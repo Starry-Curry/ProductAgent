@@ -57,3 +57,7 @@ git push -u origin main
 续接时 origin 为 `git@github.com:Starry-Curry/ProductAgent.git`。沙箱外 SSH 连接成功，`git push -u origin main` 返回 `Everything up-to-date`，随后 `git ls-remote origin refs/heads/main` 与本地 main 均为 `53a43437e94a51017bb4415cac4ad68d9245cf5a`；工作区干净，main 与 origin/main 无领先或落后。此前网络和集成写入限制保留为历史，不代表当前 Git 阻塞。
 
 后续架构审查及北京百炼配置准备位于 `chore/architecture-review-20261017`，尚未提交或推送；见同目录 architecture-review-2026-10-17.md。
+
+## 2026-10-18 · 基座升级分支
+
+用户批准第一轮实现后，创建 `feat/agent-memory-foundation`。代码与测试提交 `f394556db306c32b905fc935a040328f2e94d26a` 普通推送成功，并由 ls-remote 验证远程分支一致；main 仍为 `53a4343`。测试成绩与范围见 [本轮验证](foundation-validation-2026-10-18.json) 和 [晨间验收](morning-acceptance-2026-10-18.md)。未将环境文件、测试数据或用户原文件 docs/1018.md 纳入提交。
