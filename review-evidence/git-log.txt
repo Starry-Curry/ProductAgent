@@ -1,0 +1,15 @@
+commit f0584882769bd85a143b3756ff8e1db2845591c6
+Author:     Codex <codex@local.invalid>
+AuthorDate: Sat Oct 17 10:30:25 2026 +0800
+Commit:     Codex <codex@local.invalid>
+CommitDate: Sat Oct 17 10:30:25 2026 +0800
+
+    feat: harden v2 evidence, trace replay, privacy and migration boundaries
+
+commit 118e295d6f513fc439daaa67870c4f186ac1df69
+Author:     Codex <codex@local.invalid>
+AuthorDate: Sat Oct 17 00:34:49 2026 +0800
+Commit:     Codex <codex@local.invalid>
+CommitDate: Sat Oct 17 00:34:49 2026 +0800
+
+    baseline: preserve supplied Windows Demo 2.0 source

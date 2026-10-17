@@ -1,0 +1,12 @@
+{
+  "baselineCommit": "118e295",
+  "archiveKind": "Windows distribution ZIP, not upstream Git repository",
+  "sourceRepository": "unknown",
+  "checkedSourceFiles": 28,
+  "sourceMismatches": [
+    "next-env.d.ts"
+  ],
+  "nestedZipHash": "e1cd9b471d2599752fa2bd649aa3977c4eb98c44bd1ec59499429fc25abea967",
+  "nestedZipChecksumMatches": true,
+  "outerZipSha256": "71C21521DE5F37AF5C5EDD8293E86D75D0B4EC91066563FCA4CDDF661C419C24"
+}

@@ -1,0 +1,37 @@
+
+> product-agent@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.28
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 13.3s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/6) ...
+   Generating static pages (1/6) 
+   Generating static pages (2/6) 
+   Generating static pages (4/6) 
+ ✓ Generating static pages (6/6)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    18.9 kB         126 kB
+├ ○ /_not-found                            996 B         104 kB
+├ ƒ /api/ai                                138 B         103 kB
+├ ƒ /api/discover                          138 B         103 kB
+├ ƒ /api/gift/[token]                      138 B         103 kB
+├ ƒ /api/products                          138 B         103 kB
+├ ƒ /api/service-runs                      138 B         103 kB
+├ ƒ /api/workspace                         138 B         103 kB
+└ ƒ /gift/[token]                        1.88 kB         109 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/255-b1e2483a7e02feee.js       46.6 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          1.96 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

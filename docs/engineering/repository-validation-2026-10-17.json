@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-17",
+  "scope": "canonical repository import and offline regression",
+  "node": "24.19.0",
+  "unit_tests": {"passed": 26, "failed": 0, "skipped": 0},
+  "typecheck": "passed",
+  "production_build": "passed",
+  "baseline": {"checked": 35, "mismatches": []},
+  "benchmark": {"kind": "offline-regression-not-live-ai", "cases": 7, "baselineUnsafeAccepted": 5, "hardenedUnsafeAccepted": 0, "falseRejections": 1},
+  "candidate_credential_pattern_findings": [],
+  "real_model_calls": 0,
+  "browser_integration": "not rerun in this migration; imported evidence remains separately dated"
+}
