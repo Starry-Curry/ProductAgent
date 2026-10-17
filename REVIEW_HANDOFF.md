@@ -9,6 +9,12 @@
 - 原报告记录f0584882769bd85a143b3756ff8e1db2845591c6、基线118e295d6f513fc439daaa67870c4f186ac1df69。没有原.git，仅记录来源，不伪造历史。
 - 旧LocalFlow/Python/Windows包留作历史，勿覆盖当前源码或合并业务库。
 
+## 首次发布待完成
+
+本地导入提交`69c5b9a`已完成，后续文档提交记录上传限制。origin已设置，但尚未成功推送：普通Git网络解析失败；沙箱外推送被环境自动审批策略拒绝；GitHub连接写入返回403，当前连接未列出可用App安装授权。
+
+普通本机PowerShell进入本目录后执行`git push -u origin main`，或补齐GitHub连接对此仓库的安装授权后由agent继续。完成后核对远程main与本机HEAD；不要把“已设置origin”当作“已上传”。详细记录见docs/engineering/repository-migration-2026-10-17.md。
+
 ## 当前架构与运行
 
 根目录为Next.js应用；page/components→API→domain/db/service-store，harness/provider组织受控模型调用，Product Pack/Context/discovery提供资料、偏好和有限组合。SQLite业务仍以workspace JSON为主，另有服务记录和反馈表。

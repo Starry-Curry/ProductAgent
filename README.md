@@ -6,6 +6,8 @@
 
 应用以2026-10-17 Wukaifeng交付为起点，原交付记录提交`f0584882769bd85a143b3756ff8e1db2845591c6`。旧Windows包、Python工程及LocalFlow作为历史参考。
 
+首次迁移状态：本地整理、Git提交和离线验证已完成；远程首次推送受网络及GitHub连接写入授权限制，尚未完成。当前机器可直接运行下方Windows入口；新电脑的clone步骤须在首次推送后执行。续接方式见[迁移记录](docs/engineering/repository-migration-2026-10-17.md)。
+
 ## 启动
 
 技术栈：Next.js 15、React 19、TypeScript、Node.js **24**、内置SQLite。

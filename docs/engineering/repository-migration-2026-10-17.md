@@ -35,4 +35,19 @@ verify-baseline.mjs不再依赖仓库外旧ZIP或无法取得的118e295对象；
 
 上传main之前检查忽略规则、逐文件清单和凭证模式。api.txt、.env.local、数据库、照片数据、模型、Node运行时、node_modules、.next、ZIP均不上传。历史截图是交付方标注的合成样例；原公开仓库设置由用户创建，本次不改变可见性。
 
-本机Git网络访问失败，使用已连接且具有写入权限的GitHub接口上传；远程提交之后校验树与本机Git索引一致，并同步本地main及origin/main。以后正常联网时使用标准git pull/push，不需要继续互发ZIP。
+### 当前上传状态：待首次推送
+
+本地导入提交为`69c5b9ac1e7935345899f1a9a4bd00a5f70049bc`，分支`main`，origin已设置为`https://github.com/Starry-Curry/ProductAgent.git`。本地整理和验证已完成，远程上传尚未完成。
+
+本次普通Git推送因`getaddrinfo() thread failed to start`失败。请求沙箱外执行`git push`时，环境的自动审批策略因`sandbox_approval=false`拒绝运行；不能据此声称已推送。
+
+GitHub连接可以读取公开仓库，但创建首个README返回`403 Resource not accessible by integration`；当前连接列出的可用GitHub App安装及已安装账户均为空。仓库所有者的push/admin权限不等于当前集成具有写入授权。本次没有远程提交，也没有更改远程分支。
+
+继续方式：在普通本地PowerShell中运行以下命令，使用Git正常登录授权；或者为当前GitHub连接补齐包含此仓库的安装授权，再由后续agent执行上传。
+
+```powershell
+cd D:\Project\Tianmao\ProductAgent
+git push -u origin main
+```
+
+推送后以`git ls-remote origin refs/heads/main`与`git rev-parse HEAD`核对提交。不要重新初始化、强制覆盖或再次导入ZIP；不需要把API Key、PAT或本机凭证发到聊天中。后续正常使用git pull/push同步。
