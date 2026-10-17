@@ -140,6 +140,12 @@ export function TaskList({
             {t.createdBy ? ` · ${people[t.createdBy]}留下的` : ""}
           </small>
           <h3>{t.title}</h3>
+          {t.serviceContext && (
+            <p>
+              来自使用帮助 · 已记录 {t.serviceContext.attemptedSteps}{" "}
+              步尝试；家人仅能看到已确认的摘要。
+            </p>
+          )}
           {t.assignee === actor &&
             (t.kind === "notice" ? (
               <>

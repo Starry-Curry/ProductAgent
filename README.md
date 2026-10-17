@@ -6,7 +6,7 @@
 
 应用以2026-10-17 Wukaifeng交付为起点，原交付记录提交`f0584882769bd85a143b3756ff8e1db2845591c6`。旧Windows包、Python工程及LocalFlow作为历史参考。
 
-首次迁移状态：本地整理、Git提交和离线验证已完成；远程首次推送受网络及GitHub连接写入授权限制，尚未完成。当前机器可直接运行下方Windows入口；新电脑的clone步骤须在首次推送后执行。续接方式见[迁移记录](docs/engineering/repository-migration-2026-10-17.md)。
+首次迁移已完成：2026-10-17 经 SSH 核对并执行普通 push，远程 main 与本地基线 `53a4343` 一致。上传过程与原限制保留在[迁移记录](docs/engineering/repository-migration-2026-10-17.md)。本轮建议见[架构审查](docs/engineering/architecture-review-2026-10-17.md)。
 
 ## 启动
 
@@ -35,7 +35,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\windows.ps1 -Task 
 
 ## 模型、数据与验证
 
-从`.env.example`复制`.env.local`并仅在本机配置AI_BASE_URL、AI_API_KEY、AI_MODEL等。真实付费另受AI_ALLOW_PAID_CALLS控制，默认关闭。没有模型仍可体验本机业务与有限规则。当前没有接入本地9B、视觉识别或自动Skill迭代。
+新克隆从`.env.example`复制`.env.local`，仅在本机填写`AI_API_KEY`并按账户地域核对地址与模型；公共模板默认关闭`AI_ALLOW_PAID_CALLS`，主动启用真实调用时设为`true`。本机已按用户确认的北京百炼准备`.env.local`，只有 API Key 留空，费用开关已为手动提问开启；填入后重启`START.cmd`即可尝试。配置不入 Git，详见[接入与审查](docs/engineering/architecture-review-2026-10-17.md#百炼北京地域接入)。
+
+当前主帮助入口已接入 LangGraph.js 有状态执行：通用设置可先问，涉及型号再补条件；支持尝试反馈、关联物品、家庭摘要交接。首页可管理本人记忆、兴趣、关系和可选文字陪伴；忘记会使旧上下文失效。规格事实仍按相关来源呈现，增加两个有限官方过程；Key 不会自动扩展知识目录。尚无本地9B、视觉识别或自动Skill迭代。
+
+修改、Prompt/Loop 与边界见 [实现说明](docs/engineering/foundation-implementation-2026-10-18.md)；明早按 [晨间验收](docs/engineering/morning-acceptance-2026-10-18.md) 体验。新增 `npm.cmd run test:acceptance` 会使用隔离数据库和随机本机端口运行旧交互与三条新旅程。
 
 日常数据在`data/demo.sqlite`，测试必须指定独立PRODUCT_AGENT_DATA_DIR。凭证、私人资料、数据库、模型、依赖、构建缓存和ZIP不入Git。
 

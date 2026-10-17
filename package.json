@@ -12,13 +12,18 @@
     "dev:local": "node scripts/local-demo.mjs dev",
     "start:local": "node scripts/local-demo.mjs start",
     "test:integration": "node tests/integration.mjs",
-    "test:live": "node --experimental-strip-types scripts/live-smoke.ts"
+    "test:live": "node --experimental-strip-types scripts/live-smoke.ts",
+    "test:acceptance": "node scripts/verify-local.mjs"
   },
   "dependencies": {
+    "@langchain/core": "1.2.18",
+    "@langchain/langgraph": "1.5.1",
+    "@langchain/langgraph-checkpoint": "1.2.0",
     "lucide-react": "^0.468.0",
     "next": "^15.5.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

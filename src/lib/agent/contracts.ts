@@ -1,0 +1,117 @@
+import { z } from "zod";
+export const turnInputSchema = z
+  .object({
+    sessionId: z.string().uuid().optional(),
+    requestId: z.string().uuid(),
+    itemId: z.string().max(100).optional(),
+    question: z.string().trim().min(1).max(2000),
+    mode: z.enum(["service", "ideas", "companion"]).default("service"),
+    temporary: z.boolean().default(false),
+    expectedRevision: z.number().int().nonnegative().optional(),
+  })
+  .strict();
+export type TurnInput = z.infer<typeof turnInputSchema>;
+export type Citation = {
+  id: string;
+  title: string;
+  url: string;
+  kind: "official" | "user_report";
+  section?: string;
+};
+export type AssistantReply = {
+  outcome: "answered" | "needs_info" | "referred" | "unavailable" | "blocked";
+  answer: string;
+  steps: { id: string; text: string }[];
+  questions: string[];
+  evidenceIds: string[];
+  citations: Citation[];
+  memoryIds: string[];
+  source:
+    | "curated-guidance"
+    | "model-with-evidence"
+    | "model-general"
+    | "local-memory"
+    | "model-creative";
+  presentation?: "short" | "detailed";
+  model?: string;
+  errorCode?: string;
+  caveat?: string;
+};
+export type SessionMessage = {
+  id: string;
+  role: "user" | "assistant" | "feedback";
+  text: string;
+  at: string;
+  reply?: AssistantReply;
+};
+export type ServiceSession = {
+  id: string;
+  owner: string;
+  itemId?: string;
+  identity?: string;
+  mode: TurnInput["mode"];
+  revision: number;
+  status: "active" | "waiting_user" | "user_resolved" | "closed";
+  messages: SessionMessage[];
+  known: Record<string, string>;
+  tried: string[];
+  memoryEpoch: number;
+  createdAt: string;
+  updatedAt: string;
+  expiresAt: string;
+};
+export type Trace = { stage: string; detail: string; at: string };
+export type TurnResult = {
+  session: ServiceSession;
+  reply: AssistantReply;
+  trace: Trace[];
+  tokens: { input: number; output: number } | null;
+  modelCalls: number;
+};
+export class AgentError extends Error {
+  status: number;
+  constructor(message: string, status = 400) {
+    super(message);
+    this.status = status;
+  }
+}
+export const memorySchema = z
+  .object({
+    kind: z.enum([
+      "preference",
+      "interest",
+      "experience",
+      "story",
+      "method",
+      "relationship",
+      "fiction",
+    ]),
+    text: z.string().trim().min(1).max(1500),
+    itemId: z.string().max(100).optional(),
+    allowCloud: z.boolean().default(false),
+    status: z.enum(["active", "candidate"]).default("active"),
+    expiresAt: z.string().datetime().optional(),
+  })
+  .strict();
+export type MemoryRecord = z.infer<typeof memorySchema> & {
+  id: string;
+  owner: string;
+  version: number;
+  source: "user";
+  createdAt: string;
+  updatedAt: string;
+};
+export type Persona = {
+  enabled: boolean;
+  nickname: string;
+  style: "neutral" | "warm" | "playful";
+  itemId?: string;
+};
+export const personaSchema = z
+  .object({
+    enabled: z.boolean(),
+    nickname: z.string().trim().max(40),
+    style: z.enum(["neutral", "warm", "playful"]),
+    itemId: z.string().max(100).optional(),
+  })
+  .strict();

@@ -35,7 +35,7 @@ verify-baseline.mjs不再依赖仓库外旧ZIP或无法取得的118e295对象；
 
 上传main之前检查忽略规则、逐文件清单和凭证模式。api.txt、.env.local、数据库、照片数据、模型、Node运行时、node_modules、.next、ZIP均不上传。历史截图是交付方标注的合成样例；原公开仓库设置由用户创建，本次不改变可见性。
 
-### 当前上传状态：待首次推送
+### 首次上传失败过程（历史记录，后续已连接）
 
 本地导入提交为`69c5b9ac1e7935345899f1a9a4bd00a5f70049bc`，分支`main`，origin已设置为`https://github.com/Starry-Curry/ProductAgent.git`。本地整理和验证已完成，远程上传尚未完成。
 
@@ -51,3 +51,9 @@ git push -u origin main
 ```
 
 推送后以`git ls-remote origin refs/heads/main`与`git rev-parse HEAD`核对提交。不要重新初始化、强制覆盖或再次导入ZIP；不需要把API Key、PAT或本机凭证发到聊天中。后续正常使用git pull/push同步。
+
+### 2026-10-17 续接：首次上传已核对完成
+
+续接时 origin 为 `git@github.com:Starry-Curry/ProductAgent.git`。沙箱外 SSH 连接成功，`git push -u origin main` 返回 `Everything up-to-date`，随后 `git ls-remote origin refs/heads/main` 与本地 main 均为 `53a43437e94a51017bb4415cac4ad68d9245cf5a`；工作区干净，main 与 origin/main 无领先或落后。此前网络和集成写入限制保留为历史，不代表当前 Git 阻塞。
+
+后续架构审查及北京百炼配置准备位于 `chore/architecture-review-20261017`，尚未提交或推送；见同目录 architecture-review-2026-10-17.md。

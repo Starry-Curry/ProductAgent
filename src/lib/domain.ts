@@ -29,6 +29,12 @@ export type Item = {
   };
 };
 export type Task = {
+  serviceContext?: {
+    sourceSessionId: string;
+    sourceRevision: number;
+    summary: string;
+    attemptedSteps: number;
+  };
   id: string;
   itemId: string;
   title: string;

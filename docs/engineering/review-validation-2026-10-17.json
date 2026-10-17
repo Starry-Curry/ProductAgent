@@ -1,0 +1,19 @@
+{
+  "kind": "architecture-review-and-offline-verification",
+  "date": "2026-10-17",
+  "baselineCommit": "53a43437e94a51017bb4415cac4ad68d9245cf5a",
+  "branch": "chore/architecture-review-20261017",
+  "runtime": "Node.js 24.19.0",
+  "dependencies": { "next": "15.5.28", "react": "19.3.1", "react-dom": "19.3.1" },
+  "unitTests": { "passed": 26, "failed": 0 },
+  "benchmark": { "cases": 7, "unsafeCasesAccepted": 0, "validParaphrasesRejected": 1, "qualityGateImplemented": false, "baselineComparison": "manually-specified-ID-only-policy-not-a-measured-model" },
+  "build": "passed",
+  "typecheck": "passed",
+  "integration": { "passed": true, "isolatedDatabase": true, "viewports": ["1440x1000", "390x844"], "pageErrors": 0, "mobileHorizontalOverflow": false, "existingScript": "tests/integration.mjs" },
+  "reviewProbe": { "kind": "in-memory-provider-test-double", "question": "如何设置鼠标的双击速度？", "answer": "电源为一节可更换 AA 电池。", "actualRunStatus": "succeeded", "finding": "extractive-validation-does-not-check-question-relevance" },
+  "localConfiguration": { "path": ".env.local", "gitIgnored": true, "region": "Beijing", "provider": "Alibaba Cloud Model Studio", "apiKeyLeftEmptyAtCreation": true, "manualPaidRequestsEnabled": true },
+  "realModelCalls": 0,
+  "physicalItemTests": false,
+  "businessCodeModified": false,
+  "limitations": ["No online credential or account validation", "No physical item outcome verification", "Review recommendations are not implemented", "Browser checks cover the existing integration script only"]
+}

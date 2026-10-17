@@ -8,7 +8,14 @@
 
 ## 当前来源与证据
 
+- [技术基座实际实现、Prompt 与 Loop](engineering/foundation-implementation-2026-10-18.md)
+- [晨间验收步骤](engineering/morning-acceptance-2026-10-18.md)
+- [第一轮验证摘要](engineering/foundation-validation-2026-10-18.json)
+
 - [仓库迁移记录](engineering/repository-migration-2026-10-17.md)
+- [技术与使用闭环审查、百炼接入](engineering/architecture-review-2026-10-17.md)
+- [设计 v2：Agent、Memory 与个性化（已批准，含后续目标）](engineering/agent-memory-personalization-design-2026-10-18.md)
+- [本轮脱敏验证摘要](engineering/review-validation-2026-10-17.json)
 - [逐文件导入摘要](engineering/import-provenance.json)
 - [交付方本轮验证](../review-evidence/VALIDATION.md)
 - [第一批深化契约和回滚](engineering/第一批深化_契约验收与回滚.md)

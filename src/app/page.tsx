@@ -1,4 +1,6 @@
 "use client";
+import { AssistantConversation } from "@/components/AssistantConversation";
+import { MemoryCenter } from "@/components/MemoryCenter";
 import { PersonalContext } from "@/components/PersonalContext";
 import { EvidenceDiscovery } from "@/components/EvidenceDiscovery";
 import { HelpEntry } from "@/components/HelpEntry";
@@ -91,6 +93,10 @@ function Badge({
 export default function App() {
   const [elder, setElder] = useState(false);
   const [initialQuestion, setInitialQuestion] = useState("");
+  const [unboundSession, setUnboundSession] = useState<{
+    id: string;
+    revision: number;
+  } | null>(null);
   useEffect(() => {
     setElder(localStorage.getItem("product-agent-mode") === "elder");
     const savedActor = localStorage.getItem("product-agent-actor");
@@ -135,6 +141,7 @@ export default function App() {
   }
   useEffect(() => {
     setData(null);
+    setUnboundSession(null);
     setSelected("");
     setView("home");
     setAnswer("");
@@ -146,9 +153,11 @@ export default function App() {
     };
     const timer = setInterval(refresh, 15000);
     window.addEventListener("focus", refresh);
+    window.addEventListener("workspace-updated", refresh);
     return () => {
       clearInterval(timer);
       window.removeEventListener("focus", refresh);
+      window.removeEventListener("workspace-updated", refresh);
     };
   }, [actor]);
   useEffect(() => {
@@ -431,6 +440,12 @@ export default function App() {
                     items={data.items}
                     onAsk={startHelp}
                     elder={elder}
+                  />
+                  <MemoryCenter
+                    key={actor + (elder ? "elder" : "standard")}
+                    actor={actor}
+                    items={data.items}
+                    stories={data.memories}
                   />
                   {elder ? (
                     <section className="panel elder-inbox">
@@ -939,6 +954,14 @@ export default function App() {
               {view === "discover" && (
                 <>
                   <EvidenceDiscovery key={actor} actor={actor} />
+                  <details className="panel">
+                    <summary>结合我记下的兴趣，找点灵感</summary>
+                    <AssistantConversation
+                      key={actor + "ideas"}
+                      actor={actor}
+                      mode="ideas"
+                    />
+                  </details>
                   {title(
                     "A LITTLE DISCOVERY",
                     "熟悉的东西，新的可能。",
@@ -1439,15 +1462,46 @@ export default function App() {
                   <section className="panel">
                     <h2>你的问题</h2>
                     <p>{draft || "可以先选一件物品，再描述遇到的情况。"}</p>
-                    <p>
-                      还没有确认具体物品与型号，暂时不能给出可靠的专属操作。
-                    </p>
+                    <p>可以先解决通用问题；涉及专属操作时再补充具体型号。</p>
+                    <AssistantConversation
+                      key={actor + draft}
+                      actor={actor}
+                      initialQuestion={draft}
+                      elder={elder}
+                      onSession={(s) =>
+                        setUnboundSession(
+                          s ? { id: s.id, revision: s.revision } : null,
+                        )
+                      }
+                    />
                     <label>
                       这是家里的哪件物品？
                       <select
                         defaultValue=""
-                        onChange={(e) => {
-                          if (e.target.value) startHelp(e.target.value, draft);
+                        onChange={async (e) => {
+                          const itemId = e.target.value;
+                          if (!itemId) return;
+                          try {
+                            if (unboundSession) {
+                              const r = await fetch("/api/assistant", {
+                                method: "POST",
+                                headers,
+                                body: JSON.stringify({
+                                  action: "attach",
+                                  input: {
+                                    sessionId: unboundSession.id,
+                                    expectedRevision: unboundSession.revision,
+                                    itemId,
+                                  },
+                                }),
+                              });
+                              const d = await r.json();
+                              if (!r.ok) throw Error(d.error);
+                              startHelp(itemId, "");
+                            } else startHelp(itemId, draft);
+                          } catch (e) {
+                            setToast((e as Error).message);
+                          }
                         }}
                       >
                         <option value="">选择已有物品</option>

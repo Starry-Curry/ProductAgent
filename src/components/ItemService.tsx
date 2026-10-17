@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import type { Item, Person } from "@/lib/domain";
 import { findPack, type ProductPack } from "@/lib/products";
 import type { Run, Feedback } from "@/lib/ai/types";
 
+import { AssistantConversation } from "./AssistantConversation";
 import { SellerSupport } from "./SellerSupport";
 import type { Action } from "./FamilyTasks";
 type RecordEntry = { run: Run; feedback: Feedback | null };
@@ -31,15 +32,6 @@ export function ItemService({
 }) {
   const [question, setQuestion] = useState(initialQuestion);
   const [showIdentity, setShowIdentity] = useState(false);
-  const autoAsked = useRef(false);
-  useEffect(() => {
-    if (initialQuestion && !autoAsked.current) {
-      autoAsked.current = true;
-      ask(initialQuestion);
-    }
-  }, [initialQuestion]);
-  const familyRequest = useRef("");
-  const [familyAsked, setFamilyAsked] = useState(false);
   const [query, setQuery] = useState(item.model === "待确认" ? "" : item.model);
   const [candidates, setCandidates] = useState<ProductPack[] | null>(null);
   const [selected, setSelected] = useState("");
@@ -49,11 +41,6 @@ export function ItemService({
   const [replay, setReplay] = useState<{ id: string; text: string } | null>(
     null,
   );
-  const [answer, setAnswer] = useState<{
-    answer: string;
-    uncertainties: string[];
-    evidenceIds: string[];
-  } | null>(null);
   const [records, setRecords] = useState<RecordEntry[]>([]);
   const pack = item.productBinding && findPack(item.productBinding.packId);
   const headers = { "Content-Type": "application/json", "x-demo-actor": actor };
@@ -96,38 +83,6 @@ export function ItemService({
       setBusy(false);
     }
   }
-  async function ask(question: string) {
-    setBusy(true);
-    setError("");
-    setAnswer(null);
-    try {
-      const r = await fetch("/api/ai", {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ itemId: item.id, question, mode: "service" }),
-      });
-      const d = await r.json();
-      if (d.run)
-        setRecords((rows) =>
-          [{ run: d.run, feedback: null }, ...rows].slice(0, 30),
-        );
-      if (!r.ok) {
-        if (d.run?.status === "needs_identity") setShowIdentity(true);
-        throw Error(
-          elder && d.run?.status === "needs_identity"
-            ? "还不知道准确型号，请家人帮你确认，或联系卖家拿说明书。"
-            : elder && d.run?.status === "unavailable"
-              ? "AI 帮助暂时还不能使用，可以先请家人或卖家帮忙。"
-              : d.error,
-        );
-      }
-      setAnswer(d);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "网络连接失败，请重试。");
-    } finally {
-      setBusy(false);
-    }
-  }
   async function feedback(runId: string, outcome: Feedback["outcome"]) {
     setBusy(true);
     setError("");
@@ -153,116 +108,15 @@ export function ItemService({
   return (
     <section className="panel item-service simple-service">
       <h2>有什么不会用的？</h2>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          ask(question);
-        }}
-      >
-        <label htmlFor="service-question">写下你的问题</label>
-        <textarea
-          id="service-question"
-          name="question"
-          required
-          maxLength={2000}
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          placeholder="描述你的问题，或说说想用它做什么…"
-        />
-        <button className="button" disabled={busy}>
-          {busy ? "正在查看…" : "发送问题"}
-        </button>
-        <small>问题与必要的物品资料会交给已配置的云端 AI。</small>
-      </form>
-      {error && (
-        <div className="answer" role="alert">
-          <strong>这次还没能给出可靠回答。</strong>
-          <p>{error}</p>
-          <p>
-            {elder
-              ? "可以请家人帮忙，或联系下面的售后入口。"
-              : "你可以继续核对型号，或通过下面的入口联系售后。"}
-          </p>
-        </div>
-      )}
-      {answer && (
-        <div className="answer" role="status">
-          <span className="badge">AI 建议 · 请对照实物核实</span>
-          <p>{answer.answer}</p>
-          {!!answer.uncertainties.length && (
-            <p>还需要确认：{answer.uncertainties.join("；")}</p>
-          )}
-          <details>
-            <summary>回答依据</summary>
-            <p>
-              {answer.evidenceIds
-                .map((id) => pack?.claims.find((c) => c.id === id)?.text)
-                .join(" ")}
-            </p>
-            <p>引用核对不代表操作已验证。</p>
-          </details>
-        </div>
-      )}
-      {records[0]?.run.status === "succeeded" && !records[0].feedback && (
-        <div className="inline">
-          <button
-            className="button"
-            disabled={busy}
-            onClick={() => feedback(records[0].run.id, "completed")}
-          >
-            解决了
-          </button>
-          <button
-            className="button secondary"
-            disabled={busy}
-            onClick={() => feedback(records[0].run.id, "unresolved")}
-          >
-            还没解决
-          </button>
-        </div>
-      )}
-      {records[0]?.feedback && (
-        <p role="status">
-          {records[0].feedback.outcome === "completed"
-            ? "已记下：你确认解决了问题。"
-            : "已记下：问题还没有解决。"}
-        </p>
-      )}
-      {act && item.shared && actor !== "friend" && (
-        <button
-          className="button secondary"
-          disabled={busy || familyAsked}
-          onClick={async () => {
-            setBusy(true);
-            familyRequest.current ||= crypto.randomUUID();
-            try {
-              if (
-                await act(
-                  "quickTask",
-                  {
-                    requestId: familyRequest.current,
-                    itemId: item.id,
-                    title: (
-                      "使用求助：" +
-                      item.name +
-                      " · " +
-                      (question || "请帮我看看怎么用")
-                    ).slice(0, 120),
-                    kind: "help",
-                    assignee: actor === "dad" ? "lin" : "dad",
-                  },
-                  "求助已记下，家人打开事项即可看到",
-                )
-              )
-                setFamilyAsked(true);
-            } finally {
-              setBusy(false);
-            }
-          }}
-        >
-          {familyAsked ? "已交给家人" : "请家人帮我"}
-        </button>
-      )}
+      <AssistantConversation
+        actor={actor}
+        item={item}
+        initialQuestion={initialQuestion}
+        onQuestion={setQuestion}
+        elder={elder}
+        onHandoff={() => window.dispatchEvent(new Event("workspace-updated"))}
+      />
+      {error && <p role="alert">{error}</p>}
       <SellerSupport item={item} actor={actor} act={act} question={question} />
       {!elder && (
         <details
