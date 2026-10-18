@@ -61,11 +61,17 @@ const topicPatterns: Record<string, RegExp> = {
   controls: /开关|指示灯|指示|灯亮/,
   environment: /室内|户外|食品|食物|接触食品/,
   battery: /电池|供电|AA|AAA/i,
-  connection: /接收器|蓝牙|连接|无线/,
-  load: /承重|载荷|重量|千克|公斤/,
+  connection: /接收器|蓝牙|连接|无线|Wi-Fi|wifi/i,
+  load: /承重|载荷|重量|净重|千克|公斤/,
   stereo: /立体声|两台|多音箱|auracast/i,
   protection: /防水|防尘|IP67|浸水/i,
-  dimensions: /尺寸|长宽高|多大/,
+  dimensions: /尺寸|长宽高|多大|厘米|毫米/,
+  capacity: /容量|容积|尘杯|升/,
+  power: /功率|瓦/,
+  coverage: /覆盖面积|适用面积|平方米/,
+  airflow: /CADR|洁净空气量|立方米/i,
+  anchoring: /固定|倾倒|掉落|螺丝|螺栓/,
+  care: /保养|擦拭|湿布|清洁要求/,
 };
 export function topics(question: string) {
   return Object.entries(topicPatterns)

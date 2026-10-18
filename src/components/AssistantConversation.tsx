@@ -165,7 +165,10 @@ export function AssistantConversation({
     }
   }
   useEffect(() => {
-    const clear = () => {
+    const clear = (event?: Event) => {
+      const detail = (event as CustomEvent | undefined)?.detail;
+      if (detail?.actor && detail.actor !== actor) return;
+      if (detail?.scope && detail.scope !== item?.id) return;
       update(null);
       retry.current = null;
       setError("记忆或授权已更新，旧上下文已清除，可以重新提问。");
@@ -178,7 +181,9 @@ export function AssistantConversation({
     const storage = (e: StorageEvent) => {
       if (e.key === "product-agent-memory-revision" && e.newValue) {
         try {
-          if (JSON.parse(e.newValue).actor === actor) clear();
+          const detail = JSON.parse(e.newValue);
+          if (detail.actor === actor)
+            clear(new CustomEvent("memory-updated", { detail }));
         } catch {}
       }
     };
@@ -361,6 +366,28 @@ export function AssistantConversation({
           >
             刷新会话
           </button>
+        </div>
+      )}
+      {item?.demo && (
+        <div className="example-questions">
+          <small>
+            {mode === "story"
+              ? "可以先回顾案例，再继续自己的讲述："
+              : "先填入一个有资料可核对的问题："}
+          </small>
+          {(mode === "story"
+            ? ["聊聊以前的故事"]
+            : item.demo.questions.filter((q) => !q.includes("故事"))
+          ).map((q) => (
+            <button
+              key={q}
+              className="text-button"
+              disabled={busy}
+              onClick={() => setQuestion(q)}
+            >
+              {q}
+            </button>
+          ))}
         </div>
       )}
       <form

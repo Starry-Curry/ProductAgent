@@ -1656,3 +1656,12 @@ summary { cursor:pointer; }
     padding: 20px 16px 40px;
   }
 }
+
+.case-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:16px 0; }
+.case-card { min-width:0; border:1px solid var(--line,#e0e6df); border-radius:14px; padding:18px; background:#fff; }
+.case-card h3 { margin:8px 0; }
+.case-card p { margin:8px 0; }
+.case-card .inline { margin-top:14px; flex-wrap:wrap; }
+.demo-notice { border-left:3px solid #b09061; background:#f5f1e8; padding:14px 18px; border-radius:8px; margin:14px 0; }
+.initial-introduction { margin:14px 0; padding:14px; border:1px solid var(--line,#e0e6df); border-radius:12px; }
+@media(max-width:680px) { .case-grid { grid-template-columns:1fr; } }

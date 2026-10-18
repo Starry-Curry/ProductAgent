@@ -1,3 +1,4 @@
+import { installHouseholdCases } from "./demo/install.ts";
 import { captureWorkspace } from "./memory/ambient.ts";
 import { assertLocalDemo } from "./auth.ts";
 import { DatabaseSync } from "node:sqlite";
@@ -20,6 +21,7 @@ export function database() {
   );
   db.exec("PRAGMA foreign_keys=ON");
   migrate(db, path.join(dir, "demo.sqlite"));
+  installHouseholdCases(db);
   connection = db;
   return db;
 }

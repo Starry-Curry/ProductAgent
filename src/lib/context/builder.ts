@@ -45,7 +45,7 @@ export function buildContext(
     item,
     knowledge,
     memories,
-    cloudMemories: memories.filter((m) => m.allowCloud),
+    cloudMemories: memories.filter((m) => m.allowCloud && !m.demo),
     preferences,
     cloudPreferences: preferences
       .filter((p) => p.allowCloud)
@@ -57,6 +57,7 @@ export function buildContext(
             .filter(
               (i) =>
                 canRead(i, actor) &&
+                (item?.demo ? !!i.demo : !i.demo) &&
                 ["在用", "闲置", "待确认"].includes(i.state),
             )
             .map((i) => ({ id: i.id, name: i.name, state: i.state }))

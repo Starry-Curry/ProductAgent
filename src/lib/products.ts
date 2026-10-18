@@ -1,3 +1,4 @@
+import { householdProductPacks } from "./catalog/household-products.ts";
 export type ProductPack = {
   id: string;
   product: string;
@@ -113,6 +114,8 @@ productPacks.push(
     constraints: { indoorOnly: true, maxLoadKg: 18, foodContact: false },
   },
 );
+
+productPacks.push(...householdProductPacks);
 
 export function findPack(id: string) {
   return productPacks.find((p) => p.id === id);

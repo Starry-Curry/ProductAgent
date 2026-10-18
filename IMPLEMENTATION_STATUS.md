@@ -1,5 +1,16 @@
 # 当前实现状态
 
+## 2026-10-18 · 家居案例与对话式记忆入口
+
+最终验证：63/63 测试、生产构建/类型检查、离线基准、隔离旧旅程/静默记忆/家居案例三组浏览器验收通过。首次介绍保存/跳过后不再出现，演示操作不清空真实会话；本轮付费模型调用 0。合成截图在 review-evidence/household-20261018，详情见本轮验证摘要。
+
+新增八组家电/家具案例：7 个新官方资料包，知识目录达到 11 包/33 条事实，配套 16 段合成故事、24 条演示记忆、4 个家庭事项、2 个示例计划。案例与真实画像/活动资源隔离，按版本追加，不重置已有数据。
+
+记忆入口改为一次可选介绍，保存或跳过后持久关闭；日常新增通过物品对话。移除手动补充/直接写记忆及重复私人记录表，保留既有记忆纠正/忘记、原时间线、陪伴与家庭/礼物流程。v5 增量迁移有备份，新增介绍状态与案例安装回执。
+
+分支 feat/household-demo-conversations，起点 60b0ad9。主要文件：catalog/household-products.ts、demo/、memory/introduction.ts、experience-schema.ts、MemoryCenter、HouseholdCases。来源、运行、边界与核实步骤见 [本轮说明](docs/engineering/household-cases-and-onboarding-2026-10-18.md)；最终测试记录见 [验收摘要](docs/engineering/household-validation-2026-10-18.json)。本轮真实模型调用 0；用户 docs/1018.md 与 Key 内容未读取或纳入交付。
+
+
 ## 2026-10-18 · 静默记忆与物品故事体验
 
 验证完成：55/55 单元与领域测试、生产构建/类型检查、离线基准、隔离 API 与 Edge 故事/手机/长辈版旅程通过。新指南与暂停/恢复也已验收；本轮真实模型调用 0。详细结果见 [验收摘要](docs/engineering/ambient-validation-2026-10-18.json)，合成截图见 review-evidence/ambient-20261018。
@@ -15,7 +26,7 @@
 | --- | --- | --- |
 | T1 数据与身份 | 部分实现 | db.ts、migrations.ts、repositories/；v4 增量迁移/事务/备份；主 workspace 仍 JSON，真实用户/家庭未关系化 |
 | T2 识物/扫码 | 未实现视觉识别 | domain.ts/createItem 仅档案照片；没有 OCR/VLM/条码候选闭环 |
-| T3 Product Pack | 部分实现 | products.ts、skills/knowledge.ts；4 包 12 事实 2 过程，尚无自动资料导入流水线 |
+| T3 Product Pack | 部分实现 | products.ts、skills/knowledge.ts；11 包 33 事实 2 过程，尚无自动资料导入流水线 |
 | T4 Harness | 已有可运行基座 | agent/graph.ts、checkpointer.ts、skills/registry.ts；只读工具与状态恢复/预算/验证，非任意工具自主执行 |
 | T5 Context/Memory | 部分实现，本轮增强 | memory/ambient.ts、store.ts、context/builder.ts；故事主入口、静默整理、范围/权限/过期、纠正/忘记；有限中文提取与召回 |
 | T6 组合/目标 | 部分规则实现 | discovery.ts、planning.ts；有限场景与资料约束，无通用能力规划 |

@@ -1,6 +1,6 @@
 import type { DatabaseSync } from "node:sqlite";
 import type { Person } from "../domain.ts";
-import { clearOwnerContext } from "../memory/store.ts";
+import { clearOwnerContext, clearDemoContext } from "../memory/store.ts";
 /** Runs on local API access, not a background service. Backups are separately managed. */
 export function pruneExpired(db: DatabaseSync, actor: Person) {
   const at = new Date().toISOString();
@@ -26,16 +26,19 @@ export function pruneExpired(db: DatabaseSync, actor: Person) {
       )
       .all(actor) as { id: string; body: string }[];
     let changed = false;
+    const demoScopes = new Set<string>();
     for (const r of expired) {
       const m = JSON.parse(r.body);
       if (m.expiresAt && m.expiresAt <= at) {
         db.prepare(
           "UPDATE personal_memories SET body='{}',status='deleted',version=version+1 WHERE id=?",
         ).run(r.id);
-        changed = true;
+        if (m.demo && m.itemId) demoScopes.add(m.itemId);
+        else changed = true;
       }
     }
     if (changed) clearOwnerContext(db, actor, true);
+    else for (const scope of demoScopes) clearDemoContext(db, actor, scope);
     db.exec("COMMIT");
   } catch (e) {
     db.exec("ROLLBACK");

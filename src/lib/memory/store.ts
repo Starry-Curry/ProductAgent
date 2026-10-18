@@ -56,6 +56,39 @@ export function clearOwnerContext(
     "DELETE FROM graph_checkpoints WHERE substr(thread_id,1,length(?))=?",
   ).run(prefix, prefix);
 }
+/** Demo edits revoke only this case's context, preserving unrelated real sessions. */
+export function clearDemoContext(
+  db: DatabaseSync,
+  actor: Person,
+  itemId?: string,
+) {
+  if (!itemId) return;
+  const rows = db
+    .prepare("SELECT id,body FROM agent_sessions WHERE owner=? AND item_id=?")
+    .all(actor, itemId) as { id: string; body: string }[];
+  for (const row of rows) {
+    const session = JSON.parse(row.body);
+    session.messages = [];
+    session.known = {};
+    session.tried = [];
+    session.revision++;
+    session.updatedAt = new Date().toISOString();
+    db.prepare("UPDATE agent_sessions SET body=?,revision=? WHERE id=?").run(
+      JSON.stringify(session),
+      session.revision,
+      row.id,
+    );
+    db.prepare(
+      "UPDATE agent_requests SET result=NULL WHERE owner=? AND session_id=?",
+    ).run(actor, row.id);
+    db.prepare("DELETE FROM graph_writes WHERE thread_id=?").run(
+      actor + ":" + row.id,
+    );
+    db.prepare("DELETE FROM graph_checkpoints WHERE thread_id=?").run(
+      actor + ":" + row.id,
+    );
+  }
+}
 function accessible(
   memory: MemoryRecord & { itemOwner?: string },
   state: State,
@@ -145,6 +178,8 @@ export function saveMemory(
     const before = previous
       ? (JSON.parse(previous.body) as MemoryRecord)
       : undefined;
+    if (before?.demo)
+      value = { ...value, itemId: before.itemId, allowCloud: false };
     const item = value.itemId
       ? read().items.find((i) => i.id === value.itemId)
       : undefined;
@@ -154,6 +189,8 @@ export function saveMemory(
       owner: actor,
       version: (before?.version || 0) + 1,
       source: "user" as const,
+      demo: before?.demo || !!item?.demo,
+      allowCloud: before?.demo || item?.demo ? false : value.allowCloud,
       provenance: before?.provenance,
       polarity:
         value.kind === "interest" && /不喜欢|不再喜欢/.test(value.text)
@@ -184,7 +221,9 @@ export function saveMemory(
       db.prepare(
         "UPDATE memory_capture_slots SET locked=1 WHERE owner=? AND memory_id=?",
       ).run(actor, before.id);
-    clearOwnerContext(db, actor, !!before);
+    if (memory.demo)
+      clearDemoContext(db, actor, before?.itemId || memory.itemId);
+    else clearOwnerContext(db, actor, !!before);
     if (requestId)
       db.prepare("INSERT INTO action_receipts VALUES (?,?,?,?)").run(
         actor,
@@ -203,10 +242,14 @@ export function forgetMemory(db: DatabaseSync, actor: Person, id: string) {
   db.exec("BEGIN IMMEDIATE");
   try {
     const row = db
-      .prepare("SELECT owner FROM personal_memories WHERE id=?")
-      .get(id) as { owner: string } | undefined;
+      .prepare("SELECT owner,body,status FROM personal_memories WHERE id=?")
+      .get(id) as { owner: string; body: string; status: string } | undefined;
     if (!row || row.owner !== actor)
       throw new AgentError("记忆不存在或未获授权", 403);
+    if (row.status === "deleted") {
+      db.exec("COMMIT");
+      return;
+    }
     db.prepare(
       "UPDATE memory_capture_slots SET locked=1 WHERE owner=? AND memory_id=?",
     ).run(actor, id);
@@ -221,7 +264,9 @@ export function forgetMemory(db: DatabaseSync, actor: Person, id: string) {
       "forgotten",
       new Date().toISOString(),
     );
-    clearOwnerContext(db, actor, true);
+    const forgotten = JSON.parse(row.body) as MemoryRecord;
+    if (forgotten.demo) clearDemoContext(db, actor, forgotten.itemId);
+    else clearOwnerContext(db, actor, true);
     db.exec("COMMIT");
   } catch (error) {
     db.exec("ROLLBACK");
@@ -266,7 +311,8 @@ export function savePersona(
     db.prepare(
       "INSERT INTO persona_profiles VALUES (?,?,?) ON CONFLICT(owner,scope) DO UPDATE SET body=excluded.body",
     ).run(actor, value.itemId || "global", JSON.stringify(stored));
-    clearOwnerContext(db, actor, true);
+    if (item?.demo) clearDemoContext(db, actor, item.id);
+    else clearOwnerContext(db, actor, true);
     db.exec("COMMIT");
     return value;
   } catch (e) {
@@ -298,6 +344,10 @@ export function recallMemories(
         (!m.itemId || m.itemId === itemId) &&
         m.status === "active" &&
         m.kind !== "fiction" &&
+        (!m.demo ||
+          (!!itemId &&
+            m.itemId === itemId &&
+            !!state.items.find((i) => i.id === itemId)?.demo)) &&
         (m.kind !== "requirement" ||
           (!!sessionId && m.provenance?.sessionId === sessionId)) &&
         !(excludeInterests && m.kind === "interest"),

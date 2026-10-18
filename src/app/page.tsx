@@ -1,4 +1,5 @@
 "use client";
+import { HouseholdCases } from "@/components/HouseholdCases";
 import { AssistantConversation } from "@/components/AssistantConversation";
 import { MemoryCenter } from "@/components/MemoryCenter";
 import { PersonalContext } from "@/components/PersonalContext";
@@ -29,6 +30,13 @@ import {
   Heart,
   ShieldCheck,
   Camera,
+  Coffee,
+  Wind,
+  CookingPot,
+  Brush,
+  Library,
+  Table2,
+  ShoppingCart,
   Bookmark,
   Leaf,
   ChevronDown,
@@ -73,6 +81,13 @@ function Icon({ item, size = 42 }: { item: Item; size?: number }) {
         beads: Grid3X3,
         cup: GlassWater,
         filter: Droplets,
+        kettle: Coffee,
+        purifier: Wind,
+        fryer: CookingPot,
+        vacuum: Brush,
+        shelf: Library,
+        table: Table2,
+        trolley: ShoppingCart,
       } as Record<string, typeof Package>
     )[item.icon] || Package;
   return item.photo ? (
@@ -436,11 +451,15 @@ export default function App() {
                     onAsk={startHelp}
                     elder={elder}
                   />
-                  <PersonalContext
-                    actor={actor}
-                    facts={data.contexts || []}
-                    act={act}
-                  />
+                  {(data.contexts || []).some(
+                    (c) => c.owner === actor && c.status === "explicit",
+                  ) && (
+                    <PersonalContext
+                      actor={actor}
+                      facts={data.contexts || []}
+                      act={act}
+                    />
+                  )}
                   {!elder && (
                     <details className="panel usage-map">
                       <summary>第一次使用？先看这几个入口</summary>
@@ -469,11 +488,19 @@ export default function App() {
                       </p>
                     </details>
                   )}
+                  {!elder && (
+                    <HouseholdCases
+                      items={data.items}
+                      onOpen={(i, t) => {
+                        open(i);
+                        setTab(t);
+                      }}
+                    />
+                  )}
                   <MemoryCenter
                     key={actor + (elder ? "elder" : "standard")}
                     actor={actor}
                     items={data.items}
-                    stories={data.memories}
                   />
                   {elder ? (
                     <section className="panel elder-inbox">
@@ -715,6 +742,14 @@ export default function App() {
                       </div>
                     </div>
                   </div>
+                  {item.demo && (
+                    <section className="demo-notice">
+                      <strong>演示案例：{item.demo.title}</strong>
+                      <p>
+                        商品资料有官方来源；故事和记忆为合成内容，不表示实际持有、使用或已完成检查。本案例中的对话仅影响该演示物品。
+                      </p>
+                    </section>
+                  )}
                   <div className="tabs">
                     {(elder
                       ? ["智能服务"]
@@ -903,32 +938,15 @@ export default function App() {
                             />
                           ) : (
                             <>
-                              <p>这件物品尚未共享，可以先记下一条私人记录。</p>
-                              <form
-                                onSubmit={async (e) => {
-                                  e.preventDefault();
-                                  const form = e.currentTarget;
-                                  if (
-                                    await act("memory", {
-                                      itemId: item.id,
-                                      text: new FormData(form).get("text"),
-                                    })
-                                  )
-                                    form.reset();
-                                }}
+                              <p>
+                                这件物品尚未共享，可以先在物品对话中说明遇到的情况。
+                              </p>
+                              <button
+                                className="button secondary"
+                                onClick={() => setTab("故事与记录")}
                               >
-                                <label>
-                                  需要处理什么？
-                                  <textarea
-                                    name="text"
-                                    required
-                                    placeholder="例如：开关坏了，暂时不要使用"
-                                  />
-                                </label>
-                                <button className="button" disabled={busy}>
-                                  保存私人记录
-                                </button>
-                              </form>
+                                去物品对话说明情况
+                              </button>
                               <p>如需分配给家人，可在物品资料中主动共享。</p>
                             </>
                           )}
@@ -957,43 +975,18 @@ export default function App() {
                             <small>
                               {m.at.slice(0, 10)} ·{" "}
                               {m.author ? people[m.author] : "原作者未知"} ·{" "}
-                              {m.shared ? "共享记录" : "私人记忆"}
+                              {m.demo
+                                ? "合成案例故事"
+                                : m.shared
+                                  ? "共享记录"
+                                  : "私人记忆"}
                             </small>
                             <p>{m.text}</p>
                           </article>
                         ))}
-                      <details>
-                        <summary>直接写下一段记忆</summary>
-                        <form
-                          onSubmit={async (e) => {
-                            e.preventDefault();
-                            const form = e.currentTarget;
-                            const f = new FormData(form);
-                            if (
-                              await act("memory", {
-                                itemId: item.id,
-                                text: f.get("text"),
-                              })
-                            )
-                              form.reset();
-                          }}
-                        >
-                          <textarea
-                            required
-                            name="text"
-                            placeholder="写下一段真实经历；默认仅自己可见。"
-                          />
-                          <button className="button" disabled={busy}>
-                            保存这段记忆
-                          </button>
-                        </form>
-                      </details>
                       <MemoryCenter
                         actor={actor}
                         items={data.items}
-                        stories={data.memories.filter(
-                          (m) => m.itemId === item.id,
-                        )}
                         focusItemId={item.id}
                       />
                     </section>

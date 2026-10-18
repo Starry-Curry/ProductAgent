@@ -31,7 +31,10 @@ export function prepareActivity(
       : null;
   if (!rules) return null;
   const usable = items.filter(
-    (i) => canRead(i, actor) && ["在用", "闲置", "待确认"].includes(i.state),
+    (i) =>
+      canRead(i, actor) &&
+      !i.demo &&
+      ["在用", "闲置", "待确认"].includes(i.state),
   );
   return rules.map(([label, reason, pattern]) => ({
     label,

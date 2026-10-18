@@ -8,7 +8,7 @@ import type { DatabaseSync } from "node:sqlite";
 import { createHash } from "node:crypto";
 import { canRead, type State, type Person } from "../domain.ts";
 import { identity } from "../ai/harness.ts";
-import { epoch, clearOwnerContext } from "../memory/store.ts";
+import { epoch, clearOwnerContext, clearDemoContext } from "../memory/store.ts";
 import {
   AgentError,
   type ServiceSession,
@@ -198,6 +198,7 @@ export function commitTurn(
         at: result.session.updatedAt,
         shared: false,
         sourceSessionId: result.session.id,
+        demo: !!state.items.find((i) => i.id === result.session.itemId)?.demo,
       });
       db.prepare("UPDATE workspace SET body=? WHERE id=1").run(
         JSON.stringify(state),
@@ -344,7 +345,7 @@ export function closeSession(
   actor: Person,
   id: string,
 ) {
-  readSession(db, state, actor, id);
+  const closing = readSession(db, state, actor, id);
   db.exec("BEGIN IMMEDIATE");
   try {
     db.prepare("DELETE FROM graph_writes WHERE thread_id=?").run(
@@ -373,7 +374,11 @@ export function closeSession(
         ).run(actor, row.id);
         erased = true;
       }
-    if (erased) clearOwnerContext(db, actor, true);
+    if (erased) {
+      if (state.items.find((i) => i.id === closing.itemId)?.demo)
+        clearDemoContext(db, actor, closing.itemId);
+      else clearOwnerContext(db, actor, true);
+    }
     const s = readSession(db, state, actor, id);
     s.messages = [];
     s.known = {};

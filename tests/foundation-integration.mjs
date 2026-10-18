@@ -175,7 +175,7 @@ try {
   await home();
   const center = page.locator(".memory-center");
   await center.locator("> summary").click();
-  await expect(center.getByLabel("纠正或补充内容")).toHaveCount(0);
+  await expect(center.getByLabel("纠正内容")).toHaveCount(0);
   await page.getByRole("button", { name: "发现", exact: true }).click();
   await page.getByText("结合我记下的兴趣，找点灵感", { exact: true }).click();
   const ideas = page.getByRole("region", {

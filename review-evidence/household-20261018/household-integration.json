@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "kind": "isolated-edge-household-cases-and-one-time-introduction",
+  "realModelCalls": 0,
+  "checks": [
+    "eight cases and synthetic provenance",
+    "no repeated memory creation forms",
+    "official facts through real API and UI",
+    "case-only conversational memory",
+    "forgotten case memory stays forgotten",
+    "one-time introduction saved or skipped across reload",
+    "desktop and 390px layout"
+  ]
+}

@@ -101,6 +101,7 @@ export type MemoryRecord = z.infer<typeof memorySchema> & {
   owner: string;
   version: number;
   source: "user" | "automatic";
+  demo?: boolean;
   provenance?: {
     kind: "chat" | "item" | "story" | "operation" | "task" | "feedback";
     sourceId: string;

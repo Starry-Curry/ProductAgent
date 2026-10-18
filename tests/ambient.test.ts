@@ -403,10 +403,10 @@ test("v3 到 v4 保留备份和旧正文，重复升级不重复建表，未来�
           n: number;
         }
       ).n,
-      4,
+      5,
     );
     f.db
-      .prepare("INSERT INTO schema_migrations VALUES (5,?)")
+      .prepare("INSERT INTO schema_migrations VALUES (6,?)")
       .run(new Date().toISOString());
     assert.throws(() => migrate(f.db, f.filename), /数据库版本/);
   } finally {

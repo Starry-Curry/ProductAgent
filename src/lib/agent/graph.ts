@@ -108,14 +108,16 @@ export function curatedDecision(
         ...blank(
           "关于“" +
             ctx.item?.name +
-            "”，你留下过：\n" +
+            (ctx.item?.demo ? "”，案例中记录了：\n" : "”，你留下过：\n") +
             stories.map((m) => m.text).join("\n") +
             "\n可以接着讲它与你的近况。",
           "answered",
           "local-memory",
         ),
         memoryIds: stories.map((m) => m.id),
-        caveat: "引用本人的物品故事；没有生成共同经历。",
+        caveat: ctx.item?.demo
+          ? "合成案例故事或演示中的讲述，不代表真实用户经历。"
+          : "引用本人的物品故事；没有生成共同经历。",
       };
     return blank(
       "这里是你与“" +
@@ -631,8 +633,16 @@ export async function executeGraph(
                     kind: m.kind,
                   }))
                 : read()
-                    .items.filter((i) => canRead(i, actor))
-                    .map((i) => ({ name: i.name, state: i.state }));
+                    .items.filter(
+                      (i) =>
+                        canRead(i, actor) &&
+                        (ctx.item?.demo ? !!i.demo : !i.demo),
+                    )
+                    .map((i) => ({
+                      name: i.name,
+                      state: i.state,
+                      demo: !!i.demo,
+                    }));
           add(w, "tool_completed", call.function.name);
         } catch {
           value = { error: "工具不存在、参数无效或不在本任务授权范围" };

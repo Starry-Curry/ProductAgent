@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-18 · 家居案例与对话式记忆入口
+
+最终验证：63/63 测试、生产构建/类型检查、离线基准、隔离旧旅程/静默记忆/家居案例三组浏览器验收通过。首次介绍保存/跳过后不再出现，演示操作不清空真实会话；本轮付费模型调用 0。合成截图在 review-evidence/household-20261018，详情见本轮验证摘要。
+
+新增八组家电/家具案例：7 个新官方资料包，知识目录达到 11 包/33 条事实，配套 16 段合成故事、24 条演示记忆、4 个家庭事项、2 个示例计划。案例与真实画像/活动资源隔离，按版本追加，不重置已有数据。
+
+记忆入口改为一次可选介绍，保存或跳过后持久关闭；日常新增通过物品对话。移除手动补充/直接写记忆及重复私人记录表，保留既有记忆纠正/忘记、原时间线、陪伴与家庭/礼物流程。v5 增量迁移有备份，新增介绍状态与案例安装回执。
+
+分支 feat/household-demo-conversations，起点 60b0ad9。主要文件：catalog/household-products.ts、demo/、memory/introduction.ts、experience-schema.ts、MemoryCenter、HouseholdCases。来源、运行、边界与核实步骤见 [本轮说明](docs/engineering/household-cases-and-onboarding-2026-10-18.md)；最终测试记录见 [验收摘要](docs/engineering/household-validation-2026-10-18.json)。本轮真实模型调用 0；用户 docs/1018.md 与 Key 内容未读取或纳入交付。
+
+
 ## 2026-10-18 · 静默记忆与物品故事体验
 
 - 新增以物品故事为主要来源的静默记忆，按人/物品/会话保存来源与期限；购买、持有、喜好分开。

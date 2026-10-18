@@ -6,6 +6,12 @@ export const people: Record<Person, string> = {
   friend: "小夏",
 };
 export type Item = {
+  demo?: {
+    caseId: string;
+    title: string;
+    summary: string;
+    questions: string[];
+  };
   id: string;
   name: string;
   category: string;
@@ -47,6 +53,7 @@ export type Task = {
   logs: { by: Person; text: string; at: string }[];
 };
 export type Memory = {
+  demo?: boolean;
   sourceSessionId?: string;
   id: string;
   itemId: string;

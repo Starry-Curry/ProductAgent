@@ -59,6 +59,7 @@ try {
   for (const script of [
     "tests/integration.mjs",
     "tests/foundation-integration.mjs",
+    "tests/household-integration.mjs",
   ]) {
     const child = spawn(process.execPath, [script], {
       cwd: root,

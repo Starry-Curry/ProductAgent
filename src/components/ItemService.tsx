@@ -132,7 +132,12 @@ export function ItemService({
               <h3>
                 {pack.product} · {pack.model}
               </h3>
-              <p>型号由用户确认 · 资料版本 {pack.version}</p>
+              <p>
+                {item.demo
+                  ? "演示资料绑定，尚未核对用户实物"
+                  : "型号由用户确认"}{" "}
+                · 资料版本 {pack.version}
+              </p>
               <ul>
                 {pack.claims.map((claim) => (
                   <li key={claim.id}>{claim.text}</li>
@@ -167,8 +172,8 @@ export function ItemService({
                   />
                 </label>
                 <p className="muted">
-                  当前覆盖罗技 M185、JBL Go 4 和指定货号 IKEA
-                  RÅSKOG；其他型号会提示缺少资料。
+                  可查询小米家电、宜家家具、罗技鼠标和 JBL
+                  音箱等精选资料；请核对地域与具体型号。
                 </p>
                 <button className="button secondary" disabled={busy}>
                   查询资料

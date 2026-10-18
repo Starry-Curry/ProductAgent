@@ -1,4 +1,8 @@
 import {
+  introductionStatus,
+  completeIntroduction,
+} from "@/lib/memory/introduction";
+import {
   reconcileMemories,
   captureSettings,
   setCaptureEnabled,
@@ -47,6 +51,7 @@ export async function GET(r: Request) {
       throw new AgentError("物品未获授权", 403);
     reconcileMemories(database(), read(), a);
     return Response.json({
+      introduction: introductionStatus(database(), read(), a),
       capture: captureSettings(database(), a),
       memories: listMemories(database(), read(), a),
       persona: getPersona(database(), a, itemId),
@@ -60,6 +65,32 @@ export async function POST(r: Request) {
     localOnly(r);
     const a = actor(r);
     const p = await r.json();
+    if (p.action === "introduction" || p.action === "skipIntroduction") {
+      const input = z
+        .discriminatedUnion("action", [
+          z
+            .object({
+              action: z.literal("introduction"),
+              requestId: z.string().uuid(),
+              text: z.string().trim().min(1).max(1000),
+            })
+            .strict(),
+          z
+            .object({
+              action: z.literal("skipIntroduction"),
+              requestId: z.string().uuid(),
+            })
+            .strict(),
+        ])
+        .parse(p);
+      return Response.json({
+        introduction: completeIntroduction(database(), read(), a, {
+          requestId: input.requestId,
+          text: input.action === "introduction" ? input.text : undefined,
+          skip: input.action === "skipIntroduction",
+        }),
+      });
+    }
     if (p.action === "capture") {
       const input = z
         .object({ action: z.literal("capture"), enabled: z.boolean() })

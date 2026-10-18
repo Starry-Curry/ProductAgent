@@ -187,11 +187,11 @@ export function captureEvent(
       (candidate.expiresAt && candidate.expiresAt <= new Date().toISOString())
     )
       continue;
-    const itemId = ["interest", "preference", "purchase"].includes(
-      candidate.kind,
-    )
-      ? undefined
-      : event.itemId;
+    const itemId =
+      !item?.demo &&
+      ["interest", "preference", "purchase"].includes(candidate.kind)
+        ? undefined
+        : event.itemId;
     const scope =
       candidate.kind === "requirement" ? event.sessionId : itemId || "global";
     const slot = digest(JSON.stringify([scope, candidate.topic]));
@@ -222,8 +222,9 @@ export function captureEvent(
       text: candidate.text.slice(0, 1500),
       itemId,
       status: "active",
-      allowCloud: old?.allowCloud || false,
+      allowCloud: !item?.demo && (old?.allowCloud || false),
       source: "automatic",
+      demo: !!item?.demo,
       expiresAt: candidate.expiresAt,
       polarity: candidate.polarity,
       createdAt: old?.createdAt || at,
@@ -294,11 +295,22 @@ export function captureTurn(
     sessionId: session.id,
     basis: "user_statement",
     candidates:
-      session.mode === "story"
-        ? extractChat(question, session.id, session.updatedAt).filter(
-            (c) => c.kind !== "relationship",
-          )
-        : undefined,
+      session.mode === "story" &&
+      state.items.find((i) => i.id === session.itemId)?.demo &&
+      isStoryNarration(question)
+        ? [
+            {
+              kind: "story",
+              topic: "demo-narration:" + requestId,
+              text: question,
+            },
+            ...extractChat(question, session.id, session.updatedAt),
+          ]
+        : session.mode === "story"
+          ? extractChat(question, session.id, session.updatedAt).filter(
+              (c) => c.kind !== "relationship",
+            )
+          : undefined,
   });
 }
 export function captureFeedback(
@@ -416,7 +428,8 @@ export function captureWorkspace(
   }
   const demoStoryIds = new Set(seed().memories.map((m) => m.id));
   for (const story of state.memories.filter(
-    (m) => m.author === actor && !m.origin && !demoStoryIds.has(m.id),
+    (m) =>
+      m.author === actor && !m.origin && !m.demo && !demoStoryIds.has(m.id),
   ))
     captureEvent(db, state, actor, {
       id: story.id,
@@ -434,7 +447,7 @@ export function captureWorkspace(
       ],
     });
   for (const plan of (state.plans || [])
-    .filter((p) => p.actor === actor)
+    .filter((p) => p.actor === actor && !p.id.startsWith("demo-plan-"))
     .slice(-30))
     captureEvent(db, state, actor, {
       id: plan.id,

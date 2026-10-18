@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import type { Item, Memory, Person } from "@/lib/domain";
+import type { Item, Person } from "@/lib/domain";
 import type { MemoryRecord, Persona } from "@/lib/agent/contracts";
 import { AssistantConversation } from "./AssistantConversation";
 const kinds = {
   preference: "偏好",
   interest: "兴趣与喜好",
   experience: "经历",
-  story: "真实故事",
+  story: "物品故事",
   method: "有用的方法",
   relationship: "人与物的关系",
   fiction: "想象创作（不当作真实记忆）",
@@ -18,18 +18,20 @@ const kinds = {
 export function MemoryCenter({
   actor,
   items,
-  stories = [],
   focusItemId,
 }: {
   actor: Person;
   items: Item[];
-  stories?: Memory[];
   focusItemId?: string;
 }) {
   const [records, setRecords] = useState<MemoryRecord[]>([]),
     [editing, setEditing] = useState<MemoryRecord | null>(null),
     [busy, setBusy] = useState(false),
-    [manual, setManual] = useState(false),
+    [showDemo, setShowDemo] = useState(false),
+    [introduction, setIntroduction] = useState({
+      available: false,
+      status: "not_started",
+    }),
     [showAll, setShowAll] = useState(false),
     [capture, setCapture] = useState(true),
     [notice, setNotice] = useState(""),
@@ -56,6 +58,7 @@ export function MemoryCenter({
       .then((d) => {
         if (!cancelled) {
           setRecords(d.memories);
+          setIntroduction(d.introduction);
           setCapture(d.capture.enabled);
           setPersona(d.persona);
         }
@@ -85,16 +88,30 @@ export function MemoryCenter({
       if (!r.ok) throw Error(d.error);
       setVersion((v) => v + 1);
       setEditing(null);
-      if (invalidates) window.dispatchEvent(new Event("memory-updated"));
+      const action = body as { id?: string; action?: string };
+      const changed = records.find((m) => m.id === action.id);
+      const demoScope = changed?.demo
+        ? changed.itemId
+        : action.action === "persona" && items.find((i) => i.id === scope)?.demo
+          ? scope
+          : undefined;
+      if (invalidates)
+        window.dispatchEvent(
+          new CustomEvent("memory-updated", {
+            detail: { actor, scope: demoScope },
+          }),
+        );
       if (invalidates)
         localStorage.setItem(
           "product-agent-memory-revision",
-          JSON.stringify({ actor, at: Date.now() }),
+          JSON.stringify({ actor, scope: demoScope, at: Date.now() }),
         );
       setNotice(
         invalidates
-          ? "已更新，旧对话上下文已清除。备份文件需单独管理。"
-          : "自动整理设置已更新。暂停期间的聊天与操作不补采；已有记忆仍可使用和删除。",
+          ? demoScope
+            ? "演示记忆已更新，该案例的旧上下文已清除。"
+            : "已更新，旧对话上下文已清除。备份文件需单独管理。"
+          : "设置已保存。",
       );
       return true;
     } catch (e) {
@@ -104,7 +121,10 @@ export function MemoryCenter({
       setBusy(false);
     }
   }
-  const shown = records.filter((m) => !focusItemId || m.itemId === focusItemId);
+  const demoCount = records.filter((m) => m.demo).length;
+  const shown = records.filter((m) =>
+    focusItemId ? m.itemId === focusItemId : showDemo ? m.demo : !m.demo,
+  );
   return (
     <details className="panel memory-center">
       <summary>记忆与陪伴 · 看看它记下了什么</summary>
@@ -129,17 +149,68 @@ export function MemoryCenter({
       <p className="memory-hint">
         记忆会影响后续相关帮助；本次要求优先于过去兴趣。你可以查看来源，随时纠正或忘记。临时提问不使用也不生成记忆。
       </p>
-      <button
-        className="text-button"
-        disabled={busy}
-        onClick={() => {
-          setManual(!manual);
-          setEditing(null);
-        }}
-      >
-        手动补充（可选）
-      </button>
-      {(editing || manual) && (
+      {!focusItemId && introduction.available && (
+        <details className="initial-introduction">
+          <summary>第一次见面，可选地介绍一下自己</summary>
+          <p>
+            只在开始时留一点背景即可。之后的新经历，都可以在与物品对话时自然告诉它；也可以现在跳过。
+          </p>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const f = new FormData(e.currentTarget);
+              await change({
+                action: "introduction",
+                requestId: crypto.randomUUID(),
+                text: f.get("introduction"),
+              });
+            }}
+          >
+            <label>
+              想让我先了解的一点背景
+              <textarea
+                name="introduction"
+                maxLength={1000}
+                required
+                placeholder="用自己的话说一点生活背景，或者直接跳过。"
+              />
+            </label>
+            <div className="inline">
+              <button className="button secondary" disabled={busy}>
+                保存这次介绍
+              </button>
+              <button
+                type="button"
+                className="text-button"
+                disabled={busy}
+                onClick={() =>
+                  change(
+                    {
+                      action: "skipIntroduction",
+                      requestId: crypto.randomUUID(),
+                    },
+                    "POST",
+                    false,
+                  )
+                }
+              >
+                先跳过，以后通过物品聊天
+              </button>
+            </div>
+          </form>
+        </details>
+      )}
+      {!focusItemId && demoCount > 0 && (
+        <button className="text-button" onClick={() => setShowDemo(!showDemo)}>
+          {showDemo ? "只看我的记忆" : "查看演示记忆（" + demoCount + " 条）"}
+        </button>
+      )}
+      {showDemo && !focusItemId && (
+        <p>
+          以下为合成案例记忆，不代表你的真实背景或喜好，仅在对应演示物品中使用。
+        </p>
+      )}
+      {editing && (
         <form
           key={editing?.id || "new"}
           onSubmit={async (e) => {
@@ -164,7 +235,6 @@ export function MemoryCenter({
               })
             ) {
               setEditing(null);
-              setManual(false);
             }
           }}
         >
@@ -179,7 +249,7 @@ export function MemoryCenter({
             </select>
           </label>
           <label>
-            纠正或补充内容
+            纠正内容
             <textarea
               name="text"
               required
@@ -214,11 +284,12 @@ export function MemoryCenter({
               type="checkbox"
               name="cloud"
               defaultChecked={editing?.allowCloud || false}
+              disabled={!!editing?.demo}
             />
             允许在相关提问时把此条记忆提供给已配置的模型
           </label>
           <button className="button secondary" disabled={busy}>
-            {editing ? "保存纠正" : "保存补充"}
+            保存纠正
           </button>
           {editing && (
             <button
@@ -232,7 +303,7 @@ export function MemoryCenter({
         </form>
       )}
       <p>
-        对话中也可以说“记住：我喜欢……”，默认仅用于本地。候选与想象创作不作为真实记忆召回。
+        有新的经历，直接进入物品的“故事与记录”聊一聊。这里用于查看与纠正；候选和想象创作不当作真实记忆。
       </p>
       {notice && <p role="status">{notice}</p>}
       {!shown.length && (
@@ -244,15 +315,17 @@ export function MemoryCenter({
         <article className="source-card" key={m.id}>
           <strong>
             {kinds[m.kind]} ·{" "}
-            {m.source === "automatic"
-              ? m.provenance?.basis === "observation"
-                ? "行为观察"
-                : m.provenance?.basis === "app_record"
-                  ? "系统登记"
-                  : m.provenance?.basis === "user_feedback"
-                    ? "本人反馈"
-                    : "交流中提取"
-              : "本人补充 / 纠正"}
+            {m.demo
+              ? "演示记忆 · 非真实用户画像"
+              : m.source === "automatic"
+                ? m.provenance?.basis === "observation"
+                  ? "行为观察"
+                  : m.provenance?.basis === "app_record"
+                    ? "系统登记"
+                    : m.provenance?.basis === "user_feedback"
+                      ? "本人反馈"
+                      : "交流中提取"
+                : "本人补充 / 纠正"}
           </strong>
           <p>{m.text}</p>
           {m.provenance && (
@@ -260,20 +333,26 @@ export function MemoryCenter({
               <summary>为什么记下这条？</summary>
               <p>
                 来源：
-                {
-                  {
-                    chat: "本人聊天",
-                    item: "物品登记或备注",
-                    story: "本人写下的物品故事",
-                    operation: "本人操作记录",
-                    task: "本人任务要求",
-                    feedback: "本人使用反馈",
-                  }[m.provenance.kind]
-                }{" "}
+                {m.demo
+                  ? m.provenance.extractor === "household-demo-v1"
+                    ? "案例库合成设定"
+                    : "演示中的对话与记录"
+                  : m.provenance.extractor === "introduction-v1"
+                    ? "首次自我介绍"
+                    : {
+                        chat: "本人聊天",
+                        item: "物品登记或备注",
+                        story: "本人写下的物品故事",
+                        operation: "本人操作记录",
+                        task: "本人任务要求",
+                        feedback: "本人使用反馈",
+                      }[m.provenance.kind]}{" "}
                 · {new Date(m.provenance.at).toLocaleString("zh-CN")}
               </p>
               <small>
-                这条依据你的原始记录整理，未经过实物检测。
+                {m.demo
+                  ? "这是案例中的合成内容或演示对话，不用于真实画像。"
+                  : "这条依据你的原始记录整理，未经过实物检测。"}
                 {m.expiresAt
                   ? "到期自动失效。"
                   : "持续保留，可随时纠正或忘记。"}
@@ -327,27 +406,6 @@ export function MemoryCenter({
         <button className="text-button" onClick={() => setShowAll(!showAll)}>
           {showAll ? "收起记录" : "查看全部记忆"}
         </button>
-      )}
-      {!!stories.filter((s) => s.author === actor && !s.origin).length && (
-        <details>
-          <summary>以前的物品故事（可选补充引用）</summary>
-          {stories
-            .filter((s) => s.author === actor && !s.origin)
-            .map((s) => (
-              <article key={s.id}>
-                <p>{s.text}</p>
-                <button
-                  className="text-button"
-                  disabled={busy}
-                  onClick={() =>
-                    change({ action: "importStory", storyId: s.id })
-                  }
-                >
-                  作为本人的故事记忆（默认本地）
-                </button>
-              </article>
-            ))}
-        </details>
       )}
       <details>
         <summary>可选陪伴的交流方式</summary>
