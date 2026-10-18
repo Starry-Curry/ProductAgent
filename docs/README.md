@@ -8,6 +8,9 @@
 
 ## 当前来源与证据
 
+- [系统体验指南（含真实 AI 测试）](engineering/system-experience-2026-10-18.md)
+- [本轮真实百炼验证](engineering/live-validation-2026-10-18.json)
+
 - [技术基座实际实现、Prompt 与 Loop](engineering/foundation-implementation-2026-10-18.md)
 - [晨间验收步骤](engineering/morning-acceptance-2026-10-18.md)
 - [第一轮验证摘要](engineering/foundation-validation-2026-10-18.json)

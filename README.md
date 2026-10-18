@@ -35,7 +35,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\windows.ps1 -Task 
 
 ## 模型、数据与验证
 
-新克隆从`.env.example`复制`.env.local`，仅在本机填写`AI_API_KEY`并按账户地域核对地址与模型；公共模板默认关闭`AI_ALLOW_PAID_CALLS`，主动启用真实调用时设为`true`。本机已按用户确认的北京百炼准备`.env.local`，只有 API Key 留空，费用开关已为手动提问开启；填入后重启`START.cmd`即可尝试。配置不入 Git，详见[接入与审查](docs/engineering/architecture-review-2026-10-17.md#百炼北京地域接入)。
+真实模型与页面验收已完成，当前可按 [系统体验指南](docs/engineering/system-experience-2026-10-18.md) 操作；[在线摘要](docs/engineering/live-validation-2026-10-18.json) 记录实际结果。
+
+新克隆从`.env.example`复制`.env.local`，仅在本机填写`AI_API_KEY`并按账户地域核对地址与模型；公共模板默认关闭`AI_ALLOW_PAID_CALLS`，主动启用真实调用时设为`true`。本机北京百炼已真实验证可用，非 Key 配置已完善、手动调用已开启；凭证仅由应用用于认证，不展示或入 Git。配置不入 Git，详见[接入与审查](docs/engineering/architecture-review-2026-10-17.md#百炼北京地域接入)。
 
 当前主帮助入口已接入 LangGraph.js 有状态执行：通用设置可先问，涉及型号再补条件；支持尝试反馈、关联物品、家庭摘要交接。首页可管理本人记忆、兴趣、关系和可选文字陪伴；忘记会使旧上下文失效。规格事实仍按相关来源呈现，增加两个有限官方过程；Key 不会自动扩展知识目录。尚无本地9B、视觉识别或自动Skill迭代。
 

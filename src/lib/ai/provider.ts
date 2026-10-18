@@ -182,14 +182,15 @@ async function completeModel(
       body: JSON.stringify({
         model: env.AI_MODEL,
         messages,
-        tools,
-        tool_choice: "auto",
+        ...(tools.length ? { tools, tool_choice: "auto" } : {}),
         max_tokens: 1500,
         ...(env.AI_ENABLE_THINKING === "true" ||
         env.AI_ENABLE_THINKING === "false"
           ? { enable_thinking: env.AI_ENABLE_THINKING === "true" }
           : {}),
-        ...(env.AI_JSON_MODE === "true"
+        // DashScope tool selection must use its native protocol.
+        // The graph still validates the final JSON packet server-side.
+        ...(env.AI_JSON_MODE === "true" && !tools.length
           ? { response_format: { type: "json_object" } }
           : {}),
       }),

@@ -257,6 +257,17 @@ export function validateModelPacket(
   mode: string,
 ): AssistantReply {
   const packet = packetSchema.parse(JSON.parse(text));
+  // A requested wording change for an ordinary action is general help.
+  // Keep all factual and risk checks below; this does not license device fiction.
+  if (
+    packet.kind === "creative" &&
+    mode === "service" &&
+    !ctx.knowledge.facts.length &&
+    /改写|润色|换.{0,4}说法|变成.{0,20}(一句|一段|建议)|不催促/.test(
+      ctx.question,
+    )
+  )
+    packet.kind = "general";
   if (packet.kind === "supported") {
     const selected = packet.factIds.map((id) =>
       ctx.knowledge.facts.find((f) => f.id === id),

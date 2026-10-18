@@ -85,7 +85,7 @@ flowchart LR
 
 ## Prompt 与应用 Skill 内容
 
-主 Prompt 位于 `src/lib/agent/prompts.ts`，版本 `human-item-agent-v1`。每轮实际拼接 `skills/registry.ts` 中选中任务的目标、版本与 instructions；它不是仅有名称的清单。
+主 Prompt 位于 `src/lib/agent/prompts.ts`，当前版本 `human-item-agent-v1.2`。每轮实际拼接 `skills/registry.ts` 中选中任务的目标、版本与 instructions；它不是仅有名称的清单。
 
 五个任务覆盖物品帮助、家庭交接、记忆管理、可选陪伴、基于物品的发现。帮助 / 发现 / 陪伴有各自的读取工具白名单；记忆与家庭写操作由用户操作直接调用应用服务。
 
@@ -145,3 +145,7 @@ flowchart LR
 - SQLite JSON 主业务尚未完全规范化；会话中途崩溃恢复、跨进程并发、认证与数据备份生命周期需要后续工程阶段。
 
 验收步骤和执行结果见 [晨间验收](morning-acceptance-2026-10-18.md) 与 [验证摘要](foundation-validation-2026-10-18.json)。
+
+## 后续真实在线验收
+
+用户随后授权只修改非 Key 配置并实际测试。真实接口与页面已验收；工具协商不再同时设置 response_format，最终输出仍由服务器校验。普通措辞调整按一般帮助处理。当前结果与可复现步骤见 [系统体验指南](system-experience-2026-10-18.md)，本文件前文未在线验证的表述保留为首轮阶段边界。

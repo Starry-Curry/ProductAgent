@@ -13,7 +13,8 @@
     "start:local": "node scripts/local-demo.mjs start",
     "test:integration": "node tests/integration.mjs",
     "test:live": "node --experimental-strip-types scripts/live-smoke.ts",
-    "test:acceptance": "node scripts/verify-local.mjs"
+    "test:acceptance": "node scripts/verify-local.mjs",
+    "test:live:system": "node scripts/live-system.mjs"
   },
   "dependencies": {
     "@langchain/core": "1.2.18",

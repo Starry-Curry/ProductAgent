@@ -823,3 +823,131 @@ test("自然的澄清和停止建议不因提及风险误拒，通用回答不�
     t.close();
   }
 });
+
+test("真实协议回归：工具协商不混用 JSON mode，stop 附带 tool_calls 也能完成往返", async () => {
+  const t = setup();
+  try {
+    t.change("bindProduct", {
+      itemId: "lamp",
+      packId: "logitech-m185-m-r0061",
+      confirmed: true,
+    });
+    let requests = 0;
+    const provider = createProvider(
+      {
+        AI_BASE_URL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        AI_API_KEY: "synthetic-test-not-a-key",
+        AI_MODEL: "qwen-plus",
+        AI_ALLOW_PAID_CALLS: "true",
+        AI_JSON_MODE: "true",
+        AI_ENABLE_THINKING: "false",
+      },
+      async (_url, init) => {
+        const body = JSON.parse(String(init?.body));
+        requests++;
+        assert.equal(body.response_format, undefined);
+        assert.ok(body.tools.length);
+        if (requests === 1)
+          return Response.json({
+            choices: [
+              {
+                finish_reason: "stop",
+                message: {
+                  content: null,
+                  tool_calls: [
+                    {
+                      id: "native-call-1",
+                      type: "function",
+                      function: {
+                        name: "search_product_knowledge",
+                        arguments: JSON.stringify({ query: "电池规格" }),
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            usage: { prompt_tokens: 4, completion_tokens: 3 },
+          });
+        assert.ok(
+          body.messages.some(
+            (m: ModelMessage) =>
+              m.role === "tool" && m.tool_call_id === "native-call-1",
+          ),
+        );
+        return Response.json({
+          choices: [
+            {
+              finish_reason: "stop",
+              message: {
+                content: packet("supported", "一节 AA 电池", {
+                  factIds: ["M-R0061:battery"],
+                }),
+                tool_calls: null,
+              },
+            },
+          ],
+          usage: { prompt_tokens: 4, completion_tokens: 3 },
+        });
+      },
+    );
+    const r = await respond(
+      t.db,
+      t.read,
+      "lin",
+      turn("如何依据资料确认电池规格", { itemId: "lamp" }),
+      provider,
+    );
+    assert.equal(requests, 2);
+    assert.equal(r.reply.outcome, "answered");
+    assert.ok(r.trace.some((e) => e.stage === "tool_completed"));
+    assert.deepEqual(r.reply.evidenceIds, ["M-R0061:battery"]);
+  } finally {
+    t.close();
+  }
+});
+
+test("用户要求调整普通建议的语气可自然回答，仍禁止借改写编造设备操作", () => {
+  const t = setup();
+  try {
+    const ctx = buildContext(t.db, t.read(), "lin", {
+      question: "把“先把桌上的纸张归到一处”变成一句不催促人的行动建议。",
+      mode: "service",
+    });
+    assert.equal(
+      validateModelPacket(
+        packet(
+          "creative",
+          "要不要先把桌上的纸张轻轻归到一起，按你舒服的节奏来。",
+        ),
+        ctx,
+        "service",
+      ).source,
+      "model-general",
+    );
+    const technical = buildContext(t.db, t.read(), "lin", {
+      question: "把配对步骤改写成一句建议",
+      mode: "service",
+    });
+    assert.throws(() =>
+      validateModelPacket(
+        packet("creative", "先完成配对就行。"),
+        technical,
+        "service",
+      ),
+    );
+    const other = buildContext(t.db, t.read(), "lin", {
+      question: "设备怎么使用",
+      mode: "service",
+    });
+    assert.throws(() =>
+      validateModelPacket(
+        packet("creative", "想象它已经开始工作。"),
+        other,
+        "service",
+      ),
+    );
+  } finally {
+    t.close();
+  }
+});

@@ -1,0 +1,139 @@
+{
+  "kind": "live-model-and-isolated-system",
+  "startedAt": "2026-10-18T04:25:59.697Z",
+  "provider": "Beijing Model Studio",
+  "model": "qwen-plus",
+  "passed": true,
+  "maxNewModelCalls": 12,
+  "modelCalls": 5,
+  "tokens": {
+    "input": 5220,
+    "output": 330
+  },
+  "cases": [
+    {
+      "name": "natural-help",
+      "modelCalls": 1,
+      "outcome": "answered",
+      "source": "model-general",
+      "errorCode": null,
+      "elapsedMs": 2327,
+      "toolStages": [],
+      "evidenceIds": [],
+      "tokens": {
+        "input": 900,
+        "output": 46
+      }
+    },
+    {
+      "name": "model-selects-confirmed-fact",
+      "modelCalls": 1,
+      "outcome": "answered",
+      "source": "model-with-evidence",
+      "errorCode": null,
+      "elapsedMs": 1765,
+      "toolStages": [],
+      "evidenceIds": [
+        "M-R0061:battery"
+      ],
+      "tokens": {
+        "input": 1234,
+        "output": 61
+      }
+    },
+    {
+      "name": "companion-with-real-item-tool",
+      "modelCalls": 2,
+      "outcome": "answered",
+      "source": "model-general",
+      "errorCode": null,
+      "elapsedMs": 4821,
+      "toolStages": [
+        "list_accessible_items"
+      ],
+      "evidenceIds": [],
+      "tokens": {
+        "input": 2135,
+        "output": 175
+      }
+    },
+    {
+      "name": "browser-shows-real-model-answer",
+      "modelCalls": 1,
+      "outcome": "answered",
+      "source": "model-general",
+      "errorCode": null,
+      "elapsedMs": 1771,
+      "toolStages": [],
+      "evidenceIds": [],
+      "tokens": {
+        "input": 951,
+        "output": 48
+      }
+    }
+  ],
+  "physicalDeviceTests": 0,
+  "cost": null,
+  "notes": [
+    "Only public questions and synthetic memory fixtures were used.",
+    "Credentials, authorization headers and upstream response bodies are not logged.",
+    "Token usage is reported; actual fees must be checked in the provider bill."
+  ],
+  "finishedAt": "2026-10-18T04:26:14.250Z",
+  "legacyPublicCases": [
+    {
+      "model": "qwen-plus",
+      "status": "succeeded",
+      "latencyMs": 1758,
+      "tokens": {
+        "input": 320,
+        "output": 32
+      }
+    },
+    {
+      "model": "qwen-plus",
+      "status": "succeeded",
+      "latencyMs": 1083,
+      "tokens": {
+        "input": 287,
+        "output": 31
+      }
+    },
+    {
+      "model": "qwen-plus",
+      "status": "succeeded",
+      "latencyMs": 1787,
+      "tokens": {
+        "input": 337,
+        "output": 57
+      }
+    }
+  ],
+  "diagnostics": {
+    "httpRequestsIssuedIncludingInitialFailuresAndProbes": 23,
+    "timeoutRequestsWithUnknownUsage": 1,
+    "findings": [
+      "JSON Object constraint interfered with native tool selection in the minimal Qwen probe; tool negotiation now omits response_format.",
+      "Companion ordinary advice was incorrectly classified as referred; prompt clarifies outcome semantics.",
+      "Requested wording change was rejected as creative in service mode; intent-aware general-help normalization preserves hardware/risk checks."
+    ],
+    "resolved": true
+  },
+  "offlineChecks": {
+    "unitTests": {
+      "passed": 44,
+      "total": 44
+    },
+    "typecheck": "passed",
+    "build": "passed",
+    "benchmark": "passed"
+  },
+  "privateKeyExposed": false,
+  "nonKeyLocalConfigurationUpdated": true,
+  "sourceSha256": {
+    "src/lib/ai/provider.ts": "1bebbd22239787bc7369e46d08e797535e6f29d3fd8d1248db689bd3b1df4250",
+    "src/lib/agent/prompts.ts": "f6c2e6dbc62ad33c08bc5098595e360abb8c075e022c1ceda1b3a87c6825e8fb",
+    "src/lib/agent/graph.ts": "3a5308f0c0cd67dabeb8c52e45554b0faecd6498ac9bddbb53eb41ffd957c9f7",
+    "src/lib/skills/registry.ts": "2a64c7c976e62a59bb653372c20065624ccee19d4b68bde611f642c356821b7a"
+  }
+}
