@@ -1,3 +1,8 @@
+import {
+  reconcileMemories,
+  captureSettings,
+  setCaptureEnabled,
+} from "@/lib/memory/ambient";
 import { z, ZodError } from "zod";
 import { actor, read, database, localOnly } from "@/lib/db";
 import { canRead } from "@/lib/domain";
@@ -40,7 +45,9 @@ export async function GET(r: Request) {
     const itemId = new URL(r.url).searchParams.get("itemId") || undefined;
     if (itemId && !read().items.some((i) => i.id === itemId && canRead(i, a)))
       throw new AgentError("物品未获授权", 403);
+    reconcileMemories(database(), read(), a);
     return Response.json({
+      capture: captureSettings(database(), a),
       memories: listMemories(database(), read(), a),
       persona: getPersona(database(), a, itemId),
     });
@@ -53,6 +60,15 @@ export async function POST(r: Request) {
     localOnly(r);
     const a = actor(r);
     const p = await r.json();
+    if (p.action === "capture") {
+      const input = z
+        .object({ action: z.literal("capture"), enabled: z.boolean() })
+        .strict()
+        .parse(p);
+      return Response.json({
+        capture: setCaptureEnabled(database(), a, input.enabled),
+      });
+    }
     if (p.action === "persona")
       return Response.json({
         persona: savePersona(database(), read(), a, p.input),

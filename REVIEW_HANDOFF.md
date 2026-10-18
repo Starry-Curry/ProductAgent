@@ -1,5 +1,22 @@
 # ProductAgent统一仓库交接
 
+## 2026-10-18 · 静默记忆与物品故事体验
+
+验证完成：55/55 单元与领域测试、生产构建/类型检查、离线基准、隔离 API 与 Edge 故事/手机/长辈版旅程通过。新指南与暂停/恢复也已验收；本轮真实模型调用 0。最终复核还补上旧来源不能覆盖新陈述的时序约束，并重新通过全量测试/构建/浏览器验收。详细结果见 [验收摘要](docs/engineering/ambient-validation-2026-10-18.json)，合成截图见 review-evidence/ambient-20261018。
+
+开发分支：feat/ambient-memory-experience；起点 9c14eb1（已运行的 LangGraph + 真实百炼兼容修复）。唯一工程未变。用户 untracked docs/1018.md 保持不动，不进入导出。
+
+- 核心实现：src/lib/memory/ambient.ts，有限规则抽取、来源 hash 回执、去重/否定更新、按人暂停和有限历史核对；原记录仍在 workspace，派生记忆在 personal_memories。
+- v4：src/lib/repositories/ambient-schema.ts、migrations.ts；新增 capture settings/source receipts/slots，升级前 .before-v3-to-v4.sqlite，未来版本拒绝写。保留 v2/v3 及旧备份。
+- 写路径：db.write 事务内 captureWorkspace；commitTurn 事务内 story 原文与派生整理；recordSessionFeedback 自动方法与撤回。不调用模型写画像；显式纠正/忘记锁住自动主题并沿用上下文失效。忘记对话清除同源派生记忆，原始故事作品另留。
+- UI：故事模式 AssistantConversation + 原时间线、MemoryCenter 默认管理而非收集、HelpEntry 示例、/guide。story 模式的确认与回忆是本地能力；一般帮助和可选交流仍可用真实 provider。
+- 隐私：不要读取或打印 .env.local/api.txt；应用可用 Key 认证。默认私人记忆不上云，普通当前问题仍可能送云端。暂停整理不停止原始会话/主动故事保存。行为观察不升级喜好，采购不升级订单或所有权，礼物转入故事不升级亲历。
+- 验证：tests/ambient.test.ts 新增静默闭环回归，tests/foundation-integration.mjs 从手工填兴趣改为物品故事录入；原测试保留。使用 Node24、独立 PRODUCT_AGENT_DATA_DIR，费用关闭。命令见 README。
+- 发布附件：npm run export:review 从已提交 HEAD 用 git archive 输出 .runtime/exports 源码 ZIP 及 commit/SHA256，不带凭证、库、依赖、运行时、构建缓存和未跟踪文件。主线继续 Git 分支协作。
+
+完整设计、边界、后续顺序与回滚见 [技术说明](docs/engineering/ambient-memory-architecture-2026-10-18.md)，功能使用见 [操作指南](docs/engineering/current-product-guide-2026-10-18.md)。新测试摘要见 [验收记录](docs/engineering/ambient-validation-2026-10-18.json)。
+
+
 ## 2026-10-18 · 用户授权的真实百炼验收
 
 北京百炼 qwen-plus 已真实接通。公开商品三例成功；新版普通建议、来源事实选择、真实工具往返和浏览器显示的最终一轮验收全部成功（4 场景、5 次调用）。模型与页面问题已修正，44/44 单元与领域测试、类型、构建与离线门禁通过；没有实物验证。此前“未在线验收/调用 0”仅是上一阶段的历史结论，不表示 Key 无效。

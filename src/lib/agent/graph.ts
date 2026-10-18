@@ -31,6 +31,7 @@ import {
 } from "../skills/knowledge.ts";
 import { skills } from "../skills/registry.ts";
 import { SYSTEM_PROMPT, PROMPT_VERSION, tools } from "./prompts.ts";
+import { isStoryNarration } from "../memory/ambient.ts";
 import { epoch } from "../memory/store.ts";
 import { sessionAccess } from "../repositories/sessions.ts";
 const packetSchema = z
@@ -81,6 +82,49 @@ export function curatedDecision(
       ),
       caveat: "没有判断设备已恢复正常。",
     };
+  if (session.mode === "story") {
+    if (!session.itemId)
+      return blank(
+        "先打开一件物品的‘故事与记录’，再围绕它聊聊。",
+        "needs_info",
+      );
+    if (isStoryNarration(question))
+      return blank(
+        ctx.temporary
+          ? "这次只在当前页面聊聊，不保存故事或记忆。"
+          : "这段关于“" +
+              ctx.item?.name +
+              "”的经历已留在它的私人故事中。你可以接着讲下去，新片段会与这件物品关联。",
+        "answered",
+        "local-memory",
+      );
+    const stories = ctx.memories.filter(
+      (m) =>
+        m.itemId === session.itemId &&
+        (m.kind === "story" || m.kind === "relationship"),
+    );
+    if (/记得|回忆|以前|聊聊|故事/.test(question) && stories.length)
+      return {
+        ...blank(
+          "关于“" +
+            ctx.item?.name +
+            "”，你留下过：\n" +
+            stories.map((m) => m.text).join("\n") +
+            "\n可以接着讲它与你的近况。",
+          "answered",
+          "local-memory",
+        ),
+        memoryIds: stories.map((m) => m.id),
+        caveat: "引用本人的物品故事；没有生成共同经历。",
+      };
+    return blank(
+      "这里是你与“" +
+        ctx.item?.name +
+        "”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+      "answered",
+      "local-memory",
+    );
+  }
   const pending = session.known.pending;
   if (/mac|苹果电脑|linux|win(dows)?\s*10/i.test(question))
     delete session.known.os;
@@ -117,7 +161,7 @@ export function curatedDecision(
         ...blank(
           "已记下还没解决。先确认实际卡住的位置，再决定下一步。" +
             (session.known.unresolvedReason
-              ? "你补充的是：“+session.known.unresolvedReason+”"
+              ? "你补充的是：“" + session.known.unresolvedReason + "”"
               : ""),
           "needs_info",
         ),
@@ -168,9 +212,13 @@ export function curatedDecision(
       idea.items.every((id) => ctx.resources.some((i) => i.id === id)),
     );
     const handmade = ctx.memories.some(
-      (m) => m.kind === "interest" && /手工|拼豆|制作/.test(m.text),
+      (m) =>
+        m.kind === "interest" &&
+        m.polarity !== "negative" &&
+        /手工|拼豆|制作/.test(m.text),
     );
-    const preferOther = /不想.*手工|换个方向|想做别的/.test(question);
+    const preferOther =
+      /不想.*手工|不(?:再)?喜欢.*(手工|拼豆)|换个方向|想做别的/.test(question);
     available.sort(
       (a, b) =>
         Number(b.id === (handmade && !preferOther ? "art" : "light")) -
@@ -180,7 +228,7 @@ export function curatedDecision(
       const idea = available[0];
       return {
         ...blank(
-          `${handmade && !preferOther ? "结合你明确记下的手工兴趣，" : "先从你当前可用的物品出发，"}可以看看“${idea.title}”。\n${idea.description}`,
+          `${handmade && !preferOther ? "结合你在交流中提到的手工兴趣，" : "先从你当前可用的物品出发，"}可以看看“${idea.title}”。\n${idea.description}`,
           "answered",
           "local-memory",
         ),
@@ -372,11 +420,13 @@ export async function executeGraph(
   };
   const activeSkill =
     skills[
-      session.mode === "companion"
-        ? "companion"
-        : session.mode === "ideas"
-          ? "evidence-discovery"
-          : "item-help"
+      session.mode === "story"
+        ? "item-story"
+        : session.mode === "companion"
+          ? "companion"
+          : session.mode === "ideas"
+            ? "evidence-discovery"
+            : "item-help"
     ];
   const allowedNames: readonly string[] = activeSkill.tools;
   const activeTools = tools.filter((t) =>
@@ -425,6 +475,7 @@ export async function executeGraph(
       const ctx = buildContext(db, read(), actor, {
         question: w.question,
         mode: session.mode,
+        sessionId: session.id,
         itemId: session.itemId,
         temporary,
       });
@@ -565,6 +616,7 @@ export async function executeGraph(
           const ctx = buildContext(db, read(), actor, {
             question: query || w.question,
             mode: session.mode,
+            sessionId: session.id,
             itemId: session.itemId,
             temporary,
           });
@@ -605,6 +657,7 @@ export async function executeGraph(
         const ctx = buildContext(db, read(), actor, {
           question: session.known.goal || w.question,
           mode: session.mode,
+          sessionId: session.id,
           itemId: session.itemId,
           temporary,
         });

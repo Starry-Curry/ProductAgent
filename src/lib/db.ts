@@ -1,3 +1,4 @@
+import { captureWorkspace } from "./memory/ambient.ts";
 import { assertLocalDemo } from "./auth.ts";
 import { DatabaseSync } from "node:sqlite";
 import { mkdirSync } from "node:fs";
@@ -37,6 +38,7 @@ export function write(a: Person, action: string, p: Record<string, unknown>) {
   try {
     const s = mutate(read(), a, action, p);
     db.prepare("UPDATE workspace SET body=? WHERE id=1").run(JSON.stringify(s));
+    captureWorkspace(db, s, a, new Date().toISOString());
     db.exec("COMMIT");
     return s;
   } catch (e) {

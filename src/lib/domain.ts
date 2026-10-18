@@ -47,6 +47,7 @@ export type Task = {
   logs: { by: Person; text: string; at: string }[];
 };
 export type Memory = {
+  sourceSessionId?: string;
   id: string;
   itemId: string;
   author: Person | null;

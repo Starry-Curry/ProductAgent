@@ -16,7 +16,7 @@ export function PersonalContext({
     <details className="panel">
       <summary>我希望怎样获得帮助 · 私人偏好</summary>
       <p>
-        明确表达、系统推测和未知分别保存。当前不自动推断偏好，也不按年龄预设技能。默认不发送云端。
+        这些设置是可选的固定覆盖项。正常交流中提到的指导方式可自动整理为记忆；这里的明确设置优先，不按年龄预设技能。默认不发送云端。
       </p>
       {(["instructionStyle", "skillLevel"] as const).map((key) => {
         const fact = facts.find((c) => c.owner === actor && c.key === key);

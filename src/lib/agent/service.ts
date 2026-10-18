@@ -130,8 +130,26 @@ export async function respond(
       question: input.question,
       mode: input.mode,
       itemId: input.itemId,
+      sessionId: session.id,
     }).preferences;
-    const style = prefs.find((p) => p.key === "instructionStyle")?.value;
+    const remembered = buildContext(db, read(), actor, {
+      question: input.question,
+      mode: input.mode,
+      itemId: input.itemId,
+      sessionId: session.id,
+    }).memories;
+    const naturalStyle = remembered.find(
+      (m) =>
+        (m.kind === "preference" || m.kind === "requirement") &&
+        /简短|详细/.test(m.text),
+    );
+    const style =
+      prefs.find((p) => p.key === "instructionStyle")?.value ||
+      (naturalStyle
+        ? /简短/.test(naturalStyle.text)
+          ? "short"
+          : "detailed"
+        : undefined);
     if (style === "short" || style === "detailed")
       execution.reply.presentation = style;
     const at = new Date().toISOString();

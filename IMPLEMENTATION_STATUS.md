@@ -1,5 +1,35 @@
 # 当前实现状态
 
+## 2026-10-18 · 静默记忆与物品故事体验
+
+验证完成：55/55 单元与领域测试、生产构建/类型检查、离线基准、隔离 API 与 Edge 故事/手机/长辈版旅程通过。新指南与暂停/恢复也已验收；本轮真实模型调用 0。详细结果见 [验收摘要](docs/engineering/ambient-validation-2026-10-18.json)，合成截图见 review-evidence/ambient-20261018。
+
+新增：围绕具体物品的本人故事讲述/回忆、静默记忆事件提取、来源解释、去重与否定更新、任务要求范围/期限、自动方法反馈及撤回、暂停/恢复、遗忘/纠正屏障。SQLite v4 增量迁移保留旧数据和备份。首页示例、入口地图和 /guide 已接入；原产品模块保持。
+
+请以 [当前功能矩阵](docs/engineering/current-product-guide-2026-10-18.md) 核对 F1—F12 的已实现/有限规则/未接入状态；[技术设计](docs/engineering/ambient-memory-architecture-2026-10-18.md) 说明实际数据库、Loop 和后续优先级。静默提取尚为有限中文规则，story 模式本地处理；本轮无真实模型调用，不把上一轮在线验证重复计入。
+
+
+## 技术任务状态（T1—T11）
+
+| 任务 | 当前状态 | 证据与剩余边界 |
+| --- | --- | --- |
+| T1 数据与身份 | 部分实现 | db.ts、migrations.ts、repositories/；v4 增量迁移/事务/备份；主 workspace 仍 JSON，真实用户/家庭未关系化 |
+| T2 识物/扫码 | 未实现视觉识别 | domain.ts/createItem 仅档案照片；没有 OCR/VLM/条码候选闭环 |
+| T3 Product Pack | 部分实现 | products.ts、skills/knowledge.ts；4 包 12 事实 2 过程，尚无自动资料导入流水线 |
+| T4 Harness | 已有可运行基座 | agent/graph.ts、checkpointer.ts、skills/registry.ts；只读工具与状态恢复/预算/验证，非任意工具自主执行 |
+| T5 Context/Memory | 部分实现，本轮增强 | memory/ambient.ts、store.ts、context/builder.ts；故事主入口、静默整理、范围/权限/过期、纠正/忘记；有限中文提取与召回 |
+| T6 组合/目标 | 部分规则实现 | discovery.ts、planning.ts；有限场景与资料约束，无通用能力规划 |
+| T7 家庭/关怀 | 本机业务 + 信号模拟 | domain.ts、FamilyTasks、auth.ts；真实账户/通知/设备未接入 |
+| T8 礼物/记忆 | 本机领域已实现，部分体验 | domain.ts、page.tsx、MemoryCenter；故事/快照/作者/流转隔离；无跨设备真实身份与影音 |
+| T9 千问 | 上轮已真实验证 | ai/provider.ts、live-validation-2026-10-18.json；本轮离线，无重复计入在线次数 |
+| T10 Eval | 部分实现 | tests/、benchmark 脚本；离线反例、真实协议回归、隔离浏览器；无竞品或真机效果实验 |
+| T11 工程与体验 | 当前本机验证通过 | Node24、Next build、Windows launcher、/guide、README、审查 ZIP；非公开生产部署 |
+
+F1—F12 操作矩阵与边界见 [产品指南](docs/engineering/current-product-guide-2026-10-18.md)。后续优先级见 [技术设计](docs/engineering/ambient-memory-architecture-2026-10-18.md)。
+
+<details>
+<summary>此前阶段记录（历史事实，不覆盖上方当前状态）</summary>
+
 ## 2026-10-18 · 用户授权的真实百炼验收
 
 北京百炼 qwen-plus 已真实接通。公开商品三例成功；新版普通建议、来源事实选择、真实工具往返和浏览器显示的最终一轮验收全部成功（4 场景、5 次调用）。模型与页面问题已修正，44/44 单元与领域测试、类型、构建与离线门禁通过；没有实物验证。此前“未在线验收/调用 0”仅是上一阶段的历史结论，不表示 Key 无效。
@@ -51,3 +81,6 @@
 [设计 v2](docs/engineering/agent-memory-personalization-design-2026-10-18.md) 已写入，状态为待用户确认；LangGraph.js、工具反馈循环、跨次 Memory 管理和召回、兴趣/关系个性化与文字陪伴均为设计内容，尚未实现。现有业务架构与功能状态不因文档更新而改变。
 
 本轮只读核对代码和官方资料并验证文档；没有重跑应用测试或调用真实模型。上轮验证成绩继续作为原代码基线。
+
+
+</details>

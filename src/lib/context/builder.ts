@@ -12,6 +12,7 @@ export function buildContext(
     mode: string;
     itemId?: string;
     temporary?: boolean;
+    sessionId?: string;
   },
 ) {
   const item = input.itemId
@@ -19,7 +20,15 @@ export function buildContext(
     : undefined;
   const memories = input.temporary
     ? []
-    : recallMemories(db, state, actor, input.question, input.mode, item?.id);
+    : recallMemories(
+        db,
+        state,
+        actor,
+        input.question,
+        input.mode,
+        item?.id,
+        input.sessionId,
+      );
   const knowledge = relevantKnowledge(
     input.question,
     item ? boundPack(item) : undefined,
@@ -31,6 +40,7 @@ export function buildContext(
     ? { enabled: false, nickname: "", style: "neutral" as const }
     : getPersona(db, actor, item?.id);
   return {
+    temporary: !!input.temporary,
     question: input.question,
     item,
     knowledge,

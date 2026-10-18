@@ -22,6 +22,7 @@ export function AssistantConversation({
   onHandoff,
   onQuestion,
   onSession,
+  onActivity,
 }: {
   actor: Person;
   item?: Item;
@@ -31,6 +32,7 @@ export function AssistantConversation({
   onHandoff?: () => void;
   onQuestion?: (text: string) => void;
   onSession?: (session: ServiceSession | null) => void;
+  onActivity?: () => void;
 }) {
   const [session, setSession] = useState<ServiceSession | null>(null),
     [sessions, setSessions] = useState<ServiceSession[]>([]);
@@ -87,6 +89,8 @@ export function AssistantConversation({
       const d = (await request(input)) as TurnResult;
       if (!alive.current) return;
       update(d.session);
+      window.dispatchEvent(new Event("memory-captured"));
+      onActivity?.();
       retry.current = null;
       setQuestion("");
       setPreview(false);
@@ -151,6 +155,7 @@ export function AssistantConversation({
       });
       if (alive.current) {
         update(d.session);
+        window.dispatchEvent(new Event("memory-captured"));
         setReason("");
       }
     } catch (e) {
@@ -190,11 +195,13 @@ export function AssistantConversation({
       className="assistant-conversation"
       role="region"
       aria-label={
-        mode === "companion"
-          ? "可选陪伴对话"
-          : mode === "ideas"
-            ? "结合我的物品找灵感"
-            : "连续使用帮助"
+        mode === "story"
+          ? "与物品讲故事"
+          : mode === "companion"
+            ? "可选陪伴对话"
+            : mode === "ideas"
+              ? "结合我的物品找灵感"
+              : "连续使用帮助"
       }
     >
       {!elder && (
@@ -363,7 +370,7 @@ export function AssistantConversation({
         }}
       >
         <label>
-          写下你的问题
+          {mode === "story" ? "讲讲你与这件物品" : "写下你的问题"}
           <textarea
             name="question"
             value={question}
@@ -371,15 +378,17 @@ export function AssistantConversation({
             maxLength={2000}
             required
             placeholder={
-              session
-                ? "补充情况，或告诉我哪一步卡住了…"
-                : "描述问题，或说说想用它做什么…"
+              mode === "story"
+                ? "说说它的来历、一次经历，或问问以前留下的故事…"
+                : session
+                  ? "补充情况，或告诉我哪一步卡住了…"
+                  : "描述问题，或说说想用它做什么…"
             }
           />
         </label>
         <div className="inline">
           <button className="button" disabled={busy}>
-            {busy ? "正在查看…" : "发送问题"}
+            {busy ? "正在查看…" : mode === "story" ? "发送" : "发送问题"}
           </button>
           {session && (
             <button
@@ -400,7 +409,7 @@ export function AssistantConversation({
         <small>
           {temporary
             ? "本次不写入会话或记忆。"
-            : "本人的问答保存 7 天，确认解决后保存 30 天。必要问题与资料可能交给已配置的云端模型；私人记忆须单独授权。"}
+            : "问答保存 7 天，确认解决后保存 30 天；相关内容会在本机静默整理为记忆，可在首页查看、暂停或忘记。必要问题可能交给云端模型；私人记忆默认不上云。"}
         </small>
       </form>
       {session?.known.lastOutcome === "unresolved" && !temporary && (
@@ -420,38 +429,11 @@ export function AssistantConversation({
       {session?.status === "user_resolved" &&
         !!last?.reply?.steps.length &&
         !temporary && (
-          <button
-            className="button secondary"
-            disabled={busy}
-            onClick={async () => {
-              setBusy(true);
-              try {
-                const r = await fetch("/api/memories", {
-                  method: "POST",
-                  headers,
-                  body: JSON.stringify({
-                    action: "saveMethod",
-                    sessionId: session.id,
-                    requestId: last.id,
-                  }),
-                });
-                const d = await r.json();
-                if (!r.ok) throw Error(d.error);
-                if (alive.current)
-                  setError(
-                    "已把你确认有效的方法保存为本地记忆，可随时纠正或忘记。",
-                  );
-              } catch (e) {
-                if (alive.current) setError((e as Error).message);
-              } finally {
-                if (alive.current) setBusy(false);
-              }
-            }}
-          >
-            把这次方法记住（本地）
-          </button>
+          <small>
+            已按自动整理设置处理本轮方法；可在首页“记忆与陪伴”查看。仅代表你反馈有效。
+          </small>
         )}
-      {last && !temporary && (
+      {last && !temporary && mode !== "story" && mode !== "companion" && (
         <div className="conversation-feedback">
           <label>
             试过之后怎样？（可补充）
@@ -481,75 +463,79 @@ export function AssistantConversation({
           <small>完成状态来自你的反馈；助手没有检测实物。</small>
         </div>
       )}
-      {last && item?.shared && actor !== "friend" && !temporary && (
-        <div>
-          <button
-            className="button secondary"
-            disabled={busy || handed}
-            onClick={() => {
-              setPreview(true);
-              setSummary("使用求助：" + item.name);
-              handoffId.current = crypto.randomUUID();
-            }}
-          >
-            {handed ? "已交给家人" : "请家人帮我"}
-          </button>
-          {preview && (
-            <form
-              className="source-card"
-              onSubmit={async (e) => {
-                e.preventDefault();
-                setBusy(true);
-                try {
-                  await request({
-                    action: "handoff",
-                    input: {
-                      sessionId: session!.id,
-                      expectedRevision: session!.revision,
-                      requestId: handoffId.current,
-                      summary,
-                      assignee: actor === "dad" ? "lin" : "dad",
-                    },
-                  });
-                  if (alive.current) {
-                    setHanded(true);
-                    setPreview(false);
-                    onHandoff?.();
-                  }
-                } catch (e) {
-                  setError((e as Error).message);
-                } finally {
-                  setBusy(false);
-                }
+      {last &&
+        mode === "service" &&
+        item?.shared &&
+        actor !== "friend" &&
+        !temporary && (
+          <div>
+            <button
+              className="button secondary"
+              disabled={busy || handed}
+              onClick={() => {
+                setPreview(true);
+                setSummary("使用求助：" + item.name);
+                handoffId.current = crypto.randomUUID();
               }}
             >
-              <label>
-                家人将看到这段求助摘要
-                <input
-                  value={summary}
-                  onChange={(e) => setSummary(e.target.value)}
-                  required
-                  maxLength={120}
-                />
-              </label>
-              <p>
-                仅分享这段摘要、关联物品与已试 {session?.tried.length || 0}{" "}
-                步的数量，不附上私人记忆和整段对话。
-              </p>
-              <button className="button" disabled={busy}>
-                确认摘要并交给家人
-              </button>
-              <button
-                className="text-button"
-                type="button"
-                onClick={() => setPreview(false)}
+              {handed ? "已交给家人" : "请家人帮我"}
+            </button>
+            {preview && (
+              <form
+                className="source-card"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setBusy(true);
+                  try {
+                    await request({
+                      action: "handoff",
+                      input: {
+                        sessionId: session!.id,
+                        expectedRevision: session!.revision,
+                        requestId: handoffId.current,
+                        summary,
+                        assignee: actor === "dad" ? "lin" : "dad",
+                      },
+                    });
+                    if (alive.current) {
+                      setHanded(true);
+                      setPreview(false);
+                      onHandoff?.();
+                    }
+                  } catch (e) {
+                    setError((e as Error).message);
+                  } finally {
+                    setBusy(false);
+                  }
+                }}
               >
-                取消
-              </button>
-            </form>
-          )}
-        </div>
-      )}
+                <label>
+                  家人将看到这段求助摘要
+                  <input
+                    value={summary}
+                    onChange={(e) => setSummary(e.target.value)}
+                    required
+                    maxLength={120}
+                  />
+                </label>
+                <p>
+                  仅分享这段摘要、关联物品与已试 {session?.tried.length || 0}{" "}
+                  步的数量，不附上私人记忆和整段对话。
+                </p>
+                <button className="button" disabled={busy}>
+                  确认摘要并交给家人
+                </button>
+                <button
+                  className="text-button"
+                  type="button"
+                  onClick={() => setPreview(false)}
+                >
+                  取消
+                </button>
+              </form>
+            )}
+          </div>
+        )}
     </div>
   );
 }

@@ -154,6 +154,11 @@ export function saveMemory(
       owner: actor,
       version: (before?.version || 0) + 1,
       source: "user" as const,
+      provenance: before?.provenance,
+      polarity:
+        value.kind === "interest" && /不喜欢|不再喜欢/.test(value.text)
+          ? ("negative" as const)
+          : undefined,
       createdAt: before?.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       itemOwner: item?.owner,
@@ -175,6 +180,10 @@ export function saveMemory(
       before ? "corrected" : "explicitly_saved",
       memory.updatedAt,
     );
+    if (before)
+      db.prepare(
+        "UPDATE memory_capture_slots SET locked=1 WHERE owner=? AND memory_id=?",
+      ).run(actor, before.id);
     clearOwnerContext(db, actor, !!before);
     if (requestId)
       db.prepare("INSERT INTO action_receipts VALUES (?,?,?,?)").run(
@@ -198,6 +207,9 @@ export function forgetMemory(db: DatabaseSync, actor: Person, id: string) {
       .get(id) as { owner: string } | undefined;
     if (!row || row.owner !== actor)
       throw new AgentError("记忆不存在或未获授权", 403);
+    db.prepare(
+      "UPDATE memory_capture_slots SET locked=1 WHERE owner=? AND memory_id=?",
+    ).run(actor, id);
     // Erase content; the tombstone only retains identity/version for stale-reference rejection.
     db.prepare(
       "UPDATE personal_memories SET status='deleted',body='{}',version=version+1 WHERE id=?",
@@ -269,6 +281,7 @@ export function recallMemories(
   question: string,
   mode: string,
   itemId?: string,
+  sessionId?: string,
 ) {
   const q = question.toLowerCase();
   const pairs = new Set(q.match(/[a-z0-9]+/g) || []);
@@ -285,6 +298,8 @@ export function recallMemories(
         (!m.itemId || m.itemId === itemId) &&
         m.status === "active" &&
         m.kind !== "fiction" &&
+        (m.kind !== "requirement" ||
+          (!!sessionId && m.provenance?.sessionId === sessionId)) &&
         !(excludeInterests && m.kind === "interest"),
     )
     .map((m) => ({

@@ -1616,3 +1616,43 @@ summary { cursor:pointer; }
 .memory-center form { margin:18px 0; }
 .elder .conversation-message { font-size:20px; }
 @media(max-width:800px){.conversation-messages{max-height:none}.conversation-message{padding:14px}.conversation-feedback .inline{flex-wrap:wrap}}
+
+/* Keep the guide readable while preserving the original app navigation. */
+.example-questions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+}
+.memory-hint {
+  font-size: 0.9rem;
+}
+.guide-page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+  line-height: 1.8;
+}
+.guide-page .panel {
+  margin: 24px 0;
+}
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.guide-grid .panel {
+  margin: 0;
+  min-width: 0;
+}
+.guide-page li {
+  margin: 10px 0;
+}
+@media (max-width: 680px) {
+  .guide-grid {
+    grid-template-columns: 1fr;
+  }
+  .guide-page {
+    padding: 20px 16px 40px;
+  }
+}

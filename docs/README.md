@@ -8,6 +8,12 @@
 
 ## 当前来源与证据
 
+- [当前产品功能、操作与技术支持](engineering/current-product-guide-2026-10-18.md)
+- [静默记忆、人与物故事、架构与后续顺序](engineering/ambient-memory-architecture-2026-10-18.md)
+- [本轮离线验收结果](engineering/ambient-validation-2026-10-18.json)
+
+以下保留此前阶段证据；旧版显式采集入口描述以本轮静默整理设计为准。
+
 - [系统体验指南（含真实 AI 测试）](engineering/system-experience-2026-10-18.md)
 - [本轮真实百炼验证](engineering/live-validation-2026-10-18.json)
 

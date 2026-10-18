@@ -1,8 +1,14 @@
+import {
+  captureTurn,
+  captureFeedback,
+  captureWorkspace,
+  isStoryNarration,
+} from "../memory/ambient.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { createHash } from "node:crypto";
 import { canRead, type State, type Person } from "../domain.ts";
 import { identity } from "../ai/harness.ts";
-import { epoch } from "../memory/store.ts";
+import { epoch, clearOwnerContext } from "../memory/store.ts";
 import {
   AgentError,
   type ServiceSession,
@@ -177,6 +183,35 @@ export function commitTurn(
       epoch(db, actor) !== result.session.memoryEpoch
     )
       throw new AgentError("资料或记忆授权刚刚发生变化，请重新提问", 409);
+    result.session.updatedAt = new Date().toISOString();
+    if (
+      input.mode === "story" &&
+      result.session.itemId &&
+      isStoryNarration(input.question)
+    ) {
+      const state = read();
+      state.memories.push({
+        id: input.requestId,
+        itemId: result.session.itemId,
+        author: actor,
+        text: input.question,
+        at: result.session.updatedAt,
+        shared: false,
+        sourceSessionId: result.session.id,
+      });
+      db.prepare("UPDATE workspace SET body=? WHERE id=1").run(
+        JSON.stringify(state),
+      );
+      captureWorkspace(db, state, actor);
+    }
+    captureTurn(
+      db,
+      read(),
+      actor,
+      result.session,
+      input.requestId,
+      input.question,
+    );
     result.session.revision++;
     result.session.updatedAt = new Date().toISOString();
     db.prepare(
@@ -261,6 +296,9 @@ export function recordSessionFeedback(
     );
     if (input.outcome === "completed")
       session.expiresAt = new Date(Date.now() + 30 * 86400000).toISOString();
+    session.known.lastOutcome = input.outcome;
+    if (input.outcome === "unresolved")
+      session.known.unresolvedReason = body.reason;
     session.status =
       input.outcome === "completed" ? "user_resolved" : "waiting_user";
     if (input.stepId && !session.tried.includes(input.stepId))
@@ -284,6 +322,7 @@ export function recordSessionFeedback(
     session.messages = session.messages.slice(-30);
     session.revision++;
     session.updatedAt = at;
+    captureFeedback(db, read(), actor, session, input.outcome, body.reason);
     db.prepare(
       "UPDATE agent_sessions SET body=?,revision=?,expires_at=? WHERE id=?",
     ).run(
@@ -318,6 +357,23 @@ export function closeSession(
       id,
     );
     db.prepare("DELETE FROM agent_feedback WHERE session_id=?").run(id);
+    const derived = db
+      .prepare(
+        "SELECT id,body FROM personal_memories WHERE owner=? AND status!='deleted'",
+      )
+      .all(actor) as { id: string; body: string }[];
+    let erased = false;
+    for (const row of derived)
+      if (JSON.parse(row.body).provenance?.sessionId === id) {
+        db.prepare(
+          "UPDATE personal_memories SET body='{}',status='deleted',version=version+1 WHERE id=?",
+        ).run(row.id);
+        db.prepare(
+          "UPDATE memory_capture_slots SET locked=1 WHERE owner=? AND memory_id=?",
+        ).run(actor, row.id);
+        erased = true;
+      }
+    if (erased) clearOwnerContext(db, actor, true);
     const s = readSession(db, state, actor, id);
     s.messages = [];
     s.known = {};

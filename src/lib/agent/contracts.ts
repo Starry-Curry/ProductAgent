@@ -5,7 +5,7 @@ export const turnInputSchema = z
     requestId: z.string().uuid(),
     itemId: z.string().max(100).optional(),
     question: z.string().trim().min(1).max(2000),
-    mode: z.enum(["service", "ideas", "companion"]).default("service"),
+    mode: z.enum(["service", "ideas", "companion", "story"]).default("service"),
     temporary: z.boolean().default(false),
     expectedRevision: z.number().int().nonnegative().optional(),
   })
@@ -85,6 +85,9 @@ export const memorySchema = z
       "method",
       "relationship",
       "fiction",
+      "possession",
+      "purchase",
+      "requirement",
     ]),
     text: z.string().trim().min(1).max(1500),
     itemId: z.string().max(100).optional(),
@@ -97,7 +100,16 @@ export type MemoryRecord = z.infer<typeof memorySchema> & {
   id: string;
   owner: string;
   version: number;
-  source: "user";
+  source: "user" | "automatic";
+  provenance?: {
+    kind: "chat" | "item" | "story" | "operation" | "task" | "feedback";
+    sourceId: string;
+    sessionId?: string;
+    basis: "user_statement" | "app_record" | "observation" | "user_feedback";
+    at: string;
+    extractor: string;
+  };
+  polarity?: "positive" | "negative";
   createdAt: string;
   updatedAt: string;
 };

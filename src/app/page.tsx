@@ -414,11 +414,6 @@ export default function App() {
             <>
               {view === "home" && (
                 <>
-                  <PersonalContext
-                    actor={actor}
-                    facts={data.contexts || []}
-                    act={act}
-                  />
                   {elder &&
                     data.tasks.some(
                       (t) =>
@@ -441,6 +436,39 @@ export default function App() {
                     onAsk={startHelp}
                     elder={elder}
                   />
+                  <PersonalContext
+                    actor={actor}
+                    facts={data.contexts || []}
+                    act={act}
+                  />
+                  {!elder && (
+                    <details className="panel usage-map">
+                      <summary>第一次使用？先看这几个入口</summary>
+                      <p>
+                        使用帮助解决具体问题；活动准备核对现有物品；家庭事项接力处理；发现提供资料核对与灵感候选；礼物与记忆留下人与物的故事。
+                      </p>
+                      <ol>
+                        <li>
+                          在上方填入“分步帮助”示例并发送，尝试一步后反馈结果。
+                        </li>
+                        <li>
+                          平时正常表达喜好、记录自己新添的物品，不必填写记忆表。
+                        </li>
+                        <li>
+                          在下方“记忆与陪伴”查看来源、纠正或忘记；想聊天时再开启陪伴。
+                        </li>
+                      </ol>
+                      <p>
+                        AI
+                        一般帮助、官方资料指导、本地记忆会分别标明来源。演示角色和示例物品用于体验。
+                      </p>
+                      <p>
+                        <a href="/guide" target="_blank" rel="noreferrer">
+                          打开完整功能与操作指南 ↗
+                        </a>
+                      </p>
+                    </details>
+                  )}
                   <MemoryCenter
                     key={actor + (elder ? "elder" : "standard")}
                     actor={actor}
@@ -911,6 +939,16 @@ export default function App() {
                   {tab === "故事与记录" && (
                     <section className="panel">
                       <h2>物品的经历，生活的片段</h2>
+                      <p>
+                        把这件物品与你、家人的经历讲给它听。这里是理解人与物关系的主要窗口；不用填写喜好档案。原始故事默认私人，送礼时仍由你选择要传递的部分。
+                      </p>
+                      <AssistantConversation
+                        key={actor + item.id + "story"}
+                        actor={actor}
+                        item={item}
+                        mode="story"
+                        onActivity={load}
+                      />
                       {data.memories
                         .filter((m) => m.itemId === item.id)
                         .map((m) => (
@@ -924,29 +962,40 @@ export default function App() {
                             <p>{m.text}</p>
                           </article>
                         ))}
-                      <form
-                        onSubmit={async (e) => {
-                          e.preventDefault();
-                          const form = e.currentTarget;
-                          const f = new FormData(form);
-                          if (
-                            await act("memory", {
-                              itemId: item.id,
-                              text: f.get("text"),
-                            })
-                          )
-                            form.reset();
-                        }}
-                      >
-                        <textarea
-                          required
-                          name="text"
-                          placeholder="写下一段真实经历；默认仅自己可见。"
-                        />
-                        <button className="button" disabled={busy}>
-                          保存这段记忆
-                        </button>
-                      </form>
+                      <details>
+                        <summary>直接写下一段记忆</summary>
+                        <form
+                          onSubmit={async (e) => {
+                            e.preventDefault();
+                            const form = e.currentTarget;
+                            const f = new FormData(form);
+                            if (
+                              await act("memory", {
+                                itemId: item.id,
+                                text: f.get("text"),
+                              })
+                            )
+                              form.reset();
+                          }}
+                        >
+                          <textarea
+                            required
+                            name="text"
+                            placeholder="写下一段真实经历；默认仅自己可见。"
+                          />
+                          <button className="button" disabled={busy}>
+                            保存这段记忆
+                          </button>
+                        </form>
+                      </details>
+                      <MemoryCenter
+                        actor={actor}
+                        items={data.items}
+                        stories={data.memories.filter(
+                          (m) => m.itemId === item.id,
+                        )}
+                        focusItemId={item.id}
+                      />
                     </section>
                   )}
                 </>
