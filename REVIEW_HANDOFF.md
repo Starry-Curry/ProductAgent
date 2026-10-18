@@ -1,5 +1,16 @@
 # ProductAgent统一仓库交接
 
+## 当前交接速读：运行与两个分支
+
+更新：2026-10-18。本节为当前接手入口，下方按轮次保留历史实现事实。**先读 [运行与分支交接说明](docs/RUN_AND_BRANCH_HANDOFF.md)**，其中含本机启动、新电脑/ZIP 安装、更新重建、验收、分支差异及可直接转发的话。
+
+- 唯一工程：`D:\Project\Tianmao\ProductAgent`；仓库 `Starry-Curry/ProductAgent`。当前推荐分支 `feat/home-scene-item-companions`，功能提交 `8a5c13e1de321a4ade356fb3655000328b339b8f`；后续运行说明提交沿用该分支，实际 HEAD 以 Git/导出清单为准。
+- 前一分支 `feat/household-demo-conversations` 的功能提交为 `4394b067ff3bf35d118eb3e276315db62ab774a4`。已复核它是当前分支的祖先；当前分支包含两个迭代，无需重复合并。`main` 仍为 `53a43437e94a51017bb4415cac4ad68d9245cf5a`，未包含这些迭代。
+- 本机可先访问 http://127.0.0.1:3100 ，未运行时使用 START.cmd；新电脑 Node24 + npm ci/build/start:local。**已有构建时 START.cmd 不自动判断代码新旧，更新/切换后先停旧服务并重建。** local 启动器负责启用本机演示角色；开发用 dev:local。
+- 当前 SQLite v6，升级前备份保留。第一分支为 v5；比较旧版需独立目录/数据库，不用旧代码直接打开日常 v6 库。凭证、日常库和构建缓存继续忽略，案例初始化代码已上传。
+- 当前功能版证据：75/75、build、独立 typecheck、benchmark、四组隔离浏览器；上一分支 63/63、三组浏览器。均为相应功能轮次的历史证据。本次只整理说明、核对分支与链接/启动健康，没有重跑全量测试或调用模型。
+- 审查 ZIP 从当前已提交 HEAD 重新导出，附件排除未跟踪的 docs/1018.md、Key、日常数据、依赖与构建缓存。功能源码的测试指纹仍以本轮 home-companions-validation JSON 为准；纯文档更新不新增应用能力。
+
 ## 2026-10-18 · 家庭空间、动画角色与全屋 Agent
 
 最终验证：75/75、build、独立 typecheck、离线 benchmark 与四组隔离 API/Edge 旅程通过，真实模型调用 0。已核对桌面/390px 截图及本机 3100 的 root/guide/home API 200、v6 备份。新操作回执为 action 消息，重复确认不重复追加；统一对话定位到最新回复。

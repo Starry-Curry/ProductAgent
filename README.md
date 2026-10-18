@@ -6,7 +6,9 @@
 
 ## 先启动与体验
 
-本机已有依赖和项目 Node24：双击根目录 **START.cmd**，打开 http://127.0.0.1:3100 。开发启动可用 scripts/windows.ps1 -Task dev。
+完整的本机启动、新电脑安装、更新重建、两个分支差异及可转发说明见 **[运行与分支交接说明](docs/RUN_AND_BRANCH_HANDOFF.md)**。当前验收请使用 `feat/home-scene-item-companions`；它包含 `feat/household-demo-conversations` 的全部修改，`main` 尚未合并。
+
+本机已有依赖和项目 Node24：先打开 http://127.0.0.1:3100 ，未启动时双击根目录 **START.cmd** 并保留运行窗口。拉取或切换代码后先停止旧服务并重新 build，避免沿用旧构建。开发启动可用 scripts/windows.ps1 -Task dev。
 
 新电脑：
 
@@ -64,7 +66,7 @@ acceptance 自动使用独立数据库和端口、关闭真实模型，Windows E
 
 - [当前实现状态](IMPLEMENTATION_STATUS.md)、[开发报告](DEVELOPMENT_REPORT.md)、[技术交接](REVIEW_HANDOFF.md)
 - [文档目录](docs/README.md)、[产品说明书 V1.1](docs/物品智能服务_完整产品说明书_V1.1_交付版.md)
-- [本轮验证](docs/engineering/ambient-validation-2026-10-18.json)、[上一轮真实百炼验证](docs/engineering/live-validation-2026-10-18.json)
+- [当前家庭空间验收](docs/engineering/home-companions-validation-2026-10-18.json)、[上一轮家居案例验收](docs/engineering/household-validation-2026-10-18.json)、[历史真实百炼验证](docs/engineering/live-validation-2026-10-18.json)
 - [原始迁移与来源](docs/engineering/repository-migration-2026-10-17.md)、[Git 协作](CONTRIBUTING.md)
 
 后续仍通过 Git 功能分支迭代；审查 ZIP 是源码附件，排除 Key、数据库、个人资料、依赖、运行时和构建缓存。
