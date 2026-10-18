@@ -6,6 +6,8 @@
 
 最新更新：[记忆表达 Skill](docs/engineering/memory-storytelling-2026-10-18.md)。故事检索后组织成自然段落，按物品提供轻度语气差异，支持“还有呢/展开讲讲”；默认私人故事本地组织，获准片段才可由千问润色，失败时保留本地回忆。
 
+向他人介绍项目可直接使用 [功能与技术架构图](docs/PROJECT_ARCHITECTURE.md)，包含可发群的高清 PNG、SVG 与 Mermaid 源图。
+
 ## 先启动与体验
 
 完整的本机启动、新电脑安装、更新重建、两个分支差异及可转发说明见 **[运行与分支交接说明](docs/RUN_AND_BRANCH_HANDOFF.md)**。当前验收请使用 `feat/home-scene-item-companions`；它包含 `feat/household-demo-conversations` 的全部修改，`main` 尚未合并。

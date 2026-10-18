@@ -1,5 +1,9 @@
 # 开发报告：统一仓库与版本
 
+## 2026-10-18 · 项目架构图与分享资料
+
+新增 docs/PROJECT_ARCHITECTURE.md、docs/architecture 高清图与可编辑 SVG，整理功能、技术分层、记忆/行动闭环、实际存储与待接入项。提供离线生成脚本和排版清单，README/文档索引/handoff 已同步。应用未修改，原 88/88 等为功能版证据；本轮仅核对源码指纹、相对链接和图形排版，不调用真实模型。
+
 ## 2026-10-18 · 故事回忆表达与物品语气
 
 修复用户反馈的回忆原文清单：新增 memory-storytelling Skill 并接入 LangGraph，故事入口、统一物品对话与已开启的陪伴共享组织器。有限相关检索、同源去重、段落衔接、类别语气、继续/展开与来源回执；未授权/混合授权/演示片段本地组织，仅全部获准的片段尝试千问。保持费用、原模块和授权；没有增加数据库迁移、依赖或按钮。技术细节、Prompt 与边界见 [本轮说明](docs/engineering/memory-storytelling-2026-10-18.md)，实际测试与源码指纹见 [验收摘要](docs/engineering/memory-storytelling-validation-2026-10-18.json)。

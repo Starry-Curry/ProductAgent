@@ -1,5 +1,9 @@
 # ProductAgent统一仓库交接
 
+## 架构图与对外介绍资料
+
+2026-10-18 新增 [功能、技术与闭环架构](docs/PROJECT_ARCHITECTURE.md)，以及 docs/architecture 下的高清 PNG、SVG 和生成清单，可直接用于群内分享。图以功能提交 a6aa51b 为基线，覆盖现有功能、LangGraph/Skill/Context/百炼/SQLite 分层、记忆与行动闭环，待接入项单列。离线生成脚本为 scripts/render-architecture.mjs；本次仅改文档和绘图工具，核对 36 个应用指纹及图文排版，不重跑业务测试或模型。下方功能验收保留为对应轮次证据。
+
 ## 最新：记忆表达与物品故事 Skill
 
 2026-10-18，继续 `feat/home-scene-item-companions`，基线 `4aaeb28`。详情见 [技术说明与体验](docs/engineering/memory-storytelling-2026-10-18.md)，结果见 [本轮验收](docs/engineering/memory-storytelling-validation-2026-10-18.json)。下方 75/75 与纯文档整理均为前轮历史。

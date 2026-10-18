@@ -1,0 +1,28 @@
+{
+  "snapshot": "2026-10-18",
+  "functionalBaseline": "a6aa51b",
+  "generatedAt": "2026-10-18T14:07:23.938Z",
+  "svg": "project-architecture.svg",
+  "png": "project-architecture.png",
+  "svgDimensions": {
+    "width": 1600,
+    "height": 2720
+  },
+  "pngDimensions": {
+    "width": 2400,
+    "height": 4080
+  },
+  "layout": {
+    "textElements": 106,
+    "cards": 33,
+    "overflowErrors": []
+  },
+  "matchedApplicationFingerprints": 36,
+  "applicationTestsRerun": false,
+  "realModelCalls": 0,
+  "note": "Code-grounded documentation snapshot. Functional test results are prior a6aa51b evidence; no credentials or user database were read.",
+  "sha256": {
+    "project-architecture.svg": "f14359483ddb5718997c5ef513d92a4c62fe457738ad0a96622ddf6176952fa3",
+    "project-architecture.png": "bc3efad5e283d3b138938379826b7d0308eb1daac989cc88740a3dcfbb708e46"
+  }
+}

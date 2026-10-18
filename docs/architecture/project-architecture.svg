@@ -1,0 +1,237 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2720" viewBox="0 0 1600 2720" role="img" aria-labelledby="title desc">
+<title id="title">物间项目：功能、技术和闭环架构</title><desc id="desc">当前工程的六类产品能力，Next.js、LangGraph、百炼、SQLite 技术分层，以及记忆和行动闭环；底部单独列出待接入能力。</desc>
+<defs><marker id="arrow-green" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 8 4 L 0 8 z" fill="#2c7867"/></marker><marker id="arrow-blue" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 8 4 L 0 8 z" fill="#a8bdcf"/></marker></defs>
+<g font-family="'Microsoft YaHei UI','Microsoft YaHei','Segoe UI',sans-serif"><rect x="0" y="0" width="1600" height="2720" rx="0" fill="#f5f7f3" stroke="#f5f7f3" stroke-width="1.5"/>
+<text x="64" y="58" font-size="22" fill="#2c7867" font-weight="600" text-anchor="start">WU JIAN / PRODUCT AGENT</text>
+<text x="64" y="124" font-size="56" fill="#193c34" font-weight="700" text-anchor="start">物间｜项目功能与技术架构</text>
+<text x="64" y="171" font-size="30" fill="#5d716a" font-weight="400" text-anchor="start">理解物品 · 理解人 · 理解人与物、人与人的关系</text>
+<rect x="64" y="199" width="586" height="38" rx="19" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="84" y="225" font-size="20" fill="#2c7867" font-weight="600" text-anchor="start">现有工程快照  2026.10.18  /  功能基线 a6aa51b</text>
+<text x="1536" y="224" font-size="21" fill="#5d716a" font-weight="400" text-anchor="end">绿色：体验与闭环   蓝色：技术与依赖</text>
+<rect x="64" y="266" width="1472" height="560" rx="28" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="88" y="311" font-size="32" fill="#193c34" font-weight="600" text-anchor="start">01  以对话连接物品与日常</text>
+<g data-card="person">
+<rect x="88" y="346" width="432" height="96" rx="18" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="112" y="380" font-size="25" fill="#193c34" font-weight="600" text-anchor="start">人｜目标、经历与当下感受</text>
+<text x="112" y="414" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">自然开聊；首次介绍可跳过</text>
+</g>
+<g data-card="home-agent">
+<rect x="584" y="346" width="432" height="96" rx="18" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="608" y="380" font-size="25" fill="#193c34" font-weight="600" text-anchor="start">家｜全屋 Agent + 物品伙伴</text>
+<text x="608" y="414" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">全屋分流 · 每物角色 · 同窗交流</text>
+</g>
+<g data-card="relations">
+<rect x="1080" y="346" width="432" height="96" rx="18" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="1104" y="380" font-size="25" fill="#193c34" font-weight="600" text-anchor="start">关系｜家人与故事接收者</text>
+<text x="1104" y="414" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">获准协作 · 礼物传承 · 保留作者</text>
+</g>
+<path d="M 526 394 H 575" fill="none" stroke="#2c7867" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)"/>
+<path d="M 1022 394 H 1071" fill="none" stroke="#2c7867" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)" marker-start="url(#arrow-green)"/>
+<g data-card="capability-0">
+<rect x="88" y="470" width="456" height="142" rx="18" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="112" y="507" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">物品理解与使用帮助</text>
+<text x="112" y="545" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">档案 / 型号 / 官方知识与适用条件</text>
+<text x="112" y="577" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">连续澄清 · 操作步骤 · 尝试反馈</text>
+</g>
+<g data-card="capability-1">
+<rect x="572" y="470" width="456" height="142" rx="18" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="596" y="507" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">家庭空间与二维伙伴</text>
+<text x="596" y="545" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">房间示意 / 摆放位置 / 状态动画</text>
+<text x="596" y="577" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">点开物品问用法、讲故事或聊聊</text>
+</g>
+<g data-card="capability-2">
+<rect x="1056" y="470" width="456" height="142" rx="18" fill="#fbf4e7" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="1080" y="507" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">故事、记忆与个性化</text>
+<text x="1080" y="545" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">从讲述与操作静默整理，保留来源</text>
+<text x="1080" y="577" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">回忆表达 · 语气 · 纠正 / 忘记 / 授权</text>
+</g>
+<g data-card="capability-3">
+<rect x="88" y="636" width="456" height="142" rx="18" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="112" y="673" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">场景计划与物品发现</text>
+<text x="112" y="711" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">物品组合 / 条件核对 / 精选妙用</text>
+<text x="112" y="743" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">有限场景规划，保存到活动准备</text>
+</g>
+<g data-card="capability-4">
+<rect x="572" y="636" width="456" height="142" rx="18" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="596" y="673" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">家庭协作与事项</text>
+<text x="596" y="711" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">确认摘要 / 负责人 / 进展与反馈</text>
+<text x="596" y="743" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">私聊不随物品共享而自动公开</text>
+</g>
+<g data-card="capability-5">
+<rect x="1056" y="636" width="456" height="142" rx="18" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="1080" y="673" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">礼物与故事传承</text>
+<text x="1080" y="711" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">选定故事快照 / 预览 / 确认认领</text>
+<text x="1080" y="743" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">保留原作者，接收后的私人记忆隔离</text>
+</g>
+<text x="88" y="806" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">原有业务模块与长辈版保留；全屋与物品对话共用这些能力。</text>
+<rect x="64" y="854" width="1472" height="1102" rx="28" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="88" y="899" font-size="32" fill="#193c34" font-weight="600" text-anchor="start">02  技术分层与 Agent Harness</text>
+<text x="88" y="933" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">下图表示主要职责与依赖；完整调用与权限细节见配套 Markdown。</text>
+<g data-card="ui">
+<rect x="88" y="960" width="1424" height="88" rx="18" fill="#edf3f9" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="112" y="994" font-size="28" fill="#193c34" font-weight="600" text-anchor="start">交互层｜Next.js 15 · React 19 · TypeScript · SVG 角色</text>
+<text x="112" y="1026" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">HomeExperience / AssistantConversation / MemoryCenter / 原业务页面</text>
+</g>
+<path d="M 800 1053 V 1070" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<g data-card="api">
+<rect x="88" y="1078" width="1424" height="88" rx="18" fill="#edf3f9" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="112" y="1112" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">Next.js API｜assistant / home / memories / workspace / gift / discover</text>
+<text x="112" y="1144" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">本机演示访问校验 · 会话与物品范围 · Zod 输入校验</text>
+</g>
+<path d="M 600 1171 V 1186" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<g data-card="harness">
+<rect x="88" y="1194" width="1000" height="224" rx="20" fill="#edf3f9" stroke="#a8bdcf" stroke-width="1.5"/>
+<text x="112" y="1233" font-size="29" fill="#193c34" font-weight="600" text-anchor="start">Agent Harness｜LangGraph.js · Node.js 24</text>
+<g data-card="stage-0">
+<rect x="112" y="1258" width="168" height="66" rx="14" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="196" y="1287" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">route</text>
+<text x="196" y="1312" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">意图与目标</text>
+</g>
+<path d="M 285 1291 H 296" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<g data-card="stage-1">
+<rect x="302" y="1258" width="168" height="66" rx="14" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="386" y="1287" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">prepare</text>
+<text x="386" y="1312" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">构建上下文</text>
+</g>
+<path d="M 475 1291 H 486" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<g data-card="stage-2">
+<rect x="492" y="1258" width="168" height="66" rx="14" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="576" y="1287" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">model/tools</text>
+<text x="576" y="1312" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">生成与只读工具</text>
+</g>
+<path d="M 665 1291 H 676" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<g data-card="stage-3">
+<rect x="682" y="1258" width="168" height="66" rx="14" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="766" y="1287" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">validate</text>
+<text x="766" y="1312" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">检查与回退</text>
+</g>
+<path d="M 855 1291 H 866" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<g data-card="stage-4">
+<rect x="872" y="1258" width="168" height="66" rx="14" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="956" y="1287" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">wait</text>
+<text x="956" y="1312" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">等待用户继续</text>
+</g>
+<text x="112" y="1365" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">Checkpoint / revision / lease</text>
+<text x="112" y="1397" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">通用上限：3次模型 · 6次工具 · 45秒；本地路径可直接返回</text>
+</g>
+<g data-card="skills">
+<rect x="1116" y="1194" width="396" height="224" rx="18" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="1140" y="1231" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">任务 Skill / Prompt</text>
+<text x="1140" y="1270" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">物品帮助 · 物品故事</text>
+<text x="1140" y="1304" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">记忆表达 · 陪伴交流</text>
+<text x="1140" y="1338" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">证据发现</text>
+<text x="1140" y="1372" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">每轮选择 · 工具白名单</text>
+</g>
+<path d="M 1110 1235 H 1094" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<g data-card="context">
+<rect x="88" y="1468" width="456" height="166" rx="18" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="112" y="1505" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">Context 与 Memory</text>
+<text x="112" y="1543" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">按人 / 物品 / 会话范围组织</text>
+<text x="112" y="1574" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">记忆 · 偏好 · 语气 · 当下要求</text>
+<text x="112" y="1605" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">临时模式 / 遗忘 / 上云授权</text>
+</g>
+<g data-card="provider">
+<rect x="572" y="1468" width="456" height="166" rx="18" fill="#edf3f9" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="596" y="1505" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">模型适配｜北京百炼</text>
+<text x="596" y="1543" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">qwen-plus · 兼容接口</text>
+<text x="596" y="1574" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">费用开关 / 超时 / 本地回退</text>
+<text x="596" y="1605" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">故事回忆表达至多尝试1次模型</text>
+</g>
+<g data-card="knowledge">
+<rect x="1056" y="1468" width="456" height="166" rx="18" fill="#edf3f9" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="1080" y="1505" font-size="26" fill="#193c34" font-weight="600" text-anchor="start">商品知识｜Product Packs</text>
+<text x="1080" y="1543" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">11个资料包 / 33条事实</text>
+<text x="1080" y="1574" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">2个有限预审过程 · 型号绑定</text>
+<text x="1080" y="1605" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">来源 / 地域 / 版本 / 适用条件</text>
+</g>
+<path d="M 316 1462 V 1425" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)" marker-start="url(#arrow-blue)"/>
+<path d="M 800 1462 V 1425" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)" marker-start="url(#arrow-blue)"/>
+<path d="M 1284 1462 V 1441 H 1040 V 1425" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)" marker-start="url(#arrow-blue)"/>
+<g data-card="domain">
+<rect x="88" y="1688" width="696" height="156" rx="18" fill="#fbf4e7" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="112" y="1725" font-size="26" fill="#193c34" font-weight="600" text-anchor="start">领域执行｜确认后权限复查、事务与幂等</text>
+<text x="112" y="1766" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">位置 / 活动计划 / 家庭事项 / 礼物</text>
+<text x="112" y="1800" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">业务命令执行后回读，给出真实回执</text>
+</g>
+<g data-card="storage">
+<rect x="816" y="1688" width="696" height="156" rx="18" fill="#edf3f9" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="840" y="1725" font-size="27" fill="#193c34" font-weight="600" text-anchor="start">本地 SQLite v6｜持久化与迁移备份</text>
+<text x="840" y="1766" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">workspace JSON：主要业务与原始故事</text>
+<text x="840" y="1800" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">专用表：会话 / 记忆 / Checkpoint / 摆放 / 行动</text>
+</g>
+<path d="M 790 1766 H 808" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<path d="M 88 1137 H 73 V 1766 H 81" fill="none" stroke="#a8bdcf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<text x="88" y="1888" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">Context、会话与领域服务按范围读写本地库；主业务仍是 JSON，当前未使用向量数据库。</text>
+<text x="88" y="1927" font-size="23" fill="#2c7867" font-weight="600" text-anchor="start">模型仅调用受控只读工具；预览卡确认后由领域服务执行写动作。</text>
+<rect x="64" y="1984" width="1472" height="390" rx="28" fill="white" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="88" y="2029" font-size="32" fill="#193c34" font-weight="600" text-anchor="start">03  两条闭环：理解用户，也把事情办完</text>
+<text x="88" y="2062" font-size="23" fill="#2c7867" font-weight="600" text-anchor="start">记忆与个性化</text>
+<g data-card="memory-loop-0">
+<rect x="88" y="2078" width="264" height="68" rx="14" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="220" y="2107" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">自然讲述 / 日常操作</text>
+<text x="220" y="2132" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">主要来源是人与物的故事</text>
+</g>
+<path d="M 358 2112 H 371" fill="none" stroke="#2c7867" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)"/>
+<g data-card="memory-loop-1">
+<rect x="378" y="2078" width="264" height="68" rx="14" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="510" y="2107" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">本地提取 + 来源</text>
+<text x="510" y="2132" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">暂停 / 临时模式不提取</text>
+</g>
+<path d="M 648 2112 H 661" fill="none" stroke="#2c7867" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)"/>
+<g data-card="memory-loop-2">
+<rect x="668" y="2078" width="264" height="68" rx="14" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="800" y="2107" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">按权限检索</text>
+<text x="800" y="2132" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">去重 / 人与物品范围</text>
+</g>
+<path d="M 938 2112 H 951" fill="none" stroke="#2c7867" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)"/>
+<g data-card="memory-loop-3">
+<rect x="958" y="2078" width="264" height="68" rx="14" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="1090" y="2107" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">组织语言</text>
+<text x="1090" y="2132" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">本地或获准千问表达</text>
+</g>
+<path d="M 1228 2112 H 1241" fill="none" stroke="#2c7867" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)"/>
+<g data-card="memory-loop-4">
+<rect x="1248" y="2078" width="264" height="68" rx="14" fill="#edf4ee" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="1380" y="2107" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">纠正 / 忘记</text>
+<text x="1380" y="2132" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">使旧上下文失效</text>
+</g>
+<text x="88" y="2178" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">历史私人记忆默认本地；逐条获准才可用于云端。本次必要问题仍可能发送给千问。</text>
+<text x="88" y="2206" font-size="23" fill="#2c7867" font-weight="600" text-anchor="start">行动与协作</text>
+<g data-card="action-loop-0">
+<rect x="88" y="2222" width="264" height="68" rx="14" fill="#fbf4e7" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="220" y="2251" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">本次需求</text>
+<text x="220" y="2276" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">理解目标与当前物品</text>
+</g>
+<path d="M 358 2256 H 371" fill="none" stroke="#2c7867" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)"/>
+<g data-card="action-loop-1">
+<rect x="378" y="2222" width="264" height="68" rx="14" fill="#fbf4e7" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="510" y="2251" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">预览行动卡</text>
+<text x="510" y="2276" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">最小摘要 / 不附私人对话</text>
+</g>
+<path d="M 648 2256 H 661" fill="none" stroke="#2c7867" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)"/>
+<g data-card="action-loop-2">
+<rect x="668" y="2222" width="264" height="68" rx="14" fill="#fbf4e7" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="800" y="2251" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">用户确认</text>
+<text x="800" y="2276" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">确认前不执行业务写入</text>
+</g>
+<path d="M 938 2256 H 951" fill="none" stroke="#2c7867" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)"/>
+<g data-card="action-loop-3">
+<rect x="958" y="2222" width="264" height="68" rx="14" fill="#fbf4e7" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="1090" y="2251" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">事务复查与执行</text>
+<text x="1090" y="2276" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">权限 / 身份 / 版本 / 期限</text>
+</g>
+<path d="M 1228 2256 H 1241" fill="none" stroke="#2c7867" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)"/>
+<g data-card="action-loop-4">
+<rect x="1248" y="2222" width="264" height="68" rx="14" fill="#fbf4e7" stroke="#c7d6ce" stroke-width="1.5"/>
+<text x="1380" y="2251" font-size="23" fill="#193c34" font-weight="600" text-anchor="middle">真实回执</text>
+<text x="1380" y="2276" font-size="18" fill="#5d716a" font-weight="400" text-anchor="middle">结果回到原业务模块</text>
+</g>
+<text x="88" y="2330" font-size="22" fill="#5d716a" font-weight="400" text-anchor="start">历史提醒请求不会自动执行；家庭事项“已创建”与“已处理”分别呈现。</text>
+<rect x="64" y="2402" width="1472" height="112" rx="24" fill="#193c34" stroke="#193c34" stroke-width="1.5"/>
+<text x="88" y="2445" font-size="30" fill="#ffffff" font-weight="600" text-anchor="start">工程证据｜88 / 88 测试 · 4组 API 与浏览器旅程</text>
+<text x="88" y="2487" font-size="23" fill="#d4e4dc" font-weight="400" text-anchor="start">功能版 a6aa51b：构建 / 类型检查 / 离线基准通过；本次仅整理架构图，未重跑业务测试。</text>
+<rect x="64" y="2538" width="1472" height="104" rx="20" fill="#f0f2ee" stroke="#b5c3b9" stroke-width="1.5" stroke-dasharray="9 7"/>
+<text x="88" y="2577" font-size="26" fill="#193c34" font-weight="600" text-anchor="start">待接入｜真实账户与跨设备家庭 · 识物 / OCR · IoT · 语音 · 后台通知</text>
+<text x="88" y="2615" font-size="23" fill="#5d716a" font-weight="400" text-anchor="start">当前为本机演示；路由与记忆仍有规则边界，引用检查不等于完整语义或实物验证。</text>
+<text x="64" y="2688" font-size="20" fill="#5d716a" font-weight="400" text-anchor="start">仓库  Starry-Curry / ProductAgent</text>
+<text x="1536" y="2688" font-size="20" fill="#5d716a" font-weight="400" text-anchor="end">分支  feat/home-scene-item-companions</text></g></svg>
