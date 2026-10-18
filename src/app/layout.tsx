@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./home.css";
 export const metadata: Metadata = {
   title: "物间 · Product Agent",
   description: "让已有的物品，陪生活走得更远。物品智能服务 Demo V0.1",

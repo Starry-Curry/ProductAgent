@@ -1,0 +1,108 @@
+{
+  "kind": "offline-home-companions-and-regression-validation",
+  "measuredAt": "2026-10-18T12:19:43.832Z",
+  "branch": "feat/home-scene-item-companions",
+  "baseline": "4394b067ff3bf35d118eb3e276315db62ab774a4",
+  "realModelCalls": 0,
+  "paidCost": 0,
+  "tests": {
+    "baseline": 63,
+    "total": 75,
+    "passed": 75,
+    "failed": 0,
+    "newContractTests": 12
+  },
+  "typecheck": {
+    "passed": true,
+    "command": "node node_modules/typescript/bin/tsc --noEmit"
+  },
+  "build": {
+    "passed": true,
+    "next": "15.5.28",
+    "node": "24",
+    "route": "/api/home"
+  },
+  "benchmark": {
+    "passed": true,
+    "regressions": 0,
+    "originalExtractiveParaphraseRejectionRetained": true,
+    "limit": "Offline synthetic contracts, not a competitor comparison, semantic safety proof or live-model evaluation."
+  },
+  "browser": {
+    "passed": true,
+    "journeys": [
+      "tests/integration.mjs",
+      "tests/foundation-integration.mjs",
+      "tests/household-integration.mjs",
+      "tests/home-integration.mjs"
+    ],
+    "viewports": [
+      1440,
+      390
+    ],
+    "browser": "Windows Edge",
+    "data": "new isolated temporary database; daily database not used for tests",
+    "checks": [
+      "room and object characters",
+      "help/story/recall in one session",
+      "plan confirmed into existing module",
+      "family preview and task creation",
+      "owner placement and keyboard controls persisted",
+      "animation toggle persisted",
+      "OS reduced motion",
+      "390px no overflow",
+      "existing navigation retained",
+      "no browser errors"
+    ]
+  },
+  "runtime": {
+    "base": "http://127.0.0.1:3100",
+    "root": 200,
+    "homeApi": 200,
+    "guide": 200,
+    "v6BackupExists": true
+  },
+  "sourceHashes": {
+    "scripts/verify-local.mjs": "da5b798c45802abf044b8337c78bfa429fa89e9690afd65bf0a4ed1c00a98612",
+    "src/app/api/home/route.ts": "bde977154b950c5c91bacdd9732bf3386b7f90e1d67809dd43ff131eea1beb4f",
+    "src/app/guide/page.tsx": "4fcd53da01fd19ee3a896ea2138cb15acb7715f2a5b6cf980ee5d5dbf83fce07",
+    "src/app/home.css": "2b9b86d965e31532b6c2d7fb7237f5dfa3427349ec5fb83415d2f54cc9927404",
+    "src/app/layout.tsx": "f1e5c74fb36cbf10ba66b07c0d28c0257417e343cb3718ca18e0ab3dca66088e",
+    "src/app/page.tsx": "feeba79a5119a57764deb67bf580b028c60496a7337a422f30453614d0736077",
+    "src/components/AssistantConversation.tsx": "42f9530a57699823a7457bc7eef6e66989c5b92ab11c32e9ab6497c872227105",
+    "src/components/HomeExperience.tsx": "d18136d2f9bd8e435220577f1239b64e2ce271ade110740f917795a25532960b",
+    "src/components/ItemCharacter.tsx": "fc506e9e59765c0c0add3dd1136890b893a5b536d4964d927dce30278de172ed",
+    "src/lib/agent/contracts.ts": "ba2cabfd4f1e1b77d0572e1eafe6d6b0084378c3568baf37a781929c79dd7bae",
+    "src/lib/agent/graph.ts": "7e876349fa337d3eaf6e1e7eb09b4940bec1448a0a15672470230eb83c63ecf9",
+    "src/lib/agent/prompts.ts": "2dfe5900c275716c5633d3e436bea493bd62c3d0df3bee0f1f70d118ff127d3f",
+    "src/lib/agent/service.ts": "4f630ef6c22c56dcaa1e509f0033302204a23d12fd362b3ca8a0dcded5413ea9",
+    "src/lib/home/contracts.ts": "eb7a3684887b5027360488e7c6b8602c65a3ac781669f86184ec006765d7d2ba",
+    "src/lib/home/decisions.ts": "b22c320a1b9b4fc912f1f32698e94eeadba9fc196db359f0a68f596bf9f2163c",
+    "src/lib/home/router.ts": "891aeb103a7c572a64f3fd97acf2aacd215f824afcd8f1b48c017afe0dddcf81",
+    "src/lib/home/store.ts": "773b74501f0b2a15e257c3450319478eb3cb12b334c07ae9b158b9caabafd09e",
+    "src/lib/memory/ambient.ts": "0f1fd4f112645c097e007a03916ed295958163eab14993293a9e331dbc0a2005",
+    "src/lib/migrations.ts": "3c6fd88fd20f922b198482f5764453aa021845469e4300b8d1cb6557a5b2d124",
+    "src/lib/repositories/home-schema.ts": "7c40182301fb19f3edaef4cc6cee6de89022cc7f533c4d13b080086df722d111",
+    "src/lib/repositories/retention.ts": "82f1c0e2ce5ef23cc1562f5ab2b198946e42d1d3c6f9cff8005707bc812c30cf",
+    "src/lib/repositories/sessions.ts": "12363de3ceecca8e6ce76d11a299983024cb34584ed90e7866c23cd15edc0b19",
+    "src/lib/skills/registry.ts": "aa3e6a7bb01d2a3599f41e1be7946e02bd316e86bc8b0a03758c615f45b4ec1b",
+    "tests/ambient.test.ts": "dc8fea4f929b107d1b9e7e4b5a0a5f2aefbaa4e9a39b0625ca067625246777f2",
+    "tests/foundation-integration.mjs": "b7208e2b7f256a9e7192f7015b34c77893f7d89c2390fc1ab0343c8e8d5dd535",
+    "tests/home-companions.test.ts": "0816ae27c3b54f070b5931b7e2172acbf932bf3989c5416c25bb23abafe243ce",
+    "tests/home-integration.mjs": "8aa8672e04ceabfa1012dfe80a86b0cbdcb2d0169a1599857fe7e53011ee4eb2",
+    "tests/household-integration.mjs": "cf8312e1d5db3c7c03a2f99ccc68da56508fb6dbea67067ed460050d5adff087",
+    "tests/integration.mjs": "70b0412054ddae4c52ceae2dbe3c56aaa9626c011fae96234aa5acc23580ed8f",
+    "tests/reliability.test.ts": "69b8a7d987ce8f4b5475e56f6009e776751398a0951aa6a77c9950ea7774dfa5"
+  },
+  "knownLimits": [
+    "fixed room presets and user-recorded approximate positions",
+    "finite Chinese routing and memory extraction",
+    "saved plans cover picnic/travel/reading-corner; other goals are model suggestions",
+    "historical private memory requires existing per-record cloud permission",
+    "demo identities; no real account/cross-device household/IoT/vision/voice/background notifications",
+    "no real device tests, household user study or new live Qwen tests"
+  ],
+  "evidenceDirectory": "review-evidence/home-companions-20261018",
+  "credentials": "Key contents not read, printed, exported or included in prompts; application authentication configuration unchanged",
+  "sourceHashEncoding": "SHA256 of UTF-8 text normalized to LF; excludes report-only edits"
+}

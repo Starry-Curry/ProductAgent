@@ -34,6 +34,10 @@ import { SYSTEM_PROMPT, PROMPT_VERSION, tools } from "./prompts.ts";
 import { isStoryNarration } from "../memory/ambient.ts";
 import { epoch } from "../memory/store.ts";
 import { sessionAccess } from "../repositories/sessions.ts";
+import { routeHome } from "../home/router.ts";
+import { homeDecision } from "../home/decisions.ts";
+import { itemStamp } from "../home/store.ts";
+import type { HomeRoute } from "../home/contracts.ts";
 const packetSchema = z
   .object({
     kind: z.enum([
@@ -73,6 +77,7 @@ export function curatedDecision(
   question: string,
   session: ServiceSession,
   ctx: ReturnType<typeof buildContext>,
+  unified = false,
 ): AssistantReply | undefined {
   if (unsafe.test(question))
     return {
@@ -88,6 +93,7 @@ export function curatedDecision(
         "先打开一件物品的‘故事与记录’，再围绕它聊聊。",
         "needs_info",
       );
+    if (isStoryNarration(question) && unified) return;
     if (isStoryNarration(question))
       return blank(
         ctx.temporary
@@ -201,7 +207,7 @@ export function curatedDecision(
       };
     }
   }
-  if (session.mode === "companion" && !ctx.persona.enabled)
+  if (session.mode === "companion" && !ctx.persona.enabled && !unified)
     return {
       ...blank(
         "你可以先在“关于我与记住的事”里开启你喜欢的交流方式，也可以继续使用普通帮助。",
@@ -210,6 +216,7 @@ export function curatedDecision(
       questions: ["想使用普通帮助，还是开启可选陪伴？"],
     };
   if (session.mode === "ideas") {
+    if (unified) return;
     const available = ideas.filter((idea) =>
       idea.items.every((id) => ctx.resources.some((i) => i.id === id)),
     );
@@ -362,6 +369,9 @@ export function validateModelPacket(
   if (
     hazardousActions.test(actionable) ||
     deviceClaims.test(actionable) ||
+    /我(?:已经|已)(?:帮你|为你)?(?:通知|联系|发送|下单|购买|移动|挪|创建|保存|安排|控制)/.test(
+      actionable,
+    ) ||
     questionsUnsafe
   )
     throw new AgentError("输出包含未核实的操作、状态或共同经历");
@@ -420,7 +430,9 @@ export async function executeGraph(
       if (m.expiresAt)
         contextDeadline = Math.min(contextDeadline, Date.parse(m.expiresAt));
   };
-  const activeSkill =
+  let route: HomeRoute | undefined;
+  let effectiveSession = session;
+  let activeSkill =
     skills[
       session.mode === "story"
         ? "item-story"
@@ -430,10 +442,6 @@ export async function executeGraph(
             ? "evidence-discovery"
             : "item-help"
     ];
-  const allowedNames: readonly string[] = activeSkill.tools;
-  const activeTools = tools.filter((t) =>
-    allowedNames.includes(t.function.name),
-  );
   const guard = () => {
     if (Date.now() >= contextDeadline)
       throw new AgentError("上下文已过期，请重新提问", 409);
@@ -471,14 +479,72 @@ export async function executeGraph(
     tokens: null,
   });
   const graph = new StateGraph(GraphState)
+    .addNode("route", ({ work }) => {
+      guard();
+      if (session.mode === "auto") {
+        route = routeHome(work.question, read(), actor, session);
+        const turnScope = route.itemId || "home";
+        if (session.known.turnScope && session.known.turnScope !== turnScope) {
+          for (const key of [
+            "goal",
+            "pending",
+            "os",
+            "originalReceiver",
+            "lastOutcome",
+            "unresolvedReason",
+          ])
+            delete session.known[key];
+          session.tried = [];
+        }
+        session.known.turnScope = turnScope;
+        if (session.known.lastIntent !== route.intent) {
+          delete session.known.goal;
+          delete session.known.pending;
+        }
+        session.known.lastIntent = route.intent;
+        if (route.itemId) {
+          const item = read().items.find(
+            (i) => i.id === route!.itemId && canRead(i, actor),
+          );
+          if (item) {
+            session.itemScopes = {
+              ...session.itemScopes,
+              [item.id]: itemStamp(item),
+            };
+            if (!item.demo) session.known.activeItemId = item.id;
+          }
+        }
+        effectiveSession = {
+          ...session,
+          itemId: route.itemId,
+          mode: route.mode,
+        };
+        activeSkill =
+          skills[
+            route.mode === "story"
+              ? "item-story"
+              : route.mode === "companion"
+                ? "companion"
+                : route.mode === "ideas"
+                  ? "evidence-discovery"
+                  : "item-help"
+          ];
+        add(
+          work,
+          "intent_routed",
+          `${route.intent}; target=${route.itemId || "home"}; router=home-router-v1`,
+        );
+      }
+      return { work };
+    })
     .addNode("prepare", async ({ work }) => {
       guard();
       const w = { ...work, session, trace: [...work.trace] };
       const ctx = buildContext(db, read(), actor, {
         question: w.question,
-        mode: session.mode,
+        mode: effectiveSession.mode,
         sessionId: session.id,
-        itemId: session.itemId,
+        itemId: effectiveSession.itemId,
         temporary,
       });
       const skill = activeSkill;
@@ -489,10 +555,31 @@ export async function executeGraph(
         "context_ready",
         `purpose=${session.mode}; memoryRefs=${ctx.cloudMemories.map((m) => m.id).join(",")}; prompt=${PROMPT_VERSION}`,
       );
-      w.reply = curatedDecision(w.question, session, ctx);
+      w.reply =
+        (route &&
+          homeDecision(
+            db,
+            read(),
+            actor,
+            session,
+            w.question,
+            route,
+            temporary,
+          )) ||
+        curatedDecision(
+          w.question,
+          effectiveSession,
+          ctx,
+          session.mode === "auto",
+        );
       if (!w.reply) {
         const prior = session.messages
-          .filter((m) => m.role === "feedback")
+          .filter(
+            (m) =>
+              (m.role === "feedback" || m.role === "action") &&
+              (m.itemId || session.itemId || "") ===
+                (effectiveSession.itemId || ""),
+          )
           .slice(-3)
           .map((m) => ({ role: m.role, text: m.text.slice(0, 500) }));
         w.messages = [
@@ -500,6 +587,11 @@ export async function executeGraph(
             role: "system",
             content:
               SYSTEM_PROMPT +
+              (route
+                ? "\n统一对话：当前意图=" +
+                  route.intent +
+                  "。角色信息由本轮 item 数据给出。自然回应用户当下的话，不要求填写画像，不捏造共同经历。story 意图使用 general 回应真实叙述，至多追问一件相关的事，不补写虚构经历。历史私人记忆仅限提供的已授权片段；未提供时不声称记得。没有服务端行动回执，不声称已经通知家人、保存计划或控制设备。"
+                : "") +
               "\n本次任务：" +
               skill.goal +
               "\n" +
@@ -510,7 +602,7 @@ export async function executeGraph(
             content: JSON.stringify({
               question: w.question,
               goal: session.known.goal,
-              mode: session.mode,
+              mode: effectiveSession.mode,
               item: ctx.item
                 ? { name: ctx.item.name, model: ctx.item.model }
                 : null,
@@ -521,7 +613,12 @@ export async function executeGraph(
                 text: m.text,
               })),
               preferences: ctx.cloudPreferences,
-              persona: session.mode === "companion" ? ctx.persona : undefined,
+              resources: ctx.resources,
+              persona:
+                effectiveSession.mode === "companion" ||
+                effectiveSession.mode === "story"
+                  ? ctx.persona
+                  : undefined,
               prior,
               tried: session.tried,
             }),
@@ -543,6 +640,10 @@ export async function executeGraph(
       try {
         w.calls++;
         add(w, "model_started", `attempt=${w.calls}`);
+        const allowedNames: readonly string[] = activeSkill.tools;
+        const activeTools = tools.filter((t) =>
+          allowedNames.includes(t.function.name),
+        );
         w.response = provider.complete
           ? await provider.complete(w.messages, activeTools, {
               timeoutMs: Math.max(1, 45000 - (Date.now() - w.started)),
@@ -569,7 +670,31 @@ export async function executeGraph(
           error instanceof ProviderError
             ? error
             : new ProviderError("internal", "暂时无法生成可靠回答。");
-        w.reply = { ...blank(e.message, "unavailable"), errorCode: e.code };
+        if (route?.intent === "story" && isStoryNarration(w.question)) {
+          const ctx = buildContext(db, read(), actor, {
+            question: w.question,
+            mode: "story",
+            itemId: effectiveSession.itemId,
+            sessionId: session.id,
+            temporary,
+          });
+          w.reply = {
+            ...curatedDecision(w.question, effectiveSession, ctx)!,
+            caveat: "本次使用本地故事记录；AI 暂不可用，未生成模型回应。",
+            errorCode: e.code,
+          };
+        } else if (route?.intent === "companion") {
+          w.reply = {
+            ...blank(
+              "我在这里。你想说说今天发生的事，还是聊聊这件物品陪你度过的一个片段？",
+              "answered",
+              "local-dialogue",
+            ),
+            caveat: "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+            errorCode: e.code,
+          };
+        } else
+          w.reply = { ...blank(e.message, "unavailable"), errorCode: e.code };
         add(w, "provider_failed", e.code);
       }
       return { work: w };
@@ -599,14 +724,7 @@ export async function executeGraph(
         w.toolCount++;
         let value: unknown;
         try {
-          const allowed: readonly string[] =
-            skills[
-              session.mode === "companion"
-                ? "companion"
-                : session.mode === "ideas"
-                  ? "evidence-discovery"
-                  : "item-help"
-            ].tools;
+          const allowed: readonly string[] = activeSkill.tools;
           if (!allowed.includes(call.function.name))
             throw new AgentError("本任务未开放此工具");
           const args: { query?: string } = (
@@ -617,9 +735,9 @@ export async function executeGraph(
           const query = args.query || "";
           const ctx = buildContext(db, read(), actor, {
             question: query || w.question,
-            mode: session.mode,
+            mode: effectiveSession.mode,
             sessionId: session.id,
-            itemId: session.itemId,
+            itemId: effectiveSession.itemId,
             temporary,
           });
           trackExpiry(ctx.cloudMemories);
@@ -666,12 +784,16 @@ export async function executeGraph(
       try {
         const ctx = buildContext(db, read(), actor, {
           question: session.known.goal || w.question,
-          mode: session.mode,
+          mode: effectiveSession.mode,
           sessionId: session.id,
-          itemId: session.itemId,
+          itemId: effectiveSession.itemId,
           temporary,
         });
-        w.reply = validateModelPacket(w.response!.text, ctx, session.mode);
+        w.reply = validateModelPacket(
+          w.response!.text,
+          ctx,
+          effectiveSession.mode,
+        );
         w.reply.model = w.response!.model;
         w.reply.memoryIds = ctx.cloudMemories.map((m) => m.id);
         add(w, "validated", w.reply.outcome);
@@ -703,7 +825,8 @@ export async function executeGraph(
         throw new AgentError("继续提问格式无效");
       return { work: fresh(next.question) };
     })
-    .addEdge(START, "prepare")
+    .addEdge(START, "route")
+    .addEdge("route", "prepare")
     .addConditionalEdges("prepare", ({ work }) =>
       work.reply ? "wait" : "model",
     )
@@ -718,7 +841,7 @@ export async function executeGraph(
     .addConditionalEdges("validate", ({ work }) =>
       work.reply ? "wait" : "model",
     )
-    .addEdge("wait", "prepare")
+    .addEdge("wait", "route")
     .compile({ checkpointer: saver });
   const config = {
     configurable: { thread_id: actor + ":" + session.id },
@@ -729,7 +852,13 @@ export async function executeGraph(
     ? new Command<
         unknown,
         { work?: Work },
-        "model" | "tools" | "__start__" | "prepare" | "validate" | "wait"
+        | "model"
+        | "tools"
+        | "__start__"
+        | "prepare"
+        | "validate"
+        | "wait"
+        | "route"
       >({ resume: { question } })
     : { work: fresh(question) };
   try {
@@ -737,7 +866,7 @@ export async function executeGraph(
     guard();
     const w = result.work;
     return {
-      reply: w.reply!,
+      reply: route ? { ...w.reply!, route } : w.reply!,
       trace: w.trace,
       tokens: w.tokens,
       modelCalls: w.calls,

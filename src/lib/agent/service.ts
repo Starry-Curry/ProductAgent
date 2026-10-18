@@ -79,6 +79,7 @@ export async function respond(
   }
   const { session, cached } = beginTurn(db, read, actor, input);
   if (cached) return cached;
+  session.known.turnRequestId = input.requestId;
   try {
     let execution: Omit<TurnResult, "session">;
     const explicit = input.question.match(/^记住[：:，,\s]+([\s\S]+)$/u);
@@ -154,7 +155,23 @@ export async function respond(
       execution.reply.presentation = style;
     const at = new Date().toISOString();
     session.messages.push(
-      { id: crypto.randomUUID(), role: "user", text: input.question, at },
+      {
+        id: crypto.randomUUID(),
+        role: "user",
+        text: input.question,
+        at,
+        itemId: execution.reply.route?.itemId || session.itemId,
+        capture:
+          input.mode !== "auto" ||
+          (!!execution.reply.route &&
+            ["help", "story", "companion"].includes(
+              execution.reply.route.intent,
+            ) &&
+            !(
+              execution.reply.route.intent === "story" &&
+              !execution.reply.route.itemId
+            )),
+      },
       {
         id: crypto.randomUUID(),
         role: "assistant",

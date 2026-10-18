@@ -66,6 +66,7 @@ async function askIn(container, text) {
 }
 async function home() {
   await page.goto(base);
+  await page.locator(".legacy-home-tools > summary").click();
   await page
     .getByText("记忆与陪伴 · 看看它记下了什么", { exact: true })
     .waitFor();

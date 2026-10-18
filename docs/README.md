@@ -8,6 +8,12 @@
 
 ## 当前来源与证据
 
+- [最新：家庭空间、物品动画角色与全屋 Agent 迭代设计](engineering/home-companions-iteration-2026-10-18.md)
+- [本轮实现、API、权限与体验步骤](engineering/home-companions-implementation-2026-10-18.md)
+- [本轮最终验收摘要](engineering/home-companions-validation-2026-10-18.json)
+
+下方保留各历史阶段证据。首页以本轮空间与统一对话为准，原有入口仍可展开使用。
+
 - [最新：家居案例来源、首次介绍与对话式记忆](engineering/household-cases-and-onboarding-2026-10-18.md)
 - [本轮案例与入口验证](engineering/household-validation-2026-10-18.json)
 

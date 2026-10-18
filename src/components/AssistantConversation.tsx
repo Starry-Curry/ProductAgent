@@ -11,6 +11,7 @@ const labels = {
   "model-with-evidence": "AI 选择资料",
   "model-general": "AI 一般帮助",
   "local-memory": "来自本地记录",
+  "local-dialogue": "本地简短回应",
   "model-creative": "AI 创作 / 可选交流",
 };
 export function AssistantConversation({
@@ -23,6 +24,8 @@ export function AssistantConversation({
   onQuestion,
   onSession,
   onActivity,
+  onBusy,
+  onSelectItem,
 }: {
   actor: Person;
   item?: Item;
@@ -33,6 +36,8 @@ export function AssistantConversation({
   onQuestion?: (text: string) => void;
   onSession?: (session: ServiceSession | null) => void;
   onActivity?: () => void;
+  onBusy?: (busy: boolean) => void;
+  onSelectItem?: (itemId: string) => void;
 }) {
   const [session, setSession] = useState<ServiceSession | null>(null),
     [sessions, setSessions] = useState<ServiceSession[]>([]);
@@ -50,6 +55,14 @@ export function AssistantConversation({
     auto = useRef(false),
     handoffId = useRef("");
   const headers = { "Content-Type": "application/json", "x-demo-actor": actor };
+  const messagesRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (mode === "auto" && messagesRef.current)
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+  }, [mode, session?.id, session?.revision]);
+  useEffect(() => {
+    onBusy?.(busy);
+  }, [busy]);
   function update(s: ServiceSession | null) {
     current.current = s;
     onSession?.(s);
@@ -195,18 +208,42 @@ export function AssistantConversation({
     };
   }, [actor, item?.id, mode]);
   const last = session?.messages.filter((m) => m.role === "assistant").at(-1);
+  async function decide(id: string, action: "confirm" | "cancel") {
+    setBusy(true);
+    setError("");
+    try {
+      const r = await fetch("/api/home", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ action, id }),
+      });
+      const d = await r.json();
+      if (!r.ok) throw Error(d.error);
+      if (!alive.current) return;
+      if (d.session) update(d.session);
+      setError("");
+      onActivity?.();
+      window.dispatchEvent(new Event("workspace-updated"));
+    } catch (e) {
+      if (alive.current) setError((e as Error).message);
+    } finally {
+      if (alive.current) setBusy(false);
+    }
+  }
   return (
     <div
       className="assistant-conversation"
       role="region"
       aria-label={
-        mode === "story"
-          ? "与物品讲故事"
-          : mode === "companion"
-            ? "可选陪伴对话"
-            : mode === "ideas"
-              ? "结合我的物品找灵感"
-              : "连续使用帮助"
+        mode === "auto"
+          ? "物间统一对话"
+          : mode === "story"
+            ? "与物品讲故事"
+            : mode === "companion"
+              ? "可选陪伴对话"
+              : mode === "ideas"
+                ? "结合我的物品找灵感"
+                : "连续使用帮助"
       }
     >
       {!elder && (
@@ -273,6 +310,7 @@ export function AssistantConversation({
       )}
       <div
         className="conversation-messages"
+        ref={messagesRef}
         aria-live="polite"
         aria-busy={busy}
       >
@@ -284,13 +322,86 @@ export function AssistantConversation({
             <strong>
               {message.role === "user"
                 ? "你"
-                : message.role === "feedback"
-                  ? "你的反馈"
-                  : message.reply?.outcome === "unavailable"
-                    ? "服务暂不可用"
-                    : labels[message.reply?.source || "curated-guidance"]}
+                : message.role === "action"
+                  ? "操作结果"
+                  : message.role === "feedback"
+                    ? "你的反馈"
+                    : message.reply?.outcome === "unavailable"
+                      ? "服务暂不可用"
+                      : labels[message.reply?.source || "curated-guidance"]}
             </strong>
+            {message.reply?.route && (
+              <small className="home-route-label">
+                {message.reply.route.itemName
+                  ? message.reply.route.itemName + " · "
+                  : "全屋 · "}
+                {
+                  {
+                    help: "使用帮助",
+                    story: "故事与记忆",
+                    companion: "陪你聊聊",
+                    locate: "寻找物品",
+                    plan: "准备计划",
+                    move: "位置安排",
+                    handoff: "家庭协作",
+                    clarify: "请选一件",
+                  }[message.reply.route.intent]
+                }
+              </small>
+            )}
             <p>{message.text}</p>
+            {!!message.reply?.route?.candidates?.length && onSelectItem && (
+              <div className="home-candidate-items">
+                {message.reply.route.candidates.map((i) => (
+                  <button
+                    className="button secondary"
+                    key={i.id}
+                    onClick={() => onSelectItem(i.id)}
+                  >
+                    和{i.name}继续聊
+                  </button>
+                ))}
+              </div>
+            )}
+            {message.reply?.actionCards?.map((card) => (
+              <div className="home-action-card" key={card.id}>
+                <h3>{card.title}</h3>
+                <ul>
+                  {card.detail.map((line, i) => (
+                    <li key={i}>{line}</li>
+                  ))}
+                </ul>
+                {card.status === "pending" ? (
+                  <div className="inline">
+                    <button
+                      className="button"
+                      disabled={busy}
+                      onClick={() => decide(card.id, "confirm")}
+                    >
+                      {card.confirmLabel}
+                    </button>
+                    <button
+                      className="text-button"
+                      disabled={busy}
+                      onClick={() => decide(card.id, "cancel")}
+                    >
+                      暂不执行
+                    </button>
+                  </div>
+                ) : (
+                  <p role="status">
+                    {card.status === "applied"
+                      ? card.kind === "handoff"
+                        ? "已创建家庭事项，等待处理"
+                        : card.kind === "plan"
+                          ? "计划已保存，待你执行"
+                          : "位置已保存"
+                      : "已取消，未执行"}
+                  </p>
+                )}
+                <small>确认后才执行；建议保留 15 分钟。</small>
+              </div>
+            ))}
             {!!message.reply?.steps.length && (
               <ol>
                 {message.reply.steps.map((step) => (
@@ -368,7 +479,29 @@ export function AssistantConversation({
           </button>
         </div>
       )}
-      {item?.demo && (
+      {mode === "auto" && !session?.messages.length && (
+        <div className="example-questions">
+          <small>可以这样开始：</small>
+          {(item
+            ? [
+                item.demo?.questions.find((q) => !q.includes("故事")) ||
+                  "怎么用这件物品？",
+                "聊聊以前的故事",
+              ]
+            : ["帮我准备周末野餐", "家里有哪些物品？"]
+          ).map((q) => (
+            <button
+              key={q}
+              className="text-button"
+              disabled={busy}
+              onClick={() => setQuestion(q)}
+            >
+              {q}
+            </button>
+          ))}
+        </div>
+      )}
+      {item?.demo && mode !== "auto" && (
         <div className="example-questions">
           <small>
             {mode === "story"
@@ -397,7 +530,11 @@ export function AssistantConversation({
         }}
       >
         <label>
-          {mode === "story" ? "讲讲你与这件物品" : "写下你的问题"}
+          {mode === "auto"
+            ? "对物间说"
+            : mode === "story"
+              ? "讲讲你与这件物品"
+              : "写下你的问题"}
           <textarea
             name="question"
             value={question}
@@ -405,17 +542,25 @@ export function AssistantConversation({
             maxLength={2000}
             required
             placeholder={
-              mode === "story"
-                ? "说说它的来历、一次经历，或问问以前留下的故事…"
-                : session
-                  ? "补充情况，或告诉我哪一步卡住了…"
-                  : "描述问题，或说说想用它做什么…"
+              mode === "auto"
+                ? item
+                  ? "问问怎么用，讲一段故事，或说说今天的心情…"
+                  : "想找什么、准备什么，或请家人做些什么…"
+                : mode === "story"
+                  ? "说说它的来历、一次经历，或问问以前留下的故事…"
+                  : session
+                    ? "补充情况，或告诉我哪一步卡住了…"
+                    : "描述问题，或说说想用它做什么…"
             }
           />
         </label>
         <div className="inline">
           <button className="button" disabled={busy}>
-            {busy ? "正在查看…" : mode === "story" ? "发送" : "发送问题"}
+            {busy
+              ? "正在回应…"
+              : mode === "auto" || mode === "story"
+                ? "发送"
+                : "发送问题"}
           </button>
           {session && (
             <button
@@ -460,36 +605,42 @@ export function AssistantConversation({
             已按自动整理设置处理本轮方法；可在首页“记忆与陪伴”查看。仅代表你反馈有效。
           </small>
         )}
-      {last && !temporary && mode !== "story" && mode !== "companion" && (
-        <div className="conversation-feedback">
-          <label>
-            试过之后怎样？（可补充）
-            <input
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              maxLength={500}
-              placeholder="例如：第二步找不到，或还是没有反应"
-            />
-          </label>
-          <div className="inline">
-            <button
-              className="button secondary"
-              disabled={busy || session?.status === "user_resolved"}
-              onClick={() => feedback("completed")}
-            >
-              {session?.status === "user_resolved" ? "你已确认解决" : "解决了"}
-            </button>
-            <button
-              className="button secondary"
-              disabled={busy}
-              onClick={() => feedback("unresolved")}
-            >
-              还没解决
-            </button>
+      {last &&
+        !temporary &&
+        mode !== "story" &&
+        mode !== "companion" &&
+        (mode !== "auto" || last.reply?.route?.intent === "help") && (
+          <div className="conversation-feedback">
+            <label>
+              试过之后怎样？（可补充）
+              <input
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                maxLength={500}
+                placeholder="例如：第二步找不到，或还是没有反应"
+              />
+            </label>
+            <div className="inline">
+              <button
+                className="button secondary"
+                disabled={busy || session?.status === "user_resolved"}
+                onClick={() => feedback("completed")}
+              >
+                {session?.status === "user_resolved"
+                  ? "你已确认解决"
+                  : "解决了"}
+              </button>
+              <button
+                className="button secondary"
+                disabled={busy}
+                onClick={() => feedback("unresolved")}
+              >
+                还没解决
+              </button>
+            </div>
+            <small>完成状态来自你的反馈；助手没有检测实物。</small>
           </div>
-          <small>完成状态来自你的反馈；助手没有检测实物。</small>
-        </div>
-      )}
+        )}
       {last &&
         mode === "service" &&
         item?.shared &&

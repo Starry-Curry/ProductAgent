@@ -1,5 +1,15 @@
 # 当前实现状态
 
+## 2026-10-18 · 家庭空间、物品伙伴与全屋路由
+
+最终验证：75/75 测试、构建、独立类型检查、离线基准与四组隔离 API/Edge 浏览器旅程通过；本轮真实模型调用 0。合成截图在 review-evidence/home-companions-20261018，日常库未用于自动测试。
+
+新分支 feat/home-scene-item-companions，基线 4394b06。已实现房间示意、每件物品的 SVG 类别角色/身份配色及状态动画，移动/键盘摆放与档案同步，mode=auto 的连续对话和 LangGraph 路由，有限场景计划、家庭协作及位置动作预览/确认/事务回读。已有记忆独立可见，原表单折叠，原导航和长辈版保留。
+
+v6 增量表、备份、版本检查、行动期限与幂等；全屋引用物品权限、跨物品反馈隔离、逐条来源 capture 与案例隔离已接入。千问使用原配置，本轮自动验证不调用真实模型。Prompt v1.3；没有新增依赖或更改 Key。详情见 [实现说明](docs/engineering/home-companions-implementation-2026-10-18.md) 与 [本轮验收](docs/engineering/home-companions-validation-2026-10-18.json)。
+
+仍有限：预设房间、有限中文路由/静默提取与三类可保存场景，历史私密记忆须单条授权上云。真实身份/跨设备、视觉识物、IoT、后台通知、语音与通用语义画像未实现。角色动作来自对话或已登记事项，非实物/健康感知。
+
 ## 2026-10-18 · 家居案例与对话式记忆入口
 
 最终验证：63/63 测试、生产构建/类型检查、离线基准、隔离旧旅程/静默记忆/家居案例三组浏览器验收通过。首次介绍保存/跳过后不再出现，演示操作不清空真实会话；本轮付费模型调用 0。合成截图在 review-evidence/household-20261018，详情见本轮验证摘要。
@@ -24,10 +34,10 @@
 
 | 任务 | 当前状态 | 证据与剩余边界 |
 | --- | --- | --- |
-| T1 数据与身份 | 部分实现 | db.ts、migrations.ts、repositories/；v4 增量迁移/事务/备份；主 workspace 仍 JSON，真实用户/家庭未关系化 |
+| T1 数据与身份 | 部分实现 | v6 增量表/事务/备份、位置及行动回执；主 workspace 仍 JSON，真实用户/家庭未关系化 |
 | T2 识物/扫码 | 未实现视觉识别 | domain.ts/createItem 仅档案照片；没有 OCR/VLM/条码候选闭环 |
 | T3 Product Pack | 部分实现 | products.ts、skills/knowledge.ts；11 包 33 事实 2 过程，尚无自动资料导入流水线 |
-| T4 Harness | 已有可运行基座 | agent/graph.ts、checkpointer.ts、skills/registry.ts；只读工具与状态恢复/预算/验证，非任意工具自主执行 |
+| T4 Harness | 已有运行基座并增强 | LangGraph auto 路由、只读工具/检查点/预算/验证、到期行动卡与领域执行；非任意工具自主执行 |
 | T5 Context/Memory | 部分实现，本轮增强 | memory/ambient.ts、store.ts、context/builder.ts；故事主入口、静默整理、范围/权限/过期、纠正/忘记；有限中文提取与召回 |
 | T6 组合/目标 | 部分规则实现 | discovery.ts、planning.ts；有限场景与资料约束，无通用能力规划 |
 | T7 家庭/关怀 | 本机业务 + 信号模拟 | domain.ts、FamilyTasks、auth.ts；真实账户/通知/设备未接入 |

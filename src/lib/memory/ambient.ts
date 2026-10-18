@@ -269,10 +269,10 @@ export function isStoryNarration(text: string) {
   return (
     text.trim().length >= 4 &&
     safeForMemory(text) &&
-    !/[？?]|什么|有没有|如何|能不能|是否|吗|呢|假设|如果|示例|比如|例如|不要记录|不要记住|别记|编一个|帮我写/.test(
+    !/[？?]|什么|有没有|如何|能不能|是否|吗|呢|假设|如果|示例|比如|例如|不要记录|不要记住|别记|编一个|帮我写|想听|想知道|想问|想让你|想请你|希望你|请你|讲一个|讲个|说个/.test(
       text,
     ) &&
-    !/^(聊聊|说说|还记得|回忆|你|请|帮我|怎么|为什么|能否|可以)/.test(
+    !/^(聊聊|说说|还记得|回忆|你|请|帮我|给我|怎么|为什么|能否|可以)/.test(
       text.trim(),
     )
   );
@@ -537,13 +537,15 @@ export function reconcileMemories(
           ))
       )
         continue;
-      for (const message of session.messages.filter((m) => m.role === "user"))
+      for (const message of session.messages.filter(
+        (m) => m.role === "user" && m.capture !== false,
+      ))
         captureEvent(db, state, actor, {
           id: message.id,
           kind: "chat",
           at: message.at,
           text: message.text,
-          itemId: session.itemId,
+          itemId: message.itemId || session.itemId,
           sessionId: session.id,
           basis: "user_statement",
         });

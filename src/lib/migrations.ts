@@ -1,4 +1,5 @@
 import { migrateExperience } from "./repositories/experience-schema.ts";
+import { migrateHome } from "./repositories/home-schema.ts";
 import { migrateAmbient } from "./repositories/ambient-schema.ts";
 import { migrateFoundation } from "./repositories/foundation-schema.ts";
 import { DatabaseSync } from "node:sqlite";
@@ -18,21 +19,28 @@ export function migrate(db: DatabaseSync, filename: string) {
         ).version || 0,
       )
     : 0;
-  if (current > 5) throw Error("数据库版本比当前程序新，拒绝写入");
-  if (current === 5) return;
+  if (current > 6) throw Error("数据库版本比当前程序新，拒绝写入");
+  if (current === 6) return;
+  if (current === 5) {
+    migrateHome(db, filename);
+    return;
+  }
   if (current === 4) {
     migrateExperience(db, filename);
+    migrateHome(db, filename);
     return;
   }
   if (current === 3) {
     migrateAmbient(db, filename);
     migrateExperience(db, filename);
+    migrateHome(db, filename);
     return;
   }
   if (current === 2) {
     migrateFoundation(db, filename);
     migrateAmbient(db, filename);
     migrateExperience(db, filename);
+    migrateHome(db, filename);
     return;
   }
   // VACUUM INTO includes committed WAL data. Every upgrade has its own backup.
@@ -100,4 +108,5 @@ export function migrate(db: DatabaseSync, filename: string) {
   migrateFoundation(db, filename);
   migrateAmbient(db, filename);
   migrateExperience(db, filename);
+  migrateHome(db, filename);
 }

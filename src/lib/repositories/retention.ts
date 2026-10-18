@@ -6,6 +6,9 @@ export function pruneExpired(db: DatabaseSync, actor: Person) {
   const at = new Date().toISOString();
   db.exec("BEGIN IMMEDIATE");
   try {
+    db.prepare(
+      "DELETE FROM home_proposals WHERE owner=? AND (expires_at<=? OR session_id IN (SELECT id FROM agent_sessions WHERE owner=? AND expires_at<=?))",
+    ).run(actor, at, actor, at);
     const rows = db
       .prepare("SELECT id FROM agent_sessions WHERE owner=? AND expires_at<=?")
       .all(actor, at) as { id: string }[];

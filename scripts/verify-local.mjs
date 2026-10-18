@@ -56,11 +56,17 @@ try {
     await new Promise((r) => setTimeout(r, 500));
   }
   if (!started) throw Error("Test server did not become ready: " + logs);
-  for (const script of [
+  const scripts = [
     "tests/integration.mjs",
     "tests/foundation-integration.mjs",
     "tests/household-integration.mjs",
-  ]) {
+    "tests/home-integration.mjs",
+  ];
+  const selected = process.argv[2]
+    ? scripts.filter((s) => s === `tests/${process.argv[2]}-integration.mjs`)
+    : scripts;
+  if (!selected.length) throw Error("Unknown test journey");
+  for (const script of selected) {
     const child = spawn(process.execPath, [script], {
       cwd: root,
       env,
@@ -80,6 +86,7 @@ try {
       base,
       dataDirectory: data,
       realModelCalls: 0,
+      journeys: selected,
     }),
   );
 } finally {

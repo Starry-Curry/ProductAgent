@@ -1,5 +1,21 @@
 # ProductAgent统一仓库交接
 
+## 2026-10-18 · 家庭空间、动画角色与全屋 Agent
+
+最终验证：75/75、build、独立 typecheck、离线 benchmark 与四组隔离 API/Edge 旅程通过，真实模型调用 0。已核对桌面/390px 截图及本机 3100 的 root/guide/home API 200、v6 备份。新操作回执为 action 消息，重复确认不重复追加；统一对话定位到最新回复。
+
+当前分支 feat/home-scene-item-companions，基线 4394b06；未合并 main。本轮设计见 [迭代文档](docs/engineering/home-companions-iteration-2026-10-18.md)，具体架构/API/回退见 [实现交接](docs/engineering/home-companions-implementation-2026-10-18.md)，最终结果见 [验收摘要](docs/engineering/home-companions-validation-2026-10-18.json)。最终提交与 ZIP SHA256 见导出清单。
+
+- UI：HomeExperience、ItemCharacter、home.css；固定房间、角色/状态动画、owner 摆放与键盘控件；首页已有 MemoryCenter 单独可见，旧帮助折叠，原业务导航保留。没有修改原 globals.css，也未添加运行依赖。
+- Harness：mode=auto、LangGraph route→prepare→model/tools→validate→wait；每轮有效目标/Skill，未知/同名澄清。Prompt human-item-agent-v1.3；物品名称作为任务数据。模型/工具预算不变。
+- 领域：home/contracts.ts、router.ts、decisions.ts、store.ts 与 /api/home。行动建议 15 分钟，服务端保管参数；仅已提交的本人会话卡可确认。事务复查目标/资源/身份/lease/位置版本，回读结果与最新 session revision；重复操作不重复创建。
+- v6：home-schema.ts；home_placements/home_place_requests/home_proposals；保留 .before-v5-to-v6.sqlite。房间是固定常量；原 workspace 仍 JSON。摆放同步 location，保留同房间的细位；档案位置外部更新使旧请求冲突。
+- 隐私：session.itemScopes 覆盖全屋引用物品及计划资源；切换目标清除旧设备条件/尝试，反馈按物品过滤。用户消息有 itemId/capture；回填遵守来源与跳过标记。默认云端历史授权、遗忘屏障和案例范围不变；案例故事经全屋入口先选物，不注入全局记忆。
+- 验证：新增 home-companions.test.ts 与 home-integration.mjs；verify-local.mjs 默认四组浏览器，参数 home 可单独调试。费用关闭、独立 PRODUCT_AGENT_DATA_DIR；协议替身不算真实模型调用。报告与截图以本轮证据为准，不复用历史在线次数。
+- 凭证与用户文件：Key/.env.local/api.txt 内容未读取；用户 untracked docs/1018.md 未改动、未纳入提交或导出。日常库不用于自动测试，原 data/.runtime/.next 忽略规则不变。
+
+限制：有限规则路由/记忆提取；通用场景模型建议没有任意写动作。已实现可保存的野餐、旅行、阅读角及位置/家庭卡。没有 OCR/VLM/语音/真实登录/IoT/后台通知，也没有把旧信号模拟升级为健康判断。备份回退需先隔离核验版本，不覆盖现有 v6 日常库。
+
 ## 2026-10-18 · 家居案例与对话式记忆入口
 
 最终验证：63/63 测试、生产构建/类型检查、离线基准、隔离旧旅程/静默记忆/家居案例三组浏览器验收通过。首次介绍保存/跳过后不再出现，演示操作不清空真实会话；本轮付费模型调用 0。合成截图在 review-evidence/household-20261018，详情见本轮验证摘要。

@@ -1,11 +1,14 @@
 import { z } from "zod";
+import type { HomeRoute, ActionCard } from "../home/contracts.ts";
 export const turnInputSchema = z
   .object({
     sessionId: z.string().uuid().optional(),
     requestId: z.string().uuid(),
     itemId: z.string().max(100).optional(),
     question: z.string().trim().min(1).max(2000),
-    mode: z.enum(["service", "ideas", "companion", "story"]).default("service"),
+    mode: z
+      .enum(["service", "ideas", "companion", "story", "auto"])
+      .default("service"),
     temporary: z.boolean().default(false),
     expectedRevision: z.number().int().nonnegative().optional(),
   })
@@ -19,6 +22,8 @@ export type Citation = {
   section?: string;
 };
 export type AssistantReply = {
+  route?: HomeRoute;
+  actionCards?: ActionCard[];
   outcome: "answered" | "needs_info" | "referred" | "unavailable" | "blocked";
   answer: string;
   steps: { id: string; text: string }[];
@@ -31,6 +36,7 @@ export type AssistantReply = {
     | "model-with-evidence"
     | "model-general"
     | "local-memory"
+    | "local-dialogue"
     | "model-creative";
   presentation?: "short" | "detailed";
   model?: string;
@@ -38,13 +44,16 @@ export type AssistantReply = {
   caveat?: string;
 };
 export type SessionMessage = {
+  capture?: boolean;
+  itemId?: string;
   id: string;
-  role: "user" | "assistant" | "feedback";
+  role: "user" | "assistant" | "feedback" | "action";
   text: string;
   at: string;
   reply?: AssistantReply;
 };
 export type ServiceSession = {
+  itemScopes?: Record<string, string>;
   id: string;
   owner: string;
   itemId?: string;

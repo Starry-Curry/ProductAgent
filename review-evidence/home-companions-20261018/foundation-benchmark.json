@@ -1,0 +1,100 @@
+{
+  "kind": "offline-contract-and-curated-coverage-ablation",
+  "measuredAt": "2026-10-18T12:11:34.179Z",
+  "realModelCalls": 0,
+  "cost": null,
+  "limits": "Synthetic fixtures compare an intentionally weak ID checker, the existing extractive validator, and new contracts. Not a live-model/competitor accuracy estimate. Regex checks are not a semantic safety proof.",
+  "rows": [
+    {
+      "name": "natural-summary-selected-fact",
+      "question": "电池规格",
+      "kind": "supported",
+      "answer": "需要一节 AA 电池。",
+      "ids": [
+        "M-R0061:battery"
+      ],
+      "expected": true,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": true
+    },
+    {
+      "name": "unrelated-valid-id",
+      "question": "怎么调双击速度",
+      "kind": "supported",
+      "answer": "电源为一节可更换 AA 电池。",
+      "ids": [
+        "M-R0061:battery"
+      ],
+      "expected": false,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": true,
+      "newAccepted": false
+    },
+    {
+      "name": "invented-long-press",
+      "question": "电池规格",
+      "kind": "general",
+      "answer": "长按配对键八秒即可。",
+      "ids": [],
+      "expected": false,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": false
+    },
+    {
+      "name": "invented-hardware-state",
+      "question": "电池规格",
+      "kind": "general",
+      "answer": "已经确认正常。",
+      "ids": [],
+      "expected": false,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": false
+    },
+    {
+      "name": "invented-common-history",
+      "question": "电池规格",
+      "kind": "general",
+      "answer": "我记得我们一起修好了它。",
+      "ids": [],
+      "expected": false,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": false
+    },
+    {
+      "name": "unsupported-any-receiver",
+      "question": "兼容接收器",
+      "kind": "general",
+      "answer": "兼容任意接收器。",
+      "ids": [],
+      "expected": false,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": false
+    },
+    {
+      "name": "ordinary-general-help",
+      "question": "如何把问题描述清楚",
+      "kind": "general",
+      "answer": "可以先说想完成什么，再描述现在看到的现象。",
+      "ids": [],
+      "expected": true,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": true
+    }
+  ],
+  "coverage": {
+    "productIntroFactCount": 3,
+    "productIntroProcedureCount": 0,
+    "reviewedProcedureCount": 2,
+    "unknownItemCanAskNecessaryQuestion": true,
+    "windows11StepsAfterClarification": 3,
+    "m185StepsAfterReceiverConfirmation": 3,
+    "realModelCalls": 0
+  },
+  "regressions": 0
+}

@@ -22,6 +22,13 @@ export function sessionAccess(s: ServiceSession, state: State, actor: Person) {
     s.status === "closed"
   )
     return false;
+  if (
+    Object.entries(s.itemScopes || {}).some(([id, stamp]) => {
+      const item = state.items.find((i) => i.id === id && canRead(i, actor));
+      return !item || JSON.stringify([item.owner, identity(item)]) !== stamp;
+    })
+  )
+    return false;
   if (!s.itemId) return true;
   const item = state.items.find((i) => i.id === s.itemId);
   return (
@@ -184,35 +191,43 @@ export function commitTurn(
     )
       throw new AgentError("资料或记忆授权刚刚发生变化，请重新提问", 409);
     result.session.updatedAt = new Date().toISOString();
-    if (
-      input.mode === "story" &&
-      result.session.itemId &&
-      isStoryNarration(input.question)
-    ) {
+    const turnItemId = result.reply.route?.itemId || result.session.itemId;
+    const storyTurn =
+      input.mode === "story" ||
+      (input.mode === "auto" && result.reply.route?.intent === "story");
+    if (storyTurn && turnItemId && isStoryNarration(input.question)) {
       const state = read();
       state.memories.push({
         id: input.requestId,
-        itemId: result.session.itemId,
+        itemId: turnItemId,
         author: actor,
         text: input.question,
         at: result.session.updatedAt,
         shared: false,
         sourceSessionId: result.session.id,
-        demo: !!state.items.find((i) => i.id === result.session.itemId)?.demo,
+        demo: !!state.items.find((i) => i.id === turnItemId)?.demo,
       });
       db.prepare("UPDATE workspace SET body=? WHERE id=1").run(
         JSON.stringify(state),
       );
       captureWorkspace(db, state, actor);
     }
-    captureTurn(
-      db,
-      read(),
-      actor,
-      result.session,
-      input.requestId,
-      input.question,
-    );
+    if (
+      result.session.messages.filter((m) => m.role === "user").at(-1)
+        ?.capture !== false
+    )
+      captureTurn(
+        db,
+        read(),
+        actor,
+        {
+          ...result.session,
+          itemId: turnItemId,
+          mode: storyTurn ? "story" : result.session.mode,
+        },
+        input.requestId,
+        input.question,
+      );
     result.session.revision++;
     result.session.updatedAt = new Date().toISOString();
     db.prepare(
@@ -314,6 +329,9 @@ export function recordSessionFeedback(
     session.messages.push({
       id: crypto.randomUUID(),
       role: "feedback",
+      itemId:
+        session.messages.filter((m) => m.role === "assistant").at(-1)?.reply
+          ?.route?.itemId || session.itemId,
       text:
         input.outcome === "completed"
           ? "我确认解决了问题。"
@@ -323,7 +341,17 @@ export function recordSessionFeedback(
     session.messages = session.messages.slice(-30);
     session.revision++;
     session.updatedAt = at;
-    captureFeedback(db, read(), actor, session, input.outcome, body.reason);
+    const feedbackItemId =
+      session.messages.filter((m) => m.role === "assistant").at(-1)?.reply
+        ?.route?.itemId || session.itemId;
+    captureFeedback(
+      db,
+      read(),
+      actor,
+      { ...session, itemId: feedbackItemId },
+      input.outcome,
+      body.reason,
+    );
     db.prepare(
       "UPDATE agent_sessions SET body=?,revision=?,expires_at=? WHERE id=?",
     ).run(

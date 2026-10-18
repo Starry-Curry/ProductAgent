@@ -20,6 +20,7 @@ const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 async function home() {
   await page.goto(base);
+  await page.locator(".legacy-home-tools > summary").click();
   await page
     .getByText("记忆与陪伴 · 看看它记下了什么", { exact: true })
     .waitFor();
@@ -174,6 +175,7 @@ try {
     page.getByText("第一次见面，可选地介绍一下自己", { exact: true }),
   ).toHaveCount(0);
   await page.getByLabel("演示角色 · 非真实账号").selectOption("lin");
+  await home();
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.locator(".case-card").first()).toBeVisible();
   assert.equal(

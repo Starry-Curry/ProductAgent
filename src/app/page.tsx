@@ -1,5 +1,6 @@
 "use client";
 import { HouseholdCases } from "@/components/HouseholdCases";
+import { HomeExperience } from "@/components/HomeExperience";
 import { AssistantConversation } from "@/components/AssistantConversation";
 import { MemoryCenter } from "@/components/MemoryCenter";
 import { PersonalContext } from "@/components/PersonalContext";
@@ -66,7 +67,7 @@ type Data = Omit<State, "care" | "saved"> & {
   saved: Partial<State["saved"]>;
 };
 const nav = [
-  ["home", "使用帮助", House],
+  ["home", "我的家", House],
   ["plan", "活动准备", Package],
   ["family", "家庭事项", Users],
   ["discover", "发现", Sparkles],
@@ -429,155 +430,169 @@ export default function App() {
             <>
               {view === "home" && (
                 <>
-                  {elder &&
-                    data.tasks.some(
-                      (t) =>
-                        t.assignee === actor &&
-                        t.kind === "notice" &&
-                        t.status !== "用户确认完成",
-                    ) && (
-                      <section className="panel elder-alerts">
-                        <h2>先看一眼家人的提醒</h2>
-                        <TaskList
-                          tasks={data.tasks.filter((t) => t.kind === "notice")}
-                          actor={actor}
-                          act={act}
-                          elder
-                        />
-                      </section>
-                    )}
-                  <HelpEntry
+                  <HomeExperience
+                    actor={actor}
                     items={data.items}
-                    onAsk={startHelp}
+                    tasks={data.tasks}
                     elder={elder}
+                    onChanged={load}
+                    onOpen={open}
+                    onNavigate={go}
                   />
-                  {(data.contexts || []).some(
-                    (c) => c.owner === actor && c.status === "explicit",
-                  ) && (
-                    <PersonalContext
-                      actor={actor}
-                      facts={data.contexts || []}
-                      act={act}
-                    />
-                  )}
-                  {!elder && (
-                    <details className="panel usage-map">
-                      <summary>第一次使用？先看这几个入口</summary>
-                      <p>
-                        使用帮助解决具体问题；活动准备核对现有物品；家庭事项接力处理；发现提供资料核对与灵感候选；礼物与记忆留下人与物的故事。
-                      </p>
-                      <ol>
-                        <li>
-                          在上方填入“分步帮助”示例并发送，尝试一步后反馈结果。
-                        </li>
-                        <li>
-                          平时正常表达喜好、记录自己新添的物品，不必填写记忆表。
-                        </li>
-                        <li>
-                          在下方“记忆与陪伴”查看来源、纠正或忘记；想聊天时再开启陪伴。
-                        </li>
-                      </ol>
-                      <p>
-                        AI
-                        一般帮助、官方资料指导、本地记忆会分别标明来源。演示角色和示例物品用于体验。
-                      </p>
-                      <p>
-                        <a href="/guide" target="_blank" rel="noreferrer">
-                          打开完整功能与操作指南 ↗
-                        </a>
-                      </p>
-                    </details>
-                  )}
-                  {!elder && (
-                    <HouseholdCases
-                      items={data.items}
-                      onOpen={(i, t) => {
-                        open(i);
-                        setTab(t);
-                      }}
-                    />
-                  )}
                   <MemoryCenter
                     key={actor + (elder ? "elder" : "standard")}
                     actor={actor}
                     items={data.items}
                   />
-                  {elder ? (
-                    <section className="panel elder-inbox">
-                      <h2>{people[actor]}，家人交代的事</h2>
-                      <TaskList
-                        tasks={data.tasks.filter((t) => t.kind !== "notice")}
-                        actor={actor}
-                        act={act}
-                        elder
-                      />
-                    </section>
-                  ) : (
-                    <>
-                      <div className="primary-actions">
-                        <button onClick={() => go("plan")}>
-                          <Package size={24} />
-                          <div>
-                            <h2>准备一次活动</h2>
-                            <p>野餐、出游，看看要带什么</p>
-                          </div>
-                          <ChevronRight size={18} />
-                        </button>
-                        <button onClick={() => go("family")}>
-                          <Users size={24} />
-                          <div>
-                            <h2>家里有件事</h2>
-                            <p>记下维修、清洗或采购，交给家人</p>
-                          </div>
-                          <ChevronRight size={18} />
-                        </button>
-                      </div>
-                      <div className="section-head">
-                        <h2>点一件物品，获得帮助</h2>
-                        <div className="inline">
-                          <button
-                            className="text-button"
-                            onClick={() => go("items")}
-                          >
-                            查看全部
-                          </button>
-                          <button
-                            className="text-button"
-                            onClick={() => go("add")}
-                          >
-                            添加物品
-                          </button>
-                        </div>
-                      </div>
-                      {cards(data.items.slice(0, 4))}
-                      {data.tasks.some(
+                  <details className="legacy-home-tools">
+                    <summary>使用帮助与原有功能入口</summary>
+                    {elder &&
+                      data.tasks.some(
                         (t) =>
-                          t.assignee === actor && t.status !== "用户确认完成",
+                          t.assignee === actor &&
+                          t.kind === "notice" &&
+                          t.status !== "用户确认完成",
                       ) && (
-                        <section className="panel">
-                          <h2>等我处理</h2>
+                        <section className="panel elder-alerts">
+                          <h2>先看一眼家人的提醒</h2>
                           <TaskList
-                            tasks={data.tasks
-                              .filter((t) => t.assignee === actor)
-                              .slice(0, 3)}
+                            tasks={data.tasks.filter(
+                              (t) => t.kind === "notice",
+                            )}
                             actor={actor}
                             act={act}
                             elder
                           />
                         </section>
                       )}
-                      <div className="quiet-actions">
-                        <button onClick={() => go("discover")}>
-                          <Sparkles size={18} /> 发现物品新用法{" "}
-                          <ArrowUpRight size={16} />
-                        </button>
-                        <button onClick={() => go("gifts")}>
-                          <Heart size={18} /> 给朋友一点心意{" "}
-                          <ArrowUpRight size={16} />
-                        </button>
-                      </div>
-                    </>
-                  )}
+                    <HelpEntry
+                      items={data.items}
+                      onAsk={startHelp}
+                      elder={elder}
+                    />
+                    {(data.contexts || []).some(
+                      (c) => c.owner === actor && c.status === "explicit",
+                    ) && (
+                      <PersonalContext
+                        actor={actor}
+                        facts={data.contexts || []}
+                        act={act}
+                      />
+                    )}
+                    {!elder && (
+                      <details className="panel usage-map">
+                        <summary>第一次使用？先看这几个入口</summary>
+                        <p>
+                          使用帮助解决具体问题；活动准备核对现有物品；家庭事项接力处理；发现提供资料核对与灵感候选；礼物与记忆留下人与物的故事。
+                        </p>
+                        <ol>
+                          <li>
+                            在上方填入“分步帮助”示例并发送，尝试一步后反馈结果。
+                          </li>
+                          <li>
+                            平时正常表达喜好、记录自己新添的物品，不必填写记忆表。
+                          </li>
+                          <li>
+                            在下方“记忆与陪伴”查看来源、纠正或忘记；想聊天时再开启陪伴。
+                          </li>
+                        </ol>
+                        <p>
+                          AI
+                          一般帮助、官方资料指导、本地记忆会分别标明来源。演示角色和示例物品用于体验。
+                        </p>
+                        <p>
+                          <a href="/guide" target="_blank" rel="noreferrer">
+                            打开完整功能与操作指南 ↗
+                          </a>
+                        </p>
+                      </details>
+                    )}
+                    {!elder && (
+                      <HouseholdCases
+                        items={data.items}
+                        onOpen={(i, t) => {
+                          open(i);
+                          setTab(t);
+                        }}
+                      />
+                    )}
+                    {elder ? (
+                      <section className="panel elder-inbox">
+                        <h2>{people[actor]}，家人交代的事</h2>
+                        <TaskList
+                          tasks={data.tasks.filter((t) => t.kind !== "notice")}
+                          actor={actor}
+                          act={act}
+                          elder
+                        />
+                      </section>
+                    ) : (
+                      <>
+                        <div className="primary-actions">
+                          <button onClick={() => go("plan")}>
+                            <Package size={24} />
+                            <div>
+                              <h2>准备一次活动</h2>
+                              <p>野餐、出游，看看要带什么</p>
+                            </div>
+                            <ChevronRight size={18} />
+                          </button>
+                          <button onClick={() => go("family")}>
+                            <Users size={24} />
+                            <div>
+                              <h2>家里有件事</h2>
+                              <p>记下维修、清洗或采购，交给家人</p>
+                            </div>
+                            <ChevronRight size={18} />
+                          </button>
+                        </div>
+                        <div className="section-head">
+                          <h2>点一件物品，获得帮助</h2>
+                          <div className="inline">
+                            <button
+                              className="text-button"
+                              onClick={() => go("items")}
+                            >
+                              查看全部
+                            </button>
+                            <button
+                              className="text-button"
+                              onClick={() => go("add")}
+                            >
+                              添加物品
+                            </button>
+                          </div>
+                        </div>
+                        {cards(data.items.slice(0, 4))}
+                        {data.tasks.some(
+                          (t) =>
+                            t.assignee === actor && t.status !== "用户确认完成",
+                        ) && (
+                          <section className="panel">
+                            <h2>等我处理</h2>
+                            <TaskList
+                              tasks={data.tasks
+                                .filter((t) => t.assignee === actor)
+                                .slice(0, 3)}
+                              actor={actor}
+                              act={act}
+                              elder
+                            />
+                          </section>
+                        )}
+                        <div className="quiet-actions">
+                          <button onClick={() => go("discover")}>
+                            <Sparkles size={18} /> 发现物品新用法{" "}
+                            <ArrowUpRight size={16} />
+                          </button>
+                          <button onClick={() => go("gifts")}>
+                            <Heart size={18} /> 给朋友一点心意{" "}
+                            <ArrowUpRight size={16} />
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </details>
                 </>
               )}
               {view === "items" && (
