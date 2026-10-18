@@ -2,6 +2,7 @@ import { canRead, type State, type Person } from "../domain.ts";
 import type { ServiceSession } from "../agent/contracts.ts";
 import { isStoryNarration } from "../memory/ambient.ts";
 import type { HomeRoute } from "./contracts.ts";
+import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 
 export function routeHome(
   question: string,
@@ -141,6 +142,7 @@ export function routeHome(
     };
   if (
     /故事|回忆|记得|以前|来历|毕业|搬家|送给|送我的|一起挑/.test(q) ||
+    (session.known.lastIntent === "story" && isMemoryRecallRequest(q)) ||
     (isStoryNarration(q) &&
       /我(们)?.*(喜欢|爱好|兴趣|买了|用了|用过|一起|陪|送|挑)/.test(q))
   )

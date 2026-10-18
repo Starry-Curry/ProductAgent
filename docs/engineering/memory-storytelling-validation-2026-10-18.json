@@ -1,0 +1,119 @@
+{
+  "kind": "offline-memory-storytelling-and-regression-validation",
+  "measuredAt": "2026-10-18T13:49:10.614Z",
+  "branch": "feat/home-scene-item-companions",
+  "baseline": "4aaeb2873eb0684072d24a4521cd7095f153d188",
+  "realModelCalls": 0,
+  "paidCost": 0,
+  "tests": {
+    "baseline": 75,
+    "total": 88,
+    "passed": 88,
+    "failed": 0,
+    "newTests": 13,
+    "existingAssertionUpdated": "household case now addresses the owner as you instead of requiring verbatim I; scope and persistence assertions retained"
+  },
+  "typecheck": {
+    "passed": true,
+    "command": "node node_modules/typescript/bin/tsc --noEmit"
+  },
+  "build": {
+    "passed": true,
+    "next": "15.5.28",
+    "node": "24"
+  },
+  "benchmark": {
+    "passed": true,
+    "regressions": 0,
+    "originalExtractiveFalseRejectionRetained": true,
+    "limit": "Offline synthetic contracts, not competitor/live-model/semantic quality evaluation"
+  },
+  "browser": {
+    "passed": true,
+    "journeys": [
+      "tests/integration.mjs",
+      "tests/foundation-integration.mjs",
+      "tests/household-integration.mjs",
+      "tests/home-integration.mjs"
+    ],
+    "additionalChecks": [
+      "recall is paragraph prose without old raw-list phrases",
+      "continue recall does not repeat a story or append original memories"
+    ],
+    "realModelCalls": 0,
+    "visualInspection": [
+      "1440px desktop story reply",
+      "390px mobile home/dialogue"
+    ],
+    "evidenceDirectory": "review-evidence/memory-storytelling-20261018"
+  },
+  "behaviorCoverage": [
+    "original feedback: prose from grounded story fragments",
+    "deduplicate relationship summary and story",
+    "story retrieval outranks preferences",
+    "continue and expand without capturing questions as life events",
+    "authorized generate path receives actual skill prompt",
+    "native complete receives prompt and no tools",
+    "mixed cloud permission stays local",
+    "cross-item/actor/temporary/demo isolation",
+    "unavailable provider falls back once",
+    "invalid refs/list/false reminder/unexpected tools fall back",
+    "forgotten content not retold",
+    "no-memory honesty",
+    "family gift and reading do not imply shared reading; negative shared reading remains negative"
+  ],
+  "promptVersion": "human-item-agent-v1.4",
+  "storytellingVersion": "memory-storytelling-v1.0",
+  "localHealth": {
+    "root": 200,
+    "guide": 200,
+    "homeApi": 200
+  },
+  "credentials": "Key contents not read, printed, exported or included in prompts; existing authentication settings retained",
+  "sourceHashEncoding": "SHA256 of UTF-8 text normalized to LF; excludes document/report-only edits",
+  "sourceHashes": {
+    "scripts/verify-local.mjs": "da5b798c45802abf044b8337c78bfa429fa89e9690afd65bf0a4ed1c00a98612",
+    "src/app/api/home/route.ts": "bde977154b950c5c91bacdd9732bf3386b7f90e1d67809dd43ff131eea1beb4f",
+    "src/app/guide/page.tsx": "4fcd53da01fd19ee3a896ea2138cb15acb7715f2a5b6cf980ee5d5dbf83fce07",
+    "src/app/home.css": "2b9b86d965e31532b6c2d7fb7237f5dfa3427349ec5fb83415d2f54cc9927404",
+    "src/app/layout.tsx": "f1e5c74fb36cbf10ba66b07c0d28c0257417e343cb3718ca18e0ab3dca66088e",
+    "src/app/page.tsx": "feeba79a5119a57764deb67bf580b028c60496a7337a422f30453614d0736077",
+    "src/components/AssistantConversation.tsx": "42f9530a57699823a7457bc7eef6e66989c5b92ab11c32e9ab6497c872227105",
+    "src/components/HomeExperience.tsx": "d18136d2f9bd8e435220577f1239b64e2ce271ade110740f917795a25532960b",
+    "src/components/ItemCharacter.tsx": "fc506e9e59765c0c0add3dd1136890b893a5b536d4964d927dce30278de172ed",
+    "src/lib/agent/contracts.ts": "ba2cabfd4f1e1b77d0572e1eafe6d6b0084378c3568baf37a781929c79dd7bae",
+    "src/lib/agent/graph.ts": "c0f900161ed268e4a9a3be6ff31e3b13619b62ab57ec317b647df096dc1a8ac3",
+    "src/lib/agent/prompts.ts": "237245446205e6cecacceef1497a3d5baca11f5d8504f07e3b5b26286143e4d3",
+    "src/lib/agent/service.ts": "4f630ef6c22c56dcaa1e509f0033302204a23d12fd362b3ca8a0dcded5413ea9",
+    "src/lib/ai/provider.ts": "1bebbd22239787bc7369e46d08e797535e6f29d3fd8d1248db689bd3b1df4250",
+    "src/lib/context/builder.ts": "56ecab04284d9db9a756c2d8b5d5e67942d6cf300eced2cfefdba39029cf253e",
+    "src/lib/home/contracts.ts": "eb7a3684887b5027360488e7c6b8602c65a3ac781669f86184ec006765d7d2ba",
+    "src/lib/home/decisions.ts": "b22c320a1b9b4fc912f1f32698e94eeadba9fc196db359f0a68f596bf9f2163c",
+    "src/lib/home/router.ts": "c1014c752583f3263b093e82bf0391e03f2b670d6991d069b58f05ad0612178f",
+    "src/lib/home/store.ts": "773b74501f0b2a15e257c3450319478eb3cb12b334c07ae9b158b9caabafd09e",
+    "src/lib/memory/ambient.ts": "8ba554515250c875a5d09f1033ddffe92e6110811be9182194cd3f564685a76f",
+    "src/lib/memory/store.ts": "c80e1d6437d9edb1e39a4c54ccc5649fafa587ec836bdef0efcc939f9d782422",
+    "src/lib/migrations.ts": "3c6fd88fd20f922b198482f5764453aa021845469e4300b8d1cb6557a5b2d124",
+    "src/lib/repositories/home-schema.ts": "7c40182301fb19f3edaef4cc6cee6de89022cc7f533c4d13b080086df722d111",
+    "src/lib/repositories/retention.ts": "82f1c0e2ce5ef23cc1562f5ab2b198946e42d1d3c6f9cff8005707bc812c30cf",
+    "src/lib/repositories/sessions.ts": "12363de3ceecca8e6ce76d11a299983024cb34584ed90e7866c23cd15edc0b19",
+    "src/lib/skills/memory-storytelling.ts": "212b5c8a28b02b6418f9718669a474247322cd86a9805cd2431f43741e4854f4",
+    "src/lib/skills/registry.ts": "64305b57d058421a8e805289a15b029b6fc33c7e1bf9396448771c7d8913fa57",
+    "tests/ambient.test.ts": "dc8fea4f929b107d1b9e7e4b5a0a5f2aefbaa4e9a39b0625ca067625246777f2",
+    "tests/foundation-integration.mjs": "b7208e2b7f256a9e7192f7015b34c77893f7d89c2390fc1ab0343c8e8d5dd535",
+    "tests/home-companions.test.ts": "0816ae27c3b54f070b5931b7e2172acbf932bf3989c5416c25bb23abafe243ce",
+    "tests/home-integration.mjs": "ac1a8d72bd05257ce041da4f2d6ef8752ae3a512a7fe45c6bd64034d2bfea7ae",
+    "tests/household-cases.test.ts": "8fe01ee1cb8299e6d6a0b5d5385541a5c728c18760d2fa9231277ed05195c1bc",
+    "tests/household-integration.mjs": "cf8312e1d5db3c7c03a2f99ccc68da56508fb6dbea67067ed460050d5adff087",
+    "tests/integration.mjs": "70b0412054ddae4c52ceae2dbe3c56aaa9626c011fae96234aa5acc23580ed8f",
+    "tests/memory-storytelling.test.ts": "ff4c89f54c36ed259335fa55285fade3f88f0bf29e49f77ee14c64a2091cbc58",
+    "tests/reliability.test.ts": "69b8a7d987ce8f4b5475e56f6009e776751398a0951aa6a77c9950ea7774dfa5"
+  },
+  "knownLimits": [
+    "finite local recall and conservative prose, at most five retrieval candidates",
+    "cloud phrasing only when all selected records individually allow cloud and are non-demo",
+    "reference/format/regex checks do not prove semantic faithfulness",
+    "no new live Qwen quality assessment or household user study",
+    "no background reminders, new database schema, dependencies or UI flows"
+  ]
+}

@@ -4,6 +4,8 @@
 
 当前是可运行的本机演示工程，技术栈为 Next.js 15 / React 19 / TypeScript / Node.js **24** / SQLite / LangGraph.js。唯一开发目录为 D:\Project\Tianmao\ProductAgent；[源码仓库](https://github.com/Starry-Curry/ProductAgent)。已从 2026-10-17 精简审查包导入并持续深化。
 
+最新更新：[记忆表达 Skill](docs/engineering/memory-storytelling-2026-10-18.md)。故事检索后组织成自然段落，按物品提供轻度语气差异，支持“还有呢/展开讲讲”；默认私人故事本地组织，获准片段才可由千问润色，失败时保留本地回忆。
+
 ## 先启动与体验
 
 完整的本机启动、新电脑安装、更新重建、两个分支差异及可转发说明见 **[运行与分支交接说明](docs/RUN_AND_BRANCH_HANDOFF.md)**。当前验收请使用 `feat/home-scene-item-companions`；它包含 `feat/household-demo-conversations` 的全部修改，`main` 尚未合并。
@@ -66,7 +68,7 @@ acceptance 自动使用独立数据库和端口、关闭真实模型，Windows E
 
 - [当前实现状态](IMPLEMENTATION_STATUS.md)、[开发报告](DEVELOPMENT_REPORT.md)、[技术交接](REVIEW_HANDOFF.md)
 - [文档目录](docs/README.md)、[产品说明书 V1.1](docs/物品智能服务_完整产品说明书_V1.1_交付版.md)
-- [当前家庭空间验收](docs/engineering/home-companions-validation-2026-10-18.json)、[上一轮家居案例验收](docs/engineering/household-validation-2026-10-18.json)、[历史真实百炼验证](docs/engineering/live-validation-2026-10-18.json)
+- [当前记忆表达验收](docs/engineering/memory-storytelling-validation-2026-10-18.json)、[家庭空间基线验收](docs/engineering/home-companions-validation-2026-10-18.json)、[历史真实百炼验证](docs/engineering/live-validation-2026-10-18.json)
 - [原始迁移与来源](docs/engineering/repository-migration-2026-10-17.md)、[Git 协作](CONTRIBUTING.md)
 
 后续仍通过 Git 功能分支迭代；审查 ZIP 是源码附件，排除 Key、数据库、个人资料、依赖、运行时和构建缓存。

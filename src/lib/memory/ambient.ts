@@ -3,6 +3,7 @@ import type { DatabaseSync } from "node:sqlite";
 import { identity } from "../ai/harness.ts";
 import { canRead, seed, type State, type Person } from "../domain.ts";
 import type { MemoryRecord, ServiceSession } from "../agent/contracts.ts";
+import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 const EXTRACTOR = "ambient-local-v1";
 const digest = (text: string) =>
   createHash("sha256").update(text).digest("hex");
@@ -269,6 +270,7 @@ export function isStoryNarration(text: string) {
   return (
     text.trim().length >= 4 &&
     safeForMemory(text) &&
+    !isMemoryRecallRequest(text) &&
     !/[？?]|什么|有没有|如何|能不能|是否|吗|呢|假设|如果|示例|比如|例如|不要记录|不要记住|别记|编一个|帮我写|想听|想知道|想问|想让你|想请你|希望你|请你|讲一个|讲个|说个/.test(
       text,
     ) &&

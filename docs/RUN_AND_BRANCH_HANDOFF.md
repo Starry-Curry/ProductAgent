@@ -1,6 +1,6 @@
 # 物间：运行、验收与两个分支交接说明
 
-更新：2026-10-18。本说明对应当前 Next.js 工程；功能实现提交为 `8a5c13e`，运行和交接说明的后续提交沿用同一最新分支。代码事实与限制见 [REVIEW_HANDOFF.md](../REVIEW_HANDOFF.md)。
+更新：2026-10-18。本说明对应当前 Next.js 工程；家庭空间基线为 `8a5c13e`，后续运行文档和[记忆表达 Skill](engineering/memory-storytelling-2026-10-18.md) 沿用同一最新分支。最新功能、验收与限制见 [REVIEW_HANDOFF.md](../REVIEW_HANDOFF.md)。
 
 ## 1. 应该使用哪个版本
 
@@ -14,7 +14,7 @@
 
 两个功能分支是连续迭代。已经用 `git merge-base --is-ancestor` 确认：第二分支包含第一分支的全部修改。**运行、审查和后续开发直接使用第二分支，不需要分别合并或重复 cherry-pick。**
 
-功能提交标识用于区分两次实现；最新分支可能继续增加文档提交，以 `git log -1 --oneline` 和 ZIP 清单确认实际 HEAD。网页不会因为 GitHub 的 `main` 还没更新而自动切换版本。
+功能提交标识用于区分最初两次实现；最新分支已继续加入记忆表达 Skill，以 `git log -1 --oneline` 和 ZIP 清单确认实际 HEAD。网页不会因为 GitHub 的 `main` 还没更新而自动切换版本。
 
 ## 2. 本机怎样打开
 
@@ -128,7 +128,7 @@ git log --oneline origin/feat/household-demo-conversations..origin/feat/home-sce
 - 日常数据库是 `data/demo.sqlite`。新代码增量升级到 v6，保留 `.before-v5-to-v6.sqlite` 等升级前备份；合成案例由已上传的初始化代码重建。依赖、Key、数据库和构建输出不随 Git/审查 ZIP 上传。
 - 第一分支仅支持其 v5 数据；新版本升级后的 v6 库不能直接交给旧分支运行。需要对照旧版本时使用独立目录和独立数据，不覆盖日常库。回退与已遗忘内容/备份的边界见实现交接。
 - 功能版本 `4394b06` 的记录为 63/63 测试及三组浏览器旅程；`8a5c13e` 为 75/75、生产构建、独立类型检查、离线基准和四组 API/Edge 浏览器旅程。两轮自动验收真实模型调用均为 0；历史其他阶段的在线百炼证据单独保留，不重复计入。
-- 本次运行说明整理未重跑上述全量测试；只核对分支关系、启动脚本、文档链接、当前服务健康和已提交证据，不把历史测试写成本次新增验收。
+- 上次纯文档整理只核对分支关系、启动脚本、文档链接、服务健康和已提交证据；后续记忆表达实现已重新验证，最新结果见[记忆表达验收](engineering/memory-storytelling-validation-2026-10-18.json)，不将历史测试计为本轮成绩。
 
 需要自行复验时：
 
@@ -144,6 +144,6 @@ npm.cmd run test:acceptance
 
 ## 8. 可以直接转发的一段话
 
-> 物间项目已完成两个连续迭代，并推送到 GitHub。第一分支 `feat/household-demo-conversations`（功能提交 `4394b06`）补充了有官方资料来源的家电/家具案例、合成故事与记忆，并把日常记忆新增统一放到物品对话中，首次介绍只保留一次。第二分支 `feat/home-scene-item-companions`（功能提交 `8a5c13e`，后续文档提交也在该分支）在此基础上加入家庭空间、每件物品的二维动画角色、统一物品对话和基于现有 LangGraph 的全屋路由；位置、计划与家庭事项通过预览、确认、事务执行和真实回执接回原模块，保留原有功能与记忆权限。第二分支已包含第一分支全部修改，请直接使用第二分支验收和继续开发，`main` 尚未合并。该功能版本已通过 75/75 测试、构建、类型检查、离线基准及四组浏览器旅程；两轮自动验收均未新增真实模型调用。运行请先读 `docs/RUN_AND_BRANCH_HANDOFF.md` 与 `REVIEW_HANDOFF.md`，安装 Node24 后执行 `npm ci`、`npm run build`、`npm run start:local`，浏览器访问本机 3100。路由/记忆仍是有限规则，识物、IoT 和真实跨设备家庭尚未接入。
+> 物间项目已完成连续迭代，并推送到 GitHub。第一分支 `feat/household-demo-conversations` 补充了有官方资料来源的家电/家具案例、合成故事与记忆，把日常记忆新增转向物品对话，首次介绍只保留一次。第二分支 `feat/home-scene-item-companions` 在此基础上加入家庭空间、每件物品的二维动画角色、统一物品对话和基于 LangGraph 的全屋路由，计划、位置与家庭事项通过预览确认和实际回执接回原模块。最新又增加记忆表达 Skill：从检索片段组织自然段落，提供轻度物品语气、继续/展开；私人和演示记忆本地组织，逐条获准的片段才可由千问润色。第二分支完整包含第一分支，请直接使用第二分支验收和开发，main 尚未合并。最新功能版通过 88/88 测试、构建、类型检查、离线基准及四组浏览器旅程，本轮未新增真实模型调用。运行先读 docs/RUN_AND_BRANCH_HANDOFF.md 和 REVIEW_HANDOFF.md，安装 Node24，执行 npm.cmd ci、npm.cmd run build、npm.cmd run start:local，访问本机 3100。有限路由和记忆表达仍有边界，识物、IoT、真实跨设备家庭尚未接入。
 
 仓库入口：[最新分支](https://github.com/Starry-Curry/ProductAgent/tree/feat/home-scene-item-companions)。审查阅读顺序：本说明 → [技术交接](../REVIEW_HANDOFF.md) → [迭代设计](engineering/home-companions-iteration-2026-10-18.md) → [实现/API/边界](engineering/home-companions-implementation-2026-10-18.md) → [验收摘要](engineering/home-companions-validation-2026-10-18.json) 与源码。

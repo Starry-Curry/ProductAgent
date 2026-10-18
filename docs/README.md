@@ -10,6 +10,9 @@
 
 ## 当前来源与证据
 
+- [最新：记忆表达 Skill、Prompt、隐私与体验](engineering/memory-storytelling-2026-10-18.md)
+- [本轮故事表达验收](engineering/memory-storytelling-validation-2026-10-18.json)
+
 - [最新：家庭空间、物品动画角色与全屋 Agent 迭代设计](engineering/home-companions-iteration-2026-10-18.md)
 - [本轮实现、API、权限与体验步骤](engineering/home-companions-implementation-2026-10-18.md)
 - [本轮最终验收摘要](engineering/home-companions-validation-2026-10-18.json)

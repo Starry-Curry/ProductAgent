@@ -93,10 +93,26 @@ try {
   await expect(
     chat().locator(".conversation-message.assistant").last(),
   ).toContainText("毕业那天妈妈");
+  const recalledMessage = chat()
+    .locator(".conversation-message.assistant")
+    .last();
+  await expect(recalledMessage).not.toContainText("案例中记录了");
+  await expect(recalledMessage).not.toContainText("可以接着讲它与你的近况");
+  const recallText = await recalledMessage.locator("p").first().textContent();
+  assert.ok(recallText.split("\n").filter(Boolean).length <= 2);
   await page.screenshot({
     path: "artifacts/home-companions-story.png",
     fullPage: true,
   });
+  const beforeMore = await api("/api/workspace");
+  await send("还有呢");
+  await expect(
+    chat().locator(".conversation-message.assistant").last(),
+  ).not.toContainText("毕业那天妈妈");
+  assert.equal(
+    (await api("/api/workspace")).memories.length,
+    beforeMore.memories.length,
+  );
   await page.getByRole("button", { name: "返回全屋对话", exact: true }).click();
   await send("帮我准备周末野餐");
   let before = await api("/api/workspace");

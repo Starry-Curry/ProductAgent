@@ -1,4 +1,12 @@
+import { STORYTELLING_INSTRUCTIONS } from "./memory-storytelling.ts";
 export const skills = {
+  "memory-storytelling": {
+    version: "1.0.0",
+    instructions: STORYTELLING_INSTRUCTIONS,
+    goal: "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应",
+    tools: [],
+    success: "自然连贯、来源可追溯，不编经历、不把历史要求当成当前动作",
+  },
   "item-help": {
     version: "1.0.1",
     instructions:
@@ -8,9 +16,9 @@ export const skills = {
     success: "提供适用下一步或清楚的补充/交接路径",
   },
   "item-story": {
-    version: "1.0.0",
+    version: "1.1.0",
     instructions:
-      "围绕当前具体物品回应本人真实叙述，原始故事与派生记忆分别保留。回忆仅引用当前授权故事；不捏造共同经历，不追问画像字段，不自动共享给家人或收礼者。旧故事入口本地确认/回忆；统一对话可针对本次叙述自然回应，历史仅使用获准片段，不宣称未经提交的业务操作已经完成。",
+      "围绕当前具体物品回应本人真实叙述，原始故事与派生记忆分别保留。回忆由 memory-storytelling 组织语言，不逐条列出检索原文；不捏造共同经历，不追问画像字段，不自动共享给家人或收礼者。私人片段本地组织，只有逐条获准的片段可交给模型；不宣称未经提交的业务操作已经完成。",
     goal: "以人与物讲述故事的窗口逐步理解用户和关系",
     tools: [],
     success: "故事绑定真实 Item、本人作者与来源，可追溯可控制",

@@ -238,7 +238,7 @@ test("演示物品对话可以增加案例记忆，但喜好不会升级为全�
       },
       f.provider,
     );
-    assert.match(recalled.reply.answer, /我喜欢园艺/);
+    assert.match(recalled.reply.answer, /你喜欢园艺/);
     assert.match(recalled.reply.caveat || "", /案例/);
   } finally {
     f.db.close();

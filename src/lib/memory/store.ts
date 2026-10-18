@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 import { canRead, type State, type Person } from "../domain.ts";
+import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 import {
   AgentError,
   memorySchema,
@@ -330,6 +331,7 @@ export function recallMemories(
   sessionId?: string,
 ) {
   const q = question.toLowerCase();
+  const wantsStory = isMemoryRecallRequest(question);
   const pairs = new Set(q.match(/[a-z0-9]+/g) || []);
   for (let i = 0; i < q.length - 1; i++)
     if (/[\u4e00-\u9fff]{2}/.test(q.slice(i, i + 2)))
@@ -361,6 +363,9 @@ export function recallMemories(
         (mode === "companion" &&
         (m.kind === "story" || m.kind === "relationship")
           ? 4
+          : 0) +
+        (wantsStory && ["story", "relationship", "experience"].includes(m.kind)
+          ? 8
           : 0) +
         [...pairs].filter((p) => m.text.toLowerCase().includes(p)).length,
     }))

@@ -30,6 +30,15 @@ import {
   relevantKnowledge,
 } from "../skills/knowledge.ts";
 import { skills } from "../skills/registry.ts";
+import {
+  planMemoryStory,
+  localMemoryStory,
+  canComposeInCloud,
+  storytellingMessages,
+  validateStorytelling,
+  STORYTELLING_VERSION,
+  type StoryPlan,
+} from "../skills/memory-storytelling.ts";
 import { SYSTEM_PROMPT, PROMPT_VERSION, tools } from "./prompts.ts";
 import { isStoryNarration } from "../memory/ambient.ts";
 import { epoch } from "../memory/store.ts";
@@ -104,27 +113,8 @@ export function curatedDecision(
         "answered",
         "local-memory",
       );
-    const stories = ctx.memories.filter(
-      (m) =>
-        m.itemId === session.itemId &&
-        (m.kind === "story" || m.kind === "relationship"),
-    );
-    if (/记得|回忆|以前|聊聊|故事/.test(question) && stories.length)
-      return {
-        ...blank(
-          "关于“" +
-            ctx.item?.name +
-            (ctx.item?.demo ? "”，案例中记录了：\n" : "”，你留下过：\n") +
-            stories.map((m) => m.text).join("\n") +
-            "\n可以接着讲它与你的近况。",
-          "answered",
-          "local-memory",
-        ),
-        memoryIds: stories.map((m) => m.id),
-        caveat: ctx.item?.demo
-          ? "合成案例故事或演示中的讲述，不代表真实用户经历。"
-          : "引用本人的物品故事；没有生成共同经历。",
-      };
+    const story = planMemoryStory(ctx, session);
+    if (story) return localMemoryStory(story);
     return blank(
       "这里是你与“" +
         ctx.item?.name +
@@ -185,27 +175,8 @@ export function curatedDecision(
     };
   }
   if (ctx.persona.enabled && session.mode === "companion") {
-    const records = ctx.memories.filter(
-      (m) =>
-        m.kind === "story" ||
-        m.kind === "relationship" ||
-        m.kind === "experience",
-    );
-    if (records.length && /故事|记得|回忆|以前|聊聊|想起/.test(question)) {
-      const warm =
-        ctx.persona.style === "playful"
-          ? "我们翻开这一页小故事吧。"
-          : "我们可以从你留下的这段记忆聊起。";
-      return {
-        ...blank(
-          `${ctx.persona.nickname ? ctx.persona.nickname + " · " : ""}${warm}\n${records.map((m) => m.text).join("\n")}\n你现在想起它时，最想留下什么？`,
-          "answered",
-          "local-memory",
-        ),
-        memoryIds: records.map((m) => m.id),
-        caveat: "来自你的记录，可在记忆中纠正或忘记。",
-      };
-    }
+    const story = planMemoryStory(ctx, session);
+    if (story) return localMemoryStory(story);
   }
   if (session.mode === "companion" && !ctx.persona.enabled && !unified)
     return {
@@ -431,8 +402,9 @@ export async function executeGraph(
         contextDeadline = Math.min(contextDeadline, Date.parse(m.expiresAt));
   };
   let route: HomeRoute | undefined;
+  let storyPlan: StoryPlan | undefined;
   let effectiveSession = session;
-  let activeSkill =
+  let activeSkill: (typeof skills)[keyof typeof skills] =
     skills[
       session.mode === "story"
         ? "item-story"
@@ -547,6 +519,14 @@ export async function executeGraph(
         itemId: effectiveSession.itemId,
         temporary,
       });
+      storyPlan = planMemoryStory(ctx, effectiveSession);
+      // Safety decisions and domain actions take priority over conversational polish.
+      if (
+        unsafe.test(w.question) ||
+        (route && !["story", "companion"].includes(route.intent))
+      )
+        storyPlan = undefined;
+      if (storyPlan) activeSkill = skills["memory-storytelling"];
       const skill = activeSkill;
       trackExpiry(ctx.memories);
       add(w, "skill_selected", `${skill.goal}; version=${skill.version}`);
@@ -572,7 +552,21 @@ export async function executeGraph(
           ctx,
           session.mode === "auto",
         );
-      if (!w.reply) {
+      if (storyPlan) {
+        add(
+          w,
+          "memory_story_planned",
+          `${STORYTELLING_VERSION}; refs=${storyPlan.sources.map((m) => m.id).join(",")}`,
+        );
+        if (canComposeInCloud(storyPlan)) {
+          w.reply = undefined;
+          w.messages = storytellingMessages(storyPlan);
+          add(w, "memory_story_composition", "authorized-cloud");
+        } else {
+          w.reply = localMemoryStory(storyPlan);
+          add(w, "memory_story_composition", "local-private-or-demo");
+        }
+      } else if (!w.reply) {
         const prior = session.messages
           .filter(
             (m) =>
@@ -650,7 +644,7 @@ export async function executeGraph(
             })
           : {
               ...(await provider.generate(
-                SYSTEM_PROMPT,
+                w.messages[0].content || SYSTEM_PROMPT,
                 JSON.parse(w.messages[1].content || "{}"),
               )),
               toolCalls: [],
@@ -664,13 +658,23 @@ export async function executeGraph(
             output: (w.tokens?.output || 0) + t.output,
           };
         add(w, "model_returned", `tools=${w.response.toolCalls.length}`);
+        if (storyPlan && w.response.toolCalls.length) {
+          w.reply = localMemoryStory(storyPlan);
+          add(w, "memory_story_fallback", "unexpected_tool_call");
+        }
       } catch (error) {
         if (error instanceof AgentError) throw error;
         const e =
           error instanceof ProviderError
             ? error
             : new ProviderError("internal", "暂时无法生成可靠回答。");
-        if (route?.intent === "story" && isStoryNarration(w.question)) {
+        if (storyPlan) {
+          w.reply = {
+            ...localMemoryStory(storyPlan),
+            errorCode: e.code,
+          };
+          add(w, "memory_story_fallback", "provider_unavailable");
+        } else if (route?.intent === "story" && isStoryNarration(w.question)) {
           const ctx = buildContext(db, read(), actor, {
             question: w.question,
             mode: "story",
@@ -789,17 +793,18 @@ export async function executeGraph(
           itemId: effectiveSession.itemId,
           temporary,
         });
-        w.reply = validateModelPacket(
-          w.response!.text,
-          ctx,
-          effectiveSession.mode,
-        );
+        w.reply = storyPlan
+          ? validateStorytelling(w.response!.text, storyPlan)
+          : validateModelPacket(w.response!.text, ctx, effectiveSession.mode);
         w.reply.model = w.response!.model;
-        w.reply.memoryIds = ctx.cloudMemories.map((m) => m.id);
+        if (!storyPlan) w.reply.memoryIds = ctx.cloudMemories.map((m) => m.id);
         add(w, "validated", w.reply.outcome);
       } catch {
         add(w, "validation_failed", "schema_or_support");
-        if (w.calls < 3) {
+        if (storyPlan) {
+          w.reply = localMemoryStory(storyPlan);
+          add(w, "memory_story_fallback", "invalid_narrative");
+        } else if (w.calls < 3) {
           w.messages.push(
             { role: "assistant", content: w.response!.text },
             {

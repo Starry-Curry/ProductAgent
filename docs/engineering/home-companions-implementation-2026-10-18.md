@@ -1,5 +1,7 @@
 # 家庭空间、物品伙伴与全屋 Agent：实现及验收
 
+> 后续更新：记忆回复已由[记忆表达 Skill](memory-storytelling-2026-10-18.md)深化；当前 Prompt、本地组织、云端授权与来源检查以该说明为准。下文保留家庭空间实现的历史记录。
+
 基线：4394b06。分支：feat/home-scene-item-companions。日期：2026-10-18。设计依据见 [迭代文档](home-companions-iteration-2026-10-18.md)，测试事实见 [最终验收摘要](home-companions-validation-2026-10-18.json)。本轮没有添加模型服务商或改变 Key 配置。
 
 ## 可以直接体验什么
