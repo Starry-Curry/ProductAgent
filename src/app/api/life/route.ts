@@ -1,3 +1,4 @@
+import { planDiscovery } from "@/lib/life/planning";
 import { createLifeItem } from "@/lib/life/intake";
 import { syntheticItem } from "@/lib/life/availability";
 import { z } from "zod";
@@ -208,33 +209,10 @@ export async function POST(r: Request) {
         .parse(p.input);
       return Response.json({ id: saveSource(db, read(), a, v) });
     }
-    if (p.action === "discover") {
-      const v = z
-        .object({
-          goal: z.string().max(500).default("发现新用途"),
-          itemId: z.string().optional(),
-          minutes: z.number().int().min(1).max(240).optional(),
-          includeSynthetic: z.boolean().default(false),
-          model: z.boolean().default(false),
-        })
-        .parse(p.input);
-      return Response.json({
-        ideas: v.model
-          ? [
-              await modelIdea(
-                db,
-                read(),
-                a,
-                v.goal,
-                lifeProvider(),
-                v.includeSynthetic,
-                read,
-                { minutes: v.minutes, itemId: v.itemId },
-              ),
-            ]
-          : discoverLife(db, read(), a, v),
-      });
-    }
+    if (p.action === "discover")
+      return Response.json(
+        await planDiscovery(db, read(), a, p.input, lifeProvider(), read),
+      );
     if (p.action === "submitIdea")
       return Response.json({ idea: submitIdea(db, read(), a, p.input) });
     if (p.action === "ideaFeedback") {

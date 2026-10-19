@@ -34,6 +34,7 @@ export type ToolDefinition = {
   };
 };
 export type Provider = {
+  ready?: boolean;
   complete?: (
     messages: ModelMessage[],
     tools: ToolDefinition[],
@@ -49,6 +50,7 @@ export function createProvider(
 ): Provider {
   const { AI_BASE_URL, AI_API_KEY, AI_MODEL } = env;
   const provider: Provider = {
+    ready: !!AI_BASE_URL && !!AI_API_KEY?.trim() && !!AI_MODEL && env.AI_ALLOW_PAID_CALLS === "true",
     model: AI_MODEL || "unconfigured",
     async generate(system, input) {
       if (!AI_BASE_URL || !AI_API_KEY || !AI_MODEL)

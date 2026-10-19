@@ -51,7 +51,7 @@ export function Discovery({
         itemId: omit.includes(itemId || "") ? undefined : itemId,
         itemIds: selectedIds.filter((id) => !omit.includes(id)),
         excludedItemIds: omit,
-        previousIdeaIds: turns.at(-1)?.ids || [],
+        previousIdeaIds: turns.findLast((t) => t.ids.length)?.ids || [],
         minutes: Number(minutes),
         includeSynthetic: synthetic,
         model,
@@ -112,6 +112,18 @@ export function Discovery({
       <div className="discovery-heading">
         <span className="life-eyebrow">MAKE SOMETHING OF TODAY</span>
         <h2>描述一个想法，让手边的物品参与。</h2>
+        <button
+          className="text-button"
+          onClick={() => {
+            setTurns([]);
+            setResults([]);
+            setExcluded([]);
+            setGoal("想用已有的东西，做点新鲜的小事");
+            setGaps([]);
+          }}
+        >
+          新的探索
+        </button>
         <p>
           说说想做什么、有什么限制。物间会核对已有物品，再一起把想法变成可尝试的步骤。
         </p>
@@ -285,6 +297,14 @@ export function Discovery({
               · 未实物验证
             </span>
             <h3>{idea.title}</h3>
+            {idea.rationale && (
+              <p className="idea-rationale">{idea.rationale}</p>
+            )}
+            {!!idea.missing?.length && (
+              <p className="life-notice">
+                待确认 / 缺口：{idea.missing.join("；")}
+              </p>
+            )}
             <p className="life-muted">
               约 {idea.minutes} 分钟 ·{" "}
               {idea.itemIds

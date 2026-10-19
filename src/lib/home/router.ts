@@ -3,6 +3,7 @@ import type { ServiceSession } from "../agent/contracts.ts";
 import { isStoryNarration } from "../memory/ambient.ts";
 import type { HomeRoute } from "./contracts.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
+import { withoutProhibitedActions } from "../agent/safety-language.ts";
 
 export function routeHome(
   question: string,
@@ -10,6 +11,8 @@ export function routeHome(
   actor: Person,
   session: ServiceSession,
 ): HomeRoute {
+  if (session.known.uiPage)
+    return routeProductTurn(question, state, actor, session);
   const q = question.trim();
   const visible = state.items.filter((i) => canRead(i, actor));
   const selected = session.itemId
@@ -70,8 +73,18 @@ export function routeHome(
     mode: HomeRoute["mode"],
     reason: string,
   ): HomeRoute => ({ ...base, intent, mode, reason });
-  if (!target && session.known.memoryPolicy && !/在哪|位置|有哪些物品|请爸爸|请家人|野餐|郊游|旅行|出游|阅读角|怎么|如何|故障|型号|按钮|设置|承重/.test(q))
-    return decision("companion", "companion", "普通交流可不关联物品；仅按本次政策整理候选");
+  if (
+    !target &&
+    session.known.memoryPolicy &&
+    !/在哪|位置|有哪些物品|请爸爸|请家人|野餐|郊游|旅行|出游|阅读角|怎么|如何|故障|型号|按钮|设置|承重/.test(
+      q,
+    )
+  )
+    return decision(
+      "companion",
+      "companion",
+      "普通交流可不关联物品；仅按本次政策整理候选",
+    );
   if (/短接|冒烟|漏电|烧焦|带电.*拆/.test(q))
     return decision("help", "service", "先处理安全与实际现象");
   if (
@@ -181,4 +194,75 @@ function isPastStory(q: string) {
   return (
     isStoryNarration(q) && /去年|那年|那天|上次|以前|第一次|我们曾|记得/.test(q)
   );
+}
+/** Page and session scopes come from authorized item IDs, never model guesses. */
+export function routeProductTurn(
+  question: string,
+  state: State,
+  actor: Person,
+  session: ServiceSession,
+): HomeRoute {
+  const q = question.trim(),
+    items = state.items.filter((i) => canRead(i, actor));
+  const named = items.filter((i) => q.includes(i.name));
+  const selected = items.find((i) => i.id === session.itemId);
+  const previous = items.find((i) => i.id === session.known.activeItemId);
+  const target =
+    named.length === 1
+      ? named[0]
+      : selected ||
+        (/这个|它|这件|刚才|继续|还是|然后|有的|是的|原配|windows|win11|第.步/.test(
+          q,
+        ) || session.known.pending
+          ? previous
+          : undefined);
+  const result = (
+    intent: HomeRoute["intent"],
+    mode: HomeRoute["mode"],
+    reason: string,
+    scoped = true,
+  ): HomeRoute => ({
+    intent,
+    mode,
+    reason,
+    itemId: scoped ? target?.id : undefined,
+    itemName: scoped ? target?.name : undefined,
+  });
+  if (
+    /(?:物间|这个App|这个软件|这款App|应用|app).*(?:怎么用|功能|能做|如何|是什么)|(?:怎么|如何).*(?:录入|添加物品|保存故事|删除记忆|开启千问)|你(?:可以|能)做什么/i.test(
+      q,
+    )
+  )
+    return result(
+      "app",
+      "service",
+      "回答当前应用实际功能与入口，不套商品澄清",
+      false,
+    );
+  if (/短接|冒烟|漏电|烧焦|带电.*拆/.test(withoutProhibitedActions(q)))
+    return result("help", "service", "安全优先");
+  if (
+    /压力|焦虑|烦恼|难过|孤独|心情|陪我|想聊|今天很累|工作很累|电影|新闻|聊点别的/.test(
+      q,
+    ) &&
+    !/故障|漏电/.test(q)
+  )
+    return result(
+      "companion",
+      "companion",
+      "回应这次交流，不强行围绕物品",
+      false,
+    );
+  if (
+    /创意|玩法|新用途|灵感|有趣|组合|不买东西|不想买|整理桌面|换个方向|更简单|只有这些|不用这件/.test(
+      q,
+    ) ||
+    (session.known.lastIntent === "plan" &&
+      /换|更|不要|只有|只用|分钟|小时|试试/.test(q))
+  )
+    return result("plan", "ideas", "理解目标、检索能力并核对组合条件");
+  const known = { ...session.known };
+  delete known.uiPage;
+  delete known.memoryPolicy;
+  return routeHome(q, state, actor, { ...session, itemId: target?.id, known });
 }

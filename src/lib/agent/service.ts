@@ -42,7 +42,7 @@ export async function respond(
       revision: 0,
       status: "active",
       messages: [],
-      known: {},
+      known: input.uiContext ? { uiPage: input.uiContext.page } : {},
       tried: [],
       memoryEpoch: epoch(db, actor),
       createdAt: at,
@@ -80,6 +80,10 @@ export async function respond(
   const { session, cached } = beginTurn(db, read, actor, input);
   if (cached) return cached;
   if (input.memoryPolicy) session.known.memoryPolicy = input.memoryPolicy;
+  if (input.uiContext) {
+    session.known.uiPage = input.uiContext.page;
+    if (input.uiContext.goal) session.known.uiGoal = input.uiContext.goal;
+  }
   session.known.turnRequestId = input.requestId;
   try {
     let execution: Omit<TurnResult, "session">;
@@ -164,15 +168,16 @@ export async function respond(
         itemId: execution.reply.route?.itemId || session.itemId,
         memoryPolicy: input.memoryPolicy,
         capture:
-          session.known.memoryPolicy !== "off" && (input.mode !== "auto" ||
-          (!!execution.reply.route &&
-            ["help", "story", "companion"].includes(
-              execution.reply.route.intent,
-            ) &&
-            !(
-              execution.reply.route.intent === "story" &&
-              !execution.reply.route.itemId
-            ))),
+          session.known.memoryPolicy !== "off" &&
+          (input.mode !== "auto" ||
+            (!!execution.reply.route &&
+              ["help", "story", "companion"].includes(
+                execution.reply.route.intent,
+              ) &&
+              !(
+                execution.reply.route.intent === "story" &&
+                !execution.reply.route.itemId
+              ))),
       },
       {
         id: crypto.randomUUID(),

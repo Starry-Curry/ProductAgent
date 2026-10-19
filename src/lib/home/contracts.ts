@@ -45,6 +45,7 @@ export const placeSchema = z
   })
   .strict();
 export type HomeIntent =
+  | "app"
   | "help"
   | "story"
   | "companion"

@@ -11,6 +11,20 @@ export const turnInputSchema = z
       .default("service"),
     temporary: z.boolean().default(false),
     memoryPolicy: z.enum(["legacy", "candidates", "off"]).optional(),
+    uiContext: z
+      .object({
+        page: z.enum([
+          "home",
+          "item",
+          "assistant",
+          "discover",
+          "family",
+          "social",
+        ]),
+        goal: z.string().max(500).optional(),
+      })
+      .strict()
+      .optional(),
     expectedRevision: z.number().int().nonnegative().optional(),
   })
   .strict();

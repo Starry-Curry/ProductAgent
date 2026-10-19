@@ -1,3 +1,5 @@
+import { planDiscovery } from "../life/planning.ts";
+import { withoutProhibitedActions } from "./safety-language.ts";
 import {
   Annotation,
   StateGraph,
@@ -90,7 +92,7 @@ export function curatedDecision(
   ctx: ReturnType<typeof buildContext>,
   unified = false,
 ): AssistantReply | undefined {
-  if (unsafe.test(question))
+  if (unsafe.test(withoutProhibitedActions(question)))
     return {
       ...blank(
         "先停止这项操作。如果设备冒烟、漏电、发热异常或电池受损，请停止使用并联系专业售后；我可以帮你整理现象与型号。",
@@ -340,15 +342,19 @@ export function validateModelPacket(
       (hazardousActions.test(q) || deviceClaims.test(q)),
   );
   if (
-    hazardousActions.test(actionable) ||
-    deviceClaims.test(actionable) ||
+    hazardousActions.test(withoutProhibitedActions(actionable)) ||
+    deviceClaims.test(withoutProhibitedActions(actionable)) ||
     /我(?:已经|已)(?:帮你|为你)?(?:通知|联系|发送|下单|购买|移动|挪|创建|保存|安排|控制)/.test(
       actionable,
     ) ||
     questionsUnsafe
   )
     throw new AgentError("输出包含未核实的操作、状态或共同经历");
-  if (packet.kind === "general" && ctx.knowledge.facts.length)
+  if (
+    packet.kind === "general" &&
+    ctx.knowledge.facts.length &&
+    mode !== "companion"
+  )
     throw new AgentError("存在相关事实，请选择来源 ID 或说明还缺什么条件");
   if (packet.kind === "creative" && !["ideas", "companion"].includes(mode))
     throw new AgentError("当前任务不接受虚构替代事实");
@@ -522,10 +528,72 @@ export async function executeGraph(
         itemId: effectiveSession.itemId,
         temporary,
       });
+      trackExpiry(ctx.memories);
+      if (route?.intent === "plan" && session.known.uiPage && !temporary) {
+        w.calls = (provider.ready ?? true) ? 1 : 0;
+        try {
+          const plan = await planDiscovery(
+            db,
+            read(),
+            actor,
+            {
+              goal: w.question,
+              itemId: effectiveSession.itemId,
+              previousIdeaIds: JSON.parse(session.known.lifeIdeaIds || "[]"),
+              model: provider.ready ?? true,
+              includeSynthetic: false,
+              page: session.known.uiPage,
+            },
+            provider,
+            read,
+          );
+          guard();
+          w.calls = plan.modelCalls;
+          if (plan.ideas.length)
+            session.known.lifeIdeaIds = JSON.stringify(
+              plan.ideas.map((i) => i.id),
+            );
+          w.reply = {
+            ...blank(
+              plan.understanding +
+                "\n\n" +
+                (plan.ideas[0]?.title || "先核对可用物品，再继续规划。"),
+              plan.ideas.length ? "answered" : "needs_info",
+              plan.source === "model-creative"
+                ? "model-creative"
+                : "curated-guidance",
+            ),
+            steps: (plan.ideas[0]?.steps || []).map((text, n) => ({
+              id: `life:${plan.ideas[0].id}:${n}`,
+              text,
+            })),
+            questions: [],
+            citations: [],
+            evidenceIds: [],
+            memoryIds: [],
+            caveat: [...plan.missing, ...(plan.ideas[0]?.limits || [])].join(
+              " ",
+            ),
+          };
+          add(w, "goal_planning", plan.source);
+        } catch (error) {
+          if (error instanceof AgentError) throw error;
+          const e =
+            error instanceof ProviderError
+              ? error
+              : new ProviderError(
+                  "internal",
+                  "本次规划未完成，请保留目标后重试。",
+                );
+          w.reply = { ...blank(e.message, "unavailable"), errorCode: e.code };
+          add(w, "goal_planning_failed", e.code);
+        }
+        return { work: w };
+      }
       storyPlan = planMemoryStory(ctx, effectiveSession);
       // Safety decisions and domain actions take priority over conversational polish.
       if (
-        unsafe.test(w.question) ||
+        unsafe.test(withoutProhibitedActions(w.question)) ||
         (route && !["story", "companion"].includes(route.intent))
       )
         storyPlan = undefined;
@@ -558,7 +626,7 @@ export async function executeGraph(
             route,
             temporary,
           )) ||
-        (!unsafe.test(w.question) &&
+        (!unsafe.test(withoutProhibitedActions(w.question)) &&
         effectiveSession.itemId &&
         !ctx.knowledge.facts.length &&
         effectiveSession.mode === "service"
@@ -616,6 +684,13 @@ export async function executeGraph(
             role: "user",
             content: JSON.stringify({
               question: w.question,
+              pageContext: session.known.uiPage
+                ? {
+                    page: session.known.uiPage,
+                    goal: session.known.uiGoal || session.known.goal,
+                    currentItemId: ctx.item?.id,
+                  }
+                : undefined,
               goal: session.known.goal,
               mode: effectiveSession.mode,
               item: ctx.item
@@ -697,7 +772,7 @@ export async function executeGraph(
           add(w, "memory_story_fallback", "provider_unavailable");
         } else if (route?.intent === "story" && isStoryNarration(w.question)) {
           const ctx = buildContext(db, read(), actor, {
-        excludeSynthetic: session.known.memoryPolicy !== undefined,
+            excludeSynthetic: session.known.memoryPolicy !== undefined,
             question: w.question,
             mode: "story",
             itemId: effectiveSession.itemId,
@@ -760,7 +835,7 @@ export async function executeGraph(
           ).parse(JSON.parse(call.function.arguments));
           const query = args.query || "";
           const ctx = buildContext(db, read(), actor, {
-        excludeSynthetic: session.known.memoryPolicy !== undefined,
+            excludeSynthetic: session.known.memoryPolicy !== undefined,
             question: query || w.question,
             mode: effectiveSession.mode,
             sessionId: session.id,
@@ -810,7 +885,7 @@ export async function executeGraph(
       };
       try {
         const ctx = buildContext(db, read(), actor, {
-        excludeSynthetic: session.known.memoryPolicy !== undefined,
+          excludeSynthetic: session.known.memoryPolicy !== undefined,
           question: session.known.goal || w.question,
           mode: effectiveSession.mode,
           sessionId: session.id,

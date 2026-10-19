@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import type { Item, Person } from "@/lib/domain";
+import { additionalQuestions } from "@/lib/agent/presentation";
 import type {
   ServiceSession,
   TurnInput,
@@ -27,6 +28,7 @@ export function AssistantConversation({
   onBusy,
   onSelectItem,
   memoryPolicy,
+  uiContext,
 }: {
   actor: Person;
   item?: Item;
@@ -40,6 +42,7 @@ export function AssistantConversation({
   onBusy?: (busy: boolean) => void;
   onSelectItem?: (itemId: string) => void;
   memoryPolicy?: "candidates" | "off";
+  uiContext?: TurnInput["uiContext"];
 }) {
   const [session, setSession] = useState<ServiceSession | null>(null),
     [sessions, setSessions] = useState<ServiceSession[]>([]);
@@ -97,6 +100,7 @@ export function AssistantConversation({
             question: text.trim(),
             temporary,
             memoryPolicy,
+            uiContext,
             expectedRevision: temporary ? undefined : base?.revision,
           };
     retry.current = input;
@@ -330,16 +334,23 @@ export function AssistantConversation({
                   : message.role === "feedback"
                     ? "你的反馈"
                     : message.reply?.outcome === "unavailable"
-                      ? message.reply.errorCode === "not_configured" ? "未配置密钥或模型" : message.reply.errorCode === "payment_not_authorized" ? "未开启费用授权" : "请求失败"
+                      ? message.reply.errorCode === "not_configured"
+                        ? "未配置密钥或模型"
+                        : message.reply.errorCode === "payment_not_authorized"
+                          ? "未开启费用授权"
+                          : "请求失败"
                       : labels[message.reply?.source || "curated-guidance"]}
             </strong>
             {message.reply?.route && (
               <small className="home-route-label">
                 {message.reply.route.itemName
                   ? message.reply.route.itemName + " · "
-                  : "全屋 · "}
+                  : uiContext
+                    ? "物间 · "
+                    : "全屋 · "}
                 {
                   {
+                    app: "物间使用指南",
                     help: "使用帮助",
                     story: "故事与记忆",
                     companion: "陪你聊聊",
@@ -425,9 +436,8 @@ export function AssistantConversation({
                 ))}
               </ol>
             )}
-            {message.reply?.questions.map((q) => (
-              <p key={q}>{q}</p>
-            ))}
+            {message.reply &&
+              additionalQuestions(message.reply).map((q) => <p key={q}>{q}</p>)}
             {message.reply?.caveat && <small>{message.reply.caveat}</small>}
             {!!message.reply?.citations.length && (
               <details>
@@ -584,9 +594,11 @@ export function AssistantConversation({
         <small>
           {temporary
             ? "本次不写入会话或记忆。"
-            : memoryPolicy === "off" ? "仅保留必要的会话历史，不自动整理长期记忆。临时提问可进一步关闭历史保存；当前问题可能由已授权模型处理。"
-            : memoryPolicy === "candidates" ? "会话历史与长期记忆分开：仅提取待确认候选，确认前不用于长期个性化；历史私人记忆默认不上云。"
-            : "问答保存 7 天，确认解决后保存 30 天；相关内容会在本机静默整理为记忆，可在首页查看、暂停或忘记。必要问题可能交给云端模型；私人记忆默认不上云。"}
+            : memoryPolicy === "off"
+              ? "仅保留必要的会话历史，不自动整理长期记忆。临时提问可进一步关闭历史保存；当前问题可能由已授权模型处理。"
+              : memoryPolicy === "candidates"
+                ? "会话历史与长期记忆分开：仅提取待确认候选，确认前不用于长期个性化；历史私人记忆默认不上云。"
+                : "问答保存 7 天，确认解决后保存 30 天；相关内容会在本机静默整理为记忆，可在首页查看、暂停或忘记。必要问题可能交给云端模型；私人记忆默认不上云。"}
         </small>
       </form>
       {session?.known.lastOutcome === "unresolved" && !temporary && (

@@ -33,6 +33,11 @@ export function homeDecision(
   const item = state.items.find(
     (i) => i.id === route.itemId && canRead(i, actor),
   );
+  if (route.intent === "app")
+    return answer(
+      "物间可以从三件小事开始：\n1. 有问题：在 AI 助手直接聊天，或打开物品的使用帮助。\n2. 想尝试：到发现新玩法描述目标，可选物品、时间及限制，再继续修改方案。\n3. 留住生活：在物品故事或生活故事保存照片＋原话，可关联多件物品并编辑、删除。\n家庭页管理共享事项；社交页查看礼物与选中的故事。录入物品可用照片、扫码、型号、链接或说明书，信息不明时人工确认。云端状态和费用开关可在配置指南查看。",
+      "answered",
+    );
   if (route.intent === "clarify")
     return answer(route.reason + "。", "needs_info");
   if (route.intent === "story" && !item)
@@ -155,7 +160,10 @@ export function homeDecision(
         "这是演示物品的独立对话。回到全屋对话后，可以按你的日常物品准备和保存计划。",
         "needs_info",
       );
-    const planItems=session.known.memoryPolicy !== undefined ? state.items.filter(i=>!syntheticItem(i) && lifeUsable(i)) : state.items;
+    const planItems =
+      session.known.memoryPolicy !== undefined
+        ? state.items.filter((i) => !syntheticItem(i) && lifeUsable(i))
+        : state.items;
     const existing = prepareActivity(q, planItems, actor);
     const reading = /阅读角/.test(q);
     if (!existing && !reading) return;

@@ -624,6 +624,7 @@ export default function WujianApp() {
                   actor={actor}
                   mode="auto"
                   initialQuestion={entryQuestion}
+                  uiContext={{ page: "assistant" }}
                   memoryPolicy={policy}
                   onActivity={() => load().catch(() => {})}
                 />
@@ -767,6 +768,7 @@ export default function WujianApp() {
                       actor={actor}
                       item={item}
                       mode="auto"
+                      uiContext={{ page: "item" }}
                       memoryPolicy="off"
                       onActivity={() => load().catch(() => {})}
                     />
