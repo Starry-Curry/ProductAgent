@@ -255,9 +255,9 @@ try {
   await page.getByRole("textbox", { name: "搜索物品" }).fill("验收 M185");
   await page.getByRole("button", { name: /验收 M185/ }).click();
   await page
-    .getByRole("textbox", { name: "写下你的问题", exact: true })
+    .getByRole("textbox", { name: "对物间说", exact: true })
     .fill("电池规格是什么");
-  await page.getByRole("button", { name: "发送问题", exact: true }).click();
+  await page.getByRole("button", { name: "发送", exact: true }).click();
   await expect(
     page.getByText("电源为一节可更换 AA 电池。", { exact: true }),
   ).toBeVisible();
@@ -321,10 +321,18 @@ try {
   await expect(
     page.locator(".completed-tasks").getByText(title, { exact: true }),
   ).toBeVisible();
+  await page.screenshot({
+    path: "artifacts/life/family-desktop.png",
+    fullPage: true,
+  });
   await page.getByRole("button", { name: "社交", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "礼物与故事传递", exact: true }),
   ).toBeVisible();
+  await page.screenshot({
+    path: "artifacts/life/social-desktop.png",
+    fullPage: true,
+  });
   await page.getByRole("button", { name: "生活首页", exact: true }).click();
   await page
     .getByRole("textbox", { name: "随时问物间", exact: true })
@@ -349,6 +357,18 @@ try {
     path: "artifacts/life/home-mobile.png",
     fullPage: true,
   });
+  for (const name of ["发现新玩法", "家庭", "社交", "生活故事"]) {
+    await page
+      .getByRole("navigation", { name: "主要导航" })
+      .getByRole("button", { name, exact: true })
+      .click();
+    assert.ok(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+      name + " mobile overflow",
+    );
+  }
   assert.deepEqual(errors, []);
   checks.push("浏览器：展柜→物品问答、故事保存刷新、创意生成、390px 无横溢出");
 } finally {

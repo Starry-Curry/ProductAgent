@@ -27,6 +27,8 @@ npm.cmd run start:life
 
 独立数据库为 `data-life-v1/demo.sqlite`。程序拒绝旧 `data/` 和其他工作区；测试使用 `.runtime/verification-*`。不要复制旧数据库、照片或环境密钥。
 
+当前若3200已被本人手动云端服务占用，可用 `$env:PORT='3201'` 后 `npm run start:life` 启动费用关闭的新版预览，仍使用本开发目录的数据。本轮预览为 http://127.0.0.1:3201；已有云端服务需由其启动者重启以加载最新构建，不能把旧进程缓存当新版验收。
+
 ## 本机千问配置与手动费用开关
 
 仅在当前工作区被Git忽略的 `.env.local` 填写：`AI_API_KEY`、`AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1`、`AI_MODEL=qwen-plus`、`AI_JSON_MODE=true`、`AI_ENABLE_THINKING=false`。可参考空 `.env.example`，已有配置不要覆盖，不要将Key发到聊天或提交Git。

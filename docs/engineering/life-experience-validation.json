@@ -1,0 +1,118 @@
+{
+  "measuredAt": "2026-10-19T16:37:19.554875+00:00",
+  "scope": "产品体验与智能路径深化；无新技术栈、无真实付费模型调用",
+  "fullUnitRun": {
+    "passed": 115,
+    "failed": 0,
+    "baseCommit": "c684f2e",
+    "ranOnce": true
+  },
+  "finalTargetedRun": {
+    "passed": 27,
+    "failed": 0,
+    "why": "收尾调整规划摘要、来源标签和前端布局后，仅复测受影响life/experience测试"
+  },
+  "typecheck": "passed",
+  "productionBuild": "passed; 浏览器发现浮层遮挡关闭入口后修复并重建",
+  "benchmark": {
+    "regressions": 0,
+    "realModelCalls": 0,
+    "limit": "保留旧保守验证器一次正确改写误拒，不把引用ID当语义证明"
+  },
+  "lifeJourneys": {
+    "passed": true,
+    "measuredAt": "2026-10-19T16:31:32.103Z",
+    "kind": "isolated-api-and-edge-acceptance",
+    "checks": [
+      "A: 新建照片物品、类别/能力/状态与确认型号绑定",
+      "B: 官方 AA 电池资料、用户说明书摘录与本人结果反馈（0 模型调用）",
+      "C: 新物品参与组合、收藏与尝试、状态变化阻止旧方案执行",
+      "D: 图文保存、双物品唯一原文、编辑解除关联、越权拒绝及删除照片",
+      "E: 共享物品、创建家庭事项、另一演示成员实际接手",
+      "新版产品路径：目标对话连续修改、家庭完成状态、社交礼物独立、首页提问App指南",
+      "浏览器：展柜→物品问答、故事保存刷新、创意生成、390px 无横溢出"
+    ],
+    "baseline": {
+      "items": 25,
+      "syntheticItems": 25,
+      "packs": 11,
+      "facts": 33,
+      "procedures": 2,
+      "boundInstances": 10,
+      "distinctBoundModels": 10,
+      "legacyCases": 8,
+      "creativeRecipes": 12,
+      "familyTasks": 7,
+      "gifts": 1,
+      "photoFragments": 2,
+      "fragments": 3
+    },
+    "createdItems": 3,
+    "realModelCalls": 0,
+    "limits": "所有新增数据为合成验收数据；规则候选不是模型或实物验证。未进行付费模型、视觉识物、真人研究或真实家庭同步。"
+  },
+  "formats": {
+    "passed": true,
+    "measuredAt": "2026-10-19T16:31:37.416Z",
+    "checks": [
+      "真实 PDF 文字提取（合成PDF）",
+      "浏览器实际解码 QR 和 EAN-13 图片",
+      "浏览器照片录入、类别与生命周期",
+      "浏览器图文新增、修改、删除",
+      "资料保存失败后独立重试不重复创建物品；浏览器后退可用"
+    ],
+    "realModelCalls": 0
+  },
+  "legacyJourneys": {
+    "passed": true,
+    "isolated": true,
+    "scripts": [
+      "integration",
+      "foundation-integration",
+      "household-integration",
+      "home-integration"
+    ]
+  },
+  "verifiedPaths": [
+    "首页直接问App功能，不要求型号",
+    "选中物品连续澄清后给出已有资料步骤",
+    "无物品自由交流，页面和本轮历史保留",
+    "新物品能力组合、上一轮所属校验、排除物品、时间调整、收藏保留",
+    "云端规划离线协议生成固定配方之外方案，并验证事实ID/资源/授权变化",
+    "家庭事项完成/已完成列表，与社交礼物分开",
+    "图文创建/跨物品关联/编辑删除与越权拒绝",
+    "390px首页、发现、家庭、社交、故事无横向溢出"
+  ],
+  "cloud": {
+    "realPaidCallsThisRound": 0,
+    "notVerified": "真实Qwen输出质量、网络/账户实时效果和实际物品组合效果",
+    "preview": "http://127.0.0.1:3201",
+    "previewCloudState": "unauthorized",
+    "previewUsesExistingDevelopmentData": true,
+    "existing3200CloudProcess": "检测到手动 --cloud 启动器，保留未终止；不将其当作Codex调用授权"
+  },
+  "database": {
+    "lifeSchema": 2,
+    "integrity": "ok",
+    "newMigrationThisRound": false
+  },
+  "remainingLimits": [
+    "NLU仍是受约束路由+模型理解，离线配方/能力算子是有限兜底",
+    "公开资料获取需用户主动读取绑定来源，并非任意网页/平台搜索",
+    "视觉识物/OCR/真实家庭登录跨设备同步未实现",
+    "旧重复候选不破坏性合并，保留原ID及反馈"
+  ],
+  "sha256": {
+    "src/components/life/WujianApp.tsx": "9d1e1d40f13fdc84503bd889cc4825139e618826044e968b2f52204a5b2f0c2c",
+    "src/components/life/Discovery.tsx": "936e59cf5daaf12fb69d24161d47482b6e64fb9c0b85e83902020e7de80a28fd",
+    "src/components/life/FamilyPanel.tsx": "e7faaeea1ec26e4ec979309c853d359308053157554931b44592d6d9761f1189",
+    "src/lib/life/planning.ts": "a72cbaa09b25967baa32c467862a837c63489fdda6fc46e3204bec10ae5cca77",
+    "src/lib/life/ideas.ts": "2a4f9a95ccbfb75eca6030c6516bf74f32f8dbc47e7df5e6c30735aff87d3c3b",
+    "src/lib/home/router.ts": "6f644b3335657f9d43a10eaf0642c220e9be07fc76b816e28b37ba98404ae7b6",
+    "src/lib/agent/graph.ts": "77ef2a63b50b1034e5b0009251c3bde8fccf9926a78216fc7d749e300d2c6d83",
+    "src/lib/agent/service.ts": "80dde9effd2a7cf0fe921066128b8e5d31193a9d025f16355c217014af6150a2",
+    "src/lib/context/builder.ts": "6df3dc3a5fb2c0aea73b62978639864fae7b9113243f92281dd16219c96fdd32",
+    "tests/life-experience.test.ts": "afe9036ac51c53e401ecc36a92ea2caf7ea6b66ed79380a3e689e34898b66e51",
+    "tests/life-integration.mjs": "4f177d9d19e4f7bdf46bc35386ecfa4cdd0be6beddce1a2a55e48a9fc4ae9e4c"
+  }
+}

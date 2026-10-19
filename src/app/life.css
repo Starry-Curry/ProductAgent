@@ -148,7 +148,9 @@
 .composer-toolbar>span {margin-left:auto;font-size:11px;color:#86917b;}
 .composer-toolbar>button {display:flex;gap:8px;align-items:center;white-space:nowrap;}
 .composer-toolbar summary {display:flex;align-items:center;gap:6px;cursor:pointer;color:#6e7a65;font-size:12px;}
-.discovery-options {position:absolute;z-index:5;top:42px;left:0;background:#fff;padding:18px;border:1px solid #dce3d5;border-radius:12px;max-width:500px;width:min(500px,80vw);box-shadow:0 12px 32px #1e331b22;}
+.life-shell .composer-toolbar>details {margin:0;padding:0;border:0;position:relative;}
+.life-shell .composer-toolbar summary {margin-bottom:0;}
+.discovery-options {position:absolute;z-index:5;top:calc(100% + 12px);left:0;background:#fff;padding:18px;border:1px solid #dce3d5;border-radius:12px;max-width:500px;width:min(500px,80vw);box-shadow:0 12px 32px #1e331b22;}
 .discovery-pick-items {display:flex;flex-wrap:wrap;gap:8px;max-height:180px;overflow:auto;}
 .discovery-meta {display:flex;justify-content:space-between;gap:12px;font-size:12px;color:#7b8672;padding:14px 2px;}
 .discovery-meta button {text-decoration:underline;}
@@ -173,7 +175,9 @@
 .family-filter button {padding:8px 14px;border-radius:8px;color:#788370;}
 .family-filter button.active {background:#e5ecde;color:#314a32;}
 .family-create {position:relative;}
-.family-create>div {position:absolute;right:0;top:52px;z-index:4;width:350px;max-width:85vw;box-shadow:0 12px 32px #253b2022;padding:20px;}
+.life-shell .family-create {margin:0;padding:0;border:0;}
+.life-shell .family-create>summary {margin:0;}
+.family-create>div {position:absolute;right:0;top:calc(100% + 10px);z-index:4;width:350px;max-width:85vw;box-shadow:0 12px 32px #253b2022;padding:20px;}
 .life-family .task-list {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start;}
 .life-family .simple-task {padding:17px;border-radius:12px;margin:0;min-height:0;background:#fff;border:1px solid #dee4d7;}
 .life-family .simple-task h3 {font-size:16px;margin:10px 0;line-height:1.5;}

@@ -568,7 +568,7 @@ export async function executeGraph(
               plan.ideas.length ? "answered" : "needs_info",
               plan.source === "model-creative"
                 ? "model-creative"
-                : "curated-guidance",
+                : "local-planning",
             ),
             steps: (plan.ideas[0]?.steps || []).map((text, n) => ({
               id: `life:${plan.ideas[0].id}:${n}`,

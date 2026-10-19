@@ -13,6 +13,8 @@ const labels = {
   "model-general": "AI 一般帮助",
   "local-memory": "来自本地记录",
   "local-dialogue": "本地简短回应",
+  "local-planning": "离线能力规划 · 未实物验证",
+  "user-source": "用户提供资料 · 未独立核验",
   "model-creative": "AI 创作 / 可选交流",
 };
 export function AssistantConversation({

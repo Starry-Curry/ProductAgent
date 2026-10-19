@@ -448,7 +448,7 @@ export default function WujianApp() {
                       .filter(
                         (i, n, a) => a.findIndex((x) => x.id === i.id) === n,
                       )
-                      .slice(0, 6),
+                      .slice(0, 8),
                   )}
                 </section>
                 <section className="life-home-pair">

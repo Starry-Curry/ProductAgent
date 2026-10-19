@@ -171,9 +171,15 @@ export async function planDiscovery(
     missing.push(
       "未能将描述中的物品准确对应到展柜，请选择物品；本轮描述不会自动变成已确认库存。",
     );
-  for (const p of profiles)
-    if (p.quantity === "待确认") missing.push(`${p.name}：数量待现场核对`);
-  const understood = `${goal.slice(-500)} · ${minutes}分钟${/不买|不购买|零预算/.test(goal) ? " · 不新增购买" : ""} · ${items.length}件可用候选${excluded.size ? ` · 排除${excluded.size}件` : ""}`;
+  if (/多人|两人|三人|立体声|数量|几个/.test(goal))
+    for (const p of profiles)
+      if (p.quantity === "待确认") missing.push(`${p.name}：数量待现场核对`);
+  const focus = /整理|收纳|桌面/.test(goal)
+    ? "利用已有收纳与整理能力，改善眼前的一小块空间"
+    : /摄影|光影|拍照/.test(goal)
+      ? "围绕观察与记录，比较现有物品的组合可能"
+      : "用已有物品做一个低风险、可尝试的小项目";
+  const understood = `${followup ? `延续上一轮，调整为“${input.goal}”` : focus} · ${minutes}分钟${/不买|不购买|零预算/.test(goal) ? " · 不新增购买" : ""} · 从${items.length}件可用候选中规划${excluded.size ? ` · 排除${excluded.size}件` : ""}`;
   let ideas: LifeIdea[] = [];
   let modelCalls = 0;
   if (

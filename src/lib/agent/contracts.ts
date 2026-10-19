@@ -52,6 +52,8 @@ export type AssistantReply = {
     | "model-general"
     | "local-memory"
     | "local-dialogue"
+    | "local-planning"
+    | "user-source"
     | "model-creative";
   presentation?: "short" | "detailed";
   model?: string;

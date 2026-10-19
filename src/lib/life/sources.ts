@@ -261,7 +261,7 @@ export function sourceReply(
           { id: r.id, title: r.title, url: r.url || "", kind: "user_report" },
         ],
         memoryIds: [],
-        source: "curated-guidance",
+        source: "user-source",
         caveat:
           "用户提供的资料摘录，未经独立核验；请确认对应型号与适用条件。这不是模型生成或已验证的操作步骤。",
       };
@@ -276,7 +276,7 @@ export function sourceReply(
       evidenceIds: [],
       citations: [],
       memoryIds: [],
-      source: "curated-guidance",
+      source: "user-source",
       caveat: "尚未确认答案，不推断官方参数。",
     };
 }
