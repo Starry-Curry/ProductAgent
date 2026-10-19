@@ -45,6 +45,7 @@ export type AssistantReply = {
   caveat?: string;
 };
 export type SessionMessage = {
+  memoryPolicy?: "legacy" | "candidates" | "off";
   capture?: boolean;
   itemId?: string;
   id: string;

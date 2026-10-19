@@ -162,8 +162,9 @@ export async function respond(
         text: input.question,
         at,
         itemId: execution.reply.route?.itemId || session.itemId,
+        memoryPolicy: input.memoryPolicy,
         capture:
-          input.mode !== "auto" ||
+          session.known.memoryPolicy !== "off" && (input.mode !== "auto" ||
           (!!execution.reply.route &&
             ["help", "story", "companion"].includes(
               execution.reply.route.intent,
@@ -171,7 +172,7 @@ export async function respond(
             !(
               execution.reply.route.intent === "story" &&
               !execution.reply.route.itemId
-            )),
+            ))),
       },
       {
         id: crypto.randomUUID(),

@@ -1,0 +1,908 @@
+.life-shell {
+  --ink: #354333;
+  --muted: #8b9381;
+  background: #f8f7f2;
+  min-height: 100vh;
+  color: #354333;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+.life-shell button {
+  border: 1px solid #dce0d4;
+  border-radius: 6px;
+  background: #fffef9;
+  padding: 9px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.life-shell button:hover {
+  background: #edf0e6;
+}
+.life-shell .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #354f3c;
+  border: 1px solid #354f3c;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+}
+.life-shell .button.secondary {
+  background: transparent;
+  color: #354f3c;
+}
+.life-shell .life-text-link {
+  background: none;
+  border: 0;
+  color: #66785c;
+}
+.life-header {
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 15px max(24px, calc((100vw - 1340px) / 2));
+  border-bottom: 1px solid #e2e3d9;
+  background: #fcfbf7;
+}
+.life-shell .life-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 0;
+  background: none;
+  padding: 0;
+  min-width: 180px;
+}
+.life-brand > span {
+  font-family: Georgia, "SimSun", serif;
+  font-size: 34px;
+  letter-spacing: 7px;
+  font-weight: 600;
+}
+.life-brand small {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: #8d967f;
+}
+.life-header nav {
+  display: flex;
+  gap: 5px;
+  flex: 1;
+  justify-content: center;
+}
+.life-header nav button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  border: 0;
+  background: none;
+  padding: 10px;
+  color: #77806d;
+}
+.life-header nav .active {
+  background: #eaf0e4;
+  color: #354e3e;
+}
+.life-actor {
+  min-width: 100px;
+  font-size: 10px;
+  color: #818678;
+}
+.life-shell .life-actor select {
+  background: transparent;
+  border: 0;
+  padding: 5px;
+  font-size: 13px;
+}
+.life-main {
+  max-width: 1240px;
+  margin: auto;
+  padding: 0 32px 80px;
+}
+.life-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 0;
+  color: #929789;
+  font-size: 11px;
+}
+.life-topline button {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.life-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.06fr;
+  gap: 44px;
+  align-items: center;
+  padding: 30px 0 65px;
+}
+.life-eyebrow {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #939c7d;
+  margin-bottom: 17px;
+}
+.life-shell h1 {
+  font-family: Georgia, "SimSun", serif;
+  font-weight: 400;
+}
+.life-hero h1 {
+  font-size: 62px;
+  line-height: 1.35;
+  letter-spacing: 5px;
+  margin: 0 0 20px;
+}
+.life-hero p {
+  font-size: 14px;
+  line-height: 2;
+  color: #808778;
+  margin: 20px 0 30px;
+}
+.life-hero-photos {
+  height: 380px;
+  position: relative;
+  padding-bottom: 24px;
+}
+.life-hero-photos > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9px;
+}
+.life-hero-note {
+  position: absolute;
+  bottom: 0;
+  left: -22px;
+  padding: 24px;
+  background: #eee7d3;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-radius: 5px;
+  box-shadow: 0 9px 28px #2834230d;
+  width: 245px;
+}
+.life-hero-note > span {
+  font-family: "SimSun", serif;
+  font-size: 15px;
+  line-height: 1.9;
+  letter-spacing: 2px;
+}
+.life-hero-note small {
+  width: 100%;
+  font-size: 9px;
+  color: #8c8b75;
+}
+.life-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin: 34px 0 24px;
+}
+.life-section-head .life-eyebrow {
+  margin-bottom: 8px;
+}
+.life-section-head h1 {
+  font-size: 35px;
+  margin: 8px 0;
+}
+.life-section-head h2 {
+  font-size: 23px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 1px;
+}
+.life-section-head p {
+  font-size: 13px;
+  color: #81887b;
+  margin: 10px 0;
+}
+.life-section-head > button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 0;
+  font-size: 12px;
+}
+.life-item-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+}
+.life-shell .life-item-card {
+  padding: 0;
+  text-align: left;
+  border: 1px solid #e3e3d9;
+  background: #fffefa;
+  border-radius: 9px;
+  overflow: hidden;
+}
+.life-shell .life-item-card:hover {
+  transform: translateY(-3px);
+  background: #fffefa;
+  box-shadow: 0 8px 22px #4a51320a;
+}
+.life-item-image {
+  height: 205px;
+  position: relative;
+  background: #eeeee5;
+}
+.life-item-image > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.life-image-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: #fffef5e8;
+  padding: 3px 8px;
+  font-size: 9px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  color: #70796a;
+}
+.life-item-copy {
+  padding: 20px 21px 16px;
+}
+.life-item-copy > small {
+  font-size: 10px;
+  color: #9a9f90;
+  letter-spacing: 1px;
+}
+.life-item-copy h3 {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 8px 0;
+}
+.life-item-copy > p {
+  font-size: 11px;
+  color: #9b9e91;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.life-item-copy .life-actions {
+  justify-content: space-between;
+}
+.life-status {
+  color: #8c997f;
+  font-size: 10px;
+}
+.life-photo-placeholder {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+  color: #a5ae98;
+  font-size: 11px;
+}
+.life-home-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  margin: 40px 0;
+}
+.life-card {
+  background: #fffefa;
+  border: 1px solid #e1e4d9;
+  border-radius: 9px;
+  padding: 27px;
+  margin-bottom: 20px;
+}
+.life-card h2 {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 0 18px;
+}
+.life-card h3 {
+  font-size: 18px;
+  font-weight: 500;
+}
+.life-shell .life-story-teaser {
+  text-align: left;
+  background: #e9ecdf;
+  border: 0;
+  padding: 36px;
+  border-radius: 9px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.life-story-teaser > small {
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin: 15px 0 5px;
+}
+.life-story-teaser h2 {
+  font-family: "SimSun", serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 5px 0;
+}
+.life-story-teaser p {
+  font-size: 12px;
+  color: #7f8877;
+  line-height: 1.9;
+  max-width: 340px;
+}
+.life-story-teaser > span {
+  font-size: 11px;
+  margin-top: 14px;
+}
+.life-ask-teaser {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0;
+  padding: 36px;
+}
+.life-ask-teaser h2 {
+  line-height: 1.8;
+  margin: 20px 0 4px;
+}
+.life-ask-teaser p {
+  font-size: 12px;
+  color: #878e7d;
+}
+.life-ask-teaser small {
+  font-size: 10px;
+  color: #9b9f94;
+  margin-top: 20px;
+}
+.life-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.life-actions label {
+  margin: 0;
+}
+.life-muted {
+  font-size: 12px;
+  color: #8b9183;
+}
+.life-shell small {
+  color: #909784;
+}
+.life-shell label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 12px;
+  margin-bottom: 17px;
+}
+.life-shell input,
+.life-shell textarea,
+.life-shell select {
+  width: 100%;
+  border: 1px solid #dadfd1;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #fffef9;
+  color: #414c3d;
+  min-width: 0;
+  box-shadow: none;
+}
+.life-shell input:focus,
+.life-shell textarea:focus {
+  outline: 2px solid #a8b498;
+  outline-offset: 1px;
+}
+.life-shell textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+.life-shell .life-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.7;
+}
+.life-shell input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  flex-shrink: 0;
+  accent-color: #455f42;
+}
+.life-form-row {
+  display: flex;
+  gap: 18px;
+}
+.life-form-row > * {
+  flex: 1;
+}
+.life-filters {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 25px 0;
+}
+.life-filters > label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  margin: 0;
+}
+.life-filters > select {
+  width: 180px;
+}
+.life-filters > span {
+  font-size: 11px;
+  color: #939987;
+}
+.life-intake-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 27px;
+}
+.life-upload-empty {
+  height: 210px;
+  background: #eef0e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9aa58e;
+  letter-spacing: 2px;
+  border-radius: 6px;
+  margin-bottom: 18px;
+}
+.life-upload-preview {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+.life-file {
+  padding: 12px;
+  background: #edf1e6;
+  border-radius: 6px;
+}
+.life-shell details {
+  margin: 20px 0;
+  border-top: 1px solid #e4e7dc;
+  padding-top: 15px;
+}
+.life-shell summary {
+  font-size: 13px;
+  cursor: pointer;
+  color: #607451;
+  margin-bottom: 14px;
+}
+.life-shell details p {
+  font-size: 12px;
+}
+.life-notice {
+  padding: 15px 20px;
+  background: #f0eddf;
+  border-radius: 6px;
+  color: #6b725e;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.life-empty {
+  padding: 55px 25px;
+  text-align: center;
+  color: #939a86;
+  border: 1px dashed #d6dccb;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+.life-demo-banner {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 25px;
+  background: #ecebdd;
+  border-radius: 8px;
+  margin: 35px 0;
+}
+.life-demo-banner h3 {
+  margin: 0;
+}
+.life-demo-banner p {
+  font-size: 12px;
+  color: #858a79;
+}
+.life-demo-banner button {
+  align-self: center;
+  flex-shrink: 0;
+}
+.life-story-grid,
+.life-idea-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.life-story-grid > .life-card,
+.life-idea-grid > .life-card {
+  margin: 0;
+  min-width: 0;
+}
+.life-story-photo {
+  width: calc(100% + 54px);
+  max-width: none;
+  height: 260px;
+  object-fit: cover;
+  margin: -27px -27px 22px;
+  border-radius: 8px 8px 0 0;
+}
+.life-story-preview {
+  max-height: 210px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+.life-story-text {
+  font-family: "SimSun", serif;
+  font-size: 17px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.life-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 15px 0;
+}
+.life-tags > span,
+.life-tags > button {
+  background: #eef1e6;
+  padding: 5px 9px;
+  border: 0;
+  border-radius: 4px;
+  font-size: 10px;
+  color: #7a886c;
+}
+.life-link-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-height: 250px;
+  overflow: auto;
+}
+.life-pill {
+  display: inline-block;
+  font-size: 9px;
+  padding: 4px 8px;
+  background: #efeddd;
+  color: #8b896b;
+  border-radius: 4px;
+}
+.life-idea ol {
+  padding-left: 20px;
+  font-size: 13px;
+  line-height: 1.95;
+}
+.life-idea li {
+  margin-bottom: 8px;
+}
+.life-source-excerpt {
+  max-height: 250px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.life-back {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: none !important;
+  border: 0 !important;
+  padding-left: 0 !important;
+  color: #7e8b71 !important;
+}
+.life-detail-hero {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 45px;
+  align-items: center;
+  margin: 25px 0 35px;
+}
+.life-detail-photo {
+  height: 330px;
+  background: #eceee4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.life-detail-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.life-detail-hero h1 {
+  font-size: 38px;
+  line-height: 1.4;
+}
+.life-detail-hero p {
+  font-size: 13px;
+  color: #8b9281;
+}
+.life-tabs {
+  display: flex;
+  gap: 30px;
+  border-bottom: 1px solid #dfe3d7;
+  margin-bottom: 25px;
+}
+.life-shell .life-tabs button {
+  padding: 15px 5px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: none;
+}
+.life-shell .life-tabs .active {
+  border-bottom-color: #4c6946;
+  color: #3c5d36;
+}
+.life-shell .assistant-conversation {
+  max-width: none;
+  background: #fffefa;
+}
+.life-shell .life-gift-row {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 17px 0;
+  border-top: 1px solid #e2e5d9;
+}
+.life-shell dl {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  font-size: 12px;
+  gap: 12px;
+}
+.life-shell dt {
+  color: #919985;
+}
+.life-shell dd {
+  margin: 0;
+}
+.life-footer {
+  max-width: 1240px;
+  margin: auto;
+  border-top: 1px solid #e0e2d7;
+  padding: 25px 32px 35px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 10px;
+  color: #989f8d;
+}
+.life-footer span:first-child {
+  margin-right: auto;
+}
+@media (max-width: 1080px) {
+  .life-header {
+    padding: 15px 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .life-header nav {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: flex-start;
+    overflow: auto;
+  }
+  .life-header .life-actor {
+    margin-left: auto;
+  }
+  .life-hero h1 {
+    font-size: 48px;
+  }
+  .life-hero {
+    gap: 30px;
+  }
+  .life-hero-photos {
+    height: 320px;
+  }
+  .life-item-grid {
+    gap: 18px;
+  }
+  .life-item-image {
+    height: 175px;
+  }
+}
+@media (max-width: 700px) {
+  .life-header {
+    padding: 14px 18px;
+    gap: 9px;
+  }
+  .life-brand > span {
+    font-size: 28px;
+  }
+  .life-header nav {
+    gap: 7px;
+    padding-top: 7px;
+  }
+  .life-header nav button {
+    font-size: 11px;
+    padding: 8px;
+    gap: 4px;
+  }
+  .life-header nav button svg {
+    display: none;
+  }
+  .life-main {
+    padding: 0 18px 45px;
+  }
+  .life-topline {
+    padding: 15px 0;
+  }
+  .life-hero {
+    grid-template-columns: 1fr;
+    padding: 20px 0 35px;
+    gap: 25px;
+  }
+  .life-hero h1 {
+    font-size: 45px;
+    line-height: 1.3;
+  }
+  .life-hero p {
+    font-size: 13px;
+    margin: 15px 0 22px;
+  }
+  .life-hero-photos {
+    height: 260px;
+    margin-left: 12px;
+  }
+  .life-hero-note {
+    left: -12px;
+    padding: 15px;
+    width: 215px;
+    gap: 10px;
+  }
+  .life-hero-note > span {
+    font-size: 13px;
+  }
+  .life-hero-note small {
+    font-size: 8px;
+  }
+  .life-item-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+  .life-item-image {
+    height: 145px;
+  }
+  .life-item-copy {
+    padding: 13px;
+  }
+  .life-item-copy h3 {
+    font-size: 14px;
+  }
+  .life-item-copy > small {
+    font-size: 8px;
+  }
+  .life-item-copy > p {
+    font-size: 9px;
+  }
+  .life-image-label {
+    bottom: 8px;
+    left: 8px;
+    font-size: 8px;
+  }
+  .life-section-head {
+    margin: 28px 0 19px;
+    gap: 12px;
+  }
+  .life-section-head h2 {
+    font-size: 19px;
+  }
+  .life-section-head > button {
+    font-size: 10px;
+    max-width: 100px;
+    padding: 4px;
+  }
+  .life-eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.3px;
+  }
+  .life-home-pair,
+  .life-story-grid,
+  .life-idea-grid,
+  .life-intake-grid,
+  .life-detail-hero {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin: 25px 0;
+  }
+  .life-card {
+    padding: 20px;
+  }
+  .life-story-photo {
+    width: calc(100% + 40px);
+    margin: -20px -20px 20px;
+  }
+  .life-detail-photo {
+    height: 270px;
+  }
+  .life-detail-hero h1 {
+    font-size: 30px;
+    margin-top: 5px;
+  }
+  .life-filters {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .life-filters label {
+    flex-basis: 100%;
+  }
+  .life-filters > select {
+    width: 140px;
+  }
+  .life-filters > span {
+    font-size: 10px;
+  }
+  .life-form-row {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .life-form-row > * {
+    min-width: 120px;
+  }
+  .life-tabs {
+    gap: 22px;
+  }
+  .life-shell .life-tabs button {
+    font-size: 12px;
+  }
+  .life-demo-banner {
+    flex-direction: column;
+  }
+  .life-demo-banner button {
+    align-self: flex-start;
+  }
+  .life-footer {
+    padding: 24px 18px;
+    gap: 12px;
+  }
+  .life-footer span {
+    width: 100%;
+  }
+  .life-hero .life-actions {
+    gap: 15px;
+  }
+  .life-hero .button {
+    padding: 12px 15px;
+    font-size: 12px;
+  }
+  .life-actor {
+    min-width: 85px;
+  }
+  .life-link-options {
+    grid-template-columns: 1fr;
+  }
+  .life-shell .assistant-conversation {
+    padding: 16px;
+    min-width: 0;
+  }
+}

@@ -2,14 +2,25 @@ import type { DatabaseSync } from "node:sqlite";
 import { existsSync } from "node:fs";
 
 export function migrateLife(db: DatabaseSync, filename: string) {
-  const table = db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='life_schema'").get();
+  const table = db
+    .prepare(
+      "SELECT 1 FROM sqlite_master WHERE type='table' AND name='life_schema'",
+    )
+    .get();
   if (table) {
-    const version = Number((db.prepare("SELECT MAX(version) AS v FROM life_schema").get() as {v: number}).v || 0);
+    const version = Number(
+      (
+        db.prepare("SELECT MAX(version) AS v FROM life_schema").get() as {
+          v: number;
+        }
+      ).v || 0,
+    );
     if (version > 1) throw Error("生活数据版本高于当前程序，拒绝写入");
     if (version === 1) return;
   }
   const backup = filename + ".before-life-v1.sqlite";
-  if (!existsSync(backup)) db.exec("VACUUM INTO '" + backup.replaceAll("'", "''") + "'");
+  if (!existsSync(backup))
+    db.exec("VACUUM INTO '" + backup.replaceAll("'", "''") + "'");
   db.exec("BEGIN IMMEDIATE");
   try {
     db.exec(`
@@ -24,5 +35,8 @@ export function migrateLife(db: DatabaseSync, filename: string) {
       INSERT INTO life_schema VALUES(1);
     `);
     db.exec("COMMIT");
-  } catch (e) { db.exec("ROLLBACK"); throw e; }
+  } catch (e) {
+    db.exec("ROLLBACK");
+    throw e;
+  }
 }

@@ -59,6 +59,7 @@ export type Task = {
   logs: { by: Person; text: string; at: string }[];
 };
 export type Memory = {
+  giftSnapshot?: boolean;
   demo?: boolean;
   sourceSessionId?: string;
   id: string;

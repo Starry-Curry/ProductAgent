@@ -331,7 +331,7 @@ export function captureFeedback(
   const text =
     "本次最后一轮建议；我反馈有效（用户报告，非设备检测）：\n" +
     steps.map((s) => s.text).join("\n");
-  if (outcome === "completed" && steps.length)
+  if (session.known.memoryPolicy !== "off" && outcome === "completed" && steps.length)
     captureEvent(db, state, actor, {
       id: session.id + ":" + latest!.id,
       kind: "feedback",
@@ -340,6 +340,7 @@ export function captureFeedback(
       itemId: session.itemId,
       sessionId: session.id,
       basis: "user_feedback",
+      pending: session.known.memoryPolicy === "candidates",
       candidates: [{ kind: "method", topic: "method:" + session.id, text }],
     });
   if (outcome === "unresolved") {
@@ -368,12 +369,13 @@ export function captureFeedback(
       }
     }
   }
-  if (reason.trim())
+  if (session.known.memoryPolicy !== "off" && reason.trim())
     captureEvent(db, state, actor, {
       id: session.id + ":" + session.revision,
       kind: "feedback",
       at: session.updatedAt,
       text: reason,
+      pending: session.known.memoryPolicy === "candidates",
       itemId: session.itemId,
       sessionId: session.id,
       basis: "user_feedback",
@@ -433,7 +435,7 @@ export function captureWorkspace(
   const demoStoryIds = new Set(seed().memories.map((m) => m.id));
   for (const story of state.memories.filter(
     (m) =>
-      m.author === actor && !m.origin && !m.demo && !demoStoryIds.has(m.id),
+      m.author === actor && !m.origin && !m.demo && !m.giftSnapshot && !demoStoryIds.has(m.id),
   ))
     captureEvent(db, state, actor, {
       id: story.id,
@@ -552,6 +554,7 @@ export function reconcileMemories(
           itemId: message.itemId || session.itemId,
           sessionId: session.id,
           basis: "user_statement",
+          pending: message.memoryPolicy === "candidates" || (!message.memoryPolicy && session.known.memoryPolicy === "candidates"),
         });
     }
     db.exec("COMMIT");
