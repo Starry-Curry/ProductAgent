@@ -151,6 +151,23 @@ export default function WujianApp() {
   const items = data?.workspace.items.filter((i) => !i.demo) || [];
   const item = items.find((i) => i.id === selected);
   function photo(i: Item) {
+    // Never represent a purifier or a table by an unrelated house/lamp photograph.
+    if (
+      i.synthetic &&
+      i.photo?.startsWith("/demo/life/") &&
+      ![
+        "life-sample-0",
+        "life-sample-1",
+        "life-sample-10",
+        "life-sample-11",
+        "life-sample-12",
+        "life-sample-13",
+        "life-sample-14",
+        "life-sample-15",
+        "life-sample-17",
+      ].includes(i.id)
+    )
+      return undefined;
     return i.photo?.startsWith("/api/life/media/")
       ? i.photo.replace(/actor=[^&]+/, `actor=${actor}`)
       : i.photo;
@@ -176,7 +193,9 @@ export default function WujianApp() {
               </div>
             )}
             <span className="life-image-label">
-              {i.synthetic || i.source === "示例数据" ? "合成案例" : "我的物品"}
+              {i.synthetic || i.source === "示例数据"
+                ? "合成案例 · 分类示意照"
+                : "我的物品"}
             </span>
           </div>
           <div className="life-item-copy">
@@ -316,7 +335,21 @@ export default function WujianApp() {
                       打开物品展柜 <ArrowUpRight size={16} />
                     </button>
                   </div>
-                  {cards(items.slice(-20).slice(0, 6))}
+                  {cards(
+                    [
+                      ...items.filter(
+                        (i) => !i.synthetic && i.source !== "示例数据",
+                      ),
+                      ...[13, 14, 10, 12, 0, 1].flatMap((n) =>
+                        items.filter((i) => i.id === `life-sample-${n}`),
+                      ),
+                      ...items,
+                    ]
+                      .filter(
+                        (i, n, a) => a.findIndex((x) => x.id === i.id) === n,
+                      )
+                      .slice(0, 6),
+                  )}
                 </section>
                 <section className="life-home-pair">
                   <button

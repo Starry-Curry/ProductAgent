@@ -25,6 +25,8 @@ export function Discovery({
     [notice, setNotice] = useState(""),
     [onlySaved, setOnlySaved] = useState(false),
     [results, setResults] = useState<LifeIdea[] | null>(null);
+  const [sourceUrl, setSourceUrl] = useState(""),
+    [sourcePreview, setSourcePreview] = useState("");
   async function generate(model = false) {
     setBusy(true);
     setNotice("");
@@ -193,6 +195,14 @@ export function Discovery({
                 </p>
               )}
             </details>
+            {idea.sourceUrl && (
+              <p>
+                <a href={idea.sourceUrl} target="_blank" rel="noreferrer">
+                  用户提供的经验来源 ↗
+                </a>{" "}
+                · 未独立核验
+              </p>
+            )}
             <div className="life-actions">
               <button onClick={() => feedback(idea, { saved: !idea.saved })}>
                 {idea.saved ? "已收藏 · 取消" : "收藏这个想法"}
@@ -231,6 +241,111 @@ export function Discovery({
       {!rows.length && (
         <div className="life-empty">选好条件，开始找一个值得尝试的小想法。</div>
       )}
+      <details className="life-card">
+        <summary>保存自己找到的玩法 / 获准使用的经验</summary>
+        <p className="life-muted">
+          支持主动提供来源与选定内容；不连接私有账号，不抓取社区全站。普通公开网页可以尝试读取，受限内容由你提供获准使用的必要片段。
+        </p>
+        <label>
+          来源链接（可选）
+          <input
+            type="url"
+            value={sourceUrl}
+            onChange={(e) => setSourceUrl(e.target.value)}
+            placeholder="https://…"
+          />
+        </label>
+        <button
+          disabled={!sourceUrl || busy}
+          onClick={async () => {
+            setBusy(true);
+            try {
+              const d = await request("fetchSource", { url: sourceUrl });
+              setSourcePreview(d.text);
+              setNotice(d.notice);
+            } catch (e) {
+              setNotice((e as Error).message);
+            } finally {
+              setBusy(false);
+            }
+          }}
+        >
+          主动读取这份公开来源
+        </button>
+        {sourcePreview && (
+          <p className="life-source-excerpt">{sourcePreview}</p>
+        )}
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const f = new FormData(e.currentTarget);
+            setBusy(true);
+            try {
+              const d = await request("submitIdea", {
+                title: f.get("title"),
+                itemIds: f.getAll("itemIds"),
+                minutes: Number(f.get("minutes")),
+                steps: String(f.get("steps"))
+                  .split("\n")
+                  .map((s) => s.trim())
+                  .filter(Boolean),
+                limits: String(f.get("limits"))
+                  .split("\n")
+                  .map((s) => s.trim())
+                  .filter(Boolean),
+                sourceUrl: sourceUrl || undefined,
+              });
+              setResults([d.idea]);
+              await refresh();
+              setNotice(
+                "已保存为用户提供的经验候选，未标作官方功能或实物验证。",
+              );
+            } catch (e) {
+              setNotice((e as Error).message);
+            } finally {
+              setBusy(false);
+            }
+          }}
+        >
+          <label>
+            玩法标题
+            <input name="title" required maxLength={100} />
+          </label>
+          <div className="life-link-options">
+            {items.map((i) => (
+              <label className="life-check" key={i.id}>
+                <input
+                  type="checkbox"
+                  name="itemIds"
+                  value={i.id}
+                  defaultChecked={i.id === itemId}
+                />
+                {i.name}
+              </label>
+            ))}
+          </div>
+          <label>
+            大约需要多少分钟
+            <input
+              type="number"
+              name="minutes"
+              min="1"
+              max="240"
+              defaultValue="20"
+              required
+            />
+          </label>
+          <label>
+            步骤（每行一条，仅提供获准使用的内容）
+            <textarea name="steps" required maxLength={3000} />
+          </label>
+          <label>
+            关键条件与未验证限制（每行一条）
+            <textarea name="limits" required maxLength={2000} />
+          </label>
+          <button disabled={busy}>保存经验候选</button>
+        </form>
+      </details>
     </section>
   );
 }

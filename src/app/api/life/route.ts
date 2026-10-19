@@ -18,6 +18,7 @@ import {
   listLifeIdeas,
   feedbackIdea,
   modelIdea,
+  submitIdea,
 } from "@/lib/life/ideas";
 import { lifeProvider } from "@/lib/life/provider";
 import { storePhoto } from "@/lib/life/media";
@@ -245,11 +246,14 @@ export async function POST(r: Request) {
                 v.goal,
                 lifeProvider(),
                 v.includeSynthetic,
+                read,
               ),
             ]
           : discoverLife(db, read(), a, v),
       });
     }
+    if (p.action === "submitIdea")
+      return Response.json({ idea: submitIdea(db, read(), a, p.input) });
     if (p.action === "ideaFeedback") {
       feedbackIdea(db, read(), a, p.input);
       return Response.json({ ok: true });

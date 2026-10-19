@@ -181,6 +181,7 @@ const recipes: Recipe[] = [
   },
 ];
 export type LifeIdea = {
+  sourceUrl?: string;
   id: string;
   title: string;
   itemIds: string[];
@@ -377,6 +378,7 @@ export async function modelIdea(
   goal: string,
   provider: Provider,
   includeSynthetic = false,
+  readCurrent?: () => State,
 ) {
   const items = state.items.filter(
     (i) =>
@@ -416,6 +418,16 @@ export async function modelIdea(
     )
   )
     throw new AgentError("模型创意未通过资源或风险检查，请调整要求");
+  const current = readCurrent?.() || state;
+  if (
+    value.itemIds.some(
+      (id) =>
+        !current.items.some(
+          (i) => i.id === id && canRead(i, actor) && usable(i),
+        ),
+    )
+  )
+    throw new AgentError("物品权限或可用状态已变化，请重新生成", 409);
   return store(db, actor, {
     ...value,
     id: crypto.randomUUID(),
@@ -423,5 +435,44 @@ export async function modelIdea(
     evidence: [],
     tested: false,
     goal,
+  });
+}
+
+/** User supplies selected experience; no crawling or automatic real-world verification. */
+export function submitIdea(
+  db: DatabaseSync,
+  state: State,
+  actor: Person,
+  input: unknown,
+) {
+  const v = z
+    .object({
+      title: z.string().trim().min(1).max(100),
+      itemIds: z.array(z.string()).min(1).max(8),
+      minutes: z.number().int().min(1).max(240),
+      steps: z.array(z.string().trim().min(1).max(400)).min(1).max(8),
+      limits: z.array(z.string().trim().min(1).max(400)).min(1).max(8),
+      sourceUrl: z.string().url().optional(),
+    })
+    .strict()
+    .parse(input);
+  if (
+    v.itemIds.some(
+      (id) => !state.items.some((i) => i.id === id && canRead(i, actor)),
+    )
+  )
+    throw new AgentError("创意引用了无权访问的物品", 403);
+  if (v.sourceUrl) {
+    const u = new URL(v.sourceUrl);
+    if (u.protocol !== "https:" || u.username || u.password)
+      throw new AgentError("来源需使用不带账号的 HTTPS 链接");
+  }
+  return store(db, actor, {
+    ...v,
+    id: crypto.randomUUID(),
+    source: "user-submitted",
+    evidence: [],
+    tested: false,
+    goal: "用户主动提交的经验；未进行平台抓取或独立验证",
   });
 }

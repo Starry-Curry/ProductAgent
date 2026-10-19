@@ -48,6 +48,7 @@ import { homeDecision } from "../home/decisions.ts";
 import { itemStamp } from "../home/store.ts";
 import type { HomeRoute } from "../home/contracts.ts";
 import { sourceReply } from "../life/sources.ts";
+import { recallLifeFragments } from "../life/recall.ts";
 const packetSchema = z
   .object({
     kind: z.enum([
@@ -537,6 +538,15 @@ export async function executeGraph(
         `purpose=${session.mode}; memoryRefs=${ctx.cloudMemories.map((m) => m.id).join(",")}; prompt=${PROMPT_VERSION}`,
       );
       w.reply =
+        (session.known.memoryPolicy !== undefined && !temporary
+          ? recallLifeFragments(
+              db,
+              read(),
+              actor,
+              w.question,
+              effectiveSession.itemId,
+            )
+          : undefined) ||
         (route &&
           homeDecision(
             db,
@@ -547,7 +557,13 @@ export async function executeGraph(
             route,
             temporary,
           )) ||
-        (!unsafe.test(w.question) && effectiveSession.itemId && !ctx.knowledge.facts.length && effectiveSession.mode === "service" ? sourceReply(db, read(), actor, effectiveSession.itemId, w.question) : undefined) || curatedDecision(
+        (!unsafe.test(w.question) &&
+        effectiveSession.itemId &&
+        !ctx.knowledge.facts.length &&
+        effectiveSession.mode === "service"
+          ? sourceReply(db, read(), actor, effectiveSession.itemId, w.question)
+          : undefined) ||
+        curatedDecision(
           w.question,
           effectiveSession,
           ctx,
@@ -571,8 +587,10 @@ export async function executeGraph(
         const prior = session.messages
           .filter(
             (m) =>
-              (m.role === "feedback" || m.role === "action" ||
-                (session.known.memoryPolicy !== undefined && (m.role === "user" || m.role === "assistant"))) &&
+              (m.role === "feedback" ||
+                m.role === "action" ||
+                (session.known.memoryPolicy !== undefined &&
+                  (m.role === "user" || m.role === "assistant"))) &&
               (m.itemId || session.itemId || "") ===
                 (effectiveSession.itemId || ""),
           )

@@ -28,6 +28,78 @@ import { respond } from "../src/lib/agent/service.ts";
 import { listMemories } from "../src/lib/memory/store.ts";
 import { reconcileMemories } from "../src/lib/memory/ambient.ts";
 import { createLifeGift } from "../src/lib/life/gifts.ts";
+import { recallLifeFragments } from "../src/lib/life/recall.ts";
+import { submitIdea, modelIdea } from "../src/lib/life/ideas.ts";
+test("生活回忆只在主动请求时读取本人原文，删除立即失效且不需要Persona", () => {
+  const t = fixture();
+  try {
+    const f = saveFragment(t.db, t.read, "lin", {
+      text: "合成故事：相框来自毕业那一天",
+      itemIds: ["frame"],
+    });
+    assert.equal(
+      recallLifeFragments(t.db, t.read(), "lin", "怎么清洁", "frame"),
+      undefined,
+    );
+    assert.match(
+      recallLifeFragments(t.db, t.read(), "lin", "回忆以前的故事", "frame")!
+        .answer,
+      /毕业/,
+    );
+    assert.equal(
+      recallLifeFragments(t.db, t.read(), "dad", "回忆以前的故事"),
+      undefined,
+    );
+    deleteFragment(t.db, t.read(), "lin", f.id, f.revision);
+    assert.equal(
+      recallLifeFragments(t.db, t.read(), "lin", "回忆以前的故事", "frame"),
+      undefined,
+    );
+  } finally {
+    t.db.close();
+  }
+});
+test("用户经验保留来源类型，模型创意返回前重新复核物品授权", async () => {
+  const t = fixture();
+  try {
+    const idea = submitIdea(t.db, t.read(), "lin", {
+      title: "用户绘画经验",
+      itemIds: ["frame"],
+      minutes: 10,
+      steps: ["先在纸上画轮廓"],
+      limits: ["需有纸笔，未实物验证"],
+      sourceUrl: "https://example.org/authorized-post",
+    });
+    assert.equal(idea.source, "user-submitted");
+    assert.equal(idea.tested, false);
+    const s = t.read();
+    const provider = {
+      model: "offline-fixture",
+      async generate() {
+        const changed = t.read();
+        changed.items.find((i) => i.id === "frame")!.availability = "loaned";
+        t.write(changed);
+        return {
+          text: JSON.stringify({
+            title: "候选",
+            itemIds: ["frame"],
+            minutes: 10,
+            steps: ["观察画面"],
+            limits: ["现场核对"],
+          }),
+          model: this.model,
+          tokens: null,
+        };
+      },
+    };
+    await assert.rejects(
+      () => modelIdea(t.db, s, "lin", "看看新玩法", provider, false, t.read),
+      /状态已变化/,
+    );
+  } finally {
+    t.db.close();
+  }
+});
 test("恢复后回扫仍遵守仅聊天/候选政策，不把候选升级成事实", async () => {
   for (const policy of ["off", "candidates"] as const) {
     const t = fixture();

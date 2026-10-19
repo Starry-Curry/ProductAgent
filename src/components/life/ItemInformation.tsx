@@ -66,6 +66,74 @@ export function ItemInformation({
           <dt>保质期</dt>
           <dd>{item.attributes?.expiresOn || "未登记"}</dd>
         </dl>
+        {item.owner === actor && (
+          <details>
+            <summary>更新数量、有效期和养护信息</summary>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const f = new FormData(e.currentTarget);
+                run(async () => {
+                  await request("updateItem", {
+                    itemId: item.id,
+                    attributes: {
+                      ...item.attributes,
+                      quantity:
+                        f.get("quantity") !== ""
+                          ? Number(f.get("quantity"))
+                          : undefined,
+                      expiresOn: f.get("expiresOn"),
+                      material: f.get("material"),
+                      care: f.get("care"),
+                    },
+                  });
+                  await refresh();
+                  setNotice(
+                    "已更新管理信息；数量为零或过期的食品不参与创意候选。",
+                  );
+                });
+              }}
+            >
+              <label>
+                当前数量
+                <input
+                  name="quantity"
+                  type="number"
+                  min="0"
+                  step="0.1"
+                  defaultValue={item.attributes?.quantity ?? ""}
+                />
+              </label>
+              <label>
+                保质期 / 有效期
+                <input
+                  type="date"
+                  name="expiresOn"
+                  defaultValue={item.attributes?.expiresOn || ""}
+                />
+              </label>
+              <label>
+                材质
+                <input
+                  name="material"
+                  defaultValue={item.attributes?.material || ""}
+                />
+              </label>
+              <label>
+                {item.category === "植物"
+                  ? "已确认的养护要求"
+                  : item.category === "服装"
+                    ? "实物洗护标签"
+                    : "维护注意事项"}
+                <textarea
+                  name="care"
+                  defaultValue={item.attributes?.care || ""}
+                />
+              </label>
+              <button>保存管理信息</button>
+            </form>
+          </details>
+        )}
         {pack ? (
           <>
             <h3>{pack.product}</h3>
