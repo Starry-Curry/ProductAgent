@@ -31,7 +31,7 @@ npm.cmd run start:life
 
 ## 本机千问配置与手动费用开关
 
-可双击 `START_LIFE_CLOUD.cmd`：只显示配置状态，端口空闲后须输入 `CLOUD` 才授权本次服务；不会自动调用模型。退出窗口或 Ctrl+C 后授权撤销，双击 `START_LIFE.cmd` 恢复离线。端口占用不会杀进程，请停止自己原先的窗口，或设置 PORT 后运行 `node scripts/life-launch.mjs`。
+可双击 `START_LIFE_CLOUD.cmd`：只显示配置状态，端口空闲后须输入 `CLOUD` 才授权本次服务；不会自动调用模型。退出窗口或 Ctrl+C 后授权撤销，双击 `START_LIFE.cmd` 恢复离线。端口占用不会杀进程，会显示后续5个端口内的空闲地址，再等待本次费用确认；无需先手动停旧服务。也可自行设置 PORT。
 
 仅在当前工作区被Git忽略的 `.env.local` 填写：`AI_API_KEY`、`AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1`、`AI_MODEL=qwen-plus`、`AI_JSON_MODE=true`、`AI_ENABLE_THINKING=false`。可参考空 `.env.example`，已有配置不要覆盖，不要将Key发到聊天或提交Git。
 

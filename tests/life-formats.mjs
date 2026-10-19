@@ -39,6 +39,28 @@ const response = await fetch(base + "/api/life", {
 const manual = await response.json();
 assert.equal(response.status, 200, JSON.stringify(manual));
 assert.match(manual.text, /dry cloth/);
+const ocrImage = await sharp(
+  Buffer.from(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="220"><rect width="100%" height="100%" fill="white"/><text x="40" y="100" fill="black" font-family="Arial" font-size="48">TEST-27 Press the power button.</text></svg>',
+  ),
+)
+  .png()
+  .toBuffer();
+const ocrForm = new FormData();
+ocrForm.set("kind", "manual-ocr");
+ocrForm.set(
+  "file",
+  new File([ocrImage], "synthetic-manual.png", { type: "image/png" }),
+);
+const ocrResponse = await fetch(base + "/api/life", {
+  method: "POST",
+  headers: { "x-demo-actor": "lin" },
+  body: ocrForm,
+});
+const ocrResult = await ocrResponse.json();
+assert.equal(ocrResponse.status, 200, JSON.stringify(ocrResult));
+assert.equal(ocrResult.method, "local-ocr");
+assert.match(ocrResult.text, /power button/i);
 const matrix = new QRCodeWriter().encode(
     "https://example.org/user-manual",
     BarcodeFormat.QR_CODE,
@@ -147,6 +169,14 @@ try {
     digits,
   );
   await page.getByLabel("物品名称", { exact: true }).fill("浏览器录入的绿植");
+  await page.getByLabel("类别", { exact: true }).selectOption("食品");
+  await expect(page.getByLabel("生命周期", { exact: true })).toHaveValue(
+    "消耗型",
+  );
+  await page.getByLabel("类别", { exact: true }).selectOption("电子设备");
+  await expect(page.getByLabel("生命周期", { exact: true })).toHaveValue(
+    "长期耐用",
+  );
   await page.getByLabel("类别", { exact: true }).selectOption("植物");
   await page.getByLabel("生命周期", { exact: true }).selectOption("持续养护");
   await page.getByLabel("数量", { exact: true }).fill("1");
@@ -175,14 +205,45 @@ try {
     buffer: photo,
   });
   await expect(page.getByAltText("片段照片预览")).toBeVisible();
-  await expect(page.getByText("synthetic-story.jpg", { exact: true })).toBeVisible();
+  mkdirSync("artifacts/life", { recursive: true });
+  await page.screenshot({ path: "artifacts/life/photo-picker-desktop.png" });
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert.ok(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+    "photo picker mobile overflow",
+  );
+  await page.screenshot({ path: "artifacts/life/photo-picker-mobile.png" });
+  await page.setViewportSize({ width: 1280, height: 960 });
+  await expect(
+    page.getByText("synthetic-story.jpg", { exact: true }),
+  ).toBeVisible();
   await page.getByRole("button", { name: "移除这张照片", exact: true }).click();
   await expect(page.getByAltText("片段照片预览")).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "添加照片", exact: true })).toBeVisible();
-  await page.getByLabel(/照片（可选/).setInputFiles({ name: "invalid.gif", mimeType: "image/gif", buffer: Buffer.from("GIF89a") });
-  await expect(page.getByRole("status").filter({ hasText: "请选择 5MB 内" })).toBeVisible();
-  await page.getByLabel(/照片（可选/).setInputFiles({ name: "synthetic-story.jpg", mimeType: "image/jpeg", buffer: photo });
-  await expect(page.getByRole("button", { name: "更换照片", exact: true })).toBeEnabled();
+  await expect(
+    page.getByRole("button", { name: "添加照片", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByLabel(/照片（可选/)
+    .setInputFiles({
+      name: "invalid.gif",
+      mimeType: "image/gif",
+      buffer: Buffer.from("GIF89a"),
+    });
+  await expect(
+    page.getByRole("status").filter({ hasText: "请选择 5MB 内" }),
+  ).toBeVisible();
+  await page
+    .getByLabel(/照片（可选/)
+    .setInputFiles({
+      name: "synthetic-story.jpg",
+      mimeType: "image/jpeg",
+      buffer: photo,
+    });
+  await expect(
+    page.getByRole("button", { name: "更换照片", exact: true }),
+  ).toBeEnabled();
   await page.getByRole("button", { name: "保存生活片段", exact: true }).click();
   let article = page
     .locator("article")
@@ -250,9 +311,11 @@ const report = {
   measuredAt: new Date().toISOString(),
   checks: [
     "真实 PDF 文字提取（合成PDF）",
+    "生产API实际本机OCR（合成图片说明书）；云端关闭",
     "浏览器实际解码 QR 和 EAN-13 图片",
     "浏览器照片录入、类别与生命周期",
     "浏览器图文新增、修改、删除",
+    "照片自定义选择、缩略图/文件名、更换/移除、格式错误及390px布局；类别切换的生命周期默认值",
     "资料保存失败后独立重试不重复创建物品；浏览器后退可用",
   ],
   realModelCalls: 0,

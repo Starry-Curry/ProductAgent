@@ -1,6 +1,5 @@
 import sharp from "sharp";
 import { mkdirSync, copyFileSync, existsSync } from "node:fs";
-import { createRequire } from "node:module";
 import path from "node:path";
 import { AgentError } from "../agent/contracts.ts";
 
@@ -13,15 +12,19 @@ export async function localOCR(images: Uint8Array[]) {
   let cancelled = false;
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
-    const require = createRequire(import.meta.url);
     const langPath = path.join(process.cwd(), ".runtime", "ocr-languages");
     mkdirSync(langPath, { recursive: true });
     for (const lang of ["eng", "chi_sim"]) {
       const file = path.join(langPath, `${lang}.traineddata.gz`);
       if (!existsSync(file))
         copyFileSync(
-          require.resolve(
-            `@tesseract.js-data/${lang}/4.0.0_best_int/${lang}.traineddata.gz`,
+          path.join(
+            process.cwd(),
+            "node_modules",
+            "@tesseract.js-data",
+            lang,
+            "4.0.0_best_int",
+            `${lang}.traineddata.gz`,
           ),
           file,
         );
