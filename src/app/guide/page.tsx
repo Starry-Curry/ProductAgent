@@ -7,8 +7,18 @@ export default function Guide() {
       <h1>物间可以做什么，怎么开始？</h1>
       <section id="cloud" className="panel">
         <h2>在本机配置千问与费用授权</h2>
-        <p>只编辑当前工作区被 Git 忽略的 .env.local，勿把 Key 发到聊天、Git 或其他工作区。填写 AI_API_KEY，AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1，AI_MODEL=qwen-plus，AI_ENABLE_THINKING=false。这里只检查配置，不会自动测试账户或发送请求。</p>
-        <p>默认 npm run start:life 始终关闭费用。确认愿意产生模型费用后，停止自己的服务，再用 npm run start:life -- --cloud 启动；开发模式同理。授权仅限这次进程，退出后用不带 --cloud 的命令启动即可撤销。修改配置后需要重启。不要在未授权时点击真实调用或运行联网测试。</p>
+        <p>
+          只编辑当前工作区被 Git 忽略的 .env.local，勿把 Key 发到聊天、Git
+          或其他工作区。填写
+          AI_API_KEY，AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1，AI_MODEL=qwen-plus，AI_ENABLE_THINKING=false。这里只检查配置，不会自动测试账户或发送请求。
+        </p>
+        <p>
+          默认 npm run start:life
+          始终关闭费用。确认愿意产生模型费用后，停止自己的服务，再用 npm run
+          start:life -- --cloud
+          启动；开发模式同理。授权仅限这次进程，退出后用不带 --cloud
+          的命令启动即可撤销。修改配置后需要重启。不要在未授权时点击真实调用或运行联网测试。
+        </p>
       </section>
       <p>
         新版围绕真实物品展柜与生活故事：获得实际帮助，发现新用途，按自己的意愿留住生活。

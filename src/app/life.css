@@ -153,12 +153,16 @@
   position: relative;
   padding-bottom: 24px;
 }
-.life-hero-photos > img {
+.life-hero-photos > img, .life-hero-object img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 9px;
 }
+.life-hero-object { display:block; padding:0; width:100%; height:100%; border:0; background:transparent; }
+.life-item-story-link {display:flex; align-items:center; gap:16px; margin:22px 0; flex-wrap:wrap;}
+.life-item-story-link > div {flex:1; min-width:180px;}
+.life-item-story-link p {font-size:13px; color:#697565; line-height:1.7; margin:8px 0;}
 .life-hero-note {
   position: absolute;
   bottom: 0;

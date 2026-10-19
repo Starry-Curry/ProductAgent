@@ -23,6 +23,7 @@ import { Intake } from "./Intake";
 import { Stories, type Fragment } from "./Stories";
 import { Discovery } from "./Discovery";
 import { ItemInformation } from "./ItemInformation";
+import { syntheticItem } from "@/lib/life/availability";
 type View =
   | "home"
   | "items"
@@ -37,7 +38,10 @@ type Data = {
   fragments: Fragment[];
   ideas: LifeIdea[];
   packs: ProductPack[];
-  capabilities: { model: boolean; cloud: {state: string; ready: boolean; message: string} };
+  capabilities: {
+    model: boolean;
+    cloud: { state: string; ready: boolean; message: string };
+  };
   stats: {
     items: number;
     syntheticItems: number;
@@ -68,6 +72,7 @@ export default function WujianApp() {
     [busy, setBusy] = useState(false),
     [policy, setPolicy] = useState<"off" | "candidates">("off");
   const generation = useRef(0);
+  const [backView, setBackView] = useState<View>("items");
   const headers = { "Content-Type": "application/json", "x-demo-actor": actor };
   async function load() {
     const v = ++generation.current;
@@ -127,29 +132,57 @@ export default function WujianApp() {
     setData(null);
     setSelected("");
     setView("home");
+    window.history.replaceState(
+      { wujian: true, actor, view: "home", selected: "", tab: "帮助" },
+      "",
+      "#home",
+    );
     load().catch((e) => setError(e.message));
     return () => {
       generation.current++;
     };
   }, [actor]);
   useEffect(() => {
+    const back = (event: PopStateEvent) => {
+      const s = event.state;
+      if (s?.wujian && s.actor === actor) {
+        setView(s.view);
+        setSelected(s.selected || "");
+        setTab(s.tab || "帮助");
+        setNotice("");
+        setError("");
+      }
+    };
+    window.addEventListener("popstate", back);
+    return () => window.removeEventListener("popstate", back);
+  }, [actor]);
+  useEffect(() => {
     const listener = () => load().catch((e) => setError(e.message));
     window.addEventListener("workspace-updated", listener);
     return () => window.removeEventListener("workspace-updated", listener);
   }, [actor]);
-  function go(v: View) {
+  function go(v: View, id = selected, nextTab = tab) {
     setView(v);
+    window.history.pushState(
+      { wujian: true, actor, view: v, selected: id, tab: nextTab },
+      "",
+      `#${v}${v === "item" ? "/" + encodeURIComponent(id) : ""}`,
+    );
     setNotice("");
     setError("");
     window.scrollTo({ top: 0 });
   }
-  function open(id: string) {
+  function open(id: string, nextTab = "帮助") {
+    setBackView(view === "add" || view === "item" ? "items" : view);
     setSelected(id);
-    setTab("帮助");
-    go("item");
+    setTab(nextTab);
+    go("item", id, nextTab);
   }
   const items = data?.workspace.items.filter((i) => !i.demo) || [];
   const item = items.find((i) => i.id === selected);
+  const heroItem =
+    items.find((i) => !syntheticItem(i) && i.photo) ||
+    items.find((i) => i.id === "life-sample-13");
   function photo(i: Item) {
     // Never represent a purifier or a table by an unrelated house/lamp photograph.
     if (
@@ -204,6 +237,17 @@ export default function WujianApp() {
             </small>
             <h3>{i.name}</h3>
             <p>{i.model}</p>
+            <small>
+              {i.attributes?.quantity !== undefined
+                ? `余量 ${i.attributes.quantity} · `
+                : ""}
+              {i.attributes?.expiresOn
+                ? `有效期 ${i.attributes.expiresOn} · `
+                : ""}
+              {data?.fragments.filter((f) => f.itemIds.includes(i.id)).length ||
+                0}{" "}
+              段故事 · 用途与玩法 ↗
+            </small>
             <div className="life-actions">
               <span className="life-status">{i.state}</span>
               <ArrowUpRight size={17} />
@@ -274,7 +318,12 @@ export default function WujianApp() {
             {notice}
           </p>
         )}
-        {data && <p className="life-muted" role="status">云端 AI · {data.capabilities.cloud.message} <a href="/guide#cloud">配置与撤销方式</a></p>}
+        {data && (
+          <p className="life-muted" role="status">
+            云端 AI · {data.capabilities.cloud.message}{" "}
+            <a href="/guide#cloud">配置与撤销方式</a>
+          </p>
+        )}
         {!data ? (
           <div className="life-empty">正在打开你的生活展柜…</div>
         ) : (
@@ -309,10 +358,25 @@ export default function WujianApp() {
                     </div>
                   </div>
                   <div className="life-hero-photos">
-                    <img
-                      src="/demo/life/home.jpg"
-                      alt="温暖生活空间 · 分类示意照"
-                    />
+                    {heroItem && photo(heroItem) ? (
+                      <button
+                        className="life-hero-object"
+                        onClick={() => open(heroItem.id)}
+                      >
+                        <img
+                          src={photo(heroItem)}
+                          alt={`${heroItem.name}${syntheticItem(heroItem) ? " · 合成案例分类示意照" : ""}`}
+                        />
+                      </button>
+                    ) : (
+                      <div className="life-upload-empty">
+                        <Package size={48} />
+                        <p>从一件身边的物品开始</p>
+                        <button onClick={() => go("add")}>
+                          留下它现在的样子
+                        </button>
+                      </div>
+                    )}
                     <div className="life-hero-note">
                       <Leaf size={22} />
                       <span>
@@ -320,7 +384,11 @@ export default function WujianApp() {
                         <br />
                         陪生活多走一步。
                       </span>
-                      <small>示意照片 · 非用户实景</small>
+                      <small>
+                        {heroItem
+                          ? `${heroItem.name} · ${syntheticItem(heroItem) ? "合成案例示意照" : "我的物品照片"}`
+                          : "不必先布置虚拟空间"}
+                      </small>
                     </div>
                   </div>
                 </section>
@@ -384,9 +452,7 @@ export default function WujianApp() {
                     >
                       打开 AI 助手
                     </button>
-                    <small>
-                      {data.capabilities.cloud.message}
-                    </small>
+                    <small>{data.capabilities.cloud.message}</small>
                   </div>
                 </section>
                 {!items.some((i) => i.id === "life-sample-0") && (
@@ -502,7 +568,7 @@ export default function WujianApp() {
                 request={request}
                 upload={upload}
                 refresh={load}
-                onItem={open}
+                onItem={(id) => open(id, "故事")}
               />
             )}
             {view === "assistant" && (
@@ -541,9 +607,21 @@ export default function WujianApp() {
             )}
             {view === "item" && item && (
               <section>
-                <button className="life-back" onClick={() => go("items")}>
+                <button className="life-back" onClick={() => go(backView)}>
                   <ArrowLeft size={16} />
-                  返回物品展柜
+                  返回
+                  {
+                    {
+                      home: "生活首页",
+                      items: "物品展柜",
+                      stories: "生活故事",
+                      family: "家庭与礼物",
+                      discover: "发现新玩法",
+                      assistant: "AI 助手",
+                      add: "物品展柜",
+                      item: "物品展柜",
+                    }[backView]
+                  }
                 </button>
                 <div className="life-detail-hero">
                   <div className="life-detail-photo">
@@ -556,7 +634,9 @@ export default function WujianApp() {
                   <div>
                     <span className="life-eyebrow">
                       {item.category} ·{" "}
-                      {item.synthetic ? "合成案例 / 照片为示意" : "物品档案"}
+                      {syntheticItem(item)
+                        ? "合成案例 / 照片为示意"
+                        : "物品档案"}
                     </span>
                     <h1>{item.name}</h1>
                     <p>
@@ -615,6 +695,28 @@ export default function WujianApp() {
                     )}
                   </div>
                 </div>
+                <div className="life-card life-item-story-link">
+                  <BookOpen size={20} />
+                  <div>
+                    <strong>它与你的故事</strong>
+                    <p>
+                      {data.fragments.find((f) => f.itemIds.includes(item.id))
+                        ?.text ||
+                        "使用中的一个小变化、一次新玩法，都可以和这件物品留在一起。"}
+                    </p>
+                  </div>
+                  <button onClick={() => setTab("故事")}>
+                    查看 / 留下片段（
+                    {
+                      data.fragments.filter((f) => f.itemIds.includes(item.id))
+                        .length
+                    }
+                    ）
+                  </button>
+                  <button onClick={() => setTab("新玩法")}>
+                    从它开始找玩法
+                  </button>
+                </div>
                 <div className="life-tabs">
                   {["帮助", "新玩法", "故事", "资料与管理"].map((s) => (
                     <button
@@ -662,7 +764,7 @@ export default function WujianApp() {
                     request={request}
                     upload={upload}
                     refresh={load}
-                    onItem={open}
+                    onItem={(id) => open(id, "故事")}
                   />
                 )}
                 {tab === "资料与管理" && (

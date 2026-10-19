@@ -192,10 +192,47 @@ try {
   page.once("dialog", (d) => d.accept());
   await article.getByRole("button", { name: "删除片段", exact: true }).click();
   await expect(article).toHaveCount(0);
+  // Real server validation failure after instance creation: retry only the source.
+  await page.getByRole("button", { name: "物品展柜", exact: true }).click();
+  await page.getByRole("button", { name: "录入一件物品", exact: true }).click();
+  await page
+    .getByLabel("物品名称", { exact: true })
+    .fill("部分成功重试测试物品");
+  await page.getByText("商品链接、公开资料或说明书", { exact: true }).click();
+  await page.getByLabel("资料原文", { exact: true }).fill("太短");
+  await page
+    .getByRole("button", { name: "确认并录入物品", exact: true })
+    .click();
+  await expect(page.getByText(/物品已成功建档，资料尚未保存/)).toBeVisible();
+  const countItem = async () => {
+    const d = await (
+      await fetch(base + "/api/life", { headers: { "x-demo-actor": "lin" } })
+    ).json();
+    return d.workspace.items.filter((i) => i.name === "部分成功重试测试物品")
+      .length;
+  };
+  assert.equal(await countItem(), 1);
+  await page
+    .getByLabel("资料原文", { exact: true })
+    .fill("清洁时用干燥软布擦拭。这是离线合成测试资料。");
+  await page
+    .getByRole("button", { name: "仅重试保存资料", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "部分成功重试测试物品", exact: true }),
+  ).toBeVisible();
+  assert.equal(await countItem(), 1);
+  await page.goBack();
+  await expect(
+    page.getByRole("heading", { name: "认识一件身边的物品", exact: true }),
+  ).toBeVisible();
   assert.deepEqual(errors, []);
-} catch(e) {
-  mkdirSync("artifacts/life",{recursive:true});
-  await page.screenshot({path:"artifacts/life/formats-failure.png",fullPage:true});
+} catch (e) {
+  mkdirSync("artifacts/life", { recursive: true });
+  await page.screenshot({
+    path: "artifacts/life/formats-failure.png",
+    fullPage: true,
+  });
   throw e;
 } finally {
   await browser.close();
@@ -208,6 +245,7 @@ const report = {
     "浏览器实际解码 QR 和 EAN-13 图片",
     "浏览器照片录入、类别与生命周期",
     "浏览器图文新增、修改、删除",
+    "资料保存失败后独立重试不重复创建物品；浏览器后退可用",
   ],
   realModelCalls: 0,
 };

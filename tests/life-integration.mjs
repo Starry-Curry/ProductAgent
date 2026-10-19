@@ -288,6 +288,8 @@ try {
     .getByRole("navigation", { name: "主要导航" })
     .getByRole("button", { name: "发现新玩法", exact: true })
     .click();
+  await expect(page.getByLabel("包含合成演示物品")).not.toBeChecked();
+  await page.getByLabel("包含合成演示物品").check();
   await page.getByRole("button", { name: "找点新灵感", exact: true }).click();
   await expect(
     page.getByText("本地创意候选 · 未实物验证").first(),

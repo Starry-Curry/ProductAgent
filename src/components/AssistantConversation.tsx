@@ -330,7 +330,7 @@ export function AssistantConversation({
                   : message.role === "feedback"
                     ? "你的反馈"
                     : message.reply?.outcome === "unavailable"
-                      ? "服务暂不可用"
+                      ? message.reply.errorCode === "not_configured" ? "未配置密钥或模型" : message.reply.errorCode === "payment_not_authorized" ? "未开启费用授权" : "请求失败"
                       : labels[message.reply?.source || "curated-guidance"]}
             </strong>
             {message.reply?.route && (

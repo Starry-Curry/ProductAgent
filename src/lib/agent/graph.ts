@@ -515,6 +515,7 @@ export async function executeGraph(
       guard();
       const w = { ...work, session, trace: [...work.trace] };
       const ctx = buildContext(db, read(), actor, {
+        excludeSynthetic: session.known.memoryPolicy !== undefined,
         question: w.question,
         mode: effectiveSession.mode,
         sessionId: session.id,
@@ -696,6 +697,7 @@ export async function executeGraph(
           add(w, "memory_story_fallback", "provider_unavailable");
         } else if (route?.intent === "story" && isStoryNarration(w.question)) {
           const ctx = buildContext(db, read(), actor, {
+        excludeSynthetic: session.known.memoryPolicy !== undefined,
             question: w.question,
             mode: "story",
             itemId: effectiveSession.itemId,
@@ -758,6 +760,7 @@ export async function executeGraph(
           ).parse(JSON.parse(call.function.arguments));
           const query = args.query || "";
           const ctx = buildContext(db, read(), actor, {
+        excludeSynthetic: session.known.memoryPolicy !== undefined,
             question: query || w.question,
             mode: effectiveSession.mode,
             sessionId: session.id,
@@ -807,6 +810,7 @@ export async function executeGraph(
       };
       try {
         const ctx = buildContext(db, read(), actor, {
+        excludeSynthetic: session.known.memoryPolicy !== undefined,
           question: session.known.goal || w.question,
           mode: effectiveSession.mode,
           sessionId: session.id,

@@ -16,10 +16,38 @@ export function recallLifeFragments(
     !db.prepare("SELECT 1 FROM sqlite_master WHERE name='life_fragments'").get()
   )
     return;
-  const fragments = listFragments(db, state, actor, itemId)
-    .filter((f) => itemId || !f.demo)
+  const query = question.replace(
+    /帮我|回忆|还记得|记得|记忆|记录|故事|讲讲|说说|看看|一下|我的|我们|之前|以前|过去|这个|这件|物品|的|吗|呢|[\s，。？！?！]/g,
+    "",
+  );
+  const terms = query.match(/[\p{Script=Han}]{2}|[a-z0-9]{2,}/giu) || [];
+  const owned = listFragments(db, state, actor, itemId).filter(
+    (f) => itemId || !f.demo,
+  );
+  if (!owned.length) return;
+  const fragments = owned
+    .filter(
+      (f) =>
+        !terms.length ||
+        terms.some((t) =>
+          `${f.text} ${f.itemIds.map((id) => state.items.find((i) => i.id === id)?.name || "").join(" ")}`
+            .toLowerCase()
+            .includes(t.toLowerCase()),
+        ),
+    )
     .slice(0, 3);
-  if (!fragments.length) return;
+  if (!fragments.length)
+    return {
+      outcome: "needs_info",
+      answer:
+        "目前没有找到与你这次回忆相关、仍获准读取的生活片段。可以补充物品或事件线索；不会拿其他经历代替。",
+      steps: [],
+      questions: [],
+      evidenceIds: [],
+      citations: [],
+      memoryIds: [],
+      source: "local-memory",
+    };
   return {
     outcome: "answered",
     answer:

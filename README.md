@@ -19,6 +19,14 @@ npm.cmd run start:life
 
 独立数据库为 `data-life-v1/demo.sqlite`。程序拒绝旧 `data/` 和其他工作区；测试使用 `.runtime/verification-*`。不要复制旧数据库、照片或环境密钥。
 
+## 本机千问配置与手动费用开关
+
+仅在当前工作区被Git忽略的 `.env.local` 填写：`AI_API_KEY`、`AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1`、`AI_MODEL=qwen-plus`、`AI_JSON_MODE=true`、`AI_ENABLE_THINKING=false`。可参考空 `.env.example`，已有配置不要覆盖，不要将Key发到聊天或提交Git。
+
+默认 `npm run start:life` / `dev:life` 保持费用关闭。另获授权后，停止自己启动的服务，使用 `npm run start:life -- --cloud`（开发同理）手动启用本次进程；退出并以不带 `--cloud` 的命令重启即可撤销。改配置需重启。只加载本工作区配置，不找其他工作区密钥。前端区分缺密钥、缺配置、未授权和准备就绪；“就绪”只说明静态配置齐备，网络、账户和模型实际质量需另验证。请求失败显示认证/限流/网络/响应异常，本轮真实调用0。
+
+录入资料失败会提示物品已建档，可仅重试资料或先查看物品；重复同一请求不会重复创建。发现默认排除新旧合成案例，需本人明确勾选体验演示。同一内容/物品候选复用原ID与收藏，全部收藏不会因新生成挤出最近列表。
+
 ## 可以实际做什么
 
 - **录入与知识**：手动名称/品牌/型号、真实照片保存、条码/二维码图片解码、公开资料链接、PDF/TXT/MD 说明书文字提取；核对后绑定已有型号包。类别、生命周期、数量/有效期、材质、供电和维护信息分别保存。

@@ -262,7 +262,7 @@ async function completeModel(
         ["TimeoutError", "AbortError"].includes(error.name)
         ? "timeout"
         : "network",
-      "模型连接未完成，可以保留问题后重试。",
+      "请求失败：模型连接未完成（网络或超时），可以保留问题后重试。",
     );
   }
 }

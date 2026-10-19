@@ -1,4 +1,5 @@
 import { createLifeItem } from "@/lib/life/intake";
+import { syntheticItem } from "@/lib/life/availability";
 import { z } from "zod";
 import { actor, localOnly, read, database, write } from "@/lib/db";
 import { visible, mutate, canRead, type State } from "@/lib/domain";
@@ -43,7 +44,14 @@ function fail(e: unknown) {
               ? e.message
               : "操作未完成",
     },
-    { status: e instanceof ProviderError ? 502 : e instanceof AgentError ? e.status : 400 },
+    {
+      status:
+        e instanceof ProviderError
+          ? 502
+          : e instanceof AgentError
+            ? e.status
+            : 400,
+    },
   );
 }
 export async function GET(r: Request) {
@@ -59,7 +67,13 @@ export async function GET(r: Request) {
         fragments: listFragments(db, state, a, p.get("itemId")!),
       });
     return Response.json({
-      workspace: visible(state, a),
+      workspace: {
+        ...visible(state, a),
+        items: visible(state, a).items.map((i) => ({
+          ...i,
+          synthetic: syntheticItem(i),
+        })),
+      },
       fragments: listFragments(db, state, a),
       ideas: listLifeIdeas(db, state, a),
       packs: productPacks,
@@ -166,7 +180,8 @@ export async function POST(r: Request) {
         notice:
           "用户主动读取的公开正文；不会绕过登录，也不自动认证为官方资料。",
       });
-    if (p.action === "createItem") return Response.json(createLifeItem(db,read,a,p.input));
+    if (p.action === "createItem")
+      return Response.json(createLifeItem(db, read, a, p.input));
     if (p.action === "fragment")
       return Response.json({ fragment: saveFragment(db, read, a, p.input) });
     if (p.action === "gift")
@@ -214,6 +229,7 @@ export async function POST(r: Request) {
                 lifeProvider(),
                 v.includeSynthetic,
                 read,
+                { minutes: v.minutes, itemId: v.itemId },
               ),
             ]
           : discoverLife(db, read(), a, v),

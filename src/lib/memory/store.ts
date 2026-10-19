@@ -346,6 +346,7 @@ export function recallMemories(
         (!m.itemId || m.itemId === itemId) &&
         m.status === "active" &&
         m.kind !== "fiction" &&
+          !(["service","auto"].includes(mode) && !wantsStory && ["story","relationship","experience"].includes(m.kind)) &&
         (!m.demo ||
           (!!itemId &&
             m.itemId === itemId &&

@@ -3,6 +3,7 @@ import { canRead, type State, type Person } from "../domain.ts";
 import { boundPack } from "../ai/harness.ts";
 import { recallMemories, getPersona } from "../memory/store.ts";
 import { relevantKnowledge } from "../skills/knowledge.ts";
+import { syntheticItem, usable } from "../life/availability.ts";
 export function buildContext(
   db: DatabaseSync,
   state: State,
@@ -12,6 +13,7 @@ export function buildContext(
     mode: string;
     itemId?: string;
     temporary?: boolean;
+      excludeSynthetic?: boolean;
     sessionId?: string;
   },
 ) {
@@ -57,6 +59,7 @@ export function buildContext(
             .filter(
               (i) =>
                 canRead(i, actor) &&
+                (!input.excludeSynthetic || (!syntheticItem(i) && usable(i))) &&
                 (item?.demo ? !!i.demo : !i.demo) &&
                 ["在用", "闲置", "待确认"].includes(i.state),
             )

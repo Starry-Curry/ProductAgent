@@ -442,7 +442,9 @@ export function mutate(
       item.state = ({ unknown: "待确认", available: "在用", loaned: "借出", gifted: "已赠送", lost: "丢失", broken: "损坏", consumed: "用尽" } as Record<string,string>)[p.availability];
     }
     if (p.attributes && typeof p.attributes === "object") {
-      const v = p.attributes;
+      const v = {...item.attributes,...p.attributes};
+      if(v.quantity !== undefined && v.quantity !== null && (!Number.isFinite(v.quantity) || v.quantity < 0 || v.quantity > 100000)) fail("数量必须为0到100000之间的数值");
+      if(v.expiresOn && (!/^\d{4}-\d{2}-\d{2}$/.test(v.expiresOn) || !Number.isFinite(Date.parse(v.expiresOn)) || new Date(v.expiresOn).toISOString().slice(0,10) !== v.expiresOn)) fail("有效期需要真实的年月日");
       item.attributes = {
         material: str(v.material, 100), dimensions: str(v.dimensions, 100), power: str(v.power, 100), care: str(v.care, 500),
         quantity: Number.isFinite(v.quantity) && v.quantity >= 0 ? Math.min(v.quantity, 100000) : undefined,

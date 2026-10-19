@@ -27,12 +27,21 @@ export function Intake({
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false);
   const requestId = useRef("");
-  const [savedItem,setSavedItem] = useState<Item|null>(null);
-  async function savePendingSource(item:Item) {
+  const [savedItem, setSavedItem] = useState<Item | null>(null);
+  async function savePendingSource(item: Item) {
     try {
-      if (source?.text?.trim()) await request("source", {itemId:item.id,title:source.title || "用户提供的资料",text:source.text,url:source.url,kind:source.kind || "user-text"});
-    } catch(e) {
-      setNotice(`物品已成功建档，资料尚未保存：${(e as Error).message}。请修正资料后单独重试，无需再次录入。`);
+      if (source?.text?.trim())
+        await request("source", {
+          itemId: item.id,
+          title: source.title || "用户提供的资料",
+          text: source.text,
+          url: source.url,
+          kind: source.kind || "user-text",
+        });
+    } catch (e) {
+      setNotice(
+        `物品已成功建档，资料尚未保存：${(e as Error).message}。请修正资料后单独重试，无需再次录入。`,
+      );
       return;
     }
     onSaved(item);
@@ -52,11 +61,21 @@ export function Intake({
     setPack(id);
     const p = packs.find((p) => p.id === id);
     if (p) {
-      setName(p.product);
+      if (!name) setName(p.product);
       setModel(p.model);
-      setBrand(p.product.split(" ")[0]);
+      if (!brand) setBrand(p.product.split(" ")[0]);
     }
   }
+  const suppliedText =
+    `${model} ${url} ${source?.title || ""} ${source?.text || ""}`.toLowerCase();
+  const extractedPacks = packs.filter((p) =>
+    new RegExp(
+      `(^|[^a-z0-9])${p.model
+        .toLowerCase()
+        .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+        .replace(/\s+/g, "\\s*")}(?![a-z0-9])`,
+    ).test(suppliedText),
+  );
   return (
     <div className="life-intake">
       <div className="life-section-head">
@@ -207,6 +226,7 @@ export function Intake({
             <label>
               资料原文
               <textarea
+                aria-label="资料原文"
                 value={source?.text || ""}
                 maxLength={40000}
                 onChange={(e) =>
@@ -226,8 +246,11 @@ export function Intake({
             e.preventDefault();
             const f = new FormData(e.currentTarget);
             run(async () => {
-              if(savedItem) { await savePendingSource(savedItem); return; }
-              if(!requestId.current) requestId.current=crypto.randomUUID();
+              if (savedItem) {
+                await savePendingSource(savedItem);
+                return;
+              }
+              if (!requestId.current) requestId.current = crypto.randomUUID();
               const d = await request("createItem", {
                 requestId: requestId.current,
                 name,
@@ -261,6 +284,18 @@ export function Intake({
           }}
         >
           <h2>确认它的信息</h2>
+          {extractedPacks.length > 0 && (
+            <div className="life-notice">
+              <p>
+                提供的型号/链接/资料文本出现以下目录型号（文字匹配，未核验实物；不会自动绑定）：
+              </p>
+              {extractedPacks.map((p) => (
+                <button type="button" key={p.id} onClick={() => choose(p.id)}>
+                  采用候选：{p.product} · {p.model}
+                </button>
+              ))}
+            </div>
+          )}
           <label>
             物品名称
             <input
@@ -313,7 +348,12 @@ export function Intake({
               <select
                 aria-label="类别"
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                  if (e.target.value === "食品") setCycle("消耗型");
+                  else if (e.target.value === "植物") setCycle("持续养护");
+                  else if (e.target.value === "服装") setCycle("可重复使用");
+                }}
               >
                 {[
                   "电子设备",
@@ -394,9 +434,21 @@ export function Intake({
             我确认它目前在手、完好且可用
           </label>
           <button className="button" disabled={busy}>
-              {busy ? "正在处理…" : savedItem ? "仅重试保存资料" : "确认并录入物品"}
+            {busy
+              ? "正在处理…"
+              : savedItem
+                ? "仅重试保存资料"
+                : "确认并录入物品"}
           </button>
-            {savedItem && <button type="button" disabled={busy} onClick={()=>onSaved(savedItem)}>先查看已建档物品，稍后补资料</button>}
+          {savedItem && (
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => onSaved(savedItem)}
+            >
+              先查看已建档物品，稍后补资料
+            </button>
+          )}
         </form>
       </div>
       {notice && (

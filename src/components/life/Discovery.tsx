@@ -72,7 +72,15 @@ export function Discovery({
   }
   const rows = (
     onlySaved ? ideas.filter((i) => i.saved) : results || ideas.slice(0, 6)
-  ).filter((i) => (!itemId || i.itemIds.includes(itemId)) && (onlySaved || synthetic || !i.itemIds.some(id=>items.some(item=>item.id===id && syntheticItem(item)))));
+  ).filter(
+    (i) =>
+      (!itemId || i.itemIds.includes(itemId)) &&
+      (onlySaved ||
+        synthetic ||
+        !i.itemIds.some((id) =>
+          items.some((item) => item.id === id && syntheticItem(item)),
+        )),
+  );
   return (
     <section>
       <div className="life-section-head">

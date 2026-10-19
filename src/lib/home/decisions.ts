@@ -5,6 +5,7 @@ import type { HomeRoute } from "./contracts.ts";
 import { rooms } from "./contracts.ts";
 import { placements, proposeAction } from "./store.ts";
 import { prepareActivity } from "../planning.ts";
+import { syntheticItem, usable as lifeUsable } from "../life/availability.ts";
 
 export function homeDecision(
   db: DatabaseSync,
@@ -154,10 +155,11 @@ export function homeDecision(
         "这是演示物品的独立对话。回到全屋对话后，可以按你的日常物品准备和保存计划。",
         "needs_info",
       );
-    const existing = prepareActivity(q, state.items, actor);
+    const planItems=session.known.memoryPolicy !== undefined ? state.items.filter(i=>!syntheticItem(i) && lifeUsable(i)) : state.items;
+    const existing = prepareActivity(q, planItems, actor);
     const reading = /阅读角/.test(q);
     if (!existing && !reading) return;
-    const usable = state.items.filter(
+    const usable = planItems.filter(
       (i) =>
         canRead(i, actor) &&
         !i.demo &&

@@ -146,8 +146,19 @@ export function saveSource(
   if (!state.items.some((i) => i.id === v.itemId && i.owner === actor))
     throw new AgentError("仅所有者可添加物品资料", 403);
   if (v.url) sourceURL(v.url);
-  const existing = db.prepare("SELECT id FROM life_sources WHERE owner=? AND item_id=? AND title=? AND text=? AND coalesce(url,'')=? AND kind=?").get(actor,v.itemId,v.title.slice(0,150),v.text.slice(0,40000),v.url || "",v.kind) as {id:string}|undefined;
-  if(existing) return existing.id;
+  const existing = db
+    .prepare(
+      "SELECT id FROM life_sources WHERE owner=? AND item_id=? AND title=? AND text=? AND coalesce(url,'')=? AND kind=?",
+    )
+    .get(
+      actor,
+      v.itemId,
+      v.title.slice(0, 150),
+      v.text.slice(0, 40000),
+      v.url || "",
+      v.kind,
+    ) as { id: string } | undefined;
+  if (existing) return existing.id;
   const id = crypto.randomUUID();
   db.prepare("INSERT INTO life_sources VALUES(?,?,?,?,?,?,?,?)").run(
     id,
@@ -198,6 +209,28 @@ export function sourceReply(
     ...new Set(question.match(/[\p{Script=Han}]{2}|[a-z0-9]{2,}/giu) || []),
   ].filter((t) => !/[怎么如何这个物品可以]/.test(t));
   const rows = listSources(db, state, actor, itemId);
+  const facets = [
+    { q: /温度|几度|多少度/, a: /\d+(?:\.\d+)?\s*(?:°?C|℃|度)/i },
+    {
+      q: /多久|时长|多少分钟/,
+      a: /\d+(?:\.\d+)?\s*(?:分钟|小时|秒|min|hour)/i,
+    },
+    { q: /电压|多少伏/, a: /\d+(?:\.\d+)?\s*(?:V\b|伏)/i },
+    { q: /功率|多少瓦/, a: /\d+(?:\.\d+)?\s*(?:W\b|瓦)/i },
+    { q: /承重|载荷/, a: /\d+(?:\.\d+)?\s*(?:kg|千克|公斤)/i },
+    {
+      q: /电池|续航|容量/,
+      a: /\bAA\b|\bAAA\b|\d+(?:\.\d+)?\s*(?:mAh|Wh|毫安时|毫升|升|小时)/i,
+    },
+    { q: /尺寸|多大|多长/, a: /\d+(?:\.\d+)?\s*(?:mm|cm|毫米|厘米|米)/i },
+    { q: /材质/, a: /材质.{0,12}(?:棉|麻|钢|木|塑料|玻璃|聚酯|纤维)/ },
+    {
+      q: /蓝牙|兼容/,
+      a: /蓝牙.{0,8}\d|(?:支持|兼容|不支持|不兼容).{0,30}(?:蓝牙|USB|Windows|安卓|iOS)/i,
+    },
+    { q: /清洁|清洗|洗护|怎么洗/, a: /擦|洗涤|清洗|干洗|漂白|软布|不可水洗/ },
+    { q: /浇水/, a: /浇水.{0,20}(?:\d|干|湿|少|适量|不)|(?:干|湿).{0,10}浇水/ },
+  ].filter((f) => f.q.test(question));
   for (const r of rows) {
     const sentences = r.text
       .split(/(?<=[。！？\n])/)
@@ -210,10 +243,17 @@ export function sourceReply(
           .length,
       }))
       .sort((a, b) => b.score - a.score);
-    if (scored[0]?.score > 0)
+    const direct = scored.find(
+      (s) =>
+        s.score > 0 &&
+        !/详见|请参阅|请查阅|请见|待确认|未提供|不详/.test(s.text) &&
+        facets.length > 0 &&
+        facets.every((f) => f.a.test(s.text)),
+    );
+    if (direct)
       return {
         outcome: "answered",
-        answer: "你提供的资料中有这段原文：\n" + scored[0].text,
+        answer: "你提供的资料中有这段原文：\n" + direct.text,
         steps: [],
         questions: [],
         evidenceIds: [r.id],
@@ -226,4 +266,17 @@ export function sourceReply(
           "用户提供的资料摘录，未经独立核验；请确认对应型号与适用条件。这不是模型生成或已验证的操作步骤。",
       };
   }
+  if (rows.length && !/^(你好|谢谢|嗨|在吗)[！!。]?$/u.test(question))
+    return {
+      outcome: "needs_info",
+      answer:
+        "资料已保存，但目前未找到能直接回答这个问题的原文。关键词出现不代表参数或操作已经确认；请补充对应型号的相关章节，或换一个更具体的问题。",
+      steps: [],
+      questions: ["能补充与问题直接相关的原文及型号吗？"],
+      evidenceIds: [],
+      citations: [],
+      memoryIds: [],
+      source: "curated-guidance",
+      caveat: "尚未确认答案，不推断官方参数。",
+    };
 }

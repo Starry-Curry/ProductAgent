@@ -37,7 +37,13 @@ const child = spawn(
     },
   },
 );
-console.log("物间新版：独立数据目录", path.resolve(dir), cloud ? "；本次进程已手动开启模型费用，退出后撤销" : "；真实模型费用关闭（默认）");
+console.log(
+  "物间新版：独立数据目录",
+  path.resolve(dir),
+  cloud
+    ? "；本次进程已手动开启模型费用，退出后撤销"
+    : "；真实模型费用关闭（默认）",
+);
 process.on("SIGINT", () => child.kill());
 process.on("SIGTERM", () => child.kill());
 child.on("exit", (code) => process.exit(code ?? 1));

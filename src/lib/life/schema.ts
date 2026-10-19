@@ -19,12 +19,18 @@ export function migrateLife(db: DatabaseSync, filename: string) {
     if (version === 2) return;
     if (version === 1) {
       const backup = filename + ".before-life-v2.sqlite";
-      if (!existsSync(backup)) db.exec("VACUUM INTO '" + backup.replaceAll("'", "''") + "'");
+      if (!existsSync(backup))
+        db.exec("VACUUM INTO '" + backup.replaceAll("'", "''") + "'");
       db.exec("BEGIN IMMEDIATE");
       try {
-        db.exec("CREATE TABLE life_requests(owner TEXT NOT NULL,request_id TEXT NOT NULL,payload TEXT NOT NULL,item_id TEXT NOT NULL,PRIMARY KEY(owner,request_id)); INSERT INTO life_schema VALUES(2);");
+        db.exec(
+          "CREATE TABLE life_requests(owner TEXT NOT NULL,request_id TEXT NOT NULL,payload TEXT NOT NULL,item_id TEXT NOT NULL,PRIMARY KEY(owner,request_id)); INSERT INTO life_schema VALUES(2);",
+        );
         db.exec("COMMIT");
-      } catch(e) { db.exec("ROLLBACK"); throw e; }
+      } catch (e) {
+        db.exec("ROLLBACK");
+        throw e;
+      }
       return;
     }
   }
