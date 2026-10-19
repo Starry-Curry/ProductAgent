@@ -175,6 +175,14 @@ try {
     buffer: photo,
   });
   await expect(page.getByAltText("片段照片预览")).toBeVisible();
+  await expect(page.getByText("synthetic-story.jpg", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "移除这张照片", exact: true }).click();
+  await expect(page.getByAltText("片段照片预览")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "添加照片", exact: true })).toBeVisible();
+  await page.getByLabel(/照片（可选/).setInputFiles({ name: "invalid.gif", mimeType: "image/gif", buffer: Buffer.from("GIF89a") });
+  await expect(page.getByRole("status").filter({ hasText: "请选择 5MB 内" })).toBeVisible();
+  await page.getByLabel(/照片（可选/).setInputFiles({ name: "synthetic-story.jpg", mimeType: "image/jpeg", buffer: photo });
+  await expect(page.getByRole("button", { name: "更换照片", exact: true })).toBeEnabled();
   await page.getByRole("button", { name: "保存生活片段", exact: true }).click();
   let article = page
     .locator("article")

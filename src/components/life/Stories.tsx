@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useId, useRef, useState } from "react";
+import { ImagePlus, RefreshCw, X } from "lucide-react";
 import type { Item } from "@/lib/domain";
 import type { LifeRequest } from "./Intake";
 export type Fragment = {
@@ -35,14 +36,34 @@ export function Stories({
   const [editing, setEditing] = useState<Fragment | null>(null),
     [text, setText] = useState(""),
     [media, setMedia] = useState<string | null>(null),
+    [photoName, setPhotoName] = useState(""),
     [ids, setIds] = useState<string[]>(itemId ? [itemId] : []),
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false);
+  const photoInput = useRef<HTMLInputElement>(null);
+  const photoHelp = useId();
+  const uploading = useRef(false);
+  async function selectPhoto(file?: File) {
+    if (!file || uploading.current || busy) return;
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 5_000_000) {
+      setNotice("请选择 5MB 内的 JPEG、PNG 或 WebP 照片；原照片仍保留。");
+      return;
+    }
+    uploading.current = true;
+    await run(async () => {
+      const p = await upload(file, "photo");
+      setMedia(p.id);
+      setPhotoName(file.name);
+      setNotice(p.notice);
+    });
+    uploading.current = false;
+  }
   const rows = fragments.filter((f) => !itemId || f.itemIds.includes(itemId));
   function reset() {
     setEditing(null);
     setText("");
     setMedia(null);
+    setPhotoName("");
     setIds(itemId ? [itemId] : []);
   }
   async function run(fn: () => Promise<void>) {
@@ -84,39 +105,36 @@ export function Stories({
         }}
       >
         {editing && <p>正在修改原片段 · 版本 {editing.revision}</p>}
-        {media && (
-          <img
-            className="life-story-preview"
-            alt="片段照片预览"
-            src={`/api/life/media/${media}?actor=${actor}`}
-          />
-        )}
-        <label>
-          照片（可选，JPEG / PNG / WebP，5MB 内）
+        <div className="life-photo-picker" aria-busy={busy}
+          onDragOver={(e) => { e.preventDefault(); }}
+          onDrop={(e) => { e.preventDefault(); if (e.dataTransfer.files.length > 1) setNotice("每次请选择一张照片。"); else void selectPhoto(e.dataTransfer.files[0]); }}>
+          {media && <img className="life-photo-thumb" alt="片段照片预览" src={`/api/life/media/${media}?actor=${actor}`} />}
+          <div className="life-photo-info">
+            <strong>{media ? photoName || "已保存的片段照片" : "给这一刻添张照片"}</strong>
+            <small id={photoHelp}>照片可选 · JPEG / PNG / WebP · 5MB 内，也可拖放</small>
+            <div className="life-actions">
+              <button type="button" disabled={busy} onClick={() => photoInput.current?.click()}>
+                {media ? <RefreshCw size={16} aria-hidden="true" /> : <ImagePlus size={17} aria-hidden="true" />}
+                {busy ? "处理中…" : media ? "更换照片" : "添加照片"}
+              </button>
+              {media && <button type="button" className="text-button" disabled={busy} onClick={() => { setMedia(null); setPhotoName(""); }}><X size={16} aria-hidden="true" />移除这张照片</button>}
+            </div>
+          </div>
           <input
+            ref={photoInput}
+            className="life-visually-hidden"
+            aria-label="照片（可选，JPEG / PNG / WebP，5MB 内）"
+            aria-describedby={photoHelp}
+            tabIndex={-1}
             type="file"
             accept="image/jpeg,image/png,image/webp"
             disabled={busy}
             onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f)
-                run(async () => {
-                  const p = await upload(f, "photo");
-                  setMedia(p.id);
-                  setNotice(p.notice);
-                });
+              void selectPhoto(e.target.files?.[0]);
+              e.target.value = "";
             }}
           />
-        </label>
-        {media && (
-          <button
-            type="button"
-            className="text-button"
-            onClick={() => setMedia(null)}
-          >
-            移除这张照片
-          </button>
-        )}
+        </div>
         <label>
           留下一句话
           <textarea
@@ -202,6 +220,7 @@ export function Stories({
                   setEditing(f);
                   setText(f.text);
                   setMedia(f.mediaId);
+                  setPhotoName("");
                   setIds(f.itemIds);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
