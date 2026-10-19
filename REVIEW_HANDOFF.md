@@ -1,8 +1,10 @@
 # ProductAgent统一仓库交接
 
-## 2026-10-19 · 新版开发交接（进行中）
+## 2026-10-19 · 新版交付入口
 
-当前 feat/life-context-v1-d，从 4451ca2 统一工程增量开发；用户已允许修改现有工程，先前 prototypes 零覆盖限制已被本次授权替代。不要修改 D:\ProductAgent-Dev。使用 npm run dev:life / start:life（3200，费用硬关闭），独立 data-life-v1；测试另设 PRODUCT_AGENT_DATA_DIR，禁止接旧 data。life_schema 是 v6 之上的独立增量版本并留备份。后续最终验证覆盖本轮改动，不沿用旧成绩。
+当前 feat/life-context-v1-d，从 4451ca2 统一工程增量开发；用户允许修改现有工程，先前 prototypes 限制已被正式授权替代。未修改 D:\ProductAgent-Dev 工作区或原数据。使用 START_LIFE.cmd 或 npm run start:life（3200，费用硬关闭），独立 data-life-v1；开发 dev:life；测试 npm run test:life 自动隔离库/端口，原四组旅程通过 test:acceptance 回归 /legacy。
+
+完整数据/模块/权限/来源/操作及边界见 [本轮交接](docs/engineering/life-context-handoff-2026-10-19.md)。已通过生产构建、类型、离线基准、新版两组 API/浏览器及四组旧回归。照片/条码/二维码/PDF 是真实处理；无 VLM/扫描PDF OCR/通用商品编码查询，云端模型未付费调用。25 合成实例、10绑定型号、11包33事实2过程、12类创意、3片段2图文，统计详见验收。原型与测试数据、依赖和Key均不提交。Git只保留本地分批提交，未推送或合并。
 
 ## 架构图与对外介绍资料
 

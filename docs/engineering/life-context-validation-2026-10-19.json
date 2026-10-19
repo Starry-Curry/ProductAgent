@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "measuredAt": "2026-10-19T07:17:06.778Z",
+  "measuredAt": "2026-10-19T07:37:32.539Z",
   "kind": "isolated-api-and-edge-acceptance",
   "checks": [
     "A: 新建照片物品、类别/能力/状态与确认型号绑定",
@@ -16,7 +16,14 @@
     "packs": 11,
     "facts": 33,
     "procedures": 2,
-    "fragments": 1
+    "boundInstances": 10,
+    "distinctBoundModels": 10,
+    "legacyCases": 8,
+    "creativeRecipes": 12,
+    "familyTasks": 7,
+    "gifts": 1,
+    "photoFragments": 2,
+    "fragments": 3
   },
   "createdItems": 3,
   "realModelCalls": 0,

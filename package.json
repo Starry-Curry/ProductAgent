@@ -5,6 +5,7 @@
   "scripts": {
     "dev:life": "node scripts/life-local.mjs dev",
     "start:life": "node scripts/life-local.mjs start",
+    "test:life": "node scripts/verify-local.mjs life",
     "dev": "next dev --hostname 127.0.0.1",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",

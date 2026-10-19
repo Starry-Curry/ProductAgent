@@ -91,7 +91,7 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 try {
-  await page.goto(base);
+  await page.goto(base + "/legacy");
   await page.locator(".legacy-home-tools > summary").click();
   await page
     .getByText("已有的帮助设置 · 查看与纠正", { exact: true })

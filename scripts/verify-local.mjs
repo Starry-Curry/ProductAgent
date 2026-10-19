@@ -15,6 +15,7 @@ const env = {
   AUTH_MODE: "local-demo",
   PRODUCT_AGENT_DATA_DIR: data,
   AI_ALLOW_PAID_CALLS: "false",
+  WUJIAN_ALLOW_PAID_CALLS: "false",
   AI_API_KEY: "",
   AI_MODEL: "",
   AI_BASE_URL: "",
@@ -62,9 +63,14 @@ try {
     "tests/household-integration.mjs",
     "tests/home-integration.mjs",
   ];
-  const selected = process.argv[2]
-    ? scripts.filter((s) => s === `tests/${process.argv[2]}-integration.mjs`)
-    : scripts;
+  const selected =
+    process.argv[2] === "life"
+      ? ["tests/life-integration.mjs", "tests/life-formats.mjs"]
+      : process.argv[2]
+        ? scripts.filter(
+            (s) => s === `tests/${process.argv[2]}-integration.mjs`,
+          )
+        : scripts;
   if (!selected.length) throw Error("Unknown test journey");
   for (const script of selected) {
     const child = spawn(process.execPath, [script], {

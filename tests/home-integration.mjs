@@ -37,7 +37,7 @@ async function send(text) {
   ).toBeEnabled({ timeout: 30000 });
 }
 async function home() {
-  await page.goto(base);
+  await page.goto(base + "/legacy");
   await page
     .getByRole("heading", { name: "家里的每一件，都有话想说", exact: true })
     .waitFor();

@@ -19,7 +19,7 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 async function home() {
-  await page.goto(base);
+  await page.goto(base + "/legacy");
   await page.locator(".legacy-home-tools > summary").click();
   await page
     .getByText("记忆与陪伴 · 看看它记下了什么", { exact: true })

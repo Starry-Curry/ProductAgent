@@ -121,6 +121,7 @@ export function Stories({
           留下一句话
           <textarea
             name="storyText"
+            aria-label="留下一句话"
             value={text}
             onChange={(e) => setText(e.target.value)}
             required
