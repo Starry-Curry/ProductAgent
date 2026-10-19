@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { syntheticItem } from "@/lib/life/availability";
 import type { Item } from "@/lib/domain";
 import type { LifeIdea } from "@/lib/life/ideas";
 import type { LifeRequest } from "./Intake";
@@ -20,7 +21,7 @@ export function Discovery({
 }) {
   const [goal, setGoal] = useState("想用已有的东西，做点新鲜的小事"),
     [minutes, setMinutes] = useState("30"),
-    [synthetic, setSynthetic] = useState(true),
+    [synthetic, setSynthetic] = useState(false),
     [busy, setBusy] = useState(false),
     [notice, setNotice] = useState(""),
     [onlySaved, setOnlySaved] = useState(false),
@@ -71,7 +72,7 @@ export function Discovery({
   }
   const rows = (
     onlySaved ? ideas.filter((i) => i.saved) : results || ideas.slice(0, 6)
-  ).filter((i) => !itemId || i.itemIds.includes(itemId));
+  ).filter((i) => (!itemId || i.itemIds.includes(itemId)) && (onlySaved || synthetic || !i.itemIds.some(id=>items.some(item=>item.id===id && syntheticItem(item)))));
   return (
     <section>
       <div className="life-section-head">

@@ -146,6 +146,8 @@ export function saveSource(
   if (!state.items.some((i) => i.id === v.itemId && i.owner === actor))
     throw new AgentError("仅所有者可添加物品资料", 403);
   if (v.url) sourceURL(v.url);
+  const existing = db.prepare("SELECT id FROM life_sources WHERE owner=? AND item_id=? AND title=? AND text=? AND coalesce(url,'')=? AND kind=?").get(actor,v.itemId,v.title.slice(0,150),v.text.slice(0,40000),v.url || "",v.kind) as {id:string}|undefined;
+  if(existing) return existing.id;
   const id = crypto.randomUUID();
   db.prepare("INSERT INTO life_sources VALUES(?,?,?,?,?,?,?,?)").run(
     id,

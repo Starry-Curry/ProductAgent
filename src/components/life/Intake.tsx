@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { Item } from "@/lib/domain";
 import type { ProductPack } from "@/lib/products";
 export type LifeRequest = (action: string, input?: unknown) => Promise<any>;
@@ -26,6 +26,17 @@ export function Intake({
     [source, setSource] = useState<any>(null),
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false);
+  const requestId = useRef("");
+  const [savedItem,setSavedItem] = useState<Item|null>(null);
+  async function savePendingSource(item:Item) {
+    try {
+      if (source?.text?.trim()) await request("source", {itemId:item.id,title:source.title || "用户提供的资料",text:source.text,url:source.url,kind:source.kind || "user-text"});
+    } catch(e) {
+      setNotice(`物品已成功建档，资料尚未保存：${(e as Error).message}。请修正资料后单独重试，无需再次录入。`);
+      return;
+    }
+    onSaved(item);
+  }
   async function run(fn: () => Promise<void>) {
     setBusy(true);
     setNotice("");
@@ -215,7 +226,10 @@ export function Intake({
             e.preventDefault();
             const f = new FormData(e.currentTarget);
             run(async () => {
+              if(savedItem) { await savePendingSource(savedItem); return; }
+              if(!requestId.current) requestId.current=crypto.randomUUID();
               const d = await request("createItem", {
+                requestId: requestId.current,
                 name,
                 brand,
                 model: model || "待确认",
@@ -241,15 +255,8 @@ export function Intake({
                     .filter(Boolean),
                 },
               });
-              if (source?.text?.trim())
-                await request("source", {
-                  itemId: d.item.id,
-                  title: source.title || "用户提供的资料",
-                  text: source.text,
-                  url: source.url,
-                  kind: source.kind || "user-text",
-                });
-              onSaved(d.item);
+              setSavedItem(d.item);
+              await savePendingSource(d.item);
             });
           }}
         >
@@ -387,8 +394,9 @@ export function Intake({
             我确认它目前在手、完好且可用
           </label>
           <button className="button" disabled={busy}>
-            {busy ? "正在处理…" : "确认并录入物品"}
+              {busy ? "正在处理…" : savedItem ? "仅重试保存资料" : "确认并录入物品"}
           </button>
+            {savedItem && <button type="button" disabled={busy} onClick={()=>onSaved(savedItem)}>先查看已建档物品，稍后补资料</button>}
         </form>
       </div>
       {notice && (

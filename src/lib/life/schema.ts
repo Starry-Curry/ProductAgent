@@ -15,8 +15,18 @@ export function migrateLife(db: DatabaseSync, filename: string) {
         }
       ).v || 0,
     );
-    if (version > 1) throw Error("生活数据版本高于当前程序，拒绝写入");
-    if (version === 1) return;
+    if (version > 2) throw Error("生活数据版本高于当前程序，拒绝写入");
+    if (version === 2) return;
+    if (version === 1) {
+      const backup = filename + ".before-life-v2.sqlite";
+      if (!existsSync(backup)) db.exec("VACUUM INTO '" + backup.replaceAll("'", "''") + "'");
+      db.exec("BEGIN IMMEDIATE");
+      try {
+        db.exec("CREATE TABLE life_requests(owner TEXT NOT NULL,request_id TEXT NOT NULL,payload TEXT NOT NULL,item_id TEXT NOT NULL,PRIMARY KEY(owner,request_id)); INSERT INTO life_schema VALUES(2);");
+        db.exec("COMMIT");
+      } catch(e) { db.exec("ROLLBACK"); throw e; }
+      return;
+    }
   }
   const backup = filename + ".before-life-v1.sqlite";
   if (!existsSync(backup))
@@ -32,7 +42,8 @@ export function migrateLife(db: DatabaseSync, filename: string) {
       CREATE TABLE IF NOT EXISTS life_ideas(id TEXT PRIMARY KEY,owner TEXT NOT NULL,body TEXT NOT NULL,created_at TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS life_idea_feedback(owner TEXT NOT NULL,idea_id TEXT NOT NULL REFERENCES life_ideas(id),saved INTEGER NOT NULL DEFAULT 0,outcome TEXT NOT NULL DEFAULT '未尝试',note TEXT NOT NULL DEFAULT '',updated_at TEXT NOT NULL,PRIMARY KEY(owner,idea_id));
       CREATE TABLE IF NOT EXISTS life_installations(version TEXT PRIMARY KEY);
-      INSERT INTO life_schema VALUES(1);
+      CREATE TABLE IF NOT EXISTS life_requests(owner TEXT NOT NULL,request_id TEXT NOT NULL,payload TEXT NOT NULL,item_id TEXT NOT NULL,PRIMARY KEY(owner,request_id));
+      INSERT INTO life_schema VALUES(2);
     `);
     db.exec("COMMIT");
   } catch (e) {

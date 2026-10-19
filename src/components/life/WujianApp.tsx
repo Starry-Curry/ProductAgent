@@ -37,7 +37,7 @@ type Data = {
   fragments: Fragment[];
   ideas: LifeIdea[];
   packs: ProductPack[];
-  capabilities: { model: boolean };
+  capabilities: { model: boolean; cloud: {state: string; ready: boolean; message: string} };
   stats: {
     items: number;
     syntheticItems: number;
@@ -274,6 +274,7 @@ export default function WujianApp() {
             {notice}
           </p>
         )}
+        {data && <p className="life-muted" role="status">云端 AI · {data.capabilities.cloud.message} <a href="/guide#cloud">配置与撤销方式</a></p>}
         {!data ? (
           <div className="life-empty">正在打开你的生活展柜…</div>
         ) : (
@@ -384,10 +385,7 @@ export default function WujianApp() {
                       打开 AI 助手
                     </button>
                     <small>
-                      当前
-                      {data.capabilities.model
-                        ? "模型已授权启用"
-                        : "真实模型费用关闭；精选指导与本地功能可用"}
+                      {data.capabilities.cloud.message}
                     </small>
                   </div>
                 </section>

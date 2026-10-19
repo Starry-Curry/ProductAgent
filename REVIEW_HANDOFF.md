@@ -1,5 +1,9 @@
 # ProductAgent统一仓库交接
 
+## 2026-10-19 · 云端通路与核心可靠性修复（第一批）
+
+启动默认费用关闭；仅本机 --cloud 单进程手动启用，退出即撤销。状态按密钥/配置/授权检查，未实际联网不宣称账户可用。Provider区分认证、网络、限流与无效JSON。录入请求回执随物品同事务保存（life schema v2/升级备份），资料失败可独立重试，不重复建档。候选按内容与实例去重并保留收藏，旧种子同样按合成数据隔离，发现默认不含演示。16项life测试及类型检查通过；真实模型调用0，等待另行授权。后续体验与最终回归另记录。
+
 ## 2026-10-19 · 新版交付入口
 
 当前 feat/life-context-v1-d，从 4451ca2 统一工程增量开发；用户允许修改现有工程，先前 prototypes 限制已被正式授权替代。未修改 D:\ProductAgent-Dev 工作区或原数据。使用 START_LIFE.cmd 或 npm run start:life（3200，费用硬关闭），独立 data-life-v1；开发 dev:life；测试 npm run test:life 自动隔离库/端口，原四组旅程通过 test:acceptance 回归 /legacy。

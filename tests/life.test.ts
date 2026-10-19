@@ -16,7 +16,10 @@ import {
   readMedia,
 } from "../src/lib/life/stories.ts";
 import { storePhoto } from "../src/lib/life/media.ts";
-import { discoverLife, feedbackIdea } from "../src/lib/life/ideas.ts";
+import { discoverLife, feedbackIdea, listLifeIdeas } from "../src/lib/life/ideas.ts";
+import { cloudStatus } from "../src/lib/life/provider.ts";
+import { createProvider } from "../src/lib/ai/provider.ts";
+import { createLifeItem } from "../src/lib/life/intake.ts";
 import {
   parseCode,
   sourceURL,
@@ -29,6 +32,62 @@ import { listMemories } from "../src/lib/memory/store.ts";
 import { reconcileMemories } from "../src/lib/memory/ambient.ts";
 import { createLifeGift } from "../src/lib/life/gifts.ts";
 import { installLifeDemo } from "../src/lib/life/demo.ts";
+
+test("录入响应丢失/资料失败重试不重复建档，资料重试幂等并隔离身份",()=>{
+ const t=fixture();try{
+  const input={requestId:crypto.randomUUID(),name:"真实新台灯测试",category:"电子产品",lifecycle:"长期耐用",availability:"available"};
+  const before=t.read().items.length;
+  const first=createLifeItem(t.db,t.read,"lin",input);
+  assert.throws(()=>saveSource(t.db,t.read(),"lin",{itemId:first.item.id,title:"测试",text:"合法的测试资料原文足够长",url:"http://127.0.0.1/private",kind:"user-link"}));
+  const retry=createLifeItem(t.db,t.read,"lin",input);
+  assert.equal(first.item.id,retry.item.id);assert.equal(t.read().items.length,before+1);
+  assert.throws(()=>createLifeItem(t.db,t.read,"lin",{...input,name:"changed"}),/内容已变化/);
+  const v={itemId:first.item.id,title:"确认资料",text:"本测试物品用干燥软布清洁。",kind:"user-text"};
+  assert.equal(saveSource(t.db,t.read(),"lin",v),saveSource(t.db,t.read(),"lin",v));
+  assert.throws(()=>saveSource(t.db,t.read(),"dad",v));
+  assert.notEqual(createLifeItem(t.db,t.read,"dad",input).item.id,first.item.id);
+ }finally{t.db.close();}
+});
+
+test("云配置/费用状态与离线Provider错误准确区分，不发出未授权请求", async()=>{
+ const env={AI_BASE_URL:"https://dashscope.aliyuncs.com/compatible-mode/v1",AI_MODEL:"qwen-plus",AI_API_KEY:"",AI_ALLOW_PAID_CALLS:"true",WUJIAN_ALLOW_PAID_CALLS:"true"};
+ assert.equal(cloudStatus(env).state,"missing_key");
+ let calls=0;
+ const request=async()=>{calls++;return Response.json({});};
+ await assert.rejects(createProvider(env,request).generate("s",{}),{code:"not_configured"});
+ env.AI_API_KEY="offline-fixture-not-real";env.AI_ALLOW_PAID_CALLS="false";
+ assert.equal(cloudStatus(env).state,"unauthorized");
+ await assert.rejects(createProvider(env,request).complete!([],[]),{code:"payment_not_authorized"});
+ assert.equal(calls,0);env.AI_ALLOW_PAID_CALLS="true";
+ assert.equal(cloudStatus(env).state,"ready");
+ for(const method of ["generate","complete"] as const){
+  for(const [status,code] of [[401,"authentication"],[403,"permission"],[429,"rate_limited"],[503,"upstream"]] as const){
+   const p=createProvider(env,async()=>new Response("ignored-sensitive-upstream-body",{status}));
+   await assert.rejects(method==="generate"?p.generate("s",{}):p.complete!([],[]),{code});
+  }
+  const p=createProvider(env,async()=>new Response("not-json"));
+  await assert.rejects(method==="generate"?p.generate("s",{}):p.complete!([],[]),{code:"invalid_response"});
+ }
+ await assert.rejects(createProvider(env,async()=>{throw new TypeError("secret-like-network-detail");}).generate("s",{}),e=>(e as any).code==="network" && !(e as Error).message.includes("secret-like"));
+ assert.equal(cloudStatus({...env,AI_BASE_URL:"http://unsafe"}).state,"invalid_config");
+});
+
+test("规则创意重复生成复用ID及收藏，旧种子默认为合成且拒绝不可用物品",()=>{
+ const t=fixture();try{
+  installLifeDemo(t.db);const state=t.read();
+  assert.equal(discoverLife(t.db,state,"lin",{goal:"摄影"}).length,0);
+  const first=discoverLife(t.db,state,"lin",{goal:"安静",includeSynthetic:true});
+  assert.ok(first.length);
+  feedbackIdea(t.db,state,"lin",{id:first[0].id,saved:true,outcome:"用户报告有效"});
+  const count=(t.db.prepare("SELECT count(*) n FROM life_ideas").get() as {n:number}).n;
+  const again=discoverLife(t.db,state,"lin",{goal:"安静",includeSynthetic:true});
+  assert.equal((t.db.prepare("SELECT count(*) n FROM life_ideas").get() as {n:number}).n,count);
+  assert.ok(again.some(i=>i.id===first[0].id&&i.saved&&i.outcome==="用户报告有效"));
+  assert.ok(listLifeIdeas(t.db,state,"lin").some(i=>i.id===first[0].id&&i.saved));
+  for(const id of first[0].itemIds) state.items.find(i=>i.id===id)!.attributes={quantity:0};
+  assert.ok(!discoverLife(t.db,state,"lin",{goal:"安静",includeSynthetic:true}).some(i=>i.id===first[0].id));
+ }finally{t.db.close();}
+});
 test("演示安装跨重开可恢复且幂等，25实例/10型号、3片段含2图文，不重置用户数据", () => {
   const t = fixture();
   try {
@@ -125,7 +184,7 @@ test("用户经验保留来源类型，模型创意返回前重新复核物品�
       },
     };
     await assert.rejects(
-      () => modelIdea(t.db, s, "lin", "看看新玩法", provider, false, t.read),
+      () => modelIdea(t.db, s, "lin", "看看新玩法", provider, true, t.read),
       /状态已变化/,
     );
   } finally {
@@ -357,7 +416,7 @@ test("新物品ID也参与创意；状态变化阻止尝试；跳过反馈影响
       availability: "available",
     });
     t.write(s);
-    const ideas = discoverLife(t.db, s, "lin", { goal: "摄影", itemId: i.id });
+    const ideas = discoverLife(t.db, s, "lin", { goal: "摄影", itemId: i.id, includeSynthetic:true });
     assert.ok(ideas.length > 0);
     assert.ok(ideas[0].itemIds.includes(i.id));
     assert.equal(ideas[0].tested, false);

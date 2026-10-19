@@ -1,3 +1,4 @@
+import { createLifeItem } from "@/lib/life/intake";
 import { z } from "zod";
 import { actor, localOnly, read, database, write } from "@/lib/db";
 import { visible, mutate, canRead, type State } from "@/lib/domain";
@@ -21,7 +22,8 @@ import {
   submitIdea,
   creativeRecipeCount,
 } from "@/lib/life/ideas";
-import { lifeProvider } from "@/lib/life/provider";
+import { lifeProvider, cloudStatus } from "@/lib/life/provider";
+import { ProviderError } from "@/lib/ai/provider";
 import { storePhoto } from "@/lib/life/media";
 import { productPacks, searchProducts } from "@/lib/products";
 import { installLifeDemo } from "@/lib/life/demo";
@@ -31,6 +33,7 @@ export const dynamic = "force-dynamic";
 function fail(e: unknown) {
   return Response.json(
     {
+      code: e instanceof ProviderError ? e.code : undefined,
       error:
         e instanceof AgentError
           ? e.message
@@ -40,7 +43,7 @@ function fail(e: unknown) {
               ? e.message
               : "操作未完成",
     },
-    { status: e instanceof AgentError ? e.status : 400 },
+    { status: e instanceof ProviderError ? 502 : e instanceof AgentError ? e.status : 400 },
   );
 }
 export async function GET(r: Request) {
@@ -62,9 +65,8 @@ export async function GET(r: Request) {
       packs: productPacks,
       capabilities: {
         visual: false,
-        model:
-          process.env.WUJIAN_ALLOW_PAID_CALLS === "true" &&
-          process.env.AI_ALLOW_PAID_CALLS === "true",
+        model: cloudStatus().ready,
+        cloud: cloudStatus(),
         barcode: true,
         manual: true,
       },
@@ -164,58 +166,7 @@ export async function POST(r: Request) {
         notice:
           "用户主动读取的公开正文；不会绕过登录，也不自动认证为官方资料。",
       });
-    if (p.action === "createItem") {
-      const v = z
-        .object({
-          name: z.string().trim().min(1).max(80),
-          brand: z.string().max(80).default(""),
-          model: z.string().max(100).default("待确认"),
-          category: z.string().max(40),
-          lifecycle: z.enum([
-            "一次性",
-            "消耗型",
-            "可重复使用",
-            "长期耐用",
-            "持续养护",
-          ]),
-          availability: z.enum(["unknown", "available"]),
-          attributes: z.record(z.string(), z.unknown()).optional(),
-          mediaId: z.string().uuid().optional(),
-          packId: z.string().optional(),
-          confirmed: z.boolean().default(false),
-        })
-        .strict()
-        .parse(p.input);
-      db.exec("BEGIN IMMEDIATE");
-      try {
-        let state = mutate(read(), a, "createItem", v);
-        const item = state.items.at(-1)!;
-        state = mutate(state, a, "updateItem", { itemId: item.id, ...v });
-        if (v.mediaId) {
-          if (
-            !db
-              .prepare("SELECT 1 FROM life_media WHERE id=? AND owner=?")
-              .get(v.mediaId, a)
-          )
-            throw new AgentError("照片未获授权", 403);
-          item.photo = `/api/life/media/${v.mediaId}?actor=${a}`;
-        }
-        if (v.packId)
-          state = mutate(state, a, "bindProduct", {
-            itemId: item.id,
-            packId: v.packId,
-            confirmed: v.confirmed,
-          });
-        db.prepare("UPDATE workspace SET body=? WHERE id=1").run(
-          JSON.stringify(state),
-        );
-        db.exec("COMMIT");
-        return Response.json({ item });
-      } catch (e) {
-        db.exec("ROLLBACK");
-        throw e;
-      }
-    }
+    if (p.action === "createItem") return Response.json(createLifeItem(db,read,a,p.input));
     if (p.action === "fragment")
       return Response.json({ fragment: saveFragment(db, read, a, p.input) });
     if (p.action === "gift")

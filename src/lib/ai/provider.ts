@@ -88,6 +88,7 @@ export function createProvider(
               { role: "user", content: JSON.stringify(input) },
             ],
             max_tokens: 1500,
+            ...(env.AI_ENABLE_THINKING === "false" ? { enable_thinking: false } : {}),
             // Opt in only after checking this account/model's capabilities.
             ...(env.AI_JSON_MODE === "true"
               ? { response_format: { type: "json_object" } }
@@ -96,10 +97,10 @@ export function createProvider(
         });
         if (!response.ok)
           throw new ProviderError(
-            response.status === 429 ? "rate_limited" : "upstream",
-            `模型服务暂不可用（${response.status}），未生成回答。`,
+            response.status === 401 ? "authentication" : response.status === 403 ? "permission" : response.status === 429 ? "rate_limited" : "upstream",
+            `请求失败：模型服务返回 ${response.status}，请核对账户权限或稍后重试。`,
           );
-        const result = await response.json();
+        const result = await response.json().catch(() => { throw new ProviderError("invalid_response", "请求失败：模型服务返回了无效 JSON。"); });
         const choice = result.choices?.[0];
         if (
           choice?.finish_reason !== "stop" ||
@@ -204,11 +205,11 @@ async function completeModel(
             : response.status === 429
               ? "rate_limited"
               : "upstream",
-        "模型服务暂不可用（" +
+        "请求失败：模型服务暂不可用（" +
           response.status +
           "），请核对账户配置或稍后重试。",
       );
-    const data = await response.json();
+    const data = await response.json().catch(() => { throw new ProviderError("invalid_response", "请求失败：模型服务返回了无效 JSON。"); });
     const choice = data?.choices?.[0];
     const calls = choice?.message?.tool_calls ?? [];
     if (!choice || !["stop", "tool_calls"].includes(choice.finish_reason))

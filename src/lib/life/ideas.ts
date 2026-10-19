@@ -5,7 +5,8 @@ import { boundPack } from "../ai/harness.ts";
 import { listMemories } from "../memory/store.ts";
 import { AgentError } from "../agent/contracts.ts";
 import type { Provider } from "../ai/provider.ts";
-import { usable } from "./availability.ts";
+import { usable, syntheticItem } from "./availability.ts";
+import { createHash } from "node:crypto";
 
 type Recipe = {
   id: string;
@@ -198,7 +199,7 @@ export type LifeIdea = {
 };
 export const creativeRecipeCount = recipes.length;
 function describe(i: Item) {
-  return [i.name, i.category, ...(i.attributes?.capabilities || [])].join(" ");
+  return [i.name, i.category, i.attributes?.material, ...(Array.isArray(i.attributes?.capabilities) ? i.attributes.capabilities : [])].join(" ");
 }
 function evidence(items: Item[]) {
   return items.flatMap((i) => {
@@ -210,7 +211,13 @@ function evidence(items: Item[]) {
       : [];
   });
 }
+function candidateKey(idea: LifeIdea) {
+  return createHash("sha256").update(JSON.stringify([idea.source,idea.title,[...idea.itemIds].sort(),idea.minutes,idea.steps,idea.limits])).digest("hex");
+}
 function store(db: DatabaseSync, actor: Person, idea: LifeIdea) {
+  // Keep legacy IDs and feedback: identical content finds the already saved candidate.
+  const prior = (db.prepare("SELECT i.body,f.saved,f.outcome,f.note FROM life_ideas i LEFT JOIN life_idea_feedback f ON f.owner=i.owner AND f.idea_id=i.id WHERE i.owner=? ORDER BY coalesce(f.saved,0) DESC,i.created_at ASC").all(actor) as {body:string;saved:number|null;outcome:string|null;note:string|null}[]).find(r=>candidateKey(JSON.parse(r.body))===candidateKey(idea));
+  if(prior) return {...JSON.parse(prior.body),saved:!!prior.saved,outcome:prior.outcome || "未尝试",note:prior.note || ""} as LifeIdea;
   db.prepare("INSERT INTO life_ideas VALUES(?,?,?,?)").run(
     idea.id,
     actor,
@@ -235,7 +242,7 @@ export function discoverLife(
       canRead(i, actor) &&
       !i.demo &&
       usable(i) &&
-      (!i.synthetic || input.includeSynthetic),
+      (!syntheticItem(i) || input.includeSynthetic === true),
   );
   if (input.itemId && !available.some((i) => i.id === input.itemId)) return [];
   const prefs = listMemories(db, state, actor)
@@ -253,7 +260,9 @@ export function discoverLife(
     .filter(
       (r) =>
         (!input.minutes || r.minutes <= input.minutes) &&
-        !(skipHandcraft && r.tags.includes("手工")),
+        !(skipHandcraft && r.tags.includes("手工")) &&
+        !(/不.{0,4}(拍照|摄影)/.test(input.goal) && /摄影/.test(r.tags)) &&
+        !(/不.{0,4}(音乐|声音)|静音/.test(input.goal) && r.id === "audio"),
     )
     .map((r) => ({
       r,
@@ -266,7 +275,7 @@ export function discoverLife(
   for (const { r } of ranked) {
     const chosen: Item[] = [];
     for (const role of r.roles) {
-      const item = available.find(
+      const item = [...available].sort((a,b)=>Number(b.id===input.itemId)-Number(a.id===input.itemId) || Number(input.goal.includes(b.name))-Number(input.goal.includes(a.name)) || a.id.localeCompare(b.id)).find(
         (i) => !chosen.some((c) => c.id === i.id) && role.test(describe(i)),
       );
       if (item) chosen.push(item);
@@ -279,14 +288,7 @@ export function discoverLife(
       chosen[role] = selected;
       if (new Set(chosen.map((i) => i.id)).size !== chosen.length) continue;
     }
-    const previous = db
-      .prepare(
-        "SELECT f.outcome FROM life_idea_feedback f JOIN life_ideas i ON i.id=f.idea_id WHERE f.owner=? AND json_extract(i.body,'$.title')=? ORDER BY f.updated_at DESC LIMIT 1",
-      )
-      .get(actor, r.title) as { outcome: string } | undefined;
-    if (previous?.outcome === "不感兴趣") continue;
-    results.push(
-      store(db, actor, {
+    const candidate = store(db, actor, {
         id: crypto.randomUUID(),
         title: r.title,
         itemIds: chosen.map((i) => i.id),
@@ -300,17 +302,16 @@ export function discoverLife(
         evidence: evidence(chosen),
         tested: false,
         goal: input.goal,
-      }),
-    );
-    if (results.length >= 6) break;
+      });
+    if(candidate.outcome !== "不感兴趣") results.push(candidate);
   }
-  return results;
+  return results.sort((a,b)=>Number(a.outcome==="未成功")-Number(b.outcome==="未成功") || Number(b.saved || b.outcome==="用户报告有效")-Number(a.saved || a.outcome==="用户报告有效")).slice(0,6);
 }
 export function listLifeIdeas(db: DatabaseSync, state: State, actor: Person) {
   return (
     db
       .prepare(
-        "SELECT i.body,f.saved,f.outcome,f.note FROM life_ideas i LEFT JOIN life_idea_feedback f ON f.idea_id=i.id AND f.owner=i.owner WHERE i.owner=? ORDER BY i.created_at DESC LIMIT 60",
+        "SELECT i.body,f.saved,f.outcome,f.note FROM life_ideas i LEFT JOIN life_idea_feedback f ON f.idea_id=i.id AND f.owner=i.owner WHERE i.owner=? ORDER BY coalesce(f.saved,0) DESC,i.created_at DESC LIMIT 200",
       )
       .all(actor) as {
       body: string;
@@ -386,7 +387,7 @@ export async function modelIdea(
       canRead(i, actor) &&
       !i.demo &&
       usable(i) &&
-      (!i.synthetic || includeSynthetic),
+      (!syntheticItem(i) || includeSynthetic === true),
   );
   if (!items.length) throw new AgentError("先确认至少一件可用物品");
   const result = await provider.generate(
