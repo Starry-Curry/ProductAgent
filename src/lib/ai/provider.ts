@@ -42,6 +42,7 @@ export type Provider = {
   ) => Promise<ModelResponse>;
   model: string;
   generate: (system: string, input: unknown) => Promise<ProviderResult>;
+  recognize?: (system: string, image: string) => Promise<ProviderResult>;
 };
 
 export function createProvider(
@@ -50,7 +51,11 @@ export function createProvider(
 ): Provider {
   const { AI_BASE_URL, AI_API_KEY, AI_MODEL } = env;
   const provider: Provider = {
-    ready: !!AI_BASE_URL && !!AI_API_KEY?.trim() && !!AI_MODEL && env.AI_ALLOW_PAID_CALLS === "true",
+    ready:
+      !!AI_BASE_URL &&
+      !!AI_API_KEY?.trim() &&
+      !!AI_MODEL &&
+      env.AI_ALLOW_PAID_CALLS === "true",
     model: AI_MODEL || "unconfigured",
     async generate(system, input) {
       if (!AI_BASE_URL || !AI_API_KEY || !AI_MODEL)
@@ -90,7 +95,9 @@ export function createProvider(
               { role: "user", content: JSON.stringify(input) },
             ],
             max_tokens: 1500,
-            ...(env.AI_ENABLE_THINKING === "false" ? { enable_thinking: false } : {}),
+            ...(env.AI_ENABLE_THINKING === "false"
+              ? { enable_thinking: false }
+              : {}),
             // Opt in only after checking this account/model's capabilities.
             ...(env.AI_JSON_MODE === "true"
               ? { response_format: { type: "json_object" } }
@@ -99,10 +106,21 @@ export function createProvider(
         });
         if (!response.ok)
           throw new ProviderError(
-            response.status === 401 ? "authentication" : response.status === 403 ? "permission" : response.status === 429 ? "rate_limited" : "upstream",
+            response.status === 401
+              ? "authentication"
+              : response.status === 403
+                ? "permission"
+                : response.status === 429
+                  ? "rate_limited"
+                  : "upstream",
             `请求失败：模型服务返回 ${response.status}，请核对账户权限或稍后重试。`,
           );
-        const result = await response.json().catch(() => { throw new ProviderError("invalid_response", "请求失败：模型服务返回了无效 JSON。"); });
+        const result = await response.json().catch(() => {
+          throw new ProviderError(
+            "invalid_response",
+            "请求失败：模型服务返回了无效 JSON。",
+          );
+        });
         const choice = result?.choices?.[0];
         if (
           choice?.finish_reason !== "stop" ||
@@ -140,13 +158,39 @@ export function createProvider(
   };
   provider.complete = (messages, tools, options) =>
     completeModel(env, request, messages, tools, options);
+  // Same HTTPS/auth/error protocol; vision changes only the configured model and user content.
+  provider.recognize = (system, image) =>
+    completeModel(
+      env,
+      request,
+      [
+        { role: "system", content: system },
+        {
+          role: "user",
+          content: [
+            { type: "text", text: "请仅给出待核对的物品识别候选，输出JSON。" },
+            { type: "image_url", image_url: { url: image } },
+          ],
+        },
+      ],
+      [],
+    );
   return provider;
 }
 
 async function completeModel(
   env: Record<string, string | undefined>,
   request: typeof fetch,
-  messages: ModelMessage[],
+  messages: (
+    | ModelMessage
+    | {
+        role: "user";
+        content: (
+          | { type: "text"; text: string }
+          | { type: "image_url"; image_url: { url: string } }
+        )[];
+      }
+  )[],
   tools: ToolDefinition[],
   options?: { timeoutMs: number },
 ): Promise<ModelResponse> {
@@ -211,10 +255,18 @@ async function completeModel(
           response.status +
           "），请核对账户配置或稍后重试。",
       );
-    const data = await response.json().catch(() => { throw new ProviderError("invalid_response", "请求失败：模型服务返回了无效 JSON。"); });
+    const data = await response.json().catch(() => {
+      throw new ProviderError(
+        "invalid_response",
+        "请求失败：模型服务返回了无效 JSON。",
+      );
+    });
     const choice = data?.choices?.[0];
     const calls = choice?.message?.tool_calls ?? [];
-    if (!choice?.message || !["stop", "tool_calls"].includes(choice.finish_reason))
+    if (
+      !choice?.message ||
+      !["stop", "tool_calls"].includes(choice.finish_reason)
+    )
       throw new ProviderError(
         "invalid_response",
         "模型输出不完整，本次没有展示操作建议。",

@@ -2,17 +2,20 @@
 import { useState, useRef } from "react";
 import type { Item } from "@/lib/domain";
 import type { ProductPack } from "@/lib/products";
+import { OfficialSources } from "./OfficialSources";
 export type LifeRequest = (action: string, input?: unknown) => Promise<any>;
 export function Intake({
   packs,
   request,
   upload,
   onSaved,
+  vision,
 }: {
   packs: ProductPack[];
   request: LifeRequest;
   upload: (file: File, kind: string) => Promise<any>;
   onSaved: (item: Item) => void;
+  vision?: { ready: boolean; message: string };
 }) {
   const [name, setName] = useState(""),
     [brand, setBrand] = useState(""),
@@ -26,6 +29,10 @@ export function Intake({
     [source, setSource] = useState<any>(null),
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false);
+  const [ocr, setOCR] = useState(false);
+  const [codeCandidates, setCodeCandidates] = useState<ProductPack[]>([]);
+  const [visionConsent, setVisionConsent] = useState(false),
+    [visionCandidates, setVisionCandidates] = useState<any[]>([]);
   const requestId = useRef("");
   const [savedItem, setSavedItem] = useState<Item | null>(null);
   async function savePendingSource(item: Item) {
@@ -109,14 +116,64 @@ export function Intake({
                   run(async () => {
                     const d = await upload(f, "photo");
                     setPhoto(d);
+                    setVisionConsent(false);
+                    setVisionCandidates([]);
                     setNotice(d.notice);
                   });
               }}
             />
           </label>
           <p className="life-muted">
-            当前视觉模型未启用。照片可真实保存，名称与型号由你核对；不会冒充识物成功。
+            {vision?.message || "照片仅保存，名称与型号由你核对。"}
           </p>
+          {photo && vision?.ready && (
+            <>
+              <label className="life-check">
+                <input
+                  type="checkbox"
+                  checked={visionConsent}
+                  onChange={(e) => setVisionConsent(e.target.checked)}
+                />
+                我同意仅将这张照片发送给已授权的视觉模型（可能计费）
+              </label>
+              <button
+                type="button"
+                disabled={busy || !visionConsent}
+                onClick={() =>
+                  run(async () => {
+                    const d = await request("recognizePhoto", {
+                      mediaId: photo.id,
+                      confirmed: true,
+                    });
+                    setVisionCandidates(d.candidates);
+                    setNotice(d.notice);
+                  })
+                }
+              >
+                识别本张照片的候选
+              </button>
+            </>
+          )}
+          {visionCandidates.map((c, n) => (
+            <div className="life-notice" key={n}>
+              <strong>{c.name}</strong>
+              <p>
+                {c.basis === "visible-text" ? "模型抄录文字" : "视觉推断"}：
+                {c.observedText} · {c.uncertainties.join("；")}
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setName(c.name);
+                  setBrand(c.brand || "");
+                  setModel(c.model || "");
+                  setPack("");
+                }}
+              >
+                采用候选后人工核对
+              </button>
+            </div>
+          ))}
           <details>
             <summary>条形码 / 二维码</summary>
             <label>
@@ -138,6 +195,7 @@ export function Intake({
                       setCode(text);
                       const d = await request("code", { text });
                       if (d.type === "url") setUrl(d.text);
+                      setCodeCandidates(d.candidates || []);
                       setNotice(d.notice);
                     } finally {
                       URL.revokeObjectURL(u);
@@ -157,6 +215,7 @@ export function Intake({
                 run(async () => {
                   const d = await request("code", { text: code });
                   if (d.type === "url") setUrl(d.text);
+                  setCodeCandidates(d.candidates || []);
                   setNotice(d.notice);
                 })
               }
@@ -166,6 +225,11 @@ export function Intake({
             <p className="life-muted">
               编码不等于说明书；当前无通用条码商品数据库。
             </p>
+            {codeCandidates.map((p) => (
+              <button type="button" key={p.id} onClick={() => choose(p.id)}>
+                核对编码文字候选：{p.product} · {p.model}
+              </button>
+            ))}
           </details>
           <details>
             <summary>商品链接、公开资料或说明书</summary>
@@ -192,20 +256,29 @@ export function Intake({
               主动读取这份公开资料
             </button>
             <label>
-              上传说明书（PDF / TXT / MD，8MB 内）
+              上传说明书（PDF / TXT / MD / 图片，8MB 内）
               <input
                 type="file"
-                accept=".pdf,.txt,.md"
+                accept=".pdf,.txt,.md,.jpg,.jpeg,.png,.webp"
                 onChange={(e) => {
                   const f = e.target.files?.[0];
                   if (f)
                     run(async () => {
-                      const d = await upload(f, "manual");
+                      const d = await upload(f, ocr ? "manual-ocr" : "manual");
                       setSource(d);
                       setNotice(d.notice);
                     });
                 }}
               />
+            </label>
+            <label className="life-check">
+              <input
+                type="checkbox"
+                checked={ocr}
+                onChange={(e) => setOCR(e.target.checked)}
+              />
+              本机 OCR（图片/扫描 PDF
+              前3页，中文＋英文；无模型费用，请核对识别结果）
             </label>
             <p className="life-muted">
               不会登录、绕过访问限制或抓取社区全站。读取失败可粘贴获准使用的文字。
@@ -223,6 +296,33 @@ export function Intake({
                 }
               />
             </label>
+            {source?.extracted && (
+              <div className="life-notice">
+                <p>
+                  网页结构化字段（直接提取，未核验实物，不是 AI 推断）：
+                  {[
+                    source.extracted.name,
+                    source.extracted.brand,
+                    source.extracted.model,
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (source.extracted.name) setName(source.extracted.name);
+                    if (source.extracted.brand)
+                      setBrand(source.extracted.brand);
+                    if (source.extracted.model)
+                      setModel(source.extracted.model);
+                    setPack("");
+                  }}
+                >
+                  填入这些候选，继续人工核对
+                </button>
+              </div>
+            )}
             <label>
               资料原文
               <textarea
@@ -328,6 +428,17 @@ export function Intake({
               />
             </label>
           </div>
+          <OfficialSources
+            brand={brand}
+            model={model}
+            request={request}
+            onChoose={(d) => {
+              setSource({ ...d, kind: "user-link" });
+              setNotice(
+                "已采用公开资料草稿；请核对实物与型号后录入，不自动绑定资料包。",
+              );
+            }}
+          />
           <label>
             匹配已有可核验资料包
             <select value={packId} onChange={(e) => choose(e.target.value)}>

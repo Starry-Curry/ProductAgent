@@ -1,4 +1,5 @@
 "use client";
+import { OfficialSources } from "./OfficialSources";
 import { useEffect, useState } from "react";
 import type { Item, Person } from "@/lib/domain";
 import type { ProductPack } from "@/lib/products";
@@ -33,6 +34,8 @@ export function ItemInformation({
     [giftText, setGiftText] = useState(""),
     [chosen, setChosen] = useState<string[]>([]),
     [packId, setPack] = useState(item.productBinding?.packId || "");
+  const [ocr, setOCR] = useState(false),
+    [officialDraft, setOfficialDraft] = useState<any>(null);
   useEffect(() => {
     fetch(`/api/life?itemId=${encodeURIComponent(item.id)}`, {
       headers: { "x-demo-actor": actor },
@@ -82,6 +85,9 @@ export function ItemInformation({
                 run(async () => {
                   await request("updateItem", {
                     itemId: item.id,
+                    brand: f.get("brand"),
+                    model: f.get("model"),
+                    lifecycle: f.get("lifecycle"),
                     attributes: {
                       ...item.attributes,
                       quantity:
@@ -100,6 +106,41 @@ export function ItemInformation({
                 });
               }}
             >
+              <div className="life-form-row">
+                <label>
+                  品牌
+                  <input
+                    name="brand"
+                    maxLength={80}
+                    defaultValue={item.brand || ""}
+                  />
+                </label>
+                <label>
+                  具体型号
+                  <input
+                    name="model"
+                    maxLength={100}
+                    defaultValue={item.model || ""}
+                  />
+                </label>
+              </div>
+              <label>
+                生命周期
+                <select
+                  name="lifecycle"
+                  defaultValue={item.lifecycle || "长期耐用"}
+                >
+                  {[
+                    "一次性",
+                    "消耗型",
+                    "可重复使用",
+                    "长期耐用",
+                    "持续养护",
+                  ].map((c) => (
+                    <option key={c}>{c}</option>
+                  ))}
+                </select>
+              </label>
               <label>
                 当前数量
                 <input
@@ -215,9 +256,70 @@ export function ItemInformation({
       </section>
       <section className="life-card">
         <h2>我提供的说明书 / 经验</h2>
+        {item.owner === actor && (
+          <OfficialSources
+            brand={item.brand || ""}
+            model={item.model || ""}
+            request={request}
+            onChoose={(d) => setOfficialDraft(d)}
+          />
+        )}
+        {officialDraft && (
+          <form
+            className="life-notice"
+            onSubmit={(e) => {
+              e.preventDefault();
+              run(async () => {
+                const d = await request("importOfficial", {
+                  itemId: item.id,
+                  url: officialDraft.url,
+                  confirmed: true,
+                });
+                setSources((rows) => [
+                  d.source,
+                  ...rows.filter((s) => s.id !== d.source.id),
+                ]);
+                setOfficialDraft(null);
+                setNotice(d.notice);
+              });
+            }}
+          >
+            <strong>{officialDraft.title}</strong>
+            <label className="life-check">
+              <input type="checkbox" required />
+              我已核对实物完整型号、地区及资料适用性
+            </label>
+            <button disabled={busy}>确认保存官方摘录</button>
+            <button type="button" onClick={() => setOfficialDraft(null)}>
+              取消
+            </button>
+          </form>
+        )}
         {sources.map((s) => (
           <details key={s.id}>
-            <summary>{s.title} · 用户资料</summary>
+            <summary>
+              {s.title} ·{" "}
+              {s.kind === "official-public" ? "官方站点摘录" : "用户资料"}
+            </summary>
+            {s.knowledge && (
+              <>
+                <p className="life-muted">
+                  档案型号：{s.knowledge.applicableModel} ·{" "}
+                  {s.knowledge.modelInDocument
+                    ? "原文有型号文字"
+                    : "原文未匹配完整型号"}{" "}
+                  · {s.knowledge.provenance}
+                </p>
+                {s.knowledge.sections.map((k: any) => (
+                  <blockquote key={k.id}>
+                    <small>
+                      {k.category} · 原文位置 {k.start}–{k.end}
+                    </small>
+                    <p>{k.quote}</p>
+                  </blockquote>
+                ))}
+              </>
+            )}
             <p className="life-source-excerpt">{s.text}</p>
             {s.url && (
               <a href={s.url} target="_blank" rel="noreferrer">
@@ -232,12 +334,12 @@ export function ItemInformation({
               上传说明书
               <input
                 type="file"
-                accept=".pdf,.txt,.md"
+                accept=".pdf,.txt,.md,.jpg,.jpeg,.png,.webp"
                 onChange={(e) => {
                   const f = e.target.files?.[0];
                   if (f)
                     run(async () => {
-                      const d = await upload(f, "manual");
+                      const d = await upload(f, ocr ? "manual-ocr" : "manual");
                       setSourceTitle(d.title);
                       setSourceText(d.text);
                       setSourceLink(undefined);
@@ -246,6 +348,14 @@ export function ItemInformation({
                     });
                 }}
               />
+            </label>
+            <label className="life-check">
+              <input
+                type="checkbox"
+                checked={ocr}
+                onChange={(e) => setOCR(e.target.checked)}
+              />
+              本机 OCR：图片或扫描 PDF 前3页（请核对文字与数字）
             </label>
             <label>
               标题
@@ -351,7 +461,7 @@ export function ItemInformation({
                       await refresh();
                       setGift(false);
                       setNotice(
-                        "礼物已制作，在家庭与礼物中打开预览。尚未转移实物归属。",
+                        "礼物已制作，在社交中打开预览。尚未转移实物归属。",
                       );
                     })
                   }

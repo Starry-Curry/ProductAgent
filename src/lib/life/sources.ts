@@ -5,6 +5,7 @@ import { isIP } from "node:net";
 import { canRead, type State, type Person } from "../domain.ts";
 import { AgentError, type AssistantReply } from "../agent/contracts.ts";
 import { searchProducts } from "../products.ts";
+import { modelMentioned } from "./knowledge.ts";
 
 export function publicAddress(address: string) {
   if (address.includes(":"))
@@ -40,16 +41,27 @@ export function sourceURL(value: string) {
     );
   return url;
 }
-/** One user-requested public page, no crawling/cookies/login. Pin DNS to block rebinding. */
-export async function fetchPublicText(
+/** Explicit public document read. Re-check and pin DNS on every same-host canonical redirect. */
+export async function fetchPublicDocument(
   value: string,
-): Promise<{ title: string; text: string; url: string }> {
+  redirects = 0,
+): Promise<{
+  title: string;
+  text: string;
+  url: string;
+  links: { title: string; url: string }[];
+  extracted?: { name?: string; brand?: string; model?: string };
+}> {
   const url = sourceURL(value);
   const addresses = await lookup(url.hostname, { all: true });
   if (!addresses.length || addresses.some((a) => !publicAddress(a.address)))
     throw new AgentError("不允许读取内网或保留地址");
   const chosen = addresses[0];
-  const raw = await new Promise<string>((resolve, reject) => {
+  const result = await new Promise<{
+    bytes: Buffer;
+    type: string;
+    location?: string;
+  }>((resolve, reject) => {
     const req = request(
       url,
       {
@@ -57,7 +69,7 @@ export async function fetchPublicText(
         family: chosen.family,
         headers: {
           "User-Agent": "Wujian-UserRequestedDocument/1.0",
-          Accept: "text/html,text/plain",
+          Accept: "text/html,text/plain,application/pdf",
         },
         lookup: ((
           _host: unknown,
@@ -66,51 +78,156 @@ export async function fetchPublicText(
         ) => callback(null, chosen.address, chosen.family)) as never,
       },
       (res) => {
+        if (
+          [301, 302, 303, 307, 308].includes(res.statusCode || 0) &&
+          res.headers.location
+        ) {
+          res.resume();
+          resolve({
+            bytes: Buffer.alloc(0),
+            type: "",
+            location: res.headers.location,
+          });
+          return;
+        }
         if (res.statusCode !== 200) {
           res.resume();
           reject(
             new AgentError(
-              "来源未直接公开返回正文；不绕过登录、限制或自动跟随跳转",
+              "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
             ),
           );
           return;
         }
-        if (
-          !/text\/(html|plain)/i.test(String(res.headers["content-type"] || ""))
-        ) {
+        const type = String(res.headers["content-type"] || "");
+        if (!/text\/(html|plain)|application\/pdf/i.test(type)) {
           res.resume();
-          reject(new AgentError("此链接不是可读取网页；PDF 请下载后主动上传"));
+          reject(new AgentError("来源不是网页、文本或 PDF，可手动上传说明书"));
           return;
         }
+        const limit = /pdf/i.test(type) ? 8_000_000 : 750_000;
         const chunks: Buffer[] = [];
         let size = 0;
-        res.on("data", (chunk) => {
+        res.on("data", (chunk: Buffer) => {
           size += chunk.length;
-          if (size > 750000) {
+          if (size > limit) {
             res.destroy();
-            reject(new AgentError("网页过大，请粘贴必要片段或上传说明书"));
+            reject(new AgentError("资料过大，请选择相关章节上传"));
           } else chunks.push(chunk);
         });
-        res.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+        res.on("end", () => resolve({ bytes: Buffer.concat(chunks), type }));
         res.on("error", reject);
       },
     );
-    req.setTimeout(8000, () => req.destroy(new Error("资料读取超时")));
-    req.on("error", reject);
+    req.setTimeout(8000, () =>
+      req.destroy(new AgentError("资料读取超时，请稍后重试或人工补充")),
+    );
+    req.on("error", () =>
+      reject(
+        new AgentError("公开资料网络读取失败，可手动打开官网或上传说明书"),
+      ),
+    );
     req.end();
   });
-  const { load } = await import("cheerio");
-  const $ = load(raw);
+  if (result.location) {
+    const next = sourceURL(new URL(result.location, url).href);
+    if (
+      redirects >= 2 ||
+      next.hostname.replace(/^www\./, "") !== url.hostname.replace(/^www\./, "")
+    )
+      throw new AgentError(
+        "来源跳转到其他站点或跳转过多；请核对最终链接后主动读取",
+      );
+    return fetchPublicDocument(next.href, redirects + 1);
+  }
+  if (/pdf/i.test(result.type)) {
+    const { extractManual } = await import("./documents.ts");
+    const d = await extractManual(result.bytes, "official-document.pdf");
+    return {
+      title: decodeURIComponent(url.pathname.split("/").at(-1) || "公开 PDF"),
+      text: d.text,
+      url: url.href,
+      links: [],
+    };
+  }
+  return extractPublicHTML(result.bytes.toString("utf8"), url.href);
+}
+export async function extractPublicHTML(raw: string, address: string) {
+  const url = sourceURL(address),
+    { load } = await import("cheerio"),
+    $ = load(raw);
+  let extracted: { name?: string; brand?: string; model?: string } | undefined;
+  function product(node: any): any {
+    if (Array.isArray(node)) return node.map(product).find(Boolean);
+    if (!node || typeof node !== "object") return;
+    if ([node["@type"]].flat().includes("Product")) return node;
+    return node["@graph"] ? product(node["@graph"]) : undefined;
+  }
+  $('script[type="application/ld+json"]').each((_n, el) => {
+    try {
+      const p = product(JSON.parse($(el).text()));
+      if (p && !extracted)
+        extracted = {
+          name: typeof p.name === "string" ? p.name.slice(0, 80) : undefined,
+          brand:
+            typeof p.brand === "string"
+              ? p.brand.slice(0, 80)
+              : typeof p.brand?.name === "string"
+                ? p.brand.name.slice(0, 80)
+                : undefined,
+          model:
+            typeof p.model === "string"
+              ? p.model.slice(0, 100)
+              : typeof p.mpn === "string"
+                ? p.mpn.slice(0, 100)
+                : undefined,
+        };
+    } catch {
+      /* Invalid structured metadata is not evidence. */
+    }
+  });
+  const links: { title: string; url: string }[] = [];
+  $("a[href]").each((_n, el) => {
+    const title = $(el).text().trim().slice(0, 150),
+      href = $(el).attr("href");
+    if (
+      !href ||
+      !/manual|support|faq|\.pdf|说明|指南|手册|帮助|常见|组装/i.test(
+        title + " " + href,
+      )
+    )
+      return;
+    try {
+      const u = sourceURL(new URL(href, url).href);
+      if (!links.some((l) => l.url === u.href))
+        links.push({ title: title || "相关资料", url: u.href });
+    } catch {
+      /* No local/non-HTTPS links. */
+    }
+  });
   $("script,style,noscript,nav,footer,header,iframe,form").remove();
-  const title = $("title").text().trim().slice(0, 150) || url.hostname;
-  const text = ($("main,article").first().text() || $("body").text())
-    .replace(/\s+/g, " ")
+  $("p,li,h1,h2,h3,h4,br,tr,dt,dd").append("\n");
+  const title =
+    $("title").text().trim().slice(0, 150) ||
+    $("h1").first().text().trim().slice(0, 150) ||
+    url.hostname;
+  const text = (
+    $("main,article").first().text() ||
+    $("body").text() ||
+    $.root().text()
+  )
+    .replace(/[ \t]+/g, " ")
+    .replace(/ *\n */g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
     .trim()
     .slice(0, 40000);
   if (text.length < 20)
-    throw new AgentError("没有可读取正文，可手工粘贴已获准使用的内容");
-  return { title, text, url: url.href };
+    throw new AgentError(
+      "没有可读取正文，页面可能依赖脚本；请人工查找或上传资料",
+    );
+  return { title, text, url: url.href, links: links.slice(0, 20), extracted };
 }
+export const fetchPublicText = fetchPublicDocument;
 export function parseCode(raw: string) {
   const text = raw.trim().slice(0, 3000);
   if (!text) throw new AgentError("没有识别到编码内容");
@@ -119,15 +236,38 @@ export function parseCode(raw: string) {
     : /^\d{8,14}$/.test(text)
       ? "barcode"
       : "text";
+  const digits = type === "barcode" ? text : undefined;
+  const validChecksum =
+    digits && [8, 12, 13, 14].includes(digits.length)
+      ? (10 -
+          ([...digits.slice(0, -1)]
+            .reverse()
+            .reduce((n, c, i) => n + Number(c) * (i % 2 === 0 ? 3 : 1), 0) %
+            10)) %
+          10 ===
+        Number(digits.at(-1))
+      : undefined;
+  let candidateText = text;
+  if (type === "url") {
+    try {
+      const u = sourceURL(text);
+      candidateText = decodeURIComponent(u.pathname);
+    } catch {
+      candidateText = "";
+    }
+  }
   return {
     type,
     text,
-    candidates: type === "text" ? searchProducts(text) : [],
+    validChecksum,
+    candidates: type === "barcode" ? [] : searchProducts(candidateText),
     notice:
       type === "url"
         ? "二维码包含链接，不代表是说明书。可主动读取公开正文或手动补全。"
         : type === "barcode"
-          ? "已解析商品编码；当前没有获授权的通用条码商品库，请核对包装名称与型号。"
+          ? validChecksum === false
+            ? "编码校验位不匹配，请重新扫码或人工核对；未查询商品库。"
+            : "已解析商品编码；当前没有获授权的通用条码商品库，请核对包装名称与型号。"
           : "已解码原始文字；以下仅是本地目录匹配候选，仍须核对实物。",
   };
 }
@@ -200,6 +340,7 @@ export function sourceReply(
   actor: Person,
   itemId: string,
   question: string,
+  fallback = true,
 ): AssistantReply | undefined {
   if (
     !db.prepare("SELECT 1 FROM sqlite_master WHERE name='life_sources'").get()
@@ -209,7 +350,13 @@ export function sourceReply(
     ...new Set(question.match(/[\p{Script=Han}]{2}|[a-z0-9]{2,}/giu) || []),
   ].filter((t) => !/[怎么如何这个物品可以]/.test(t));
   const rows = listSources(db, state, actor, itemId);
+  const operation =
+    /怎么用|如何使用|操作|使用方法|使用步骤|开启|启动|连接|安装/.test(question);
   const facets = [
+    {
+      q: /怎么用|如何使用|操作|使用方法|使用步骤|开启|启动|连接|安装/,
+      a: /按下|开启|插入|放入|选择|连接|操作步骤|press|turn on|insert|connect/i,
+    },
     { q: /温度|几度|多少度/, a: /\d+(?:\.\d+)?\s*(?:°?C|℃|度)/i },
     {
       q: /多久|时长|多少分钟/,
@@ -232,6 +379,12 @@ export function sourceReply(
     { q: /浇水/, a: /浇水.{0,20}(?:\d|干|湿|少|适量|不)|(?:干|湿).{0,10}浇水/ },
   ].filter((f) => f.q.test(question));
   for (const r of rows) {
+    const model = state.items.find((i) => i.id === itemId)?.model;
+    if (
+      r.kind === "official-public" &&
+      (!model || !modelMentioned(r.title + " " + r.text, model))
+    )
+      continue;
     const sentences = r.text
       .split(/(?<=[。！？\n])/)
       .map((x) => x.trim())
@@ -245,7 +398,7 @@ export function sourceReply(
       .sort((a, b) => b.score - a.score);
     const direct = scored.find(
       (s) =>
-        s.score > 0 &&
+        (s.score > 0 || operation) &&
         !/详见|请参阅|请查阅|请见|待确认|未提供|不详/.test(s.text) &&
         facets.length > 0 &&
         facets.every((f) => f.a.test(s.text)),
@@ -253,7 +406,21 @@ export function sourceReply(
     if (direct)
       return {
         outcome: "answered",
-        answer: "你提供的资料中有这段原文：\n" + direct.text,
+        answer:
+          (r.kind === "official-public"
+            ? "已保存的官方站点摘录中有以下原文：\n"
+            : "你提供的资料中有这段原文：\n") +
+          (operation
+            ? sentences
+                .filter(
+                  (s) =>
+                    s === direct.text ||
+                    /警告|切勿|禁止/.test(s) ||
+                    /按下|开启|插入|放入|选择|连接|press|turn on/i.test(s),
+                )
+                .slice(0, 5)
+                .join("\n")
+            : direct.text),
         steps: [],
         questions: [],
         evidenceIds: [r.id],
@@ -266,7 +433,11 @@ export function sourceReply(
           "用户提供的资料摘录，未经独立核验；请确认对应型号与适用条件。这不是模型生成或已验证的操作步骤。",
       };
   }
-  if (rows.length && !/^(你好|谢谢|嗨|在吗)[！!。]?$/u.test(question))
+  if (
+    fallback &&
+    rows.length &&
+    !/^(你好|谢谢|嗨|在吗)[！!。]?$/u.test(question)
+  )
     return {
       outcome: "needs_info",
       answer:

@@ -635,9 +635,15 @@ export async function executeGraph(
           )) ||
         (!unsafe.test(withoutProhibitedActions(w.question)) &&
         effectiveSession.itemId &&
-        !ctx.knowledge.facts.length &&
         effectiveSession.mode === "service"
-          ? sourceReply(db, read(), actor, effectiveSession.itemId, w.question)
+          ? sourceReply(
+              db,
+              read(),
+              actor,
+              effectiveSession.itemId,
+              w.question,
+              !ctx.knowledge.facts.length,
+            )
           : undefined) ||
         curatedDecision(
           w.question,

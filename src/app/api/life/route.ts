@@ -1,3 +1,10 @@
+import {
+  findOfficial,
+  officialDomain,
+  modelMentioned,
+  organizeKnowledge,
+} from "@/lib/life/knowledge";
+import { visionStatus, recognizeOwnedPhoto } from "@/lib/life/vision";
 import { planDiscovery } from "@/lib/life/planning";
 import { createLifeItem } from "@/lib/life/intake";
 import { syntheticItem } from "@/lib/life/availability";
@@ -64,7 +71,13 @@ export async function GET(r: Request) {
       p = new URL(r.url).searchParams;
     if (p.has("itemId"))
       return Response.json({
-        sources: listSources(db, state, a, p.get("itemId")!),
+        sources: listSources(db, state, a, p.get("itemId")!).map((s) => ({
+          ...s,
+          knowledge: organizeKnowledge(
+            s,
+            state.items.find((i) => i.id === p.get("itemId"))?.model,
+          ),
+        })),
         fragments: listFragments(db, state, a, p.get("itemId")!),
       });
     return Response.json({
@@ -79,7 +92,8 @@ export async function GET(r: Request) {
       ideas: listLifeIdeas(db, state, a),
       packs: productPacks,
       capabilities: {
-        visual: false,
+        visual: visionStatus().ready,
+        vision: visionStatus(),
         model: cloudStatus().ready,
         cloud: cloudStatus(),
         barcode: true,
@@ -133,34 +147,10 @@ export async function POST(r: Request) {
       const bytes = new Uint8Array(await file.arrayBuffer());
       if (f.get("kind") === "photo")
         return Response.json(await storePhoto(db, a, bytes));
-      let text = "";
-      if (file.name.toLowerCase().endsWith(".pdf")) {
-        if (Buffer.from(bytes).subarray(0, 5).toString() !== "%PDF-")
-          throw new AgentError("PDF 文件内容无效");
-        const { PDFParse } = await import("pdf-parse");
-        const parser = new PDFParse({ data: bytes });
-        try {
-          text = (await parser.getText({ first: 20 })).text.slice(0, 40000);
-        } finally {
-          await parser.destroy();
-        }
-      } else if (/\.(txt|md)$/i.test(file.name)) {
-        text = new TextDecoder().decode(bytes).slice(0, 40000);
-      } else
-        throw new AgentError(
-          "说明书支持 PDF、TXT、Markdown；扫描 PDF 无 OCR 时可手动补充",
-        );
-      if (text.trim().length < 10)
-        throw new AgentError(
-          "未提取到可用文字，请补充文字或人工确认；不代表完成 OCR",
-        );
-      return Response.json({
-        title: file.name.slice(0, 150),
-        text,
-        kind: "user-manual",
-        notice:
-          "已在本机提取前 20 页内的文字，未核验型号或官方身份；原文件不持久保存。",
-      });
+      const { extractManual } = await import("@/lib/life/documents");
+      return Response.json(
+        await extractManual(bytes, file.name, f.get("kind") === "manual-ocr"),
+      );
     }
     const p = await r.json();
     if (p.action === "demo") {
@@ -181,6 +171,59 @@ export async function POST(r: Request) {
         notice:
           "用户主动读取的公开正文；不会绕过登录，也不自动认证为官方资料。",
       });
+    if (p.action === "findOfficial")
+      return Response.json(await findOfficial(p.input));
+    if (p.action === "recognizePhoto") {
+      const v = z
+        .object({ mediaId: z.string().uuid(), confirmed: z.literal(true) })
+        .strict()
+        .parse(p.input);
+      return Response.json(
+        await recognizeOwnedPhoto(db, a, v.mediaId, v.confirmed),
+      );
+    }
+    if (p.action === "importOfficial") {
+      const v = z
+        .object({
+          itemId: z.string().min(1),
+          url: z.string().max(2000),
+          confirmed: z.literal(true),
+        })
+        .strict()
+        .parse(p.input);
+      const item = read().items.find((i) => i.id === v.itemId && i.owner === a);
+      if (!item?.brand || !item.model)
+        throw new AgentError("请先补充品牌与完整型号，再核对官方资料", 403);
+      if (!officialDomain(v.url, item.brand))
+        throw new AgentError(
+          "该站点未列入此品牌的官方适配范围，可作为本人提供资料保存",
+        );
+      const d = await fetchPublicText(v.url);
+      if (
+        !officialDomain(d.url, item.brand) ||
+        !modelMentioned(d.title + " " + d.text, item.model)
+      )
+        throw new AgentError("正文未匹配完整型号，请核对地区版本；未保存资料");
+      // Re-check ownership after the network wait; never shares this source with household members.
+      const id = saveSource(db, read(), a, {
+        itemId: item.id,
+        title: d.title,
+        text: d.text,
+        url: d.url,
+        kind: "official-public",
+      });
+      const source = {
+        id,
+        title: d.title,
+        text: d.text,
+        url: d.url,
+        kind: "official-public",
+      };
+      return Response.json({
+        source: { ...source, knowledge: organizeKnowledge(source, item.model) },
+        notice: "已保存本人核对的官方站点摘录；不等于完整知识包或实物验证。",
+      });
+    }
     if (p.action === "createItem")
       return Response.json(createLifeItem(db, read, a, p.input));
     if (p.action === "fragment")
@@ -224,6 +267,11 @@ export async function POST(r: Request) {
         .object({
           itemId: z.string().min(1),
           name: z.string().optional(),
+          brand: z.string().max(80).optional(),
+          model: z.string().max(100).optional(),
+          lifecycle: z
+            .enum(["一次性", "消耗型", "可重复使用", "长期耐用", "持续养护"])
+            .optional(),
           state: z.string().optional(),
           availability: z.string().optional(),
           attributes: z.record(z.string(), z.unknown()).optional(),

@@ -41,6 +41,7 @@ type Data = {
   packs: ProductPack[];
   capabilities: {
     model: boolean;
+    vision?: { ready: boolean; message: string };
     cloud: { state: string; ready: boolean; message: string };
   };
   stats: {
@@ -575,6 +576,7 @@ export default function WujianApp() {
             )}
             {view === "add" && (
               <Intake
+                vision={data.capabilities.vision}
                 key={actor}
                 packs={data.packs}
                 request={request}

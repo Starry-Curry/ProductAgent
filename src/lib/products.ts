@@ -124,6 +124,10 @@ export function searchProducts(query: string) {
   const q = query.trim().toLowerCase();
   if (!q) return [];
   return productPacks
-    .filter((p) => `${p.product} ${p.model}`.toLowerCase().includes(q))
+    .filter((p) => {
+      const text = `${p.product} ${p.model}`.toLowerCase();
+      const model = p.model.toLowerCase().replace(/[\s_/-]/g, "");
+      return text.includes(q) || (model.length >= 4 && q.replace(/[\s_/-]/g, "").includes(model));
+    })
     .slice(0, 3);
 }
