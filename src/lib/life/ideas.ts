@@ -196,6 +196,7 @@ export type LifeIdea = {
   outcome?: string;
   note?: string;
 };
+export const creativeRecipeCount = recipes.length;
 function describe(i: Item) {
   return [i.name, i.category, ...(i.attributes?.capabilities || [])].join(" ");
 }

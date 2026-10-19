@@ -1,10 +1,12 @@
 import { spawn } from "node:child_process";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { lifeDataDirectory } from "../src/lib/life/data-directory.ts";
 const command = process.argv[2];
 if (!["dev", "start", "build"].includes(command))
   throw Error("Use dev, start or build");
-const dir = lifeDataDirectory();
+const workspace = fileURLToPath(new URL("../", import.meta.url));
+const dir = lifeDataDirectory(process.env, workspace);
 const child = spawn(
   process.execPath,
   [
@@ -15,7 +17,7 @@ const child = spawn(
       : ["--hostname", "127.0.0.1", "--port", process.env.PORT || "3200"]),
   ],
   {
-    cwd: process.cwd(),
+    cwd: workspace,
     windowsHide: true,
     stdio: "inherit",
     env: {

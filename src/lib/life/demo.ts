@@ -1,6 +1,9 @@
 import type { DatabaseSync } from "node:sqlite";
 import { findPack } from "../products.ts";
 import type { State, Item } from "../domain.ts";
+import { mutate } from "../domain.ts";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 const samples = [
   ["无线鼠标", "电子设备", "logitech-m185-m-r0061", "mouse"],
   ["随身音箱", "电子设备", "jbl-go4", "speaker"],
@@ -28,8 +31,10 @@ export function installLifeDemo(db: DatabaseSync) {
     db
       .prepare("SELECT 1 FROM life_installations WHERE version='life-demo-v1'")
       .get()
-  )
+  ) {
+    installLifePhotoStories(db);
     return;
+  }
   db.exec("BEGIN IMMEDIATE");
   try {
     const state = JSON.parse(
@@ -110,6 +115,96 @@ export function installLifeDemo(db: DatabaseSync) {
     for (const itemId of ["life-sample-12", "life-sample-13"])
       db.prepare("INSERT INTO life_fragment_items VALUES(?,?)").run(id, itemId);
     db.prepare("INSERT INTO life_installations VALUES('life-demo-v1')").run();
+    db.exec("COMMIT");
+  } catch (e) {
+    db.exec("ROLLBACK");
+    throw e;
+  }
+  installLifePhotoStories(db);
+}
+
+function installLifePhotoStories(db: DatabaseSync) {
+  if (
+    db
+      .prepare(
+        "SELECT 1 FROM life_installations WHERE version='life-demo-photos-v1'",
+      )
+      .get()
+  )
+    return;
+  db.exec("BEGIN IMMEDIATE");
+  try {
+    const state = JSON.parse(
+      (
+        db.prepare("SELECT body FROM workspace WHERE id=1").get() as {
+          body: string;
+        }
+      ).body,
+    ) as State;
+    const at = new Date().toISOString();
+    for (const [photo, text, itemIds] of [
+      [
+        "plant",
+        "合成图文案例：给窗边绿植留一张观察照。品种、浇水量与健康状态仍待本人核对。",
+        ["life-sample-14"],
+      ],
+      [
+        "camera",
+        "合成图文案例：出门前整理相机和背包，想用已有的东西记录一天。",
+        ["life-sample-12", "life-sample-13"],
+      ],
+    ] as const) {
+      const mediaId = crypto.randomUUID(),
+        id = crypto.randomUUID();
+      db.prepare("INSERT INTO life_media VALUES(?,?,?,?)").run(
+        mediaId,
+        "lin",
+        "image/jpeg",
+        readFileSync(
+          path.join(process.cwd(), "public", "demo", "life", photo + ".jpg"),
+        ),
+      );
+      db.prepare("INSERT INTO life_fragments VALUES(?,?,?,?,1,?,?,1)").run(
+        id,
+        "lin",
+        text,
+        mediaId,
+        at,
+        at,
+      );
+      for (const itemId of itemIds)
+        db.prepare("INSERT INTO life_fragment_items VALUES(?,?)").run(
+          id,
+          itemId,
+        );
+    }
+    for (const n of [2, 3, 4, 5, 6, 7, 8, 9, 16, 18, 19]) {
+      const i = state.items.find((i) => i.id === `life-sample-${n}`);
+      if (i?.synthetic && i.photo?.startsWith("/demo/life/"))
+        i.photo = undefined;
+    }
+    if (!state.tasks.some((t) => t.id === "life-demo-task-mouse"))
+      state.tasks.push({
+        id: "life-demo-task-mouse",
+        itemId: "life-sample-0",
+        title: "合成案例：帮忙核对鼠标原配接收器",
+        assignee: "dad",
+        status: "待处理",
+        logs: [{ by: "lin", text: "本机演示事项，未向真人发送通知。", at }],
+      });
+    if (!state.gifts.some((g) => g.itemId === "life-sample-11"))
+      mutate(state, "lin", "gift", {
+        itemId: "life-sample-11",
+        message: "合成礼物案例：愿这条旧围巾陪你新的旅程。",
+        memoryIds: [],
+        includeKnowledge: false,
+      });
+    db.prepare("UPDATE workspace SET body=? WHERE id=1").run(
+      JSON.stringify(state),
+    );
+    db.prepare(
+      "INSERT INTO life_installations VALUES('life-demo-photos-v1')",
+    ).run();
     db.exec("COMMIT");
   } catch (e) {
     db.exec("ROLLBACK");

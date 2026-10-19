@@ -23,6 +23,8 @@ export function lifeDataDirectory(
   temporary = tmpdir(),
 ) {
   const root = physical(cwd);
+  if (/(?:^|[\\/])ProductAgent-Dev(?:[\\/]|$)/i.test(root))
+    throw Error("新版程序禁止从原版工作区启动或写入数据");
   const selected = physical(
     path.resolve(env.PRODUCT_AGENT_DATA_DIR || path.join(root, "data-life-v1")),
   );

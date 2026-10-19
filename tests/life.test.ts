@@ -28,6 +28,38 @@ import { respond } from "../src/lib/agent/service.ts";
 import { listMemories } from "../src/lib/memory/store.ts";
 import { reconcileMemories } from "../src/lib/memory/ambient.ts";
 import { createLifeGift } from "../src/lib/life/gifts.ts";
+import { installLifeDemo } from "../src/lib/life/demo.ts";
+test("演示安装跨重开可恢复且幂等，25实例/10型号、3片段含2图文，不重置用户数据", () => {
+  const t = fixture();
+  try {
+    installLifeDemo(t.db);
+    const s = t.read();
+    assert.equal(s.items.filter((i) => !i.demo).length, 25);
+    assert.equal(
+      new Set(
+        s.items
+          .filter((i) => !i.demo && i.productBinding)
+          .map((i) => i.productBinding!.packId),
+      ).size,
+      10,
+    );
+    assert.equal(listFragments(t.db, s, "lin").length, 3);
+    assert.equal(
+      listFragments(t.db, s, "lin").filter((f) => f.mediaId).length,
+      2,
+    );
+    s.items.find((i) => i.id === "life-sample-14")!.name = "用户改过的绿植";
+    t.write(s);
+    installLifeDemo(t.db);
+    assert.equal(
+      t.read().items.find((i) => i.id === "life-sample-14")!.name,
+      "用户改过的绿植",
+    );
+    assert.equal(listFragments(t.db, t.read(), "lin").length, 3);
+  } finally {
+    t.db.close();
+  }
+});
 import { recallLifeFragments } from "../src/lib/life/recall.ts";
 import { submitIdea, modelIdea } from "../src/lib/life/ideas.ts";
 test("生活回忆只在主动请求时读取本人原文，删除立即失效且不需要Persona", () => {

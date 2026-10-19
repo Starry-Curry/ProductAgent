@@ -19,6 +19,7 @@ import {
   feedbackIdea,
   modelIdea,
   submitIdea,
+  creativeRecipeCount,
 } from "@/lib/life/ideas";
 import { lifeProvider } from "@/lib/life/provider";
 import { storePhoto } from "@/lib/life/media";
@@ -78,6 +79,21 @@ export async function GET(r: Request) {
         packs: productPacks.length,
         facts: productPacks.reduce((n, p) => n + p.claims.length, 0),
         procedures: 2,
+        boundInstances: state.items.filter(
+          (i) => canRead(i, a) && !i.demo && i.productBinding,
+        ).length,
+        distinctBoundModels: new Set(
+          state.items
+            .filter((i) => canRead(i, a) && !i.demo && i.productBinding)
+            .map((i) => i.productBinding!.packId),
+        ).size,
+        legacyCases: state.items.filter((i) => canRead(i, a) && !!i.demo)
+          .length,
+        creativeRecipes: creativeRecipeCount,
+        familyTasks: visible(state, a).tasks.length,
+        gifts: visible(state, a).gifts.length,
+        photoFragments: listFragments(db, state, a).filter((f) => f.mediaId)
+          .length,
         fragments: listFragments(db, state, a).length,
       },
     });

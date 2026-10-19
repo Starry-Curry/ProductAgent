@@ -304,6 +304,7 @@ export function Intake({
             <label>
               类别
               <select
+                aria-label="类别"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               >
@@ -324,7 +325,11 @@ export function Intake({
             </label>
             <label>
               生命周期
-              <select value={cycle} onChange={(e) => setCycle(e.target.value)}>
+              <select
+                aria-label="生命周期"
+                value={cycle}
+                onChange={(e) => setCycle(e.target.value)}
+              >
                 {["一次性", "消耗型", "可重复使用", "长期耐用", "持续养护"].map(
                   (x) => (
                     <option key={x}>{x}</option>
