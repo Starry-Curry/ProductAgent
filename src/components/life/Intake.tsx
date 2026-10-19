@@ -284,6 +284,9 @@ export function Intake({
           }}
         >
           <h2>确认它的信息</h2>
+          <p className="life-muted">
+            先记下名称与照片就能开始。品牌、资料和能力可以稍后补充；未知信息不会自动变成已确认事实。
+          </p>
           {extractedPacks.length > 0 && (
             <div className="life-notice">
               <p>
@@ -407,28 +410,31 @@ export function Intake({
               <input name="material" maxLength={100} />
             </label>
           </div>
-          <div className="life-form-row">
+          <details className="intake-extra">
+            <summary>补充能力与维护信息（可稍后填写）</summary>
+            <div className="life-form-row">
+              <label>
+                尺寸
+                <input name="dimensions" maxLength={100} />
+              </label>
+              <label>
+                供电方式
+                <input name="power" maxLength={100} />
+              </label>
+            </div>
             <label>
-              尺寸
-              <input name="dimensions" maxLength={100} />
+              {category === "植物"
+                ? "品种与养护要求（以可靠资料为准）"
+                : category === "服装"
+                  ? "洗护标签与注意事项"
+                  : "维护与使用限制"}
+              <textarea name="care" maxLength={500} />
             </label>
             <label>
-              供电方式
-              <input name="power" maxLength={100} />
+              已确认的能力 / 功能（逗号分隔）
+              <input name="capabilities" placeholder="例如：收纳、照明、便携" />
             </label>
-          </div>
-          <label>
-            {category === "植物"
-              ? "品种与养护要求（以可靠资料为准）"
-              : category === "服装"
-                ? "洗护标签与注意事项"
-                : "维护与使用限制"}
-            <textarea name="care" maxLength={500} />
-          </label>
-          <label>
-            已确认的能力 / 功能（逗号分隔）
-            <input name="capabilities" placeholder="例如：收纳、照明、便携" />
-          </label>
+          </details>
           <label className="life-check">
             <input name="available" type="checkbox" />
             我确认它目前在手、完好且可用

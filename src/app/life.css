@@ -188,6 +188,20 @@
 .social-gifts .life-card {padding:24px;}
 .social-gifts h3 {font-size:24px;margin:16px 0;}
 .life-extra-plans {margin-top:20px;}
+.life-shell .conversation-top {padding:12px 0;gap:12px;}
+.life-shell .conversation-message {border-radius:13px;padding:16px 18px;line-height:1.8;}
+.life-shell .conversation-message p {margin:8px 0;}
+.life-shell .conversation-form textarea {min-height:84px;}
+.life-shell .life-story-composer {padding:20px;}
+.life-shell .life-stories .life-story-grid {gap:18px;align-items:start;}
+.life-shell .life-story-photo {height:210px;object-fit:cover;}
+.life-shell .life-story-grid article {padding:18px;}
+.life-shell .life-story-text {font-size:15px;line-height:1.8;}
+.life-shell .life-intake-grid {gap:22px;align-items:start;}
+.life-shell .life-intake .life-card {padding:22px;}
+.life-shell .intake-extra {border-top:1px solid #e3e7dd;margin:16px 0;padding:14px 0;}
+.life-shell .intake-extra summary {font-size:13px;color:#718069;cursor:pointer;}
+.life-shell .idea-rationale {color:#53664c;line-height:1.8;font-size:14px;}
 @media(max-width:950px){.life-shell .life-item-grid {grid-template-columns:repeat(3,minmax(0,1fr));}.life-shell .life-hero h1{font-size:37px;}.life-shell .life-detail-hero{grid-template-columns:240px 1fr;}}
 @media(max-width:650px){.life-shell .life-main{padding:0 16px 30px;}.life-shell .life-hero{grid-template-columns:1fr;gap:18px;}.life-shell .life-hero h1{font-size:34px;}.life-shell .life-hero-photos{height:205px;max-width:none;}.life-shell .life-hero-note{left:8px;}.life-shell .life-item-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}.life-shell .life-item-image{height:145px;}.life-shell .life-item-copy{padding:12px;}.life-shell .life-item-copy h3{font-size:15px;}.life-shell .life-detail-hero{grid-template-columns:1fr;gap:12px;}.life-shell .life-detail-photo{height:230px;}.life-shell .life-section-head h1,.life-shell .discovery-heading h2{font-size:25px;}.composer-toolbar>span{display:none;}.composer-toolbar>button{margin-left:auto;}.family-overview{padding:14px;gap:14px;grid-template-columns:repeat(2,1fr);}.life-family .task-list,.family-shared-items,.completed-tasks,.social-gifts{grid-template-columns:1fr;}.family-filter{gap:3px;}.family-filter button{padding:8px 10px;}.life-shell .life-section-head{flex-wrap:wrap;}}
 .life-topline {

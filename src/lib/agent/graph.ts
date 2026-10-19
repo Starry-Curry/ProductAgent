@@ -269,7 +269,13 @@ export function curatedDecision(
     };
   }
   if (/^(你好|谢谢|在吗|嗨|早上好)[！!。]?$/u.test(question))
-    return blank("我在。想先解决一件物品的使用问题，还是聊聊最近留下的故事？");
+    return session.known.uiPage
+      ? blank(
+          "我在。想聊什么都可以，也可以一起解决手边的问题。",
+          "answered",
+          "local-dialogue",
+        )
+      : blank("我在。想先解决一件物品的使用问题，还是聊聊最近留下的故事？");
   if (
     !pack &&
     /预约|配对|兼容|接收器|型号|复位|重置|拆|电池规格|承重|载荷/.test(goal)
@@ -522,6 +528,7 @@ export async function executeGraph(
       const w = { ...work, session, trace: [...work.trace] };
       const ctx = buildContext(db, read(), actor, {
         excludeSynthetic: session.known.memoryPolicy !== undefined,
+        taskMemoryOnly: !!session.known.uiPage,
         question: w.question,
         mode: effectiveSession.mode,
         sessionId: session.id,
@@ -687,6 +694,22 @@ export async function executeGraph(
               pageContext: session.known.uiPage
                 ? {
                     page: session.known.uiPage,
+                    appCapabilities: {
+                      available: [
+                        "手动/照片/扫码录入，型号需确认",
+                        "来源资料问答",
+                        "目标规划与反馈",
+                        "图文故事手动保存",
+                        "记忆候选与明确保存",
+                        "本机演示家庭与社交礼物",
+                      ],
+                      unavailable: [
+                        "视觉识物尚未启用",
+                        "真实家庭账户/跨设备通知",
+                        "自动购物下单",
+                        "受限社区全站API",
+                      ],
+                    },
                     goal: session.known.uiGoal || session.known.goal,
                     currentItemId: ctx.item?.id,
                   }
@@ -773,6 +796,7 @@ export async function executeGraph(
         } else if (route?.intent === "story" && isStoryNarration(w.question)) {
           const ctx = buildContext(db, read(), actor, {
             excludeSynthetic: session.known.memoryPolicy !== undefined,
+            taskMemoryOnly: !!session.known.uiPage,
             question: w.question,
             mode: "story",
             itemId: effectiveSession.itemId,
@@ -836,6 +860,7 @@ export async function executeGraph(
           const query = args.query || "";
           const ctx = buildContext(db, read(), actor, {
             excludeSynthetic: session.known.memoryPolicy !== undefined,
+            taskMemoryOnly: !!session.known.uiPage,
             question: query || w.question,
             mode: effectiveSession.mode,
             sessionId: session.id,
@@ -886,6 +911,7 @@ export async function executeGraph(
       try {
         const ctx = buildContext(db, read(), actor, {
           excludeSynthetic: session.known.memoryPolicy !== undefined,
+          taskMemoryOnly: !!session.known.uiPage,
           question: session.known.goal || w.question,
           mode: effectiveSession.mode,
           sessionId: session.id,

@@ -33,6 +33,21 @@ export function homeDecision(
   const item = state.items.find(
     (i) => i.id === route.itemId && canRead(i, actor),
   );
+  if (
+    route.intent === "app" &&
+    /下单|订单|购物|真实账号|跨设备|通知真人/.test(q)
+  )
+    return answer(
+      "目前没有购物下单、订单同步、真实跨设备家庭账户或真人通知接口。家庭事项是真实写入本机的演示协作，必须由用户确认处理；我不会把文字建议说成已经执行。",
+    );
+  if (route.intent === "app" && /识物|识别照片|视觉/.test(q))
+    return answer(
+      "可以上传并保存物品照片、解码条形码/二维码，但当前未启用视觉识物模型。名称与型号可人工填写，目录匹配只是待确认候选，不会凭照片猜准确型号。",
+    );
+  if (route.intent === "app" && /删除记忆|忘记/.test(q))
+    return answer(
+      "到 AI 助手展开“个人记忆、来源与可选交流方式”，查看并忘记相应记录；若是照片和生活原话，请到生活故事或物品的故事中编辑/删除。普通聊天、长期记忆和图文片段分别管理，删除不会承诺立即擦除数据库备份。",
+    );
   if (route.intent === "app")
     return answer(
       "物间可以从三件小事开始：\n1. 有问题：在 AI 助手直接聊天，或打开物品的使用帮助。\n2. 想尝试：到发现新玩法描述目标，可选物品、时间及限制，再继续修改方案。\n3. 留住生活：在物品故事或生活故事保存照片＋原话，可关联多件物品并编辑、删除。\n家庭页管理共享事项；社交页查看礼物与选中的故事。录入物品可用照片、扫码、型号、链接或说明书，信息不明时人工确认。云端状态和费用开关可在配置指南查看。",
@@ -40,6 +55,11 @@ export function homeDecision(
     );
   if (route.intent === "clarify")
     return answer(route.reason + "。", "needs_info");
+  if (route.intent === "story" && !item && session.known.uiPage)
+    return answer(
+      "目前没有找到可引用的相关生活片段。你可以补充事件线索，或到生活故事查看已保存的原话；普通聊天不要求先选物品。",
+      "needs_info",
+    );
   if (route.intent === "story" && !item)
     return answer(
       "这段故事想留给哪件物品？点选它后继续说，就能与它关联。",

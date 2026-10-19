@@ -74,6 +74,7 @@ export default function WujianApp() {
     [busy, setBusy] = useState(false),
     [policy, setPolicy] = useState<"off" | "candidates">("off");
   const [entryQuestion, setEntryQuestion] = useState("");
+  const [giftPicking, setGiftPicking] = useState(false);
   const generation = useRef(0);
   const [backView, setBackView] = useState<View>("items");
   const headers = { "Content-Type": "application/json", "x-demo-actor": actor };
@@ -165,6 +166,7 @@ export default function WujianApp() {
     return () => window.removeEventListener("workspace-updated", listener);
   }, [actor]);
   function go(v: View, id = selected, nextTab = tab) {
+    if (v !== "items") setGiftPicking(false);
     setView(v);
     window.history.pushState(
       { wujian: true, actor, view: v, selected: id, tab: nextTab },
@@ -214,7 +216,9 @@ export default function WujianApp() {
         <button
           className="life-item-card"
           key={i.id}
-          onClick={() => open(i.id)}
+          onClick={() =>
+            open(i.id, view === "items" && giftPicking ? "资料与管理" : "帮助")
+          }
         >
           <div className="life-item-image">
             {photo(i) ? (
@@ -519,6 +523,11 @@ export default function WujianApp() {
                       A CABINET OF EVERYDAY LIFE
                     </span>
                     <h1>物品展柜</h1>
+                    {giftPicking && (
+                      <p className="life-notice">
+                        选择一件本人拥有的物品，进入资料与管理预览赠礼及选中的故事。未选择的私人内容不会附带。
+                      </p>
+                    )}
                     <p>类别、生命周期与用途，一起认识身边的物品。</p>
                   </div>
                   <button className="button" onClick={() => go("add")}>
@@ -555,6 +564,7 @@ export default function WujianApp() {
                 {cards(
                   items.filter(
                     (i) =>
+                      (!giftPicking || i.owner === actor) &&
                       (category === "全部" || i.category === category) &&
                       JSON.stringify([i.name, i.brand, i.model, i.attributes])
                         .toLowerCase()
@@ -838,7 +848,12 @@ export default function WujianApp() {
                 workspace={data.workspace}
                 actor={actor}
                 act={act}
-                onCabinet={() => go("items")}
+                onCabinet={() => {
+                  setQuery("");
+                  setCategory("全部");
+                  setGiftPicking(true);
+                  go("items");
+                }}
               />
             )}
           </>

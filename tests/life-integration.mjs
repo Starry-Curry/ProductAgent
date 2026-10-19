@@ -289,7 +289,9 @@ try {
     .getByRole("button", { name: "发现新玩法", exact: true })
     .click();
   await expect(page.getByLabel("包含合成演示物品")).not.toBeChecked();
+  await page.locator(".composer-toolbar > details > summary").click();
   await page.getByLabel("包含合成演示物品").check();
+  await page.locator(".composer-toolbar > details > summary").click();
   await page.getByRole("button", { name: "找点新灵感", exact: true }).click();
   await expect(
     page.getByText("本地创意候选 · 未实物验证").first(),
@@ -298,6 +300,42 @@ try {
     path: "artifacts/life/discovery-desktop.png",
     fullPage: true,
   });
+  await page.getByRole("button", { name: "更有趣一点", exact: true }).click();
+  await expect(page.locator(".discovery-thread .goal-message")).toHaveCount(2);
+  await page.getByRole("button", { name: "家庭", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "家里的事，一起接着做", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "礼物与故事传递", exact: true }),
+  ).toHaveCount(0);
+  const task = page
+    .locator(".life-family .simple-task")
+    .filter({
+      has: page.getByRole("button", { name: "我已完成", exact: true }),
+    })
+    .first();
+  const title = await task.locator("h3").innerText();
+  await task.getByRole("button", { name: "我已完成", exact: true }).click();
+  await page.getByRole("button", { name: "已完成", exact: true }).click();
+  await expect(
+    page.locator(".completed-tasks").getByText(title, { exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "社交", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "礼物与故事传递", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "生活首页", exact: true }).click();
+  await page
+    .getByRole("textbox", { name: "随时问物间", exact: true })
+    .fill("这个App怎么用");
+  await page.getByRole("button", { name: "开始对话", exact: true }).click();
+  await expect(
+    page.getByText(/家庭页管理共享事项；社交页查看礼物/),
+  ).toBeVisible();
+  checks.push(
+    "新版产品路径：目标对话连续修改、家庭完成状态、社交礼物独立、首页提问App指南",
+  );
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
   await expect(page.getByRole("heading", { name: /物有所用/ })).toBeVisible();

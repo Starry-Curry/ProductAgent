@@ -95,6 +95,48 @@ test("页面选中物品被保留；App问题与自由交流不误入商品澄�
         .intent,
       "plan",
     );
+    const mouse = t.add("常用鼠标", "电子设备", "塑料");
+    t.write(
+      mutate(t.read(), "lin", "bindProduct", {
+        itemId: mouse,
+        packId: "logitech-m185-m-r0061",
+        confirmed: true,
+      }),
+    );
+    const first = await respond(
+      t.db,
+      t.read,
+      "lin",
+      {
+        requestId: crypto.randomUUID(),
+        question: "这个怎么用",
+        mode: "auto",
+        itemId: mouse,
+        memoryPolicy: "off",
+        uiContext: { page: "item" },
+      },
+      offline,
+    );
+    assert.match(first.reply.answer, /原配接收器/);
+    const next = await respond(
+      t.db,
+      t.read,
+      "lin",
+      {
+        requestId: crypto.randomUUID(),
+        sessionId: first.session.id,
+        expectedRevision: first.session.revision,
+        question: "有原配接收器",
+        mode: "auto",
+        itemId: mouse,
+        memoryPolicy: "off",
+        uiContext: { page: "item" },
+      },
+      offline,
+    );
+    assert.equal(next.reply.route!.itemId, mouse);
+    assert.equal(next.reply.steps.length, 3);
+    assert.equal(next.reply.questions.length, 0);
   } finally {
     t.db.close();
   }
@@ -102,6 +144,11 @@ test("页面选中物品被保留；App问题与自由交流不误入商品澄�
 test("连续自由交流传入页面和本轮历史；不绑定物品也不强制提问", async () => {
   const t = fixture();
   try {
+    saveMemory(t.db, t.read, "lin", {
+      kind: "experience",
+      text: "合成隐私旅行：去年海边留下的私人经历",
+      allowCloud: true,
+    });
     const requests: any[] = [];
     const provider: Provider = {
       model: "offline-protocol-fixture",
@@ -154,6 +201,7 @@ test("连续自由交流传入页面和本轮历史；不绑定物品也不强�
     const payload = JSON.stringify(requests.at(-1));
     assert.match(payload, /今天工作压力很大/);
     assert.match(payload, /pageContext/);
+    assert.ok(!payload.includes("合成隐私旅行"));
   } finally {
     t.db.close();
   }
@@ -190,6 +238,25 @@ test("能力组合不依赖种子ID，下一轮排除真实资源并保护上一
       t.read,
     );
     assert.ok(again.ideas.some((i) => i.id === pair.id && i.saved));
+    const shorter = await planDiscovery(
+      t.db,
+      t.read(),
+      "lin",
+      { goal: "我只有十分钟", previousIdeaIds: [pair.id] },
+      offline,
+      t.read,
+    );
+    assert.match(shorter.understanding, /10分钟/);
+    const unclear = await planDiscovery(
+      t.db,
+      t.read(),
+      "lin",
+      { goal: "不要用这个", previousIdeaIds: [pair.id] },
+      offline,
+      t.read,
+    );
+    assert.equal(unclear.ideas.length, 0);
+    assert.match(unclear.missing.join(" "), /排除哪件/);
     const next = await planDiscovery(
       t.db,
       t.read(),
@@ -307,4 +374,71 @@ test("正文已经问过的问题不再重复展示，保存的数据包不被�
   };
   assert.deepEqual(additionalQuestions(r), ["有原配接收器吗？"]);
   assert.equal(r.questions.length, 3);
+});
+test("新版聊天叙述不自动写生活故事，临时目标不持久化候选或个人记忆", async () => {
+  const t = fixture();
+  try {
+    const id = t.add("随身小相机", "电子设备", "塑料");
+    const provider: Provider = {
+      model: "offline-protocol-fixture",
+      async generate() {
+        return {
+          model: this.model,
+          tokens: null,
+          text: JSON.stringify({
+            kind: "general",
+            answer: "可以在这次交流里慢慢聊，想留作故事时再明确保存。",
+            factIds: [],
+            questions: [],
+            procedureId: null,
+          }),
+        };
+      },
+    };
+    const before = t.read().memories.length;
+    const story = await respond(
+      t.db,
+      t.read,
+      "lin",
+      {
+        requestId: crypto.randomUUID(),
+        question: "我昨天和妈妈用相机拍了照",
+        itemId: id,
+        mode: "auto",
+        memoryPolicy: "off",
+        uiContext: { page: "item" },
+      },
+      provider,
+    );
+    assert.equal(story.reply.route!.intent, "companion");
+    assert.equal(t.read().memories.length, before);
+    assert.equal(
+      (
+        t.db.prepare("SELECT count(*) n FROM life_fragments").get() as {
+          n: number;
+        }
+      ).n,
+      0,
+    );
+    await respond(
+      t.db,
+      t.read,
+      "lin",
+      {
+        requestId: crypto.randomUUID(),
+        question: "我想用已有物品做点有趣的事",
+        mode: "auto",
+        temporary: true,
+        uiContext: { page: "assistant" },
+      },
+      provider,
+    );
+    assert.equal(
+      (t.db.prepare("SELECT count(*) n FROM life_ideas").get() as { n: number })
+        .n,
+      0,
+    );
+  } finally {
+    t.db.close();
+  }
 });

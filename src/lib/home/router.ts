@@ -254,6 +254,20 @@ export function routeProductTurn(
       false,
     );
   if (
+    isStoryNarration(q) &&
+    !isMemoryRecallRequest(q) &&
+    /今天|昨天|那天|上周|刚才|买了|用过|送我|我们曾|我(?:很)?喜欢|我的兴趣|我爱好/.test(
+      q,
+    ) &&
+    !/想|打算|准备|计划|希望/.test(q)
+  )
+    return result(
+      "companion",
+      "companion",
+      "聊天叙述留在本次会话；生活故事需明确保存",
+      false,
+    );
+  if (
     /创意|玩法|新用途|灵感|有趣|组合|不买东西|不想买|整理桌面|换个方向|更简单|只有这些|不用这件/.test(
       q,
     ) ||

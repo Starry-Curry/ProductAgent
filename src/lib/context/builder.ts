@@ -4,6 +4,7 @@ import { boundPack } from "../ai/harness.ts";
 import { recallMemories, getPersona } from "../memory/store.ts";
 import { relevantKnowledge } from "../skills/knowledge.ts";
 import { syntheticItem, usable } from "../life/availability.ts";
+import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 export function buildContext(
   db: DatabaseSync,
   state: State,
@@ -13,7 +14,8 @@ export function buildContext(
     mode: string;
     itemId?: string;
     temporary?: boolean;
-      excludeSynthetic?: boolean;
+    excludeSynthetic?: boolean;
+    taskMemoryOnly?: boolean;
     sessionId?: string;
   },
 ) {
@@ -30,6 +32,11 @@ export function buildContext(
         input.mode,
         item?.id,
         input.sessionId,
+      ).filter(
+        (m) =>
+          !input.taskMemoryOnly ||
+          isMemoryRecallRequest(input.question) ||
+          !["experience", "story", "relationship"].includes(m.kind),
       );
   const knowledge = relevantKnowledge(
     input.question,

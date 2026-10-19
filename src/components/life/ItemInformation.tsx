@@ -26,6 +26,9 @@ export function ItemInformation({
     [notice, setNotice] = useState(""),
     [sourceText, setSourceText] = useState(""),
     [sourceTitle, setSourceTitle] = useState(""),
+    [sourceLink, setSourceLink] = useState<string | undefined>(),
+    [sourceKind, setSourceKind] = useState("user-text"),
+    [busy, setBusy] = useState(false),
     [gift, setGift] = useState(false),
     [giftText, setGiftText] = useState(""),
     [chosen, setChosen] = useState<string[]>([]),
@@ -40,10 +43,13 @@ export function ItemInformation({
   }, [item.id, actor]);
   const pack = packs.find((p) => p.id === item.productBinding?.packId);
   async function run(fn: () => Promise<void>) {
+    setBusy(true);
     try {
       await fn();
     } catch (e) {
       setNotice((e as Error).message);
+    } finally {
+      setBusy(false);
     }
   }
   return (
@@ -146,6 +152,27 @@ export function ItemInformation({
             <a href={pack.source.url} target="_blank" rel="noreferrer">
               打开原始官方来源 ↗
             </a>
+            {item.owner === actor && (
+              <button
+                disabled={busy}
+                onClick={() =>
+                  run(async () => {
+                    const d = await request("fetchSource", {
+                      url: pack.source.url,
+                    });
+                    setSourceTitle(pack.source.title);
+                    setSourceText(d.text);
+                    setSourceLink(pack.source.url);
+                    setSourceKind("user-link");
+                    setNotice(
+                      "已主动读取绑定来源的公开正文，请核对相关章节后保存；网页内容不会自动升级为已验证Product Pack事实。读取失败可上传说明书或补充原文。",
+                    );
+                  })
+                }
+              >
+                读取这份公开来源的正文
+              </button>
+            )}
             <p className="life-muted">{pack.limits.join(" ")}</p>
           </>
         ) : (
@@ -213,6 +240,8 @@ export function ItemInformation({
                       const d = await upload(f, "manual");
                       setSourceTitle(d.title);
                       setSourceText(d.text);
+                      setSourceLink(undefined);
+                      setSourceKind("user-manual");
                       setNotice(d.notice);
                     });
                 }}
@@ -228,27 +257,30 @@ export function ItemInformation({
             <label>
               说明书原文或获准使用的经验
               <textarea
+                aria-label="说明书原文或获准使用的经验"
                 maxLength={40000}
                 value={sourceText}
                 onChange={(e) => setSourceText(e.target.value)}
               />
             </label>
             <button
-              disabled={!sourceText.trim()}
+              disabled={busy || !sourceText.trim()}
               onClick={() =>
                 run(async () => {
-                  await request("source", {
+                  const saved = await request("source", {
                     itemId: item.id,
                     title: sourceTitle || "用户资料",
                     text: sourceText,
-                    kind: "user-text",
+                    kind: sourceKind,
+                    url: sourceLink,
                   });
                   setSources([
-                    ...sources,
+                    ...sources.filter((s) => s.id !== saved.id),
                     {
-                      id: crypto.randomUUID(),
+                      id: saved.id,
                       title: sourceTitle,
                       text: sourceText,
+                      url: sourceLink,
                     },
                   ]);
                   setSourceText("");
