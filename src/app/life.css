@@ -105,6 +105,91 @@
   margin: auto;
   padding: 0 32px 80px;
 }
+/* Product workspace: shared rhythm, compact reading surfaces and touch targets. */
+.life-shell { --life-ink:#24392f; --life-accent:#3b6550; font-family:Inter,"Microsoft YaHei",sans-serif; color:var(--life-ink); }
+.life-shell .sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.life-shell button,.life-shell a,.life-shell input,.life-shell textarea,.life-shell select {font:inherit;}
+.life-shell button:focus-visible,.life-shell a:focus-visible,.life-shell input:focus-visible,.life-shell textarea:focus-visible {outline:2px solid #779978;outline-offset:3px;}
+.life-shell .life-header {min-height:80px;padding-block:14px;}
+.life-shell .life-main {max-width:1260px;padding-bottom:48px;}
+.life-shell .life-topline {padding:14px 0;}
+.life-shell .life-hero {padding:14px 0 22px;gap:36px;grid-template-columns:1.2fr .8fr;}
+.life-shell .life-hero h1 {font-size:44px;line-height:1.3;margin-bottom:12px;letter-spacing:1px;}
+.life-shell .life-hero p {margin:12px 0 18px;font-size:14px;}
+.life-shell .life-hero-photos {height:285px;max-width:420px;margin-left:auto;width:100%;}
+.life-shell .life-hero-note {padding:12px 16px;width:210px;gap:8px;left:-12px;}
+.life-shell .life-hero-note>span {font-size:13px;line-height:1.5;}
+.life-shell .life-section-head {margin:26px 0 16px;}
+.life-shell .life-section-head h1,.life-shell .discovery-heading h2 {font-size:30px;line-height:1.4;font-weight:500;margin:0 0 8px;}
+.life-shell .life-section-head p,.life-shell .discovery-heading p {font-size:14px;color:#788373;line-height:1.7;margin:6px 0;}
+.life-shell .life-eyebrow {letter-spacing:1.5px;margin-bottom:10px;}
+.life-shell .life-item-grid {gap:18px;grid-template-columns:repeat(4,minmax(0,1fr));}
+.life-shell .life-item-image {height:180px;}
+.life-shell .life-item-copy {padding:14px;}
+.life-shell .life-item-copy h3 {font-size:17px;margin:8px 0;}
+.life-shell .life-home-pair {margin-top:22px;gap:18px;align-items:start;}
+.life-shell .life-home-pair>button,.life-shell .life-ask-teaser {padding:24px;min-height:0;}
+.life-shell .life-home-pair h2 {font-size:24px;line-height:1.5;margin:14px 0;}
+.life-shell .life-detail-hero {gap:28px;grid-template-columns:300px 1fr;}
+.life-shell .life-detail-photo {height:260px;}
+.life-shell .life-detail-hero h1 {font-size:32px;margin:14px 0;}
+.life-shell .life-card {border-radius:14px;box-shadow:0 2px 7px #33472c04;}
+.life-shell .life-tabs {position:sticky;top:0;background:#faf9f5ed;backdrop-filter:blur(8px);z-index:2;}
+.home-ask {display:flex;gap:8px;padding:6px;border:1px solid #cbd3c4;border-radius:15px;background:white;margin:18px 0 12px;}
+.life-shell .home-ask input {border:0;background:transparent;margin:0;flex:1;min-width:0;padding:10px;}
+.life-shell .home-ask button {flex:none;min-width:42px;}
+.life-discovery {max-width:1000px;margin:auto;padding-top:18px;}
+.discovery-heading {max-width:720px;margin-bottom:18px;}
+.goal-suggestions {display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+.goal-suggestions button,.idea-replace-items button {border:1px solid #dce3d5;background:#fff;border-radius:20px;padding:8px 13px;font-size:12px;color:#52694e;}
+.goal-composer {background:#fff;border:1px solid #c8d4c4;border-radius:18px;padding:14px 16px;box-shadow:0 6px 22px #263d2810;}
+.life-shell .goal-composer textarea {border:0;box-shadow:none;margin:0;padding:2px 0 12px;min-height:70px;background:transparent;resize:vertical;font-size:16px;line-height:1.7;}
+.composer-toolbar {display:flex;align-items:center;gap:12px;position:relative;}
+.composer-toolbar>span {margin-left:auto;font-size:11px;color:#86917b;}
+.composer-toolbar>button {display:flex;gap:8px;align-items:center;white-space:nowrap;}
+.composer-toolbar summary {display:flex;align-items:center;gap:6px;cursor:pointer;color:#6e7a65;font-size:12px;}
+.discovery-options {position:absolute;z-index:5;top:42px;left:0;background:#fff;padding:18px;border:1px solid #dce3d5;border-radius:12px;max-width:500px;width:min(500px,80vw);box-shadow:0 12px 32px #1e331b22;}
+.discovery-pick-items {display:flex;flex-wrap:wrap;gap:8px;max-height:180px;overflow:auto;}
+.discovery-meta {display:flex;justify-content:space-between;gap:12px;font-size:12px;color:#7b8672;padding:14px 2px;}
+.discovery-meta button {text-decoration:underline;}
+.goal-message {margin:12px 0 12px auto;background:#e9efe3;padding:12px 16px;border-radius:15px 15px 3px 15px;width:fit-content;max-width:85%;font-size:14px;}
+.goal-understanding {display:flex;align-items:flex-start;gap:8px;font-size:14px;line-height:1.8;color:#5d6d56;}
+.goal-understanding svg {flex:none;margin-top:4px;}
+.discovery-thread>div:not(:last-child) {opacity:.72;font-size:12px;}
+.life-shell .life-idea-grid {gap:16px;align-items:start;}
+.life-shell .life-idea {padding:22px;}
+.life-shell .life-idea h3 {font-size:21px;line-height:1.5;margin:12px 0;}
+.life-shell .life-idea li {line-height:1.8;font-size:14px;margin:7px 0;}
+.idea-steps summary {font-size:12px;color:#72826a;padding-top:8px;}
+.idea-replace-items {display:flex;flex-wrap:wrap;gap:6px;margin:14px 0;}
+.idea-replace-items button {font-size:11px;padding:5px 9px;}
+.idea-feedback {font-size:12px;margin-top:14px;}
+.life-family,.life-social {padding-top:4px;}
+.family-overview {display:grid;grid-template-columns:repeat(4,1fr);gap:12px;background:#eaf0e4;border-radius:15px;padding:20px;margin:18px 0;}
+.family-overview>div {display:flex;align-items:baseline;gap:12px;}
+.family-overview strong {font-size:28px;font-weight:500;}
+.family-overview span {font-size:12px;color:#74806b;}
+.family-filter {display:flex;gap:8px;border-bottom:1px solid #dbe1d5;padding-bottom:12px;margin:20px 0;}
+.family-filter button {padding:8px 14px;border-radius:8px;color:#788370;}
+.family-filter button.active {background:#e5ecde;color:#314a32;}
+.family-create {position:relative;}
+.family-create>div {position:absolute;right:0;top:52px;z-index:4;width:350px;max-width:85vw;box-shadow:0 12px 32px #253b2022;padding:20px;}
+.life-family .task-list {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start;}
+.life-family .simple-task {padding:17px;border-radius:12px;margin:0;min-height:0;background:#fff;border:1px solid #dee4d7;}
+.life-family .simple-task h3 {font-size:16px;margin:10px 0;line-height:1.5;}
+.life-family .simple-task p {font-size:12px;margin:8px 0;line-height:1.6;}
+.life-family .simple-task button {padding:7px 10px;font-size:12px;}
+.life-family .simple-task details {font-size:12px;margin-top:12px;}
+.life-family .important-task {background:#fffaf0;border-color:#e8dbb7;}
+.family-shared-items,.completed-tasks {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.family-shared-items>button,.completed-tasks>article {display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:left;background:white;border:1px solid #e0e5d9;border-radius:10px;padding:16px;}
+.family-shared-items span,.completed-tasks span,.completed-tasks small {font-size:12px;color:#7b8773;}
+.social-gifts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}
+.social-gifts .life-card {padding:24px;}
+.social-gifts h3 {font-size:24px;margin:16px 0;}
+.life-extra-plans {margin-top:20px;}
+@media(max-width:950px){.life-shell .life-item-grid {grid-template-columns:repeat(3,minmax(0,1fr));}.life-shell .life-hero h1{font-size:37px;}.life-shell .life-detail-hero{grid-template-columns:240px 1fr;}}
+@media(max-width:650px){.life-shell .life-main{padding:0 16px 30px;}.life-shell .life-hero{grid-template-columns:1fr;gap:18px;}.life-shell .life-hero h1{font-size:34px;}.life-shell .life-hero-photos{height:205px;max-width:none;}.life-shell .life-hero-note{left:8px;}.life-shell .life-item-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}.life-shell .life-item-image{height:145px;}.life-shell .life-item-copy{padding:12px;}.life-shell .life-item-copy h3{font-size:15px;}.life-shell .life-detail-hero{grid-template-columns:1fr;gap:12px;}.life-shell .life-detail-photo{height:230px;}.life-shell .life-section-head h1,.life-shell .discovery-heading h2{font-size:25px;}.composer-toolbar>span{display:none;}.composer-toolbar>button{margin-left:auto;}.family-overview{padding:14px;gap:14px;grid-template-columns:repeat(2,1fr);}.life-family .task-list,.family-shared-items,.completed-tasks,.social-gifts{grid-template-columns:1fr;}.family-filter{gap:3px;}.family-filter button{padding:8px 10px;}.life-shell .life-section-head{flex-wrap:wrap;}}
 .life-topline {
   display: flex;
   justify-content: space-between;

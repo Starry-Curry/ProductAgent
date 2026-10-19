@@ -17,7 +17,7 @@ import type { ProductPack } from "@/lib/products";
 import type { LifeIdea } from "@/lib/life/ideas";
 import { AssistantConversation } from "../AssistantConversation";
 import { MemoryCenter } from "../MemoryCenter";
-import { TaskComposer, TaskList } from "../FamilyTasks";
+import { FamilyPanel, SocialPanel } from "./FamilyPanel";
 import { ActivityPlanner } from "../ActivityPlanner";
 import { Intake } from "./Intake";
 import { Stories, type Fragment } from "./Stories";
@@ -31,6 +31,7 @@ type View =
   | "stories"
   | "assistant"
   | "family"
+  | "social"
   | "add"
   | "item";
 type Data = {
@@ -57,7 +58,8 @@ const nav = [
   ["discover", "发现新玩法", Sparkles],
   ["stories", "生活故事", BookOpen],
   ["assistant", "AI 助手", MessageCircle],
-  ["family", "家庭与礼物", Users],
+  ["family", "家庭", Users],
+  ["social", "社交", BookOpen],
 ] as const;
 export default function WujianApp() {
   const [actor, setActor] = useState<Person>("lin"),
@@ -71,6 +73,7 @@ export default function WujianApp() {
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [policy, setPolicy] = useState<"off" | "candidates">("off");
+  const [entryQuestion, setEntryQuestion] = useState("");
   const generation = useRef(0);
   const [backView, setBackView] = useState<View>("items");
   const headers = { "Content-Type": "application/json", "x-demo-actor": actor };
@@ -345,8 +348,32 @@ export default function WujianApp() {
                       <br />
                       也留住那些，和它们一起发生的小事。
                     </p>
+                    <form
+                      className="home-ask"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        if (entryQuestion.trim()) go("assistant");
+                      }}
+                    >
+                      <label className="sr-only" htmlFor="home-question">
+                        随时问物间
+                      </label>
+                      <input
+                        id="home-question"
+                        value={entryQuestion}
+                        onChange={(e) => setEntryQuestion(e.target.value)}
+                        maxLength={2000}
+                        placeholder="有件事想问问，或想一起试点新东西…"
+                      />
+                      <button className="button" aria-label="开始对话">
+                        ↗
+                      </button>
+                    </form>
                     <div className="life-actions">
-                      <button className="button" onClick={() => go("discover")}>
+                      <button
+                        className="button secondary"
+                        onClick={() => go("discover")}
+                      >
                         今天，试点新鲜的 <ArrowUpRight size={16} />
                       </button>
                       <button
@@ -596,6 +623,7 @@ export default function WujianApp() {
                   key={actor + policy}
                   actor={actor}
                   mode="auto"
+                  initialQuestion={entryQuestion}
                   memoryPolicy={policy}
                   onActivity={() => load().catch(() => {})}
                 />
@@ -615,7 +643,8 @@ export default function WujianApp() {
                       home: "生活首页",
                       items: "物品展柜",
                       stories: "生活故事",
-                      family: "家庭与礼物",
+                      family: "家庭",
+                      social: "社交",
                       discover: "发现新玩法",
                       assistant: "AI 助手",
                       add: "物品展柜",
@@ -737,7 +766,7 @@ export default function WujianApp() {
                       key={actor + item.id}
                       actor={actor}
                       item={item}
-                      mode="service"
+                      mode="auto"
                       memoryPolicy="off"
                       onActivity={() => load().catch(() => {})}
                     />
@@ -783,60 +812,16 @@ export default function WujianApp() {
               </section>
             )}
             {view === "family" && (
-              <section>
-                <div className="life-section-head">
-                  <div>
-                    <span className="life-eyebrow">TAKE CARE, TOGETHER</span>
-                    <h1>家里的事，一起接着做</h1>
-                    <p>本机演示家庭成员 · 事项回执不等于真人通知或实际完成。</p>
-                  </div>
-                </div>
-                <div className="life-home-pair">
-                  <section className="life-card">
-                    <h2>留一件事给家人</h2>
-                    <TaskComposer items={items} actor={actor} act={act} />
-                  </section>
-                  <section className="life-card">
-                    <h2>正在一起处理</h2>
-                    <TaskList
-                      tasks={data.workspace.tasks}
-                      actor={actor}
-                      act={act}
-                    />
-                  </section>
-                </div>
-                <div className="life-section-head">
-                  <h2>共享物品</h2>
-                </div>
-                {cards(items.filter((i) => i.shared).slice(0, 6))}
-                <div className="life-card">
-                  <h2>礼物与选中的故事</h2>
-                  <p>
-                    在物品的“资料与管理”中预览并制作礼物；收礼者新的私人经历不会回传。
-                  </p>
-                  {data.workspace.gifts.map((g) => (
-                    <article key={g.id} className="life-gift-row">
-                      <strong>{g.itemName}</strong>
-                      <span>
-                        {g.revoked
-                          ? "已撤销"
-                          : g.claimedBy
-                            ? "已认领"
-                            : "等待认领"}
-                      </span>
-                      <a className="button secondary" href={`/gift/${g.token}`}>
-                        打开礼物预览
-                      </a>
-                      {g.sender === actor && !g.claimedBy && !g.revoked && (
-                        <button onClick={() => act("revoke", { giftId: g.id })}>
-                          撤销礼物
-                        </button>
-                      )}
-                    </article>
-                  ))}
-                </div>
-                <details className="life-card">
-                  <summary>活动准备与原有计划</summary>
+              <>
+                <FamilyPanel
+                  workspace={data.workspace}
+                  actor={actor}
+                  items={items}
+                  act={act}
+                  onItem={open}
+                />
+                <details className="life-card life-extra-plans">
+                  <summary>活动准备与已保存计划</summary>
                   <ActivityPlanner
                     actor={actor}
                     items={items}
@@ -844,7 +829,15 @@ export default function WujianApp() {
                     save={act}
                   />
                 </details>
-              </section>
+              </>
+            )}
+            {view === "social" && (
+              <SocialPanel
+                workspace={data.workspace}
+                actor={actor}
+                act={act}
+                onCabinet={() => go("items")}
+              />
             )}
           </>
         )}

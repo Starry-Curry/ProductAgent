@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Sparkles, ArrowUp, SlidersHorizontal } from "lucide-react";
 import { syntheticItem } from "@/lib/life/availability";
 import type { Item } from "@/lib/domain";
 import type { LifeIdea } from "@/lib/life/ideas";
@@ -26,20 +27,45 @@ export function Discovery({
     [notice, setNotice] = useState(""),
     [onlySaved, setOnlySaved] = useState(false),
     [results, setResults] = useState<LifeIdea[] | null>(null);
+  const [turns, setTurns] = useState<
+    { goal: string; summary: string; ids: string[] }[]
+  >([]);
+  const [excluded, setExcluded] = useState<string[]>([]);
+  const [selectedIds, setSelectedIds] = useState<string[]>(
+    itemId ? [itemId] : [],
+  );
+  const [cloud, setCloud] = useState(true);
+  const [gaps, setGaps] = useState<string[]>([]);
   const [sourceUrl, setSourceUrl] = useState(""),
     [sourcePreview, setSourcePreview] = useState("");
-  async function generate(model = false) {
+  async function generate(
+    model = modelAvailable && cloud,
+    followup?: string,
+    omit: string[] = excluded,
+  ) {
     setBusy(true);
     setNotice("");
     try {
       const d = await request("discover", {
-        goal,
-        itemId,
+        goal: followup || goal,
+        itemId: omit.includes(itemId || "") ? undefined : itemId,
+        itemIds: selectedIds.filter((id) => !omit.includes(id)),
+        excludedItemIds: omit,
+        previousIdeaIds: turns.at(-1)?.ids || [],
         minutes: Number(minutes),
         includeSynthetic: synthetic,
         model,
       });
       setResults(d.ideas);
+      setGaps(d.missing || []);
+      setTurns((rows) => [
+        ...rows.slice(-5),
+        {
+          goal: followup || goal,
+          summary: d.understanding || "按当前可用物品、时间与来源条件筛选。",
+          ids: d.ideas.map((i: LifeIdea) => i.id),
+        },
+      ]);
       await refresh();
       if (!d.ideas.length)
         setNotice(
@@ -82,72 +108,166 @@ export function Discovery({
         )),
   );
   return (
-    <section>
-      <div className="life-section-head">
-        <div>
-          <span className="life-eyebrow">WITH WHAT YOU HAVE</span>
-          <h2>已有的东西，还有新可能</h2>
-          <p>不用先有一个大计划。告诉我现在的时间与心情，从手边开始。</p>
-        </div>
+    <section className="life-discovery">
+      <div className="discovery-heading">
+        <span className="life-eyebrow">MAKE SOMETHING OF TODAY</span>
+        <h2>描述一个想法，让手边的物品参与。</h2>
+        <p>
+          说说想做什么、有什么限制。物间会核对已有物品，再一起把想法变成可尝试的步骤。
+        </p>
       </div>
+      {!turns.length && (
+        <div className="goal-suggestions">
+          {[
+            "我有一小时，不买东西，想做点有趣的事",
+            "想整理桌面，看看已有物品能怎么利用",
+            "用选中的物品，换一个有趣的玩法",
+          ].map((text) => (
+            <button key={text} onClick={() => setGoal(text)}>
+              {text} ↗
+            </button>
+          ))}
+        </div>
+      )}
+      {turns.length > 0 && (
+        <div className="discovery-thread" aria-label="本次探索对话">
+          {turns.map((t, n) => (
+            <div key={n}>
+              <p className="goal-message">{t.goal}</p>
+              <p className="goal-understanding">
+                <Sparkles size={16} />
+                {t.summary}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
       <form
-        className="life-card"
+        className="goal-composer"
         onSubmit={(e) => {
           e.preventDefault();
           generate();
         }}
       >
-        <label>
+        <label className="sr-only" htmlFor="discovery-goal">
           这次想怎样度过？
-          <input
-            value={goal}
-            maxLength={500}
-            onChange={(e) => setGoal(e.target.value)}
-            placeholder="例如：安静一点，20 分钟，不买材料"
-          />
         </label>
-        <div className="life-actions">
-          <label>
-            可用时间
-            <select
-              value={minutes}
-              onChange={(e) => setMinutes(e.target.value)}
-            >
-              {[10, 20, 30, 60].map((n) => (
-                <option key={n} value={n}>
-                  {n} 分钟
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="life-check">
-            <input
-              type="checkbox"
-              checked={synthetic}
-              onChange={(e) => setSynthetic(e.target.checked)}
-            />
-            包含合成演示物品
-          </label>
-          <button className="button" disabled={busy}>
-            {busy ? "正在找灵感…" : "找点新灵感"}
-          </button>
-          {modelAvailable && (
-            <button
-              type="button"
-              disabled={busy}
-              onClick={() => generate(true)}
-            >
-              用已授权模型生成
-            </button>
-          )}
-          <button type="button" onClick={() => setOnlySaved((v) => !v)}>
-            {onlySaved ? "看看全部" : "我的收藏"}
+        <textarea
+          id="discovery-goal"
+          value={goal}
+          maxLength={500}
+          onChange={(e) => setGoal(e.target.value)}
+          placeholder="例如：我有手电筒和玻璃杯，想试一个不买材料的新玩法…"
+          rows={2}
+        />
+        <div className="composer-toolbar">
+          <details>
+            <summary>
+              <SlidersHorizontal size={15} /> 可选条件 · {minutes}分钟
+            </summary>
+            <div className="discovery-options">
+              <label>
+                可用时间
+                <select
+                  value={minutes}
+                  onChange={(e) => setMinutes(e.target.value)}
+                >
+                  {[10, 20, 30, 60, 120].map((n) => (
+                    <option key={n} value={n}>
+                      {n} 分钟
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="life-check">
+                <input
+                  type="checkbox"
+                  checked={synthetic}
+                  onChange={(e) => setSynthetic(e.target.checked)}
+                />
+                包含合成演示物品
+              </label>
+              {modelAvailable && (
+                <label className="life-check">
+                  <input
+                    type="checkbox"
+                    checked={cloud}
+                    onChange={(e) => setCloud(e.target.checked)}
+                  />
+                  使用已授权千问规划
+                </label>
+              )}
+              <p>只用这些物品（不选则检索可用展柜）</p>
+              <div className="discovery-pick-items">
+                {items
+                  .filter((i) => synthetic || !syntheticItem(i))
+                  .map((i) => (
+                    <label className="life-check" key={i.id}>
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.includes(i.id)}
+                        onChange={(e) =>
+                          setSelectedIds((ids) =>
+                            e.target.checked
+                              ? [...ids, i.id]
+                              : ids.filter((id) => id !== i.id),
+                          )
+                        }
+                      />
+                      {i.name}
+                    </label>
+                  ))}
+              </div>
+            </div>
+          </details>
+          <span>
+            {modelAvailable && cloud
+              ? "千问目标规划"
+              : "离线能力规划 · 有限规则"}
+          </span>
+          <button className="button" disabled={busy} aria-label="找点新灵感">
+            {busy ? "正在推敲…" : turns.length ? "继续探索" : "开始探索"}
+            <ArrowUp size={16} />
           </button>
         </div>
-        <small>
-          本地能力规则匹配不同物品实例；模型生成需另外启用费用授权。数量、状态和条件仍须本人核实。
-        </small>
       </form>
+      <div className="discovery-meta">
+        <span>
+          {selectedIds.length
+            ? `已选择 ${selectedIds.length} 件物品`
+            : "从本人可用展柜检索"}{" "}
+          · {synthetic ? "含明确合成案例" : "不含合成案例"}
+        </span>
+        <button onClick={() => setOnlySaved((v) => !v)}>
+          {onlySaved ? "返回本次探索" : "我的收藏"}
+        </button>
+      </div>
+      {!!gaps.length && (
+        <aside className="life-notice">
+          <strong>还需要核对</strong>
+          <ul>
+            {gaps.map((g) => (
+              <li key={g}>{g}</li>
+            ))}
+          </ul>
+        </aside>
+      )}
+      {turns.length > 0 && (
+        <div className="goal-suggestions">
+          {["更有趣一点", "换个方向", "时间缩短到10分钟"].map((t) => (
+            <button
+              key={t}
+              disabled={busy}
+              onClick={() => {
+                setGoal(t);
+                generate(undefined, t);
+              }}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+      )}
       {notice && (
         <p className="life-notice" role="status">
           {notice}
@@ -174,11 +294,14 @@ export function Discovery({
                 )
                 .join(" ＋ ")}
             </p>
-            <ol>
-              {idea.steps.map((s, n) => (
-                <li key={n}>{s}</li>
-              ))}
-            </ol>
+            <details className="idea-steps" open>
+              <summary>怎么开始 · {idea.steps.length} 步</summary>
+              <ol>
+                {idea.steps.map((s, n) => (
+                  <li key={n}>{s}</li>
+                ))}
+              </ol>
+            </details>
             <details>
               <summary>关键条件与资料来源</summary>
               <ul>
@@ -212,6 +335,21 @@ export function Discovery({
                 · 未独立核验
               </p>
             )}
+            <div className="idea-replace-items">
+              {idea.itemIds.map((id) => (
+                <button
+                  key={id}
+                  disabled={busy}
+                  onClick={() => {
+                    const omit = [...new Set([...excluded, id])];
+                    setExcluded(omit);
+                    generate(undefined, "不用这件，换一种组合", omit);
+                  }}
+                >
+                  不用{items.find((i) => i.id === id)?.name || "这件物品"} ↻
+                </button>
+              ))}
+            </div>
             <div className="life-actions">
               <button onClick={() => feedback(idea, { saved: !idea.saved })}>
                 {idea.saved ? "已收藏 · 取消" : "收藏这个想法"}
@@ -232,23 +370,28 @@ export function Discovery({
                 ))}
               </select>
             </div>
-            <label>
-              实际结果 / 下次调整
-              <textarea
-                defaultValue={idea.note || ""}
-                maxLength={1000}
-                placeholder="例如：缺一张纸；下次想换个方向"
-                onBlur={(e) => {
-                  if (e.target.value !== idea.note)
-                    feedback(idea, { note: e.target.value });
-                }}
-              />
-            </label>
+            <details className="idea-feedback">
+              <summary>记录实际结果 / 下次调整</summary>
+              <label>
+                实际结果 / 下次调整
+                <textarea
+                  defaultValue={idea.note || ""}
+                  maxLength={1000}
+                  placeholder="例如：缺一张纸；下次想换个方向"
+                  onBlur={(e) => {
+                    if (e.target.value !== idea.note)
+                      feedback(idea, { note: e.target.value });
+                  }}
+                />
+              </label>
+            </details>
           </article>
         ))}
       </div>
       {!rows.length && (
-        <div className="life-empty">选好条件，开始找一个值得尝试的小想法。</div>
+        <p className="life-muted">
+          还没有合适的方案。可以补充目标、确认物品状态，或在可选条件中明确体验合成案例。
+        </p>
       )}
       <details className="life-card">
         <summary>保存自己找到的玩法 / 获准使用的经验</summary>
