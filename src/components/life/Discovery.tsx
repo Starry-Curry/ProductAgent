@@ -34,7 +34,9 @@ export function Discovery({
   const [selectedIds, setSelectedIds] = useState<string[]>(
     itemId ? [itemId] : [],
   );
+  const [continuation, setContinuation] = useState<any>(undefined);
   const [cloud, setCloud] = useState(true);
+  const [experienceIds, setExperienceIds] = useState<string[]>([]);
   const [gaps, setGaps] = useState<string[]>([]);
   const [sourceUrl, setSourceUrl] = useState(""),
     [sourcePreview, setSourcePreview] = useState("");
@@ -48,15 +50,19 @@ export function Discovery({
     try {
       const d = await request("discover", {
         goal: followup || goal,
+        continuation,
         itemId: omit.includes(itemId || "") ? undefined : itemId,
         itemIds: selectedIds.filter((id) => !omit.includes(id)),
         excludedItemIds: omit,
+        experienceIds,
         previousIdeaIds: turns.findLast((t) => t.ids.length)?.ids || [],
         minutes: Number(minutes),
         includeSynthetic: synthetic,
         model,
       });
       setResults(d.ideas);
+      setContinuation(d.continuation);
+      if (d.continuation) setMinutes(String(d.continuation.minutes));
       setGaps(d.missing || []);
       setTurns((rows) => [
         ...rows.slice(-5),
@@ -184,11 +190,25 @@ export function Discovery({
                   value={minutes}
                   onChange={(e) => setMinutes(e.target.value)}
                 >
-                  {[10, 20, 30, 60, 120].map((n) => (
-                    <option key={n} value={n}>
-                      {n} 分钟
-                    </option>
-                  ))}
+                  {[
+                    ...new Set([
+                      5,
+                      10,
+                      15,
+                      20,
+                      30,
+                      60,
+                      90,
+                      120,
+                      Number(minutes),
+                    ]),
+                  ]
+                    .sort((a, b) => a - b)
+                    .map((n) => (
+                      <option key={n} value={n}>
+                        {n} 分钟
+                      </option>
+                    ))}
                 </select>
               </label>
               <label className="life-check">
@@ -208,6 +228,30 @@ export function Discovery({
                   />
                   使用已授权千问规划
                 </label>
+              )}
+              {ideas.some((i) => i.source === "user-submitted") && (
+                <div>
+                  <p>参考本人提供的经验（选中内容可用于本次已授权云端规划）</p>
+                  {ideas
+                    .filter((i) => i.source === "user-submitted")
+                    .slice(0, 6)
+                    .map((i) => (
+                      <label className="life-check" key={i.id}>
+                        <input
+                          type="checkbox"
+                          checked={experienceIds.includes(i.id)}
+                          onChange={(e) =>
+                            setExperienceIds((ids) =>
+                              e.target.checked
+                                ? [...ids, i.id]
+                                : ids.filter((id) => id !== i.id),
+                            )
+                          }
+                        />
+                        {i.title}
+                      </label>
+                    ))}
+                </div>
               )}
               <p>只用这些物品（不选则检索可用展柜）</p>
               <div className="discovery-pick-items">
@@ -347,6 +391,19 @@ export function Discovery({
                 </p>
               )}
             </details>
+            {idea.experienceSources?.map((s) => (
+              <p className="life-muted" key={s.id}>
+                参考本人提供的经验：
+                {s.url ? (
+                  <a href={s.url} target="_blank" rel="noreferrer">
+                    {s.title} ↗
+                  </a>
+                ) : (
+                  s.title
+                )}{" "}
+                · 第三方适用性未独立核验
+              </p>
+            ))}
             {idea.sourceUrl && (
               <p>
                 <a href={idea.sourceUrl} target="_blank" rel="noreferrer">

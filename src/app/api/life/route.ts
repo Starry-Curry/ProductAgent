@@ -204,6 +204,15 @@ export async function POST(r: Request) {
         !modelMentioned(d.title + " " + d.text, item.model)
       )
         throw new AgentError("正文未匹配完整型号，请核对地区版本；未保存资料");
+      const currentItem = read().items.find(
+        (i) => i.id === item.id && i.owner === a,
+      );
+      if (
+        !currentItem ||
+        currentItem.model !== item.model ||
+        currentItem.brand !== item.brand
+      )
+        throw new AgentError("物品归属或型号在读取期间变化，请重新核对", 409);
       // Re-check ownership after the network wait; never shares this source with household members.
       const id = saveSource(db, read(), a, {
         itemId: item.id,

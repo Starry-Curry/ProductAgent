@@ -98,6 +98,8 @@ function accessible(
   if (memory.owner !== actor) return false;
   if (!memory.itemId) return true;
   const item = state.items.find((i) => i.id === memory.itemId);
+  // Personal authored records survive gifting. Demo cases keep their original isolation.
+  if (!memory.demo) return true;
   return (
     !!item &&
     canRead(item, actor) &&
@@ -112,7 +114,20 @@ export function listMemories(db: DatabaseSync, state: State, actor: Person) {
       )
       .all(actor) as { body: string }[]
   )
-    .map((r) => JSON.parse(r.body) as MemoryRecord)
+    .map((r) => {
+      const m = JSON.parse(r.body) as MemoryRecord & { itemOwner?: string };
+      const item = m.itemId
+        ? state.items.find((i) => i.id === m.itemId)
+        : undefined;
+      return {
+        ...m,
+        archived:
+          !!m.itemId &&
+          (!item ||
+            !canRead(item, actor) ||
+            (!!m.itemOwner && item.owner !== m.itemOwner)),
+      };
+    })
     .filter(
       (m) =>
         accessible(m, state, actor) &&
@@ -128,11 +143,6 @@ export function saveMemory(
   requestId?: string,
 ) {
   let value = memorySchema.parse(input);
-  if (
-    value.itemId &&
-    !read().items.some((i) => i.id === value.itemId && canRead(i, actor))
-  )
-    throw new AgentError("物品不存在或没有访问权限", 403);
   db.exec("BEGIN IMMEDIATE");
   try {
     const hash = createHash("sha256")
@@ -179,6 +189,12 @@ export function saveMemory(
     const before = previous
       ? (JSON.parse(previous.body) as MemoryRecord)
       : undefined;
+    if (
+      value.itemId &&
+      !read().items.some((i) => i.id === value.itemId && canRead(i, actor)) &&
+      before?.itemId !== value.itemId
+    )
+      throw new AgentError("物品不存在或没有访问权限", 403);
     if (before?.demo)
       value = { ...value, itemId: before.itemId, allowCloud: false };
     const item = value.itemId
@@ -199,7 +215,11 @@ export function saveMemory(
           : undefined,
       createdAt: before?.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      itemOwner: item?.owner,
+      itemOwner:
+        before && before.itemId === value.itemId
+          ? (before as MemoryRecord & { itemOwner?: string }).itemOwner ||
+            item?.owner
+          : item?.owner,
     };
     db.prepare(
       "INSERT INTO personal_memories VALUES (?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET body=excluded.body,status=excluded.status,version=excluded.version,item_id=excluded.item_id",
@@ -343,10 +363,17 @@ export function recallMemories(
   return listMemories(db, state, actor)
     .filter(
       (m) =>
-        (!m.itemId || m.itemId === itemId) &&
+        (!m.itemId ||
+          m.itemId === itemId ||
+          (m.archived && wantsStory && !itemId)) &&
+        (!m.archived || wantsStory) &&
         m.status === "active" &&
         m.kind !== "fiction" &&
-          !(["service","auto"].includes(mode) && !wantsStory && ["story","relationship","experience"].includes(m.kind)) &&
+        !(
+          ["service", "auto"].includes(mode) &&
+          !wantsStory &&
+          ["story", "relationship", "experience"].includes(m.kind)
+        ) &&
         (!m.demo ||
           (!!itemId &&
             m.itemId === itemId &&

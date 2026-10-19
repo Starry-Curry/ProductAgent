@@ -547,6 +547,9 @@ export async function executeGraph(
               goal: w.question,
               itemId: effectiveSession.itemId,
               previousIdeaIds: JSON.parse(session.known.lifeIdeaIds || "[]"),
+              continuation: session.known.lifePlanContext
+                ? JSON.parse(session.known.lifePlanContext)
+                : undefined,
               model: provider.ready ?? true,
               includeSynthetic: false,
               page: session.known.uiPage,
@@ -556,6 +559,7 @@ export async function executeGraph(
           );
           guard();
           w.calls = plan.modelCalls;
+          session.known.lifePlanContext = JSON.stringify(plan.continuation);
           if (plan.ideas.length)
             session.known.lifeIdeaIds = JSON.stringify(
               plan.ideas.map((i) => i.id),

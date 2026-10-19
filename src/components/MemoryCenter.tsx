@@ -328,6 +328,11 @@ export function MemoryCenter({
                 : "本人补充 / 纠正"}
           </strong>
           <p>{m.text}</p>
+          {m.archived && (
+            <p className="muted">
+              关联物品已离手或不可访问。这份私人记录仍属于你，仅主动回忆时使用，不随物品转交。
+            </p>
+          )}
           {m.provenance && (
             <details>
               <summary>为什么记下这条？</summary>

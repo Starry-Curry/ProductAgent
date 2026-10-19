@@ -20,6 +20,7 @@ export const STORYTELLING_INSTRUCTIONS = `你负责把检索到的记忆讲成�
 export function isMemoryRecallRequest(question: string) {
   const q = question.trim();
   return (
+    /^(?:帮我)?回忆(?:一下)?/.test(q) ||
     /^(?:你(?:还)?|还)?记得.*(?:吗|什么|哪些|故事|以前|[？?])/.test(q) ||
     /^(?:我(?:还)?想(?:听|知道)|想听|想知道|聊聊|说说|讲讲|回忆|回顾|给我讲|讲一个|讲个).*(?:故事|以前|过去|经历|记忆|来历)/.test(
       q,

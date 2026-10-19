@@ -247,7 +247,7 @@ export default function WujianApp() {
             <p>{i.model}</p>
             <small>
               {i.attributes?.quantity !== undefined
-                ? `余量 ${i.attributes.quantity} · `
+                ? `余量 ${i.attributes.quantity}${i.attributes.quantityUnit || ""} · `
                 : ""}
               {i.attributes?.expiresOn
                 ? `有效期 ${i.attributes.expiresOn} · `
@@ -327,10 +327,24 @@ export default function WujianApp() {
           </p>
         )}
         {data && (
-          <p className="life-muted" role="status">
-            云端 AI · {data.capabilities.cloud.message}{" "}
-            <a href="/guide#cloud">配置与撤销方式</a>
-          </p>
+          <details className="life-cloud-status">
+            <summary>
+              云端 AI ·{" "}
+              {(
+                {
+                  ready: "已准备就绪",
+                  missing_key: "未配置密钥",
+                  unauthorized: "费用关闭",
+                  missing_config: "配置待补全",
+                  invalid_config: "配置无效",
+                } as Record<string, string>
+              )[data.capabilities.cloud.state] || "暂不可用"}
+            </summary>
+            <p>
+              {data.capabilities.cloud.message}{" "}
+              <a href="/guide#cloud">配置与撤销方式</a>
+            </p>
+          </details>
         )}
         {!data ? (
           <div className="life-empty">正在打开你的生活展柜…</div>

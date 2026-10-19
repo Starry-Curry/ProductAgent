@@ -364,6 +364,7 @@ export function Intake({
                 confirmed: f.get("confirmed") === "on",
                 attributes: {
                   material: f.get("material"),
+                  quantityUnit: f.get("quantityUnit"),
                   care: f.get("care"),
                   power: f.get("power"),
                   dimensions: f.get("dimensions"),
@@ -467,6 +468,7 @@ export function Intake({
                   if (e.target.value === "食品") setCycle("消耗型");
                   else if (e.target.value === "植物") setCycle("持续养护");
                   else if (e.target.value === "服装") setCycle("可重复使用");
+                  else setCycle("长期耐用");
                 }}
               >
                 {[
@@ -509,6 +511,14 @@ export function Intake({
                 max="100000"
                 step="0.1"
               />
+            </label>
+            <label>
+              数量单位
+              <select name="quantityUnit" defaultValue="件">
+                {["件", "份", "克", "毫升", "盆", "米"].map((x) => (
+                  <option key={x}>{x}</option>
+                ))}
+              </select>
             </label>
             {(category === "食品" || cycle === "消耗型") && (
               <label>

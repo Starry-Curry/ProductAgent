@@ -61,7 +61,10 @@ export function ItemInformation({
         <h2>物品资料与属性</h2>
         <dl>
           <dt>数量</dt>
-          <dd>{item.attributes?.quantity ?? "未知"}</dd>
+          <dd>
+            {item.attributes?.quantity ?? "未知"}{" "}
+            {item.attributes?.quantityUnit || ""}
+          </dd>
           <dt>材质 / 尺寸</dt>
           <dd>
             {item.attributes?.material || "未登记"} /{" "}
@@ -94,6 +97,7 @@ export function ItemInformation({
                         f.get("quantity") !== ""
                           ? Number(f.get("quantity"))
                           : undefined,
+                      quantityUnit: f.get("quantityUnit"),
                       expiresOn: f.get("expiresOn"),
                       material: f.get("material"),
                       care: f.get("care"),
@@ -150,6 +154,17 @@ export function ItemInformation({
                   step="0.1"
                   defaultValue={item.attributes?.quantity ?? ""}
                 />
+              </label>
+              <label>
+                数量单位
+                <select
+                  name="quantityUnit"
+                  defaultValue={item.attributes?.quantityUnit || "件"}
+                >
+                  {["件", "份", "克", "毫升", "盆", "米"].map((x) => (
+                    <option key={x}>{x}</option>
+                  ))}
+                </select>
               </label>
               <label>
                 保质期 / 有效期

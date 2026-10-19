@@ -124,6 +124,8 @@ export const memorySchema = z
   })
   .strict();
 export type MemoryRecord = z.infer<typeof memorySchema> & {
+  /** Author-owned record retained after losing item access; excluded from ordinary task recall. */
+  archived?: boolean;
   id: string;
   owner: string;
   version: number;
