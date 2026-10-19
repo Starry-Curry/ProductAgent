@@ -101,7 +101,7 @@ export function createProvider(
             `请求失败：模型服务返回 ${response.status}，请核对账户权限或稍后重试。`,
           );
         const result = await response.json().catch(() => { throw new ProviderError("invalid_response", "请求失败：模型服务返回了无效 JSON。"); });
-        const choice = result.choices?.[0];
+        const choice = result?.choices?.[0];
         if (
           choice?.finish_reason !== "stop" ||
           typeof choice?.message?.content !== "string" ||
@@ -212,7 +212,7 @@ async function completeModel(
     const data = await response.json().catch(() => { throw new ProviderError("invalid_response", "请求失败：模型服务返回了无效 JSON。"); });
     const choice = data?.choices?.[0];
     const calls = choice?.message?.tool_calls ?? [];
-    if (!choice || !["stop", "tool_calls"].includes(choice.finish_reason))
+    if (!choice?.message || !["stop", "tool_calls"].includes(choice.finish_reason))
       throw new ProviderError(
         "invalid_response",
         "模型输出不完整，本次没有展示操作建议。",

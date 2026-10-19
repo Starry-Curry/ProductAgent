@@ -361,6 +361,10 @@ test("云配置/费用状态与离线Provider错误准确区分，不发出未�
       method === "generate" ? p.generate("s", {}) : p.complete!([], []),
       { code: "invalid_response" },
     );
+    for(const payload of [null,{choices:[{finish_reason:"stop"}]}]) {
+      const invalid=createProvider(env,async()=>Response.json(payload));
+      await assert.rejects(method==="generate"?invalid.generate("s",{}):invalid.complete!([],[]),{code:"invalid_response"});
+    }
   }
   await assert.rejects(
     createProvider(env, async () => {
