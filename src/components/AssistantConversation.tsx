@@ -26,6 +26,7 @@ export function AssistantConversation({
   onActivity,
   onBusy,
   onSelectItem,
+  memoryPolicy,
 }: {
   actor: Person;
   item?: Item;
@@ -38,6 +39,7 @@ export function AssistantConversation({
   onActivity?: () => void;
   onBusy?: (busy: boolean) => void;
   onSelectItem?: (itemId: string) => void;
+  memoryPolicy?: "candidates" | "off";
 }) {
   const [session, setSession] = useState<ServiceSession | null>(null),
     [sessions, setSessions] = useState<ServiceSession[]>([]);
@@ -94,6 +96,7 @@ export function AssistantConversation({
             mode,
             question: text.trim(),
             temporary,
+            memoryPolicy,
             expectedRevision: temporary ? undefined : base?.revision,
           };
     retry.current = input;

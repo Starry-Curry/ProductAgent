@@ -70,6 +70,8 @@ export function routeHome(
     mode: HomeRoute["mode"],
     reason: string,
   ): HomeRoute => ({ ...base, intent, mode, reason });
+  if (!target && session.known.memoryPolicy && !/在哪|位置|有哪些物品|请爸爸|请家人|野餐|郊游|旅行|出游|阅读角|怎么|如何|故障|型号|按钮|设置|承重/.test(q))
+    return decision("companion", "companion", "普通交流可不关联物品；仅按本次政策整理候选");
   if (/短接|冒烟|漏电|烧焦|带电.*拆/.test(q))
     return decision("help", "service", "先处理安全与实际现象");
   if (

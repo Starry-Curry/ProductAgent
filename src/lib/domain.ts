@@ -6,6 +6,12 @@ export const people: Record<Person, string> = {
   friend: "小夏",
 };
 export type Item = {
+  brand?: string;
+  lifecycle?: "一次性" | "消耗型" | "可重复使用" | "长期耐用" | "持续养护";
+  attributes?: { material?: string; dimensions?: string; power?: string; care?: string; quantity?: number; expiresOn?: string; capabilities?: string[] };
+  availability?: "unknown" | "available" | "loaned" | "gifted" | "lost" | "broken" | "consumed";
+  availabilityAt?: string;
+  synthetic?: boolean;
   demo?: {
     caseId: string;
     title: string;
@@ -372,6 +378,9 @@ export function mutate(
       icon: "box",
       note: str(p.note),
       source: "用户录入",
+      brand: str(p.brand, 80),
+      lifecycle: ["一次性", "消耗型", "可重复使用", "长期耐用", "持续养护"].includes(p.lifecycle) ? p.lifecycle : "长期耐用",
+      availability: "unknown",
       photo:
         typeof p.photo === "string" &&
         /^data:image\/(png|jpeg|webp);base64,/.test(p.photo) &&
@@ -424,6 +433,22 @@ export function mutate(
       if (typeof p[k] === "string" && str(p[k])) item[k] = str(p[k]);
     }
     if (typeof p.shared === "boolean") item.shared = p.shared;
+    if (typeof p.brand === "string") item.brand = str(p.brand, 80);
+    if (["一次性", "消耗型", "可重复使用", "长期耐用", "持续养护"].includes(p.lifecycle)) item.lifecycle = p.lifecycle;
+    if (["unknown", "available", "loaned", "gifted", "lost", "broken", "consumed"].includes(p.availability)) {
+      item.availability = p.availability;
+      item.availabilityAt = now();
+      item.state = ({ unknown: "待确认", available: "在用", loaned: "借出", gifted: "已赠送", lost: "丢失", broken: "损坏", consumed: "用尽" } as Record<string,string>)[p.availability];
+    }
+    if (p.attributes && typeof p.attributes === "object") {
+      const v = p.attributes;
+      item.attributes = {
+        material: str(v.material, 100), dimensions: str(v.dimensions, 100), power: str(v.power, 100), care: str(v.care, 500),
+        quantity: Number.isFinite(v.quantity) && v.quantity >= 0 ? Math.min(v.quantity, 100000) : undefined,
+        expiresOn: /^\d{4}-\d{2}-\d{2}$/.test(v.expiresOn || "") ? v.expiresOn : undefined,
+        capabilities: Array.isArray(v.capabilities) ? v.capabilities.filter((x: unknown) => typeof x === "string").map((x: string) => str(x, 60)).slice(0, 20) : [],
+      };
+    }
   } else if (action === "memory") {
     get(p.itemId);
     const text = str(p.text);
@@ -644,6 +669,7 @@ export function mutate(
         m.shared = false;
       });
     item!.owner = a;
+    item!.availability = "unknown";
     item!.shared = false;
     item!.location = "待接收者更新";
     item!.note = "";

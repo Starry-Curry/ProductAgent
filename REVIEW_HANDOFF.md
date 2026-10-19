@@ -1,5 +1,9 @@
 # ProductAgent统一仓库交接
 
+## 2026-10-19 · 新版开发交接（进行中）
+
+当前 feat/life-context-v1-d，从 4451ca2 统一工程增量开发；用户已允许修改现有工程，先前 prototypes 零覆盖限制已被本次授权替代。不要修改 D:\ProductAgent-Dev。使用 npm run dev:life / start:life（3200，费用硬关闭），独立 data-life-v1；测试另设 PRODUCT_AGENT_DATA_DIR，禁止接旧 data。life_schema 是 v6 之上的独立增量版本并留备份。后续最终验证覆盖本轮改动，不沿用旧成绩。
+
 ## 架构图与对外介绍资料
 
 2026-10-18 新增 [功能、技术与闭环架构](docs/PROJECT_ARCHITECTURE.md)，以及 docs/architecture 下的高清 PNG、SVG 和生成清单，可直接用于群内分享。图以功能提交 a6aa51b 为基线，覆盖现有功能、LangGraph/Skill/Context/百炼/SQLite 分层、记忆与行动闭环，待接入项单列。离线生成脚本为 scripts/render-architecture.mjs；本次仅改文档和绘图工具，核对 36 个应用指纹及图文排版，不重跑业务测试或模型。下方功能验收保留为对应轮次证据。

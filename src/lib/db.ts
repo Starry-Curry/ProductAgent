@@ -4,13 +4,14 @@ import { assertLocalDemo } from "./auth.ts";
 import { DatabaseSync } from "node:sqlite";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
+import { lifeDataDirectory } from "./life/data-directory.ts";
+import { migrateLife } from "./life/schema.ts";
 import { seed, mutate, type State, type Person } from "./domain";
 import { migrate } from "./migrations";
 let connection: DatabaseSync | undefined;
 export function database() {
   if (connection) return connection;
-  const dir =
-    process.env.PRODUCT_AGENT_DATA_DIR || path.join(process.cwd(), "data");
+  const dir = lifeDataDirectory();
   mkdirSync(dir, { recursive: true });
   const db = new DatabaseSync(path.join(dir, "demo.sqlite"));
   db.exec(
@@ -22,6 +23,7 @@ export function database() {
   db.exec("PRAGMA foreign_keys=ON");
   migrate(db, path.join(dir, "demo.sqlite"));
   installHouseholdCases(db);
+  migrateLife(db, path.join(dir, "demo.sqlite"));
   connection = db;
   return db;
 }

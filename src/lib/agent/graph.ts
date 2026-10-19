@@ -47,6 +47,7 @@ import { routeHome } from "../home/router.ts";
 import { homeDecision } from "../home/decisions.ts";
 import { itemStamp } from "../home/store.ts";
 import type { HomeRoute } from "../home/contracts.ts";
+import { sourceReply } from "../life/sources.ts";
 const packetSchema = z
   .object({
     kind: z.enum([
@@ -546,7 +547,7 @@ export async function executeGraph(
             route,
             temporary,
           )) ||
-        curatedDecision(
+        (!unsafe.test(w.question) && effectiveSession.itemId && !ctx.knowledge.facts.length && effectiveSession.mode === "service" ? sourceReply(db, read(), actor, effectiveSession.itemId, w.question) : undefined) || curatedDecision(
           w.question,
           effectiveSession,
           ctx,
@@ -570,11 +571,12 @@ export async function executeGraph(
         const prior = session.messages
           .filter(
             (m) =>
-              (m.role === "feedback" || m.role === "action") &&
+              (m.role === "feedback" || m.role === "action" ||
+                (session.known.memoryPolicy !== undefined && (m.role === "user" || m.role === "assistant"))) &&
               (m.itemId || session.itemId || "") ===
                 (effectiveSession.itemId || ""),
           )
-          .slice(-3)
+          .slice(session.known.memoryPolicy ? -8 : -3)
           .map((m) => ({ role: m.role, text: m.text.slice(0, 500) }));
         w.messages = [
           {
@@ -690,7 +692,7 @@ export async function executeGraph(
         } else if (route?.intent === "companion") {
           w.reply = {
             ...blank(
-              "我在这里。你想说说今天发生的事，还是聊聊这件物品陪你度过的一个片段？",
+              "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
               "answered",
               "local-dialogue",
             ),

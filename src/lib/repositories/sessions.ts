@@ -195,7 +195,7 @@ export function commitTurn(
     const storyTurn =
       input.mode === "story" ||
       (input.mode === "auto" && result.reply.route?.intent === "story");
-    if (storyTurn && turnItemId && isStoryNarration(input.question)) {
+    if ((!result.session.known.memoryPolicy || result.session.known.memoryPolicy === "legacy") && storyTurn && turnItemId && isStoryNarration(input.question)) {
       const state = read();
       state.memories.push({
         id: input.requestId,

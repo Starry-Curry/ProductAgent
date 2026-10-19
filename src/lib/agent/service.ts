@@ -79,6 +79,7 @@ export async function respond(
   }
   const { session, cached } = beginTurn(db, read, actor, input);
   if (cached) return cached;
+  if (input.memoryPolicy) session.known.memoryPolicy = input.memoryPolicy;
   session.known.turnRequestId = input.requestId;
   try {
     let execution: Omit<TurnResult, "session">;

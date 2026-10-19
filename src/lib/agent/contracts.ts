@@ -10,6 +10,7 @@ export const turnInputSchema = z
       .enum(["service", "ideas", "companion", "story", "auto"])
       .default("service"),
     temporary: z.boolean().default(false),
+    memoryPolicy: z.enum(["legacy", "candidates", "off"]).optional(),
     expectedRevision: z.number().int().nonnegative().optional(),
   })
   .strict();

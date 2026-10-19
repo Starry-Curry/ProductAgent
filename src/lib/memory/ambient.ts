@@ -21,6 +21,7 @@ export type SourceEvent = {
   sessionId?: string;
   basis: NonNullable<MemoryRecord["provenance"]>["basis"];
   candidates?: Candidate[];
+  pending?: boolean;
 };
 // This is a narrow local extractor, not unrestricted semantic understanding.
 // Skip quoted, hypothetical, third-party and credential-bearing input entirely.
@@ -222,8 +223,8 @@ export function captureEvent(
       kind: candidate.kind,
       text: candidate.text.slice(0, 1500),
       itemId,
-      status: "active",
-      allowCloud: !item?.demo && (old?.allowCloud || false),
+      status: event.pending ? "candidate" : "active",
+      allowCloud: event.pending ? false : !item?.demo && (old?.allowCloud || false),
       source: "automatic",
       demo: !!item?.demo,
       expiresAt: candidate.expiresAt,
@@ -287,7 +288,7 @@ export function captureTurn(
   requestId: string,
   question: string,
 ) {
-  if (/^记住[：:，,\s]/u.test(question)) return [];
+  if (/^记住[：:，,\s]/u.test(question) || session.known.memoryPolicy === "off") return [];
   return captureEvent(db, state, actor, {
     id: requestId,
     kind: "chat",
@@ -296,6 +297,7 @@ export function captureTurn(
     itemId: session.itemId,
     sessionId: session.id,
     basis: "user_statement",
+    pending: session.known.memoryPolicy === "candidates",
     candidates:
       session.mode === "story" &&
       state.items.find((i) => i.id === session.itemId)?.demo &&

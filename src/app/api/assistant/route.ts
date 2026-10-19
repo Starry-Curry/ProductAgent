@@ -2,7 +2,7 @@ import { z, ZodError } from "zod";
 import { actor, read, database, localOnly } from "@/lib/db";
 import { AgentError } from "@/lib/agent/contracts";
 import { respond, handoff } from "@/lib/agent/service";
-import { createProvider } from "@/lib/ai/provider";
+import { lifeProvider } from "@/lib/life/provider";
 import {
   listSessions,
   attachSession,
@@ -99,7 +99,7 @@ export async function POST(r: Request) {
     if (p.action === "handoff")
       return Response.json(handoff(database(), read, a, p.input));
     return Response.json(
-      await respond(database(), read, a, p, createProvider()),
+      await respond(database(), read, a, p, lifeProvider()),
     );
   } catch (e) {
     return fail(e);

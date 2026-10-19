@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev:life": "node scripts/life-local.mjs dev",
+    "start:life": "node scripts/life-local.mjs start",
     "dev": "next dev --hostname 127.0.0.1",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",
@@ -21,10 +23,14 @@
     "@langchain/core": "1.2.18",
     "@langchain/langgraph": "1.5.1",
     "@langchain/langgraph-checkpoint": "1.2.0",
+    "@zxing/browser": "^0.2.1",
+    "cheerio": "^1.2.0",
     "lucide-react": "^0.468.0",
     "next": "^15.5.0",
+    "pdf-parse": "^2.4.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "sharp": "^0.35.5",
     "zod": "4.6.7"
   },
   "devDependencies": {
