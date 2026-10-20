@@ -1,3 +1,4 @@
+import { publicDemo, visitorContext, CloudError } from "./cloud/runtime.ts";
 import { installHouseholdCases } from "./demo/install.ts";
 import { captureWorkspace } from "./memory/ambient.ts";
 import { assertLocalDemo } from "./auth.ts";
@@ -10,8 +11,12 @@ import { seed, mutate, type State, type Person } from "./domain";
 import { migrate } from "./migrations";
 let connection: DatabaseSync | undefined;
 export function database() {
-  if (connection) return connection;
-  const dir = lifeDataDirectory();
+  const scope = visitorContext.getStore();
+  if (publicDemo() && !scope)
+    throw new CloudError("session_required", "请先进入演示空间", 401);
+  if (scope?.database) return scope.database;
+  if (!scope && connection) return connection;
+  const dir = scope?.directory || lifeDataDirectory();
   mkdirSync(dir, { recursive: true });
   const db = new DatabaseSync(path.join(dir, "demo.sqlite"));
   db.exec(
@@ -24,7 +29,12 @@ export function database() {
   migrate(db, path.join(dir, "demo.sqlite"));
   installHouseholdCases(db);
   migrateLife(db, path.join(dir, "demo.sqlite"));
-  connection = db;
+  if (scope) {
+    scope.database = db;
+    scope.close = () => {
+      db.close();
+    };
+  } else connection = db;
   return db;
 }
 export function read(): State {
@@ -51,10 +61,20 @@ export function write(a: Person, action: string, p: Record<string, unknown>) {
   }
 }
 export function actor(r: Request): Person {
+  if (publicDemo()) {
+    if (!visitorContext.getStore())
+      throw new CloudError("session_required", "请先进入演示空间", 401);
+    return "lin";
+  }
   const a = r.headers.get("x-demo-actor");
   if (a === "lin" || a === "dad" || a === "friend") return a;
   throw new Error("请选择演示角色");
 }
 export function localOnly(r: Request) {
+  if (publicDemo()) {
+    if (!visitorContext.getStore())
+      throw new CloudError("session_required", "请先进入演示空间", 401);
+    return;
+  }
   assertLocalDemo(r);
 }

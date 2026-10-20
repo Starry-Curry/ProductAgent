@@ -1,3 +1,4 @@
+import { publicDemo } from "../cloud/runtime.ts";
 import {
   acquireKnowledge,
   retrieveKnowledge,
@@ -931,7 +932,10 @@ export async function executeGraph(
     .addNode("model", async ({ work }) => {
       guard();
       const w = { ...work, trace: [...work.trace] };
-      if (w.calls >= 3 || Date.now() - w.started > 45000) {
+      if (
+        w.calls >= (publicDemo() ? 1 : 3) ||
+        Date.now() - w.started > (publicDemo() ? 75000 : 45000)
+      ) {
         w.reply = blank(
           "这次还需要补充资料。我已保留问题，可以说明卡住的地方，或请家人协助。",
           "referred",
@@ -956,7 +960,10 @@ export async function executeGraph(
         );
         w.response = provider.complete
           ? await provider.complete(w.messages, activeTools, {
-              timeoutMs: Math.max(1, 45000 - (Date.now() - w.started)),
+              timeoutMs: Math.max(
+                1,
+                (publicDemo() ? 75000 : 45000) - (Date.now() - w.started),
+              ),
               maxTokens: activeSkill === skills["document-help"] ? 2600 : 1500,
             })
           : {
@@ -1172,7 +1179,7 @@ export async function executeGraph(
         if (storyPlan) {
           w.reply = localMemoryStory(storyPlan);
           add(w, "memory_story_fallback", "invalid_narrative");
-        } else if (w.calls < 3) {
+        } else if (w.calls < (publicDemo() ? 1 : 3)) {
           w.messages.push(
             { role: "assistant", content: w.response!.text },
             {
@@ -1186,12 +1193,15 @@ export async function executeGraph(
             },
           );
         } else
-          w.reply = blank(
-            effectiveSession.itemId
-              ? "已保留档案中的型号。本轮回答未通过资料核对，不能给出可靠的专属操作；可补充对应官方资料或描述当前卡住的现象，不必重新提供已确认型号。"
-              : "资料还不足以给出适用步骤。请说明当前卡住的现象或必要的适用信息。",
-            "needs_info",
-          );
+          w.reply = {
+            ...blank(
+              effectiveSession.itemId
+                ? "已保留档案中的型号。本轮回答未通过资料核对，不能给出可靠的专属操作；可补充对应官方资料或描述当前卡住的现象，不必重新提供已确认型号。"
+                : "资料还不足以给出适用步骤。请说明当前卡住的现象或必要的适用信息。",
+              "needs_info",
+            ),
+            errorCode: "validation_failed",
+          };
       }
       return { work: w };
     })

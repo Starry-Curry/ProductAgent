@@ -1,6 +1,19 @@
 import Link from "next/link";
 import LegacyGuide from "@/components/LegacyGuide";
 export default function Guide() {
+  if (process.env.AUTH_MODE === "public-demo")
+    return (
+      <main className="cloud-demo-entry">
+        <Link href="/">回到物间</Link>
+        <h1>从一件真实物品开始</h1>
+        <p>
+          录入测试物品，在详情提问；到发现页描述目标；故事书保存照片与一句话。每位访客拥有独立临时空间，AI受演示额度限制。
+        </p>
+        <p>
+          请勿上传私人资料。遇到模型暂不可用时，可继续阅读资料、保存故事或尝试离线建议。
+        </p>
+      </main>
+    );
   return (
     <div className="guide-page">
       <Link href="/">← 回到物间</Link>

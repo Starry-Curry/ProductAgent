@@ -20,7 +20,11 @@ export function assertLocalDemo(
     !loopbacks.includes(supplied.hostname)
   )
     throw new Error("演示身份只允许本机访问");
-  if ((r.headers.has("x-forwarded-host") && r.headers.get("x-forwarded-host") !== rawHost) || r.headers.has("forwarded"))
+  if (
+    (r.headers.has("x-forwarded-host") &&
+      r.headers.get("x-forwarded-host") !== rawHost) ||
+    r.headers.has("forwarded")
+  )
     throw new Error("演示身份不允许代理转发");
   if (r.headers.get("sec-fetch-site") === "cross-site")
     throw new Error("拒绝跨站请求");

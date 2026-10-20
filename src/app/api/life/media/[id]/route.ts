@@ -1,7 +1,8 @@
+import { withDemoRequest } from "@/lib/cloud/request";
 import { actor, localOnly, database, read } from "@/lib/db";
 import { readMedia } from "@/lib/life/stories";
 export const runtime = "nodejs";
-export async function GET(
+async function GETHandler(
   r: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
@@ -27,3 +28,5 @@ export async function GET(
     return Response.json({ error: "照片不存在或未获授权" }, { status: 403 });
   }
 }
+
+export const GET = withDemoRequest(GETHandler);

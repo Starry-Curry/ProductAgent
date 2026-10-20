@@ -1,4 +1,5 @@
 "use client";
+import { usePublicDemo } from "../DemoBoundary";
 import { useEffect, useRef, useState } from "react";
 import {
   Plus,
@@ -65,6 +66,7 @@ const nav = [
   ["social", "社交", BookOpen],
 ] as const;
 export default function WujianApp() {
+  const publicMode = usePublicDemo();
   const [actor, setActor] = useState<Person>("lin"),
     [data, setData] = useState<Data | null>(null),
     [view, setView] = useState<View>("home"),
@@ -330,20 +332,24 @@ export default function WujianApp() {
             </button>
           ))}
         </nav>
-        <label className="life-actor">
-          <span>本机演示身份</span>
-          <select
-            aria-label="演示家庭成员"
-            value={actor}
-            onChange={(e) => setActor(e.target.value as Person)}
-          >
-            {Object.entries(people).map(([id, n]) => (
-              <option key={id} value={id}>
-                {n}
-              </option>
-            ))}
-          </select>
-        </label>
+        {publicMode ? (
+          <span className="life-actor">我的演示空间</span>
+        ) : (
+          <label className="life-actor">
+            <span>本机演示身份</span>
+            <select
+              aria-label="演示家庭成员"
+              value={actor}
+              onChange={(e) => setActor(e.target.value as Person)}
+            >
+              {Object.entries(people).map(([id, n]) => (
+                <option key={id} value={id}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
       </header>
       <main className="life-main">
         <div className="life-topline">
@@ -377,7 +383,7 @@ export default function WujianApp() {
             <summary>设置与 AI 状态</summary>
             <p>
               {data.capabilities.cloud.message}{" "}
-              <a href="/guide#cloud">本机配置与撤销</a>
+              {!publicMode && <a href="/guide#cloud">本机配置与撤销</a>}
             </p>
             <p className="life-muted">
               官方资料按需联网，可在启动环境以 WUJIAN_ALLOW_PUBLIC_FETCH=false

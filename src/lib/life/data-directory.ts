@@ -29,6 +29,26 @@ export function lifeDataDirectory(
     path.resolve(env.PRODUCT_AGENT_DATA_DIR || path.join(root, "data-life-v1")),
   );
   const temporaryRoot = physical(temporary);
+  if (env.AUTH_MODE === "public-demo") {
+    if (
+      env.WUJIAN_DEPLOYMENT !== "cloud" ||
+      !env.PRODUCT_AGENT_DATA_DIR ||
+      !path.isAbsolute(env.PRODUCT_AGENT_DATA_DIR) ||
+      selected === root ||
+      selected === path.parse(selected).root ||
+      selected === temporaryRoot ||
+      /(?:^|[\\/])ProductAgent-Dev(?:[\\/]|$)/i.test(selected) ||
+      within(path.join(root, "data"), selected) ||
+      within(path.join(root, "data-life-v1"), selected)
+    )
+      throw Error("云端演示需明确配置独立持久化目录，禁止使用开发数据库");
+    if (
+      within(root, selected) &&
+      !within(path.join(root, ".runtime"), selected)
+    )
+      throw Error("本机生产模拟只能使用.runtime独立目录");
+    return selected;
+  }
   if (
     within(path.join(root, "data"), selected) ||
     selected === root ||

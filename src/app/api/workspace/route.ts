@@ -1,8 +1,9 @@
+import { withDemoRequest } from "@/lib/cloud/request";
 import { actor, read, write, localOnly } from "@/lib/db";
 import { visible } from "@/lib/domain";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export async function GET(r: Request) {
+async function GETHandler(r: Request) {
   try {
     localOnly(r);
     const a = actor(r);
@@ -11,7 +12,7 @@ export async function GET(r: Request) {
     return Response.json({ error: (e as Error).message }, { status: 403 });
   }
 }
-export async function POST(r: Request) {
+async function POSTHandler(r: Request) {
   try {
     localOnly(r);
     const a = actor(r);
@@ -21,3 +22,7 @@ export async function POST(r: Request) {
     return Response.json({ error: (e as Error).message }, { status: 400 });
   }
 }
+
+export const GET = withDemoRequest(GETHandler);
+
+export const POST = withDemoRequest(POSTHandler);

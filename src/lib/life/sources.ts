@@ -1,3 +1,4 @@
+import { reservePublicFetch } from "../cloud/runtime.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { lookup } from "node:dns/promises";
 import { request } from "node:https";
@@ -10,7 +11,8 @@ import { modelMentioned } from "./knowledge.ts";
 export function publicAddress(address: string) {
   if (address.includes(":"))
     return (
-      !/^(::|fc|fd|fe[89ab]|ff|2001:db8)/i.test(address) &&
+      /^[23][0-9a-f]{3}:/i.test(address) &&
+      !/^(2001:(?:0:|db8:)|2002:)/i.test(address) &&
       !address.toLowerCase().includes("::ffff:")
     );
   const p = address.split(".").map(Number);
@@ -20,6 +22,8 @@ export function publicAddress(address: string) {
     !(p[0] === 169 && p[1] === 254) &&
     !(p[0] === 172 && p[1] >= 16 && p[1] <= 31) &&
     !(p[0] === 192 && (p[1] === 168 || p[1] === 0)) &&
+    !(p[0] === 198 && [18, 19, 51].includes(p[1])) &&
+    !(p[0] === 203 && p[1] === 0 && p[2] === 113) &&
     !(p[0] === 100 && p[1] >= 64 && p[1] <= 127) &&
     p[0] < 224
   );
@@ -53,6 +57,7 @@ export async function fetchPublicDocument(
   extracted?: { name?: string; brand?: string; model?: string };
 }> {
   const url = sourceURL(value);
+  reservePublicFetch(url.hostname);
   const addresses = await lookup(url.hostname, { all: true });
   if (!addresses.length || addresses.some((a) => !publicAddress(a.address)))
     throw new AgentError("不允许读取内网或保留地址");
@@ -68,7 +73,8 @@ export async function fetchPublicDocument(
         method: "GET",
         family: chosen.family,
         headers: {
-          "User-Agent": "Wujian/1.0 (https://github.com/Starry-Curry/ProductAgent; user-requested low-volume lookup)",
+          "User-Agent":
+            "Wujian/1.0 (https://github.com/Starry-Curry/ProductAgent; user-requested low-volume lookup)",
           Accept: "application/json,text/html,text/plain,application/pdf",
         },
         lookup: ((

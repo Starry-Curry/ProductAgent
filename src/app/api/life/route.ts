@@ -1,3 +1,5 @@
+import { publicDemo, CloudError } from "@/lib/cloud/runtime";
+import { withDemoRequest } from "@/lib/cloud/request";
 import { storyOrganization, organizeStories } from "@/lib/life/organization";
 import { matchStoryPhoto } from "@/lib/life/story-photo";
 import {
@@ -75,7 +77,7 @@ function fail(e: unknown) {
     },
   );
 }
-export async function GET(r: Request) {
+async function GETHandler(r: Request) {
   try {
     localOnly(r);
     const a = actor(r),
@@ -156,7 +158,7 @@ export async function GET(r: Request) {
     return fail(e);
   }
 }
-export async function POST(r: Request) {
+async function POSTHandler(r: Request) {
   try {
     localOnly(r);
     const a = actor(r),
@@ -177,6 +179,16 @@ export async function POST(r: Request) {
             bytes,
             f.get("kind") === "story-photo" ? "story" : "item",
           ),
+        );
+      if (
+        publicDemo() &&
+        f.get("kind") === "manual-ocr" &&
+        process.env.DEMO_ALLOW_OCR !== "true"
+      )
+        throw new CloudError(
+          "ocr_disabled",
+          "在线演示暂未开放扫描资料OCR，可上传文字PDF",
+          403,
         );
       const { extractManual } = await import("@/lib/life/documents");
       return Response.json(
@@ -393,3 +405,7 @@ export async function POST(r: Request) {
     return fail(e);
   }
 }
+
+export const GET = withDemoRequest(GETHandler);
+
+export const POST = withDemoRequest(POSTHandler);

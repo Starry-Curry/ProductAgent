@@ -1,3 +1,5 @@
+import { DemoBoundary } from "@/components/DemoBoundary";
+export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import "./globals.css";
 import "./home.css";
@@ -9,7 +11,11 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN">
-      <body>{children}</body>
+      <body>
+        <DemoBoundary publicMode={process.env.AUTH_MODE === "public-demo"}>
+          {children}
+        </DemoBoundary>
+      </body>
     </html>
   );
 }

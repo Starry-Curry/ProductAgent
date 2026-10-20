@@ -1,3 +1,4 @@
+import { cloudBudgetState, publicDemo } from "../cloud/runtime.ts";
 import { createProvider } from "../ai/provider.ts";
 export function cloudStatus(
   env: Record<string, string | undefined> = process.env,
@@ -34,6 +35,7 @@ export function cloudStatus(
       message:
         "未开启费用授权；默认不发送模型请求。获准后以 npm run start:life -- --cloud 手动启用",
     };
+  if (publicDemo(env)) return cloudBudgetState(env);
   return {
     state: "ready",
     ready: true,

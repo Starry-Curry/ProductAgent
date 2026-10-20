@@ -1,10 +1,11 @@
+import { withDemoRequest } from "@/lib/cloud/request";
 import { replayRun } from "@/lib/ai/harness";
 import type { Run } from "@/lib/ai/types";
 import { actor, database, localOnly, read } from "@/lib/db";
 import { listRuns, recordFeedback, accessibleRun } from "@/lib/service-store";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export async function GET(r: Request) {
+async function GETHandler(r: Request) {
   try {
     localOnly(r);
     const a = actor(r);
@@ -34,7 +35,7 @@ export async function GET(r: Request) {
     return Response.json({ error: "无法读取记录" }, { status: 403 });
   }
 }
-export async function POST(r: Request) {
+async function POSTHandler(r: Request) {
   try {
     localOnly(r);
     const a = actor(r);
@@ -51,3 +52,7 @@ export async function POST(r: Request) {
     );
   }
 }
+
+export const GET = withDemoRequest(GETHandler);
+
+export const POST = withDemoRequest(POSTHandler);

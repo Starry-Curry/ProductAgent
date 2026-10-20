@@ -1,9 +1,57 @@
+import {
+  CloudError,
+  governedModelFetch,
+  publicDemo,
+  cloudBudgetState,
+} from "../cloud/runtime.ts";
 export class ProviderError extends Error {
   code: string;
-  constructor(code: string, message: string) {
+  upstreamStatus?: number;
+  upstreamCode?: string;
+  constructor(
+    code: string,
+    message: string,
+    upstreamStatus?: number,
+    upstreamCode?: string,
+  ) {
     super(message);
     this.code = code;
+    this.upstreamStatus = upstreamStatus;
+    this.upstreamCode = upstreamCode;
   }
+}
+export function modelTimeout(
+  env: Record<string, string | undefined>,
+  requested?: number,
+) {
+  const configured = Number(env.AI_REQUEST_TIMEOUT_MS) || 60000;
+  return Math.max(1, Math.min(90000, configured, requested ?? configured));
+}
+async function upstreamFailure(response: Response) {
+  const data = await response.json().catch(() => null);
+  const raw = data?.error?.code || data?.code;
+  const upstreamCode =
+    typeof raw === "string" && /^[a-z0-9._-]{1,80}$/i.test(raw)
+      ? raw
+      : undefined;
+  const code =
+    response.status === 400
+      ? "invalid_request"
+      : response.status === 401
+        ? "authentication"
+        : response.status === 403
+          ? "permission"
+          : response.status === 429
+            ? "rate_limited"
+            : [408, 504].includes(response.status)
+              ? "upstream_timeout"
+              : "upstream";
+  return new ProviderError(
+    code,
+    `模型服务请求未完成（${response.status}${upstreamCode ? " / " + upstreamCode : ""}），请稍后重试或联系维护者。`,
+    response.status,
+    upstreamCode,
+  );
 }
 export type ProviderResult = {
   text: string;
@@ -61,12 +109,14 @@ export function createProvider(
   env: Record<string, string | undefined> = process.env,
   request: typeof fetch = fetch,
 ): Provider {
+  request = governedModelFetch(request, env);
   const { AI_BASE_URL, AI_API_KEY, AI_MODEL } = env;
   const provider: Provider = {
     ready:
       !!AI_BASE_URL &&
       !!AI_API_KEY?.trim() &&
       !!AI_MODEL &&
+      (!publicDemo(env) || cloudBudgetState(env).ready) &&
       env.AI_ALLOW_PAID_CALLS === "true",
     model: AI_MODEL || "unconfigured",
     async generate(system, input, options) {
@@ -99,20 +149,25 @@ export function createProvider(
             Authorization: `Bearer ${AI_API_KEY}`,
             "Content-Type": "application/json",
           },
-          signal: AbortSignal.timeout(
-            Math.min(45000, options?.timeoutMs || 30000),
-          ),
+          signal: AbortSignal.timeout(modelTimeout(env, options?.timeoutMs)),
           body: JSON.stringify({
             model: AI_MODEL,
             messages: [
-              { role: "system", content: system },
+              {
+                role: "system",
+                content:
+                  system +
+                  (env.AI_JSON_MODE === "true"
+                    ? "\n仅输出一个合法JSON对象。"
+                    : ""),
+              },
               { role: "user", content: JSON.stringify(input) },
             ],
             max_tokens: Math.min(
               4000,
               Math.max(300, options?.maxTokens || 1500),
             ),
-            ...(env.AI_ENABLE_THINKING === "false"
+            ...(env.AI_ENABLE_THINKING !== "true"
               ? { enable_thinking: false }
               : {}),
             // Opt in only after checking this account/model's capabilities.
@@ -121,17 +176,7 @@ export function createProvider(
               : {}),
           }),
         });
-        if (!response.ok)
-          throw new ProviderError(
-            response.status === 401
-              ? "authentication"
-              : response.status === 403
-                ? "permission"
-                : response.status === 429
-                  ? "rate_limited"
-                  : "upstream",
-            `请求失败：模型服务返回 ${response.status}，请核对账户权限或稍后重试。`,
-          );
+        if (!response.ok) throw await upstreamFailure(response);
         const result = await response.json().catch(() => {
           throw new ProviderError(
             "invalid_response",
@@ -161,6 +206,8 @@ export function createProvider(
         return { text: choice.message.content, model: AI_MODEL, tokens };
       } catch (error) {
         if (error instanceof ProviderError) throw error;
+        if (error instanceof CloudError)
+          throw new ProviderError(error.code, error.message);
         const timeout =
           error instanceof Error &&
           ["TimeoutError", "AbortError"].includes(error.name);
@@ -332,18 +379,16 @@ async function completeModel(
         Authorization: "Bearer " + env.AI_API_KEY,
         "Content-Type": "application/json",
       },
-      signal: AbortSignal.timeout(
-        Math.max(1, Math.min(40000, options?.timeoutMs ?? 25000)),
-      ),
+      signal: AbortSignal.timeout(modelTimeout(env, options?.timeoutMs)),
       body: JSON.stringify({
         model: env.AI_MODEL,
-        messages,
+        messages:
+          env.AI_JSON_MODE === "true" && !tools.length
+            ? [{ role: "system", content: "仅输出合法JSON对象。" }, ...messages]
+            : messages,
         ...(tools.length ? { tools, tool_choice: "auto" } : {}),
         max_tokens: Math.min(4000, Math.max(300, options?.maxTokens || 1500)),
-        ...(env.AI_ENABLE_THINKING === "true" ||
-        env.AI_ENABLE_THINKING === "false"
-          ? { enable_thinking: env.AI_ENABLE_THINKING === "true" }
-          : {}),
+        enable_thinking: env.AI_ENABLE_THINKING === "true",
         // DashScope tool selection must use its native protocol.
         // The graph still validates the final JSON packet server-side.
         ...(env.AI_JSON_MODE === "true" && !tools.length
@@ -351,19 +396,7 @@ async function completeModel(
           : {}),
       }),
     });
-    if (!response.ok)
-      throw new ProviderError(
-        response.status === 401
-          ? "authentication"
-          : response.status === 403
-            ? "permission"
-            : response.status === 429
-              ? "rate_limited"
-              : "upstream",
-        "请求失败：模型服务暂不可用（" +
-          response.status +
-          "），请核对账户配置或稍后重试。",
-      );
+    if (!response.ok) throw await upstreamFailure(response);
     const data = await response.json().catch(() => {
       throw new ProviderError(
         "invalid_response",
@@ -420,12 +453,17 @@ async function completeModel(
     };
   } catch (error) {
     if (error instanceof ProviderError) throw error;
+    if (error instanceof CloudError)
+      throw new ProviderError(error.code, error.message);
     throw new ProviderError(
       error instanceof Error &&
         ["TimeoutError", "AbortError"].includes(error.name)
         ? "timeout"
         : "network",
-      "请求失败：模型连接未完成（网络或超时），可以保留问题后重试。",
+      error instanceof Error &&
+        ["TimeoutError", "AbortError"].includes(error.name)
+        ? "模型请求超过配置时限，尚未得到完整回答。"
+        : "模型网络连接中断，尚未得到完整回答。",
     );
   }
 }

@@ -1,3 +1,4 @@
+import { withDemoRequest } from "@/lib/cloud/request";
 import { z, ZodError } from "zod";
 import { actor, localOnly, database, read } from "@/lib/db";
 import { rooms } from "@/lib/home/contracts";
@@ -24,7 +25,7 @@ function failure(e: unknown) {
     },
   );
 }
-export async function GET(r: Request) {
+async function GETHandler(r: Request) {
   try {
     localOnly(r);
     const a = actor(r);
@@ -36,7 +37,7 @@ export async function GET(r: Request) {
     return failure(e);
   }
 }
-export async function POST(r: Request) {
+async function POSTHandler(r: Request) {
   try {
     localOnly(r);
     const a = actor(r);
@@ -54,3 +55,7 @@ export async function POST(r: Request) {
     return failure(e);
   }
 }
+
+export const GET = withDemoRequest(GETHandler);
+
+export const POST = withDemoRequest(POSTHandler);
