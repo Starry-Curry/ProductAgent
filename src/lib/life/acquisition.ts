@@ -11,6 +11,8 @@ import {
   type PublicDocument,
 } from "./knowledge.ts";
 import { fetchPublicDocument, sourceURL, listSources } from "./sources.ts";
+import type { Provider } from "../ai/provider.ts";
+import { selectTaskEvidence } from "./knowledge-task.ts";
 
 export type KnowledgeChunk = {
   id: string;
@@ -211,7 +213,7 @@ export function retrieveKnowledge(
           : intent === "charge"
             ? ["charging", "charge the", "充电"]
             : question.match(/[\p{Script=Han}]{2}|[a-z0-9]{3,}/giu) || [];
-  return documents
+  const eligible = documents
     .flatMap((d) =>
       d.chunks
         .filter((c) => !conflicts.some((f) => f.pattern.test(c.text)))
@@ -221,7 +223,8 @@ export function retrieveKnowledge(
       (c) =>
         ["cn", "tw", "hk", "unspecified"].includes(c.region) ||
         (c.text.match(/[\u4e00-\u9fff]/g) || []).length / c.text.length < 0.12,
-    )
+    );
+  const ranked = eligible
     .map((c) => ({
       c,
       score:
@@ -237,6 +240,13 @@ export function retrieveKnowledge(
     .sort((a, b) => b.score - a.score)
     .slice(0, 8)
     .map((x) => x.c);
+  return selectTaskEvidence(
+    eligible,
+    question + " " + (state.items.find((i) => i.id === itemId)?.name || ""),
+    ranked.length
+      ? ranked
+      : eligible.filter((c) => c.category === "facts").slice(0, 2),
+  );
 }
 /** Conservative exact-field conflict detection only; never silently pick a value across sources. */
 export function knowledgeConflicts(documents: AcquiredDocument[]) {
@@ -359,6 +369,7 @@ export async function acquireKnowledge(
     force?: boolean;
     persist?: boolean;
     fetchDocument?: typeof fetchPublicDocument;
+    search?: Provider["search"];
   } = {},
 ) {
   const foundItem = read().items.find(
@@ -529,6 +540,48 @@ export async function acquireKnowledge(
         ? e.message
         : "官方资料网络读取失败；可稍后刷新或上传对应说明书",
     );
+  }
+  if (!documents.length && options.search && entry) {
+    try {
+      const result = await options.search(
+        `${brand} ${item.model} 官方 说明书 使用方法 ${item.region || ""}`,
+        [...entry.domains],
+      );
+      for (const hit of result.hits.slice(0, 4)) {
+        if (requests >= 6) break;
+        if (!officialDomain(hit.url, brand)) continue;
+        try {
+          const d = await get(hit.url),
+            sourceRegion = regionOf(d.url);
+          if (
+            !officialDomain(d.url, brand) ||
+            !modelMentioned(d.title + " " + d.text, item.model)
+          ) {
+            issues.push("搜索命中未通过最终域名/完整型号核对，未采用");
+            continue;
+          }
+          if (item.region && item.region !== sourceRegion) {
+            issues.push("搜索来源地区不一致或未明，未采用");
+            continue;
+          }
+          if (!documents.some((s) => s.url === d.url))
+            documents.push(
+              makeKnowledgeDocument(
+                d,
+                { ...item, brand },
+                ["bailian-search:turbo", d.url],
+                sourceRegion,
+              ),
+            );
+        } catch {
+          issues.push("搜索命中公开页面无法读取，未采用模型摘要替代原文");
+        }
+      }
+      if (!result.hits.length)
+        issues.push("搜索未返回结构化来源，不使用模型正文引用。");
+    } catch {
+      issues.push("联网搜索未完成或未获授权，本轮不重试。");
+    }
   }
   const current = read().items.find(
     (i) => i.id === itemId && canRead(i, actor),

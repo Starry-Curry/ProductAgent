@@ -181,7 +181,9 @@ export function routeHome(
   if (
     session.known.lastIntent === "help" &&
     (session.known.pending ||
-      /^(还是|仍然|试过|没变化|windows|win\s*11|11$|原配|有的|是的)/i.test(q))
+      /^(还是|仍然|试过|没变化|我已经|已经|windows|win\s*11|11$|原配|有的|是的)/i.test(
+        q,
+      ))
   )
     return decision("help", "service", "继续上一轮澄清，保留已经尝试的步骤");
   return decision(
@@ -230,6 +232,12 @@ export function routeProductTurn(
     itemId: scoped ? target?.id : undefined,
     itemName: scoped ? target?.name : undefined,
   });
+  if (target && /说明书|拼搭步骤|操作步骤|使用说明|怎么组装|怎样组装/.test(q))
+    return result(
+      "help",
+      "service",
+      "查询当前物品的操作资料，不把“哪里看说明”误判为找位置",
+    );
   if (
     /(?:物间|这个App|这个软件|这款App|应用|app).*(?:怎么用|功能|能做|如何|是什么)|(?:怎么|如何).*(?:录入|添加物品|保存故事|删除记忆|开启千问)|你(?:可以|能)做什么/i.test(
       q,

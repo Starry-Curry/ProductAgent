@@ -5,6 +5,16 @@ import { fetchPublicDocument, sourceURL } from "./sources.ts";
 
 const brands = [
   {
+    names: ["乐高", "lego"],
+    domains: ["lego.com"],
+    home: "https://www.lego.com/service/buildinginstructions/",
+  },
+  {
+    names: ["patagonia", "巴塔哥尼亚"],
+    domains: ["patagonia.com"],
+    home: "https://www.patagonia.com/",
+  },
+  {
     names: ["索尼", "sony"],
     domains: ["sony.com", "sony.net", "sony-asia.com"],
     home: "https://www.sony.com/electronics/support/",
@@ -81,6 +91,10 @@ export async function findOfficial(
         `${p.product}`.toLowerCase().includes(brand.toLowerCase()),
     )
     .map((p) => p.source.url);
+  if (b?.domains[0] === "lego.com" && /^\d{4,6}$/.test(model))
+    candidates.push(
+      `https://www.lego.com/en-us/service/buildinginstructions/${model}`,
+    );
   if (b?.domains[0] === "ikea.cn" && /^\d{8}$/.test(normalized))
     candidates.push(`https://www.ikea.cn/cn/zh/p/${normalized}/`);
   if (

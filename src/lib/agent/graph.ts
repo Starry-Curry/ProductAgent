@@ -145,7 +145,9 @@ export function curatedDecision(
     session.known.originalReceiver = "yes";
   const followup =
     (!!pending && question.length < 35) ||
-    /^(还是|仍然|没变化|依然|试过|我试过|第二步|第一步|第三步)/.test(question);
+    /^(还是|仍然|没变化|依然|试过|我试过|第二步|第一步|第三步|我已经|已经)/.test(
+      question,
+    );
   const goal = followup ? session.known.goal || question : question;
   session.known.goal = goal;
   if (/双击|double.?click/i.test(goal)) {
@@ -304,7 +306,12 @@ export function validateModelPacket(
 ): AssistantReply {
   const value = JSON.parse(text);
   if (value?.kind === "grounded")
-    return groundedReply(value, ctx.externalKnowledge, { tried });
+    return groundedReply(
+      value,
+      ctx.externalKnowledge,
+      { tried },
+      ctx.knowledgeTask,
+    );
   const packet = packetSchema.parse(value);
   // A requested wording change for an ordinary action is general help.
   // Keep all factual and risk checks below; this does not license device fiction.
@@ -542,7 +549,7 @@ export async function executeGraph(
       guard();
       const w = { ...work, session, trace: [...work.trace] };
       const knowledgeQuery =
-        /^(还是|仍然|没变化|依然|试过|我试过|第二步|第一步|第三步|已经)/.test(
+        /^(还是|仍然|没变化|依然|试过|我试过|第二步|第一步|第三步|已经|我已经)/.test(
           w.question,
         )
           ? session.known.goal || w.question
@@ -559,7 +566,24 @@ export async function executeGraph(
           read,
           actor,
           effectiveSession.itemId,
-          { persist: !temporary },
+          {
+            persist: !temporary,
+            search:
+              provider.ready &&
+              provider.search &&
+              process.env.WUJIAN_ALLOW_SEARCH === "true"
+                ? async (q, sites) => {
+                    w.calls++;
+                    const result = await provider.search!(q, sites);
+                    if (result.tokens)
+                      w.tokens = {
+                        input: (w.tokens?.input || 0) + result.tokens.input,
+                        output: (w.tokens?.output || 0) + result.tokens.output,
+                      };
+                    return result;
+                  }
+                : undefined,
+          },
         );
         guard();
         w.officialLookup = {
@@ -567,6 +591,7 @@ export async function executeGraph(
           cached: acquired.cached,
           issues: acquired.issues,
         };
+        w.started = Date.now(); // Public acquisition has its own bounded requests; reserve a usable model response budget.
         add(
           w,
           "official_knowledge",
@@ -588,7 +613,10 @@ export async function executeGraph(
         temporary,
       });
       trackExpiry(ctx.memories);
-      if (ctx.externalKnowledge.some(c=>c.category!=="facts") && effectiveSession.mode === "service")
+      if (
+        ctx.externalKnowledge.some((c) => c.category !== "facts") &&
+        effectiveSession.mode === "service"
+      )
         activeSkill = skills["document-help"];
       if (route?.intent === "plan" && session.known.uiPage && !temporary) {
         w.calls = (provider.ready ?? true) ? 1 : 0;
@@ -711,6 +739,45 @@ export async function executeGraph(
           ctx,
           session.mode === "auto",
         );
+      if (
+        !w.reply &&
+        ctx.item &&
+        operationQuestion(w.question) &&
+        ctx.externalKnowledge.length &&
+        ctx.externalKnowledge.every((e) => e.category === "facts")
+      ) {
+        w.reply = {
+          ...blank(
+            `已找到${ctx.item.model}的官方资料入口，但可读取正文只有资料/规格信息，缺少可核对的操作图解。可从下方原始来源打开对应说明；本轮不从规格补造步骤。`,
+            "needs_info",
+          ),
+          citations: ctx.externalKnowledge.map((e) => ({
+            id: e.id,
+            title: e.title,
+            url: e.url,
+            kind: "official" as const,
+          })),
+          caveat: "型号入口经过核对；图片式步骤/动态下载内容尚未完整提取。",
+        };
+      }
+      if (
+        !w.reply &&
+        w.officialLookup &&
+        !w.officialLookup.documents &&
+        !ctx.externalKnowledge.length &&
+        !ctx.knowledge.pack &&
+        ctx.item?.model &&
+        ctx.item.model !== "待确认" &&
+        operationQuestion(w.question)
+      ) {
+        w.reply = {
+          ...blank(
+            `已确认档案型号为${ctx.item.model}。${ctx.item.supportUrl ? "已记录提供的官方链接，但本轮读取未成功；不需要重复提供同一链接。" : ""}本轮未取得可靠的专属操作资料，不能猜测按键、时长或套用相似型号。通用准备可先核对实物标签与包装说明；可稍后刷新，或补充可读取的对应资料。`,
+            "needs_info",
+          ),
+          caveat: w.officialLookup.issues.join(" "),
+        };
+      }
       if (storyPlan) {
         add(
           w,
@@ -811,6 +878,7 @@ export async function executeGraph(
                 : null,
               evidence: ctx.knowledge,
               officialDocuments: ctx.externalKnowledge,
+              knowledgeTask: ctx.knowledgeTask,
               officialLookup: w.officialLookup,
               memories: ctx.cloudMemories.map((m) => ({
                 id: m.id,
@@ -852,6 +920,7 @@ export async function executeGraph(
         w.response = provider.complete
           ? await provider.complete(w.messages, activeTools, {
               timeoutMs: Math.max(1, 45000 - (Date.now() - w.started)),
+              maxTokens: activeSkill === skills["document-help"] ? 2600 : 1500,
             })
           : {
               ...(await provider.generate(
@@ -1068,12 +1137,16 @@ export async function executeGraph(
             {
               role: "user",
               content:
-                "上次输出未满足结构或证据要求。已有officialDocuments操作证据时，请用grounded结构及其sourceIds，answer只写引导，steps逐项引用，不要退回无资料声明；其他情况只用相关事实ID，不补造操作。已确认型号不要再问，未知专属按钮不能凭布局猜。输出约定JSON。",
+                "上次输出校验失败：" +
+                (error instanceof AgentError ? error.message : "结构无效") +
+                "。不要原样重复。去掉未经逐步引用支持的参数/按钮/装配细节，不从另一段借数字。使用grounded，steps每项必须有phase和sourceIds，answer只引导；knowledgeTask.requiredPhases缺少的用gaps说明。已知型号不再询问。",
             },
           );
         } else
           w.reply = blank(
-            "资料还不足以给出适用步骤。请补充具体型号、系统或你看到的现象，我会继续核对。",
+            effectiveSession.itemId
+              ? "已保留档案中的型号。本轮回答未通过资料核对，不能给出可靠的专属操作；可补充对应官方资料或描述当前卡住的现象，不必重新提供已确认型号。"
+              : "资料还不足以给出适用步骤。请说明当前卡住的现象或必要的适用信息。",
             "needs_info",
           );
       }

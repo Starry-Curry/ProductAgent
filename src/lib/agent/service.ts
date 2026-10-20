@@ -106,6 +106,17 @@ export async function respond(
     }
   }
   session.known.turnRequestId = input.requestId;
+  const completed = input.question.match(
+    /(?:已经|已|做过|完成了).{0,5}第([一二三四五六七八九十1-9])步/,
+  );
+  if (completed) {
+    const n =
+      "一二三四五六七八九十".indexOf(completed[1]) + 1 || Number(completed[1]);
+    const step = session.messages.filter((m) => m.reply).at(-1)?.reply?.steps[
+      n - 1
+    ];
+    if (step && !session.tried.includes(step.id)) session.tried.push(step.id);
+  }
   try {
     let execution: Omit<TurnResult, "session">;
     const explicit = input.question.match(/^记住[：:，,\s]+([\s\S]+)$/u);

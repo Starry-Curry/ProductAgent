@@ -198,8 +198,13 @@ export async function POST(r: Request) {
         .parse(p.input);
       if (process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "false")
         throw new AgentError("当前服务已关闭官方资料联网；仍可上传说明书", 403);
+      const provider = lifeProvider();
       const result = await acquireKnowledge(db, read, a, v.itemId, {
         force: v.force,
+        search:
+          provider.ready && process.env.WUJIAN_ALLOW_SEARCH === "true"
+            ? provider.search
+            : undefined,
       });
       return Response.json({
         ...result,

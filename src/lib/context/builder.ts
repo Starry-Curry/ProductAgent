@@ -1,4 +1,5 @@
 import { retrieveKnowledge } from "../life/acquisition.ts";
+import { taskEvidence } from "../life/knowledge-task.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { canRead, type State, type Person } from "../domain.ts";
 import { boundPack } from "../ai/harness.ts";
@@ -63,19 +64,25 @@ export function buildContext(
       (persona.memoryUse !== "explicit" ||
         isMemoryRecallRequest(input.question)),
   );
+  const externalKnowledge = item
+    ? retrieveKnowledge(
+        db,
+        state,
+        actor,
+        item.id,
+        input.knowledgeQuery || input.question,
+      )
+    : [];
   return {
     temporary: !!input.temporary,
     question: input.question,
     productConversation: !!input.taskMemoryOnly,
-    externalKnowledge: item
-      ? retrieveKnowledge(
-          db,
-          state,
-          actor,
-          item.id,
-          input.knowledgeQuery || input.question,
-        )
-      : [],
+    externalKnowledge,
+    knowledgeTask: taskEvidence(
+      externalKnowledge,
+      input.knowledgeQuery || input.question,
+      item?.name,
+    ),
     item,
     knowledge,
     memories,

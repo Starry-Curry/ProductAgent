@@ -4,7 +4,7 @@ export const skills = {
     version: "1.0.0",
     goal: "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续",
     instructions:
-      "已有officialDocuments时优先组织具体操作/清洁/维护步骤；首次使用尽量覆盖准备、安全放置及开始实际使用，不能只列规格。answer只写引导，不重复steps全文，输出grounded结构。只使用对应sourceIds支持步骤，不把规格冒充流程。不要跨型号、地区或虚构温度、时长、按钮。复用已知型号；已尝试步骤不要再让用户做，缺关键条件最多问一项。",
+      "已有officialDocuments时组织可完成任务的操作/清洁/维护流程。knowledgeTask.full时按requiredPhases覆盖相应阶段，每步填phase和sourceIds，相关前置条件、警告放在对应步骤。每步80-120字，完整流程控制在7-9步；不写段号、页码，不把原文offset当页码。不写等待几分钟/默认状态/咔嗒提示等无引用内容。只有必要时最后问一次食材，以便继续选用对应食谱，不能自定食品时温。资料不足的阶段写gaps，不造时温或食品熟度。answer只引导，不重复steps；可返回最多10步grounded。tried中phase已完成则从下一阶段继续，不再反复要求品牌型号。不因正文说明‘用户已经做过’误当助手执行。",
     tools: ["search_product_knowledge", "fetch_official_knowledge"],
     success: "有可追溯步骤，或说明具体资料缺口，不重复已确认信息",
   },

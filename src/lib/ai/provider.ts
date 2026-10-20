@@ -10,6 +10,13 @@ export type ProviderResult = {
   model: string;
   tokens: { input: number; output: number } | null;
 };
+export type SearchHit = { title: string; url: string };
+export type SearchResponse = {
+  hits: SearchHit[];
+  tokens: ProviderResult["tokens"];
+  model: string;
+  usage: unknown;
+};
 export type ModelMessage = {
   role: "system" | "user" | "assistant" | "tool";
   content: string | null;
@@ -38,10 +45,15 @@ export type Provider = {
   complete?: (
     messages: ModelMessage[],
     tools: ToolDefinition[],
-    options?: { timeoutMs: number },
+    options?: { timeoutMs: number; maxTokens?: number },
   ) => Promise<ModelResponse>;
   model: string;
-  generate: (system: string, input: unknown) => Promise<ProviderResult>;
+  generate: (
+    system: string,
+    input: unknown,
+    options?: { maxTokens?: number },
+  ) => Promise<ProviderResult>;
+  search?: (query: string, sites?: string[]) => Promise<SearchResponse>;
   recognize?: (system: string, image: string) => Promise<ProviderResult>;
 };
 
@@ -57,7 +69,7 @@ export function createProvider(
       !!AI_MODEL &&
       env.AI_ALLOW_PAID_CALLS === "true",
     model: AI_MODEL || "unconfigured",
-    async generate(system, input) {
+    async generate(system, input, options) {
       if (!AI_BASE_URL || !AI_API_KEY || !AI_MODEL)
         throw new ProviderError(
           "not_configured",
@@ -94,7 +106,10 @@ export function createProvider(
               { role: "system", content: system },
               { role: "user", content: JSON.stringify(input) },
             ],
-            max_tokens: 1500,
+            max_tokens: Math.min(
+              4000,
+              Math.max(300, options?.maxTokens || 1500),
+            ),
             ...(env.AI_ENABLE_THINKING === "false"
               ? { enable_thinking: false }
               : {}),
@@ -175,6 +190,98 @@ export function createProvider(
       ],
       [],
     );
+  provider.search = async (query, sites = []) => {
+    if (
+      env.AI_ALLOW_PAID_CALLS !== "true" ||
+      env.WUJIAN_ALLOW_PAID_CALLS !== "true" ||
+      env.WUJIAN_ALLOW_SEARCH !== "true"
+    )
+      throw new ProviderError(
+        "search_not_authorized",
+        "联网搜索尚未单独启用，本次未发送请求",
+      );
+    if (!AI_API_KEY || !AI_BASE_URL || !AI_MODEL)
+      throw new ProviderError("not_configured", "搜索需要当前千问配置");
+    const base = new URL(AI_BASE_URL);
+    if (
+      base.protocol !== "https:" ||
+      base.hostname !== "dashscope.aliyuncs.com" ||
+      base.username ||
+      base.password
+    )
+      throw new ProviderError(
+        "configuration",
+        "当前原生搜索仅适配北京百炼标准域名；未转发密钥",
+      );
+    const response = await request(
+      new URL("/api/v1/services/aigc/text-generation/generation", base),
+      {
+        method: "POST",
+        redirect: "error",
+        headers: {
+          Authorization: `Bearer ${AI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        signal: AbortSignal.timeout(25000),
+        body: JSON.stringify({
+          model: AI_MODEL,
+          input: {
+            messages: [{ role: "user", content: query.slice(0, 1000) }],
+          },
+          parameters: {
+            enable_search: true,
+            enable_thinking: false,
+            result_format: "message",
+            max_tokens: 180,
+            search_options: {
+              search_strategy: "turbo",
+              forced_search: true,
+              enable_source: true,
+              enable_citation: false,
+              ...(sites.length
+                ? { assigned_site_list: sites.slice(0, 25) }
+                : {}),
+            },
+          },
+        }),
+      },
+    );
+    if (!response.ok)
+      throw new ProviderError(
+        "search_failed",
+        `搜索请求失败（${response.status}），不自动重试`,
+      );
+    const result = await response.json().catch(() => null);
+    if (result?.code || !result?.output)
+      throw new ProviderError(
+        "search_failed",
+        "搜索未返回有效结果；不使用模型正文中的链接",
+      );
+    const hits = (
+      Array.isArray(result.output.search_info?.search_results)
+        ? result.output.search_info.search_results
+        : []
+    )
+      .filter(
+        (h: any) => typeof h?.url === "string" && typeof h?.title === "string",
+      )
+      .slice(0, 8)
+      .map((h: any) => ({
+        title: h.title.slice(0, 200),
+        url: h.url.slice(0, 2000),
+      }));
+    return {
+      hits,
+      model: AI_MODEL,
+      tokens: result.usage
+        ? {
+            input: result.usage.input_tokens || 0,
+            output: result.usage.output_tokens || 0,
+          }
+        : null,
+      usage: result.usage,
+    };
+  };
   return provider;
 }
 
@@ -192,7 +299,7 @@ async function completeModel(
       }
   )[],
   tools: ToolDefinition[],
-  options?: { timeoutMs: number },
+  options?: { timeoutMs: number; maxTokens?: number },
 ): Promise<ModelResponse> {
   if (!env.AI_BASE_URL || !env.AI_API_KEY || !env.AI_MODEL)
     throw new ProviderError(
@@ -224,13 +331,13 @@ async function completeModel(
         "Content-Type": "application/json",
       },
       signal: AbortSignal.timeout(
-        Math.max(1, Math.min(25000, options?.timeoutMs ?? 25000)),
+        Math.max(1, Math.min(40000, options?.timeoutMs ?? 25000)),
       ),
       body: JSON.stringify({
         model: env.AI_MODEL,
         messages,
         ...(tools.length ? { tools, tool_choice: "auto" } : {}),
-        max_tokens: 1500,
+        max_tokens: Math.min(4000, Math.max(300, options?.maxTokens || 1500)),
         ...(env.AI_ENABLE_THINKING === "true" ||
         env.AI_ENABLE_THINKING === "false"
           ? { enable_thinking: env.AI_ENABLE_THINKING === "true" }
