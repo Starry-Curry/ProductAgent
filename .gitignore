@@ -52,3 +52,6 @@ Thumbs.db
 .vscode/
 *.swp
 *.tmp
+
+# Server deployment credentials
+deploy/cloud.env

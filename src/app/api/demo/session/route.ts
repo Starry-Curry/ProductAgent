@@ -5,6 +5,7 @@ import {
   publicOrigin,
   readVisitor,
   issueVisitor,
+  reserveEntryAttempt,
   registry,
   visitorCookie,
   CloudError,
@@ -35,10 +36,19 @@ export async function GET(r: Request) {
     );
   }
 }
+let pendingEntry = 0;
 export async function POST(r: Request) {
+  let entered = false;
   try {
     if (!publicDemo()) throw new CloudError("disabled", "公开演示未启用", 404);
     assertPublicRequest(r);
+    if (!process.env.DEMO_ACCESS_CODE && process.env.DEMO_OPEN_ACCESS !== "true")
+      throw new CloudError("configuration", "演示入口尚未开放", 503);
+    reserveEntryAttempt();
+    if (pendingEntry >= 4)
+      throw new CloudError("busy", "演示入口繁忙，请稍后再试", 429);
+    pendingEntry++;
+    entered = true;
     if (Number(r.headers.get("content-length") || 0) > 2048)
       throw new CloudError("body_limit", "请求过大", 413);
     const reader = r.body?.getReader();
@@ -46,7 +56,18 @@ export async function POST(r: Request) {
       size = 0;
     if (reader)
       while (true) {
-        const row = await reader.read();
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        const row = await Promise.race([
+          reader.read(),
+          new Promise<never>((_, reject) => {
+            timer = setTimeout(() => {
+              void reader.cancel();
+              reject(new CloudError("body_timeout", "请求接收超时", 408));
+            }, 15000);
+          }),
+        ]).finally(() => {
+          if (timer) clearTimeout(timer);
+        });
         if (row.done) break;
         size += row.value.length;
         if (size > 2048) {
@@ -89,6 +110,8 @@ export async function POST(r: Request) {
       },
       { status: e instanceof CloudError ? e.status : 400 },
     );
+  } finally {
+    if (entered) pendingEntry--;
   }
 }
 export async function DELETE(r: Request) {

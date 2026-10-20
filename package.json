@@ -18,7 +18,9 @@
     "test:live": "node --experimental-strip-types scripts/live-smoke.ts",
     "test:acceptance": "node scripts/verify-local.mjs",
     "test:live:system": "node scripts/live-system.mjs",
-    "export:review": "node scripts/export-review.mjs"
+    "export:review": "node scripts/export-review.mjs",
+    "start:cloud": "node scripts/cloud-start.mjs",
+    "test:cloud": "node scripts/test-cloud.mjs"
   },
   "dependencies": {
     "@langchain/core": "1.2.18",
@@ -46,5 +48,8 @@
     "prettier": "^3.9.10",
     "typescript": "^5.9.0"
   },
-  "type": "module"
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  }
 }

@@ -3,6 +3,7 @@ import {
   governedModelFetch,
   publicDemo,
   cloudBudgetState,
+  isTimeoutLike,
 } from "../cloud/runtime.ts";
 export class ProviderError extends Error {
   code: string;
@@ -208,9 +209,7 @@ export function createProvider(
         if (error instanceof ProviderError) throw error;
         if (error instanceof CloudError)
           throw new ProviderError(error.code, error.message);
-        const timeout =
-          error instanceof Error &&
-          ["TimeoutError", "AbortError"].includes(error.name);
+        const timeout = isTimeoutLike(error);
         throw new ProviderError(
           timeout ? "timeout" : "network",
           timeout
@@ -456,12 +455,8 @@ async function completeModel(
     if (error instanceof CloudError)
       throw new ProviderError(error.code, error.message);
     throw new ProviderError(
-      error instanceof Error &&
-        ["TimeoutError", "AbortError"].includes(error.name)
-        ? "timeout"
-        : "network",
-      error instanceof Error &&
-        ["TimeoutError", "AbortError"].includes(error.name)
+      isTimeoutLike(error) ? "timeout" : "network",
+      isTimeoutLike(error)
         ? "模型请求超过配置时限，尚未得到完整回答。"
         : "模型网络连接中断，尚未得到完整回答。",
     );

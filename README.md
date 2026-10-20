@@ -1,4 +1,6 @@
-最新增量：[RC定向修复与分层故事](docs/engineering/wujian-rc-targeted-2026-10-20.md)。原23项不变；新增6次文字实测有明确失败，不宣称全部通过。
+最新增量：[在线Demo部署准备](docs/engineering/cloud-demo-2026-10-21.md)与[离线生产验收](docs/engineering/cloud-demo-validation-2026-10-21.json)。已支持服务端访客隔离、持久化及费用控制；尚未公开部署，Docker/公网HTTPS/真实云端Qwen待验证。本机启动方式保持不变。
+
+历史RC：[定向修复与分层故事](docs/engineering/wujian-rc-targeted-2026-10-20.md)。原23项不变；新增6次文字实测有明确失败，不宣称全部通过。
 
 # 物间 · ProductAgent
 

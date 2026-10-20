@@ -1,4 +1,6 @@
-最新增量：[RC定向修复与分层故事](engineering/wujian-rc-targeted-2026-10-20.md)，新增独立验收，不改变历史23项结果。
+最新增量：[在线Demo部署与维护](engineering/cloud-demo-2026-10-21.md)、[生产模拟验收](engineering/cloud-demo-validation-2026-10-21.json)。未公开部署，本轮0真实模型请求。
+
+此前：[RC定向修复与分层故事](engineering/wujian-rc-targeted-2026-10-20.md)，新增独立验收，不改变历史23项结果。
 
 # 文档索引与优先级
 

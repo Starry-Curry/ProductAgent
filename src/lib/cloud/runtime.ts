@@ -14,6 +14,19 @@ export class CloudError extends Error {
     this.status = status;
   }
 }
+export function isTimeoutLike(error: unknown) {
+  let e = error as
+    { name?: string; code?: string; cause?: unknown } | undefined;
+  for (let i = 0; e && i < 5; i++) {
+    if (
+      e.name === "AbortError" ||
+      /timeout|timedout/i.test(`${e.name || ""} ${e.code || ""}`)
+    )
+      return true;
+    e = e.cause as typeof e;
+  }
+  return false;
+}
 export type VisitorScope = {
   id: string;
   directory: string;
@@ -110,6 +123,11 @@ function increment(db: DatabaseSync, key: string, max: number, n = 1) {
   ).run(key, old + n);
 }
 export function issueVisitor() {
+  if (
+    directoryBytes(lifeDataDirectory()) >
+    limit("DEMO_GLOBAL_STORAGE_BYTES", 512 * 1024 * 1024)
+  )
+    throw new CloudError("capacity", "演示存储暂时已满，请稍后再试", 503);
   const db = registry();
   try {
     db.exec("BEGIN IMMEDIATE");
@@ -123,6 +141,8 @@ export function issueVisitor() {
         .prepare("SELECT count(*) n FROM visitors WHERE expires>?")
         .get(Date.now())!.n,
     );
+    if (Number(db.prepare("SELECT count(*) n FROM visitors").get()!.n) >= 60)
+      throw new CloudError("capacity", "演示空间需要维护，请稍后再试", 503);
     if (active >= limit("DEMO_MAX_VISITORS", 30, 1000))
       throw new CloudError("capacity", "演示空间暂时已满，请稍后再试", 503);
     const id = randomBytes(16).toString("hex"),
@@ -138,6 +158,20 @@ export function issueVisitor() {
   } catch (e) {
     if (db.isTransaction) db.exec("ROLLBACK");
     throw e;
+  } finally {
+    db.close();
+  }
+}
+/** Bound invitation guessing as well as successful space creation. Shared across restarts. */
+export function reserveEntryAttempt() {
+  const db = registry();
+  try {
+    db.exec("BEGIN IMMEDIATE");
+    increment(db, `entry:${Math.floor(Date.now() / 60000)}`, 30);
+    db.exec("COMMIT");
+  } catch (error) {
+    if (db.isTransaction) db.exec("ROLLBACK");
+    throw error;
   } finally {
     db.close();
   }
@@ -195,6 +229,16 @@ export function checkStorage() {
   const scope = visitorContext.getStore();
   if (
     scope &&
+    directoryBytes(lifeDataDirectory()) >
+      limit("DEMO_GLOBAL_STORAGE_BYTES", 512 * 1024 * 1024)
+  )
+    throw new CloudError(
+      "storage_quota",
+      "演示存储总量已达到限制，请联系维护者",
+      413,
+    );
+  if (
+    scope &&
     directoryBytes(scope.directory) >
       limit("DEMO_STORAGE_BYTES", 50 * 1024 * 1024, 200 * 1024 * 1024)
   )
@@ -227,6 +271,8 @@ export function reserveUpload(bytes: number) {
 }
 export function reservePublicFetch(host: string) {
   if (!publicDemo()) return;
+  if (process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "false")
+    throw new CloudError("source_disabled", "公开资料联网暂未开放", 403);
   const scope = visitorContext.getStore();
   if (!scope) throw new CloudError("session_required", "未授权资料读取", 401);
   const allowed = (
@@ -348,9 +394,7 @@ export function governedModelFetch(
         "当前演示未开放云端照片识别",
         403,
       );
-    const input = Buffer.byteLength(
-      JSON.stringify(body.messages || body.input || {}),
-    );
+    const input = Buffer.byteLength(JSON.stringify(body));
     if (input > limit("DEMO_MODEL_INPUT_BYTES", 60000, 120000))
       throw new CloudError(
         "input_limit",
@@ -361,7 +405,7 @@ export function governedModelFetch(
       Number(body.max_tokens) || 1500,
       limit("DEMO_MAX_OUTPUT_TOKENS", 1800, 4000),
     );
-    const reserved = input + body.max_tokens;
+    const reserved = input + 256 + body.max_tokens;
     const id = randomBytes(16).toString("hex"),
       db = registry();
     try {
@@ -407,6 +451,10 @@ export function governedModelFetch(
         status: response.status,
         headers: response.headers,
       });
+    } catch (error) {
+      if (status === "network")
+        status = isTimeoutLike(error) ? "timeout" : "network";
+      throw error;
     } finally {
       modelActive.delete(scope.id);
       const db = registry();

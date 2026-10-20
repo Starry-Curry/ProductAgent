@@ -13,6 +13,10 @@ import {
 
 function clean(value: unknown): unknown {
   if (typeof value === "string") {
+    if (process.env.AI_API_KEY && value.includes(process.env.AI_API_KEY))
+      return "[敏感信息已隐藏]";
+    if (/(?:^|[\s"'])\/(?:app|data|tmp|home|var)\//.test(value))
+      return "演示服务暂不可用，请稍后重试";
     if (
       /\.env\.local|npm (?:run|ci)|[A-Z]:\\|PRODUCT_AGENT_DATA_DIR/.test(value)
     )
@@ -25,9 +29,13 @@ function clean(value: unknown): unknown {
       Object.entries(value)
         .filter(
           ([k]) =>
-            ![/api.?key/i, /secret/i, /checkpoint/i, /^trace$/i].some((p) =>
-              p.test(k),
-            ),
+            ![
+              /api.?key/i,
+              /secret/i,
+              /checkpoint/i,
+              /^trace$/i,
+              /^events$/i,
+            ].some((p) => p.test(k)),
         )
         .map(([k, v]) => [k, clean(v)]),
     );
@@ -63,7 +71,20 @@ export function withDemoRequest<T extends unknown[]>(
             let length = 0;
             if (reader)
               while (true) {
-                const part = await reader.read();
+                let timer: ReturnType<typeof setTimeout> | undefined;
+                const part = await Promise.race([
+                  reader.read(),
+                  new Promise<never>((_, reject) => {
+                    timer = setTimeout(() => {
+                      void reader.cancel();
+                      reject(
+                        new CloudError("body_timeout", "上传内容接收超时", 408),
+                      );
+                    }, 15000);
+                  }),
+                ]).finally(() => {
+                  if (timer) clearTimeout(timer);
+                });
                 if (part.done) break;
                 length += part.value.length;
                 if (length > max) {

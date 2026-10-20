@@ -3,6 +3,8 @@ import { createProvider } from "../ai/provider.ts";
 export function cloudStatus(
   env: Record<string, string | undefined> = process.env,
 ) {
+  if (publicDemo(env) && env.DEMO_AI_ENABLED !== "true")
+    return cloudBudgetState(env);
   if (!env.AI_API_KEY?.trim())
     return {
       state: "missing_key",

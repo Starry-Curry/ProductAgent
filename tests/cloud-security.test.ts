@@ -12,6 +12,7 @@ import {
   reserveUpload,
   reservePublicFetch,
   registry,
+  reserveEntryAttempt,
 } from "../src/lib/cloud/runtime.ts";
 import { withDemoRequest } from "../src/lib/cloud/request.ts";
 import {
@@ -39,6 +40,8 @@ test("公开会话不可伪造；并发请求上下文隔离、来源验证、�
   });
   try {
     assert.equal(publicDemo(), true);
+    for (let i = 0; i < 30; i++) reserveEntryAttempt();
+    assert.throws(() => reserveEntryAttempt(), /额度/);
     const a = issueVisitor(),
       b = issueVisitor();
     const req = (token: string, headers: Record<string, string> = {}) =>
@@ -212,6 +215,35 @@ test("JSON模式显式JSON约束，普通问答可关闭；400错误安全分类
     "198.18.0.1",
   ])
     assert.equal(publicAddress(address), false, address);
+  for (const [status, code] of [
+    [401, "authentication"],
+    [429, "rate_limited"],
+    [504, "upstream_timeout"],
+    [503, "upstream"],
+  ] as const) {
+    const p = createProvider(env, async () =>
+      Response.json(
+        { error: { code: "test-error", message: "private" } },
+        { status },
+      ),
+    );
+    await assert.rejects(
+      p.generate("JSON", {}),
+      (e) =>
+        e instanceof ProviderError &&
+        e.code === code &&
+        !e.message.includes("private"),
+    );
+  }
+  const timed = createProvider(env, async () => {
+    throw new TypeError("fetch failed", {
+      cause: { code: "UND_ERR_CONNECT_TIMEOUT" },
+    });
+  });
+  await assert.rejects(
+    timed.complete!([{ role: "user", content: "JSON" }], []),
+    (e) => e instanceof ProviderError && e.code === "timeout",
+  );
   assert.equal(modelTimeout({ AI_REQUEST_TIMEOUT_MS: "65000" }, 70000), 65000);
   assert.equal(modelTimeout({ AI_REQUEST_TIMEOUT_MS: "999999" }), 90000);
 });

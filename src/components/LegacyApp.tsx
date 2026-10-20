@@ -1,4 +1,5 @@
 "use client";
+import { usePublicDemo } from "./DemoBoundary";
 import { HouseholdCases } from "@/components/HouseholdCases";
 import { HomeExperience } from "@/components/HomeExperience";
 import { AssistantConversation } from "@/components/AssistantConversation";
@@ -107,6 +108,7 @@ function Badge({
   return <span className={`badge ${tone}`}>{children}</span>;
 }
 export default function App() {
+  const publicMode = usePublicDemo();
   const [elder, setElder] = useState(false);
   const [initialQuestion, setInitialQuestion] = useState("");
   const [unboundSession, setUnboundSession] = useState<{
@@ -116,7 +118,10 @@ export default function App() {
   useEffect(() => {
     setElder(localStorage.getItem("product-agent-mode") === "elder");
     const savedActor = localStorage.getItem("product-agent-actor");
-    if (savedActor === "lin" || savedActor === "dad" || savedActor === "friend")
+    if (
+      !publicMode &&
+      (savedActor === "lin" || savedActor === "dad" || savedActor === "friend")
+    )
       setActor(savedActor);
   }, []);
   const visibleNav = elder
@@ -371,25 +376,29 @@ export default function App() {
           </p>
           <small>让已有之物，创造更多可能</small>
         </div>
-        <div className="demo-switch">
-          <label htmlFor="actor">演示角色 · 非真实账号</label>
-          <select
-            disabled={busy}
-            id="actor"
-            value={actor}
-            onChange={(e) => {
-              setActor(e.target.value as Person);
-              localStorage.setItem("product-agent-actor", e.target.value);
-            }}
-          >
-            {Object.entries(people).map(([id, name]) => (
-              <option key={id} value={id}>
-                {name}
-                {id === "friend" ? " · 收礼人" : " · 家庭成员"}
-              </option>
-            ))}
-          </select>
-        </div>
+        {publicMode ? (
+          <div className="demo-switch">独立演示空间 · 仅自己可见</div>
+        ) : (
+          <div className="demo-switch">
+            <label htmlFor="actor">演示角色 · 非真实账号</label>
+            <select
+              disabled={busy}
+              id="actor"
+              value={actor}
+              onChange={(e) => {
+                setActor(e.target.value as Person);
+                localStorage.setItem("product-agent-actor", e.target.value);
+              }}
+            >
+              {Object.entries(people).map(([id, name]) => (
+                <option key={id} value={id}>
+                  {name}
+                  {id === "friend" ? " · 收礼人" : " · 家庭成员"}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </aside>
       <div className="body">
         <header className="topbar">

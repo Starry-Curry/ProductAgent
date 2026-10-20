@@ -385,10 +385,12 @@ export default function WujianApp() {
               {data.capabilities.cloud.message}{" "}
               {!publicMode && <a href="/guide#cloud">本机配置与撤销</a>}
             </p>
-            <p className="life-muted">
-              官方资料按需联网，可在启动环境以 WUJIAN_ALLOW_PUBLIC_FETCH=false
-              关闭；不会发送私人记忆。
-            </p>
+            {!publicMode && (
+              <p className="life-muted">
+                官方资料按需联网，可在启动环境以 WUJIAN_ALLOW_PUBLIC_FETCH=false
+                关闭；不会发送私人记忆。
+              </p>
+            )}
           </details>
         )}
         {!data ? (
@@ -970,7 +972,11 @@ export default function WujianApp() {
       </main>
       <footer className="life-footer">
         <span>物间 · 用好物品，也留住生活。</span>
-        <span>本机演示 / 真实资料、合成实例与创意候选分别标注</span>
+        <span>
+          {publicMode
+            ? "在线演示 / 测试案例、资料与创意分别标注"
+            : "本机演示 / 真实资料、合成实例与创意候选分别标注"}
+        </span>
         <a href="/legacy">旧版入口</a>
         <a href="/guide">操作指南</a>
       </footer>
