@@ -42,7 +42,7 @@ import { reconcileMemories } from "../src/lib/memory/ambient.ts";
 import { createLifeGift } from "../src/lib/life/gifts.ts";
 import { installLifeDemo } from "../src/lib/life/demo.ts";
 
-test("life v1升级v3保留原图文和升级前备份，重复迁移幂等", () => {
+test("life v1升级v6保留原图文和升级前备份，重复迁移幂等", () => {
   const t = fixture();
   try {
     const f = saveFragment(t.db, t.read, "lin", {
@@ -62,7 +62,7 @@ test("life v1升级v3保留原图文和升级前备份，重复迁移幂等", ()
           n: number;
         }
       ).n,
-      5,
+      6,
     );
     assert.equal(
       buildContext(t.db, t.read(), "lin", {

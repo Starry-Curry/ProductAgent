@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { ImagePlus, RefreshCw, X, BookOpen, Expand } from "lucide-react";
 import "yet-another-react-lightbox/styles.css";
 import type { Item } from "@/lib/domain";
+import { StoryOrganization } from "./StoryOrganization";
 import type { LifeRequest } from "./Intake";
 const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
   ssr: false,
@@ -76,6 +77,10 @@ export function Stories({
       useState<NonNullable<Fragment["origin"]>>("user-record"),
     [query, setQuery] = useState(""),
     [filter, setFilter] = useState("all"),
+    [chapterIds, setChapterIds] = useState<string[] | null>(null),
+    [photoMatches, setPhotoMatches] = useState<
+      { itemId: string; name: string; reason: string }[]
+    >([]),
     [order, setOrder] = useState("newest"),
     [opened, setOpened] = useState<string | null>(null),
     [composing, setComposing] = useState(false),
@@ -90,6 +95,8 @@ export function Stories({
     detailTitle = useId();
   const url = (id: string) => `/api/life/media/${id}?actor=${actor}`;
   const current = fragments.find((f) => f.id === opened);
+  const slidesOpen = useRef(false);
+  slidesOpen.current = slides.length > 0;
   useEffect(() => {
     if (!opened) return;
     const previous = document.activeElement as HTMLElement | null;
@@ -97,7 +104,7 @@ export function Stories({
     document.body.style.overflow = "hidden";
     detailRef.current?.focus();
     const keys = (e: KeyboardEvent) => {
-      if (slides.length) return;
+      if (slidesOpen.current) return;
       if (e.key === "Escape") {
         e.preventDefault();
         setOpened(null);
@@ -129,7 +136,7 @@ export function Stories({
       window.removeEventListener("keydown", keys);
       previous?.focus();
     };
-  }, [opened, slides.length]);
+  }, [opened]);
   async function run(fn: () => Promise<void>) {
     setBusy(true);
     setNotice("");
@@ -151,6 +158,7 @@ export function Stories({
     setRecall(true);
     setCloud(false);
     setOrigin("user-record");
+    setPhotoMatches([]);
   }
   async function selectPhoto(file?: File) {
     if (!file || uploading.current || busy) return;
@@ -227,6 +235,7 @@ export function Stories({
   const rows = fragments
     .filter(
       (f) =>
+        (!chapterIds || chapterIds.includes(f.id)) &&
         (!itemId || f.itemIds.includes(itemId)) &&
         (filter === "all" ||
           (filter === "unlinked"
@@ -421,6 +430,55 @@ export function Stories({
               placeholder="一次新尝试，一件旧物的来历，或今天想留下的事。"
             />
           </label>
+          {media.length > 0 && (
+            <div className="life-story-photo-matches">
+              <button
+                type="button"
+                disabled={busy}
+                onClick={() => {
+                  if (
+                    !window.confirm(
+                      "仅将这张照片发送到本机已配置的视觉模型，可能产生费用。识别只生成候选，不自动绑定；确认继续？",
+                    )
+                  )
+                    return;
+                  void run(async () => {
+                    const d = await request("storyPhoto", {
+                      mediaId: media[0],
+                      confirmed: true,
+                    });
+                    setPhotoMatches(
+                      d.matches.flatMap((m: any) => m.candidates),
+                    );
+                    setNotice(
+                      d.notice +
+                        (d.matches.every((m: any) => !m.candidates.length)
+                          ? " 未找到可靠实例候选，可手动选择或不关联。"
+                          : ""),
+                    );
+                  });
+                }}
+              >
+                找找照片里的已有物品（需视觉授权）
+              </button>
+              {photoMatches.map((c) => (
+                <label key={c.itemId} className="life-check">
+                  <input
+                    type="checkbox"
+                    checked={ids.includes(c.itemId)}
+                    onChange={(e) =>
+                      setIds(
+                        e.target.checked
+                          ? [...new Set([...ids, c.itemId])]
+                          : ids.filter((id) => id !== c.itemId),
+                      )
+                    }
+                  />
+                  {c.name} · {c.reason}
+                </label>
+              ))}
+            </div>
+          )}
           <details>
             <summary>关联物品 · 已选择 {ids.length} 件</summary>
             <div className="life-link-options">
@@ -527,6 +585,12 @@ export function Stories({
           {notice}
         </p>
       )}
+      <StoryOrganization
+        actor={actor}
+        fragments={fragments}
+        request={request}
+        onFilter={setChapterIds}
+      />
       <div className="life-story-toolbar">
         <label>
           寻找一段经历

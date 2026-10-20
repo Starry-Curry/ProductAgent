@@ -1,3 +1,4 @@
+import { storyMemoryRelevant } from "./organization.ts";
 import { readKnowledge, documentCapabilities } from "./acquisition.ts";
 import type { CreativeEvidence } from "./creative-evidence.ts";
 import type { ProviderResult } from "../ai/provider.ts";
@@ -113,7 +114,7 @@ const recipes: Recipe[] = [
     tags: "穿搭 创意",
     steps: [
       "选一件今天想重新使用的衣物",
-      "与已有配饰或下装试搭并拍照比较",
+      "仅在已选衣物中试搭，未登记配饰、下装或拍摄设备时不假定已有；可以口头比较",
       "按舒适度和天气选择，不默认添购",
     ],
     limits: ["需本人确认尺寸、天气与场合", "清洗和熨烫以实际洗护标签为准"],
@@ -152,7 +153,7 @@ const recipes: Recipe[] = [
     tags: "户外 旅行 摄影",
     steps: [
       "按实际天气、路线和身体状态决定是否出门",
-      "只带必要饮水、手机和随身用品",
+      "先核对必要饮水与随身物资；未录入的材料只列缺口，缺少必需品时不要直接出发",
       "留意一路上一个小变化，可选择拍照记录",
     ],
     limits: ["路线安全和天气由本人确认", "不推断定位或身体状态"],
@@ -586,6 +587,7 @@ export async function modelIdea(
         preferences: listMemories(db, state, actor)
           .filter(
             (m) =>
+              storyMemoryRelevant(db, actor, m, goal) &&
               memoryPolicy !== "off" &&
               (memoryPolicy !== "explicit" || isMemoryRecallRequest(goal)) &&
               m.status === "active" &&
@@ -593,8 +595,9 @@ export async function modelIdea(
               !m.demo &&
               !m.archived &&
               ["interest", "preference"].includes(m.kind) &&
-              ((m.kind === "preference" &&
-                /简短|详细|一步一步|慢一点/.test(m.text)) ||
+              (m.provenance?.extractor === "confirmed-story-statement-v1" ||
+                (m.kind === "preference" &&
+                  /简短|详细|一步一步|慢一点/.test(m.text)) ||
                 (
                   m.text
                     .replace(/我|喜欢|不再|不喜欢|平时/g, "")
@@ -713,7 +716,22 @@ export async function modelIdea(
         steps: z.array(z.string().max(400)).min(1).max(8),
         limits: z.array(z.string().max(400)).min(1).max(8),
         rationale: z.string().max(500).optional(),
-        missing: z.array(z.string().max(200)).max(10).optional(),
+        missing: z
+          .array(
+            z.union([
+              z.string().max(400),
+              z
+                .object({
+                  reason: z.string().max(400).optional(),
+                  itemId: z.string().optional(),
+                  quantity: z.number().optional(),
+                  unit: z.string().optional(),
+                })
+                .transform((v) => v.reason || "物品实际数量与单位仍需现场确认"),
+            ]),
+          )
+          .max(10)
+          .optional(),
         factIds: z.array(z.string().max(100)).max(10).optional(),
         experienceIds: z.array(z.string()).max(6).optional(),
         creativeEvidenceIds: z.array(z.string().uuid()).max(6).optional(),

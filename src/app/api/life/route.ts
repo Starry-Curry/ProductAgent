@@ -1,3 +1,5 @@
+import { storyOrganization, organizeStories } from "@/lib/life/organization";
+import { matchStoryPhoto } from "@/lib/life/story-photo";
 import {
   findOfficial,
   officialDomain,
@@ -109,6 +111,7 @@ export async function GET(r: Request) {
         })),
       },
       fragments: listFragments(db, state, a),
+      storyOrganization: storyOrganization(db, state, a),
       ideas: listLifeIdeas(db, state, a),
       creativeEvidence: listCreativeEvidence(db, a),
       packs: productPacks,
@@ -174,6 +177,10 @@ export async function POST(r: Request) {
       );
     }
     const p = await r.json();
+    if (p.action === "storyOrganization")
+      return Response.json(organizeStories(db, read, a, p.input));
+    if (p.action === "storyPhoto")
+      return Response.json(await matchStoryPhoto(db, read, a, p.input));
     if (p.action === "demo") {
       if (p.confirmed !== true) throw new AgentError("请确认载入合成案例");
       installLifeDemo(db);

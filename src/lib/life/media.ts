@@ -22,8 +22,13 @@ export async function storePhoto(
     .resize(1600, 1600, { fit: "inside", withoutEnlargement: true })
     .jpeg({ quality: 84 })
     .toBuffer();
-  const id = crypto.randomUUID();
-  db.prepare("INSERT INTO life_media VALUES(?,?,?,?)").run(
+  const existing = db
+    .prepare(
+      "SELECT id FROM life_media WHERE owner=? AND mime='image/jpeg' AND body=?",
+    )
+    .get(actor, body) as { id: string } | undefined;
+  const id = existing?.id || crypto.randomUUID();
+  db.prepare("INSERT OR IGNORE INTO life_media VALUES(?,?,?,?)").run(
     id,
     actor,
     "image/jpeg",

@@ -1,3 +1,4 @@
+import { storyMemoryRelevant } from "../life/organization.ts";
 import { retrieveKnowledge } from "../life/acquisition.ts";
 import { taskEvidence } from "../life/knowledge-task.ts";
 import type { DatabaseSync } from "node:sqlite";
@@ -47,6 +48,7 @@ export function buildContext(
         input.sessionId,
       ).filter(
         (m) =>
+          storyMemoryRelevant(db, actor, m, input.question) &&
           persona.memoryUse !== "off" &&
           (persona.memoryUse !== "explicit" ||
             isMemoryRecallRequest(input.question)) &&

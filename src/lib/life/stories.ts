@@ -2,6 +2,7 @@ import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import { canRead, type State, type Person } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
+import { invalidateStoryUnderstanding } from "./organization.ts";
 import { clearOwnerContext } from "../memory/store.ts";
 
 export const fragmentInput = z
@@ -141,6 +142,21 @@ export function saveFragment(
           .get(photo, actor)
       )
         throw new AgentError("照片未获授权", 403);
+    if (!old) {
+      const duplicate = listFragments(db, state, actor).find(
+        (f) =>
+          f.text === value.text &&
+          f.capturedOn === (value.capturedOn ?? null) &&
+          JSON.stringify([...f.mediaIds].sort()) ===
+            JSON.stringify([...photos].sort()) &&
+          JSON.stringify([...f.itemIds].sort()) ===
+            JSON.stringify([...ids].sort()),
+      );
+      if (duplicate) {
+        db.exec("COMMIT");
+        return duplicate;
+      }
+    }
     const id = old?.id || crypto.randomUUID(),
       at = new Date().toISOString();
     if (old)
@@ -164,13 +180,14 @@ export function saveFragment(
     ).run(
       id,
       value.capturedOn === undefined
-        ? previousDetails?.capturedOn || at.slice(0, 10)
+        ? previousDetails?.capturedOn || null
         : value.capturedOn,
       JSON.stringify(photos),
       Number(value.allowRecall ?? previousDetails?.allowRecall ?? true),
       Number(value.allowCloud ?? previousDetails?.allowCloud ?? false),
       value.origin ?? previousDetails?.origin ?? "user-record",
     );
+    if (old) invalidateStoryUnderstanding(db, actor, id);
     clearOwnerContext(db, actor, !!old);
     for (const previousPhoto of previousDetails?.mediaIds || [])
       if (!photos.includes(previousPhoto))
@@ -197,6 +214,7 @@ export function deleteFragment(
     if (!r) throw new AgentError("生活片段不存在或未获授权", 403);
     if (r.revision !== revision) throw new AgentError("片段已更新", 409);
     const oldPhotos = details(db, r).mediaIds;
+    invalidateStoryUnderstanding(db, actor, id);
     db.prepare("DELETE FROM life_fragments WHERE id=?").run(id);
     for (const photo of oldPhotos) removeUnusedMedia(db, state, actor, photo);
     clearOwnerContext(db, actor, true);

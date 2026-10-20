@@ -1,4 +1,6 @@
 import type { DatabaseSync } from "node:sqlite";
+import { storyOrganization } from "./organization.ts";
+import { canRead } from "../domain.ts";
 import type { State, Person } from "../domain.ts";
 import type { AssistantReply } from "../agent/contracts.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
@@ -25,12 +27,20 @@ export function recallLifeFragments(
     (f) => f.allowRecall && f.origin !== "fiction" && (itemId || !f.demo),
   );
   if (!owned.length) return;
+  const chapterIds = new Set(
+    storyOrganization(db, state, actor)
+      .chapters.filter((c) =>
+        terms.some((t) => c.name.toLowerCase().includes(t.toLowerCase())),
+      )
+      .flatMap((c) => c.fragmentIds),
+  );
   const fragments = owned
     .filter(
       (f) =>
         !terms.length ||
+        chapterIds.has(f.id) ||
         terms.some((t) =>
-          `${f.text} ${f.itemIds.map((id) => state.items.find((i) => i.id === id)?.name || "").join(" ")}`
+          `${f.text} ${f.itemIds.map((id) => state.items.find((i) => i.id === id && canRead(i, actor))?.name || "").join(" ")}`
             .toLowerCase()
             .includes(t.toLowerCase()),
         ),
