@@ -17,6 +17,7 @@ import {
   knowledgeConflicts,
 } from "@/lib/life/acquisition";
 import { createLifeItem } from "@/lib/life/intake";
+import { lookupOpenCatalog } from "@/lib/life/open-catalog";
 import { syntheticItem } from "@/lib/life/availability";
 import { z } from "zod";
 import { actor, localOnly, read, database, write } from "@/lib/db";
@@ -180,6 +181,11 @@ export async function POST(r: Request) {
     }
     if (p.action === "code")
       return Response.json(parseCode(z.string().max(3000).parse(p.text)));
+    if (p.action === "lookupCode") {
+      if (process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "false")
+        throw new AgentError("本机已关闭公开资料联网，可继续手动录入", 403);
+      return Response.json(await lookupOpenCatalog(p.input?.code));
+    }
     if (p.action === "lookup")
       return Response.json({
         candidates: searchProducts(z.string().max(200).parse(p.query)),

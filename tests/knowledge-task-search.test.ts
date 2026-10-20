@@ -85,6 +85,7 @@ test("完整任务按阶段取证；规格、数值与单位错配拒绝，序�
       [],
     );
     const task = taskEvidence(d.chunks, "第一次带我完成一次烹饪");
+    for(const chunk of d.chunks){assert.ok(chunk.start>=0);assert.equal(d.text.slice(chunk.start,chunk.end),chunk.text);}
     assert.equal(task.requiredPhases.length, 6);
     assert.ok(
       selectTaskEvidence(d.chunks, "第一次带我完成一次烹饪", []).length,

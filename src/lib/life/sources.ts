@@ -68,8 +68,8 @@ export async function fetchPublicDocument(
         method: "GET",
         family: chosen.family,
         headers: {
-          "User-Agent": "Wujian-UserRequestedDocument/1.0",
-          Accept: "text/html,text/plain,application/pdf",
+          "User-Agent": "Wujian/1.0 (https://github.com/Starry-Curry/ProductAgent; user-requested low-volume lookup)",
+          Accept: "application/json,text/html,text/plain,application/pdf",
         },
         lookup: ((
           _host: unknown,
@@ -100,7 +100,7 @@ export async function fetchPublicDocument(
           return;
         }
         const type = String(res.headers["content-type"] || "");
-        if (!/text\/(html|plain)|application\/pdf/i.test(type)) {
+        if (!/text\/(html|plain)|application\/(pdf|json)/i.test(type)) {
           res.resume();
           reject(new AgentError("来源不是网页、文本或 PDF，可手动上传说明书"));
           return;

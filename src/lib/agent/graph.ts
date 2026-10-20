@@ -1163,7 +1163,9 @@ export async function executeGraph(
               content:
                 "上次输出校验失败：" +
                 (error instanceof AgentError ? error.message : "结构无效") +
-                "。不要原样重复。去掉未经逐步引用支持的参数/按钮/装配细节，不从另一段借数字。使用grounded，steps每项必须有phase和sourceIds，answer只引导；knowledgeTask.requiredPhases缺少的用gaps说明。已知型号不再询问。",
+                (activeSkill === skills["document-help"]
+                  ? "。不要原样重复。去掉未经逐步引用支持的参数/按钮/装配细节，不从另一段借数字。使用grounded，steps每项必须有phase和sourceIds，answer只引导；knowledgeTask.requiredPhases缺少的用gaps说明。已知型号不再询问。"
+                  : '。按当前聊天/故事意图修正，不要转成商品操作步骤。仅输出合法JSON，例如 {"kind":"general","answer":"自然回应，只使用提供的获准经历，不补写未知细节","factIds":[],"procedureId":null,"questions":[]}，使用标准双引号。'),
             },
           );
         } else

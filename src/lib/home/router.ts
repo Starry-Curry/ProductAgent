@@ -251,6 +251,8 @@ export function routeProductTurn(
     );
   if (/短接|冒烟|漏电|烧焦|带电.*拆/.test(withoutProhibitedActions(q)))
     return result("help", "service", "安全优先");
+  if (isMemoryRecallRequest(q))
+    return result("story", "story", "按当前授权回忆本人记录");
   if (
     target &&
     /带我|教我|首次清洗|第一次使用|首次使用|如何清洗|清洗|清洁|充电|维护|保养|排障/.test(
@@ -260,7 +262,7 @@ export function routeProductTurn(
   )
     return result("help", "service", "使用已确认物品处理实际操作任务");
   if (
-    /压力|焦虑|烦恼|难过|孤独|心情|陪我|想聊|今天很累|工作很累|电影|新闻|聊点别的/.test(
+    /压力|焦虑|烦恼|难过|孤独|心情|陪我|想聊|随便聊|聊聊|闲聊|今天很累|工作很累|电影|新闻|聊点别的/.test(
       q,
     ) &&
     !/故障|漏电/.test(q)

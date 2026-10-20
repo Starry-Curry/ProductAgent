@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import type { Item } from "@/lib/domain";
 import type { ProductPack } from "@/lib/products";
 import { OfficialSources } from "./OfficialSources";
+import type { CatalogCandidate } from "@/lib/life/open-catalog";
 export type LifeRequest = (action: string, input?: unknown) => Promise<any>;
 export function Intake({
   packs,
@@ -31,6 +32,9 @@ export function Intake({
     [busy, setBusy] = useState(false);
   const [ocr, setOCR] = useState(false);
   const [codeCandidates, setCodeCandidates] = useState<ProductPack[]>([]);
+  const [catalogCandidates, setCatalogCandidates] = useState<
+    CatalogCandidate[]
+  >([]);
   const [visionConsent, setVisionConsent] = useState(false),
     [visionCandidates, setVisionCandidates] = useState<any[]>([]);
   const requestId = useRef("");
@@ -223,8 +227,53 @@ export function Intake({
               解析实际内容
             </button>
             <p className="life-muted">
-              编码不等于说明书；当前无通用条码商品数据库。
+              编码不等于说明书。食品条码可尝试Open Food Facts，ISBN可尝试Open
+              Library；其他品类请人工确认。
             </p>
+            <button
+              type="button"
+              disabled={busy || !code}
+              onClick={() =>
+                run(async () => {
+                  const d = await request("lookupCode", { code });
+                  setCatalogCandidates(d.candidates);
+                  setNotice(d.notice);
+                })
+              }
+            >
+              查询食品条码 / 图书ISBN
+            </button>
+            {catalogCandidates.map((c) => (
+              <div className="life-notice" key={c.source.url}>
+                <strong>{c.name}</strong>
+                <p>
+                  {c.brand} · {c.model} · 公共数据库候选
+                </p>
+                <small>
+                  {c.license} · {c.fetchedAt} · {c.version}
+                </small>
+                <a href={c.source.url} target="_blank" rel="noreferrer">
+                  查看原记录
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setName(c.name);
+                    setBrand(c.brand);
+                    setModel(c.model);
+                    setCategory(c.category);
+                    setCycle(c.lifecycle);
+                    setPack("");
+                    setSource(c.source);
+                    setNotice(
+                      "已填入候选，仍请核对实物；保存时将保留来源。数量/开封/保质期不从公共数据库猜测。",
+                    );
+                  }}
+                >
+                  采用公共候选并人工核对
+                </button>
+              </div>
+            ))}
             {codeCandidates.map((p) => (
               <button type="button" key={p.id} onClick={() => choose(p.id)}>
                 核对编码文字候选：{p.product} · {p.model}

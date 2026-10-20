@@ -23,7 +23,20 @@ export const groundedSchema = z
           .object({
             text: z.string().trim().min(1).max(600),
             sourceIds: z.array(z.string()).max(4),
-            phase: z.enum(taskPhases).optional(),
+            phase: z
+              .preprocess(
+                (v) =>
+                  typeof v === "string"
+                    ? {
+                        load: "operate",
+                        clean: "care",
+                        setup: "configure",
+                        end: "finish",
+                      }[v] || v
+                    : v,
+                z.enum(taskPhases),
+              )
+              .optional(),
             covers: z.array(z.string().max(30)).max(5).optional(),
           })
           .strict(),

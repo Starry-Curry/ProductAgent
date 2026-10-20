@@ -50,7 +50,7 @@ export const knowledgeIdentity = (item: Item) =>
     item.productBinding?.packId || "",
   ]);
 export const operationQuestion = (q: string) =>
-  /怎么用|如何使用|首次|第一次|操作|清洁|清洗|洗护|维护|保养|储存|保存|养护|安装|充电|配对|故障|不行|失灵|失效|卡住/.test(
+  /怎么用|如何使用|首次|第一次|操作|清洁|清洗|洗护|维护|保养|储存|保存|养护|安装|组装|装配|拼搭|图解|烹饪|充电|配对|故障|不行|失灵|失效|卡住/.test(
     q,
   );
 function regionOf(url: string) {
@@ -101,11 +101,10 @@ export function makeKnowledgeDocument(
     id = digest(d.url + "\n" + hash).slice(0, 24),
     chunks: KnowledgeChunk[] = [];
   for (const m of d.text.matchAll(/[\s\S]{1,1000}(?:\s|$)/g)) {
-    const text = d.text
-      .slice(m.index!, Math.min(d.text.length, m.index! + m[0].length + 350))
-      .trim();
+    const window = d.text.slice(m.index!, Math.min(d.text.length, m.index! + m[0].length + 350));
+    const text = window.trim();
     if (text.length < 15) continue;
-    const start = m.index! + m[0].indexOf(text);
+    const start = m.index! + window.indexOf(text);
     chunks.push({
       id: `${id}:${start}`,
       documentId: id,
@@ -129,7 +128,7 @@ export function makeKnowledgeDocument(
   }
   return {
     id,
-    processorVersion: "extractive-2-overlap",
+    processorVersion: "extractive-3-overlap",
     url: d.url,
     title: d.title,
     text: d.text,
@@ -165,7 +164,7 @@ export function readKnowledge(
       .all(actor, itemId, knowledgeIdentity(item)) as { body: string }[]
   ).map((r) => {
     const d = JSON.parse(r.body) as AcquiredDocument;
-    return d.processorVersion === "extractive-2-overlap"
+    return d.processorVersion === "extractive-3-overlap"
       ? d
       : {
           ...makeKnowledgeDocument(

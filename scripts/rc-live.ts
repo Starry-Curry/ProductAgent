@@ -143,7 +143,9 @@ try {
       );
     const start = Date.now();
     let result: any;
-    const previous = ledger.cases.find((c) => c.name === "A1")?.result;
+    const previous = ledger.cases
+      .filter((c) => c.name.startsWith("A1") && c.result?.reply?.steps?.length)
+      .at(-1)?.result;
     const before = ledger.requests.length;
     try {
       if (name.startsWith("A1"))
