@@ -69,7 +69,20 @@ export function storyOrganization(
       )
       .all(actor) as { body: string }[]
   ).map((r) => JSON.parse(r.body) as Understanding);
-  return { chapters, understanding };
+  return {
+    chapters,
+    understanding: understanding.map((u) =>
+      u.status === "confirmed" &&
+      (!u.memoryId ||
+        !db
+          .prepare(
+            "SELECT 1 FROM personal_memories WHERE id=? AND owner=? AND status='active'",
+          )
+          .get(u.memoryId, actor))
+        ? { ...u, status: "withdrawn" as const }
+        : u,
+    ),
+  };
 }
 function putUnderstanding(db: DatabaseSync, actor: Person, u: Understanding) {
   db.prepare("UPDATE life_understanding SET body=? WHERE id=? AND owner=?").run(
@@ -169,7 +182,7 @@ export function organizeStories(
     )) {
       for (const sentence of f.text.split(/[。！？\n]/).map((s) => s.trim())) {
         if (
-          !/^(?:我|我的目标是|我希望|我想)(?:一直|更|比较|很|最)?(?:喜欢|偏好|希望|想要|计划|目标是)/.test(
+          !/^(?:我(?:一直|更|比较|很|最)?(?:喜欢|偏好|希望|想要|计划)|我的目标是)/.test(
             sentence,
           ) ||
           /疾病|宗教|政治|性取向|抑郁|人格|性格/.test(sentence)

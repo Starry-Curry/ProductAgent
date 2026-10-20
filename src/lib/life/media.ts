@@ -6,6 +6,7 @@ export async function storePhoto(
   db: DatabaseSync,
   actor: Person,
   bytes: Uint8Array,
+  purpose: "item" | "story" = "story",
 ) {
   if (bytes.length > 5_000_000 || bytes.length < 12)
     throw new AgentError("照片需要小于 5MB");
@@ -22,11 +23,25 @@ export async function storePhoto(
     .resize(1600, 1600, { fit: "inside", withoutEnlargement: true })
     .jpeg({ quality: 84 })
     .toBuffer();
-  const existing = db
-    .prepare(
-      "SELECT id FROM life_media WHERE owner=? AND mime='image/jpeg' AND body=?",
-    )
-    .get(actor, body) as { id: string } | undefined;
+  // Keep story-only assets separate from item photos, whose access can later be shared/gifted.
+  const workspace = db
+    .prepare("SELECT body FROM workspace WHERE id=1")
+    .get() as { body: string } | undefined;
+  const itemPhotos: string[] = workspace
+    ? (JSON.parse(workspace.body).items || []).map(
+        (i: { photo?: string }) => i.photo || "",
+      )
+    : [];
+  const existing =
+    purpose === "story"
+      ? (
+          db
+            .prepare(
+              "SELECT id FROM life_media WHERE owner=? AND mime='image/jpeg' AND body=?",
+            )
+            .all(actor, body) as { id: string }[]
+        ).find((r) => !itemPhotos.some((url) => url.includes(`/media/${r.id}`)))
+      : undefined;
   const id = existing?.id || crypto.randomUUID();
   db.prepare("INSERT OR IGNORE INTO life_media VALUES(?,?,?,?)").run(
     id,

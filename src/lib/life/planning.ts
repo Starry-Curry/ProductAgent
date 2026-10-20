@@ -18,6 +18,7 @@ import { capabilityPlans } from "./capability-plans.ts";
 import {
   listCreativeEvidence,
   findCreativeEvidence,
+  importCreativeEvidence,
 } from "./creative-evidence.ts";
 import { usable, syntheticItem } from "./availability.ts";
 import {
@@ -295,6 +296,24 @@ export async function planDiscovery(
     if (!e) throw new AgentError("创意经验不属于当前用户", 403);
     return e;
   });
+  if (
+    input.publicEvidence &&
+    process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "true" &&
+    /整理.*照片|照片.*整理|老照片/.test(goal)
+  ) {
+    const url = "https://www.loc.gov/preservation/care/photo.html";
+    try {
+      const cached = listCreativeEvidence(db, actor).find(
+        (e) =>
+          e.url === url && Date.now() - Date.parse(e.fetchedAt) < 7 * 86400000,
+      );
+      const e = cached || (await importCreativeEvidence(db, actor, { url }));
+      if (!selectedEvidence.some((x) => x.id === e.id))
+        selectedEvidence.push(e);
+    } catch {
+      missing.push("公开照片保护参考未能实际读取，不用摘要代替");
+    }
+  }
   for (const old of previous.flatMap((p) => p.creativeEvidenceSources || [])) {
     const current = listCreativeEvidence(db, actor).find(
       (e) => e.id === old.id,
@@ -513,6 +532,43 @@ export async function planDiscovery(
             evidence: [],
             creativeEvidenceSources: [shadowSource],
             direction: "娱乐",
+            tested: false,
+            goal,
+          }),
+        );
+      const photoReference = selectedEvidence.find(
+        (e) =>
+          e.url === "https://www.loc.gov/preservation/care/photo.html" &&
+          /Avoid touching the image area/.test(e.excerpt),
+      );
+      const printedPhoto = items.find((i) =>
+        /纸质照片|老照片|相片/.test(i.name),
+      );
+      if (photoReference && printedPhoto && minutes >= 5 && /照片/.test(goal))
+        ideas.unshift(
+          storeLifeIdea(db, actor, {
+            id: crypto.randomUUID(),
+            title: "给旧照片做一份不伤原件的主题索引",
+            itemIds: [printedPhoto.id],
+            minutes: 5,
+            steps: [
+              "先核对是否为普通纸质照片；玻璃底片、粘连或破损材料不要自行处理",
+              "保持照片原有保护材料，仅从边缘拿取，避免触碰影像表面；不拆除粘贴或清洗",
+              "在不标记原件的前提下口述分组与主题索引；缺少合适保护材料时只做索引，不换包装",
+            ],
+            missing: [
+              "照片实际材质/状态与原保护材料需本人核对；本方案不证明容器具有档案级保护能力",
+            ],
+            limits: [
+              "参考机构原文仅支持避免接触影像面和边缘拿取；主题索引是本地改编，未实物验证",
+              "不对原件写字、粘贴、加热或清洗；专业保存条件请查看完整来源",
+            ],
+            rationale:
+              "把真实公开保护建议变成不改动原件的整理任务，不凭收纳盒类别推断保护性能。",
+            source: "local-candidate",
+            evidence: [],
+            creativeEvidenceSources: [photoReference],
+            direction: "生活改善",
             tested: false,
             goal,
           }),

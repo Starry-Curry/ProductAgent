@@ -175,15 +175,21 @@ export function Stories({
     }
     uploading.current = true;
     await run(async () => {
-      const p = await upload(file, "photo");
+      const p = await upload(file, "story-photo");
       const index = replace.current;
-      setMedia((old) =>
-        index === null
-          ? [...old, p.id]
-          : old.map((id, i) => (i === index ? p.id : id)),
-      );
+      setMedia((old) => [
+        ...new Set(
+          index === null
+            ? [...old, p.id]
+            : old.map((id, i) => (i === index ? p.id : id)),
+        ),
+      ]);
       setNames((old) => ({ ...old, [p.id]: file.name }));
-      setNotice(p.notice);
+      setNotice(
+        media.includes(p.id)
+          ? "这张照片已经在当前事件中，不重复添加。"
+          : p.notice,
+      );
     });
     uploading.current = false;
   }
@@ -585,43 +591,46 @@ export function Stories({
           {notice}
         </p>
       )}
-      <StoryOrganization
-        actor={actor}
-        fragments={fragments}
-        request={request}
-        onFilter={setChapterIds}
-      />
-      <div className="life-story-toolbar">
-        <label>
-          寻找一段经历
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="搜索原话"
-          />
-        </label>
-        <label>
-          按关联物品浏览
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="all">全部故事</option>
-            <option value="unlinked">未关联物品</option>
-            {items.map((i) => (
-              <option value={i.id} key={i.id}>
-                {i.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          时间顺序
-          <select value={order} onChange={(e) => setOrder(e.target.value)}>
-            <option value="newest">最近的经历在前</option>
-            <option value="oldest">从最早开始翻阅</option>
-          </select>
-        </label>
-        <small>{rows.length} 段 · 默认私人</small>
-      </div>
+      <details className="life-story-browse-tools">
+        <summary>寻找经历 · 按时间、物品或章节浏览</summary>
+        <StoryOrganization
+          actor={actor}
+          fragments={fragments}
+          request={request}
+          onFilter={setChapterIds}
+        />
+        <div className="life-story-toolbar">
+          <label>
+            寻找一段经历
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="搜索原话"
+            />
+          </label>
+          <label>
+            按关联物品浏览
+            <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+              <option value="all">全部故事</option>
+              <option value="unlinked">未关联物品</option>
+              {items.map((i) => (
+                <option value={i.id} key={i.id}>
+                  {i.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            时间顺序
+            <select value={order} onChange={(e) => setOrder(e.target.value)}>
+              <option value="newest">最近的经历在前</option>
+              <option value="oldest">从最早开始翻阅</option>
+            </select>
+          </label>
+          <small>{rows.length} 段 · 默认私人</small>
+        </div>
+      </details>
       <div className="life-story-grid">
         {rows.map((f) => (
           <article
@@ -687,8 +696,10 @@ export function Stories({
               aria-label="阅读故事"
               onClick={() => setOpened(f.id)}
             >
-              <h3>{storyTitle(f.text)}</h3>
-              <p className="life-story-text">{f.text}</p>
+              <h3>{f.text.length <= 60 ? f.text : storyTitle(f.text)}</h3>
+              {f.text.length > 60 && (
+                <p className="life-story-text">{f.text}</p>
+              )}
             </button>
             {links(f)}
             <div className="life-actions">

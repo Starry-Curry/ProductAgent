@@ -1,0 +1,135 @@
+{
+  "date": "2026-10-20",
+  "baseline": "95354a3",
+  "original23": {
+    "path": "wujian-rc-acceptance.json",
+    "baselineBlob": "d62fe0f2533e7ebd4bed2a3d3786578754802592",
+    "workingBlob": "d62fe0f2533e7ebd4bed2a3d3786578754802592",
+    "gradesChanged": false
+  },
+  "values": [
+    {
+      "id": "V1",
+      "value": "兑现原有价值",
+      "evidence": "Sony充电标签/局部可用步骤、MAF10任务目标恢复",
+      "grade": "L2",
+      "gap": "逐断言语义及首次实机流程未证实，续接在线网络失败"
+    },
+    {
+      "id": "V2",
+      "value": "发现潜在价值",
+      "evidence": "整理/搭配/备菜/出游/摄影五目标有限能力规划；实际LoC参考进入照片整理",
+      "grade": "L2",
+      "gap": "不是开放推理整体通过；两次云端对照仍失败回退"
+    },
+    {
+      "id": "V3",
+      "value": "延续与保护价值",
+      "evidence": "阅读优先、事件唯一、照片去重、章节引用和可撤销Context",
+      "grade": "L2",
+      "gap": "阅读喜好需人工审查，语义事件消歧/自动主题未实现"
+    },
+    {
+      "id": "V4",
+      "value": "传递与共享价值",
+      "evidence": "保留家庭/礼物域与赠后本人故事保留/接收者无权限测试",
+      "grade": "L2",
+      "gap": "本机演示身份，不是跨设备真实账号"
+    }
+  ],
+  "independentAcceptance": [
+    {
+      "id": "R1",
+      "name": "故事阅读与视觉",
+      "grade": "L2",
+      "status": "browser-pass-human-review-pending",
+      "criteria": [
+        "默认无大表单",
+        "照片/文字分版、原文标题、照片组",
+        "可选筛选与章节",
+        "Esc/焦点约束/返回/滚动",
+        "人工愿意翻阅体验另审"
+      ],
+      "note": "CRUD结果不作为整体阅读验收通过"
+    },
+    {
+      "id": "P1",
+      "name": "Persona三风格/物品伙伴开关",
+      "grade": "L2",
+      "status": "offline-protocol-pass",
+      "gap": "实际表达质量未独立在线验收"
+    },
+    {
+      "id": "M1",
+      "name": "30合成事件召回/无关排除/去重/撤销/赠后隐私",
+      "grade": "L2",
+      "status": "isolated-tests-pass",
+      "gap": "当前关键词相关性与显式任务范围，非语义检索评测"
+    },
+    {
+      "id": "M2",
+      "name": "明确原话候选/确认纠正拒绝遗忘/任务范围",
+      "grade": "L2",
+      "status": "isolated-tests-pass",
+      "gap": "暂定倾向/AI推断/语义章节自动建议未实现"
+    },
+    {
+      "id": "I1",
+      "name": "图像物品候选",
+      "grade": "L2",
+      "status": "offline-mocked-vision-pass",
+      "gap": "未配置AI_VISION_MODEL，真实视觉0次；不证明识别正确率"
+    },
+    {
+      "id": "C1",
+      "name": "有无个人Context创意收益",
+      "grade": "L2",
+      "status": "not-passed",
+      "gap": "原始响应有主题变化，但两答最终均回退，未形成用户可见收益"
+    },
+    {
+      "id": "Q1",
+      "name": "同题Agent与普通Qwen对照",
+      "grade": "L2",
+      "status": "not-passed",
+      "gap": "Agent Sony局部回答可用；direct Qwen HTTP400，不存在有效对照"
+    },
+    {
+      "id": "A5-new",
+      "name": "真实MAF10续接",
+      "grade": "L2",
+      "status": "not-passed-online",
+      "gap": "恢复目标后1次真实请求网络失败；旧响应离线完整Graph回放返回下一阶段，不重复清洗"
+    }
+  ],
+  "L3": [
+    {
+      "item": "自动语义事件关系/章节建议、合并拆分自动化",
+      "dependency": "合成相关/不相关事件标注集、获准模型预算；目前仅人工章节成员操作"
+    },
+    {
+      "item": "多次经历暂定倾向与可解释推断",
+      "dependency": "证据独立性、重复事件消歧、人工确认评测；不以关键词聚类冒充理解"
+    },
+    {
+      "item": "CLIP/SigLIP外观检索",
+      "dependency": "本地模型/资源/基准；当前仅视觉观测文字匹配已有名称/型号，无向量索引"
+    },
+    {
+      "item": "真实生活照片识别",
+      "dependency": "配置AI_VISION_MODEL后使用已批准且尚未消耗的2次合成图预算；真实私人照片不发送"
+    },
+    {
+      "item": "通用逐断言语义证明",
+      "dependency": "独立标注/反例；现为词项/数值/单位/否定限制与来源核对，不构成蕴含证明"
+    },
+    {
+      "item": "Neo4j/向量数据库",
+      "dependency": "大规模多跳查询/语义召回基准证明SQLite不足后再引入；当前事件/章节/来源关系SQLite足够"
+    },
+    {
+      "item": "全品类官方资料自动发现、扫描图解理解",
+      "dependency": "更广适配/合法检索与图像步骤评估，不能跨型号补造"
+    }
+  ]
+}

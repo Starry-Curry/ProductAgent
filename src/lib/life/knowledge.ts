@@ -36,7 +36,7 @@ const brands = [
   },
   {
     names: ["小米", "米家", "xiaomi"],
-    domains: ["mi.com"],
+    domains: ["mi.com", "mi-img.com", "mi-fds.com", "xiaomi.com"],
     home: "https://www.mi.com/service/",
   },
   {

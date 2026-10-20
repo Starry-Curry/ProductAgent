@@ -61,9 +61,13 @@ try {
       .getByRole("navigation", { name: "主要导航" })
       .getByRole("button", { name, exact: true })
       .click();
-  await page.goto(base);
+  fs.mkdirSync("artifacts/rc", { recursive: true });
+  await page.goto(base + "#stories");
+  await expect(
+    page.getByRole("heading", { name: "生活里，值得留住的小片段" }),
+  ).toBeVisible();
   await nav("生活故事");
-  await expect(page.getByLabel("留下一句话", {exact:true})).toHaveCount(0);
+  await expect(page.getByLabel("留下一句话", { exact: true })).toHaveCount(0);
   await page.getByRole("button", { name: "写一段生活", exact: true }).click();
   await page
     .locator('input[aria-label="照片（可选，JPEG / PNG / WebP，5MB 内）"]')
@@ -109,6 +113,24 @@ try {
     await nav("生活故事");
   }
   checks.push("C3同一正文两件物品双向入口");
+  await page.screenshot({
+    path: "artifacts/rc/storybook-reading-desktop.png",
+    fullPage: true,
+  });
+  await page.getByText("寻找经历 · 按时间、物品或章节浏览",{exact:true}).click();
+  await page.getByRole("button", { name: "整理一个章节", exact: true }).click();
+  await page.getByLabel("章节名称", { exact: true }).fill("合成阅读验收章节");
+  await page
+    .getByRole("checkbox", { name: "合成验收：画下杯子的轮廓。", exact: true })
+    .check();
+  await page.getByRole("button", { name: "保存章节", exact: true }).click();
+  await expect(page.getByLabel("按章节浏览").locator("option")).toContainText([
+    "全部章节",
+    "合成阅读验收章节",
+  ]);
+  checks.push(
+    "新增R：默认阅读/原文标题/章节创建入口，未将CRUD升级为阅读体验通过",
+  );
   let card = page
     .locator("article.life-story-page")
     .filter({ hasText: f.text });
@@ -124,7 +146,11 @@ try {
     .setInputFiles({
       name: "synthetic-rc-2.jpg",
       mimeType: "image/jpeg",
-      buffer: pixels,
+      buffer: await sharp({
+        create: { width: 260, height: 180, channels: 3, background: "#d7b88d" },
+      })
+        .jpeg()
+        .toBuffer(),
     });
   await expect(page.getByAltText("追加照片2预览")).toBeVisible();
   await page
@@ -153,7 +179,22 @@ try {
       () => document.documentElement.scrollWidth <= innerWidth + 1,
     ),
   );
-  await page.getByRole("button", { name: "关闭故事详情" }).click();
+  await page.getByRole("button", { name: "关闭故事详情" }).focus();
+  await page.keyboard.press("Shift+Tab");
+  assert.ok(
+    await page
+      .getByRole("dialog")
+      .evaluate((el) => el.contains(document.activeElement)),
+  );
+  await page.screenshot({
+    path: "artifacts/rc/storybook-reading-mobile.png",
+    fullPage: true,
+  });
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(
+    card.getByRole("button", { name: "阅读完整故事", exact: true }),
+  ).toBeFocused();
   checks.push("390px全文/照片布局与桌面操作");
   await card.getByRole("button", { name: "编辑片段", exact: true }).click();
   await page.getByText("关联物品 · 已选择 2 件", { exact: true }).click();

@@ -382,6 +382,13 @@ try {
   );
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
+  await expect(
+    page.getByRole("heading", { name: "问物间", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("navigation", { name: "主要导航" })
+    .getByRole("button", { name: "生活首页", exact: true })
+    .click();
   await expect(page.getByRole("heading", { name: /物有所用/ })).toBeVisible();
   assert.ok(
     await page.evaluate(

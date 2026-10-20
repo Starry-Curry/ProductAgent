@@ -169,8 +169,15 @@ export async function POST(r: Request) {
       if (!(file instanceof File) || file.size > 8_000_000)
         throw new AgentError("需要小于 8MB 的文件");
       const bytes = new Uint8Array(await file.arrayBuffer());
-      if (f.get("kind") === "photo")
-        return Response.json(await storePhoto(db, a, bytes));
+      if (f.get("kind") === "photo" || f.get("kind") === "story-photo")
+        return Response.json(
+          await storePhoto(
+            db,
+            a,
+            bytes,
+            f.get("kind") === "story-photo" ? "story" : "item",
+          ),
+        );
       const { extractManual } = await import("@/lib/life/documents");
       return Response.json(
         await extractManual(bytes, file.name, f.get("kind") === "manual-ocr"),

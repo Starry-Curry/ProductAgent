@@ -123,7 +123,16 @@ export async function importCreativeEvidence(
     kind: "third-party",
     title: d.title.slice(0, 150),
     url: d.url,
-    excerpt: short(passages[0] || d.text),
+    excerpt: short(
+      (url.hostname === "www.loc.gov" &&
+      url.pathname === "/preservation/care/photo.html"
+        ? d.text
+            .split(/\n+/)
+            .find((t) => /Avoid touching the image area/.test(t))
+        : undefined) ||
+        passages[0] ||
+        d.text,
+    ),
     conditions: ["仅短摘录作为灵感，未核验整套玩法或适用型号"],
     license: "许可未核定；仅保存链接、元信息与短摘录，不保留整篇内容",
     attribution: d.title + " · " + new URL(d.url).hostname,

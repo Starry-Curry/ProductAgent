@@ -1,3 +1,5 @@
+最新增量：[RC定向修复与分层故事](engineering/wujian-rc-targeted-2026-10-20.md)，新增独立验收，不改变历史23项结果。
+
 # 文档索引与优先级
 
 **当前RC候选**：[统一验收与交接](engineering/wujian-rc-handoff-2026-10-20.md)、[固定23场景矩阵](engineering/wujian-rc-acceptance.json)。优先于下方阶段记录；严格验收未全部通过。

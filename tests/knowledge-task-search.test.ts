@@ -85,7 +85,10 @@ test("完整任务按阶段取证；规格、数值与单位错配拒绝，序�
       [],
     );
     const task = taskEvidence(d.chunks, "第一次带我完成一次烹饪");
-    for(const chunk of d.chunks){assert.ok(chunk.start>=0);assert.equal(d.text.slice(chunk.start,chunk.end),chunk.text);}
+    for (const chunk of d.chunks) {
+      assert.ok(chunk.start >= 0);
+      assert.equal(d.text.slice(chunk.start, chunk.end), chunk.text);
+    }
     assert.equal(task.requiredPhases.length, 6);
     assert.ok(
       selectTaskEvidence(d.chunks, "第一次带我完成一次烹饪", []).length,
@@ -262,6 +265,107 @@ test("搜索命中还须实际读取和型号核对；完成第一步后保持�
 });
 
 test("任务标签适配充电；有引用不等于支持锁扣/漂白等专属断言，合法步骤局部保留", () => {
- const t=fixture();try {const id=t.add("普通耳机","电子设备","测试","CHARGE1");const item=t.read().items.find(i=>i.id===id)!;const d=makeKnowledgeDocument({url:"https://example.org/manual",title:"CHARGE1",text:"CHARGE1. Connect the supplied USB cable to charge. Wipe with a soft cloth. Do not use a dishwasher.",links:[]},item,[]);const task=taskEvidence(d.chunks,"如何充电",item.name);const r=groundedReply({kind:"grounded",answer:"自带自动锁扣",steps:[{text:"连接随附USB线充电。",phase:"start",sourceIds:[d.chunks[0].id]},{text:"自动嵌合锁扣，不可接触高温或漂白剂。",sourceIds:[d.chunks[0].id]},{text:"可以放入洗碗机清洗。",sourceIds:[d.chunks[0].id]}]},d.chunks,{tried:[]},task);assert.equal(r.steps.length,1);assert.match(r.steps[0].text,/连接电源/);assert.doesNotMatch(r.answer,/锁扣/);assert.match(r.caveat!,/隐藏2/);
- }finally{t.db.close();}
+  const t = fixture();
+  try {
+    const id = t.add("普通耳机", "电子设备", "测试", "CHARGE1");
+    const item = t.read().items.find((i) => i.id === id)!;
+    const d = makeKnowledgeDocument(
+      {
+        url: "https://example.org/manual",
+        title: "CHARGE1",
+        text: "CHARGE1. Connect the supplied USB cable to charge. Wipe with a soft cloth. Do not use a dishwasher.",
+        links: [],
+      },
+      item,
+      [],
+    );
+    const task = taskEvidence(d.chunks, "如何充电", item.name);
+    const r = groundedReply(
+      {
+        kind: "grounded",
+        answer: "自带自动锁扣",
+        steps: [
+          {
+            text: "连接随附USB线充电。",
+            phase: "start",
+            sourceIds: [d.chunks[0].id],
+          },
+          {
+            text: "自动嵌合锁扣，不可接触高温或漂白剂。",
+            sourceIds: [d.chunks[0].id],
+          },
+          { text: "可以放入洗碗机清洗。", sourceIds: [d.chunks[0].id] },
+        ],
+      },
+      d.chunks,
+      { tried: [] },
+      task,
+    );
+    assert.equal(r.steps.length, 1);
+    assert.match(r.steps[0].text, /连接电源/);
+    assert.doesNotMatch(r.answer, /锁扣/);
+    assert.match(r.caveat!, /隐藏2/);
+  } finally {
+    t.db.close();
+  }
+});
+
+test("已完成清洁的原文在会话中保留，截短ID和改写不导致重新清洗", () => {
+  const t = fixture();
+  try {
+    const id = t.add("普通电器", "电子设备", "测试", "FLOW1");
+    const item = t.read().items.find((i) => i.id === id)!;
+    const d = makeKnowledgeDocument(
+      {
+        url: "https://example.org/manual",
+        title: "FLOW1",
+        text: "FLOW1. Before first use, unplug and cool down. Clean the basket. Turn on power.",
+        links: [],
+      },
+      item,
+      [],
+    );
+    const packet = {
+      kind: "grounded",
+      answer: "继续",
+      steps: [
+        {
+          phase: "prepare",
+          text: "先断电并等待机身完全冷却，取出可拆部件放在一旁，再清洗篮子。",
+          sourceIds: [d.chunks[0].id],
+        },
+        { phase: "start", text: "开启电源。", sourceIds: [d.chunks[0].id] },
+      ],
+    };
+    const first = groundedReply(packet, d.chunks, { tried: [] });
+    const reply = groundedReply(
+      {
+        ...packet,
+        steps: [
+          {
+            ...packet.steps[0],
+            text: "请先断电并确保设备完全冷却，取出篮子清洁。",
+          },
+          packet.steps[1],
+        ],
+      },
+      d.chunks,
+      {
+        tried: [first.steps[0].id],
+        messages: [
+          {
+            id: "offline",
+            role: "assistant",
+            text: first.answer,
+            at: new Date().toISOString(),
+            reply: first,
+          },
+        ],
+      },
+    );
+    assert.equal(reply.steps.length, 1);
+    assert.match(reply.steps[0].text, /开启电源/);
+  } finally {
+    t.db.close();
+  }
 });

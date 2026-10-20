@@ -1,3 +1,5 @@
+最新增量：[RC定向修复与分层故事](docs/engineering/wujian-rc-targeted-2026-10-20.md)。原23项不变；新增6次文字实测有明确失败，不宣称全部通过。
+
 # 物间 · ProductAgent
 
 ## 当前：初赛受控Demo候选（2026-10-20）

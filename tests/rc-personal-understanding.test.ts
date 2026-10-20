@@ -197,6 +197,8 @@ test("合成照片离线视觉协议：两物品、多同型号候选与未知�
       .toBuffer();
     const photo = await storePhoto(t.db, "lin", image);
     assert.equal((await storePhoto(t.db, "lin", image)).id, photo.id);
+    const itemPhoto = await storePhoto(t.db, "lin", image, "item");
+    assert.notEqual(itemPhoto.id, photo.id, "分享用途不能复用私人故事资产");
     const env = {
       AI_API_KEY: "offline-fixture",
       AI_BASE_URL: "https://example.org/v1",

@@ -166,7 +166,8 @@ function quantities(s: string) {
 export function groundedReply(
   value: unknown,
   evidence: KnowledgeChunk[],
-  session: Pick<ServiceSession, "tried">,
+  session: Pick<ServiceSession, "tried"> &
+    Partial<Pick<ServiceSession, "messages">>,
   task?: ReturnType<typeof taskEvidence>,
 ): AssistantReply {
   const p = groundedSchema.parse(value),
@@ -274,6 +275,10 @@ export function groundedReply(
   )
     p.answer = "下面是通过资料检查的步骤；请同时核对列出的条件与资料缺口。";
   const used = evidence.filter((e) => ids.has(e.id));
+  const completed = (session.messages || [])
+    .flatMap((m) => m.reply?.steps || [])
+    .filter((s) => session.tried.includes(s.id));
+  const actionGroups = [/清洁|清洗|洗净/];
   const steps = p.steps
     .map((s) => ({
       id: `docstep:${s.sourceIds[0]}:${s.phase ? "phase=" + s.phase + ":" : ""}${s.text.replace(/\s/g, "").slice(0, 24)}`,
@@ -285,6 +290,12 @@ export function groundedReply(
         !session.tried.includes(s.id) &&
         !session.tried.some((id) => {
           if (!s.phase || !id.includes(":phase=" + s.phase + ":")) return false;
+          const full = completed.find((old) => old.id === id)?.text;
+          if (
+            full &&
+            actionGroups.some((group) => group.test(full) && group.test(s.text))
+          )
+            return true;
           const old = id.split(":").at(-1) || "";
           const now = s.text.replace(/[^\p{Script=Han}a-z0-9]/giu, "");
           const pairs = [...new Set(old.match(/.{2}/gu) || [])];
@@ -309,7 +320,11 @@ export function groundedReply(
         !(
           f.id === "initial-clean" &&
           session.tried.some(
-            (id) => id.includes(":phase=prepare:") && /清洗|清洁|洗净/.test(id),
+            (id) =>
+              id.includes(":phase=prepare:") &&
+              /清洗|清洁|洗净/.test(
+                completed.find((s) => s.id === id)?.text || id,
+              ),
           )
         ) &&
         !p.steps.some((s) =>

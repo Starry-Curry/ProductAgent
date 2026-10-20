@@ -1,3 +1,5 @@
+> 独立审查后的增量结果见 [本轮定向修复](wujian-rc-targeted-2026-10-20.md)。下方历史23项编号与等级保留；故事CRUD不代表阅读体验已验收。
+
 # 物间 RC｜统一验收与交接（2026-10-20）
 
 结论：**可进行有明确边界的初赛 Demo；严格完整验收尚未全部通过。** 商品首用指导、生活故事书、低风险受控创意可展示；不宣称全品类自动服务、完整实机烹饪、通用可靠自由创意或真实家庭云同步。
@@ -31,7 +33,7 @@
 | 来源 | 本机实际状态/产品入口 | 许可与限制 |
 |---|---|---|
 | 品牌官方HTML/PDF/FAQ | Xiaomi、Sony、IKEA已实际读取；`acquireKnowledge`/问答/资料页 | 核对型号/地区、原文位置/哈希/版本；图解、网络、区域与适配覆盖有限 |
-| 百炼原生turbo搜索 | 本轮2次，取得结构化URL后另读网页；不信生成引用 | [官方费用/协议](https://help.aliyun.com/zh/model-studio/web-search/)；另行开关，计入模型预算 |
+| 百炼原生turbo搜索 | 更正：历史RC两次均未取得可验证URL；“URL→原文”仅是实现路径，不是这两次实测成功 | [官方费用/协议](https://help.aliyun.com/zh/model-studio/web-search/)；另行开关，计入模型预算 |
 | Open Food Facts | 3017620422003实际读取，API候选→合成建档→来源保存→详情读取通过；录入扫码区可用 | [官方API](https://openfoodfacts.github.io/openfoodfacts-server/api/)；ODbL/DbCL，限流/缓存，不复制图片；众包不当成包装、过敏安全或持有证据 |
 | Open Library | ISBN适配、协议/缓存测试及录入入口完成；Books API与REST备选实际网络失败 | [API限制](https://openlibrary.org/developers/api)、[许可](https://openlibrary.org/developers/licensing)；低频人工查询、缓存，非商用大流量后台；封面/正文权利独立 |
 | First8 | [实际读取页面](https://www.first8studios.org/nicoandnor/guide/shadows/lesson8/shoebox-shadow-theater.html)；短摘录、来源和受控改编 | 未核定全文再分发许可，只保留链接/元信息及最多25词、180字符短摘录；不是官方用途或实物验证 |

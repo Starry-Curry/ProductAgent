@@ -552,8 +552,23 @@ export async function executeGraph(
         /^(还是|仍然|没变化|依然|试过|我试过|第二步|第一步|第三步|已经|我已经)/.test(
           w.question,
         )
-          ? session.known.goal || w.question
+          ? session.known.goal ||
+            [...session.messages]
+              .reverse()
+              .find(
+                (m) =>
+                  m.role === "user" &&
+                  m.text !== w.question &&
+                  (!m.itemId || m.itemId === effectiveSession.itemId) &&
+                  operationQuestion(m.text),
+              )?.text ||
+            w.question
           : w.question;
+      if (
+        effectiveSession.mode === "service" &&
+        operationQuestion(knowledgeQuery)
+      )
+        session.known.goal = knowledgeQuery;
       if (
         session.known.uiPage &&
         effectiveSession.mode === "service" &&
