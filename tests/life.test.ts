@@ -62,7 +62,7 @@ test("life v1升级v3保留原图文和升级前备份，重复迁移幂等", ()
           n: number;
         }
       ).n,
-      4,
+      5,
     );
     assert.equal(
       buildContext(t.db, t.read(), "lin", {

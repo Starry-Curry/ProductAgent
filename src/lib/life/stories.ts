@@ -6,11 +6,24 @@ import { clearOwnerContext } from "../memory/store.ts";
 
 export const fragmentInput = z
   .object({
-    text: z.string().trim().min(1).max(3000),
+    text: z.string().trim().min(1).max(10000),
     itemIds: z.array(z.string().min(1).max(100)).max(20).default([]),
     mediaId: z.string().uuid().nullable().optional(),
     id: z.string().uuid().optional(),
     revision: z.number().int().positive().optional(),
+    mediaIds: z.array(z.string().uuid()).max(8).optional(),
+    capturedOn: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/)
+      .refine(
+        (s) =>
+          !isNaN(Date.parse(s)) && new Date(s).toISOString().slice(0, 10) === s,
+      )
+      .nullable()
+      .optional(),
+    allowRecall: z.boolean().optional(),
+    allowCloud: z.boolean().optional(),
+    origin: z.enum(["user-record", "ai-edited", "fiction"]).optional(),
   })
   .strict();
 type Row = {
@@ -29,6 +42,29 @@ function links(db: DatabaseSync, id: string) {
       .prepare("SELECT item_id FROM life_fragment_items WHERE fragment_id=?")
       .all(id) as { item_id: string }[]
   ).map((x) => x.item_id);
+}
+type Details = {
+  captured_on: string | null;
+  media_ids: string;
+  allow_recall: number;
+  allow_cloud: number;
+  origin: "user-record" | "ai-edited" | "fiction";
+};
+function details(db: DatabaseSync, r: Row) {
+  const d = db
+    .prepare("SELECT * FROM life_fragment_details WHERE fragment_id=?")
+    .get(r.id) as Details | undefined;
+  return {
+    capturedOn: d ? d.captured_on : null,
+    mediaIds: d
+      ? (JSON.parse(d.media_ids) as string[])
+      : r.media_id
+        ? [r.media_id]
+        : [],
+    allowRecall: d ? !!d.allow_recall : true,
+    allowCloud: !!d?.allow_cloud,
+    origin: d?.origin || ("user-record" as const),
+  };
 }
 export function listFragments(
   db: DatabaseSync,
@@ -55,6 +91,7 @@ export function listFragments(
       updatedAt: r.updated_at,
       demo: !!r.demo,
       itemIds: links(db, r.id),
+      ...details(db, r),
     }))
     .filter((r) => !itemId || r.itemIds.includes(itemId));
 }
@@ -85,15 +122,25 @@ export function saveFragment(
         !state.items.some((i) => i.id === id && canRead(i, actor))
       )
         throw new AgentError("关联物品未获授权", 403);
-    const media =
-      value.mediaId === undefined ? old?.media_id || null : value.mediaId;
-    if (
-      media &&
-      !db
-        .prepare("SELECT 1 FROM life_media WHERE id=? AND owner=?")
-        .get(media, actor)
-    )
-      throw new AgentError("照片未获授权", 403);
+    const previousDetails = old ? details(db, old) : undefined;
+    const photos = [
+      ...new Set(
+        value.mediaIds ??
+          (value.mediaId === undefined
+            ? previousDetails?.mediaIds || []
+            : value.mediaId
+              ? [value.mediaId]
+              : []),
+      ),
+    ];
+    const media = photos[0] || null;
+    for (const photo of photos)
+      if (
+        !db
+          .prepare("SELECT 1 FROM life_media WHERE id=? AND owner=?")
+          .get(photo, actor)
+      )
+        throw new AgentError("照片未获授权", 403);
     const id = old?.id || crypto.randomUUID(),
       at = new Date().toISOString();
     if (old)
@@ -112,9 +159,22 @@ export function saveFragment(
     db.prepare("DELETE FROM life_fragment_items WHERE fragment_id=?").run(id);
     for (const itemId of ids)
       db.prepare("INSERT INTO life_fragment_items VALUES(?,?)").run(id, itemId);
+    db.prepare(
+      "INSERT INTO life_fragment_details VALUES(?,?,?,?,?,?) ON CONFLICT(fragment_id) DO UPDATE SET captured_on=excluded.captured_on,media_ids=excluded.media_ids,allow_recall=excluded.allow_recall,allow_cloud=excluded.allow_cloud,origin=excluded.origin",
+    ).run(
+      id,
+      value.capturedOn === undefined
+        ? previousDetails?.capturedOn || at.slice(0, 10)
+        : value.capturedOn,
+      JSON.stringify(photos),
+      Number(value.allowRecall ?? previousDetails?.allowRecall ?? true),
+      Number(value.allowCloud ?? previousDetails?.allowCloud ?? false),
+      value.origin ?? previousDetails?.origin ?? "user-record",
+    );
     clearOwnerContext(db, actor, !!old);
-    if (old?.media_id && old.media_id !== media)
-      removeUnusedMedia(db, state, actor, old.media_id);
+    for (const previousPhoto of previousDetails?.mediaIds || [])
+      if (!photos.includes(previousPhoto))
+        removeUnusedMedia(db, state, actor, previousPhoto);
     db.exec("COMMIT");
     return listFragments(db, state, actor).find((f) => f.id === id)!;
   } catch (e) {
@@ -136,8 +196,9 @@ export function deleteFragment(
       .get(id, actor) as Row | undefined;
     if (!r) throw new AgentError("生活片段不存在或未获授权", 403);
     if (r.revision !== revision) throw new AgentError("片段已更新", 409);
+    const oldPhotos = details(db, r).mediaIds;
     db.prepare("DELETE FROM life_fragments WHERE id=?").run(id);
-    if (r.media_id) removeUnusedMedia(db, state, actor, r.media_id);
+    for (const photo of oldPhotos) removeUnusedMedia(db, state, actor, photo);
     clearOwnerContext(db, actor, true);
     db.exec("COMMIT");
   } catch (e) {
@@ -153,6 +214,11 @@ export function removeUnusedMedia(
 ) {
   if (
     db.prepare("SELECT 1 FROM life_fragments WHERE media_id=?").get(id) ||
+    (
+      db.prepare("SELECT media_ids FROM life_fragment_details").all() as {
+        media_ids: string;
+      }[]
+    ).some((r) => (JSON.parse(r.media_ids) as string[]).includes(id)) ||
     state.items.some((i) => i.photo?.includes(`/media/${id}`))
   )
     return;

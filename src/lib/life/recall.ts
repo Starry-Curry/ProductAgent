@@ -22,7 +22,7 @@ export function recallLifeFragments(
   );
   const terms = query.match(/[\p{Script=Han}]{2}|[a-z0-9]{2,}/giu) || [];
   const owned = listFragments(db, state, actor, itemId).filter(
-    (f) => itemId || !f.demo,
+    (f) => f.allowRecall && f.origin !== "fiction" && (itemId || !f.demo),
   );
   if (!owned.length) return;
   const fragments = owned

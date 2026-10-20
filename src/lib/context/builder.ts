@@ -7,6 +7,7 @@ import { recallMemories, effectivePersona } from "../memory/store.ts";
 import { relevantKnowledge } from "../skills/knowledge.ts";
 import { syntheticItem, usable } from "../life/availability.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
+import { listFragments } from "../life/stories.ts";
 export function buildContext(
   db: DatabaseSync,
   state: State,
@@ -73,6 +74,27 @@ export function buildContext(
         input.knowledgeQuery || input.question,
       )
     : [];
+  const cloudFragments =
+    !input.temporary &&
+    persona.memoryUse !== "off" &&
+    isMemoryRecallRequest(input.question)
+      ? listFragments(db, state, actor, item?.id)
+          .filter(
+            (f) =>
+              f.allowRecall &&
+              f.allowCloud &&
+              !f.demo &&
+              f.origin !== "fiction",
+          )
+          .slice(0, 3)
+          .map((f) => ({
+            id: f.id,
+            text: f.text.slice(0, 1800),
+            origin: f.origin,
+            recordedAt: f.createdAt,
+            eventDate: f.capturedOn,
+          }))
+      : [];
   return {
     temporary: !!input.temporary,
     question: input.question,
@@ -87,6 +109,7 @@ export function buildContext(
     knowledge,
     memories,
     cloudMemories: memories.filter((m) => m.allowCloud && !m.demo),
+    cloudFragments,
     preferences,
     cloudPreferences: preferences
       .filter((p) => p.allowCloud)

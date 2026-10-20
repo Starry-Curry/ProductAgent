@@ -22,7 +22,7 @@ export const groundedSchema = z
         z
           .object({
             text: z.string().trim().min(1).max(600),
-            sourceIds: z.array(z.string()).min(1).max(4),
+            sourceIds: z.array(z.string()).max(4),
             phase: z.enum(taskPhases).optional(),
             covers: z.array(z.string().max(30)).max(5).optional(),
           })
@@ -30,7 +30,17 @@ export const groundedSchema = z
       )
       .min(1)
       .max(10),
-    gaps: z.array(z.string().max(200)).max(6).optional(),
+    gaps: z
+      .array(
+        z.union([
+          z.string().max(400),
+          z
+            .object({ phase: z.string().max(30), reason: z.string().max(400) })
+            .transform((v) => v.phase + "：" + v.reason),
+        ]),
+      )
+      .max(8)
+      .optional(),
     questions: z
       .array(z.string().max(250))
       .max(6)
@@ -66,6 +76,10 @@ function numericText(s: string) {
   ];
   return s
     .normalize("NFKC")
+    .replace(
+      /(\d+(?:\.\d+)?)\s*(?:mA\b|毫安)/g,
+      (_m, n) => String(Number(n) / 1000) + " A",
+    )
     .replace(new RegExp("\\b(" + english.join("|") + ")\\b", "gi"), (w) =>
       String(english.indexOf(w.toLowerCase())),
     )
@@ -205,7 +219,7 @@ export function groundedReply(
         ),
     )
   )
-    throw new AgentError("摘要包含未支持的参数或动作");
+    p.answer = "下面是通过资料检查的步骤；请同时核对列出的条件与资料缺口。";
   const used = evidence.filter((e) => ids.has(e.id));
   const steps = p.steps
     .map((s) => ({

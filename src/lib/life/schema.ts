@@ -15,8 +15,24 @@ export function migrateLife(db: DatabaseSync, filename: string) {
         }
       ).v || 0,
     );
-    if (version > 4) throw Error("生活数据版本高于当前程序，拒绝写入");
-    if (version === 4) return;
+    if (version > 5) throw Error("生活数据版本高于当前程序，拒绝写入");
+    if (version === 5) return;
+    if (version === 4) {
+      const backup = filename + ".before-life-v5.sqlite";
+      if (!existsSync(backup))
+        db.exec("VACUUM INTO '" + backup.replaceAll("'", "''") + "'");
+      db.exec("BEGIN IMMEDIATE");
+      try {
+        db.exec(
+          "CREATE TABLE IF NOT EXISTS life_fragment_details(fragment_id TEXT PRIMARY KEY REFERENCES life_fragments(id) ON DELETE CASCADE,captured_on TEXT,media_ids TEXT NOT NULL,allow_recall INTEGER NOT NULL DEFAULT 1,allow_cloud INTEGER NOT NULL DEFAULT 0,origin TEXT NOT NULL DEFAULT 'user-record');INSERT INTO life_schema VALUES(5);",
+        );
+        db.exec("COMMIT");
+      } catch (e) {
+        db.exec("ROLLBACK");
+        throw e;
+      }
+      return;
+    }
     if (version === 3) {
       const backup = filename + ".before-life-v4.sqlite";
       if (!existsSync(backup))
@@ -31,6 +47,7 @@ export function migrateLife(db: DatabaseSync, filename: string) {
         db.exec("ROLLBACK");
         throw e;
       }
+      migrateLife(db, filename);
       return;
     }
     if (version === 2) {

@@ -714,7 +714,8 @@ export async function executeGraph(
       w.reply =
         (session.known.memoryPolicy !== undefined &&
         !temporary &&
-        ctx.persona.memoryUse !== "off"
+        ctx.persona.memoryUse !== "off" &&
+        !(provider.ready && ctx.cloudFragments.length)
           ? recallLifeFragments(
               db,
               read(),
@@ -724,6 +725,7 @@ export async function executeGraph(
             )
           : undefined) ||
         (route &&
+          !(route.intent === "story" && ctx.cloudFragments.length) &&
           homeDecision(
             db,
             read(),
@@ -898,6 +900,7 @@ export async function executeGraph(
                 text: m.text,
               })),
               preferences: ctx.cloudPreferences,
+              authorizedLifeStories: ctx.cloudFragments,
               resources: ctx.resources,
               persona: ctx.persona.enabled ? ctx.persona : undefined,
               prior,
@@ -1137,7 +1140,11 @@ export async function executeGraph(
               session.tried,
             );
         w.reply.model = w.response!.model;
-        if (!storyPlan) w.reply.memoryIds = ctx.cloudMemories.map((m) => m.id);
+        if (!storyPlan)
+          w.reply.memoryIds = [
+            ...ctx.cloudMemories.map((m) => m.id),
+            ...ctx.cloudFragments.map((f) => f.id),
+          ];
         add(w, "validated", w.reply.outcome);
       } catch (error) {
         add(
