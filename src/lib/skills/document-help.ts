@@ -36,7 +36,7 @@ export const groundedSchema = z
                         cooking: "operate",
                         cleanup: "care",
                         end: "finish",
-                      }[v] || v
+                      }[v] || (taskPhases.includes(v as TaskPhase) ? v : undefined)
                     : v,
                 z.enum(taskPhases),
               )
@@ -72,10 +72,10 @@ export const groundedSchema = z
         ]),
       )
       .max(6)
-      .default([])
+      .catch([])
       .transform((rows) => rows.filter(Boolean).slice(-1)),
   })
-  .strict();
+  .strip();
 const forbidden =
   /短接|带电.{0,5}拆|绕过.{0,5}保护|我(?:已经|已)(?:帮你|为你)?(?:修复|通知|保存|检测)|(?<!不)(?<!不能)保证.{0,6}安全|我亲眼|我记得我们/;
 function numericText(s: string) {
@@ -170,11 +170,17 @@ export function groundedReply(
     Partial<Pick<ServiceSession, "messages">>,
   task?: ReturnType<typeof taskEvidence>,
 ): AssistantReply {
-  const p = groundedSchema.parse(value),
+  const raw = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const parsedSteps = (Array.isArray(raw.steps) ? raw.steps : []).slice(0,10)
+    .map(step => groundedSchema.shape.steps.element.safeParse(step));
+  const p = groundedSchema.parse({...raw,
+      answer: typeof raw.answer === "string" && raw.answer.trim() ? raw.answer.slice(0,1600) : "下面根据现有资料继续。",
+      steps: parsedSteps.filter(s => s.success).map(s => s.data),
+    }),
     ids = new Set<string>();
   const labels = task?.phaseLabels || phaseLabels;
   const accepted: typeof p.steps = [];
-  const rejected: string[] = [];
+  const rejected: string[] = parsedSteps.filter(s=>!s.success).map(()=>"单条步骤协议不完整，未作为操作指导");
   for (const step of p.steps) {
     step.text = step.text.replace(/[（(]说明书第[0-9、，,]+[页段][）)]/g, "");
     try {

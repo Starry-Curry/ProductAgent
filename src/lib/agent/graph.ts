@@ -923,6 +923,9 @@ export async function executeGraph(
               persona: ctx.persona.enabled ? ctx.persona : undefined,
               prior,
               tried: session.tried,
+              completedSteps: session.messages.flatMap(m => m.reply?.steps || [])
+                .filter(s => session.tried.includes(s.id)).slice(-12)
+                .map(s => ({id:s.id,text:s.text})),
             }),
           },
         ];

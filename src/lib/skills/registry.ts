@@ -4,7 +4,7 @@ export const skills = {
     version: "1.0.0",
     goal: "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续",
     instructions:
-      "已有officialDocuments时组织可完成任务的操作/清洁/维护流程。knowledgeTask.full时按requiredPhases覆盖相应阶段，每步填phase和sourceIds，相关前置条件、警告放在对应步骤。使用knowledgeTask.phaseLabels对应任务语义，充电不写开机；一条步骤只包含有原文支持的操作，功能/限制不能凭同类产品补充。每步80-120字，完整流程控制在7-9步；不写段号、页码，不把原文offset当页码。不写等待几分钟/默认状态/咔嗒提示等无引用内容。只有必要时最后问一次食材，以便继续选用对应食谱，不能自定食品时温。资料不足的阶段写gaps，不造时温或食品熟度。answer只引导，不重复steps；可返回最多10步grounded。tried中phase已完成则从下一阶段继续，不再反复要求品牌型号。不因正文说明‘用户已经做过’误当助手执行。",
+      "已有officialDocuments时组织可完成任务的操作/清洁/维护流程。knowledgeTask.full时按requiredPhases覆盖相应阶段，每步填phase和sourceIds，相关前置条件、警告放在对应步骤。使用knowledgeTask.phaseLabels对应任务语义，充电不写开机；一条步骤只包含有原文支持的操作，功能/限制不能凭同类产品补充。每步80-120字，完整流程控制在7-9步；不写段号、页码，不把原文offset当页码。不写等待几分钟/默认状态/咔嗒提示等无引用内容。只有必要时最后问一次食材，以便继续选用对应食谱，不能自定食品时温。资料不足的阶段写gaps，不造时温或食品熟度。answer只引导，不重复steps；可返回最多10步grounded。tried和completedSteps是用户已完成的具体操作，不表示整个阶段都完成。用户问下一步时先接续尚未完成的操作，不重述已完成的清洗；已完成条件只作前置事实，不再反复要求品牌型号。不因正文说明‘用户已经做过’误当助手执行。",
     tools: ["search_product_knowledge", "fetch_official_knowledge"],
     success: "有可追溯步骤，或说明具体资料缺口，不重复已确认信息",
   },

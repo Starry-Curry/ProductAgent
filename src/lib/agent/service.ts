@@ -19,6 +19,14 @@ import { epoch, saveMemory, getPersona } from "../memory/store.ts";
 import { executeGraph } from "./graph.ts";
 import { buildContext } from "../context/builder.ts";
 import { identity } from "../ai/harness.ts";
+export function completedStepOrdinal(question: string): number | undefined {
+  for (const part of question.split(/[，。；！？,;!?\n]/).reverse()) {
+    if (/没(?:有)?|尚未|未曾|还未|未完成|未做完/.test(part)) continue;
+    const m = part.match(/(?:已经|已|做过|完成了|做完了).{0,8}第([一二三四五六七八九十1-9])步/) ||
+      part.match(/第([一二三四五六七八九十1-9])步.{0,8}(?:完成|做完|做过|结束)/);
+    if (m) return "一二三四五六七八九十".indexOf(m[1]) + 1 || Number(m[1]);
+  }
+}
 export async function respond(
   db: DatabaseSync,
   read: () => State,
@@ -106,12 +114,8 @@ export async function respond(
     }
   }
   session.known.turnRequestId = input.requestId;
-  const completed = input.question.match(
-    /(?:已经|已|做过|完成了).{0,5}第([一二三四五六七八九十1-9])步/,
-  );
-  if (completed) {
-    const n =
-      "一二三四五六七八九十".indexOf(completed[1]) + 1 || Number(completed[1]);
+  const n = completedStepOrdinal(input.question);
+  if (n) {
     const step = session.messages.filter((m) => m.reply).at(-1)?.reply?.steps[
       n - 1
     ];

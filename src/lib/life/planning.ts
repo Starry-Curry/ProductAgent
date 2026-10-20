@@ -429,6 +429,7 @@ export async function planDiscovery(
         };
       }
       ideas = generated.alternatives || [generated];
+      missing.push(...(generated.validationNotes || []));
       if (followup && previous.some((p) => p.id === ideas[0].id)) {
         ideas = [];
         missing.push(

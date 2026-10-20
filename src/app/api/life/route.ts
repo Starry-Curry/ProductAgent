@@ -1,6 +1,6 @@
 import { publicDemo, CloudError } from "@/lib/cloud/runtime";
 import { withDemoRequest } from "@/lib/cloud/request";
-import { storyOrganization, organizeStories } from "@/lib/life/organization";
+import { storyOrganization, organizeStories, suggestStoryOrganization } from "@/lib/life/organization";
 import { matchStoryPhoto } from "@/lib/life/story-photo";
 import {
   findOfficial,
@@ -196,6 +196,8 @@ async function POSTHandler(r: Request) {
       );
     }
     const p = await r.json();
+    if (p.action === "suggestStoryOrganization")
+      return Response.json(await suggestStoryOrganization(db, read, a, p.input, lifeProvider()));
     if (p.action === "storyOrganization")
       return Response.json(organizeStories(db, read, a, p.input));
     if (p.action === "storyPhoto")

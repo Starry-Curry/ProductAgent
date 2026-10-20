@@ -18,6 +18,7 @@ export function StoryOrganization({
   const [data, setData] = useState<{
     chapters: Chapter[];
     understanding: Understanding[];
+    chapterSuggestions?: Chapter[];
   }>({ chapters: [], understanding: [] });
   const [editing, setEditing] = useState<Chapter | null>(null),
     [name, setName] = useState(""),
@@ -44,11 +45,11 @@ export function StoryOrganization({
       live = false;
     };
   }, [actor, fragments]);
-  async function act(input: unknown) {
+  async function act(input: unknown, action = "storyOrganization") {
     setBusy(true);
     setNotice("");
     try {
-      const d = await request("storyOrganization", input);
+      const d = await request(action, input);
       setData(d);
       const c = d.chapters.find((c: Chapter) => c.id === selected);
       onFilter(selected === "all" ? null : c?.fragmentIds || []);
@@ -104,6 +105,18 @@ export function StoryOrganization({
           </button>
         )}
       </div>
+      <button type="button" disabled={busy} onClick={() => {
+        const allowed = fragments.filter(f=>!f.demo && f.origin!=="fiction" && f.allowRecall && f.allowCloud).slice(0,40);
+        if (!allowed.length) {setNotice("请先在要整理的故事中允许文字回忆及上云；未授权故事不会发送。");return;}
+        if (confirm(`将${allowed.length}段已获准故事的文字交给当前云端AI，提出章节与理解候选？不发送照片，不自动确认。`))
+          void act({confirmed:true,fragmentIds:allowed.map(f=>f.id)},"suggestStoryOrganization");
+      }}>{busy ? "正在整理…" : "请物间建议章节与生活线索"}</button>
+      {(data.chapterSuggestions || []).map(c=><article className="life-card" key={c.id}>
+        <strong>{c.name} · 章节建议，待确认</strong><p>{c.reason}</p>
+        <p className="life-muted">{c.fragmentIds.map(id=>fragments.find(f=>f.id===id)?.text.slice(0,65)).join("；")}</p>
+        <div className="life-actions"><button type="button" onClick={()=>edit(c)}>核对并调整</button>
+        <button type="button" disabled={busy} onClick={()=>void act({command:"rejectChapter",id:c.id,revision:c.revision})}>不归为这一章</button></div>
+      </article>)}
       {open && (
         <form
           className="life-card"
@@ -205,7 +218,7 @@ export function StoryOrganization({
                   : u.status === "confirmed"
                     ? "已确认"
                     : "已拒绝"}{" "}
-                · 明确原话
+                · {u.basis === "repeated-tendency" ? "多事件暂定线索，不是固定习惯" : "明确原话"}
               </small>
               <p className="life-muted">
                 证据：

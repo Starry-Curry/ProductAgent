@@ -530,7 +530,7 @@ export async function modelIdea(
       sourceUrl?: string;
     }[];
   } = {},
-): Promise<LifeIdea & { alternatives?: LifeIdea[] }> {
+): Promise<LifeIdea & { alternatives?: LifeIdea[]; validationNotes?: string[] }> {
   if (riskyGoal.test(withoutProhibitedActions(goal)))
     throw new AgentError("该目标涉及未核实的安全条件，本次不发送模型请求");
   const items = state.items.filter(
@@ -691,7 +691,8 @@ export async function modelIdea(
       }
     if (!candidates.length)
       throw new AgentError(failures.join("；") || "没有可用的创意候选");
-    return { ...candidates[0], alternatives: candidates };
+    return { ...candidates[0], alternatives: candidates,
+      validationNotes: failures.length ? [`另有${failures.length}个草稿未通过检查：${[...new Set(failures)].join("；")}`] : [] };
   }
   let value: {
     title: string;
@@ -781,6 +782,13 @@ export async function modelIdea(
       [i.name, i.category, ...(i.attributes?.capabilities || [])].join(" "),
     )
     .join(" ");
+  const missingResource = (name: string) =>
+    !registered.includes(name) && !value.missing?.some((m) => m.includes(name));
+  // A digital photograph is not a physical print, and placing it on paper needs more than a camera.
+  if (/照片|相片|拍.{0,8}照/.test(proposal) &&
+      /(?:贴|粘|印|打印).{0,25}(?:纸|墙|本)|(?:照片|相片).{0,20}(?:贴|粘|打印)/.test(proposal) &&
+      missingResource("打印") && missingResource("纸质照片"))
+    throw new AgentError("方案把数字照片当成可粘贴的实物，打印/纸质照片条件未确认");
   if (
     /(?:倒入|接|续|加).{0,8}水/.test(proposal) &&
     !/饮用水|瓶装水|自来水|纯净水|矿泉水|清水|水壶/.test(registered) &&

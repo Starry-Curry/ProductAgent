@@ -96,6 +96,11 @@ export async function recognizeOwnedPhoto(
   return {
     candidates: value.candidates.map((c) => ({
       ...c,
+      // A plausible logo is not legible brand evidence; do not use a visual guess to filter owned instances.
+      brand:
+        c.basis === "visible-text" && c.brand &&
+        c.observedText?.toLowerCase().includes(c.brand.toLowerCase())
+          ? c.brand : undefined,
       model:
         c.basis === "visible-text" &&
         c.model &&
