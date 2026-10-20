@@ -63,6 +63,8 @@ try {
       .click();
   await page.goto(base);
   await nav("生活故事");
+  await expect(page.getByLabel("留下一句话", {exact:true})).toHaveCount(0);
+  await page.getByRole("button", { name: "写一段生活", exact: true }).click();
   await page
     .locator('input[aria-label="照片（可选，JPEG / PNG / WebP，5MB 内）"]')
     .setInputFiles({
@@ -144,7 +146,7 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   card = page.locator("article.life-story-page").filter({ hasText: f.text });
   await card.getByRole("button", { name: "阅读完整故事", exact: true }).click();
-  await expect(page.getByRole("dialog", { name: "故事详情" })).toBeVisible();
+  await expect(page.getByRole("dialog")).toBeVisible();
   await expect(page.getByRole("dialog")).toContainText(f.text);
   assert.ok(
     await page.evaluate(

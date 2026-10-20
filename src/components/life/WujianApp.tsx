@@ -170,11 +170,22 @@ export default function WujianApp() {
   useEffect(() => {
     setData(null);
     setSelected("");
-    setView("home");
+    const initial = [
+      "home",
+      "items",
+      "discover",
+      "stories",
+      "assistant",
+      "family",
+      "social",
+    ].includes(window.location.hash.slice(1))
+      ? (window.location.hash.slice(1) as View)
+      : "home";
+    setView(initial);
     window.history.replaceState(
-      { wujian: true, actor, view: "home", selected: "", tab: "帮助" },
+      { wujian: true, actor, view: initial, selected: "", tab: "帮助" },
       "",
-      "#home",
+      `#${initial}`,
     );
     load().catch((e) => setError(e.message));
     return () => {

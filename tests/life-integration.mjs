@@ -304,6 +304,7 @@ try {
     .getByRole("navigation", { name: "主要导航" })
     .getByRole("button", { name: "生活故事", exact: true })
     .click();
+  await page.getByRole("button", { name: "写一段生活", exact: true }).click();
   await page
     .getByLabel("留下一句话", { exact: true })
     .fill("浏览器合成验收：一段生活片段");

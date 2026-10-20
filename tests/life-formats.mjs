@@ -196,6 +196,7 @@ try {
     page.getByRole("heading", { name: "浏览器录入的绿植", exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "故事", exact: true }).click();
+  await page.getByRole("button", { name: "写一段生活", exact: true }).click();
   await page
     .getByLabel("留下一句话", { exact: true })
     .fill("浏览器图文验收：今天给绿植拍照");

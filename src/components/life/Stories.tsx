@@ -24,6 +24,14 @@ export type Fragment = {
   allowCloud?: boolean;
   origin?: "user-record" | "ai-edited" | "fiction";
 };
+const storyTitle = (text: string) => {
+  const line =
+    text
+      .split(/[\n。！？!?]/u)
+      .find(Boolean)
+      ?.trim() || "生活的一页";
+  return line.length > 28 ? line.slice(0, 28) + "…" : line;
+};
 const photos = (f: Fragment) => f.mediaIds || (f.mediaId ? [f.mediaId] : []);
 const provenance = (f: Fragment) =>
   f.demo
@@ -70,23 +78,58 @@ export function Stories({
     [filter, setFilter] = useState("all"),
     [order, setOrder] = useState("newest"),
     [opened, setOpened] = useState<string | null>(null),
-    [composing, setComposing] = useState(true),
+    [composing, setComposing] = useState(false),
     [slides, setSlides] = useState<{ src: string; alt: string }[]>([]),
     [slideIndex, setSlideIndex] = useState(0);
   const photoInput = useRef<HTMLInputElement>(null),
     help = useId(),
     uploading = useRef(false),
     replace = useRef<number | null>(null),
-    formRef = useRef<HTMLFormElement>(null);
+    formRef = useRef<HTMLFormElement>(null),
+    detailRef = useRef<HTMLElement>(null),
+    detailTitle = useId();
   const url = (id: string) => `/api/life/media/${id}?actor=${actor}`;
   const current = fragments.find((f) => f.id === opened);
   useEffect(() => {
-    const close = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpened(null);
+    if (!opened) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    detailRef.current?.focus();
+    const keys = (e: KeyboardEvent) => {
+      if (slides.length) return;
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpened(null);
+      }
+      if (e.key === "Tab") {
+        const nodes = Array.from(
+          detailRef.current?.querySelectorAll<HTMLElement>(
+            'button:not(:disabled),a[href],input,select,textarea,[tabindex="0"]',
+          ) || [],
+        );
+        const first = nodes[0],
+          last = nodes.at(-1);
+        if (
+          e.shiftKey &&
+          (document.activeElement === first ||
+            document.activeElement === detailRef.current)
+        ) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
     };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-  }, []);
+    window.addEventListener("keydown", keys);
+    return () => {
+      document.body.style.overflow = overflow;
+      window.removeEventListener("keydown", keys);
+      previous?.focus();
+    };
+  }, [opened, slides.length]);
   async function run(fn: () => Promise<void>) {
     setBusy(true);
     setNotice("");
@@ -227,7 +270,13 @@ export function Stories({
           type="button"
           onClick={() => {
             setComposing(true);
-            formRef.current?.scrollIntoView({ behavior: "smooth" });
+            setTimeout(() => {
+              formRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+              formRef.current?.querySelector("textarea")?.focus();
+            }, 0);
           }}
         >
           <ImagePlus size={17} /> 写一段生活
@@ -303,7 +352,7 @@ export function Stories({
             <div className="life-photo-info">
               <strong>
                 {media.length
-                ? `已选 ${media.length} 张照片`
+                  ? `已选 ${media.length} 张照片`
                   : "给这一刻添张照片"}
               </strong>
               <small id={help}>
@@ -542,11 +591,31 @@ export function Stories({
                 aria-hidden="true"
               />
             )}
+            {photos(f).length > 1 && (
+              <div className="life-story-contact-sheet">
+                {photos(f)
+                  .slice(1, 4)
+                  .map((id, index) => (
+                    <button
+                      key={id}
+                      type="button"
+                      aria-label={`查看故事照片 ${index + 2}`}
+                      onClick={() => enlarge(f, index + 1)}
+                    >
+                      <img
+                        src={url(id)}
+                        alt={`故事照片 ${index + 2}`}
+                        loading="lazy"
+                      />
+                    </button>
+                  ))}
+              </div>
+            )}
             <small>
               {f.capturedOn
-                ? `${f.capturedOn} · 经本人设置`
+                ? f.capturedOn
                 : `记录于 ${new Date(f.createdAt).toLocaleDateString("zh-CN")}`}{" "}
-              · {provenance(f)}
+              {f.demo || f.origin === "fiction" ? ` · ${provenance(f)}` : ""}
             </small>
             <button
               type="button"
@@ -554,6 +623,7 @@ export function Stories({
               aria-label="阅读故事"
               onClick={() => setOpened(f.id)}
             >
+              <h3>{storyTitle(f.text)}</h3>
               <p className="life-story-text">{f.text}</p>
             </button>
             {links(f)}
@@ -578,7 +648,10 @@ export function Stories({
         <div className="life-story-overlay" onClick={() => setOpened(null)}>
           <section
             role="dialog"
+            ref={detailRef}
+            tabIndex={-1}
             aria-modal="true"
+            aria-labelledby={detailTitle}
             aria-label="故事详情"
             className="life-story-detail"
             onClick={(e) => e.stopPropagation()}
@@ -592,9 +665,10 @@ export function Stories({
               <X />
             </button>
             <small>
-              {provenance(current)} · {current.capturedOn || "事件日期未设置"}
+              {current.capturedOn ||
+                `记录于 ${new Date(current.createdAt).toLocaleDateString("zh-CN")}`}
             </small>
-            <h3>生活的一页</h3>
+            <h3 id={detailTitle}>{storyTitle(current.text)}</h3>
             <div className="life-story-detail-photos">
               {photos(current).map((id, index) => (
                 <button
@@ -609,14 +683,18 @@ export function Stories({
             </div>
             <p className="life-story-fulltext">{current.text}</p>
             {links(current)}
-            <p className="life-muted">
-              {current.allowRecall === false
-                ? "已关闭AI回忆引用"
-                : current.allowCloud
-                  ? "允许本人主动回忆时上云（仅文字）"
-                  : "仅主动回忆时本机引用，不上云"}{" "}
-              · 不随物品流转分享
-            </p>
+            <details className="life-story-permissions">
+              <summary>记录与隐私</summary>
+              <p>{provenance(current)}</p>
+              <p className="life-muted">
+                {current.allowRecall === false
+                  ? "已关闭AI回忆引用"
+                  : current.allowCloud
+                    ? "允许本人主动回忆时上云（仅文字）"
+                    : "仅主动回忆时本机引用，不上云"}{" "}
+                · 不随物品流转分享
+              </p>
+            </details>
             <div className="life-actions">
               <button type="button" onClick={() => edit(current)}>
                 修改这页故事
