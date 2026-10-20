@@ -1,5 +1,7 @@
 # 文档索引与优先级
 
+**当前RC候选**：[统一验收与交接](engineering/wujian-rc-handoff-2026-10-20.md)、[固定23场景矩阵](engineering/wujian-rc-acceptance.json)。优先于下方阶段记录；严格验收未全部通过。
+
 **本轮最新：商品任务与创意来源链路**：[30次新增授权的实测、失败、离线回放与限制](engineering/life-knowledge-creative-validation-2026-10-20.json)。创意质量仍未达标，详见人工评价，不以HTTP200代替验收。
 
 **2026-10-20 智能能力深化实测**：[脱敏调用、失败与回归记录](engineering/life-intelligence-validation-2026-10-20.json)。以根README和最新实现状态为准；历史“未真实模型验证”的结论保留为当时证据。

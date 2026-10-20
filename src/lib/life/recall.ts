@@ -17,7 +17,7 @@ export function recallLifeFragments(
   )
     return;
   const query = question.replace(
-    /帮我|回忆|还记得|记得|记忆|记录|故事|讲讲|说说|看看|一下|我的|我们|之前|以前|过去|这个|这件|物品|的|吗|呢|[\s，。？！?！]/g,
+    /帮我|回忆|还记得|记得|记忆|记录|故事|讲讲|说说|看看|一下|我的|我们|之前|以前|过去|这个|这件|物品|保存|生活|所有|全部|片段|经历|的|我|吗|呢|[\s，。？！?！]/g,
     "",
   );
   const terms = query.match(/[\p{Script=Han}]{2}|[a-z0-9]{2,}/giu) || [];

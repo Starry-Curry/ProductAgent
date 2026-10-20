@@ -16,6 +16,57 @@ const fixture = () =>
     mkdtempSync(path.join(process.cwd(), ".runtime", "creative-test-")),
   );
 
+test("公开经验受控改编使用实际来源/能力，不强制玻璃杯或未登记道具、不调用模型", async () => {
+  const t = fixture();
+  try {
+    const light = t.add("手电筒", "电子设备", "合成", "L", {
+        attributes: { capabilities: ["照明"] },
+      }),
+      paper = t.add("纸笔", "文具", "合成", "P", {
+        attributes: { capabilities: ["书写"] },
+      }),
+      cup = t.add("玻璃杯", "厨房用品", "合成", "C");
+    const e = await importCreativeEvidence(
+      t.db,
+      "lin",
+      { url: "https://example.org/shadow" },
+      async (url) => ({
+        url,
+        title: "Shadow game",
+        text: "Use light and hands to play a shadow guessing game. A flat background must be checked first.",
+        links: [],
+      }),
+    );
+    const p = await planDiscovery(
+      t.db,
+      t.read(),
+      "lin",
+      {
+        goal: "参考影子经验，只用手电筒和纸笔做十分钟游戏",
+        itemIds: [light, paper, cup],
+        creativeEvidenceIds: [e.id],
+        model: false,
+      },
+      {
+        ready: false,
+        model: "offline",
+        generate: async () => {
+          throw Error("No model allowed");
+        },
+      },
+      t.read,
+    );
+    assert.equal(p.modelCalls, 0);
+    assert.equal(p.ideas[0].creativeEvidenceSources?.[0].id, e.id);
+    assert.equal(p.ideas[0].source, "local-candidate");
+    assert.ok(!p.ideas[0].itemIds.includes(cup));
+    assert.ok(p.ideas[0].missing?.some((s) => s.includes("现场确认")));
+    assert.equal(p.ideas[0].tested, false);
+  } finally {
+    t.db.close();
+  }
+});
+
 test("真实失败回归：错误物理机制、隐含材料不可借有效来源ID绕过；失败回退诚实标注且不重试模型", async () => {
   const t = fixture();
   try {

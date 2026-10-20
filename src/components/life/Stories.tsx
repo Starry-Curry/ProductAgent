@@ -303,7 +303,7 @@ export function Stories({
             <div className="life-photo-info">
               <strong>
                 {media.length
-                  ? names[media[0]] || `已选 ${media.length} 张照片`
+                ? `已选 ${media.length} 张照片`
                   : "给这一刻添张照片"}
               </strong>
               <small id={help}>

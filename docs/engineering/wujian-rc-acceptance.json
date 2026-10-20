@@ -10,440 +10,629 @@
   "cases": [
     {
       "id": "A1",
-      "productValue": "兑现原有价值",
+      "productValue": [
+        "A兑现原有价值",
+        "C延续保护"
+      ],
       "task": "新电器首次完整使用",
       "code": [
         "src/lib/agent/graph.ts",
         "src/lib/skills/document-help.ts"
       ],
       "input": "新电器首次完整使用",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "确认型号/地区，先清洗和准备，再装料/操作/结束；缺食材参数只问必要条件；用户确认不冒充设备证据",
       "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
-      "result": "pending",
-      "evidence": [],
+      "result": "partial",
+      "evidence": [
+        "A1-r6八步；A5离线回放",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "缺食材/份量的专属参数确认与真实设备完成反馈。"
       ],
-      "releaseBlocker": true
+      "releaseBlocker": true,
+      "api": "/api/assistant + /api/life acquireKnowledge",
+      "actual": "缺食材/份量的专属参数确认与真实设备完成反馈。"
     },
     {
       "id": "A2",
-      "productValue": "兑现原有价值",
+      "productValue": [
+        "A兑现原有价值",
+        "C延续保护"
+      ],
       "task": "耳机充电与注意事项",
       "code": [
         "src/lib/agent/graph.ts",
         "src/lib/skills/document-help.ts"
       ],
       "input": "耳机充电与注意事项",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "USB线/充电条件/指示灯与结束有适用官方来源",
       "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
-      "result": "pending",
-      "evidence": [],
-      "level": "L2",
-      "issues": [
-        "本轮固定验收尚未执行"
+      "result": "pass",
+      "evidence": [
+        "A2-r1、life-acquisition测试",
+        "wujian-rc-validation-2026-10-20.json"
       ],
-      "releaseBlocker": false
+      "level": "L1",
+      "issues": [
+        "充电指导通过；未客观检测电池，1条未核对附加步骤被隐藏。"
+      ],
+      "releaseBlocker": false,
+      "api": "/api/assistant + /api/life acquireKnowledge",
+      "actual": "充电指导通过；未客观检测电池，1条未核对附加步骤被隐藏。"
     },
     {
       "id": "A3",
-      "productValue": "兑现原有价值",
+      "productValue": [
+        "A兑现原有价值",
+        "C延续保护"
+      ],
       "task": "家具清洁/装配分流",
       "code": [
         "src/lib/agent/graph.ts",
         "src/lib/skills/document-help.ts"
       ],
       "input": "家具清洁/装配分流",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "湿布与干布保养可用；没有已读取图解则不编装配步骤",
       "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
-      "result": "pending",
-      "evidence": [],
+      "result": "partial",
+      "evidence": [
+        "A3-r1",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "清洁可演示，完整装配图未解析，安装细节不作已完成。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": false,
+      "api": "/api/assistant + /api/life acquireKnowledge",
+      "actual": "清洁可演示，完整装配图未解析，安装细节不作已完成。"
     },
     {
       "id": "A4",
-      "productValue": "兑现原有价值",
+      "productValue": [
+        "A兑现原有价值",
+        "C延续保护"
+      ],
       "task": "新商品仅品牌型号找资料",
       "code": [
         "src/lib/agent/graph.ts",
         "src/lib/skills/document-help.ts"
       ],
       "input": "新商品仅品牌型号找资料",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "仅品牌型号定位未预置商品真实页面，失败可人工补充",
       "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
-      "result": "pending",
-      "evidence": [],
+      "result": "partial",
+      "evidence": [
+        "A4-samla / A4",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "SAMLA新页定位真实；Philips失败，新型号通用覆盖和逐断言核验不足。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": false,
+      "api": "/api/assistant + /api/life acquireKnowledge",
+      "actual": "SAMLA新页定位真实；Philips失败，新型号通用覆盖和逐断言核验不足。"
     },
     {
       "id": "A5",
-      "productValue": "兑现原有价值",
+      "productValue": [
+        "A兑现原有价值",
+        "C延续保护"
+      ],
       "task": "已尝试步骤续接",
       "code": [
         "src/lib/agent/graph.ts",
         "src/lib/skills/document-help.ts"
       ],
       "input": "已尝试步骤续接",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "用户已完成首步，下一答不重新要求首步或型号",
       "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
-      "result": "pending",
-      "evidence": [],
+      "result": "offline-pass-live-pending",
+      "evidence": [
+        "A5/A5-r1失败；A5-offline-final七步首步不再清洗",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "当前修复未再次在线验证；已尝试状态与预算止损在离线/legacy旅程通过。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": true,
+      "api": "/api/assistant + /api/life acquireKnowledge",
+      "actual": "当前修复未再次在线验证；已尝试状态与预算止损在离线/legacy旅程通过。"
     },
     {
       "id": "A6",
-      "productValue": "兑现原有价值",
+      "productValue": [
+        "A兑现原有价值",
+        "C延续保护"
+      ],
       "task": "未知型号停止猜测",
       "code": [
         "src/lib/agent/graph.ts",
         "src/lib/skills/document-help.ts"
       ],
       "input": "未知型号停止猜测",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "不存在型号停止猜测，同轮不无限搜索/模型重试",
       "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
-      "result": "pending",
-      "evidence": [],
-      "level": "L2",
-      "issues": [
-        "本轮固定验收尚未执行"
+      "result": "pass",
+      "evidence": [
+        "A6 / LEGO-r1",
+        "wujian-rc-validation-2026-10-20.json"
       ],
-      "releaseBlocker": false
+      "level": "L1",
+      "issues": [
+        "型号缺口明确；LEGO图解能力留L3。"
+      ],
+      "releaseBlocker": false,
+      "api": "/api/assistant + /api/life acquireKnowledge",
+      "actual": "型号缺口明确；LEGO图解能力留L3。"
     },
     {
       "id": "B1",
-      "productValue": "发现潜在价值",
+      "productValue": [
+        "B发现潜在价值"
+      ],
       "task": "多物品差异创意",
       "code": [
         "src/lib/life/planning.ts",
         "src/lib/life/ideas.ts"
       ],
       "input": "多物品差异创意",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "至少不同方向的低风险候选，资源范围真实",
       "baseline": "上轮真实创意质量不合格，受控本地能力可用",
-      "result": "pending",
-      "evidence": [],
+      "result": "controlled-pass",
+      "evidence": [
+        "capabilityPlans / 真实B1失败及离线防回归",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "纸笔游戏/创作/归位可运行；自由生成仍不可靠。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": false,
+      "api": "/api/life discover/creativeEvidence/ideaFeedback",
+      "actual": "纸笔游戏/创作/归位可运行；自由生成仍不可靠。"
     },
     {
       "id": "B2",
-      "productValue": "发现潜在价值",
+      "productValue": [
+        "B发现潜在价值"
+      ],
       "task": "目标检索已有资源",
       "code": [
         "src/lib/life/planning.ts",
         "src/lib/life/ideas.ts"
       ],
       "input": "目标检索已有资源",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "未点选物品时服务端按能力/可用状态选择资源",
       "baseline": "上轮真实创意质量不合格，受控本地能力可用",
-      "result": "pending",
-      "evidence": [],
+      "result": "controlled-pass",
+      "evidence": [
+        "真实B2、life-planning-memory、life-integration",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "资源检索真实，方案仅候选，不能泛化为全部目标可完成。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": false,
+      "api": "/api/life discover/creativeEvidence/ideaFeedback",
+      "actual": "资源检索真实，方案仅候选，不能泛化为全部目标可完成。"
     },
     {
       "id": "B3",
-      "productValue": "发现潜在价值",
+      "productValue": [
+        "B发现潜在价值"
+      ],
       "task": "多轮排除与时间限制",
       "code": [
         "src/lib/life/planning.ts",
         "src/lib/life/ideas.ts"
       ],
       "input": "多轮排除与时间限制",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "继承前文目标、时间与排除，不能从后门再用被排除物品",
       "baseline": "上轮真实创意质量不合格，受控本地能力可用",
-      "result": "pending",
-      "evidence": [],
+      "result": "controlled-pass",
+      "evidence": [
+        "真实B3、多轮排除/只用回归",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "时间/排除可用，未知道具检查有限。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": false,
+      "api": "/api/life discover/creativeEvidence/ideaFeedback",
+      "actual": "时间/排除可用，未知道具检查有限。"
     },
     {
       "id": "B4",
-      "productValue": "发现潜在价值",
+      "productValue": [
+        "B发现潜在价值"
+      ],
       "task": "缺少材料识别",
       "code": [
         "src/lib/life/planning.ts",
         "src/lib/life/ideas.ts"
       ],
       "input": "缺少材料识别",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "缺少工具/材料列条件或可行替代，不声称持有",
       "baseline": "上轮真实创意质量不合格，受控本地能力可用",
-      "result": "pending",
-      "evidence": [],
+      "result": "controlled-pass",
+      "evidence": [
+        "真实B4、creative-evidence回归",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "缺口可提示，未建立全材料语义核验。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": false,
+      "api": "/api/life discover/creativeEvidence/ideaFeedback",
+      "actual": "缺口可提示，未建立全材料语义核验。"
     },
     {
       "id": "B5",
-      "productValue": "发现潜在价值",
+      "productValue": [
+        "B发现潜在价值"
+      ],
       "task": "公开经验有来源改造",
       "code": [
         "src/lib/life/planning.ts",
         "src/lib/life/ideas.ts"
       ],
       "input": "公开经验有来源改造",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "实际可读来源留下链接/短摘录/许可边界，再作明确标识的改编",
       "baseline": "上轮真实创意质量不合格，受控本地能力可用",
-      "result": "pending",
-      "evidence": [],
+      "result": "controlled-pass",
+      "evidence": [
+        "First8实际读取；B5-controlled-final（0模型）",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "云端改编失败；现有照明+纸笔的本地规则改编保留真实来源/限制，非实物验证。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": false,
+      "api": "/api/life discover/creativeEvidence/ideaFeedback",
+      "actual": "云端改编失败；现有照明+纸笔的本地规则改编保留真实来源/限制，非实物验证。"
     },
     {
       "id": "B6",
-      "productValue": "发现潜在价值",
+      "productValue": [
+        "B发现潜在价值"
+      ],
       "task": "错误物理机制阻止/降级",
       "code": [
         "src/lib/life/planning.ts",
         "src/lib/life/ideas.ts"
       ],
       "input": "错误物理机制阻止/降级",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "已知不成立机制不作为确定效果输出",
       "baseline": "上轮真实创意质量不合格，受控本地能力可用",
-      "result": "pending",
-      "evidence": [],
+      "result": "controlled-pass",
+      "evidence": [
+        "creative-evidence真实失败重放与回归",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "已知凝露/印痕/几何/工具错误拦截；不保证所有未知物理错误。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": false,
+      "api": "/api/life discover/creativeEvidence/ideaFeedback",
+      "actual": "已知凝露/印痕/几何/工具错误拦截；不保证所有未知物理错误。"
     },
     {
       "id": "C1",
-      "productValue": "生活经历/长期联系",
+      "productValue": [
+        "C延续生活联系",
+        "D选择性分享"
+      ],
       "task": "照片一句话保存",
       "code": [
         "src/lib/life/stories.ts",
         "src/components/life/Stories.tsx"
       ],
       "input": "照片一句话保存",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "照片一句话经UI保存并可读",
       "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
-      "result": "pending",
-      "evidence": [],
-      "level": "L2",
-      "issues": [
-        "本轮固定验收尚未执行"
+      "result": "pass",
+      "evidence": [
+        "tests/rc-integration.mjs / storybook-journeys",
+        "wujian-rc-validation-2026-10-20.json"
       ],
-      "releaseBlocker": true
+      "level": "L1",
+      "issues": [
+        "合成照片软件真实读写，非真实用户研究。"
+      ],
+      "releaseBlocker": false,
+      "api": "/api/life fragment/deleteFragment + /api/life/media/:id + /api/assistant",
+      "actual": "合成照片软件真实读写，非真实用户研究。"
     },
     {
       "id": "C2",
-      "productValue": "生活经历/长期联系",
+      "productValue": [
+        "C延续生活联系",
+        "D选择性分享"
+      ],
       "task": "纯文字故事",
       "code": [
         "src/lib/life/stories.ts",
         "src/components/life/Stories.tsx"
       ],
       "input": "纯文字故事",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "不要求照片或物品也可保存",
       "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
-      "result": "pending",
-      "evidence": [],
-      "level": "L2",
-      "issues": [
-        "本轮固定验收尚未执行"
+      "result": "pass",
+      "evidence": [
+        "tests/rc-integration.mjs",
+        "wujian-rc-validation-2026-10-20.json"
       ],
-      "releaseBlocker": true
+      "level": "L1",
+      "issues": [
+        "纯文字零关联可保存。"
+      ],
+      "releaseBlocker": false,
+      "api": "/api/life fragment/deleteFragment + /api/life/media/:id + /api/assistant",
+      "actual": "纯文字零关联可保存。"
     },
     {
       "id": "C3",
-      "productValue": "生活经历/长期联系",
+      "productValue": [
+        "C延续生活联系",
+        "D选择性分享"
+      ],
       "task": "一事多物双向浏览",
       "code": [
         "src/lib/life/stories.ts",
         "src/components/life/Stories.tsx"
       ],
       "input": "一事多物双向浏览",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "同一故事关联2物品，各入口ID及正文相同",
       "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
-      "result": "pending",
-      "evidence": [],
-      "level": "L2",
-      "issues": [
-        "本轮固定验收尚未执行"
+      "result": "pass",
+      "evidence": [
+        "tests/rc-integration.mjs",
+        "wujian-rc-validation-2026-10-20.json"
       ],
-      "releaseBlocker": true
+      "level": "L1",
+      "issues": [
+        "两个物品共用同一正文/ID，双向浏览通过。"
+      ],
+      "releaseBlocker": false,
+      "api": "/api/life fragment/deleteFragment + /api/life/media/:id + /api/assistant",
+      "actual": "两个物品共用同一正文/ID，双向浏览通过。"
     },
     {
       "id": "C4",
-      "productValue": "生活经历/长期联系",
+      "productValue": [
+        "C延续生活联系",
+        "D选择性分享"
+      ],
       "task": "修改删除解除关联一致",
       "code": [
         "src/lib/life/stories.ts",
         "src/components/life/Stories.tsx"
       ],
       "input": "修改删除解除关联一致",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "编辑/日期/增照/解除/删除同步，未引用媒体清理",
       "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
-      "result": "pending",
-      "evidence": [],
-      "level": "L2",
-      "issues": [
-        "本轮固定验收尚未执行"
+      "result": "pass",
+      "evidence": [
+        "tests/rc-integration.mjs / rc-storybook.test.ts",
+        "wujian-rc-validation-2026-10-20.json"
       ],
-      "releaseBlocker": true
+      "level": "L1",
+      "issues": [
+        "多照/日期/修改/解除/删除一致；备份不即时擦除。"
+      ],
+      "releaseBlocker": false,
+      "api": "/api/life fragment/deleteFragment + /api/life/media/:id + /api/assistant",
+      "actual": "多照/日期/修改/解除/删除一致；备份不即时擦除。"
     },
     {
       "id": "C5",
-      "productValue": "生活经历/长期联系",
+      "productValue": [
+        "C延续生活联系",
+        "D选择性分享"
+      ],
       "task": "赠出后私人故事保留",
       "code": [
         "src/lib/life/stories.ts",
         "src/components/life/Stories.tsx"
       ],
       "input": "赠出后私人故事保留",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "赠送不复制私人正文/照片给接收者",
       "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
-      "result": "pending",
-      "evidence": [],
+      "result": "pass-in-local-demo",
+      "evidence": [
+        "tests/rc-integration.mjs",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "赠送领取后原主故事保留，正文/照片不自动分享；成员为本机模拟。"
       ],
-      "releaseBlocker": true
+      "releaseBlocker": false,
+      "api": "/api/life fragment/deleteFragment + /api/life/media/:id + /api/assistant",
+      "actual": "赠送领取后原主故事保留，正文/照片不自动分享；成员为本机模拟。"
     },
     {
       "id": "C6",
-      "productValue": "生活经历/长期联系",
+      "productValue": [
+        "C延续生活联系",
+        "D选择性分享"
+      ],
       "task": "AI引用授权及撤销",
       "code": [
         "src/lib/life/stories.ts",
         "src/components/life/Stories.tsx"
       ],
       "input": "AI引用授权及撤销",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "仅本人授权文字进入模型；撤销后不再引用且旧Context清除",
       "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
-      "result": "pending",
-      "evidence": [],
-      "level": "L2",
-      "issues": [
-        "本轮固定验收尚未执行"
+      "result": "pass-with-limits",
+      "evidence": [
+        "故事书浏览器授权/撤销；C6-r2实际云端",
+        "wujian-rc-validation-2026-10-20.json"
       ],
-      "releaseBlocker": true
+      "level": "L1",
+      "issues": [
+        "上云需单独勾选文字；自然表达仍可能过度修饰。"
+      ],
+      "releaseBlocker": false,
+      "api": "/api/life fragment/deleteFragment + /api/life/media/:id + /api/assistant",
+      "actual": "上云需单独勾选文字；自然表达仍可能过度修饰。"
     },
     {
       "id": "D1",
-      "productValue": "延续保护/传递共享",
+      "productValue": [
+        "C延续保护",
+        "D传递共享"
+      ],
       "task": "耐用与消耗品状态",
       "code": [
         "src/lib/domain.ts",
         "src/components/life/WujianApp.tsx"
       ],
       "input": "耐用与消耗品状态",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "耐用品养护和消耗品轻量余量/状态分别可用",
       "baseline": "已有本地角色模拟，待固定旅程复验",
-      "result": "pending",
-      "evidence": [],
-      "level": "L2",
-      "issues": [
-        "本轮固定验收尚未执行"
+      "result": "pass",
+      "evidence": [
+        "life-integration / life-planning-memory / availability",
+        "wujian-rc-validation-2026-10-20.json"
       ],
-      "releaseBlocker": false
+      "level": "L1",
+      "issues": [
+        "余量可未知/为0，过期/耗尽不参与创意；无后台推送或设备检测。"
+      ],
+      "releaseBlocker": false,
+      "api": "/api/workspace + /api/assistant",
+      "actual": "余量可未知/为0，过期/耗尽不参与创意；无后台推送或设备检测。"
     },
     {
       "id": "D2",
-      "productValue": "延续保护/传递共享",
+      "productValue": [
+        "C延续保护",
+        "D传递共享"
+      ],
       "task": "家庭协助与确认",
       "code": [
         "src/lib/domain.ts",
         "src/components/life/WujianApp.tsx"
       ],
       "input": "家庭协助与确认",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "共享范围内事项交接、反馈/完成可操作",
       "baseline": "已有本地角色模拟，待固定旅程复验",
-      "result": "pending",
-      "evidence": [],
+      "result": "pass-in-local-demo",
+      "evidence": [
+        "household/foundation API+Edge验收",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "明确为本机角色协作，非真实账户或云同步。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": false,
+      "api": "/api/workspace + /api/assistant",
+      "actual": "明确为本机角色协作，非真实账户或云同步。"
     },
     {
       "id": "D3",
-      "productValue": "延续保护/传递共享",
+      "productValue": [
+        "C延续保护",
+        "D传递共享"
+      ],
       "task": "赠礼后权限",
       "code": [
         "src/lib/domain.ts",
         "src/components/life/WujianApp.tsx"
       ],
       "input": "赠礼后权限",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "流转后来源作者、选中内容与私人权限正确",
       "baseline": "已有本地角色模拟，待固定旅程复验",
-      "result": "pending",
-      "evidence": [],
+      "result": "pass-in-local-demo",
+      "evidence": [
+        "gift original author / RC赠送领取权限",
+        "wujian-rc-validation-2026-10-20.json"
+      ],
       "level": "L2",
       "issues": [
-        "本轮固定验收尚未执行"
+        "只传明确选中内容；没有跨设备真实社交身份。"
       ],
-      "releaseBlocker": false
+      "releaseBlocker": false,
+      "api": "/api/workspace + /api/assistant",
+      "actual": "只传明确选中内容；没有跨设备真实社交身份。"
     },
     {
       "id": "D4",
-      "productValue": "延续保护/传递共享",
+      "productValue": [
+        "C延续保护",
+        "D传递共享"
+      ],
       "task": "无物品自然聊天",
       "code": [
         "src/lib/domain.ts",
         "src/components/life/WujianApp.tsx"
       ],
       "input": "无物品自然聊天",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "没有物品也可普通聊天，不强制录入/保存",
       "baseline": "已有本地角色模拟，待固定旅程复验",
-      "result": "pending",
-      "evidence": [],
-      "level": "L2",
-      "issues": [
-        "本轮固定验收尚未执行"
+      "result": "pass",
+      "evidence": [
+        "D4-r1实际Qwen",
+        "wujian-rc-validation-2026-10-20.json"
       ],
-      "releaseBlocker": false
+      "level": "L1",
+      "issues": [
+        "不强制物品，未自动保存长期记忆。"
+      ],
+      "releaseBlocker": false,
+      "api": "/api/workspace + /api/assistant",
+      "actual": "不强制物品，未自动保存长期记忆。"
     },
     {
       "id": "D5",
-      "productValue": "延续保护/传递共享",
+      "productValue": [
+        "C延续保护",
+        "D传递共享"
+      ],
       "task": "普通用户核心操作",
       "code": [
         "src/lib/domain.ts",
         "src/components/life/WujianApp.tsx"
       ],
       "input": "普通用户核心操作",
-      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "expected": "用户通过明确按钮完成路径，不需理解内部架构名词",
       "baseline": "已有本地角色模拟，待固定旅程复验",
-      "result": "pending",
-      "evidence": [],
-      "level": "L2",
-      "issues": [
-        "本轮固定验收尚未执行"
+      "result": "pass-with-minor-issues",
+      "evidence": [
+        "新版2组+RC故事书桌面/390px旅程",
+        "wujian-rc-validation-2026-10-20.json"
       ],
-      "releaseBlocker": false
+      "level": "L1",
+      "issues": [
+        "直接刷新#assistant仍可能回首页；菜单可用。"
+      ],
+      "releaseBlocker": false,
+      "api": "/api/workspace + /api/assistant",
+      "actual": "直接刷新#assistant仍可能回首页；菜单可用。"
     }
-  ]
+  ],
+  "verdict": "受控Demo候选；严格完整验收尚有缺口，不宣称全品类首用/实机烹饪或通用可靠自由创意。",
+  "updated": "2026-10-20",
+  "blockers": [
+    "A1",
+    "A5"
+  ],
+  "supportingEvidence": {
+    "storybook": "浏览器覆盖任务5.3十个关键路径，云端部分另见C6-r2；全部使用合成数据",
+    "openData": "Open Food Facts实际API录入闭环；Open Library/Wikibooks未成功",
+    "currentArchitecture": "Next.js/React + LangGraph + Qwen + SQLite/Product Pack/Memory；未部署Neo4j、向量库或端侧LLM"
+  }
 }

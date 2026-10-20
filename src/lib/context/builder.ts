@@ -8,6 +8,7 @@ import { relevantKnowledge } from "../skills/knowledge.ts";
 import { syntheticItem, usable } from "../life/availability.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 import { listFragments } from "../life/stories.ts";
+import { recallLifeFragments } from "../life/recall.ts";
 export function buildContext(
   db: DatabaseSync,
   state: State,
@@ -74,27 +75,35 @@ export function buildContext(
         input.knowledgeQuery || input.question,
       )
     : [];
-  const cloudFragments =
+  const fragmentRecall =
+    !!db
+      .prepare("SELECT 1 FROM sqlite_master WHERE name='life_fragment_details'")
+      .get() &&
     !input.temporary &&
     persona.memoryUse !== "off" &&
     isMemoryRecallRequest(input.question)
-      ? listFragments(db, state, actor, item?.id)
-          .filter(
-            (f) =>
-              f.allowRecall &&
-              f.allowCloud &&
-              !f.demo &&
-              f.origin !== "fiction",
-          )
-          .slice(0, 3)
-          .map((f) => ({
-            id: f.id,
-            text: f.text.slice(0, 1800),
-            origin: f.origin,
-            recordedAt: f.createdAt,
-            eventDate: f.capturedOn,
-          }))
-      : [];
+      ? recallLifeFragments(db, state, actor, input.question, item?.id)
+      : undefined;
+  const fragmentIds = new Set(fragmentRecall?.memoryIds || []);
+  const cloudFragments = fragmentIds.size
+    ? listFragments(db, state, actor, item?.id)
+        .filter(
+          (f) =>
+            fragmentIds.has(f.id) &&
+            f.allowRecall &&
+            f.allowCloud &&
+            !f.demo &&
+            f.origin !== "fiction",
+        )
+        .slice(0, 3)
+        .map((f) => ({
+          id: f.id,
+          text: f.text.slice(0, 1800),
+          origin: f.origin,
+          recordedAt: f.createdAt,
+          eventDate: f.capturedOn,
+        }))
+    : [];
   return {
     temporary: !!input.temporary,
     question: input.question,

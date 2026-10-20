@@ -1,0 +1,2846 @@
+{
+  "scope": "RC新增40次独立授权；不重复上轮30次台账",
+  "baselineCommit": "bdc1ca3",
+  "date": "2026-10-20",
+  "syntheticOnly": true,
+  "requestsUsed": 40,
+  "limit": 40,
+  "searchUsed": 2,
+  "searchLimit": 10,
+  "visionUsed": 0,
+  "visionLimit": 5,
+  "remaining": 0,
+  "requests": [
+    {
+      "number": 1,
+      "case": "A1",
+      "purpose": "固定验收A1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:13:26.703Z",
+      "inputCharacters": 4203,
+      "status": 200,
+      "elapsedMs": 1183,
+      "usage": {
+        "total_tokens": 1992,
+        "completion_tokens": 16,
+        "prompt_tokens": 1976,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 2,
+      "case": "A1",
+      "purpose": "固定验收A1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:13:27.926Z",
+      "inputCharacters": 5215,
+      "status": 200,
+      "elapsedMs": 1186,
+      "usage": {
+        "total_tokens": 2277,
+        "completion_tokens": 35,
+        "prompt_tokens": 2242,
+        "prompt_tokens_details": {
+          "cached_tokens": 1856
+        }
+      },
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 3,
+      "case": "A1",
+      "purpose": "固定验收A1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:13:29.154Z",
+      "inputCharacters": 5502,
+      "status": 200,
+      "elapsedMs": 3437,
+      "usage": {
+        "total_tokens": 2421,
+        "completion_tokens": 130,
+        "prompt_tokens": 2291,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"needs_info\",\"answer\":\"我目前没有找到关于 Xiaomi RC 空气炸锅 MAF10 型号的官方说明书或首次使用操作资料。为了确保安全、正确地完成首次清洁、设置与烹饪，我们需要这份资料——特别是‘首次清洁’‘除味’‘程序启动’等关键步骤的原文说明。您可以提供说明书链接、PDF 文件"
+    },
+    {
+      "number": 4,
+      "case": "A1-r1",
+      "purpose": "固定验收A1-r1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:15:05.383Z",
+      "inputCharacters": 21267,
+      "status": 200,
+      "elapsedMs": 1932,
+      "usage": {
+        "total_tokens": 7521,
+        "completion_tokens": 48,
+        "prompt_tokens": 7473,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 5,
+      "case": "A1-r1",
+      "purpose": "固定验收A1-r1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:15:07.423Z",
+      "inputCharacters": 32452,
+      "status": 200,
+      "elapsedMs": 33223,
+      "usage": {
+        "total_tokens": 12166,
+        "completion_tokens": 1468,
+        "prompt_tokens": 10698,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"好的，我们按官方说明书（Xiaomi MAF10 UK版）为您梳理首次使用空气炸锅的完整流程：从清洁、除味、开机设置，到装料、启动程序，再到结束与清洁。所有步骤均严格依据原文，不自拟温度、时间或食材参数。请放心跟随——每一步都有明确依据。\",\"steps\":[{"
+    },
+    {
+      "number": 6,
+      "case": "A1-r1",
+      "purpose": "固定验收A1-r1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:15:40.748Z",
+      "inputCharacters": 35367,
+      "status": "network_failed",
+      "elapsedMs": 9599,
+      "usage": null,
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 7,
+      "case": "A1-r3",
+      "purpose": "固定验收A1-r3的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:18:42.394Z",
+      "inputCharacters": 21266,
+      "status": 200,
+      "elapsedMs": 29135,
+      "usage": {
+        "total_tokens": 8598,
+        "completion_tokens": 1276,
+        "prompt_tokens": 7322,
+        "prompt_tokens_details": {
+          "cached_tokens": 1152
+        }
+      },
+      "outputSummary": "{\n  \"kind\": \"grounded\",\n  \"answer\": \"好的，我们一起来完成首次使用 Xiaomi RC 空气炸锅（MAF10，UK版）的全流程。所有步骤均严格依据官方说明书，不添加任何自拟参数（如食材种类、克重、温度或时间）。当前需您确认：是否已通电？是否已完成首次语言选择？我们将从首次清洁开始，逐"
+    },
+    {
+      "number": 8,
+      "case": "A1-r3",
+      "purpose": "固定验收A1-r3的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:19:11.640Z",
+      "inputCharacters": 23915,
+      "status": "network_failed",
+      "elapsedMs": 15741,
+      "usage": null,
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 9,
+      "case": "A2",
+      "purpose": "固定验收A2的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:21:30.988Z",
+      "inputCharacters": 8921,
+      "status": 200,
+      "elapsedMs": 19418,
+      "usage": {
+        "total_tokens": 3958,
+        "completion_tokens": 846,
+        "prompt_tokens": 3112,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"第一次使用 Sony WH-CH520 耳机前，请先充电。使用附带的 USB-C 线缆连接耳机与符合要求的 USB 交流适配器（输出电流 ≥500 mA）或运行中的电脑。充电时橙色指示灯亮起，约 3 小时充满后自动熄灭；此时请拔下线缆。注意：勿用非原装线缆或 U"
+    },
+    {
+      "number": 10,
+      "case": "A2",
+      "purpose": "固定验收A2的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:21:50.499Z",
+      "inputCharacters": 10650,
+      "status": 200,
+      "elapsedMs": 15783,
+      "usage": {
+        "total_tokens": 4716,
+        "completion_tokens": 678,
+        "prompt_tokens": 4038,
+        "prompt_tokens_details": {
+          "cached_tokens": 1152
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"第一次使用 Sony WH-CH520 耳机前，请按官方指南完成首次充电。以下是基于说明书的可执行步骤：连接、启动充电、确认状态、结束操作及长期存放建议。注意环境温度与线缆要求，避免影响充电效果。\",\"steps\":[{\"phase\":\"prepare\",\"co"
+    },
+    {
+      "number": 11,
+      "case": "A2",
+      "purpose": "固定验收A2的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:22:06.362Z",
+      "inputCharacters": 12160,
+      "status": "network_failed",
+      "elapsedMs": 9619,
+      "usage": null,
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 12,
+      "case": "A3",
+      "purpose": "固定验收A3的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:22:20.265Z",
+      "inputCharacters": 5453,
+      "status": 200,
+      "elapsedMs": 13858,
+      "usage": {
+        "total_tokens": 3298,
+        "completion_tokens": 585,
+        "prompt_tokens": 2713,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"这款宜家 RC 书架（货号 305.976.49，对应商品名为 FÄRJKARL 法依考）的清洁与装配资料已在官方页面明确提供。清洁方法直接来自保养说明；组装图解虽未内嵌于当前网页正文，但页面明确列出了‘货号组装手册 305.976.49’及‘相关文件’入口，可"
+    },
+    {
+      "number": 13,
+      "case": "A3",
+      "purpose": "固定验收A3的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:22:34.224Z",
+      "inputCharacters": 6845,
+      "status": 200,
+      "elapsedMs": 9911,
+      "usage": {
+        "total_tokens": 3809,
+        "completion_tokens": 431,
+        "prompt_tokens": 3378,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"根据宜家官网对该书架（货号 305.976.49）的公开说明，清洁方法明确可执行；组装图解虽被官方列为可用文件，但当前文本中未包含具体内容。以下步骤均严格引用原文出处：\",\"steps\":[{\"phase\":\"care\",\"covers\":[\"initial-c"
+    },
+    {
+      "number": 14,
+      "case": "A3",
+      "purpose": "固定验收A3的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:22:44.244Z",
+      "inputCharacters": 8037,
+      "status": 200,
+      "elapsedMs": 12146,
+      "usage": {
+        "total_tokens": 4417,
+        "completion_tokens": 528,
+        "prompt_tokens": 3889,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\n  \"kind\": \"grounded\",\n  \"answer\": \"根据宜家官网对该书架（货号 305.976.49）的公开说明，清洁方式明确；组装图解被官方列为可用文件，但当前文本未包含其内容。以下步骤均逐字/意译自原文，每项严格对应唯一 sourceId。\",\n  \"steps\": [\n    {\n     "
+    },
+    {
+      "number": 15,
+      "case": "A4",
+      "purpose": "固定验收A4的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": true,
+      "vision": false,
+      "at": "2026-10-20T09:22:59.003Z",
+      "inputCharacters": 73,
+      "status": 200,
+      "elapsedMs": 5046,
+      "usage": {
+        "total_tokens": 298,
+        "output_tokens": 180,
+        "input_tokens": 118,
+        "plugins": {
+          "search": {
+            "count": 1,
+            "strategy": "turbo"
+          }
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": {
+        "sourceURLs": [],
+        "generatedCitationNotProof": true
+      }
+    },
+    {
+      "number": 16,
+      "case": "A1-r4",
+      "purpose": "固定验收A1-r4的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:27:43.852Z",
+      "inputCharacters": 21295,
+      "status": 200,
+      "elapsedMs": 27751,
+      "usage": {
+        "total_tokens": 8547,
+        "completion_tokens": 1220,
+        "prompt_tokens": 7327,
+        "prompt_tokens_details": {
+          "cached_tokens": 7168
+        }
+      },
+      "outputSummary": "{\n  \"kind\": \"grounded\",\n  \"answer\": \"好的，我们来一起完成首次使用 Xiaomi RC 空气炸锅（MAF10，UK版）的全流程。所有步骤均严格依据官方说明书，不添加任何未说明的参数或操作。请按顺序执行：\",\n  \"steps\": [\n    {\n      \"phase\": \"pre"
+    },
+    {
+      "number": 17,
+      "case": "A2-r1",
+      "purpose": "固定验收A2-r1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:28:12.774Z",
+      "inputCharacters": 8949,
+      "status": 200,
+      "elapsedMs": 18210,
+      "usage": {
+        "total_tokens": 3919,
+        "completion_tokens": 802,
+        "prompt_tokens": 3117,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\n  \"kind\": \"grounded\",\n  \"answer\": \"第一次给 Sony WH-CH520 耳机充电，需使用附带的 USB Type-C 充电线和符合要求的 USB AC 适配器（输出电流 ≥0.5 A），或连接至运行中的电脑。充电时指示灯（橙色）亮起，约 3 小时充满后自动熄灭。请勿使用非原装线缆"
+    },
+    {
+      "number": 18,
+      "case": "A3-r1",
+      "purpose": "固定验收A3-r1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:28:32.108Z",
+      "inputCharacters": 5481,
+      "status": 200,
+      "elapsedMs": 10424,
+      "usage": {
+        "total_tokens": 3136,
+        "completion_tokens": 418,
+        "prompt_tokens": 2718,
+        "prompt_tokens_details": {
+          "cached_tokens": 2560
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"这款宜家RC书架（货号305.976.49，对应商品名FÄRJKARL 法依考）的清洁与装配资料已确认可得：清洁只需用湿布擦拭，再以干净抹布擦干；组装手册明确存在，标题为‘FÄRJKARL 法依考 书架’，您可在宜家官网该商品页直接下载。\",\"steps\":[{"
+    },
+    {
+      "number": 19,
+      "case": "B1",
+      "purpose": "固定验收B1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:31:56.630Z",
+      "inputCharacters": 3672,
+      "status": 200,
+      "elapsedMs": 31438,
+      "usage": {
+        "total_tokens": 2747,
+        "completion_tokens": 1377,
+        "prompt_tokens": 1370,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\n  \"ideas\": [\n    {\n      \"direction\": \"娱乐\",\n      \"title\": \"光影猜词游戏\",\n      \"itemIds\": [\"4c408abd-2625-4189-8e5b-e50607b1919f\", \"2f0e94aa-cfa5-4db2-b8af-b3694e"
+    },
+    {
+      "number": 20,
+      "case": "B3",
+      "purpose": "固定验收B3的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:32:29.382Z",
+      "inputCharacters": 3960,
+      "status": 200,
+      "elapsedMs": 30961,
+      "usage": {
+        "total_tokens": 3009,
+        "completion_tokens": 1289,
+        "prompt_tokens": 1720,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\n  \"ideas\": [\n    {\n      \"direction\": \"娱乐\",\n      \"title\": \"手电筒节奏传信挑战\",\n      \"itemIds\": [\"4c408abd-2625-4189-8e5b-e50607b1919f\", \"4120cbbc-8864-4f61-92d5-8cc"
+    },
+    {
+      "number": 21,
+      "case": "B5",
+      "purpose": "固定验收B5的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": true,
+      "vision": false,
+      "at": "2026-10-20T09:33:07.934Z",
+      "inputCharacters": 95,
+      "status": 200,
+      "elapsedMs": 5229,
+      "usage": {
+        "total_tokens": 287,
+        "output_tokens": 180,
+        "input_tokens": 107,
+        "plugins": {
+          "search": {
+            "count": 1,
+            "strategy": "turbo"
+          }
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": {
+        "sourceURLs": [],
+        "generatedCitationNotProof": true
+      }
+    },
+    {
+      "number": 22,
+      "case": "B5",
+      "purpose": "固定验收B5的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:33:13.192Z",
+      "inputCharacters": 4286,
+      "status": 200,
+      "elapsedMs": 31897,
+      "usage": {
+        "total_tokens": 2979,
+        "completion_tokens": 1402,
+        "prompt_tokens": 1577,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\n  \"ideas\": [\n    {\n      \"direction\": \"娱乐\",\n      \"title\": \"手电筒影子猜谜赛\",\n      \"itemIds\": [\"4c408abd-2625-4189-8e5b-e50607b1919f\", \"4120cbbc-8864-4f61-92d5-8cc3"
+    },
+    {
+      "number": 23,
+      "case": "A1-r5",
+      "purpose": "固定验收A1-r5的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:38:32.570Z",
+      "inputCharacters": 23194,
+      "status": 200,
+      "elapsedMs": 27560,
+      "usage": {
+        "total_tokens": 8893,
+        "completion_tokens": 1193,
+        "prompt_tokens": 7700,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\n  \"kind\": \"grounded\",\n  \"answer\": \"好的，我们按官方说明书（Xiaomi MAF10 英国版用户指南）为您梳理首次使用空气炸锅的完整流程：从首次清洁、开机设置、装料、程序选择到烹饪结束及后续清洁。所有步骤均严格依据原文，不添加任何未说明的食材、温度、时间或操作细节。\",\n  \"st"
+    },
+    {
+      "number": 24,
+      "case": "A1-r5",
+      "purpose": "固定验收A1-r5的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:39:00.253Z",
+      "inputCharacters": 25873,
+      "status": "network_failed",
+      "elapsedMs": 17308,
+      "usage": null,
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 25,
+      "case": "A4-samla",
+      "purpose": "固定验收A4-samla的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:39:20.290Z",
+      "inputCharacters": 5789,
+      "status": 200,
+      "elapsedMs": 10501,
+      "usage": {
+        "total_tokens": 3345,
+        "completion_tokens": 451,
+        "prompt_tokens": 2894,
+        "prompt_tokens_details": {
+          "cached_tokens": 1152
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"这款宜家SAMLA萨姆拉透明储物盒（货号394.407.67）使用简单、清洁方便，但需注意几项重要安全限制。下面分三部分说明：使用要点、清洁方法、关键限制。\",\"steps\":[{\"phase\":\"prepare\",\"covers\":[],\"text\":\"开箱后"
+    },
+    {
+      "number": 26,
+      "case": "LEGO",
+      "purpose": "固定验收LEGO的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:39:32.664Z",
+      "inputCharacters": 3655,
+      "status": 200,
+      "elapsedMs": 1720,
+      "usage": {
+        "total_tokens": 1904,
+        "completion_tokens": 35,
+        "prompt_tokens": 1869,
+        "prompt_tokens_details": {
+          "cached_tokens": 960
+        }
+      },
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 27,
+      "case": "LEGO",
+      "purpose": "固定验收LEGO的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:39:39.765Z",
+      "inputCharacters": 4492,
+      "status": 200,
+      "elapsedMs": 1191,
+      "usage": {
+        "total_tokens": 2141,
+        "completion_tokens": 33,
+        "prompt_tokens": 2108,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 28,
+      "case": "LEGO",
+      "purpose": "固定验收LEGO的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:39:41.046Z",
+      "inputCharacters": 5328,
+      "status": 200,
+      "elapsedMs": 6222,
+      "usage": {
+        "total_tokens": 2588,
+        "completion_tokens": 250,
+        "prompt_tokens": 2338,
+        "prompt_tokens_details": {
+          "cached_tokens": 1984
+        }
+      },
+      "outputSummary": "{\"kind\":\"needs_info\",\"answer\":\"LEGO 11036「Creative Vehicles」官方拼搭说明书已确认存在，可直接下载（PDF，21.86MB）：\\n\\n🔗 下载链接：https://www.lego.com/en-us/service/building-instructions"
+    },
+    {
+      "number": 29,
+      "case": "A1-r6",
+      "purpose": "固定验收A1-r6的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:42:33.975Z",
+      "inputCharacters": 23194,
+      "status": 200,
+      "elapsedMs": 27041,
+      "usage": {
+        "total_tokens": 8870,
+        "completion_tokens": 1170,
+        "prompt_tokens": 7700,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\n  \"kind\": \"grounded\",\n  \"answer\": \"好的，我们按官方说明书（Xiaomi MAF10 英国版用户指南）为您梳理首次使用空气炸锅的完整流程：从首次清洁、开机设置、装料、程序选择到烹饪结束与清洁养护。所有步骤均严格依据原文，不添加任何未说明的食材、温度或时间参数。\",\n  \"steps"
+    },
+    {
+      "number": 30,
+      "case": "B2",
+      "purpose": "固定验收B2的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:43:03.705Z",
+      "inputCharacters": 15359,
+      "status": 200,
+      "elapsedMs": 30395,
+      "usage": {
+        "total_tokens": 8253,
+        "completion_tokens": 1338,
+        "prompt_tokens": 6915,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\n  \"ideas\": [\n    {\n      \"direction\": \"娱乐\",\n      \"title\": \"书桌收纳挑战赛：三分钟归位\",\n      \"itemIds\": [\"9ae34366-850e-42ed-a804-0976bbb17759\", \"4120cbbc-8864-4f61-92d5"
+    },
+    {
+      "number": 31,
+      "case": "B4",
+      "purpose": "固定验收B4的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:43:35.301Z",
+      "inputCharacters": 3652,
+      "status": 200,
+      "elapsedMs": 31365,
+      "usage": {
+        "total_tokens": 2743,
+        "completion_tokens": 1387,
+        "prompt_tokens": 1356,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        }
+      },
+      "outputSummary": "{\n  \"ideas\": [\n    {\n      \"direction\": \"娱乐\",\n      \"title\": \"光影剪影剧场\",\n      \"itemIds\": [\"4c408abd-2625-4189-8e5b-e50607b1919f\", \"2f0e94aa-cfa5-4db2-b8af-b3694e"
+    },
+    {
+      "number": 32,
+      "case": "C6",
+      "purpose": "固定验收C6的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:44:07.787Z",
+      "inputCharacters": 3747,
+      "status": 200,
+      "elapsedMs": 1001,
+      "usage": {
+        "total_tokens": 1862,
+        "completion_tokens": 21,
+        "prompt_tokens": 1841,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 33,
+      "case": "C6",
+      "purpose": "固定验收C6的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:44:08.837Z",
+      "inputCharacters": 4020,
+      "status": 200,
+      "elapsedMs": 2768,
+      "usage": {
+        "total_tokens": 1984,
+        "completion_tokens": 108,
+        "prompt_tokens": 1876,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"general\",\"answer\":\"你保存过一段真实的阳台画画故事：‘周六在阳台画杯子的轮廓，画歪了也觉得轻松。’——就这一句，干净、轻盈，有 Saturday 的闲暇感，也有铅笔落在纸上那种不较劲的温柔。你想多聊聊它吗？比如当时窗外的光、手边的颜料，或者‘画歪了’那一刻心里悄悄松开的一小截？”,\""
+    },
+    {
+      "number": 34,
+      "case": "C6",
+      "purpose": "固定验收C6的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:44:11.676Z",
+      "inputCharacters": 4449,
+      "status": 200,
+      "elapsedMs": 2736,
+      "usage": {
+        "total_tokens": 2171,
+        "completion_tokens": 107,
+        "prompt_tokens": 2064,
+        "prompt_tokens_details": {
+          "cached_tokens": 1792
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"你保存过一段真实的阳台画画故事：‘周六在阳台画杯子的轮廓，画歪了也觉得轻松。’——就这一句，干净、轻盈，有 Saturday 的闲暇感，也有铅笔落在纸上那种不较劲的温柔。你想多聊聊它吗？比如当时窗外的光、手边的颜料，或者‘画歪了’那一刻心里悄悄松开的一小截？\","
+    },
+    {
+      "number": 35,
+      "case": "D4-r1",
+      "purpose": "固定验收D4-r1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:46:07.643Z",
+      "inputCharacters": 3543,
+      "status": 200,
+      "elapsedMs": 2777,
+      "usage": {
+        "total_tokens": 1808,
+        "completion_tokens": 81,
+        "prompt_tokens": 1727,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"general\",\"answer\":\"啊，终于能坐下来喘口气了——光是听到这句话，就让人跟着松了一小口气呢。今天忙了些什么呀？或者，如果什么都不想说，我们就安静地待一会儿，像两杯刚倒好的温水，不急、不凉、刚刚好。\",\"factIds\":[],\"procedureId\":null,\"questions\""
+    },
+    {
+      "number": 36,
+      "case": "A5",
+      "purpose": "固定验收A5的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:46:11.344Z",
+      "inputCharacters": 23474,
+      "status": 200,
+      "elapsedMs": 19044,
+      "usage": {
+        "total_tokens": 8667,
+        "completion_tokens": 824,
+        "prompt_tokens": 7843,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"您已完成首次清洁的断电冷却与部件取出。接下来请进行首次专属准备：开机并完成语言设置，再执行空篮除味程序。\",\"steps\":[{\"phase\":\"prepare\",\"covers\":[\"initial-clean\"],\"text\":\"已确认完成：请先断电并确保设"
+    },
+    {
+      "number": 37,
+      "case": "A5",
+      "purpose": "固定验收A5的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:46:30.516Z",
+      "inputCharacters": 25363,
+      "status": 200,
+      "elapsedMs": 18905,
+      "usage": {
+        "total_tokens": 9566,
+        "completion_tokens": 819,
+        "prompt_tokens": 8747,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"您已完成首次清洁的断电冷却与部件取出。接下来请开机并完成语言设置，再执行空篮除味程序。\",\"steps\":[{\"phase\":\"prepare\",\"covers\":[\"initial-clean\"],\"text\":\"已确认完成：请先断电并确保设备完全冷却。取出炸"
+    },
+    {
+      "number": 38,
+      "case": "A5",
+      "purpose": "固定验收A5的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:46:49.518Z",
+      "inputCharacters": 27243,
+      "status": "network_failed",
+      "elapsedMs": 6803,
+      "usage": null,
+      "outputSummary": "tool-only/no output"
+    },
+    {
+      "number": 39,
+      "case": "C6-r2",
+      "purpose": "固定验收C6-r2的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:48:07.432Z",
+      "inputCharacters": 3990,
+      "status": 200,
+      "elapsedMs": 3427,
+      "usage": {
+        "total_tokens": 1878,
+        "completion_tokens": 99,
+        "prompt_tokens": 1779,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"general\",\"answer\":\"你保存过三段一模一样的阳台画画故事：‘周六在阳台画杯子的轮廓，画歪了也觉得轻松。’——文字很轻，但能看见光、纸、手和那种不较劲的自在。你想聊聊它哪一部分？是那个周六的天气，还是画歪时心里的反应？或者，只是想让它被轻轻记住？\",\"factIds\":[],\"proce"
+    },
+    {
+      "number": 40,
+      "case": "A5-r1",
+      "purpose": "固定验收A5-r1的最终用户回答/反馈",
+      "model": "qwen-plus",
+      "search": false,
+      "vision": false,
+      "at": "2026-10-20T09:50:01.180Z",
+      "inputCharacters": 23572,
+      "status": 200,
+      "elapsedMs": 29216,
+      "usage": {
+        "total_tokens": 9137,
+        "completion_tokens": 1265,
+        "prompt_tokens": 7872,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"接下来请进行首次使用专属准备：开机并完成语言设置，然后空载除味。\",\"steps\":[{\"phase\":\"prepare\",\"covers\":[\"initial-clean\"],\"text\":\"请先断电并确保设备完全冷却。取出炸篮、炸盘和烤架。用软布或海绵蘸中性"
+    }
+  ],
+  "cases": [
+    {
+      "name": "A1",
+      "calls": 3,
+      "elapsedMs": 6074,
+      "input": "我是第一次使用，想烹饪食物，能带我从首次清洗、准备到完成吗？不要自拟食材参数。",
+      "outcome": "needs_info",
+      "assessment": "失败：首次清洗说法误入陪伴，浪费工具循环；已修路由。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "companion; target=ea851a82-860a-46fb-8ab6-01e06d835ad2; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=1"
+        },
+        {
+          "stage": "tool_completed",
+          "detail": "list_accessible_items"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=1"
+        },
+        {
+          "stage": "tool_completed",
+          "detail": "search_personal_memory"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=3"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "needs_info"
+        }
+      ]
+    },
+    {
+      "name": "A1-r1",
+      "calls": 3,
+      "elapsedMs": 56072,
+      "input": "我是第一次使用，想烹饪食物，能带我从首次清洗、准备到完成吗？不要自拟食材参数。",
+      "outcome": "unavailable",
+      "assessment": "已取到官方资料；covers格式导致整答误拒，重试网络失败。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=ea851a82-860a-46fb-8ab6-01e06d835ad2; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":false,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=1"
+        },
+        {
+          "stage": "tool_completed",
+          "detail": "search_product_knowledge"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=3"
+        },
+        {
+          "stage": "provider_failed",
+          "detail": "network"
+        }
+      ]
+    },
+    {
+      "name": "A1-r2",
+      "calls": 0,
+      "elapsedMs": 113,
+      "input": "我是第一次使用，想烹饪食物，能带我从首次清洗、准备到完成吗？不要自拟食材参数。",
+      "outcome": "unavailable",
+      "assessment": "0请求：新增过滤器的作用域错误已修，保留记录。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=ea851a82-860a-46fb-8ab6-01e06d835ad2; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "provider_failed",
+          "detail": "internal"
+        }
+      ]
+    },
+    {
+      "name": "A1-r3",
+      "calls": 2,
+      "elapsedMs": 45133,
+      "input": "我是第一次使用，想烹饪食物，能带我从首次清洗、准备到完成吗？不要自拟食材参数。",
+      "outcome": "unavailable",
+      "assessment": "两个追问导致整答误拒，随后超时；已规范化追问。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=ea851a82-860a-46fb-8ab6-01e06d835ad2; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "provider_failed",
+          "detail": "network"
+        }
+      ]
+    },
+    {
+      "name": "A2",
+      "calls": 3,
+      "elapsedMs": 46858,
+      "input": "第一次如何给耳机充电？怎么知道充完，有什么注意事项？",
+      "outcome": "unavailable",
+      "assessment": "空引用步骤导致整答误拒，重试失败；后改逐步骤隔离。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=b06eed68-e7b9-467e-877f-7d812f36548c; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":false,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=3"
+        },
+        {
+          "stage": "provider_failed",
+          "detail": "network"
+        }
+      ]
+    },
+    {
+      "name": "A3",
+      "calls": 3,
+      "elapsedMs": 39555,
+      "input": "这件家具怎么清洁？它的装配是否有可用的图解？不要猜安装细节。",
+      "outcome": "needs_info",
+      "assessment": "对象形式gaps被拒，三次输出未成为可用回答；已修协议兼容。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=9ae34366-850e-42ed-a804-0976bbb17759; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":false,\"issues\":[\"官方文档未包含完整型号，未采用：resources.ikea.cn\"]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=3"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        }
+      ]
+    },
+    {
+      "name": "A4",
+      "calls": 1,
+      "elapsedMs": 6527,
+      "input": "第一次使用怎么准备、怎么清洁？请先按品牌型号找官方资料。",
+      "outcome": "needs_info",
+      "assessment": "Philips HD9252/90未取得可读专属资料；诚实止损，未通过泛化案例。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=ab1c9b46-143b-4782-b155-71f9f2e2985f; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":0,\"cached\":false,\"issues\":[\"官方候选未公开返回可读取资料；没有绕过限制，可人工打开官网或上传说明书。\",\"未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。\",\"搜索未返回结构化来源，不使用模型正文引用。\"]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "curated_answer",
+          "detail": "needs_info"
+        }
+      ]
+    },
+    {
+      "name": "A1-r4",
+      "calls": 1,
+      "elapsedMs": 28020,
+      "input": "我是第一次使用，想烹饪食物，能带我从首次清洗、准备到完成吗？不要自拟食材参数。",
+      "outcome": "answered",
+      "assessment": "七阶段指导部分可用；结束步骤跨块引用不足，被隐藏。",
+      "sources": [
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:8931",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 8931–9928；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:9929",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 9929–10928；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:12926",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 12926–13926；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:13927",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 13927–14927；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:18929",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 18929–19925；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:19926",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 19926–20920；MAF10 / uk",
+          "kind": "official"
+        }
+      ],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=ea851a82-860a-46fb-8ab6-01e06d835ad2; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    },
+    {
+      "name": "A2-r1",
+      "calls": 1,
+      "elapsedMs": 18392,
+      "input": "第一次如何给耳机充电？怎么知道充完，有什么注意事项？",
+      "outcome": "answered",
+      "assessment": "充电准备/连接/状态/结束可见，有来源；另1条未核对步骤被隐藏，非实机充电验证。",
+      "sources": [
+        {
+          "id": "676d57adda7466fbe9e529c5:994",
+          "title": "WH-CH520 | Help Guide | Charging the headset",
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+          "section": "原文位置 994–1990；WH-CH520 / unspecified",
+          "kind": "official"
+        },
+        {
+          "id": "676d57adda7466fbe9e529c5:0",
+          "title": "WH-CH520 | Help Guide | Charging the headset",
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+          "section": "原文位置 0–993；WH-CH520 / unspecified",
+          "kind": "official"
+        },
+        {
+          "id": "676d57adda7466fbe9e529c5:1991",
+          "title": "WH-CH520 | Help Guide | Charging the headset",
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+          "section": "原文位置 1991–2988；WH-CH520 / unspecified",
+          "kind": "official"
+        },
+        {
+          "id": "676d57adda7466fbe9e529c5:2989",
+          "title": "WH-CH520 | Help Guide | Charging the headset",
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+          "section": "原文位置 2989–3196；WH-CH520 / unspecified",
+          "kind": "official"
+        }
+      ],
+      "finalUserVisibleReply": {
+        "outcome": "answered",
+        "answer": "以下保留了可核对的步骤；缺失环节见说明，不将部分指导当作完整任务。",
+        "steps": [
+          {
+            "id": "docstep:676d57adda7466fbe9e529c5:0:phase=prepare:确认使用包装内附带的USBType-C充电线；准",
+            "text": "检查与准备：确认使用包装内附带的 USB Type-C 充电线；准备一个输出电流为 0.5 A（500 mA）或更高的商用 USB AC 适配器，或一台已开机、未进入休眠/睡眠模式的电脑。",
+            "phase": "prepare"
+          },
+          {
+            "id": "docstep:676d57adda7466fbe9e529c5:994:phase=start:将USBType-C线一端插入耳机底部的充电接口",
+            "text": "开机：将 USB Type-C 线一端插入耳机底部的充电接口，另一端接入适配器（再接入电源插座）或直接插入电脑 USB 端口；若耳机处于开机状态，会自动关机。",
+            "phase": "start"
+          },
+          {
+            "id": "docstep:676d57adda7466fbe9e529c5:1991:phase=configure:充电开始后，耳机上的橙色指示灯会亮起；若长时间未",
+            "text": "设置：充电开始后，耳机上的橙色指示灯会亮起；若长时间未使用，指示灯可能延迟亮起，请稍候；若指示灯闪烁，说明环境温度超出 5 °C–35 °C 范围或存在电池异常。",
+            "phase": "configure"
+          },
+          {
+            "id": "docstep:676d57adda7466fbe9e529c5:994:phase=operate:充电过程中，耳机无法开机、配对蓝牙设备或播放音乐",
+            "text": "实际使用：充电过程中，耳机无法开机、配对蓝牙设备或播放音乐；电脑进入待机或休眠状态时，充电将中断，需调整电脑设置后重新开始。",
+            "phase": "operate"
+          },
+          {
+            "id": "docstep:676d57adda7466fbe9e529c5:0:phase=finish:充电约需3小时（从完全没电到满电），完成后橙色指",
+            "text": "结束处理：充电约需 3 小时（从完全没电到满电），完成后橙色指示灯自动熄灭；此时请拔下 USB Type-C 线；切勿通过 USB 集线器连接充电，须直连电脑或适配器。",
+            "phase": "finish"
+          }
+        ],
+        "questions": [],
+        "source": "model-with-evidence",
+        "citations": [
+          {
+            "id": "676d57adda7466fbe9e529c5:994",
+            "title": "WH-CH520 | Help Guide | Charging the headset",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+            "section": "原文位置 994–1990；WH-CH520 / unspecified",
+            "kind": "official"
+          },
+          {
+            "id": "676d57adda7466fbe9e529c5:0",
+            "title": "WH-CH520 | Help Guide | Charging the headset",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+            "section": "原文位置 0–993；WH-CH520 / unspecified",
+            "kind": "official"
+          },
+          {
+            "id": "676d57adda7466fbe9e529c5:1991",
+            "title": "WH-CH520 | Help Guide | Charging the headset",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+            "section": "原文位置 1991–2988；WH-CH520 / unspecified",
+            "kind": "official"
+          },
+          {
+            "id": "676d57adda7466fbe9e529c5:2989",
+            "title": "WH-CH520 | Help Guide | Charging the headset",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+            "section": "原文位置 2989–3196；WH-CH520 / unspecified",
+            "kind": "official"
+          }
+        ],
+        "evidenceIds": [
+          "676d57adda7466fbe9e529c5:0",
+          "676d57adda7466fbe9e529c5:994",
+          "676d57adda7466fbe9e529c5:1991",
+          "676d57adda7466fbe9e529c5:2989"
+        ],
+        "memoryIds": [],
+        "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。 已隐藏1条未通过证据检查的步骤，未据此宣称完整完成任务。",
+        "model": "qwen-plus",
+        "route": {
+          "intent": "help",
+          "mode": "service",
+          "reason": "使用已确认物品处理实际操作任务",
+          "itemId": "b06eed68-e7b9-467e-877f-7d812f36548c",
+          "itemName": "RC 耳机"
+        }
+      },
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=b06eed68-e7b9-467e-877f-7d812f36548c; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    },
+    {
+      "name": "A3-r1",
+      "calls": 1,
+      "elapsedMs": 10621,
+      "input": "这件家具怎么清洁？它的装配是否有可用的图解？不要猜安装细节。",
+      "outcome": "answered",
+      "assessment": "清洁/防倾倒有依据；未解析装配图，不能当完整装配指导。",
+      "sources": [
+        {
+          "id": "079714daa8af827a25dbfc26:0",
+          "title": "FÄRJKARL 法依考 书架 灰白 - IKEA",
+          "url": "https://www.ikea.cn/cn/zh/p/30597649/",
+          "section": "原文位置 0–999；305.976.49 / cn",
+          "kind": "official"
+        }
+      ],
+      "finalUserVisibleReply": {
+        "outcome": "answered",
+        "answer": "这款宜家RC书架（货号305.976.49，对应商品名FÄRJKARL 法依考）的清洁与装配资料已确认可得：清洁只需用湿布擦拭，再以干净抹布擦干；组装手册明确存在，标题为‘FÄRJKARL 法依考 书架’，您可在宜家官网该商品页直接下载。",
+        "steps": [
+          {
+            "id": "docstep:079714daa8af827a25dbfc26:0:phase=care:用湿布擦净书架表面，再用干净的抹布擦干。请定期检",
+            "text": "清洁养护：用湿布擦净书架表面，再用干净的抹布擦干。请定期检查所有组装配件是否紧固，如有必要，重新进行加固。",
+            "phase": "care"
+          },
+          {
+            "id": "docstep:079714daa8af827a25dbfc26:0:phase=prepare:本产品必须安全固定，以防倾倒风险。请使用合适的螺",
+            "text": "检查与准备：本产品必须安全固定，以防倾倒风险。请使用合适的螺丝和螺栓将书架牢固安装在墙体上；如无法确定安装方式，请咨询专业人士。",
+            "phase": "prepare"
+          },
+          {
+            "id": "docstep:079714daa8af827a25dbfc26:0:phase=configure:黄铜横杆和搁板均可安装在开孔中，方便您根据需要移",
+            "text": "设置：黄铜横杆和搁板均可安装在开孔中，方便您根据需要移动至任意位置；储物单元配有可调节支腿，可减少晃动。",
+            "phase": "configure"
+          },
+          {
+            "id": "docstep:079714daa8af827a25dbfc26:0:phase=operate:3个搁板可自由调节高度，适配不同尺寸的书籍与装饰",
+            "text": "实际使用：3个搁板可自由调节高度，适配不同尺寸的书籍与装饰品；支腿为实木材质，其余主体为纤维板与刨花板，表面覆丙烯酸漆及纸制贴膜。",
+            "phase": "operate"
+          }
+        ],
+        "questions": [],
+        "source": "model-with-evidence",
+        "citations": [
+          {
+            "id": "079714daa8af827a25dbfc26:0",
+            "title": "FÄRJKARL 法依考 书架 灰白 - IKEA",
+            "url": "https://www.ikea.cn/cn/zh/p/30597649/",
+            "section": "原文位置 0–999；305.976.49 / cn",
+            "kind": "official"
+          }
+        ],
+        "evidenceIds": [
+          "079714daa8af827a25dbfc26:0"
+        ],
+        "memoryIds": [],
+        "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
+        "model": "qwen-plus",
+        "route": {
+          "intent": "help",
+          "mode": "service",
+          "reason": "使用已确认物品处理实际操作任务",
+          "itemId": "9ae34366-850e-42ed-a804-0976bbb17759",
+          "itemName": "RC 书架"
+        }
+      },
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=9ae34366-850e-42ed-a804-0976bbb17759; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":true,\"issues\":[\"官方文档未包含完整型号，未采用：resources.ikea.cn\"]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    },
+    {
+      "name": "B1",
+      "calls": 1,
+      "elapsedMs": 31538,
+      "input": "只用手电筒、玻璃杯和纸笔，给娱乐、生活改善、创作三个不同方案。不做科学观察实验，不假定有其他材料。",
+      "outcome": "model-creative",
+      "assessment": "三个方向输出，但水未确认、对称杯旋转错位等不合理；已增加独立检查，不能按HTTP200认成功。",
+      "sources": [],
+      "candidateTitles": [
+        "光影猜词游戏",
+        "饮水进度可视化标记",
+        "杯沿拓印叙事画"
+      ],
+      "missing": [],
+      "source": "model-creative",
+      "stages": []
+    },
+    {
+      "name": "B3",
+      "calls": 1,
+      "elapsedMs": 31031,
+      "input": "只用手电筒、玻璃杯和纸笔，给娱乐、生活改善、创作三个不同方案。不做科学观察实验，不假定有其他材料。；；本轮调整：不要用玻璃杯，缩短到十分钟，换个更有趣的方向",
+      "outcome": "model-creative",
+      "assessment": "排除杯和10分钟条件生效，但出现未登记钥匙与未确认同伴；模型质量仍有限。",
+      "sources": [],
+      "candidateTitles": [
+        "手电筒节奏传信挑战",
+        "光影轮廓速写日记"
+      ],
+      "missing": [],
+      "source": "model-creative",
+      "stages": []
+    },
+    {
+      "name": "B5",
+      "calls": 2,
+      "elapsedMs": 43818,
+      "input": "参考给出的影子游戏经验，改成只用手电筒和纸笔，10分钟猜谜游戏，不用纸箱胶带剪刀。",
+      "outcome": "local-candidate",
+      "assessment": "模型来源/可执行性未通过，明确回退；最终另以真实来源做本地规则改编并通过无模型验证。",
+      "sources": [],
+      "candidateTitles": [
+        "用RC 纸笔玩一轮限词编故事",
+        "借RC 透明玻璃杯的轮廓做角色草图",
+        "把一件常用物画成今天的小速写",
+        "给自己留一个安静的饮水休息"
+      ],
+      "missing": [
+        "纸笔是否完整须确认；多人参与不是前置条件",
+        "可写表面、笔和容器稳定性需本人确认；不涂写原物品",
+        "云端方案未通过可执行性/资料检查，下面仅为本地有限能力组合，未冒充AI成功。"
+      ],
+      "source": "local-candidate",
+      "stages": []
+    },
+    {
+      "name": "A1-r5",
+      "calls": 2,
+      "elapsedMs": 45219,
+      "input": "我是第一次使用，想烹饪食物，能带我从首次清洗、准备到完成吗？不要自拟食材参数。",
+      "outcome": "unavailable",
+      "assessment": "模型用load作phase，整答拒绝后超时；已做阶段别名兼容。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=ea851a82-860a-46fb-8ab6-01e06d835ad2; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "provider_failed",
+          "detail": "network"
+        }
+      ]
+    },
+    {
+      "name": "A4-samla",
+      "calls": 1,
+      "elapsedMs": 11890,
+      "input": "这件收纳用品怎么使用和清洁？有哪些重要限制？",
+      "outcome": "answered",
+      "assessment": "仅品牌型号真实取得新SAMLA官方页并输出帮助；含自动锁扣/泛化养护等未经逐断言核实内容及当时定位-1错误，不能标为全面可信帮助。定位已修，旧输出保留。",
+      "sources": [
+        {
+          "id": "5a19f993c0ca16ec65aa8fcd:-1",
+          "title": "SAMLA 萨姆拉 附盖储物盒 透明 - IKEA",
+          "url": "https://www.ikea.cn/cn/zh/p/39440767/",
+          "section": "原文位置 -1–1348；394.407.67 / cn",
+          "kind": "official"
+        }
+      ],
+      "finalUserVisibleReply": {
+        "outcome": "answered",
+        "answer": "这款宜家SAMLA萨姆拉透明储物盒（货号394.407.67）使用简单、清洁方便，但需注意几项重要安全限制。下面分三部分说明：使用要点、清洁方法、关键限制。",
+        "steps": [
+          {
+            "id": "docstep:5a19f993c0ca16ec65aa8fcd:-1:phase=prepare:开箱后检查盒体与盖子是否完好，确认盖子内嵌式锁扣",
+            "text": "检查与准备：开箱后检查盒体与盖子是否完好，确认盖子内嵌式锁扣能顺畅卡合。该盒为透明聚丙烯塑料材质，不可用于盛放食物或接触高温物品。请勿让婴幼儿在盒内玩耍，避免密闭窒息风险。",
+            "phase": "prepare"
+          },
+          {
+            "id": "docstep:5a19f993c0ca16ec65aa8fcd:-1:phase=operate:将物品放入盒中时，建议重物置于底部以保持稳定；盖",
+            "text": "实际使用：将物品放入盒中时，建议重物置于底部以保持稳定；盖上盖子后，锁扣会自动嵌合，实现防尘与叠放功能。可与其他SAMLA系列（如IVAR/BROR搁架）搭配使用，最大推荐叠放高度为90cm，以防倾倒。",
+            "phase": "operate"
+          },
+          {
+            "id": "docstep:5a19f993c0ca16ec65aa8fcd:-1:phase=care:必要时清洁：用软布蘸取清水及中性洗涤剂或皂液擦拭",
+            "text": "清洁养护：必要时清洁：用软布蘸取清水及中性洗涤剂或皂液擦拭盒体与盖子内外表面，之后用干净软布擦干。切勿使用研磨性清洁剂、溶剂或漂白水，以免损伤透明塑料表面。",
+            "phase": "care"
+          },
+          {
+            "id": "docstep:5a19f993c0ca16ec65aa8fcd:-1:phase=finish:清洁完毕后，请确保盒体与盖子完全干燥再重新使用或",
+            "text": "结束处理：清洁完毕后，请确保盒体与盖子完全干燥再重新使用或收纳。长期存放时，建议置于阴凉干燥的室内环境，避免阳光直射导致塑料老化变脆。",
+            "phase": "finish"
+          }
+        ],
+        "questions": [],
+        "source": "model-with-evidence",
+        "citations": [
+          {
+            "id": "5a19f993c0ca16ec65aa8fcd:-1",
+            "title": "SAMLA 萨姆拉 附盖储物盒 透明 - IKEA",
+            "url": "https://www.ikea.cn/cn/zh/p/39440767/",
+            "section": "原文位置 -1–1348；394.407.67 / cn",
+            "kind": "official"
+          }
+        ],
+        "evidenceIds": [
+          "5a19f993c0ca16ec65aa8fcd:-1"
+        ],
+        "memoryIds": [],
+        "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
+        "model": "qwen-plus",
+        "route": {
+          "intent": "help",
+          "mode": "service",
+          "reason": "使用已确认物品处理实际操作任务",
+          "itemId": "b6868c32-4d53-4032-9d1c-34d760593e16",
+          "itemName": "RC 新收纳用品"
+        }
+      },
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=b6868c32-4d53-4032-9d1c-34d760593e16; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":false,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    },
+    {
+      "name": "A6",
+      "calls": 0,
+      "elapsedMs": 90,
+      "input": "这个第一次怎么用？型号已经确认，请不要猜。",
+      "outcome": "needs_info",
+      "assessment": "0请求：已知未知型号直接说明缺口，不重复索要型号。",
+      "sources": [],
+      "finalUserVisibleReply": {
+        "outcome": "needs_info",
+        "answer": "已确认档案型号为ZZ-NOT-REAL-RC。本轮未取得可靠的专属操作资料，不能猜测按键、时长或套用相似型号。通用准备可先核对实物标签与包装说明；可稍后刷新，或补充可读取的对应资料。",
+        "source": "curated-guidance",
+        "steps": [],
+        "questions": [],
+        "evidenceIds": [],
+        "citations": [],
+        "memoryIds": [],
+        "caveat": "未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。",
+        "route": {
+          "itemId": "a494e1a5-7f8c-4b9f-872f-4663e6d3f6cc",
+          "itemName": "RC 未知电器",
+          "intent": "help",
+          "mode": "service",
+          "reason": "核对适用资料与使用条件"
+        }
+      },
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=a494e1a5-7f8c-4b9f-872f-4663e6d3f6cc; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":0,\"cached\":false,\"issues\":[\"未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。\"]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "curated_answer",
+          "detail": "needs_info"
+        }
+      ]
+    },
+    {
+      "name": "LEGO",
+      "calls": 3,
+      "elapsedMs": 14831,
+      "input": "这个型号的官方拼搭图解在哪里？能从说明书带我拼第一步吗？",
+      "outcome": "needs_info",
+      "assessment": "不合格：模型给出未实际验证的PDF存在/体积和泛化追问。补入拼搭/图解意图后采用本地资料缺口路径。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=cc3e7715-0711-4ca6-8d41-b0be5e71e145; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=1"
+        },
+        {
+          "stage": "tool_completed",
+          "detail": "fetch_official_knowledge"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=1"
+        },
+        {
+          "stage": "tool_completed",
+          "detail": "search_product_knowledge"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=3"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "needs_info"
+        }
+      ]
+    },
+    {
+      "name": "A1-r6",
+      "calls": 1,
+      "elapsedMs": 27308,
+      "input": "我是第一次使用，想烹饪食物，能带我从首次清洗、准备到完成吗？不要自拟食材参数。",
+      "outcome": "answered",
+      "assessment": "单次真实请求返回8步，包含首次清洁、开机、除味、装料、程序、运行、结束和养护；仍需食材份量参数及实机反馈，不等于已经完成烹饪。",
+      "sources": [
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:9929",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 9929–11279；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:8931",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 8931–10279；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:12926",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 12926–14277；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:13927",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 13927–15277；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:18929",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 18929–20276；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:19926",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 19926–21271；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:17928",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 17928–19279；MAF10 / uk",
+          "kind": "official"
+        }
+      ],
+      "finalUserVisibleReply": {
+        "outcome": "answered",
+        "answer": "好的，我们按官方说明书（Xiaomi MAF10 英国版用户指南）为您梳理首次使用空气炸锅的完整流程：从首次清洁、开机设置、装料、程序选择到烹饪结束与清洁养护。所有步骤均严格依据原文，不添加任何未说明的食材、温度或时间参数。",
+        "steps": [
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:18929:phase=prepare:请先断电并确保设备完全冷却。取出炸篮、炸盘和烤架",
+            "text": "检查与准备：请先断电并确保设备完全冷却。取出炸篮、炸盘和烤架，可用软布或海绵蘸中性清洁剂擦拭；炸篮有涂层，严禁使用钢丝球等研磨材料。炸盘和烤架可放入洗碗机清洗，炸篮也可水洗（但整机不可浸水或机洗）。机身表面用干软布或微湿中性清洁布擦拭即可。",
+            "phase": "prepare"
+          },
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:9929:phase=start:将空气炸锅放在平稳、水平且四周留有足够散热空间的",
+            "text": "开机：将空气炸锅放在平稳、水平且四周留有足够散热空间的台面上。连接电源，按下电源按钮开机。首次开机将进入语言选择界面，请旋转旋钮选择所需语言，再按旋钮确认。",
+            "phase": "start"
+          },
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:9929:phase=configure:为去除新机轻微气味，建议空篮运行：将炸篮完全推入",
+            "text": "设置：为去除新机轻微气味，建议空篮运行：将炸篮完全推入，设置最高温220°C，运行5分钟。此过程可能产生少量白烟或气味，属正常现象。",
+            "phase": "configure"
+          },
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:12926:phase=operate:将炸盘放入炸篮内（注意：炸盘上的硅胶垫不可移除）",
+            "text": "实际使用：将炸盘放入炸篮内（注意：炸盘上的硅胶垫不可移除）；再逐层加入食材。若食材量较大，请使用烤架分层放置；切勿无烤架直接堆叠，否则影响受热效果。",
+            "phase": "operate"
+          },
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:12926:phase=configure:确保炸篮完全推入后，旋转并按下控制旋钮，选择手动",
+            "text": "设置：确保炸篮完全推入后，旋转并按下控制旋钮，选择手动模式或预设食谱（如鸡翅、薯条等）；再旋转并按下旋钮设定模式（如酥脆烤/脱脂）、食材量（单层/双层）、温度与时间，最后按旋钮启动程序。",
+            "phase": "configure"
+          },
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:13927:phase=operate:程序启动后开始倒计时。烹饪中可旋转旋钮调节温度或",
+            "text": "实际使用：程序启动后开始倒计时。烹饪中可旋转旋钮调节温度或时间（酸奶模式除外），但须及时按旋钮确认；否则5秒后将按原设定继续运行。",
+            "phase": "operate"
+          },
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:13927:phase=finish:烹饪完成时，设备会蜂鸣并显示“Completed",
+            "text": "结束处理：烹饪完成时，设备会蜂鸣并显示“Completed”。部分食谱会自动进入保温状态（显示“Keeping warm…”），保温时长30分钟、温度80°C。请注意：此时炸篮极烫，切勿徒手触碰。",
+            "phase": "finish"
+          },
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:18929:phase=care:烹饪结束后，请先拔掉电源，待炸篮及腔体充分冷却（",
+            "text": "清洁养护：烹饪结束后，请先拔掉电源，待炸篮及腔体充分冷却（不可用水冲淋或浸泡），再取出炸篮、炸盘和烤架进行清洁。每次使用后都应清洁，以延长使用寿命。",
+            "phase": "care"
+          }
+        ],
+        "questions": [
+          "您希望本次烹饪使用哪一类食材？例如：鸡翅、薯条、蔬菜、鱼肉等（说明书列出了预设选项，我们可以据此调出对应操作）"
+        ],
+        "source": "model-with-evidence",
+        "citations": [
+          {
+            "id": "cb1ecafb4232cc3ad2f506af:9929",
+            "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "section": "原文位置 9929–11279；MAF10 / uk",
+            "kind": "official"
+          },
+          {
+            "id": "cb1ecafb4232cc3ad2f506af:8931",
+            "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "section": "原文位置 8931–10279；MAF10 / uk",
+            "kind": "official"
+          },
+          {
+            "id": "cb1ecafb4232cc3ad2f506af:12926",
+            "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "section": "原文位置 12926–14277；MAF10 / uk",
+            "kind": "official"
+          },
+          {
+            "id": "cb1ecafb4232cc3ad2f506af:13927",
+            "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "section": "原文位置 13927–15277；MAF10 / uk",
+            "kind": "official"
+          },
+          {
+            "id": "cb1ecafb4232cc3ad2f506af:18929",
+            "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "section": "原文位置 18929–20276；MAF10 / uk",
+            "kind": "official"
+          },
+          {
+            "id": "cb1ecafb4232cc3ad2f506af:19926",
+            "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "section": "原文位置 19926–21271；MAF10 / uk",
+            "kind": "official"
+          },
+          {
+            "id": "cb1ecafb4232cc3ad2f506af:17928",
+            "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "section": "原文位置 17928–19279；MAF10 / uk",
+            "kind": "official"
+          }
+        ],
+        "evidenceIds": [
+          "cb1ecafb4232cc3ad2f506af:18929",
+          "cb1ecafb4232cc3ad2f506af:19926",
+          "cb1ecafb4232cc3ad2f506af:9929",
+          "cb1ecafb4232cc3ad2f506af:8931",
+          "cb1ecafb4232cc3ad2f506af:12926",
+          "cb1ecafb4232cc3ad2f506af:13927",
+          "cb1ecafb4232cc3ad2f506af:17928"
+        ],
+        "memoryIds": [],
+        "taskProgress": {
+          "guidance": "partial",
+          "missing": [
+            "实际烹饪前，请按所选食材、份量及官方食谱确认程序/参数；本次只提供控制流程，不凭空设定熟度或食品时温。"
+          ],
+          "completionEvidence": "advice-only"
+        },
+        "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。 实际烹饪前，请按所选食材、份量及官方食谱确认程序/参数；本次只提供控制流程，不凭空设定熟度或食品时温。",
+        "model": "qwen-plus",
+        "route": {
+          "intent": "help",
+          "mode": "service",
+          "reason": "使用已确认物品处理实际操作任务",
+          "itemId": "ea851a82-860a-46fb-8ab6-01e06d835ad2",
+          "itemName": "RC 空气炸锅"
+        }
+      },
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=ea851a82-860a-46fb-8ab6-01e06d835ad2; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    },
+    {
+      "name": "LEGO-r1",
+      "calls": 0,
+      "elapsedMs": 87,
+      "input": "这个型号的官方拼搭图解在哪里？能从说明书带我拼第一步吗？",
+      "outcome": "needs_info",
+      "assessment": "0请求：官方入口可读但图解未解析，明确提示局限，不再猜图或下载体积。",
+      "sources": [
+        {
+          "id": "e9c47854ebc10368a23cbde6:0",
+          "title": "Building Instructions - Download",
+          "url": "https://www.lego.com/en-us/service/building-instructions/11036",
+          "kind": "official"
+        }
+      ],
+      "finalUserVisibleReply": {
+        "outcome": "needs_info",
+        "answer": "已找到11036的官方资料入口，但可读取正文只有资料/规格信息，缺少可核对的操作图解。可从下方原始来源打开对应说明；本轮不从规格补造步骤。",
+        "source": "curated-guidance",
+        "steps": [],
+        "questions": [],
+        "evidenceIds": [],
+        "citations": [
+          {
+            "id": "e9c47854ebc10368a23cbde6:0",
+            "title": "Building Instructions - Download",
+            "url": "https://www.lego.com/en-us/service/building-instructions/11036",
+            "kind": "official"
+          }
+        ],
+        "memoryIds": [],
+        "caveat": "型号入口经过核对；图片式步骤/动态下载内容尚未完整提取。",
+        "route": {
+          "intent": "help",
+          "mode": "service",
+          "reason": "查询当前物品的操作资料，不把“哪里看说明”误判为找位置",
+          "itemId": "cc3e7715-0711-4ca6-8d41-b0be5e71e145",
+          "itemName": "RC 拼搭套装"
+        }
+      },
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=cc3e7715-0711-4ca6-8d41-b0be5e71e145; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":true,\"issues\":[\"相关说明书未能读取，保留已取得的官方页面\"]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "curated_answer",
+          "detail": "needs_info"
+        }
+      ]
+    },
+    {
+      "name": "B2",
+      "calls": 1,
+      "elapsedMs": 30476,
+      "input": "我想整理书桌，不花钱，请从我已有的可用物品挑合适的组合。",
+      "outcome": "model-creative",
+      "assessment": "从全量可用资源规划；输出仍需人工核对，不宣称通用可靠性。",
+      "sources": [],
+      "candidateTitles": [
+        "玻璃杯+纸笔：桌面垂直收纳启动器",
+        "书架轮廓速写+功能标注手账页"
+      ],
+      "missing": [
+        "RC 书架：需1份，实际数量待确认"
+      ],
+      "source": "model-creative",
+      "stages": []
+    },
+    {
+      "name": "B4",
+      "calls": 1,
+      "elapsedMs": 31508,
+      "input": "我想用剪刀和胶带做手工，但没确认是否有这些材料，能怎么做？",
+      "outcome": "model-creative",
+      "assessment": "缺少剪刀/胶带时尝试替代与条件提示；保留模型待尝试等级。",
+      "sources": [],
+      "candidateTitles": [
+        "光影剪影剧场",
+        "杯身功能标签系统",
+        "杯形拓印日记"
+      ],
+      "missing": [
+        "剪刀",
+        "胶带",
+        "同伴人数与参与意愿待确认；没有同伴时需改成单人玩法"
+      ],
+      "source": "model-creative",
+      "stages": []
+    },
+    {
+      "name": "C6",
+      "calls": 3,
+      "elapsedMs": 6776,
+      "input": "回忆我保存的阳台画画故事，陪我聊聊，不要补编人物、地点或其他经历。",
+      "outcome": "needs_info",
+      "assessment": "失败：聊天JSON格式问题后重试错误地要求grounded商品步骤；已按Skill修复重试协议。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "companion; target=home; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=1"
+        },
+        {
+          "stage": "tool_completed",
+          "detail": "search_personal_memory"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=3"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        }
+      ]
+    },
+    {
+      "name": "D4",
+      "calls": 0,
+      "elapsedMs": 108,
+      "input": "今天忙完终于有空坐一会儿，想随便聊聊，不用给我安排任务。",
+      "outcome": "needs_info",
+      "assessment": "失败：随便聊聊误入故事并要求线索，已修自然交流路由。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "story; target=home; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "curated_answer",
+          "detail": "needs_info"
+        }
+      ]
+    },
+    {
+      "name": "C6-r1",
+      "calls": 0,
+      "elapsedMs": 130,
+      "input": "回忆我保存的阳台画画故事，陪我聊聊，不要补编人物、地点或其他经历。",
+      "outcome": "needs_info",
+      "assessment": "0请求：无物品的旧精选分支挡住已授权故事，已取消这一阻挡。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "story; target=home; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "curated_answer",
+          "detail": "needs_info"
+        }
+      ]
+    },
+    {
+      "name": "D4-r1",
+      "calls": 1,
+      "elapsedMs": 2925,
+      "input": "今天忙完终于有空坐一会儿，想随便聊聊，不用给我安排任务。",
+      "outcome": "answered",
+      "assessment": "单次真实自然闲聊回应，不要求物品或分配任务；语气仍可更简洁。",
+      "sources": [],
+      "finalUserVisibleReply": {
+        "outcome": "answered",
+        "answer": "啊，终于能坐下来喘口气了——光是听到这句话，就让人跟着松了一小口气呢。今天忙了些什么呀？或者，如果什么都不想说，我们就安静地待一会儿，像两杯刚倒好的温水，不急、不凉、刚刚好。",
+        "source": "model-general",
+        "steps": [],
+        "questions": [],
+        "evidenceIds": [],
+        "citations": [],
+        "memoryIds": [],
+        "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+        "model": "qwen-plus",
+        "route": {
+          "intent": "companion",
+          "mode": "companion",
+          "reason": "回应这次交流，不强行围绕物品"
+        }
+      },
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "companion; target=home; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    },
+    {
+      "name": "A5",
+      "calls": 3,
+      "elapsedMs": 45192,
+      "input": "我已经做过第一步了，接下来呢？",
+      "outcome": "unavailable",
+      "assessment": "已尝试状态保留，但program别名/结构字段导致误拒、网络失败。",
+      "sources": [],
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=ea851a82-860a-46fb-8ab6-01e06d835ad2; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=3"
+        },
+        {
+          "stage": "provider_failed",
+          "detail": "network"
+        }
+      ]
+    },
+    {
+      "name": "C6-r2",
+      "calls": 1,
+      "elapsedMs": 3652,
+      "input": "回忆我保存的阳台画画故事，陪我聊聊，不要补编人物、地点或其他经历。",
+      "outcome": "answered",
+      "assessment": "真实使用3条获准合成故事进入表达，能沿故事自然说话；测试脚本多次创建相同合成文本导致模型说三条相同，非真实用户经历。需避免视觉化比喻被理解成实物感知。",
+      "sources": [],
+      "finalUserVisibleReply": {
+        "outcome": "answered",
+        "answer": "你保存过三段一模一样的阳台画画故事：‘周六在阳台画杯子的轮廓，画歪了也觉得轻松。’——文字很轻，但能看见光、纸、手和那种不较劲的自在。你想聊聊它哪一部分？是那个周六的天气，还是画歪时心里的反应？或者，只是想让它被轻轻记住？",
+        "source": "model-general",
+        "steps": [],
+        "questions": [],
+        "evidenceIds": [],
+        "citations": [],
+        "memoryIds": [
+          "42c98f4c-8769-4db9-b3cb-22f97dca23df",
+          "1cf2120d-eecf-43ba-b69c-13f00f9fac37",
+          "1086a5d1-ec5a-431c-bcc3-04e98d513061"
+        ],
+        "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+        "model": "qwen-plus",
+        "route": {
+          "intent": "story",
+          "mode": "story",
+          "reason": "按当前授权回忆本人记录"
+        }
+      },
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "story; target=home; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    },
+    {
+      "name": "A5-r1",
+      "calls": 1,
+      "elapsedMs": 29491,
+      "input": "我已经做过第一步了，接下来呢？",
+      "outcome": "unavailable",
+      "assessment": "最后1次请求后额度到40；question对象导致后续重试被预算阻止。收尾规范化该可选字段，用第40次原始响应离线经过当前Graph返回7步、tried=1且首步不重讲清洗。未再在线验证。",
+      "sources": [],
+      "finalUserVisibleReply": {
+        "outcome": "unavailable",
+        "answer": "RC请求预算已到，未发送",
+        "source": "curated-guidance",
+        "steps": [],
+        "questions": [],
+        "evidenceIds": [],
+        "citations": [],
+        "memoryIds": [],
+        "errorCode": "budget_exhausted",
+        "route": {
+          "itemId": "ea851a82-860a-46fb-8ab6-01e06d835ad2",
+          "itemName": "RC 空气炸锅",
+          "intent": "help",
+          "mode": "service",
+          "reason": "继续上一轮澄清，保留已经尝试的步骤"
+        }
+      },
+      "stages": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=ea851a82-860a-46fb-8ab6-01e06d835ad2; router=home-router-v1"
+        },
+        {
+          "stage": "official_knowledge",
+          "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.7"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validation_failed",
+          "detail": "schema_or_support"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "provider_failed",
+          "detail": "budget_exhausted"
+        }
+      ]
+    }
+  ],
+  "knownTokens": {
+    "input": 133815,
+    "output": 22090
+  },
+  "cost": {
+    "actualBill": null,
+    "knownTokenPriceEstimateRMB": 0.157232,
+    "limits": "仅按北京非思考qwen-plus<128K列价估算已返回Token及两次turbo搜索；缓存折扣、失败请求用量/费用未返回，不是账单。",
+    "sources": [
+      "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "https://help.aliyun.com/zh/model-studio/web-search/"
+    ]
+  },
+  "offlineFollowup": {
+    "realModelCalls": 0,
+    "recordedRequest": 40,
+    "replayed": 1,
+    "reply": {
+      "outcome": "answered",
+      "answer": "以下保留了可核对的步骤；缺失环节见说明，不将部分指导当作完整任务。",
+      "steps": [
+        {
+          "id": "docstep:cb1ecafb4232cc3ad2f506af:9929:phase=start:将空气炸锅放在平稳、水平的台面上，确保四周留有足",
+          "text": "开机：将空气炸锅放在平稳、水平的台面上，确保四周留有足够散热空间。接通电源，按压电源按钮开机；首次开机将进入语言选择界面，旋转控制旋钮选择所需语言，再按压旋钮确认。",
+          "phase": "start"
+        },
+        {
+          "id": "docstep:cb1ecafb4232cc3ad2f506af:10929:phase=configure:语言确认后，无需额外设置即可进入下一步。注意：说",
+          "text": "设置：语言确认后，无需额外设置即可进入下一步。注意：说明书未要求首次开机后必须配网或升级固件，Wi-Fi连接与App操作属可选功能，非首次烹饪必要步骤。",
+          "phase": "configure"
+        },
+        {
+          "id": "docstep:cb1ecafb4232cc3ad2f506af:9929:phase=operate:将已清洁并彻底晾干的炸篮完全推入主机。按电源按钮",
+          "text": "实际使用：将已清洁并彻底晾干的炸篮完全推入主机。按电源按钮开机（若已开机则跳过），旋转并按压控制旋钮选择“手动模式”或任一预设食谱（如鸡翅、薯条等）；随后旋转旋钮设定温度为220°C、时间为5分钟，按压旋钮启动——此为空载除味程序，运行中可能有少量白烟或气味，属正常现象。",
+          "phase": "operate"
+        },
+        {
+          "id": "docstep:cb1ecafb4232cc3ad2f506af:18929:phase=care:待炸篮完全冷却后，可按需再次简单擦拭内壁残留油渍",
+          "text": "清洁养护：待炸篮完全冷却后，可按需再次简单擦拭内壁残留油渍；主机表面用干软布轻拭即可。至此首次准备完成，您已准备好放入真实食材开始第一次烹饪。",
+          "phase": "care"
+        },
+        {
+          "id": "docstep:cb1ecafb4232cc3ad2f506af:12926:phase=configure:确认炸篮、炸盘、烤架均已干燥洁净。将炸盘放入炸篮",
+          "text": "设置：确认炸篮、炸盘、烤架均已干燥洁净。将炸盘放入炸篮底部；如需分层放置食材，请使用烤架；每次仅添加一种食材，避免混放影响受热。注意：小颗粒食材不可直接置于烤架上，以防掉落。",
+          "phase": "configure"
+        },
+        {
+          "id": "docstep:cb1ecafb4232cc3ad2f506af:12926:phase=configure:将装好食材的炸篮完全推入主机。旋转并按压控制旋钮",
+          "text": "设置：将装好食材的炸篮完全推入主机。旋转并按压控制旋钮选择“手动模式”或某项预设食谱（如鸡翅、薯条、酸奶等）；再旋转旋钮设定所需温度与时间（具体数值依所选食谱而定），最后按压旋钮确认并启动。",
+          "phase": "configure"
+        },
+        {
+          "id": "docstep:cb1ecafb4232cc3ad2f506af:12926:phase=operate:烹饪过程中无需翻动食材（薯条除外：若重量超500",
+          "text": "实际使用：烹饪过程中无需翻动食材（薯条除外：若重量超500g，设备会提示中途拉出炸篮翻面）。运行结束后设备提示音响起、“Completed”显示，部分食谱将自动进入保温状态（80°C，持续30分钟）。请务必等炸篮冷却后再清洁。",
+          "phase": "operate"
+        }
+      ],
+      "questions": [],
+      "source": "model-with-evidence",
+      "citations": [
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:9929",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 9929–11279；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:10929",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 10929–12275；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:8931",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 8931–10279；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:12926",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 12926–14277；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:13927",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 13927–15277；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:18929",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 18929–20276；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:19926",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 19926–21271；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:11925",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 11925–13276；MAF10 / uk",
+          "kind": "official"
+        },
+        {
+          "id": "cb1ecafb4232cc3ad2f506af:17928",
+          "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+          "section": "原文位置 17928–19279；MAF10 / uk",
+          "kind": "official"
+        }
+      ],
+      "evidenceIds": [
+        "cb1ecafb4232cc3ad2f506af:18929",
+        "cb1ecafb4232cc3ad2f506af:19926",
+        "cb1ecafb4232cc3ad2f506af:9929",
+        "cb1ecafb4232cc3ad2f506af:8931",
+        "cb1ecafb4232cc3ad2f506af:12926",
+        "cb1ecafb4232cc3ad2f506af:10929",
+        "cb1ecafb4232cc3ad2f506af:11925",
+        "cb1ecafb4232cc3ad2f506af:17928",
+        "cb1ecafb4232cc3ad2f506af:13927"
+      ],
+      "memoryIds": [],
+      "taskProgress": {
+        "guidance": "partial",
+        "missing": [
+          "结束处理：本轮未取得可支持的完整步骤",
+          "实际烹饪前，请按所选食材、份量及官方食谱确认程序/参数；本次只提供控制流程，不凭空设定熟度或食品时温。",
+          "已隐藏1条未通过证据检查的步骤，未据此宣称完整完成任务。"
+        ],
+        "completionEvidence": "advice-only"
+      },
+      "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。 结束处理：本轮未取得可支持的完整步骤 实际烹饪前，请按所选食材、份量及官方食谱确认程序/参数；本次只提供控制流程，不凭空设定熟度或食品时温。 已隐藏1条未通过证据检查的步骤，未据此宣称完整完成任务。",
+      "model": "recorded-qwen-plus",
+      "route": {
+        "itemId": "ea851a82-860a-46fb-8ab6-01e06d835ad2",
+        "itemName": "RC 空气炸锅",
+        "intent": "help",
+        "mode": "service",
+        "reason": "继续上一轮澄清，保留已经尝试的步骤"
+      }
+    },
+    "tried": [
+      "docstep:cb1ecafb4232cc3ad2f506af:18929:phase=prepare:请先断电并确保设备完全冷却。取出炸篮、炸盘和烤架"
+    ]
+  },
+  "controlledCreative": {
+    "realModelCalls": 0,
+    "sourceReadPreviously": true,
+    "result": {
+      "ideas": [
+        {
+          "id": "c63254d2-4b97-44f9-9df9-750236b0a116",
+          "title": "把公开影子游戏改成一段手影小剧场",
+          "itemIds": [
+            "4c408abd-2625-4189-8e5b-e50607b1919f",
+            "4120cbbc-8864-4f61-92d5-8cc377f3dd82"
+          ],
+          "minutes": 10,
+          "steps": [
+            "先确认有平整墙面或可投影的空白背景，光源稳定且不发热；不满足时改成口述猜词，不购买道具",
+            "将RC 手电筒放在稳固位置照向背景，用舒适的手势尝试一个可见影子；看不清就调整位置或放弃，不承诺特定成像",
+            "可用RC 纸笔写三个词，为手影编一句虚构台词；单人也可玩，有人愿意参与再轮流猜词",
+            "选一个最喜欢的片段继续编结尾；记录是否看得清、是否有趣，不把创作当成真实生活经历自动保存"
+          ],
+          "missing": [
+            "空白背景、稳定低温光源与舒适手势需现场确认；同伴不是前置条件"
+          ],
+          "limits": [
+            "不直照眼睛、不用激光、不覆盖灯头；玻璃杯及未登记纸箱/胶带/剪刀均不需要",
+            "仅借第三方影子主题作为灵感，以下规则为本地改编；没有实物验证，不保证影像清晰或猜词效果"
+          ],
+          "rationale": "在实际已有照明/记录能力上改编游戏规则，剔除来源未核对的几何参数、材料与设备效果。",
+          "source": "local-candidate",
+          "evidence": [],
+          "creativeEvidenceSources": [
+            {
+              "kind": "third-party",
+              "title": "First 8 Studios: Shoebox Shadow Theater",
+              "url": "https://www.first8studios.org/nicoandnor/guide/shadows/lesson8/shoebox-shadow-theater.html",
+              "excerpt": "Explain, I think if I make the shadow smaller, it will be clearer and easier to tell what the object is. Move the light closer",
+              "conditions": [
+                "仅短摘录作为灵感，未核验整套玩法或适用型号"
+              ],
+              "license": "许可未核定；仅保存链接、元信息与短摘录，不保留整篇内容",
+              "attribution": "First 8 Studios: Shoebox Shadow Theater · www.first8studios.org",
+              "fetchedAt": "2026-10-20T09:33:02.899Z",
+              "verified": "public-page-read",
+              "id": "b5bfcf01-ebb4-4f01-8a03-3224fec01a38"
+            }
+          ],
+          "direction": "娱乐",
+          "tested": false,
+          "goal": "参考提供的影子游戏经验，只用手电筒和纸笔改成十分钟猜谜游戏"
+        },
+        {
+          "id": "4be20670-d5b2-4c4c-86c6-a37f70de3010",
+          "title": "用RC 纸笔玩一轮限词编故事",
+          "itemIds": [
+            "4120cbbc-8864-4f61-92d5-8cc377f3dd82"
+          ],
+          "minutes": 5,
+          "steps": [
+            "先确认有纸和能写的笔；缺一个可改为口述，不假定还有其他文具",
+            "写下三个互不相干的日常词，用它们串成四句虚构小故事；不当成真实经历保存",
+            "换一个词重写结尾，比较两个版本；可独自完成，也可征得同伴同意后轮流接句"
+          ],
+          "missing": [
+            "纸笔是否完整须确认；多人参与不是前置条件"
+          ],
+          "rationale": "娱乐靠规则和表达成立，不依赖未确认的物理现象。",
+          "evidence": [],
+          "limits": [
+            "本地能力组合：登记属性与类别只是候选依据，尺寸、稳定性和实际适用性需现场确认；不改装、不加热。",
+            "RC 纸笔：未登记维护限制，先核对实物标签/说明书"
+          ],
+          "source": "local-candidate",
+          "tested": false,
+          "goal": "参考给出的影子游戏经验，改成只用手电筒和纸笔，10分钟猜谜游戏，不用纸箱胶带剪刀。",
+          "saved": false,
+          "outcome": "未尝试",
+          "note": ""
+        },
+        {
+          "id": "c6c1821a-fba8-45ee-90fa-c646803dd75a",
+          "title": "把一件常用物画成今天的小速写",
+          "itemIds": [
+            "4120cbbc-8864-4f61-92d5-8cc377f3dd82"
+          ],
+          "minutes": 10,
+          "steps": [
+            "选一个身边可观察的物品",
+            "用纸笔画轮廓或写三个细节",
+            "可拍照保存，不追求画得像"
+          ],
+          "limits": [
+            "确认纸笔和观察对象在场",
+            "物品能力来自已登记信息/类别匹配，仍须现场核对；方案未实物验证。"
+          ],
+          "source": "local-candidate",
+          "evidence": [],
+          "tested": false,
+          "goal": "参考给出的影子游戏经验，改成只用手电筒和纸笔，10分钟猜谜游戏，不用纸箱胶带剪刀。",
+          "saved": false,
+          "outcome": "未尝试",
+          "note": ""
+        }
+      ],
+      "continuation": {
+        "goal": "参考提供的影子游戏经验，只用手电筒和纸笔改成十分钟猜谜游戏",
+        "minutes": 10,
+        "itemIds": [
+          "4c408abd-2625-4189-8e5b-e50607b1919f",
+          "4120cbbc-8864-4f61-92d5-8cc377f3dd82"
+        ],
+        "excludedItemIds": [],
+        "restrictions": []
+      },
+      "understanding": "用已有物品做一个低风险、可尝试的小项目 · 10分钟 · 从2件可用候选中规划",
+      "resources": [
+        {
+          "id": "4c408abd-2625-4189-8e5b-e50607b1919f",
+          "name": "RC 手电筒",
+          "capabilities": [
+            "照明"
+          ]
+        },
+        {
+          "id": "4120cbbc-8864-4f61-92d5-8cc377f3dd82",
+          "name": "RC 纸笔",
+          "capabilities": [
+            "书写",
+            "观察记录"
+          ]
+        }
+      ],
+      "missing": [
+        "空白背景、稳定低温光源与舒适手势需现场确认；同伴不是前置条件",
+        "纸笔是否完整须确认；多人参与不是前置条件"
+      ],
+      "source": "local-candidate",
+      "modelCalls": 0
+    }
+  },
+  "storybookBrowser": {
+    "passed": true,
+    "realModelCalls": 0,
+    "checks": [
+      "C1照片一句话真实保存",
+      "C2纯文字、零物品保存",
+      "C3同一正文两件物品双向入口",
+      "C4追加照片/日期/编辑，两个入口一致",
+      "390px全文/照片布局与桌面操作",
+      "C4解除关联不复制/删除原故事",
+      "C6主动本机引用/撤销引用，商品帮助不据故事猜事实",
+      "C5赠送领取后本人故事保留，接收者无正文/照片权限",
+      "C4删除正文/关系/未再引用照片"
+    ],
+    "kind": "isolated-api-and-edge-desktop-390px-storybook"
+  },
+  "openCatalogJourney": {
+    "passed": true,
+    "realModelCalls": 0,
+    "source": "https://world.openfoodfacts.org/product/3017620422003",
+    "name": "Nutella",
+    "license": "Open Food Facts · ODbL数据库 / DbCL单项内容；不导入图片",
+    "version": "1792487392",
+    "fetchedAt": "2026-10-20T09:59:34.678Z",
+    "flow": "真实食品条码 -> API候选 -> 人工确认建档 -> 来源保存 -> 详情读取",
+    "warning": "测试实例是合成持有；众包数据不当作包装事实或营养安全证明"
+  },
+  "publicDataFailures": {
+    "library": {
+      "error": "公开数据库暂不可用或未返回可解析资料；请人工填写名称/型号。没有自动重试或编造匹配。"
+    },
+    "wikibooks": {
+      "error": "公开资料网络读取失败，可手动打开官网或上传说明书"
+    }
+  },
+  "checks": {
+    "unit": "147/147",
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "newLife": "life-integration passed; formats locator duplication fixed and targeted rerun passed",
+    "storybook": "desktop/390px continuous journey passed",
+    "legacy": "4 isolated API/Edge journeys passed",
+    "benchmark": "0 regressions",
+    "initialFailures": "首次全测17项因Context在旧库查不存在生活表失败，修复后全回归通过；故事主动回忆泛化词、照片文件名重复定位也已修并复验",
+    "physicalDeviceVerification": false,
+    "storyTopicPrivacy": "逐条允许上云仍按当前回忆主题筛选；不把无关获准故事混入上下文；见rc-storybook.test"
+  },
+  "releaseVerdict": "受控Demo候选；严格完整验收尚有缺口，不宣称全品类首用/实机烹饪或通用可靠自由创意。",
+  "developmentData": {
+    "schema": 5,
+    "integrity": "ok",
+    "backupV5": true,
+    "workspaceUnchanged": true,
+    "storiesUnchanged": true,
+    "linksUnchanged": true,
+    "mediaUnchanged": true,
+    "cloud": "unauthorized",
+    "paidCallsEnabled": false,
+    "vision": "missing_vision_model"
+  }
+}

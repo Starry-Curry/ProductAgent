@@ -31,6 +31,10 @@ export const groundedSchema = z
                         load: "operate",
                         clean: "care",
                         setup: "configure",
+                        program: "configure",
+                        preheat: "configure",
+                        cooking: "operate",
+                        cleanup: "care",
                         end: "finish",
                       }[v] || v
                     : v,
@@ -55,10 +59,21 @@ export const groundedSchema = z
       .max(8)
       .optional(),
     questions: z
-      .array(z.string().max(250))
+      .array(
+        z.union([
+          z.string().max(250),
+          z
+            .object({
+              text: z.string().max(250).optional(),
+              question: z.string().max(250).optional(),
+            })
+            .passthrough()
+            .transform((q) => q.text || q.question || ""),
+        ]),
+      )
       .max(6)
       .default([])
-      .transform((rows) => rows.slice(-1)),
+      .transform((rows) => rows.filter(Boolean).slice(-1)),
   })
   .strict();
 const forbidden =

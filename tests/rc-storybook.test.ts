@@ -12,6 +12,47 @@ import { buildContext } from "../src/lib/context/builder.ts";
 import { mutate } from "../src/lib/domain.ts";
 import { epoch } from "../src/lib/memory/store.ts";
 
+test("允许上云不等于本次相关：仅选当前回忆主题，商品指导和临时聊天不取故事", () => {
+  const t = validationFixture(
+    fs.mkdtempSync(path.join(process.cwd(), ".runtime", "rc-relevance-")),
+  );
+  try {
+    const relevant = saveFragment(t.db, t.read, "lin", {
+      text: "合成测试：在阳台画画。",
+      itemIds: [],
+      allowRecall: true,
+      allowCloud: true,
+    });
+    saveFragment(t.db, t.read, "lin", {
+      text: "合成测试：昨天读完一本书。",
+      itemIds: [],
+      allowRecall: true,
+      allowCloud: true,
+    });
+    const input = { question: "回忆阳台画画的故事", mode: "companion" };
+    assert.deepEqual(
+      buildContext(t.db, t.read(), "lin", input).cloudFragments.map(
+        (f) => f.id,
+      ),
+      [relevant.id],
+    );
+    assert.equal(
+      buildContext(t.db, t.read(), "lin", { ...input, temporary: true })
+        .cloudFragments.length,
+      0,
+    );
+    assert.equal(
+      buildContext(t.db, t.read(), "lin", {
+        question: "怎么清洗杯子",
+        mode: "service",
+      }).cloudFragments.length,
+      0,
+    );
+  } finally {
+    t.db.close();
+  }
+});
+
 test("故事书同一正文、多照片/日期、并发编辑、赠出保留、撤销授权与媒体清理", () => {
   const dir = fs.mkdtempSync(path.join(process.cwd(), ".runtime", "rc-story-")),
     t = validationFixture(dir);

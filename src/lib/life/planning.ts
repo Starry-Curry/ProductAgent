@@ -473,6 +473,50 @@ export async function planDiscovery(
         ...capabilityPlans(db, actor, items, goal, minutes, anchor),
         ...ideas,
       ];
+      // Controlled experience adaptation. The source supplies the theme, not a verified physical mechanism.
+      const shadowSource = selectedEvidence.find((e) =>
+        /shadow|影子/i.test(e.excerpt),
+      );
+      const shadowLight = profiles.find((p) => p.capabilities.includes("照明"));
+      const note = profiles.find(
+        (p) => p.capabilities.includes("书写") || /纸笔/.test(p.name),
+      );
+      if (
+        shadowSource &&
+        shadowLight &&
+        /影子|手影|shadow/i.test(goal) &&
+        minutes >= 5 &&
+        (!anchor || [shadowLight.id, note?.id].includes(anchor))
+      )
+        ideas.unshift(
+          storeLifeIdea(db, actor, {
+            id: crypto.randomUUID(),
+            title: "把公开影子游戏改成一段手影小剧场",
+            itemIds: [shadowLight.id, ...(note ? [note.id] : [])],
+            minutes: Math.min(10, minutes),
+            steps: [
+              "先确认有平整墙面或可投影的空白背景，光源稳定且不发热；不满足时改成口述猜词，不购买道具",
+              `将${shadowLight.name}放在稳固位置照向背景，用舒适的手势尝试一个可见影子；看不清就调整位置或放弃，不承诺特定成像`,
+              `${note ? `可用${note.name}写` : "口述"}三个词，为手影编一句虚构台词；单人也可玩，有人愿意参与再轮流猜词`,
+              "选一个最喜欢的片段继续编结尾；记录是否看得清、是否有趣，不把创作当成真实生活经历自动保存",
+            ],
+            missing: [
+              "空白背景、稳定低温光源与舒适手势需现场确认；同伴不是前置条件",
+            ],
+            limits: [
+              "不直照眼睛、不用激光、不覆盖灯头；玻璃杯及未登记纸箱/胶带/剪刀均不需要",
+              "仅借第三方影子主题作为灵感，以下规则为本地改编；没有实物验证，不保证影像清晰或猜词效果",
+            ],
+            rationale:
+              "在实际已有照明/记录能力上改编游戏规则，剔除来源未核对的几何参数、材料与设备效果。",
+            source: "local-candidate",
+            evidence: [],
+            creativeEvidenceSources: [shadowSource],
+            direction: "娱乐",
+            tested: false,
+            goal,
+          }),
+        );
       // Reuse only explicit user-provided experiences whose real resources still meet this request.
       const submitted = listLifeIdeas(db, state, actor).filter(
         (i) =>

@@ -747,12 +747,14 @@ export async function executeGraph(
               !ctx.knowledge.facts.length,
             )
           : undefined) ||
-        curatedDecision(
-          w.question,
-          effectiveSession,
-          ctx,
-          session.mode === "auto",
-        );
+        (!ctx.cloudFragments.length
+          ? curatedDecision(
+              w.question,
+              effectiveSession,
+              ctx,
+              session.mode === "auto",
+            )
+          : undefined);
       if (
         !w.reply &&
         ctx.item &&
