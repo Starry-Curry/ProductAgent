@@ -101,7 +101,10 @@ export function makeKnowledgeDocument(
     id = digest(d.url + "\n" + hash).slice(0, 24),
     chunks: KnowledgeChunk[] = [];
   for (const m of d.text.matchAll(/[\s\S]{1,1000}(?:\s|$)/g)) {
-    const window = d.text.slice(m.index!, Math.min(d.text.length, m.index! + m[0].length + 350));
+    const window = d.text.slice(
+      m.index!,
+      Math.min(d.text.length, m.index! + m[0].length + 350),
+    );
     const text = window.trim();
     if (text.length < 15) continue;
     const start = m.index! + window.indexOf(text);
@@ -411,16 +414,32 @@ export async function acquireKnowledge(
       documents: cached,
       issues: previousIssues as string[],
       cached: true,
+      acquisition: previousResult?.acquisition || {
+        cached: true,
+        searchAttempted: false,
+        searchURLs: [],
+        readURLs: [],
+        verifiedURLs: cached.map((d) => d.url),
+      },
     };
   const fetcher = options.fetchDocument || fetchPublicDocument,
     brand = brandFor(item),
     entry = brandEntry(brand),
     issues: string[] = [],
     documents: AcquiredDocument[] = [];
+  const acquisition = {
+    searchAttempted: false,
+    searchCompleted: false,
+    searchURLs: [] as string[],
+    readURLs: [] as string[],
+    verifiedURLs: [] as string[],
+  };
   let requests = 0;
   const get = async (url: string) => {
     if (++requests > 6) throw new AgentError("本轮官方资料读取达到6份上限");
-    return fetcher(url);
+    const page = await fetcher(url);
+    acquisition.readURLs.push(page.url);
+    return page;
   };
   const packs = productPacks.filter(
     (p) =>
@@ -544,10 +563,13 @@ export async function acquireKnowledge(
   }
   if (!documents.length && options.search && entry) {
     try {
+      acquisition.searchAttempted = true;
       const result = await options.search(
         `${brand} ${item.model} 官方 说明书 使用方法 ${item.region || ""}`,
         [...entry.domains],
       );
+      acquisition.searchCompleted = true;
+      acquisition.searchURLs = result.hits.slice(0, 4).map((h) => h.url);
       for (const hit of result.hits.slice(0, 4)) {
         if (requests >= 6) break;
         if (!officialDomain(hit.url, brand)) continue;
@@ -593,6 +615,7 @@ export async function acquireKnowledge(
     issues.push(
       "本次刷新未取得新资料；沿用带原取得时间的缓存，请核对原文是否仍适用。",
     );
+  acquisition.verifiedURLs = documents.map((d) => d.url);
   if (options.persist !== false && tableExists(db)) {
     db.exec("BEGIN IMMEDIATE");
     try {
@@ -604,7 +627,11 @@ export async function acquireKnowledge(
         itemId,
         identity,
         new Date().toISOString(),
-        JSON.stringify({ issues, successful: documents.length > 0 }),
+        JSON.stringify({
+          issues,
+          successful: documents.length > 0,
+          acquisition,
+        }),
       );
       db.exec("COMMIT");
     } catch (e) {
@@ -615,6 +642,7 @@ export async function acquireKnowledge(
   return {
     documents: documents.length ? documents : cached,
     issues: [...new Set(issues)],
+    acquisition,
     cached: false,
   };
 }

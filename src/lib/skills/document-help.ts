@@ -171,8 +171,7 @@ export function groundedReply(
 ): AssistantReply {
   const p = groundedSchema.parse(value),
     ids = new Set<string>();
-  if (task?.full && p.steps.some((s) => !s.phase))
-    throw new AgentError("完整任务步骤缺少phase阶段标记");
+  const labels = task?.phaseLabels || phaseLabels;
   const accepted: typeof p.steps = [];
   const rejected: string[] = [];
   for (const step of p.steps) {
@@ -210,9 +209,35 @@ export function groundedReply(
         [/咔嗒|咔哒|卡嗒/, /click|咔嗒|咔哒/i],
         [/卡扣|卡入/, /snap|click|卡扣|卡入/i],
         [/腌制/, /marinat|腌制/i],
+        [
+          /自动.{0,6}(?:扣|锁|嵌|吸附)/,
+          /automatic.{0,25}(?:lock|snap|latch)|自动.{0,6}(?:扣|锁|嵌|吸附)/i,
+        ],
+        [/漂白|漂白剂/, /bleach|漂白/i],
+        [/溶剂/, /solvent|溶剂/i],
+        [/高温|耐热/, /high temperature|heat.resistan|高温|耐热/i],
+        [/防水/, /waterproof|防水/i],
+        [/密封|气密/, /airtight|seal|密封|气密/i],
       ] as const)
         if (claim.test(text) && !proof.test(original))
           throw new AgentError("专属步骤未获引用原文支持");
+      // Matching vocabulary must not reverse an explicit restriction.
+      for (const [claim, forbiddenSource] of [
+        [
+          /可以.{0,5}洗碗机|放入洗碗机|用洗碗机/,
+          /(?:not|never|不可|不得|不能).{0,35}(?:dishwasher|洗碗机)/i,
+        ],
+        [
+          /浸泡|浸入/,
+          /(?:not|never|不可|不得|不能).{0,30}(?:immerse|soak|浸泡|浸入)/i,
+        ],
+      ] as const)
+        if (
+          claim.test(step.text) &&
+          !/不要|不可|不得|不能|切勿|禁止/.test(step.text) &&
+          forbiddenSource.test(original)
+        )
+          throw new AgentError("操作违背引用原文限制");
       step.sourceIds.forEach((id) => ids.add(id));
       accepted.push(step);
     } catch (e) {
@@ -252,7 +277,7 @@ export function groundedReply(
   const steps = p.steps
     .map((s) => ({
       id: `docstep:${s.sourceIds[0]}:${s.phase ? "phase=" + s.phase + ":" : ""}${s.text.replace(/\s/g, "").slice(0, 24)}`,
-      text: (s.phase ? phaseLabels[s.phase] + "：" : "") + s.text,
+      text: (s.phase ? labels[s.phase] + "：" : "") + s.text,
       phase: s.phase,
     }))
     .filter(
@@ -276,11 +301,17 @@ export function groundedReply(
             !p.steps.some((s) => s.phase === phase) &&
             !session.tried.some((id) => id.includes(":phase=" + phase + ":")),
         )
-        .map((phase) => phaseLabels[phase] + "：本轮未取得可支持的完整步骤")
+        .map((phase) => labels[phase] + "：本轮未取得可支持的完整步骤")
     : [];
   if (task?.full && task.cooking)
     for (const f of task.checklist)
       if (
+        !(
+          f.id === "initial-clean" &&
+          session.tried.some(
+            (id) => id.includes(":phase=prepare:") && /清洗|清洁|洗净/.test(id),
+          )
+        ) &&
         !p.steps.some((s) =>
           f.id === "initial-clean"
             ? s.phase === "prepare" && /清洗|清洁|洗净/.test(s.text)
@@ -310,7 +341,7 @@ export function groundedReply(
         ? "以下保留了可核对的步骤；缺失环节见说明，不将部分指导当作完整任务。"
         : /(?:^|[\s：:])[1-7][.、．]/.test(p.answer)
           ? "可以，下面按官方资料逐步开始。"
-          : p.answer
+          : "下面按当前资料继续；步骤中的限制和缺口请一并核对。"
       : "已记下这些方法已经尝试，不再重复。请描述当前实际现象，或核对官方排障章节。",
     steps,
     questions: steps.length

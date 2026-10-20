@@ -260,3 +260,8 @@ test("搜索命中还须实际读取和型号核对；完成第一步后保持�
     t.db.close();
   }
 });
+
+test("任务标签适配充电；有引用不等于支持锁扣/漂白等专属断言，合法步骤局部保留", () => {
+ const t=fixture();try {const id=t.add("普通耳机","电子设备","测试","CHARGE1");const item=t.read().items.find(i=>i.id===id)!;const d=makeKnowledgeDocument({url:"https://example.org/manual",title:"CHARGE1",text:"CHARGE1. Connect the supplied USB cable to charge. Wipe with a soft cloth. Do not use a dishwasher.",links:[]},item,[]);const task=taskEvidence(d.chunks,"如何充电",item.name);const r=groundedReply({kind:"grounded",answer:"自带自动锁扣",steps:[{text:"连接随附USB线充电。",phase:"start",sourceIds:[d.chunks[0].id]},{text:"自动嵌合锁扣，不可接触高温或漂白剂。",sourceIds:[d.chunks[0].id]},{text:"可以放入洗碗机清洗。",sourceIds:[d.chunks[0].id]}]},d.chunks,{tried:[]},task);assert.equal(r.steps.length,1);assert.match(r.steps[0].text,/连接电源/);assert.doesNotMatch(r.answer,/锁扣/);assert.match(r.caveat!,/隐藏2/);
+ }finally{t.db.close();}
+});

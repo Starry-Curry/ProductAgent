@@ -49,6 +49,43 @@ export function taskEvidence(
   const full = wholeTask(question);
   const goal = question + " " + itemName;
   const cooking = /烹饪|炸锅|做饭|做菜|air fryer/i.test(goal);
+  const labels: Record<TaskPhase, string> = /充电|charge/i.test(goal)
+    ? {
+        prepare: "充电前检查",
+        start: "连接电源",
+        configure: "连接与条件",
+        operate: "充电过程",
+        finish: "确认结束与断开",
+        care: "充电维护",
+      }
+    : /清洁|清洗|洗护|保养|维护/.test(goal)
+      ? {
+          prepare: "清洁前准备",
+          start: "开始处理",
+          configure: "方法与条件",
+          operate: "清洁与养护",
+          finish: "干燥与收纳",
+          care: "后续维护",
+        }
+      : /组装|拼搭|安装/.test(goal)
+        ? {
+            prepare: "部件与准备",
+            start: "开始装配",
+            configure: "位置与调整",
+            operate: "装配步骤",
+            finish: "检查与完成",
+            care: "维护",
+          }
+        : cooking
+          ? phaseLabels
+          : {
+              prepare: "检查与准备",
+              start: "开始",
+              configure: "方法与条件",
+              operate: "处理步骤",
+              finish: "完成与检查",
+              care: "后续养护",
+            };
   const required: readonly TaskPhase[] = /烹饪|炸锅|做饭|做菜|air fryer/i.test(
     goal,
   )
@@ -100,7 +137,7 @@ export function taskEvidence(
     cooking,
     checklist,
     requiredPhases: full ? required : [],
-    phaseLabels,
+    phaseLabels: labels,
     available: taskPhases.map((phase) => ({
       phase,
       sourceIds: evidence
