@@ -61,7 +61,7 @@ export type Citation = {
   id: string;
   title: string;
   url: string;
-  kind: "official" | "user_report";
+  kind: "official" | "user_report" | "third_party" | "open_knowledge";
   section?: string;
 };
 export type AssistantReply = {

@@ -634,6 +634,7 @@ export async function executeGraph(
                 : undefined,
               model: provider.ready ?? true,
               includeSynthetic: false,
+              review: true,
               page: session.known.uiPage,
             },
             provider,
@@ -661,7 +662,18 @@ export async function executeGraph(
               text,
             })),
             questions: [],
-            citations: [],
+            citations: (plan.ideas[0]?.creativeEvidenceSources || [])
+              .filter((e) => e.url)
+              .map((e) => ({
+                id: e.id,
+                title: e.title,
+                url: e.url!,
+                kind:
+                  e.kind === "open-knowledge"
+                    ? ("open_knowledge" as const)
+                    : ("third_party" as const),
+                section: e.license + "；" + e.attribution,
+              })),
             evidenceIds: [],
             memoryIds: [],
             caveat: [...plan.missing, ...(plan.ideas[0]?.limits || [])].join(

@@ -7,7 +7,7 @@ import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import { canRead, type State, type Person } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
-import type { Provider } from "../ai/provider.ts";
+import { ProviderError, type Provider } from "../ai/provider.ts";
 import { boundPack } from "../ai/harness.ts";
 import {
   goalDuration,
@@ -15,6 +15,10 @@ import {
   noPurchase,
 } from "./planning-constraints.ts";
 import { capabilityPlans } from "./capability-plans.ts";
+import {
+  listCreativeEvidence,
+  findCreativeEvidence,
+} from "./creative-evidence.ts";
 import { usable, syntheticItem } from "./availability.ts";
 import {
   discoverLife,
@@ -44,6 +48,10 @@ export const discoveryInput = z
     excludedItemIds: z.array(z.string()).max(100).default([]),
     previousIdeaIds: z.array(z.string().uuid()).max(6).default([]),
     experienceIds: z.array(z.string().uuid()).max(6).default([]),
+    creativeEvidenceIds: z.array(z.string().uuid()).max(6).default([]),
+    publicEvidence: z.boolean().default(true),
+    candidates: z.number().int().min(1).max(3).default(3),
+    review: z.boolean().default(false),
     minutes: z.number().int().min(1).max(240).optional(),
     includeSynthetic: z.boolean().default(false),
     model: z.boolean().default(false),
@@ -102,6 +110,16 @@ export function itemAffordances(
 }
 
 /** Resolve history on the server, then narrow the real resource set before any model call. */
+export type DiscoveryResult = {
+  ideas: LifeIdea[];
+  continuation: NonNullable<z.infer<typeof discoveryInput>["continuation"]>;
+  understanding: string;
+  resources: { id: string; name: string; capabilities: string[] }[];
+  missing: string[];
+  source: "model-creative" | "local-candidate";
+  modelCalls: number;
+  cloudRejected?: boolean;
+};
 export async function planDiscovery(
   db: DatabaseSync,
   state: State,
@@ -109,7 +127,7 @@ export async function planDiscovery(
   raw: unknown,
   provider: Provider,
   readCurrent: () => State,
-) {
+): Promise<DiscoveryResult> {
   const input = discoveryInput.parse(raw),
     visible = state.items.filter((i) => canRead(i, actor));
   for (const id of [
@@ -138,6 +156,7 @@ export async function planDiscovery(
       goal: idea.goal,
       minutes: idea.minutes,
       outcome: row.outcome || "未尝试",
+      creativeEvidenceSources: idea.creativeEvidenceSources,
     };
   });
   const lastGoal = input.continuation?.goal || previous.at(-1)?.goal;
@@ -262,24 +281,60 @@ export async function planDiscovery(
   const understood = `${followup ? `延续上一轮，调整为“${input.goal}”` : focus} · ${minutes}分钟${noPurchase(goal) ? " · 不新增购买" : ""} · 从${items.length}件可用候选中规划${excluded.size ? ` · 排除${excluded.size}件` : ""}`;
   let ideas: LifeIdea[] = [];
   let modelCalls = 0;
+  const selectedEvidence = input.creativeEvidenceIds.map((id) => {
+    const e = listCreativeEvidence(db, actor).find((e) => e.id === id);
+    if (!e) throw new AgentError("创意经验不属于当前用户", 403);
+    return e;
+  });
+  for (const old of previous.flatMap((p) => p.creativeEvidenceSources || [])) {
+    const current = listCreativeEvidence(db, actor).find(
+      (e) => e.id === old.id,
+    );
+    if (current && !selectedEvidence.some((e) => e.id === current.id))
+      selectedEvidence.push(current);
+  }
   if (
     items.length &&
     !ambiguousExclusion &&
     !missing.some((m) => m.startsWith("未能"))
   ) {
     if (input.model) {
-      modelCalls = 1;
-      ideas = [
-        await modelIdea(
+      if (
+        input.publicEvidence &&
+        process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "true"
+      ) {
+        const found = await findCreativeEvidence(
+          db,
+          actor,
+          goal,
+          items,
+          provider,
+        );
+        selectedEvidence.push(...found.evidence);
+        missing.push(...found.issues);
+      }
+      const countedProvider: Provider = {
+        ...provider,
+        generate: (...args) => {
+          modelCalls++;
+          return provider.generate(...args);
+        },
+      };
+      let generated;
+      try {
+        generated = await modelIdea(
           db,
           scoped,
           actor,
           goal,
-          provider,
+          countedProvider,
           input.includeSynthetic,
           readCurrent,
           {
             minutes,
+            candidates: input.candidates,
+            review: input.review,
+            creativeEvidence: selectedEvidence,
             experiences,
             itemId: excluded.has(input.itemId || "") ? undefined : input.itemId,
             itemIds: items.map((i) => i.id),
@@ -305,8 +360,47 @@ export async function planDiscovery(
               noPurchase: noPurchase(goal),
             },
           },
-        ),
-      ];
+        );
+      } catch (error) {
+        // Configuration, authorization and transport failures must retain their accurate UI state.
+        if (!(error instanceof AgentError) && !(error instanceof ProviderError))
+          throw error;
+        if (error instanceof ProviderError && error.code !== "invalid_response")
+          throw error;
+        if (
+          error instanceof AgentError &&
+          /超出实际登记数量|用量单位|数量条件|引用了|权限|授权/.test(
+            error.message,
+          )
+        )
+          throw error;
+        if (
+          error instanceof AgentError &&
+          (error.status !== 400 ||
+            !/方案|创意候选|未登记|成像|[不未]成立|留印|计量/.test(
+              error.message,
+            ))
+        )
+          throw error;
+        const fallback = await planDiscovery(
+          db,
+          readCurrent?.() || state,
+          actor,
+          { ...input, model: false, review: false, publicEvidence: false },
+          provider,
+          readCurrent,
+        );
+        return {
+          ...fallback,
+          modelCalls,
+          cloudRejected: true,
+          missing: [
+            ...fallback.missing,
+            "云端方案未通过可执行性/资料检查，下面仅为本地有限能力组合，未冒充AI成功。",
+          ],
+        };
+      }
+      ideas = generated.alternatives || [generated];
       if (followup && previous.some((p) => p.id === ideas[0].id)) {
         ideas = [];
         missing.push(

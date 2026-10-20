@@ -155,6 +155,13 @@ export async function fetchPublicDocument(
       links: [],
     };
   }
+  if (/application\/json/.test(result.type))
+    return {
+      url: url.href,
+      title: "公开API响应",
+      text: result.bytes.toString("utf8"),
+      links: [],
+    };
   return extractPublicHTML(result.bytes.toString("utf8"), url.href);
 }
 export async function extractPublicHTML(raw: string, address: string) {

@@ -38,10 +38,14 @@ export function Discovery({
   );
   const [continuation, setContinuation] = useState<any>(undefined);
   const [cloud, setCloud] = useState(true);
+  const [review, setReview] = useState(true);
   const [experienceIds, setExperienceIds] = useState<string[]>([]);
   const [gaps, setGaps] = useState<string[]>([]);
   const [sourceUrl, setSourceUrl] = useState(""),
     [sourcePreview, setSourcePreview] = useState("");
+  const [creativeEvidenceIds, setCreativeEvidenceIds] = useState<string[]>([]),
+    [providedText, setProvidedText] = useState(""),
+    [rights, setRights] = useState(false);
   async function generate(
     model = modelAvailable && cloud,
     followup?: string,
@@ -57,10 +61,12 @@ export function Discovery({
         itemIds: selectedIds.filter((id) => !omit.includes(id)),
         excludedItemIds: omit,
         experienceIds,
+        creativeEvidenceIds,
         previousIdeaIds: turns.findLast((t) => t.ids.length)?.ids || [],
         minutes: Number(minutes),
         includeSynthetic: synthetic,
         model,
+        review,
       });
       setResults(d.ideas);
       setContinuation(d.continuation);
@@ -255,6 +261,14 @@ export function Discovery({
                     ))}
                 </div>
               )}
+              <label className="life-check">
+                <input
+                  type="checkbox"
+                  checked={review}
+                  onChange={(e) => setReview(e.target.checked)}
+                />
+                云端方案再核对一次可执行性（额外1次模型请求，仍不等于实物验证）
+              </label>
               <p>只用这些物品（不选则检索可用展柜）</p>
               <div className="discovery-pick-items">
                 {items
@@ -365,6 +379,7 @@ export function Discovery({
             {idea.rationale && (
               <p className="idea-rationale">{idea.rationale}</p>
             )}
+            {idea.direction && <small>{idea.direction} · 可尝试的方向</small>}
             {!!idea.missing?.length && (
               <p className="life-notice">
                 待确认 / 缺口：{idea.missing.join("；")}
@@ -412,6 +427,32 @@ export function Discovery({
                 </p>
               )}
             </details>
+            {idea.creativeEvidenceSources?.map((e) => (
+              <p key={e.id}>
+                {e.kind === "open-knowledge"
+                  ? "开放知识"
+                  : e.kind === "third-party"
+                    ? "公开第三方资料（灵感）"
+                    : "用户提供的经验"}
+                ：
+                {e.url ? (
+                  <a href={e.url} target="_blank" rel="noreferrer">
+                    {e.title} ↗
+                  </a>
+                ) : (
+                  e.title
+                )}
+                <small>
+                  {e.license} · {e.attribution} · {e.fetchedAt}
+                  ；AI改编，未实物验证。
+                </small>
+                {e.licenseURL && (
+                  <a href={e.licenseURL} target="_blank" rel="noreferrer">
+                    许可与署名要求
+                  </a>
+                )}
+              </p>
+            ))}
             {idea.experienceSources?.map((s) => (
               <p className="life-muted" key={s.id}>
                 参考本人提供的经验：
@@ -510,9 +551,15 @@ export function Discovery({
           onClick={async () => {
             setBusy(true);
             try {
-              const d = await request("fetchSource", { url: sourceUrl });
-              setSourcePreview(d.text);
-              setNotice(d.notice);
+              const d = await request("creativeEvidence", { url: sourceUrl });
+              setSourcePreview(d.evidence.excerpt);
+              setCreativeEvidenceIds((ids) =>
+                [...new Set([...ids, d.evidence.id])].slice(-6),
+              );
+              setNotice(
+                "已记录来源元信息及短摘录，后续规划可引用。" +
+                  d.evidence.license,
+              );
             } catch (e) {
               setNotice((e as Error).message);
             } finally {
@@ -525,6 +572,46 @@ export function Discovery({
         {sourcePreview && (
           <p className="life-source-excerpt">{sourcePreview}</p>
         )}
+        <label>
+          粘贴获准使用的经验片段
+          <textarea
+            maxLength={2500}
+            value={providedText}
+            onChange={(e) => setProvidedText(e.target.value)}
+            placeholder="无法读取帖子时，可提供有权使用的必要片段；无需上传账号私有内容。"
+          />
+        </label>
+        <label className="life-check">
+          <input
+            type="checkbox"
+            checked={rights}
+            onChange={(e) => setRights(e.target.checked)}
+          />
+          我有权提供这些内容，仅用于本人的玩法规划
+        </label>
+        <button
+          disabled={busy || !rights || !providedText.trim()}
+          onClick={async () => {
+            setBusy(true);
+            try {
+              const d = await request("creativeEvidence", {
+                url: sourceUrl || undefined,
+                text: providedText,
+                confirmed: true,
+              });
+              setCreativeEvidenceIds((ids) =>
+                [...new Set([...ids, d.evidence.id])].slice(-6),
+              );
+              setNotice("已加入本次可用经验，仍需核对现实条件。");
+            } catch (e) {
+              setNotice((e as Error).message);
+            } finally {
+              setBusy(false);
+            }
+          }}
+        >
+          加入本次规划的经验
+        </button>
         <form
           onSubmit={async (e) => {
             e.preventDefault();

@@ -9,6 +9,12 @@ import {
   readKnowledge,
   acquireKnowledge,
 } from "../src/lib/life/acquisition.ts";
+import { listCreativeEvidence } from "../src/lib/life/creative-evidence.ts";
+import {
+  feedbackIdea,
+  reviewIdeaPackets,
+  modelIdea,
+} from "../src/lib/life/ideas.ts";
 import { planDiscovery } from "../src/lib/life/planning.ts";
 const dir = path.join(process.cwd(), ".runtime", "knowledge-creative-20261020");
 fs.mkdirSync(dir, { recursive: true });
@@ -223,7 +229,15 @@ try {
         p,
       );
     if (group === "products") {
-      if(process.argv.includes('--last-product'))await run('U2-complete-cooking-final',{model:'MAF10',goal:'首次完整控制流程；按食谱选参数，不自拟食品时温'},()=>turn('我是第一次使用，能不能带我从准备到完成一次烹饪？',maf));
+      if (process.argv.includes("--last-product"))
+        await run(
+          "U2-complete-cooking-final",
+          {
+            model: "MAF10",
+            goal: "首次完整控制流程；按食谱选参数，不自拟食品时温",
+          },
+          () => turn("我是第一次使用，能不能带我从准备到完成一次烹饪？", maf),
+        );
       if (process.argv.includes("--finish-products")) {
         await run("T1-complete-cooking", { model: "MAF10" }, () =>
           turn("我是第一次使用，能不能带我从准备到完成一次烹饪？", maf),
@@ -387,6 +401,163 @@ try {
         JSON.stringify(sources, null, 2),
       );
     } else {
+      if (process.argv.includes("--review-final")) {
+        const original = ledger.cases.find(
+          (c) => c.name === "I2-repaired-directions",
+        )?.result;
+        if (original?.ideas?.length)
+          await run(
+            "J1-reviewed-three-directions",
+            {
+              goal: original.continuation.goal,
+              review: "一轮可执行性复核：材料、物理机制、人体操作与方向差异",
+            },
+            async () => {
+              const selected = t
+                .read()
+                .items.filter((i) => [light, cup, paper].includes(i.id));
+              const result = await reviewIdeaPackets(
+                p,
+                original.continuation.goal,
+                selected,
+                original.ideas,
+              );
+              const raw = JSON.parse(result.text);
+              const ideas = [];
+              const rejected = [];
+              for (const packet of (raw.ideas || []).slice(0, 3))
+                try {
+                  ideas.push(
+                    await modelIdea(
+                      t.db,
+                      t.read(),
+                      "lin",
+                      original.continuation.goal,
+                      p,
+                      false,
+                      t.read,
+                      {
+                        minutes: 30,
+                        itemIds: [light, cup, paper],
+                        precomputed: {
+                          ...result,
+                          text: JSON.stringify(packet),
+                        },
+                      },
+                    ),
+                  );
+                } catch (e) {
+                  rejected.push(e instanceof Error ? e.message : "invalid");
+                }
+              return {
+                ideas,
+                rejected,
+                source: "model-creative",
+                review: "Qwen二次检查，不等于实物验证",
+              };
+            },
+          );
+      }
+      if (process.argv.includes("--finish-ideas")) {
+        await run(
+          "I2-repaired-directions",
+          { goal: "三种不同方向；只用登记物品，避免未确认物理机制" },
+          () =>
+            planDiscovery(
+              t.db,
+              t.read(),
+              "lin",
+              {
+                goal: "只用手电筒、透明玻璃杯和纸笔，半小时不花钱，请给娱乐游戏、生活改善、纸笔创作三个真正不同的方案，不要都做观察实验",
+                itemIds: [light, cup, paper],
+                model: true,
+                publicEvidence: false,
+              },
+              p,
+              t.read,
+            ),
+        );
+        const first = ledger.cases.find(
+          (c) => c.name === "I2-repaired-directions",
+        )?.result;
+        if (first?.ideas?.length) {
+          feedbackIdea(t.db, t.read(), "lin", {
+            id: first.ideas[0].id,
+            saved: false,
+            outcome: "不感兴趣",
+            note: "合成反馈：希望换个方向，不做观察实验。",
+          });
+          await run(
+            "I3-continue-new-constraints",
+            { goal: "不用玻璃杯，缩短到10分钟，不要观察实验，换个轻松游戏" },
+            () =>
+              planDiscovery(
+                t.db,
+                t.read(),
+                "lin",
+                {
+                  goal: "不用玻璃杯，缩短到10分钟，不要观察实验，换个轻松游戏",
+                  previousIdeaIds: first.ideas.map((i: any) => i.id),
+                  continuation: first.continuation,
+                  model: true,
+                  publicEvidence: false,
+                  candidates: 1,
+                },
+                p,
+                t.read,
+              ),
+          );
+        }
+        await run(
+          "I4-practical-goal",
+          { goal: "桌面东西很乱，常用小东西不好找，用已有物品帮我改善" },
+          () =>
+            planDiscovery(
+              t.db,
+              t.read(),
+              "lin",
+              {
+                goal: "桌面东西很乱，常用小东西不好找，不花钱，用已有物品帮我改善",
+                itemIds: [light, cup, paper],
+                minutes: 10,
+                candidates: 1,
+                model: true,
+                publicEvidence: false,
+              },
+              p,
+              t.read,
+            ),
+        );
+        const source = listCreativeEvidence(t.db, "lin").find(
+          (e) =>
+            e.url?.includes("first8studios") && e.excerpt.startsWith("Explain"),
+        );
+        if (source)
+          await run(
+            "I5-public-experience-adaptation",
+            {
+              goal: "根据我提供的影子游戏经验，改成只用手电筒和纸笔的10分钟猜谜游戏",
+              source: source.url,
+            },
+            () =>
+              planDiscovery(
+                t.db,
+                t.read(),
+                "lin",
+                {
+                  goal: "根据我提供的影子游戏经验，改成只用手电筒和纸笔的10分钟猜谜游戏，不用玻璃杯，不假定有纸箱、胶带或剪刀",
+                  itemIds: [light, paper],
+                  creativeEvidenceIds: [source.id],
+                  minutes: 10,
+                  candidates: 1,
+                  model: true,
+                  publicEvidence: false,
+                },
+                p,
+                t.read,
+              ),
+          );
+      }
       await run(
         "I1-three-directions",
         {

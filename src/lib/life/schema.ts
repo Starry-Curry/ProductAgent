@@ -15,8 +15,24 @@ export function migrateLife(db: DatabaseSync, filename: string) {
         }
       ).v || 0,
     );
-    if (version > 3) throw Error("生活数据版本高于当前程序，拒绝写入");
-    if (version === 3) return;
+    if (version > 4) throw Error("生活数据版本高于当前程序，拒绝写入");
+    if (version === 4) return;
+    if (version === 3) {
+      const backup = filename + ".before-life-v4.sqlite";
+      if (!existsSync(backup))
+        db.exec("VACUUM INTO '" + backup.replaceAll("'", "''") + "'");
+      db.exec("BEGIN IMMEDIATE");
+      try {
+        db.exec(
+          "CREATE TABLE IF NOT EXISTS life_creative_evidence(id TEXT PRIMARY KEY,owner TEXT NOT NULL,signature TEXT NOT NULL,body TEXT NOT NULL,created_at TEXT NOT NULL,UNIQUE(owner,signature));INSERT INTO life_schema VALUES(4);",
+        );
+        db.exec("COMMIT");
+      } catch (e) {
+        db.exec("ROLLBACK");
+        throw e;
+      }
+      return;
+    }
     if (version === 2) {
       const backup = filename + ".before-life-v3.sqlite";
       if (!existsSync(backup))
@@ -32,6 +48,7 @@ export function migrateLife(db: DatabaseSync, filename: string) {
         db.exec("ROLLBACK");
         throw e;
       }
+      migrateLife(db, filename);
       return;
     }
     if (version === 1) {

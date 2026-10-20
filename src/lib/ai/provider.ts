@@ -51,7 +51,7 @@ export type Provider = {
   generate: (
     system: string,
     input: unknown,
-    options?: { maxTokens?: number },
+    options?: { maxTokens?: number; timeoutMs?: number },
   ) => Promise<ProviderResult>;
   search?: (query: string, sites?: string[]) => Promise<SearchResponse>;
   recognize?: (system: string, image: string) => Promise<ProviderResult>;
@@ -99,7 +99,9 @@ export function createProvider(
             Authorization: `Bearer ${AI_API_KEY}`,
             "Content-Type": "application/json",
           },
-          signal: AbortSignal.timeout(30000),
+          signal: AbortSignal.timeout(
+            Math.min(45000, options?.timeoutMs || 30000),
+          ),
           body: JSON.stringify({
             model: AI_MODEL,
             messages: [

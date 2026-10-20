@@ -1,5 +1,7 @@
 # 文档索引与优先级
 
+**本轮最新：商品任务与创意来源链路**：[30次新增授权的实测、失败、离线回放与限制](engineering/life-knowledge-creative-validation-2026-10-20.json)。创意质量仍未达标，详见人工评价，不以HTTP200代替验收。
+
 **2026-10-20 智能能力深化实测**：[脱敏调用、失败与回归记录](engineering/life-intelligence-validation-2026-10-20.json)。以根README和最新实现状态为准；历史“未真实模型验证”的结论保留为当时证据。
 
 **2026-10-19 新版优先读 [真实物品展柜＋生活故事交接](engineering/life-context-handoff-2026-10-19.md)** 与根 README。下方二维空间/旧路径/旧分支启动信息保留为历史，不覆盖新版 B＋C、3200 和独立数据目录。

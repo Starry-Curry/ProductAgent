@@ -7,6 +7,10 @@ import {
 import { visionStatus, recognizeOwnedPhoto } from "@/lib/life/vision";
 import { planDiscovery } from "@/lib/life/planning";
 import {
+  importCreativeEvidence,
+  listCreativeEvidence,
+} from "@/lib/life/creative-evidence";
+import {
   acquireKnowledge,
   readKnowledge,
   indexOfficialSource,
@@ -105,6 +109,7 @@ export async function GET(r: Request) {
       },
       fragments: listFragments(db, state, a),
       ideas: listLifeIdeas(db, state, a),
+      creativeEvidence: listCreativeEvidence(db, a),
       packs: productPacks,
       capabilities: {
         visual: visionStatus().ready,
@@ -178,6 +183,10 @@ export async function POST(r: Request) {
     if (p.action === "lookup")
       return Response.json({
         candidates: searchProducts(z.string().max(200).parse(p.query)),
+      });
+    if (p.action === "creativeEvidence")
+      return Response.json({
+        evidence: await importCreativeEvidence(db, a, p.input),
       });
     if (p.action === "fetchSource")
       return Response.json({
