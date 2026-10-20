@@ -261,6 +261,41 @@ try {
   await expect(
     page.getByText("电源为一节可更换 AA 电池。", { exact: true }),
   ).toBeVisible();
+  await page.getByRole("button", { name: "在问物间继续", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "问物间", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("电源为一节可更换 AA 电池。", { exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("textbox", { name: "对物间说", exact: true })
+    .fill("电池规格是什么");
+  await page.getByRole("button", { name: "发送", exact: true }).click();
+  await expect(
+    page.getByText("电源为一节可更换 AA 电池。", { exact: true }),
+  ).toHaveCount(2);
+  await page.locator(".life-ai-settings > summary").click();
+  await page.getByLabel("使用自定义称呼与交流风格").check();
+  await page.getByLabel("物间的称呼", { exact: true }).fill("测试小间");
+  await page.getByLabel("个人记忆引用", { exact: true }).selectOption("off");
+  await page.getByRole("button", { name: "保存交流设置", exact: true }).click();
+  await expect(page.getByText(/交流设置已保存/)).toBeVisible();
+  await page
+    .getByRole("button", { name: "切换到普通聊天", exact: true })
+    .click();
+  await page
+    .getByRole("textbox", { name: "对物间说", exact: true })
+    .fill("你好");
+  await page.getByRole("button", { name: "发送", exact: true }).click();
+  await expect(
+    page.getByText("我在。想聊什么都可以，也可以一起解决手边的问题。", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  checks.push(
+    "统一入口保留物品会话并连续问答；Persona保存保留历史，可切换普通聊天",
+  );
   await page.screenshot({
     path: "artifacts/life/item-help-desktop.png",
     fullPage: true,

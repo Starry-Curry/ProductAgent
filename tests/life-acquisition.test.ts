@@ -79,6 +79,42 @@ test("普通新型号经官方目录定位PDF，按型号/地区缓存与原文�
       ).n,
       1,
     );
+    revision = 1;
+    await acquireKnowledge(t.db, t.read, "lin", id, {
+      force: true,
+      fetchDocument,
+    });
+    assert.match(readKnowledge(t.db, t.read(), "lin", id)[0].text, /Version 1/);
+    assert.equal(
+      (
+        t.db
+          .prepare("SELECT count(*) n FROM life_knowledge_documents")
+          .get() as { n: number }
+      ).n,
+      2,
+    );
+    let failedReads = 0;
+    const unavailable = async () => {
+      failedReads++;
+      throw Error("offline outage");
+    };
+    const failed = await acquireKnowledge(t.db, t.read, "lin", id, {
+      force: true,
+      fetchDocument: unavailable,
+    });
+    assert.ok(failed.documents.length);
+    assert.match(failed.issues.join(" "), /沿用/);
+    await acquireKnowledge(t.db, t.read, "lin", id, {
+      fetchDocument: unavailable,
+    });
+    assert.equal(failedReads, 1);
+    t.db
+      .prepare("UPDATE life_knowledge_fetches SET at=? WHERE item_id=?")
+      .run(new Date(Date.now() - 11 * 60000).toISOString(), id);
+    await acquireKnowledge(t.db, t.read, "lin", id, {
+      fetchDocument: unavailable,
+    });
+    assert.equal(failedReads, 2);
     assert.ok(
       existsSync(path.join(t.directory, "test.sqlite.before-life-v3.sqlite")),
     );
@@ -258,6 +294,7 @@ test("有规格仍可使用新型号官方操作原文； grounded翻译可读�
         ),
       /不属于当前型号/,
     );
+    assert.throws(()=>groundedReply(value,evidence.map(e=>({...e,category:"facts"})),{tried:[]}),/不能冒充操作/);
     let modelInput = "";
     const result = await respond(
       t.db,
@@ -287,6 +324,13 @@ test("有规格仍可使用新型号官方操作原文； grounded翻译可读�
     assert.equal(result.reply.outcome, "answered");
     assert.match(modelInput, /officialDocuments/);
     assert.equal(result.reply.steps.length, 1);
+    const previous=process.env.WUJIAN_ALLOW_PUBLIC_FETCH;process.env.WUJIAN_ALLOW_PUBLIC_FETCH="true";
+    try {
+      const unknown=t.add("未知设备","电子设备","无适配品牌","UNKNOWN-73");
+      let mockedCalls=0;
+      const gap=await respond(t.db,t.read,"lin",{requestId:crypto.randomUUID(),question:"这个第一次怎么用，长按哪个键？",itemId:unknown,mode:"auto",memoryPolicy:"off",uiContext:{page:"item"}},{ready:true,model:"offline-test",complete:async(messages,tools)=>{mockedCalls++;const input=JSON.parse(messages[1].content!);assert.equal(input.item.model,"UNKNOWN-73");assert.equal(input.officialLookup.documents,0);assert.ok(!tools.some(t=>t.function.name==="fetch_official_knowledge"));return {text:JSON.stringify({kind:"needs_info",answer:"当前未取得该型号的官方操作资料，无法确认启动按键。可补充对应说明书或官方支持链接；不按相似设备猜测。",questions:[]}),model:"offline-test",tokens:null,toolCalls:[],finishReason:"stop"};},generate:async()=>{throw Error("native protocol expected");}});
+      assert.equal(gap.reply.outcome,"needs_info");assert.equal(mockedCalls,1);assert.deepEqual(gap.reply.questions,[]);
+    }finally{if(previous===undefined)delete process.env.WUJIAN_ALLOW_PUBLIC_FETCH;else process.env.WUJIAN_ALLOW_PUBLIC_FETCH=previous;}
   } finally {
     t.db.close();
   }

@@ -220,6 +220,7 @@ export default function WujianApp() {
   }
   const items = data?.workspace.items.filter((i) => !i.demo) || [];
   const item = items.find((i) => i.id === selected);
+  const activeAskItemId = askSession ? askSession.itemId : askEntry.itemId;
   const heroItem =
     items.find((i) => !syntheticItem(i) && i.photo) ||
     items.find((i) => i.id === "life-sample-13");
@@ -670,13 +671,12 @@ export default function WujianApp() {
                   />
                   允许从这段对话整理待确认记忆（确认前不用于长期个性化；默认不发送历史记忆给云端）
                 </label>
-                {(askEntry.itemId || askSession?.itemId) && (
+                {activeAskItemId && (
                   <div className="life-actions">
                     <span>
                       正在围绕：
-                      {items.find(
-                        (i) => i.id === (askSession?.itemId || askEntry.itemId),
-                      )?.name || "所选物品"}
+                      {items.find((i) => i.id === activeAskItemId)?.name ||
+                        "所选物品"}
                     </span>
                     <button onClick={() => ask()}>切换到普通聊天</button>
                   </div>

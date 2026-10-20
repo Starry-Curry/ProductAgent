@@ -113,6 +113,7 @@ export function AISettings({
         <label>
           交流风格
           <select
+            aria-label="交流风格"
             value={persona.style}
             onChange={(e) => {
               setSaved(false);
@@ -130,6 +131,7 @@ export function AISettings({
         <label>
           个人记忆引用
           <select
+            aria-label="个人记忆引用"
             value={persona.memoryUse || "explicit"}
             onChange={(e) => {
               setSaved(false);

@@ -43,6 +43,7 @@ export function groundedReply(
     );
     if (sources.some((s) => !s))
       throw new AgentError("操作引用不属于当前型号或已失效的资料版本");
+    if(sources.every(s=>s?.category === "facts"))throw new AgentError("只有规格资料，不能冒充操作步骤");
     const text = withoutProhibitedActions(step.text),
       original = sources
         .map((s) => `${s!.model} ${s!.title} ${s!.text}`)

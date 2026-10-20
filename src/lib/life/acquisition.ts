@@ -286,11 +286,17 @@ function persist(
       .prepare(
         "SELECT id FROM life_knowledge_documents WHERE owner=? AND item_id=? AND identity=? AND url=? AND hash=?",
       )
-      .get(actor, item.id, identity, d.url, d.hash);
-  if (same) return;
+      .get(actor, item.id, identity, d.url, d.hash) as
+      { id: string } | undefined;
   db.prepare(
     "UPDATE life_knowledge_documents SET status='superseded' WHERE owner=? AND item_id=? AND identity=? AND url=?",
   ).run(actor, item.id, identity, d.url);
+  if (same) {
+    db.prepare(
+      "UPDATE life_knowledge_documents SET status='active',body=?,created_at=? WHERE id=?",
+    ).run(JSON.stringify(d), d.fetchedAt, same.id);
+    return;
+  }
   db.prepare(
     "INSERT INTO life_knowledge_documents VALUES(?,?,?,?,?,?,?,?,?)",
   ).run(
@@ -376,14 +382,22 @@ export async function acquireKnowledge(
         .get(actor, itemId) as
         { identity: string; at: string; result: string } | undefined)
     : undefined;
+  const previousResult = last ? JSON.parse(last.result) : undefined;
+  const previousIssues = Array.isArray(previousResult)
+    ? previousResult
+    : previousResult?.issues || [];
+  const previousSucceeded = Array.isArray(previousResult)
+    ? cached.length > 0
+    : previousResult?.successful;
   if (
     !options.force &&
     last?.identity === identity &&
-    Date.now() - Date.parse(last.at) < (cached.length ? 7 * 86400000 : 600000)
+    Date.now() - Date.parse(last.at) <
+      (previousSucceeded ? 7 * 86400000 : 600000)
   )
     return {
       documents: cached,
-      issues: JSON.parse(last.result) as string[],
+      issues: previousIssues as string[],
       cached: true,
     };
   const fetcher = options.fetchDocument || fetchPublicDocument,
@@ -521,6 +535,10 @@ export async function acquireKnowledge(
   );
   if (!current || knowledgeIdentity(current) !== identity)
     throw new AgentError("读取期间物品权限或型号已变化", 409);
+  if (!documents.length && cached.length)
+    issues.push(
+      "本次刷新未取得新资料；沿用带原取得时间的缓存，请核对原文是否仍适用。",
+    );
   if (options.persist !== false && tableExists(db)) {
     db.exec("BEGIN IMMEDIATE");
     try {
@@ -532,7 +550,7 @@ export async function acquireKnowledge(
         itemId,
         identity,
         new Date().toISOString(),
-        JSON.stringify(issues),
+        JSON.stringify({ issues, successful: documents.length > 0 }),
       );
       db.exec("COMMIT");
     } catch (e) {

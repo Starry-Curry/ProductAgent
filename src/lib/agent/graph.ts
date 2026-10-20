@@ -588,7 +588,7 @@ export async function executeGraph(
         temporary,
       });
       trackExpiry(ctx.memories);
-      if (ctx.externalKnowledge.length && effectiveSession.mode === "service")
+      if (ctx.externalKnowledge.some(c=>c.category!=="facts") && effectiveSession.mode === "service")
         activeSkill = skills["document-help"];
       if (route?.intent === "plan" && session.known.uiPage && !temporary) {
         w.calls = (provider.ready ?? true) ? 1 : 0;

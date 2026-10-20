@@ -37,10 +37,56 @@
   ],
   "focusedChecks": {
     "passed": true,
-    "latest": "8 new acquisition/persona tests; preceding 25 acquisition/persona/foundation tests passed",
-    "fullRegression": "pending",
+    "initialCore": {
+      "tests": 25,
+      "passed": 25
+    },
+    "newFeatureTests": {
+      "tests": 8,
+      "passed": 8
+    },
+    "finalAffectedCacheAndGroundingTests": {
+      "tests": 4,
+      "passed": 4
+    },
+    "fullRegression": {
+      "tests": 136,
+      "passed": 136,
+      "failed": 0
+    },
     "typecheck": "passed",
-    "build": "pending"
+    "build": "passed; rebuilt once after a browser accessibility failure and cache/grounding fixes",
+    "benchmark": {
+      "regressions": 0,
+      "realModelCalls": 0
+    },
+    "lifeBrowserAndAPI": {
+      "journeys": [
+        "life-integration",
+        "life-formats"
+      ],
+      "passed": true,
+      "realModelCalls": 0,
+      "includes": [
+        "owned item session -> unified chat -> continuous item question",
+        "Persona settings persist; global chat switch",
+        "desktop/390px navigation",
+        "photo story CRUD and association",
+        "manual/PDF/OCR/QR/EAN-13 intake",
+        "source partial-success retry"
+      ]
+    },
+    "legacyBrowserAndAPI": {
+      "journeys": [
+        "integration",
+        "foundation-integration",
+        "household-integration",
+        "home-integration"
+      ],
+      "passed": true,
+      "realModelCalls": 0,
+      "timing": "earlier production build; final fixes retested on affected new-product journeys only"
+    }
   },
   "actualPaidRequests": 15,
   "model": "qwen-plus",
@@ -1063,5 +1109,24 @@
         ]
       }
     }
+  ],
+  "runtimeHealth": {
+    "status": 200,
+    "modelReady": false,
+    "cloudState": "unauthorized",
+    "integrity": "ok",
+    "lifeSchema": 3,
+    "backupExists": true,
+    "workspaceUnchanged": true,
+    "fragmentCountUnchanged": true,
+    "url": "http://127.0.0.1:3201"
+  },
+  "featureCommit": "dfcb642",
+  "finalRepairs": [
+    "Version A -> B -> A reactivates the correct hash instead of leaving B active; update timestamps without duplicate rows.",
+    "A failed refresh retains original dated material and uses a 10-minute failure cooldown, not a false 7-day success.",
+    "Known lookup failures are passed into the model and duplicate fetch tools omitted; unknown model missing-evidence reply tested with native protocol substitute.",
+    "Grounded steps cannot cite a specification-only chunk as operational proof.",
+    "Persona selects have explicit accessible labels; full browser journey confirmed current-item history transfer and ordinary chat switch."
   ]
 }
