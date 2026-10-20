@@ -105,6 +105,27 @@ test("完整任务按阶段取证；规格、数值与单位错配拒绝，序�
       groundedReply(p, d.chunks, { tried: [] }, task).steps.length,
       1,
     );
+    assert.equal(
+      groundedReply(p, d.chunks, { tried: [] }, task).taskProgress?.guidance,
+      "partial",
+    );
+    assert.ok(
+      groundedReply(
+        p,
+        d.chunks,
+        { tried: [] },
+        task,
+      ).taskProgress?.missing.some((m) => m.includes("首次清洁")),
+    );
+    assert.equal(
+      groundedReply(
+        { ...p, steps: [{ ...p.steps[0], covers: ["care"] }] },
+        d.chunks,
+        { tried: [] },
+        task,
+      ).steps.length,
+      1,
+    );
     const spelled = d.chunks.map((c) => ({
       ...c,
       text: c.text.replace("3 minutes", "five minutes"),

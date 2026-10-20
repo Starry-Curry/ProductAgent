@@ -62,6 +62,12 @@ export function taskEvidence(
     full && cooking
       ? [
           {
+            id: "initial-clean",
+            label:
+              "首次清洁（采用同型号清洁章并保留断电/冷却/禁浸泡条件；不得编造专属要求）",
+            pattern: /clean|wash|清洁|清洗/i,
+          },
+          {
             id: "initial",
             label:
               "首次使用专属准备（含初次设置/除味等原文要求；首次清洁若无专门说明须标缺口）",
@@ -102,7 +108,7 @@ export function taskEvidence(
         .map((e) => e.id),
     })),
     policy:
-      "按资料说明完成任务；checklist逐项覆盖，缺资料写gaps。不为凑齐流程补造。类别知识与型号步骤分开。",
+      "按资料说明组织可执行指导，checklist逐项覆盖。首次清洁可引用同型号清洁章前置执行并保留断电/冷却等限制，说明不是首次专属条款。食材/份量不明不得自拟参数；参数选择列为待确认条件。标签覆盖不是证明；用户报告完成不等于设备验证。",
   };
 }
 /** Balance retrieval across a full lifecycle instead of returning only high-scoring first-use paragraphs. */

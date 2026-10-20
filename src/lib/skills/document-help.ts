@@ -24,17 +24,18 @@ export const groundedSchema = z
             text: z.string().trim().min(1).max(600),
             sourceIds: z.array(z.string()).min(1).max(4),
             phase: z.enum(taskPhases).optional(),
-            covers: z
-              .array(z.enum(["initial", "load", "program", "end"]))
-              .max(4)
-              .optional(),
+            covers: z.array(z.string().max(30)).max(5).optional(),
           })
           .strict(),
       )
       .min(1)
       .max(10),
     gaps: z.array(z.string().max(200)).max(6).optional(),
-    questions: z.array(z.string().max(250)).max(1).default([]),
+    questions: z
+      .array(z.string().max(250))
+      .max(6)
+      .default([])
+      .transform((rows) => rows.slice(-1)),
   })
   .strict();
 const forbidden =
@@ -133,7 +134,7 @@ export function groundedReply(
   const accepted: typeof p.steps = [];
   const rejected: string[] = [];
   for (const step of p.steps) {
-    step.text=step.text.replace(/[（(]说明书第[0-9、，,]+[页段][）)]/g, "");
+    step.text = step.text.replace(/[（(]说明书第[0-9、，,]+[页段][）)]/g, "");
     try {
       const sources = step.sourceIds.map((id) =>
         evidence.find((s) => s.id === id),
@@ -146,7 +147,13 @@ export function groundedReply(
         original = sources
           .map((s) => `${s!.model} ${s!.title} ${s!.text}`)
           .join(" ");
-      if(!/right side|left side|front panel|rear panel|top panel/i.test(original))step.text=step.text.replace(/机身(?:右侧|左侧|正面|背面|顶部|底部)的/g,'');
+      if (
+        !/right side|left side|front panel|rear panel|top panel/i.test(original)
+      )
+        step.text = step.text.replace(
+          /机身(?:右侧|左侧|正面|背面|顶部|底部)的/g,
+          "",
+        );
       if (
         forbidden.test(text) ||
         numbers(step.text).some((n) => !numbers(original).includes(n)) ||
@@ -160,7 +167,7 @@ export function groundedReply(
         [/浸泡|浸入/, /immerse|soak|浸泡|浸入/i],
         [/咔嗒|咔哒|卡嗒/, /click|咔嗒|咔哒/i],
         [/卡扣|卡入/, /snap|click|卡扣|卡入/i],
-      [/腌制/, /marinat|腌制/i],
+        [/腌制/, /marinat|腌制/i],
       ] as const)
         if (claim.test(text) && !proof.test(original))
           throw new AgentError("专属步骤未获引用原文支持");
@@ -175,8 +182,20 @@ export function groundedReply(
     throw new AgentError(rejected[0] || "没有可支持的操作步骤");
   p.steps = accepted;
   // A preparation operation that explicitly needs power must follow startup, not precede it.
-  const startAt=p.steps.findIndex(s=>s.phase==='start');
-  if(startAt>0){const dependent=p.steps.filter((s,n)=>n<startAt&&s.phase==='prepare'&&/开机后|空转|空篮|插电后/.test(s.text));if(dependent.length){p.steps=p.steps.filter(s=>!dependent.includes(s));const at=p.steps.findIndex(s=>s.phase==='start');p.steps.splice(at+1,0,...dependent);}}
+  const startAt = p.steps.findIndex((s) => s.phase === "start");
+  if (startAt > 0) {
+    const dependent = p.steps.filter(
+      (s, n) =>
+        n < startAt &&
+        s.phase === "prepare" &&
+        /开机后|空转|空篮|插电后/.test(s.text),
+    );
+    if (dependent.length) {
+      p.steps = p.steps.filter((s) => !dependent.includes(s));
+      const at = p.steps.findIndex((s) => s.phase === "start");
+      p.steps.splice(at + 1, 0, ...dependent);
+    }
+  }
   if (
     forbidden.test(withoutProhibitedActions(p.answer)) ||
     numbers(p.answer).some(
@@ -221,10 +240,23 @@ export function groundedReply(
     for (const f of task.checklist)
       if (
         !p.steps.some((s) =>
-          s.covers?.includes(f.id as "initial" | "load" | "program" | "end"),
+          f.id === "initial-clean"
+            ? s.phase === "prepare" && /清洗|清洁|洗净/.test(s.text)
+            : f.id === "initial"
+              ? /首次|第一次|初次/.test(s.text)
+              : f.id === "load"
+                ? /食材|食物/.test(s.text) && /放入|加入|装入|摆放/.test(s.text)
+                : f.id === "program"
+                  ? /程序|模式|时间|温度/.test(s.text) &&
+                    /旋|选|设|确认|启动/.test(s.text)
+                  : /结束|冷却|清洗|清洁|拔/.test(s.text),
         )
       )
         missing.push(f.label + "：未形成完整指导");
+  if (task?.full && task.cooking)
+    missing.push(
+      "实际烹饪前，请按所选食材、份量及官方食谱确认程序/参数；本次只提供控制流程，不凭空设定熟度或食品时温。",
+    );
   if (rejected.length)
     missing.push(
       `已隐藏${rejected.length}条未通过证据检查的步骤，未据此宣称完整完成任务。`,
@@ -252,6 +284,17 @@ export function groundedReply(
     })),
     evidenceIds: [...ids],
     memoryIds: [],
+    ...(task?.full
+      ? {
+          taskProgress: {
+            guidance: missing.length
+              ? ("partial" as const)
+              : ("ready-to-confirm" as const),
+            missing,
+            completionEvidence: "advice-only" as const,
+          },
+        }
+      : {}),
     caveat: [
       "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
       ...missing,

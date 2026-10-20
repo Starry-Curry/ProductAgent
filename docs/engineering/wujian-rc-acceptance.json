@@ -1,0 +1,449 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "bdc1ca3",
+  "criteria": "用户提供的初赛候选版本任务第5.3、11、12节；编号及通过口径固定",
+  "levels": {
+    "L1": "真实本机闭环，注明模型/规则；非真实跨设备账户",
+    "L2": "限定资源/合成数据/本机角色的受控原型",
+    "L3": "未实现但有依赖/协议/验证路径"
+  },
+  "cases": [
+    {
+      "id": "A1",
+      "productValue": "兑现原有价值",
+      "task": "新电器首次完整使用",
+      "code": [
+        "src/lib/agent/graph.ts",
+        "src/lib/skills/document-help.ts"
+      ],
+      "input": "新电器首次完整使用",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": true
+    },
+    {
+      "id": "A2",
+      "productValue": "兑现原有价值",
+      "task": "耳机充电与注意事项",
+      "code": [
+        "src/lib/agent/graph.ts",
+        "src/lib/skills/document-help.ts"
+      ],
+      "input": "耳机充电与注意事项",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "A3",
+      "productValue": "兑现原有价值",
+      "task": "家具清洁/装配分流",
+      "code": [
+        "src/lib/agent/graph.ts",
+        "src/lib/skills/document-help.ts"
+      ],
+      "input": "家具清洁/装配分流",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "A4",
+      "productValue": "兑现原有价值",
+      "task": "新商品仅品牌型号找资料",
+      "code": [
+        "src/lib/agent/graph.ts",
+        "src/lib/skills/document-help.ts"
+      ],
+      "input": "新商品仅品牌型号找资料",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "A5",
+      "productValue": "兑现原有价值",
+      "task": "已尝试步骤续接",
+      "code": [
+        "src/lib/agent/graph.ts",
+        "src/lib/skills/document-help.ts"
+      ],
+      "input": "已尝试步骤续接",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "A6",
+      "productValue": "兑现原有价值",
+      "task": "未知型号停止猜测",
+      "code": [
+        "src/lib/agent/graph.ts",
+        "src/lib/skills/document-help.ts"
+      ],
+      "input": "未知型号停止猜测",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实记录有成功、部分与失败，须本轮复测",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "B1",
+      "productValue": "发现潜在价值",
+      "task": "多物品差异创意",
+      "code": [
+        "src/lib/life/planning.ts",
+        "src/lib/life/ideas.ts"
+      ],
+      "input": "多物品差异创意",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实创意质量不合格，受控本地能力可用",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "B2",
+      "productValue": "发现潜在价值",
+      "task": "目标检索已有资源",
+      "code": [
+        "src/lib/life/planning.ts",
+        "src/lib/life/ideas.ts"
+      ],
+      "input": "目标检索已有资源",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实创意质量不合格，受控本地能力可用",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "B3",
+      "productValue": "发现潜在价值",
+      "task": "多轮排除与时间限制",
+      "code": [
+        "src/lib/life/planning.ts",
+        "src/lib/life/ideas.ts"
+      ],
+      "input": "多轮排除与时间限制",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实创意质量不合格，受控本地能力可用",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "B4",
+      "productValue": "发现潜在价值",
+      "task": "缺少材料识别",
+      "code": [
+        "src/lib/life/planning.ts",
+        "src/lib/life/ideas.ts"
+      ],
+      "input": "缺少材料识别",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实创意质量不合格，受控本地能力可用",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "B5",
+      "productValue": "发现潜在价值",
+      "task": "公开经验有来源改造",
+      "code": [
+        "src/lib/life/planning.ts",
+        "src/lib/life/ideas.ts"
+      ],
+      "input": "公开经验有来源改造",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实创意质量不合格，受控本地能力可用",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "B6",
+      "productValue": "发现潜在价值",
+      "task": "错误物理机制阻止/降级",
+      "code": [
+        "src/lib/life/planning.ts",
+        "src/lib/life/ideas.ts"
+      ],
+      "input": "错误物理机制阻止/降级",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "上轮真实创意质量不合格，受控本地能力可用",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "C1",
+      "productValue": "生活经历/长期联系",
+      "task": "照片一句话保存",
+      "code": [
+        "src/lib/life/stories.ts",
+        "src/components/life/Stories.tsx"
+      ],
+      "input": "照片一句话保存",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": true
+    },
+    {
+      "id": "C2",
+      "productValue": "生活经历/长期联系",
+      "task": "纯文字故事",
+      "code": [
+        "src/lib/life/stories.ts",
+        "src/components/life/Stories.tsx"
+      ],
+      "input": "纯文字故事",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": true
+    },
+    {
+      "id": "C3",
+      "productValue": "生活经历/长期联系",
+      "task": "一事多物双向浏览",
+      "code": [
+        "src/lib/life/stories.ts",
+        "src/components/life/Stories.tsx"
+      ],
+      "input": "一事多物双向浏览",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": true
+    },
+    {
+      "id": "C4",
+      "productValue": "生活经历/长期联系",
+      "task": "修改删除解除关联一致",
+      "code": [
+        "src/lib/life/stories.ts",
+        "src/components/life/Stories.tsx"
+      ],
+      "input": "修改删除解除关联一致",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": true
+    },
+    {
+      "id": "C5",
+      "productValue": "生活经历/长期联系",
+      "task": "赠出后私人故事保留",
+      "code": [
+        "src/lib/life/stories.ts",
+        "src/components/life/Stories.tsx"
+      ],
+      "input": "赠出后私人故事保留",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": true
+    },
+    {
+      "id": "C6",
+      "productValue": "生活经历/长期联系",
+      "task": "AI引用授权及撤销",
+      "code": [
+        "src/lib/life/stories.ts",
+        "src/components/life/Stories.tsx"
+      ],
+      "input": "AI引用授权及撤销",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有CRUD和隔离旅程，完整故事书体验待补齐",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": true
+    },
+    {
+      "id": "D1",
+      "productValue": "延续保护/传递共享",
+      "task": "耐用与消耗品状态",
+      "code": [
+        "src/lib/domain.ts",
+        "src/components/life/WujianApp.tsx"
+      ],
+      "input": "耐用与消耗品状态",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有本地角色模拟，待固定旅程复验",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "D2",
+      "productValue": "延续保护/传递共享",
+      "task": "家庭协助与确认",
+      "code": [
+        "src/lib/domain.ts",
+        "src/components/life/WujianApp.tsx"
+      ],
+      "input": "家庭协助与确认",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有本地角色模拟，待固定旅程复验",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "D3",
+      "productValue": "延续保护/传递共享",
+      "task": "赠礼后权限",
+      "code": [
+        "src/lib/domain.ts",
+        "src/components/life/WujianApp.tsx"
+      ],
+      "input": "赠礼后权限",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有本地角色模拟，待固定旅程复验",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "D4",
+      "productValue": "延续保护/传递共享",
+      "task": "无物品自然聊天",
+      "code": [
+        "src/lib/domain.ts",
+        "src/components/life/WujianApp.tsx"
+      ],
+      "input": "无物品自然聊天",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有本地角色模拟，待固定旅程复验",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    },
+    {
+      "id": "D5",
+      "productValue": "延续保护/传递共享",
+      "task": "普通用户核心操作",
+      "code": [
+        "src/lib/domain.ts",
+        "src/components/life/WujianApp.tsx"
+      ],
+      "input": "普通用户核心操作",
+      "expected": "按任务书第11节固定条件执行；不得用HTTP200/页面存在代替任务成功",
+      "baseline": "已有本地角色模拟，待固定旅程复验",
+      "result": "pending",
+      "evidence": [],
+      "level": "L2",
+      "issues": [
+        "本轮固定验收尚未执行"
+      ],
+      "releaseBlocker": false
+    }
+  ]
+}

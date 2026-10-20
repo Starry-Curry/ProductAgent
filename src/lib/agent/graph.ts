@@ -927,6 +927,11 @@ export async function executeGraph(
             allowedNames.includes(t.function.name) &&
             !(
               w.officialLookup && t.function.name === "fetch_official_knowledge"
+            ) &&
+            !(
+              !!w.officialLookup?.documents &&
+              activeSkill === skills["document-help"] &&
+              t.function.name === "search_product_knowledge"
             ),
         );
         w.response = provider.complete

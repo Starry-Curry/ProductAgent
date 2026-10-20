@@ -87,6 +87,11 @@ export type AssistantReply = {
   model?: string;
   errorCode?: string;
   caveat?: string;
+  taskProgress?: {
+    guidance: "partial" | "ready-to-confirm";
+    missing: string[];
+    completionEvidence: "advice-only";
+  };
 };
 export type SessionMessage = {
   memoryPolicy?: "legacy" | "candidates" | "off";
