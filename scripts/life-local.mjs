@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
 import { lifeDataDirectory } from "../src/lib/life/data-directory.ts";
+import { currentBuildDirectory } from "./life-build.mjs";
 const command = process.argv[2];
 if (!["dev", "start", "build"].includes(command))
   throw Error("Use dev, start or build");
@@ -27,6 +28,10 @@ const child = spawn(
     stdio: "inherit",
     env: {
       ...process.env,
+      WUJIAN_BUILD_DIR:
+        command === "start"
+          ? currentBuildDirectory(workspace)
+          : process.env.WUJIAN_BUILD_DIR || ".next",
       AUTH_MODE: "local-demo",
       WUJIAN_ALLOW_PUBLIC_FETCH:
         process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "false" ? "false" : "true",

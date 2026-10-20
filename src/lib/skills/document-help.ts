@@ -23,6 +23,7 @@ export const groundedSchema = z
           .object({
             text: z.string().trim().min(1).max(600),
             sourceIds: z.array(z.string()).max(4),
+            sourceQuote: z.string().min(8).max(500).optional(),
             phase: z
               .preprocess(
                 (v) =>
@@ -36,9 +37,10 @@ export const groundedSchema = z
                         cooking: "operate",
                         cleanup: "care",
                         end: "finish",
-                      }[v] || (taskPhases.includes(v as TaskPhase) ? v : undefined)
+                      }[v] ||
+                      (taskPhases.includes(v as TaskPhase) ? v : undefined)
                     : v,
-                z.enum(taskPhases),
+                z.enum(taskPhases).optional(),
               )
               .optional(),
             covers: z.array(z.string().max(30)).max(5).optional(),
@@ -170,17 +172,27 @@ export function groundedReply(
     Partial<Pick<ServiceSession, "messages">>,
   task?: ReturnType<typeof taskEvidence>,
 ): AssistantReply {
-  const raw = value && typeof value === "object" ? value as Record<string, unknown> : {};
-  const parsedSteps = (Array.isArray(raw.steps) ? raw.steps : []).slice(0,10)
-    .map(step => groundedSchema.shape.steps.element.safeParse(step));
-  const p = groundedSchema.parse({...raw,
-      answer: typeof raw.answer === "string" && raw.answer.trim() ? raw.answer.slice(0,1600) : "下面根据现有资料继续。",
-      steps: parsedSteps.filter(s => s.success).map(s => s.data),
+  const raw =
+    value && typeof value === "object"
+      ? (value as Record<string, unknown>)
+      : {};
+  const parsedSteps = (Array.isArray(raw.steps) ? raw.steps : [])
+    .slice(0, 10)
+    .map((step) => groundedSchema.shape.steps.element.safeParse(step));
+  const p = groundedSchema.parse({
+      ...raw,
+      answer:
+        typeof raw.answer === "string" && raw.answer.trim()
+          ? raw.answer.slice(0, 1600)
+          : "下面根据现有资料继续。",
+      steps: parsedSteps.filter((s) => s.success).map((s) => s.data),
     }),
     ids = new Set<string>();
   const labels = task?.phaseLabels || phaseLabels;
   const accepted: typeof p.steps = [];
-  const rejected: string[] = parsedSteps.filter(s=>!s.success).map(()=>"单条步骤协议不完整，未作为操作指导");
+  const rejected: string[] = parsedSteps
+    .filter((s) => !s.success)
+    .map(() => "单条步骤协议不完整，未作为操作指导");
   for (const step of p.steps) {
     step.text = step.text.replace(/[（(]说明书第[0-9、，,]+[页段][）)]/g, "");
     try {
@@ -195,6 +207,8 @@ export function groundedReply(
         original = sources
           .map((s) => `${s!.model} ${s!.title} ${s!.text}`)
           .join(" ");
+      if (step.sourceQuote && !sources.some(s=>s!.text.includes(step.sourceQuote!)))
+        throw new AgentError("逐步引文不在所列原文中");
       if (
         !/right side|left side|front panel|rear panel|top panel/i.test(original)
       )
@@ -225,6 +239,13 @@ export function groundedReply(
         [/高温|耐热/, /high temperature|heat.resistan|高温|耐热/i],
         [/防水/, /waterproof|防水/i],
         [/密封|气密/, /airtight|seal|密封|气密/i],
+        [/酒精|乙醇/, /alcohol|ethanol|酒精|乙醇/i],
+        [/强碱|碱性/, /alkali|alkaline|强碱|碱性/i],
+        [/内六角/, /allen|hex(?:agon)?|内六角/i],
+        [/螺丝|螺钉/, /screw|螺丝|螺钉/i],
+        [/拧紧|紧固|加固/, /tighten|fasten|拧紧|紧固|加固/i],
+        [/沿.{0,8}纹理/, /along.{0,20}grain|纹理/i],
+        [/鼓包|翘起/, /swell|warp|鼓包|翘起/i],
       ] as const)
         if (claim.test(text) && !proof.test(original))
           throw new AgentError("专属步骤未获引用原文支持");
@@ -318,7 +339,13 @@ export function groundedReply(
             !p.steps.some((s) => s.phase === phase) &&
             !session.tried.some((id) => id.includes(":phase=" + phase + ":")),
         )
-        .map((phase) => labels[phase] + "：本轮未取得可支持的完整步骤")
+        .map(
+          (phase) =>
+            labels[phase] +
+            (completed.length
+              ? "：本轮先接续当前步骤，后续待确认后继续"
+              : "：本轮未取得可支持的完整步骤"),
+        )
     : [];
   if (task?.full && task.cooking)
     for (const f of task.checklist)

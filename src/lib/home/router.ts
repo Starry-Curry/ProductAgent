@@ -5,6 +5,8 @@ import type { HomeRoute } from "./contracts.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 import { withoutProhibitedActions } from "../agent/safety-language.ts";
 
+export const isStepFollowup = (q: string) =>
+  /第[一二三四五六七八九十\d]+步|下一步|接下来|然后呢/.test(q);
 export function routeHome(
   question: string,
   state: State,
@@ -181,6 +183,7 @@ export function routeHome(
   if (
     session.known.lastIntent === "help" &&
     (session.known.pending ||
+      isStepFollowup(q) ||
       /^(还是|仍然|试过|没变化|我已经|已经|windows|win\s*11|11$|原配|有的|是的)/i.test(
         q,
       ))

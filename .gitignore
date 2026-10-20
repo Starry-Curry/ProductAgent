@@ -55,3 +55,4 @@ Thumbs.db
 
 # Server deployment credentials
 deploy/cloud.env
+.next-*/

@@ -151,8 +151,9 @@ export async function fetchPublicDocument(
     const d = await extractManual(
       result.bytes,
       "official-document.pdf",
-      false,
+      process.env.AUTH_MODE !== "public-demo",
       12_000_000,
+      true,
     );
     return {
       title: decodeURIComponent(url.pathname.split("/").at(-1) || "公开 PDF"),

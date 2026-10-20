@@ -83,6 +83,7 @@ export async function extractManual(
   name: string,
   ocr = false,
   maxBytes = 8_000_000,
+  official = false,
 ) {
   if (bytes.length > maxBytes) throw new AgentError("说明书需要小于 8MB");
   let text = "",
@@ -93,14 +94,19 @@ export async function extractManual(
     const { PDFParse } = await import("pdf-parse"),
       parser = new PDFParse({ data: bytes });
     try {
-      text = (await parser.getText({ first: 20 })).text.slice(0, 40000);
+      // Official text manuals often place charging/maintenance after a long contents section.
+      // Keep ingestion bounded, but let retrieval select the relevant later pages.
+      text = (await parser.getText({ first: official ? 80 : 20 })).text.slice(
+        0,
+        official ? 160000 : 40000,
+      );
       // PDF page markers are not extracted content.
       if (
         text.replace(/--\s*\d+\s*of\s*\d+\s*--/g, "").trim().length < 10 &&
         ocr
       ) {
         const rendered = await parser.getScreenshot({
-          first: 3,
+          first: official ? 4 : 3,
           desiredWidth: 1600,
           imageDataUrl: false,
         });
@@ -129,7 +135,7 @@ export async function extractManual(
     kind: "user-manual",
     method: usedOCR ? "local-ocr" : "text-extraction",
     notice: usedOCR
-      ? "本机 OCR 完成（扫描 PDF 最多前3页）；识别可能出错，请逐字核对型号、数字和警告。原文件不保存，也未上传模型。"
-      : "已在本机提取前20页内文字，请核对型号；原文件不保存。",
+      ? `本机 OCR 完成（扫描 PDF 最多前${official ? 4 : 3}页）；识别可能出错，请逐字核对型号、数字和警告。原文件不保存，也未上传模型。`
+      : `已在本机提取前${official ? 80 : 20}页内文字，请核对型号；原文件不保存。`,
   };
 }

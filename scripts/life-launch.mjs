@@ -5,6 +5,7 @@ import { createInterface } from "node:readline/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { cloudStatus } from "../src/lib/life/provider.ts";
+import { currentBuildDirectory } from "./life-build.mjs";
 
 export function launchStatus(env) {
   const status = cloudStatus({
@@ -53,7 +54,8 @@ async function main() {
     );
     return;
   }
-  if (!existsSync(path.join(root, ".next", "BUILD_ID"))) {
+  const buildDir = currentBuildDirectory(root);
+  if (!existsSync(path.join(root, buildDir, "BUILD_ID"))) {
     console.log("尚无生产构建，请先运行 npm run build，再重新启动。");
     return;
   }
@@ -105,6 +107,7 @@ async function main() {
       env: {
         ...process.env,
         PORT: String(port),
+        WUJIAN_BUILD_DIR: buildDir,
         AI_ALLOW_PAID_CALLS: "false",
         WUJIAN_ALLOW_PAID_CALLS: "false",
       },

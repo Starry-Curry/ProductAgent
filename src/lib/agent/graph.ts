@@ -1,4 +1,5 @@
 import { publicDemo } from "../cloud/runtime.ts";
+import { visionStatus } from "../life/vision.ts";
 import {
   acquireKnowledge,
   retrieveKnowledge,
@@ -52,7 +53,7 @@ import { SYSTEM_PROMPT, PROMPT_VERSION, tools } from "./prompts.ts";
 import { isStoryNarration } from "../memory/ambient.ts";
 import { epoch } from "../memory/store.ts";
 import { sessionAccess } from "../repositories/sessions.ts";
-import { routeHome } from "../home/router.ts";
+import { routeHome, isStepFollowup } from "../home/router.ts";
 import { homeDecision } from "../home/decisions.ts";
 import { itemStamp } from "../home/store.ts";
 import type { HomeRoute } from "../home/contracts.ts";
@@ -304,13 +305,14 @@ export function validateModelPacket(
   ctx: ReturnType<typeof buildContext>,
   mode: string,
   tried: string[] = [],
+  messages: ServiceSession["messages"] = [],
 ): AssistantReply {
   const value = JSON.parse(text);
   if (value?.kind === "grounded")
     return groundedReply(
       value,
       ctx.externalKnowledge,
-      { tried },
+      { tried, messages },
       ctx.knowledgeTask,
     );
   const packet = packetSchema.parse(value);
@@ -366,6 +368,24 @@ export function validateModelPacket(
       /(请|尝试|试着|直接|先把|先将)/.test(q) &&
       (hazardousActions.test(q) || deviceClaims.test(q)),
   );
+  const claimedHistory = actionable.replace(
+    /(?:没有|无法|不能|不清楚|不知道|不记得|未保存)[^。！？\n]*/g,
+    "",
+  );
+  if (
+    !ctx.cloudMemories.length &&
+    !ctx.cloudFragments.length &&
+    /我们.{0,8}(?:上次|一起去)|(?:上次|以前|曾经|那次).{0,8}(?:一起|我们去|咱们去)/.test(
+      claimedHistory,
+    )
+  )
+    throw new AgentError("没有获准经历，不能预设共同出行或经历");
+  if (
+    /下次开机.{0,12}(?:看见|提醒)|我会自动.{0,8}(?:记住|保存|通知)/.test(
+      actionable,
+    )
+  )
+    throw new AgentError("没有相应行动授权，不能承诺自动记忆或设备行为");
   if (
     hazardousActions.test(withoutProhibitedActions(actionable)) ||
     deviceClaims.test(withoutProhibitedActions(actionable)) ||
@@ -550,6 +570,7 @@ export async function executeGraph(
       guard();
       const w = { ...work, session, trace: [...work.trace] };
       const knowledgeQuery =
+        isStepFollowup(w.question) ||
         /^(还是|仍然|没变化|依然|试过|我试过|第二步|第一步|第三步|已经|我已经)/.test(
           w.question,
         )
@@ -774,7 +795,7 @@ export async function executeGraph(
       if (
         !w.reply &&
         ctx.item &&
-        operationQuestion(w.question) &&
+        operationQuestion(knowledgeQuery) &&
         ctx.externalKnowledge.length &&
         ctx.externalKnowledge.every((e) => e.category === "facts")
       ) {
@@ -800,7 +821,7 @@ export async function executeGraph(
         !ctx.knowledge.pack &&
         ctx.item?.model &&
         ctx.item.model !== "待确认" &&
-        operationQuestion(w.question)
+        operationQuestion(knowledgeQuery)
       ) {
         w.reply = {
           ...blank(
@@ -857,6 +878,17 @@ export async function executeGraph(
             role: "system",
             content:
               SYSTEM_PROMPT +
+              (ctx.persona.enabled
+                ? "\n表达风格：" +
+                  {
+                    neutral:
+                      "简洁直接、正常交流；不用动作扮演、抒情比喻或大量表情。",
+                    warm: "自然亲切，适度回应感受，不渲染共同经历。",
+                    playful:
+                      "轻松有趣，可以有少量明确比喻；不假装实物移动或感知。",
+                  }[ctx.persona.style]
+                : "\n默认正常自然交流，不扮演拟人物品。") +
+              "没有提供获准经历时，不能预设‘我们上次一起去过’；应直接说没有可确认的记录。不能承诺自动保存、开机提醒或控制实物；用户需主动确认保存。" +
               (route
                 ? "\n统一对话：当前意图=" +
                   route.intent +
@@ -876,6 +908,9 @@ export async function executeGraph(
                     page: session.known.uiPage,
                     appCapabilities: {
                       available: [
+                        ...(visionStatus().ready
+                          ? ["照片视觉候选，须逐张确认上云并人工确认实例"]
+                          : []),
                         "手动/照片/扫码录入，型号需确认",
                         "来源资料问答",
                         "目标规划与反馈",
@@ -884,7 +919,7 @@ export async function executeGraph(
                         "本机演示家庭与社交礼物",
                       ],
                       unavailable: [
-                        "视觉识物尚未启用",
+                        ...(!visionStatus().ready ? ["视觉识物尚未启用"] : []),
                         "真实家庭账户/跨设备通知",
                         "自动购物下单",
                         "受限社区全站API",
@@ -923,9 +958,11 @@ export async function executeGraph(
               persona: ctx.persona.enabled ? ctx.persona : undefined,
               prior,
               tried: session.tried,
-              completedSteps: session.messages.flatMap(m => m.reply?.steps || [])
-                .filter(s => session.tried.includes(s.id)).slice(-12)
-                .map(s => ({id:s.id,text:s.text})),
+              completedSteps: session.messages
+                .flatMap((m) => m.reply?.steps || [])
+                .filter((s) => session.tried.includes(s.id))
+                .slice(-12)
+                .map((s) => ({ id: s.id, text: s.text })),
             }),
           },
         ];
@@ -1165,6 +1202,7 @@ export async function executeGraph(
               ctx,
               effectiveSession.mode,
               session.tried,
+              session.messages,
             );
         w.reply.model = w.response!.model;
         if (!storyPlan)

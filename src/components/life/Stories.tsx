@@ -71,6 +71,8 @@ export function Stories({
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
     [date, setDate] = useState(""),
+    [photoIndex, setPhotoIndex] = useState(0),
+    [observations, setObservations] = useState<string[]>([]),
     [recall, setRecall] = useState(true),
     [cloud, setCloud] = useState(false),
     [origin, setOrigin] =
@@ -438,6 +440,22 @@ export function Stories({
           </label>
           {media.length > 0 && (
             <div className="life-story-photo-matches">
+              {media.length > 1 && (
+                <label>
+                  识别哪张照片
+                  <select
+                    aria-label="识别哪张照片"
+                    value={Math.min(photoIndex, media.length - 1)}
+                    onChange={(e) => setPhotoIndex(Number(e.target.value))}
+                  >
+                    {media.map((id, n) => (
+                      <option key={id} value={n}>
+                        第{n + 1}张照片
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              )}
               <button
                 type="button"
                 disabled={busy}
@@ -450,11 +468,24 @@ export function Stories({
                     return;
                   void run(async () => {
                     const d = await request("storyPhoto", {
-                      mediaId: media[0],
+                      mediaId: media[photoIndex] || media[0],
                       confirmed: true,
                     });
-                    setPhotoMatches(
-                      d.matches.flatMap((m: any) => m.candidates),
+                    setPhotoMatches([
+                      ...new Map(
+                        d.matches
+                          .flatMap((m: any) => m.candidates)
+                          .map((c: any) => [c.itemId, c]),
+                      ).values(),
+                    ] as { itemId: string; name: string; reason: string }[]);
+                    setObservations(
+                      d.matches.map(
+                        (m: any) =>
+                          m.observation.name +
+                          "：" +
+                          m.observation.uncertainties.join("；") +
+                          (m.candidates.length ? "" : "（无已登记实例候选）"),
+                      ),
                     );
                     setNotice(
                       d.notice +
@@ -467,6 +498,11 @@ export function Stories({
               >
                 找找照片里的已有物品（需视觉授权）
               </button>
+              {observations.length > 0 && (
+                <p className="life-muted">
+                  视觉观察，待核对：{observations.join("；")}
+                </p>
+              )}
               {photoMatches.map((c) => (
                 <label key={c.itemId} className="life-check">
                   <input

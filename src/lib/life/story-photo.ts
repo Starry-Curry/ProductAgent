@@ -6,9 +6,15 @@ import { recognizeOwnedPhoto } from "./vision.ts";
 import { syntheticItem } from "./availability.ts";
 
 const objectKinds = [
-  /鼠标|mouse/i, /相机|camera/i, /耳机|headphones?|earbuds?/i,
-  /杯|cup|glass|mug/i, /手电|flashlight|torch/i, /背包|backpack/i,
-  /衬衫|shirt/i, /书|book/i, /植物|盆栽|plant/i,
+  /鼠标|mouse/i,
+  /相机|camera/i,
+  /耳机|headphones?|earbuds?/i,
+  /杯|cup|glass|mug/i,
+  /手电|flashlight|torch/i,
+  /背包|backpack/i,
+  /衬衫|shirt/i,
+  /书|book/i,
+  /植物|盆栽|plant/i,
 ];
 function sameVisibleKind(a: string, b: string) {
   return objectKinds.some((kind) => kind.test(a) && kind.test(b));

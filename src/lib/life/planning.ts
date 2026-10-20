@@ -59,10 +59,14 @@ export const discoveryInput = z
     page: z.enum(["discover", "assistant", "item"]).default("discover"),
   })
   .strict();
-const declaresItems = (q: string) =>
+const declaresItems = (question: string) => {
+  // Referring to one's inventory is not a new list of unregistered item names.
+  const q = question.replace(/(?:只用|只有|利用|用)(?:我(?:的)?|自己|家里|手头|当前)?(?:现有|已有|登记|展柜)(?:的)?(?:物品|东西|材料|资源)?/g," ").replace(/只有这些|只用这些/g," ");
+  return (
   /只用|(?:我有|只有)(?![一二两三四五六七八九十\d半]+(?:个)?(?:小时|分钟|时间|天))/.test(
     q,
-  );
+  ));
+};
 
 export function itemAffordances(
   item: State["items"][number],
