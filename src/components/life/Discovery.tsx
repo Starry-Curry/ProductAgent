@@ -38,7 +38,7 @@ export function Discovery({
   );
   const [continuation, setContinuation] = useState<any>(undefined);
   const [cloud, setCloud] = useState(true);
-  const [review, setReview] = useState(true);
+  const [review, setReview] = useState(false);
   const [experienceIds, setExperienceIds] = useState<string[]>([]);
   const [gaps, setGaps] = useState<string[]>([]);
   const [sourceUrl, setSourceUrl] = useState(""),

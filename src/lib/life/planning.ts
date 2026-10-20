@@ -204,6 +204,14 @@ export async function planDiscovery(
     selected = [...new Set(previous.flatMap((p) => p.itemIds))];
   if (!selected.length && declaresItems(input.goal) && named.length)
     selected = named.map((i) => i.id);
+  const onlyPhrase = input.goal.match(/(?:只用|只使用)([^，。；]{1,80})/)?.[1];
+  const onlyNamed = onlyPhrase
+    ? visible.filter((i) => mentionsItem(onlyPhrase, i.name)).map((i) => i.id)
+    : [];
+  if (onlyNamed.length)
+    selected = selected.length
+      ? selected.filter((id) => onlyNamed.includes(id))
+      : onlyNamed;
   if (!selected.length && followup && declaresItems(lastGoal || ""))
     selected = [...new Set(previous.flatMap((p) => p.itemIds))];
   const minutes =
@@ -226,6 +234,7 @@ export async function planDiscovery(
       usable(i) &&
       (!syntheticItem(i) || input.includeSynthetic) &&
       !excluded.has(i.id) &&
+      (!onlyNamed.length || onlyNamed.includes(i.id)) &&
       (!selected.length || selected.includes(i.id)),
   );
   const referenceGaps: string[] = [];
@@ -428,7 +437,8 @@ export async function planDiscovery(
         light &&
         subject &&
         minutes >= 10 &&
-        /摄影|有趣|光|观察|玩法/.test(goal) &&
+        /摄影|光影|观察/.test(goal) &&
+        !/不要.{0,4}观察|不做科学|不要实验/.test(goal) &&
         (!input.itemId ||
           excluded.has(input.itemId) ||
           [light.id, subject.id].includes(input.itemId))
@@ -484,7 +494,11 @@ export async function planDiscovery(
       "本地有限能力规划暂未找到新方案。可调整物品/限制；获准云端后可做开放式规划。不会把缺口当成已有。",
     );
   ideas = [...new Map(ideas.map((i) => [i.id, i])).values()]
-    .filter((i) => i.outcome !== "不感兴趣")
+    .filter(
+      (i) =>
+        i.outcome !== "不感兴趣" &&
+        (i.outcome !== "未成功" || /重试|再试|修复/.test(goal)),
+    )
     .sort(
       (a, b) =>
         Number(a.outcome === "未成功") - Number(b.outcome === "未成功") ||

@@ -73,6 +73,11 @@ export function capabilityPlans(
         ],
         source: "local-candidate",
         tested: false,
+        direction: /限词/.test(title)
+          ? "娱乐"
+          : /角色|观察/.test(title)
+            ? "创作"
+            : "生活改善",
         goal,
       }),
     );
@@ -80,6 +85,33 @@ export function capabilityPlans(
   const writing = find(/纸|笔|书写|writing|annotation/i),
     container = find(/收纳|容器|盒|杯|storage|contain/i),
     carry = find(/背包|旅行包|携带|portable|carrying/i);
+  if (writing && /娱乐|好玩|有趣|游戏|创作|换.*方向/.test(goal)) {
+    offer(
+      `用${writing.name}玩一轮限词编故事`,
+      [writing],
+      5,
+      [
+        "先确认有纸和能写的笔；缺一个可改为口述，不假定还有其他文具",
+        "写下三个互不相干的日常词，用它们串成四句虚构小故事；不当成真实经历保存",
+        "换一个词重写结尾，比较两个版本；可独自完成，也可征得同伴同意后轮流接句",
+      ],
+      ["纸笔是否完整须确认；多人参与不是前置条件"],
+      "娱乐靠规则和表达成立，不依赖未确认的物理现象。",
+    );
+    if (container && container.id !== writing.id)
+      offer(
+        `借${container.name}的轮廓做角色草图`,
+        [writing, container],
+        10,
+        [
+          `确认${container.name}干净、干燥并可稳定放在纸上；玻璃不能放稳就只看轮廓画，不沿边描`,
+          `用${writing.name}画出看到的外形，再添眼睛、线条或文字，变成一个明确虚构的角色`,
+          "为角色写一句台词，再用同样外形画出另一种性格；不要求杯子自行印出痕迹",
+        ],
+        ["可写表面、笔和容器稳定性需本人确认；不涂写原物品"],
+        "创作利用真实可见轮廓和纸笔，不承诺光学成像或自动印痕。",
+      );
+  }
   if (/整理|收纳|桌面|生活改善/.test(goal) && container) {
     offer(
       `把${container.name}变成可撤回的桌面归位点`,
@@ -107,7 +139,10 @@ export function capabilityPlans(
         "把容纳和记录两种能力组合成可试用的整理流程。",
       );
   }
-  if (/学习|学点|观察|有趣|娱乐|玩法|新用途|换个方向/.test(goal)) {
+  if (
+    /学习|学点|观察|有趣|娱乐|玩法|新用途|换个方向/.test(goal) &&
+    !/不要.{0,4}观察|不做科学|不要实验/.test(goal)
+  ) {
     const subject =
       items.find(
         (i) =>

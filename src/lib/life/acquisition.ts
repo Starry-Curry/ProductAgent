@@ -101,7 +101,9 @@ export function makeKnowledgeDocument(
     id = digest(d.url + "\n" + hash).slice(0, 24),
     chunks: KnowledgeChunk[] = [];
   for (const m of d.text.matchAll(/[\s\S]{1,1000}(?:\s|$)/g)) {
-    const text = m[0].trim();
+    const text = d.text
+      .slice(m.index!, Math.min(d.text.length, m.index! + m[0].length + 350))
+      .trim();
     if (text.length < 15) continue;
     const start = m.index! + m[0].indexOf(text);
     chunks.push({
@@ -127,7 +129,7 @@ export function makeKnowledgeDocument(
   }
   return {
     id,
-    processorVersion: "extractive-1",
+    processorVersion: "extractive-2-overlap",
     url: d.url,
     title: d.title,
     text: d.text,
@@ -163,7 +165,7 @@ export function readKnowledge(
       .all(actor, itemId, knowledgeIdentity(item)) as { body: string }[]
   ).map((r) => {
     const d = JSON.parse(r.body) as AcquiredDocument;
-    return d.processorVersion === "extractive-1"
+    return d.processorVersion === "extractive-2-overlap"
       ? d
       : {
           ...makeKnowledgeDocument(

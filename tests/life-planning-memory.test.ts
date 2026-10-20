@@ -241,7 +241,8 @@ test("收藏和失败反馈参与规划排序与云端上下文；不相关获�
       /超出实际登记数量/,
     );
     const repeated = await t.plan({ goal: "整理桌面" });
-    assert.ok(repeated.ideas.some((i) => i.id === failed.id && i.saved));
+    assert.ok(!repeated.ideas.some((i) => i.id === failed.id));
+    assert.equal((t.db.prepare("SELECT saved FROM life_idea_feedback WHERE idea_id=? AND owner='lin'").get(failed.id) as {saved:number}).saved,1);
   } finally {
     t.db.close();
   }

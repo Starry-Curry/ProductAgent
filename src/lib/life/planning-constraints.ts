@@ -23,11 +23,13 @@ export function mentionsItem(q: string, name: string) {
   if (q.includes(name)) return true;
   const chunks = name.match(/[\p{Script=Han}]+|[a-z0-9-]{4,}/giu) || [];
   return chunks.some((chunk) =>
-    /^[a-z0-9-]+$/i.test(chunk)
-      ? q.toLowerCase().includes(chunk.toLowerCase())
-      : Array.from({ length: Math.max(0, chunk.length - 2) }, (_, n) =>
-          chunk.slice(n, n + 3),
-        ).some((w) => q.includes(w)),
+    chunk.length >= 2 && q.includes(chunk)
+      ? true
+      : /^[a-z0-9-]+$/i.test(chunk)
+        ? q.toLowerCase().includes(chunk.toLowerCase())
+        : Array.from({ length: Math.max(0, chunk.length - 2) }, (_, n) =>
+            chunk.slice(n, n + 3),
+          ).some((w) => q.includes(w)),
   );
 }
 export function violatesGoal(goal: string, proposed: string) {

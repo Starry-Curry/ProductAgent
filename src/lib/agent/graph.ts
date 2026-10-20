@@ -634,7 +634,7 @@ export async function executeGraph(
                 : undefined,
               model: provider.ready ?? true,
               includeSynthetic: false,
-              review: true,
+              review: false,
               page: session.known.uiPage,
             },
             provider,

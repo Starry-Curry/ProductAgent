@@ -7,6 +7,7 @@ import { respond } from "../src/lib/agent/service.ts";
 import { planDiscovery } from "../src/lib/life/planning.ts";
 import { importCreativeEvidence } from "../src/lib/life/creative-evidence.ts";
 import { validationFixture } from "./life-validation-fixture.ts";
+import { saveFragment } from "../src/lib/life/stories.ts";
 
 const directory = path.join(process.cwd(), ".runtime", "rc-20261020");
 fs.mkdirSync(directory, { recursive: true });
@@ -160,6 +161,13 @@ try {
           "这件家具怎么清洁？它的装配是否有可用的图解？不要猜安装细节。",
           ikea,
         );
+      else if (name.startsWith("A4-samla"))
+        result = await turn(
+          "这件收纳用品怎么使用和清洁？有哪些重要限制？",
+          t.add("RC 新收纳用品", "家具", "宜家", "394.407.67", {
+            region: "cn",
+          }),
+        );
       else if (name.startsWith("A4"))
         result = await turn(
           "第一次使用怎么准备、怎么清洁？请先按品牌型号找官方资料。",
@@ -185,7 +193,26 @@ try {
         result = await turn(
           "今天忙完终于有空坐一会儿，想随便聊聊，不用给我安排任务。",
         );
-      else if (name.startsWith("B")) {
+      else if (name.startsWith("C6")) {
+        const story = saveFragment(t.db, t.read, "lin", {
+          text: "合成测试：周六在阳台画杯子的轮廓，画歪了也觉得轻松。",
+          itemIds: [],
+          allowRecall: true,
+          allowCloud: true,
+        });
+        result = await turn(
+          "回忆我保存的阳台画画故事，陪我聊聊，不要补编人物、地点或其他经历。",
+        );
+        if (name.includes("revoke"))
+          saveFragment(t.db, t.read, "lin", {
+            id: story.id,
+            revision: story.revision,
+            text: story.text,
+            itemIds: [],
+            allowRecall: false,
+            allowCloud: false,
+          });
+      } else if (name.startsWith("B")) {
         const old = ledger.cases.find((c) => c.name === "B1")?.result;
         let experience: string[] = [];
         if (name.startsWith("B5"))
