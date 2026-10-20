@@ -57,12 +57,17 @@ export function listSessions(
   actor: Person,
   itemId?: string,
   mode?: string,
+  allScopes = false,
 ) {
   const rows = db
     .prepare(
-      "SELECT body FROM agent_sessions WHERE owner=? AND coalesce(item_id,'')=? ORDER BY json_extract(body,'$.updatedAt') DESC LIMIT 25",
+      allScopes
+        ? "SELECT body FROM agent_sessions WHERE owner=? ORDER BY json_extract(body,'$.updatedAt') DESC LIMIT 40"
+        : "SELECT body FROM agent_sessions WHERE owner=? AND coalesce(item_id,'')=? ORDER BY json_extract(body,'$.updatedAt') DESC LIMIT 25",
     )
-    .all(actor, itemId || "") as { body: string }[];
+    .all(...(allScopes ? [actor] : [actor, itemId || ""])) as {
+    body: string;
+  }[];
   return rows
     .map((r) => JSON.parse(r.body) as ServiceSession)
     .filter(
@@ -195,7 +200,13 @@ export function commitTurn(
     const storyTurn =
       input.mode === "story" ||
       (input.mode === "auto" && result.reply.route?.intent === "story");
-    if ((!result.session.known.memoryPolicy || result.session.known.memoryPolicy === "legacy") && storyTurn && turnItemId && isStoryNarration(input.question)) {
+    if (
+      (!result.session.known.memoryPolicy ||
+        result.session.known.memoryPolicy === "legacy") &&
+      storyTurn &&
+      turnItemId &&
+      isStoryNarration(input.question)
+    ) {
       const state = read();
       state.memories.push({
         id: input.requestId,

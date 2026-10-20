@@ -48,6 +48,7 @@ export async function GET(r: Request) {
               a,
               p.get("itemId") || undefined,
               p.get("mode") || "service",
+              p.get("scope") === "all",
             ),
           },
     );
@@ -98,9 +99,7 @@ export async function POST(r: Request) {
     }
     if (p.action === "handoff")
       return Response.json(handoff(database(), read, a, p.input));
-    return Response.json(
-      await respond(database(), read, a, p, lifeProvider()),
-    );
+    return Response.json(await respond(database(), read, a, p, lifeProvider()));
   } catch (e) {
     return fail(e);
   }

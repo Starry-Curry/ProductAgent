@@ -1,3 +1,9 @@
+import {
+  acquireKnowledge,
+  retrieveKnowledge,
+  operationQuestion,
+} from "../life/acquisition.ts";
+import { groundedReply, offlineDocumentHelp } from "../skills/document-help.ts";
 import { planDiscovery } from "../life/planning.ts";
 import { withoutProhibitedActions } from "./safety-language.ts";
 import {
@@ -278,6 +284,7 @@ export function curatedDecision(
       : blank("我在。想先解决一件物品的使用问题，还是聊聊最近留下的故事？");
   if (
     !pack &&
+    (!ctx.item?.model || ctx.item.model === "待确认") &&
     /预约|配对|兼容|接收器|型号|复位|重置|拆|电池规格|承重|载荷/.test(goal)
   )
     return {
@@ -293,8 +300,12 @@ export function validateModelPacket(
   text: string,
   ctx: ReturnType<typeof buildContext>,
   mode: string,
+  tried: string[] = [],
 ): AssistantReply {
-  const packet = packetSchema.parse(JSON.parse(text));
+  const value = JSON.parse(text);
+  if (value?.kind === "grounded")
+    return groundedReply(value, ctx.externalKnowledge, { tried });
+  const packet = packetSchema.parse(value);
   // A requested wording change for an ordinary action is general help.
   // Keep all factual and risk checks below; this does not license device fiction.
   if (
@@ -359,6 +370,7 @@ export function validateModelPacket(
   if (
     packet.kind === "general" &&
     ctx.knowledge.facts.length &&
+    !ctx.productConversation &&
     mode !== "companion"
   )
     throw new AgentError("存在相关事实，请选择来源 ID 或说明还缺什么条件");
@@ -384,7 +396,9 @@ export function validateModelPacket(
     caveat:
       packet.kind === "creative"
         ? "这是可选交流或创作表达，不作为真实经历自动保存。"
-        : "一般帮助，请对照当前条件；未验证实物状态。",
+        : ctx.item
+          ? "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。"
+          : "一般交流与帮助；没有伪造用户经历或执行动作。",
   };
 }
 type Work = {
@@ -398,6 +412,7 @@ type Work = {
   started: number;
   session: ServiceSession;
   tokens: { input: number; output: number } | null;
+  officialLookup?: { documents: number; cached: boolean; issues: string[] };
 };
 const GraphState = Annotation.Root({ work: Annotation<Work> });
 export async function executeGraph(
@@ -526,16 +541,55 @@ export async function executeGraph(
     .addNode("prepare", async ({ work }) => {
       guard();
       const w = { ...work, session, trace: [...work.trace] };
+      const knowledgeQuery =
+        /^(还是|仍然|没变化|依然|试过|我试过|第二步|第一步|第三步|已经)/.test(
+          w.question,
+        )
+          ? session.known.goal || w.question
+          : w.question;
+      if (
+        session.known.uiPage &&
+        effectiveSession.mode === "service" &&
+        effectiveSession.itemId &&
+        operationQuestion(knowledgeQuery) &&
+        process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "true"
+      ) {
+        const acquired = await acquireKnowledge(
+          db,
+          read,
+          actor,
+          effectiveSession.itemId,
+          { persist: !temporary },
+        );
+        guard();
+        w.officialLookup = {
+          documents: acquired.documents.length,
+          cached: acquired.cached,
+          issues: acquired.issues,
+        };
+        add(
+          w,
+          "official_knowledge",
+          JSON.stringify({
+            documents: acquired.documents.length,
+            cached: acquired.cached,
+            issues: acquired.issues,
+          }),
+        );
+      }
       const ctx = buildContext(db, read(), actor, {
         excludeSynthetic: session.known.memoryPolicy !== undefined,
         taskMemoryOnly: !!session.known.uiPage,
         question: w.question,
+        knowledgeQuery,
         mode: effectiveSession.mode,
         sessionId: session.id,
         itemId: effectiveSession.itemId,
         temporary,
       });
       trackExpiry(ctx.memories);
+      if (ctx.externalKnowledge.length && effectiveSession.mode === "service")
+        activeSkill = skills["document-help"];
       if (route?.intent === "plan" && session.known.uiPage && !temporary) {
         w.calls = (provider.ready ?? true) ? 1 : 0;
         try {
@@ -618,7 +672,9 @@ export async function executeGraph(
         `purpose=${session.mode}; memoryRefs=${ctx.cloudMemories.map((m) => m.id).join(",")}; prompt=${PROMPT_VERSION}`,
       );
       w.reply =
-        (session.known.memoryPolicy !== undefined && !temporary
+        (session.known.memoryPolicy !== undefined &&
+        !temporary &&
+        ctx.persona.memoryUse !== "off"
           ? recallLifeFragments(
               db,
               read(),
@@ -669,10 +725,25 @@ export async function executeGraph(
           w.reply = localMemoryStory(storyPlan);
           add(w, "memory_story_composition", "local-private-or-demo");
         }
-      } else if (!w.reply) {
+      } else if (
+        ctx.externalKnowledge.some((c) => c.category !== "facts") &&
+        effectiveSession.mode === "service" &&
+        !unsafe.test(withoutProhibitedActions(w.question))
+      ) {
+        w.reply =
+          provider.ready === false
+            ? offlineDocumentHelp(ctx.externalKnowledge, session)
+            : undefined;
+      }
+      if (!w.reply && !storyPlan) {
         const prior = session.messages
           .filter(
             (m) =>
+              !(
+                ctx.persona.memoryUse === "off" &&
+                m.role === "assistant" &&
+                m.reply?.memoryIds.length
+              ) &&
               (m.role === "feedback" ||
                 m.role === "action" ||
                 (session.known.memoryPolicy !== undefined &&
@@ -727,9 +798,20 @@ export async function executeGraph(
               goal: session.known.goal,
               mode: effectiveSession.mode,
               item: ctx.item
-                ? { name: ctx.item.name, model: ctx.item.model }
+                ? {
+                    name: ctx.item.name,
+                    brand: ctx.item.brand,
+                    model: ctx.item.model,
+                    region: ctx.item.region || "未确认",
+                    category: ctx.item.category,
+                    attributes: ctx.item.attributes,
+                    state: ctx.item.state,
+                    availability: ctx.item.availability,
+                  }
                 : null,
               evidence: ctx.knowledge,
+              officialDocuments: ctx.externalKnowledge,
+              officialLookup: w.officialLookup,
               memories: ctx.cloudMemories.map((m) => ({
                 id: m.id,
                 kind: m.kind,
@@ -737,17 +819,13 @@ export async function executeGraph(
               })),
               preferences: ctx.cloudPreferences,
               resources: ctx.resources,
-              persona:
-                effectiveSession.mode === "companion" ||
-                effectiveSession.mode === "story"
-                  ? ctx.persona
-                  : undefined,
+              persona: ctx.persona.enabled ? ctx.persona : undefined,
               prior,
               tried: session.tried,
             }),
           },
         ];
-      } else add(w, "curated_answer", w.reply.outcome);
+      } else if (w.reply) add(w, "curated_answer", w.reply.outcome);
       return { work: w };
     })
     .addNode("model", async ({ work }) => {
@@ -764,8 +842,12 @@ export async function executeGraph(
         w.calls++;
         add(w, "model_started", `attempt=${w.calls}`);
         const allowedNames: readonly string[] = activeSkill.tools;
-        const activeTools = tools.filter((t) =>
-          allowedNames.includes(t.function.name),
+        const activeTools = tools.filter(
+          (t) =>
+            allowedNames.includes(t.function.name) &&
+            !(
+              w.officialLookup && t.function.name === "fetch_official_knowledge"
+            ),
         );
         w.response = provider.complete
           ? await provider.complete(w.messages, activeTools, {
@@ -878,26 +960,58 @@ export async function executeGraph(
             temporary,
           });
           trackExpiry(ctx.cloudMemories);
-          value =
-            call.function.name === "search_product_knowledge"
-              ? relevantKnowledge(query || w.question, ctx.knowledge.pack)
-              : call.function.name === "search_personal_memory"
-                ? ctx.cloudMemories.map((m) => ({
-                    id: m.id,
-                    text: m.text,
-                    kind: m.kind,
-                  }))
-                : read()
-                    .items.filter(
-                      (i) =>
-                        canRead(i, actor) &&
-                        (ctx.item?.demo ? !!i.demo : !i.demo),
-                    )
-                    .map((i) => ({
-                      name: i.name,
-                      state: i.state,
-                      demo: !!i.demo,
-                    }));
+          if (call.function.name === "fetch_official_knowledge") {
+            if (
+              !effectiveSession.itemId ||
+              !session.known.uiPage ||
+              process.env.WUJIAN_ALLOW_PUBLIC_FETCH !== "true"
+            )
+              throw new AgentError("本轮未开放官方联网读取");
+            const acquired = await acquireKnowledge(
+              db,
+              read,
+              actor,
+              effectiveSession.itemId,
+              { persist: !temporary },
+            );
+            guard();
+            value = {
+              issues: acquired.issues,
+              documents: retrieveKnowledge(
+                db,
+                read(),
+                actor,
+                effectiveSession.itemId,
+                query || w.question,
+              ),
+            };
+          } else
+            value =
+              call.function.name === "search_product_knowledge"
+                ? {
+                    ...relevantKnowledge(
+                      query || w.question,
+                      ctx.knowledge.pack,
+                    ),
+                    officialDocuments: ctx.externalKnowledge,
+                  }
+                : call.function.name === "search_personal_memory"
+                  ? ctx.cloudMemories.map((m) => ({
+                      id: m.id,
+                      text: m.text,
+                      kind: m.kind,
+                    }))
+                  : read()
+                      .items.filter(
+                        (i) =>
+                          canRead(i, actor) &&
+                          (ctx.item?.demo ? !!i.demo : !i.demo),
+                      )
+                      .map((i) => ({
+                        name: i.name,
+                        state: i.state,
+                        demo: !!i.demo,
+                      }));
           add(w, "tool_completed", call.function.name);
         } catch {
           value = { error: "工具不存在、参数无效或不在本任务授权范围" };
@@ -930,12 +1044,21 @@ export async function executeGraph(
         });
         w.reply = storyPlan
           ? validateStorytelling(w.response!.text, storyPlan)
-          : validateModelPacket(w.response!.text, ctx, effectiveSession.mode);
+          : validateModelPacket(
+              w.response!.text,
+              ctx,
+              effectiveSession.mode,
+              session.tried,
+            );
         w.reply.model = w.response!.model;
         if (!storyPlan) w.reply.memoryIds = ctx.cloudMemories.map((m) => m.id);
         add(w, "validated", w.reply.outcome);
-      } catch {
-        add(w, "validation_failed", "schema_or_support");
+      } catch (error) {
+        add(
+          w,
+          "validation_failed",
+          error instanceof AgentError ? error.message : "schema_or_support",
+        );
         if (storyPlan) {
           w.reply = localMemoryStory(storyPlan);
           add(w, "memory_story_fallback", "invalid_narrative");
@@ -945,7 +1068,7 @@ export async function executeGraph(
             {
               role: "user",
               content:
-                "上次输出未满足结构或证据要求。请仅使用相关证据ID；资料不足请给出 needs_info 或 referred，不补造操作。输出约定 JSON。",
+                "上次输出未满足结构或证据要求。已有officialDocuments操作证据时，请用grounded结构及其sourceIds，answer只写引导，steps逐项引用，不要退回无资料声明；其他情况只用相关事实ID，不补造操作。已确认型号不要再问，未知专属按钮不能凭布局猜。输出约定JSON。",
             },
           );
         } else

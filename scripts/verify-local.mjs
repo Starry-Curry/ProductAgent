@@ -16,6 +16,7 @@ const env = {
   PRODUCT_AGENT_DATA_DIR: data,
   AI_ALLOW_PAID_CALLS: "false",
   WUJIAN_ALLOW_PAID_CALLS: "false",
+  WUJIAN_ALLOW_PUBLIC_FETCH: "false",
   AI_API_KEY: "",
   AI_MODEL: "",
   AI_BASE_URL: "",

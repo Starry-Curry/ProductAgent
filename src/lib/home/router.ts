@@ -207,6 +207,8 @@ export function routeProductTurn(
   const named = items.filter((i) => q.includes(i.name));
   const selected = items.find((i) => i.id === session.itemId);
   const previous = items.find((i) => i.id === session.known.activeItemId);
+  const companionScope =
+    !!selected && session.known.companionItemId === selected.id;
   const target =
     named.length === 1
       ? named[0]
@@ -251,7 +253,7 @@ export function routeProductTurn(
       "companion",
       "companion",
       "回应这次交流，不强行围绕物品",
-      false,
+      companionScope,
     );
   if (
     isStoryNarration(q) &&
@@ -265,10 +267,10 @@ export function routeProductTurn(
       "companion",
       "companion",
       "聊天叙述留在本次会话；生活故事需明确保存",
-      false,
+      companionScope,
     );
   if (
-    /创意|玩法|新用途|灵感|有趣|组合|不买东西|不想买|整理桌面|收纳规划|学习计划|学点|出行计划|生活改善|换个方向|更简单|只有这些|不用这件/.test(
+    /创意|玩法|新用途|灵感|有趣|组合|继续这个目标|不买东西|不想买|整理桌面|收纳规划|学习计划|学点|出行计划|生活改善|换个方向|更简单|只有这些|不用这件/.test(
       q,
     ) ||
     (session.known.lastIntent === "plan" &&

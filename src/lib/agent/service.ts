@@ -15,7 +15,7 @@ import {
   releaseTurn,
   readSession,
 } from "../repositories/sessions.ts";
-import { epoch, saveMemory } from "../memory/store.ts";
+import { epoch, saveMemory, getPersona } from "../memory/store.ts";
 import { executeGraph } from "./graph.ts";
 import { buildContext } from "../context/builder.ts";
 import { identity } from "../ai/harness.ts";
@@ -83,6 +83,27 @@ export async function respond(
   if (input.uiContext) {
     session.known.uiPage = input.uiContext.page;
     if (input.uiContext.goal) session.known.uiGoal = input.uiContext.goal;
+    if (
+      input.uiContext.companion &&
+      input.itemId &&
+      getPersona(db, actor, input.itemId).enabled
+    )
+      session.known.companionItemId = input.itemId;
+    if (
+      session.known.companionItemId &&
+      !getPersona(db, actor, session.known.companionItemId).enabled
+    )
+      delete session.known.companionItemId;
+    if (input.uiContext.planContext && !input.sessionId) {
+      session.known.lifeIdeaIds = JSON.stringify(
+        input.uiContext.planContext.previousIdeaIds,
+      );
+      if (input.uiContext.planContext.continuation)
+        session.known.lifePlanContext = JSON.stringify(
+          input.uiContext.planContext.continuation,
+        );
+      session.known.lastIntent = "plan";
+    }
   }
   session.known.turnRequestId = input.requestId;
   try {

@@ -28,6 +28,8 @@ const child = spawn(
     env: {
       ...process.env,
       AUTH_MODE: "local-demo",
+      WUJIAN_ALLOW_PUBLIC_FETCH:
+        process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "false" ? "false" : "true",
       PRODUCT_AGENT_DATA_DIR: dir,
       AI_ALLOW_PAID_CALLS: cloud ? "true" : "false",
       WUJIAN_ALLOW_PAID_CALLS: cloud ? "true" : "false",

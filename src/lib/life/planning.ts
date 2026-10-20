@@ -1,3 +1,8 @@
+import {
+  readKnowledge,
+  documentCapabilities,
+  type AcquiredDocument,
+} from "./acquisition.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import { canRead, type State, type Person } from "../domain.ts";
@@ -50,7 +55,10 @@ const declaresItems = (q: string) =>
     q,
   );
 
-export function itemAffordances(item: State["items"][number]) {
+export function itemAffordances(
+  item: State["items"][number],
+  documents: AcquiredDocument[] = [],
+) {
   const pack = boundPack(item),
     declared = [
       item.name,
@@ -79,6 +87,7 @@ export function itemAffordances(item: State["items"][number]) {
     quantity: item.attributes?.quantity ?? "待确认",
     quantityUnit: item.attributes?.quantityUnit || "未登记单位",
     capabilities,
+    acquiredCapabilities: documentCapabilities(documents),
     declaredCapabilities: item.attributes?.capabilities || [],
     inferredCapabilities: capabilities,
     lifecycle: item.lifecycle,
@@ -134,7 +143,7 @@ export async function planDiscovery(
   const lastGoal = input.continuation?.goal || previous.at(-1)?.goal;
   const followup =
     (previous.length > 0 || !!input.continuation) &&
-    /^(?:能不能|可以|再)?(?:更|换|不要|不用|只有|只用|缩短|简单|时间|我只有)/.test(
+    /^(?:能不能|可以|再)?(?:继续|更|换|不要|不用|只有|只用|缩短|简单|时间|我只有)/.test(
       input.goal,
     );
   const goal = followup
@@ -226,7 +235,9 @@ export async function planDiscovery(
     ];
   });
   const scoped = { ...state, items },
-    profiles = items.map(itemAffordances);
+    profiles = items.map((i) =>
+      itemAffordances(i, readKnowledge(db, state, actor, i.id)),
+    );
   const missing: string[] = [...referenceGaps];
   if (ambiguousExclusion)
     missing.push(

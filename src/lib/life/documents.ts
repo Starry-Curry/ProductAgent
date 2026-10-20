@@ -82,8 +82,9 @@ export async function extractManual(
   bytes: Uint8Array,
   name: string,
   ocr = false,
+  maxBytes = 8_000_000,
 ) {
-  if (bytes.length > 8_000_000) throw new AgentError("说明书需要小于 8MB");
+  if (bytes.length > maxBytes) throw new AgentError("说明书需要小于 8MB");
   let text = "",
     usedOCR = false;
   if (/\.pdf$/i.test(name)) {

@@ -308,6 +308,7 @@ export function getPersona(
     enabled: saved.enabled,
     nickname: saved.nickname,
     style: saved.style,
+    memoryUse: saved.memoryUse,
     itemId: saved.itemId,
   };
 }
@@ -333,13 +334,26 @@ export function savePersona(
       "INSERT INTO persona_profiles VALUES (?,?,?) ON CONFLICT(owner,scope) DO UPDATE SET body=excluded.body",
     ).run(actor, value.itemId || "global", JSON.stringify(stored));
     if (item?.demo) clearDemoContext(db, actor, item.id);
-    else clearOwnerContext(db, actor, true);
+    else clearOwnerContext(db, actor, false);
     db.exec("COMMIT");
     return value;
   } catch (e) {
     db.exec("ROLLBACK");
     throw e;
   }
+}
+/** Item voice is opt-in; memory consent is independent of enabling that voice. */
+export function effectivePersona(
+  db: DatabaseSync,
+  actor: Person,
+  itemId?: string,
+): Persona {
+  const global = getPersona(db, actor);
+  if (!itemId) return global;
+  const scoped = getPersona(db, actor, itemId);
+  return scoped.enabled
+    ? scoped
+    : { ...global, memoryUse: scoped.memoryUse ?? global.memoryUse };
 }
 export function recallMemories(
   db: DatabaseSync,

@@ -7,6 +7,7 @@ export const people: Record<Person, string> = {
 };
 export type Item = {
   brand?: string;
+  region?: string;
   lifecycle?: "一次性" | "消耗型" | "可重复使用" | "长期耐用" | "持续养护";
   attributes?: { material?: string; dimensions?: string; power?: string; care?: string; quantity?: number; quantityUnit?: string; expiresOn?: string; capabilities?: string[] };
   availability?: "unknown" | "available" | "loaned" | "gifted" | "lost" | "broken" | "consumed";
@@ -380,6 +381,7 @@ export function mutate(
       note: str(p.note),
       source: "用户录入",
       brand: str(p.brand, 80),
+      region: str(p.region,20) || undefined,
       lifecycle: ["一次性", "消耗型", "可重复使用", "长期耐用", "持续养护"].includes(p.lifecycle) ? p.lifecycle : "长期耐用",
       availability: "unknown",
       photo:
@@ -425,9 +427,11 @@ export function mutate(
       item.supportUrl = value || undefined;
     }
     if (
-      typeof p.model === "string" &&
+      (typeof p.brand === "string" && str(p.brand,80) !== (item.brand || "")) ||
+      (typeof p.region === "string" && str(p.region,20) !== (item.region || "")) ||
+      (typeof p.model === "string" &&
       str(p.model) &&
-      str(p.model) !== item.model
+      str(p.model) !== item.model)
     )
       delete item.productBinding;
     for (const k of ["name", "location", "model", "note", "state"] as const) {
@@ -435,6 +439,7 @@ export function mutate(
     }
     if (typeof p.shared === "boolean") item.shared = p.shared;
     if (typeof p.brand === "string") item.brand = str(p.brand, 80);
+    if (typeof p.region === "string") item.region = str(p.region,20) || undefined;
     if (["一次性", "消耗型", "可重复使用", "长期耐用", "持续养护"].includes(p.lifecycle)) item.lifecycle = p.lifecycle;
     if (["unknown", "available", "loaned", "gifted", "lost", "broken", "consumed"].includes(p.availability)) {
       item.availability = p.availability;

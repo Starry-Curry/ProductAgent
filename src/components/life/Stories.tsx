@@ -23,6 +23,7 @@ export function Stories({
   upload,
   refresh,
   onItem,
+  onAsk,
 }: {
   items: Item[];
   fragments: Fragment[];
@@ -32,6 +33,7 @@ export function Stories({
   upload: (f: File, k: string) => Promise<any>;
   refresh: () => Promise<void>;
   onItem: (id: string) => void;
+  onAsk?: () => void;
 }) {
   const [editing, setEditing] = useState<Fragment | null>(null),
     [text, setText] = useState(""),
@@ -89,6 +91,7 @@ export function Stories({
           <p>一张照片，一句话。也可以先不关联物品，晚一点再整理。</p>
         </div>
       </div>
+      {onAsk && <button onClick={onAsk}>和物间聊聊这些故事</button>}
       <form
         className="life-card life-story-composer"
         onSubmit={(e) => {

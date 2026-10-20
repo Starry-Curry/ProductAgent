@@ -12,6 +12,7 @@ export function Discovery({
   request,
   refresh,
   modelAvailable,
+  onAsk,
 }: {
   items: Item[];
   ideas: LifeIdea[];
@@ -19,6 +20,7 @@ export function Discovery({
   request: LifeRequest;
   refresh: () => Promise<void>;
   modelAvailable: boolean;
+  onAsk?: (context: any) => void;
 }) {
   const [goal, setGoal] = useState("想用已有的东西，做点新鲜的小事"),
     [minutes, setMinutes] = useState("30"),
@@ -287,6 +289,25 @@ export function Discovery({
           </button>
         </div>
       </form>
+      {onAsk && (
+        <button
+          type="button"
+          onClick={() =>
+            onAsk({
+              previousIdeaIds: turns.findLast((t) => t.ids.length)?.ids || [],
+              continuation: continuation || {
+                goal,
+                minutes: Number(minutes),
+                itemIds: selectedIds,
+                excludedItemIds: excluded,
+                restrictions: [],
+              },
+            })
+          }
+        >
+          带着目标与方案，继续问物间
+        </button>
+      )}
       <div className="discovery-meta">
         <span>
           {selectedIds.length

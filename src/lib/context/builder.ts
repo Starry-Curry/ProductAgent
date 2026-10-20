@@ -1,7 +1,8 @@
+import { retrieveKnowledge } from "../life/acquisition.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { canRead, type State, type Person } from "../domain.ts";
 import { boundPack } from "../ai/harness.ts";
-import { recallMemories, getPersona } from "../memory/store.ts";
+import { recallMemories, effectivePersona } from "../memory/store.ts";
 import { relevantKnowledge } from "../skills/knowledge.ts";
 import { syntheticItem, usable } from "../life/availability.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
@@ -11,6 +12,7 @@ export function buildContext(
   actor: Person,
   input: {
     question: string;
+    knowledgeQuery?: string;
     mode: string;
     itemId?: string;
     temporary?: boolean;
@@ -22,6 +24,14 @@ export function buildContext(
   const item = input.itemId
     ? state.items.find((i) => i.id === input.itemId && canRead(i, actor))
     : undefined;
+  const persona = input.temporary
+    ? {
+        enabled: false,
+        nickname: "",
+        style: "neutral" as const,
+        memoryUse: "off" as const,
+      }
+    : effectivePersona(db, actor, item?.id);
   const memories = input.temporary
     ? []
     : recallMemories(
@@ -34,23 +44,38 @@ export function buildContext(
         input.sessionId,
       ).filter(
         (m) =>
-          !input.taskMemoryOnly ||
-          isMemoryRecallRequest(input.question) ||
-          !["experience", "story", "relationship"].includes(m.kind),
+          persona.memoryUse !== "off" &&
+          (persona.memoryUse !== "explicit" ||
+            isMemoryRecallRequest(input.question)) &&
+          (!input.taskMemoryOnly ||
+            isMemoryRecallRequest(input.question) ||
+            !["experience", "story", "relationship"].includes(m.kind)),
       );
   const knowledge = relevantKnowledge(
     input.question,
     item ? boundPack(item) : undefined,
   );
   const preferences = (input.temporary ? [] : state.contexts || []).filter(
-    (c) => c.owner === actor && c.status === "explicit",
+    (c) =>
+      c.owner === actor &&
+      c.status === "explicit" &&
+      persona.memoryUse !== "off" &&
+      (persona.memoryUse !== "explicit" ||
+        isMemoryRecallRequest(input.question)),
   );
-  const persona = input.temporary
-    ? { enabled: false, nickname: "", style: "neutral" as const }
-    : getPersona(db, actor, item?.id);
   return {
     temporary: !!input.temporary,
     question: input.question,
+    productConversation: !!input.taskMemoryOnly,
+    externalKnowledge: item
+      ? retrieveKnowledge(
+          db,
+          state,
+          actor,
+          item.id,
+          input.knowledgeQuery || input.question,
+        )
+      : [],
     item,
     knowledge,
     memories,

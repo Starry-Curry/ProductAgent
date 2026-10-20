@@ -14,6 +14,7 @@ export function createLifeItem(
       name: z.string().trim().min(1).max(80),
       requestId: z.string().uuid().optional(),
       brand: z.string().max(80).default(""),
+      region: z.string().max(20).optional(),
       model: z.string().max(100).default("待确认"),
       category: z.string().max(40),
       lifecycle: z.enum([

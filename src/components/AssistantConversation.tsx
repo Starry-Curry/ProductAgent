@@ -31,7 +31,13 @@ export function AssistantConversation({
   onSelectItem,
   memoryPolicy,
   uiContext,
+  initialSessionId,
+  startFresh = false,
+  allHistory = false,
 }: {
+  initialSessionId?: string;
+  startFresh?: boolean;
+  allHistory?: boolean;
   actor: Person;
   item?: Item;
   initialQuestion?: string;
@@ -97,12 +103,21 @@ export function AssistantConversation({
         : {
             requestId: crypto.randomUUID(),
             sessionId: temporary ? undefined : base?.id,
-            itemId: item?.id,
+            itemId:
+              allHistory && base
+                ? base.itemId
+                : item?.id ||
+                  (!temporary && uiContext ? base?.itemId : undefined),
             mode,
             question: text.trim(),
             temporary,
             memoryPolicy,
-            uiContext,
+            uiContext: uiContext
+              ? {
+                  ...uiContext,
+                  planContext: base ? undefined : uiContext.planContext,
+                }
+              : undefined,
             expectedRevision: temporary ? undefined : base?.revision,
           };
     retry.current = input;
@@ -126,6 +141,7 @@ export function AssistantConversation({
   }
   async function refresh() {
     const p = new URLSearchParams({ mode });
+    if (allHistory) p.set("scope", "all");
     if (item) p.set("itemId", item.id);
     const r = await fetch("/api/assistant?" + p, {
       headers,
@@ -139,10 +155,23 @@ export function AssistantConversation({
     alive.current = true;
     let cancelled = false;
     refresh()
-      .then((rows) => {
+      .then(async (rows) => {
         if (cancelled) return;
         setSessions(rows);
-        const s = rows[0] || null;
+        let s = startFresh
+          ? null
+          : (allHistory && !item ? rows.find((r) => !r.itemId) : rows[0]) ||
+            null;
+        if (initialSessionId) {
+          const response = await fetch(
+            "/api/assistant?sessionId=" + encodeURIComponent(initialSessionId),
+            { headers, cache: "no-store" },
+          );
+          const d = await response.json();
+          if (!response.ok) throw Error(d.error);
+          s = d.session;
+        }
+        if (cancelled) return;
         update(s);
         if (initialQuestion && !auto.current) {
           auto.current = true;

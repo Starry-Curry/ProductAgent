@@ -1,5 +1,13 @@
 import { STORYTELLING_INSTRUCTIONS } from "./memory-storytelling.ts";
 export const skills = {
+  "document-help": {
+    version: "1.0.0",
+    goal: "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续",
+    instructions:
+      "已有officialDocuments时优先组织具体操作/清洁/维护步骤；首次使用尽量覆盖准备、安全放置及开始实际使用，不能只列规格。answer只写引导，不重复steps全文，输出grounded结构。只使用对应sourceIds支持步骤，不把规格冒充流程。不要跨型号、地区或虚构温度、时长、按钮。复用已知型号；已尝试步骤不要再让用户做，缺关键条件最多问一项。",
+    tools: ["search_product_knowledge", "fetch_official_knowledge"],
+    success: "有可追溯步骤，或说明具体资料缺口，不重复已确认信息",
+  },
   "memory-storytelling": {
     version: "1.0.0",
     instructions: STORYTELLING_INSTRUCTIONS,
@@ -12,7 +20,11 @@ export const skills = {
     instructions:
       "先区分通用设置与硬件专属问题。通用问题不要求建档；专属过程必须有当前型号资料。每次最多追问两项会改变下一步的信息。复用系统与接收器条件，已尝试步骤不重复。完成只能由用户反馈确认。",
     goal: "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试",
-    tools: ["search_product_knowledge", "search_personal_memory"],
+    tools: [
+      "search_product_knowledge",
+      "fetch_official_knowledge",
+      "search_personal_memory",
+    ],
     success: "提供适用下一步或清楚的补充/交接路径",
   },
   "item-story": {

@@ -105,7 +105,7 @@ export async function fetchPublicDocument(
           reject(new AgentError("来源不是网页、文本或 PDF，可手动上传说明书"));
           return;
         }
-        const limit = /pdf/i.test(type) ? 8_000_000 : 750_000;
+        const limit = /pdf/i.test(type) ? 12_000_000 : 1_500_000;
         const chunks: Buffer[] = [];
         let size = 0;
         res.on("data", (chunk: Buffer) => {
@@ -142,7 +142,12 @@ export async function fetchPublicDocument(
   }
   if (/pdf/i.test(result.type)) {
     const { extractManual } = await import("./documents.ts");
-    const d = await extractManual(result.bytes, "official-document.pdf");
+    const d = await extractManual(
+      result.bytes,
+      "official-document.pdf",
+      false,
+      12_000_000,
+    );
     return {
       title: decodeURIComponent(url.pathname.split("/").at(-1) || "公开 PDF"),
       text: d.text,
@@ -205,6 +210,39 @@ export async function extractPublicHTML(raw: string, address: string) {
       /* No local/non-HTTPS links. */
     }
   });
+  function catalog(node: unknown, depth = 0) {
+    if (depth > 20 || !node) return;
+    if (typeof node === "string" && /^[\[{]/.test(node.trim())) {
+      try {
+        catalog(JSON.parse(node), depth + 1);
+      } catch {}
+    } else if (Array.isArray(node))
+      for (const child of node.slice(0, 2000)) catalog(child, depth + 1);
+    else if (typeof node === "object") {
+      const row = node as Record<string, unknown>;
+      if (
+        typeof row.link === "string" &&
+        typeof row.text === "string" &&
+        /\.pdf(?:$|[?#])/i.test(row.link)
+      ) {
+        try {
+          const u = sourceURL(row.link);
+          if (!links.some((l) => l.url === u.href))
+            links.push({ title: row.text.slice(0, 150), url: u.href });
+        } catch {}
+      }
+      for (const child of Object.values(row)) catalog(child, depth + 1);
+    }
+  }
+  $("script").each((_n, el) => {
+    const m = $(el)
+      .text()
+      .match(/window\.__PRELOADED_\w+__\s*=\s*([\s\S]+)/);
+    if (m)
+      try {
+        catalog(JSON.parse(m[1].replace(/;\s*$/, "")));
+      } catch {}
+  });
   $("script,style,noscript,nav,footer,header,iframe,form").remove();
   $("p,li,h1,h2,h3,h4,br,tr,dt,dd").append("\n");
   const title =
@@ -225,7 +263,16 @@ export async function extractPublicHTML(raw: string, address: string) {
     throw new AgentError(
       "没有可读取正文，页面可能依赖脚本；请人工查找或上传资料",
     );
-  return { title, text, url: url.href, links: links.slice(0, 20), extracted };
+  return {
+    title,
+    text,
+    url: url.href,
+    links: [
+      ...links.filter((l) => /\.pdf(?:$|[?#])/i.test(l.url)).slice(0, 600),
+      ...links.filter((l) => !/\.pdf(?:$|[?#])/i.test(l.url)).slice(0, 60),
+    ],
+    extracted,
+  };
 }
 export const fetchPublicText = fetchPublicDocument;
 export function parseCode(raw: string) {

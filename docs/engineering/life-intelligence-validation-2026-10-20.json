@@ -1,0 +1,1067 @@
+{
+  "date": "2026-10-20",
+  "startingHead": "a4ee291",
+  "branch": "feat/life-context-v1-d",
+  "paidRequestLimit": 15,
+  "dataIsolation": ".runtime/intelligence-20261020/test.sqlite (synthetic fixtures only)",
+  "defaultPaidStatusAfterTests": "unauthorized; local configuration unchanged; process flags reset false",
+  "sourceVerification": [
+    {
+      "model": "MAF10",
+      "region": "uk",
+      "retrieval": "generic Xiaomi official catalog by exact product name then exact model inside PDF",
+      "url": "https://www.mi.com/uk/support/user-guide/"
+    },
+    {
+      "model": "305.976.49",
+      "category": "furniture",
+      "retrieval": "automatic IKEA official article locator; mismatching linked assembly manual rejected",
+      "url": "https://www.ikea.cn/cn/zh/p/30597649/"
+    },
+    {
+      "model": "WH-CH520",
+      "category": "electronics",
+      "retrieval": "user-provided public official help URL; not claimed as automatic general web search",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html"
+    }
+  ],
+  "limitations": [
+    "Model citations, numeric checks and a few operation guards are not full semantic entailment or real-world verification.",
+    "Official discovery uses finite brand adapters, exact titles and user source hints; not a universal search engine. Explicit region mismatches fail closed.",
+    "Only explicit rated power/voltage disagreement is detected; general document conflicts require human review.",
+    "MAF10 real first reply gave plug/power/language/initial empty burn steps; did not cover a complete first cooking procedure. No physical operation tested.",
+    "Creative optical effects and safety assertions were overstated in initial D/E. Prompt and guarantee guard tightened; final live followup is a tentative observation activity, still not physically tested.",
+    "Initial Sony was incorrectly rejected by numeric validator, fixed and passed a real retest. R-unified-plan was rejected for negated safety text, fixed offline; final unified handoff passed live.",
+    "C initial unknown-model answer was honest about missing evidence but re-asked a known model. R-unknown used its single request on a retrieval tool, so budget prevented final prose. Lookup result is now explicitly passed and repeated lookup suppressed; correction verified offline only.",
+    "First 11 HTTP requests retained token/timing metrics and final case replies, but not every intermediate raw packet. Later requests retain sanitized synthetic/public output packets. No missing evidence is reconstructed."
+  ],
+  "focusedChecks": {
+    "passed": true,
+    "latest": "8 new acquisition/persona tests; preceding 25 acquisition/persona/foundation tests passed",
+    "fullRegression": "pending",
+    "typecheck": "passed",
+    "build": "pending"
+  },
+  "actualPaidRequests": 15,
+  "model": "qwen-plus",
+  "tokens": {
+    "input": 33620,
+    "output": 6201
+  },
+  "billingCost": "Not available from API response; no currency amount inferred from tokens.",
+  "requests": [
+    {
+      "number": 1,
+      "test": "A-MAF10-first-use",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:12:22.804Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 6797,
+        "completion_tokens": 267,
+        "prompt_tokens": 6530,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 6985
+    },
+    {
+      "number": 2,
+      "test": "B-new-IKEA-model",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:35:38.656Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2304,
+        "completion_tokens": 37,
+        "prompt_tokens": 2267,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 1471
+    },
+    {
+      "number": 3,
+      "test": "B-new-IKEA-model",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:35:40.191Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 3383,
+        "completion_tokens": 143,
+        "prompt_tokens": 3240,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 3599
+    },
+    {
+      "number": 4,
+      "test": "B-new-Sony-model",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:35:43.967Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 3067,
+        "completion_tokens": 472,
+        "prompt_tokens": 2595,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 10962
+    },
+    {
+      "number": 5,
+      "test": "B-new-Sony-model",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:35:55.009Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 3600,
+        "completion_tokens": 489,
+        "prompt_tokens": 3111,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        }
+      },
+      "elapsedMs": 11820
+    },
+    {
+      "number": 6,
+      "test": "B-new-Sony-model",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:36:06.907Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 4138,
+        "completion_tokens": 494,
+        "prompt_tokens": 3644,
+        "prompt_tokens_details": {
+          "cached_tokens": 2496
+        }
+      },
+      "elapsedMs": 11288
+    },
+    {
+      "number": 7,
+      "test": "C-unknown-model",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:36:18.420Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 1429,
+        "completion_tokens": 38,
+        "prompt_tokens": 1391,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 1311
+    },
+    {
+      "number": 8,
+      "test": "C-unknown-model",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:36:19.812Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 1658,
+        "completion_tokens": 169,
+        "prompt_tokens": 1489,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 4634
+    },
+    {
+      "number": 9,
+      "test": "D-open-combination",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:36:24.563Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 1931,
+        "completion_tokens": 928,
+        "prompt_tokens": 1003,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 20974
+    },
+    {
+      "number": 10,
+      "test": "E-change-constraints",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:36:45.562Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 1717,
+        "completion_tokens": 697,
+        "prompt_tokens": 1020,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 15749
+    },
+    {
+      "number": 11,
+      "test": "F-natural-chat",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:37:01.433Z",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 1355,
+        "completion_tokens": 71,
+        "prompt_tokens": 1284,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 2332
+    },
+    {
+      "number": 12,
+      "test": "R-Sony-grounding",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:38:24.560Z",
+      "inputSummary": {
+        "test": "R-Sony-grounding",
+        "roles": [
+          "system",
+          "user"
+        ],
+        "characters": 7182,
+        "tools": [
+          "fetch_official_knowledge",
+          "search_product_knowledge"
+        ]
+      },
+      "status": 200,
+      "tokens": {
+        "total_tokens": 3149,
+        "completion_tokens": 518,
+        "prompt_tokens": 2631,
+        "prompt_tokens_details": {
+          "cached_tokens": 64
+        }
+      },
+      "outputSummary": "{\"kind\":\"grounded\",\"answer\":\"请使用随附的 USB Type-C 充电线为 WH-CH520 耳机充电。可连接至符合要求的 USB 交流电源适配器（输出电流 ≥0.5 A），或直接连接至正在运行的电脑 USB 端口。充电时耳机指示灯（橙色）会亮起，约 3 小时可充满；完成后指示灯自动熄灭。充电期间无法操作耳机（如开机、蓝牙配对或播放音乐）。\",\"steps\":[{\"text\":\"使用随附的 USB Type-C 充电线连接耳机与 USB 交流电源适配器（需支持 ≥0.5 A 输出）或正在运行的电脑。\",\"sourceIds\":[\"676d57adda7466fbe9e529c5:0\",\"676d57adda7466fbe9e529c5:994\"]},{\"text\":\"充电开始后，耳机上的橙色指示灯会亮起；约 3 小时（从完全没电充至满电）后指示灯自动熄灭，表示充电完成。\",\"sourceIds\":[\"676d57adda7466fbe9e529c5:0\"]},{\"text\":\"充电期间耳机将自动关机，且无法进行任何操作（包括开机、蓝牙配对、播放音乐等）。\",\"sourceIds\":[\"676d57adda7466fbe9e529c5:994\"]},{\"text\":\"充电完成后，请拔下 USB Type-C 充电线。长期存放时，建议每 6 个月充电一次，避免电池过放。\",\"sourceIds\":[\"676d57adda7466fbe9e529c5:994\",\"676d57adda7466fbe9e529c5:1991\"]},{\"text\":\"请勿使用非",
+      "elapsedMs": 12206
+    },
+    {
+      "number": 13,
+      "test": "R-unknown-gap",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:44:35.708Z",
+      "inputSummary": {
+        "test": "R-unknown-gap",
+        "roles": [
+          "system",
+          "user"
+        ],
+        "characters": 2441,
+        "tools": [
+          "fetch_official_knowledge",
+          "search_product_knowledge",
+          "search_personal_memory"
+        ]
+      },
+      "status": 200,
+      "tokens": {
+        "total_tokens": 1464,
+        "completion_tokens": 37,
+        "prompt_tokens": 1427,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "fetch_official_knowledge",
+      "elapsedMs": 1389
+    },
+    {
+      "number": 14,
+      "test": "R-unified-plan",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:44:37.216Z",
+      "inputSummary": {
+        "test": "R-unified-plan",
+        "roles": [
+          "system",
+          "user"
+        ],
+        "characters": 2443
+      },
+      "status": 200,
+      "tokens": {
+        "total_tokens": 1918,
+        "completion_tokens": 1022,
+        "prompt_tokens": 896,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\n  \"title\": \"手电筒-玻璃杯光路观察实验：折射与影子变形\",\n  \"itemIds\": [\"6c79190f-f51a-452a-843c-99c8aa6d0eaf\", \"ce998f69-b3c4-4056-b220-12146f8e774d\"],\n  \"minutes\": 30,\n  \"steps\": [\n    \"1. 准备环境：拉上窗帘或关灯，使房间光线较暗（避免环境光干扰观察）；将纸平铺于桌面，笔置于手边用于记录。\",\n    \"2. 将透明玻璃杯正立放于纸上；用笔在纸边缘标记杯底中心位置（作参考点）。\",\n    \"3. 打开低温手电筒，保持常亮模式（勿调闪烁/频闪——因未登记该能力，且塑料外壳不保证电气安全或无频闪）；从杯子正侧方约15 cm处，水平照射杯壁（光束中心对准杯身中段，非杯口或杯底）。\",\n    \"4. 缓慢平移手电筒，沿弧线绕杯一周（保持距离≈15 cm、高度≈杯中线），观察纸上投射的光斑形状、边缘清晰度及是否出现彩色边缘（色散迹象）；每移动约30°停顿3秒，用笔简绘光斑轮廓变化。\",\n    \"5. 尝试将手电筒移至杯正前方，光束垂直入射杯壁，观察光斑是否收缩/变亮；再微调角度至斜射（约30°入射角），对比光斑位移与变形程度。\",\n    \"6. 将手电筒移至杯正上方（约20 cm高），垂直向下照射杯口；观察杯底光斑是否缩小、是否居中、边缘是否柔和；轻敲杯壁听声音（仅听，不施加可能致裂外力），感受玻璃振动对光斑稳定性的潜在影响（待观察现象，非结论）。\",\n    \"7. 实验后关闭手电筒；用纸笔整理3个最显著的观察差异（如：‘侧照时",
+      "elapsedMs": 23526
+    },
+    {
+      "number": 15,
+      "test": "R-discovery-to-unified-followup",
+      "model": "qwen-plus",
+      "startedAt": "2026-10-20T03:46:52.831Z",
+      "inputSummary": {
+        "test": "R-discovery-to-unified-followup",
+        "roles": [
+          "system",
+          "user"
+        ],
+        "characters": 2746
+      },
+      "status": 200,
+      "tokens": {
+        "total_tokens": 1911,
+        "completion_tokens": 819,
+        "prompt_tokens": 1092,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "outputSummary": "{\n  \"title\": \"手电筒光斑形状与距离关系速记观察\",\n  \"itemIds\": [\"6c79190f-f51a-452a-843c-99c8aa6d0eaf\", \"ef1d42a9-0579-4416-8827-873cf6b6d16b\"],\n  \"minutes\": 10,\n  \"steps\": [\n    \"1. 在较暗环境中（如拉上窗帘的房间），打开低温手电筒，将光束垂直投射到平整白墙或浅色纸面（可用纸笔套装中的纸平铺于桌面或墙面固定）。\",\n    \"2. 从距离墙面约10 cm处开始，缓慢后退手电筒，每退10 cm暂停2秒，用纸笔快速画下当前光斑的轮廓（注意：只描外缘，不涂色；标出对应距离，如'10cm'、'20cm'）。\",\n    \"3. 继续后退至约60 cm（共6个点：10/20/30/40/50/60 cm），全程保持手电筒朝向不变、无晃动。\",\n    \"4. 观察并记录：光斑大小是否均匀扩大？边缘是否始终清晰？有无出现中心亮斑+外围渐晕？在纸上对比不同距离下的草图差异。\",\n    \"5. 最后1分钟：合上纸笔，口头或简写一句发现（例：‘越远越圆但越淡’或‘30cm后边缘变毛’）\"\n  ],\n  \"limits\": [\n    \"不直视手电筒光源，避免眼睛受强光刺激\",\n    \"手电筒仅手持操作，不固定于高处或不稳定支撑物\",\n    \"纸张仅用于接收光斑和手绘，不覆盖手电筒镜头、不折叠遮挡光路\",\n    \"全程不使用玻璃杯、水、镜子等任何未列出物品\",\n    \"若环境光线过强导致光斑不可见，立即中止，不尝试补光或更换场地（本方案默认可",
+      "elapsedMs": 18591
+    }
+  ],
+  "cases": [
+    {
+      "name": "A-MAF10-first-use",
+      "input": {
+        "question": "第一次怎么用？",
+        "model": "MAF10",
+        "region": "uk"
+      },
+      "elapsedMs": 7303,
+      "calls": 1,
+      "result": {
+        "outcome": "answered",
+        "answer": "第一次使用前，请先进行以下三步：1. 连接电源，按电源开关键开机；2. 首次通电会进入语言选择界面，旋转控制键设定语言，点按确认；3. 建议用最高温（220℃）空烧5分钟，去除新机可能的轻微气味（过程中可能出现少量白烟，属正常现象）。",
+        "steps": [
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:996:连接电源线，按电源开关键开机。",
+            "text": "连接电源线，按电源开关键开机。"
+          },
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:996:首次通电，按电源开关键，进入语言选择界面，旋转控",
+            "text": "首次通电，按电源开关键，进入语言选择界面，旋转控制键设定语言，点按旋钮确认选择语言。"
+          },
+          {
+            "id": "docstep:cb1ecafb4232cc3ad2f506af:996:首次使用可能存在少许气味，建议使用最大温度(22",
+            "text": "首次使用可能存在少许气味，建议使用最大温度 (220 ℃) 空烧 5 分钟，去除气味。空烧过程中可能出现少量白烟或气味，属于正常现象。"
+          }
+        ],
+        "questions": [],
+        "source": "model-with-evidence",
+        "citations": [
+          {
+            "id": "cb1ecafb4232cc3ad2f506af:996",
+            "title": "47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "url": "https://cdn.azams0.fds.api.mi-img.com/xiaomi-b2c-i18n-upload/EU-ERP-Userguide-upload/Kitchen-and-bathroom-appliances/47711-Xiaomi-Smart-Air-Fryer-6.5L-Black&White-UserGuide-GB.pdf",
+            "section": "原文位置 996–1995；MAF10 / uk",
+            "kind": "official"
+          }
+        ],
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=4dbbef7c-633d-46c5-b35b-ab51bdbbaadf; router=home-router-v1"
+          },
+          {
+            "stage": "official_knowledge",
+            "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.6"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered"
+          }
+        ]
+      }
+    },
+    {
+      "name": "B-new-IKEA-model",
+      "input": {
+        "question": "怎么清洁保养这件书架？",
+        "model": "305.976.49",
+        "region": "cn"
+      },
+      "elapsedMs": 5365,
+      "calls": 2,
+      "result": {
+        "outcome": "answered",
+        "answer": "请用微湿的布擦拭书架表面，再用干净干布擦干即可；同时建议定期检查所有连接件是否紧固，必要时重新加固。",
+        "steps": [
+          {
+            "id": "docstep:079714daa8af827a25dbfc26:0:用湿布擦净。再用干净的抹布擦干。",
+            "text": "用湿布擦净。再用干净的抹布擦干。"
+          },
+          {
+            "id": "docstep:079714daa8af827a25dbfc26:0:请定期检查所有组装配件是否紧固，如有必要，重新进",
+            "text": "请定期检查所有组装配件是否紧固，如有必要，重新进行加固。"
+          }
+        ],
+        "questions": [],
+        "source": "model-with-evidence",
+        "citations": [
+          {
+            "id": "079714daa8af827a25dbfc26:0",
+            "title": "FÄRJKARL 法依考 书架 灰白 - IKEA",
+            "url": "https://www.ikea.cn/cn/zh/p/30597649/",
+            "section": "原文位置 0–999；305.976.49 / cn",
+            "kind": "official"
+          }
+        ],
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=5461d447-ef36-4dd9-bce8-8e790a535ff8; router=home-router-v1"
+          },
+          {
+            "stage": "official_knowledge",
+            "detail": "{\"documents\":1,\"cached\":true,\"issues\":[\"官方文档未包含完整型号，未采用：resources.ikea.cn\"]}"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.6"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=1"
+          },
+          {
+            "stage": "tool_completed",
+            "detail": "search_product_knowledge"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered"
+          }
+        ]
+      }
+    },
+    {
+      "name": "B-new-Sony-model",
+      "input": {
+        "question": "如何给这件耳机充电？",
+        "model": "WH-CH520",
+        "sourceHint": "official user provided URL"
+      },
+      "elapsedMs": 34419,
+      "calls": 3,
+      "result": {
+        "outcome": "needs_info",
+        "answer": "资料还不足以给出适用步骤。请补充具体型号、系统或你看到的现象，我会继续核对。",
+        "steps": [],
+        "questions": [],
+        "source": "curated-guidance",
+        "citations": [],
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=710cd853-9802-4f90-bd9d-dba29ec537db; router=home-router-v1"
+          },
+          {
+            "stage": "official_knowledge",
+            "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.6"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "schema_or_support"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "schema_or_support"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=3"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "schema_or_support"
+          }
+        ]
+      }
+    },
+    {
+      "name": "C-unknown-model",
+      "input": {
+        "question": "这个型号第一次怎么用，长按哪个键？",
+        "model": "ZZ-UNKNOWN-73"
+      },
+      "elapsedMs": 6248,
+      "calls": 2,
+      "result": {
+        "outcome": "needs_info",
+        "answer": "目前还没有找到 ZZ-UNKNOWN-73 型号的官方说明书或启动指引。可能是型号输入暂未匹配，或该样机尚未公开发布资料。\n\n您可以：\n• 确认机身标签或包装盒上的完整型号（例如是否含字母后缀、空格或连字符）；\n• 拍照上传说明书第1页，或提供官网支持页面链接；\n• 或告诉我您手边看到的按键布局（比如几个键？有无图标？位置？），我可以帮您推测通用启动方式。\n\n我随时在这里，等您补充一点信息就好。",
+        "steps": [],
+        "questions": [
+          "型号标签是否可见？",
+          "是否有说明书或官网页面可分享？"
+        ],
+        "source": "model-general",
+        "citations": [],
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=17b6f010-eb21-4460-989a-65419e0a6daf; router=home-router-v1"
+          },
+          {
+            "stage": "official_knowledge",
+            "detail": "{\"documents\":0,\"cached\":false,\"issues\":[\"未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。\"]}"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.6"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=1"
+          },
+          {
+            "stage": "tool_completed",
+            "detail": "fetch_official_knowledge"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0"
+          },
+          {
+            "stage": "validated",
+            "detail": "needs_info"
+          }
+        ]
+      }
+    },
+    {
+      "name": "D-open-combination",
+      "input": {
+        "goal": "我有半小时，不想花钱，用手电筒、透明玻璃杯和纸笔，设计一个有趣的观察活动"
+      },
+      "elapsedMs": 21009,
+      "calls": 1,
+      "result": {
+        "ideas": [
+          {
+            "title": "手电筒-玻璃杯光路折射观察记录",
+            "itemIds": [
+              "6c79190f-f51a-452a-843c-99c8aa6d0eaf",
+              "ce998f69-b3c4-4056-b220-12146f8e774d",
+              "ef1d42a9-0579-4416-8827-873cf6b6d16b"
+            ],
+            "minutes": 30,
+            "steps": [
+              "1. 在较暗环境中（如拉上窗帘的房间）摆放透明玻璃杯于平整桌面，确保杯壁洁净无水渍。",
+              "2. 打开低温手电筒，将其置于玻璃杯一侧约10–15 cm处，使光束水平、稳定地斜射入杯壁（非垂直入射）。",
+              "3. 缓慢平移手电筒位置，同时从杯体正前方、侧前方及杯口上方不同角度观察：光束在空气→玻璃→水（或空气）界面的偏折路径、亮斑形状变化、是否出现分离光带（色散初象）。",
+              "4. 向玻璃杯中注入约1/3清水（用户未提供水，但该活动需少量水以增强折射对比；若无水，则改用空杯观察空气→玻璃→空气路径，仍可观测明显偏折，但色散弱），重复步骤2–3并对比差异。",
+              "5. 用纸笔套装绘制三类观察草图：① 光入射方向与预期路径（标出入射角示意）；② 实际看到的光斑/光路弯曲形态；③ 杯中加水前后关键差异标注（如‘亮斑下移’‘边缘微泛彩’）。",
+              "6. 记录至少3个可复现现象（例如：‘手电筒抬高1cm，杯底亮斑左移约0.5cm’），并写下1个待验证疑问（如：‘旋转杯子角度是否改变偏折方向？’）"
+            ],
+            "limits": [
+              "不加热、不拆解手电筒；不依赖外部电源或额外耗材；不假设玻璃杯含水——若无水则自动降级为干杯折射观察；所有操作在桌面完成，无手持高风险动作"
+            ],
+            "rationale": "本方案聚焦‘可观察、可记录、可对比’三大核心：利用手电筒提供可控点光源，玻璃杯作为天然透光介质实现折射现象可视化，纸笔完成结构化记录——三者能力完全匹配且无超限使用。区别于常见‘投影字’或‘镜面反射’玩法，本方案强调主动调节入射角与视角，激发对光路可变性的感知；未引入液体即成立（空杯仍具玻璃-空气界面折射），但加水后提升现象显著性，属低门槛增强项。全程无需改装、无电气风险、不消耗耗材，严格满足30分钟内启动+执行+记录闭环。",
+            "missing": [
+              "水（用于增强折射对比；若不可得，则以空杯替代，现象仍成立但减弱）"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "requirements": [
+              {
+                "itemId": "6c79190f-f51a-452a-843c-99c8aa6d0eaf",
+                "quantity": 1,
+                "unit": "未登记单位"
+              },
+              {
+                "itemId": "ce998f69-b3c4-4056-b220-12146f8e774d",
+                "quantity": 1,
+                "unit": "未登记单位"
+              },
+              {
+                "itemId": "ef1d42a9-0579-4416-8827-873cf6b6d16b",
+                "quantity": 1,
+                "unit": "未登记单位"
+              }
+            ],
+            "id": "ed3ff25b-5ecf-4163-9a77-27fb24cc8d0c",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "tested": false,
+            "goal": "我有半小时，不想花钱，用手电筒、透明玻璃杯和纸笔，设计一个有趣的观察活动"
+          }
+        ],
+        "continuation": {
+          "goal": "我有半小时，不想花钱，用手电筒、透明玻璃杯和纸笔，设计一个有趣的观察活动",
+          "minutes": 30,
+          "itemIds": [
+            "6c79190f-f51a-452a-843c-99c8aa6d0eaf",
+            "ce998f69-b3c4-4056-b220-12146f8e774d",
+            "ef1d42a9-0579-4416-8827-873cf6b6d16b"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "6c79190f-f51a-452a-843c-99c8aa6d0eaf",
+            "name": "低温手电筒",
+            "capabilities": [
+              "照明"
+            ]
+          },
+          {
+            "id": "ce998f69-b3c4-4056-b220-12146f8e774d",
+            "name": "透明玻璃杯",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "ef1d42a9-0579-4416-8827-873cf6b6d16b",
+            "name": "纸笔套装",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "水（用于增强折射对比；若不可得，则以空杯替代，现象仍成立但减弱）"
+        ],
+        "source": "model-creative",
+        "modelCalls": 1
+      }
+    },
+    {
+      "name": "E-change-constraints",
+      "input": {
+        "goal": "不用玻璃杯，缩短到10分钟，换一种更有趣的方式"
+      },
+      "elapsedMs": 15774,
+      "calls": 1,
+      "result": {
+        "ideas": [
+          {
+            "title": "手电筒光迹投影写字观察活动",
+            "itemIds": [
+              "6c79190f-f51a-452a-843c-99c8aa6d0eaf",
+              "ef1d42a9-0579-4416-8827-873cf6b6d16b"
+            ],
+            "minutes": 10,
+            "steps": [
+              "1. 在较暗环境中（如拉上窗帘的房间）铺开纸，将纸笔套装中的纸平铺于桌面或地面；",
+              "2. 打开低温手电筒，保持常亮模式（非闪烁/调光），手持手电筒约20–40 cm高，垂直向下照射纸面中心，观察光斑形状与边缘清晰度；",
+              "3. 缓慢沿纸面水平移动手电筒（不抬高/降低），同时用另一只手快速在光斑内用笔尖‘描边’——即让笔尖始终处于光斑最亮区域边缘，观察笔尖阴影如何随光斑位移实时变形、拉长或断裂；",
+              "4. 尝试以不同速度和方向（直线/弧线/绕圈）移动手电筒，记录3种典型运动下阴影的形态变化（如：‘Z字形移动时阴影出现双断点’）；",
+              "5. 关灯后立即在纸上速写1个你观察到的最有趣的阴影瞬态图形（如‘蝌蚪状拖影’‘分叉触须’），并在旁标注对应手电筒动作关键词。"
+            ],
+            "limits": [
+              "不使用玻璃杯（已排除）",
+              "全程≤10分钟",
+              "不引入任何未登记物品",
+              "不依赖外部光源或电子设备改装",
+              "不加热、不拆解手电筒"
+            ],
+            "rationale": "本方案避开上一轮折射路径依赖，转而利用手电筒点光源+纸面漫反射+人眼暂留+手动协同的动态光学现象。塑料外壳手电筒具备稳定低温照明能力，无频闪风险；纸张提供高对比度漫反射基底，便于捕捉阴影瞬变。相比静态折射观察，该玩法强调‘人-光-影-笔’四者实时耦合，动作反馈直观、结果不可完全预判，趣味性来自控制感与意外性的平衡。全程仅需2件可用物，无需调整或准备耗材。",
+            "missing": [],
+            "factIds": [],
+            "experienceIds": [],
+            "requirements": [
+              {
+                "itemId": "6c79190f-f51a-452a-843c-99c8aa6d0eaf",
+                "quantity": 1,
+                "unit": "未登记单位"
+              },
+              {
+                "itemId": "ef1d42a9-0579-4416-8827-873cf6b6d16b",
+                "quantity": 1,
+                "unit": "未登记单位"
+              }
+            ],
+            "id": "93b16735-a859-456b-ac09-a7fa2d203a10",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "tested": false,
+            "goal": "我有半小时，不想花钱，用手电筒、透明玻璃杯和纸笔，设计一个有趣的观察活动；不买东西；本轮调整：不用玻璃杯，缩短到10分钟，换一种更有趣的方式"
+          }
+        ],
+        "continuation": {
+          "goal": "我有半小时，不想花钱，用手电筒、透明玻璃杯和纸笔，设计一个有趣的观察活动；不买东西；本轮调整：不用玻璃杯，缩短到10分钟，换一种更有趣的方式",
+          "minutes": 10,
+          "itemIds": [
+            "6c79190f-f51a-452a-843c-99c8aa6d0eaf",
+            "ce998f69-b3c4-4056-b220-12146f8e774d",
+            "ef1d42a9-0579-4416-8827-873cf6b6d16b"
+          ],
+          "excludedItemIds": [
+            "ce998f69-b3c4-4056-b220-12146f8e774d"
+          ],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "延续上一轮，调整为“不用玻璃杯，缩短到10分钟，换一种更有趣的方式” · 10分钟 · 不新增购买 · 从2件可用候选中规划 · 排除1件",
+        "resources": [
+          {
+            "id": "6c79190f-f51a-452a-843c-99c8aa6d0eaf",
+            "name": "低温手电筒",
+            "capabilities": [
+              "照明"
+            ]
+          },
+          {
+            "id": "ef1d42a9-0579-4416-8827-873cf6b6d16b",
+            "name": "纸笔套装",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [],
+        "source": "model-creative",
+        "modelCalls": 1
+      }
+    },
+    {
+      "name": "F-natural-chat",
+      "input": {
+        "question": "今天工作有点累，不想解决什么问题，就想随便聊聊。"
+      },
+      "elapsedMs": 2519,
+      "calls": 1,
+      "result": {
+        "outcome": "answered",
+        "answer": "嗯，工作累了就歇会儿吧～不用急着解决什么，我在这儿陪你随便说说话。想聊天气、今天遇到的小事，还是发发呆、听点轻快的？都行。你放松就好。",
+        "steps": [],
+        "questions": [],
+        "source": "model-general",
+        "citations": [],
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.6"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered"
+          }
+        ]
+      }
+    },
+    {
+      "name": "R-Sony-grounding",
+      "input": {
+        "question": "如何给这件耳机充电？",
+        "model": "WH-CH520"
+      },
+      "elapsedMs": 12443,
+      "calls": 1,
+      "result": {
+        "outcome": "answered",
+        "answer": "请使用随附的 USB Type-C 充电线为 WH-CH520 耳机充电。可连接至符合要求的 USB 交流电源适配器（输出电流 ≥0.5 A），或直接连接至正在运行的电脑 USB 端口。充电时耳机指示灯（橙色）会亮起，约 3 小时可充满；完成后指示灯自动熄灭。充电期间无法操作耳机（如开机、蓝牙配对或播放音乐）。",
+        "steps": [
+          {
+            "id": "docstep:676d57adda7466fbe9e529c5:0:使用随附的USBType-C充电线连接耳机与US",
+            "text": "使用随附的 USB Type-C 充电线连接耳机与 USB 交流电源适配器（需支持 ≥0.5 A 输出）或正在运行的电脑。"
+          },
+          {
+            "id": "docstep:676d57adda7466fbe9e529c5:0:充电开始后，耳机上的橙色指示灯会亮起；约3小时（",
+            "text": "充电开始后，耳机上的橙色指示灯会亮起；约 3 小时（从完全没电充至满电）后指示灯自动熄灭，表示充电完成。"
+          },
+          {
+            "id": "docstep:676d57adda7466fbe9e529c5:994:充电期间耳机将自动关机，且无法进行任何操作（包括",
+            "text": "充电期间耳机将自动关机，且无法进行任何操作（包括开机、蓝牙配对、播放音乐等）。"
+          },
+          {
+            "id": "docstep:676d57adda7466fbe9e529c5:994:充电完成后，请拔下USBType-C充电线。长期",
+            "text": "充电完成后，请拔下 USB Type-C 充电线。长期存放时，建议每 6 个月充电一次，避免电池过放。"
+          },
+          {
+            "id": "docstep:676d57adda7466fbe9e529c5:994:请勿使用非随附线缆或通过USB集线器充电；若在电",
+            "text": "请勿使用非随附线缆或通过 USB 集线器充电；若在电脑上充电，请确保电脑未进入睡眠或休眠状态。"
+          }
+        ],
+        "questions": [],
+        "source": "model-with-evidence",
+        "citations": [
+          {
+            "id": "676d57adda7466fbe9e529c5:0",
+            "title": "WH-CH520 | Help Guide | Charging the headset",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+            "section": "原文位置 0–993；WH-CH520 / mdr",
+            "kind": "official"
+          },
+          {
+            "id": "676d57adda7466fbe9e529c5:994",
+            "title": "WH-CH520 | Help Guide | Charging the headset",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+            "section": "原文位置 994–1990；WH-CH520 / mdr",
+            "kind": "official"
+          },
+          {
+            "id": "676d57adda7466fbe9e529c5:1991",
+            "title": "WH-CH520 | Help Guide | Charging the headset",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+            "section": "原文位置 1991–2988；WH-CH520 / mdr",
+            "kind": "official"
+          },
+          {
+            "id": "676d57adda7466fbe9e529c5:2989",
+            "title": "WH-CH520 | Help Guide | Charging the headset",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776814.html",
+            "section": "原文位置 2989–3196；WH-CH520 / mdr",
+            "kind": "official"
+          }
+        ],
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=710cd853-9802-4f90-bd9d-dba29ec537db; router=home-router-v1"
+          },
+          {
+            "stage": "official_knowledge",
+            "detail": "{\"documents\":1,\"cached\":true,\"issues\":[]}"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.6"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered"
+          }
+        ]
+      }
+    },
+    {
+      "name": "R-unknown-gap",
+      "input": {
+        "question": "这个型号第一次怎么用，长按哪个键？",
+        "model": "ZZ-UNKNOWN-73"
+      },
+      "elapsedMs": 1549,
+      "calls": 1,
+      "result": {
+        "outcome": "unavailable",
+        "answer": "本次修复验证仅允许1次请求；未发送重试",
+        "steps": [],
+        "questions": [],
+        "source": "curated-guidance",
+        "citations": [],
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=17b6f010-eb21-4460-989a-65419e0a6daf; router=home-router-v1"
+          },
+          {
+            "stage": "official_knowledge",
+            "detail": "{\"documents\":0,\"cached\":true,\"issues\":[\"未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。\"]}"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.6"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=1"
+          },
+          {
+            "stage": "tool_completed",
+            "detail": "fetch_official_knowledge"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2"
+          },
+          {
+            "stage": "provider_failed",
+            "detail": "budget_exhausted"
+          }
+        ]
+      }
+    },
+    {
+      "name": "R-unified-plan",
+      "input": {
+        "goal": "我有半小时，不想花钱，只用手电筒、透明玻璃杯和纸笔，帮我设计一个有趣的活动"
+      },
+      "calls": 1,
+      "error": "模型创意未通过资源或风险检查，请调整要求"
+    },
+    {
+      "name": "R-discovery-to-unified-followup",
+      "input": {
+        "goal": "不用玻璃杯，缩短到10分钟，换个更简单的方向",
+        "transfer": "previous owned discovery plan"
+      },
+      "elapsedMs": 18733,
+      "calls": 1,
+      "result": {
+        "outcome": "answered",
+        "answer": "延续上一轮，调整为“不用玻璃杯，缩短到10分钟，换个更简单的方向” · 10分钟 · 不新增购买 · 从2件可用候选中规划 · 排除1件\n\n手电筒光斑形状与距离关系速记观察",
+        "steps": [
+          {
+            "id": "life:c1422cf5-88b7-4a80-b79f-341d62ea90bc:0",
+            "text": "1. 在较暗环境中（如拉上窗帘的房间），打开低温手电筒，将光束垂直投射到平整白墙或浅色纸面（可用纸笔套装中的纸平铺于桌面或墙面固定）。"
+          },
+          {
+            "id": "life:c1422cf5-88b7-4a80-b79f-341d62ea90bc:1",
+            "text": "2. 从距离墙面约10 cm处开始，缓慢后退手电筒，每退10 cm暂停2秒，用纸笔快速画下当前光斑的轮廓（注意：只描外缘，不涂色；标出对应距离，如'10cm'、'20cm'）。"
+          },
+          {
+            "id": "life:c1422cf5-88b7-4a80-b79f-341d62ea90bc:2",
+            "text": "3. 继续后退至约60 cm（共6个点：10/20/30/40/50/60 cm），全程保持手电筒朝向不变、无晃动。"
+          },
+          {
+            "id": "life:c1422cf5-88b7-4a80-b79f-341d62ea90bc:3",
+            "text": "4. 观察并记录：光斑大小是否均匀扩大？边缘是否始终清晰？有无出现中心亮斑+外围渐晕？在纸上对比不同距离下的草图差异。"
+          },
+          {
+            "id": "life:c1422cf5-88b7-4a80-b79f-341d62ea90bc:4",
+            "text": "5. 最后1分钟：合上纸笔，口头或简写一句发现（例：‘越远越圆但越淡’或‘30cm后边缘变毛’）"
+          }
+        ],
+        "questions": [],
+        "source": "model-creative",
+        "citations": [],
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "plan; target=home; router=home-router-v1"
+          },
+          {
+            "stage": "goal_planning",
+            "detail": "model-creative"
+          }
+        ]
+      }
+    }
+  ]
+}

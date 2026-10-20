@@ -20,8 +20,36 @@ export const turnInputSchema = z
           "discover",
           "family",
           "social",
+          "stories",
         ]),
         goal: z.string().max(500).optional(),
+        companion: z.boolean().optional(),
+        planContext: z
+          .object({
+            previousIdeaIds: z.array(z.string().uuid()).max(6),
+            continuation: z
+              .object({
+                goal: z.string().max(1000),
+                minutes: z.number().int().min(1).max(240),
+                itemIds: z.array(z.string().max(100)).max(30),
+                excludedItemIds: z.array(z.string().max(100)).max(100),
+                restrictions: z
+                  .array(
+                    z.enum([
+                      "不买东西",
+                      "在家",
+                      "静音",
+                      "不要拍照",
+                      "不要手工",
+                    ]),
+                  )
+                  .max(5),
+              })
+              .strict()
+              .optional(),
+          })
+          .strict()
+          .optional(),
       })
       .strict()
       .optional(),
@@ -147,6 +175,7 @@ export type Persona = {
   enabled: boolean;
   nickname: string;
   style: "neutral" | "warm" | "playful";
+  memoryUse?: "off" | "explicit" | "relevant";
   itemId?: string;
 };
 export const personaSchema = z
@@ -154,6 +183,7 @@ export const personaSchema = z
     enabled: z.boolean(),
     nickname: z.string().trim().max(40),
     style: z.enum(["neutral", "warm", "playful"]),
+    memoryUse: z.enum(["off", "explicit", "relevant"]).optional(),
     itemId: z.string().max(100).optional(),
   })
   .strict();

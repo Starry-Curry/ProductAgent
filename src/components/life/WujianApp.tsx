@@ -22,6 +22,8 @@ import { ActivityPlanner } from "../ActivityPlanner";
 import { Intake } from "./Intake";
 import { Stories, type Fragment } from "./Stories";
 import { Discovery } from "./Discovery";
+import { AISettings } from "./AISettings";
+import type { ServiceSession, TurnInput } from "@/lib/agent/contracts";
 import { ItemInformation } from "./ItemInformation";
 import { syntheticItem } from "@/lib/life/availability";
 type View =
@@ -58,7 +60,7 @@ const nav = [
   ["items", "物品展柜", Package],
   ["discover", "发现新玩法", Sparkles],
   ["stories", "生活故事", BookOpen],
-  ["assistant", "AI 助手", MessageCircle],
+  ["assistant", "问物间", MessageCircle],
   ["family", "家庭", Users],
   ["social", "社交", BookOpen],
 ] as const;
@@ -75,6 +77,38 @@ export default function WujianApp() {
     [busy, setBusy] = useState(false),
     [policy, setPolicy] = useState<"off" | "candidates">("off");
   const [entryQuestion, setEntryQuestion] = useState("");
+  const [askEntry, setAskEntry] = useState<{
+    key: number;
+    itemId?: string;
+    sessionId?: string;
+    origin: TurnInput["uiContext"];
+    fresh?: boolean;
+  }>({ key: 0, origin: { page: "assistant" } });
+  const [askSession, setAskSession] = useState<ServiceSession | null>(null);
+  const itemSessions = useRef<Record<string, string>>({});
+  function ask(
+    question = "",
+    itemId?: string,
+    planContext?: any,
+    sessionId?: string,
+    companion = false,
+  ) {
+    setEntryQuestion(question);
+    setAskEntry((e) => ({
+      key: e.key + 1,
+      itemId,
+      sessionId,
+      origin: {
+        page: planContext ? "discover" : itemId ? "item" : "assistant",
+        goal: planContext?.continuation?.goal,
+        planContext,
+        companion,
+      },
+      fresh: !!planContext,
+    }));
+    setAskSession(null);
+    go("assistant");
+  }
   const [giftPicking, setGiftPicking] = useState(false);
   const generation = useRef(0);
   const [backView, setBackView] = useState<View>("items");
@@ -328,21 +362,14 @@ export default function WujianApp() {
         )}
         {data && (
           <details className="life-cloud-status">
-            <summary>
-              云端 AI ·{" "}
-              {(
-                {
-                  ready: "已准备就绪",
-                  missing_key: "未配置密钥",
-                  unauthorized: "费用关闭",
-                  missing_config: "配置待补全",
-                  invalid_config: "配置无效",
-                } as Record<string, string>
-              )[data.capabilities.cloud.state] || "暂不可用"}
-            </summary>
+            <summary>设置与 AI 状态</summary>
             <p>
               {data.capabilities.cloud.message}{" "}
-              <a href="/guide#cloud">配置与撤销方式</a>
+              <a href="/guide#cloud">本机配置与撤销</a>
+            </p>
+            <p className="life-muted">
+              官方资料按需联网，可在启动环境以 WUJIAN_ALLOW_PUBLIC_FETCH=false
+              关闭；不会发送私人记忆。
             </p>
           </details>
         )}
@@ -371,7 +398,7 @@ export default function WujianApp() {
                       className="home-ask"
                       onSubmit={(e) => {
                         e.preventDefault();
-                        if (entryQuestion.trim()) go("assistant");
+                        if (entryQuestion.trim()) ask(entryQuestion);
                       }}
                     >
                       <label className="sr-only" htmlFor="home-question">
@@ -395,10 +422,7 @@ export default function WujianApp() {
                       >
                         今天，试点新鲜的 <ArrowUpRight size={16} />
                       </button>
-                      <button
-                        className="life-text-link"
-                        onClick={() => go("assistant")}
-                      >
+                      <button className="life-text-link" onClick={() => ask()}>
                         有件事想问问
                       </button>
                     </div>
@@ -492,11 +516,8 @@ export default function WujianApp() {
                       或者，只想聊聊。
                     </h2>
                     <p>普通交流不必绑定物品。具体型号和资料会在需要时核对。</p>
-                    <button
-                      className="button secondary"
-                      onClick={() => go("assistant")}
-                    >
-                      打开 AI 助手
+                    <button className="button secondary" onClick={() => ask()}>
+                      问物间
                     </button>
                     <small>{data.capabilities.cloud.message}</small>
                   </div>
@@ -610,6 +631,9 @@ export default function WujianApp() {
                 request={request}
                 refresh={load}
                 modelAvailable={data.capabilities.model}
+                onAsk={(context) =>
+                  ask("继续这个目标，帮我进一步完善方案", undefined, context)
+                }
               />
             )}
             {view === "stories" && (
@@ -622,6 +646,7 @@ export default function WujianApp() {
                 upload={upload}
                 refresh={load}
                 onItem={(id) => open(id, "故事")}
+                onAsk={() => ask("回忆一下以前保存的生活故事")}
               />
             )}
             {view === "assistant" && (
@@ -631,7 +656,7 @@ export default function WujianApp() {
                     <span className="life-eyebrow">
                       HERE TO HELP, AND TO LISTEN
                     </span>
-                    <h1>随时问，也可以慢慢聊</h1>
+                    <h1>问物间</h1>
                     <p>需要时使用相关物品和获准信息；普通聊天不必围绕物品。</p>
                   </div>
                 </div>
@@ -645,12 +670,29 @@ export default function WujianApp() {
                   />
                   允许从这段对话整理待确认记忆（确认前不用于长期个性化；默认不发送历史记忆给云端）
                 </label>
+                {(askEntry.itemId || askSession?.itemId) && (
+                  <div className="life-actions">
+                    <span>
+                      正在围绕：
+                      {items.find(
+                        (i) => i.id === (askSession?.itemId || askEntry.itemId),
+                      )?.name || "所选物品"}
+                    </span>
+                    <button onClick={() => ask()}>切换到普通聊天</button>
+                  </div>
+                )}
+                <AISettings actor={actor} />
                 <AssistantConversation
-                  key={actor + policy}
+                  key={actor + policy + askEntry.key}
                   actor={actor}
                   mode="auto"
                   initialQuestion={entryQuestion}
-                  uiContext={{ page: "assistant" }}
+                  item={items.find((i) => i.id === askEntry.itemId)}
+                  initialSessionId={askEntry.sessionId}
+                  startFresh={askEntry.fresh}
+                  allHistory
+                  onSession={setAskSession}
+                  uiContext={askEntry.origin}
                   memoryPolicy={policy}
                   onActivity={() => load().catch(() => {})}
                 />
@@ -673,7 +715,7 @@ export default function WujianApp() {
                       family: "家庭",
                       social: "社交",
                       discover: "发现新玩法",
-                      assistant: "AI 助手",
+                      assistant: "问物间",
                       add: "物品展柜",
                       item: "物品展柜",
                     }[backView]
@@ -789,8 +831,38 @@ export default function WujianApp() {
                     <p className="life-muted">
                       具体型号资料优先；无资料时说明未知。反馈来自本人报告，不能当作设备检测。
                     </p>
+                    <div className="life-actions">
+                      <button
+                        onClick={() =>
+                          ask(
+                            "",
+                            item.id,
+                            undefined,
+                            itemSessions.current[item.id],
+                          )
+                        }
+                      >
+                        在问物间继续
+                      </button>
+                    </div>
+                    <AISettings
+                      actor={actor}
+                      item={item}
+                      onChat={() =>
+                        ask(
+                          "想和你聊聊今天的事",
+                          item.id,
+                          undefined,
+                          itemSessions.current[item.id],
+                          true,
+                        )
+                      }
+                    />
                     <AssistantConversation
                       key={actor + item.id}
+                      onSession={(s) => {
+                        if (s) itemSessions.current[item.id] = s.id;
+                      }}
                       actor={actor}
                       item={item}
                       mode="auto"
@@ -809,6 +881,9 @@ export default function WujianApp() {
                     request={request}
                     refresh={load}
                     modelAvailable={data.capabilities.model}
+                    onAsk={(context) =>
+                      ask("继续这个目标，帮我进一步完善方案", item.id, context)
+                    }
                   />
                 )}
                 {tab === "故事" && (
@@ -822,6 +897,7 @@ export default function WujianApp() {
                     upload={upload}
                     refresh={load}
                     onItem={(id) => open(id, "故事")}
+                    onAsk={() => ask("回忆一下这件物品的故事", item.id)}
                   />
                 )}
                 {tab === "资料与管理" && (

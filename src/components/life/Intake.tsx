@@ -356,6 +356,7 @@ export function Intake({
                 name,
                 brand,
                 model: model || "待确认",
+                region: String(f.get("region") || ""),
                 category,
                 lifecycle: cycle,
                 availability: f.get("available") ? "available" : "unknown",
@@ -427,6 +428,29 @@ export function Intake({
                 onChange={(e) => setModel(e.target.value)}
                 placeholder="不确定可以留空"
               />
+            </label>
+            <label>
+              产品地区版本（可选）
+              <select name="region" defaultValue="">
+                <option value="">待核对，不假定国内版</option>
+                {[
+                  "cn",
+                  "uk",
+                  "us",
+                  "global",
+                  "my",
+                  "au",
+                  "sg",
+                  "tw",
+                  "hk",
+                  "de",
+                  "fr",
+                ].map((r) => (
+                  <option key={r} value={r}>
+                    {r.toUpperCase()}
+                  </option>
+                ))}
+              </select>
             </label>
           </div>
           <OfficialSources

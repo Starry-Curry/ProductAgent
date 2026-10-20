@@ -5,6 +5,11 @@ import { fetchPublicDocument, sourceURL } from "./sources.ts";
 
 const brands = [
   {
+    names: ["索尼", "sony"],
+    domains: ["sony.com", "sony.net", "sony-asia.com"],
+    home: "https://www.sony.com/electronics/support/",
+  },
+  {
     names: ["宜家", "ikea"],
     domains: ["ikea.cn", "ikea.com"],
     home: "https://www.ikea.cn/cn/zh/",
@@ -30,7 +35,7 @@ const brands = [
     home: "https://support.logi.com/hc/zh-cn",
   },
 ] as const;
-function brandEntry(brand: string) {
+export function brandEntry(brand: string) {
   return brands.find((b) =>
     b.names.some((n) => brand.toLowerCase().includes(n)),
   );

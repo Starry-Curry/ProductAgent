@@ -683,7 +683,7 @@ test("百炼工具传输接受 tool_calls=null，正确传递预算与关闭思�
     );
   }
 });
-test("候选保存重试幂等，角色更改和本人纠正同步清除旧上下文", async () => {
+test("候选保存重试幂等；角色更改保留聊天并撤销旧检查点，本人纠正仍清除旧内容", async () => {
   const t = setup();
   try {
     const requestId = crypto.randomUUID();
@@ -719,6 +719,22 @@ test("候选保存重试幂等，角色更改和本人纠正同步清除旧上�
       style: "playful",
       itemId: "lamp",
     });
+    assert.equal(listSessions(t.db, t.read(), "lin")[0].messages.length, 2);
+    assert.equal(
+      (
+        t.db.prepare("SELECT count(*) n FROM graph_checkpoints").get() as {
+          n: number;
+        }
+      ).n,
+      0,
+    );
+    saveMemory(
+      t.db,
+      t.read,
+      "lin",
+      { kind: "interest", text: "不再喜欢阅读", status: "active" },
+      a.id,
+    );
     assert.equal(listSessions(t.db, t.read(), "lin")[0].messages.length, 0);
   } finally {
     t.close();

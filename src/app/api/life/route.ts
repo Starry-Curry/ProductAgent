@@ -6,6 +6,12 @@ import {
 } from "@/lib/life/knowledge";
 import { visionStatus, recognizeOwnedPhoto } from "@/lib/life/vision";
 import { planDiscovery } from "@/lib/life/planning";
+import {
+  acquireKnowledge,
+  readKnowledge,
+  indexOfficialSource,
+  knowledgeConflicts,
+} from "@/lib/life/acquisition";
 import { createLifeItem } from "@/lib/life/intake";
 import { syntheticItem } from "@/lib/life/availability";
 import { z } from "zod";
@@ -79,6 +85,15 @@ export async function GET(r: Request) {
           ),
         })),
         fragments: listFragments(db, state, a, p.get("itemId")!),
+        knowledge: readKnowledge(db, state, a, p.get("itemId")!).map(
+          ({ text, chunks, ...document }) => ({
+            ...document,
+            chunkCount: chunks.length,
+          }),
+        ),
+        knowledgeWarnings: knowledgeConflicts(
+          readKnowledge(db, state, a, p.get("itemId")!),
+        ).map((c) => c.message),
       });
     return Response.json({
       workspace: {
@@ -173,6 +188,27 @@ export async function POST(r: Request) {
       });
     if (p.action === "findOfficial")
       return Response.json(await findOfficial(p.input));
+    if (p.action === "acquireKnowledge") {
+      const v = z
+        .object({
+          itemId: z.string().min(1).max(100),
+          force: z.boolean().default(false),
+        })
+        .strict()
+        .parse(p.input);
+      if (process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "false")
+        throw new AgentError("当前服务已关闭官方资料联网；仍可上传说明书", 403);
+      const result = await acquireKnowledge(db, read, a, v.itemId, {
+        force: v.force,
+      });
+      return Response.json({
+        ...result,
+        documents: result.documents.map(({ text, chunks, ...document }) => ({
+          ...document,
+          chunkCount: chunks.length,
+        })),
+      });
+    }
     if (p.action === "recognizePhoto") {
       const v = z
         .object({ mediaId: z.string().uuid(), confirmed: z.literal(true) })
@@ -228,9 +264,20 @@ export async function POST(r: Request) {
         url: d.url,
         kind: "official-public",
       };
+      let knowledgeNotice = "";
+      try {
+        indexOfficialSource(db, read(), a, item.id, id);
+      } catch (e) {
+        knowledgeNotice =
+          e instanceof AgentError
+            ? e.message
+            : "暂未整理为型号知识，原资料已保存";
+      }
       return Response.json({
         source: { ...source, knowledge: organizeKnowledge(source, item.model) },
-        notice: "已保存本人核对的官方站点摘录；不等于完整知识包或实物验证。",
+        notice:
+          "已保存本人核对的官方站点摘录；不等于完整知识包或实物验证。" +
+          knowledgeNotice,
       });
     }
     if (p.action === "createItem")
@@ -278,6 +325,22 @@ export async function POST(r: Request) {
           name: z.string().optional(),
           brand: z.string().max(80).optional(),
           model: z.string().max(100).optional(),
+          region: z
+            .enum([
+              "",
+              "cn",
+              "uk",
+              "us",
+              "global",
+              "my",
+              "au",
+              "sg",
+              "tw",
+              "hk",
+              "de",
+              "fr",
+            ])
+            .optional(),
           lifecycle: z
             .enum(["一次性", "消耗型", "可重复使用", "长期耐用", "持续养护"])
             .optional(),

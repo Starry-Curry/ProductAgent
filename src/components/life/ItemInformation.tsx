@@ -36,12 +36,16 @@ export function ItemInformation({
     [packId, setPack] = useState(item.productBinding?.packId || "");
   const [ocr, setOCR] = useState(false),
     [officialDraft, setOfficialDraft] = useState<any>(null);
+  const [knowledge, setKnowledge] = useState<any[]>([]);
   useEffect(() => {
     fetch(`/api/life?itemId=${encodeURIComponent(item.id)}`, {
       headers: { "x-demo-actor": actor },
     })
       .then((r) => r.json())
-      .then((d) => setSources(d.sources || []))
+      .then((d) => {
+        setSources(d.sources || []);
+        setKnowledge(d.knowledge || []);
+      })
       .catch((e) => setNotice(e.message));
   }, [item.id, actor]);
   const pack = packs.find((p) => p.id === item.productBinding?.packId);
@@ -90,6 +94,7 @@ export function ItemInformation({
                     itemId: item.id,
                     brand: f.get("brand"),
                     model: f.get("model"),
+                    region: f.get("region"),
                     lifecycle: f.get("lifecycle"),
                     attributes: {
                       ...item.attributes,
@@ -146,6 +151,29 @@ export function ItemInformation({
                 </select>
               </label>
               <label>
+                产品地区版本
+                <select name="region" defaultValue={item.region || ""}>
+                  <option value="">待核对</option>
+                  {[
+                    "cn",
+                    "uk",
+                    "us",
+                    "global",
+                    "my",
+                    "au",
+                    "sg",
+                    "tw",
+                    "hk",
+                    "de",
+                    "fr",
+                  ].map((r) => (
+                    <option key={r} value={r}>
+                      {r.toUpperCase()}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
                 当前数量
                 <input
                   name="quantity"
@@ -196,6 +224,52 @@ export function ItemInformation({
             </form>
           </details>
         )}
+        <div className="life-official-cache">
+          <h3>按需取得的官方资料</h3>
+          <p className="life-muted">
+            用于型号问答和能力候选；保留来源、原文位置与版本。自动定位覆盖有限品牌，找不到时可粘贴对应官方链接或上传说明书。地区未确认时需核对来源版本。
+          </p>
+          <button
+            disabled={busy}
+            onClick={() =>
+              run(async () => {
+                const d = await request("acquireKnowledge", {
+                  itemId: item.id,
+                  force: true,
+                });
+                setKnowledge(d.documents);
+                setNotice(
+                  [
+                    d.documents.length
+                      ? `已取得${d.documents.length}份资料`
+                      : "未取得匹配型号的资料",
+                    ...d.issues,
+                  ].join("；"),
+                );
+              })
+            }
+          >
+            {busy ? "读取中…" : "查找 / 刷新官方资料"}
+          </button>
+          {knowledge.map((d) => (
+            <details key={d.id}>
+              <summary>
+                {d.title} · {d.model} / {d.region}
+              </summary>
+              <p>
+                取得时间：{d.fetchedAt} · {d.chunkCount}段可定位原文 · 版本
+                {d.hash.slice(0, 10)}
+              </p>
+              <a href={d.url} target="_blank" rel="noreferrer">
+                核对原始资料 ↗
+              </a>
+              <p className="life-muted">
+                定位链：
+                {d.chain.map((u: string) => new URL(u).hostname).join(" → ")}
+              </p>
+            </details>
+          ))}
+        </div>
         {pack ? (
           <>
             <h3>{pack.product}</h3>

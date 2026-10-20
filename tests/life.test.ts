@@ -42,7 +42,7 @@ import { reconcileMemories } from "../src/lib/memory/ambient.ts";
 import { createLifeGift } from "../src/lib/life/gifts.ts";
 import { installLifeDemo } from "../src/lib/life/demo.ts";
 
-test("life v1升级v2保留原图文和升级前备份，重复迁移幂等", () => {
+test("life v1升级v3保留原图文和升级前备份，重复迁移幂等", () => {
   const t = fixture();
   try {
     const f = saveFragment(t.db, t.read, "lin", {
@@ -62,7 +62,7 @@ test("life v1升级v2保留原图文和升级前备份，重复迁移幂等", ()
           n: number;
         }
       ).n,
-      2,
+      3,
     );
     assert.equal(
       buildContext(t.db, t.read(), "lin", {
@@ -361,9 +361,14 @@ test("云配置/费用状态与离线Provider错误准确区分，不发出未�
       method === "generate" ? p.generate("s", {}) : p.complete!([], []),
       { code: "invalid_response" },
     );
-    for(const payload of [null,{choices:[{finish_reason:"stop"}]}]) {
-      const invalid=createProvider(env,async()=>Response.json(payload));
-      await assert.rejects(method==="generate"?invalid.generate("s",{}):invalid.complete!([],[]),{code:"invalid_response"});
+    for (const payload of [null, { choices: [{ finish_reason: "stop" }] }]) {
+      const invalid = createProvider(env, async () => Response.json(payload));
+      await assert.rejects(
+        method === "generate"
+          ? invalid.generate("s", {})
+          : invalid.complete!([], []),
+        { code: "invalid_response" },
+      );
     }
   }
   await assert.rejects(
