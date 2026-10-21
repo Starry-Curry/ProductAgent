@@ -1,4 +1,6 @@
-最新增量：[在线Demo部署与维护](engineering/cloud-demo-2026-10-21.md)、[生产模拟验收](engineering/cloud-demo-validation-2026-10-21.json)。未公开部署，本轮0真实模型请求。
+当前版本（2026-10-21）：[初赛候选冲刺最终交接](engineering/wujian-final-2026-10-21.md) · [版本化验收与真实模型记录](engineering/wujian-final-validation-2026-10-21.json)。保留原23项；93次真实请求与失败，168项领域测试及核心生产回归，严格产品验收未全通过。
+
+此前部署阶段：[在线Demo部署与维护](engineering/cloud-demo-2026-10-21.md)、[生产模拟验收](engineering/cloud-demo-validation-2026-10-21.json)。未公开部署，本轮0真实模型请求。
 
 此前：[RC定向修复与分层故事](engineering/wujian-rc-targeted-2026-10-20.md)，新增独立验收，不改变历史23项结果。
 

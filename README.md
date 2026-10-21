@@ -1,10 +1,12 @@
-最新增量：[在线Demo部署准备](docs/engineering/cloud-demo-2026-10-21.md)与[离线生产验收](docs/engineering/cloud-demo-validation-2026-10-21.json)。已支持服务端访客隔离、持久化及费用控制；尚未公开部署，Docker/公网HTTPS/真实云端Qwen待验证。本机启动方式保持不变。
+当前版本（2026-10-21）：[正式候选冲刺交接](docs/engineering/wujian-final-2026-10-21.md) · [实际验收与93次请求记录](docs/engineering/wujian-final-validation-2026-10-21.json)。168项领域测试、类型、构建及核心回归通过；严格产品验收仍有明确缺口。可打开[最新故事书合成预览](http://127.0.0.1:3201/#stories)，费用关闭；默认启动 START_LIFE_RC.cmd，手动云端 START_LIFE_CLOUD.cmd。当前构建用 build:rc，未推送或公开部署。下方旧调用额度与验收结论仅代表相应历史阶段。
+
+部署阶段记录（冲刺前）：[在线Demo部署准备](docs/engineering/cloud-demo-2026-10-21.md)与[离线生产验收](docs/engineering/cloud-demo-validation-2026-10-21.json)。已支持服务端访客隔离、持久化及费用控制；尚未公开部署，Docker/公网HTTPS/真实云端Qwen待验证。本机启动方式保持不变。
 
 历史RC：[定向修复与分层故事](docs/engineering/wujian-rc-targeted-2026-10-20.md)。原23项不变；新增6次文字实测有明确失败，不宣称全部通过。
 
 # 物间 · ProductAgent
 
-## 当前：初赛受控Demo候选（2026-10-20）
+## 2026-10-20 阶段候选（历史记录）
 
 [RC验收、演示与交接](docs/engineering/wujian-rc-handoff-2026-10-20.md) · [固定矩阵](docs/engineering/wujian-rc-acceptance.json)。新增40次真实测试已用尽；故事书完整旅程、开放食品录入、商品帮助与受控创意已有真实运行证据，严格完整验收仍有明确缺口，不宣称通用可靠创意/实机完成烹饪。
 
@@ -37,7 +39,7 @@ npm.cmd run build
 npm.cmd run start:life
 ```
 
-打开 [物间新版](http://127.0.0.1:3200)，也可双击 `START_LIFE.cmd`。开发使用 `npm run dev:life`。更新源码后须重新 build；启动器只在缺少构建时自动构建。默认仅监听本机、费用与外部 tracing 关闭。
+打开 [物间新版](http://127.0.0.1:3200)，也可双击 `START_LIFE.cmd`。开发使用 `npm run dev:life`。更新源码后须重新 build:rc；启动器只在缺少构建时自动构建。默认仅监听本机、费用与外部 tracing 关闭。
 
 独立数据库为 `data-life-v1/demo.sqlite`。程序拒绝旧 `data/` 和其他工作区；测试使用 `.runtime/verification-*`。不要复制旧数据库、照片或环境密钥。
 

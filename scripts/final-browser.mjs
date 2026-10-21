@@ -8,9 +8,20 @@ import { chromium, expect } from "@playwright/test";
 if (!process.argv.includes("--run"))
   throw Error("Pass --run for the current authorized real-model sprint");
 process.loadEnvFile(".env.local");
-const folder = fs.mkdtempSync(
-  path.join(process.cwd(), ".runtime", "final-browser-"),
-);
+const resume = process.argv.find((a) => a.startsWith("--resume="))?.slice(9);
+const folder = resume
+  ? path.resolve(resume)
+  : fs.mkdtempSync(path.join(process.cwd(), ".runtime", "final-browser-"));
+if (
+  !folder.startsWith(path.resolve(".runtime") + path.sep) ||
+  !path.basename(folder).startsWith("final-browser-")
+)
+  throw Error("Only this sprint's synthetic browser data may be resumed");
+const priorReport = resume
+  ? JSON.parse(
+      fs.readFileSync(path.join(folder, "browser-validation.json"), "utf8"),
+    )
+  : null;
 const socket = createServer();
 await new Promise((r) => socket.listen(0, "127.0.0.1", r));
 const port = socket.address().port;
@@ -56,8 +67,21 @@ const checks = [],
 let browser;
 const report = () =>
   fs.writeFileSync(
-    path.join(folder, "browser-validation.json"),
-    JSON.stringify({ base, synthetic: true, checks, cases }, null, 2),
+    path.join(
+      folder,
+      resume ? "browser-resume-validation.json" : "browser-validation.json",
+    ),
+    JSON.stringify(
+      {
+        base,
+        synthetic: true,
+        resumedFrom: resume ? "browser-validation.json" : undefined,
+        checks,
+        cases,
+      },
+      null,
+      2,
+    ),
   );
 async function api(action, input) {
   const r = await fetch(base + "/api/life", {
@@ -84,15 +108,21 @@ try {
     } catch {}
     await new Promise((r) => setTimeout(r, 300));
   }
-  const create = (name, category, model = "", brand = "") =>
-    api("createItem", {
-      name,
-      category,
-      model,
-      brand,
-      lifecycle: "长期耐用",
-      availability: "available",
-    }).then((d) => d.item);
+  const create = async (name, category, model = "", brand = "") => {
+    const existing =
+      resume && (await data()).workspace.items.find((i) => i.name === name);
+    return (
+      existing ||
+      api("createItem", {
+        name,
+        category,
+        model,
+        brand,
+        lifecycle: "长期耐用",
+        availability: "available",
+      }).then((d) => d.item)
+    );
+  };
   const maf = await create(
     "Xiaomi Smart Air Fryer 6.5L",
     "厨房用品",
@@ -148,8 +178,14 @@ try {
     report();
     return d;
   }
-  const first = await send(
-    "我是第一次使用，能带我从准备到完成一次烹饪吗？尚未选食材，不要猜食物参数。",
+  const first = resume
+    ? priorReport.cases.find((c) => c.result?.reply?.steps?.length >= 4)?.result
+    : await send(
+        "我是第一次使用，能带我从准备到完成一次烹饪吗？尚未选食材，不要猜食物参数。",
+      );
+  assert.ok(
+    first,
+    "Resume needs the recorded useful first answer; it does not re-run first use",
   );
   assert.equal(first.reply.source, "model-with-evidence");
   assert.ok(
