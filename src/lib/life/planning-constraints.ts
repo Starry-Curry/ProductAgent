@@ -21,6 +21,21 @@ export function goalDuration(q: string): number | undefined {
 /** Name fragments only, not product facts or new inventory. */
 export function mentionsItem(q: string, name: string) {
   if (q.includes(name)) return true;
+  const plain = name.replace(
+    /^(?:测试|验收|我的|备用|轻便|便携|旅行|全新)+/g,
+    "",
+  );
+  if (plain && q.includes(plain)) return true;
+  for (const kind of [
+    /相机|camera/i,
+    /纸笔|纸和笔/,
+    /玻璃杯|透明杯|水杯|杯子/,
+    /手电筒|手电|flashlight/i,
+    /背包|旅行包/,
+    /衬衫|上衣/,
+    /保鲜盒|食品盒/,
+  ])
+    if (kind.test(q) && kind.test(name)) return true;
   const chunks = name.match(/[\p{Script=Han}]+|[a-z0-9-]{4,}/giu) || [];
   return chunks.some((chunk) =>
     chunk.length >= 2 && q.includes(chunk)

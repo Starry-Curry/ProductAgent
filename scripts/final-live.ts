@@ -37,6 +37,7 @@ if (!process.argv.includes("--run")) {
 if (fs.existsSync(".env.local")) process.loadEnvFile(".env.local");
 export const env: Record<string, string | undefined> = {
   ...process.env,
+  AI_MODEL: process.env.FINAL_TEXT_MODEL || process.env.AI_MODEL,
   AUTH_MODE: "local-demo",
   AI_ALLOW_PAID_CALLS: "true",
   WUJIAN_ALLOW_PAID_CALLS: "true",
@@ -439,7 +440,12 @@ try {
         organizeStories(t.db, t.read, "lin", { command: "forget", id: u.id });
     await record(caseName + "-personalization-after-forget", plan);
   } else if (caseName === "direct-sony") {
-    await record('Sony-direct-current',()=>createProvider({...env,AI_JSON_MODE:'false'},trackedFetch).generate('你是自然、诚实的通用助手。直接回答，不伪造来源；不知道就说明。','Sony WH-CH720N 第一次如何充电，怎么知道充完，有哪些注意事项？'));
+    await record("Sony-direct-current", () =>
+      createProvider({ ...env, AI_JSON_MODE: "false" }, trackedFetch).generate(
+        "你是自然、诚实的通用助手。直接回答，不伪造来源；不知道就说明。",
+        "Sony WH-CH720N 第一次如何充电，怎么知道充完，有哪些注意事项？",
+      ),
+    );
   } else if (caseName.startsWith("persona")) {
     for (const style of ["neutral", "playful"] as const) {
       savePersona(t.db, t.read(), "lin", {

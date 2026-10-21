@@ -507,6 +507,12 @@ export async function executeGraph(
     session,
     tokens: null,
   });
+  const agentBudgetMs = publicDemo()
+    ? 75000
+    : Math.min(
+        120000,
+        Math.max(45000, Number(process.env.AI_AGENT_TIMEOUT_MS) || 90000),
+      );
   const graph = new StateGraph(GraphState)
     .addNode("route", ({ work }) => {
       guard();
@@ -974,7 +980,7 @@ export async function executeGraph(
       const w = { ...work, trace: [...work.trace] };
       if (
         w.calls >= (publicDemo() ? 1 : 3) ||
-        Date.now() - w.started > (publicDemo() ? 75000 : 45000)
+        Date.now() - w.started > agentBudgetMs
       ) {
         w.reply = blank(
           "这次还需要补充资料。我已保留问题，可以说明卡住的地方，或请家人协助。",
@@ -1000,10 +1006,7 @@ export async function executeGraph(
         );
         w.response = provider.complete
           ? await provider.complete(w.messages, activeTools, {
-              timeoutMs: Math.max(
-                1,
-                (publicDemo() ? 75000 : 45000) - (Date.now() - w.started),
-              ),
+              timeoutMs: Math.max(1, agentBudgetMs - (Date.now() - w.started)),
               maxTokens: activeSkill === skills["document-help"] ? 2600 : 1500,
             })
           : {

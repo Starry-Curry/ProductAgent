@@ -447,7 +447,17 @@ export async function suggestStoryOrganization(
           .sort()
           .join("|"),
       );
-      if (existingChapters.some((c) => c.signature === signature)) continue;
+      if (
+        existingChapters.some(
+          (c) =>
+            c.signature === signature ||
+            (c.status === "rejected" &&
+              evidence.every((e) =>
+                c.evidence?.some((old) => old.fingerprint === e.fingerprint),
+              )),
+        )
+      )
+        continue;
       const chapter: Chapter = {
         id: crypto.randomUUID(),
         name: c.name,
@@ -505,10 +515,14 @@ export async function suggestStoryOrganization(
       if (
         existingUnderstanding.some(
           (old) =>
-            old.evidence.length === evidence.length &&
-            old.evidence.every((e) =>
-              evidence.some((n) => n.fingerprint === e.fingerprint),
-            ),
+            (["rejected", "withdrawn"].includes(old.status) &&
+              evidence.every((e) =>
+                old.evidence.some((n) => n.fingerprint === e.fingerprint),
+              )) ||
+            (old.evidence.length === evidence.length &&
+              old.evidence.every((e) =>
+                evidence.some((n) => n.fingerprint === e.fingerprint),
+              )),
         )
       )
         continue;

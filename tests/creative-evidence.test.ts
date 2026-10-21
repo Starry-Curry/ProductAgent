@@ -67,7 +67,7 @@ test("公开经验受控改编使用实际来源/能力，不强制玻璃杯或�
   }
 });
 
-test("真实失败回归：错误物理机制、隐含材料不可借有效来源ID绕过；失败回退诚实标注且不重试模型", async () => {
+test("真实失败回归：错误物理机制、隐含材料不可借有效来源ID绕过；失败回退诚实标注且最多一次定向修复", async () => {
   const t = fixture();
   try {
     const light = t.add("普通手电筒", "电子设备", "合成", "LIGHT", {
@@ -163,7 +163,7 @@ test("真实失败回归：错误物理机制、隐含材料不可借有效来�
       },
       t.read,
     );
-    assert.equal(calls, 1);
+    assert.equal(calls, 2); // First draft + one reason-guided repair; neither may bypass physical checks.
     assert.equal(fallback.source, "local-candidate");
     assert.equal(fallback.cloudRejected, true);
     assert.ok(fallback.missing.some((m) => m.includes("未冒充AI成功")));

@@ -100,6 +100,10 @@ export function Stories({
   const slidesOpen = useRef(false);
   slidesOpen.current = slides.length > 0;
   useEffect(() => {
+    setObservations([]);
+    setPhotoMatches([]);
+  }, [media, photoIndex]);
+  useEffect(() => {
     if (!opened) return;
     const previous = document.activeElement as HTMLElement | null;
     const overflow = document.body.style.overflow;

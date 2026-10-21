@@ -207,8 +207,25 @@ export function groundedReply(
         original = sources
           .map((s) => `${s!.model} ${s!.title} ${s!.text}`)
           .join(" ");
-      if (step.sourceQuote && !sources.some(s=>s!.text.includes(step.sourceQuote!)))
+      if (
+        step.sourceQuote &&
+        !sources.some((s) => s!.text.includes(step.sourceQuote!))
+      )
         throw new AgentError("逐步引文不在所列原文中");
+      // A diagram's reading order or an unrelated mention of a left/right unit is not
+      // evidence for where the port is. Omit this optional location; keep the action.
+      if (
+        /USB|接口|端口/.test(step.text) &&
+        !/(?:USB|port|connector)[^。\n.!?;]{0,50}(?:left|right|bottom)|(?:left|right|bottom)[^。\n.!?;]{0,50}(?:USB|port|connector)/i.test(
+          original,
+        )
+      )
+        step.text = step.text
+          .replace(/[（(]位于[^）)]{0,30}[）)]/g, "")
+          .replace(
+            /(?:位于)?(?:右|左)(?:耳罩|单元|侧)(?:下方|底部|顶部)?的?|耳机底部(?:的)?/g,
+            "",
+          );
       if (
         !/right side|left side|front panel|rear panel|top panel/i.test(original)
       )
@@ -246,6 +263,7 @@ export function groundedReply(
         [/拧紧|紧固|加固/, /tighten|fasten|拧紧|紧固|加固/i],
         [/沿.{0,8}纹理/, /along.{0,20}grain|纹理/i],
         [/鼓包|翘起/, /swell|warp|鼓包|翘起/i],
+        [/激活/, /activat|激活/i],
       ] as const)
         if (claim.test(text) && !proof.test(original))
           throw new AgentError("专属步骤未获引用原文支持");

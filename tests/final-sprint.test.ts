@@ -13,12 +13,82 @@ import {
 import { matchStoryPhoto } from "../src/lib/life/story-photo.ts";
 import { storePhoto } from "../src/lib/life/media.ts";
 import { modelIdea } from "../src/lib/life/ideas.ts";
+import { planDiscovery } from "../src/lib/life/planning.ts";
+import { savePersona } from "../src/lib/memory/store.ts";
 import { completedStepOrdinal, respond } from "../src/lib/agent/service.ts";
 import { groundedReply } from "../src/lib/skills/document-help.ts";
 const fixture = () =>
   validationFixture(
     fs.mkdtempSync(path.join(process.cwd(), ".runtime", "final-unit-")),
   );
+test("只用已有物品是库存指代，不会阻止目标模型调用；多候选生成中撤销权限不得发布", async () => {
+  const t = fixture();
+  try {
+    const pen = t.add("纸笔", "文具", "", "");
+    let calls = 0;
+    const valid = {
+      title: "纸上清单",
+      itemIds: [pen],
+      minutes: 5,
+      steps: ["在纸上写下桌面物品类别，按类别归位"],
+      limits: ["先核对桌面空间"],
+    };
+    const provider = {
+      model: "offline",
+      ready: true,
+      generate: async () => {
+        calls++;
+        return { model: "offline", tokens: null, text: JSON.stringify(valid) };
+      },
+    };
+    const r = await planDiscovery(
+      t.db,
+      t.read(),
+      "lin",
+      {
+        goal: "只用已有物品，五分钟整理桌面",
+        model: true,
+        candidates: 1,
+        publicEvidence: false,
+      },
+      provider,
+      t.read,
+    );
+    assert.equal(r.source, "model-creative");
+    assert.equal(calls, 1);
+    await assert.rejects(
+      modelIdea(
+        t.db,
+        t.read(),
+        "lin",
+        "整理桌面",
+        {
+          model: "offline",
+          generate: async () => {
+            savePersona(t.db, t.read(), "lin", {
+              enabled: false,
+              nickname: "",
+              style: "neutral",
+              memoryUse: "off",
+            });
+            return {
+              model: "offline",
+              tokens: null,
+              text: JSON.stringify({ ideas: [valid] }),
+            };
+          },
+        },
+        false,
+        t.read,
+        { candidates: 3 },
+      ),
+      /授权或记忆已变化/,
+    );
+    assert.equal(t.db.prepare("SELECT count(*) n FROM life_ideas").get()!.n, 1);
+  } finally {
+    t.db.close();
+  }
+});
 test("步骤完成语序互换与否定不会丢失/误记进度", () => {
   assert.equal(completedStepOrdinal("第一步已经完成了，接下来呢？"), 1);
   assert.equal(completedStepOrdinal("我已经做过第二步了"), 2);
@@ -315,6 +385,133 @@ test("数字照片不能绕过缺少打印与粘贴材料的资源检查", async
       ),
       /数字照片/,
     );
+  } finally {
+    t.db.close();
+  }
+});
+
+test("创意只修复一次协议/断言错误，保留合法草稿且不把复核失败当成功", async () => {
+  const t = fixture();
+  try {
+    const pen = t.add("纸笔", "文具", "", "");
+    let calls = 0;
+    const good = {
+      title: "纸上收纳路径",
+      itemIds: [pen],
+      minutes: 5,
+      steps: ["写下桌面三类物品，为每类选一个现有位置"],
+      limits: "不购买材料",
+      unrelatedDisplayHint: "ignored",
+    };
+    const provider = {
+      model: "offline",
+      generate: async () => {
+        calls++;
+        return {
+          model: "offline",
+          tokens: null,
+          text: JSON.stringify(
+            calls === 1 ? { ...good, factIds: ["invented-source"] } : good,
+          ),
+        };
+      },
+    };
+    const r = await modelIdea(
+      t.db,
+      t.read(),
+      "lin",
+      "五分钟整理桌面",
+      provider,
+      false,
+      t.read,
+    );
+    assert.equal(calls, 2);
+    assert.equal(r.source, "model-creative");
+    assert.ok(r.limits.includes("不购买材料"));
+    let reviewCalls = 0;
+    const reviewed = await modelIdea(
+      t.db,
+      t.read(),
+      "lin",
+      "整理桌面",
+      {
+        model: "offline",
+        generate: async () => {
+          reviewCalls++;
+          return {
+            model: "offline",
+            tokens: null,
+            text: JSON.stringify(
+              reviewCalls === 1 ? good : { ...good, itemIds: ["not-owned"] },
+            ),
+          };
+        },
+      },
+      false,
+      t.read,
+      { review: true },
+    );
+    assert.equal(reviewCalls, 2);
+    assert.equal(reviewed.title, good.title);
+    assert.match(reviewed.validationNotes!.join(" "), /保留/);
+    assert.equal(t.db.prepare("SELECT count(*) n FROM life_ideas").get()!.n, 1);
+  } finally {
+    t.db.close();
+  }
+});
+
+test("充电指导不从零件列表猜接口方位，也不追加未证实的激活例外", () => {
+  const evidence: any = [
+    {
+      id: "e",
+      category: "operation",
+      model: "X",
+      text: "Connect the USB Type-C port with the supplied cable. Right unit has volume buttons.",
+      url: "https://example.org/manual",
+      title: "X manual",
+      start: 0,
+      end: 140,
+    },
+  ];
+  const r = groundedReply(
+    {
+      kind: "grounded",
+      answer: "继续",
+      steps: [
+        {
+          text: "将USB Type-C线缆连接至接口（位于右单元底部）",
+          sourceIds: ["e"],
+        },
+        { text: "首次使用无需激活", sourceIds: ["e"] },
+      ],
+    },
+    evidence,
+    { tried: [] },
+  );
+  assert.equal(r.steps.length, 1);
+  assert.doesNotMatch(r.steps[0].text, /右单元|底部/);
+  assert.match(r.caveat!, /隐藏1条/);
+});
+
+test("明确游戏目标的离线降级不混入喝水/食品等无关配方", async () => {
+  const t = fixture();
+  try {
+    t.add("透明杯", "厨房用品", "", "");
+    t.add("纸笔", "文具", "", "");
+    const r = await planDiscovery(
+      t.db,
+      t.read(),
+      "lin",
+      {
+        goal: "十分钟内玩单人小游戏，不做科学实验",
+        model: false,
+        publicEvidence: false,
+      },
+      undefined as any,
+      t.read,
+    );
+    assert.ok(r.ideas.length > 0);
+    assert.ok(r.ideas.every((i) => !/饮水休息|加餐/.test(i.title)));
   } finally {
     t.db.close();
   }
