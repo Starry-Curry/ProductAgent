@@ -24,7 +24,10 @@ export function discover(
 ): Candidate[] {
   const bound = state.items
     .filter(
-      (i) => canRead(i, actor) && ["在用", "闲置", "待确认"].includes(i.state),
+      (i) =>
+        canRead(i, actor) &&
+        !i.demo &&
+        ["在用", "闲置", "待确认"].includes(i.state),
     )
     .map((item) => ({ item, pack: boundPack(item) }));
   const result: Candidate[] = [];

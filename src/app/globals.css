@@ -1601,3 +1601,67 @@ summary { cursor:pointer; }
 .elder .brand small { font-size:8px; letter-spacing:1.5px; }
 .elder .mobile-nav { backdrop-filter:none; background:#fcfdf9; }
 @media(max-width:800px) { .sidebar .secondary-items { display:none; } }
+
+.assistant-conversation { min-width:0; }
+.conversation-messages { display:grid; gap:14px; margin:18px 0; max-height:680px; overflow-y:auto; }
+.conversation-message { padding:16px 18px; border:1px solid var(--line, #e1e5dc); border-radius:14px; background:#f8faf6; overflow-wrap:anywhere; }
+.conversation-message p { white-space:pre-wrap; }
+.conversation-message.user { background:#eef3ec; margin-left:clamp(0px,4vw,50px); }
+.conversation-message.feedback { background:#fff8e8; }
+.conversation-message li { margin-bottom:12px; }
+.conversation-message .text-button { margin-left:8px; }
+.conversation-feedback { margin:20px 0; padding:16px; border-radius:14px; background:#f8faf6; }
+.conversation-options { margin-bottom:14px; }
+.memory-center { margin-bottom:20px; }
+.memory-center form { margin:18px 0; }
+.elder .conversation-message { font-size:20px; }
+@media(max-width:800px){.conversation-messages{max-height:none}.conversation-message{padding:14px}.conversation-feedback .inline{flex-wrap:wrap}}
+
+/* Keep the guide readable while preserving the original app navigation. */
+.example-questions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+}
+.memory-hint {
+  font-size: 0.9rem;
+}
+.guide-page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+  line-height: 1.8;
+}
+.guide-page .panel {
+  margin: 24px 0;
+}
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.guide-grid .panel {
+  margin: 0;
+  min-width: 0;
+}
+.guide-page li {
+  margin: 10px 0;
+}
+@media (max-width: 680px) {
+  .guide-grid {
+    grid-template-columns: 1fr;
+  }
+  .guide-page {
+    padding: 20px 16px 40px;
+  }
+}
+
+.case-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:16px 0; }
+.case-card { min-width:0; border:1px solid var(--line,#e0e6df); border-radius:14px; padding:18px; background:#fff; }
+.case-card h3 { margin:8px 0; }
+.case-card p { margin:8px 0; }
+.case-card .inline { margin-top:14px; flex-wrap:wrap; }
+.demo-notice { border-left:3px solid #b09061; background:#f5f1e8; padding:14px 18px; border-radius:8px; margin:14px 0; }
+.initial-introduction { margin:14px 0; padding:14px; border:1px solid var(--line,#e0e6df); border-radius:12px; }
+@media(max-width:680px) { .case-grid { grid-template-columns:1fr; } }

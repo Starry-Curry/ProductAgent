@@ -1,3 +1,4 @@
+import { householdProductPacks } from "./catalog/household-products.ts";
 export type ProductPack = {
   id: string;
   product: string;
@@ -11,6 +12,19 @@ export type ProductPack = {
     kind: "official";
   };
   claims: { id: string; text: string }[];
+  /** Optional reviewed procedures. A specification claim never implicitly becomes an operation. */
+  procedures?: {
+    id: string;
+    title: string;
+    goal: string;
+    preconditions: string[];
+    steps: { id: string; text: string; sourceSection: string }[];
+    limits: string[];
+    fieldChecks: string[];
+    sourceUrl: string;
+    model: string;
+    region?: string;
+  }[];
   capabilities?: string[];
   constraints?: {
     indoorOnly?: boolean;
@@ -114,6 +128,8 @@ productPacks.push(
   },
 );
 
+productPacks.push(...householdProductPacks);
+
 export function findPack(id: string) {
   return productPacks.find((p) => p.id === id);
 }
@@ -121,6 +137,13 @@ export function searchProducts(query: string) {
   const q = query.trim().toLowerCase();
   if (!q) return [];
   return productPacks
-    .filter((p) => `${p.product} ${p.model}`.toLowerCase().includes(q))
+    .filter((p) => {
+      const text = `${p.product} ${p.model}`.toLowerCase();
+      const model = p.model.toLowerCase().replace(/[\s_/-]/g, "");
+      return (
+        text.includes(q) ||
+        (model.length >= 4 && q.replace(/[\s_/-]/g, "").includes(model))
+      );
+    })
     .slice(0, 3);
 }

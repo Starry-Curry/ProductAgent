@@ -1,10 +1,11 @@
+import { withDemoRequest } from "@/lib/cloud/request";
 import { actor, read, localOnly, database } from "@/lib/db";
 import { canRead } from "@/lib/domain";
 import { runAssist } from "@/lib/ai/harness";
 import { createProvider } from "@/lib/ai/provider";
 import { saveRun, accessibleRun } from "@/lib/service-store";
 export const runtime = "nodejs";
-export async function POST(r: Request) {
+async function POSTHandler(r: Request) {
   try {
     localOnly(r);
     const a = actor(r);
@@ -107,3 +108,5 @@ export async function POST(r: Request) {
     );
   }
 }
+
+export const POST = withDemoRequest(POSTHandler);

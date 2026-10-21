@@ -1,7 +1,8 @@
+import { withDemoRequest } from "@/lib/cloud/request";
 import { read, localOnly } from "@/lib/db";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export async function GET(
+async function GETHandler(
   r: Request,
   { params }: { params: Promise<{ token: string }> },
 ) {
@@ -27,3 +28,5 @@ export async function GET(
     return Response.json({ error: "当前仅支持本地礼物预览" }, { status: 403 });
   }
 }
+
+export const GET = withDemoRequest(GETHandler);

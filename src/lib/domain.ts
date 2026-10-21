@@ -1,4 +1,6 @@
 import { findPack } from "./products.ts";
+import type { Preparation } from "./life/task-types.ts";
+import { currentPreparation, mutatePreparation } from "./life/task-planning.ts";
 export type Person = "lin" | "dad" | "friend";
 export const people: Record<Person, string> = {
   lin: "小林",
@@ -6,6 +8,19 @@ export const people: Record<Person, string> = {
   friend: "小夏",
 };
 export type Item = {
+  brand?: string;
+  region?: string;
+  lifecycle?: "一次性" | "消耗型" | "可重复使用" | "长期耐用" | "持续养护";
+  attributes?: { material?: string; dimensions?: string; power?: string; care?: string; quantity?: number; quantityUnit?: string; expiresOn?: string; capabilities?: string[] };
+  availability?: "unknown" | "available" | "loaned" | "gifted" | "lost" | "broken" | "consumed";
+  availabilityAt?: string;
+  synthetic?: boolean;
+  demo?: {
+    caseId: string;
+    title: string;
+    summary: string;
+    questions: string[];
+  };
   id: string;
   name: string;
   category: string;
@@ -29,6 +44,12 @@ export type Item = {
   };
 };
 export type Task = {
+  serviceContext?: {
+    sourceSessionId: string;
+    sourceRevision: number;
+    summary: string;
+    attemptedSteps: number;
+  };
   id: string;
   itemId: string;
   title: string;
@@ -41,6 +62,9 @@ export type Task = {
   logs: { by: Person; text: string; at: string }[];
 };
 export type Memory = {
+  giftSnapshot?: boolean;
+  demo?: boolean;
+  sourceSessionId?: string;
   id: string;
   itemId: string;
   author: Person | null;
@@ -84,6 +108,7 @@ export type Care = {
   recipient: Person;
 };
 export type Plan = {
+  preparation?: Preparation;
   id: string;
   actor: Person;
   goal: string;
@@ -286,7 +311,11 @@ export function visible(s: State, a: Person) {
   return {
     ...s,
     contexts: (s.contexts || []).filter((c) => c.owner === a),
-    plans: (s.plans || []).filter((p) => p.actor === a),
+    plans: (s.plans || [])
+      .filter((p) => p.actor === a)
+      .map((p) =>
+        p.preparation ? { ...p, preparation: currentPreparation(s, a, p) } : p,
+      ),
     items,
     tasks: s.tasks.filter(
       (t) =>
@@ -358,6 +387,10 @@ export function mutate(
       icon: "box",
       note: str(p.note),
       source: "用户录入",
+      brand: str(p.brand, 80),
+      region: str(p.region,20) || undefined,
+      lifecycle: ["一次性", "消耗型", "可重复使用", "长期耐用", "持续养护"].includes(p.lifecycle) ? p.lifecycle : "长期耐用",
+      availability: "unknown",
       photo:
         typeof p.photo === "string" &&
         /^data:image\/(png|jpeg|webp);base64,/.test(p.photo) &&
@@ -401,15 +434,37 @@ export function mutate(
       item.supportUrl = value || undefined;
     }
     if (
-      typeof p.model === "string" &&
+      (typeof p.brand === "string" && str(p.brand,80) !== (item.brand || "")) ||
+      (typeof p.region === "string" && str(p.region,20) !== (item.region || "")) ||
+      (typeof p.model === "string" &&
       str(p.model) &&
-      str(p.model) !== item.model
+      str(p.model) !== item.model)
     )
       delete item.productBinding;
     for (const k of ["name", "location", "model", "note", "state"] as const) {
       if (typeof p[k] === "string" && str(p[k])) item[k] = str(p[k]);
     }
     if (typeof p.shared === "boolean") item.shared = p.shared;
+    if (typeof p.brand === "string") item.brand = str(p.brand, 80);
+    if (typeof p.region === "string") item.region = str(p.region,20) || undefined;
+    if (["一次性", "消耗型", "可重复使用", "长期耐用", "持续养护"].includes(p.lifecycle)) item.lifecycle = p.lifecycle;
+    if (["unknown", "available", "loaned", "gifted", "lost", "broken", "consumed"].includes(p.availability)) {
+      item.availability = p.availability;
+      item.availabilityAt = now();
+      item.state = ({ unknown: "待确认", available: "在用", loaned: "借出", gifted: "已赠送", lost: "丢失", broken: "损坏", consumed: "用尽" } as Record<string,string>)[p.availability];
+    }
+    if (p.attributes && typeof p.attributes === "object") {
+      const v = {...item.attributes,...p.attributes};
+      if(v.quantity !== undefined && v.quantity !== null && (!Number.isFinite(v.quantity) || v.quantity < 0 || v.quantity > 100000)) fail("数量必须为0到100000之间的数值");
+      if(v.expiresOn && (!/^\d{4}-\d{2}-\d{2}$/.test(v.expiresOn) || !Number.isFinite(Date.parse(v.expiresOn)) || new Date(v.expiresOn).toISOString().slice(0,10) !== v.expiresOn)) fail("有效期需要真实的年月日");
+      item.attributes = {
+        material: str(v.material, 100), dimensions: str(v.dimensions, 100), power: str(v.power, 100), care: str(v.care, 500),
+        quantityUnit: str(v.quantityUnit, 20) || undefined,
+        quantity: Number.isFinite(v.quantity) && v.quantity >= 0 ? Math.min(v.quantity, 100000) : undefined,
+        expiresOn: /^\d{4}-\d{2}-\d{2}$/.test(v.expiresOn || "") ? v.expiresOn : undefined,
+        capabilities: Array.isArray(v.capabilities) ? v.capabilities.filter((x: unknown) => typeof x === "string").map((x: string) => str(x, 60)).slice(0, 20) : [],
+      };
+    }
   } else if (action === "memory") {
     get(p.itemId);
     const text = str(p.text);
@@ -422,6 +477,8 @@ export function mutate(
       at: now(),
       shared: false,
     });
+  } else if (action === "saveTaskPlan" || action === "setPreparationStep") {
+    return mutatePreparation(s, a, action, p);
   } else if (action === "savePlan") {
     const goal = str(p.goal, 150);
     if (!goal) fail("请填写目标");
@@ -630,6 +687,7 @@ export function mutate(
         m.shared = false;
       });
     item!.owner = a;
+    item!.availability = "unknown";
     item!.shared = false;
     item!.location = "待接收者更新";
     item!.note = "";

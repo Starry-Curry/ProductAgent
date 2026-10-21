@@ -1,25 +1,98 @@
-# Git协作流程
+# 贡献指南
 
-统一在本仓库开发。main为团队集成主线；每项工作从main建立功能分支，经PR审查后合并。
+感谢你愿意改进物间。这个项目同时涉及 Agent、隐私、家庭权限和现实世界行动，因此“看起来能回答”不等于实现正确。
 
-```powershell
-git switch main
-git pull --ff-only
-git switch -c feat/item-recognition
-# 修改、验证并更新文档
-git add src tests docs
-git commit -m "feat: add confirmed recognition candidates"
-git push -u origin feat/item-recognition
+## 开发环境
+
+- Node.js 24.x
+- npm 10+
+- Microsoft Edge 仅用于部分浏览器验收，不是运行应用的必需项
+- 默认不配置真实模型 Key
+
+```bash
+git clone https://github.com/Starry-Curry/ProductAgent.git
+cd ProductAgent
+npm ci
+npm run dev
 ```
 
-未提交改动先提交或妥善保存再切分支。不要force push覆盖队友。
+## 分支与提交
 
-- 分支：feat/...、fix/...、docs/...、chore/...。
-- 提交：feat:、fix:、docs:、test:、chore:，说明一个完整变化。
-- PR说明实际变化、测试、已知限制及迁移影响。离线替身不能算真实模型成功。
-- 在已验收提交建立版本标签，标签不移动；通过GitHub Releases分发ZIP，模型/运行时另行管理。
-- 不再用“最新/最终版2/某人版本”文件夹作为开发主线。
+- `main` 保持可构建、可测试；
+- 功能分支使用 `feat/...`、`fix/...`、`docs/...` 或 `chore/...`；
+- 提交信息建议使用 `feat:`、`fix:`、`test:`、`docs:`、`refactor:`；
+- 一个提交尽量表达一个完整变化；
+- 不移动已经发布的版本标签，不擅自重写共享历史。
 
-Node24、npm ci；CI运行离线测试、类型检查、基准及构建。集成测试用独立数据库；真实模型请求需要当前任务授权。提交前检查git status、git diff --cached --stat，不提交凭证、私人材料或运行产物。
+## 修改前
 
-原交付没有.git。f058488与118e295是来源记录，不是本仓库恢复出的历史；此后以当前仓库真实commit/PR为准。来源见docs/engineering/import-provenance.json。
+1. 先确认当前行为在代码和测试中的真实状态。
+2. 区分产品目标、历史记录和已实现能力。
+3. 涉及权限、记忆、分享或模型费用时，说明威胁模型和回滚方式。
+4. 不要从旧版工作区读取或合并数据库。
+5. 不要读取、打印或提交任何 Key、Token、私人照片和真实家庭数据。
+
+## 验证
+
+提交前至少运行：
+
+```bash
+npm run typecheck
+npm test
+npm run build
+```
+
+涉及 Agent 协议、资料引用或 UI 主路径时，还应运行相应集成验收：
+
+```bash
+npm run test:life
+npm run test:task-planning
+npm run test:care
+```
+
+浏览器验收依赖已构建应用、Microsoft Edge 和隔离数据目录。
+
+真实模型调用必须由当前任务明确授权。CI 与默认测试必须使用模型替身，不能依赖公开网络。
+
+## 测试要求
+
+- 新规则需要覆盖成功、拒绝和授权变化路径；
+- 修复 bug 时优先增加能复现问题的回归测试；
+- 模型输出测试要区分 provider 原始结果、结构修复和最终业务校验；
+- 不得把 HTTP 200、合法 JSON 或引用 ID 当作语义正确的充分条件；
+- 涉及 SQLite 迁移时验证重复执行、备份和失败回滚；
+- 涉及公开访客时验证跨访客隔离、配额和费用关闭。
+
+## 数据与素材
+
+- 合成内容必须显式标记；
+- 演示图片需要记录来源、许可和用途；
+- 新增 AI 生成图片时保留生成说明，并明确它不是型号实拍或资料证据；
+- 私人数据、数据库、上传媒体、运行日志、构建缓存和依赖目录不得提交；
+- 新增第三方依赖时更新 `THIRD_PARTY_NOTICES.md`，保持 lockfile 可复现。
+
+## 代码风格
+
+- TypeScript 保持严格模式；
+- 优先在领域服务中执行业务规则，不把权限判断散落在 UI；
+- Route Handler 只负责解析、调用和响应映射；
+- 外部文本一律视为数据，不作为系统指令执行；
+- 网络 I/O 后重新检查授权和版本，避免状态漂移；
+- 错误信息向用户说明下一步，同时在内部保留可诊断错误码。
+
+## Pull Request
+
+PR 描述应包含：
+
+- 用户问题与改动范围；
+- 主要实现和设计取舍；
+- 实际运行的检查；
+- 未运行的检查与原因；
+- 对数据迁移、隐私、权限、费用或部署的影响；
+- 截图或演示步骤（涉及 UI 时）。
+
+提交即表示你确认没有在变更中引入真实密钥、私人数据或无权分发的素材。
+
+## 安全问题
+
+不要在公开 Issue 或 PR 中披露未修复漏洞。请按 [SECURITY.md](SECURITY.md) 的方式报告。

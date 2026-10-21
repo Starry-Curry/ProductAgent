@@ -1,8 +1,9 @@
+import { withDemoRequest } from "@/lib/cloud/request";
 import { actor, read, localOnly } from "@/lib/db";
 import { discover } from "@/lib/discovery";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export async function GET(r: Request) {
+async function GETHandler(r: Request) {
   try {
     localOnly(r);
     const a = actor(r);
@@ -28,3 +29,5 @@ export async function GET(r: Request) {
     return Response.json({ error: (e as Error).message }, { status: 400 });
   }
 }
+
+export const GET = withDemoRequest(GETHandler);

@@ -1,0 +1,24 @@
+{
+  "source_zip": "物间-Windows体验包-20261021.zip",
+  "source_commit": "e14b6978f3e50c9513dd5c83040d0c2d1dda8574",
+  "source_files": 239,
+  "unchanged_source_files": 237,
+  "changed_source_files": [
+    "scripts/docker-entrypoint.sh",
+    "src/lib/cloud/runtime.ts"
+  ],
+  "new_files": [
+    ".dockerignore",
+    "Dockerfile",
+    "README.md",
+    "ms_deploy.json",
+    "创空间变量模板.txt",
+    "部署说明.md"
+  ],
+  "checks": {
+    "source_sha256_comparison": "passed",
+    "archive_excludes_windows_node_archives": true,
+    "docker_runtime_execution": "NOT TESTED - docker unavailable",
+    "npm_ci_and_build": "NOT TESTED - external NPM unavailable"
+  }
+}

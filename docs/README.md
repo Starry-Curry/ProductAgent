@@ -1,24 +1,35 @@
-# 文档索引与优先级
+# 文档索引
 
-1. [根README](../README.md)：当前启动和目录。
-2. [实现状态](../IMPLEMENTATION_STATUS.md)、[工程交接](../REVIEW_HANDOFF.md)：当前事实与限制。
-3. [产品说明书V1.1](物品智能服务_完整产品说明书_V1.1_交付版.md)：最新产品共识，包含待实现目标。
-4. [完整技术任务书](engineering/物间2.0_产品技术全维审查与Codex深化任务书_V1.0.md)、[后续开发主提示](collaboration/Wujian-Friend-Codex-Master-Prompt.md)：后续研发要求。
-5. [协作流程](../CONTRIBUTING.md)：分支、提交、PR和发布。
+README 负责快速运行，以下文档分别回答产品、工程、演示和部署问题。
 
-## 当前来源与证据
+## 推荐阅读顺序
 
-- [仓库迁移记录](engineering/repository-migration-2026-10-17.md)
-- [逐文件导入摘要](engineering/import-provenance.json)
-- [交付方本轮验证](../review-evidence/VALIDATION.md)
-- [第一批深化契约和回滚](engineering/第一批深化_契约验收与回滚.md)
-- [原开发报告](archive/import-2026-10-17/DEVELOPMENT_REPORT.md)、[原工程交接](archive/import-2026-10-17/REVIEW_HANDOFF.md)
-- [配套交接包原说明](collaboration/START_HERE.md)：其中ZIP交付指引是历史上下文，现在代码统一使用本仓库。
+| 顺序 | 文档 | 适合谁 |
+| --- | --- | --- |
+| 1 | [根 README](../README.md) | 第一次访问仓库、准备运行的人 |
+| 2 | [产品方案](PRODUCT.md) | 评审、产品、设计与潜在用户 |
+| 3 | [演示指南](DEMO_GUIDE.md) | 需要现场讲解或复现体验的人 |
+| 4 | [技术架构](ARCHITECTURE.md) | 工程、算法与安全评审 |
+| 5 | [部署说明](DEPLOYMENT.md) | 本地容器或公开演示维护者 |
+| 6 | [验证记录](VALIDATION.md) | 需要判断完成度和风险边界的人 |
 
-## 历史资料
+## 工程与协作
 
-[pre-repository](archive/pre-repository/)保存早期商业讨论、赛道说明、LocalFlow交接和10月16日旧物间评审。它们不覆盖V1.1和本次源码。
+- [贡献指南](../CONTRIBUTING.md)
+- [安全策略](../SECURITY.md)
+- [变更记录](../CHANGELOG.md)
+- [第三方组件与素材](../THIRD_PARTY_NOTICES.md)
+- [最终验收 JSON](validation/final-validation-2026-10-21.json)
+- [部署核验 JSON](validation/deployment-check-2026-10-21.json)
 
-旧评审中“没有显式偏好/只有两款鼠标资料”是10月16日旧包事实；10月17日已增加Context、商品资料、Trace和校验，应按当前代码核对。LocalFlow的本地9B/Skill能力也不能直接算成本项目已经接入。
+## 证据原则
 
-review-evidence的截图、样例和输出按交付方说明标注为合成/离线或历史验证，本次新复验另记迁移记录，避免混用。
+仓库会显式区分以下来源：
+
+1. **预置演示内容**：为了让新访客看到完整体验而写入的合成数据。
+2. **本地规则或资料检索**：可以离线执行，但不等于在线模型能力。
+3. **模型生成内容**：来自已配置模型，仍需通过结构、证据和行动条件校验。
+4. **真实验收记录**：有日期、环境、请求结果和剩余限制。
+5. **产品构想**：尚未由当前代码实现的能力，只在路线图中出现。
+
+演示图片、合成故事和 AI 生成类别图都不代表用户的真实物品、真实经历或型号实拍。

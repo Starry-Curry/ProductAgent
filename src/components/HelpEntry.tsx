@@ -50,6 +50,32 @@ export function HelpEntry({
             placeholder="例如：电饭煲怎么预约煮饭？"
           />
         </label>
+        <div className="example-questions">
+          <span>不确定怎么开始？先填一个示例：</span>
+          <button
+            type="button"
+            className="text-button"
+            onClick={() => {
+              setItemId("");
+              setQuestion("Windows 11 双击速度怎么调");
+            }}
+          >
+            试试分步帮助
+          </button>
+          <button
+            type="button"
+            className="text-button"
+            onClick={() => {
+              setItemId("");
+              setQuestion("怎样把整理桌面拆成十分钟的小任务？");
+            }}
+          >
+            试试 AI 一般帮助
+          </button>
+        </div>
+        <small>
+          示例只填入问题，点击“帮我解决”后才发送。分步帮助可离线体验，一般帮助需要已配置模型。
+        </small>
         <button className="button">帮我解决</button>
         <small>回答不了时，可以继续找家人或联系售后。</small>
       </form>

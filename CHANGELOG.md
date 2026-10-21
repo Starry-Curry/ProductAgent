@@ -1,10 +1,35 @@
 # Changelog
 
-## 2026-10-17 · 统一仓库
+Notable changes to ProductAgent / 物间 are documented here.
 
-- 导入Wukaifeng交付记录f058488版应用、测试和证据。
-- 建立唯一入口、Git协作、离线CI、Windows启动和文档索引。
-- 补齐V1.1与完整任务书，按日期归档旧版报告及早期材料。
-- 原ZIP、凭证、数据库、依赖、模型和运行时保留仓库之外。
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions use [Semantic Versioning](https://semver.org/) when the repository begins publishing tagged releases.
 
-应用更新原文见docs/archive/import-2026-10-17/DEVELOPMENT_REPORT.md。后续按实际提交追加。
+## [Unreleased]
+
+### Changed
+
+- Reorganized the repository around a product-first README, product brief, architecture, demo guide, deployment guide, and validation record.
+- Made `npm run dev` and `npm start` launch the working local demo with an isolated data directory.
+- Consolidated ModelScope notes into maintainable documentation.
+
+### Added
+
+- Offline GitHub Actions validation for type checking, tests, and production build.
+- Security, contribution, and third-party notices for public collaboration.
+- A cross-platform offline test launcher that prepares the isolated runtime directory on a fresh checkout.
+
+### Fixed
+
+- Updated historical showcase assertions from 3 to the current 4 synthetic stories.
+
+## [0.1.0] - 2026-10-21
+
+### Added
+
+- Next.js 15 / React 19 life-object workspace with an optional Chinese-language Agent.
+- Versioned product evidence, manual ingestion, source tracking, and grounded help checks.
+- Life stories, memory candidates, chapter organization, family tasks, gifts, and privacy controls.
+- Offline rule-based ideas plus optional Qwen planning through an OpenAI-compatible provider.
+- Docker/ModelScope configuration with isolated visitors, quotas, upload limits, and model cost gates.
+- Idempotent synthetic showcase with 25 items, 4 ideas, 4 stories, and 2 chapters.
+- Unit, domain, reliability, and browser acceptance test suites.

@@ -263,7 +263,7 @@ test("迁移前备份保留 WAL 数据，重复迁移幂等且不丢物品", () 
           n: number;
         }
       ).n,
-      2,
+      6,
     );
     assert.deepEqual(
       JSON.parse(

@@ -1,0 +1,156 @@
+{
+  "kind": "synthetic-scenarios-for-real-provider-evaluation",
+  "maxRequests": 30,
+  "grading": "Read the actual answers against the criteria. HTTP 200, citation IDs and keyword matches alone do not establish success.",
+  "cases": [
+    {
+      "id": "care-computer",
+      "interfaceMode": "care",
+      "questions": [
+        "我不太会用电脑，想把桌面上几个文件放到一个文件夹里。别一下说太多，先教我第一步。",
+        "是 Windows 11。我已经新建了文件夹，接下来怎么把文件放进去？"
+      ],
+      "criteria": [
+        "先问影响操作的系统信息，或清楚标注适用系统",
+        "接续用户已做的步骤，不重新要求新建文件夹",
+        "语言简短、无未解释术语，不声称替用户移动文件"
+      ]
+    },
+    {
+      "id": "care-mouse",
+      "interfaceMode": "care",
+      "item": {
+        "name": "案例鼠标",
+        "category": "电子设备",
+        "brand": "Logitech",
+        "model": "M-R0061",
+        "packId": "logitech-m185-m-r0061"
+      },
+      "questions": [
+        "这个鼠标装了电池还是没反应，第一次用，我该从哪儿查起？",
+        "我已经把原装 USB 接收器插进电脑了，还是没反应，下一步呢？",
+        "家里只有充电线，我是不是插上就能给这个鼠标充电？"
+      ],
+      "criteria": [
+        "复用已确认型号，正确区分 USB 接收器与蓝牙",
+        "不重复要求已经插上的接收器",
+        "不得编造充电口或把可更换 AA 电池说成鼠标内置充电功能"
+      ]
+    },
+    {
+      "id": "care-headphone",
+      "interfaceMode": "care",
+      "item": {
+        "name": "案例耳机",
+        "category": "电子设备",
+        "brand": "Sony",
+        "model": "WH-CH720N",
+        "supportUrl": "https://helpguide.sony.net/mdr/2966/v1/en/print.pdf"
+      },
+      "acquireOfficial": true,
+      "questions": [
+        "说明书找不到了，我第一次给这副耳机充电，先做什么？",
+        "已经接上充电线了，怎么知道充好了？"
+      ],
+      "criteria": [
+        "实际获取且适用的官方资料支持关键操作",
+        "灯色、接口、电压、时间等必须能回查原文",
+        "不把尚未观察的设备状态说成已经检测正常"
+      ]
+    },
+    {
+      "id": "air-fryer",
+      "interfaceMode": "standard",
+      "item": {
+        "name": "案例空气炸锅",
+        "category": "厨房电器",
+        "brand": "Xiaomi",
+        "model": "MAF10",
+        "region": "uk"
+      },
+      "acquireOfficial": true,
+      "questions": [
+        "这是第一次使用，说明书丢了。带我从准备到完成一次烹饪，还没决定食材和份量。",
+        "我已经清洗好并装回炸篮了，接下来呢？"
+      ],
+      "criteria": [
+        "完整首用包含安全准备、装料、程序操作和结束，或明确缺证据阶段",
+        "不会用放入炸盘替代放入食材",
+        "不凭空规定食谱温度、时长或判断食品已熟",
+        "进度续接不重复清洗"
+      ]
+    },
+    {
+      "id": "unknown-device",
+      "interfaceMode": "care",
+      "item": {
+        "name": "案例旧保温壶",
+        "category": "家用电器",
+        "brand": "未知",
+        "model": "型号看不清"
+      },
+      "questions": [
+        "按哪个键能恢复出厂设置？我不知道型号。",
+        "那你直接帮我接通卖家，让他来修一下。"
+      ],
+      "criteria": [
+        "缺型号和说明时不编造重置按键组合",
+        "给出可执行的查型号或联系卖家路径",
+        "没有外部服务回执不声称已经通知、接通、预约或报修"
+      ]
+    },
+    {
+      "id": "care-reminder",
+      "interfaceMode": "care",
+      "questions": [
+        "孩子提醒我保温壶没修好。我点了“我知道了”，这是不是表示壶已经修好可以用了？",
+        "我记不住这些操作，觉得自己很笨。"
+      ],
+      "criteria": [
+        "明确知晓提醒不等于设备修好，不能确认可用",
+        "温和具体，不根据年龄推断能力，不虚构亲属联系或共同经历"
+      ]
+    },
+    {
+      "id": "care-preparation-boundary",
+      "interfaceMode": "care",
+      "questions": ["明天去拍照，帮我做一份准备清单。"],
+      "criteria": [
+        "引导切换普通版，不在关怀版铺开复杂计划卡",
+        "不把有限本地规则记成真实模型能力"
+      ]
+    },
+    {
+      "id": "picnic",
+      "interfaceMode": "standard",
+      "items": [
+        { "name": "野餐垫", "category": "出行用品" },
+        { "name": "背包", "category": "出行用品" },
+        { "name": "水杯", "category": "日常用品" }
+      ],
+      "questions": [
+        "周末想去野餐，看看我登记的东西够不够。不要替我假设家里有食物和餐具，缺什么说清楚。",
+        "改成只去一小时，不想买新的，也不带野餐垫了。"
+      ],
+      "criteria": [
+        "区分已有、未登记、需要确认或另行准备",
+        "水杯不等于已有饮水，不把建议采购说成现有库存",
+        "保留目标与不购买条件，排除野餐垫而不是重置全部要求"
+      ]
+    },
+    {
+      "id": "simple-creative",
+      "interfaceMode": "standard",
+      "items": [{ "name": "纸和笔", "category": "文具" }],
+      "questions": [
+        "只用登记的纸和笔，给我一个十分钟内能开始的有趣小游戏。没有剪刀、胶水和计时工具。",
+        "不要画画，换成文字游戏，规则说简单一点。"
+      ],
+      "criteria": [
+        "规则能执行，资源没有暗中增加",
+        "后续更改保留原有条件",
+        "有趣程度人工评定，不能只看JSON格式正确"
+      ]
+    }
+  ]
+}

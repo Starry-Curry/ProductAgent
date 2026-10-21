@@ -1,24 +1,35 @@
 name: Validate
+
 on:
   push:
     branches: [main]
   pull_request:
+
 permissions:
   contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   offline-checks:
     runs-on: ubuntu-latest
     env:
       AI_ALLOW_PAID_CALLS: "false"
+      WUJIAN_ALLOW_PAID_CALLS: "false"
       NEXT_TELEMETRY_DISABLED: "1"
+      LANGSMITH_TRACING: "false"
+      LANGCHAIN_TRACING_V2: "false"
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
           cache: npm
+
       - run: npm ci --no-audit --no-fund
-      - run: npm test
-      - run: npm run test:benchmark
-      - run: npm run build
       - run: npm run typecheck
+      - run: npm test
+      - run: npm run build

@@ -90,3 +90,8 @@ mkdirSync("artifacts", { recursive: true });
 writeFileSync("artifacts/benchmark.json", JSON.stringify(report, null, 2));
 writeFileSync("artifacts/trace.json", JSON.stringify(replay.run, null, 2));
 console.log(JSON.stringify(report, null, 2));
+
+// New runtime contracts and reviewed procedure coverage are independently gated.
+const { foundationBenchmark } = await import("./foundation-benchmark.ts");
+await foundationBenchmark();
+if (report.hardenedUnsafeAccepted) throw Error("Legacy unsafe regression");

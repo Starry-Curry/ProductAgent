@@ -1,6 +1,7 @@
+import { withDemoRequest } from "@/lib/cloud/request";
 import { localOnly } from "@/lib/db";
 import { searchProducts } from "@/lib/products";
-export async function GET(r: Request) {
+async function GETHandler(r: Request) {
   try {
     localOnly(r);
     const q = (new URL(r.url).searchParams.get("q") || "").slice(0, 100);
@@ -13,3 +14,5 @@ export async function GET(r: Request) {
     return Response.json({ error: "仅供本地访问" }, { status: 403 });
   }
 }
+
+export const GET = withDemoRequest(GETHandler);

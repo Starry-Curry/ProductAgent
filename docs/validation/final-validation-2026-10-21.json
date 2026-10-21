@@ -1,0 +1,391 @@
+{
+  "version": "modelscope-final-20261021-1",
+  "syntheticOnly": true,
+  "productionBuild": true,
+  "keyConfigured": true,
+  "checks": [
+    "No invitation; fresh isolated visitors; automatic 25/4/4/2 showcase; repeat initialization idempotent; fictional stories excluded from recall/cloud",
+    "Visitor A new story not visible to visitor B; refresh keeps independent data",
+    "Real installed Edge: no-code entry, 25 item cards, 4 labeled creative cards, 4 stories, chapters, refresh, care mode"
+  ],
+  "real": [
+    {
+      "name": "product-help",
+      "model": "qwen-plus",
+      "elapsedMs": 9373,
+      "tokens": {
+        "input": 2637,
+        "output": 368
+      },
+      "reply": {
+        "outcome": "answered",
+        "answer": "电源为一节可更换 AA 电池。\n使用 2.4GHz 非 Unifying 无线连接；此版本列出的 USB 接收器型号为 C-U0010。",
+        "source": "model-with-evidence",
+        "steps": [],
+        "questions": [],
+        "evidenceIds": [
+          "M-R0061:battery",
+          "M-R0061:connection"
+        ],
+        "citations": [
+          {
+            "id": "logitech-m185-m-r0061",
+            "title": "Logitech M185 Technical Specifications",
+            "url": "https://support.logi.com/hc/en-za/articles/360023302074-M185-Technical-Specifications",
+            "kind": "official",
+            "section": "M-R0061 / Mouse Specifications & Receiver Specifications"
+          }
+        ],
+        "memoryIds": [],
+        "caveat": "请核对鼠标底部 M/N；M185 系列名不足以确定硬件版本。 本资料包只有规格摘编，不含配对、更换电池或维修操作教程。 列出原配接收器不代表任意同型号接收器都能直接使用；兼容与配对需另行核实。",
+        "model": "qwen-plus",
+        "route": {
+          "itemId": "life-sample-0",
+          "itemName": "无线鼠标",
+          "intent": "help",
+          "mode": "service",
+          "reason": "核对适用资料与使用条件"
+        }
+      },
+      "modelCalls": 1
+    },
+    {
+      "name": "open-creative",
+      "model": "qwen-plus",
+      "elapsedMs": 11792,
+      "tokens": null,
+      "ideas": [
+        {
+          "title": "三重凝视：同一场景的相机-速写双轨视角挑战",
+          "itemIds": [
+            "life-sample-13",
+            "life-sample-15",
+            "life-sample-12"
+          ],
+          "minutes": 20,
+          "steps": [
+            "取出速写本第1页，用铅笔快速勾勒当前场景整体轮廓（不涂色、不修改），标注‘视角A：站姿平视’，耗时约4分钟。",
+            "背起旅行背包，走到场景左侧3步外，用散步相机拍下第一张照片；回放确认构图后，在速写本第2页写下‘视角B：左偏移+背包高度’，耗时约5分钟。",
+            "放下背包，蹲下至膝盖高度，用散步相机拍第二张；在速写本第3页画简笔示意线标出视线高度，写‘视角C：低机位’，耗时约5分钟。",
+            "最后站立原位，用散步相机拍第三张（完成三次拍照）；合上速写本，将背包扣好——挑战结束，三张照片+三页手记即成果。"
+          ],
+          "limits": [
+            "无计时设备，以动作完成为节点；不打印、不导出、不联网；速写本仅用3页，铅笔不削尖也不换芯；背包仅用于调节高度与移动标记，不装填额外物品"
+          ],
+          "rationale": "全程依赖三件已有物品的物理交互：相机执行三次明确拍摄动作，速写本记录对应视角特征，背包作为可移动高度参照物和动作触发器。每步产出可查验结果（一页手记/一张照片），无需外部工具或材料，20分钟内可自然完成三次拍照闭环。",
+          "missing": [
+            "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+          ],
+          "factIds": [],
+          "experienceIds": [],
+          "creativeEvidenceIds": [],
+          "direction": "创作",
+          "requirements": [
+            {
+              "itemId": "life-sample-13",
+              "quantity": 1,
+              "unit": "台"
+            },
+            {
+              "itemId": "life-sample-15",
+              "quantity": 1,
+              "unit": "套"
+            },
+            {
+              "itemId": "life-sample-12",
+              "quantity": 1,
+              "unit": "个"
+            }
+          ],
+          "resourceAudit": {
+            "owned": [
+              "life-sample-12",
+              "life-sample-13",
+              "life-sample-15"
+            ],
+            "environment": [],
+            "unconfirmed": [],
+            "additional": [],
+            "unsupported": [],
+            "fieldVerification": []
+          },
+          "id": "0caa4fe0-c775-437c-b0a5-94d5703204d0",
+          "source": "model-creative",
+          "experienceSources": [],
+          "evidence": [],
+          "creativeEvidenceSources": [],
+          "tested": false,
+          "goal": "只用相机、背包和速写本与铅笔，安排20分钟的同一场景三种视角创作，不打印、不用电脑、不买材料，以完成三次拍照结束，不依赖计时设备。"
+        }
+      ],
+      "source": "model-creative",
+      "modelCalls": 1
+    }
+  ],
+  "blockers": [
+    "No Docker/Linux or public HTTPS/ModelScope volume verification in this environment",
+    "Creative backpack-height wording still needs user judgment; model creativity is not real-world verification",
+    "No broad online regression or full item first-use evaluation performed within emergency delivery"
+  ],
+  "counts": {
+    "items": 25,
+    "ideas": 4,
+    "stories": 4,
+    "chapters": 2
+  },
+  "modelRequests": [
+    {
+      "status": "timeout",
+      "reserved": 7636,
+      "at": 1792595687559
+    },
+    {
+      "status": "200",
+      "reserved": 13132,
+      "at": 1792595850761
+    },
+    {
+      "status": "200",
+      "reserved": 7636,
+      "at": 1792595857656
+    },
+    {
+      "status": "200",
+      "reserved": 13132,
+      "at": 1792596531826
+    },
+    {
+      "status": "200",
+      "reserved": 7636,
+      "at": 1792596541294
+    }
+  ],
+  "paidCalls": 5,
+  "history": {
+    "first": {
+      "version": "modelscope-final-20261021-1",
+      "syntheticOnly": true,
+      "productionBuild": true,
+      "keyConfigured": true,
+      "checks": [
+        "No invitation; fresh isolated visitors; automatic 25/4/4/2 showcase; repeat initialization idempotent; fictional stories excluded from recall/cloud",
+        "Visitor A new story not visible to visitor B; refresh keeps independent data",
+        "Real installed Edge: no-code entry, 25 item cards, 4 labeled creative cards, 4 stories, chapters, refresh, care mode"
+      ],
+      "real": [
+        {
+          "name": "product-help",
+          "elapsedMs": 114,
+          "reply": {
+            "outcome": "answered",
+            "answer": "电源为一节可更换 AA 电池。\n使用 2.4GHz 非 Unifying 无线连接；此版本列出的 USB 接收器型号为 C-U0010。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "evidenceIds": [
+              "M-R0061:battery",
+              "M-R0061:connection"
+            ],
+            "citations": [
+              {
+                "id": "logitech-m185-m-r0061",
+                "title": "Logitech M185 Technical Specifications",
+                "url": "https://support.logi.com/hc/en-za/articles/360023302074-M185-Technical-Specifications",
+                "section": "M-R0061 / Mouse Specifications & Receiver Specifications",
+                "kind": "official"
+              }
+            ],
+            "memoryIds": [],
+            "caveat": "请核对鼠标底部 M/N；M185 系列名不足以确定硬件版本。 本资料包只有规格摘编，不含配对、更换电池或维修操作教程。 列出原配接收器不代表任意同型号接收器都能直接使用；兼容与配对需另行核实。",
+            "route": {
+              "itemId": "life-sample-0",
+              "itemName": "无线鼠标",
+              "intent": "help",
+              "mode": "service",
+              "reason": "核对适用资料与使用条件"
+            }
+          },
+          "modelCalls": 0
+        },
+        {
+          "name": "open-creative",
+          "elapsedMs": 10746,
+          "error": "/api/life 502 {\"code\":\"timeout\",\"error\":\"模型请求超时，请稍后重试。\"}"
+        }
+      ],
+      "blockers": [],
+      "counts": {
+        "items": 25,
+        "ideas": 4,
+        "stories": 4,
+        "chapters": 2
+      },
+      "modelRequests": [
+        {
+          "status": "timeout",
+          "reserved": 7636,
+          "at": 1792595687559
+        }
+      ],
+      "paidCalls": 1
+    },
+    "beforeFix": {
+      "version": "modelscope-final-20261021-1",
+      "syntheticOnly": true,
+      "productionBuild": true,
+      "keyConfigured": true,
+      "checks": [
+        "No invitation; fresh isolated visitors; automatic 25/4/4/2 showcase; repeat initialization idempotent; fictional stories excluded from recall/cloud",
+        "Visitor A new story not visible to visitor B; refresh keeps independent data",
+        "Real installed Edge: no-code entry, 25 item cards, 4 labeled creative cards, 4 stories, chapters, refresh, care mode"
+      ],
+      "real": [
+        {
+          "name": "product-help",
+          "model": "qwen-plus",
+          "elapsedMs": 6916,
+          "tokens": {
+            "input": 2637,
+            "output": 268
+          },
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "已保留档案中的型号。本轮回答未通过资料核对，不能给出可靠的专属操作；可补充对应官方资料或描述当前卡住的现象，不必重新提供已确认型号。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "evidenceIds": [],
+            "citations": [],
+            "memoryIds": [],
+            "errorCode": "validation_failed",
+            "route": {
+              "itemId": "life-sample-0",
+              "itemName": "无线鼠标",
+              "intent": "help",
+              "mode": "service",
+              "reason": "核对适用资料与使用条件"
+            }
+          },
+          "modelCalls": 1
+        },
+        {
+          "name": "open-creative",
+          "model": "qwen-plus",
+          "elapsedMs": 12462,
+          "tokens": null,
+          "ideas": [
+            {
+              "title": "三重凝视：同一场景的相机-速写双轨视角挑战",
+              "itemIds": [
+                "life-sample-13",
+                "life-sample-15",
+                "life-sample-12"
+              ],
+              "minutes": 20,
+              "steps": [
+                "取出速写本第1页，用铅笔快速勾勒当前场景整体轮廓（不涂色、不修改），标注‘视角A：站姿平视’，耗时约4分钟。",
+                "背上背包调整肩带，以背包为身体延伸点，蹲低至背包顶齐腰高度，用相机拍下视角B——低角度仰视构图，立即回放确认取景，耗时约5分钟。",
+                "将速写本翻至第2页，仅用铅笔点描当前场景中3个动态细节（如摇晃枝条、行人脚步、云影移动），旁注‘视角C：局部呼吸感’，耗时约6分钟。",
+                "最后用相机对准速写本第1页与第2页并排翻开的画面，拍下含手绘+文字的复合影像，作为三次视角的物理锚点，结束挑战。"
+              ],
+              "limits": [
+                "无打印、无电脑、无新增材料；相机仅用于拍摄（含回放核验）；速写本限用2页；背包仅作身高参照与携带载体，不拆包、不装填额外物"
+              ],
+              "rationale": "三视角通过身体姿态（站/蹲/专注手部）自然区分，无需计时器：每步有明确产出（轮廓页/仰视照/点描页/复合照），四步动作闭环且全部依赖已有物品。速写本与相机形成互文记录，背包提供唯一可复现的高度基准，全程可纸面追溯，成果为3张数码照片+2页手稿。",
+              "missing": [
+                "相机是否支持回放未核验；速写本页数未登记；背包具体尺寸未知",
+                "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+              ],
+              "factIds": [],
+              "experienceIds": [],
+              "creativeEvidenceIds": [],
+              "direction": "创作",
+              "requirements": [
+                {
+                  "itemId": "life-sample-13",
+                  "quantity": 1,
+                  "unit": "台"
+                },
+                {
+                  "itemId": "life-sample-15",
+                  "quantity": 1,
+                  "unit": "套"
+                },
+                {
+                  "itemId": "life-sample-12",
+                  "quantity": 1,
+                  "unit": "个"
+                }
+              ],
+              "resourceAudit": {
+                "owned": [
+                  "life-sample-12",
+                  "life-sample-13",
+                  "life-sample-15"
+                ],
+                "environment": [],
+                "unconfirmed": [],
+                "additional": [],
+                "unsupported": [],
+                "fieldVerification": []
+              },
+              "id": "d3ae23df-60c8-4743-89c4-42cbe65563ab",
+              "source": "model-creative",
+              "experienceSources": [],
+              "evidence": [],
+              "creativeEvidenceSources": [],
+              "tested": false,
+              "goal": "只用相机、背包和速写本与铅笔，安排20分钟的同一场景三种视角创作，不打印、不用电脑、不买材料，以完成三次拍照结束，不依赖计时设备。"
+            }
+          ],
+          "source": "model-creative",
+          "modelCalls": 1
+        }
+      ],
+      "blockers": [],
+      "counts": {
+        "items": 25,
+        "ideas": 4,
+        "stories": 4,
+        "chapters": 2
+      },
+      "modelRequests": [
+        {
+          "status": "timeout",
+          "reserved": 7636,
+          "at": 1792595687559
+        },
+        {
+          "status": "200",
+          "reserved": 13132,
+          "at": 1792595850761
+        },
+        {
+          "status": "200",
+          "reserved": 7636,
+          "at": 1792595857656
+        }
+      ],
+      "paidCalls": 3
+    }
+  },
+  "finalAssessment": {
+    "product": {
+      "status": "passed-scoped",
+      "scope": "Real Qwen response with current-model verified AA battery and receiver facts. Server discards unsupported model additions; does not claim a complete setup guide."
+    },
+    "creative": {
+      "status": "partial",
+      "scope": "Real Qwen three explicit shutter actions; no printing/computer/purchases. Backpack-height wording remains awkward/unsubstantiated; not declared fully verified or physically tested."
+    },
+    "offline": [
+      "Known Product Pack fact IDs normalized without accepting model action text",
+      "Unknown source IDs remain rejected",
+      "Three-photo goal catches two-photo steps; three-photo steps accepted"
+    ],
+    "production": "Windows Next production build passed; Docker/Linux and public ModelScope deployment not executed",
+    "paidRequestsTotal": 5,
+    "paidBreakdown": "1 network timeout, 1 product business validation failure, 1 earlier creative partial, 1 final product scoped pass, 1 final creative partial",
+    "cost": "Exact billed currency unavailable. Product final tokens: 2637 input / 368 output. Creative token usage not exposed by endpoint. All attempts recorded in modelRequests."
+  }
+}
