@@ -20,6 +20,7 @@ const run = process.argv.includes("--run");
 if (fs.existsSync(".env.local")) process.loadEnvFile(".env.local");
 const env: Record<string, string | undefined> = {
   ...process.env,
+  AI_MODEL: process.env.INTELLIGENCE_MODEL || process.env.AI_MODEL,
   AI_ALLOW_PAID_CALLS: run ? "true" : "false",
   WUJIAN_ALLOW_PAID_CALLS: run ? "true" : "false",
   AI_ENABLE_THINKING: "false",
@@ -190,6 +191,15 @@ const products: any = {
     question: "第一次清洗这个垫套，带我从准备到清洗结束，哪些步骤有官方依据？",
     follow: "第一步已经完成，接下来怎么继续？",
   },
+  holdout: {
+    name: "IKEA VITMOSSA throw",
+    category: "家用纺织品",
+    brand: "IKEA",
+    model: "703.048.90",
+    region: "cn",
+    question: "第一次清洗这条休闲毯，带我从准备到清洗结束。",
+    follow: "第一步已经完成，接下来继续。",
+  },
   clothing: {
     name: "Patagonia R1 Fleece Pants",
     category: "服装",
@@ -222,8 +232,24 @@ try {
     const key = group.slice(8),
       p = products[key];
     if (!p) throw Error("Unknown product case");
+    const reuse = process.argv.includes("--reuse-latest")
+      ? fs
+          .readdirSync(directory)
+          .filter(
+            (n) =>
+              n.startsWith(group + "-") &&
+              fs.statSync(path.join(directory, n)).isDirectory(),
+          )
+          .sort(
+            (a, b) =>
+              fs.statSync(path.join(directory, b)).birthtimeMs -
+              fs.statSync(path.join(directory, a)).birthtimeMs,
+          )[0]
+      : undefined;
     const t = validationFixture(
-      fs.mkdtempSync(path.join(directory, group + "-")),
+      reuse
+        ? path.join(directory, reuse)
+        : fs.mkdtempSync(path.join(directory, group + "-")),
     );
     try {
       const id = t.add(p.name, p.category, p.brand, p.model, {

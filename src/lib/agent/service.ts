@@ -32,6 +32,28 @@ export function completedStepOrdinal(question: string): number | undefined {
     if (m) return "一二三四五六七八九十".indexOf(m[1]) + 1 || Number(m[1]);
   }
 }
+export function completedStepOrdinals(question: string): number[] {
+  const result = new Set<number>();
+  for (const clause of question.split(/[，。；！？,;!?\n]/)) {
+    if (/没(?:有)?|尚未|还未|未完成|未做完/.test(clause)) continue;
+    const range = clause.match(
+      /前([一二两三四五六七八九十1-9])步.{0,10}(?:完成|做完|做过)/,
+    );
+    if (range) {
+      const n =
+        "一二三四五六七八九十".indexOf(range[1].replace("两", "二")) + 1 ||
+        Number(range[1]);
+      for (let i = 1; i <= n; i++) result.add(i);
+    } else if (/完成|做完|做过/.test(clause)) {
+      const ordinals = [...clause.matchAll(/第([一二三四五六七八九十1-9])步/g)];
+      for (const m of ordinals)
+        result.add("一二三四五六七八九十".indexOf(m[1]) + 1 || Number(m[1]));
+    }
+  }
+  const single = completedStepOrdinal(question);
+  if (single) result.add(single);
+  return [...result];
+}
 export async function respond(
   db: DatabaseSync,
   read: () => State,
@@ -119,8 +141,7 @@ export async function respond(
     }
   }
   session.known.turnRequestId = input.requestId;
-  const n = completedStepOrdinal(input.question);
-  if (n) {
+  for (const n of completedStepOrdinals(input.question)) {
     const step = session.messages.filter((m) => m.reply).at(-1)?.reply?.steps[
       n - 1
     ];

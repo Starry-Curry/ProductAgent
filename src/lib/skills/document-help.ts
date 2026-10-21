@@ -170,6 +170,10 @@ function quantities(s: string) {
 export function quoteInSource(source: string, quote: string) {
   const normalize = (s: string) =>
     s
+      .replace(/\\u00(0[0-8e-f]|1[0-9a-f]|7f)/gi, (_m, n) =>
+        String.fromCharCode(parseInt(n, 16)),
+      )
+      .replace(/\\"/g, '"')
       .normalize("NFKC")
       .replace(/^\s*\d{1,2}[.)、]\s+/gm, "")
       .replace(/\s+/g, " ")
@@ -304,10 +308,10 @@ export function groundedReply(
             });
         }
         const originals = joined.map((s) => s.text);
-        // PDF line wrapping is presentation. Several separately quoted lines may
-        // cite different blocks, but EVERY substantive line still needs a source.
+        // Whole-sentence excerpts may omit intervening sentences. Every sentence
+        // must still match a cited block; no paraphrase or changed number allowed.
         const spans = step.sourceQuote
-          .split(/\n+/)
+          .split(/\n+|(?<=[.!?。；;])\s+(?=[A-Z\u4e00-\u9fff])/)
           .map(normalized)
           .filter((s) => s && !/^(?:\d+|[*†]+)$/.test(s));
         if (

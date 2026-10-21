@@ -4,10 +4,20 @@ import fs from "node:fs";
 import path from "node:path";
 import { auditIdeaActions } from "../src/lib/life/idea-audit.ts";
 import { taskStepCovers } from "../src/lib/life/knowledge-task.ts";
-import { groundedReply } from "../src/lib/skills/document-help.ts";
+import {
+  groundedReply,
+  quoteInSource,
+} from "../src/lib/skills/document-help.ts";
 import { routeProductTurn } from "../src/lib/home/router.ts";
 import { validationFixture } from "../scripts/life-validation-fixture.ts";
 import { modelIdea } from "../src/lib/life/ideas.ts";
+import { completedStepOrdinals } from "../src/lib/agent/service.ts";
+
+test("用户批量报告完成按可见序号记录，否定和重复不误进度", () => {
+  assert.deepEqual(completedStepOrdinals("前两步已经完成，继续"), [1, 2]);
+  assert.deepEqual(completedStepOrdinals("第1步和第3步都已完成"), [1, 3]);
+  assert.deepEqual(completedStepOrdinals("前两步还没有完成"), []);
+});
 
 test("真实失败动作回归：数字照片、隐含杂物、精确计时、罩灯、墨迹投影与未证实效果", () => {
   const items: any = [
@@ -20,6 +30,11 @@ test("真实失败动作回归：数字照片、隐含杂物、精确计时、�
     ["在照片背面写下感想", "digital-physical"],
     ["将桌面杂物分类收进杯中", "unconfirmed-subject"],
     ["每轮严格30秒，写下词语", "implicit-tool"],
+    ["限时三分钟写作，时间到结束", "implicit-tool"],
+    ["对着镜子检查搭配", "implicit-tool"],
+    ["将明天必带的小件零散物品放在围巾中央", "unconfirmed-subject"],
+    ["导出照片并拼成九宫格图", "implicit-tool"],
+    ["用另一种颜色笔修正地图", "implicit-tool"],
     ["将杯子正立罩住灯头，确保光晕", "heat-obstruction"],
     ["照亮纸上的轮廓，使其投影到墙面", "ink-projection"],
     ["透过杯子就会形成清晰彩虹", "unverified-effect"],
@@ -40,11 +55,59 @@ test("真实失败动作回归：数字照片、隐含杂物、精确计时、�
   assert.equal(good.issues.length, 0);
   assert.deepEqual(good.resources.owned, ["c", "p"]);
 });
+
+test("引文序列化修复与逐句定位不放过改写、数字或无据句子", () => {
+  assert.equal(
+    quoteInSource("Press the bu\u001con.", "Press the bu\\u001con."),
+    true,
+  );
+  const evidence: any = [
+    {
+      id: "a",
+      documentId: "d",
+      start: 0,
+      end: 130,
+      model: "TEST",
+      category: "operation",
+      title: "TEST",
+      text: "Press power. Check readiness first. Select program. Use 5 V only.",
+      url: "https://example.org",
+    },
+  ];
+  const value = {
+    kind: "grounded",
+    answer: "开始",
+    steps: [
+      {
+        phase: "start",
+        text: "按电源按钮，选择程序",
+        sourceIds: ["a"],
+        sourceQuote: "Press power. Select program.",
+      },
+    ],
+  };
+  assert.equal(groundedReply(value, evidence, { tried: [] }).steps.length, 1);
+  assert.throws(
+    () =>
+      groundedReply(
+        {
+          ...value,
+          steps: [
+            { ...value.steps[0], sourceQuote: "Press power. Use 9 V only." },
+          ],
+        },
+        evidence,
+        { tried: [] },
+      ),
+    /引文/,
+  );
+});
 test("任务覆盖核对动作目标，非装料句和运行中调参不能冒充装料/选程序", () => {
   assert.equal(
     taskStepCovers("load", "将炸盘放入篮子；如需分层放置食材，请使用烤架"),
     false,
   );
+  assert.equal(taskStepCovers("load", "空篮运行，不放入任何食材"), false);
   assert.equal(
     taskStepCovers("load", "将炸盘放入篮子，再将食材逐一加入篮中"),
     true,
