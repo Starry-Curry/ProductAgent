@@ -19,6 +19,8 @@ import { epoch, saveMemory, getPersona } from "../memory/store.ts";
 import { executeGraph } from "./graph.ts";
 import { buildContext } from "../context/builder.ts";
 import { identity } from "../ai/harness.ts";
+import { readKnowledge } from "../life/acquisition.ts";
+import { continueVerifiedGuidance } from "./guidance-continuation.ts";
 export function completedStepOrdinal(question: string): number | undefined {
   for (const part of question.split(/[，。；！？,;!?\n]/).reverse()) {
     if (/没(?:有)?|尚未|未曾|还未|未完成|未做完/.test(part)) continue;
@@ -185,15 +187,43 @@ export async function respond(
         tokens: null,
         modelCalls: 0,
       };
-    } else
-      execution = await executeGraph(
-        db,
-        read,
-        actor,
-        session,
-        input.question,
-        provider,
-      );
+    } else {
+      const itemId = input.itemId || session.known.activeItemId;
+      const continued =
+        itemId && completedStepOrdinals(input.question).length
+          ? continueVerifiedGuidance(
+              session,
+              input.question,
+              new Set(
+                readKnowledge(db, read(), actor, itemId).flatMap((d) =>
+                  d.chunks.map((c) => c.id),
+                ),
+              ),
+            )
+          : undefined;
+      execution = continued
+        ? {
+            reply: continued,
+            trace: [
+              {
+                stage: "verified_guidance_continued",
+                detail:
+                  "Current document IDs and item permission rechecked; no model request",
+                at: new Date().toISOString(),
+              },
+            ],
+            tokens: null,
+            modelCalls: 0,
+          }
+        : await executeGraph(
+            db,
+            read,
+            actor,
+            session,
+            input.question,
+            provider,
+          );
+    }
     const prefs = buildContext(db, read(), actor, {
       question: input.question,
       mode: input.mode,

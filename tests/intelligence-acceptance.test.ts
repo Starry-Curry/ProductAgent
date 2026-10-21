@@ -12,11 +12,57 @@ import { routeProductTurn } from "../src/lib/home/router.ts";
 import { validationFixture } from "../scripts/life-validation-fixture.ts";
 import { modelIdea } from "../src/lib/life/ideas.ts";
 import { completedStepOrdinals } from "../src/lib/agent/service.ts";
+import { continueVerifiedGuidance } from "../src/lib/agent/guidance-continuation.ts";
 
 test("用户批量报告完成按可见序号记录，否定和重复不误进度", () => {
   assert.deepEqual(completedStepOrdinals("前两步已经完成，继续"), [1, 2]);
   assert.deepEqual(completedStepOrdinals("第1步和第3步都已完成"), [1, 3]);
   assert.deepEqual(completedStepOrdinals("前两步还没有完成"), []);
+});
+
+test("纯进度续接沿用有据剩余步骤，条件变化、过期来源与私人记忆不复用", () => {
+  const session: any = {
+    tried: ["one"],
+    messages: [
+      {
+        reply: {
+          source: "model-with-evidence",
+          memoryIds: [],
+          evidenceIds: ["d:0"],
+          steps: [
+            { id: "one", text: "清洁" },
+            { id: "two", text: "装料" },
+          ],
+        },
+      },
+    ],
+  };
+  const ids = new Set(["d:0"]);
+  assert.deepEqual(
+    continueVerifiedGuidance(
+      session,
+      "第一步已经完成，下一步呢？还没决定食材和份量。",
+      ids,
+    )?.steps,
+    [{ id: "two", text: "装料" }],
+  );
+  assert.equal(
+    continueVerifiedGuidance(session, "第一步已经完成，但机器冒烟", ids),
+    undefined,
+  );
+  assert.equal(
+    continueVerifiedGuidance(session, "第一步已经完成，换成冷冻鱼", ids),
+    undefined,
+  );
+  assert.equal(
+    continueVerifiedGuidance(session, "第一步已经完成，继续", new Set()),
+    undefined,
+  );
+  session.messages[0].reply.memoryIds = ["private"];
+  assert.equal(
+    continueVerifiedGuidance(session, "第一步已经完成，继续", ids),
+    undefined,
+  );
 });
 
 test("真实失败动作回归：数字照片、隐含杂物、精确计时、罩灯、墨迹投影与未证实效果", () => {

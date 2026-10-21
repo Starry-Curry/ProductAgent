@@ -540,6 +540,7 @@ export async function modelIdea(
       (error instanceof ProviderError && error.code === "invalid_response") ||
       (error instanceof AgentError &&
         error.status === 400 &&
+        !/风险检查/.test(error.message) &&
         /方案|创意候选|模型创意|物理|材料|未提供的官方事实|未成立|机制|凹槽|成像|留印|计量|数量条件引用了未使用/.test(
           error.message,
         ));
