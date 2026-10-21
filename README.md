@@ -1,3 +1,11 @@
+# 当前交接入口（2026-10-21）
+
+**[物间完整项目交接手册](docs/handoff/WUJIAN_PROJECT_HANDOFF.md)** · [本轮脱敏结果与失败](docs/handoff/INTELLIGENCE_RESULTS_20261021.json) · [历史安全扫描](docs/handoff/HANDOFF_SAFETY.json)
+
+交接分支：`handoff/wujian-prelim-20261021`。当前是智能质量仍有缺口的开发候选，已停止全面冲刺。新开发者从手册的“先从这里开始”及第8节任务驱动物品组织方案接手。最后源码修复 `6d385df` 只有针对性/类型验收，未重新完整构建与浏览器回归；下面旧版本的测试、视觉、费用和启动状态是历史记录，不覆盖最新交接。
+
+---
+
 当前版本（2026-10-21）：[正式候选冲刺交接](docs/engineering/wujian-final-2026-10-21.md) · [实际验收与93次请求记录](docs/engineering/wujian-final-validation-2026-10-21.json)。168项领域测试、类型、构建及核心回归通过；严格产品验收仍有明确缺口。可打开[最新故事书合成预览](http://127.0.0.1:3201/#stories)，费用关闭；默认启动 START_LIFE_RC.cmd，手动云端 START_LIFE_CLOUD.cmd。当前构建用 build:rc，未推送或公开部署。下方旧调用额度与验收结论仅代表相应历史阶段。
 
 部署阶段记录（冲刺前）：[在线Demo部署准备](docs/engineering/cloud-demo-2026-10-21.md)与[离线生产验收](docs/engineering/cloud-demo-validation-2026-10-21.json)。已支持服务端访客隔离、持久化及费用控制；尚未公开部署，Docker/公网HTTPS/真实云端Qwen待验证。本机启动方式保持不变。

@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-21T07:24:53.284Z",
+  "head": "6d385df87e664ed4fb5493b23e53934f2d375b3f",
+  "remote": "https://github.com/Starry-Curry/ProductAgent.git",
+  "trackedFiles": 359,
+  "scope": "All blobs reachable from current HEAD, including historical versions; ignored credentials never read; no matched credential values printed.",
+  "textBlobsScanned": 1071,
+  "binaryBlobsSkipped": 37,
+  "findings": [],
+  "privateMaterialPathReview": [],
+  "limitations": [
+    "Pattern scanning cannot prove absence of all secrets or private prose; binary assets need separate provenance review.",
+    "Staged new files receive a separate working-tree scan before commit; rerun this history scan after commit before push."
+  ]
+}

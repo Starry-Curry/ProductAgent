@@ -1,3 +1,9 @@
+# 正式交接入口（2026-10-21）
+
+先读 [物间项目交接手册](handoff/WUJIAN_PROJECT_HANDOFF.md) 和 [本轮脱敏结果](handoff/INTELLIGENCE_RESULTS_20261021.json)。已停止冲刺；智能任务质量未全部通过，第8节任务组织是未实现的下一轮方案。下方保留历史阶段记录，不能当作最新全量验收。
+
+---
+
 当前版本（2026-10-21）：[初赛候选冲刺最终交接](engineering/wujian-final-2026-10-21.md) · [版本化验收与真实模型记录](engineering/wujian-final-validation-2026-10-21.json)。保留原23项；93次真实请求与失败，168项领域测试及核心生产回归，严格产品验收未全通过。
 
 此前部署阶段：[在线Demo部署与维护](engineering/cloud-demo-2026-10-21.md)、[生产模拟验收](engineering/cloud-demo-validation-2026-10-21.json)。未公开部署，本轮0真实模型请求。
