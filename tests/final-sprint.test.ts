@@ -516,3 +516,122 @@ test("明确游戏目标的离线降级不混入喝水/食品等无关配方", a
     t.db.close();
   }
 });
+
+test("PDF引文忽略排版换行，分段引文必须逐段命中，不能夹带无来源断言", () => {
+  const e: any = [
+    {
+      id: "e",
+      category: "operation",
+      model: "X",
+      text: "Connect the headset to a computer, with the\nsupplied USB cable.\nSome other paragraph.\nThe indicator turns off automatically.",
+      url: "https://example.org",
+      title: "Manual",
+      start: 0,
+      end: 200,
+    },
+  ];
+  const r = groundedReply(
+    {
+      kind: "grounded",
+      answer: "继续",
+      steps: [
+        {
+          text: "连接线缆，完成后灯熄灭",
+          sourceIds: ["e"],
+          sourceQuote:
+            "Connect the headset to a computer, with the supplied USB cable.\nThe indicator turns off automatically.",
+        },
+      ],
+    },
+    e,
+    { tried: [] },
+  );
+  assert.equal(r.steps.length, 1);
+  assert.throws(
+    () =>
+      groundedReply(
+        {
+          kind: "grounded",
+          answer: "继续",
+          steps: [
+            {
+              text: "连接",
+              sourceIds: ["e"],
+              sourceQuote:
+                "The indicator turns off automatically.\nInvented automatic self repair.",
+            },
+          ],
+        },
+        e,
+        { tried: [] },
+      ),
+    /逐步引文/,
+  );
+});
+
+test("PDF已损坏字形只容忍该位置的拉丁连字，参数与完整单词仍须一致", async () => {
+  const { quoteInSource } = await import("../src/lib/skills/document-help.ts");
+  assert.equal(
+    quoteInSource(
+      "Press the power bu\u001con. Set 220°C.",
+      "1. Press the power button. Set 220°C.",
+    ),
+    true,
+  );
+  assert.equal(
+    quoteInSource(
+      "Press the power bu\u001con. Set 220°C.",
+      "Press the power button. Set 200°C.",
+    ),
+    false,
+  );
+  assert.equal(
+    quoteInSource("Press the power button.", "Press the power switch."),
+    false,
+  );
+  assert.equal(
+    quoteInSource("Press the power bu\u001con.", "Press the power bu123on."),
+    false,
+  );
+});
+
+test("逐步引文允许跨相邻重叠块，不允许跨文档或跳过缺失原文拼接", () => {
+  const base = {
+    documentId: "d",
+    category: "operation",
+    model: "X",
+    url: "https://example.org",
+    title: "Manual",
+  };
+  const first = "Press power. Then connect ",
+    second = "connect the cable.";
+  const e: any = [
+    { ...base, id: "a", start: 0, end: first.length, text: first },
+    {
+      ...base,
+      id: "b",
+      start: first.length - 8,
+      end: first.length - 8 + second.length,
+      text: second,
+    },
+  ];
+  const packet = {
+    kind: "grounded",
+    answer: "继续",
+    steps: [
+      {
+        text: "按电源，再连接线缆",
+        sourceIds: ["a", "b"],
+        sourceQuote: "Press power. Then connect the cable.",
+      },
+    ],
+  };
+  assert.equal(groundedReply(packet, e, { tried: [] }).steps.length, 1);
+  assert.throws(
+    () =>
+      groundedReply(packet, [e[0], { ...e[1], documentId: "other" }], {
+        tried: [],
+      }),
+    /逐步引文/,
+  );
+});

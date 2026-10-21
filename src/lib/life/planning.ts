@@ -309,18 +309,26 @@ export async function planDiscovery(
     process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "true" &&
     /整理.*照片|照片.*整理|老照片/.test(goal)
   ) {
-    const url = "https://www.loc.gov/preservation/care/photo.html";
-    try {
-      const cached = listCreativeEvidence(db, actor).find(
-        (e) =>
-          e.url === url && Date.now() - Date.parse(e.fetchedAt) < 7 * 86400000,
-      );
-      const e = cached || (await importCreativeEvidence(db, actor, { url }));
-      if (!selectedEvidence.some((x) => x.id === e.id))
-        selectedEvidence.push(e);
-    } catch {
-      missing.push("公开照片保护参考未能实际读取，不用摘要代替");
-    }
+    let read = false;
+    for (const url of [
+      "https://www.loc.gov/preservation/care/photo.html",
+      "https://www.archives.gov/preservation/holdings-maintenance/photographs",
+    ])
+      try {
+        const cached = listCreativeEvidence(db, actor).find(
+          (e) =>
+            e.url === url &&
+            Date.now() - Date.parse(e.fetchedAt) < 7 * 86400000,
+        );
+        const e = cached || (await importCreativeEvidence(db, actor, { url }));
+        if (!selectedEvidence.some((x) => x.id === e.id))
+          selectedEvidence.push(e);
+        read = true;
+        break;
+      } catch {
+        // Bounded alternative public institution; no bypass or generated URL.
+      }
+    if (!read) missing.push("公开照片保护参考未能实际读取，不用摘要代替");
   }
   for (const old of previous.flatMap((p) => p.creativeEvidenceSources || [])) {
     const current = listCreativeEvidence(db, actor).find(
@@ -547,8 +555,11 @@ export async function planDiscovery(
         );
       const photoReference = selectedEvidence.find(
         (e) =>
-          e.url === "https://www.loc.gov/preservation/care/photo.html" &&
-          /Avoid touching the image area/.test(e.excerpt),
+          [
+            "https://www.loc.gov/preservation/care/photo.html",
+            "https://www.archives.gov/preservation/holdings-maintenance/photographs",
+          ].includes(e.url || "") &&
+          /avoid touching the image area/i.test(e.excerpt),
       );
       const printedPhoto = items.find((i) =>
         /纸质照片|老照片|相片/.test(i.name),
@@ -567,6 +578,7 @@ export async function planDiscovery(
             ],
             missing: [
               "照片实际材质/状态与原保护材料需本人核对；本方案不证明容器具有档案级保护能力",
+              "清洁手部及适合的保护手套等拿取条件需按来源核对；条件不足时只口述索引、不接触原件。",
             ],
             limits: [
               "参考机构原文仅支持避免接触影像面和边缘拿取；主题索引是本地改编，未实物验证",

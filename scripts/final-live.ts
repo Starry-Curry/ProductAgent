@@ -589,6 +589,27 @@ try {
         t.read,
       ),
     );
+    if (process.argv.includes("--followup")) {
+      const previous = ledger.cases.at(-1).result;
+      if (previous?.continuation && previous.ideas?.length)
+        await record(caseName + "-followup", () =>
+          planDiscovery(
+            t.db,
+            t.read(),
+            "lin",
+            {
+              goal: "不用杯子，只剩五分钟，不做光学实验，继续上一个游戏。",
+              continuation: previous.continuation,
+              previousIdeaIds: previous.ideas.map((i: any) => i.id),
+              model: true,
+              publicEvidence: false,
+              candidates: 1,
+            },
+            provider,
+            t.read,
+          ),
+        );
+    }
   }
 } finally {
   t.db.close();

@@ -103,6 +103,9 @@ export async function importCreativeEvidence(
       "该平台不进行自动抓取。可手动提供获准文字或使用现有本机OCR提取截图；不绕过登录或平台限制。",
     );
   const d = await fetchDocument(url.href);
+  const handlingExcerpt = d.text
+    .split(/\n+|(?<=[.!?。])\s+/)
+    .find((t) => /avoid touching the image area/i.test(t));
   const passages = d.text
     .split(/\n+/)
     .filter((t) => t.length > 35)
@@ -110,12 +113,12 @@ export async function importCreativeEvidence(
       (a, b) =>
         (
           b.match(
-            /shine|play|draw|hold|make|place|turn|build|cut|步骤|放|画|照/g,
+            /shine|play|draw|hold|make|place|turn|build|cut|handle|handling|touching|步骤|放|画|照/gi,
           ) || []
         ).length -
         (
           a.match(
-            /shine|play|draw|hold|make|place|turn|build|cut|步骤|放|画|照/g,
+            /shine|play|draw|hold|make|place|turn|build|cut|handle|handling|touching|步骤|放|画|照/gi,
           ) || []
         ).length,
     );
@@ -123,16 +126,7 @@ export async function importCreativeEvidence(
     kind: "third-party",
     title: d.title.slice(0, 150),
     url: d.url,
-    excerpt: short(
-      (url.hostname === "www.loc.gov" &&
-      url.pathname === "/preservation/care/photo.html"
-        ? d.text
-            .split(/\n+/)
-            .find((t) => /Avoid touching the image area/.test(t))
-        : undefined) ||
-        passages[0] ||
-        d.text,
-    ),
+    excerpt: short(handlingExcerpt || passages[0] || d.text),
     conditions: ["仅短摘录作为灵感，未核验整套玩法或适用型号"],
     license: "许可未核定；仅保存链接、元信息与短摘录，不保留整篇内容",
     attribution: d.title + " · " + new URL(d.url).hostname,

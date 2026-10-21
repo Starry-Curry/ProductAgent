@@ -23,7 +23,7 @@ export const groundedSchema = z
           .object({
             text: z.string().trim().min(1).max(600),
             sourceIds: z.array(z.string()).max(4),
-            sourceQuote: z.string().min(8).max(500).optional(),
+            sourceQuote: z.string().min(8).max(1600).optional(),
             phase: z
               .preprocess(
                 (v) =>
@@ -165,6 +165,42 @@ function quantities(s: string) {
     return [m[1], ...(m[2] ? [m[2]] : [])].map((n) => n + ":" + unit);
   });
 }
+/** Match source typography, never paraphrases or changed numerical parameters. */
+export function quoteInSource(source: string, quote: string) {
+  const normalize = (s: string) =>
+    s
+      .normalize("NFKC")
+      .replace(/^\s*\d{1,2}[.)、]\s+/gm, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  const original = normalize(source),
+    quoted = normalize(quote);
+  if (original.includes(quoted)) return true;
+  // Some PDFs encode a Latin ligature as a C0 glyph (e.g. bu<glyph>on).
+  // Allow 1–3 letters only at that damaged position. Keep raw evidence intact.
+  const glyph = /[\u0000-\u0008\u000e-\u001f\u007f]/g;
+  if (!glyph.test(original)) return false;
+  const tokens = (s: string) =>
+    s.match(/[\p{L}\p{N}\u0000-\u0008\u000e-\u001f\u007f]+|[^\s]/gu) || [];
+  const a = tokens(original),
+    b = tokens(quoted);
+  const same = (s: string, q: string) => {
+    if (s === q) return true;
+    if (!/[a-z][\u0000-\u0008\u000e-\u001f\u007f][a-z]/i.test(s)) return false;
+    const pattern = s
+      .split(glyph)
+      .map((v) => v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      .join("[A-Za-z]{1,3}");
+    return new RegExp("^" + pattern + "$").test(q);
+  };
+  return (
+    b.length > 0 &&
+    a.some((_, start) =>
+      b.every((q, n) => a[start + n] !== undefined && same(a[start + n], q)),
+    )
+  );
+}
+
 export function groundedReply(
   value: unknown,
   evidence: KnowledgeChunk[],
@@ -179,6 +215,8 @@ export function groundedReply(
   const parsedSteps = (Array.isArray(raw.steps) ? raw.steps : [])
     .slice(0, 10)
     .map((step) => groundedSchema.shape.steps.element.safeParse(step));
+  if (!parsedSteps.some((s) => s.success))
+    throw new AgentError("没有符合协议的可核对操作步骤");
   const p = groundedSchema.parse({
       ...raw,
       answer:
@@ -207,11 +245,48 @@ export function groundedReply(
         original = sources
           .map((s) => `${s!.model} ${s!.title} ${s!.text}`)
           .join(" ");
-      if (
-        step.sourceQuote &&
-        !sources.some((s) => s!.text.includes(step.sourceQuote!))
-      )
-        throw new AgentError("逐步引文不在所列原文中");
+      if (step.sourceQuote) {
+        const normalized = (v: string) =>
+          v.normalize("NFKC").replace(/\s+/g, " ").trim();
+        const joined: {
+          documentId: string;
+          start: number;
+          end: number;
+          text: string;
+        }[] = [];
+        for (const s of sources
+          .filter((s): s is KnowledgeChunk => !!s)
+          .sort((a, b) => a.start - b.start)) {
+          const previous = joined.findLast(
+            (p) => p.documentId === s.documentId && p.end >= s.start,
+          );
+          if (previous && s.start >= previous.start) {
+            if (s.end > previous.end) {
+              previous.text += s.text.slice(previous.end - s.start);
+              previous.end = s.end;
+            }
+          } else
+            joined.push({
+              documentId: s.documentId,
+              start: s.start,
+              end: s.end,
+              text: s.text,
+            });
+        }
+        const originals = joined.map((s) => s.text);
+        // PDF line wrapping is presentation. Several separately quoted lines may
+        // cite different blocks, but EVERY substantive line still needs a source.
+        const spans = step.sourceQuote
+          .split(/\n+/)
+          .map(normalized)
+          .filter((s) => s && !/^(?:\d+|[*†]+)$/.test(s));
+        if (
+          !originals.some((s) => quoteInSource(s, step.sourceQuote!)) &&
+          (!spans.length ||
+            spans.some((q) => !originals.some((s) => quoteInSource(s, q))))
+        )
+          throw new AgentError("逐步引文不在所列原文中");
+      }
       // A diagram's reading order or an unrelated mention of a left/right unit is not
       // evidence for where the port is. Omit this optional location; keep the action.
       if (
