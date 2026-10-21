@@ -24,7 +24,7 @@ export const groundedSchema = z
           .object({
             text: z.string().trim().min(1).max(600),
             sourceIds: z.array(z.string()).max(4),
-            sourceQuote: z.string().min(8).max(1600).optional(),
+            sourceQuote: z.string().min(3).max(1600).optional(),
             phase: z
               .preprocess(
                 (v) =>
@@ -311,12 +311,13 @@ export function groundedReply(
         // Whole-sentence excerpts may omit intervening sentences. Every sentence
         // must still match a cited block; no paraphrase or changed number allowed.
         const spans = step.sourceQuote
-          .split(/\n+|(?<=[.!?。；;])\s+(?=[A-Z\u4e00-\u9fff])/)
+          .split(/\n+|\.{3,}|…+|(?<=[.!?。；;])\s+(?=[A-Z\u4e00-\u9fff])/)
           .map(normalized)
           .filter((s) => s && !/^(?:\d+|[*†]+)$/.test(s));
         if (
           !originals.some((s) => quoteInSource(s, step.sourceQuote!)) &&
           (!spans.length ||
+            spans.some((q) => q.length < 3) ||
             spans.some((q) => !originals.some((s) => quoteInSource(s, q))))
         )
           throw new AgentError("逐步引文不在所列原文中");
@@ -410,7 +411,7 @@ export function groundedReply(
         if (
           claim.test(step.text) &&
           !/不要|不可|不得|不能|切勿|禁止/.test(step.text) &&
-          forbiddenSource.test(original)
+          forbiddenSource.test(originalBlock)
         )
           throw new AgentError("操作违背引用原文限制");
       step.sourceIds.forEach((id) => ids.add(id));

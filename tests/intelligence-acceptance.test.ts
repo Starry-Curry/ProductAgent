@@ -160,6 +160,57 @@ test("引文序列化修复与逐句定位不放过改写、数字或无据句�
     /引文/,
   );
 });
+
+test("短中文官方操作与显式省略摘录可定位，省略不能反转原文禁令", () => {
+  const e: any = [
+    {
+      id: "c",
+      documentId: "d",
+      start: 0,
+      end: 200,
+      model: "TEST",
+      category: "operation",
+      title: "TEST",
+      text: "用湿布擦净。勿漂白。再用干净抹布擦干。 Never immerse the unit in water. Cleaning: wipe with a cloth.",
+      url: "https://example.org",
+    },
+  ];
+  const packet = (text: string, sourceQuote: string) => ({
+    kind: "grounded",
+    answer: "继续",
+    steps: [{ text, sourceIds: ["c"], sourceQuote }],
+  });
+  assert.equal(
+    groundedReply(packet("用湿布擦净", "用湿布擦净。"), e, { tried: [] }).steps
+      .length,
+    1,
+  );
+  assert.equal(
+    groundedReply(
+      packet(
+        "用湿布擦净，再用干净抹布擦干",
+        "用湿布擦净。...再用干净抹布擦干。",
+      ),
+      e,
+      { tried: [] },
+    ).steps.length,
+    1,
+  );
+  assert.throws(
+    () =>
+      groundedReply(packet("将主机浸入水中", "immerse the unit in water."), e, {
+        tried: [],
+      }),
+    /违背/,
+  );
+  assert.throws(
+    () =>
+      groundedReply(packet("用酒精擦洗", "用湿布擦净。...用酒精擦洗。"), e, {
+        tried: [],
+      }),
+    /引文/,
+  );
+});
 test("任务覆盖核对动作目标，非装料句和运行中调参不能冒充装料/选程序", () => {
   assert.equal(
     taskStepCovers("load", "将炸盘放入篮子；如需分层放置食材，请使用烤架"),
