@@ -64,7 +64,7 @@ try {
   fs.mkdirSync("artifacts/rc", { recursive: true });
   await page.goto(base + "#stories");
   await expect(
-    page.getByRole("heading", { name: "生活里，值得留住的小片段" }),
+    page.getByRole("heading", { name: "生活故事书", exact: true }),
   ).toBeVisible();
   await nav("生活故事");
   await expect(page.getByLabel("留下一句话", { exact: true })).toHaveCount(0);
@@ -117,7 +117,7 @@ try {
     path: "artifacts/rc/storybook-reading-desktop.png",
     fullPage: true,
   });
-  await page.getByText("寻找经历 · 按时间、物品或章节浏览",{exact:true}).click();
+  await page.getByText("整理与隐私", { exact: true }).click();
   await page.getByRole("button", { name: "整理一个章节", exact: true }).click();
   await page.getByLabel("章节名称", { exact: true }).fill("合成阅读验收章节");
   await page
@@ -139,6 +139,10 @@ try {
     page.getByRole("button", { name: "关闭照片", exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "关闭照片", exact: true }).click();
+  if (
+    !(await card.locator("details.story-management").evaluate((el) => el.open))
+  )
+    await card.getByLabel("故事选项", { exact: true }).click();
   await card.getByRole("button", { name: "编辑片段", exact: true }).click();
   await page.getByRole("button", { name: "追加照片", exact: true }).click();
   await page
@@ -196,6 +200,10 @@ try {
     card.getByRole("button", { name: "阅读完整故事", exact: true }),
   ).toBeFocused();
   checks.push("390px全文/照片布局与桌面操作");
+  if (
+    !(await card.locator("details.story-management").evaluate((el) => el.open))
+  )
+    await card.getByLabel("故事选项", { exact: true }).click();
   await card.getByRole("button", { name: "编辑片段", exact: true }).click();
   await page.getByText("关联物品 · 已选择 2 件", { exact: true }).click();
   await page.getByRole("checkbox", { name: b.name, exact: true }).uncheck();
@@ -266,6 +274,11 @@ try {
   checks.push("C5赠送领取后本人故事保留，接收者无正文/照片权限");
   await page.reload();
   await nav("生活故事");
+  await page
+    .locator("article.life-story-page")
+    .filter({ hasText: f.text })
+    .getByLabel("故事选项", { exact: true })
+    .click();
   page.once("dialog", (d) => d.accept());
   await page
     .locator("article.life-story-page")

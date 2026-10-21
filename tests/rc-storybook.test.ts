@@ -11,6 +11,58 @@ import {
 import { buildContext } from "../src/lib/context/builder.ts";
 import { mutate } from "../src/lib/domain.ts";
 import { epoch } from "../src/lib/memory/store.ts";
+import { installLifeDemo } from "../src/lib/life/demo.ts";
+
+test("演示故事独立场景配图、多照片、明确虚构；重复安装不改写已有记录", () => {
+  const t = validationFixture(
+    fs.mkdtempSync(path.join(process.cwd(), ".runtime", "storybook-demo-")),
+  );
+  try {
+    installLifeDemo(t.db);
+    const fragments = listFragments(t.db, t.read(), "lin");
+    assert.equal(fragments.length, 3);
+    assert.deepEqual(
+      fragments.map((f) => f.mediaIds?.length).sort(),
+      [0, 1, 2],
+    );
+    for (const f of fragments) {
+      assert.equal(f.demo, true);
+      assert.equal(f.origin, "fiction");
+      assert.equal(f.allowRecall, false);
+      assert.equal(f.allowCloud, false);
+      assert.ok(!/合成验收|验收旅行|合成案例|合成图文/.test(f.text));
+    }
+    const inventoryPhotos = new Set(
+      fs
+        .readdirSync("public/demo/life")
+        .filter((n) => n.endsWith(".jpg"))
+        .map((n) =>
+          fs.readFileSync(path.join("public/demo/life", n)).toString("base64"),
+        ),
+    );
+    const media = t.db.prepare("SELECT body FROM life_media").all() as {
+      body: Uint8Array;
+    }[];
+    assert.equal(media.length, 3);
+    for (const photo of media)
+      assert.ok(
+        !inventoryPhotos.has(Buffer.from(photo.body).toString("base64")),
+      );
+    const original = fragments[0];
+    t.db
+      .prepare("UPDATE life_fragments SET text=? WHERE id=?")
+      .run("本人修改的演示原文，不应被替换。", original.id);
+    installLifeDemo(t.db);
+    const after = listFragments(t.db, t.read(), "lin");
+    assert.equal(after.length, 3);
+    assert.equal(
+      after.find((f) => f.id === original.id)?.text,
+      "本人修改的演示原文，不应被替换。",
+    );
+  } finally {
+    t.db.close();
+  }
+});
 
 test("允许上云不等于本次相关：仅选当前回忆主题，商品指导和临时聊天不取故事", () => {
   const t = validationFixture(

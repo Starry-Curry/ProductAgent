@@ -107,13 +107,21 @@ export function installLifeDemo(db: DatabaseSync) {
     db.prepare("INSERT INTO life_fragments VALUES(?,?,?,?,1,?,?,1)").run(
       id,
       "lin",
-      "合成案例：毕业旅行前，把相机和背包一起收进行李。没有推断实际日期、地点或同行人。",
+      "出门前把相机放进背包，最后还是拿出了一本太重的书。今天想走得慢一点，留些空白给路上。",
       null,
       at,
       at,
     );
     for (const itemId of ["life-sample-12", "life-sample-13"])
       db.prepare("INSERT INTO life_fragment_items VALUES(?,?)").run(id, itemId);
+    db.prepare("INSERT INTO life_fragment_details VALUES(?,?,?,?,?,?)").run(
+      id,
+      "2026-10-12",
+      "[]",
+      0,
+      0,
+      "fiction",
+    );
     db.prepare("INSERT INTO life_installations VALUES('life-demo-v1')").run();
     db.exec("COMMIT");
   } catch (e) {
@@ -142,35 +150,56 @@ function installLifePhotoStories(db: DatabaseSync) {
       ).body,
     ) as State;
     const at = new Date().toISOString();
-    for (const [photo, text, itemIds] of [
+    // Dedicated licensed scene photographs, never inventory/product thumbnails.
+    // Existing installations and user records are deliberately left untouched.
+    for (const [photos, text, itemIds, capturedOn] of [
       [
-        "plant",
-        "合成图文案例：给窗边绿植留一张观察照。品种、浇水量与健康状态仍待本人核对。",
-        ["life-sample-14"],
+        ["park"],
+        "沿着树影走了一小段，才发现今天没有急着赶去哪里。背包很轻，心里也松了一点。",
+        ["life-sample-12", "life-sample-13"],
+        "2026-10-18",
       ],
       [
-        "camera",
-        "合成图文案例：出门前整理相机和背包，想用已有的东西记录一天。",
-        ["life-sample-12", "life-sample-13"],
+        ["afternoon", "window"],
+        "下午没有安排别的事。\n把本子放在窗边，记下几句突然想起的话。翻完几页书，光线已经慢慢挪到了桌角。",
+        ["life-sample-15"],
+        "2026-10-16",
       ],
     ] as const) {
-      const mediaId = crypto.randomUUID(),
-        id = crypto.randomUUID();
-      db.prepare("INSERT INTO life_media VALUES(?,?,?,?)").run(
-        mediaId,
-        "lin",
-        "image/jpeg",
-        readFileSync(
-          path.join(process.cwd(), "public", "demo", "life", photo + ".jpg"),
-        ),
-      );
+      const mediaIds = photos.map((photo) => {
+        const mediaId = crypto.randomUUID();
+        db.prepare("INSERT INTO life_media VALUES(?,?,?,?)").run(
+          mediaId,
+          "lin",
+          "image/jpeg",
+          readFileSync(
+            path.join(
+              process.cwd(),
+              "public",
+              "demo",
+              "stories",
+              photo + ".jpg",
+            ),
+          ),
+        );
+        return mediaId;
+      });
+      const id = crypto.randomUUID();
       db.prepare("INSERT INTO life_fragments VALUES(?,?,?,?,1,?,?,1)").run(
         id,
         "lin",
         text,
-        mediaId,
+        mediaIds[0],
         at,
         at,
+      );
+      db.prepare("INSERT INTO life_fragment_details VALUES(?,?,?,?,?,?)").run(
+        id,
+        capturedOn,
+        JSON.stringify(mediaIds),
+        0,
+        0,
+        "fiction",
       );
       for (const itemId of itemIds)
         db.prepare("INSERT INTO life_fragment_items VALUES(?,?)").run(

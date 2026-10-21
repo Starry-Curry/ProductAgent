@@ -11,6 +11,9 @@
 !public/demo/life/
 !public/demo/life/*.jpg
 !public/demo/life/SOURCES.json
+!public/demo/stories/
+!public/demo/stories/*.jpg
+!public/demo/stories/SOURCES.json
 !scripts/
 !scripts/cloud-start.mjs
 !scripts/cloud-ops.mjs

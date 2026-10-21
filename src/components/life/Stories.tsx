@@ -1,10 +1,18 @@
 "use client";
 import { useId, useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { ImagePlus, RefreshCw, X, BookOpen, Expand } from "lucide-react";
+import {
+  ImagePlus,
+  RefreshCw,
+  X,
+  Expand,
+  MoreHorizontal,
+  ArrowUpRight,
+} from "lucide-react";
 import "yet-another-react-lightbox/styles.css";
 import type { Item } from "@/lib/domain";
 import { StoryOrganization } from "./StoryOrganization";
+import type { Chapter } from "@/lib/life/organization";
 import type { LifeRequest } from "./Intake";
 const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
   ssr: false,
@@ -80,6 +88,9 @@ export function Stories({
     [query, setQuery] = useState(""),
     [filter, setFilter] = useState("all"),
     [chapterIds, setChapterIds] = useState<string[] | null>(null),
+    [chapters, setChapters] = useState<Chapter[]>([]),
+    [chapterId, setChapterId] = useState("all"),
+    [browseMode, setBrowseMode] = useState("timeline"),
     [photoMatches, setPhotoMatches] = useState<
       { itemId: string; name: string; reason: string }[]
     >([]),
@@ -99,6 +110,23 @@ export function Stories({
   const current = fragments.find((f) => f.id === opened);
   const slidesOpen = useRef(false);
   slidesOpen.current = slides.length > 0;
+  useEffect(() => {
+    if (itemId || !fragments.length) return;
+    const key = "wujian.story-return." + actor;
+    const id = sessionStorage.getItem(key);
+    if (!id) return;
+    sessionStorage.removeItem(key);
+    const frame = requestAnimationFrame(() => {
+      const entry = document.querySelector<HTMLElement>(
+        `[data-story-id="${CSS.escape(id)}"]`,
+      );
+      entry?.scrollIntoView({ block: "center" });
+      entry
+        ?.querySelector<HTMLButtonElement>(".story-open")
+        ?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [actor, itemId, fragments]);
   useEffect(() => {
     setObservations([]);
     setPhotoMatches([]);
@@ -262,30 +290,115 @@ export function Stories({
           b.capturedOn || b.createdAt,
         ),
     );
-  const links = (f: Fragment) => (
-    <div className="life-tags">
-      {f.itemIds.map((id) => (
-        <button
-          type="button"
-          key={id}
-          disabled={!items.some((i) => i.id === id)}
-          onClick={() => {
-            setOpened(null);
-            onItem(id);
-          }}
-        >
-          {items.find((i) => i.id === id)?.name || "已流转/不可访问的物品"}
-        </button>
-      ))}
+  const relatedChapters = (f: Fragment) =>
+    chapters.filter((c) => c.fragmentIds.includes(f.id));
+  const links = (f: Fragment) =>
+    f.itemIds.length > 0 && (
+      <div className="story-item-trace" aria-label="这段经历关联的物品">
+        <span>那天一起的</span>
+        {f.itemIds.map((id) => (
+          <button
+            type="button"
+            key={id}
+            disabled={!items.some((i) => i.id === id)}
+            onClick={() => {
+              sessionStorage.setItem("wujian.story-return." + actor, f.id);
+              setOpened(null);
+              onItem(id);
+            }}
+          >
+            {items.find((i) => i.id === id)?.name || "已流转的物品"}
+            <ArrowUpRight size={12} aria-hidden="true" />
+          </button>
+        ))}
+      </div>
+    );
+  const metadata = (f: Fragment) => (
+    <div className="story-dateline">
+      <time dateTime={f.capturedOn || f.createdAt}>
+        {f.capturedOn
+          ? new Date(f.capturedOn + "T12:00:00").toLocaleDateString("zh-CN", {
+              month: "long",
+              day: "numeric",
+            })
+          : "记于 " +
+            new Date(f.createdAt).toLocaleDateString("zh-CN", {
+              month: "long",
+              day: "numeric",
+            })}
+      </time>
+      {(f.demo || f.origin === "fiction") && (
+        <span className="story-demo-label">
+          {f.demo ? "演示故事" : "虚构记录"}
+        </span>
+      )}
+      {relatedChapters(f)
+        .slice(0, 1)
+        .map((c) => (
+          <button
+            key={c.id}
+            className="story-chapter-link"
+            onClick={() => {
+              setOpened(null);
+              setBrowseMode("chapters");
+              setChapterId(c.id);
+              setChapterIds(c.fragmentIds);
+            }}
+          >
+            收在「{c.name}」
+          </button>
+        ))}
     </div>
   );
+  const gallery = (f: Fragment, detail = false) =>
+    photos(f).length > 0 && (
+      <div
+        className={
+          detail
+            ? "story-photo-sequence detail-sequence"
+            : "story-photo-sequence"
+        }
+        data-photo-count={photos(f).length}
+        aria-label="这次经历的照片"
+        tabIndex={photos(f).length > 1 ? 0 : undefined}
+      >
+        {photos(f).map((id, index) => (
+          <figure key={id}>
+            <button
+              type="button"
+              aria-label={
+                index === 0 && !detail
+                  ? "放大故事照片"
+                  : (detail ? "放大照片 " : "查看故事照片 ") + (index + 1)
+              }
+              onClick={() => enlarge(f, index)}
+            >
+              <img
+                className="story-scene"
+                src={url(id)}
+                alt={f.demo ? "演示故事场景配图" : "用户保存的生活照片"}
+                loading="lazy"
+              />
+              <span className="story-photo-enlarge">
+                <Expand size={14} aria-hidden="true" />
+              </span>
+            </button>
+            {photos(f).length > 1 && (
+              <figcaption>
+                {f.demo ? "演示场景" : "这次经历"} · {index + 1} /{" "}
+                {photos(f).length}
+              </figcaption>
+            )}
+          </figure>
+        ))}
+      </div>
+    );
   return (
     <section className="life-stories">
       <div className="life-section-head">
         <div>
-          <span className="life-eyebrow">A BOOK OF YOUR EVERYDAY</span>
-          <h2>{itemId ? "它与你的故事" : "生活里，值得留住的小片段"}</h2>
-          <p>一张照片，一句话。可以不关联物品；这本故事书始终属于你。</p>
+          <h2>{itemId ? "它与你的故事" : "生活故事书"}</h2>
+          <p>一张照片，一句话，把日常留在这里。</p>
         </div>
         <button
           type="button"
@@ -303,11 +416,6 @@ export function Stories({
           <ImagePlus size={17} /> 写一段生活
         </button>
       </div>
-      {onAsk && (
-        <button type="button" className="text-button" onClick={onAsk}>
-          和物间聊聊这些故事
-        </button>
-      )}
       {composing && (
         <form
           ref={formRef}
@@ -631,130 +739,195 @@ export function Stories({
           {notice}
         </p>
       )}
-      <details className="life-story-browse-tools">
-        <summary>寻找经历 · 按时间、物品或章节浏览</summary>
-        <StoryOrganization
-          actor={actor}
-          fragments={fragments}
-          request={request}
-          onFilter={setChapterIds}
-        />
-        <div className="life-story-toolbar">
-          <label>
-            寻找一段经历
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="搜索原话"
-            />
-          </label>
-          <label>
-            按关联物品浏览
-            <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-              <option value="all">全部故事</option>
-              <option value="unlinked">未关联物品</option>
-              {items.map((i) => (
-                <option value={i.id} key={i.id}>
+      <div className="story-reading-nav">
+        <div
+          role="group"
+          aria-label="故事浏览方式"
+          className="story-view-switch"
+        >
+          {[
+            ["timeline", "时间流"],
+            ["chapters", "按章节"],
+            ["items", "按物品"],
+          ].map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              aria-pressed={browseMode === key}
+              onClick={() => {
+                setBrowseMode(key);
+                setChapterId("all");
+                setChapterIds(null);
+                setFilter("all");
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <label className="story-search">
+          <span className="life-visually-hidden">寻找一段经历</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="找一句话、一段经历"
+          />
+        </label>
+      </div>
+      {browseMode === "chapters" && (
+        <div className="story-chapter-shelf" aria-label="故事章节">
+          {chapters.map((c) => (
+            <button
+              key={c.id}
+              type="button"
+              aria-pressed={chapterId === c.id}
+              onClick={() => {
+                setChapterId(c.id);
+                setChapterIds(c.fragmentIds);
+              }}
+            >
+              <strong>{c.name}</strong>
+              <span>{c.fragmentIds.length} 段经历</span>
+            </button>
+          ))}
+          {!chapters.length && (
+            <p>把相关经历收进同一章，随时可以更名或移出。</p>
+          )}
+        </div>
+      )}
+      {browseMode === "items" && (
+        <label className="story-item-filter">
+          循着一件物品翻阅
+          <select
+            aria-label="按关联物品浏览"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            <option value="all">全部故事</option>
+            <option value="unlinked">未关联物品</option>
+            {items
+              .filter((i) => fragments.some((f) => f.itemIds.includes(i.id)))
+              .map((i) => (
+                <option key={i.id} value={i.id}>
                   {i.name}
                 </option>
               ))}
-            </select>
-          </label>
-          <label>
-            时间顺序
-            <select value={order} onChange={(e) => setOrder(e.target.value)}>
-              <option value="newest">最近的经历在前</option>
-              <option value="oldest">从最早开始翻阅</option>
-            </select>
-          </label>
-          <small>{rows.length} 段 · 默认私人</small>
-        </div>
-      </details>
-      <div className="life-story-grid">
-        {rows.map((f) => (
-          <article
-            className={`life-card life-story-page ${photos(f).length ? "has-photo" : "text-only"}`}
-            key={f.id}
+          </select>
+        </label>
+      )}
+      <div className="story-quiet-tools">
+        <label>
+          时间顺序
+          <select
+            aria-label="时间顺序"
+            value={order}
+            onChange={(e) => setOrder(e.target.value)}
           >
-            {photos(f).length > 0 ? (
-              <button
-                className="life-story-cover"
-                type="button"
-                aria-label="放大故事照片"
-                onClick={() => enlarge(f)}
-              >
-                <img
-                  className="life-story-photo"
-                  src={url(photos(f)[0])}
-                  alt="用户保存的生活照片"
-                  loading="lazy"
-                />
-                <span>
-                  <Expand size={15} />{" "}
-                  {photos(f).length > 1
-                    ? `${photos(f).length}张照片`
-                    : "放大照片"}
-                </span>
-              </button>
-            ) : (
-              <BookOpen
-                className="life-story-mark"
-                size={25}
-                aria-hidden="true"
-              />
-            )}
-            {photos(f).length > 1 && (
-              <div className="life-story-contact-sheet">
-                {photos(f)
-                  .slice(1, 4)
-                  .map((id, index) => (
-                    <button
-                      key={id}
-                      type="button"
-                      aria-label={`查看故事照片 ${index + 2}`}
-                      onClick={() => enlarge(f, index + 1)}
-                    >
-                      <img
-                        src={url(id)}
-                        alt={`故事照片 ${index + 2}`}
-                        loading="lazy"
-                      />
-                    </button>
-                  ))}
-              </div>
-            )}
-            <small>
-              {f.capturedOn
-                ? f.capturedOn
-                : `记录于 ${new Date(f.createdAt).toLocaleDateString("zh-CN")}`}{" "}
-              {f.demo || f.origin === "fiction" ? ` · ${provenance(f)}` : ""}
-            </small>
-            <button
-              type="button"
-              className="life-story-read"
-              aria-label="阅读故事"
-              onClick={() => setOpened(f.id)}
-            >
-              <h3>{f.text.length <= 60 ? f.text : storyTitle(f.text)}</h3>
-              {f.text.length > 60 && (
-                <p className="life-story-text">{f.text}</p>
-              )}
+            <option value="newest">最近在前</option>
+            <option value="oldest">从最早翻起</option>
+          </select>
+        </label>
+        <details className="life-story-browse-tools">
+          <summary>整理与隐私</summary>
+          {onAsk && (
+            <button type="button" className="text-button" onClick={onAsk}>
+              和物间聊聊这些故事
             </button>
-            {links(f)}
-            <div className="life-actions">
-              <button type="button" onClick={() => setOpened(f.id)}>
-                阅读完整故事
-              </button>
-              <button type="button" disabled={busy} onClick={() => edit(f)}>
-                编辑片段
-              </button>
-              <button type="button" disabled={busy} onClick={() => remove(f)}>
-                删除片段
-              </button>
+          )}
+          <StoryOrganization
+            actor={actor}
+            fragments={fragments}
+            request={request}
+            onChapters={setChapters}
+            activeChapterId={chapterId}
+            onFilter={(ids, id) => {
+              setChapterIds(ids);
+              if (id) setChapterId(id);
+              setBrowseMode("chapters");
+            }}
+          />
+        </details>
+      </div>
+      {fragments.some((f) => f.demo) && (
+        <p className="story-demo-note">
+          演示故事为虚构片段，使用公开场景配图，并非你的真实经历。
+        </p>
+      )}
+      <div className="life-story-grid story-reading-stream">
+        {rows.map((f, index) => {
+          const photoCount = photos(f).length;
+          const month = (f.capturedOn || f.createdAt).slice(0, 7);
+          const previousMonth = index
+            ? (rows[index - 1].capturedOn || rows[index - 1].createdAt).slice(
+                0,
+                7,
+              )
+            : null;
+          return (
+            <div key={f.id} className="story-stream-entry">
+              {month !== previousMonth && (
+                <h3 className="story-month">
+                  {month.split("-")[0]}{" "}
+                  <span>年 {Number(month.split("-")[1])} 月</span>
+                </h3>
+              )}
+              <article
+                data-story-id={f.id}
+                data-story-type={
+                  photoCount > 1 ? "sequence" : photoCount ? "photo" : "text"
+                }
+                className={
+                  "life-story-page story-entry " +
+                  (photoCount > 1
+                    ? "multi-photo"
+                    : photoCount
+                      ? "single-photo"
+                      : "text-only")
+                }
+              >
+                {photoCount === 1 && gallery(f)}
+                <div className="story-entry-copy">
+                  {metadata(f)}
+                  <p className="story-prose">{f.text}</p>
+                  {photoCount > 1 && gallery(f)}
+                  {links(f)}
+                  <footer className="story-entry-footer">
+                    <button
+                      type="button"
+                      className="story-open"
+                      onClick={() => setOpened(f.id)}
+                    >
+                      阅读完整故事 <ArrowUpRight size={13} aria-hidden="true" />
+                    </button>
+                    <details className="story-management">
+                      <summary aria-label="故事选项">
+                        <MoreHorizontal size={18} />
+                        <span className="life-visually-hidden">故事选项</span>
+                      </summary>
+                      <div>
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => edit(f)}
+                        >
+                          编辑片段
+                        </button>
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => remove(f)}
+                        >
+                          删除片段
+                        </button>
+                      </div>
+                    </details>
+                  </footer>
+                </div>
+              </article>
             </div>
-          </article>
-        ))}
+          );
+        })}
       </div>
       {!rows.length && (
         <div className="life-empty">从一句话开始，故事不必很特别。</div>
@@ -771,63 +944,76 @@ export function Stories({
             className="life-story-detail"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              type="button"
-              className="life-story-close"
-              onClick={() => setOpened(null)}
-              aria-label="关闭故事详情"
-            >
-              <X />
-            </button>
-            <small>
-              {current.capturedOn ||
-                `记录于 ${new Date(current.createdAt).toLocaleDateString("zh-CN")}`}
-            </small>
-            <h3 id={detailTitle}>{storyTitle(current.text)}</h3>
-            <div className="life-story-detail-photos">
-              {photos(current).map((id, index) => (
-                <button
-                  type="button"
-                  key={id}
-                  aria-label={`放大照片 ${index + 1}`}
-                  onClick={() => enlarge(current, index)}
-                >
-                  <img src={url(id)} alt={`故事照片 ${index + 1}`} />
-                </button>
-              ))}
-            </div>
-            <p className="life-story-fulltext">{current.text}</p>
-            {links(current)}
-            <details className="life-story-permissions">
-              <summary>记录与隐私</summary>
-              <p>{provenance(current)}</p>
-              <p className="life-muted">
-                {current.allowRecall === false
-                  ? "已关闭AI回忆引用"
-                  : current.allowCloud
-                    ? "允许本人主动回忆时上云（仅文字）"
-                    : "仅主动回忆时本机引用，不上云"}{" "}
-                · 不随物品流转分享
-              </p>
-            </details>
-            <div className="life-actions">
-              <button type="button" onClick={() => edit(current)}>
-                修改这页故事
+            <header className="story-detail-header">
+              <span>生活的一页</span>
+              <button
+                type="button"
+                className="life-story-close"
+                onClick={() => setOpened(null)}
+                aria-label="关闭故事详情"
+              >
+                <X size={20} />
               </button>
-              <button type="button" onClick={() => remove(current)}>
-                删除这页故事
-              </button>
-              {onAsk && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpened(null);
-                    onAsk();
-                  }}
-                >
-                  与物间回忆
+            </header>
+            <div className="story-detail-content">
+              <h3 id={detailTitle} className="life-visually-hidden">
+                {storyTitle(current.text)}
+              </h3>
+              {metadata(current)}
+              <p className="life-story-fulltext">{current.text}</p>
+              {gallery(current, true)}
+              {links(current)}
+              <details className="life-story-permissions">
+                <summary>记录与隐私</summary>
+                <p>{provenance(current)}</p>
+                <p>
+                  {current.capturedOn
+                    ? "事件日期：" + current.capturedOn
+                    : "事件日期未填写"}{" "}
+                  · 记下于{" "}
+                  {new Date(current.createdAt).toLocaleDateString("zh-CN")}
+                </p>
+                {current.demo && (
+                  <p>
+                    场景配图仅供虚构演示，来源与许可：
+                    <a
+                      href="/demo/stories/SOURCES.json"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      配图说明
+                    </a>
+                    ；不代表同一真实事件或型号实拍。
+                  </p>
+                )}
+                <p className="life-muted">
+                  {current.allowRecall === false
+                    ? "已关闭AI回忆引用"
+                    : current.allowCloud
+                      ? "允许本人主动回忆时上云（仅文字）"
+                      : "仅主动回忆时本机引用，不上云"}{" "}
+                  · 不随物品流转分享
+                </p>
+              </details>
+              <div className="life-actions">
+                <button type="button" onClick={() => edit(current)}>
+                  修改这页故事
                 </button>
-              )}
+                <button type="button" onClick={() => remove(current)}>
+                  删除这页故事
+                </button>
+                {onAsk && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpened(null);
+                      onAsk();
+                    }}
+                  >
+                    与物间回忆
+                  </button>
+                )}
+              </div>
             </div>
           </section>
         </div>

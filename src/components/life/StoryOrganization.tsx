@@ -9,11 +9,15 @@ export function StoryOrganization({
   fragments,
   request,
   onFilter,
+  onChapters,
+  activeChapterId,
 }: {
   actor: string;
   fragments: Fragment[];
   request: LifeRequest;
-  onFilter: (ids: string[] | null) => void;
+  onFilter: (ids: string[] | null, chapterId?: string) => void;
+  onChapters?: (chapters: Chapter[]) => void;
+  activeChapterId?: string;
 }) {
   const [data, setData] = useState<{
     chapters: Chapter[];
@@ -31,6 +35,12 @@ export function StoryOrganization({
     [text, setText] = useState(""),
     [scope, setScope] = useState(""),
     [cloud, setCloud] = useState(false);
+  useEffect(() => {
+    onChapters?.(data.chapters);
+  }, [data.chapters, onChapters]);
+  useEffect(() => {
+    if (activeChapterId !== undefined) setSelected(activeChapterId);
+  }, [activeChapterId]);
   useEffect(() => {
     let live = true;
     fetch("/api/life", { headers: { "x-demo-actor": actor } })
@@ -52,7 +62,7 @@ export function StoryOrganization({
       const d = await request(action, input);
       setData(d);
       const c = d.chapters.find((c: Chapter) => c.id === selected);
-      onFilter(selected === "all" ? null : c?.fragmentIds || []);
+      onFilter(selected === "all" ? null : c?.fragmentIds || [], selected);
       return true;
     } catch (e) {
       setNotice((e as Error).message);
@@ -82,6 +92,7 @@ export function StoryOrganization({
                   ? null
                   : data.chapters.find((c) => c.id === e.target.value)
                       ?.fragmentIds || [],
+                e.target.value,
               );
             }}
           >
@@ -233,7 +244,7 @@ export function StoryOrganization({
                     if (ok) {
                       setOpen(false);
                       setSelected("all");
-                      onFilter(null);
+                      onFilter(null, "all");
                     }
                   });
                 }}

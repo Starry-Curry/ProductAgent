@@ -1030,15 +1030,134 @@
 .life-cloud-status p { margin: 8px 0; }
 .life-official-sources .life-source-excerpt { max-height: 180px; overflow: auto; }
 .life-source-excerpt { white-space: pre-wrap; overflow-wrap: anywhere; }
-/* RC storybook: a quiet photo-led reading surface; scoped to the story module. */
-.life-story-toolbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:24px 0 18px}.life-story-toolbar label{flex:1;min-width:150px;font-size:12px;color:var(--life-muted,#6e756a)}.life-story-toolbar small{padding:10px 0}.life-story-page{overflow:hidden;padding:16px!important;align-self:start}.life-story-cover{display:block;position:relative;border:0!important;padding:0!important;background:transparent!important;width:calc(100% + 32px);margin:-16px -16px 16px!important;border-radius:0!important}.life-story-cover .life-story-photo{width:100%;height:245px;object-fit:cover;display:block;margin:0}.life-story-cover span{display:flex;gap:5px;position:absolute;right:10px;bottom:10px;background:#ffffffe6;padding:5px 8px;border-radius:20px;font-size:11px}.life-story-read{padding:0!important;border:0!important;background:transparent!important;text-align:left;width:100%;color:inherit}.life-story-read .life-story-text{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;line-height:1.85;margin:12px 0 18px}.life-story-page.text-only{background:linear-gradient(130deg,#fffdf7,#f5f3e9);min-height:230px}.life-story-mark{color:#a29174;margin:8px 0 20px}.life-story-upload-tile{display:grid;gap:4px;max-width:130px;overflow-wrap:anywhere}.life-story-upload-tile small{font-size:11px}.life-story-upload-tile .life-photo-thumb{width:115px;height:95px}.life-photo-picker{flex-wrap:wrap}.life-story-settings{display:grid;gap:12px;grid-template-columns:1fr 1fr;padding:14px 0}.life-story-settings>small{grid-column:1/-1}.life-story-overlay{position:fixed;inset:0;z-index:80;background:#20291e85;display:grid;place-items:center;padding:24px}.life-story-detail{position:relative;max-width:740px;width:100%;max-height:90dvh;overflow:auto;background:#fffdf7;padding:32px;border-radius:18px;box-shadow:0 24px 90px #0004}.life-story-close{position:absolute;right:12px;top:12px}.life-story-detail-photos{display:flex;gap:8px;overflow:auto;scroll-snap-type:x mandatory}.life-story-detail-photos button{padding:0;border:0;background:none;flex:0 0 85%;scroll-snap-align:start}.life-story-detail-photos img{display:block;width:100%;max-height:460px;object-fit:contain;border-radius:8px}.life-story-fulltext{white-space:pre-wrap;line-height:1.9;font-size:16px;overflow-wrap:anywhere}.life-story-composer{padding:18px!important}.life-story-composer textarea{min-height:88px}.life-story-page .life-actions{gap:8px;flex-wrap:wrap}.life-story-page .life-actions button{font-size:12px;padding:6px 9px}.life-story-page .life-tags{margin:12px 0}.life-story-page>small{font-size:11px;color:#697362}.life-story-composer details{margin:10px 0}.life-story-composer .life-actions{flex-wrap:wrap}
-@media(max-width:600px){.life-story-overlay{padding:10px}.life-story-detail{padding:24px 18px;max-height:95dvh}.life-story-settings{grid-template-columns:1fr}.life-story-cover .life-story-photo{height:240px}.life-story-toolbar label{min-width:125px}.life-story-grid{grid-template-columns:1fr!important}.life-story-upload-tile{max-width:100px}.life-story-upload-tile .life-photo-thumb{width:94px;height:84px}.life-story-composer .life-photo-info{min-width:140px}.life-story-detail-photos button{flex-basis:95%}}
-
-/* Reading-first storybook: the saved experience leads; editing is optional. */
-.life-story-grid{align-items:start;gap:22px}.life-story-page h3{font-size:1.22rem;line-height:1.5;margin:10px 0 6px;color:#34483e}.life-story-page.text-only{padding:28px;background:#fcfaf4;min-height:230px}.life-story-page .life-actions{opacity:.8;gap:12px;border-top:1px solid #eceee7;padding-top:12px;margin-top:16px}.life-story-page .life-actions button{font-size:.8rem;padding:4px 0;border:0;background:transparent}.life-story-page>small{display:block;margin-top:14px;color:#7c837a}.life-story-contact-sheet{display:flex;gap:6px;margin-top:6px}.life-story-contact-sheet button{padding:0;border:0;flex:1;overflow:hidden;border-radius:6px}.life-story-contact-sheet img{display:block;object-fit:cover;width:100%;height:78px}.life-story-detail{overscroll-behavior:contain;scrollbar-gutter:stable;outline:none;padding:34px!important;max-width:820px!important}.life-story-detail h3{font-size:1.65rem;line-height:1.5;margin:12px 32px 22px 0}.life-story-fulltext{font-size:1.07rem;line-height:1.95;white-space:pre-wrap;overflow-wrap:anywhere}.life-story-detail-photos{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible!important;gap:10px}.life-story-detail-photos button{width:auto!important;min-width:0!important}.life-story-detail-photos button:first-child{grid-column:1/-1}.life-story-detail-photos img{display:block;max-height:420px!important;width:100%;object-fit:contain!important;background:#f3f2ec;border-radius:8px}.life-story-permissions{font-size:.82rem;color:#7b827b;margin:24px 0 16px}.life-story-close{position:sticky!important;float:right;top:0!important;background:#fff!important;z-index:2}.life-story-composer{max-width:760px;margin:16px auto 28px}.life-stories>.life-section-head{margin-bottom:16px}@media(max-width:600px){.life-story-detail{padding:22px!important;max-height:94dvh!important}.life-story-detail h3{font-size:1.3rem}.life-story-grid{gap:16px}.life-story-toolbar{gap:8px}.life-story-fulltext{font-size:1rem}}
-
-.life-story-organization{margin:12px 0 20px}.life-story-organization>.life-actions{align-items:end}.life-story-organization select{min-width:160px}.life-understanding{margin-top:12px;font-size:.88rem;color:#5f6b63}.life-understanding article{border-bottom:1px solid #e6e8df;padding:15px 0}.life-understanding form{background:#f6f5ee;padding:16px;border-radius:12px;display:grid;gap:12px}.life-chapter-choices{display:grid;gap:8px;max-height:260px;overflow:auto;margin:14px 0}.life-story-photo-matches{margin:12px 0;font-size:.85rem}.life-story-photo-matches label{margin-top:8px}
-
-.life-story-browse-tools{margin:14px 0 22px;color:#6e796e;font-size:.85rem}.life-story-browse-tools>summary{cursor:pointer;padding:8px 0}.life-story-browse-tools[open]{padding-bottom:12px;border-bottom:1px solid #e6e8df}.life-story-browse-tools .life-story-toolbar{margin:12px 0 0}.life-story-browse-tools .life-story-organization{margin:8px 0 12px}
+/* Storybook reading surface. Only this module; no data or other-page styling. */
+.life-shell .life-stories {max-width:980px;margin:0 auto;}
+.life-stories>.life-section-head {margin-bottom:8px;align-items:center;}
+.life-stories>.life-section-head h2 {font-family:Georgia,"Songti SC","SimSun",serif;font-size:29px;line-height:1.5;}
+.life-stories>.life-section-head p {line-height:1.8;max-width:52ch;}
+.life-stories>.text-button {font-size:12px;padding:4px 0;background:none;border:0;color:#788575;}
+.life-stories .story-reading-nav {display:flex;justify-content:space-between;align-items:center;gap:20px;border-bottom:1px solid #dfe3d8;padding:24px 0 12px;}
+.life-stories .story-view-switch {display:flex;gap:6px;}
+.life-stories .story-view-switch button {border:0;background:none;color:#7c8477;padding:7px 13px;border-radius:30px;white-space:nowrap;}
+.life-stories .story-view-switch button[aria-pressed=true] {background:#e6ecdf;color:#344d3e;}
+.life-stories label.story-search {margin:0;}
+.life-stories .story-search input {max-width:220px;min-height:34px;padding:6px 0;margin:0;border:0;border-bottom:1px solid #dfe3d8;background:none;font-size:12px;border-radius:0;}
+.life-stories .story-quiet-tools {display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:9px 0;}
+.life-shell .life-stories .story-quiet-tools>label {display:flex;flex-direction:row;align-items:center;gap:8px;margin:0;font-size:11px;color:#7e877b;white-space:nowrap;}
+.life-stories .story-quiet-tools select {font-size:11px;padding:5px 6px;margin:0;max-width:140px;background:transparent;border:0;}
+.life-stories details.life-story-browse-tools {border:0;padding:0;margin:0;max-width:70%;font-size:12px;}
+.life-stories .life-story-browse-tools>summary {font-size:11px;margin:0;padding:5px 0;color:#798674;}
+.life-stories .life-story-browse-tools[open] {flex:1;max-width:100%;}
+.life-stories .story-quiet-tools:has(.life-story-browse-tools[open]) {display:block;}
+.life-stories .story-demo-note {font-size:11px;color:#7c8174;line-height:1.7;margin:14px 0 8px;max-width:72ch;}
+.life-stories .story-chapter-shelf {display:flex;gap:12px;flex-wrap:wrap;padding:18px 0 10px;}
+.life-stories .story-chapter-shelf button {display:grid;gap:10px;text-align:left;min-width:155px;border:1px solid #e0e3d8;border-left:3px solid #a4b19a;background:#f1f1e6;padding:16px 22px;}
+.life-stories .story-chapter-shelf button[aria-pressed=true] {border-color:#6e886a;background:#e9eedf;}
+.life-stories .story-chapter-shelf strong {font-family:"Songti SC","SimSun",serif;font-size:17px;font-weight:500;}
+.life-stories .story-chapter-shelf span {font-size:11px;color:#7c8775;}
+.life-stories .story-item-filter {display:flex;gap:16px;align-items:center;font-size:13px;padding:20px 0 10px;}
+.life-stories .story-item-filter select {max-width:260px;}
+.life-shell .life-stories .life-story-grid {display:flex;flex-direction:column;gap:0;}
+.life-stories .story-stream-entry {width:100%;min-width:0;}
+.life-stories .story-month {font-family:Georgia,serif;font-size:24px;font-weight:400;color:#6f7f66;margin:14px 0 2px;}
+.life-stories .story-month span {font-family:inherit;font-size:13px;letter-spacing:.1em;color:#8b9382;}
+.life-shell .life-stories article.story-entry {position:relative;margin:0;padding:28px 0;border:0;border-bottom:1px solid #e0e4d9;border-radius:0;background:none;box-shadow:none;min-height:0;overflow:visible;}
+.life-stories .story-entry.single-photo {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center;}
+.life-stories .story-entry-copy {min-width:0;}
+.life-stories .story-dateline {display:flex;flex-wrap:wrap;align-items:center;gap:10px;color:#7f887a;font-size:11px;line-height:1.6;margin-bottom:13px;}
+.life-stories .story-demo-label {font-size:10px;padding:1px 6px;border:1px solid #dce1d3;border-radius:3px;color:#818b73;}
+.life-stories button.story-chapter-link {padding:0;border:0;background:none;font-size:11px;color:#73826c;}
+.life-stories .story-prose {font-family:Georgia,"Songti SC","SimSun",serif;font-size:21px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere;color:#354639;margin:0 0 18px;max-width:38em;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden;}
+.life-shell .life-stories article.story-entry.text-only {max-width:740px;padding-left:28px;margin-left:0;border-left:2px solid #dfe3d4;}
+.life-stories .text-only .story-prose {font-size:22px;-webkit-line-clamp:8;}
+.life-stories .multi-photo .story-prose {max-width:700px;}
+.life-stories .story-photo-sequence {display:flex;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;align-items:flex-start;padding:0 0 8px;scrollbar-width:thin;scrollbar-color:#c5cebc transparent;}
+.life-stories .story-photo-sequence figure {margin:0;min-width:0;flex:0 0 auto;max-width:82%;scroll-snap-align:start;}
+.life-stories .story-photo-sequence[data-photo-count="1"] figure {max-width:100%;}
+.life-stories .story-photo-sequence button {position:relative;display:block;max-width:100%;border:0;padding:0;background:transparent;border-radius:5px;}
+.life-shell .life-stories img.story-scene {display:block;width:auto;max-width:100%;height:auto;max-height:340px;object-fit:contain;border-radius:5px;margin:0;}
+.life-stories .story-photo-sequence figcaption {font-size:10px;letter-spacing:.04em;color:#88927e;margin:8px 0 0;}
+.life-stories .story-photo-enlarge {position:absolute;right:8px;bottom:8px;display:flex;background:#fffc;border-radius:50%;padding:5px;color:#5f715e;opacity:0;transition:opacity .15s;}
+.life-stories .story-photo-sequence button:hover .story-photo-enlarge,.life-stories .story-photo-sequence button:focus-visible .story-photo-enlarge {opacity:1;}
+.life-stories .multi-photo .story-photo-sequence {margin:18px 0 12px;}
+.life-stories .story-item-trace {display:flex;gap:6px 12px;flex-wrap:wrap;align-items:center;font-size:11px;color:#8c9485;margin:15px 0 0;}
+.life-stories .story-item-trace button {display:inline-flex;align-items:center;gap:2px;background:none;border:0;padding:2px 0;border-bottom:1px solid #dfe3d6;border-radius:0;font-size:11px;color:#718068;}
+.life-stories .story-entry-footer {display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin-top:14px;padding:0;border:0;}
+.life-stories button.story-open {display:flex;align-items:center;gap:5px;font-size:12px;color:#728268;padding:4px 0;border:0;background:none;}
+.life-stories details.story-management {border:0;margin:0;padding:0;}
+.life-stories .story-management summary {display:flex;align-items:center;list-style:none;margin:0;padding:4px 6px;color:#88927f;}
+.life-stories .story-management summary::-webkit-details-marker {display:none;}
+.life-stories .story-management>div {display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;}
+.life-stories .story-management button {padding:4px 0;border:0;background:none;color:#7e8876;font-size:12px;}
+.life-stories .life-notice {padding:10px 14px;margin:12px 0;font-size:12px;}
+.life-stories .life-story-overlay {position:fixed;inset:0;z-index:80;display:grid;place-items:center;background:#23302788;padding:28px;}
+.life-stories .life-story-detail {width:min(880px,100%);max-height:90dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-gutter:stable;background:#fcfbf5;border-radius:12px;box-shadow:0 24px 90px #10251a3a;outline:none;padding:0;}
+.life-stories .story-detail-header {position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;background:#fcfbf5f5;backdrop-filter:blur(8px);border-bottom:1px solid #e5e7df;padding:12px 24px;}
+.life-stories .story-detail-header>span {font-size:12px;letter-spacing:.12em;color:#849078;}
+.life-stories .life-story-close {display:flex;align-items:center;justify-content:center;padding:7px;border:0;background:none;color:#64765f;}
+.life-stories .story-detail-content {padding:24px 36px 30px;}
+.life-stories .life-story-fulltext {font-family:Georgia,"Songti SC","SimSun",serif;font-size:23px;line-height:1.95;white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 25px;}
+.life-stories .detail-sequence {display:flex;flex-direction:row;justify-content:center;flex-wrap:wrap;gap:24px 16px;overflow:visible;padding:0;margin:0;}
+.life-stories .detail-sequence figure {width:auto;max-width:calc(50% - 8px);flex:0 1 auto;}
+.life-stories .detail-sequence[data-photo-count="1"] figure {max-width:100%;}
+.life-shell .life-stories .detail-sequence img.story-scene {max-height:460px;}
+.life-stories .life-story-permissions {font-size:12px;color:#87917d;margin:24px 0 16px;}
+.life-stories .life-story-permissions summary {font-size:12px;margin:0;}
+.life-stories .life-story-detail .life-actions {flex-wrap:wrap;gap:14px;}
+.life-stories .life-story-detail .life-actions button {padding:4px 0;border:0;background:none;font-size:12px;color:#718268;}
+.life-stories .life-story-composer {max-width:760px;padding:20px!important;margin:16px auto 24px;}
+.life-stories .life-story-composer textarea {min-height:88px;}
+.life-stories .life-story-composer details {margin:10px 0;}
+.life-stories .life-story-composer .life-actions {flex-wrap:wrap;}
+.life-stories .life-story-upload-tile {display:grid;gap:4px;max-width:130px;overflow-wrap:anywhere;}
+.life-stories .life-story-upload-tile small {font-size:11px;}
+.life-stories .life-story-upload-tile .life-photo-thumb {width:115px;height:95px;}
+.life-stories .life-photo-picker {flex-wrap:wrap;}
+.life-stories .life-story-settings {display:grid;gap:12px;grid-template-columns:1fr 1fr;padding:14px 0;}
+.life-stories .life-story-settings>small {grid-column:1/-1;}
+.life-story-organization {margin:12px 0 20px;}
+.life-story-organization>.life-actions {align-items:end;}
+.life-story-organization select {min-width:160px;}
+.life-understanding {margin-top:12px;font-size:.88rem;color:#5f6b63;}
+.life-understanding article {border-bottom:1px solid #e6e8df;padding:15px 0;}
+.life-understanding form {background:#f6f5ee;padding:16px;border-radius:12px;display:grid;gap:12px;}
+.life-chapter-choices {display:grid;gap:8px;max-height:260px;overflow:auto;margin:14px 0;}
+.life-story-photo-matches {margin:12px 0;font-size:.85rem;}
+.life-story-photo-matches label {margin-top:8px;}
+@media(max-width:650px) {
+ .life-shell .life-stories>.life-section-head {gap:10px;align-items:flex-start;flex-wrap:nowrap;}
+ .life-stories>.life-section-head>div {min-width:0;}
+ .life-stories>.life-section-head>button {flex-shrink:0;white-space:nowrap;padding:7px 0;margin-top:4px;font-size:12px;}
+ .life-stories>.life-section-head h2 {font-size:25px;}
+ .life-stories .story-reading-nav {gap:12px;flex-wrap:wrap;padding-top:16px;}
+ .life-stories .story-view-switch {gap:3px;}
+ .life-stories .story-view-switch button {padding:6px 11px;font-size:12px;}
+ .life-stories .story-search {width:100%;}
+ .life-stories .story-search input {width:100%;max-width:none;}
+ .life-stories .story-quiet-tools {align-items:flex-start;gap:8px;}
+ .life-stories details.life-story-browse-tools {max-width:58%;}
+ .life-shell .life-stories article.story-entry {padding:23px 0;}
+ .life-stories .story-entry.single-photo {display:flex;flex-direction:column;gap:14px;align-items:stretch;}
+ .life-stories .story-entry.single-photo .story-entry-copy {display:contents;}
+ .life-stories .single-photo .story-dateline {order:-2;margin-bottom:0;}
+ .life-stories .single-photo .story-prose {order:-1;margin:0;}
+ .life-stories .single-photo .story-item-trace {margin-top:0;}
+ .life-stories .single-photo .story-entry-footer {margin-top:0;}
+ .life-shell .life-stories article.story-entry.text-only {margin-left:0;padding-left:18px;max-width:none;}
+ .life-stories .story-prose,.life-stories .text-only .story-prose {font-size:20px;line-height:1.85;}
+ .life-stories .story-photo-sequence figure {max-width:86%;}
+ .life-shell .life-stories img.story-scene {max-height:310px;}
+ .life-stories .life-story-overlay {padding:10px;}
+ .life-stories .life-story-detail {max-height:95dvh;border-radius:10px;}
+ .life-stories .detail-sequence {flex-direction:column;align-items:center;}
+ .life-stories .detail-sequence figure {max-width:100%;}
+ .life-stories .story-detail-header {padding:10px 16px;}
+ .life-stories .story-detail-content {padding:18px 20px 24px;}
+ .life-stories .life-story-fulltext {font-size:21px;line-height:1.9;}
+ .life-stories .life-story-settings {grid-template-columns:1fr;}
+ .life-stories .life-story-upload-tile {max-width:100px;}
+ .life-stories .life-story-upload-tile .life-photo-thumb {width:94px;height:84px;}
+ .life-stories .life-story-composer .life-photo-info {min-width:140px;}
+}
 
 .cloud-demo-entry{max-width:620px;margin:12vh auto;padding:28px;line-height:1.9;color:#34483e}.cloud-demo-entry button{background:#395c4b;color:white;padding:12px 24px;border:0;border-radius:10px;cursor:pointer}.cloud-demo-entry input{display:block;padding:10px;margin:12px 0}.cloud-demo-banner{padding:8px 20px;background:#eef2e8;text-align:center;font-size:12px;color:#586852}.cloud-demo-banner[hidden]{display:none}.cloud-demo-banner button{margin-left:12px;border:0;background:none;text-decoration:underline;cursor:pointer}

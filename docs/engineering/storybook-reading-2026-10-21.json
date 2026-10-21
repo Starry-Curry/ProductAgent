@@ -1,0 +1,272 @@
+{
+  "passed": true,
+  "browser": "installed Microsoft Edge",
+  "browserVersion": "137.0.3296.62",
+  "realModelCalls": 0,
+  "data": "isolated synthetic demo; licensed scene photos, not actual experiences",
+  "checks": [
+    "Distinct single-photo / multi-photo / text layouts, original prose, no permanent composer or product images",
+    "Confirmed chapter and multi-item browsing filter same original events without copying",
+    "Story → item → story returns to original reading position",
+    "desktop: no overflow/meaningless text height/obscured controls, full detail, sticky close, focus trap and Escape return",
+    "mobile: no overflow/meaningless text height/obscured controls, full detail, sticky close, focus trap and Escape return",
+    "390px real create → edit text to photo → delete; gallery navigation remains usable"
+  ],
+  "layouts": [
+    {
+      "label": "desktop-timeline",
+      "width": 1365,
+      "documentWidth": 1365,
+      "entries": [
+        {
+          "type": "photo",
+          "width": 980,
+          "height": 379.015625,
+          "proseHeight": 79.78125,
+          "minHeight": "0px"
+        },
+        {
+          "type": "sequence",
+          "width": 980,
+          "height": 684.09375,
+          "proseHeight": 119.671875,
+          "minHeight": "0px"
+        },
+        {
+          "type": "text",
+          "width": 740,
+          "height": 260.53125,
+          "proseHeight": 83.59375,
+          "minHeight": "0px"
+        }
+      ],
+      "images": [
+        {
+          "width": 474,
+          "height": 314.015625,
+          "fit": "contain",
+          "source": "/api/life/media/d9f96673-7f01-4a15-b03c-523966caa0c3?actor=lin",
+          "ratioError": 0.000029855202269057912
+        },
+        {
+          "width": 226.65625,
+          "height": 339.984375,
+          "fit": "contain",
+          "source": "/api/life/media/2890c416-6f04-4478-9bae-328f609fd53e?actor=lin",
+          "ratioError": 0
+        },
+        {
+          "width": 226.65625,
+          "height": 339.984375,
+          "fit": "contain",
+          "source": "/api/life/media/20025434-7a03-4f75-b9b7-cc70ecda2774?actor=lin",
+          "ratioError": 0
+        }
+      ],
+      "buttonsClear": true
+    },
+    {
+      "label": "desktop-timeline",
+      "width": 1365,
+      "documentWidth": 1365,
+      "entries": [
+        {
+          "type": "photo",
+          "width": 980,
+          "height": 379.015625,
+          "proseHeight": 79.78125,
+          "minHeight": "0px"
+        },
+        {
+          "type": "sequence",
+          "width": 980,
+          "height": 684.09375,
+          "proseHeight": 119.671875,
+          "minHeight": "0px"
+        },
+        {
+          "type": "text",
+          "width": 740,
+          "height": 260.53125,
+          "proseHeight": 83.59375,
+          "minHeight": "0px"
+        }
+      ],
+      "images": [
+        {
+          "width": 474,
+          "height": 314.015625,
+          "fit": "contain",
+          "source": "/api/life/media/d9f96673-7f01-4a15-b03c-523966caa0c3?actor=lin",
+          "ratioError": 0.000029855202269057912
+        },
+        {
+          "width": 226.65625,
+          "height": 339.984375,
+          "fit": "contain",
+          "source": "/api/life/media/2890c416-6f04-4478-9bae-328f609fd53e?actor=lin",
+          "ratioError": 0
+        },
+        {
+          "width": 226.65625,
+          "height": 339.984375,
+          "fit": "contain",
+          "source": "/api/life/media/20025434-7a03-4f75-b9b7-cc70ecda2774?actor=lin",
+          "ratioError": 0
+        }
+      ],
+      "buttonsClear": true
+    },
+    {
+      "label": "mobile-timeline",
+      "width": 390,
+      "documentWidth": 390,
+      "entries": [
+        {
+          "type": "photo",
+          "width": 358,
+          "height": 534.109375,
+          "proseHeight": 111,
+          "minHeight": "0px"
+        },
+        {
+          "type": "sequence",
+          "width": 358,
+          "height": 672.421875,
+          "proseHeight": 148,
+          "minHeight": "0px"
+        },
+        {
+          "type": "text",
+          "width": 358,
+          "height": 277.9375,
+          "proseHeight": 111,
+          "minHeight": "0px"
+        }
+      ],
+      "images": [
+        {
+          "width": 358,
+          "height": 237.171875,
+          "fit": "contain",
+          "source": "/api/life/media/d9f96673-7f01-4a15-b03c-523966caa0c3?actor=lin",
+          "ratioError": 0.00001317609855711055
+        },
+        {
+          "width": 206.65625,
+          "height": 309.984375,
+          "fit": "contain",
+          "source": "/api/life/media/2890c416-6f04-4478-9bae-328f609fd53e?actor=lin",
+          "ratioError": 0
+        },
+        {
+          "width": 206.65625,
+          "height": 309.984375,
+          "fit": "contain",
+          "source": "/api/life/media/20025434-7a03-4f75-b9b7-cc70ecda2774?actor=lin",
+          "ratioError": 0
+        }
+      ],
+      "buttonsClear": true
+    },
+    {
+      "label": "mobile-edited-text-to-photo",
+      "width": 390,
+      "documentWidth": 390,
+      "entries": [
+        {
+          "type": "photo",
+          "width": 358,
+          "height": 552.359375,
+          "proseHeight": 74,
+          "minHeight": "0px"
+        },
+        {
+          "type": "photo",
+          "width": 358,
+          "height": 534.109375,
+          "proseHeight": 111,
+          "minHeight": "0px"
+        },
+        {
+          "type": "sequence",
+          "width": 358,
+          "height": 672.421875,
+          "proseHeight": 148,
+          "minHeight": "0px"
+        },
+        {
+          "type": "text",
+          "width": 358,
+          "height": 277.9375,
+          "proseHeight": 111,
+          "minHeight": "0px"
+        }
+      ],
+      "images": [
+        {
+          "width": 206.71875,
+          "height": 309.96875,
+          "fit": "contain",
+          "source": "/api/life/media/0eed1081-9514-4767-888d-35e24f625c4c?actor=lin",
+          "ratioError": 0.000040345543041109266
+        },
+        {
+          "width": 358,
+          "height": 237.171875,
+          "fit": "contain",
+          "source": "/api/life/media/d9f96673-7f01-4a15-b03c-523966caa0c3?actor=lin",
+          "ratioError": 0.00001317609855711055
+        },
+        {
+          "width": 206.65625,
+          "height": 309.984375,
+          "fit": "contain",
+          "source": "/api/life/media/2890c416-6f04-4478-9bae-328f609fd53e?actor=lin",
+          "ratioError": 0
+        },
+        {
+          "width": 206.65625,
+          "height": 309.984375,
+          "fit": "contain",
+          "source": "/api/life/media/20025434-7a03-4f75-b9b7-cc70ecda2774?actor=lin",
+          "ratioError": 0
+        }
+      ],
+      "buttonsClear": true
+    }
+  ],
+  "subjectiveReadingQuality": "Awaiting user review; geometry and CRUD passing does not certify aesthetics",
+  "date": "2026-10-21",
+  "baseline": "903abb9",
+  "scope": "Storybook reading rework only; no schema or user-record migration",
+  "acceptance": {
+    "singlePhoto": "Edge desktop + 390px",
+    "multiplePhotos": "sequence + lightbox + full detail",
+    "textOnly": "no fake image and measured content height",
+    "multipleItems": "one original event, two item links and item/story return",
+    "chapters": "confirmed chapter filter, no copied events",
+    "crud": "create, edit text to photo, delete on 390px",
+    "privacy": "existing RC recall revocation / gifted item privacy / media deletion regression passed",
+    "subjectiveQuality": "pending human review"
+  },
+  "regression": {
+    "targetedDomainTests": 25,
+    "passed": 25,
+    "typecheck": "passed",
+    "productionBuild": ".next-storybook passed",
+    "edgeRC": "passed",
+    "fullRepositorySuite": "not rerun for this UI-only task",
+    "paidCalls": 0
+  },
+  "screenshots": [
+    "artifacts/storybook-reading/desktop.png",
+    "artifacts/storybook-reading/mobile.png",
+    "artifacts/storybook-reading/single-photo.png",
+    "artifacts/storybook-reading/multi-photo.png",
+    "artifacts/storybook-reading/text-only.png",
+    "artifacts/storybook-reading/chapters.png",
+    "artifacts/storybook-reading/detail-desktop.png",
+    "artifacts/storybook-reading/detail-mobile.png"
+  ]
+}

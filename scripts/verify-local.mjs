@@ -67,17 +67,19 @@ try {
   const selected =
     process.argv[2] === "catalog"
       ? ["tests/catalog-integration.mjs"]
-      : process.argv[2] === "formats"
-        ? ["tests/life-formats.mjs"]
-        : process.argv[2] === "rc"
-          ? ["tests/rc-integration.mjs"]
-          : process.argv[2] === "life"
-            ? ["tests/life-integration.mjs", "tests/life-formats.mjs"]
-            : process.argv[2]
-              ? scripts.filter(
-                  (s) => s === `tests/${process.argv[2]}-integration.mjs`,
-                )
-              : scripts;
+      : process.argv[2] === "storybook"
+        ? ["tests/storybook-reading.mjs"]
+        : process.argv[2] === "formats"
+          ? ["tests/life-formats.mjs"]
+          : process.argv[2] === "rc"
+            ? ["tests/rc-integration.mjs"]
+            : process.argv[2] === "life"
+              ? ["tests/life-integration.mjs", "tests/life-formats.mjs"]
+              : process.argv[2]
+                ? scripts.filter(
+                    (s) => s === `tests/${process.argv[2]}-integration.mjs`,
+                  )
+                : scripts;
   if (!selected.length) throw Error("Unknown test journey");
   for (const script of selected) {
     const child = spawn(process.execPath, [script], {
