@@ -140,7 +140,9 @@ export function auditIdeaActions(
       if (
         name === "精确计时工具" &&
         /约|大约|粗略|默数/.test(text) &&
-        !/严格|精确|没有.{0,5}计时|不用计时/.test(goal)
+        !/严格|精确|没有.{0,5}计时|不(?:用|使用|依赖)(?:任何)?计时|无(?:需)?计时/.test(
+          goal,
+        )
       )
         continue;
       resources.unconfirmed.push(name);
@@ -191,6 +193,19 @@ export function auditIdeaActions(
         );
       }
     }
+    for (const feature of ["侧袋", "前袋", "挂钩", "颈带", "带扣"]) {
+      if (
+        text.includes(feature) &&
+        !inventory.includes(feature) &&
+        !conditional
+      ) {
+        resources.unconfirmed.push(feature);
+        issue(
+          "unsupported-capability",
+          `未确认有${feature}结构，改为主容器/手持等基础操作，或给无该结构的替代`,
+        );
+      }
+    }
     if (/桌面|台面|地面|窗边|户外|公园|墙面/.test(text))
       resources.environment.push(
         "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
@@ -210,6 +225,58 @@ export function auditIdeaActions(
         );
     }
   });
+  const allSteps = value.steps.join(" ");
+  if (
+    /杯|玻璃/.test(inventory) &&
+    /倒扣.{0,20}(?:杯底|底座)|杯.{0,6}倒扣/.test(allSteps) &&
+    /(?:插入|插进|伸入|放进).{0,10}杯口/.test(allSteps)
+  )
+    issues.push({
+      code: "inconsistent-geometry",
+      step: -1,
+      reason:
+        "倒扣的杯子不能再从上方插入杯口；改用稳定的正立容器或平放布局，不搭建易倒玻璃结构",
+    });
+  if (
+    /(?:走路|步行|行走).{0,12}(?:始终|一直|全程).{0,20}(?:取景|框住|盯着)/.test(
+      allSteps,
+    )
+  )
+    issues.push({
+      code: "unsafe-attention",
+      step: -1,
+      reason: "不能边走边持续盯取景框；行走看路，停稳后再取景",
+    });
+  if (
+    /香蕉|水果/.test(inventory) &&
+    /(?:压|挤|划|掐).{0,15}(?:凹痕|果皮|香蕉皮)|(?:香蕉|果皮|香蕉皮).{0,15}(?:弯折|划出)/.test(
+      allSteps,
+    )
+  )
+    issues.push({
+      code: "food-damage",
+      step: -1,
+      reason:
+        "备餐不应为了游戏压折或划伤食物；保留完整水果，趣味不依赖损伤或无据保鲜效果",
+    });
+  if (/冷藏|冰箱/.test(allSteps) && !/冰箱|冷藏设备/.test(inventory) && strict)
+    issues.push({
+      code: "implicit-tool",
+      step: -1,
+      reason:
+        "只用登记物品时不能假定有冷藏设备；给不依赖冷藏的方案并核对食品状态",
+    });
+  if (
+    /延缓.{0,8}褐变|保留可食性|仍可食|可放心.{0,5}(?:食|吃)/.test(
+      value.rationale || allSteps,
+    )
+  )
+    issues.push({
+      code: "unsupported-food-safety",
+      step: -1,
+      reason:
+        "没有储存与食品状态证据，不能保证保鲜、可食性或用游戏状态判断食品安全",
+    });
   // A narrowly identifiable goal needs a usable arrangement, not a balancing game.
   // Other creative goals stay open; this is not a general semantic judge.
   if (

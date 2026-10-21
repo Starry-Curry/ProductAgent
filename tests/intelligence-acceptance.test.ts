@@ -100,6 +100,18 @@ test("真实失败动作回归：数字照片、隐含杂物、精确计时、�
   });
   assert.equal(good.issues.length, 0);
   assert.deepEqual(good.resources.owned, ["c", "p"]);
+  assert.ok(
+    auditIdeaActions("只用已有物品整理桌面", items, {
+      itemIds: ["g", "p"],
+      steps: ["将杯子倒扣作底座", "把笔记本插入杯口"],
+    }).issues.some((i) => i.code === "inconsistent-geometry"),
+  );
+  assert.ok(
+    auditIdeaActions("摄影散步", items, {
+      itemIds: ["c"],
+      steps: ["走路时始终框住前方移动目标"],
+    }).issues.some((i) => i.code === "unsafe-attention"),
+  );
 });
 
 test("引文序列化修复与逐句定位不放过改写、数字或无据句子", () => {
