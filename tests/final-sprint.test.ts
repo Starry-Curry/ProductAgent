@@ -30,7 +30,7 @@ test("只用已有物品是库存指代，不会阻止目标模型调用；多�
       title: "纸上清单",
       itemIds: [pen],
       minutes: 5,
-      steps: ["在纸上写下桌面物品类别，按类别归位"],
+      steps: ["在纸上写下整理目标和摆放草图，不处理未登记物品"],
       limits: ["先核对桌面空间"],
     };
     const provider = {

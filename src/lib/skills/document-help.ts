@@ -11,6 +11,7 @@ import {
   phaseLabels,
   type TaskPhase,
   taskEvidence,
+  taskStepCovers,
 } from "../life/knowledge-task.ts";
 
 export const groundedSchema = z
@@ -45,7 +46,7 @@ export const groundedSchema = z
               .optional(),
             covers: z.array(z.string().max(30)).max(5).optional(),
           })
-          .strict(),
+          .strip(),
       )
       .min(1)
       .max(10),
@@ -232,6 +233,11 @@ export function groundedReply(
     .filter((s) => !s.success)
     .map(() => "单条步骤协议不完整，未作为操作指导");
   for (const step of p.steps) {
+    if (
+      step.covers?.includes("initial-clean") &&
+      /首次|使用前|开始前/.test(step.text)
+    )
+      step.phase = "prepare";
     step.text = step.text.replace(/[（(]说明书第[0-9、，,]+[页段][）)]/g, "");
     try {
       const sources = step.sourceIds.map((id) =>
@@ -239,10 +245,34 @@ export function groundedReply(
       );
       if (sources.some((s) => !s))
         throw new AgentError("操作引用不属于当前型号或已失效的资料版本");
+      // A quote crossing the boundary of overlapping retrieved chunks is still
+      // verifiable. Locate only adjacent chunks of the SAME known document;
+      // never search other documents or silently accept an unknown citation ID.
+      if (
+        step.sourceQuote &&
+        !sources.some((s) => quoteInSource(s!.text, step.sourceQuote!))
+      ) {
+        const neighbors = evidence.filter((e) =>
+          sources.some(
+            (s) =>
+              s?.documentId &&
+              e.documentId === s.documentId &&
+              e.id !== s.id &&
+              e.start <= s.end &&
+              e.end >= s.start,
+          ),
+        );
+        for (const e of neighbors.slice(0, 4 - sources.length)) {
+          if (!sources.some((s) => s?.id === e.id)) {
+            sources.push(e);
+            step.sourceIds.push(e.id);
+          }
+        }
+      }
       if (sources.every((s) => s?.category === "facts"))
         throw new AgentError("只有规格资料，不能冒充操作步骤");
       const text = withoutProhibitedActions(step.text),
-        original = sources
+        originalBlock = sources
           .map((s) => `${s!.model} ${s!.title} ${s!.text}`)
           .join(" ");
       if (step.sourceQuote) {
@@ -287,6 +317,8 @@ export function groundedReply(
         )
           throw new AgentError("逐步引文不在所列原文中");
       }
+      // Valid citation IDs cannot license assertions borrowed from unrelated sentences.
+      const original = step.sourceQuote || originalBlock;
       // A diagram's reading order or an unrelated mention of a left/right unit is not
       // evidence for where the port is. Omit this optional location; keep the action.
       if (
@@ -328,7 +360,10 @@ export function groundedReply(
         ],
         [/漂白|漂白剂/, /bleach|漂白/i],
         [/溶剂/, /solvent|溶剂/i],
-        [/高温|耐热/, /high temperature|heat.resistan|高温|耐热/i],
+        [
+          /高温|耐热/,
+          /high temperature|maximum temperature|heat.resistan|高温|耐热/i,
+        ],
         [/防水/, /waterproof|防水/i],
         [/密封|气密/, /airtight|seal|密封|气密/i],
         [/酒精|乙醇/, /alcohol|ethanol|酒精|乙醇/i],
@@ -340,9 +375,24 @@ export function groundedReply(
         [/鼓包|翘起/, /swell|warp|鼓包|翘起/i],
         [/激活/, /activat|激活/i],
       ] as const)
-        if (claim.test(text) && !proof.test(original))
-          throw new AgentError("专属步骤未获引用原文支持");
+        if (claim.test(step.text) && !proof.test(original)) {
+          // An optional unsupported prohibition is not evidence. Omit just that
+          // clause, rather than discarding a correctly sourced cleaning action.
+          const clauses = step.text.split(/([。；;，,])/);
+          step.text = clauses
+            .filter(
+              (clause) =>
+                !(
+                  claim.test(clause) && /切勿|不要|不可|禁止|不得/.test(clause)
+                ),
+            )
+            .join("");
+          if (claim.test(step.text))
+            throw new AgentError("专属步骤未获引用原文支持");
+        }
       // Matching vocabulary must not reverse an explicit restriction.
+      if (!step.text.replace(/[。；;，,\s]/g, ""))
+        throw new AgentError("移除无据附加断言后没有可执行动作");
       for (const [claim, forbiddenSource] of [
         [
           /可以.{0,5}洗碗机|放入洗碗机|用洗碗机/,
@@ -369,6 +419,28 @@ export function groundedReply(
   if (!accepted.length)
     throw new AgentError(rejected[0] || "没有可支持的操作步骤");
   p.steps = accepted;
+  if (task?.full && task.cooking) {
+    // Task dependency ordering, not a model-specific recipe. No timings added.
+    const rank = (s: (typeof p.steps)[number]) =>
+      s.phase === "prepare" && taskStepCovers("initial-clean", s.text)
+        ? 0
+        : /语言/.test(s.text)
+          ? 2
+          : /空篮|除味/.test(s.text)
+            ? 3
+            : s.phase === "start"
+              ? 1
+              : taskStepCovers("load", s.text)
+                ? 4
+                : s.phase === "configure"
+                  ? 5
+                  : s.phase === "finish"
+                    ? 7
+                    : s.phase === "care"
+                      ? 8
+                      : 6;
+    p.steps.sort((a, b) => rank(a) - rank(b));
+  }
   // A preparation operation that explicitly needs power must follow startup, not precede it.
   const startAt = p.steps.findIndex((s) => s.phase === "start");
   if (startAt > 0) {
@@ -453,24 +525,33 @@ export function groundedReply(
               ),
           )
         ) &&
-        !p.steps.some((s) =>
-          f.id === "initial-clean"
-            ? s.phase === "prepare" && /清洗|清洁|洗净/.test(s.text)
-            : f.id === "initial"
-              ? /首次|第一次|初次/.test(s.text)
-              : f.id === "load"
-                ? /食材|食物/.test(s.text) && /放入|加入|装入|摆放/.test(s.text)
-                : f.id === "program"
-                  ? /程序|模式|时间|温度/.test(s.text) &&
-                    /旋|选|设|确认|启动/.test(s.text)
-                  : /结束|冷却|清洗|清洁|拔/.test(s.text),
-        )
+        !p.steps.some(
+          (s) =>
+            (f.id !== "initial-clean" || s.phase === "prepare") &&
+            taskStepCovers(f.id, s.text),
+        ) &&
+        !completed.some((s) => taskStepCovers(f.id, s.text))
       )
         missing.push(f.label + "：未形成完整指导");
   if (task?.full && task.cooking)
     missing.push(
       "实际烹饪前，请按所选食材、份量及官方食谱确认程序/参数；本次只提供控制流程，不凭空设定熟度或食品时温。",
     );
+  const conditions = [
+    task?.question,
+    ...(session.messages || [])
+      .filter((m) => m.role === "user")
+      .map((m) => m.text),
+  ].join(" ");
+  if (
+    task?.full &&
+    task.cooking &&
+    (!/食材[为是：:]|鸡|肉|鱼|薯|土豆|蔬菜|豆腐/.test(conditions) ||
+      !/\d+\s*(?:g\b|克|千克|公斤|份|个)/i.test(conditions))
+  )
+    p.questions = [
+      "这次准备做什么食材、大约多少克或几份？确认后才能核对适用程序；不会自行给出食谱参数。",
+    ];
   if (rejected.length)
     missing.push(
       `已隐藏${rejected.length}条未通过证据检查的步骤，未据此宣称完整完成任务。`,

@@ -1198,6 +1198,7 @@ export async function executeGraph(
           itemId: effectiveSession.itemId,
           temporary,
         });
+        ctx.knowledgeTask.question += "\n本轮用户条件：" + w.question;
         w.reply = storyPlan
           ? validateStorytelling(w.response!.text, storyPlan)
           : validateModelPacket(
@@ -1207,6 +1208,101 @@ export async function executeGraph(
               session.tried,
               session.messages,
             );
+        // Repair only an omitted, source-backed action. Keep the usable original
+        // steps; no transport retries or wholesale re-generation of valid guidance.
+        if (
+          !storyPlan &&
+          ctx.knowledgeTask.full &&
+          ctx.knowledgeTask.cooking &&
+          w.reply.source === "model-with-evidence" &&
+          w.calls < (publicDemo() ? 1 : 3)
+        ) {
+          const missing = ctx.knowledgeTask.checklist.filter(
+            (c) =>
+              c.sourceIds.length &&
+              w.reply!.taskProgress?.missing.some((m) => m.startsWith(c.label)),
+          );
+          if (missing.length) {
+            const originalPacket = JSON.parse(w.response!.text);
+            try {
+              w.calls++;
+              add(
+                w,
+                "repair_missing_actions",
+                missing.map((m) => m.id).join(","),
+              );
+              const patch = await provider.generate(
+                "只补齐有原文依据但被遗漏的动作，不重写已有步骤。输出JSON {additions:[{beforeIndex,phase,covers,text,sourceIds,sourceQuote}]}。beforeIndex为原steps的0开始插入位置；引文逐字来自证据，步骤不得添加无据参数。将炸盘放入篮子不是装料，需明确将食材逐一放入；食材/份量未确认时不自拟食谱参数。已完成动作不重复。",
+                {
+                  missing,
+                  steps: originalPacket.steps,
+                  evidence: ctx.externalKnowledge.filter((e) =>
+                    missing.some((m) => m.sourceIds.includes(e.id)),
+                  ),
+                  completedSteps: session.messages
+                    .flatMap((m) => m.reply?.steps || [])
+                    .filter((s) => session.tried.includes(s.id)),
+                  conditions: w.question,
+                },
+                {
+                  maxTokens: 1100,
+                  timeoutMs: Math.max(
+                    1,
+                    Math.min(30000, agentBudgetMs - (Date.now() - w.started)),
+                  ),
+                },
+              );
+              if (patch.tokens)
+                w.tokens = {
+                  input: (w.tokens?.input || 0) + patch.tokens.input,
+                  output: (w.tokens?.output || 0) + patch.tokens.output,
+                };
+              guard();
+              const additions = z
+                .object({
+                  additions: z
+                    .array(
+                      z
+                        .object({
+                          beforeIndex: z
+                            .number()
+                            .int()
+                            .min(0)
+                            .max(originalPacket.steps.length),
+                          phase: z.string(),
+                          covers: z.array(z.string()).optional(),
+                          text: z.string(),
+                          sourceIds: z.array(z.string()),
+                          sourceQuote: z.string(),
+                        })
+                        .strict(),
+                    )
+                    .max(3),
+                })
+                .parse(JSON.parse(patch.text)).additions;
+              for (const { beforeIndex, ...step } of additions.sort(
+                (a, b) => b.beforeIndex - a.beforeIndex,
+              ))
+                originalPacket.steps.splice(beforeIndex, 0, step);
+              w.reply = groundedReply(
+                originalPacket,
+                ctx.externalKnowledge,
+                { tried: session.tried, messages: session.messages },
+                ctx.knowledgeTask,
+              );
+              add(w, "missing_actions_rechecked", String(additions.length));
+            } catch (error) {
+              add(
+                w,
+                "partial_repair_failed",
+                error instanceof ProviderError
+                  ? error.code
+                  : "patch_validation",
+              );
+              // The previously accepted result remains explicitly partial.
+            }
+          }
+        }
         w.reply.model = w.response!.model;
         if (!storyPlan)
           w.reply.memoryIds = [

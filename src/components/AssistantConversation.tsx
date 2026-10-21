@@ -68,6 +68,17 @@ export function AssistantConversation({
     auto = useRef(false),
     handoffId = useRef("");
   const headers = { "Content-Type": "application/json", "x-demo-actor": actor };
+  const [waitSeconds, setWaitSeconds] = useState(0);
+  useEffect(() => {
+    setWaitSeconds(0);
+    if (!busy) return;
+    const started = Date.now();
+    const timer = setInterval(
+      () => setWaitSeconds(Math.floor((Date.now() - started) / 1000)),
+      1000,
+    );
+    return () => clearInterval(timer);
+  }, [busy]);
   const messagesRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (mode === "auto" && messagesRef.current)
@@ -487,7 +498,13 @@ export function AssistantConversation({
           </article>
         ))}
       </div>
-      {busy && <p role="status">正在查看资料与本次条件…</p>}
+      {busy && (
+        <p role="status">
+          {waitSeconds < 8
+            ? "已提交，正在处理本次问题…"
+            : `已等待 ${waitSeconds} 秒，服务器仍在完成资料核对与回答。不会自动重复发送请求。`}
+        </p>
+      )}
       {error && (
         <div role="alert" className="answer">
           <p>{error}</p>

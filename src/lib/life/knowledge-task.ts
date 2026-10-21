@@ -40,6 +40,22 @@ export function wholeTask(question: string) {
     /怎么用|如何使用|带我|烹饪|开始|完成|使用/.test(question)
   );
 }
+/** Check the object of the action, not two unrelated words anywhere in a step. */
+export function taskStepCovers(id: string, text: string) {
+  return id === "initial-clean"
+    ? /清洗|清洁|洗净/.test(text)
+    : id === "initial"
+      ? /(?:首次|第一次|初次).{0,25}(?:设置|语言|除味|空篮)|除味/.test(text)
+      : id === "load"
+        ? /(?:食材|食物).{0,12}(?:放入|加入|装入|摆放|放置)|(?:放入|加入|装入|摆放|放置).{0,10}(?:食材|食物)/.test(
+            text.replace(/如需[^。；;]+/g, ""),
+          )
+        : id === "program"
+          ? /(?:选择|设定|设置).{0,18}(?:程序|模式|温度|时间)|(?:程序|模式).{0,18}(?:选择|设定|设置|启动)/.test(
+              text,
+            )
+          : /结束|冷却|清洗|清洁|拔/.test(text);
+}
 /** Coverage denotes document topic availability, not proof that an instruction is entailed. */
 export function taskEvidence(
   evidence: KnowledgeChunk[],
@@ -133,6 +149,7 @@ export function taskEvidence(
         }))
       : [];
   return {
+    question,
     full,
     cooking,
     checklist,
@@ -156,6 +173,12 @@ export function selectTaskEvidence(
 ) {
   if (!wholeTask(question)) return fallback;
   const selected: KnowledgeChunk[] = [];
+  // Reserve action anchors before broad lifecycle terms ("cook" often hits specs).
+  for (const check of taskEvidence(chunks, question).checklist)
+    for (const id of check.sourceIds.slice(0, 1)) {
+      const c = chunks.find((c) => c.id === id)!;
+      if (!selected.some((s) => s.id === id)) selected.push(c);
+    }
   for (const phase of taskEvidence(chunks, question).requiredPhases) {
     const anchors: Record<TaskPhase, RegExp> = {
       prepare: /before first use|preparation|准备/i,

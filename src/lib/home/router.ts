@@ -196,9 +196,7 @@ export function routeHome(
   );
 }
 function isPastStory(q: string) {
-  return (
-    isStoryNarration(q) && /去年|那年|那天|上次|以前|第一次|我们曾|记得/.test(q)
-  );
+  return isStoryNarration(q) && /去年|那年|那天|上次|以前|我们曾|记得/.test(q);
 }
 /** Page and session scopes come from authorized item IDs, never model guesses. */
 export function routeProductTurn(

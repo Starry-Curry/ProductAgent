@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sparkles, ArrowUp, SlidersHorizontal } from "lucide-react";
 import { syntheticItem } from "@/lib/life/availability";
 import type { Item } from "@/lib/domain";
@@ -41,6 +41,17 @@ export function Discovery({
   const [review, setReview] = useState(false);
   const [experienceIds, setExperienceIds] = useState<string[]>([]);
   const [gaps, setGaps] = useState<string[]>([]);
+  const [waitSeconds, setWaitSeconds] = useState(0);
+  useEffect(() => {
+    setWaitSeconds(0);
+    if (!busy) return;
+    const started = Date.now();
+    const timer = setInterval(
+      () => setWaitSeconds(Math.floor((Date.now() - started) / 1000)),
+      1000,
+    );
+    return () => clearInterval(timer);
+  }, [busy]);
   const [sourceUrl, setSourceUrl] = useState(""),
     [sourcePreview, setSourcePreview] = useState("");
   const [creativeEvidenceIds, setCreativeEvidenceIds] = useState<string[]>([]),
@@ -358,6 +369,12 @@ export function Discovery({
             </button>
           ))}
         </div>
+      )}
+      {busy && (
+        <p role="status">
+          已提交目标，等待资源核对与规划结果 · {waitSeconds}{" "}
+          秒；不会自动重复提交。
+        </p>
       )}
       {notice && (
         <p className="life-notice" role="status">
