@@ -1,0 +1,110 @@
+[
+  {
+    "path": "experiments/pi-item-loop/README.md",
+    "sha256": "d48cb050f67ee42ccd7a4c2f3c1072673748b4253a293fa1f1203860274cf400"
+  },
+  {
+    "path": "experiments/pi-item-loop/package-lock.json",
+    "sha256": "cd4441440b549e75b4484341b6c8ee0f9be6a92ce02ef4f10e01b86a5de22cf0"
+  },
+  {
+    "path": "experiments/pi-item-loop/package.json",
+    "sha256": "552f2e465c352177c8ce060808b8ad25ff91372cafc780aceb66973f8cc148eb"
+  },
+  {
+    "path": "experiments/pi-item-loop/poc.mjs",
+    "sha256": "693990cca75e23347043b580c4acfd53f0df1e7f6fd46e596f55d19c00db7cff"
+  },
+  {
+    "path": "scripts/finals-item-cases.mjs",
+    "sha256": "d961c4050fbd6416d9d8b0237cfb970e60a881f4a3e9a8d77ce26170dc607cfa"
+  },
+  {
+    "path": "scripts/finals-item-eval.mjs",
+    "sha256": "d72b43527eeae1cbf25507dcd0d93afe72ca5a3c375cc5e8d288507735c10b19"
+  },
+  {
+    "path": "scripts/finals-item-evidence.mjs",
+    "sha256": "ebc2f25bdf2bc59b4410ca2276ef62a932b3013fea9d947e9989077471150dc1"
+  },
+  {
+    "path": "scripts/finals-item-publish-scan.mjs",
+    "sha256": "2c0a803ca297fa3cf4361239cc97d269b428682c27614cb374995c08f2ea5c89"
+  },
+  {
+    "path": "scripts/finals-item-verify.mjs",
+    "sha256": "cf1b05b066e5c904ad3b576cb6facf03394f7514edba68ee1aa38c572790f69a"
+  },
+  {
+    "path": "scripts/test-cloud.mjs",
+    "sha256": "1d8206be788f69bb8cb78290b821b47e274b2574bb35a043a0b630890497ad2a"
+  },
+  {
+    "path": "src/lib/agent/budget.ts",
+    "sha256": "96a49e110e74cb93ab2f7d0bf5676910032d2148d97c836ce28d0858696f5193"
+  },
+  {
+    "path": "src/lib/agent/graph.ts",
+    "sha256": "b357290a13fbf41d75630deaaabae6fc3ce9933cdb41aa40d7b891adc7520ebb"
+  },
+  {
+    "path": "src/lib/agent/prompts.ts",
+    "sha256": "d4c0274c30e61c96f7eb2d2284d8c616503d7f486b79c9ddb6d7e610fe324615"
+  },
+  {
+    "path": "src/lib/context/builder.ts",
+    "sha256": "d1cbce429b1b6b27d9c40c818606906a5f8a58ecff47735d6cd67fa0863cc360"
+  },
+  {
+    "path": "src/lib/context/item-advice.ts",
+    "sha256": "4231a61e2a3d9cbb075cefa685c5f55922aac499c6620a99b7e53ba6c894fc3a"
+  },
+  {
+    "path": "src/lib/context/items.ts",
+    "sha256": "dcd7423a999b7917189b292fcd140c0f18bc11928cc5d075da9af763eaeb3981"
+  },
+  {
+    "path": "src/lib/home/router.ts",
+    "sha256": "6764ee1aa122223a76cca460590c147344c90788317049e2421e08f094c75719"
+  },
+  {
+    "path": "src/lib/life/ideas.ts",
+    "sha256": "c7901e85a8cdf5bea6fe0658bb97ffb085e2b5b2d3322ebfecd0257a8d58635b"
+  },
+  {
+    "path": "src/lib/life/planning-constraints.ts",
+    "sha256": "bbeef8c382968ca01f7800fc9f1453f7b858a8862bae7abd1ca492d966e9b074"
+  },
+  {
+    "path": "src/lib/life/planning.ts",
+    "sha256": "22d1342a9a45ca94eeda23d00a29682f8d6c8ef29c76374e6f5e5ca51afba84a"
+  },
+  {
+    "path": "src/lib/life/task-planning.ts",
+    "sha256": "6b401f633c9de08ecdf36e2b6f1971740024ba2ee15d4f83f23733e08337f502"
+  },
+  {
+    "path": "src/lib/skills/registry.ts",
+    "sha256": "b569549c322da248e5103ee3da471840428e437f7167f4da367f645ebd76e8ec"
+  },
+  {
+    "path": "tests/cloud-provider-stub.mjs",
+    "sha256": "dafb0054a9db0a3ddfb8743d2c204dde3cec076345b1b22760a596c32acc30a4"
+  },
+  {
+    "path": "tests/cloud-security.test.ts",
+    "sha256": "0a1999772334385db1c96aa21e3ede22d6cf95865364ed4d2d2e43a58deec048"
+  },
+  {
+    "path": "tests/foundation.test.ts",
+    "sha256": "ca7fc66b817a6f909bab54de4e13ab0bddb0c528ccba4d2c0a974d04b64a49db"
+  },
+  {
+    "path": "tests/item-evidence-language.test.ts",
+    "sha256": "41293fb99d081d2d607020fa569287abc8ee0500c748772a009e7c61bfeb6e7d"
+  },
+  {
+    "path": "tests/item-understanding-v1.test.ts",
+    "sha256": "dbbe8a52b699f5165558cea9a6fb320dedfd382f2949fdd442e7e038c79138ce"
+  }
+]

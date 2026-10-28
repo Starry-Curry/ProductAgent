@@ -1,0 +1,69 @@
+✔ 真实失败回归：谨慎表述不误拒 不能确定。档案中仅登记为不锈钢，未注明304牌号或食品级认证。 (1.8695ms)
+✔ 真实失败回归：谨慎表述不误拒 是否安全使用，取决于其实际等级（如是否为食品级304），目前缺少这些信息。 (0.1811ms)
+✔ 真实失败回归：谨慎表述不误拒 杯底具体弧度、是否镜面抛光、厚度分布等条件均未确认。 (0.1101ms)
+✔ 真实失败回归：谨慎表述不误拒 没有官方资料支持直接装沸水，无法确认沸水安全性。 (0.0771ms)
+✔ 真实失败回归：谨慎表述不误拒 这只杯子没有被确认是透明的，不能假设它的光学性质。 (0.0832ms)
+✔ 真实失败回归：谨慎表述不误拒 镜面、凹槽和承重都尚未确认，先不要据此设计。 (0.0676ms)
+✔ 真实失败回归：谨慎表述不误拒 因此，无法从现有资料确定它是304食品级不锈钢。若需用于盛装食物或饮品，建议优先确认产品标识。 (0.1047ms)
+✔ 真实失败回归：谨慎表述不误拒 这些信息直接影响能否安全装沸水。 (0.0809ms)
+✔ 否定说明不能掩盖独立断言 镜面未经确认，但可以用它的镜面反射文字。 (0.2282ms)
+✔ 否定说明不能掩盖独立断言 材质未注明，但它就是304食品级不锈钢。 (0.2364ms)
+✔ 否定说明不能掩盖独立断言 这只杯子可以盛装热水。最后再确认耐热。 (0.1437ms)
+✔ 否定说明不能掩盖独立断言 食品级未确认，不过可以用这只杯子喝水。 (0.1065ms)
+✔ 否定说明不能掩盖独立断言 杯子的承重足够。 (0.4236ms)
+✔ 否定说明不能掩盖独立断言 材质未注明但它就是304食品级不锈钢。 (0.209ms)
+✔ 破损物品的禁止提示和维修前提不误作正在使用 (0.5715ms)
+✖ 真实输出漏检回归：稳妥做法是先装温水试用。 (3.1237ms)
+✖ 真实输出漏检回归：若想尝试，可将杯底朝下平放于文字上方，缓慢调整高度观察放大。 (0.2644ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 15
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 237.2737
+
+✖ failing tests:
+
+test at tests\item-evidence-language.test.ts:52:3
+✖ 真实输出漏检回归：稳妥做法是先装温水试用。 (3.1237ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(itemAdviceIssues(advice,[itemContext(item)]).length)
+
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/tests/item-evidence-language.test.ts:52:40)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\item-evidence-language.test.ts:52:3
+✖ 真实输出漏检回归：若想尝试，可将杯底朝下平放于文字上方，缓慢调整高度观察放大。 (0.2644ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(itemAdviceIssues(advice,[itemContext(item)]).length)
+
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/tests/item-evidence-language.test.ts:52:40)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-28T18:12:20.464Z",
+  "requests": 145,
+  "costCny": 0.4247335999999999,
+  "records": 106,
+  "http200": 145,
+  "transportErrors": 0,
+  "usage": {
+    "input": 434777,
+    "output": 38456
+  },
+  "physicalTests": 0,
+  "modelJudges": 0
+}

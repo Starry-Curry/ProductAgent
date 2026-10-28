@@ -638,10 +638,13 @@ test("校验重试保持原始服务问题，不把内部反馈当成用户经�
       t.db,
       t.read,
       "lin",
-      turn("孩子说保温壶没修好。我点了我知道了，是不是代表保温壶修好可以用了？", {
-        mode: "auto",
-        uiContext: { page: "assistant", interfaceMode: "care" },
-      }),
+      turn(
+        "孩子说保温壶没修好。我点了我知道了，是不是代表保温壶修好可以用了？",
+        {
+          mode: "auto",
+          uiContext: { page: "assistant", interfaceMode: "care" },
+        },
+      ),
       offline,
     );
     assert.match(reminder.reply.answer, /不要使用/);
@@ -724,7 +727,7 @@ test("记住指令及显式保存可安全重试，删除后不复活；过期�
   }
 });
 
-test("工具循环只执行白名单读取，错误工具与坏 JSON 在 3 次模型调用内结束", async () => {
+test("工具循环只执行白名单读取，错误工具与坏 JSON 在限定模型回合内结束", async () => {
   for (const variant of ["tool", "json"]) {
     const t = setup();
     try {
@@ -750,8 +753,10 @@ test("工具循环只执行白名单读取，错误工具与坏 JSON 在 3 次�
         };
       };
       const a = await respond(t.db, t.read, "lin", turn("想讨论一个新目标"), p);
-      assert.equal(count, 3);
-      assert.ok(["referred", "needs_info"].includes(a.reply.outcome));
+      assert.equal(count, variant === "tool" ? 4 : 2);
+      assert.ok(
+        ["unavailable", "referred", "needs_info"].includes(a.reply.outcome),
+      );
       assert.ok(
         a.trace.some(
           (e) =>

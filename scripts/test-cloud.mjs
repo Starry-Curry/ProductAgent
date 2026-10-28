@@ -41,6 +41,7 @@ const env = () => ({
   LANGCHAIN_TRACING_V2: "false",
 });
 let modelMode = false,
+  toolMode = false,
   secretLogged = false;
 let child,
   logs = "";
@@ -54,7 +55,8 @@ async function start() {
           DEMO_AI_ENABLED: "true",
           AI_ALLOW_PAID_CALLS: "true",
           WUJIAN_ALLOW_PAID_CALLS: "true",
-          DEMO_GLOBAL_MODEL_CALLS: "1",
+          DEMO_GLOBAL_MODEL_CALLS: toolMode ? "8" : "1",
+          WUJIAN_TEST_TOOL_LOOP: toolMode ? "true" : "false",
           NODE_OPTIONS: `--import=${new URL("../tests/cloud-provider-stub.mjs", import.meta.url).href}`,
         }
       : env(),
@@ -324,6 +326,8 @@ try {
     const page = await browser.newPage({
       viewport: { width: 1280, height: 900 },
     });
+    const pageErrors = [];
+    page.on("pageerror", (error) => pageErrors.push(error.message));
     await page.context().addCookies([
       {
         name: "wujian_visitor",
@@ -335,20 +339,21 @@ try {
     ]);
     await page.goto(base + "/#stories");
     await expect(
-      page.getByRole("heading", { name: "生活里，值得留住的小片段" }),
+      page.getByRole("heading", { name: "生活故事书" }),
     ).toBeVisible();
-    await expect(
-      page.getByRole("heading", { name: story.text, exact: true }),
-    ).toBeVisible();
+    await expect(page.getByText(story.text, { exact: true })).toBeVisible();
     await expect(page.getByLabel("演示家庭成员")).toHaveCount(0);
+    fs.mkdirSync("artifacts/cloud", { recursive: true });
+    await page.screenshot({
+      path: "artifacts/cloud/stories-desktop.png",
+      fullPage: true,
+    });
     assert.doesNotMatch(
       await page.locator("body").innerText(),
       /[A-Z]:\\|\.env\.local|npm run/,
     );
     await page.reload();
-    await expect(
-      page.getByRole("heading", { name: story.text, exact: true }),
-    ).toBeVisible();
+    await expect(page.getByText(story.text, { exact: true })).toBeVisible();
     await page.goto(base + "/legacy");
     await expect(page.locator("body")).not.toContainText(
       "请先进入自己的演示空间",
@@ -363,6 +368,7 @@ try {
     checks.push(
       "browser story refresh, no local identity switch or developer setup UI; no API key in HTML/JS/API",
     );
+    assert.deepEqual(pageErrors, []);
   } finally {
     await browser.close();
   }
@@ -420,6 +426,48 @@ try {
   assert.equal(cleaned.status, 0, cleaned.stderr);
   checks.push(
     "logout revokes credentials; explicit expired-space cleanup preserves other spaces",
+  );
+  volume = path.join(folder, "tool-loop-volume");
+  toolMode = true;
+  await start();
+  const toolVisitor = await enter();
+  const created = await post(toolVisitor, "createItem", {
+    name: "合成纸盒",
+    brand: "Test",
+    model: "TEST-BOX",
+    category: "收纳容器",
+    lifecycle: "长期耐用",
+    availability: "available",
+  });
+  assert.equal(created.status, 200);
+  const toolInput = {
+    requestId: crypto.randomUUID(),
+    question: "今天累了，先读取我可访问的物品，再聊聊休息，不读取记忆。",
+    mode: "auto",
+    memoryPolicy: "off",
+    uiContext: { page: "assistant" },
+  };
+  const loop = await call("/api/assistant", toolVisitor, toolInput);
+  assert.equal(loop.status, 200);
+  assert.equal(loop.data.reply.outcome, "answered");
+  assert.match(loop.data.reply.answer, /合成离线工具往返：合成纸盒/);
+  assert.equal(loop.data.trace, undefined); // Public API deliberately hides internal diagnostics.
+  const duplicate = await call("/api/assistant", toolVisitor, toolInput);
+  assert.equal(duplicate.status, 200);
+  assert.equal(duplicate.data.reply.answer, loop.data.reply.answer);
+  await stop();
+  const { DatabaseSync } = await import("node:sqlite");
+  const quotaDb = new DatabaseSync(path.join(volume, "visitors.sqlite"));
+  try {
+    assert.equal(
+      quotaDb.prepare("SELECT COUNT(*) n FROM model_requests").get().n,
+      2,
+    );
+  } finally {
+    quotaDb.close();
+  }
+  checks.push(
+    "public production HTTP: native tool -> rich item result -> final answer; exactly 2 governed requests; duplicate request uses cached answer (0 real model calls)",
   );
   assert.equal(secretLogged, false);
   fs.mkdirSync("artifacts/cloud", { recursive: true });

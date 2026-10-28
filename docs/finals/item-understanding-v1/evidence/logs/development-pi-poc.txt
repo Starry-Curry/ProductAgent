@@ -1,0 +1,12 @@
+file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/experiments/pi-item-loop/node_modules/@earendil-works/pi-ai/dist/utils/identity.js:118
+        getAuth: models.getAuth.bind(models),
+                                ^
+
+TypeError: Cannot read properties of undefined (reading 'bind')
+    at withClientIdentity (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/experiments/pi-item-loop/node_modules/@earendil-works/pi-ai/dist/utils/identity.js:118:33)
+    at currentModels (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/experiments/pi-item-loop/node_modules/@earendil-works/pi-durable/dist/harness/harness.js:96:21)
+    at new HarnessImpl (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/experiments/pi-item-loop/node_modules/@earendil-works/pi-durable/dist/harness/harness.js:129:21)
+    at Object.open (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/experiments/pi-item-loop/node_modules/@earendil-works/pi-durable/dist/harness/harness.js:384:25)
+    at file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/experiments/pi-item-loop/poc.mjs:40:23
+
+Node.js v24.16.0

@@ -1,0 +1,12 @@
+
+> product-agent@0.1.0 typecheck
+> tsc --noEmit
+
+tests/item-understanding-v1.test.ts(446,11): error TS2820: Type '"unavailable"' is not assignable to type '"unknown" | "available" | "loaned" | "gifted" | "lost" | "broken" | "consumed" | undefined'. Did you mean '"available"'?
+tests/item-understanding-v1.test.ts(486,23): error TS2352: Conversion of type '{ mode: "auto"; known: { uiPage: string; }; }' to type 'ServiceSession' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ mode: "auto"; known: { uiPage: string; }; }' is missing the following properties from type 'ServiceSession': id, owner, revision, status, and 6 more.
+npm notice
+npm notice New major version of npm available! 11.13.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

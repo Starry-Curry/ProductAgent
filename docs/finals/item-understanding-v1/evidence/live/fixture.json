@@ -1,0 +1,247 @@
+{
+  "ids": {
+    "cup": "8ac8d344-30d2-4b66-bbe4-28745f1c14fa",
+    "paper": "420914f6-3840-4aa0-81bc-33d8bdb2f862",
+    "pen": "3243abc5-bdee-46cb-b40d-1c2b37daaf78",
+    "box": "d540a5ab-8f44-4e08-b23d-7b2e42f3ca68",
+    "mouse": "571d415d-950e-477a-8fae-f00ea2d34cc2",
+    "broken": "80781f76-c689-48b0-86c8-90383e7149e9",
+    "unknown": "bf37a93e-fb61-4d9b-8406-9d9b7b12585f"
+  },
+  "state": {
+    "items": [
+      {
+        "id": "8ac8d344-30d2-4b66-bbe4-28745f1c14fa",
+        "name": "无盖不锈钢水杯",
+        "category": "水杯",
+        "model": "未知",
+        "location": "未设置",
+        "owner": "lin",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "",
+        "source": "用户录入",
+        "brand": "未知",
+        "lifecycle": "长期耐用",
+        "availability": "available",
+        "availabilityAt": "2026-10-28T17:45:57.623Z",
+        "attributes": {
+          "material": "不锈钢，单层，无杯盖",
+          "dimensions": "",
+          "power": "",
+          "care": "食品接触与耐热未确认；不加热；不要使用漂白剂",
+          "quantity": 1,
+          "capabilities": [
+            "容纳常温物品"
+          ]
+        }
+      },
+      {
+        "id": "420914f6-3840-4aa0-81bc-33d8bdb2f862",
+        "name": "空白纸质笔记本",
+        "category": "纸品",
+        "model": "未知",
+        "location": "未设置",
+        "owner": "lin",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "",
+        "source": "用户录入",
+        "brand": "未知",
+        "lifecycle": "长期耐用",
+        "availability": "available",
+        "availabilityAt": "2026-10-28T17:45:57.626Z",
+        "attributes": {
+          "material": "纸",
+          "dimensions": "",
+          "power": "",
+          "care": "",
+          "quantity": 1,
+          "capabilities": [
+            "书写记录"
+          ]
+        }
+      },
+      {
+        "id": "3243abc5-bdee-46cb-b40d-1c2b37daaf78",
+        "name": "黑色圆珠笔",
+        "category": "文具",
+        "model": "未知",
+        "location": "未设置",
+        "owner": "lin",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "",
+        "source": "用户录入",
+        "brand": "未知",
+        "lifecycle": "长期耐用",
+        "availability": "available",
+        "availabilityAt": "2026-10-28T17:45:57.629Z",
+        "attributes": {
+          "material": "塑料笔杆，黑色墨水",
+          "dimensions": "",
+          "power": "",
+          "care": "",
+          "quantity": 1,
+          "capabilities": [
+            "在纸上书写"
+          ]
+        }
+      },
+      {
+        "id": "d540a5ab-8f44-4e08-b23d-7b2e42f3ca68",
+        "name": "旧纸盒",
+        "category": "收纳容器",
+        "model": "未知",
+        "location": "未设置",
+        "owner": "lin",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "",
+        "source": "用户录入",
+        "brand": "未知",
+        "lifecycle": "长期耐用",
+        "availability": "available",
+        "availabilityAt": "2026-10-28T17:45:57.632Z",
+        "attributes": {
+          "material": "纸板",
+          "dimensions": "20×15×10厘米",
+          "power": "",
+          "care": "不接触水；承重未知",
+          "quantity": 1,
+          "capabilities": [
+            "容纳少量轻质文具"
+          ]
+        }
+      },
+      {
+        "id": "571d415d-950e-477a-8fae-f00ea2d34cc2",
+        "name": "无线鼠标",
+        "category": "电子设备",
+        "model": "M-R0061",
+        "location": "未设置",
+        "owner": "lin",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "",
+        "source": "用户录入",
+        "brand": "Logitech",
+        "lifecycle": "长期耐用",
+        "availability": "available",
+        "availabilityAt": "2026-10-28T17:45:57.635Z",
+        "attributes": {
+          "material": "",
+          "dimensions": "",
+          "power": "",
+          "care": "",
+          "quantity": 1,
+          "capabilities": [
+            "使用原配接收器连接电脑"
+          ]
+        },
+        "productBinding": {
+          "packId": "logitech-m185-m-r0061",
+          "version": "2026-10-16.1",
+          "confirmedBy": "lin",
+          "confirmedAt": "2026-10-28T17:45:57.646Z"
+        }
+      },
+      {
+        "id": "80781f76-c689-48b0-86c8-90383e7149e9",
+        "name": "损坏小台灯",
+        "category": "电子设备",
+        "model": "未知",
+        "location": "未设置",
+        "owner": "lin",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "",
+        "source": "用户录入",
+        "brand": "未知",
+        "lifecycle": "长期耐用",
+        "availability": "unavailable",
+        "availabilityAt": "2026-10-28T17:45:57.638Z",
+        "attributes": {
+          "material": "",
+          "dimensions": "",
+          "power": "",
+          "care": "电线破损，禁止通电",
+          "quantity": 1,
+          "capabilities": []
+        }
+      },
+      {
+        "id": "bf37a93e-fb61-4d9b-8406-9d9b7b12585f",
+        "name": "未知材质盒",
+        "category": "收纳容器",
+        "model": "未知",
+        "location": "未设置",
+        "owner": "lin",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "",
+        "source": "用户录入",
+        "brand": "未知",
+        "lifecycle": "长期耐用",
+        "availability": "available",
+        "availabilityAt": "2026-10-28T17:45:57.641Z",
+        "attributes": {
+          "material": "",
+          "dimensions": "",
+          "power": "",
+          "care": "",
+          "quantity": 1,
+          "capabilities": []
+        }
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task-filter",
+        "itemId": "filter",
+        "title": "核实净水器维护时间与滤芯型号",
+        "assignee": "lin",
+        "status": "待处理",
+        "logs": [
+          {
+            "by": "dad",
+            "text": "先核实具体型号和官方说明，再决定是否更换。",
+            "at": "2026-10-15"
+          }
+        ]
+      }
+    ],
+    "memories": [
+      {
+        "id": "memory-frame",
+        "itemId": "frame",
+        "author": "lin",
+        "text": "想把一起做的小作品装进这个相框。",
+        "at": "2026-10-15",
+        "shared": false
+      }
+    ],
+    "gifts": [],
+    "saved": {
+      "lin": [],
+      "dad": [],
+      "friend": []
+    },
+    "attempts": [],
+    "care": {
+      "consent": false,
+      "paused": false,
+      "away": false,
+      "offline": false,
+      "signal": "normal",
+      "recipient": "lin"
+    }
+  }
+}

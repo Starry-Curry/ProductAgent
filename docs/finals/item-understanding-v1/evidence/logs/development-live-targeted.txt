@@ -1,0 +1,10 @@
+{"label":"F01:fixed-targeted","requests":0,"totalRequests":135,"costCny":0.391493,"outcome":"answered","source":"curated-guidance"}
+{"label":"F02:fixed-targeted","requests":1,"totalRequests":136,"costCny":0.394115,"outcome":"answered","source":"model-general"}
+{"label":"F03:fixed-targeted","requests":1,"totalRequests":137,"costCny":0.396998,"outcome":"answered","source":"model-general"}
+{"label":"F04:fixed-targeted","requests":1,"totalRequests":138,"costCny":0.399704,"outcome":"answered","source":"model-general"}
+{"label":"F05:fixed-targeted","requests":0,"totalRequests":138,"costCny":0.399704,"outcome":"needs_info","source":"curated-guidance"}
+{"label":"F07:fixed-targeted","requests":2,"totalRequests":140,"costCny":0.405684,"outcome":"unavailable","source":"curated-guidance"}
+{"label":"F08:fixed-targeted","requests":1,"totalRequests":141,"costCny":0.408261,"outcome":"answered","source":"model-general"}
+{"label":"F12:fixed-targeted","requests":0,"totalRequests":141,"costCny":0.408261,"outcome":"needs_info","source":"curated-guidance"}
+{"label":"C06:fixed-targeted","requests":1,"totalRequests":142,"costCny":0.414441,"outcome":"answered","source":"model-creative"}
+{"label":"T01:fixed-targeted","requests":3,"totalRequests":145,"costCny":0.424734,"outcome":"unavailable","source":"curated-guidance"}

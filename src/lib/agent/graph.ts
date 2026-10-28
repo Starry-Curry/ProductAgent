@@ -1,4 +1,12 @@
 import { publicDemo } from "../cloud/runtime.ts";
+import {
+  itemContext,
+  itemContextPage,
+  readItemContext,
+  type ItemContext,
+} from "../context/items.ts";
+import { itemAdviceIssues } from "../context/item-advice.ts";
+import { turnBudget } from "./budget.ts";
 import { visionStatus } from "../life/vision.ts";
 import {
   acquireKnowledge,
@@ -52,7 +60,12 @@ import {
   STORYTELLING_VERSION,
   type StoryPlan,
 } from "../skills/memory-storytelling.ts";
-import { SYSTEM_PROMPT, PROMPT_VERSION, tools } from "./prompts.ts";
+import {
+  SYSTEM_PROMPT,
+  PROMPT_VERSION,
+  tools,
+  ITEM_CONTEXT_INSTRUCTIONS,
+} from "./prompts.ts";
 import { isStoryNarration } from "../memory/ambient.ts";
 import { epoch } from "../memory/store.ts";
 import { sessionAccess } from "../repositories/sessions.ts";
@@ -75,6 +88,7 @@ const packetSchema = z
     factIds: z.array(z.string().max(100)).max(10).default([]),
     procedureId: z.string().max(100).nullable().default(null),
     questions: z.array(z.string().max(250)).max(2).default([]),
+    itemIds: z.array(z.string().max(100)).max(8).optional(),
   })
   .strict();
 const unsafe =
@@ -253,6 +267,25 @@ export function curatedDecision(
     }
   }
   const pack = ctx.knowledge.pack;
+  if (ctx.item && /登记.*(?:型号|品牌)|(?:型号|品牌).{0,8}是什么/.test(goal)) {
+    const record = itemContext(ctx.item);
+    return {
+      ...blank(
+        `当前登记：${record.name}；品牌：${record.brand || "未知"}；型号：${record.model || "未知"}。这是登记信息，不证明实物已核验或工作正常。`,
+      ),
+      caveat: "按获准物品档案直接读取，没有发送模型请求。",
+    };
+  }
+  if (
+    ctx.item &&
+    /官方资料|说明书/.test(goal) &&
+    /目前|当前|这只|我的/.test(goal) &&
+    /工作正常|正常工作|已修复|修好/.test(goal)
+  )
+    return blank(
+      "官方资料描述型号的设计能力，不能证明你这件实物当前工作正常或已经修复。登记状态也是用户记录；实际状态仍需用户核对或合适的检验。",
+      "needs_info",
+    );
   if (
     pack?.id.startsWith("logitech-m185") &&
     /首次|第一次|怎么用|如何使用|安装|接上电脑/.test(goal)
@@ -315,12 +348,16 @@ export function curatedDecision(
       ...blank(
         /不知道型号|型号看不清|不清楚型号/.test(question)
           ? "先不要尝试猜按键或重置。请查看机身标签、购买订单或保修卡，把能辨认的品牌和型号写下来，也可以提供对应说明书链接。仍无法辨认时，请联系购买平台的卖家或售后；找到型号也不保证一定能取得资料。"
-          : "我可以帮你核对。先告诉我品牌和具体型号，或补充对应说明书；这样才能判断专属步骤，避免套用相似产品。",
+          : /承重|载荷/.test(goal)
+            ? "当前登记没有确认承重能力，不能据此承诺可吊挂或承载该重量。需要核对承重规格、物品当前状态和连接结构；先不要实际吊重尝试。"
+            : "我可以帮你核对。先告诉我品牌和具体型号，或补充对应说明书；这样才能判断专属步骤，避免套用相似产品。",
         "needs_info",
       ),
       questions: /不知道型号|型号看不清|不清楚型号/.test(question)
         ? []
-        : ["品牌和具体型号是什么？"],
+        : /承重|载荷/.test(goal)
+          ? ["是否有这件物品的承重规格和连接结构资料？"]
+          : ["品牌和具体型号是什么？"],
     };
   return undefined;
 }
@@ -335,19 +372,39 @@ export function validateModelPacket(
   // Some providers wrap Product Pack fact IDs in the document-step protocol.
   // Accept only those exact current facts, rendered by the server: discard the
   // model's paraphrased actions/parameters instead of treating facts as procedures.
-  if (value?.kind === "grounded" && Array.isArray(value.steps) && value.steps.length) {
+  if (
+    value?.kind === "grounded" &&
+    Array.isArray(value.steps) &&
+    value.steps.length
+  ) {
     const ids = value.steps.flatMap((step: { sourceIds?: unknown }) =>
       Array.isArray(step.sourceIds) ? step.sourceIds : [],
     );
-    if (ids.length && ids.every((id: unknown) =>
-      typeof id === "string" && ctx.knowledge.facts.some((fact) => fact.id === id),
-    ) && value.steps.every((step: { sourceIds?: unknown }) =>
-      Array.isArray(step.sourceIds) && step.sourceIds.length > 0,
-    )) {
-      return validateModelPacket(JSON.stringify({
-        kind: "supported", answer: "", factIds: [...new Set(ids)],
-        procedureId: null, questions: [],
-      }), ctx, mode, tried, messages);
+    if (
+      ids.length &&
+      ids.every(
+        (id: unknown) =>
+          typeof id === "string" &&
+          ctx.knowledge.facts.some((fact) => fact.id === id),
+      ) &&
+      value.steps.every(
+        (step: { sourceIds?: unknown }) =>
+          Array.isArray(step.sourceIds) && step.sourceIds.length > 0,
+      )
+    ) {
+      return validateModelPacket(
+        JSON.stringify({
+          kind: "supported",
+          answer: "",
+          factIds: [...new Set(ids)],
+          procedureId: null,
+          questions: [],
+        }),
+        ctx,
+        mode,
+        tried,
+        messages,
+      );
     }
   }
   if (value?.kind === "grounded")
@@ -358,6 +415,8 @@ export function validateModelPacket(
       ctx.knowledgeTask,
     );
   const packet = packetSchema.parse(value);
+  if (packet.itemIds?.some((id) => !ctx.itemContexts.some((i) => i.id === id)))
+    throw new AgentError("回答引用了本轮未读取或未获准的物品");
   // A requested wording change for an ordinary action is general help.
   // Keep all factual and risk checks below; this does not license device fiction.
   if (
@@ -455,6 +514,9 @@ export function validateModelPacket(
   )
     throw new AgentError("需要型号证据");
   if (!packet.answer.trim()) throw new AgentError("没有可用回答");
+  const itemIssues = itemAdviceIssues(packet.answer, ctx.itemContexts);
+  if (itemIssues.length)
+    throw new AgentError("物品条件检查：" + itemIssues.join("；"));
   return {
     ...blank(
       packet.answer,
@@ -481,6 +543,9 @@ type Work = {
   messages: ModelMessage[];
   response?: ModelResponse;
   calls: number;
+  modelTurns: number;
+  repairs: number;
+  toolItemIds: string[];
   toolCount: number;
   started: number;
   session: ServiceSession;
@@ -516,6 +581,7 @@ export async function executeGraph(
             ? "evidence-discovery"
             : "item-help"
     ];
+  const itemSnapshots = new Map<string, string>();
   const guard = () => {
     if (Date.now() >= contextDeadline)
       throw new AgentError("上下文已过期，请重新提问", 409);
@@ -535,6 +601,12 @@ export async function executeGraph(
       !sessionAccess(session, read(), actor)
     )
       throw new AgentError("物品或记忆授权已改变，请重新开始", 409);
+    const latest = read();
+    for (const [id, snapshot] of itemSnapshots) {
+      const item = latest.items.find((i) => i.id === id && canRead(i, actor));
+      if (!item || JSON.stringify(itemContext(item)) !== snapshot)
+        throw new AgentError("物品状态或登记条件已改变，请重新核对后提问", 409);
+    }
   };
   const saver = temporary
     ? new MemorySaver()
@@ -547,6 +619,9 @@ export async function executeGraph(
     trace: [],
     messages: [],
     calls: 0,
+    modelTurns: 0,
+    repairs: 0,
+    toolItemIds: [],
     toolCount: 0,
     started: Date.now(),
     session,
@@ -735,14 +810,23 @@ export async function executeGraph(
         temporary,
       });
       trackExpiry(ctx.memories);
+      if (ctx.item)
+        itemSnapshots.set(ctx.item.id, JSON.stringify(itemContext(ctx.item)));
       if (
         ctx.externalKnowledge.some((c) => c.category !== "facts") &&
         effectiveSession.mode === "service"
       )
         activeSkill = skills["document-help"];
       if (route?.intent === "plan" && session.known.uiPage && !temporary) {
-        w.calls = (provider.ready ?? true) ? 1 : 0;
+        w.calls = 0;
         try {
+          const planningProvider: Provider = {
+            ...provider,
+            generate: async (...args) => {
+              w.calls++;
+              return provider.generate(...args);
+            },
+          };
           const plan = await planDiscovery(
             db,
             read(),
@@ -756,14 +840,16 @@ export async function executeGraph(
                 : undefined,
               model: provider.ready ?? true,
               includeSynthetic: false,
+              candidates: 1,
               review: false,
               page: session.known.uiPage,
             },
-            provider,
+            planningProvider,
             read,
           );
           guard();
           w.calls = plan.modelCalls;
+          w.tokens = plan.tokens || null;
           session.known.lifePlanContext = JSON.stringify(plan.continuation);
           if (plan.ideas.length)
             session.known.lifeIdeaIds = JSON.stringify(
@@ -773,8 +859,17 @@ export async function executeGraph(
             ...blank(
               plan.understanding +
                 "\n\n" +
-                (plan.ideas[0]?.title || "先核对可用物品，再继续规划。"),
-              plan.ideas.length ? "answered" : "needs_info",
+                (plan.ideas[0]?.title ||
+                  plan.failure?.message ||
+                  "先核对可用物品，再继续规划。") +
+                (plan.source === "model-creative" && plan.ideas[0]?.rationale
+                  ? "\n关键原理与条件：" + plan.ideas[0].rationale
+                  : ""),
+              plan.ideas.length
+                ? "answered"
+                : plan.failure
+                  ? "unavailable"
+                  : "needs_info",
               plan.source === "model-creative"
                 ? "model-creative"
                 : "local-planning",
@@ -798,6 +893,7 @@ export async function executeGraph(
               })),
             evidenceIds: [],
             memoryIds: [],
+            errorCode: plan.failure?.kind,
             caveat: [...plan.missing, ...(plan.ideas[0]?.limits || [])].join(
               " ",
             ),
@@ -963,6 +1059,7 @@ export async function executeGraph(
             role: "system",
             content:
               SYSTEM_PROMPT +
+              ITEM_CONTEXT_INSTRUCTIONS +
               "\n严格区分‘助手建议过’和‘用户明确说已经做过’。建议的选中、复制、连接或保存不能当成已经执行；继续下一步前保留未完成的前置动作，不假设剪贴板已有内容。当前对话只显示文字，没有语音朗读或代打电话；只能提供文字说明，不能声称能读给用户听。照片识别只在pageContext明确列为可用时才能建议走该入口，不保证一定识别成功或一定找到官方资料。" +
               (session.known.interfaceMode === "care"
                 ? "\n当前为大字关怀版：短句、常用词，一次先给1—3个当前可执行的小步骤，至多追问一项必要信息；完整流程可分段继续，不能省略安全前提和资料缺口。用户已经做过的步骤不要重复。普通输入操作不猜按键的物理位置。仍待维修或被家人提醒停用的物品，先停用并询问维修负责人，不建议通电或试用来验证。"
@@ -1034,6 +1131,7 @@ export async function executeGraph(
                     availability: ctx.item.availability,
                   }
                 : null,
+              itemContexts: ctx.itemContexts,
               evidence: ctx.knowledge,
               officialDocuments: ctx.externalKnowledge,
               knowledgeTask: ctx.knowledgeTask,
@@ -1064,31 +1162,48 @@ export async function executeGraph(
       guard();
       const w = { ...work, trace: [...work.trace] };
       if (
-        w.calls >= (publicDemo() ? 1 : 3) ||
+        (w.modelTurns || 0) >= turnBudget.modelTurns ||
         Date.now() - w.started > agentBudgetMs
       ) {
-        w.reply = blank(
-          "这次还需要补充资料。我已保留问题，可以说明卡住的地方，或请家人协助。",
-          "referred",
+        w.reply = {
+          ...blank(
+            "本次推敲已达到处理时限或回合上限，尚未形成最终回答。可缩小到一件物品或一个问题后重试；这不表示你的资料有误。",
+            "unavailable",
+          ),
+          errorCode: "turn_budget_exhausted",
+        };
+        add(
+          w,
+          "turn_budget_exhausted",
+          `rounds=${w.modelTurns || 0}; attempts=${w.calls}`,
         );
         return { work: w };
       }
       try {
         w.calls++;
-        add(w, "model_started", `attempt=${w.calls}`);
-        const allowedNames: readonly string[] = activeSkill.tools;
-        const activeTools = tools.filter(
-          (t) =>
-            allowedNames.includes(t.function.name) &&
-            !(
-              w.officialLookup && t.function.name === "fetch_official_knowledge"
-            ) &&
-            !(
-              !!w.officialLookup?.documents &&
-              activeSkill === skills["document-help"] &&
-              t.function.name === "search_product_knowledge"
-            ),
+        w.modelTurns = (w.modelTurns || 0) + 1;
+        add(
+          w,
+          "model_started",
+          `attempt=${w.calls}; round=${w.modelTurns}/${turnBudget.modelTurns}`,
         );
+        const allowedNames: readonly string[] = activeSkill.tools;
+        const activeTools =
+          w.modelTurns === turnBudget.modelTurns
+            ? []
+            : tools.filter(
+                (t) =>
+                  allowedNames.includes(t.function.name) &&
+                  !(
+                    w.officialLookup &&
+                    t.function.name === "fetch_official_knowledge"
+                  ) &&
+                  !(
+                    !!w.officialLookup?.documents &&
+                    activeSkill === skills["document-help"] &&
+                    t.function.name === "search_product_knowledge"
+                  ),
+              );
         w.response = provider.complete
           ? await provider.complete(w.messages, activeTools, {
               timeoutMs: Math.max(1, agentBudgetMs - (Date.now() - w.started)),
@@ -1165,11 +1280,12 @@ export async function executeGraph(
         trace: [...work.trace],
       };
       const calls = w.response!.toolCalls;
-      if (w.toolCount + calls.length > 6) {
+      if (w.toolCount + calls.length > turnBudget.toolCalls) {
         w.reply = blank(
-          "我还需要更准确的线索。你可以补充型号或描述实际现象，我会接着处理。",
-          "needs_info",
+          "本轮读取次数已用完，尚未完成回答。可以缩小物品范围后重试。",
+          "unavailable",
         );
+        w.reply.errorCode = "tool_budget_exhausted";
         return { work: w };
       }
       w.messages.push({
@@ -1185,10 +1301,24 @@ export async function executeGraph(
           const allowed: readonly string[] = activeSkill.tools;
           if (!allowed.includes(call.function.name))
             throw new AgentError("本任务未开放此工具");
-          const args: { query?: string } = (
+          const args: {
+            query?: string;
+            itemId?: string;
+            offset?: number;
+            limit?: number;
+          } = (
             call.function.name === "list_accessible_items"
-              ? z.object({}).strict()
-              : z.object({ query: z.string().trim().min(1).max(200) }).strict()
+              ? z
+                  .object({
+                    offset: z.number().int().min(0).optional(),
+                    limit: z.number().int().min(1).max(40).optional(),
+                  })
+                  .strict()
+              : call.function.name === "read_item_context"
+                ? z.object({ itemId: z.string().min(1).max(100) }).strict()
+                : z
+                    .object({ query: z.string().trim().min(1).max(200) })
+                    .strict()
           ).parse(JSON.parse(call.function.arguments));
           const query = args.query || "";
           const ctx = buildContext(db, read(), actor, {
@@ -1201,7 +1331,15 @@ export async function executeGraph(
             temporary,
           });
           trackExpiry(ctx.cloudMemories);
-          if (call.function.name === "fetch_official_knowledge") {
+          if (call.function.name === "read_item_context") {
+            value = readItemContext(
+              read(),
+              actor,
+              args.itemId!,
+              !!ctx.item?.demo,
+            );
+            if (!value) throw new AgentError("物品不存在或未获授权");
+          } else if (call.function.name === "fetch_official_knowledge") {
             if (
               !effectiveSession.itemId ||
               !session.known.uiPage ||
@@ -1242,17 +1380,41 @@ export async function executeGraph(
                       text: m.text,
                       kind: m.kind,
                     }))
-                  : read()
-                      .items.filter(
-                        (i) =>
-                          canRead(i, actor) &&
-                          (ctx.item?.demo ? !!i.demo : !i.demo),
-                      )
-                      .map((i) => ({
-                        name: i.name,
-                        state: i.state,
-                        demo: !!i.demo,
-                      }));
+                  : itemContextPage(
+                      read(),
+                      actor,
+                      !!ctx.item?.demo,
+                      args.offset,
+                      args.limit,
+                    );
+          if (
+            ["read_item_context", "list_accessible_items"].includes(
+              call.function.name,
+            )
+          ) {
+            const returned = (
+              call.function.name === "list_accessible_items"
+                ? (value as ReturnType<typeof itemContextPage>).items
+                : [value]
+            ) as ItemContext[];
+            w.toolItemIds = [
+              ...new Set([
+                ...(w.toolItemIds || []),
+                ...returned.map((i) => i.id),
+              ]),
+            ];
+            for (const record of returned) {
+              itemSnapshots.set(record.id, JSON.stringify(record));
+              const item = read().items.find(
+                (i) => i.id === record.id && canRead(i, actor),
+              );
+              if (item)
+                session.itemScopes = {
+                  ...session.itemScopes,
+                  [item.id]: itemStamp(item),
+                };
+            }
+          }
           add(w, "tool_completed", call.function.name);
         } catch {
           value = { error: "工具不存在、参数无效或不在本任务授权范围" };
@@ -1284,6 +1446,22 @@ export async function executeGraph(
           temporary,
         });
         ctx.knowledgeTask.question += "\n本轮用户条件：" + w.question;
+        ctx.itemContexts = [
+          ...new Map(
+            [
+              ...ctx.itemContexts,
+              ...(w.toolItemIds || []).flatMap((id) => {
+                const item = readItemContext(
+                  read(),
+                  actor,
+                  id,
+                  !!ctx.item?.demo,
+                );
+                return item ? [item] : [];
+              }),
+            ].map((i) => [i.id, i]),
+          ).values(),
+        ];
         w.reply = storyPlan
           ? validateStorytelling(w.response!.text, storyPlan)
           : validateModelPacket(
@@ -1300,7 +1478,8 @@ export async function executeGraph(
           ctx.knowledgeTask.full &&
           ctx.knowledgeTask.cooking &&
           w.reply.source === "model-with-evidence" &&
-          w.calls < (publicDemo() ? 1 : 3)
+          (w.modelTurns || 0) < turnBudget.modelTurns &&
+          (w.repairs || 0) < turnBudget.repairs
         ) {
           const missing = ctx.knowledgeTask.checklist.filter(
             (c) =>
@@ -1311,6 +1490,7 @@ export async function executeGraph(
             const originalPacket = JSON.parse(w.response!.text);
             try {
               w.calls++;
+              w.repairs = (w.repairs || 0) + 1;
               add(
                 w,
                 "repair_missing_actions",
@@ -1404,7 +1584,11 @@ export async function executeGraph(
         if (storyPlan) {
           w.reply = localMemoryStory(storyPlan);
           add(w, "memory_story_fallback", "invalid_narrative");
-        } else if (w.calls < (publicDemo() ? 1 : 3)) {
+        } else if (
+          (w.modelTurns || 0) < turnBudget.modelTurns &&
+          (w.repairs || 0) < turnBudget.repairs
+        ) {
+          w.repairs = (w.repairs || 0) + 1;
           w.messages.push(
             { role: "assistant", content: w.response!.text },
             {
@@ -1417,19 +1601,21 @@ export async function executeGraph(
                 (activeSkill === skills["document-help"]
                   ? "。不要原样重复。去掉未经逐步引用支持的参数/按钮/装配细节，不从另一段借数字。使用grounded，steps每项必须有phase和sourceIds，answer只引导；knowledgeTask.requiredPhases缺少的用gaps说明。已知型号不再询问。"
                   : effectiveSession.mode === "service"
-                    ? "。保持使用帮助意图。已有证据只选相关factIds；普通电脑操作可用general。缺少型号专属依据则用needs_info或referred并给出下一步，不编造按钮，不改聊故事，不把校验文字当成用户说过的话。只输出合法JSON。"
+                    ? "。保持使用帮助意图。官方证据只选相关factIds；用户登记的材质、状态、限制请用general与实际itemIds，不把登记伪装成官方supported事实。普通电脑操作可用general。缺少型号专属依据则用needs_info或referred并给出下一步，不编造按钮，不改聊故事，不把校验文字当成用户说过的话。只输出合法JSON。"
                     : "。保持当前聊天/故事意图，不把校验反馈当成用户经历。仅输出合法JSON，使用标准双引号。"),
             },
           );
         } else
           w.reply = {
             ...blank(
-              effectiveSession.itemId
-                ? "已保留档案中的型号。本轮回答未通过资料核对，不能给出可靠的专属操作；可补充对应官方资料或描述当前卡住的现象，不必重新提供已确认型号。"
-                : "资料还不足以给出适用步骤。请说明当前卡住的现象或必要的适用信息。",
-              "needs_info",
+              "本轮模型候选未通过资料或物品条件检查，修正后仍未得到可靠答案，未展示该草稿。可缩小到一个具体问题后重试；已登记的物品无需重复录入。",
+              "unavailable",
             ),
             errorCode: "validation_failed",
+            caveat:
+              error instanceof AgentError
+                ? "候选未通过的原因：" + error.message
+                : "模型输出格式未通过检查。",
           };
       }
       return { work: w };

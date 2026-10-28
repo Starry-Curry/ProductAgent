@@ -1,0 +1,422 @@
+[
+  {
+    "path": "logs/development-benchmark-final.txt",
+    "originalSha256": "afb904deca792a50112f40ccc26cfb51b19c5c3199d42e9bd83cad0ee3f9def8",
+    "publishedSha256": "5bcdd516a276e1bc9f640c48a9dba9b85a5fc21fc71d13eeb135e824edb6dc4d",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-benchmark.txt",
+    "originalSha256": "f230f0556e3df7f8bf3bf2585dcb556c3f7fccbd321fb6887626f839a0540415",
+    "publishedSha256": "9a022398905fdc20fa3a79069c185392c9027c87cb8c61be9e6e188ace8aae38",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-browser-care-final.txt",
+    "originalSha256": "64afa814e908b456f3b93528ed7edb34622e994b5e165c50844fea18b80aa677",
+    "publishedSha256": "37840943a74379d58d34e0e0f2103dece3e18c12820a24e50eb8c3bee57702b2",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-browser-care.txt",
+    "originalSha256": "b51a02e72be4b2eff06edc7ecaedd273d0e352761dfa0211674082843847e34f",
+    "publishedSha256": "a373be14482014b0713c45ed9708892fa17214e1a219d7d07b38cb15f722ec80",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-browser-core-final.txt",
+    "originalSha256": "c1b4cd2aed97164b88e2af0dd04f245800d397e4b87b24a57f1e21b2f4e8d26d",
+    "publishedSha256": "bb7394e04fef4298093f60bd49c988d3b2c94f1c38e0aa4d9b4b69fd99a701aa",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-browser-core.txt",
+    "originalSha256": "45c084f2aa14e84bb749897020ae7fe2ad6f0f54540cd58387232e82921931eb",
+    "publishedSha256": "cc07c115222ffcf8115108d6ff0508b50d3484f0f384de7ebf1ea71195d729db",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-browser-life-final.txt",
+    "originalSha256": "a74f331b00b71c8b6f31f091a9dd3070d8917eff3adff492805942f794728801",
+    "publishedSha256": "1b1405041310be6085b3f9e8a7bb4e7410df220aec9b254bfd6ba3d0abe37177",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-browser-life.txt",
+    "originalSha256": "d9ecc0569a203cd1fa302f37667bde7f10951fe74bb3f44103430d3ce1ed46f3",
+    "publishedSha256": "662659477b8337962aa9a94b8615056e7fa79ca3eaea690c60a1c519df76dad9",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-browser-planning-final.txt",
+    "originalSha256": "72c7574861924f25a0c7f05a41250653eb162199dea9884d9843e50724f21ba0",
+    "publishedSha256": "cc394329c0dd7b445fd7adfe1edb31d3a2f8295c6f63246bc0f0a4104862b7e5",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-browser-planning.txt",
+    "originalSha256": "05d9b3654c35a9b5d63b15566526b0bcedcd36d5fbeb2046a81d0c1491617fc4",
+    "publishedSha256": "e728e6ed77a86c970315a6843a430b826e254c87af0c942f2b4fddad32dd6714",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-build-final.txt",
+    "originalSha256": "865c82f2979d54eddacf6a565af93bee99923edfac876444e74845fb4890bf6a",
+    "publishedSha256": "70fc50a20efba9976aba37d0b02786a192729a390c318991269d0cfebd41d38f",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-build.txt",
+    "originalSha256": "77930450392cb8c69d84f864a382b57576d54dcddfe70221d9a7f0a13f64c105",
+    "publishedSha256": "5e124fadedcdf32cdfed0356da0af397a2f26606ea2c6851e37b5542fb123b0b",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-cloud-final-recheck.txt",
+    "originalSha256": "08c5f100ab3e52017dde1decf9feafb4c9db7516a23da42f28b7618f1ed32a5f",
+    "publishedSha256": "04f7689c92a7bfc9b2a61f52c374dce0498aa519b553026d2e66fb3da9e1ed65",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-cloud-final.txt",
+    "originalSha256": "a26ccf971cfc0248340c8fd4af0b49acb6933e5353c28a6509d21c04ea0b4d27",
+    "publishedSha256": "cfba9850530707b1ef9b6f0d997253f41ee8dc0c79be8b3483092e414836ae2d",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-cloud-fixed.txt",
+    "originalSha256": "7a57c0f48d308c78e996e7cf0530680883dc8d6dd3709480d049140f103ed4bc",
+    "publishedSha256": "151ae22e22df6494e5dd8e07ae4a3c346821e93b829c363b7367eb08d3d75ecc",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-cloud-pass.txt",
+    "originalSha256": "08c5f100ab3e52017dde1decf9feafb4c9db7516a23da42f28b7618f1ed32a5f",
+    "publishedSha256": "04f7689c92a7bfc9b2a61f52c374dce0498aa519b553026d2e66fb3da9e1ed65",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-cloud.txt",
+    "originalSha256": "0bc50240db828ba8b880c0544d381649332eeb0930f675920b027f36a1f2adaf",
+    "publishedSha256": "200b9a616f5257514d35f32390c944a075a48620613e2f7b3b5aba04e67ef003",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-condition-scope-fixed.txt",
+    "originalSha256": "6db9c064e581d1127853212f68e99bfa1a8982296739c37683d845797d34449a",
+    "publishedSha256": "5d98a96640682e9594d782efdab668c9ab011289c7229112b4846219cbddb370",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-condition-scope-initial.txt",
+    "originalSha256": "01f7d0fcfab496704c0b66c7676c70ad4c8a826136c1207470a0401e3cd5a4fd",
+    "publishedSha256": "1774abe0b0235a5c082ced3a66f56ba5dd51de324900a9efe06e893b7461da10",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-evidence-export-final.txt",
+    "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "publishedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-evidence-export.txt",
+    "originalSha256": "5033623abb663afb68e5b3ca146a1bc8435370690fc0ee19242fbd837428d389",
+    "publishedSha256": "fae9d1efd8809ed068162e28fdeb9b31c271db4d5677b04e18076c64be6f968a",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-final-verifier-initial.txt",
+    "originalSha256": "e4b219dc811b8160d150d66ba1b4bf595f2b6c796b9f0a2e135b64874bd72319",
+    "publishedSha256": "ebb41c1b8d31322b06c04de73207f6d03e75564afe629cc32ce1c2334251033b",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-final-verifier-unit-initial.txt",
+    "originalSha256": "4ff5ba6e8880452c9e764a9c20ebf0f1ca97216e4552958b93d86ac2ac90c98d",
+    "publishedSha256": "534c2427e569f566fd52ae3f9728999e7c9d22fccf3fcea311b073c9ee7adce8",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-final-verify.txt",
+    "originalSha256": "c2752519e5988b620f47b4a792d09bbfead9e7d0371dc2d37d6dfaaa4b03d5e1",
+    "publishedSha256": "e9c7854bf9baefa9f8e57d85f9301d984c6cadf277e5b51b7fbf1b9341dd1c70",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-format-delivery.txt",
+    "originalSha256": "25c0b1402e80ae1e3431762e98a227ffdc5d0abf982941e6921dd834d400e654",
+    "publishedSha256": "d10a395a0d15d16b71721a33eba3f1644ace48fd2da7795cada3f56e96655668",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-format-docs.txt",
+    "originalSha256": "df3e47a3a1c5963614d761e65d35e0db5c0f145d91c6ccbd3ae44bcadfab0edf",
+    "publishedSha256": "5b7fb9521bbc356a14bb683abf539feff9a274ae0f0ed72b5ee2ce4c9ac81775",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-format-evidence.txt",
+    "originalSha256": "6e61ea0d8dfaddc50a0411470cf2ca4c25e0f331594fd07896757e6c2d7ad37e",
+    "publishedSha256": "22e26a169ce67712ae990e3d87f1488ac6046fb87210089f0aad54347819a358",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-format-final.txt",
+    "originalSha256": "76f047085e2ff05fbe003867102d89387a0947c5a9d370853f3d9a482e0a0624",
+    "publishedSha256": "3dec1a777269a39cae747d2875a66348fb745c8f47745eb63e148e232f412ebe",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-format-publish.txt",
+    "originalSha256": "35b4934458a9617f7f0ca6ef9f613909a4b5d1307cf6e7fe7a0f35bf997ba9bf",
+    "publishedSha256": "d3caa859855884d9cbd2c50b1b6c2d91a7b335a4ef2d85aa6a12b8292f1c9674",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-format.txt",
+    "originalSha256": "406d2b565734e1b8507cbe09c209d134a169c5505319ea169c4a67ee33521c85",
+    "publishedSha256": "ced04066eb06bab47c23b219a72b2e876fe0834921eacee05b7d35e601c25687",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-install.txt",
+    "originalSha256": "5ef18395405f38a0f3acc34759767bcbdb13ea01a34a5e74c8668494197fde7d",
+    "publishedSha256": "382f5b9fa85376c9ff1e03da2eef26624163306a840e517f2cb64c52820f47be",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-language-precision.txt",
+    "originalSha256": "19b071188ff18acdd21f7cf8c200c8b45e31b4993bcc2b1b1b7b2c5ae6daa0d7",
+    "publishedSha256": "8b3dc01d6fbb69df3b147d84b8b62aefd8914f26979da3fd1c9b243f59a9d4e9",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-leak-fixed.txt",
+    "originalSha256": "0942a850741eee19da28392676712815cc083b6b76dab022b283fc1e629e227f",
+    "publishedSha256": "1fbb2931aec9dc04b4f1eea7ea21c67f318abb69dfdae5cafa8af7b28d837a6b",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-leak-reproduction.txt",
+    "originalSha256": "4fd01ba187acc59d7d34e22dc0f8a514fc6d766b3baa4d1066b89b39eb5ebdc8",
+    "publishedSha256": "be3884d20f596c91687f2cb53a70ef811a3388ec01dbef630c5e2468e9109b57",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-live-final.txt",
+    "originalSha256": "6d25c018f0a79bdc337d4695026cc14acbb7b033aafa8714b0a1399c0cf82238",
+    "publishedSha256": "21529c73924c7aa5c73dc6fc0ec4e6cf9283736670b76b60b6cc0bf1e9b23bb6",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-live-guard.txt",
+    "originalSha256": "c917b3fdecb346534e16564bdf03e49db757925e63f1099bad7012c83e6e6497",
+    "publishedSha256": "8f082f0303e76940b7d48d8a098365f263f2ca9ee2a776e881f3d488439e636e",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-live-run.txt",
+    "originalSha256": "3025580a97b5df752006f4b214f3a84ee8004476222694451b80bf3f9119f2d8",
+    "publishedSha256": "15b214c98e04f1f616d859b6a6a582b65ef230197814e2f8b615ff6ba9b0d574",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-live-targeted.txt",
+    "originalSha256": "937c025c54e8e98147dd2e445de47fafa4737f0c27a15926a49454025e8ce0bf",
+    "publishedSha256": "1efdec9c43dfa3cde768b63abd8a0e776421e8788862686142a9e7c8c2749943",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-pi-install.txt",
+    "originalSha256": "7996b7bc5cdd79c31f56a1f566227c4bcdd458fff9bb569de293c20743cc046b",
+    "publishedSha256": "d880abd1f7b3ee6e77b6c1249b27ef3d1d8e8889296a31d95276dbf0f3e9d731",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-pi-poc-fixed.txt",
+    "originalSha256": "1b62efaa606b160477e5f6587d39f3c7e46e65d7a368776ebbc72ce6781a0257",
+    "publishedSha256": "e213d969c76a1ee9b87a99dab48b755f03288b9fdace62dd59874cbfa17efb08",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-pi-poc.txt",
+    "originalSha256": "ddb3bf7e1cb47d5da4e41eb019d8f675c03dd93d2165ca9a0b662cae935dc4e9",
+    "publishedSha256": "a794d985681084d4dfa6367e987e7c9e7c5850b19bf0538fda56e0f8f949856a",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-real-language-fixed.txt",
+    "originalSha256": "6d453fcd44c72828ed2ff75a8d2b755df575ea889a083eeffe67666dd2590bfd",
+    "publishedSha256": "9eba60dddd1402e9388e5eafb353c17bca248dbc95e0b6e4302776e539932292",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-real-language-initial.txt",
+    "originalSha256": "d8abd66f4dc5db4bd7c54bf931f86d15b8f175b3cc8d111c2858b40c511ae37a",
+    "publishedSha256": "3ce2c6e55332726aa85f7fe401498298d4dd544f79e7c51f26c01fca11fc5ddb",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-real-language-pass.txt",
+    "originalSha256": "b52d389d6a4671754de51ba6c675ee6024e6e1f7cf7dd813b15c67ae8c221848",
+    "publishedSha256": "fb9697edeaa7d2dd0b0afbf49042f6cc234ae5cbc2e54e1b768f8cf874bcbe4a",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-targeted-fixed.txt",
+    "originalSha256": "39b7ed5836f13dbef3dc5cd4cdfef90078b7f8b1f7a80eb8898af8cd95f59c2c",
+    "publishedSha256": "331b16b1633190fad315a23aa1efa55f7d8267e514f5aec58d9008d435b7cb92",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-targeted-initial.txt",
+    "originalSha256": "0cc0367bfda342c74dcf70cd855ee7ba9e8e30f161f646f7c88d1395b6ed4a1f",
+    "publishedSha256": "3df6c42d1e1234bbed8f3aaaa9d915d96fc99800b66875166785a63160380492",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-targeted-precision.txt",
+    "originalSha256": "88bd48ac8fde5dda7f9d28212d70118c99edd601dc1b921445af7a1b374ebf63",
+    "publishedSha256": "56af34e2a6be1e8cfe43ed1ca0b20cb29d11255d67b99afd05bb2a0c259994f6",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-targeted-refined.txt",
+    "originalSha256": "211f09ae76e8a1f8ce752d4c58025885eb86ab2a88a7db3b28a48a697e1e7e06",
+    "publishedSha256": "3c41db36bed83de8f3115d9d03c903bd7eeb34e90059111d8fb851ce5241165d",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-typecheck-final.txt",
+    "originalSha256": "825679ec5bc0c018a5839700255ea95de70c27fc3e9908179a9d16d27f50128b",
+    "publishedSha256": "c1b753d0d0b033b3358a94d02614ccc3ad7eeda1a3bfe05b6652571d6993b944",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-typecheck-guard.txt",
+    "originalSha256": "7df6634af11c5db08928230eebaf2945f75c0adcb3650b54cc8a90f7a285b496",
+    "publishedSha256": "79cb45b1270ac13b98c97db25c000ac4b65614e4080cdf004691ce6c0aacb483",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-typecheck-initial.txt",
+    "originalSha256": "7df6634af11c5db08928230eebaf2945f75c0adcb3650b54cc8a90f7a285b496",
+    "publishedSha256": "79cb45b1270ac13b98c97db25c000ac4b65614e4080cdf004691ce6c0aacb483",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-typecheck-pass.txt",
+    "originalSha256": "292fac678f539c5fa04b8e706c139afc861f9b6d084d64cec3fa76ce30472160",
+    "publishedSha256": "8ecd2c9e217809de41e0ac3444a6bb794f588f6da1b28e1a41efc6b4c7f3ebed",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-typecheck-precision.txt",
+    "originalSha256": "7df6634af11c5db08928230eebaf2945f75c0adcb3650b54cc8a90f7a285b496",
+    "publishedSha256": "79cb45b1270ac13b98c97db25c000ac4b65614e4080cdf004691ce6c0aacb483",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-typecheck-refined.txt",
+    "originalSha256": "7df6634af11c5db08928230eebaf2945f75c0adcb3650b54cc8a90f7a285b496",
+    "publishedSha256": "79cb45b1270ac13b98c97db25c000ac4b65614e4080cdf004691ce6c0aacb483",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-unit-final.txt",
+    "originalSha256": "027c582fca909413e2fccc1840f70a10146aa6c361dcc770f683fbe9ffd90909",
+    "publishedSha256": "5301d0c86f937e37cd77b05735788384bef5ab63233db9f1c2c7a57e3065ce39",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-unit-fixed.txt",
+    "originalSha256": "5fc3f19dd77e10c0e37ccd99568e59c8eed08fe0377f79473c5bb522f64273e0",
+    "publishedSha256": "6b0617e8aa08219505d447a2e173c2c2871068e0106d457dde78a3286b405116",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-unit-initial.txt",
+    "originalSha256": "e47f3d1dbc9c0b050a870c21a2ecd7d2abfb49c7337bd4998c6db5ad7cdbb681",
+    "publishedSha256": "6d6bf7090b03fb874370e3fb1aeb69e26beb2751212f026912333a855ba0ce91",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-unit-pass.txt",
+    "originalSha256": "0d4426e5fa1348b06cdfbc0a9d7a280e2c018049302bdad934faf5bf55ebf1bc",
+    "publishedSha256": "945ff7f3c4b74f33979ac8e32cc147f146e2b2fbfb809ffe82bf5664b79e2117",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/development-unit-refined.txt",
+    "originalSha256": "44819cae5660095456df06e9906a5894e6f16b6cf32f9b4f3ebfd586403dbb16",
+    "publishedSha256": "b23ef4e1b22f6af7f720bd6efb9f196100c7b684ee452bb45d92c601cdae37fd",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-benchmark.txt",
+    "originalSha256": "e47683f8529560e08cae59f21b060eebf076d606d90c83964041403b35e2fa79",
+    "publishedSha256": "e47683f8529560e08cae59f21b060eebf076d606d90c83964041403b35e2fa79",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-browser-care.txt",
+    "originalSha256": "0180d8f0fcbb83c6c15a0d07140a79092b4b6f13ecc2aa386b9fc40383420fc3",
+    "publishedSha256": "0180d8f0fcbb83c6c15a0d07140a79092b4b6f13ecc2aa386b9fc40383420fc3",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-browser-core.txt",
+    "originalSha256": "728bf3edca689134ef0c8f65b0eb8eb13fba944aea55f34ee90d068c912461f1",
+    "publishedSha256": "728bf3edca689134ef0c8f65b0eb8eb13fba944aea55f34ee90d068c912461f1",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-browser-life.txt",
+    "originalSha256": "b4bb384902a2caf04445b956ba213c33fbfbb96b932b4107164ef2d0fac4b99c",
+    "publishedSha256": "d99954da33045653391542d88d1c0923c830645f97c102fb36b216403acd3e45",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-browser-planning.txt",
+    "originalSha256": "03c4f962278895daa5d53311491039c0b8b6d49211ab4c2f09cc7c0a620db80c",
+    "publishedSha256": "03c4f962278895daa5d53311491039c0b8b6d49211ab4c2f09cc7c0a620db80c",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-browser-storybook.txt",
+    "originalSha256": "207a831f6d0525d0c867387e8b4b2b8e4d69a42d5acf5a1c011e65315220a3b1",
+    "publishedSha256": "207a831f6d0525d0c867387e8b4b2b8e4d69a42d5acf5a1c011e65315220a3b1",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-build.txt",
+    "originalSha256": "c76478991dc176d493fdae6df61877c234f644564fb9006ecdb489188694d9cc",
+    "publishedSha256": "90908005aef3a6bf9f62eff1c4160eb3a26f9eb37887b19bce74e3c982f94b8e",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-cloud.txt",
+    "originalSha256": "04f7689c92a7bfc9b2a61f52c374dce0498aa519b553026d2e66fb3da9e1ed65",
+    "publishedSha256": "04f7689c92a7bfc9b2a61f52c374dce0498aa519b553026d2e66fb3da9e1ed65",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-pi-poc.txt",
+    "originalSha256": "e213d969c76a1ee9b87a99dab48b755f03288b9fdace62dd59874cbfa17efb08",
+    "publishedSha256": "e213d969c76a1ee9b87a99dab48b755f03288b9fdace62dd59874cbfa17efb08",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-typecheck.txt",
+    "originalSha256": "79cb45b1270ac13b98c97db25c000ac4b65614e4080cdf004691ce6c0aacb483",
+    "publishedSha256": "79cb45b1270ac13b98c97db25c000ac4b65614e4080cdf004691ce6c0aacb483",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  },
+  {
+    "path": "logs/final-unit.txt",
+    "originalSha256": "4cd975f38de1b0f41e5c76c11b99c8e95d204c20fa0fb9075f124da3c31a7766",
+    "publishedSha256": "4cd975f38de1b0f41e5c76c11b99c8e95d204c20fa0fb9075f124da3c31a7766",
+    "normalization": "LF, trim trailing spaces and final blank lines; no substantive lines removed"
+  }
+]

@@ -6,6 +6,61 @@ globalThis.fetch = async (input, init) => {
       ? String(input)
       : input.url,
   );
+  if (
+    url.hostname === "dashscope.aliyuncs.com" &&
+    process.env.WUJIAN_TEST_TOOL_LOOP === "true"
+  ) {
+    const body = JSON.parse(init.body);
+    const tool = body.messages.find((m) => m.role === "tool");
+    const item = tool
+      ? JSON.parse(tool.content).items?.find((i) => i.name === "合成纸盒")
+      : null;
+    if (
+      tool &&
+      (!item?.id ||
+        !item.properties ||
+        !item.sources?.registration ||
+        !item.unknowns)
+    )
+      throw Error("Missing actual rich item tool result");
+    return Response.json({
+      choices: [
+        {
+          finish_reason: tool ? "stop" : "tool_calls",
+          message: tool
+            ? {
+                role: "assistant",
+                content: JSON.stringify({
+                  kind: "general",
+                  answer:
+                    "合成离线工具往返：" +
+                    item.name +
+                    "。登记条件仍需核对，先坐下休息。",
+                  itemIds: [item.id],
+                  factIds: [],
+                  procedureId: null,
+                  questions: [],
+                }),
+              }
+            : {
+                role: "assistant",
+                content: null,
+                tool_calls: [
+                  {
+                    id: "list-fixture",
+                    type: "function",
+                    function: {
+                      name: "list_accessible_items",
+                      arguments: JSON.stringify({ limit: 40 }),
+                    },
+                  },
+                ],
+              },
+        },
+      ],
+      usage: { prompt_tokens: 10, completion_tokens: 20 },
+    });
+  }
   if (url.hostname === "dashscope.aliyuncs.com")
     return Response.json({
       model: "offline-cloud-stub",

@@ -1,0 +1,10 @@
+scripts/finals-item-publish-scan.mjs 36ms
+CHANGELOG.md 31ms
+DEVELOPMENT_REPORT.md 5ms
+IMPLEMENTATION_STATUS.md 4ms
+REVIEW_HANDOFF.md 7ms (unchanged)
+docs/finals/item-understanding-v1/ARCHITECTURE.md 6ms (unchanged)
+docs/finals/item-understanding-v1/DECISIONS.md 16ms (unchanged)
+docs/finals/item-understanding-v1/README.md 6ms (unchanged)
+docs/finals/item-understanding-v1/TEST_REPORT.md 23ms
+docs/finals/README.md 3ms (unchanged)

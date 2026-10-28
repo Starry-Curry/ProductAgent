@@ -1,0 +1,49 @@
+✔ 真实失败回归：谨慎表述不误拒 不能确定。档案中仅登记为不锈钢，未注明304牌号或食品级认证。 (1.6973ms)
+✔ 真实失败回归：谨慎表述不误拒 是否安全使用，取决于其实际等级（如是否为食品级304），目前缺少这些信息。 (0.1949ms)
+✔ 真实失败回归：谨慎表述不误拒 杯底具体弧度、是否镜面抛光、厚度分布等条件均未确认。 (0.1113ms)
+✔ 真实失败回归：谨慎表述不误拒 没有官方资料支持直接装沸水，无法确认沸水安全性。 (0.0749ms)
+✔ 真实失败回归：谨慎表述不误拒 这只杯子没有被确认是透明的，不能假设它的光学性质。 (0.0864ms)
+✔ 真实失败回归：谨慎表述不误拒 镜面、凹槽和承重都尚未确认，先不要据此设计。 (0.1351ms)
+✔ 真实失败回归：谨慎表述不误拒 因此，无法从现有资料确定它是304食品级不锈钢。若需用于盛装食物或饮品，建议优先确认产品标识。 (0.3924ms)
+✔ 真实失败回归：谨慎表述不误拒 这些信息直接影响能否安全装沸水。 (0.0952ms)
+✔ 否定说明不能掩盖独立断言 镜面未经确认，但可以用它的镜面反射文字。 (0.2488ms)
+✔ 否定说明不能掩盖独立断言 材质未注明，但它就是304食品级不锈钢。 (0.2125ms)
+✔ 否定说明不能掩盖独立断言 这只杯子可以盛装热水。最后再确认耐热。 (0.3679ms)
+✔ 否定说明不能掩盖独立断言 食品级未确认，不过可以用这只杯子喝水。 (0.1772ms)
+✔ 否定说明不能掩盖独立断言 杯子的承重足够。 (0.1884ms)
+✔ 否定说明不能掩盖独立断言 材质未注明但它就是304食品级不锈钢。 (0.1011ms)
+✔ 破损物品的禁止提示和维修前提不误作正在使用 (0.4347ms)
+✔ 真实输出漏检回归：稳妥做法是先装温水试用。 (0.109ms)
+✔ 真实输出漏检回归：若想尝试，可将杯底朝下平放于文字上方，缓慢调整高度观察放大。 (0.06ms)
+✖ 食品接触前提不能授权其他未经确认的性质或破损状态 (2.5417ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 17
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 237.7225
+
+✖ failing tests:
+
+test at tests\item-evidence-language.test.ts:72:1
+✖ 食品接触前提不能授权其他未经确认的性质或破损状态 (2.5417ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(itemAdviceIssues("如果确认食品接触适用，才用杯子盛装热水并加热。", [itemContext(item)]).length)
+
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/tests/item-evidence-language.test.ts:73:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

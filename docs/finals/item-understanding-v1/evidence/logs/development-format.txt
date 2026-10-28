@@ -1,0 +1,20 @@
+src/lib/agent/graph.ts 181ms
+src/lib/agent/prompts.ts 5ms
+src/lib/agent/budget.ts 1ms (unchanged)
+src/lib/context/builder.ts 7ms (unchanged)
+src/lib/context/items.ts 5ms
+src/lib/context/item-advice.ts 5ms
+src/lib/home/router.ts 11ms
+src/lib/life/ideas.ts 60ms
+src/lib/life/planning.ts 34ms
+src/lib/life/planning-constraints.ts 4ms
+src/lib/life/task-planning.ts 26ms (unchanged)
+src/lib/skills/registry.ts 2ms
+tests/foundation.test.ts 41ms
+tests/item-understanding-v1.test.ts 13ms
+tests/item-evidence-language.test.ts 2ms
+tests/cloud-provider-stub.mjs 18ms
+scripts/test-cloud.mjs 20ms
+scripts/finals-item-eval.mjs 12ms
+scripts/finals-item-cases.mjs 3ms
+experiments/pi-item-loop/poc.mjs 7ms

@@ -1,0 +1,1 @@
+{"name":"unit","command":["C:\\Program Files\\nodejs\\node.exe","C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js","test"],"exitCode":1,"elapsedMs":12668,"log":".runtime\\item-v1\\final-checks\\unit.log","realModelRequests":0}

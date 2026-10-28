@@ -1,0 +1,21 @@
+src/lib/agent/graph.ts 217ms
+src/lib/context/item-advice.ts 13ms
+src/lib/life/planning.ts 50ms (unchanged)
+scripts/finals-item-cases.mjs 18ms (unchanged)
+scripts/finals-item-eval.mjs 20ms
+scripts/finals-item-evidence.mjs 14ms
+scripts/finals-item-verify.mjs 3ms
+scripts/test-cloud.mjs 19ms
+tests/item-evidence-language.test.ts 3ms
+tests/item-understanding-v1.test.ts 17ms
+tests/cloud-security.test.ts 13ms
+experiments/pi-item-loop/poc.mjs 8ms (unchanged)
+docs/finals/item-understanding-v1/ARCHITECTURE.md 27ms (unchanged)
+docs/finals/item-understanding-v1/DECISIONS.md 19ms
+docs/finals/item-understanding-v1/README.md 6ms (unchanged)
+docs/finals/README.md 3ms (unchanged)
+npm notice
+npm notice New major version of npm available! 11.13.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

@@ -1,0 +1,38 @@
+[
+  {
+    "path": "src/lib/agent/graph.ts",
+    "sha256": "72d16441eec74e06bbc3b46dd528447f36fa2e5bcbc57a21cf14512323529928"
+  },
+  {
+    "path": "src/lib/agent/prompts.ts",
+    "sha256": "7ab6b8393ee588c13a8ba282f2d1568702f7604c3d13860a75db772e1bd22435"
+  },
+  {
+    "path": "src/lib/context/builder.ts",
+    "sha256": "d1cbce429b1b6b27d9c40c818606906a5f8a58ecff47735d6cd67fa0863cc360"
+  },
+  {
+    "path": "src/lib/home/router.ts",
+    "sha256": "417fb4e6d98770d58ced5958764a99553c66af876f7028495fdca11e0ae88e0a"
+  },
+  {
+    "path": "src/lib/life/ideas.ts",
+    "sha256": "66cb0c05fb938a872640ddf51cb327360368451b5039bc03af9fba819f3f996d"
+  },
+  {
+    "path": "src/lib/life/planning-constraints.ts",
+    "sha256": "a6283cb5ada5e3dae8d02a7f0450bbdfdcf9cc4e12f9e0e01df9e16834e8191b"
+  },
+  {
+    "path": "src/lib/life/planning.ts",
+    "sha256": "ed697223b9836625b6994151b02d8a0b30d157660c23c60d700e9bc8d7a2f4bb"
+  },
+  {
+    "path": "src/lib/life/task-planning.ts",
+    "sha256": "6b401f633c9de08ecdf36e2b6f1971740024ba2ee15d4f83f23733e08337f502"
+  },
+  {
+    "path": "src/lib/skills/registry.ts",
+    "sha256": "b3eccc0f23d900e23c4b58934a4c60f846dd287231d6fe86e2d96fb4c9b62aaa"
+  }
+]

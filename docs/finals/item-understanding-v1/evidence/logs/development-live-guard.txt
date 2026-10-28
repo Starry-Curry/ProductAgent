@@ -1,0 +1,2 @@
+{"label":"F03:fixed-guard-recheck","requests":1,"totalRequests":146,"costCny":0.427485,"outcome":"answered","source":"model-general"}
+{"label":"F04:fixed-guard-recheck","requests":2,"totalRequests":148,"costCny":0.432985,"outcome":"unavailable","source":"curated-guidance"}

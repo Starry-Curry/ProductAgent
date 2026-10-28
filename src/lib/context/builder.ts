@@ -1,4 +1,5 @@
 import { storyMemoryRelevant } from "../life/organization.ts";
+import { itemContext } from "./items.ts";
 import { retrieveKnowledge } from "../life/acquisition.ts";
 import { taskEvidence } from "../life/knowledge-task.ts";
 import type { DatabaseSync } from "node:sqlite";
@@ -117,6 +118,7 @@ export function buildContext(
       item?.name,
     ),
     item,
+    itemContexts: item ? [itemContext(item)] : [],
     knowledge,
     memories,
     cloudMemories: memories.filter((m) => m.allowCloud && !m.demo),
@@ -136,7 +138,7 @@ export function buildContext(
                 (item?.demo ? !!i.demo : !i.demo) &&
                 ["在用", "闲置", "待确认"].includes(i.state),
             )
-            .map((i) => ({ id: i.id, name: i.name, state: i.state }))
+            .map(itemContext)
         : [],
   };
 }

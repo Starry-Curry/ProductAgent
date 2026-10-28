@@ -1,0 +1,67 @@
+✔ 真实失败回归：谨慎表述不误拒 不能确定。档案中仅登记为不锈钢，未注明304牌号或食品级认证。 (1.6549ms)
+✔ 真实失败回归：谨慎表述不误拒 是否安全使用，取决于其实际等级（如是否为食品级304），目前缺少这些信息。 (0.1862ms)
+✔ 真实失败回归：谨慎表述不误拒 杯底具体弧度、是否镜面抛光、厚度分布等条件均未确认。 (0.1165ms)
+✔ 真实失败回归：谨慎表述不误拒 没有官方资料支持直接装沸水，无法确认沸水安全性。 (0.0783ms)
+✖ 真实失败回归：谨慎表述不误拒 这只杯子没有被确认是透明的，不能假设它的光学性质。 (0.9329ms)
+✔ 真实失败回归：谨慎表述不误拒 镜面、凹槽和承重都尚未确认，先不要据此设计。 (0.1133ms)
+✔ 否定说明不能掩盖独立断言 镜面未经确认，但可以用它的镜面反射文字。 (0.211ms)
+✔ 否定说明不能掩盖独立断言 材质未注明，但它就是304食品级不锈钢。 (0.1613ms)
+✔ 否定说明不能掩盖独立断言 这只杯子可以盛装热水。最后再确认耐热。 (0.6804ms)
+✔ 否定说明不能掩盖独立断言 食品级未确认，不过可以用这只杯子喝水。 (0.1839ms)
+✖ 否定说明不能掩盖独立断言 杯子的承重足够。 (2.9177ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 9
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 229.594
+
+✖ failing tests:
+
+test at tests\item-evidence-language.test.ts:14:3
+✖ 真实失败回归：谨慎表述不误拒 这只杯子没有被确认是透明的，不能假设它的光学性质。 (0.9329ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   '无盖不锈钢水杯：透明尚未确认，缺少当前属性或事实依据'
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/tests/item-evidence-language.test.ts:14:44)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '无盖不锈钢水杯：透明尚未确认，缺少当前属性或事实依据' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\item-evidence-language.test.ts:21:3
+✖ 否定说明不能掩盖独立断言 杯子的承重足够。 (2.9177ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(itemAdviceIssues(text,[itemContext(item)]).length)
+
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/tests/item-evidence-language.test.ts:21:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

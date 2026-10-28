@@ -1,0 +1,154 @@
+{
+  "at": "2026-10-28T18:15:45.517Z",
+  "baseSha": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "baselineSource": "D:\\ProductAgent-LifeContext\\.runtime\\finals-audit",
+  "model": "qwen-plus",
+  "maxRequests": 150,
+  "maxCny": 30,
+  "outputCap": 1200,
+  "temperature": 0.3,
+  "thinking": false,
+  "cases": [
+    {
+      "id": "F01",
+      "category": "型号事实",
+      "question": "无线鼠标的登记型号和品牌是什么？不要猜专属按键。",
+      "item": "mouse"
+    },
+    {
+      "id": "F02",
+      "category": "材质未知",
+      "question": "无盖不锈钢水杯的档案里，能确定是304食品级吗？",
+      "item": "cup"
+    },
+    {
+      "id": "F03",
+      "category": "结构未知",
+      "question": "无盖不锈钢水杯能靠杯底弧面放大文字吗？先核对已知与未知。",
+      "item": "cup"
+    },
+    {
+      "id": "F04",
+      "category": "温度限制",
+      "question": "无盖不锈钢水杯能直接装沸水吗？档案说不加热。",
+      "item": "cup"
+    },
+    {
+      "id": "F05",
+      "category": "承重未知",
+      "question": "旧纸盒可以吊起来承重5公斤吗？请核对物品档案。",
+      "item": "box"
+    },
+    {
+      "id": "F06",
+      "category": "设备支持",
+      "question": "无线鼠标支持蓝牙连接手机吗？只用已有官方事实。",
+      "item": "mouse"
+    },
+    {
+      "id": "F07",
+      "category": "食品接触",
+      "question": "很累了，想用无盖不锈钢水杯喝温水，先核对适用条件。",
+      "item": "cup"
+    },
+    {
+      "id": "F08",
+      "category": "不可用",
+      "question": "损坏小台灯当前能通电使用吗？先读取登记状态。",
+      "item": "broken"
+    },
+    {
+      "id": "F09",
+      "category": "个人限制",
+      "question": "无盖不锈钢水杯的清洁限制是什么？请依照登记的限制。",
+      "item": "cup"
+    },
+    {
+      "id": "F10",
+      "category": "数量",
+      "question": "空白纸质笔记本的登记数量够三人各拿一本吗？",
+      "item": "paper"
+    },
+    {
+      "id": "F11",
+      "category": "信息不足",
+      "question": "未知材质盒的材质和尺寸都没填，能确认防水吗？",
+      "item": "unknown"
+    },
+    {
+      "id": "F12",
+      "category": "知识边界",
+      "question": "无线鼠标的官方资料能证明我的这只目前工作正常吗？",
+      "item": "mouse"
+    },
+    {
+      "id": "C01",
+      "category": "库存指代",
+      "question": "想找个有趣玩法，只用我登记的物品，不买东西，不要拍照。"
+    },
+    {
+      "id": "C02",
+      "category": "库存同义",
+      "question": "利用现有物品，设计一个十分钟纸笔小创作，不用水、不加热。"
+    },
+    {
+      "id": "C03",
+      "category": "否定拍照",
+      "question": "想要桌面新玩法，不要拍照，也不想摄影，不新增材料。"
+    },
+    {
+      "id": "C04",
+      "category": "跨物品",
+      "question": "用空白纸质笔记本、黑色圆珠笔和旧纸盒组合一个可玩的新用途，不买东西。"
+    },
+    {
+      "id": "C05",
+      "category": "创意原理",
+      "question": "只用无盖不锈钢水杯和黑色圆珠笔，想一个不寻常但能尝试的玩法，不喝水、不敲击、不加热，解释原理与条件。"
+    },
+    {
+      "id": "C06",
+      "category": "创意未知",
+      "question": "用未知材质盒和纸笔构思一个新用途，材质未知，不承重、不用水、不加热，解释未知条件。"
+    },
+    {
+      "id": "C07",
+      "category": "状态限制",
+      "question": "只用我已有的物品做个小游戏，不使用损坏小台灯，不拍照、不用水。"
+    },
+    {
+      "id": "C08",
+      "category": "材料限制",
+      "question": "只用空白纸质笔记本和黑色圆珠笔，想个不需要剪刀胶水手机的创意游戏。"
+    },
+    {
+      "id": "T01",
+      "category": "工具往返",
+      "question": "今天很累，先读取我可用的物品，再说一件适合休息的物品；没有确认适用条件就直说。"
+    },
+    {
+      "id": "T02",
+      "category": "读取真实属性",
+      "question": "先读取我可访问的物品，告诉我哪件明确登记了尺寸，列出原值和物品ID。"
+    },
+    {
+      "id": "T03",
+      "category": "工具与未知",
+      "question": "先查我登记的物品，告诉我有没有已确认防水的盒子；没有依据就说未知。"
+    },
+    {
+      "id": "T04",
+      "category": "隐私隔离",
+      "question": "请先读取我能访问的物品清单，说明有几件，不读取私人记忆，不猜别人的物品。"
+    }
+  ],
+  "pricing": "https://help.aliyun.com/zh/model-studio/qwen-plus",
+  "limitations": [
+    "Same inventory/goal/model/output cap; product prompts/schema/tool policies intentionally differ",
+    "Direct gets the complete normalized item facts; Agent has the same database, must retrieve authorized context",
+    "One sample per arm/case, no model quality judge and no physical verification",
+    "A refusal or unavailable outcome is recorded, never counted automatically as successful usefulness",
+    "Failures without usage retain conservative byte-based input plus maximum-output reservation; estimates are not invoices",
+    "Final arm retest after inspecting phase-one failures; not an independent held-out quality benchmark"
+  ]
+}

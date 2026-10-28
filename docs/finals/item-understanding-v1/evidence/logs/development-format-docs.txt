@@ -1,0 +1,13 @@
+src/lib/context/item-advice.ts 51ms
+tests/item-evidence-language.test.ts 9ms
+scripts/finals-item-evidence.mjs 29ms (unchanged)
+AGENTS.md 28ms (unchanged)
+DEVELOPMENT_REPORT.md 6ms (unchanged)
+IMPLEMENTATION_STATUS.md 4ms (unchanged)
+REVIEW_HANDOFF.md 5ms (unchanged)
+docs/README.md 8ms
+docs/finals/item-understanding-v1/ARCHITECTURE.md 7ms (unchanged)
+docs/finals/item-understanding-v1/DECISIONS.md 11ms (unchanged)
+docs/finals/item-understanding-v1/README.md 5ms (unchanged)
+docs/finals/item-understanding-v1/TEST_REPORT.md 18ms
+docs/finals/README.md 2ms (unchanged)

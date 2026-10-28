@@ -1,0 +1,11 @@
+
+> product-agent@0.1.0 test:care
+> node scripts/verify-local.mjs care
+
+{"passed":true,"realModelCalls":0,"checks":["right-corner mode switch and two-entry navigation","actor and version survive reload","legacy preference keys","only assigned tasks","acknowledgement keeps reminder active","ask for help and complete task","incoming task refresh","unified Q&A and no preparation mutation in care","selected item answers from existing product evidence and seller entry","390px large text and buttons","switch back preserves inventory"]}
+{"passed":true,"kind":"isolated-production-server","base":"http://127.0.0.1:59530","dataDirectory":"D:\\ProductAgent-LifeContext\\.runtime\\finals-item-understanding-v1\\.runtime\\verification-JU1MV2","realModelCalls":0,"journeys":["tests/care-integration.mjs"]}
+npm notice
+npm notice New major version of npm available! 11.13.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

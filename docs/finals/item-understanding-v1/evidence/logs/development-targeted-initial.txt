@@ -1,0 +1,101 @@
+✔ 库存指代进入模型路径：只用我登记的物品 (128.8161ms)
+✔ 库存指代进入模型路径：只用我已登记的物品 (115.2486ms)
+✔ 库存指代进入模型路径：只使用我登记过的物品 (149.8967ms)
+✔ 库存指代进入模型路径：利用现有物品 (148.9293ms)
+✔ 库存指代进入模型路径：用已有的东西 (124.987ms)
+✔ 库存指代进入模型路径：用我录入的物品 (140.9084ms)
+✔ 库存指代进入模型路径：仅用家里已有的物品 (150.7691ms)
+✔ 库存指代进入模型路径：只有我登记的物品 (129.4142ms)
+✔ 库存指代进入模型路径：利用我拥有的物品 (103.3226ms)
+✔ 库存指代进入模型路径：使用手边已有物品 (143.3498ms)
+✔ 库存指代进入模型路径：只用当前登记的全部物品 (158.2646ms)
+✔ 库存指代进入模型路径：利用我已经录入的这些物品 (120.7845ms)
+✔ 否定活动不成为目标：不要拍照，想玩一个纸笔游戏 (0.2057ms)
+✔ 否定活动不成为目标：不加热，观察纸的影子 (0.0884ms)
+✔ 否定活动不成为目标：不想摄影，试着写故事 (0.0416ms)
+✔ 实际步骤遵守否定限制：不要拍照 (0.2758ms)
+✔ 实际步骤遵守否定限制：不用水 (0.1974ms)
+✔ 实际步骤遵守否定限制：不加热 (0.1192ms)
+✔ 实际步骤遵守否定限制：不买东西 (0.0539ms)
+✔ 物品契约保留ID/登记/未知与来源，不泄露隐私字段或越权物品 (127.4418ms)
+✔ 缺证据的性质或行动被拒：这只杯子可安心使用。 (123.7544ms)
+✔ 缺证据的性质或行动被拒：先用无盖不锈钢水杯喝点温水。 (120.094ms)
+✔ 缺证据的性质或行动被拒：它是304食品级不锈钢。 (134.8411ms)
+✔ 缺证据的性质或行动被拒：用它的镜面观察倒影。 (107.6724ms)
+✔ 缺证据的性质或行动被拒：杯底弧面可以放大文字。 (117.2207ms)
+✔ 缺证据的性质或行动被拒：可以盛装热水。 (120.2063ms)
+✔ 缺证据的性质或行动被拒：这只杯子的承重足够。 (131.647ms)
+✔ 缺证据的性质或行动被拒：先加热水杯，最后再确认耐热。 (143.9558ms)
+✔ 缺证据的性质或行动被拒：利用表面的凹槽夹住纸。 (145.5178ms)
+✔ 缺证据的性质或行动被拒：杯子透明，能直接看到里面。 (152.4699ms)
+✔ 拒绝或明确前置条件不误判：尚未确认食品接触条件，先不要用它喝水。 (119.4033ms)
+✖ 拒绝或明确前置条件不误判：没有证据说明它是304或食品级，不能承诺可安心使用。 (100.5184ms)
+✔ 拒绝或明确前置条件不误判：如果确认食品接触适用，才用该杯喝水，否则选择其他已确认的容器。 (124.995ms)
+✖ 拒绝或明确前置条件不误判：先用纸笔做接龙，不依赖杯子的耐热、镜面或承重。 (159.9624ms)
+✔ local-demo 完成真实Graph tool→result→answer，带属性与稳定ID (256.0575ms)
+✔ public-demo 完成真实Graph tool→result→answer，带属性与稳定ID (190.7127ms)
+✔ 详情工具拒绝越权ID且不透露隐藏名称 (173.0707ms)
+✔ 模型循环耗尽明确报回合预算，不伪装成用户缺资料 (314.6633ms)
+✔ 创意修正超时保留准确错误，未通过草稿不落库，不自动重试网络 (142.6604ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 37
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5368.6308
+
+✖ failing tests:
+
+test at tests\item-understanding-v1.test.ts:60:3
+✖ 拒绝或明确前置条件不误判：没有证据说明它是304或食品级，不能承诺可安心使用。 (100.5184ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   '无盖不锈钢水杯：304未在当前属性或事实中确认',
+  +   '无盖不锈钢水杯：食品级未在当前属性或事实中确认'
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/tests/item-understanding-v1.test.ts:60:70)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '无盖不锈钢水杯：304未在当前属性或事实中确认', '无盖不锈钢水杯：食品级未在当前属性或事实中确认' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\item-understanding-v1.test.ts:60:3
+✖ 拒绝或明确前置条件不误判：先用纸笔做接龙，不依赖杯子的耐热、镜面或承重。 (159.9624ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   '无盖不锈钢水杯：镜面未在当前属性或事实中确认',
+  +   '无盖不锈钢水杯：承重未在当前属性或事实中确认'
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/tests/item-understanding-v1.test.ts:60:70)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '无盖不锈钢水杯：镜面未在当前属性或事实中确认', '无盖不锈钢水杯：承重未在当前属性或事实中确认' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

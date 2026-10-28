@@ -1,0 +1,28 @@
+
+> product-agent@0.1.0 test:cloud
+> node scripts/test-cloud.mjs
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /合成离线工具往返：合成纸盒/. Input:
+
+'合成离线工具往返：书桌上的台灯。登记条件仍需核对，先坐下休息。'
+
+    at file:///D:/ProductAgent-LifeContext/.runtime/finals-item-understanding-v1/scripts/test-cloud.mjs:439:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '合成离线工具往返：书桌上的台灯。登记条件仍需核对，先坐下休息。',
+  expected: /合成离线工具往返：合成纸盒/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.16.0
+npm notice
+npm notice New major version of npm available! 11.13.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
