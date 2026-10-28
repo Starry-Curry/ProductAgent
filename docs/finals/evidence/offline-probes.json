@@ -1,0 +1,613 @@
+{
+  "kind": "offline-deterministic-probes",
+  "fixtureVersion": "care-v2",
+  "at": "2026-10-28T16:54:17.328Z",
+  "baseline": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "config": {
+    "keyPresent": false,
+    "model": null,
+    "baseUrl": "other-or-missing",
+    "jsonMode": false,
+    "thinking": false,
+    "timeoutMs": 60000,
+    "status": {
+      "state": "missing_key",
+      "ready": false,
+      "message": "未配置密钥：请在本工作区 .env.local 填写北京百炼 Key"
+    }
+  },
+  "cases": [
+    {
+      "id": "understanding",
+      "path": "agent",
+      "requests": 0,
+      "result": {
+        "session": {
+          "id": "e47ab5ad-2da0-4b3a-ac9f-9309ca6e74d7",
+          "owner": "lin",
+          "itemId": "42954a81-37a0-41d3-bd5d-d8708b74b92b",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "1961ccb3-c3ab-48e8-991a-4c26732208e0",
+              "role": "user",
+              "text": "请解释这只水杯档案已经知道什么、尚不能确定什么。没有刻度能当量杯吗？不要把用户登记当官方认证。",
+              "at": "2026-10-28T16:54:17.601Z",
+              "itemId": "42954a81-37a0-41d3-bd5d-d8708b74b92b",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "0d2889a2-e7bc-4c54-8c84-67e575dabeda",
+              "role": "assistant",
+              "text": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+                "source": "local-dialogue",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+                "errorCode": "not_configured",
+                "route": {
+                  "itemId": "42954a81-37a0-41d3-bd5d-d8708b74b92b",
+                  "itemName": "无盖不锈钢水杯",
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "自然交流；明确的物品经历才进入故事"
+                }
+              },
+              "at": "2026-10-28T16:54:17.601Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "turnRequestId": "3b418207-7a02-47a3-8889-01f2084987ae",
+            "turnScope": "42954a81-37a0-41d3-bd5d-d8708b74b92b",
+            "lastIntent": "companion",
+            "activeItemId": "42954a81-37a0-41d3-bd5d-d8708b74b92b",
+            "goal": "请解释这只水杯档案已经知道什么、尚不能确定什么。没有刻度能当量杯吗？不要把用户登记当官方认证。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:54:17.518Z",
+          "updatedAt": "2026-10-28T16:54:17.601Z",
+          "expiresAt": "2026-11-04T16:54:17.518Z",
+          "itemScopes": {
+            "42954a81-37a0-41d3-bd5d-d8708b74b92b": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+          "source": "local-dialogue",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+          "errorCode": "not_configured",
+          "route": {
+            "itemId": "42954a81-37a0-41d3-bd5d-d8708b74b92b",
+            "itemName": "无盖不锈钢水杯",
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "自然交流；明确的物品经历才进入故事"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=42954a81-37a0-41d3-bd5d-d8708b74b92b; router=home-router-v1",
+            "at": "2026-10-28T16:54:17.555Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-28T16:54:17.569Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9",
+            "at": "2026-10-28T16:54:17.569Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1",
+            "at": "2026-10-28T16:54:17.582Z"
+          },
+          {
+            "stage": "provider_failed",
+            "detail": "not_configured",
+            "at": "2026-10-28T16:54:17.582Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "creative",
+      "path": "agent",
+      "requests": 0,
+      "result": {
+        "session": {
+          "id": "de7a7598-b510-4539-ac30-d70e57827436",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "6880e38f-f25a-49d9-934b-9bc505b79b26",
+              "role": "user",
+              "text": "在家想做一个有趣而稍微意外的新玩法，20分钟内，只用我已登记的物品，不买东西，不用水，不拍照，不加热。给出明确规则和结束成果。",
+              "at": "2026-10-28T16:54:17.657Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "71d481b5-6bb7-4534-84a5-fa218e5f790c",
+              "role": "assistant",
+              "text": "围绕观察与记录，比较现有物品的组合可能 · 20分钟 · 不新增购买 · 从4件可用候选中规划\n\n先核对可用物品，再继续规划。",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "围绕观察与记录，比较现有物品的组合可能 · 20分钟 · 不新增购买 · 从4件可用候选中规划\n\n先核对可用物品，再继续规划。",
+                "source": "local-planning",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "未能将描述中的物品准确对应到展柜，请选择物品；本轮描述不会自动变成已确认库存。 本地有限能力规划暂未找到新方案。可调整物品/限制；获准云端后可做开放式规划。不会把缺口当成已有。",
+                "route": {
+                  "intent": "plan",
+                  "mode": "ideas",
+                  "reason": "理解目标、检索能力并核对组合条件"
+                }
+              },
+              "at": "2026-10-28T16:54:17.657Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "525b9802-41b5-4a8a-b82d-3430b877c4d4",
+            "turnScope": "home",
+            "lastIntent": "plan",
+            "lifePlanContext": "{\"goal\":\"在家想做一个有趣而稍微意外的新玩法，20分钟内，只用我已登记的物品，不买东西，不用水，不拍照，不加热。给出明确规则和结束成果。\",\"minutes\":20,\"itemIds\":[],\"excludedItemIds\":[],\"restrictions\":[\"不买东西\",\"在家\",\"不要拍照\"]}"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:54:17.604Z",
+          "updatedAt": "2026-10-28T16:54:17.657Z",
+          "expiresAt": "2026-11-04T16:54:17.604Z"
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "围绕观察与记录，比较现有物品的组合可能 · 20分钟 · 不新增购买 · 从4件可用候选中规划\n\n先核对可用物品，再继续规划。",
+          "source": "local-planning",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "未能将描述中的物品准确对应到展柜，请选择物品；本轮描述不会自动变成已确认库存。 本地有限能力规划暂未找到新方案。可调整物品/限制；获准云端后可做开放式规划。不会把缺口当成已有。",
+          "route": {
+            "intent": "plan",
+            "mode": "ideas",
+            "reason": "理解目标、检索能力并核对组合条件"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "plan; target=home; router=home-router-v1",
+            "at": "2026-10-28T16:54:17.622Z"
+          },
+          {
+            "stage": "goal_planning",
+            "detail": "local-candidate",
+            "at": "2026-10-28T16:54:17.639Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    },
+    {
+      "id": "task",
+      "path": "agent",
+      "requests": 0,
+      "result": {
+        "session": {
+          "id": "8b0dbdb8-d723-416f-a833-b9eff7ab9172",
+          "owner": "lin",
+          "itemId": "e7fc44ac-6283-43a0-a1c6-8b7314148bb0",
+          "identity": "[\"lin\",\"[\\\"M-R0061\\\",\\\"logitech-m185-m-r0061\\\",\\\"2026-10-16.1\\\",\\\"2026-10-28T16:54:17.407Z\\\"]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "7bac06f8-682f-4dc4-965e-898e2c25ba2a",
+              "role": "user",
+              "text": "这只无线鼠标电源是什么？能直接插线充电吗？请依据已绑定的资料，不猜实物状态。",
+              "at": "2026-10-28T16:54:17.711Z",
+              "itemId": "e7fc44ac-6283-43a0-a1c6-8b7314148bb0",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "f6232193-0fb5-42ec-84ae-0fdc4fe8ba1f",
+              "role": "assistant",
+              "text": "电源为一节可更换 AA 电池。\n使用 2.4GHz 非 Unifying 无线连接；此版本列出的 USB 接收器型号为 C-U0010。\n这份资料没有确认可以用充电线给鼠标充电，先不要据此尝试；请按该型号说明书核对供电方式。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "电源为一节可更换 AA 电池。\n使用 2.4GHz 非 Unifying 无线连接；此版本列出的 USB 接收器型号为 C-U0010。\n这份资料没有确认可以用充电线给鼠标充电，先不要据此尝试；请按该型号说明书核对供电方式。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "M-R0061:battery",
+                  "M-R0061:connection"
+                ],
+                "citations": [
+                  {
+                    "id": "logitech-m185-m-r0061",
+                    "title": "Logitech M185 Technical Specifications",
+                    "url": "https://support.logi.com/hc/en-za/articles/360023302074-M185-Technical-Specifications",
+                    "section": "M-R0061 / Mouse Specifications & Receiver Specifications",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "请核对鼠标底部 M/N；M185 系列名不足以确定硬件版本。 本资料包只有规格摘编，不含配对、更换电池或维修操作教程。 列出原配接收器不代表任意同型号接收器都能直接使用；兼容与配对需另行核实。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "使用已确认物品处理实际操作任务",
+                  "itemId": "e7fc44ac-6283-43a0-a1c6-8b7314148bb0",
+                  "itemName": "无线鼠标"
+                }
+              },
+              "at": "2026-10-28T16:54:17.711Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "turnRequestId": "63c47a22-fcad-4ef6-84c6-cac7e0f9585d",
+            "turnScope": "e7fc44ac-6283-43a0-a1c6-8b7314148bb0",
+            "lastIntent": "help",
+            "activeItemId": "e7fc44ac-6283-43a0-a1c6-8b7314148bb0",
+            "goal": "这只无线鼠标电源是什么？能直接插线充电吗？请依据已绑定的资料，不猜实物状态。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:54:17.661Z",
+          "updatedAt": "2026-10-28T16:54:17.711Z",
+          "expiresAt": "2026-11-04T16:54:17.661Z",
+          "itemScopes": {
+            "e7fc44ac-6283-43a0-a1c6-8b7314148bb0": "[\"lin\",\"[\\\"M-R0061\\\",\\\"logitech-m185-m-r0061\\\",\\\"2026-10-16.1\\\",\\\"2026-10-28T16:54:17.407Z\\\"]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "电源为一节可更换 AA 电池。\n使用 2.4GHz 非 Unifying 无线连接；此版本列出的 USB 接收器型号为 C-U0010。\n这份资料没有确认可以用充电线给鼠标充电，先不要据此尝试；请按该型号说明书核对供电方式。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "M-R0061:battery",
+            "M-R0061:connection"
+          ],
+          "citations": [
+            {
+              "id": "logitech-m185-m-r0061",
+              "title": "Logitech M185 Technical Specifications",
+              "url": "https://support.logi.com/hc/en-za/articles/360023302074-M185-Technical-Specifications",
+              "section": "M-R0061 / Mouse Specifications & Receiver Specifications",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "请核对鼠标底部 M/N；M185 系列名不足以确定硬件版本。 本资料包只有规格摘编，不含配对、更换电池或维修操作教程。 列出原配接收器不代表任意同型号接收器都能直接使用；兼容与配对需另行核实。",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "使用已确认物品处理实际操作任务",
+            "itemId": "e7fc44ac-6283-43a0-a1c6-8b7314148bb0",
+            "itemName": "无线鼠标"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=e7fc44ac-6283-43a0-a1c6-8b7314148bb0; router=home-router-v1",
+            "at": "2026-10-28T16:54:17.680Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-28T16:54:17.693Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9",
+            "at": "2026-10-28T16:54:17.693Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-28T16:54:17.694Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    },
+    {
+      "id": "tool",
+      "path": "agent",
+      "requests": 0,
+      "result": {
+        "session": {
+          "id": "7ca279d5-eb38-4d6a-bdbd-420349d891c2",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "1a90edbd-1883-4294-8a42-799110b43709",
+              "role": "user",
+              "text": "今天很累。请先使用物品清单工具核对我的登记，再挑一件适合我休息时使用的物品，明确说出名称。",
+              "at": "2026-10-28T16:54:17.776Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "238baf2c-246d-497c-86be-0dda7084ba19",
+              "role": "assistant",
+              "text": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+                "source": "local-dialogue",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+                "errorCode": "not_configured",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "回应这次交流，不强行围绕物品"
+                }
+              },
+              "at": "2026-10-28T16:54:17.776Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "e6b928d5-f7f9-4265-b0fe-7201a5f29b43",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "今天很累。请先使用物品清单工具核对我的登记，再挑一件适合我休息时使用的物品，明确说出名称。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:54:17.715Z",
+          "updatedAt": "2026-10-28T16:54:17.777Z",
+          "expiresAt": "2026-11-04T16:54:17.715Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+          "source": "local-dialogue",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+          "errorCode": "not_configured",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "回应这次交流，不强行围绕物品"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-28T16:54:17.734Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-28T16:54:17.745Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9",
+            "at": "2026-10-28T16:54:17.745Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1",
+            "at": "2026-10-28T16:54:17.759Z"
+          },
+          {
+            "stage": "provider_failed",
+            "detail": "not_configured",
+            "at": "2026-10-28T16:54:17.759Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "prepare",
+      "path": "agent",
+      "requests": 0,
+      "result": {
+        "session": {
+          "id": "1fe1804f-7334-4f30-ad8c-2b0b0b34a4da",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "7177513a-1c8e-4491-97e7-1e707cbc33d6",
+              "role": "user",
+              "text": "明天要去摄影出游，帮我准备清单，不买新的",
+              "at": "2026-10-28T16:54:17.832Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "02cdaffe-ee28-453b-9c10-f6993dffe0b8",
+              "role": "assistant",
+              "text": "先核对已有物品与现场条件，确认后保存准备清单。",
+              "reply": {
+                "answer": "先核对已有物品与现场条件，确认后保存准备清单。",
+                "outcome": "answered",
+                "source": "local-planning",
+                "steps": [],
+                "questions": [],
+                "citations": [],
+                "memoryIds": [],
+                "evidenceIds": [],
+                "route": {
+                  "intent": "prepare",
+                  "mode": "service",
+                  "reason": "准备与进度管理，不转为创意活动"
+                },
+                "actionCards": [
+                  {
+                    "id": "9aee4610-c052-4950-9d9f-0a359efec1ec",
+                    "kind": "taskPlan",
+                    "title": "摄影出游准备",
+                    "detail": [
+                      "必要 · 确认出发地点、天气与通行条件",
+                      "必要 · 确认可用于拍照的设备：尚缺已确认的拍照设备",
+                      "仅使用已登记且获准访问的物品；电量、空间、天气和充电适配性需现场确认。"
+                    ],
+                    "status": "pending",
+                    "expiresAt": "2026-10-28T17:09:17.813Z",
+                    "confirmLabel": "保存这份计划"
+                  }
+                ],
+                "caveat": "摄影准备的有限本地规则，未调用模型；保存清单不表示现实任务完成。"
+              },
+              "at": "2026-10-28T16:54:17.832Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "df528154-612a-4501-ad55-751c40252b44",
+            "turnScope": "home",
+            "lastIntent": "prepare"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:54:17.781Z",
+          "updatedAt": "2026-10-28T16:54:17.832Z",
+          "expiresAt": "2026-11-04T16:54:17.781Z",
+          "itemScopes": {}
+        },
+        "reply": {
+          "answer": "先核对已有物品与现场条件，确认后保存准备清单。",
+          "outcome": "answered",
+          "source": "local-planning",
+          "steps": [],
+          "questions": [],
+          "citations": [],
+          "memoryIds": [],
+          "evidenceIds": [],
+          "route": {
+            "intent": "prepare",
+            "mode": "service",
+            "reason": "准备与进度管理，不转为创意活动"
+          },
+          "actionCards": [
+            {
+              "id": "9aee4610-c052-4950-9d9f-0a359efec1ec",
+              "kind": "taskPlan",
+              "title": "摄影出游准备",
+              "detail": [
+                "必要 · 确认出发地点、天气与通行条件",
+                "必要 · 确认可用于拍照的设备：尚缺已确认的拍照设备",
+                "仅使用已登记且获准访问的物品；电量、空间、天气和充电适配性需现场确认。"
+              ],
+              "status": "pending",
+              "expiresAt": "2026-10-28T17:09:17.813Z",
+              "confirmLabel": "保存这份计划"
+            }
+          ],
+          "caveat": "摄影准备的有限本地规则，未调用模型；保存清单不表示现实任务完成。"
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "prepare; target=home; router=home-router-v1",
+            "at": "2026-10-28T16:54:17.800Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "task-preparation@1.0.0; deterministic local rules; no model calls",
+            "at": "2026-10-28T16:54:17.817Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    }
+  ],
+  "limitations": [
+    "Synthetic registered inventory, not the owner's private data or physical-device verification",
+    "Direct and Agent share model, goal and fixture facts; prompts, tools, output schema and budgets differ",
+    "Single samples diagnose paths, not statistical quality or framework superiority"
+  ],
+  "database": {
+    "integrity": {
+      "integrity_check": "ok"
+    },
+    "checkpointRows": {
+      "n": 15
+    },
+    "migrationBackups": "Retained in isolated fixture directory"
+  },
+  "requestsThisRun": 0,
+  "totalRequests": 22,
+  "tokens": {
+    "input": 31805,
+    "output": 8019
+  },
+  "cost": {
+    "actual": null,
+    "reason": "API usage returns tokens, not the account's billed amount; no billing account accessed"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "reportPath": "D:\\ProductAgent-LifeContext\\.runtime\\finals-audit\\.runtime\\audit-20261029\\live-followup.json",
+  "requests": 10,
+  "cases": [
+    {
+      "id": "creative-normalized",
+      "path": "direct",
+      "requests": 1
+    },
+    {
+      "id": "creative-normalized",
+      "path": "agent",
+      "requests": 1,
+      "outcome": "answered",
+      "source": "model-creative",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "plan; target=home; router=home-router-v1"
+        },
+        {
+          "stage": "goal_planning",
+          "detail": "model-creative"
+        }
+      ]
+    },
+    {
+      "id": "grounded-task",
+      "path": "direct",
+      "requests": 1
+    },
+    {
+      "id": "grounded-task",
+      "path": "agent",
+      "requests": 1,
+      "outcome": "answered",
+      "source": "model-with-evidence",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=73734e01-9027-4918-926d-e154980b33d4; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    }
+  ]
+}

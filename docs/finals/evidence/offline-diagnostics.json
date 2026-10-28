@@ -1,0 +1,150 @@
+{
+  "kind": "offline-reproduction-not-live-provider-or-public-http",
+  "at": "2026-10-28T16:54:52.170Z",
+  "realModelCalls": 0,
+  "fixtureItemId": "4b4a8eb0-e220-4dbc-9e88-8f9ce61a1991",
+  "results": [
+    {
+      "probe": "tool-round-trip",
+      "mode": "local-demo",
+      "providerCalls": 2,
+      "outcome": "answered",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "companion; target=home; router=home-router-v1",
+          "at": "2026-10-28T16:54:51.864Z"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+          "at": "2026-10-28T16:54:51.897Z"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9",
+          "at": "2026-10-28T16:54:51.897Z"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1",
+          "at": "2026-10-28T16:54:51.922Z"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=1",
+          "at": "2026-10-28T16:54:51.923Z"
+        },
+        {
+          "stage": "tool_completed",
+          "detail": "list_accessible_items",
+          "at": "2026-10-28T16:54:51.960Z"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2",
+          "at": "2026-10-28T16:54:51.988Z"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0",
+          "at": "2026-10-28T16:54:51.989Z"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered",
+          "at": "2026-10-28T16:54:52.013Z"
+        }
+      ],
+      "toolPayload": [
+        {
+          "name": "书桌上的台灯",
+          "state": "在用",
+          "demo": false
+        },
+        {
+          "name": "木质相框",
+          "state": "在用",
+          "demo": false
+        },
+        {
+          "name": "彩色拼豆材料",
+          "state": "待确认",
+          "demo": false
+        },
+        {
+          "name": "家里的净水器",
+          "state": "在用",
+          "demo": false
+        },
+        {
+          "name": "随行保温杯",
+          "state": "在用",
+          "demo": false
+        },
+        {
+          "name": "无盖不锈钢水杯",
+          "state": "在用",
+          "demo": false
+        }
+      ]
+    },
+    {
+      "probe": "tool-round-trip",
+      "mode": "public-demo",
+      "providerCalls": 1,
+      "outcome": "referred",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "companion; target=home; router=home-router-v1",
+          "at": "2026-10-28T16:54:52.098Z"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+          "at": "2026-10-28T16:54:52.111Z"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9",
+          "at": "2026-10-28T16:54:52.111Z"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1",
+          "at": "2026-10-28T16:54:52.123Z"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=1",
+          "at": "2026-10-28T16:54:52.123Z"
+        },
+        {
+          "stage": "tool_completed",
+          "detail": "list_accessible_items",
+          "at": "2026-10-28T16:54:52.135Z"
+        }
+      ]
+    },
+    {
+      "probe": "inventory-reference-phrase",
+      "phrase": "只用我已登记的物品",
+      "providerCalls": 0,
+      "missing": [
+        "未能将描述中的物品准确对应到展柜，请选择物品；本轮描述不会自动变成已确认库存。",
+        "本地有限能力规划暂未找到新方案。可调整物品/限制；获准云端后可做开放式规划。不会把缺口当成已有。"
+      ],
+      "source": "local-candidate"
+    },
+    {
+      "probe": "inventory-reference-phrase",
+      "phrase": "利用现有物品",
+      "providerCalls": 1,
+      "error": "Probe reached provider; no network"
+    }
+  ],
+  "integrity": {
+    "integrity_check": "ok"
+  }
+}

@@ -1,0 +1,73 @@
+
+> product-agent@0.1.0 test:acceptance
+> node scripts/verify-local.mjs life
+
+{
+  "passed": true,
+  "measuredAt": "2026-10-28T16:32:40.858Z",
+  "kind": "isolated-api-and-edge-acceptance",
+  "checks": [
+    "A: 新建照片物品、类别/能力/状态与确认型号绑定",
+    "B: 官方 AA 电池资料、用户说明书摘录与本人结果反馈（0 模型调用）",
+    "C: 新物品参与组合、收藏与尝试、状态变化阻止旧方案执行",
+    "D: 图文保存、双物品唯一原文、编辑解除关联、越权拒绝及删除照片",
+    "E: 共享物品、创建家庭事项、另一演示成员实际接手",
+    "统一入口保留物品会话并连续问答；Persona保存保留历史，可切换普通聊天",
+    "新版产品路径：目标对话连续修改、家庭完成状态、社交礼物独立、首页提问App指南",
+    "浏览器：展柜→物品问答、故事保存刷新、创意生成、390px 无横溢出"
+  ],
+  "baseline": {
+    "items": 25,
+    "syntheticItems": 25,
+    "packs": 11,
+    "facts": 33,
+    "procedures": 2,
+    "boundInstances": 10,
+    "distinctBoundModels": 10,
+    "legacyCases": 8,
+    "creativeRecipes": 12,
+    "familyTasks": 7,
+    "gifts": 1,
+    "photoFragments": 2,
+    "fragments": 4
+  },
+  "createdItems": 3,
+  "realModelCalls": 0,
+  "limits": "所有新增数据为合成验收数据；规则候选不是模型或实物验证。未进行付费模型、视觉识物、真人研究或真实家庭同步。"
+}
+
+Fontconfig error: No writable cache directories
+	C:/Users/hp/AppData/Local/fontconfig/cache
+	C:/Users/hp/.cache/fontconfig
+
+Fontconfig error: No writable cache directories
+	C:/Users/hp/AppData/Local/fontconfig/cache
+	C:/Users/hp/.cache/fontconfig
+
+Fontconfig error: No writable cache directories
+	C:/Users/hp/AppData/Local/fontconfig/cache
+	C:/Users/hp/.cache/fontconfig
+
+Fontconfig error: No writable cache directories
+	C:/Users/hp/AppData/Local/fontconfig/cache
+	C:/Users/hp/.cache/fontconfig
+{
+  "passed": true,
+  "measuredAt": "2026-10-28T16:32:48.878Z",
+  "checks": [
+    "真实 PDF 文字提取（合成PDF）",
+    "生产API实际本机OCR（合成图片说明书）；云端关闭",
+    "浏览器实际解码 QR 和 EAN-13 图片",
+    "浏览器照片录入、类别与生命周期",
+    "浏览器图文新增、修改、删除",
+    "照片自定义选择、缩略图/文件名、更换/移除、格式错误及390px布局；类别切换的生命周期默认值",
+    "资料保存失败后独立重试不重复创建物品；浏览器后退可用"
+  ],
+  "realModelCalls": 0
+}
+{"passed":true,"kind":"isolated-production-server","base":"http://127.0.0.1:57442","dataDirectory":"D:\\ProductAgent-LifeContext\\.runtime\\finals-audit\\.runtime\\verification-GyMFbu","realModelCalls":0,"journeys":["tests/life-integration.mjs","tests/life-formats.mjs"]}
+npm notice
+npm notice New major version of npm available! 11.13.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

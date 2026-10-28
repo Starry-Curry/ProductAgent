@@ -1,0 +1,182 @@
+
+> product-agent@0.1.0 test:cloud
+> node scripts/test-cloud.mjs
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+ExpectError: expect(locator).toBeVisible() failed
+
+Locator: getByRole('heading', { name: '生活里，值得留住的小片段' })
+Expected: visible
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" getByRole('heading', { name: '生活里，值得留住的小片段' }) with timeout 5000ms
+  - waiting for getByRole('heading', { name: '生活里，值得留住的小片段' })
+
+    at captureRawStack (D:\ProductAgent-LifeContext\.runtime\finals-audit\node_modules\playwright-core\lib\coreBundle.js:9282:17)
+    at callMatcherAsStep (D:\ProductAgent-LifeContext\.runtime\finals-audit\node_modules\playwright\lib\matchers\expect.js:13316:57)
+    at Object.toBeVisible (D:\ProductAgent-LifeContext\.runtime\finals-audit\node_modules\playwright\lib\matchers\expect.js:13308:23)
+    at D:\ProductAgent-LifeContext\.runtime\finals-audit\scripts\test-cloud.mjs:339:7 {
+  matcherResult: {
+    message: 'expect(locator).toBeVisible() failed\n' +
+      '\n' +
+      "Locator: getByRole('heading', { name: '生活里，值得留住的小片段' })\n" +
+      'Expected: visible\n' +
+      'Timeout: 5000ms\n' +
+      'Error: element(s) not found\n' +
+      '\n' +
+      'Call log:\n' +
+      `  - Expect "toBeVisible" getByRole('heading', { name: '生活里，值得留住的小片段' }) with timeout 5000ms\n` +
+      "  - waiting for getByRole('heading', { name: '生活里，值得留住的小片段' })\n",
+    pass: false,
+    actual: undefined,
+    name: 'toBeVisible',
+    expected: 'visible',
+    log: [
+      `  - Expect "toBeVisible" getByRole('heading', { name: '生活里，值得留住的小片段' }) with timeout 5000ms`,
+      "  - waiting for getByRole('heading', { name: '生活里，值得留住的小片段' })"
+    ],
+    timeout: 5000,
+    ariaSnapshot: '- alert\n' +
+      '- text: 独立临时演示空间 · 有效期内刷新保留 · 请勿上传私人资料\n' +
+      '- button "退出空间"\n' +
+      '- banner:\n' +
+      '  - button "物间 WU JIAN · LIFE, WITH THINGS"\n' +
+      '  - navigation "主要导航":\n' +
+      '    - button "生活首页":\n' +
+      '      - img\n' +
+      '      - text: 生活首页\n' +
+      '    - button "物品展柜":\n' +
+      '      - img\n' +
+      '      - text: 物品展柜\n' +
+      '    - button "发现新玩法":\n' +
+      '      - img\n' +
+      '      - text: 发现新玩法\n' +
+      '    - button "生活故事":\n' +
+      '      - img\n' +
+      '      - text: 生活故事\n' +
+      '    - button "问物间":\n' +
+      '      - img\n' +
+      '      - text: 问物间\n' +
+      '    - button "家庭":\n' +
+      '      - img\n' +
+      '      - text: 家庭\n' +
+      '    - button "社交":\n' +
+      '      - img\n' +
+      '      - text: 社交\n' +
+      '  - text: 我的演示空间 界面版本\n' +
+      '  - combobox "界面版本":\n' +
+      '    - option "普通版" [selected]\n' +
+      '    - option "大字关怀版"\n' +
+      '- main:\n' +
+      '  - text: 把日常用好，把生活留住。\n' +
+      '  - button "录入物品":\n' +
+      '    - img\n' +
+      '    - text: 录入物品\n' +
+      '  - group: 设置与 AI 状态\n' +
+      '  - heading "生活故事书" [level=2]\n' +
+      '  - paragraph: 一张照片，一句话，把日常留在这里。\n' +
+      '  - button "写一段生活":\n' +
+      '    - img\n' +
+      '    - text: 写一段生活\n' +
+      '  - group "故事浏览方式":\n' +
+      '    - button "时间流" [pressed]\n' +
+      '    - button "按章节"\n' +
+      '    - button "按物品"\n' +
+      '  - text: 寻找一段经历\n' +
+      '  - searchbox "寻找一段经历"\n' +
+      '  - text: 时间顺序\n' +
+      '  - combobox "时间顺序":\n' +
+      '    - option "最近在前" [selected]\n' +
+      '    - option "从最早翻起"\n' +
+      '  - group: 整理与隐私\n' +
+      '  - paragraph: 演示故事为虚构片段，使用公开场景配图，并非你的真实经历。\n' +
+      '  - heading "2026 年 10 月" [level=3]\n' +
+      '  - article:\n' +
+      '    - figure:\n' +
+      '      - button "放大故事照片":\n' +
+      '        - img "用户保存的生活照片"\n' +
+      '    - time: 记于 10月29日\n' +
+      '    - paragraph: Synthetic visitor A private story\n' +
+      '    - text: 那天一起的\n' +
+      '    - button "Synthetic Visitor A box"\n' +
+      '    - button "阅读完整故事"\n' +
+      '    - group:\n' +
+      '      - img\n' +
+      '      - text: 故事选项\n' +
+      '  - article:\n' +
+      '    - time: 10月19日\n' +
+      '    - text: 演示故事\n' +
+      '    - button "收在「演示｜窗边留白」"\n' +
+      '    - paragraph: 睡前翻到下午留下的几行字，又添上一个很小的愿望：明天也给自己留一点慢慢来的时间。\n' +
+      '    - text: 那天一起的\n' +
+      '    - button "速写本与铅笔"\n' +
+      '    - button "阅读完整故事"\n' +
+      '    - group:\n' +
+      '      - img\n' +
+      '      - text: 故事选项\n' +
+      '  - article:\n' +
+      '    - figure:\n' +
+      '      - button "放大故事照片":\n' +
+      '        - img "演示故事场景配图"\n' +
+      '    - time: 10月18日\n' +
+      '    - text: 演示故事\n' +
+      '    - button "收在「演示｜走慢一点的周末」"\n' +
+      '    - paragraph: 沿着树影走了一小段，才发现今天没有急着赶去哪里。背包很轻，心里也松了一点。\n' +
+      '    - text: 那天一起的\n' +
+      '    - button "旅行背包"\n' +
+      '    - button "散步相机"\n' +
+      '    - button "阅读完整故事"\n' +
+      '    - group:\n' +
+      '      - img\n' +
+      '      - text: 故事选项\n' +
+      '  - article:\n' +
+      '    - time: 10月16日\n' +
+      '    - text: 演示故事\n' +
+      '    - button "收在「演示｜窗边留白」"\n' +
+      '    - paragraph: 下午没有安排别的事。 把本子放在窗边，记下几句突然想起的话。翻完几页书，光线已经慢慢挪到了桌角。\n' +
+      '    - figure "演示场景 · 1 / 2":\n' +
+      '      - button "放大故事照片":\n' +
+      '        - img "演示故事场景配图"\n' +
+      '      - text: 演示场景 · 1 / 2\n' +
+      '    - figure "演示场景 · 2 / 2":\n' +
+      '      - button "查看故事照片 2":\n' +
+      '        - img "演示故事场景配图"\n' +
+      '      - text: 演示场景 · 2 / 2\n' +
+      '    - text: 那天一起的\n' +
+      '    - button "速写本与铅笔"\n' +
+      '    - button "阅读完整故事"\n' +
+      '    - group:\n' +
+      '      - img\n' +
+      '      - text: 故事选项\n' +
+      '  - article:\n' +
+      '    - time: 10月12日\n' +
+      '    - text: 演示故事\n' +
+      '    - button "收在「演示｜走慢一点的周末」"\n' +
+      '    - paragraph: 出门前把相机放进背包，最后还是拿出了一本太重的书。今天想走得慢一点，留些空白给路上。\n' +
+      '    - text: 那天一起的\n' +
+      '    - button "旅行背包"\n' +
+      '    - button "散步相机"\n' +
+      '    - button "阅读完整故事"\n' +
+      '    - group:\n' +
+      '      - img\n' +
+      '      - text: 故事选项\n' +
+      '- contentinfo:\n' +
+      '  - text: 物间 · 用好物品，也留住生活。 在线演示 / 测试案例、资料与创意分别标注\n' +
+      '  - link "旧版入口":\n' +
+      '    - /url: /legacy\n' +
+      '  - link "操作指南":\n' +
+      '    - /url: /guide'
+  }
+}
+
+Node.js v24.16.0
+npm notice
+npm notice New major version of npm available! 11.13.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

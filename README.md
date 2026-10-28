@@ -1,3 +1,5 @@
+> 决赛升级（2026-10-29）：[第一阶段中文审计与技术基线](docs/finals/README.md) · [测试证据](docs/finals/TEST_REPORT.md) · [框架比较与下一轮实验](docs/finals/DECISIONS.md)。本轮只审计，未重构产品；下方旧验证描述保留其历史日期。
+
 <div align="center">
   <img src="docs/assets/wunori.png" alt="物间 Wujian：让身边的物品成为 AI 与生活的入口" width="100%" />
 

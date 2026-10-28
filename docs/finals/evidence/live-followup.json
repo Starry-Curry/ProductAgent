@@ -1,0 +1,347 @@
+{
+  "kind": "real-provider-on-synthetic-registered-items",
+  "at": "2026-10-28T16:40:08.241Z",
+  "baseline": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "config": {
+    "keyPresent": true,
+    "model": "qwen-plus",
+    "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "jsonMode": true,
+    "thinking": false,
+    "timeoutMs": 60000,
+    "status": {
+      "state": "ready",
+      "ready": true,
+      "message": "已准备就绪（配置及费用授权齐备，尚不代表网络或账户已验证）"
+    }
+  },
+  "cases": [
+    {
+      "id": "creative-normalized",
+      "path": "direct",
+      "requests": 1,
+      "result": {
+        "text": "**玩法名称：「静默共振」声音拓扑实验**\n\n**规则（严格遵守）：**  \n1. 仅使用清单内5件物品，不可添加/移除任何东西；  \n2. 全程不触碰水、不加热、不拍照、不联网、不发出人声；  \n3. 时间严格20分钟，从开始计时起执行以下三步；  \n4. 所有动作需安静、缓慢、可重复——重点在“感知变化”，而非制造噪音。\n\n**操作步骤：**  \n① **准备（2分钟）**：将不锈钢水杯倒扣于桌面中央；把无线鼠标开关打开，置于杯底正下方（确保接收器已插入电脑，但电脑无需开机或操作）；笔记本平铺于杯侧，圆珠笔横放其上；收纳盒空置，置于一旁备用。  \n② **探索（12分钟）**：用指尖轻叩杯壁不同位置（边缘/中部/底部），每次叩击后停顿3秒，专注听**杯体振动传导至桌面→再传至鼠标外壳→引发微弱共振反馈**（可轻微感到鼠标微微颤动或听见极细微“嗡”声）。记录每次叩击位置、手指力度（轻/中/重）、是否触发鼠标反应，在笔记本上用符号标记（如●=有感，○=无感，△=延迟响应）。  \n③ **收束（6分钟）**：停止叩击，静坐1分钟观察余振；随后将笔记本翻至新页，用圆珠笔画出一张「你感知到的共振路径图」——不必写实，可用线条、箭头、疏密点表现振动如何从杯→桌→鼠标→你指尖的传递逻辑。\n\n**结束成果：**  \n一张手绘的、非标准但个人真实的「物理共振感知拓扑图」+ 一页带符号标记的叩击实验记录。  \n它不“有用”，但真实记录了你与日常金属、塑料、纸张之间一次被忽略的力学对话。  \n\n⏱️ 计时结束，游戏即止——拓扑图就是唯一成品。",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 614,
+          "output": 466
+        },
+        "toolCalls": [],
+        "finishReason": "stop"
+      }
+    },
+    {
+      "id": "creative-normalized",
+      "path": "agent",
+      "requests": 2,
+      "result": {
+        "session": {
+          "id": "a126af48-aa5f-4f36-aff4-8e57414e182d",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "4cc350c1-4806-45b2-9755-c8071adc8aa8",
+              "role": "user",
+              "text": "在家想做一个有趣而稍微意外的新玩法，20分钟内，利用现有物品，不买东西，不用水，不拍照，不加热。给出明确规则和结束成果。",
+              "at": "2026-10-28T16:41:29.379Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "65d3a396-03d3-4a98-beb2-3f00e7195ba2",
+              "role": "assistant",
+              "text": "模型请求超时，请稍后重试。",
+              "reply": {
+                "outcome": "unavailable",
+                "answer": "模型请求超时，请稍后重试。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "errorCode": "timeout",
+                "route": {
+                  "intent": "plan",
+                  "mode": "ideas",
+                  "reason": "理解目标、检索能力并核对组合条件"
+                }
+              },
+              "at": "2026-10-28T16:41:29.379Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "0eebc316-c9de-4ba9-905c-cf3a3d291d27",
+            "turnScope": "home",
+            "lastIntent": "plan"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:40:19.320Z",
+          "updatedAt": "2026-10-28T16:41:29.380Z",
+          "expiresAt": "2026-11-04T16:40:19.321Z"
+        },
+        "reply": {
+          "outcome": "unavailable",
+          "answer": "模型请求超时，请稍后重试。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "errorCode": "timeout",
+          "route": {
+            "intent": "plan",
+            "mode": "ideas",
+            "reason": "理解目标、检索能力并核对组合条件"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "plan; target=home; router=home-router-v1",
+            "at": "2026-10-28T16:40:19.481Z"
+          },
+          {
+            "stage": "goal_planning_failed",
+            "detail": "timeout",
+            "at": "2026-10-28T16:41:29.329Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "grounded-task",
+      "path": "direct",
+      "requests": 1,
+      "result": {
+        "text": "根据导入资料，清洁“测试收纳盒”（ID：13cb7e2c-91dc-4e63-a867-80e51fc8784e）的操作如下：\n\n✅ **可做**：  \n用柔软的干布轻轻擦拭表面即可。这是手册明确指定的清洁方式。\n\n❌ **不可做**：  \n- **禁止浸入水中**（manual 明确警告：“Do not immerse in water”）；  \n- **禁止使用湿布、清洁剂、酒精、消毒液等液体擦拭**（因手册仅允许“soft dry cloth”，未授权任何润湿或化学清洁）；  \n- **禁止刮擦、高温烘烤、暴晒或使用研磨工具清洁**（材质未说明，但干布擦拭已隐含避免物理/热损伤）；  \n- **不可拆卸或强行打开非设计开口**（资料未提及其结构可拆解，且无维护相关说明）。\n\n⚠️ 注意：该收纳盒无其他属性描述（如材质、密封性、耐候性），因此所有超出“干布擦拭”的操作均属风险行为，应严格避免。\n\n（当前库存中无清洁用品，需自备符合要求的软质干布。）",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 685,
+          "output": 272
+        },
+        "toolCalls": [],
+        "finishReason": "stop"
+      }
+    },
+    {
+      "id": "grounded-task",
+      "path": "agent",
+      "requests": 2,
+      "result": {
+        "session": {
+          "id": "05100e90-6a45-4ad7-a236-9c9bc3c88f2e",
+          "owner": "lin",
+          "itemId": "13cb7e2c-91dc-4e63-a867-80e51fc8784e",
+          "identity": "[\"lin\",\"[\\\"AUDIT-BOX1\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "2daa0026-bc69-4966-9275-43918ff18d4d",
+              "role": "user",
+              "text": "请依据导入资料，带我清洁这个收纳盒，并说明不能做什么。",
+              "at": "2026-10-28T16:41:41.009Z",
+              "itemId": "13cb7e2c-91dc-4e63-a867-80e51fc8784e",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "e3b6a56c-933f-43d0-9eab-e0fd6a9a3fe9",
+              "role": "assistant",
+              "text": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+                "steps": [
+                  {
+                    "id": "docstep:1542d90bccdfe2480df422a6:0:phase=operate:用柔软的干布擦拭收纳盒",
+                    "text": "清洁与养护：用柔软的干布擦拭收纳盒",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:1542d90bccdfe2480df422a6:0:phase=operate:不可将收纳盒浸入水中",
+                    "text": "清洁与养护：不可将收纳盒浸入水中",
+                    "phase": "operate"
+                  }
+                ],
+                "questions": [],
+                "source": "model-with-evidence",
+                "citations": [
+                  {
+                    "id": "1542d90bccdfe2480df422a6:0",
+                    "title": "Synthetic audit fixture, NOT a fetched manufacturer manual",
+                    "url": "https://example.org/audit-manual",
+                    "section": "原文位置 0–90；AUDIT-BOX1 / unspecified",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "1542d90bccdfe2480df422a6:0"
+                ],
+                "memoryIds": [],
+                "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "使用已确认物品处理实际操作任务",
+                  "itemId": "13cb7e2c-91dc-4e63-a867-80e51fc8784e",
+                  "itemName": "测试收纳盒"
+                }
+              },
+              "at": "2026-10-28T16:41:41.009Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "turnRequestId": "360a4ad4-fd3c-4f25-87f5-5bcfafcb640a",
+            "turnScope": "13cb7e2c-91dc-4e63-a867-80e51fc8784e",
+            "lastIntent": "help",
+            "activeItemId": "13cb7e2c-91dc-4e63-a867-80e51fc8784e",
+            "goal": "请依据导入资料，带我清洁这个收纳盒，并说明不能做什么。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:41:35.911Z",
+          "updatedAt": "2026-10-28T16:41:41.010Z",
+          "expiresAt": "2026-11-04T16:41:35.911Z",
+          "itemScopes": {
+            "13cb7e2c-91dc-4e63-a867-80e51fc8784e": "[\"lin\",\"[\\\"AUDIT-BOX1\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+          "steps": [
+            {
+              "id": "docstep:1542d90bccdfe2480df422a6:0:phase=operate:用柔软的干布擦拭收纳盒",
+              "text": "清洁与养护：用柔软的干布擦拭收纳盒",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:1542d90bccdfe2480df422a6:0:phase=operate:不可将收纳盒浸入水中",
+              "text": "清洁与养护：不可将收纳盒浸入水中",
+              "phase": "operate"
+            }
+          ],
+          "questions": [],
+          "source": "model-with-evidence",
+          "citations": [
+            {
+              "id": "1542d90bccdfe2480df422a6:0",
+              "title": "Synthetic audit fixture, NOT a fetched manufacturer manual",
+              "url": "https://example.org/audit-manual",
+              "section": "原文位置 0–90；AUDIT-BOX1 / unspecified",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "1542d90bccdfe2480df422a6:0"
+          ],
+          "memoryIds": [],
+          "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "使用已确认物品处理实际操作任务",
+            "itemId": "13cb7e2c-91dc-4e63-a867-80e51fc8784e",
+            "itemName": "测试收纳盒"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=13cb7e2c-91dc-4e63-a867-80e51fc8784e; router=home-router-v1",
+            "at": "2026-10-28T16:41:35.965Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-28T16:41:36.037Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9",
+            "at": "2026-10-28T16:41:36.037Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1",
+            "at": "2026-10-28T16:41:36.085Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=1",
+            "at": "2026-10-28T16:41:37.202Z"
+          },
+          {
+            "stage": "tool_completed",
+            "detail": "search_product_knowledge",
+            "at": "2026-10-28T16:41:37.248Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2",
+            "at": "2026-10-28T16:41:37.278Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-28T16:41:40.932Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-28T16:41:40.973Z"
+          }
+        ],
+        "tokens": {
+          "input": 5257,
+          "output": 185
+        },
+        "modelCalls": 2
+      }
+    }
+  ],
+  "limitations": [
+    "Synthetic registered inventory, not the owner's private data or physical-device verification",
+    "Direct and Agent share model, goal and fixture facts; prompts, tools, output schema and budgets differ",
+    "Single samples diagnose paths, not statistical quality or framework superiority"
+  ],
+  "database": {
+    "integrity": {
+      "integrity_check": "ok"
+    },
+    "checkpointRows": {
+      "n": 6
+    },
+    "migrationBackups": "Retained in isolated fixture directory"
+  },
+  "requestsThisRun": 6,
+  "totalRequests": 22,
+  "tokens": {
+    "input": 31805,
+    "output": 8019
+  },
+  "cost": {
+    "actual": null,
+    "reason": "API usage returns tokens, not the account's billed amount; no billing account accessed"
+  },
+  "fixtureVersion": "care-v2"
+}

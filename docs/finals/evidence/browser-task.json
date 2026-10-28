@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "realModelCalls": 0,
+  "kind": "isolated-production-browser",
+  "checks": [
+    "goal and explicit save",
+    "dependencies and per-step confirmation",
+    "reload retains progress",
+    "camera power report adds charge dependency",
+    "time limit and exclusion preserve completion",
+    "owner isolation",
+    "390px layout"
+  ],
+  "planId": "d97e3395-0ef3-462f-8371-cfc01691dba0",
+  "revision": 5
+}

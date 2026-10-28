@@ -1,0 +1,16 @@
+{
+  "source": "scripts/test-cloud.mjs",
+  "sha256": "7be51517bc740595c23b3d444663ef4e41f43f486dde53019bbf499b72aeee89",
+  "replacements": [
+    [
+      "name: \"生活里，值得留住的小片段\"",
+      "name: \"生活故事书\""
+    ],
+    [
+      "page.getByRole(\"heading\", { name: story.text, exact: true })",
+      "page.getByText(story.text, { exact: true })"
+    ]
+  ],
+  "additional": "Capture public story screenshot and pageerror; original assertions otherwise retained",
+  "realModelCalls": 0
+}

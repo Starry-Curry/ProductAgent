@@ -1,0 +1,689 @@
+{
+  "kind": "real-provider-on-synthetic-registered-items",
+  "at": "2026-10-28T16:39:34.656Z",
+  "baseline": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "config": {
+    "keyPresent": true,
+    "model": "qwen-plus",
+    "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "jsonMode": true,
+    "thinking": false,
+    "timeoutMs": 60000,
+    "status": {
+      "state": "ready",
+      "ready": true,
+      "message": "已准备就绪（配置及费用授权齐备，尚不代表网络或账户已验证）"
+    }
+  },
+  "cases": [
+    {
+      "id": "understanding",
+      "path": "direct",
+      "requests": 1,
+      "result": {
+        "text": "已知（基于档案登记）：  \n- 这只水杯编号为 `6c748bf3-c8b1-459e-a8aa-fbeb76a2f171`；  \n- 名称为“无盖不锈钢水杯”，材质为**单层不锈钢，无杯盖**；  \n- 当前状态为“在用”，数量为1，具备基础能力“容纳常温物品”；  \n- 明确标注**没有刻度**，且**未确认食品接触安全认证与耐热认证**；  \n- “care”字段强调其非计量属性与合规性未知——这属于主动声明的限制，非推测。\n\n尚不能确定：  \n- 是否实际可用于盛装热水/冰饮（因未验证耐热/耐冷性能）；  \n- 是否符合国家食品接触材料标准（如GB 4806.9）；  \n- 实际容积大小（无刻度、无标称容量、无实测数据）；  \n- 不锈钢具体牌号（如304/201）、是否含镍、有无内涂层等影响安全与使用的关键参数；  \n- 是否存在隐蔽刻度（如杯身压印、激光蚀刻），需实物查验——档案仅确认“没有刻度”，依据是登记时观察，非权威检测。\n\n关于“没有刻度能当量杯吗？”：  \n**不能。** 量杯的核心功能是提供可信赖的体积计量，须有清晰、校准过的刻度，并通常需符合计量器具相关规范（如JJG 13-2022）。本杯明确无刻度，且无任何计量属性声明或认证，**不可作为量具使用**——临时目测估算不等于具备量杯功能。\n\n注：用户登记 ≠ 官方认证，所有结论均严格基于所给档案字段，未引入外部知识或假设。",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 570,
+          "output": 415
+        },
+        "toolCalls": [],
+        "finishReason": "stop"
+      }
+    },
+    {
+      "id": "understanding",
+      "path": "agent",
+      "requests": 1,
+      "result": {
+        "session": {
+          "id": "f628ca5e-eaf2-4ac2-8021-42a2029d5077",
+          "owner": "lin",
+          "itemId": "6c748bf3-c8b1-459e-a8aa-fbeb76a2f171",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "2c1ec3c3-a586-4566-9284-09a7a108dd93",
+              "role": "user",
+              "text": "请解释这只水杯档案已经知道什么、尚不能确定什么。没有刻度能当量杯吗？不要把用户登记当官方认证。",
+              "at": "2026-10-28T16:39:49.693Z",
+              "itemId": "6c748bf3-c8b1-459e-a8aa-fbeb76a2f171",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "be65d2f4-28dd-44b5-a2a6-bb8c109f316e",
+              "role": "assistant",
+              "text": "这只水杯的档案目前确认：它是一只无盖、单层不锈钢材质的水杯，当前处于‘在用’状态，仅具备基本容纳常温物品的能力；明确没有刻度，且尚未确认是否通过食品接触安全认证或耐热认证——这些都不能靠用户登记或主观描述替代官方检测报告。\n\n正因没有刻度，它不能作为量杯使用：量杯需有经校准的容量标识（如ml或oz）及相应精度，而‘能大致估测’不等于‘可当量杯’。若你需要准确计量液体，建议搭配专用量具；若只是日常饮水，这只杯子仍可安心使用。需要我帮你找一款带可靠刻度与食品级认证的替代选择吗？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这只水杯的档案目前确认：它是一只无盖、单层不锈钢材质的水杯，当前处于‘在用’状态，仅具备基本容纳常温物品的能力；明确没有刻度，且尚未确认是否通过食品接触安全认证或耐热认证——这些都不能靠用户登记或主观描述替代官方检测报告。\n\n正因没有刻度，它不能作为量杯使用：量杯需有经校准的容量标识（如ml或oz）及相应精度，而‘能大致估测’不等于‘可当量杯’。若你需要准确计量液体，建议搭配专用量具；若只是日常饮水，这只杯子仍可安心使用。需要我帮你找一款带可靠刻度与食品级认证的替代选择吗？",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。",
+                "model": "qwen-plus",
+                "route": {
+                  "itemId": "6c748bf3-c8b1-459e-a8aa-fbeb76a2f171",
+                  "itemName": "无盖不锈钢水杯",
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "自然交流；明确的物品经历才进入故事"
+                }
+              },
+              "at": "2026-10-28T16:39:49.693Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "turnRequestId": "1c8a7cfa-b7fb-4ce1-9d29-28581abd88eb",
+            "turnScope": "6c748bf3-c8b1-459e-a8aa-fbeb76a2f171",
+            "lastIntent": "companion",
+            "activeItemId": "6c748bf3-c8b1-459e-a8aa-fbeb76a2f171",
+            "goal": "请解释这只水杯档案已经知道什么、尚不能确定什么。没有刻度能当量杯吗？不要把用户登记当官方认证。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:39:44.641Z",
+          "updatedAt": "2026-10-28T16:39:49.693Z",
+          "expiresAt": "2026-11-04T16:39:44.641Z",
+          "itemScopes": {
+            "6c748bf3-c8b1-459e-a8aa-fbeb76a2f171": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这只水杯的档案目前确认：它是一只无盖、单层不锈钢材质的水杯，当前处于‘在用’状态，仅具备基本容纳常温物品的能力；明确没有刻度，且尚未确认是否通过食品接触安全认证或耐热认证——这些都不能靠用户登记或主观描述替代官方检测报告。\n\n正因没有刻度，它不能作为量杯使用：量杯需有经校准的容量标识（如ml或oz）及相应精度，而‘能大致估测’不等于‘可当量杯’。若你需要准确计量液体，建议搭配专用量具；若只是日常饮水，这只杯子仍可安心使用。需要我帮你找一款带可靠刻度与食品级认证的替代选择吗？",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。",
+          "model": "qwen-plus",
+          "route": {
+            "itemId": "6c748bf3-c8b1-459e-a8aa-fbeb76a2f171",
+            "itemName": "无盖不锈钢水杯",
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "自然交流；明确的物品经历才进入故事"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=6c748bf3-c8b1-459e-a8aa-fbeb76a2f171; router=home-router-v1",
+            "at": "2026-10-28T16:39:44.705Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-28T16:39:44.719Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9",
+            "at": "2026-10-28T16:39:44.720Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1",
+            "at": "2026-10-28T16:39:44.733Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-28T16:39:49.623Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-28T16:39:49.661Z"
+          }
+        ],
+        "tokens": {
+          "input": 2234,
+          "output": 184
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "creative",
+      "path": "direct",
+      "requests": 1,
+      "result": {
+        "text": "**玩法名称：「静默轨迹」——20分钟无声鼠标书写实验**\n\n**规则（严格遵守）：**  \n1. **仅用登记物品**：不锈钢水杯、空白笔记本、黑色圆珠笔、无线鼠标（关闭电源开关，不连接电脑，不触发任何电子功能）；  \n2. **全程不触碰水、不加热、不拍照、不购买、不离开座位；**  \n3. **核心动作**：将无线鼠标*倒置*（底部朝上），用其**橡胶脚垫作为“印章”**，蘸取圆珠笔墨水（轻压笔尖在纸面点出微小墨点，再迅速轻按鼠标脚垫吸墨，不流淌）；  \n4. 每次蘸墨后，在笔记本上以**单脚垫为单位**，沿直线/弧线/几何路径缓慢拖移鼠标（靠手指控制方向与间距），留下断续墨点轨迹；  \n5. 全程**不写字、不画图、不描摹，只专注移动鼠标本体产生的物理印记**；  \n6. 时间严格20分钟，结束后立即停手。\n\n**结束成果：**  \n一本笔记本上呈现一条**唯一、不可复制的20分钟手控轨迹**——由数十个微小墨点构成的抽象路径（如蜿蜒线、螺旋雏形或不规则折线），每个点均由鼠标脚垫真实接触纸面形成。轨迹旁用圆珠笔标注：  \n> 「静默轨迹 · 2024-06-12 · 起点→终点：鼠标本体位移 × 时间 × 手的微颤」\n\n✅ 零消耗、零准备、全利用既有物品物理特性；  \n✅ 意外感来自：鼠标从“输入工具”变为“拓印媒介”，日常物件获得陌生触感与视觉表达；  \n✅ 成果唯一、可存档、不依赖外部设备。",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 547,
+          "output": 423
+        },
+        "toolCalls": [],
+        "finishReason": "stop"
+      }
+    },
+    {
+      "id": "creative",
+      "path": "agent",
+      "requests": 0,
+      "result": {
+        "session": {
+          "id": "c38535bd-0170-4e1c-a6da-ed22a168fdaa",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "40d4de72-5910-4f33-85e0-e174bb55abe6",
+              "role": "user",
+              "text": "在家想做一个有趣而稍微意外的新玩法，20分钟内，只用我已登记的物品，不买东西，不用水，不拍照，不加热。给出明确规则和结束成果。",
+              "at": "2026-10-28T16:39:59.475Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "80de480b-33df-465f-bb09-4b6e0f2e9816",
+              "role": "assistant",
+              "text": "围绕观察与记录，比较现有物品的组合可能 · 20分钟 · 不新增购买 · 从4件可用候选中规划\n\n先核对可用物品，再继续规划。",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "围绕观察与记录，比较现有物品的组合可能 · 20分钟 · 不新增购买 · 从4件可用候选中规划\n\n先核对可用物品，再继续规划。",
+                "source": "local-planning",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "未能将描述中的物品准确对应到展柜，请选择物品；本轮描述不会自动变成已确认库存。 本地有限能力规划暂未找到新方案。可调整物品/限制；获准云端后可做开放式规划。不会把缺口当成已有。",
+                "route": {
+                  "intent": "plan",
+                  "mode": "ideas",
+                  "reason": "理解目标、检索能力并核对组合条件"
+                }
+              },
+              "at": "2026-10-28T16:39:59.475Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "883c4c7d-7541-492c-825c-e926fd8c1a09",
+            "turnScope": "home",
+            "lastIntent": "plan",
+            "lifePlanContext": "{\"goal\":\"在家想做一个有趣而稍微意外的新玩法，20分钟内，只用我已登记的物品，不买东西，不用水，不拍照，不加热。给出明确规则和结束成果。\",\"minutes\":20,\"itemIds\":[],\"excludedItemIds\":[],\"restrictions\":[\"不买东西\",\"在家\",\"不要拍照\"]}"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:39:59.342Z",
+          "updatedAt": "2026-10-28T16:39:59.475Z",
+          "expiresAt": "2026-11-04T16:39:59.343Z"
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "围绕观察与记录，比较现有物品的组合可能 · 20分钟 · 不新增购买 · 从4件可用候选中规划\n\n先核对可用物品，再继续规划。",
+          "source": "local-planning",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "未能将描述中的物品准确对应到展柜，请选择物品；本轮描述不会自动变成已确认库存。 本地有限能力规划暂未找到新方案。可调整物品/限制；获准云端后可做开放式规划。不会把缺口当成已有。",
+          "route": {
+            "intent": "plan",
+            "mode": "ideas",
+            "reason": "理解目标、检索能力并核对组合条件"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "plan; target=home; router=home-router-v1",
+            "at": "2026-10-28T16:39:59.406Z"
+          },
+          {
+            "stage": "goal_planning",
+            "detail": "local-candidate",
+            "at": "2026-10-28T16:39:59.447Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    },
+    {
+      "id": "task",
+      "path": "direct",
+      "requests": 1,
+      "result": {
+        "text": "依据已绑定资料，该无线鼠标（Logitech M-R0061，ID：3ea99d49-3fe7-423f-9c40-48a69ed17f0f）的电源为**一节可更换 AA 电池**（见 facts 中 \"M-R0061:battery\" 条目）。  \n资料中**未提及内置充电电池、USB-C/micro-USB 接口或插线充电功能**，亦无任何与“充电”“内置电池”“充电指示灯”“充电线兼容性”相关的描述。  \n因此，**不能直接插线充电**——其设计为使用可更换干电池供电，非充电式设备。",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 567,
+          "output": 161
+        },
+        "toolCalls": [],
+        "finishReason": "stop"
+      }
+    },
+    {
+      "id": "task",
+      "path": "agent",
+      "requests": 0,
+      "result": {
+        "session": {
+          "id": "bb86a8ca-0c96-44c9-bf67-7d6a2c915466",
+          "owner": "lin",
+          "itemId": "3ea99d49-3fe7-423f-9c40-48a69ed17f0f",
+          "identity": "[\"lin\",\"[\\\"M-R0061\\\",\\\"logitech-m185-m-r0061\\\",\\\"2026-10-16.1\\\",\\\"2026-10-28T16:39:34.728Z\\\"]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "2770ea90-9c40-4949-8c7a-9762e8ad1150",
+              "role": "user",
+              "text": "这只无线鼠标电源是什么？能直接插线充电吗？请依据已绑定的资料，不猜实物状态。",
+              "at": "2026-10-28T16:40:03.432Z",
+              "itemId": "3ea99d49-3fe7-423f-9c40-48a69ed17f0f",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "594dffb6-83ee-4155-9487-e65ba2b8f1a0",
+              "role": "assistant",
+              "text": "电源为一节可更换 AA 电池。\n使用 2.4GHz 非 Unifying 无线连接；此版本列出的 USB 接收器型号为 C-U0010。\n这份资料没有确认可以用充电线给鼠标充电，先不要据此尝试；请按该型号说明书核对供电方式。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "电源为一节可更换 AA 电池。\n使用 2.4GHz 非 Unifying 无线连接；此版本列出的 USB 接收器型号为 C-U0010。\n这份资料没有确认可以用充电线给鼠标充电，先不要据此尝试；请按该型号说明书核对供电方式。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "M-R0061:battery",
+                  "M-R0061:connection"
+                ],
+                "citations": [
+                  {
+                    "id": "logitech-m185-m-r0061",
+                    "title": "Logitech M185 Technical Specifications",
+                    "url": "https://support.logi.com/hc/en-za/articles/360023302074-M185-Technical-Specifications",
+                    "section": "M-R0061 / Mouse Specifications & Receiver Specifications",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "请核对鼠标底部 M/N；M185 系列名不足以确定硬件版本。 本资料包只有规格摘编，不含配对、更换电池或维修操作教程。 列出原配接收器不代表任意同型号接收器都能直接使用；兼容与配对需另行核实。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "使用已确认物品处理实际操作任务",
+                  "itemId": "3ea99d49-3fe7-423f-9c40-48a69ed17f0f",
+                  "itemName": "无线鼠标"
+                }
+              },
+              "at": "2026-10-28T16:40:03.432Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "turnRequestId": "7ab32a82-cb85-4167-be67-b168c5d5c074",
+            "turnScope": "3ea99d49-3fe7-423f-9c40-48a69ed17f0f",
+            "lastIntent": "help",
+            "activeItemId": "3ea99d49-3fe7-423f-9c40-48a69ed17f0f",
+            "goal": "这只无线鼠标电源是什么？能直接插线充电吗？请依据已绑定的资料，不猜实物状态。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:40:03.335Z",
+          "updatedAt": "2026-10-28T16:40:03.432Z",
+          "expiresAt": "2026-11-04T16:40:03.335Z",
+          "itemScopes": {
+            "3ea99d49-3fe7-423f-9c40-48a69ed17f0f": "[\"lin\",\"[\\\"M-R0061\\\",\\\"logitech-m185-m-r0061\\\",\\\"2026-10-16.1\\\",\\\"2026-10-28T16:39:34.728Z\\\"]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "电源为一节可更换 AA 电池。\n使用 2.4GHz 非 Unifying 无线连接；此版本列出的 USB 接收器型号为 C-U0010。\n这份资料没有确认可以用充电线给鼠标充电，先不要据此尝试；请按该型号说明书核对供电方式。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "M-R0061:battery",
+            "M-R0061:connection"
+          ],
+          "citations": [
+            {
+              "id": "logitech-m185-m-r0061",
+              "title": "Logitech M185 Technical Specifications",
+              "url": "https://support.logi.com/hc/en-za/articles/360023302074-M185-Technical-Specifications",
+              "section": "M-R0061 / Mouse Specifications & Receiver Specifications",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "请核对鼠标底部 M/N；M185 系列名不足以确定硬件版本。 本资料包只有规格摘编，不含配对、更换电池或维修操作教程。 列出原配接收器不代表任意同型号接收器都能直接使用；兼容与配对需另行核实。",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "使用已确认物品处理实际操作任务",
+            "itemId": "3ea99d49-3fe7-423f-9c40-48a69ed17f0f",
+            "itemName": "无线鼠标"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=3ea99d49-3fe7-423f-9c40-48a69ed17f0f; router=home-router-v1",
+            "at": "2026-10-28T16:40:03.376Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-28T16:40:03.398Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9",
+            "at": "2026-10-28T16:40:03.398Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-28T16:40:03.401Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    },
+    {
+      "id": "tool",
+      "path": "agent",
+      "requests": 2,
+      "result": {
+        "session": {
+          "id": "f82aae54-3a3b-4da9-a304-0a2fcc836b16",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "f422beb6-ed9e-4ea6-a215-d85142d1fc1f",
+              "role": "user",
+              "text": "今天很累。请先使用物品清单工具核对我的登记，再挑一件适合我休息时使用的物品，明确说出名称。",
+              "at": "2026-10-28T16:40:07.091Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "0b448554-4331-451e-a183-d5ddb0299f26",
+              "role": "assistant",
+              "text": "已核对您的登记，当前可访问的物品有：无盖不锈钢水杯、空白纸质笔记本、黑色圆珠笔、无线鼠标。今天很累的话，我建议您先用‘无盖不锈钢水杯’喝点温水——它简洁、顺手、无需操作，能温和地帮身体缓一缓。需要我陪您一起安静几分钟，或帮您写一句放松的小提醒吗？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "已核对您的登记，当前可访问的物品有：无盖不锈钢水杯、空白纸质笔记本、黑色圆珠笔、无线鼠标。今天很累的话，我建议您先用‘无盖不锈钢水杯’喝点温水——它简洁、顺手、无需操作，能温和地帮身体缓一缓。需要我陪您一起安静几分钟，或帮您写一句放松的小提醒吗？",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "回应这次交流，不强行围绕物品"
+                }
+              },
+              "at": "2026-10-28T16:40:07.091Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "3ce71b8b-0ade-4382-a093-eea21e23a0fc",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "今天很累。请先使用物品清单工具核对我的登记，再挑一件适合我休息时使用的物品，明确说出名称。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:40:03.437Z",
+          "updatedAt": "2026-10-28T16:40:07.092Z",
+          "expiresAt": "2026-11-04T16:40:03.438Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "已核对您的登记，当前可访问的物品有：无盖不锈钢水杯、空白纸质笔记本、黑色圆珠笔、无线鼠标。今天很累的话，我建议您先用‘无盖不锈钢水杯’喝点温水——它简洁、顺手、无需操作，能温和地帮身体缓一缓。需要我陪您一起安静几分钟，或帮您写一句放松的小提醒吗？",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "回应这次交流，不强行围绕物品"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-28T16:40:03.467Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-28T16:40:03.482Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9",
+            "at": "2026-10-28T16:40:03.482Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1",
+            "at": "2026-10-28T16:40:03.501Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=1",
+            "at": "2026-10-28T16:40:04.262Z"
+          },
+          {
+            "stage": "tool_completed",
+            "detail": "list_accessible_items",
+            "at": "2026-10-28T16:40:04.308Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2",
+            "at": "2026-10-28T16:40:04.337Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-28T16:40:07.035Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-28T16:40:07.059Z"
+          }
+        ],
+        "tokens": {
+          "input": 4327,
+          "output": 125
+        },
+        "modelCalls": 2
+      }
+    },
+    {
+      "id": "prepare",
+      "path": "agent",
+      "requests": 0,
+      "result": {
+        "session": {
+          "id": "757552b9-313b-4d5b-8152-962ef7b5d30d",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "0eb95602-c58b-4ca1-8c42-f48c882eff48",
+              "role": "user",
+              "text": "明天要去摄影出游，帮我准备清单，不买新的",
+              "at": "2026-10-28T16:40:07.205Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "fa1b5666-641b-4778-876b-374824aeab7a",
+              "role": "assistant",
+              "text": "先核对已有物品与现场条件，确认后保存准备清单。",
+              "reply": {
+                "answer": "先核对已有物品与现场条件，确认后保存准备清单。",
+                "outcome": "answered",
+                "source": "local-planning",
+                "steps": [],
+                "questions": [],
+                "citations": [],
+                "memoryIds": [],
+                "evidenceIds": [],
+                "route": {
+                  "intent": "prepare",
+                  "mode": "service",
+                  "reason": "准备与进度管理，不转为创意活动"
+                },
+                "actionCards": [
+                  {
+                    "id": "22fcb46d-4347-471a-9f4a-ccdec019aa90",
+                    "kind": "taskPlan",
+                    "title": "摄影出游准备",
+                    "detail": [
+                      "必要 · 确认出发地点、天气与通行条件",
+                      "必要 · 确认可用于拍照的设备：尚缺已确认的拍照设备",
+                      "仅使用已登记且获准访问的物品；电量、空间、天气和充电适配性需现场确认。"
+                    ],
+                    "status": "pending",
+                    "expiresAt": "2026-10-28T16:55:07.169Z",
+                    "confirmLabel": "保存这份计划"
+                  }
+                ],
+                "caveat": "摄影准备的有限本地规则，未调用模型；保存清单不表示现实任务完成。"
+              },
+              "at": "2026-10-28T16:40:07.205Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "937774e8-aa12-415b-9c63-7a56ffc6027d",
+            "turnScope": "home",
+            "lastIntent": "prepare"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:40:07.101Z",
+          "updatedAt": "2026-10-28T16:40:07.206Z",
+          "expiresAt": "2026-11-04T16:40:07.101Z",
+          "itemScopes": {}
+        },
+        "reply": {
+          "answer": "先核对已有物品与现场条件，确认后保存准备清单。",
+          "outcome": "answered",
+          "source": "local-planning",
+          "steps": [],
+          "questions": [],
+          "citations": [],
+          "memoryIds": [],
+          "evidenceIds": [],
+          "route": {
+            "intent": "prepare",
+            "mode": "service",
+            "reason": "准备与进度管理，不转为创意活动"
+          },
+          "actionCards": [
+            {
+              "id": "22fcb46d-4347-471a-9f4a-ccdec019aa90",
+              "kind": "taskPlan",
+              "title": "摄影出游准备",
+              "detail": [
+                "必要 · 确认出发地点、天气与通行条件",
+                "必要 · 确认可用于拍照的设备：尚缺已确认的拍照设备",
+                "仅使用已登记且获准访问的物品；电量、空间、天气和充电适配性需现场确认。"
+              ],
+              "status": "pending",
+              "expiresAt": "2026-10-28T16:55:07.169Z",
+              "confirmLabel": "保存这份计划"
+            }
+          ],
+          "caveat": "摄影准备的有限本地规则，未调用模型；保存清单不表示现实任务完成。"
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "prepare; target=home; router=home-router-v1",
+            "at": "2026-10-28T16:40:07.138Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "task-preparation@1.0.0; deterministic local rules; no model calls",
+            "at": "2026-10-28T16:40:07.174Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    }
+  ],
+  "limitations": [
+    "Synthetic registered inventory, not the owner's private data or physical-device verification",
+    "Direct and Agent share model, goal and fixture facts; prompts, tools, output schema and budgets differ",
+    "Single samples diagnose paths, not statistical quality or framework superiority"
+  ],
+  "database": {
+    "integrity": {
+      "integrity_check": "ok"
+    },
+    "checkpointRows": {
+      "n": 15
+    },
+    "migrationBackups": "Retained in isolated fixture directory"
+  },
+  "requestsThisRun": 6,
+  "totalRequests": 16,
+  "tokens": {
+    "input": 22783,
+    "output": 5312
+  },
+  "cost": {
+    "actual": null,
+    "reason": "API usage returns tokens, not the account's billed amount; no billing account accessed"
+  },
+  "fixtureVersion": "care-v2"
+}

@@ -1,0 +1,158 @@
+{
+  "reportPath": "D:\\ProductAgent-LifeContext\\.runtime\\finals-audit\\.runtime\\audit-20261029\\live-results.json",
+  "requests": 16,
+  "cases": [
+    {
+      "id": "understanding",
+      "path": "direct",
+      "requests": 1
+    },
+    {
+      "id": "understanding",
+      "path": "agent",
+      "requests": 1,
+      "outcome": "answered",
+      "source": "model-general",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "companion; target=6c748bf3-c8b1-459e-a8aa-fbeb76a2f171; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    },
+    {
+      "id": "creative",
+      "path": "direct",
+      "requests": 1
+    },
+    {
+      "id": "creative",
+      "path": "agent",
+      "requests": 0,
+      "outcome": "needs_info",
+      "source": "local-planning",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "plan; target=home; router=home-router-v1"
+        },
+        {
+          "stage": "goal_planning",
+          "detail": "local-candidate"
+        }
+      ]
+    },
+    {
+      "id": "task",
+      "path": "direct",
+      "requests": 1
+    },
+    {
+      "id": "task",
+      "path": "agent",
+      "requests": 0,
+      "outcome": "answered",
+      "source": "curated-guidance",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=3ea99d49-3fe7-423f-9c40-48a69ed17f0f; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9"
+        },
+        {
+          "stage": "curated_answer",
+          "detail": "answered"
+        }
+      ]
+    },
+    {
+      "id": "tool",
+      "path": "agent",
+      "requests": 2,
+      "outcome": "answered",
+      "source": "model-general",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "companion; target=home; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=1"
+        },
+        {
+          "stage": "tool_completed",
+          "detail": "list_accessible_items"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    },
+    {
+      "id": "prepare",
+      "path": "agent",
+      "requests": 0,
+      "outcome": "answered",
+      "source": "local-planning",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "prepare; target=home; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "task-preparation@1.0.0; deterministic local rules; no model calls"
+        }
+      ]
+    }
+  ]
+}

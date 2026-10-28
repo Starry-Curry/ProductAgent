@@ -1,0 +1,30 @@
+
+> product-agent@0.1.0 test:care
+> node scripts/verify-local.mjs care
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Failed to launch chromium because executable doesn't exist at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+    at D:\ProductAgent-LifeContext\.runtime\finals-audit\tests\care-integration.mjs:49:32 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v24.16.0
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+file:///D:/ProductAgent-LifeContext/.runtime/finals-audit/scripts/verify-local.mjs:99
+    if (code !== 0) throw Error(script + " failed (" + code + ")");
+                          ^
+
+Error: tests/care-integration.mjs failed (3221226505)
+    at file:///D:/ProductAgent-LifeContext/.runtime/finals-audit/scripts/verify-local.mjs:99:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.16.0
+npm notice
+npm notice New major version of npm available! 11.13.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

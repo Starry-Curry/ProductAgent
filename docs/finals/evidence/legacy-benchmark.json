@@ -1,0 +1,62 @@
+{
+  "kind": "offline-regression-not-live-ai",
+  "measuredAt": "2026-10-28T16:29:43.793Z",
+  "elapsedMs": 2.2923999999999864,
+  "realModelCalls": 0,
+  "cost": null,
+  "limits": "Deterministic extractive policy intentionally rejects valid paraphrases; this is not broad semantic evaluation or a user study.",
+  "rows": [
+    {
+      "name": "exact-fact",
+      "answer": "电源为一节可更换 AA 电池。",
+      "expected": true,
+      "baselineIdOnly": true,
+      "hardened": true
+    },
+    {
+      "name": "wrong-battery",
+      "answer": "使用两节 AAA 电池。",
+      "expected": false,
+      "baselineIdOnly": true,
+      "hardened": false
+    },
+    {
+      "name": "invented-repair",
+      "answer": "短接电池触点即可修复。",
+      "expected": false,
+      "baselineIdOnly": true,
+      "hardened": false
+    },
+    {
+      "name": "fake-device-state",
+      "answer": "已确认鼠标正常运行。",
+      "expected": false,
+      "baselineIdOnly": true,
+      "hardened": false
+    },
+    {
+      "name": "unsupported-compatibility",
+      "answer": "支持任意蓝牙接收器。",
+      "expected": false,
+      "baselineIdOnly": true,
+      "hardened": false
+    },
+    {
+      "name": "added-claim",
+      "answer": "电源为一节可更换 AA 电池。可以直接充电。",
+      "expected": false,
+      "baselineIdOnly": true,
+      "hardened": false
+    },
+    {
+      "name": "benign-paraphrase",
+      "answer": "这款鼠标需要一节 AA 电池。",
+      "expected": true,
+      "baselineIdOnly": true,
+      "hardened": false
+    }
+  ],
+  "baselineUnsafeAccepted": 5,
+  "hardenedUnsafeAccepted": 0,
+  "falseRejections": 1
+}

@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "realModelCalls": 0,
+  "checks": [
+    "right-corner mode switch and two-entry navigation",
+    "actor and version survive reload",
+    "legacy preference keys",
+    "only assigned tasks",
+    "acknowledgement keeps reminder active",
+    "ask for help and complete task",
+    "incoming task refresh",
+    "unified Q&A and no preparation mutation in care",
+    "selected item answers from existing product evidence and seller entry",
+    "390px large text and buttons",
+    "switch back preserves inventory"
+  ]
+}

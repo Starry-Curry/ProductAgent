@@ -1,0 +1,155 @@
+{
+  "measuredAt": "2026-10-28T16:57:24.135Z",
+  "timezone": "Asia/Shanghai",
+  "baseline": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "branch": "codex/finals-baseline-audit",
+  "repository": "https://github.com/Starry-Curry/ProductAgent",
+  "auditPath": "D:\\ProductAgent-LifeContext\\.runtime\\finals-audit",
+  "node": "v24.16.0",
+  "logNormalization": "Published logs use LF and remove trailing spaces; raw runtime logs retained locally, with rawSha256 per command.",
+  "requests": 22,
+  "http200": 21,
+  "transportErrors": 1,
+  "tokens": {
+    "input": 31805,
+    "output": 8019
+  },
+  "unreportedUsageRequests": [
+    19
+  ],
+  "knownUsageListPriceCny": 0.041482,
+  "actualBilledCostCny": null,
+  "costCaveat": "Known returned usage only. Beijing non-thinking <=128K list price input 0.8/output 2 CNY per million. Excludes unknown timeout usage; ignores cache/free quota/discounts. Not an invoice.",
+  "pricingSource": "https://help.aliyun.com/zh/model-studio/qwen-plus",
+  "commands": [
+    {
+      "command": "npm ci --cache .npm --no-audit --no-fund",
+      "exitCode": 0,
+      "log": "logs/install.log",
+      "rawSha256": "1ff92a3f451b2a92e1cd31324b3cc908b821cc8736565b51216bb798dac6494d"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "log": "logs/unit.log",
+      "rawSha256": "e4d46e03190c04215cfc1df6f6f2dc475940a1d7c0ec9ec88fbe2d4994bd07b9"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "logs/typecheck.log",
+      "rawSha256": "7df6634af11c5db08928230eebaf2945f75c0adcb3650b54cc8a90f7a285b496"
+    },
+    {
+      "command": "npm run test:benchmark",
+      "exitCode": 0,
+      "log": "logs/benchmark.log",
+      "rawSha256": "bb8d960a59b2d4f2c3ab3e829b1695f96df78a1295de403440def910bc84b6dc"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "log": "logs/build.log",
+      "rawSha256": "9e13d9428b549ccd1c57ca251d5a758be8139901430a22229ff62d44a146bcff"
+    },
+    {
+      "command": "npm run test:acceptance -- life",
+      "exitCode": 0,
+      "log": "logs/browser-life.log",
+      "rawSha256": "bb88b0db12574ad560a3e7f0a818fe6fcc6b3863693b9d2afb2b993a8505b9b9"
+    },
+    {
+      "command": "npm run test:acceptance",
+      "exitCode": 0,
+      "log": "logs/browser-legacy.log",
+      "rawSha256": "6f0d6fefdf905f18545e64f080985174218e73809e69cddb3d3032a2f2831a52"
+    },
+    {
+      "command": "npm run test:task-planning (default browser path)",
+      "exitCode": 1,
+      "log": "logs/browser-task.log",
+      "rawSha256": "9f9858bddcbff4543d91fb67854c8938c12d6e3cfac9476e4c8766994e476e85"
+    },
+    {
+      "command": "npm run test:care (default browser path)",
+      "exitCode": 1,
+      "log": "logs/browser-care.log",
+      "rawSha256": "b77911606f7a57a1a7022056bd9462253b18693ab935a953f5a898bdb28c30e8"
+    },
+    {
+      "command": "EDGE_PATH=<installed Edge>; npm run test:task-planning",
+      "exitCode": 0,
+      "log": "logs/browser-task-edge.log",
+      "rawSha256": "56dccce870ef4681a9ba545b659dcf7ea7b0e0b224a62780c6620a9042ea28f9"
+    },
+    {
+      "command": "EDGE_PATH=<installed Edge>; npm run test:care",
+      "exitCode": 0,
+      "log": "logs/browser-care-edge.log",
+      "rawSha256": "e1579c692d7d0ca19b67dce609cf8f90ff7312f7bf35cbe7b488c2f53de2b0a9"
+    },
+    {
+      "command": "node scripts/verify-local.mjs storybook",
+      "exitCode": 0,
+      "log": "logs/browser-storybook.log",
+      "rawSha256": "00243cb570384cb0ff07cbbc5edbccdb5135e51febdd1a9d89432034c37d39b0"
+    },
+    {
+      "command": "npm run test:cloud",
+      "exitCode": 1,
+      "log": "logs/cloud.log",
+      "rawSha256": "296ca99e1ad51808079da10500cfe8a9b332cc467a7091636a45f94758c4d788"
+    },
+    {
+      "command": "node scripts/finals-cloud-recheck.mjs (initial audit wrapper URL argument error)",
+      "exitCode": 1,
+      "log": "logs/cloud-wrapper-initial.log",
+      "rawSha256": "ca23c88195ffa63052209aa7eb1192bce51c446e3aa2735fc2a5415603e79ff0"
+    },
+    {
+      "command": "EDGE_PATH=<installed Edge>; node scripts/finals-cloud-recheck.mjs (locator adaptation)",
+      "exitCode": 0,
+      "log": "logs/cloud-recheck.log",
+      "rawSha256": "8238328c3416bc4924a724a051ea7c41b8338d7b51fb8a2c70a8c6e509abd35a"
+    },
+    {
+      "command": "node --experimental-strip-types scripts/finals-offline-diagnostics.mjs",
+      "exitCode": 0,
+      "log": "logs/offline-diagnostics.log",
+      "rawSha256": "97a39e4dfdb4509196c588d5edcd8ace6047db41d6c32e2c10b3f2e0f48ed9e5"
+    },
+    {
+      "command": "node --experimental-strip-types scripts/finals-audit.mjs (offline)",
+      "exitCode": 0,
+      "log": "logs/offline-probes.log",
+      "rawSha256": "92fe9b1fee51ef98c3edeb3d84a37ac054a01177b1ac6ae9c2e1770441aa3be6"
+    },
+    {
+      "command": "node --experimental-strip-types scripts/finals-audit.mjs --live --authorize-paid-max=40 --config=<project .env.local> (initial fixture)",
+      "exitCode": 0,
+      "log": "logs/live.log",
+      "rawSha256": "92a63daa5ca41f8e28d311d628bcd7885a31998721b6aeec141ea9a1f168792b"
+    },
+    {
+      "command": "node --experimental-strip-types scripts/finals-audit.mjs --live --followup --authorize-paid-max=40 --config=<project .env.local> (initial fixture)",
+      "exitCode": 0,
+      "log": "logs/live-followup.log",
+      "rawSha256": "d4b6daea644c2085850b164bd5a631907f61bbbba121d058690212320610b271"
+    },
+    {
+      "command": "node --experimental-strip-types scripts/finals-audit.mjs --live --authorize-paid-max=40 --config=<project .env.local>",
+      "exitCode": 0,
+      "log": "logs/live-recheck.log",
+      "rawSha256": "a6a96ee958bf163428023edfe14145608410739bb95278822d7894dcd4fd186d"
+    },
+    {
+      "command": "node --experimental-strip-types scripts/finals-audit.mjs --live --followup --authorize-paid-max=40 --config=<project .env.local>",
+      "exitCode": 0,
+      "log": "logs/live-followup-recheck.log",
+      "rawSha256": "3f318ca1b8e276120f7b68a6665ce00b7993c6cc5680c278d5febdfa9bf080b6"
+    }
+  ],
+  "productChanges": false,
+  "piInstalled": false,
+  "paidLimit": 40
+}

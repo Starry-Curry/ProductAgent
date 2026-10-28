@@ -1,0 +1,25 @@
+
+> product-agent@0.1.0 test:task-planning
+> node scripts/verify-local.mjs task-planning
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Failed to launch chromium because executable doesn't exist at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+    at D:\ProductAgent-LifeContext\.runtime\finals-audit\tests\task-planning-integration.mjs:38:32 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v24.16.0
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+file:///D:/ProductAgent-LifeContext/.runtime/finals-audit/scripts/verify-local.mjs:99
+    if (code !== 0) throw Error(script + " failed (" + code + ")");
+                          ^
+
+Error: tests/task-planning-integration.mjs failed (3221226505)
+    at file:///D:/ProductAgent-LifeContext/.runtime/finals-audit/scripts/verify-local.mjs:99:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.16.0

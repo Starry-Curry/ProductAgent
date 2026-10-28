@@ -1,0 +1,78 @@
+{
+  "reportPath": "D:\\ProductAgent-LifeContext\\.runtime\\finals-audit\\.runtime\\audit-20261029\\live-followup.json",
+  "requests": 22,
+  "cases": [
+    {
+      "id": "creative-normalized",
+      "path": "direct",
+      "requests": 1
+    },
+    {
+      "id": "creative-normalized",
+      "path": "agent",
+      "requests": 2,
+      "outcome": "unavailable",
+      "source": "curated-guidance",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "plan; target=home; router=home-router-v1"
+        },
+        {
+          "stage": "goal_planning_failed",
+          "detail": "timeout"
+        }
+      ]
+    },
+    {
+      "id": "grounded-task",
+      "path": "direct",
+      "requests": 1
+    },
+    {
+      "id": "grounded-task",
+      "path": "agent",
+      "requests": 2,
+      "outcome": "answered",
+      "source": "model-with-evidence",
+      "trace": [
+        {
+          "stage": "intent_routed",
+          "detail": "help; target=13cb7e2c-91dc-4e63-a867-80e51fc8784e; router=home-router-v1"
+        },
+        {
+          "stage": "skill_selected",
+          "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0"
+        },
+        {
+          "stage": "context_ready",
+          "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=1"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=1"
+        },
+        {
+          "stage": "tool_completed",
+          "detail": "search_product_knowledge"
+        },
+        {
+          "stage": "model_started",
+          "detail": "attempt=2"
+        },
+        {
+          "stage": "model_returned",
+          "detail": "tools=0"
+        },
+        {
+          "stage": "validated",
+          "detail": "answered"
+        }
+      ]
+    }
+  ]
+}

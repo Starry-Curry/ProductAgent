@@ -1,5 +1,9 @@
 # 文档索引
 
+## 决赛升级最新事实（2026-10-29）
+
+[中文概要与持续状态](finals/README.md) · [真实架构图](finals/ARCHITECTURE.md) · [代码审计](finals/AUDIT.md) · [测试/请求/费用](finals/TEST_REPORT.md) · [架构决定与实验](finals/DECISIONS.md)。审计基于GitHub `ea32c3f`，不是下方旧验收的重复声明。
+
 README 负责快速运行，以下文档分别回答产品、工程、演示和部署问题。
 
 ## 推荐阅读顺序

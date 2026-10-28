@@ -1,0 +1,369 @@
+{
+  "kind": "real-provider-on-synthetic-registered-items",
+  "at": "2026-10-28T16:35:42.281Z",
+  "baseline": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "config": {
+    "keyPresent": true,
+    "model": "qwen-plus",
+    "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "jsonMode": true,
+    "thinking": false,
+    "timeoutMs": 60000,
+    "status": {
+      "state": "ready",
+      "ready": true,
+      "message": "已准备就绪（配置及费用授权齐备，尚不代表网络或账户已验证）"
+    }
+  },
+  "cases": [
+    {
+      "id": "creative-normalized",
+      "path": "direct",
+      "requests": 1,
+      "result": {
+        "text": "**玩法名称：「静默平衡塔」**\n\n**规则（严格遵守）：**  \n1. **时间限制**：20分钟倒计时开始后启动，超时即止；  \n2. **禁用项**：不接触水、不加热、不拍照、不购买/借用任何未列在 inventory 中的物品；  \n3. **可用物仅限清单所列5件**：不锈钢水杯、空白笔记本、黑色圆珠笔、无线鼠标、测试收纳盒；  \n4. **核心动作**：仅允许 *放置、叠放、支撑、书写*（不可撕纸、折纸、按压变形笔记本封皮以外部位）；  \n5. **安全前提**：全程不摇晃、不抛掷、不使鼠标跌落；不锈钢杯不得倒扣于桌面（防滑失效风险）。\n\n**执行步骤（建议节奏）：**  \n- 0–3min：用圆珠笔在笔记本第1页画一个边长8cm正方形，标出中心点；  \n- 4–10min：将无线鼠标（关机状态）平放于正方形内，以鼠标底部四角为支点，尝试用不锈钢杯底沿轻触其顶部中央——记录每次“杯沿悬停未触碰”达3秒的次数（写在正方形下方）；  \n- 11–18min：将收纳盒倒置作基座，杯口朝上立于盒中央；再将鼠标（仍关机）横跨杯口，两端悬空——调整至鼠标自身重力使其保持静止≥10秒（不掉落、不滑动）；  \n- 19–20min：在笔记本新页写下：“平衡达成 × [次数]，静默塔存续：✓”。\n\n**结束成果：**  \n✅ 一座由收纳盒（基座）+ 不锈钢杯（中柱）+ 无线鼠标（横梁）构成的、无外力维持的三层静态平衡结构；  \n✅ 笔记本上含1个手绘正方形、1组悬停计数、1句完成确认语；  \n✅ 全程零耗材、零声响、零电子交互（鼠标始终关机），且所有物品归位原状，可立即复用。  \n\n（提示：成败关键在鼠标重心与杯口直径的微小匹配——意外感正来自日常物件突然显露的力学诗意。）",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 607,
+          "output": 530
+        },
+        "toolCalls": [],
+        "finishReason": "stop"
+      }
+    },
+    {
+      "id": "creative-normalized",
+      "path": "agent",
+      "requests": 1,
+      "result": {
+        "session": {
+          "id": "0b157054-fe41-4818-b2c3-30ca4cc16c69",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "59dd1310-4c65-4800-bc42-d8c0a2653865",
+              "role": "user",
+              "text": "在家想做一个有趣而稍微意外的新玩法，20分钟内，利用现有物品，不买东西，不用水，不拍照，不加热。给出明确规则和结束成果。",
+              "at": "2026-10-28T16:36:30.364Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "e935c326-d542-43a3-a82b-bd3c494ea9c9",
+              "role": "assistant",
+              "text": "围绕观察与记录，比较现有物品的组合可能 · 20分钟 · 不新增购买 · 从5件可用候选中规划\n\n杯中镜像文字挑战",
+              "reply": {
+                "outcome": "answered",
+                "answer": "围绕观察与记录，比较现有物品的组合可能 · 20分钟 · 不新增购买 · 从5件可用候选中规划\n\n杯中镜像文字挑战",
+                "source": "model-creative",
+                "steps": [
+                  {
+                    "id": "life:6d31cd54-5806-4f87-a08a-3668adbe1f91:0",
+                    "text": "用圆珠笔在笔记本第1页写下3个日常词（如‘门’‘笑’‘灯’），字迹工整、大小适中。"
+                  },
+                  {
+                    "id": "life:6d31cd54-5806-4f87-a08a-3668adbe1f91:1",
+                    "text": "将不锈钢水杯倒扣，杯底朝上，平放于桌面；从杯底弧面斜向下45°观察自己写的字。"
+                  },
+                  {
+                    "id": "life:6d31cd54-5806-4f87-a08a-3668adbe1f91:2",
+                    "text": "记录：哪些字在杯底曲面反射中仍可辨认？哪些变成意外图形？标出最像新符号的那个。"
+                  },
+                  {
+                    "id": "life:6d31cd54-5806-4f87-a08a-3668adbe1f91:3",
+                    "text": "翻到笔记本第2页，重写那个‘最意外符号’，并命名它（如‘云爪文’），完成即止。"
+                  }
+                ],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "另有1个草稿未通过检查：方案动作依赖检查：步骤3依赖未登记的精确计时工具，改成无该工具的动作或明确条件与替代；免责声明不能代替资源 可用场地、空间与访问条件须现场确认（不是已拥有物品） 不锈钢杯无镀层/镜面处理，仅靠抛光弧面产生轻微畸变反射；不保证清晰成像",
+                "route": {
+                  "intent": "plan",
+                  "mode": "ideas",
+                  "reason": "理解目标、检索能力并核对组合条件"
+                }
+              },
+              "at": "2026-10-28T16:36:30.364Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "4afa16ef-fcc9-4394-8375-98d0ca7c3a71",
+            "turnScope": "home",
+            "lastIntent": "plan",
+            "lifePlanContext": "{\"goal\":\"在家想做一个有趣而稍微意外的新玩法，20分钟内，利用现有物品，不买东西，不用水，不拍照，不加热。给出明确规则和结束成果。\",\"minutes\":20,\"itemIds\":[],\"excludedItemIds\":[],\"restrictions\":[\"不买东西\",\"在家\",\"不要拍照\"]}",
+            "lifeIdeaIds": "[\"6d31cd54-5806-4f87-a08a-3668adbe1f91\"]"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:35:54.960Z",
+          "updatedAt": "2026-10-28T16:36:30.365Z",
+          "expiresAt": "2026-11-04T16:35:54.961Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "围绕观察与记录，比较现有物品的组合可能 · 20分钟 · 不新增购买 · 从5件可用候选中规划\n\n杯中镜像文字挑战",
+          "source": "model-creative",
+          "steps": [
+            {
+              "id": "life:6d31cd54-5806-4f87-a08a-3668adbe1f91:0",
+              "text": "用圆珠笔在笔记本第1页写下3个日常词（如‘门’‘笑’‘灯’），字迹工整、大小适中。"
+            },
+            {
+              "id": "life:6d31cd54-5806-4f87-a08a-3668adbe1f91:1",
+              "text": "将不锈钢水杯倒扣，杯底朝上，平放于桌面；从杯底弧面斜向下45°观察自己写的字。"
+            },
+            {
+              "id": "life:6d31cd54-5806-4f87-a08a-3668adbe1f91:2",
+              "text": "记录：哪些字在杯底曲面反射中仍可辨认？哪些变成意外图形？标出最像新符号的那个。"
+            },
+            {
+              "id": "life:6d31cd54-5806-4f87-a08a-3668adbe1f91:3",
+              "text": "翻到笔记本第2页，重写那个‘最意外符号’，并命名它（如‘云爪文’），完成即止。"
+            }
+          ],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "另有1个草稿未通过检查：方案动作依赖检查：步骤3依赖未登记的精确计时工具，改成无该工具的动作或明确条件与替代；免责声明不能代替资源 可用场地、空间与访问条件须现场确认（不是已拥有物品） 不锈钢杯无镀层/镜面处理，仅靠抛光弧面产生轻微畸变反射；不保证清晰成像",
+          "route": {
+            "intent": "plan",
+            "mode": "ideas",
+            "reason": "理解目标、检索能力并核对组合条件"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "plan; target=home; router=home-router-v1",
+            "at": "2026-10-28T16:35:55.098Z"
+          },
+          {
+            "stage": "goal_planning",
+            "detail": "model-creative",
+            "at": "2026-10-28T16:36:30.326Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "grounded-task",
+      "path": "direct",
+      "requests": 1,
+      "result": {
+        "text": "根据提供的资料，清洁“测试收纳盒”（ID：73734e01-9027-4918-926d-e154980b33d4）的操作如下：\n\n✅ **可做**：  \n用柔软的干布轻轻擦拭表面即可。无需水、清洁剂或任何湿法处理。\n\n❌ **不可做**：  \n- **不可浸入水中**（manual 明确禁止）；  \n- **不可使用湿布、喷雾清洁剂、酒精、消毒液等液体清洁剂**（因无耐水/耐化学性说明，且干擦即满足要求）；  \n- **不可用粗糙布料、钢丝球、研磨剂擦拭**（可能刮伤表面，虽未明说，但“软布”已隐含此限制）；  \n- **不可拆卸、加热、暴晒或放入洗碗机/消毒柜**（无相关耐受说明，且非设计用途）。\n\n⚠️ 注意：该收纳盒无材质、密封性、耐温等详细属性，所有清洁操作须严格遵循手册“Wipe with a soft dry cloth. Do not immerse in water.”——这是唯一权威依据。\n\n其他物品（如不锈钢杯、笔记本、鼠标等）与此清洁任务无关，无需取出或处理。",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 681,
+          "output": 287
+        },
+        "toolCalls": [],
+        "finishReason": "stop"
+      }
+    },
+    {
+      "id": "grounded-task",
+      "path": "agent",
+      "requests": 1,
+      "result": {
+        "session": {
+          "id": "88966d2a-310e-48bf-8a25-0fa2cc3a3bc5",
+          "owner": "lin",
+          "itemId": "73734e01-9027-4918-926d-e154980b33d4",
+          "identity": "[\"lin\",\"[\\\"AUDIT-BOX1\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "6461ef29-0524-4d3c-9564-6960da9b1de8",
+              "role": "user",
+              "text": "请依据导入资料，带我清洁这个收纳盒，并说明不能做什么。",
+              "at": "2026-10-28T16:36:41.116Z",
+              "itemId": "73734e01-9027-4918-926d-e154980b33d4",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "b745dd8f-317a-412a-b2a5-4c32d5bccdb1",
+              "role": "assistant",
+              "text": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+                "steps": [
+                  {
+                    "id": "docstep:1542d90bccdfe2480df422a6:0:phase=operate:用柔软的干布擦拭",
+                    "text": "清洁与养护：用柔软的干布擦拭",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:1542d90bccdfe2480df422a6:0:phase=operate:不可浸水",
+                    "text": "清洁与养护：不可浸水",
+                    "phase": "operate"
+                  }
+                ],
+                "questions": [],
+                "source": "model-with-evidence",
+                "citations": [
+                  {
+                    "id": "1542d90bccdfe2480df422a6:0",
+                    "title": "Synthetic audit fixture, NOT a fetched manufacturer manual",
+                    "url": "https://example.org/audit-manual",
+                    "section": "原文位置 0–90；AUDIT-BOX1 / unspecified",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "1542d90bccdfe2480df422a6:0"
+                ],
+                "memoryIds": [],
+                "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "使用已确认物品处理实际操作任务",
+                  "itemId": "73734e01-9027-4918-926d-e154980b33d4",
+                  "itemName": "测试收纳盒"
+                }
+              },
+              "at": "2026-10-28T16:36:41.116Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "turnRequestId": "03b8e18d-57c2-481e-979a-b9b4e144956b",
+            "turnScope": "73734e01-9027-4918-926d-e154980b33d4",
+            "lastIntent": "help",
+            "activeItemId": "73734e01-9027-4918-926d-e154980b33d4",
+            "goal": "请依据导入资料，带我清洁这个收纳盒，并说明不能做什么。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-28T16:36:37.429Z",
+          "updatedAt": "2026-10-28T16:36:41.117Z",
+          "expiresAt": "2026-11-04T16:36:37.430Z",
+          "itemScopes": {
+            "73734e01-9027-4918-926d-e154980b33d4": "[\"lin\",\"[\\\"AUDIT-BOX1\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+          "steps": [
+            {
+              "id": "docstep:1542d90bccdfe2480df422a6:0:phase=operate:用柔软的干布擦拭",
+              "text": "清洁与养护：用柔软的干布擦拭",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:1542d90bccdfe2480df422a6:0:phase=operate:不可浸水",
+              "text": "清洁与养护：不可浸水",
+              "phase": "operate"
+            }
+          ],
+          "questions": [],
+          "source": "model-with-evidence",
+          "citations": [
+            {
+              "id": "1542d90bccdfe2480df422a6:0",
+              "title": "Synthetic audit fixture, NOT a fetched manufacturer manual",
+              "url": "https://example.org/audit-manual",
+              "section": "原文位置 0–90；AUDIT-BOX1 / unspecified",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "1542d90bccdfe2480df422a6:0"
+          ],
+          "memoryIds": [],
+          "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "使用已确认物品处理实际操作任务",
+            "itemId": "73734e01-9027-4918-926d-e154980b33d4",
+            "itemName": "测试收纳盒"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=73734e01-9027-4918-926d-e154980b33d4; router=home-router-v1",
+            "at": "2026-10-28T16:36:37.461Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-28T16:36:37.481Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v1.9",
+            "at": "2026-10-28T16:36:37.481Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1",
+            "at": "2026-10-28T16:36:37.504Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-28T16:36:41.004Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-28T16:36:41.068Z"
+          }
+        ],
+        "tokens": {
+          "input": 2538,
+          "output": 143
+        },
+        "modelCalls": 1
+      }
+    }
+  ],
+  "limitations": [
+    "Synthetic registered inventory, not the owner's private data or physical-device verification",
+    "Direct and Agent share model, goal and fixture facts; prompts, tools, output schema and budgets differ",
+    "Single samples diagnose paths, not statistical quality or framework superiority"
+  ],
+  "database": {
+    "integrity": {
+      "integrity_check": "ok"
+    },
+    "checkpointRows": {
+      "n": 6
+    },
+    "migrationBackups": "Retained in isolated fixture directory"
+  },
+  "requestsThisRun": 4,
+  "totalRequests": 10,
+  "tokens": {
+    "input": 14538,
+    "output": 4004
+  },
+  "cost": {
+    "actual": null,
+    "reason": "API usage returns tokens, not the account's billed amount; no billing account accessed"
+  },
+  "fixtureVersion": "initial-notes-v1",
+  "fixtureCaveat": "An ancillary certification note used an undeclared notes field. Retained as historical evidence; requests 11 onward rerun with supported care field."
+}
