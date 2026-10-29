@@ -1,0 +1,166 @@
+
+> product-agent@0.1.0 test:benchmark
+> node --experimental-strip-types scripts/benchmark.ts
+
+{
+  "kind": "offline-regression-not-live-ai",
+  "measuredAt": "2026-10-29T05:16:00.557Z",
+  "elapsedMs": 1.9376000000000033,
+  "realModelCalls": 0,
+  "cost": null,
+  "limits": "Deterministic extractive policy intentionally rejects valid paraphrases; this is not broad semantic evaluation or a user study.",
+  "rows": [
+    {
+      "name": "exact-fact",
+      "answer": "电源为一节可更换 AA 电池。",
+      "expected": true,
+      "baselineIdOnly": true,
+      "hardened": true
+    },
+    {
+      "name": "wrong-battery",
+      "answer": "使用两节 AAA 电池。",
+      "expected": false,
+      "baselineIdOnly": true,
+      "hardened": false
+    },
+    {
+      "name": "invented-repair",
+      "answer": "短接电池触点即可修复。",
+      "expected": false,
+      "baselineIdOnly": true,
+      "hardened": false
+    },
+    {
+      "name": "fake-device-state",
+      "answer": "已确认鼠标正常运行。",
+      "expected": false,
+      "baselineIdOnly": true,
+      "hardened": false
+    },
+    {
+      "name": "unsupported-compatibility",
+      "answer": "支持任意蓝牙接收器。",
+      "expected": false,
+      "baselineIdOnly": true,
+      "hardened": false
+    },
+    {
+      "name": "added-claim",
+      "answer": "电源为一节可更换 AA 电池。可以直接充电。",
+      "expected": false,
+      "baselineIdOnly": true,
+      "hardened": false
+    },
+    {
+      "name": "benign-paraphrase",
+      "answer": "这款鼠标需要一节 AA 电池。",
+      "expected": true,
+      "baselineIdOnly": true,
+      "hardened": false
+    }
+  ],
+  "baselineUnsafeAccepted": 5,
+  "hardenedUnsafeAccepted": 0,
+  "falseRejections": 1
+}
+{
+  "kind": "offline-contract-and-curated-coverage-ablation",
+  "measuredAt": "2026-10-29T05:16:01.841Z",
+  "realModelCalls": 0,
+  "cost": null,
+  "limits": "Synthetic fixtures compare an intentionally weak ID checker, the existing extractive validator, and new contracts. Not a live-model/competitor accuracy estimate. Regex checks are not a semantic safety proof.",
+  "rows": [
+    {
+      "name": "natural-summary-selected-fact",
+      "question": "电池规格",
+      "kind": "supported",
+      "answer": "需要一节 AA 电池。",
+      "ids": [
+        "M-R0061:battery"
+      ],
+      "expected": true,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": true
+    },
+    {
+      "name": "unrelated-valid-id",
+      "question": "怎么调双击速度",
+      "kind": "supported",
+      "answer": "电源为一节可更换 AA 电池。",
+      "ids": [
+        "M-R0061:battery"
+      ],
+      "expected": false,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": true,
+      "newAccepted": false
+    },
+    {
+      "name": "invented-long-press",
+      "question": "电池规格",
+      "kind": "general",
+      "answer": "长按配对键八秒即可。",
+      "ids": [],
+      "expected": false,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": false
+    },
+    {
+      "name": "invented-hardware-state",
+      "question": "电池规格",
+      "kind": "general",
+      "answer": "已经确认正常。",
+      "ids": [],
+      "expected": false,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": false
+    },
+    {
+      "name": "invented-common-history",
+      "question": "电池规格",
+      "kind": "general",
+      "answer": "我记得我们一起修好了它。",
+      "ids": [],
+      "expected": false,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": false
+    },
+    {
+      "name": "unsupported-any-receiver",
+      "question": "兼容接收器",
+      "kind": "general",
+      "answer": "兼容任意接收器。",
+      "ids": [],
+      "expected": false,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": false
+    },
+    {
+      "name": "ordinary-general-help",
+      "question": "如何把问题描述清楚",
+      "kind": "general",
+      "answer": "可以先说想完成什么，再描述现在看到的现象。",
+      "ids": [],
+      "expected": true,
+      "idOnlyFixtureAccepted": true,
+      "oldAccepted": false,
+      "newAccepted": true
+    }
+  ],
+  "coverage": {
+    "productIntroFactCount": 3,
+    "productIntroProcedureCount": 0,
+    "reviewedProcedureCount": 2,
+    "unknownItemCanAskNecessaryQuestion": true,
+    "windows11StepsAfterClarification": 3,
+    "m185StepsAfterReceiverConfirmation": 3,
+    "realModelCalls": 0
+  },
+  "regressions": 0
+}

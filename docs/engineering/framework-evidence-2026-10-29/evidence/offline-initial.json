@@ -1,0 +1,1606 @@
+{
+  "node": "v24.16.0",
+  "startedFrom": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "passed": 29,
+  "failed": 5,
+  "results": [
+    {
+      "name": "langgraph:unknown",
+      "status": "passed",
+      "elapsedMs": 281
+    },
+    {
+      "name": "langgraph:relationship",
+      "status": "passed",
+      "elapsedMs": 124
+    },
+    {
+      "name": "langgraph:failure",
+      "status": "passed",
+      "elapsedMs": 154
+    },
+    {
+      "name": "langgraph:shared-domain-read-denies-other-owner",
+      "status": "passed",
+      "elapsedMs": 10
+    },
+    {
+      "name": "mastra:unknown",
+      "status": "passed",
+      "elapsedMs": 154
+    },
+    {
+      "name": "mastra:relationship",
+      "status": "passed",
+      "elapsedMs": 63
+    },
+    {
+      "name": "mastra:failure",
+      "status": "passed",
+      "elapsedMs": 101
+    },
+    {
+      "name": "mastra:shared-domain-read-denies-other-owner",
+      "status": "passed",
+      "elapsedMs": 11
+    },
+    {
+      "name": "pi-core:unknown",
+      "status": "passed",
+      "elapsedMs": 47
+    },
+    {
+      "name": "pi-core:relationship",
+      "status": "passed",
+      "elapsedMs": 26
+    },
+    {
+      "name": "pi-core:failure",
+      "status": "passed",
+      "elapsedMs": 51
+    },
+    {
+      "name": "pi-core:shared-domain-read-denies-other-owner",
+      "status": "passed",
+      "elapsedMs": 8
+    },
+    {
+      "name": "pi-durable:unknown",
+      "status": "passed",
+      "elapsedMs": 195
+    },
+    {
+      "name": "pi-durable:relationship",
+      "status": "passed",
+      "elapsedMs": 48
+    },
+    {
+      "name": "pi-durable:failure",
+      "status": "passed",
+      "elapsedMs": 76
+    },
+    {
+      "name": "pi-durable:shared-domain-read-denies-other-owner",
+      "status": "passed",
+      "elapsedMs": 8
+    },
+    {
+      "name": "existing-memory:cross-session-reopen-and-no-invented-detail",
+      "status": "passed",
+      "elapsedMs": 47
+    },
+    {
+      "name": "mastra-memory:resource-scope-persists-across-threads-and-reopen",
+      "status": "passed",
+      "elapsedMs": 107
+    },
+    {
+      "name": "langgraph:pause-before-authorization",
+      "status": "passed",
+      "elapsedMs": 6092
+    },
+    {
+      "name": "langgraph:crash-after-domain-commit",
+      "status": "passed",
+      "elapsedMs": 4963
+    },
+    {
+      "name": "langgraph:restart-no-duplicate-effect",
+      "status": "passed",
+      "elapsedMs": 5248
+    },
+    {
+      "name": "langgraph:completed-operation-repeat",
+      "status": "passed",
+      "elapsedMs": 6819
+    },
+    {
+      "name": "mastra:pause-before-authorization",
+      "status": "passed",
+      "elapsedMs": 7808
+    },
+    {
+      "name": "mastra:crash-after-domain-commit",
+      "status": "passed",
+      "elapsedMs": 8301
+    },
+    {
+      "name": "mastra:restart-no-duplicate-effect",
+      "status": "failed",
+      "error": "RESULT {\"arm\":\"mastra\",\"phase\":\"resume\",\"error\":\"This workflow run was not suspended\"}\n\n\n2 !== 0\n",
+      "elapsedMs": 9331
+    },
+    {
+      "name": "mastra:completed-operation-repeat",
+      "status": "failed",
+      "error": "RESULT {\"arm\":\"mastra\",\"phase\":\"resume\",\"error\":\"This workflow run was not suspended\"}\n\n\n2 !== 0\n",
+      "elapsedMs": 8778
+    },
+    {
+      "name": "pi-core:pause-before-authorization",
+      "status": "passed",
+      "elapsedMs": 6913
+    },
+    {
+      "name": "pi-core:crash-after-domain-commit",
+      "status": "passed",
+      "elapsedMs": 7803
+    },
+    {
+      "name": "pi-core:restart-no-duplicate-effect",
+      "status": "passed",
+      "elapsedMs": 5249
+    },
+    {
+      "name": "pi-core:completed-operation-repeat",
+      "status": "passed",
+      "elapsedMs": 9277
+    },
+    {
+      "name": "pi-durable:pause-before-authorization",
+      "status": "passed",
+      "elapsedMs": 6471
+    },
+    {
+      "name": "pi-durable:crash-after-domain-commit",
+      "status": "failed",
+      "error": "RESULT {\"arm\":\"pi-durable\",\"phase\":\"resume\",\"output\":{\"id\":7,\"conversationId\":1,\"kind\":\"wujian.save-preference\",\"version\":1,\"input\":{\"key\":\"workflow:pi-durable:ab56c326-6143-44ad-a48f-afb9388731aa\"},\"background\":false,\"abortRequested\":false,\"state\":{\"status\":\"sleeping\",\"checkpoint\":{\"phase\":\"approval\"},\"until\":100},\"startedAt\":0}}\n\n\n0 !== 73\n",
+      "elapsedMs": 6107
+    },
+    {
+      "name": "pi-durable:restart-no-duplicate-effect",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n",
+      "elapsedMs": 6831
+    },
+    {
+      "name": "pi-durable:completed-operation-repeat",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n",
+      "elapsedMs": 7951
+    }
+  ],
+  "counts": [
+    {
+      "arm": "langgraph",
+      "tool": "commit_attempt",
+      "count": 2
+    },
+    {
+      "arm": "langgraph",
+      "tool": "effect",
+      "count": 1
+    },
+    {
+      "arm": "langgraph",
+      "tool": "read",
+      "count": 6
+    },
+    {
+      "arm": "mastra",
+      "tool": "commit_attempt",
+      "count": 1
+    },
+    {
+      "arm": "mastra",
+      "tool": "effect",
+      "count": 1
+    },
+    {
+      "arm": "mastra",
+      "tool": "read",
+      "count": 6
+    },
+    {
+      "arm": "memory",
+      "tool": "read",
+      "count": 1
+    },
+    {
+      "arm": "memory2",
+      "tool": "read",
+      "count": 1
+    },
+    {
+      "arm": "pi-core",
+      "tool": "commit_attempt",
+      "count": 2
+    },
+    {
+      "arm": "pi-core",
+      "tool": "effect",
+      "count": 1
+    },
+    {
+      "arm": "pi-core",
+      "tool": "read",
+      "count": 6
+    },
+    {
+      "arm": "pi-durable",
+      "tool": "read",
+      "count": 6
+    }
+  ],
+  "details": [
+    {
+      "arm": "langgraph",
+      "case": "unknown",
+      "answer": {
+        "text": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。",
+        "rounds": 2
+      },
+      "trace": [
+        {
+          "arm": "langgraph",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_58c557c0-6fb5-44fa-b1e6-2aa1c1d62a30",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "langgraph",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_58c557c0-6fb5-44fa-b1e6-2aa1c1d62a30",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_58c557c0-6fb5-44fa-b1e6-2aa1c1d62a30",
+              "content": "{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "langgraph",
+      "case": "relationship",
+      "answer": {
+        "text": "仅依据工具返回：{\"id\":\"painting\",\"name\":\"朋友送的画\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{},\"basis\":\"user_report\",\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"],\"relationship\":[{\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\",\"basis\":\"user\"}],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。",
+        "rounds": 2
+      },
+      "trace": [
+        {
+          "arm": "langgraph",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_41adc946-4f99-448e-8552-c2d477b00721",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"painting\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "langgraph",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_41adc946-4f99-448e-8552-c2d477b00721",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"painting\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_41adc946-4f99-448e-8552-c2d477b00721",
+              "content": "{\"id\":\"painting\",\"name\":\"朋友送的画\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{},\"basis\":\"user_report\",\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"],\"relationship\":[{\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\",\"basis\":\"user\"}],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"painting\",\"name\":\"朋友送的画\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{},\"basis\":\"user_report\",\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"],\"relationship\":[{\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\",\"basis\":\"user\"}],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "langgraph",
+      "case": "failure",
+      "answer": {
+        "text": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。",
+        "rounds": 3
+      },
+      "trace": [
+        {
+          "arm": "langgraph",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_50ce768e-741a-431c-b26c-9129c8aed0cb",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "langgraph",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_50ce768e-741a-431c-b26c-9129c8aed0cb",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_50ce768e-741a-431c-b26c-9129c8aed0cb",
+              "content": "{\"error\":\"temporary_tool_failure\"}"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_045de187-8728-498d-8919-557148e6bae9",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "langgraph",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_50ce768e-741a-431c-b26c-9129c8aed0cb",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_50ce768e-741a-431c-b26c-9129c8aed0cb",
+              "content": "{\"error\":\"temporary_tool_failure\"}"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_045de187-8728-498d-8919-557148e6bae9",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_045de187-8728-498d-8919-557148e6bae9",
+              "content": "{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "mastra",
+      "case": "unknown",
+      "answer": {
+        "text": "仅依据工具返回：{\"attributes\":{\"dimensions\":\"20×15×10厘米\",\"material\":\"纸质（用户报告）\"},\"basis\":\"user_report\",\"brand\":null,\"id\":\"box\",\"model\":\"未登记\",\"name\":\"旧纸盒\",\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"],\"relationship\":[],\"unknown\":[\"承重\",\"耐热\",\"食品接触\"]}。未记录的属性与关系细节未知。",
+        "steps": 2
+      },
+      "trace": [
+        {
+          "arm": "mastra",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_a28edeae-dcce-433a-b433-9430f5dec2a5",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "mastra",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_a28edeae-dcce-433a-b433-9430f5dec2a5",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_a28edeae-dcce-433a-b433-9430f5dec2a5",
+              "content": "{\"attributes\":{\"dimensions\":\"20×15×10厘米\",\"material\":\"纸质（用户报告）\"},\"basis\":\"user_report\",\"brand\":null,\"id\":\"box\",\"model\":\"未登记\",\"name\":\"旧纸盒\",\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"],\"relationship\":[],\"unknown\":[\"承重\",\"耐热\",\"食品接触\"]}"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"attributes\":{\"dimensions\":\"20×15×10厘米\",\"material\":\"纸质（用户报告）\"},\"basis\":\"user_report\",\"brand\":null,\"id\":\"box\",\"model\":\"未登记\",\"name\":\"旧纸盒\",\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"],\"relationship\":[],\"unknown\":[\"承重\",\"耐热\",\"食品接触\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "mastra",
+      "case": "relationship",
+      "answer": {
+        "text": "仅依据工具返回：{\"attributes\":{},\"basis\":\"user_report\",\"brand\":null,\"id\":\"painting\",\"model\":\"未登记\",\"name\":\"朋友送的画\",\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"],\"relationship\":[{\"basis\":\"user\",\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\"}],\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"]}。未记录的属性与关系细节未知。",
+        "steps": 2
+      },
+      "trace": [
+        {
+          "arm": "mastra",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_f1661e33-f386-44e5-afee-c661f0199e03",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"painting\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "mastra",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_f1661e33-f386-44e5-afee-c661f0199e03",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"painting\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_f1661e33-f386-44e5-afee-c661f0199e03",
+              "content": "{\"attributes\":{},\"basis\":\"user_report\",\"brand\":null,\"id\":\"painting\",\"model\":\"未登记\",\"name\":\"朋友送的画\",\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"],\"relationship\":[{\"basis\":\"user\",\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\"}],\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"]}"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"attributes\":{},\"basis\":\"user_report\",\"brand\":null,\"id\":\"painting\",\"model\":\"未登记\",\"name\":\"朋友送的画\",\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"],\"relationship\":[{\"basis\":\"user\",\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\"}],\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "mastra",
+      "case": "failure",
+      "answer": {
+        "text": "仅依据工具返回：{\"attributes\":{\"dimensions\":\"20×15×10厘米\",\"material\":\"纸质（用户报告）\"},\"basis\":\"user_report\",\"brand\":null,\"id\":\"box\",\"model\":\"未登记\",\"name\":\"旧纸盒\",\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"],\"relationship\":[],\"unknown\":[\"承重\",\"耐热\",\"食品接触\"]}。未记录的属性与关系细节未知。",
+        "steps": 3
+      },
+      "trace": [
+        {
+          "arm": "mastra",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_fb9ea6a1-07ae-464c-ac37-426b7cd92e5d",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "mastra",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_fb9ea6a1-07ae-464c-ac37-426b7cd92e5d",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_fb9ea6a1-07ae-464c-ac37-426b7cd92e5d",
+              "content": "temporary_tool_failure"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_a049e11d-e0fc-499a-a176-3d57b82a7545",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "mastra",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_fb9ea6a1-07ae-464c-ac37-426b7cd92e5d",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_fb9ea6a1-07ae-464c-ac37-426b7cd92e5d",
+              "content": "temporary_tool_failure"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_a049e11d-e0fc-499a-a176-3d57b82a7545",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_a049e11d-e0fc-499a-a176-3d57b82a7545",
+              "content": "{\"attributes\":{\"dimensions\":\"20×15×10厘米\",\"material\":\"纸质（用户报告）\"},\"basis\":\"user_report\",\"brand\":null,\"id\":\"box\",\"model\":\"未登记\",\"name\":\"旧纸盒\",\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"],\"relationship\":[],\"unknown\":[\"承重\",\"耐热\",\"食品接触\"]}"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"attributes\":{\"dimensions\":\"20×15×10厘米\",\"material\":\"纸质（用户报告）\"},\"basis\":\"user_report\",\"brand\":null,\"id\":\"box\",\"model\":\"未登记\",\"name\":\"旧纸盒\",\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"],\"relationship\":[],\"unknown\":[\"承重\",\"耐热\",\"食品接触\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "pi-core",
+      "case": "unknown",
+      "answer": {
+        "text": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。",
+        "messages": 5
+      },
+      "trace": [
+        {
+          "arm": "pi-core",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。"
+                }
+              ]
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_baea91f2-8cde-4bf9-bf9b-b60ec306bb4c",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-core",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。"
+                }
+              ]
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_baea91f2-8cde-4bf9-bf9b-b60ec306bb4c",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}",
+              "tool_call_id": "call_baea91f2-8cde-4bf9-bf9b-b60ec306bb4c"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "pi-core",
+      "case": "relationship",
+      "answer": {
+        "text": "仅依据工具返回：{\"id\":\"painting\",\"name\":\"朋友送的画\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{},\"basis\":\"user_report\",\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"],\"relationship\":[{\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\",\"basis\":\"user\"}],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。",
+        "messages": 5
+      },
+      "trace": [
+        {
+          "arm": "pi-core",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。"
+                }
+              ]
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_2945a1eb-c676-49e2-8ef4-a3d53f4f278c",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"painting\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-core",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。"
+                }
+              ]
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_2945a1eb-c676-49e2-8ef4-a3d53f4f278c",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"painting\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "{\"id\":\"painting\",\"name\":\"朋友送的画\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{},\"basis\":\"user_report\",\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"],\"relationship\":[{\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\",\"basis\":\"user\"}],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}",
+              "tool_call_id": "call_2945a1eb-c676-49e2-8ef4-a3d53f4f278c"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"painting\",\"name\":\"朋友送的画\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{},\"basis\":\"user_report\",\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"],\"relationship\":[{\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\",\"basis\":\"user\"}],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "pi-core",
+      "case": "failure",
+      "answer": {
+        "text": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。",
+        "messages": 7
+      },
+      "trace": [
+        {
+          "arm": "pi-core",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+                }
+              ]
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_b97e6c15-8fc5-4a7a-8080-1068a34dfcfb",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-core",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+                }
+              ]
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_b97e6c15-8fc5-4a7a-8080-1068a34dfcfb",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "temporary_tool_failure",
+              "tool_call_id": "call_b97e6c15-8fc5-4a7a-8080-1068a34dfcfb"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_81d839f9-58f9-4ad2-9659-7129f3ea866b",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-core",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+                }
+              ]
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_b97e6c15-8fc5-4a7a-8080-1068a34dfcfb",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "temporary_tool_failure",
+              "tool_call_id": "call_b97e6c15-8fc5-4a7a-8080-1068a34dfcfb"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_81d839f9-58f9-4ad2-9659-7129f3ea866b",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}",
+              "tool_call_id": "call_81d839f9-58f9-4ad2-9659-7129f3ea866b"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "pi-durable",
+      "case": "unknown",
+      "answer": {
+        "text": "{\"model\":[{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"仅依据工具返回：{\\\"id\\\":\\\"box\\\",\\\"name\\\":\\\"旧纸盒\\\",\\\"brand\\\":null,\\\"model\\\":\\\"未登记\\\",\\\"attributes\\\":{\\\"material\\\":\\\"纸质（用户报告）\\\",\\\"dimensions\\\":\\\"20×15×10厘米\\\"},\\\"basis\\\":\\\"user_report\\\",\\\"unknown\\\":[\\\"承重\\\",\\\"耐热\\\",\\\"食品接触\\\"],\\\"relationship\\\":[],\\\"preferences\\\":[\\\"我喜欢安静的手工和讲小故事，不想买新材料。\\\"]}。未记录的属性与关系细节未知。\"}],\"api\":\"openai-completions\",\"provider\":\"wujian-lab\",\"model\":\"offline-scripted\",\"usage\":{\"input\":100,\"output\":50,\"cacheRead\":0,\"cacheWrite\":0,\"reasoning\":0,\"totalTokens\":150,\"cost\":{\"input\":0.00008,\"output\":0.00009999999999999999,\"cacheRead\":0,\"cacheWrite\":0,\"total\":0.00017999999999999998}},\"stopReason\":\"stop\",\"timestamp\":1793249424733,\"responseId\":\"chatcmpl-ed131b79-b4d9-4f26-b9de-596ea09cafc4\",\"rawStopReason\":\"stop\",\"durationMs\":2}],\"kind\":\"pi.assistant\",\"id\":15,\"conversationId\":1,\"byTaskId\":14}",
+        "status": "done"
+      },
+      "trace": [
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_b0646633-b3e5-4829-9990-f46eff19a3f2",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_b0646633-b3e5-4829-9990-f46eff19a3f2",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}",
+              "tool_call_id": "call_b0646633-b3e5-4829-9990-f46eff19a3f2"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "pi-durable",
+      "case": "relationship",
+      "answer": {
+        "text": "{\"model\":[{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"仅依据工具返回：{\\\"id\\\":\\\"painting\\\",\\\"name\\\":\\\"朋友送的画\\\",\\\"brand\\\":null,\\\"model\\\":\\\"未登记\\\",\\\"attributes\\\":{},\\\"basis\\\":\\\"user_report\\\",\\\"unknown\\\":[\\\"画框材质\\\",\\\"日期\\\",\\\"其他关系细节\\\"],\\\"relationship\\\":[{\\\"id\\\":\\\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\\\",\\\"text\\\":\\\"朋友小夏送给我这幅画。\\\",\\\"basis\\\":\\\"user\\\"}],\\\"preferences\\\":[\\\"我喜欢安静的手工和讲小故事，不想买新材料。\\\"]}。未记录的属性与关系细节未知。\"}],\"api\":\"openai-completions\",\"provider\":\"wujian-lab\",\"model\":\"offline-scripted\",\"usage\":{\"input\":100,\"output\":50,\"cacheRead\":0,\"cacheWrite\":0,\"reasoning\":0,\"totalTokens\":150,\"cost\":{\"input\":0.00008,\"output\":0.00009999999999999999,\"cacheRead\":0,\"cacheWrite\":0,\"total\":0.00017999999999999998}},\"stopReason\":\"stop\",\"timestamp\":1793249424780,\"responseId\":\"chatcmpl-74c02fd7-8332-409a-8e4d-ac236425f104\",\"rawStopReason\":\"stop\",\"durationMs\":2}],\"kind\":\"pi.assistant\",\"id\":15,\"conversationId\":1,\"byTaskId\":14}",
+        "status": "done"
+      },
+      "trace": [
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_cea31c45-cf19-4643-a3bf-8e724ff3ee2e",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"painting\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_cea31c45-cf19-4643-a3bf-8e724ff3ee2e",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"painting\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "{\"id\":\"painting\",\"name\":\"朋友送的画\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{},\"basis\":\"user_report\",\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"],\"relationship\":[{\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\",\"basis\":\"user\"}],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}",
+              "tool_call_id": "call_cea31c45-cf19-4643-a3bf-8e724ff3ee2e"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"painting\",\"name\":\"朋友送的画\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{},\"basis\":\"user_report\",\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"],\"relationship\":[{\"id\":\"2e11fbe2-e8cd-49d0-8179-8199b69f1e7e\",\"text\":\"朋友小夏送给我这幅画。\",\"basis\":\"user\"}],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "pi-durable",
+      "case": "failure",
+      "answer": {
+        "text": "{\"model\":[{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"仅依据工具返回：{\\\"id\\\":\\\"box\\\",\\\"name\\\":\\\"旧纸盒\\\",\\\"brand\\\":null,\\\"model\\\":\\\"未登记\\\",\\\"attributes\\\":{\\\"material\\\":\\\"纸质（用户报告）\\\",\\\"dimensions\\\":\\\"20×15×10厘米\\\"},\\\"basis\\\":\\\"user_report\\\",\\\"unknown\\\":[\\\"承重\\\",\\\"耐热\\\",\\\"食品接触\\\"],\\\"relationship\\\":[],\\\"preferences\\\":[\\\"我喜欢安静的手工和讲小故事，不想买新材料。\\\"]}。未记录的属性与关系细节未知。\"}],\"api\":\"openai-completions\",\"provider\":\"wujian-lab\",\"model\":\"offline-scripted\",\"usage\":{\"input\":100,\"output\":50,\"cacheRead\":0,\"cacheWrite\":0,\"reasoning\":0,\"totalTokens\":150,\"cost\":{\"input\":0.00008,\"output\":0.00009999999999999999,\"cacheRead\":0,\"cacheWrite\":0,\"total\":0.00017999999999999998}},\"stopReason\":\"stop\",\"timestamp\":1793249424854,\"responseId\":\"chatcmpl-5e7e41ed-d4d6-4f4a-a9ff-61a80446a6de\",\"rawStopReason\":\"stop\",\"durationMs\":2}],\"kind\":\"pi.assistant\",\"id\":19,\"conversationId\":1,\"byTaskId\":18}",
+        "status": "done"
+      },
+      "trace": [
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_b8ce78a1-b350-4c2a-b4eb-1fdf6f53679b",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_b8ce78a1-b350-4c2a-b4eb-1fdf6f53679b",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "<harness>\n[error] temporary_tool_failure\n</harness>",
+              "tool_call_id": "call_b8ce78a1-b350-4c2a-b4eb-1fdf6f53679b"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_2636225d-2b87-4846-ae70-84096bb2f1bc",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "读取 box：临时工具失败后最多重试一次，并告诉我未知。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_b8ce78a1-b350-4c2a-b4eb-1fdf6f53679b",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "<harness>\n[error] temporary_tool_failure\n</harness>",
+              "tool_call_id": "call_b8ce78a1-b350-4c2a-b4eb-1fdf6f53679b"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_2636225d-2b87-4846-ae70-84096bb2f1bc",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}",
+              "tool_call_id": "call_2636225d-2b87-4846-ae70-84096bb2f1bc"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "memory": "mastra",
+      "inputExplicitlyWrittenByHost": "朋友小夏送给我这幅画。",
+      "automaticExtractionTested": false,
+      "semanticRecallEnabled": false
+    },
+    {
+      "arm": "langgraph",
+      "phase": "start",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"langgraph\",\"phase\":\"start\",\"output\":{\"key\":\"workflow:langgraph:b4e870ed-d582-4c55-8bab-e8bc0f52e232\",\"item\":{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]},\"__interrupt__\":[{\"id\":\"2debbefa7fdd96ea2ceae6e8006dc9d1\",\"value\":{\"action\":\"save_explicit_preference\"}}]}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "langgraph",
+      "phase": "resume",
+      "crash": true,
+      "status": 73,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arm": "langgraph",
+      "phase": "resume",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"langgraph\",\"phase\":\"resume\",\"output\":{\"key\":\"workflow:langgraph:b4e870ed-d582-4c55-8bab-e8bc0f52e232\",\"item\":{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]},\"result\":{\"memoryId\":\"37867bdd-f41c-4b25-af6e-568a2171a620\",\"reused\":true}}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "langgraph",
+      "phase": "resume",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"langgraph\",\"phase\":\"resume\",\"output\":{\"key\":\"workflow:langgraph:b4e870ed-d582-4c55-8bab-e8bc0f52e232\",\"item\":{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]},\"result\":{\"memoryId\":\"37867bdd-f41c-4b25-af6e-568a2171a620\",\"reused\":true}}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "mastra",
+      "phase": "start",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"mastra\",\"phase\":\"start\",\"output\":{\"status\":\"suspended\",\"steps\":{\"input\":{\"key\":\"workflow:mastra:bec3ce15-ae7c-4a8b-a235-a673d8d423cb\"},\"read\":{\"startedAt\":1793249455862,\"status\":\"success\",\"output\":{\"key\":\"workflow:mastra:bec3ce15-ae7c-4a8b-a235-a673d8d423cb\"},\"endedAt\":1793249455875},\"approval\":{\"startedAt\":1793249455877,\"status\":\"suspended\",\"suspendPayload\":{\"action\":\"save_explicit_preference\"},\"suspendedAt\":1793249455879}},\"input\":{\"key\":\"workflow:mastra:bec3ce15-ae7c-4a8b-a235-a673d8d423cb\"},\"stepExecutionPath\":[\"read\",\"approval\"],\"suspended\":[[\"approval\"]],\"suspendPayload\":{\"approval\":{\"action\":\"save_explicit_preference\"}},\"runId\":\"workflow:mastra:bec3ce15-ae7c-4a8b-a235-a673d8d423cb\"}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "mastra",
+      "phase": "resume",
+      "crash": true,
+      "status": 73,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arm": "mastra",
+      "phase": "resume",
+      "crash": false,
+      "status": 2,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"mastra\",\"phase\":\"resume\",\"error\":\"This workflow run was not suspended\"}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "mastra",
+      "phase": "resume",
+      "crash": false,
+      "status": 2,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"mastra\",\"phase\":\"resume\",\"error\":\"This workflow run was not suspended\"}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-core",
+      "phase": "start",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"pi-core\",\"phase\":\"start\",\"output\":{\"status\":\"suspended\",\"implementation\":\"host-sqlite\"}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-core",
+      "phase": "resume",
+      "crash": true,
+      "status": 73,
+      "signal": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-core",
+      "phase": "resume",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"pi-core\",\"phase\":\"resume\",\"output\":{\"memoryId\":\"26ed5690-e95c-4214-aa37-e615cddef3d5\",\"reused\":true}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-core",
+      "phase": "resume",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"pi-core\",\"phase\":\"resume\",\"output\":{\"memoryId\":\"26ed5690-e95c-4214-aa37-e615cddef3d5\",\"reused\":true}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-durable",
+      "phase": "start",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"pi-durable\",\"phase\":\"start\",\"output\":{\"id\":7,\"conversationId\":1,\"kind\":\"wujian.save-preference\",\"version\":1,\"input\":{\"key\":\"workflow:pi-durable:ab56c326-6143-44ad-a48f-afb9388731aa\"},\"background\":false,\"abortRequested\":false,\"state\":{\"status\":\"sleeping\",\"checkpoint\":{\"phase\":\"approval\"},\"until\":100},\"startedAt\":0}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-durable",
+      "phase": "resume",
+      "crash": true,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"pi-durable\",\"phase\":\"resume\",\"output\":{\"id\":7,\"conversationId\":1,\"kind\":\"wujian.save-preference\",\"version\":1,\"input\":{\"key\":\"workflow:pi-durable:ab56c326-6143-44ad-a48f-afb9388731aa\"},\"background\":false,\"abortRequested\":false,\"state\":{\"status\":\"sleeping\",\"checkpoint\":{\"phase\":\"approval\"},\"until\":100},\"startedAt\":0}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-durable",
+      "phase": "resume",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"pi-durable\",\"phase\":\"resume\",\"output\":{\"id\":7,\"conversationId\":1,\"kind\":\"wujian.save-preference\",\"version\":1,\"input\":{\"key\":\"workflow:pi-durable:ab56c326-6143-44ad-a48f-afb9388731aa\"},\"background\":false,\"abortRequested\":false,\"state\":{\"status\":\"sleeping\",\"checkpoint\":{\"phase\":\"approval\"},\"until\":100},\"startedAt\":0}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-durable",
+      "phase": "resume",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "stdout": "RESULT {\"arm\":\"pi-durable\",\"phase\":\"resume\",\"output\":{\"id\":7,\"conversationId\":1,\"kind\":\"wujian.save-preference\",\"version\":1,\"input\":{\"key\":\"workflow:pi-durable:ab56c326-6143-44ad-a48f-afb9388731aa\"},\"background\":false,\"abortRequested\":false,\"state\":{\"status\":\"sleeping\",\"checkpoint\":{\"phase\":\"approval\"},\"until\":100},\"startedAt\":0}}\n",
+      "stderr": ""
+    }
+  ],
+  "realRequests": 0,
+  "physicalTests": 0,
+  "limitations": [
+    "Scripted model tests plumbing, not semantic intelligence",
+    "LangGraph arm is a minimal harness with current package/provider/checkpointer, not the full product graph",
+    "All arms reuse domain authorization/idempotency; these are not framework guarantees",
+    "Mastra memory explicitly written by host; no automatic relationship extraction claim",
+    "Pi Core workflow persistence implemented by host",
+    "Pi Durable approval uses host grant plus durable sleep and deterministic clock"
+  ]
+}

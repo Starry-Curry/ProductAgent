@@ -1,0 +1,11 @@
+{"name":"pi-durable:unknown","status":"passed","elapsedMs":379}
+{"name":"pi-durable:relationship","status":"passed","elapsedMs":95}
+{"name":"pi-durable:failure","status":"passed","elapsedMs":49}
+{"name":"pi-durable:shared-domain-read-denies-other-owner","status":"passed","elapsedMs":6}
+{"name":"existing-memory:cross-session-reopen-and-no-invented-detail","status":"passed","elapsedMs":13}
+{"name":"mastra-memory:resource-scope-persists-across-threads-and-reopen","status":"passed","elapsedMs":51}
+{"name":"pi-durable:pause-before-authorization","status":"passed","elapsedMs":2162}
+{"name":"pi-durable:crash-after-domain-commit","status":"passed","elapsedMs":2208}
+{"name":"pi-durable:restart-no-duplicate-effect","status":"passed","elapsedMs":2356}
+{"name":"pi-durable:completed-operation-repeat","status":"passed","elapsedMs":2277}
+{"name":"pi-durable:revocation-while-paused-blocks-write","status":"passed","elapsedMs":4544}

@@ -86,6 +86,12 @@ test("公开会话不可伪造；并发请求上下文隔离、来源验证、�
     await visitorContext.run(sa, async () => {
       reserveUpload(100);
       assert.throws(() => reserveUpload(500), /额度/);
+      process.env.WUJIAN_ALLOW_PUBLIC_FETCH = "false";
+      assert.throws(
+        () => reservePublicFetch("unapproved.example"),
+        (e) => e instanceof CloudError && e.code === "source_disabled",
+      );
+      process.env.WUJIAN_ALLOW_PUBLIC_FETCH = "true";
       assert.throws(() => reservePublicFetch("unapproved.example"), /尚未开放/);
     });
     let calls = 0;

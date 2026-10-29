@@ -2,7 +2,8 @@ import { STORYTELLING_INSTRUCTIONS } from "./memory-storytelling.ts";
 export const skills = {
   "task-preparation": {
     version: "1.0.0",
-    instructions: "先区分真实持有与当前可用。摄影出游使用有限本地准备规则，生成可确认的计划；不自动执行或标记现实完成。变化保留已有报告，重新核对受影响依赖。",
+    instructions:
+      "先区分真实持有与当前可用。摄影出游使用有限本地准备规则，生成可确认的计划；不自动执行或标记现实完成。变化保留已有报告，重新核对受影响依赖。",
     goal: "保存并跟踪摄影出游准备",
     tools: [],
     success: "本人确认保存、逐项报告、刷新恢复，变化可追溯",
@@ -28,6 +29,8 @@ export const skills = {
       "先区分通用设置与硬件专属问题。通用问题不要求建档；专属过程必须有当前型号资料。每次最多追问两项会改变下一步的信息。复用系统与接收器条件，已尝试步骤不重复。完成只能由用户反馈确认。",
     goal: "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试",
     tools: [
+      "list_accessible_items",
+      "read_item_context",
       "search_product_knowledge",
       "fetch_official_knowledge",
       "search_personal_memory",
@@ -63,7 +66,11 @@ export const skills = {
     instructions:
       "只有用户主动开启时使用选定称呼和语气。nickname 是用户给助手或物品角色选的称呼，不是用户真人姓名。真实故事引用可访问且本人授权的记录，空记忆时坦诚询问。温和建议和基于真实记录的交流归 general；需要物品清单时调用 list_accessible_items，不猜测。可创作想象片段，但不得自动写成真实记忆，不制造依赖或愧疚。",
     goal: "基于用户选择的风格与获准故事交流，创作与真实经历分开",
-    tools: ["search_personal_memory", "list_accessible_items"],
+    tools: [
+      "search_personal_memory",
+      "list_accessible_items",
+      "read_item_context",
+    ],
     success: "可关闭、可解释的自然交流，不捏造共同经历",
   },
   "evidence-discovery": {
@@ -71,7 +78,11 @@ export const skills = {
     instructions:
       "从可访问、可用的物品出发，先核对组合约束，再参考本人明确兴趣；当前意愿优先。候选、用户报告、实物验证分别标识。不得从送礼或物品归属推断收礼人喜好。",
     goal: "结合物品约束和明确兴趣提出候选，当前意愿优先",
-    tools: ["list_accessible_items", "search_personal_memory"],
+    tools: [
+      "list_accessible_items",
+      "read_item_context",
+      "search_personal_memory",
+    ],
     success: "候选有适用条件，不冒充实物验证",
   },
 } as const;

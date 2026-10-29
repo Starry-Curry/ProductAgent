@@ -1,0 +1,115 @@
+{
+  "passed": true,
+  "checks": [
+    "explicit save defaults local",
+    "new session recalls exact gift fact",
+    "other actor denied",
+    "forgotten fact absent in new session",
+    "box goal enters planning",
+    "offline source not represented as model",
+    "390px no horizontal overflow",
+    "no pageerror"
+  ],
+  "replies": [
+    {
+      "question": "记住：朋友小夏送给我这幅画。",
+      "sessionId": "176bac11-746a-409c-834d-b234fdd14ffa",
+      "reply": {
+        "outcome": "answered",
+        "answer": "已记下这件事，默认仅用于本地帮助。你可以在“关于我与记住的事”里纠正、忘记，或单独允许云端使用。",
+        "steps": [],
+        "questions": [],
+        "citations": [],
+        "evidenceIds": [],
+        "memoryIds": [
+          "3062a8e6-ed15-44b7-9c37-0da02476fec6"
+        ],
+        "source": "local-memory"
+      }
+    },
+    {
+      "question": "你还记得这幅画的来历吗？",
+      "sessionId": "b45cca1d-eb10-415e-b2f1-b17eb6d6ef64",
+      "reply": {
+        "outcome": "answered",
+        "answer": "记得，你曾提到，朋友小夏送给你这幅画。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+        "source": "local-memory",
+        "steps": [],
+        "questions": [],
+        "evidenceIds": [],
+        "citations": [],
+        "memoryIds": [
+          "3062a8e6-ed15-44b7-9c37-0da02476fec6"
+        ],
+        "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+        "route": {
+          "intent": "story",
+          "mode": "story",
+          "reason": "按当前授权回忆本人记录",
+          "itemId": "2b21fcdb-8cb9-41ec-abf7-6b5975607d39",
+          "itemName": "验收赠画 V2"
+        }
+      }
+    },
+    {
+      "question": "你还记得这幅画的来历吗？",
+      "sessionId": "8efb2518-9afc-423f-8cff-a0bdad2d5c20",
+      "reply": {
+        "outcome": "answered",
+        "answer": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+        "source": "local-memory",
+        "steps": [],
+        "questions": [],
+        "evidenceIds": [],
+        "citations": [],
+        "memoryIds": [],
+        "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+        "route": {
+          "intent": "story",
+          "mode": "story",
+          "reason": "按当前授权回忆本人记录",
+          "itemId": "2b21fcdb-8cb9-41ec-abf7-6b5975607d39",
+          "itemName": "验收赠画 V2"
+        }
+      }
+    },
+    {
+      "question": "只用我登记的物品，旧纸盒有什么具体新用途？我喜欢安静的手工和讲故事，不买东西、不加热、不碰水、不裁切。",
+      "sessionId": "402ea6d1-5a8e-4683-ab85-0db3a9f592e7",
+      "reply": {
+        "outcome": "answered",
+        "answer": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从2件可用候选中规划\n\n用验收旧纸盒 V2为验收赠画 V2做一张观察卡",
+        "source": "local-planning",
+        "steps": [
+          {
+            "id": "life:9d81ef0c-77fe-4dfb-a9de-35ace711f6f0:0",
+            "text": "先核对是否有完整纸笔或可写可擦的记录工具"
+          },
+          {
+            "id": "life:9d81ef0c-77fe-4dfb-a9de-35ace711f6f0:1",
+            "text": "记录验收赠画 V2现在可观察的轮廓、用途和一个实际疑问"
+          },
+          {
+            "id": "life:9d81ef0c-77fe-4dfb-a9de-35ace711f6f0:2",
+            "text": "将登记资料和现场观察分栏比较，不编造材质、参数或过去经历；可按意愿另存生活片段"
+          }
+        ],
+        "questions": [],
+        "evidenceIds": [],
+        "citations": [],
+        "memoryIds": [],
+        "caveat": "可写表面与工具、是否能安全近距离观察须本人确认 本地能力组合：登记属性与类别只是候选依据，尺寸、稳定性和实际适用性需现场确认；不改装、不加热。 验收旧纸盒 V2：未登记维护限制，先核对实物标签/说明书 验收赠画 V2：未登记维护限制，先核对实物标签/说明书",
+        "route": {
+          "intent": "plan",
+          "mode": "ideas",
+          "reason": "理解目标、检索能力并核对组合条件",
+          "itemId": "d3507f6a-e9bf-4ece-8e15-0a06f3f8a70d",
+          "itemName": "验收旧纸盒 V2"
+        }
+      }
+    }
+  ],
+  "realModelCalls": 0,
+  "physicalTests": 0,
+  "creativeQualityPassed": false
+}

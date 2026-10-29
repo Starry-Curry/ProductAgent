@@ -1,0 +1,288 @@
+{
+  "stage": "main-ui-baseline",
+  "rows": [
+    {
+      "arm": "main-ui-baseline",
+      "case": "painting",
+      "input": "你记得这幅画是谁送给我的吗？只说明确记录，不要编造日期和经历。",
+      "returned": true,
+      "result": {
+        "session": {
+          "id": "0ec2cbb0-00ee-4854-a3fd-9b45a0cbac4b",
+          "owner": "lin",
+          "itemId": "painting",
+          "identity": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "68647e92-790c-4879-8eae-da05de3d3cde",
+              "role": "user",
+              "text": "你记得这幅画是谁送给我的吗？只说明确记录，不要编造日期和经历。",
+              "at": "2026-10-29T05:14:29.933Z",
+              "itemId": "painting",
+              "capture": true
+            },
+            {
+              "id": "d924d9ca-2e28-4098-b230-f8032c2f428e",
+              "role": "assistant",
+              "text": "朋友小夏送给你这幅画。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "朋友小夏送给你这幅画。",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "7cf635b6-bcbd-4514-ab7e-7d5766362998"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "按当前授权回忆本人记录",
+                  "itemId": "painting",
+                  "itemName": "朋友送的画"
+                }
+              },
+              "at": "2026-10-29T05:14:29.933Z"
+            }
+          ],
+          "known": {
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "2e9b1069-82c9-4efa-993d-6e38068c93ce",
+            "turnScope": "painting",
+            "lastIntent": "story",
+            "activeItemId": "painting"
+          },
+          "tried": [],
+          "memoryEpoch": 2,
+          "createdAt": "2026-10-29T05:14:28.020Z",
+          "updatedAt": "2026-10-29T05:14:29.935Z",
+          "expiresAt": "2026-11-05T05:14:28.029Z",
+          "itemScopes": {
+            "painting": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "朋友小夏送给你这幅画。",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "7cf635b6-bcbd-4514-ab7e-7d5766362998"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "story",
+            "mode": "story",
+            "reason": "按当前授权回忆本人记录",
+            "itemId": "painting",
+            "itemName": "朋友送的画"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=painting; router=home-router-v1",
+            "at": "2026-10-29T05:14:28.070Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T05:14:28.088Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=7cf635b6-bcbd-4514-ab7e-7d5766362998,eb0b445a-7387-4013-92b0-f65e9dc9d66b; prompt=human-item-agent-v1.9",
+            "at": "2026-10-29T05:14:28.088Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=7cf635b6-bcbd-4514-ab7e-7d5766362998",
+            "at": "2026-10-29T05:14:28.089Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "authorized-cloud",
+            "at": "2026-10-29T05:14:28.089Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1",
+            "at": "2026-10-29T05:14:28.102Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T05:14:29.879Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T05:14:29.905Z"
+          }
+        ],
+        "tokens": {
+          "input": 498,
+          "output": 47
+        },
+        "modelCalls": 1
+      },
+      "requestCount": 1,
+      "elapsedMs": 1928
+    },
+    {
+      "arm": "main-ui-baseline",
+      "case": "box",
+      "input": "只用我登记的物品，旧纸盒有什么具体新用途？结合我喜欢安静手工和讲故事的偏好，不买东西、不加热、不碰水、不裁切。",
+      "returned": true,
+      "result": {
+        "session": {
+          "id": "b07285cf-2766-468b-a979-1f5f5e38da2c",
+          "owner": "lin",
+          "itemId": "box",
+          "identity": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "30213f59-d150-4b2f-9d55-229bc4f03f79",
+              "role": "user",
+              "text": "只用我登记的物品，旧纸盒有什么具体新用途？结合我喜欢安静手工和讲故事的偏好，不买东西、不加热、不碰水、不裁切。",
+              "at": "2026-10-29T05:14:52.420Z",
+              "itemId": "box",
+              "capture": false
+            },
+            {
+              "id": "35c012b9-4762-4331-9295-41503c56a584",
+              "role": "assistant",
+              "text": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从2件可用候选中规划\n\n折叠回声：盒盖翻页故事书",
+              "reply": {
+                "outcome": "answered",
+                "answer": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从2件可用候选中规划\n\n折叠回声：盒盖翻页故事书",
+                "source": "model-creative",
+                "steps": [
+                  {
+                    "id": "life:caa17ffc-3414-47f1-b530-524afe3bb083:0",
+                    "text": "只用盒盖：平放，以长边为轴，左右各向内折1/3，形成三折立式面板。"
+                  },
+                  {
+                    "id": "life:caa17ffc-3414-47f1-b530-524afe3bb083:1",
+                    "text": "在左折面写第一句故事开头（如‘门缝漏出一缕蓝光’），中面留白，右折面写结尾（如‘它轻轻合上了’）。"
+                  },
+                  {
+                    "id": "life:caa17ffc-3414-47f1-b530-524afe3bb083:2",
+                    "text": "合盖再展开，三段文字自动按序排列；每次开合即触发新读序（左→中→右 / 右→中→左）。"
+                  },
+                  {
+                    "id": "life:caa17ffc-3414-47f1-b530-524afe3bb083:3",
+                    "text": "用盒身盛放写好的盖子，整套即成可手持、可重排、无字数限制的物理互动故事盒。"
+                  }
+                ],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "另有2个草稿未通过检查：方案动作依赖检查：步骤3依赖未登记的精确计时工具，改成无该工具的动作或明确条件与替代；免责声明不能代替资源；方案动作依赖检查：步骤2依赖未登记的精确计时工具，改成无该工具的动作或明确条件与替代；免责声明不能代替资源 笔（未登记，但书写动作必需） 旧纸盒：需1份，实际数量待确认 不裁切、不加热、不碰水、不新增笔墨（默认已有笔）；仅折盖，不动盒身结构",
+                "route": {
+                  "intent": "plan",
+                  "mode": "ideas",
+                  "reason": "理解目标、检索能力并核对组合条件",
+                  "itemId": "box",
+                  "itemName": "旧纸盒"
+                }
+              },
+              "at": "2026-10-29T05:14:52.420Z"
+            }
+          ],
+          "known": {
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "3e4475de-6220-46f8-ac71-686d84362cd4",
+            "turnScope": "box",
+            "lastIntent": "plan",
+            "activeItemId": "box",
+            "lifePlanContext": "{\"goal\":\"只用我登记的物品，旧纸盒有什么具体新用途？结合我喜欢安静手工和讲故事的偏好，不买东西、不加热、不碰水、不裁切。\",\"minutes\":30,\"itemIds\":[],\"excludedItemIds\":[],\"restrictions\":[\"不买东西\"]}",
+            "lifeIdeaIds": "[\"caa17ffc-3414-47f1-b530-524afe3bb083\"]"
+          },
+          "tried": [],
+          "memoryEpoch": 2,
+          "createdAt": "2026-10-29T05:14:29.941Z",
+          "updatedAt": "2026-10-29T05:14:52.420Z",
+          "expiresAt": "2026-11-05T05:14:29.941Z",
+          "itemScopes": {
+            "box": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从2件可用候选中规划\n\n折叠回声：盒盖翻页故事书",
+          "source": "model-creative",
+          "steps": [
+            {
+              "id": "life:caa17ffc-3414-47f1-b530-524afe3bb083:0",
+              "text": "只用盒盖：平放，以长边为轴，左右各向内折1/3，形成三折立式面板。"
+            },
+            {
+              "id": "life:caa17ffc-3414-47f1-b530-524afe3bb083:1",
+              "text": "在左折面写第一句故事开头（如‘门缝漏出一缕蓝光’），中面留白，右折面写结尾（如‘它轻轻合上了’）。"
+            },
+            {
+              "id": "life:caa17ffc-3414-47f1-b530-524afe3bb083:2",
+              "text": "合盖再展开，三段文字自动按序排列；每次开合即触发新读序（左→中→右 / 右→中→左）。"
+            },
+            {
+              "id": "life:caa17ffc-3414-47f1-b530-524afe3bb083:3",
+              "text": "用盒身盛放写好的盖子，整套即成可手持、可重排、无字数限制的物理互动故事盒。"
+            }
+          ],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "另有2个草稿未通过检查：方案动作依赖检查：步骤3依赖未登记的精确计时工具，改成无该工具的动作或明确条件与替代；免责声明不能代替资源；方案动作依赖检查：步骤2依赖未登记的精确计时工具，改成无该工具的动作或明确条件与替代；免责声明不能代替资源 笔（未登记，但书写动作必需） 旧纸盒：需1份，实际数量待确认 不裁切、不加热、不碰水、不新增笔墨（默认已有笔）；仅折盖，不动盒身结构",
+          "route": {
+            "intent": "plan",
+            "mode": "ideas",
+            "reason": "理解目标、检索能力并核对组合条件",
+            "itemId": "box",
+            "itemName": "旧纸盒"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "plan; target=box; router=home-router-v1",
+            "at": "2026-10-29T05:14:29.964Z"
+          },
+          {
+            "stage": "goal_planning",
+            "detail": "model-creative",
+            "at": "2026-10-29T05:14:52.381Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      },
+      "requestCount": 1,
+      "elapsedMs": 22485
+    }
+  ],
+  "model": "qwen-plus",
+  "totalTaskAttempts": 39,
+  "estimatedCny": 0.0148064,
+  "transport": "All frameworks use loopback budget gateway; real upstream is existing Bailian chat/completions non-streaming, gateway adapts response to SSE for streaming SDKs. Native upstream SSE not tested.",
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

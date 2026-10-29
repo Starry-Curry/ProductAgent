@@ -4,6 +4,7 @@ import { isStoryNarration } from "../memory/ambient.ts";
 import type { HomeRoute } from "./contracts.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 import { withoutProhibitedActions } from "../agent/safety-language.ts";
+import { positiveGoalText } from "../life/planning-constraints.ts";
 import {
   isPreparationGoal,
   isPreparationChange,
@@ -281,6 +282,14 @@ export function routeProductTurn(
     return result("story", "story", "按当前授权回忆本人记录");
   if (
     target &&
+    /档案|属性|材质|量杯|耐热|食品接触|已知|未知|结构|尺寸|能力限制|登记状态|通电使用/.test(
+      q,
+    ) &&
+    !/创意|玩法|新用途|组合|构思|小创作|小游戏|游戏/.test(positiveGoalText(q))
+  )
+    return result("help", "service", "核对已登记的物品性质、限制与未知条件");
+  if (
+    target &&
     /带我|教我|首次清洗|第一次使用|首次使用|如何清洗|清洗|清洁|充电|维护|保养|排障/.test(
       q,
     ) &&
@@ -314,8 +323,8 @@ export function routeProductTurn(
       companionScope,
     );
   if (
-    /创意|玩法|新用途|灵感|有趣|组合|继续这个目标|不买东西|不想买|整理桌面|收纳规划|学习计划|学点|出行计划|生活改善|换个方向|更简单|只有这些|不用这件/.test(
-      q,
+    /创意|玩法|新用途|灵感|有趣|组合|构思|小创作|小游戏|游戏|继续这个目标|不买东西|不想买|整理桌面|收纳规划|学习计划|学点|出行计划|生活改善|换个方向|更简单|只有这些|不用这件/.test(
+      positiveGoalText(q),
     ) ||
     (session.known.lastIntent === "plan" &&
       /换|更|不要|只有|只用|分钟|小时|试试/.test(q))

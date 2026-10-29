@@ -13,7 +13,10 @@ import {
   goalDuration,
   mentionsItem,
   noPurchase,
+  inventoryReference,
+  positiveGoalText,
 } from "./planning-constraints.ts";
+import { itemContext } from "../context/items.ts";
 import { capabilityPlans } from "./capability-plans.ts";
 import {
   listCreativeEvidence,
@@ -62,8 +65,9 @@ export const discoveryInput = z
 const declaresItems = (question: string) => {
   // Referring to one's inventory is not a new list of unregistered item names.
   const q = question
+    .replace(inventoryReference, " ")
     .replace(
-      /(?:只用|只有|利用|用)(?:我(?:的)?|自己|家里|手头|当前)?(?:现有|已有|登记|展柜)(?:的)?(?:物品|东西|材料|资源)?/g,
+      /(?:只用|只有|利用|用)(?:我(?:的)?|家里|当前)?展柜(?:的)?(?:物品|东西|资源)?/g,
       " ",
     )
     .replace(/只有这些|只用这些/g, " ");
@@ -97,6 +101,7 @@ export function itemAffordances(
   ] as const)
     if (pattern.test(declared)) capabilities.push(label);
   return {
+    context: itemContext(item),
     id: item.id,
     name: item.name,
     category: item.category,
@@ -127,6 +132,8 @@ export type DiscoveryResult = {
   missing: string[];
   source: "model-creative" | "local-candidate";
   modelCalls: number;
+  tokens?: { input: number; output: number } | null;
+  failure?: { kind: "candidate_invalid"; retryable: boolean; message: string };
   cloudRejected?: boolean;
 };
 export async function planDiscovery(
@@ -193,14 +200,16 @@ export async function planDiscovery(
   }
   const named = visible.filter((i) => mentionsItem(input.goal, i.name));
   const exclusionPhrases = [
-    ...input.goal.matchAll(/(?:不要用|不用|排除)([^，。；！!?？]{1,80})/g),
+    ...input.goal.matchAll(
+      /(?:不要使用|不使用|不要用|不用|排除)([^，。；！!?？]{1,80})/g,
+    ),
   ].map((m) => m[1]);
   for (const i of visible)
     if (exclusionPhrases.some((q) => mentionsItem(q, i.name)))
       excluded.add(i.id);
   // Exclusions from prior turns survive later revisions in both discovery and the main assistant.
   for (const phrase of goal.matchAll(
-    /(?:不要用|不用|排除)([^，。；！!?？]{1,80})/g,
+    /(?:不要使用|不使用|不要用|不用|排除)([^，。；！!?？]{1,80})/g,
   ))
     for (const i of visible)
       if (mentionsItem(phrase[1], i.name)) excluded.add(i.id);
@@ -291,14 +300,16 @@ export async function planDiscovery(
   if (/多人|两人|三人|立体声|数量|几个/.test(goal))
     for (const p of profiles)
       if (p.quantity === "待确认") missing.push(`${p.name}：数量待现场核对`);
-  const focus = /整理|收纳|桌面/.test(goal)
+  const positiveGoal = positiveGoalText(goal);
+  const focus = /整理|收纳|桌面/.test(positiveGoal)
     ? "利用已有收纳与整理能力，改善眼前的一小块空间"
-    : /摄影|光影|拍照/.test(goal)
+    : /摄影|光影|拍照/.test(positiveGoal)
       ? "围绕观察与记录，比较现有物品的组合可能"
       : "用已有物品做一个低风险、可尝试的小项目";
   const understood = `${followup ? `延续上一轮，调整为“${input.goal}”` : focus} · ${minutes}分钟${noPurchase(goal) ? " · 不新增购买" : ""} · 从${items.length}件可用候选中规划${excluded.size ? ` · 排除${excluded.size}件` : ""}`;
   let ideas: LifeIdea[] = [];
   let modelCalls = 0;
+  let tokens: { input: number; output: number } | null = null;
   const selectedEvidence = input.creativeEvidenceIds.map((id) => {
     const e = listCreativeEvidence(db, actor).find((e) => e.id === id);
     if (!e) throw new AgentError("创意经验不属于当前用户", 403);
@@ -359,9 +370,15 @@ export async function planDiscovery(
       }
       const countedProvider: Provider = {
         ...provider,
-        generate: (...args) => {
+        generate: async (...args) => {
           modelCalls++;
-          return provider.generate(...args);
+          const result = await provider.generate(...args);
+          if (result.tokens)
+            tokens = {
+              input: (tokens?.input || 0) + result.tokens.input,
+              output: (tokens?.output || 0) + result.tokens.output,
+            };
+          return result;
         },
       };
       let generated;
@@ -421,7 +438,7 @@ export async function planDiscovery(
         if (
           error instanceof AgentError &&
           (error.status !== 400 ||
-            !/方案|创意候选|未登记|成像|[不未]成立|留印|计量/.test(
+            !/方案|创意候选|模型创意未通过资源或风险检查|未登记|成像|[不未]成立|留印|计量/.test(
               error.message,
             ))
         )
@@ -437,7 +454,14 @@ export async function planDiscovery(
         return {
           ...fallback,
           modelCalls,
+          tokens,
           cloudRejected: true,
+          failure: {
+            kind: "candidate_invalid",
+            retryable: true,
+            message:
+              "模型候选未通过条件检查；未发布草稿。可调整限制或选择下面明确标注的本地方案。",
+          },
           missing: [
             ...fallback.missing,
             "云端方案未通过可执行性/资料检查，下面仅为本地有限能力组合，未冒充AI成功。",
@@ -657,5 +681,6 @@ export async function planDiscovery(
     ],
     source: modelCalls ? "model-creative" : "local-candidate",
     modelCalls,
+    tokens,
   };
 }

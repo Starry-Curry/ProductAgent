@@ -12,6 +12,7 @@ import {
   mentionsItem,
   noPurchase,
   goalDuration,
+  positiveGoalText,
 } from "./planning-constraints.ts";
 import type { Preparation, PreparationStep } from "./task-types.ts";
 
@@ -26,7 +27,7 @@ export const preparationRequest = z
 export type PreparationRequest = z.infer<typeof preparationRequest>;
 export function isPreparationGoal(q: string) {
   return (
-    /拍照|摄影|拍摄/.test(q) &&
+    /拍照|摄影|拍摄/.test(positiveGoalText(q)) &&
     /准备|要带|带什么|清单|明天|出发|出游|出门/.test(q) &&
     !/玩法|创意|游戏|有趣|新用途|昨天|去年|上次/.test(q)
   );

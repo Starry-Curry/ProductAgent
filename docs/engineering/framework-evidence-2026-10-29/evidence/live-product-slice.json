@@ -1,0 +1,285 @@
+{
+  "stage": "product-slice",
+  "rows": [
+    {
+      "arm": "product-slice",
+      "case": "painting",
+      "input": "你记得这幅画是谁送给我的吗？只说明确记录，不要编造日期和经历。",
+      "returned": true,
+      "result": {
+        "session": {
+          "id": "8248967e-d9c1-4820-bfb4-c36ce1d4904e",
+          "owner": "lin",
+          "itemId": "painting",
+          "identity": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "f3fc729e-c95d-4619-a2e8-df49df09b94d",
+              "role": "user",
+              "text": "你记得这幅画是谁送给我的吗？只说明确记录，不要编造日期和经历。",
+              "at": "2026-10-29T05:15:11.120Z",
+              "itemId": "painting",
+              "capture": true
+            },
+            {
+              "id": "9d903ea0-57bb-4e43-9bb9-bbe2e9ba951d",
+              "role": "assistant",
+              "text": "记得，是朋友小夏送给你的。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "记得，是朋友小夏送给你的。",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "7cf635b6-bcbd-4514-ab7e-7d5766362998"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "按当前授权回忆本人记录",
+                  "itemId": "painting",
+                  "itemName": "朋友送的画"
+                }
+              },
+              "at": "2026-10-29T05:15:11.120Z"
+            }
+          ],
+          "known": {
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "0dd7bcd8-68ce-4c51-bc1b-674c45e82363",
+            "turnScope": "painting",
+            "lastIntent": "story",
+            "activeItemId": "painting"
+          },
+          "tried": [],
+          "memoryEpoch": 2,
+          "createdAt": "2026-10-29T05:15:09.037Z",
+          "updatedAt": "2026-10-29T05:15:11.127Z",
+          "expiresAt": "2026-11-05T05:15:09.038Z",
+          "itemScopes": {
+            "painting": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "记得，是朋友小夏送给你的。",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "7cf635b6-bcbd-4514-ab7e-7d5766362998"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "story",
+            "mode": "story",
+            "reason": "按当前授权回忆本人记录",
+            "itemId": "painting",
+            "itemName": "朋友送的画"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=painting; router=home-router-v1",
+            "at": "2026-10-29T05:15:09.151Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T05:15:09.211Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=7cf635b6-bcbd-4514-ab7e-7d5766362998,eb0b445a-7387-4013-92b0-f65e9dc9d66b; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T05:15:09.211Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=7cf635b6-bcbd-4514-ab7e-7d5766362998",
+            "at": "2026-10-29T05:15:09.215Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "authorized-cloud",
+            "at": "2026-10-29T05:15:09.215Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T05:15:09.279Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T05:15:10.956Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T05:15:11.035Z"
+          }
+        ],
+        "tokens": {
+          "input": 820,
+          "output": 47
+        },
+        "modelCalls": 1
+      },
+      "requestCount": 1,
+      "elapsedMs": 2107
+    },
+    {
+      "arm": "product-slice",
+      "case": "box",
+      "input": "只用我登记的物品，旧纸盒有什么具体新用途？结合我喜欢安静手工和讲故事的偏好，不买东西、不加热、不碰水、不裁切。",
+      "returned": true,
+      "result": {
+        "session": {
+          "id": "8332e052-7199-4a18-804c-b9d8d1f33c82",
+          "owner": "lin",
+          "itemId": "box",
+          "identity": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "12bf1d81-f4a9-482b-9237-25598338acb1",
+              "role": "user",
+              "text": "只用我登记的物品，旧纸盒有什么具体新用途？结合我喜欢安静手工和讲故事的偏好，不买东西、不加热、不碰水、不裁切。",
+              "at": "2026-10-29T05:15:33.168Z",
+              "itemId": "box",
+              "capture": false
+            },
+            {
+              "id": "2a353e6d-9ac6-401e-80d9-3db8c6e84a0c",
+              "role": "assistant",
+              "text": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从2件可用候选中规划\n\n用旧纸盒为朋友送的画做一张观察卡",
+              "reply": {
+                "outcome": "answered",
+                "answer": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从2件可用候选中规划\n\n用旧纸盒为朋友送的画做一张观察卡",
+                "source": "local-planning",
+                "steps": [
+                  {
+                    "id": "life:42179cfe-c580-41aa-a10b-051f77969fdb:0",
+                    "text": "先核对是否有完整纸笔或可写可擦的记录工具"
+                  },
+                  {
+                    "id": "life:42179cfe-c580-41aa-a10b-051f77969fdb:1",
+                    "text": "记录朋友送的画现在可观察的轮廓、用途和一个实际疑问"
+                  },
+                  {
+                    "id": "life:42179cfe-c580-41aa-a10b-051f77969fdb:2",
+                    "text": "将登记资料和现场观察分栏比较，不编造材质、参数或过去经历；可按意愿另存生活片段"
+                  }
+                ],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "errorCode": "candidate_invalid",
+                "caveat": "可写表面与工具、是否能安全近距离观察须本人确认 云端方案未通过可执行性/资料检查，下面仅为本地有限能力组合，未冒充AI成功。 本地能力组合：登记属性与类别只是候选依据，尺寸、稳定性和实际适用性需现场确认；不改装、不加热。 旧纸盒：未登记维护限制，先核对实物标签/说明书 朋友送的画：未登记维护限制，先核对实物标签/说明书",
+                "route": {
+                  "intent": "plan",
+                  "mode": "ideas",
+                  "reason": "理解目标、检索能力并核对组合条件",
+                  "itemId": "box",
+                  "itemName": "旧纸盒"
+                }
+              },
+              "at": "2026-10-29T05:15:33.168Z"
+            }
+          ],
+          "known": {
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "7509137e-cfdd-4204-a8a1-db6f39f56f60",
+            "turnScope": "box",
+            "lastIntent": "plan",
+            "activeItemId": "box",
+            "lifePlanContext": "{\"goal\":\"只用我登记的物品，旧纸盒有什么具体新用途？结合我喜欢安静手工和讲故事的偏好，不买东西、不加热、不碰水、不裁切。\",\"minutes\":30,\"itemIds\":[],\"excludedItemIds\":[],\"restrictions\":[\"不买东西\"]}",
+            "lifeIdeaIds": "[\"42179cfe-c580-41aa-a10b-051f77969fdb\",\"f85c7302-09c2-41c5-8bde-b6b14cea3541\",\"0216b2c6-237a-4ad1-9b5f-963f27b1ef57\"]"
+          },
+          "tried": [],
+          "memoryEpoch": 2,
+          "createdAt": "2026-10-29T05:15:11.139Z",
+          "updatedAt": "2026-10-29T05:15:33.170Z",
+          "expiresAt": "2026-11-05T05:15:11.139Z",
+          "itemScopes": {
+            "box": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从2件可用候选中规划\n\n用旧纸盒为朋友送的画做一张观察卡",
+          "source": "local-planning",
+          "steps": [
+            {
+              "id": "life:42179cfe-c580-41aa-a10b-051f77969fdb:0",
+              "text": "先核对是否有完整纸笔或可写可擦的记录工具"
+            },
+            {
+              "id": "life:42179cfe-c580-41aa-a10b-051f77969fdb:1",
+              "text": "记录朋友送的画现在可观察的轮廓、用途和一个实际疑问"
+            },
+            {
+              "id": "life:42179cfe-c580-41aa-a10b-051f77969fdb:2",
+              "text": "将登记资料和现场观察分栏比较，不编造材质、参数或过去经历；可按意愿另存生活片段"
+            }
+          ],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "errorCode": "candidate_invalid",
+          "caveat": "可写表面与工具、是否能安全近距离观察须本人确认 云端方案未通过可执行性/资料检查，下面仅为本地有限能力组合，未冒充AI成功。 本地能力组合：登记属性与类别只是候选依据，尺寸、稳定性和实际适用性需现场确认；不改装、不加热。 旧纸盒：未登记维护限制，先核对实物标签/说明书 朋友送的画：未登记维护限制，先核对实物标签/说明书",
+          "route": {
+            "intent": "plan",
+            "mode": "ideas",
+            "reason": "理解目标、检索能力并核对组合条件",
+            "itemId": "box",
+            "itemName": "旧纸盒"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "plan; target=box; router=home-router-v1",
+            "at": "2026-10-29T05:15:11.226Z"
+          },
+          {
+            "stage": "goal_planning",
+            "detail": "local-candidate",
+            "at": "2026-10-29T05:15:33.051Z"
+          }
+        ],
+        "tokens": {
+          "input": 2825,
+          "output": 934
+        },
+        "modelCalls": 2
+      },
+      "requestCount": 2,
+      "elapsedMs": 22042
+    }
+  ],
+  "model": "qwen-plus",
+  "totalTaskAttempts": 42,
+  "estimatedCny": 0.019684400000000005,
+  "transport": "All frameworks use loopback budget gateway; real upstream is existing Bailian chat/completions non-streaming, gateway adapts response to SSE for streaming SDKs. Native upstream SSE not tested.",
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

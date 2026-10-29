@@ -1,0 +1,478 @@
+{
+  "generatedAt": "2026-10-29T06:02:35.685Z",
+  "base": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "filesScanned": 91,
+  "largestFileBytes": 139905,
+  "findings": [],
+  "reviewedSynthetic": [
+    {
+      "file": "tests/foundation.test.ts",
+      "line": 817,
+      "reason": "Existing offline transport fixture with injected request; exact placeholder reviewed, no real credential"
+    },
+    {
+      "file": "tests/foundation.test.ts",
+      "line": 1033,
+      "reason": "Existing offline transport fixture with injected request; exact placeholder reviewed, no real credential"
+    }
+  ],
+  "scope": "Changed/untracked task allowlist; credential patterns, paths, size and local Markdown links; not full security audit",
+  "manifest": [
+    {
+      "file": "AGENTS.md",
+      "bytes": 3265,
+      "sha256": "58f294abc9378884a865bbbbb13045c4170f27ec822c83be280fab816e5bd023"
+    },
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 2432,
+      "sha256": "3cadce336e1b39a0853b40e97af8c5dd842b1ede4a6fc67f72bc77657291a69e"
+    },
+    {
+      "file": "DEVELOPMENT_REPORT.md",
+      "bytes": 1240,
+      "sha256": "297bf0d4a2ca3a38a1f2cb31bbe7586fd4c204c94d228651f68ed4ca7c9e2ec7"
+    },
+    {
+      "file": "IMPLEMENTATION_STATUS.md",
+      "bytes": 1725,
+      "sha256": "1e262de253655e747b00f46bf6156c781bc3ad2404901e6512884119a996e5bf"
+    },
+    {
+      "file": "REVIEW_HANDOFF.md",
+      "bytes": 1226,
+      "sha256": "11e4938b4c22bd3177c94985465d2b4ef3d93eb270bc632d991272d67050f0f3"
+    },
+    {
+      "file": "docs/README.md",
+      "bytes": 2347,
+      "sha256": "78be7e15074913a6f45799040acec5e9d2151862663762d83ce42837dae2ae5d"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/DECISION.md",
+      "bytes": 4937,
+      "sha256": "f9f32a663b562061bb7e641f234b5374b93975e838b550d100bb72b450946994"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/NEXT_IMPLEMENTATION.md",
+      "bytes": 4271,
+      "sha256": "e49bb608acefc3a523c0bf3b62fe68f97fbb78c5b92d1341b91444226e3c7615"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/README.md",
+      "bytes": 1990,
+      "sha256": "1a2285c54181f6c461d300fcc169c3123f62221308984f220ae7604e9314d621"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/REVIEW.md",
+      "bytes": 1969,
+      "sha256": "dc4a5354856ad82710034ddfce5bff808303aa3a66f6923f1e655998461b3f02"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/TEST_REPORT.md",
+      "bytes": 11425,
+      "sha256": "0bd66de06500164d6c29454a5ab18ccb8c4a3a423f5481ac779619c0f3d539a7"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/FAIRNESS.json",
+      "bytes": 2592,
+      "sha256": "dec8da009583efa23e7813728d14df40ecf3d37905961e5e1de19ff63a0e7286"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/SUMMARY.json",
+      "bytes": 17020,
+      "sha256": "96262b0a1909cb9cb7249aa5d7702511abf539ca08c810defdbe467a9fde05b0"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/browser/box-offline-mobile.png",
+      "bytes": 128301,
+      "sha256": "272dee3b4ce69d07fc00dee47dc475fed5df0690a7e7c0844c45857c04192563"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/browser/painting-cross-session.png",
+      "bytes": 120434,
+      "sha256": "63f60bea65115206e49b913ceb9009cea3c1b92465d416dd98a84fa7b419d895"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/browser/result.json",
+      "bytes": 4649,
+      "sha256": "cb004d1c6a2d92bb6198ccfed1357f77969f71b38b5d71199f424cc62a9e1e44"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/budget-check.json",
+      "bytes": 137,
+      "sha256": "36ccba323a389dad0a07722e44d04fbc0bd2c2d4c422037dc81afc8369853df6"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/live-framework-and-main.json",
+      "bytes": 19500,
+      "sha256": "475f1ab31232ca1d3fe08d90bc32fd98c2ac45424c1b36da1a40cac818fa0016"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/live-framework-recheck.json",
+      "bytes": 3379,
+      "sha256": "9d06925d61473257a0083368c11e405e2ecec3ad42cc526c4c57772f474cb4b5"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/live-ledger.json",
+      "bytes": 104972,
+      "sha256": "b0304901ed64458e0a21874afa04e4815c562ffa5765e220db835fdf99d11bfb"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/live-main-ui-baseline.json",
+      "bytes": 12747,
+      "sha256": "2b401b32b25ed1fb7174f16aa80e562adfd7a176de932e831a43e51a8479b532"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/live-product-slice.json",
+      "bytes": 12186,
+      "sha256": "bfcaf72fc0c275883f18558e5df6df36c9e5bd3263d4838b80fd7a08bdad70fc"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/app-install.txt",
+      "bytes": 148,
+      "sha256": "7390a0e4d2bbc0cd64ec93080989303d985f73f925a9ddea92fdd7654853b66b"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/benchmark.txt",
+      "bytes": 4651,
+      "sha256": "d710f8346d45ae211a32112214e5b6a9559320175a28ac464cbf11e694ae9627"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/browser-life.txt",
+      "bytes": 2388,
+      "sha256": "ac8f9a76a7a44355193bcc6e7c3c4ace262526499130ec36287af102061dbde8"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/browser-shared-initial.txt",
+      "bytes": 1109,
+      "sha256": "08d0a194fe7fa5b03e1e8bc41ed01787719560066f870cfc32c46f91e991bbb0"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/browser-shared.txt",
+      "bytes": 423,
+      "sha256": "b91217605fe7187ab68df5e51584e0153d79eedc930169895f56d6776d51340b"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/budget-check.txt",
+      "bytes": 116,
+      "sha256": "0b3a28cb11fed58ddd3619cd548abb6ea3f16a4195261e431bd88a25ff916f9b"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/build.txt",
+      "bytes": 2029,
+      "sha256": "d361d2130713378c6351ece4dcaa35c4c3052e8c06108679cb0da52b47a8eca9"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/cloud.txt",
+      "bytes": 950,
+      "sha256": "0db0302a6c74ef656483c0b86d29c08123321f464ff7fdc17e19dad5e3db0e2c"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/format-docs.txt",
+      "bytes": 499,
+      "sha256": "3e4c718c55f0501071911ee4235519cbd4f0830dedd82e68d65f4b8480930fad"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/format-scripts.txt",
+      "bytes": 105,
+      "sha256": "a507b2b23daf4ce770c8749f850597007302a90a18ac95093ce508adf1c7a94f"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/format.txt",
+      "bytes": 648,
+      "sha256": "54b5607bd0bb40870027bfc3159d4b6b9a2dca000804214c03568406f6416b50"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/lab-install.txt",
+      "bytes": 119,
+      "sha256": "b4bae795d97d4cbedc2f31ed67ff9bf359435381dddd912b85c19a97ba4b01ce"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/live-initial.txt",
+      "bytes": 1753,
+      "sha256": "9d5de6b682058ec679532ab68f52d7c8eea23b084bc89057c32ae10fea1793fe"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/live-main-ui.txt",
+      "bytes": 151,
+      "sha256": "1b66e1c6c67e1be823883b4c859802e6eff9d53fc2fe7d61ffc43355cdfdf77f"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/live-product-slice.txt",
+      "bytes": 145,
+      "sha256": "6c870ad670c75d11a1d1ddbe69d446fd0dc307a5ce209f73d6b49392a614a1a7"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/live-recheck.txt",
+      "bytes": 524,
+      "sha256": "151de34970b1b34cddae7c9c077189d07b273aefe2e925d53f68c7fc3eca7215"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/offline-complete-final.txt",
+      "bytes": 3010,
+      "sha256": "c9b3c065fa60ea66af7fd531dbcf26ca8e6f981371af4123be92e979837f7109"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/offline-final.txt",
+      "bytes": 3152,
+      "sha256": "fee3601320190db6e7f20baa6186941127264bdc1c7232fef7a62c0e1fbc0907"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/offline-initial.txt",
+      "bytes": 1585,
+      "sha256": "67551ea006b367e746c9d164eac094ef9adbc8d5815ae50df1c39325ba9f8a97"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/offline-recovery-final.txt",
+      "bytes": 3174,
+      "sha256": "bbcde112f62abf923636cdd9f9c446ba20bb85d92c717978e08a2cb4dc1e05f8"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/offline-second.txt",
+      "bytes": 3420,
+      "sha256": "9b3c34410bbb18f8d60bb47b17f5a93c272c76c5d3c4c021f6670f53e83247b7"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/pi-isolated-run.txt",
+      "bytes": 929,
+      "sha256": "761cddf4fe65622ea5ddf5e30b05565fc04382a7a289957a8ebec25ad022c0e4"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/pi-targeted.txt",
+      "bytes": 1099,
+      "sha256": "b1c56501876fcefb43989952b010c58032a7bb7fcd63dc2419850f0667f44c93"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/ported-unit.txt",
+      "bytes": 27529,
+      "sha256": "bd7cb700865c106550179b6b659a12e31beaedee354fad910d799702ac9744d1"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/shared-targeted.txt",
+      "bytes": 825,
+      "sha256": "174a3dabddd73f376978f0b14ed34b7e9cc617aa0b653355d945d820dc95db8f"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/typecheck.txt",
+      "bytes": 48,
+      "sha256": "8ecd2c9e217809de41e0ac3444a6bb794f588f6da1b28e1a41efc6b4c7f3ebed"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/logs/unit-final.txt",
+      "bytes": 28070,
+      "sha256": "1a1f220080744244470f5d1a85dd49d3482af533ab06cae06b9955d52842e57c"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/offline-initial.json",
+      "bytes": 71097,
+      "sha256": "e454218e17b2a24b6b944956d64ad722b4c025464882a4784639f72650cc05d6"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/offline-pi-durable-recheck.json",
+      "bytes": 27413,
+      "sha256": "f46f410fb10d974c04b7e2ee97fcf6b8091370bbcda86320375dbf15f05befe3"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/offline-pi-durable-shared-store.json",
+      "bytes": 25005,
+      "sha256": "1660996e655893d09bc76ec3069483637f6250ea2f548da06ffd61219bb39bff"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/offline-second.json",
+      "bytes": 72991,
+      "sha256": "2aeacf3858d9c673d948e57f96990c58fc1bf783fb46abcf58a6a0b8bd41f64e"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/offline-third.json",
+      "bytes": 96529,
+      "sha256": "8596ac6ec17204a038d19ffca258be56f004e357d6a8ca0ae3dced2311868641"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/offline.json",
+      "bytes": 101746,
+      "sha256": "68379faa5a3bdcd6ac77fc0e626775eb0e1db0c52a3a6bbb67471e00f23d017b"
+    },
+    {
+      "file": "docs/engineering/framework-evidence-2026-10-29/evidence/route-before.json",
+      "bytes": 362,
+      "sha256": "e0b0cbbf4619d83f72bd50fb0ca37e27d79aaa4836d7377af7a3b2a30b3b2768"
+    },
+    {
+      "file": "experiments/framework-evidence/README.md",
+      "bytes": 2149,
+      "sha256": "059b28e640fe926b2aaeda16f277b614900330fe5255c621a212ee208dd1bea3"
+    },
+    {
+      "file": "experiments/framework-evidence/agents.mjs",
+      "bytes": 8131,
+      "sha256": "eff321d357365d9bb5030d84da91998b32fc0467b82a66ada2587e9a1d5c3d07"
+    },
+    {
+      "file": "experiments/framework-evidence/budget-check.mjs",
+      "bytes": 1016,
+      "sha256": "44a741f96d567733ae58b2f37d3c6f5c0a5d3ff731143301cfeadbbf0a95b4c0"
+    },
+    {
+      "file": "experiments/framework-evidence/collect.mjs",
+      "bytes": 9427,
+      "sha256": "63a5ef00b061243861865ec649cd43df06aed7d0780252dffc776199729a08d5"
+    },
+    {
+      "file": "experiments/framework-evidence/gateway.mjs",
+      "bytes": 8843,
+      "sha256": "8d8a3ad3cd7241a3e559b5ff860c201339b143cb56f45e59881135bded401fce"
+    },
+    {
+      "file": "experiments/framework-evidence/live.mjs",
+      "bytes": 5779,
+      "sha256": "e28b8fcba6fad374668139c530782a4d50081aca7753fadb22c98d76791a4ecb"
+    },
+    {
+      "file": "experiments/framework-evidence/offline.mjs",
+      "bytes": 9903,
+      "sha256": "fd3387d1aac2b5f119cbf8ccfefe39ec3a3ef8302db70fa819fd566e7f5aec6d"
+    },
+    {
+      "file": "experiments/framework-evidence/package-lock.json",
+      "bytes": 139905,
+      "sha256": "b177e6f970166d96de5edfb2492fc3ccf60c62a8a0c6b9350cc8c3083d94efba"
+    },
+    {
+      "file": "experiments/framework-evidence/package.json",
+      "bytes": 564,
+      "sha256": "9eb04517efc2431dbe553e81a52d51a0b6c5166985efa6eadd52eef6cd26ab19"
+    },
+    {
+      "file": "experiments/framework-evidence/publish-scan.mjs",
+      "bytes": 6191,
+      "sha256": "af7608b6b55a5d76e52ce4f7ac5f87fd69d542c59f2dc9d7d13889cc14aca924"
+    },
+    {
+      "file": "experiments/framework-evidence/shared.mjs",
+      "bytes": 5946,
+      "sha256": "cf24d0af19cbe332d4676b1c5ae9e22ff47f60fdf3063d68090c99e82b28f755"
+    },
+    {
+      "file": "experiments/framework-evidence/workflow-worker.mjs",
+      "bytes": 8815,
+      "sha256": "4f9b1e03aa0cf552d0bf4ff215785ce9d26b577c4e62dc13b706b1f7e530367f"
+    },
+    {
+      "file": "scripts/test-cloud.mjs",
+      "bytes": 15513,
+      "sha256": "1d8206be788f69bb8cb78290b821b47e274b2574bb35a043a0b630890497ad2a"
+    },
+    {
+      "file": "scripts/verify-local.mjs",
+      "bytes": 3553,
+      "sha256": "3965b787737829dd91e972df059582b7e7aff038446d1e45ee3b29ba8bb02e0b"
+    },
+    {
+      "file": "src/lib/agent/budget.ts",
+      "bytes": 161,
+      "sha256": "96a49e110e74cb93ab2f7d0bf5676910032d2148d97c836ce28d0858696f5193"
+    },
+    {
+      "file": "src/lib/agent/graph.ts",
+      "bytes": 63267,
+      "sha256": "7356a395017019476ee6d674f75258e3926dad2057dc287ee5b3602988025d8b"
+    },
+    {
+      "file": "src/lib/agent/prompts.ts",
+      "bytes": 8513,
+      "sha256": "d4c0274c30e61c96f7eb2d2284d8c616503d7f486b79c9ddb6d7e610fe324615"
+    },
+    {
+      "file": "src/lib/context/builder.ts",
+      "bytes": 4794,
+      "sha256": "412bee0d5ac057398169c6bd93de9d7fd519e2d86fb0f380ec34dbb0d700f096"
+    },
+    {
+      "file": "src/lib/context/item-advice.ts",
+      "bytes": 5836,
+      "sha256": "4231a61e2a3d9cbb075cefa685c5f55922aac499c6620a99b7e53ba6c894fc3a"
+    },
+    {
+      "file": "src/lib/context/items.ts",
+      "bytes": 3088,
+      "sha256": "dcd7423a999b7917189b292fcd140c0f18bc11928cc5d075da9af763eaeb3981"
+    },
+    {
+      "file": "src/lib/context/knowledge.ts",
+      "bytes": 1288,
+      "sha256": "7a509fef29451284badb2c67fdbeed2e6b2221d6055b6705a9764baa80bf131f"
+    },
+    {
+      "file": "src/lib/home/router.ts",
+      "bytes": 12153,
+      "sha256": "6764ee1aa122223a76cca460590c147344c90788317049e2421e08f094c75719"
+    },
+    {
+      "file": "src/lib/life/ideas.ts",
+      "bytes": 51271,
+      "sha256": "852062c24748ce2f4c7558e8a84383e0b9c2abedf617040ed682aac996188b6e"
+    },
+    {
+      "file": "src/lib/life/planning-constraints.ts",
+      "bytes": 3192,
+      "sha256": "bbeef8c382968ca01f7800fc9f1453f7b858a8862bae7abd1ca492d966e9b074"
+    },
+    {
+      "file": "src/lib/life/planning.ts",
+      "bytes": 27073,
+      "sha256": "22d1342a9a45ca94eeda23d00a29682f8d6c8ef29c76374e6f5e5ca51afba84a"
+    },
+    {
+      "file": "src/lib/life/task-planning.ts",
+      "bytes": 19119,
+      "sha256": "6b401f633c9de08ecdf36e2b6f1971740024ba2ee15d4f83f23733e08337f502"
+    },
+    {
+      "file": "src/lib/skills/memory-storytelling.ts",
+      "bytes": 13618,
+      "sha256": "8b89b356433ad973df91f5371e1a969ff92d46499f20f9f20800c6699f1cf41f"
+    },
+    {
+      "file": "src/lib/skills/registry.ts",
+      "bytes": 6199,
+      "sha256": "b569549c322da248e5103ee3da471840428e437f7167f4da367f645ebd76e8ec"
+    },
+    {
+      "file": "tests/cloud-provider-stub.mjs",
+      "bytes": 2671,
+      "sha256": "dafb0054a9db0a3ddfb8743d2c204dde3cec076345b1b22760a596c32acc30a4"
+    },
+    {
+      "file": "tests/cloud-security.test.ts",
+      "bytes": 8050,
+      "sha256": "0a1999772334385db1c96aa21e3ede22d6cf95865364ed4d2d2e43a58deec048"
+    },
+    {
+      "file": "tests/foundation.test.ts",
+      "bytes": 32305,
+      "sha256": "ca7fc66b817a6f909bab54de4e13ab0bddb0c528ccba4d2c0a974d04b64a49db"
+    },
+    {
+      "file": "tests/item-evidence-language.test.ts",
+      "bytes": 3501,
+      "sha256": "41293fb99d081d2d607020fa569287abc8ee0500c748772a009e7c61bfeb6e7d"
+    },
+    {
+      "file": "tests/item-understanding-v1.test.ts",
+      "bytes": 16917,
+      "sha256": "dbbe8a52b699f5165558cea9a6fb320dedfd382f2949fdd442e7e038c79138ce"
+    },
+    {
+      "file": "tests/shared-item-knowledge.test.ts",
+      "bytes": 8282,
+      "sha256": "48db56310cf138a088b354305e3758ba330a1d98dab2b96ecd1913a3e04f0c17"
+    },
+    {
+      "file": "tests/shared-knowledge-integration.mjs",
+      "bytes": 5642,
+      "sha256": "c4b7c2ec49cec5243237df716eab6c7dd27407fdb5ee587a180f575d487f9752"
+    }
+  ],
+  "selfExcluded": "docs/engineering/framework-evidence-2026-10-29/evidence/PUBLICATION_SCAN.json"
+}

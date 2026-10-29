@@ -1,0 +1,83 @@
+{
+  "stage": "framework-recheck",
+  "rows": [
+    {
+      "arm": "langgraph",
+      "case": "unknown",
+      "input": "请调用 read_item，参数 itemId=\"box\"。旧纸盒的材质和承重是什么？只用登记资料。",
+      "returned": true,
+      "answer": {
+        "text": "旧纸盒的材质是纸质（用户报告），承重未知。",
+        "rounds": 2
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": true,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 2452
+    },
+    {
+      "arm": "mastra",
+      "case": "unknown",
+      "input": "请调用 read_item，参数 itemId=\"box\"。旧纸盒的材质和承重是什么？只用登记资料。",
+      "returned": true,
+      "answer": {
+        "text": "旧纸盒的材质是纸质（用户报告），承重未知。",
+        "steps": 2
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": true,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 2716
+    },
+    {
+      "arm": "pi-core",
+      "case": "unknown",
+      "input": "请调用 read_item，参数 itemId=\"box\"。旧纸盒的材质和承重是什么？只用登记资料。",
+      "returned": true,
+      "answer": {
+        "text": "旧纸盒的材质是纸质（用户报告），承重未知。",
+        "messages": 5
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": true,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 1961
+    },
+    {
+      "arm": "pi-durable",
+      "case": "unknown",
+      "input": "请调用 read_item，参数 itemId=\"box\"。旧纸盒的材质和承重是什么？只用登记资料。",
+      "returned": true,
+      "answer": {
+        "text": "{\"model\":[{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"旧纸盒的材质是纸质（用户报告），承重未知。\"}],\"api\":\"openai-completions\",\"provider\":\"wujian-lab\",\"model\":\"qwen-plus\",\"usage\":{\"input\":85,\"output\":15,\"cacheRead\":256,\"cacheWrite\":0,\"reasoning\":0,\"totalTokens\":356,\"cost\":{\"input\":0.000068,\"output\":0.000029999999999999997,\"cacheRead\":0,\"cacheWrite\":0,\"total\":0.000098}},\"stopReason\":\"stop\",\"timestamp\":1793249881864,\"responseId\":\"chatcmpl-e90cf199-1c17-4d7a-bcd0-cd6289a30238\",\"rawStopReason\":\"stop\",\"durationMs\":818}],\"kind\":\"pi.assistant\",\"id\":15,\"conversationId\":1,\"byTaskId\":14}",
+        "status": "done"
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": true,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 2498
+    }
+  ],
+  "model": "qwen-plus",
+  "totalTaskAttempts": 37,
+  "estimatedCny": 0.0113892,
+  "transport": "All frameworks use loopback budget gateway; real upstream is existing Bailian chat/completions non-streaming, gateway adapts response to SSE for streaming SDKs. Native upstream SSE not tested.",
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

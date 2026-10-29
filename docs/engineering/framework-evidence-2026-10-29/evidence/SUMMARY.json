@@ -1,0 +1,411 @@
+{
+  "generatedAt": "2026-10-29T05:58:39.731Z",
+  "node": "v24.16.0",
+  "repository": "Starry-Curry/ProductAgent",
+  "main": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "rfc": "69eb7c8791ca0fa85a8b105827705b5e75df5230",
+  "portedV1": "8eca3d72fc93fce9d4cdb27b1ccd6bd70973a52e",
+  "branch": "codex/wujian-framework-evidence-v1",
+  "frameworkResearchStartedAt": "2026-10-29T04:35:48Z",
+  "frameworkExperimentClosedAt": "2026-10-29T05:31:40.577Z",
+  "productTests": {
+    "passed": 265,
+    "failed": 0,
+    "newThisRound": 9,
+    "portedV1New": 65,
+    "mainHistorical": 191,
+    "typecheck": true,
+    "build": true,
+    "benchmarkRegressions": 0,
+    "cloudStubChecks": 8,
+    "browserJourneys": [
+      "life-integration",
+      "life-formats",
+      "shared-knowledge-integration"
+    ],
+    "realHardware": 0,
+    "humanCreativeBlindReview": false,
+    "creativePaperCasePassed": false
+  },
+  "frameworkOffline": {
+    "full": {
+      "passed": 38,
+      "failed": 0
+    },
+    "lastPiTargeted": {
+      "passed": 11,
+      "failed": 0
+    },
+    "note": "Historical failed attempts preserved; do not sum repeats as unique tests"
+  },
+  "live": {
+    "requests": 42,
+    "limits": {
+      "requests": 60,
+      "estimatedCny": 20
+    },
+    "inputTokens": 17008,
+    "outputTokens": 3039,
+    "estimatedCny": 0.0196844,
+    "http200": 42,
+    "failedAttempts": 0,
+    "finishReasons": {
+      "tool_calls": 20,
+      "stop": 22
+    },
+    "byArm": {
+      "langgraph": {
+        "requests": 9,
+        "input": 2782,
+        "output": 239,
+        "estimatedCny": 0.0027036000000000004,
+        "httpErrors": 0
+      },
+      "mastra": {
+        "requests": 9,
+        "input": 2944,
+        "output": 325,
+        "estimatedCny": 0.0030052000000000004,
+        "httpErrors": 0
+      },
+      "pi-core": {
+        "requests": 9,
+        "input": 2727,
+        "output": 220,
+        "estimatedCny": 0.0026216,
+        "httpErrors": 0
+      },
+      "pi-durable": {
+        "requests": 9,
+        "input": 2756,
+        "output": 178,
+        "estimatedCny": 0.0025608000000000002,
+        "httpErrors": 0
+      },
+      "framework-and-main": {
+        "requests": 1,
+        "input": 500,
+        "output": 49,
+        "estimatedCny": 0.000498,
+        "httpErrors": 0
+      },
+      "main-ui-baseline": {
+        "requests": 2,
+        "input": 1654,
+        "output": 1047,
+        "estimatedCny": 0.0034172,
+        "httpErrors": 0
+      },
+      "product-slice": {
+        "requests": 3,
+        "input": 3645,
+        "output": 981,
+        "estimatedCny": 0.004878,
+        "httpErrors": 0
+      }
+    },
+    "price": "Beijing qwen-plus non-thinking <=128k: input 0.8/output 2 CNY per million; no cache discount; estimate, not invoice",
+    "priceSource": "https://help.aliyun.com/zh/model-studio/qwen-plus",
+    "transport": "Guarded loopback gateway: real Bailian non-streaming; local SSE adaptation for SDKs; native upstream SSE not tested"
+  },
+  "dependencies": {
+    "productPackageLockChanged": false,
+    "experimentalPackageCount": 268,
+    "experimentalVersions": {
+      "@ai-sdk/openai-compatible": "3.0.80",
+      "@earendil-works/chord": "1.4.0",
+      "@earendil-works/pi-agent-core": "1.4.0",
+      "@earendil-works/pi-ai": "1.4.0",
+      "@earendil-works/pi-durable": "1.4.0",
+      "@mastra/core": "1.80.0",
+      "@mastra/libsql": "1.27.1",
+      "@mastra/memory": "1.39.1",
+      "zod": "4.6.7"
+    }
+  },
+  "storage": [
+    {
+      "syntheticFile": "mastra-memory.sqlite",
+      "mainFileBytes": 512000,
+      "tables": 40,
+      "note": "PoC measurements include initialized framework domains; not required production size; WAL excluded"
+    },
+    {
+      "syntheticFile": "mastra-workflow.sqlite",
+      "mainFileBytes": 4096,
+      "tables": 40,
+      "note": "PoC measurements include initialized framework domains; not required production size; WAL excluded"
+    }
+  ],
+  "manifest": [
+    {
+      "file": "evidence/offline-initial.json",
+      "bytes": 71097,
+      "sha256": "e454218e17b2a24b6b944956d64ad722b4c025464882a4784639f72650cc05d6"
+    },
+    {
+      "file": "evidence/offline-second.json",
+      "bytes": 72991,
+      "sha256": "2aeacf3858d9c673d948e57f96990c58fc1bf783fb46abcf58a6a0b8bd41f64e"
+    },
+    {
+      "file": "evidence/offline-third.json",
+      "bytes": 96529,
+      "sha256": "8596ac6ec17204a038d19ffca258be56f004e357d6a8ca0ae3dced2311868641"
+    },
+    {
+      "file": "evidence/offline.json",
+      "bytes": 101746,
+      "sha256": "68379faa5a3bdcd6ac77fc0e626775eb0e1db0c52a3a6bbb67471e00f23d017b"
+    },
+    {
+      "file": "evidence/offline-pi-durable-shared-store.json",
+      "bytes": 25005,
+      "sha256": "1660996e655893d09bc76ec3069483637f6250ea2f548da06ffd61219bb39bff"
+    },
+    {
+      "file": "evidence/offline-pi-durable-recheck.json",
+      "bytes": 27413,
+      "sha256": "f46f410fb10d974c04b7e2ee97fcf6b8091370bbcda86320375dbf15f05befe3"
+    },
+    {
+      "file": "evidence/live-framework-and-main.json",
+      "bytes": 19500,
+      "sha256": "475f1ab31232ca1d3fe08d90bc32fd98c2ac45424c1b36da1a40cac818fa0016"
+    },
+    {
+      "file": "evidence/live-framework-recheck.json",
+      "bytes": 3379,
+      "sha256": "9d06925d61473257a0083368c11e405e2ecec3ad42cc526c4c57772f474cb4b5"
+    },
+    {
+      "file": "evidence/live-main-ui-baseline.json",
+      "bytes": 12747,
+      "sha256": "2b401b32b25ed1fb7174f16aa80e562adfd7a176de932e831a43e51a8479b532"
+    },
+    {
+      "file": "evidence/live-product-slice.json",
+      "bytes": 12186,
+      "sha256": "bfcaf72fc0c275883f18558e5df6df36c9e5bd3263d4838b80fd7a08bdad70fc"
+    },
+    {
+      "file": "evidence/live-ledger.json",
+      "bytes": 104972,
+      "sha256": "b0304901ed64458e0a21874afa04e4815c562ffa5765e220db835fdf99d11bfb"
+    },
+    {
+      "file": "evidence/route-before.json",
+      "bytes": 362,
+      "sha256": "e0b0cbbf4619d83f72bd50fb0ca37e27d79aaa4836d7377af7a3b2a30b3b2768"
+    },
+    {
+      "file": "evidence/budget-check.json",
+      "bytes": 137,
+      "sha256": "36ccba323a389dad0a07722e44d04fbc0bd2c2d4c422037dc81afc8369853df6"
+    },
+    {
+      "file": "evidence/logs/app-install.txt",
+      "bytes": 148,
+      "sha256": "7390a0e4d2bbc0cd64ec93080989303d985f73f925a9ddea92fdd7654853b66b",
+      "originalSha256": "2bfb1673705c84f32b8538cccd8e3493015c324b1aaec7d6b70aa74e6af6d010",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/lab-install.txt",
+      "bytes": 119,
+      "sha256": "b4bae795d97d4cbedc2f31ed67ff9bf359435381dddd912b85c19a97ba4b01ce",
+      "originalSha256": "fa0fd59b6939fb3e4c18dbb5afeb262f9c876078d3da6ce7c4c15a9a8a4c2d2b",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/offline-initial.txt",
+      "bytes": 1585,
+      "sha256": "67551ea006b367e746c9d164eac094ef9adbc8d5815ae50df1c39325ba9f8a97",
+      "originalSha256": "be3dc584b0f8534a296e8c3195fee0d409509fbfd7d56daddc2ffc45cf90f0c0",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/offline-second.txt",
+      "bytes": 3420,
+      "sha256": "9b3c34410bbb18f8d60bb47b17f5a93c272c76c5d3c4c021f6670f53e83247b7",
+      "originalSha256": "42c33c4d2e8741e532bba879b5437f95913b40f0d6b3713f7a0de7700be8a3d0",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/offline-final.txt",
+      "bytes": 3152,
+      "sha256": "fee3601320190db6e7f20baa6186941127264bdc1c7232fef7a62c0e1fbc0907",
+      "originalSha256": "503794b598bfd925e2d149567edf725f95c1ca401de523e0175704288c9d2fc2",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/offline-recovery-final.txt",
+      "bytes": 3174,
+      "sha256": "bbcde112f62abf923636cdd9f9c446ba20bb85d92c717978e08a2cb4dc1e05f8",
+      "originalSha256": "c021a054385759e1bbb143ccb607fa63e40a595c9748a3c41db2413cc53a6155",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/offline-complete-final.txt",
+      "bytes": 3010,
+      "sha256": "c9b3c065fa60ea66af7fd531dbcf26ca8e6f981371af4123be92e979837f7109",
+      "originalSha256": "de1c917b6e0e5ac9870b1908056f0e38e22bbf8edf6386b28aba829afea8a479",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/pi-targeted.txt",
+      "bytes": 1099,
+      "sha256": "b1c56501876fcefb43989952b010c58032a7bb7fcd63dc2419850f0667f44c93",
+      "originalSha256": "bf6e84255af73b4c95f27c13fe9895cb1bda5527b44506a9d62c23e1913c00e9",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/pi-isolated-run.txt",
+      "bytes": 929,
+      "sha256": "761cddf4fe65622ea5ddf5e30b05565fc04382a7a289957a8ebec25ad022c0e4",
+      "originalSha256": "153a3c59758eb8a23557407f9f49774ea25f197079abb9d4c4075eb1c1134a07",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/live-initial.txt",
+      "bytes": 1753,
+      "sha256": "9d5de6b682058ec679532ab68f52d7c8eea23b084bc89057c32ae10fea1793fe",
+      "originalSha256": "4d858e67e19a85542ae4a96b686a32c232c16ab27c6b0a22be34a4a9b1d35cd4",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/live-recheck.txt",
+      "bytes": 524,
+      "sha256": "151de34970b1b34cddae7c9c077189d07b273aefe2e925d53f68c7fc3eca7215",
+      "originalSha256": "c2bf15d5b24117f8842cd196a8c4ba8c8dc3d3ff0806ed729da55ccaad0407c7",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/live-main-ui.txt",
+      "bytes": 151,
+      "sha256": "1b66e1c6c67e1be823883b4c859802e6eff9d53fc2fe7d61ffc43355cdfdf77f",
+      "originalSha256": "8080ff7c8686b59e426e03be573d364eb28c18b641ecd10ab224a49ab02722d0",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/live-product-slice.txt",
+      "bytes": 145,
+      "sha256": "6c870ad670c75d11a1d1ddbe69d446fd0dc307a5ce209f73d6b49392a614a1a7",
+      "originalSha256": "caecafae56d60636063705f73f8dd7c8898f1f09e4b6c56e366e66af2d661760",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/ported-unit.txt",
+      "bytes": 27529,
+      "sha256": "bd7cb700865c106550179b6b659a12e31beaedee354fad910d799702ac9744d1",
+      "originalSha256": "f856f3da0950694f30a0b8b467ff0d9d221dedbd4be138938ac99e39265f4a17",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/shared-targeted.txt",
+      "bytes": 825,
+      "sha256": "174a3dabddd73f376978f0b14ed34b7e9cc617aa0b653355d945d820dc95db8f",
+      "originalSha256": "ffcddfed7394b37d21addb144cc0ac9e7f3893817901d4a71dd53109e17bfeb0",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/typecheck.txt",
+      "bytes": 48,
+      "sha256": "8ecd2c9e217809de41e0ac3444a6bb794f588f6da1b28e1a41efc6b4c7f3ebed",
+      "originalSha256": "292fac678f539c5fa04b8e706c139afc861f9b6d084d64cec3fa76ce30472160",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/unit-final.txt",
+      "bytes": 28070,
+      "sha256": "1a1f220080744244470f5d1a85dd49d3482af533ab06cae06b9955d52842e57c",
+      "originalSha256": "83fb2fbbe696e7a8ecfb740a5d6058d8b4ad3b2d84c33af5bf67cda3a1b5f46b",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/benchmark.txt",
+      "bytes": 4651,
+      "sha256": "d710f8346d45ae211a32112214e5b6a9559320175a28ac464cbf11e694ae9627",
+      "originalSha256": "c426b422d36dcaa63d5dccd695487752a62be4dffd627fda6da183484c358943",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/build.txt",
+      "bytes": 2029,
+      "sha256": "d361d2130713378c6351ece4dcaa35c4c3052e8c06108679cb0da52b47a8eca9",
+      "originalSha256": "28187a0a5462b6036874d34b77f3153d0872bc94301b312efb170b6748a6fb4c",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/cloud.txt",
+      "bytes": 950,
+      "sha256": "0db0302a6c74ef656483c0b86d29c08123321f464ff7fdc17e19dad5e3db0e2c",
+      "originalSha256": "08ab3e8b1eb7c1d56f3a629e185bb86e6562722a7dacf9a394b5306a6da3e5d7",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/browser-life.txt",
+      "bytes": 2388,
+      "sha256": "ac8f9a76a7a44355193bcc6e7c3c4ace262526499130ec36287af102061dbde8",
+      "originalSha256": "18fb9416e2f0218b23f3ab0c157e7e6f6c31736b297b7cc3ecdbc4934bddf01a",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/browser-shared-initial.txt",
+      "bytes": 1109,
+      "sha256": "08d0a194fe7fa5b03e1e8bc41ed01787719560066f870cfc32c46f91e991bbb0",
+      "originalSha256": "b3543140da43e9552f26b932746569ed3c082ca672738c55b1cdac262587f3d4",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/browser-shared.txt",
+      "bytes": 423,
+      "sha256": "b91217605fe7187ab68df5e51584e0153d79eedc930169895f56d6776d51340b",
+      "originalSha256": "d5041aa1e0ec277a4934de3859020237c154559d55088929536cb9e899d4ebd3",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/budget-check.txt",
+      "bytes": 116,
+      "sha256": "0b3a28cb11fed58ddd3619cd548abb6ea3f16a4195261e431bd88a25ff916f9b",
+      "originalSha256": "dc1e44bc3d0fa36dd26d936b2c5a4e236b5929000c202354dfcb3a42711f0018",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/format.txt",
+      "bytes": 648,
+      "sha256": "54b5607bd0bb40870027bfc3159d4b6b9a2dca000804214c03568406f6416b50",
+      "originalSha256": "d297e4acfc61d0f3b793428e4ba458de0a3b8277aa03db7de5271e88e7100a79",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/format-docs.txt",
+      "bytes": 499,
+      "sha256": "3e4c718c55f0501071911ee4235519cbd4f0830dedd82e68d65f4b8480930fad",
+      "originalSha256": "b5bd0fd244e1165a1d1536a6e34e74b633f5ceda64144ecc1fdb9a53931fd1f1",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/logs/format-scripts.txt",
+      "bytes": 105,
+      "sha256": "a507b2b23daf4ce770c8749f850597007302a90a18ac95093ce508adf1c7a94f",
+      "originalSha256": "b2950a83e8403c0d1d96b6f0aadd381c27ece483d5fb97d88a35502a3df0c92b",
+      "normalization": "UTF-8 without BOM, LF, no trailing horizontal whitespace, one final newline; no failed output removed"
+    },
+    {
+      "file": "evidence/browser/result.json",
+      "bytes": 4649,
+      "sha256": "cb004d1c6a2d92bb6198ccfed1357f77969f71b38b5d71199f424cc62a9e1e44"
+    },
+    {
+      "file": "evidence/browser/painting-cross-session.png",
+      "bytes": 120434,
+      "sha256": "63f60bea65115206e49b913ceb9009cea3c1b92465d416dd98a84fa7b419d895"
+    },
+    {
+      "file": "evidence/browser/box-offline-mobile.png",
+      "bytes": 128301,
+      "sha256": "272dee3b4ce69d07fc00dee47dc475fed5df0690a7e7c0844c45857c04192563"
+    }
+  ]
+}

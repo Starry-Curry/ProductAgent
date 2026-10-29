@@ -1,0 +1,74 @@
+{
+  "sameSuccessfulToolPayloadPerArm": true,
+  "groups": {
+    "langgraph": {
+      "initialPainting": {
+        "sha256": "2e51e3ee89d7c0e2894e4ffad2c38eefef1f349ebc1049d4eff5fdc30216cd04",
+        "preferences": 4,
+        "relationships": 1
+      },
+      "initialBoxAfterFailure": {
+        "sha256": "5d88a3c2bedb797452c231e58143f5fe06eea26ff91e64fc4c9b51668ff3feb8",
+        "preferences": 4,
+        "relationships": 3
+      },
+      "correctedBox": {
+        "sha256": "44401cd8bda832ddd41646614f50a0c71929436fa1d241e4bcac542d0de3e58d",
+        "preferences": 1,
+        "relationships": 0
+      }
+    },
+    "mastra": {
+      "initialPainting": {
+        "sha256": "2e51e3ee89d7c0e2894e4ffad2c38eefef1f349ebc1049d4eff5fdc30216cd04",
+        "preferences": 4,
+        "relationships": 1
+      },
+      "initialBoxAfterFailure": {
+        "sha256": "5d88a3c2bedb797452c231e58143f5fe06eea26ff91e64fc4c9b51668ff3feb8",
+        "preferences": 4,
+        "relationships": 3
+      },
+      "correctedBox": {
+        "sha256": "44401cd8bda832ddd41646614f50a0c71929436fa1d241e4bcac542d0de3e58d",
+        "preferences": 1,
+        "relationships": 0
+      }
+    },
+    "pi-core": {
+      "initialPainting": {
+        "sha256": "2e51e3ee89d7c0e2894e4ffad2c38eefef1f349ebc1049d4eff5fdc30216cd04",
+        "preferences": 4,
+        "relationships": 1
+      },
+      "initialBoxAfterFailure": {
+        "sha256": "5d88a3c2bedb797452c231e58143f5fe06eea26ff91e64fc4c9b51668ff3feb8",
+        "preferences": 4,
+        "relationships": 3
+      },
+      "correctedBox": {
+        "sha256": "44401cd8bda832ddd41646614f50a0c71929436fa1d241e4bcac542d0de3e58d",
+        "preferences": 1,
+        "relationships": 0
+      }
+    },
+    "pi-durable": {
+      "initialPainting": {
+        "sha256": "2e51e3ee89d7c0e2894e4ffad2c38eefef1f349ebc1049d4eff5fdc30216cd04",
+        "preferences": 4,
+        "relationships": 1
+      },
+      "initialBoxAfterFailure": {
+        "sha256": "5d88a3c2bedb797452c231e58143f5fe06eea26ff91e64fc4c9b51668ff3feb8",
+        "preferences": 4,
+        "relationships": 3
+      },
+      "correctedBox": {
+        "sha256": "44401cd8bda832ddd41646614f50a0c71929436fa1d241e4bcac542d0de3e58d",
+        "preferences": 1,
+        "relationships": 0
+      }
+    }
+  },
+  "initialWrapperIssue": "Box relationship array also contained workflow-test preference records in initial run; corrected kind filtering and separated workflow data in final source. Painting gift fact unaffected; all four arms had identical initial data. Historical outputs retained; no semantic-quality ranking."
+}

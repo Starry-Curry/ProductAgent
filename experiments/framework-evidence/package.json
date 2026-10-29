@@ -1,0 +1,20 @@
+{
+  "name": "wujian-framework-evidence",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "offline": "node --experimental-strip-types offline.mjs",
+    "live": "node --experimental-strip-types live.mjs"
+  },
+  "dependencies": {
+    "@mastra/core": "1.80.0",
+    "@mastra/memory": "1.39.1",
+    "@mastra/libsql": "1.27.1",
+    "@ai-sdk/openai-compatible": "3.0.80",
+    "@earendil-works/chord": "1.4.0",
+    "@earendil-works/pi-agent-core": "1.4.0",
+    "@earendil-works/pi-ai": "1.4.0",
+    "@earendil-works/pi-durable": "1.4.0",
+    "zod": "4.6.7"
+  }
+}

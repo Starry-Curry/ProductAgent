@@ -1,4 +1,12 @@
 import { withoutProhibitedActions } from "../agent/safety-language.ts";
+/** Remove only the negated activity, preserving the rest of the user's goal. */
+export const positiveGoalText = (q: string) =>
+  q.replace(
+    /(?:不想|不要|不愿|不用|不做|不)(?:再)?(?:拍照|拍摄|摄影|手工|加热|用水|出门)/g,
+    " ",
+  );
+export const inventoryReference =
+  /(?:只用|只使用|只有|仅用|仅使用|利用|使用|用)?(?:我(?:的)?|自己|家里|手边|当前|手头)?(?:已经?|曾经)?(?:登记|录入|拥有|现有|已有)(?:过|好)?(?:的)?(?:全部|这些)?(?:物品|东西|材料|资源)/g;
 export const noPurchase = (q: string) =>
   /不(?:想|要)?(?:再)?(?:买|购买|采购|花钱)|零预算|预算\s*[为是：:]?\s*0\s*元/.test(
     q,
@@ -57,6 +65,9 @@ export function violatesGoal(goal: string, proposed: string) {
       /播放音乐|打开音箱|放歌|大声/.test(proposed)) ||
     (/不(?:要|想|用).{0,3}(拍照|摄影)/.test(goal) &&
       /拍照|拍摄|摄影/.test(proposed)) ||
-    (/不要手工|不做手工/.test(goal) && /裁剪|折纸|粘贴/.test(proposed))
+    (/不要手工|不做手工/.test(goal) && /裁剪|折纸|粘贴/.test(proposed)) ||
+    (/不(?:要|想)?(?:用水|加水)|不用水/.test(goal) &&
+      /倒入.{0,8}水|加入.{0,8}水|注水|装水/.test(proposed)) ||
+    (/不(?:要|想)?加热/.test(goal) && /加热|烧水|烤箱|热风/.test(proposed))
   );
 }

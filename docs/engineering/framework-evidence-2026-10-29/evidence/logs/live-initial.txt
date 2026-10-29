@@ -1,0 +1,14 @@
+{"arm":"langgraph","case":"unknown","toolResultRoundTrip":true,"unknownExpressed":false,"explicitGiftPresent":null,"requestCount":2}
+{"arm":"langgraph","case":"relationship","toolResultRoundTrip":true,"unknownExpressed":true,"explicitGiftPresent":true,"requestCount":2}
+{"arm":"langgraph","case":"failure","toolResultRoundTrip":true,"unknownExpressed":true,"explicitGiftPresent":null,"requestCount":3}
+{"arm":"mastra","case":"unknown","toolResultRoundTrip":true,"unknownExpressed":false,"explicitGiftPresent":null,"requestCount":2}
+{"arm":"mastra","case":"relationship","toolResultRoundTrip":true,"unknownExpressed":true,"explicitGiftPresent":true,"requestCount":2}
+{"arm":"mastra","case":"failure","toolResultRoundTrip":true,"unknownExpressed":true,"explicitGiftPresent":null,"requestCount":3}
+{"arm":"pi-core","case":"unknown","toolResultRoundTrip":true,"unknownExpressed":false,"explicitGiftPresent":null,"requestCount":2}
+{"arm":"pi-core","case":"relationship","toolResultRoundTrip":true,"unknownExpressed":false,"explicitGiftPresent":true,"requestCount":2}
+{"arm":"pi-core","case":"failure","toolResultRoundTrip":true,"unknownExpressed":true,"explicitGiftPresent":null,"requestCount":3}
+{"arm":"pi-durable","case":"unknown","toolResultRoundTrip":true,"unknownExpressed":false,"explicitGiftPresent":null,"requestCount":2}
+{"arm":"pi-durable","case":"relationship","toolResultRoundTrip":true,"unknownExpressed":false,"explicitGiftPresent":true,"requestCount":2}
+{"arm":"pi-durable","case":"failure","toolResultRoundTrip":true,"unknownExpressed":true,"explicitGiftPresent":null,"requestCount":3}
+{"arm":"framework-and-main","case":"painting","returned":true,"requestCount":1}
+{"arm":"framework-and-main","case":"box","returned":true,"requestCount":0}

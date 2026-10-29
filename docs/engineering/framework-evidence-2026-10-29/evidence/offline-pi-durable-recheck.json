@@ -1,0 +1,668 @@
+{
+  "node": "v24.16.0",
+  "arms": [
+    "pi-durable"
+  ],
+  "startedFrom": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "passed": 11,
+  "failed": 0,
+  "results": [
+    {
+      "name": "pi-durable:unknown",
+      "status": "passed",
+      "elapsedMs": 379
+    },
+    {
+      "name": "pi-durable:relationship",
+      "status": "passed",
+      "elapsedMs": 95
+    },
+    {
+      "name": "pi-durable:failure",
+      "status": "passed",
+      "elapsedMs": 49
+    },
+    {
+      "name": "pi-durable:shared-domain-read-denies-other-owner",
+      "status": "passed",
+      "elapsedMs": 6
+    },
+    {
+      "name": "existing-memory:cross-session-reopen-and-no-invented-detail",
+      "status": "passed",
+      "elapsedMs": 13
+    },
+    {
+      "name": "mastra-memory:resource-scope-persists-across-threads-and-reopen",
+      "status": "passed",
+      "elapsedMs": 51
+    },
+    {
+      "name": "pi-durable:pause-before-authorization",
+      "status": "passed",
+      "elapsedMs": 2162
+    },
+    {
+      "name": "pi-durable:crash-after-domain-commit",
+      "status": "passed",
+      "elapsedMs": 2208
+    },
+    {
+      "name": "pi-durable:restart-no-duplicate-effect",
+      "status": "passed",
+      "elapsedMs": 2356
+    },
+    {
+      "name": "pi-durable:completed-operation-repeat",
+      "status": "passed",
+      "elapsedMs": 2277
+    },
+    {
+      "name": "pi-durable:revocation-while-paused-blocks-write",
+      "status": "passed",
+      "elapsedMs": 4544
+    }
+  ],
+  "counts": [
+    {
+      "arm": "langgraph",
+      "tool": "read",
+      "count": 10
+    },
+    {
+      "arm": "live:langgraph",
+      "tool": "read",
+      "count": 1
+    },
+    {
+      "arm": "live:mastra",
+      "tool": "read",
+      "count": 1
+    },
+    {
+      "arm": "live:pi-core",
+      "tool": "read",
+      "count": 1
+    },
+    {
+      "arm": "live:pi-durable",
+      "tool": "read",
+      "count": 1
+    },
+    {
+      "arm": "mastra",
+      "tool": "read",
+      "count": 10
+    },
+    {
+      "arm": "memory",
+      "tool": "read",
+      "count": 4
+    },
+    {
+      "arm": "memory2",
+      "tool": "read",
+      "count": 4
+    },
+    {
+      "arm": "pi-core",
+      "tool": "read",
+      "count": 10
+    },
+    {
+      "arm": "pi-durable",
+      "tool": "read",
+      "count": 20
+    },
+    {
+      "arm": "langgraph",
+      "tool": "commit_attempt",
+      "count": 4
+    },
+    {
+      "arm": "langgraph",
+      "tool": "effect",
+      "count": 2
+    },
+    {
+      "arm": "langgraph",
+      "tool": "read",
+      "count": 3
+    },
+    {
+      "arm": "mastra",
+      "tool": "commit_attempt",
+      "count": 4
+    },
+    {
+      "arm": "mastra",
+      "tool": "effect",
+      "count": 2
+    },
+    {
+      "arm": "mastra",
+      "tool": "read",
+      "count": 3
+    },
+    {
+      "arm": "pi-core",
+      "tool": "commit_attempt",
+      "count": 3
+    },
+    {
+      "arm": "pi-core",
+      "tool": "effect",
+      "count": 2
+    },
+    {
+      "arm": "pi-core",
+      "tool": "read",
+      "count": 3
+    },
+    {
+      "arm": "pi-durable",
+      "tool": "commit_attempt",
+      "count": 8
+    },
+    {
+      "arm": "pi-durable",
+      "tool": "effect",
+      "count": 4
+    },
+    {
+      "arm": "pi-durable",
+      "tool": "read",
+      "count": 7
+    }
+  ],
+  "details": [
+    {
+      "arm": "pi-durable",
+      "case": "unknown",
+      "answer": {
+        "text": "{\"model\":[{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"仅依据工具返回：{\\\"id\\\":\\\"box\\\",\\\"name\\\":\\\"旧纸盒\\\",\\\"brand\\\":null,\\\"model\\\":\\\"未登记\\\",\\\"attributes\\\":{\\\"material\\\":\\\"纸质（用户报告）\\\",\\\"dimensions\\\":\\\"20×15×10厘米\\\"},\\\"basis\\\":\\\"user_report\\\",\\\"unknown\\\":[\\\"承重\\\",\\\"耐热\\\",\\\"食品接触\\\"],\\\"relationship\\\":[],\\\"preferences\\\":[\\\"我喜欢安静的手工和讲小故事，不想买新材料。\\\"]}。未记录的属性与关系细节未知。\"}],\"api\":\"openai-completions\",\"provider\":\"wujian-lab\",\"model\":\"offline-scripted\",\"usage\":{\"input\":100,\"output\":50,\"cacheRead\":0,\"cacheWrite\":0,\"reasoning\":0,\"totalTokens\":150,\"cost\":{\"input\":0.00008,\"output\":0.00009999999999999999,\"cacheRead\":0,\"cacheWrite\":0,\"total\":0.00017999999999999998}},\"stopReason\":\"stop\",\"timestamp\":1793251668959,\"responseId\":\"chatcmpl-9551be47-47db-423e-bf7f-be07c16348ad\",\"rawStopReason\":\"stop\",\"durationMs\":29}],\"kind\":\"pi.assistant\",\"id\":15,\"conversationId\":1,\"byTaskId\":14}",
+        "status": "done"
+      },
+      "trace": [
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "请调用 read_item，参数 itemId=\"box\"。旧纸盒的材质和承重是什么？只用登记资料。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_e6f77344-f3d4-4d1c-9c42-d992e61a1198",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "请调用 read_item，参数 itemId=\"box\"。旧纸盒的材质和承重是什么？只用登记资料。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_e6f77344-f3d4-4d1c-9c42-d992e61a1198",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}",
+              "tool_call_id": "call_e6f77344-f3d4-4d1c-9c42-d992e61a1198"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "pi-durable",
+      "case": "relationship",
+      "answer": {
+        "text": "{\"model\":[{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"仅依据工具返回：{\\\"id\\\":\\\"painting\\\",\\\"name\\\":\\\"朋友送的画\\\",\\\"brand\\\":null,\\\"model\\\":\\\"未登记\\\",\\\"attributes\\\":{},\\\"basis\\\":\\\"user_report\\\",\\\"unknown\\\":[\\\"画框材质\\\",\\\"日期\\\",\\\"其他关系细节\\\"],\\\"relationship\\\":[{\\\"id\\\":\\\"7cf635b6-bcbd-4514-ab7e-7d5766362998\\\",\\\"text\\\":\\\"朋友小夏送给我这幅画。\\\",\\\"basis\\\":\\\"user\\\"}],\\\"preferences\\\":[\\\"我喜欢安静的手工和讲小故事，不想买新材料。\\\"]}。未记录的属性与关系细节未知。\"}],\"api\":\"openai-completions\",\"provider\":\"wujian-lab\",\"model\":\"offline-scripted\",\"usage\":{\"input\":100,\"output\":50,\"cacheRead\":0,\"cacheWrite\":0,\"reasoning\":0,\"totalTokens\":150,\"cost\":{\"input\":0.00008,\"output\":0.00009999999999999999,\"cacheRead\":0,\"cacheWrite\":0,\"total\":0.00017999999999999998}},\"stopReason\":\"stop\",\"timestamp\":1793251669109,\"responseId\":\"chatcmpl-0d0bc109-f03c-4794-bf54-6049412f39a6\",\"rawStopReason\":\"stop\",\"durationMs\":6}],\"kind\":\"pi.assistant\",\"id\":15,\"conversationId\":1,\"byTaskId\":14}",
+        "status": "done"
+      },
+      "trace": [
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "请调用 read_item，参数 itemId=\"painting\"。朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_8a143e05-2bd1-4b9b-a6d5-afa91e2ffe92",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"painting\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "请调用 read_item，参数 itemId=\"painting\"。朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_8a143e05-2bd1-4b9b-a6d5-afa91e2ffe92",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"painting\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "{\"id\":\"painting\",\"name\":\"朋友送的画\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{},\"basis\":\"user_report\",\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"],\"relationship\":[{\"id\":\"7cf635b6-bcbd-4514-ab7e-7d5766362998\",\"text\":\"朋友小夏送给我这幅画。\",\"basis\":\"user\"}],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}",
+              "tool_call_id": "call_8a143e05-2bd1-4b9b-a6d5-afa91e2ffe92"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"painting\",\"name\":\"朋友送的画\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{},\"basis\":\"user_report\",\"unknown\":[\"画框材质\",\"日期\",\"其他关系细节\"],\"relationship\":[{\"id\":\"7cf635b6-bcbd-4514-ab7e-7d5766362998\",\"text\":\"朋友小夏送给我这幅画。\",\"basis\":\"user\"}],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "arm": "pi-durable",
+      "case": "failure",
+      "answer": {
+        "text": "{\"model\":[{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"仅依据工具返回：{\\\"id\\\":\\\"box\\\",\\\"name\\\":\\\"旧纸盒\\\",\\\"brand\\\":null,\\\"model\\\":\\\"未登记\\\",\\\"attributes\\\":{\\\"material\\\":\\\"纸质（用户报告）\\\",\\\"dimensions\\\":\\\"20×15×10厘米\\\"},\\\"basis\\\":\\\"user_report\\\",\\\"unknown\\\":[\\\"承重\\\",\\\"耐热\\\",\\\"食品接触\\\"],\\\"relationship\\\":[],\\\"preferences\\\":[\\\"我喜欢安静的手工和讲小故事，不想买新材料。\\\"]}。未记录的属性与关系细节未知。\"}],\"api\":\"openai-completions\",\"provider\":\"wujian-lab\",\"model\":\"offline-scripted\",\"usage\":{\"input\":100,\"output\":50,\"cacheRead\":0,\"cacheWrite\":0,\"reasoning\":0,\"totalTokens\":150,\"cost\":{\"input\":0.00008,\"output\":0.00009999999999999999,\"cacheRead\":0,\"cacheWrite\":0,\"total\":0.00017999999999999998}},\"stopReason\":\"stop\",\"timestamp\":1793251669161,\"responseId\":\"chatcmpl-1a4cfc3a-cd7c-4264-bf24-a223ee2287bb\",\"rawStopReason\":\"stop\",\"durationMs\":2}],\"kind\":\"pi.assistant\",\"id\":19,\"conversationId\":1,\"byTaskId\":18}",
+        "status": "done"
+      },
+      "trace": [
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "请调用 read_item，参数 itemId=\"box\"。临时工具失败后最多重试一次，并告诉我未知。"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_33263f9a-2e43-4fbc-90c6-bf4e891e8cac",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "请调用 read_item，参数 itemId=\"box\"。临时工具失败后最多重试一次，并告诉我未知。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_33263f9a-2e43-4fbc-90c6-bf4e891e8cac",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "<harness>\n[error] temporary_tool_failure\n</harness>",
+              "tool_call_id": "call_33263f9a-2e43-4fbc-90c6-bf4e891e8cac"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": null,
+            "tool_calls": [
+              {
+                "id": "call_75b9ddd4-4247-4dd6-aeab-0b85833932be",
+                "type": "function",
+                "function": {
+                  "name": "read_item",
+                  "arguments": "{\"itemId\":\"box\"}"
+                }
+              }
+            ]
+          },
+          "live": false
+        },
+        {
+          "arm": "pi-durable",
+          "input": [
+            {
+              "role": "system",
+              "content": "你是物间。必须先调用 read_item 读取当前物品，再仅依据工具结果回答。未知性质必须说未知；用户报告不能升级成实测。朋友送画不证明生日、旅行、亲密程度。不得补充未登记物品。"
+            },
+            {
+              "role": "user",
+              "content": "请调用 read_item，参数 itemId=\"box\"。临时工具失败后最多重试一次，并告诉我未知。"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_33263f9a-2e43-4fbc-90c6-bf4e891e8cac",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "<harness>\n[error] temporary_tool_failure\n</harness>",
+              "tool_call_id": "call_33263f9a-2e43-4fbc-90c6-bf4e891e8cac"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call_75b9ddd4-4247-4dd6-aeab-0b85833932be",
+                  "type": "function",
+                  "function": {
+                    "name": "read_item",
+                    "arguments": "{\"itemId\":\"box\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "content": "{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}",
+              "tool_call_id": "call_75b9ddd4-4247-4dd6-aeab-0b85833932be"
+            }
+          ],
+          "output": {
+            "role": "assistant",
+            "content": "仅依据工具返回：{\"id\":\"box\",\"name\":\"旧纸盒\",\"brand\":null,\"model\":\"未登记\",\"attributes\":{\"material\":\"纸质（用户报告）\",\"dimensions\":\"20×15×10厘米\"},\"basis\":\"user_report\",\"unknown\":[\"承重\",\"耐热\",\"食品接触\"],\"relationship\":[],\"preferences\":[\"我喜欢安静的手工和讲小故事，不想买新材料。\"]}。未记录的属性与关系细节未知。"
+          },
+          "live": false
+        }
+      ]
+    },
+    {
+      "memory": "mastra",
+      "inputExplicitlyWrittenByHost": "朋友小夏送给我这幅画。",
+      "automaticExtractionTested": false,
+      "semanticRecallEnabled": false
+    },
+    {
+      "arm": "pi-durable",
+      "phase": "start",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "result": {
+        "arm": "pi-durable",
+        "phase": "start",
+        "output": {
+          "id": 7,
+          "conversationId": 1,
+          "kind": "wujian.save-preference",
+          "version": 1,
+          "input": {
+            "key": "workflow:pi-durable:854183f4-2d1b-4f0d-9f01-643dc82c6f3b"
+          },
+          "background": false,
+          "abortRequested": false,
+          "state": {
+            "status": "sleeping",
+            "checkpoint": {
+              "phase": "approval"
+            },
+            "until": 1793251731315
+          },
+          "startedAt": 1793251671282
+        }
+      },
+      "stdout": "PROGRESS {\"taskId\":7,\"state\":\"sleeping\"}\nPROGRESS closing\nPROGRESS closed\nRESULT {\"arm\":\"pi-durable\",\"phase\":\"start\",\"output\":{\"id\":7,\"conversationId\":1,\"kind\":\"wujian.save-preference\",\"version\":1,\"input\":{\"key\":\"workflow:pi-durable:854183f4-2d1b-4f0d-9f01-643dc82c6f3b\"},\"background\":false,\"abortRequested\":false,\"state\":{\"status\":\"sleeping\",\"checkpoint\":{\"phase\":\"approval\"},\"until\":1793251731315},\"startedAt\":1793251671282}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-durable",
+      "phase": "resume",
+      "crash": true,
+      "status": 73,
+      "signal": null,
+      "result": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-durable",
+      "phase": "resume",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "result": {
+        "arm": "pi-durable",
+        "phase": "resume",
+        "output": {
+          "id": 7,
+          "conversationId": 1,
+          "kind": "wujian.save-preference",
+          "version": 1,
+          "input": {
+            "key": "workflow:pi-durable:854183f4-2d1b-4f0d-9f01-643dc82c6f3b"
+          },
+          "background": false,
+          "abortRequested": false,
+          "state": {
+            "status": "terminal",
+            "outcome": {
+              "status": "completed",
+              "result": {
+                "memoryId": "7cfcc2d2-1c14-4496-9b84-3fc1ae6525d7",
+                "reused": true
+              }
+            }
+          },
+          "startedAt": 1793251671282,
+          "endedAt": 1793251795931
+        }
+      },
+      "stdout": "PROGRESS {\"taskId\":\"7.0\",\"state\":\"terminal\",\"outcome\":\"completed\"}\nPROGRESS closing\nPROGRESS closed\nRESULT {\"arm\":\"pi-durable\",\"phase\":\"resume\",\"output\":{\"id\":7,\"conversationId\":1,\"kind\":\"wujian.save-preference\",\"version\":1,\"input\":{\"key\":\"workflow:pi-durable:854183f4-2d1b-4f0d-9f01-643dc82c6f3b\"},\"background\":false,\"abortRequested\":false,\"state\":{\"status\":\"terminal\",\"outcome\":{\"status\":\"completed\",\"result\":{\"memoryId\":\"7cfcc2d2-1c14-4496-9b84-3fc1ae6525d7\",\"reused\":true}}},\"startedAt\":1793251671282,\"endedAt\":1793251795931}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-durable",
+      "phase": "resume",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "result": {
+        "arm": "pi-durable",
+        "phase": "resume",
+        "output": {
+          "id": 7,
+          "conversationId": 1,
+          "kind": "wujian.save-preference",
+          "version": 1,
+          "input": {
+            "key": "workflow:pi-durable:854183f4-2d1b-4f0d-9f01-643dc82c6f3b"
+          },
+          "background": false,
+          "abortRequested": false,
+          "state": {
+            "status": "terminal",
+            "outcome": {
+              "status": "completed",
+              "result": {
+                "memoryId": "7cfcc2d2-1c14-4496-9b84-3fc1ae6525d7",
+                "reused": true
+              }
+            }
+          },
+          "startedAt": 1793251671282,
+          "endedAt": 1793251795931
+        }
+      },
+      "stdout": "PROGRESS {\"taskId\":\"7.0\",\"state\":\"terminal\",\"outcome\":\"completed\"}\nPROGRESS closing\nPROGRESS closed\nRESULT {\"arm\":\"pi-durable\",\"phase\":\"resume\",\"output\":{\"id\":7,\"conversationId\":1,\"kind\":\"wujian.save-preference\",\"version\":1,\"input\":{\"key\":\"workflow:pi-durable:854183f4-2d1b-4f0d-9f01-643dc82c6f3b\"},\"background\":false,\"abortRequested\":false,\"state\":{\"status\":\"terminal\",\"outcome\":{\"status\":\"completed\",\"result\":{\"memoryId\":\"7cfcc2d2-1c14-4496-9b84-3fc1ae6525d7\",\"reused\":true}}},\"startedAt\":1793251671282,\"endedAt\":1793251795931}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-durable",
+      "phase": "start",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "result": {
+        "arm": "pi-durable",
+        "phase": "start",
+        "output": {
+          "id": 7,
+          "conversationId": 1,
+          "kind": "wujian.save-preference",
+          "version": 1,
+          "input": {
+            "key": "workflow:pi-durable:854183f4-2d1b-4f0d-9f01-643dc82c6f3b:revoked"
+          },
+          "background": false,
+          "abortRequested": false,
+          "state": {
+            "status": "sleeping",
+            "checkpoint": {
+              "phase": "approval"
+            },
+            "until": 1793251740632
+          },
+          "startedAt": 1793251680612
+        }
+      },
+      "stdout": "PROGRESS {\"taskId\":7,\"state\":\"sleeping\"}\nPROGRESS closing\nPROGRESS closed\nRESULT {\"arm\":\"pi-durable\",\"phase\":\"start\",\"output\":{\"id\":7,\"conversationId\":1,\"kind\":\"wujian.save-preference\",\"version\":1,\"input\":{\"key\":\"workflow:pi-durable:854183f4-2d1b-4f0d-9f01-643dc82c6f3b:revoked\"},\"background\":false,\"abortRequested\":false,\"state\":{\"status\":\"sleeping\",\"checkpoint\":{\"phase\":\"approval\"},\"until\":1793251740632},\"startedAt\":1793251680612}}\n",
+      "stderr": ""
+    },
+    {
+      "arm": "pi-durable",
+      "phase": "resume",
+      "crash": false,
+      "status": 0,
+      "signal": null,
+      "result": {
+        "arm": "pi-durable",
+        "phase": "resume",
+        "output": {
+          "id": 7,
+          "conversationId": 1,
+          "kind": "wujian.save-preference",
+          "version": 1,
+          "input": {
+            "key": "workflow:pi-durable:854183f4-2d1b-4f0d-9f01-643dc82c6f3b:revoked"
+          },
+          "background": false,
+          "abortRequested": false,
+          "state": {
+            "status": "terminal",
+            "outcome": {
+              "status": "faulted",
+              "error": {
+                "message": "authorization_denied"
+              }
+            }
+          },
+          "startedAt": 1793251680612,
+          "endedAt": 1793251802696
+        }
+      },
+      "stdout": "PROGRESS {\"taskId\":\"7.0\",\"state\":\"terminal\",\"outcome\":\"faulted\"}\nPROGRESS closing\nPROGRESS closed\nRESULT {\"arm\":\"pi-durable\",\"phase\":\"resume\",\"output\":{\"id\":7,\"conversationId\":1,\"kind\":\"wujian.save-preference\",\"version\":1,\"input\":{\"key\":\"workflow:pi-durable:854183f4-2d1b-4f0d-9f01-643dc82c6f3b:revoked\"},\"background\":false,\"abortRequested\":false,\"state\":{\"status\":\"terminal\",\"outcome\":{\"status\":\"faulted\",\"error\":{\"message\":\"authorization_denied\"}}},\"startedAt\":1793251680612,\"endedAt\":1793251802696}}\n",
+      "stderr": ""
+    }
+  ],
+  "realRequests": 0,
+  "physicalTests": 0,
+  "limitations": [
+    "Scripted model tests plumbing, not semantic intelligence",
+    "LangGraph arm is a minimal harness with current package/provider/checkpointer, not the full product graph",
+    "All arms reuse domain authorization/idempotency; these are not framework guarantees",
+    "Mastra memory explicitly written by host; no automatic relationship extraction claim",
+    "Pi Core workflow persistence implemented by host",
+    "Pi Durable approval uses host grant plus durable sleep and an advancing clock with a test-only offset"
+  ]
+}

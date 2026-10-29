@@ -1,0 +1,34 @@
+{"name":"langgraph:unknown","status":"passed","elapsedMs":141}
+{"name":"langgraph:relationship","status":"passed","elapsedMs":80}
+{"name":"langgraph:failure","status":"passed","elapsedMs":110}
+{"name":"langgraph:shared-domain-read-denies-other-owner","status":"passed","elapsedMs":5}
+{"name":"mastra:unknown","status":"passed","elapsedMs":103}
+{"name":"mastra:relationship","status":"passed","elapsedMs":20}
+{"name":"mastra:failure","status":"passed","elapsedMs":35}
+{"name":"mastra:shared-domain-read-denies-other-owner","status":"passed","elapsedMs":4}
+{"name":"pi-core:unknown","status":"passed","elapsedMs":27}
+{"name":"pi-core:relationship","status":"passed","elapsedMs":8}
+{"name":"pi-core:failure","status":"passed","elapsedMs":14}
+{"name":"pi-core:shared-domain-read-denies-other-owner","status":"passed","elapsedMs":4}
+{"name":"pi-durable:unknown","status":"passed","elapsedMs":65}
+{"name":"pi-durable:relationship","status":"passed","elapsedMs":36}
+{"name":"pi-durable:failure","status":"passed","elapsedMs":50}
+{"name":"pi-durable:shared-domain-read-denies-other-owner","status":"passed","elapsedMs":4}
+{"name":"existing-memory:cross-session-reopen-and-no-invented-detail","status":"passed","elapsedMs":14}
+{"name":"mastra-memory:resource-scope-persists-across-threads-and-reopen","status":"passed","elapsedMs":49}
+{"name":"langgraph:pause-before-authorization","status":"passed","elapsedMs":5535}
+{"name":"langgraph:crash-after-domain-commit","status":"passed","elapsedMs":6321}
+{"name":"langgraph:restart-no-duplicate-effect","status":"passed","elapsedMs":6442}
+{"name":"langgraph:completed-operation-repeat","status":"passed","elapsedMs":6380}
+{"name":"mastra:pause-before-authorization","status":"passed","elapsedMs":5697}
+{"name":"mastra:crash-after-domain-commit","status":"passed","elapsedMs":5157}
+{"name":"mastra:restart-no-duplicate-effect","status":"failed","error":"RESULT {\"arm\":\"mastra\",\"phase\":\"resume\",\"error\":\"Workflow \\\"wujian-lab\\\" run \\\"workflow:mastra:68fedc0c-41de-40aa-83aa-5d647123cce2\\\" is still being executed by another process, so it was not restarted. Restart it after that process stops renewing its ownership lease.\"}\n\n\n2 !== 0\n","elapsedMs":6108}
+{"name":"mastra:completed-operation-repeat","status":"passed","elapsedMs":17061}
+{"name":"pi-core:pause-before-authorization","status":"failed","error":"Expected values to be strictly equal:\n\nnull !== 0\n","elapsedMs":25126}
+{"name":"pi-core:crash-after-domain-commit","status":"failed","error":"Expected values to be strictly equal:\n\nnull !== 73\n","elapsedMs":25200}
+{"name":"pi-core:restart-no-duplicate-effect","status":"passed","elapsedMs":10011}
+{"name":"pi-core:completed-operation-repeat","status":"passed","elapsedMs":8122}
+{"name":"pi-durable:pause-before-authorization","status":"passed","elapsedMs":6858}
+{"name":"pi-durable:crash-after-domain-commit","status":"passed","elapsedMs":6420}
+{"name":"pi-durable:restart-no-duplicate-effect","status":"failed","error":"Expected values to be strictly equal:\n\nnull !== 0\n","elapsedMs":25054}
+{"name":"pi-durable:completed-operation-repeat","status":"passed","elapsedMs":5497}

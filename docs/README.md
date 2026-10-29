@@ -2,16 +2,22 @@
 
 README 负责快速运行，以下文档分别回答产品、工程、演示和部署问题。
 
+## 2026-10-29：框架实证与共享资料产品切片
+
+- [本轮结论与实际改动](engineering/framework-evidence-2026-10-29/README.md)：保留 LangGraph，移植 v1 修复，接入最小共享物品资料。
+- [测试与真实失败](engineering/framework-evidence-2026-10-29/TEST_REPORT.md)、[下一轮直接开发](engineering/framework-evidence-2026-10-29/NEXT_IMPLEMENTATION.md)。
+- [V2 RFC 的固定成果](https://github.com/Starry-Curry/ProductAgent/tree/69eb7c8791ca0fa85a8b105827705b5e75df5230/docs/architecture-v2) 是设计依据，不等于 main 或本轮产品已全部实现。
+
 ## 推荐阅读顺序
 
-| 顺序 | 文档 | 适合谁 |
-| --- | --- | --- |
-| 1 | [根 README](../README.md) | 第一次访问仓库、准备运行的人 |
-| 2 | [产品方案](PRODUCT.md) | 评审、产品、设计与潜在用户 |
-| 3 | [演示指南](DEMO_GUIDE.md) | 需要现场讲解或复现体验的人 |
-| 4 | [技术架构](ARCHITECTURE.md) | 工程、算法与安全评审 |
-| 5 | [部署说明](DEPLOYMENT.md) | 本地容器或公开演示维护者 |
-| 6 | [验证记录](VALIDATION.md) | 需要判断完成度和风险边界的人 |
+| 顺序 | 文档                        | 适合谁                       |
+| ---- | --------------------------- | ---------------------------- |
+| 1    | [根 README](../README.md)   | 第一次访问仓库、准备运行的人 |
+| 2    | [产品方案](PRODUCT.md)      | 评审、产品、设计与潜在用户   |
+| 3    | [演示指南](DEMO_GUIDE.md)   | 需要现场讲解或复现体验的人   |
+| 4    | [技术架构](ARCHITECTURE.md) | 工程、算法与安全评审         |
+| 5    | [部署说明](DEPLOYMENT.md)   | 本地容器或公开演示维护者     |
+| 6    | [验证记录](VALIDATION.md)   | 需要判断完成度和风险边界的人 |
 
 ## 工程与协作
 

@@ -1,4 +1,5 @@
 import { storyMemoryRelevant } from "../life/organization.ts";
+import { sharedItemKnowledge } from "./knowledge.ts";
 import { retrieveKnowledge } from "../life/acquisition.ts";
 import { taskEvidence } from "../life/knowledge-task.ts";
 import type { DatabaseSync } from "node:sqlite";
@@ -106,6 +107,12 @@ export function buildContext(
           eventDate: f.capturedOn,
         }))
     : [];
+  const sharedKnowledge = sharedItemKnowledge(
+    state,
+    actor,
+    item ? [item.id] : [],
+    { demo: !!item?.demo },
+  );
   return {
     temporary: !!input.temporary,
     question: input.question,
@@ -117,6 +124,8 @@ export function buildContext(
       item?.name,
     ),
     item,
+    sharedKnowledge,
+    itemContexts: sharedKnowledge.items,
     knowledge,
     memories,
     cloudMemories: memories.filter((m) => m.allowCloud && !m.demo),
@@ -128,15 +137,21 @@ export function buildContext(
     persona,
     resources:
       input.mode === "ideas"
-        ? state.items
-            .filter(
-              (i) =>
-                canRead(i, actor) &&
-                (!input.excludeSynthetic || (!syntheticItem(i) && usable(i))) &&
-                (item?.demo ? !!i.demo : !i.demo) &&
-                ["在用", "闲置", "待确认"].includes(i.state),
-            )
-            .map((i) => ({ id: i.id, name: i.name, state: i.state }))
+        ? sharedItemKnowledge(
+            state,
+            actor,
+            state.items
+              .filter(
+                (i) =>
+                  canRead(i, actor) &&
+                  (!input.excludeSynthetic ||
+                    (!syntheticItem(i) && usable(i))) &&
+                  (item?.demo ? !!i.demo : !i.demo) &&
+                  ["在用", "闲置", "待确认"].includes(i.state),
+              )
+              .map((i) => i.id),
+            { demo: !!item?.demo },
+          ).items
         : [],
   };
 }

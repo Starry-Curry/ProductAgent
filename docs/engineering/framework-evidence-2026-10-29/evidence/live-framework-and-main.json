@@ -1,0 +1,472 @@
+{
+  "stage": "framework-and-main",
+  "rows": [
+    {
+      "arm": "langgraph",
+      "case": "unknown",
+      "input": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。",
+      "returned": true,
+      "answer": {
+        "text": "无权读取 box：旧纸盒。",
+        "rounds": 2
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": false,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 4315
+    },
+    {
+      "arm": "langgraph",
+      "case": "relationship",
+      "input": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。",
+      "returned": true,
+      "answer": {
+        "text": "已明确记录的关系只有一条：朋友小夏送给我这幅画。  \n其余关系细节（如生日、旅行、亲密程度等）均未登记，不可推测。",
+        "rounds": 2
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": true,
+        "explicitGiftPresent": true
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 2819
+    },
+    {
+      "arm": "langgraph",
+      "case": "failure",
+      "input": "读取 box：临时工具失败后最多重试一次，并告诉我未知。",
+      "returned": true,
+      "answer": {
+        "text": "已成功读取 box：  \n- 名称：旧纸盒  \n- 材质：纸质（用户报告）  \n- 尺寸：20×15×10厘米  \n- 未知性质：承重、耐热、食品接触  \n\n其余未登记信息保持为未知，不作推测。",
+        "rounds": 3
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": true,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 3,
+      "elapsedMs": 3977
+    },
+    {
+      "arm": "mastra",
+      "case": "unknown",
+      "input": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。",
+      "returned": true,
+      "answer": {
+        "text": "未授权读取该物品。",
+        "steps": 2
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": false,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 2225
+    },
+    {
+      "arm": "mastra",
+      "case": "relationship",
+      "input": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。",
+      "returned": true,
+      "answer": {
+        "text": "已明确记录的关系仅有一条：朋友小夏送给我这幅画。  \n其余关系细节（如日期、亲密程度、生日、旅行等）均未登记，不可推测。",
+        "steps": 2
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": true,
+        "explicitGiftPresent": true
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 2194
+    },
+    {
+      "arm": "mastra",
+      "case": "failure",
+      "input": "读取 box：临时工具失败后最多重试一次，并告诉我未知。",
+      "returned": true,
+      "answer": {
+        "text": "临时工具失败，正在重试……  \n已成功读取 box。  \n当前已知属性：  \n- 名称：旧纸盒  \n- 尺寸：20×15×10厘米  \n- 材质：纸质（用户报告）  \n- 品牌：未登记  \n- 型号：未登记  \n\n偏好记录（共3条，均来自用户）：  \n- 我愿意用旧纸盒讲小故事。  \n\n关系记录（共3条，均基于 user 报告）：  \n- 我愿意用旧纸盒讲小故事。  \n\n未知属性（明确登记为 unknown）：  \n- 承重  \n- 耐热  \n- 食品接触  \n\n如需进一步操作，请告诉我。",
+        "steps": 3
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": true,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 3,
+      "elapsedMs": 5631
+    },
+    {
+      "arm": "pi-core",
+      "case": "unknown",
+      "input": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。",
+      "returned": true,
+      "answer": {
+        "text": "未获准读取该物品。",
+        "messages": 5
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": false,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 1620
+    },
+    {
+      "arm": "pi-core",
+      "case": "relationship",
+      "input": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。",
+      "returned": true,
+      "answer": {
+        "text": "朋友送的画已明确记录的关系只有一条：朋友小夏送给我这幅画。",
+        "messages": 5
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": false,
+        "explicitGiftPresent": true
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 1893
+    },
+    {
+      "arm": "pi-core",
+      "case": "failure",
+      "input": "读取 box：临时工具失败后最多重试一次，并告诉我未知。",
+      "returned": true,
+      "answer": {
+        "text": "已读取 box：旧纸盒。  \n- 材质：纸质（用户报告）  \n- 尺寸：20×15×10厘米  \n- 未知性质：承重、耐热、食品接触  \n\n其余未登记信息（如品牌、型号）及未提及属性均视为未知。",
+        "messages": 7
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": true,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 3,
+      "elapsedMs": 4107
+    },
+    {
+      "arm": "pi-durable",
+      "case": "unknown",
+      "input": "读取 box：旧纸盒的材质和承重是什么？只用登记资料。",
+      "returned": true,
+      "answer": {
+        "text": "{\"model\":[{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"无权读取 box：旧纸盒。\"}],\"api\":\"openai-completions\",\"provider\":\"wujian-lab\",\"model\":\"qwen-plus\",\"usage\":{\"input\":144,\"output\":10,\"cacheRead\":128,\"cacheWrite\":0,\"reasoning\":0,\"totalTokens\":282,\"cost\":{\"input\":0.00011520000000000001,\"output\":0.000019999999999999998,\"cacheRead\":0,\"cacheWrite\":0,\"total\":0.0001352}},\"stopReason\":\"stop\",\"timestamp\":1793249589065,\"responseId\":\"chatcmpl-669a871a-f42c-46c0-8c3e-b5d71061e874\",\"rawStopReason\":\"stop\",\"durationMs\":1056}],\"kind\":\"pi.assistant\",\"id\":15,\"conversationId\":1,\"byTaskId\":14}",
+        "status": "done"
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": false,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 2647
+    },
+    {
+      "arm": "pi-durable",
+      "case": "relationship",
+      "input": "读取 painting：朋友送的画有什么已明确记录的关系？不要推测日期和其他经历。",
+      "returned": true,
+      "answer": {
+        "text": "{\"model\":[{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"朋友送的画已明确记录的关系只有一条：朋友小夏送给我这幅画。\"}],\"api\":\"openai-completions\",\"provider\":\"wujian-lab\",\"model\":\"qwen-plus\",\"usage\":{\"input\":404,\"output\":21,\"cacheRead\":0,\"cacheWrite\":0,\"reasoning\":0,\"totalTokens\":425,\"cost\":{\"input\":0.00032320000000000005,\"output\":0.000042,\"cacheRead\":0,\"cacheWrite\":0,\"total\":0.00036520000000000004}},\"stopReason\":\"stop\",\"timestamp\":1793249591476,\"responseId\":\"chatcmpl-40a7a79b-db43-4ceb-bd66-2aa673ab4aa4\",\"rawStopReason\":\"stop\",\"durationMs\":1009}],\"kind\":\"pi.assistant\",\"id\":15,\"conversationId\":1,\"byTaskId\":14}",
+        "status": "done"
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": false,
+        "explicitGiftPresent": true
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 2,
+      "elapsedMs": 1843
+    },
+    {
+      "arm": "pi-durable",
+      "case": "failure",
+      "input": "读取 box：临时工具失败后最多重试一次，并告诉我未知。",
+      "returned": true,
+      "answer": {
+        "text": "{\"model\":[{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"已成功读取 box：旧纸盒。  \\n未知属性包括：承重、耐热、食品接触。\"}],\"api\":\"openai-completions\",\"provider\":\"wujian-lab\",\"model\":\"qwen-plus\",\"usage\":{\"input\":570,\"output\":24,\"cacheRead\":0,\"cacheWrite\":0,\"reasoning\":0,\"totalTokens\":594,\"cost\":{\"input\":0.000456,\"output\":0.000048,\"cacheRead\":0,\"cacheWrite\":0,\"total\":0.000504}},\"stopReason\":\"stop\",\"timestamp\":1793249595068,\"responseId\":\"chatcmpl-37f6424f-45cf-4af5-9d1b-e21a880dda60\",\"rawStopReason\":\"stop\",\"durationMs\":833}],\"kind\":\"pi.assistant\",\"id\":19,\"conversationId\":1,\"byTaskId\":18}",
+        "status": "done"
+      },
+      "checks": {
+        "toolResultRoundTrip": true,
+        "unknownExpressed": true,
+        "explicitGiftPresent": null
+      },
+      "note": "Rule checks are not human quality judgments",
+      "requestCount": 3,
+      "elapsedMs": 3400
+    },
+    {
+      "arm": "framework-and-main",
+      "case": "painting",
+      "input": "你记得这幅画是谁送给我的吗？只说明确记录，不要编造日期和经历。",
+      "returned": true,
+      "result": {
+        "session": {
+          "id": "620a9066-9e4e-40a3-bb68-b27792831201",
+          "owner": "lin",
+          "itemId": "painting",
+          "identity": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "1a68e898-6d8a-43e6-9137-19ba22c452e2",
+              "role": "user",
+              "text": "你记得这幅画是谁送给我的吗？只说明确记录，不要编造日期和经历。",
+              "at": "2026-10-29T04:53:17.811Z",
+              "itemId": "painting",
+              "capture": true
+            },
+            {
+              "id": "8f6bb35c-9087-4953-a771-b6814db0b7a9",
+              "role": "assistant",
+              "text": "朋友小夏送给你这幅画。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "朋友小夏送给你这幅画。",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "2e11fbe2-e8cd-49d0-8179-8199b69f1e7e"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+                "model": "qwen-plus",
+                "route": {
+                  "itemId": "painting",
+                  "itemName": "朋友送的画",
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "围绕当前物品的真实经历与记忆"
+                }
+              },
+              "at": "2026-10-29T04:53:17.811Z"
+            }
+          ],
+          "known": {
+            "turnRequestId": "dc934299-2e56-4ded-94a5-6ff64fef6612",
+            "turnScope": "painting",
+            "lastIntent": "story",
+            "activeItemId": "painting"
+          },
+          "tried": [],
+          "memoryEpoch": 5,
+          "createdAt": "2026-10-29T04:53:15.924Z",
+          "updatedAt": "2026-10-29T04:53:17.815Z",
+          "expiresAt": "2026-11-05T04:53:15.924Z",
+          "itemScopes": {
+            "painting": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "朋友小夏送给你这幅画。",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "2e11fbe2-e8cd-49d0-8179-8199b69f1e7e"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+          "model": "qwen-plus",
+          "route": {
+            "itemId": "painting",
+            "itemName": "朋友送的画",
+            "intent": "story",
+            "mode": "story",
+            "reason": "围绕当前物品的真实经历与记忆"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=painting; router=home-router-v1",
+            "at": "2026-10-29T04:53:15.994Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T04:53:16.040Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=2e11fbe2-e8cd-49d0-8179-8199b69f1e7e,95440a6d-57dd-40dc-a953-06f0a0f7356b; prompt=human-item-agent-v1.9",
+            "at": "2026-10-29T04:53:16.040Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=2e11fbe2-e8cd-49d0-8179-8199b69f1e7e",
+            "at": "2026-10-29T04:53:16.044Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "authorized-cloud",
+            "at": "2026-10-29T04:53:16.044Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1",
+            "at": "2026-10-29T04:53:16.080Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T04:53:17.732Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T04:53:17.774Z"
+          }
+        ],
+        "tokens": {
+          "input": 500,
+          "output": 49
+        },
+        "modelCalls": 1
+      },
+      "requestCount": 1,
+      "elapsedMs": 1906
+    },
+    {
+      "arm": "framework-and-main",
+      "case": "box",
+      "input": "只用我登记的物品，旧纸盒有什么具体新用途？结合我喜欢安静手工和讲故事的偏好，不买东西、不加热、不碰水、不裁切。",
+      "returned": true,
+      "result": {
+        "session": {
+          "id": "ecf03574-de19-447f-a102-d6f788c47f93",
+          "owner": "lin",
+          "itemId": "box",
+          "identity": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "06ca9b33-adb7-4050-9864-5c934da1d7b0",
+              "role": "user",
+              "text": "只用我登记的物品，旧纸盒有什么具体新用途？结合我喜欢安静手工和讲故事的偏好，不买东西、不加热、不碰水、不裁切。",
+              "at": "2026-10-29T04:53:17.957Z",
+              "itemId": "box",
+              "capture": true
+            },
+            {
+              "id": "fb2c1bc9-2d08-42a4-8af2-08964aa37265",
+              "role": "assistant",
+              "text": "这里是你与“旧纸盒”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这里是你与“旧纸盒”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "route": {
+                  "itemId": "box",
+                  "itemName": "旧纸盒",
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "围绕当前物品的真实经历与记忆"
+                }
+              },
+              "at": "2026-10-29T04:53:17.957Z"
+            }
+          ],
+          "known": {
+            "turnRequestId": "3b32728b-b9be-4d54-bbbd-fdcad7559c9e",
+            "turnScope": "box",
+            "lastIntent": "story",
+            "activeItemId": "box"
+          },
+          "tried": [],
+          "memoryEpoch": 5,
+          "createdAt": "2026-10-29T04:53:17.823Z",
+          "updatedAt": "2026-10-29T04:53:17.960Z",
+          "expiresAt": "2026-11-05T04:53:17.823Z",
+          "itemScopes": {
+            "box": "[\"lin\",\"[\\\"未登记\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这里是你与“旧纸盒”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "route": {
+            "itemId": "box",
+            "itemName": "旧纸盒",
+            "intent": "story",
+            "mode": "story",
+            "reason": "围绕当前物品的真实经历与记忆"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=box; router=home-router-v1",
+            "at": "2026-10-29T04:53:17.876Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0",
+            "at": "2026-10-29T04:53:17.907Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=26ed5690-e95c-4214-aa37-e615cddef3d5,5abf5794-59c8-40dc-95c3-0f77726ffbbd,37867bdd-f41c-4b25-af6e-568a2171a620,95440a6d-57dd-40dc-a953-06f0a0f7356b; prompt=human-item-agent-v1.9",
+            "at": "2026-10-29T04:53:17.907Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T04:53:17.907Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requestCount": 0,
+      "elapsedMs": 145
+    }
+  ],
+  "model": "qwen-plus",
+  "totalTaskAttempts": 29,
+  "estimatedCny": 0.009237200000000001,
+  "transport": "All frameworks use loopback budget gateway; real upstream is existing Bailian chat/completions non-streaming, gateway adapts response to SSE for streaming SDKs. Native upstream SSE not tested.",
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

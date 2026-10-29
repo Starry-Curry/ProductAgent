@@ -75,6 +75,7 @@ export type StoryPlan = {
   sources: MemoryRecord[];
   character: ReturnType<typeof storyCharacter>;
   persona: Context["persona"];
+  itemKnowledge?: Context["sharedKnowledge"];
   demo: boolean;
   more: boolean;
   expand: boolean;
@@ -160,6 +161,7 @@ export function planMemoryStory(
     sources: (more ? unseen : unique).slice(0, expand ? 1 : more ? 2 : 3),
     character: storyCharacter(ctx.item),
     persona: ctx.persona,
+    itemKnowledge: ctx.sharedKnowledge,
     demo: !!ctx.item?.demo,
     more,
     expand,
@@ -282,6 +284,17 @@ export function storytellingMessages(plan: StoryPlan): ModelMessage[] {
       role: "user",
       content: JSON.stringify({
         question: plan.question,
+        // Story composition needs identity, not the item's physical inventory.
+        // Keep the common local projection without widening cloud story input.
+        itemKnowledge: plan.itemKnowledge
+          ? {
+              schemaVersion: plan.itemKnowledge.schemaVersion,
+              items: plan.itemKnowledge.items.map((item) => ({
+                id: item.id,
+                name: item.name,
+              })),
+            }
+          : undefined,
         character: plan.character,
         persona: plan.persona.enabled ? plan.persona : { enabled: false },
         memories: plan.sources.map((m) => ({

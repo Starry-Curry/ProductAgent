@@ -1,0 +1,24 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.selectOption: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByLabel('之前的问题', { exact: true })
+
+    at freshQuestion (C:\Users\hp\.codex\worktrees\wujian-framework-evidence\ProductAgent-LifeContext\tests\shared-knowledge-integration.mjs:33:47)
+    at async file:///C:/Users/hp/.codex/worktrees/wujian-framework-evidence/ProductAgent-LifeContext/tests/shared-knowledge-integration.mjs:41:29 {
+  log: [ "  - waiting for getByLabel('之前的问题', { exact: true })" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.16.0
+file:///C:/Users/hp/.codex/worktrees/wujian-framework-evidence/ProductAgent-LifeContext/scripts/verify-local.mjs:100
+    if (code !== 0) throw Error(script + " failed (" + code + ")");
+                          ^
+
+Error: tests/shared-knowledge-integration.mjs failed (1)
+    at file:///C:/Users/hp/.codex/worktrees/wujian-framework-evidence/ProductAgent-LifeContext/scripts/verify-local.mjs:100:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.16.0
