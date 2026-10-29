@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "port": 49687,
+  "data": "D:\\ProductAgent-LifeContext\\.runtime\\alpha-app\\.runtime\\alpha-browser-WTH5YE",
+  "logs": "   ▲ Next.js 15.5.28\n   - Local:        http://127.0.0.1:49687\n   - Network:      http://127.0.0.1:49687\n\n ✓ Starting...\n ✓ Ready in 334ms\n",
+  "requests": 72
+}

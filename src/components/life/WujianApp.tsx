@@ -630,7 +630,8 @@ export default function WujianApp() {
                     <small>{data.capabilities.cloud.message}</small>
                   </div>
                 </section>
-                {(publicMode || !items.some((i) => i.id === "life-sample-0")) && (
+                {(publicMode ||
+                  !items.some((i) => i.id === "life-sample-0")) && (
                   <section className="life-demo-banner">
                     <div>
                       <h3>先用一组生活案例逛一逛</h3>
@@ -641,7 +642,10 @@ export default function WujianApp() {
                     <button
                       disabled={busy}
                       onClick={async () => {
-                        if(items.some(i=>i.id==="life-sample-0")) { go("items"); return; }
+                        if (items.some((i) => i.id === "life-sample-0")) {
+                          go("items");
+                          return;
+                        }
                         setBusy(true);
                         try {
                           await request("demo", { confirmed: true });
@@ -653,7 +657,9 @@ export default function WujianApp() {
                         }
                       }}
                     >
-                      {items.some(i=>i.id==="life-sample-0") ? "浏览演示物品" : "载入合成演示案例"}
+                      {items.some((i) => i.id === "life-sample-0")
+                        ? "浏览演示物品"
+                        : "载入合成演示案例"}
                     </button>
                   </section>
                 )}
@@ -776,7 +782,7 @@ export default function WujianApp() {
                       setPolicy(e.target.checked ? "candidates" : "off")
                     }
                   />
-                  允许从这段对话整理待确认记忆（确认前不用于长期个性化；默认不发送历史记忆给云端）
+                  允许从这段对话建议记忆（模型可用时分析当前原话；先确认再用于长期个性化，历史私密记忆默认不上云）
                 </label>
                 {activeAskItemId && (
                   <div className="life-actions">
@@ -818,7 +824,7 @@ export default function WujianApp() {
                   memoryPolicy={policy}
                   onActivity={() => load().catch(() => {})}
                 />
-                <details className="life-card">
+                <details className="life-card" open>
                   <summary>个人记忆、来源与可选交流方式</summary>
                   <MemoryCenter actor={actor} items={items} />
                 </details>

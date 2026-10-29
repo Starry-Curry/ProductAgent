@@ -42,8 +42,8 @@ const checks = [];
 await api("demo", { confirmed: true });
 const initial = (await call("/api/life")).data;
 assert.equal(initial.stats.items, 25);
-assert.equal(initial.stats.packs, 11);
-assert.equal(initial.stats.facts, 33);
+assert.equal(initial.stats.packs, 13);
+assert.equal(initial.stats.facts, 42);
 const pixels = await sharp({
   create: { width: 180, height: 130, channels: 3, background: "#899b72" },
 })

@@ -1,0 +1,621 @@
+{
+  "rows": [
+    {
+      "id": "box-story",
+      "arm": "direct",
+      "result": {
+        "text": "{\n  \"newUse\": \"用作口述故事时的‘声音聚焦盒’：将旧纸盒开口朝向讲述者、背对听者，置于讲述者胸前或桌面靠近口部位置，利用其空腔结构轻微反射并引导声波向前方听者方向，增强语音清晰度与私密感。\",\n  \"principle\": \"纸板具有适度声反射性（非吸音亦非强反射），20×15×10 cm空腔可形成低频轻微共振与中高频定向散射；开口朝向讲述者时，盒体遮挡部分后向和侧向声能，使更多直达声集中投射至前方听者，提升语音信噪比与临场专注感——符合安静口述场景对柔和、聚焦、无电子介入的声学需求。\",\n  \"steps\": [\n    \"保持纸盒完整原状（不裁切、不折叠、不加装）\",\n    \"确认盒盖已移除或完全打开，确保顶部与正面开口通畅\",\n    \"讲述时将纸盒竖直放置，开口面正对自身口部（约15–25 cm距离），盒底贴于胸前衣襟或平放于桌面靠近身体一侧\",\n    \"调整盒体倾角，使开口中心大致对准听者耳部高度，避免遮挡视线\",\n    \"自然讲述，不提高音量，依靠盒体被动声学引导增强语音投送效果\"\n  ],\n  \"keyConditions\": [\n    \"纸盒必须为敞口空腔结构（已知尺寸支持此形态）\",\n    \"纸板材质需具备基本声反射能力（用户报告为普通纸板，符合常见纸板声学行为）\",\n    \"使用环境需为安静室内（与用户偏好‘安静的口述故事’一致，避免背景噪声抵消聚焦效果）\",\n    \"听者位于纸盒正前方1–2米内（在空腔有效指向范围内）\"\n  ],\n  \"uncertainties\": [\n    \"实际反射率与内部阻尼未测量，效果强度因纸板厚度、密度、表面平整度而异\",\n    \"个体口型位置与盒体相对几何关系影响声束耦合效率，需现场微调\",\n    \"无实测数据验证该尺寸空腔对人声频段（85–255 Hz基频，最高约4 kHz）的具体响应特性\"\n  ]\n}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 618,
+          "output": 524
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 12255
+    },
+    {
+      "id": "box-story",
+      "arm": "baseline",
+      "result": {
+        "ideas": [
+          {
+            "title": "纸盒故事剧场：口述叙事空间构建",
+            "itemIds": [
+              "9da5047e-7012-49e5-9a57-10dd6625fdbf"
+            ],
+            "minutes": 15,
+            "steps": [
+              "将旧纸盒平放于桌面，开口朝上，作为天然声场边界；不移动、不遮挡，仅利用其空腔结构。",
+              "轻声口述一个原创小故事，每讲完一段（以自然呼吸停顿为界），轻轻敲击盒侧一次作段落标记；共讲三段，敲三下，形成可复现的听觉节律。",
+              "闭眼静默，直到完成三次自然呼吸（吸气-呼气为一回合），回忆刚才声音在盒中停留的质感，用一句话写下‘这个盒子刚刚听过什么’。"
+            ],
+            "limits": [
+              "不裁切、不加热、不碰水、不拍照、不添加任何材料；仅使用登记纸盒本体；依赖用户口述能力与听觉感知"
+            ],
+            "rationale": "以自然呼吸回合替代精确秒数计时，符合‘无计时工具’约束；保留声场边界、口述节奏呼应、敲击标记、质感回忆等核心体验；删除所有关于驻波条件、中频响应、安全/生理效果的未经验证断言，仅陈述可执行动作与可观察结果。",
+            "missing": [
+              "纸板厚度、密度、内部涂层等影响声学表现的参数未登记；无实测混响数据，故不承诺音效强度，仅依托物理常识支持基础听觉反馈",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "生活改善",
+            "requirements": [
+              {
+                "itemId": "9da5047e-7012-49e5-9a57-10dd6625fdbf",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "9da5047e-7012-49e5-9a57-10dd6625fdbf"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "id": "b94692c3-58b5-4d55-817e-55a7da1d63ab",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "只用登记的旧纸盒，想得到一种具体的新用途。我喜欢安静的口述故事；不要拍照、不裁切、不碰水、不加热，不增加任何材料。",
+            "validationNotes": [
+              "已对原草稿的具体错误做一次局部修正并重新检查；未实物验证。"
+            ]
+          }
+        ],
+        "continuation": {
+          "goal": "只用登记的旧纸盒，想得到一种具体的新用途。我喜欢安静的口述故事；不要拍照、不裁切、不碰水、不加热，不增加任何材料。",
+          "minutes": 15,
+          "itemIds": [
+            "9da5047e-7012-49e5-9a57-10dd6625fdbf"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不要拍照"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 从1件可用候选中规划",
+        "resources": [
+          {
+            "id": "9da5047e-7012-49e5-9a57-10dd6625fdbf",
+            "name": "旧纸盒",
+            "capabilities": [
+              "收纳",
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "已对原草稿的具体错误做一次局部修正并重新检查；未实物验证。",
+          "纸板厚度、密度、内部涂层等影响声学表现的参数未登记；无实测混响数据，故不承诺音效强度，仅依托物理常识支持基础听觉反馈",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+        ],
+        "source": "model-creative",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 2587,
+          "output": 871
+        }
+      },
+      "requests": 2,
+      "elapsedMs": 20346
+    },
+    {
+      "id": "box-story",
+      "arm": "alpha",
+      "result": {
+        "ideas": [
+          {
+            "id": "cf0543f2-6d5b-4dd7-ac6b-57df22e85ad7",
+            "title": "围绕旧纸盒做一次细节发现挑战",
+            "itemIds": [
+              "9da5047e-7012-49e5-9a57-10dd6625fdbf"
+            ],
+            "minutes": 5,
+            "steps": [
+              "在正常使用位置观察旧纸盒，找出三个平时未注意到的细节，不拆卸或移动不稳定物品",
+              "给三个细节分别写出一个已看到的事实和一个还不知道的问题；没有记录工具时口头完成",
+              "用已有资料核对一个问题；找不到就保留未知，不能以猜测代替事实"
+            ],
+            "missing": [
+              "材质/结构由本人登记，观察不等于检测；植物不尝食，食品不因游戏改变保存条件"
+            ],
+            "rationale": "将任意一件可用物品转为观察与提问对象，练习区分事实和猜测。",
+            "evidence": [],
+            "limits": [
+              "本地能力组合：登记属性与类别只是候选依据，尺寸、稳定性和实际适用性需现场确认；不改装、不加热。",
+              "旧纸盒：未登记维护限制，先核对实物标签/说明书"
+            ],
+            "source": "local-candidate",
+            "tested": false,
+            "direction": "生活改善",
+            "goal": "只用登记的旧纸盒，想得到一种具体的新用途。我喜欢安静的口述故事；不要拍照、不裁切、不碰水、不加热，不增加任何材料。"
+          },
+          {
+            "id": "323e3daa-08fb-4ef4-be4b-66296be0c427",
+            "title": "把一件常用物画成今天的小速写",
+            "itemIds": [
+              "9da5047e-7012-49e5-9a57-10dd6625fdbf"
+            ],
+            "minutes": 10,
+            "steps": [
+              "选一个身边可观察的物品",
+              "用纸笔画轮廓或写三个细节",
+              "可拍照保存，不追求画得像"
+            ],
+            "limits": [
+              "确认纸笔和观察对象在场",
+              "物品能力来自已登记信息/类别匹配，仍须现场核对；方案未实物验证。"
+            ],
+            "source": "local-candidate",
+            "evidence": [],
+            "tested": false,
+            "goal": "只用登记的旧纸盒，想得到一种具体的新用途。我喜欢安静的口述故事；不要拍照、不裁切、不碰水、不加热，不增加任何材料。"
+          },
+          {
+            "id": "f7dadaad-d168-4336-81eb-1902e71f5f6d",
+            "title": "用现有容器做一次桌面分区",
+            "itemIds": [
+              "9da5047e-7012-49e5-9a57-10dd6625fdbf"
+            ],
+            "minutes": 15,
+            "steps": [
+              "把桌面小物按常用与偶尔用分组",
+              "用清洁完好的容器分区，不堆高",
+              "试用后调整，不合适就恢复"
+            ],
+            "limits": [
+              "确认尺寸、清洁、稳定性及载荷",
+              "非食品级容器不直接接触食物",
+              "物品能力来自已登记信息/类别匹配，仍须现场核对；方案未实物验证。"
+            ],
+            "source": "local-candidate",
+            "evidence": [],
+            "tested": false,
+            "goal": "只用登记的旧纸盒，想得到一种具体的新用途。我喜欢安静的口述故事；不要拍照、不裁切、不碰水、不加热，不增加任何材料。"
+          }
+        ],
+        "continuation": {
+          "goal": "只用登记的旧纸盒，想得到一种具体的新用途。我喜欢安静的口述故事；不要拍照、不裁切、不碰水、不加热，不增加任何材料。",
+          "minutes": 15,
+          "itemIds": [
+            "9da5047e-7012-49e5-9a57-10dd6625fdbf"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不要拍照"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 从1件可用候选中规划",
+        "resources": [
+          {
+            "id": "9da5047e-7012-49e5-9a57-10dd6625fdbf",
+            "name": "旧纸盒",
+            "capabilities": [
+              "收纳",
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "材质/结构由本人登记，观察不等于检测；植物不尝食，食品不因游戏改变保存条件",
+          "云端方案未通过可执行性/资料检查，下面仅为本地有限能力组合，未冒充AI成功。"
+        ],
+        "source": "local-candidate",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 3476,
+          "output": 1194
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "模型候选未通过条件检查；未发布草稿。可调整限制或选择下面明确标注的本地方案。"
+        }
+      },
+      "requests": 2,
+      "elapsedMs": 27302
+    },
+    {
+      "id": "goal-combination",
+      "arm": "direct",
+      "result": {
+        "text": "{\n  \"newUse\": \"纸盒画框叙事台：将旧纸盒平放为底座，画斜靠其前立面内侧形成倾斜画屏；用户坐于盒前，以盒体为‘故事边界’，用手指沿盒边缘轻敲或滑动模拟场景节奏（如敲左角=开门，滑上边=日升），口述与画中视觉元素即时呼应的即兴短故事。\",\n  \"principle\": \"利用纸盒刚性结构提供稳定物理参照系，其尺寸（20×15×10 cm）确保可单手操控且不遮挡画；画仅靠重力斜倚，无接触损伤风险；敲击/滑动动作产生可控微声（纸板固有阻尼抑制响亮噪音），满足安静要求；口述+肢体节奏+视觉锚点构成多模态叙事闭环，支持无限重玩。\",\n  \"steps\": [\n    \"1. 将旧纸盒移至平整桌面，移除盖子（若存在），确保盒体开口朝上、长边（20 cm）为前侧；\",\n    \"2. 将朋友送的画背面轻靠盒体前立面内侧，调整倾角使画自然稳定不滑落（依赖画自身重量与纸盒前立面摩擦）；\",\n    \"3. 用户正坐盒前，视线平齐画中构图区域；\",\n    \"4. 用指尖沿盒体四边缓慢滑动或轻敲特定位置（如左下角=起点，右上角=转折），同步口述与画中形状、色彩、留白等可视特征关联的情节；\",\n    \"5. 每次结束时复位手指，更换敲击模式或视角，重新开始新故事。\"\n  ],\n  \"keyConditions\": [\n    \"纸盒前立面需保持完整直立（用户报告为纸板，承重与结构稳定性默认可用，但须避免过度按压画背）；\",\n    \"画须具备自立倾向（如硬质背板或足够厚度），能靠摩擦斜倚而不坠落——此依赖画的实际物理状态，属用户需现场验证项；\",\n    \"用户需接受即兴口述逻辑（无脚本、不重复），依赖画的开放性视觉信息激发叙事；\",\n    \"环境需有基础静音条件（纸盒敲击声极弱，但强背景噪可能干扰沉浸感）。\"\n  ],\n  \"uncertainties\": [\n    \"画的具体材质与厚度未知，影响其能否稳定斜倚（如薄软纸画易滑落）；\",\n    \"纸盒内部前立面实际平整度与垂直度未登记，若严重变形可能导致画倾角失控；\",\n    \"用户对‘轻敲/滑动’节奏的感知阈值未量化，个体静音敏感度差异可能影响体验一致性；\",\n    \"画的内容抽象程度未知——具象图像更易触发叙事，高度抽象画面可能增加口述启动难度。\"\n  ]\n}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 945,
+          "output": 655
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 15092
+    },
+    {
+      "id": "goal-combination",
+      "arm": "baseline",
+      "result": {
+        "ideas": [
+          {
+            "title": "盒面画廊：三幕静默叙事轮盘",
+            "itemIds": [
+              "fdf5e9d5-4e90-4a7e-afc4-56d55133bfb2",
+              "32b9759a-97ad-41c1-8197-27b5a0329445"
+            ],
+            "minutes": 15,
+            "steps": [
+              "将旧纸盒平放，以盒盖朝上为‘舞台面’；不开启、不拆解、不压折，仅用其六个外表面作叙事分区。",
+              "把朋友送的画平铺于桌面，不移动、不覆盖、不遮挡；仅用它作为‘视觉词典’——每次指向画中任一局部（如一棵树、一只手、一道光）即代表一个叙事元素。",
+              "轮流说出三句话：第一句描述盒面A（如‘左侧面有折痕’），第二句用画中某局部隐喻该特征（如‘像画里那截枯枝’），第三句续编微型情节（如‘它昨夜悄悄长出了新芽’）。",
+              "每轮更换盒面+画中局部组合；完成三轮后，共同轻敲盒面三下——敲击声落定即刻静默，此时所有句子自动连成一段可复述的安静故事。"
+            ],
+            "limits": [
+              "不可触碰画作表面，不可将画放入/覆盖/固定于盒子；不可裁切、粘贴、书写、描摹；纸盒保持闭合原始状态"
+            ],
+            "rationale": "将原步骤4中依赖精确计时工具的‘静默10秒’替换为可执行的物理动作‘共同轻敲盒面三下’，以敲击声落定为明确、无设备依赖的静默触发条件；该动作利用已有纸盒固有属性（可发声），符合‘不买材料、不损坏’约束，且维持原有认知节奏与留白意图。",
+            "missing": [
+              "画作具体尺寸与内容细节（影响局部指认精度，但不阻碍规则运行）",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+              "同伴人数与参与意愿待确认；没有同伴时需改成单人玩法"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "娱乐",
+            "requirements": [
+              {
+                "itemId": "fdf5e9d5-4e90-4a7e-afc4-56d55133bfb2",
+                "quantity": 1
+              },
+              {
+                "itemId": "32b9759a-97ad-41c1-8197-27b5a0329445",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "fdf5e9d5-4e90-4a7e-afc4-56d55133bfb2",
+                "32b9759a-97ad-41c1-8197-27b5a0329445"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "id": "6d27e715-4c74-428c-801a-83ec284d4af6",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "只用登记的旧纸盒和朋友送的画，设计一种能反复玩的安静叙事互动。不要损坏画，不假设画能放进盒子，不裁切、不粘贴、不买材料。",
+            "validationNotes": [
+              "已对原草稿的具体错误做一次局部修正并重新检查；未实物验证。"
+            ]
+          }
+        ],
+        "continuation": {
+          "goal": "只用登记的旧纸盒和朋友送的画，设计一种能反复玩的安静叙事互动。不要损坏画，不假设画能放进盒子，不裁切、不粘贴、不买材料。",
+          "minutes": 15,
+          "itemIds": [
+            "fdf5e9d5-4e90-4a7e-afc4-56d55133bfb2",
+            "32b9759a-97ad-41c1-8197-27b5a0329445"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 不新增购买 · 从2件可用候选中规划",
+        "resources": [
+          {
+            "id": "fdf5e9d5-4e90-4a7e-afc4-56d55133bfb2",
+            "name": "旧纸盒",
+            "capabilities": [
+              "收纳",
+              "观察记录"
+            ]
+          },
+          {
+            "id": "32b9759a-97ad-41c1-8197-27b5a0329445",
+            "name": "朋友送的画",
+            "capabilities": []
+          }
+        ],
+        "missing": [
+          "已对原草稿的具体错误做一次局部修正并重新检查；未实物验证。",
+          "画作具体尺寸与内容细节（影响局部指认精度，但不阻碍规则运行）",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+          "同伴人数与参与意愿待确认；没有同伴时需改成单人玩法"
+        ],
+        "source": "model-creative",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 3376,
+          "output": 1157
+        }
+      },
+      "requests": 2,
+      "elapsedMs": 26289
+    },
+    {
+      "id": "goal-combination",
+      "arm": "alpha",
+      "error": "模型服务请求未完成（503），请稍后重试或联系维护者。",
+      "requests": 2
+    },
+    {
+      "id": "box-practical",
+      "arm": "direct",
+      "error": "模型服务请求未完成（503），请稍后重试或联系维护者。",
+      "requests": 1
+    },
+    {
+      "id": "box-practical",
+      "arm": "baseline",
+      "error": "模型服务请求未完成（503），请稍后重试或联系维护者。",
+      "requests": 1
+    },
+    {
+      "id": "box-practical",
+      "arm": "alpha",
+      "error": "模型服务请求未完成（503），请稍后重试或联系维护者。",
+      "requests": 1
+    },
+    {
+      "id": "product-alpha-test-lin-ikea-samla-19440848",
+      "arm": "alpha",
+      "error": "模型服务请求未完成（503），请稍后重试或联系维护者。",
+      "requests": 1
+    },
+    {
+      "id": "product-alpha-test-lin-ikea-knagglig-10392601",
+      "arm": "alpha",
+      "error": "模型服务请求未完成（503），请稍后重试或联系维护者。",
+      "requests": 1
+    },
+    {
+      "id": "interest",
+      "arm": "natural-chat",
+      "result": {
+        "session": {
+          "id": "76bf87fd-578f-4d1e-99a7-a32cbf449cec",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "81dbad83-4dc0-48af-8e6d-090fc384f7da",
+              "role": "user",
+              "text": "我最近在学水彩，想练习把日常物品编成小故事。",
+              "at": "2026-10-29T06:55:07.985Z",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "a56b23c4-5203-4e0d-9d15-0423a7f97838",
+              "role": "assistant",
+              "text": "目前没有找到可引用的相关生活片段。你可以补充事件线索，或到生活故事查看已保存的原话；普通聊天不要求先选物品。",
+              "reply": {
+                "answer": "目前没有找到可引用的相关生活片段。你可以补充事件线索，或到生活故事查看已保存的原话；普通聊天不要求先选物品。",
+                "outcome": "needs_info",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "citations": [],
+                "memoryIds": [],
+                "evidenceIds": [],
+                "route": {
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "先选择承载故事的物品"
+                }
+              },
+              "at": "2026-10-29T06:55:07.985Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "dfb1b39e-e140-4b5c-b1ba-d9b75d0ddff8",
+            "turnScope": "home",
+            "lastIntent": "story"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T06:55:07.620Z",
+          "updatedAt": "2026-10-29T06:55:07.992Z",
+          "expiresAt": "2026-11-05T06:55:07.620Z"
+        },
+        "reply": {
+          "answer": "目前没有找到可引用的相关生活片段。你可以补充事件线索，或到生活故事查看已保存的原话；普通聊天不要求先选物品。",
+          "outcome": "needs_info",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "citations": [],
+          "memoryIds": [],
+          "evidenceIds": [],
+          "route": {
+            "intent": "story",
+            "mode": "story",
+            "reason": "先选择承载故事的物品"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=home; router=home-router-v1",
+            "at": "2026-10-29T06:55:07.795Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0",
+            "at": "2026-10-29T06:55:07.857Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=5f2bb476-3c77-449d-9636-3db37378ce01; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T06:55:07.858Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "needs_info",
+            "at": "2026-10-29T06:55:07.861Z"
+          },
+          {
+            "stage": "memory_proposals_unavailable",
+            "detail": "Candidate extraction failed; answer preserved, local extraction only",
+            "at": "2026-10-29T06:55:07.985Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      },
+      "requests": 1,
+      "elapsedMs": 394
+    },
+    {
+      "id": "gift",
+      "arm": "natural-chat",
+      "result": {
+        "session": {
+          "id": "8595d6f1-ed76-4942-81b2-4cd98672f177",
+          "owner": "lin",
+          "itemId": "d1ab9c18-b663-471d-9ed1-7cdc82c9c346",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "1002a97f-f2db-42f3-894b-eaca0717b9c1",
+              "role": "user",
+              "text": "这幅画是朋友小夏送我的，我把它带到了新住处。",
+              "at": "2026-10-29T06:55:08.393Z",
+              "itemId": "d1ab9c18-b663-471d-9ed1-7cdc82c9c346",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "f55a5d49-7379-4e27-89af-5cae7361b5da",
+              "role": "assistant",
+              "text": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+                "source": "local-dialogue",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+                "errorCode": "upstream",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+                }
+              },
+              "at": "2026-10-29T06:55:08.393Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "79f21427-b742-4b51-b462-9c4310e7806e",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "这幅画是朋友小夏送我的，我把它带到了新住处。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T06:55:08.016Z",
+          "updatedAt": "2026-10-29T06:55:08.402Z",
+          "expiresAt": "2026-11-05T06:55:08.016Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+          "source": "local-dialogue",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+          "errorCode": "upstream",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-29T06:55:08.143Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T06:55:08.191Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T06:55:08.191Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T06:55:08.242Z"
+          },
+          {
+            "stage": "provider_failed",
+            "detail": "upstream",
+            "at": "2026-10-29T06:55:08.266Z"
+          },
+          {
+            "stage": "memory_proposals_unavailable",
+            "detail": "Candidate extraction failed; answer preserved, local extraction only",
+            "at": "2026-10-29T06:55:08.393Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 2
+      },
+      "requests": 2,
+      "elapsedMs": 403
+    },
+    {
+      "id": "candidates-before-confirmation",
+      "candidates": []
+    },
+    {
+      "id": "gift-candidate-missing",
+      "pass": false
+    }
+  ],
+  "requests": 18,
+  "estimatedCny": 9.0223672,
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

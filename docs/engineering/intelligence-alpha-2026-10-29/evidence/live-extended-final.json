@@ -1,0 +1,417 @@
+{
+  "rows": [
+    {
+      "id": "box-with-real-resources",
+      "arm": "direct",
+      "result": {
+        "text": "{\n  \"newUse\": \"纸盒叙事转盘：用旧纸盒作物理随机器，白纸列角色/场景/动作三类词库，铅笔抽取组合生成故事起点\",\n  \"principle\": \"利用纸盒六面体结构（6个外表面）作为天然骰子；每面贴1张白纸（共6张），每张写同一类别的2个词（如'角色'类：老邮差、玻璃猫），共12词；每次轻摇纸盒后静置，顶面朝上的词即为本次故事核心要素；铅笔用于书写词、标记轮次、记录生成的故事片段。\",\n  \"steps\": [\n    \"取6张白纸，对折一次形成可立于盒面的‘小旗’（不裁切，仅对折；利用A4纸长边对折后高约14.8cm，可稳定倚靠在20cm宽纸盒顶面）\",\n    \"在6张纸上分别写：3张标'角色'（各写2个词）、2张标'场景'（各写2个词）、1张标'动作'（写2个词），共12个词，全部用铅笔书写\",\n    \"将6张对折纸竖直立于旧纸盒六个外表面（盒盖开启状态，盒体平放；纸张倚靠盒壁外侧，不粘贴、不固定，仅靠重力与摩擦维持）\",\n    \"轻握纸盒两端，水平晃动3秒后平稳放下，静置2秒，观察哪一面朝上（顶面）\",\n    \"读出该面上小旗所写的2个词，任选其一作为本次15分钟故事练习的核心要素（如'玻璃猫'或'雨巷尽头'），用剩余白纸和铅笔即兴写出150字内小故事开头\",\n    \"每轮结束后，用铅笔在所用小旗背面画'✓'，6轮后轮换未用过的白纸重新布设词库，实现可反复变化\"\n  ],\n  \"conditions\": {\n    \"requiredItems\": [\"旧纸盒\", \"白纸\", \"铅笔\"],\n    \"physicalConstraints\": [\"不裁切纸张\", \"不加热\", \"不购买新物\", \"不依赖粘合/固定手段\", \"仅靠纸盒六面几何结构与纸张对折后的自立性\"],\n    \"cognitiveConstraints\": [\"每次仅激活1个核心词，避免选项过载\", \"词类分层（角色/场景/动作）确保叙事基本要素覆盖\", \"手写强制慢思考，契合用户‘安静的小故事’偏好\"]\n  },\n  \"unknowns\": [\"纸盒六面是否完全等概率朝上（因磨损或结构不对称可能造成微偏，但无需校准，偏差本身构成自然变化源）\", \"对折白纸在晃动中是否偶有滑落（若发生，视为规则一部分：滑落面自动作废，重摇；此不确定性增强游戏感，且符合‘不固定’约束）\"]\n}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 1671,
+          "output": 676
+        }
+      },
+      "requests": 1
+    },
+    {
+      "id": "box-with-real-resources",
+      "arm": "baseline",
+      "result": {
+        "ideas": [
+          {
+            "id": "15aec270-ac66-4df1-975a-841194270d4e",
+            "title": "把一件常用物画成今天的小速写",
+            "itemIds": [
+              "0cc1fd86-d71c-4a89-b2f5-1393d37a182e"
+            ],
+            "minutes": 10,
+            "steps": [
+              "选一个身边可观察的物品",
+              "用纸笔画轮廓或写三个细节",
+              "可拍照保存，不追求画得像"
+            ],
+            "limits": [
+              "确认纸笔和观察对象在场",
+              "物品能力来自已登记信息/类别匹配，仍须现场核对；方案未实物验证。"
+            ],
+            "source": "local-candidate",
+            "evidence": [],
+            "tested": false,
+            "goal": "只用登记的旧纸盒、白纸和铅笔，想练习讲小故事。设计一种有具体规则、可反复变化的新用途，不要只是观察或仪式；不买材料、不裁切、不加热。"
+          },
+          {
+            "id": "4d191af5-2256-4285-83fb-f0ecdd4bc78d",
+            "title": "用现有容器做一次桌面分区",
+            "itemIds": [
+              "0cc1fd86-d71c-4a89-b2f5-1393d37a182e"
+            ],
+            "minutes": 15,
+            "steps": [
+              "把桌面小物按常用与偶尔用分组",
+              "用清洁完好的容器分区，不堆高",
+              "试用后调整，不合适就恢复"
+            ],
+            "limits": [
+              "确认尺寸、清洁、稳定性及载荷",
+              "非食品级容器不直接接触食物",
+              "物品能力来自已登记信息/类别匹配，仍须现场核对；方案未实物验证。"
+            ],
+            "source": "local-candidate",
+            "evidence": [],
+            "tested": false,
+            "goal": "只用登记的旧纸盒、白纸和铅笔，想练习讲小故事。设计一种有具体规则、可反复变化的新用途，不要只是观察或仪式；不买材料、不裁切、不加热。"
+          }
+        ],
+        "continuation": {
+          "goal": "只用登记的旧纸盒、白纸和铅笔，想练习讲小故事。设计一种有具体规则、可反复变化的新用途，不要只是观察或仪式；不买材料、不裁切、不加热。",
+          "minutes": 15,
+          "itemIds": [
+            "0cc1fd86-d71c-4a89-b2f5-1393d37a182e",
+            "a9c59f68-7d2a-43e6-aee1-61cacdf4a294"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 不新增购买 · 从2件可用候选中规划",
+        "resources": [
+          {
+            "id": "0cc1fd86-d71c-4a89-b2f5-1393d37a182e",
+            "name": "旧纸盒",
+            "capabilities": [
+              "收纳",
+              "观察记录"
+            ]
+          },
+          {
+            "id": "a9c59f68-7d2a-43e6-aee1-61cacdf4a294",
+            "name": "铅笔",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "云端方案未通过可执行性/资料检查，下面仅为本地有限能力组合，未冒充AI成功。"
+        ],
+        "source": "local-candidate",
+        "modelCalls": 1,
+        "tokens": {
+          "input": 2498,
+          "output": 531
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "模型候选未通过条件检查；未发布草稿。可调整限制或选择下面明确标注的本地方案。"
+        }
+      },
+      "requests": 1
+    },
+    {
+      "id": "box-with-real-resources",
+      "arm": "alpha",
+      "error": "模型请求超时，请稍后重试。",
+      "requests": 1
+    },
+    {
+      "id": "goal-with-official-products",
+      "arm": "direct",
+      "result": {
+        "text": "{\n  \"newUse\": \"用KNAGGLIG松木盒作‘故事锚点站’，SAMLA透明盒作‘水彩构思池’，白纸与铅笔执行双轨记录：在纸上分栏手写‘此刻所见’（左）与‘即兴故事片段’（右），每日一张；用KNAGGLIG盒盛放当日纸张并提至固定位置（如窗台），SAMLA盒则静置桌面，仅用于暂存未完成的构图草稿（不叠压、不封盖）；两盒不混用、不移动彼此内容，仅通过人每日‘取纸→书写→归盒’的动作建立空间-时间锚定。\",\n  \"principle\": \"利用KNAGGLIG的物理可携性（提手+2kg承重）与稳定木质触感，将‘完成书写’动作具身化为一次短程搬运，强化行为仪式感；SAMLA的透明性支持‘非介入式视觉提示’——无需开盖即可确认草稿存在，降低启动阻力；A4纸的固定尺寸与铅笔的不可擦除性共同约束发散，使‘构思’与‘叙事’保持分离但同步演进。\",\n  \"steps\": [\n    \"每日开始前，从KNAGGLIG盒取出一张白纸平铺桌面\",\n    \"用铅笔在纸左半部写3–5句‘此刻所见’（如：晾衣绳上晃动的蓝衬衫）\",\n    \"在右半部写1–2句由此生发的安静故事片段（如：它昨天还裹着一个打喷嚏的人）\",\n    \"书写完毕，将纸对折（字面朝内），放入KNAGGLIG盒中，提盒走到预设位置（如窗台）放下\",\n    \"若产生水彩构图念头，另取一张纸速写轮廓，不涂色，放入SAMLA盒中（不盖盖），留待后续决定是否发展\"\n  ],\n  \"conditions\": [\n    \"KNAGGLIG盒内仅放置当日对折纸张，总数不超过20张（对应白纸库存）\",\n    \"SAMLA盒内只放未涂色的构图草稿，且始终敞开，不叠放超过3张\",\n    \"所有书写必须用铅笔，不使用橡皮、不撕纸、不裁切\",\n    \"系统可持续性依赖每日‘提盒—放盒’动作的重复，而非内容累积\"\n  ],\n  \"unknowns\": [\n    \"KNAGGLIG松木表面毛刺是否影响提握舒适度（需首次使用前目视检查）\",\n    \"SAMLA盒在长期日光直射下聚丙烯是否黄变（当前无耐光性数据）\",\n    \"A4纸在KNAGGLIG盒内叠放20张后的实际厚度是否仍适配其内部净高（官方未提供内尺寸）\"\n  ]\n}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 3273,
+          "output": 641
+        }
+      },
+      "requests": 1
+    },
+    {
+      "id": "goal-with-official-products",
+      "arm": "baseline",
+      "result": {
+        "ideas": [
+          {
+            "id": "4daed6f2-6452-4a12-b454-8e19ab0b3c6c",
+            "title": "把一件常用物画成今天的小速写",
+            "itemIds": [
+              "a9c59f68-7d2a-43e6-aee1-61cacdf4a294"
+            ],
+            "minutes": 10,
+            "steps": [
+              "选一个身边可观察的物品",
+              "用纸笔画轮廓或写三个细节",
+              "可拍照保存，不追求画得像"
+            ],
+            "limits": [
+              "确认纸笔和观察对象在场",
+              "物品能力来自已登记信息/类别匹配，仍须现场核对；方案未实物验证。"
+            ],
+            "source": "local-candidate",
+            "evidence": [],
+            "tested": false,
+            "goal": "只用登记的两款盒子、白纸和铅笔，为练习水彩构思和口述故事做一个可持续改变的创意系统。不要把所有物品硬凑在一起，不买材料、不用屏幕，不裁切不加热。"
+          }
+        ],
+        "continuation": {
+          "goal": "只用登记的两款盒子、白纸和铅笔，为练习水彩构思和口述故事做一个可持续改变的创意系统。不要把所有物品硬凑在一起，不买材料、不用屏幕，不裁切不加热。",
+          "minutes": 15,
+          "itemIds": [
+            "a9c59f68-7d2a-43e6-aee1-61cacdf4a294"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 不新增购买 · 从1件可用候选中规划",
+        "resources": [
+          {
+            "id": "a9c59f68-7d2a-43e6-aee1-61cacdf4a294",
+            "name": "铅笔",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "云端方案未通过可执行性/资料检查，下面仅为本地有限能力组合，未冒充AI成功。"
+        ],
+        "source": "local-candidate",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 2576,
+          "output": 1142
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "模型候选未通过条件检查；未发布草稿。可调整限制或选择下面明确标注的本地方案。"
+        }
+      },
+      "requests": 2
+    },
+    {
+      "id": "goal-with-official-products",
+      "arm": "alpha",
+      "error": "模型请求超时，请稍后重试。",
+      "requests": 1
+    },
+    {
+      "id": "alpha-test-lin-ikea-samla-19440848",
+      "arm": "actual-chat",
+      "result": {
+        "session": {
+          "id": "e695eed1-3989-453d-a3be-4bf85eed9e63",
+          "owner": "lin",
+          "itemId": "alpha-test-lin-ikea-samla-19440848",
+          "identity": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T08:27:05.191Z\\\"]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "dda02dfb-0e86-447d-bef3-ea04192837cf",
+              "role": "user",
+              "text": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。",
+              "at": "2026-10-29T08:29:21.833Z",
+              "itemId": "alpha-test-lin-ikea-samla-19440848",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "8f8b09d9-9374-4e83-a8d7-3ed65d69e17a",
+              "role": "assistant",
+              "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:size"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "section": "商品描述、商品尺寸、小贴士、材料",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件"
+              },
+              "at": "2026-10-29T08:29:21.833Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "bdff884c-6c69-43c7-8b06-c0b43b4708a4",
+            "goal": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T08:29:21.705Z",
+          "updatedAt": "2026-10-29T08:29:21.834Z",
+          "expiresAt": "2026-11-05T08:29:21.705Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "samla:size"
+          ],
+          "citations": [
+            {
+              "id": "ikea-samla-19440848",
+              "title": "宜家中国 SAMLA 商品详情",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "section": "商品描述、商品尺寸、小贴士、材料",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T08:29:21.804Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:29:21.804Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T08:29:21.808Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0
+    },
+    {
+      "id": "alpha-test-lin-ikea-knagglig-10392601",
+      "arm": "actual-chat",
+      "result": {
+        "session": {
+          "id": "c74f0973-8457-4931-9026-633b13a3c496",
+          "owner": "lin",
+          "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+          "identity": "[\"lin\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T08:27:05.191Z\\\"]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "ab7ac4d2-2c70-45d7-b55d-03d47be4a9f6",
+              "role": "user",
+              "text": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。",
+              "at": "2026-10-29T08:29:21.893Z",
+              "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "979e373f-582d-4a08-a0c2-cada893fce1b",
+              "role": "assistant",
+              "text": "宽23、深16、高10厘米；不是内部净尺寸。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "宽23、深16、高10厘米；不是内部净尺寸。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "knagglig:size"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-knagglig-10392601",
+                    "title": "宜家中国 KNAGGLIG 商品详情与组装文件入口",
+                    "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+                    "section": "商品描述、尺寸、材料、小贴士",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "不得挂墙 承重上限2公斤不是可坐踏或悬挂许可 食品接触、耐热、内尺寸、具体实物紧固状态未知"
+              },
+              "at": "2026-10-29T08:29:21.893Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "fa3070dc-51f7-4ccc-8291-83c2fa002e57",
+            "goal": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T08:29:21.840Z",
+          "updatedAt": "2026-10-29T08:29:21.894Z",
+          "expiresAt": "2026-11-05T08:29:21.840Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "宽23、深16、高10厘米；不是内部净尺寸。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "knagglig:size"
+          ],
+          "citations": [
+            {
+              "id": "ikea-knagglig-10392601",
+              "title": "宜家中国 KNAGGLIG 商品详情与组装文件入口",
+              "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+              "section": "商品描述、尺寸、材料、小贴士",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "不得挂墙 承重上限2公斤不是可坐踏或悬挂许可 食品接触、耐热、内尺寸、具体实物紧固状态未知"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T08:29:21.876Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:29:21.876Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T08:29:21.877Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0
+    }
+  ],
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

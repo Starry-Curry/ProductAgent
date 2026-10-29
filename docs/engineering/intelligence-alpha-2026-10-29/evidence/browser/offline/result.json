@@ -1,0 +1,237 @@
+{
+  "passed": true,
+  "live": false,
+  "records": [
+    {
+      "input": "我喜欢安静的故事",
+      "result": {
+        "session": {
+          "id": "e77f572a-cde0-4242-929b-aeec02548849",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 4,
+          "status": "active",
+          "messages": [
+            {
+              "id": "a62b083b-095b-449d-aef7-a65f2065df49",
+              "role": "user",
+              "text": "我喜欢安静的故事",
+              "at": "2026-10-29T08:58:28.468Z",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "9d7cb47d-5a7f-40c6-8f73-085c656285a9",
+              "role": "assistant",
+              "text": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+                "source": "local-dialogue",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+                "errorCode": "not_configured",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+                },
+                "presentation": "short"
+              },
+              "at": "2026-10-29T08:58:28.468Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "c70fb0d9-7990-4863-9141-2781013981ef",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "我喜欢安静的故事"
+          },
+          "tried": [],
+          "memoryEpoch": 6,
+          "createdAt": "2026-10-29T08:58:18.878Z",
+          "updatedAt": "2026-10-29T08:58:28.468Z",
+          "expiresAt": "2026-11-05T08:58:18.878Z",
+          "itemScopes": {
+            "cup": "[\"lin\",\"[\\\"500ml · 用户录入\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+          "source": "local-dialogue",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+          "errorCode": "not_configured",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+          },
+          "presentation": "short"
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-29T08:58:28.445Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T08:58:28.450Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:58:28.450Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T08:58:28.457Z"
+          },
+          {
+            "stage": "provider_failed",
+            "detail": "not_configured",
+            "at": "2026-10-29T08:58:28.457Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    },
+    {
+      "input": "这幅画是朋友小夏送我的，我把它带到了新住处。",
+      "result": {
+        "session": {
+          "id": "82444f20-5a8b-413a-ac55-19252f634a0d",
+          "owner": "lin",
+          "itemId": "5309ce2d-53c6-4c1e-b0ab-34ec104e87a8",
+          "identity": "[\"lin\",\"[\\\"待确认\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "6a9a2620-b6ea-462a-a282-b3cf786012d4",
+              "role": "user",
+              "text": "这幅画是朋友小夏送我的，我把它带到了新住处。",
+              "at": "2026-10-29T08:58:28.950Z",
+              "itemId": "5309ce2d-53c6-4c1e-b0ab-34ec104e87a8",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "cfc0959d-51f7-46f1-9cc1-ae0e8c2c1be3",
+              "role": "assistant",
+              "text": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+                "source": "local-dialogue",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+                "errorCode": "not_configured",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+                },
+                "presentation": "short"
+              },
+              "at": "2026-10-29T08:58:28.950Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "4007a7ac-ad49-4534-9fb6-dbf5beb6996a",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "这幅画是朋友小夏送我的，我把它带到了新住处。"
+          },
+          "tried": [],
+          "memoryEpoch": 8,
+          "createdAt": "2026-10-29T08:58:28.918Z",
+          "updatedAt": "2026-10-29T08:58:28.951Z",
+          "expiresAt": "2026-11-05T08:58:28.918Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+          "source": "local-dialogue",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+          "errorCode": "not_configured",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+          },
+          "presentation": "short"
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-29T08:58:28.930Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T08:58:28.935Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:58:28.935Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T08:58:28.942Z"
+          },
+          {
+            "stage": "provider_failed",
+            "detail": "not_configured",
+            "at": "2026-10-29T08:58:28.942Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    }
+  ],
+  "checks": [
+    "official test-product panel",
+    "private explicit synthetic import",
+    "natural source-backed memory candidate",
+    "confirmation and correction UI",
+    "other actor isolation",
+    "390px layout",
+    "no pageerror"
+  ],
+  "physicalTests": 0,
+  "humanCreativeJudgment": false
+}

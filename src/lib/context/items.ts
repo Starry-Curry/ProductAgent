@@ -43,6 +43,7 @@ export function itemContext(item: Item) {
         : null,
     },
     officialFacts: pack?.claims || [],
+    productUnderstanding: pack?.understanding || null,
     limits: pack?.limits || [],
     unknowns: [
       ...(!known(item.brand) ? ["品牌"] : []),

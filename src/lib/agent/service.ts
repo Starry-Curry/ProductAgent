@@ -1,3 +1,5 @@
+import { proposeMemories } from "../memory/proposals.ts";
+import { captureSettings, type Candidate } from "../memory/ambient.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import { mutate, type State, type Person } from "../domain.ts";
@@ -264,6 +266,62 @@ export async function respond(
         : undefined);
     if (style === "short" || style === "detailed")
       execution.reply.presentation = style;
+    let proposals: Candidate[] | undefined;
+    if (
+      !explicit &&
+      session.known.memoryPolicy === "candidates" &&
+      provider.ready &&
+      captureSettings(db, actor).enabled
+    ) {
+      try {
+        const extracted = await proposeMemories(
+          {
+            ...provider,
+            generate: async (...args) => {
+              execution.modelCalls++;
+              return provider.generate(...args);
+            },
+          },
+          input.question,
+        );
+        proposals = extracted.candidates;
+        if (proposals.length) {
+          execution.reply.caveat = [
+            execution.reply.caveat,
+            `整理了${proposals.length}条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。`,
+          ]
+            .filter(Boolean)
+            .join(" ");
+          if (
+            execution.reply.source === "local-memory" &&
+            /没有找到|还没找到|没有.*片段/.test(execution.reply.answer)
+          )
+            execution.reply.answer =
+              "听到了，你刚才说：“" +
+              proposals.map((p) => p.text).join("；") +
+              "”。我整理成了待确认线索，你可以选择是否保留。";
+        }
+        if (extracted.result?.tokens)
+          execution.tokens = {
+            input:
+              (execution.tokens?.input || 0) + extracted.result.tokens.input,
+            output:
+              (execution.tokens?.output || 0) + extracted.result.tokens.output,
+          };
+        execution.trace.push({
+          stage: "memory_proposals",
+          detail: `${proposals.length} source-anchored candidates; confirmation required`,
+          at: new Date().toISOString(),
+        });
+      } catch {
+        execution.trace.push({
+          stage: "memory_proposals_unavailable",
+          detail:
+            "Candidate extraction failed; answer preserved, local extraction only",
+          at: new Date().toISOString(),
+        });
+      }
+    }
     const at = new Date().toISOString();
     session.messages.push(
       {
@@ -275,7 +333,8 @@ export async function respond(
         memoryPolicy: input.memoryPolicy,
         capture:
           session.known.memoryPolicy !== "off" &&
-          (input.mode !== "auto" ||
+          (session.known.memoryPolicy === "candidates" ||
+            input.mode !== "auto" ||
             (!!execution.reply.route &&
               ["help", "story", "companion"].includes(
                 execution.reply.route.intent,
@@ -297,7 +356,7 @@ export async function respond(
     session.status =
       execution.reply.outcome === "needs_info" ? "waiting_user" : "active";
     const result = { session, ...execution };
-    commitTurn(db, read, actor, input, result);
+    commitTurn(db, read, actor, input, result, proposals);
     return result;
   } catch (error) {
     releaseTurn(db, actor, input, session.id);

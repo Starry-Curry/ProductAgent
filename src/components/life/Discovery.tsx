@@ -1,4 +1,5 @@
 "use client";
+import { ProductKnowledgeLab } from "./ProductKnowledgeLab";
 import { useState, useEffect } from "react";
 import { usePublicDemo } from "../DemoBoundary";
 import { Sparkles, ArrowUp, SlidersHorizontal } from "lucide-react";
@@ -40,7 +41,7 @@ export function Discovery({
   );
   const [continuation, setContinuation] = useState<any>(undefined);
   const [cloud, setCloud] = useState(true);
-  const [review, setReview] = useState(false);
+  const [review, setReview] = useState(true);
   const [experienceIds, setExperienceIds] = useState<string[]>([]);
   const [gaps, setGaps] = useState<string[]>([]);
   const [waitSeconds, setWaitSeconds] = useState(0);
@@ -96,7 +97,8 @@ export function Discovery({
       await refresh();
       if (!d.ideas.length)
         setNotice(
-          "暂时没有满足条件的方案。先确认物品可用状态，或调整时间与要求；不会把缺少的物品当成已有。",
+          d.failure?.message ||
+            "暂时没有满足条件的方案。先确认物品可用状态，或调整时间与要求；不会把缺少的物品当成已有。",
         );
     } catch (e) {
       setNotice((e as Error).message);
@@ -137,6 +139,16 @@ export function Discovery({
   );
   return (
     <section className="life-discovery">
+      <ProductKnowledgeLab
+        onTry={async () => {
+          await request("alphaSamples", { confirmed: true });
+          setSynthetic(true);
+          await refresh();
+          setNotice(
+            "已添加测试商品。勾选范围后描述想实现的效果；这些记录不代表真实拥有。",
+          );
+        }}
+      />
       <div className="discovery-heading">
         <span className="life-eyebrow">MAKE SOMETHING OF TODAY</span>
         <h2>描述一个想法，让手边的物品参与。</h2>
@@ -388,16 +400,44 @@ export function Discovery({
         {rows.map((idea) => (
           <article className="life-card life-idea" key={idea.id}>
             <span className="life-pill">
-              {idea.demo ? "预置演示方案（非在线 AI）" : idea.source === "model-creative"
-                ? "AI 生成创意"
-                : idea.source === "user-submitted"
-                  ? "用户提供的经验"
-                  : "本地创意候选"}{" "}
+              {idea.demo
+                ? "预置演示方案（非在线 AI）"
+                : idea.source === "model-creative"
+                  ? "AI 生成创意"
+                  : idea.source === "user-submitted"
+                    ? "用户提供的经验"
+                    : "本地创意候选"}{" "}
               · 未实物验证
             </span>
             <h3>{idea.title}</h3>
             {idea.rationale && (
               <p className="idea-rationale">{idea.rationale}</p>
+            )}
+            {idea.reasoning && (
+              <section aria-label="创意如何成立">
+                <p>
+                  <strong>你会得到：</strong>
+                  {idea.reasoning.outcome}
+                </p>
+                <ul>
+                  {idea.reasoning.roles.map((r) => (
+                    <li key={r.itemId}>
+                      {items.find((i) => i.id === r.itemId)?.name}：{r.function}{" "}
+                      → {r.contribution}（用途推导，待实践）
+                    </li>
+                  ))}
+                </ul>
+                {idea.reasoning.checks.map((c, n) => (
+                  <p key={n}>
+                    先确认：{c.condition}。{c.method}；不成立时：{c.ifFail}
+                  </p>
+                ))}
+                {!!idea.reasoning.preferenceIds.length && (
+                  <small>
+                    采用了你已确认并授权的偏好；可在个人记忆中纠正或忘记。
+                  </small>
+                )}
+              </section>
             )}
             {idea.direction && <small>{idea.direction} · 可尝试的方向</small>}
             {!!idea.missing?.length && (

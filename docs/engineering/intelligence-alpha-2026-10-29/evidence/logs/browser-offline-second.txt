@@ -1,0 +1,25 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('article.source-card').filter({ has: getByText('我喜欢安静的故事', { exact: true }) }).getByRole('button', { name: '纠正 / 调整授权', exact: true })
+
+    at D:\ProductAgent-LifeContext\.runtime\alpha-app\tests\alpha-integration.mjs:22:63 {
+  log: [
+    "  - waiting for locator('article.source-card').filter({ has: getByText('我喜欢安静的故事', { exact: true }) }).getByRole('button', { name: '纠正 / 调整授权', exact: true })"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.16.0
+file:///D:/ProductAgent-LifeContext/.runtime/alpha-app/scripts/verify-local.mjs:101
+    if (code !== 0) throw Error(script + " failed (" + code + ")");
+                          ^
+
+Error: tests/alpha-integration.mjs failed (1)
+    at file:///D:/ProductAgent-LifeContext/.runtime/alpha-app/scripts/verify-local.mjs:101:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.16.0

@@ -61,17 +61,17 @@ function setup() {
   };
   return { db, filename, read, provider };
 }
-test("官方资料扩充为十一包三十三事实，案例绑定明确地区型号，演示记忆 ID 可由 API 使用", () => {
-  assert.equal(productPacks.length, 11);
+test("官方资料含十三包四十二事实，案例绑定明确地区型号，演示记忆 ID 可由 API 使用", () => {
+  assert.equal(productPacks.length, 13);
   assert.equal(
     productPacks.reduce((n, p) => n + p.claims.length, 0),
-    33,
+    42,
   );
   assert.equal(householdProductPacks.length, 7);
   assert.equal(householdCases.length, 8);
   assert.equal(
     new Set(productPacks.flatMap((p) => p.claims.map((c) => c.id))).size,
-    33,
+    42,
   );
   for (const p of householdProductPacks) {
     assert.ok(

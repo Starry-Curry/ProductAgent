@@ -54,7 +54,7 @@ export const discoveryInput = z
     experienceIds: z.array(z.string().uuid()).max(6).default([]),
     creativeEvidenceIds: z.array(z.string().uuid()).max(6).default([]),
     publicEvidence: z.boolean().default(true),
-    candidates: z.number().int().min(1).max(3).default(3),
+    candidates: z.number().int().min(1).max(3).default(1),
     review: z.boolean().default(false),
     minutes: z.number().int().min(1).max(240).optional(),
     includeSynthetic: z.boolean().default(false),
@@ -130,7 +130,7 @@ export type DiscoveryResult = {
   understanding: string;
   resources: { id: string; name: string; capabilities: string[] }[];
   missing: string[];
-  source: "model-creative" | "local-candidate";
+  source: "model-creative" | "local-candidate" | "rejected-model";
   modelCalls: number;
   tokens?: { input: number; output: number } | null;
   failure?: { kind: "candidate_invalid"; retryable: boolean; message: string };
@@ -223,9 +223,12 @@ export async function planDiscovery(
   if (!selected.length && declaresItems(input.goal) && named.length)
     selected = named.map((i) => i.id);
   const onlyPhrase = input.goal.match(/(?:只用|只使用)([^，。；]{1,80})/)?.[1];
-  const onlyNamed = onlyPhrase
-    ? visible.filter((i) => mentionsItem(onlyPhrase, i.name)).map((i) => i.id)
-    : [];
+  // Structured IDs are the explicit authorized pool. A partial name match must
+  // not silently drop the rest (e.g. "20张白纸" mentioned as "白纸").
+  const onlyNamed =
+    onlyPhrase && !input.itemIds.length
+      ? visible.filter((i) => mentionsItem(onlyPhrase, i.name)).map((i) => i.id)
+      : [];
   if (onlyNamed.length)
     selected = selected.length
       ? selected.filter((id) => onlyNamed.includes(id))
@@ -443,16 +446,22 @@ export async function planDiscovery(
             ))
         )
           throw error;
-        const fallback = await planDiscovery(
-          db,
-          readCurrent?.() || state,
-          actor,
-          { ...input, model: false, review: false, publicEvidence: false },
-          provider,
-          readCurrent,
-        );
         return {
-          ...fallback,
+          ideas: [],
+          continuation: {
+            goal,
+            minutes,
+            itemIds: items.map((i) => i.id),
+            excludedItemIds: [...excluded],
+            restrictions: input.continuation?.restrictions || [],
+          },
+          understanding: understood,
+          resources: profiles.map((p) => ({
+            id: p.id,
+            name: p.name,
+            capabilities: p.capabilities,
+          })),
+          source: "rejected-model",
           modelCalls,
           tokens,
           cloudRejected: true,
@@ -460,12 +469,9 @@ export async function planDiscovery(
             kind: "candidate_invalid",
             retryable: true,
             message:
-              "模型候选未通过条件检查；未发布草稿。可调整限制或选择下面明确标注的本地方案。",
+              "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。",
           },
-          missing: [
-            ...fallback.missing,
-            "云端方案未通过可执行性/资料检查，下面仅为本地有限能力组合，未冒充AI成功。",
-          ],
+          missing: ["本次没有可发布的AI方案；未用固定观察任务替代新用途。"],
         };
       }
       ideas = generated.alternatives || [generated];

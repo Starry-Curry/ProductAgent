@@ -1,0 +1,281 @@
+{
+  "rows": [
+    {
+      "id": "box-with-real-resources",
+      "arm": "alpha",
+      "result": {
+        "ideas": [],
+        "continuation": {
+          "goal": "只用登记的旧纸盒、白纸和铅笔，想练习讲小故事。设计一种有具体规则、可反复变化的新用途，不要只是观察或仪式；不买材料、不裁切、不加热。",
+          "minutes": 15,
+          "itemIds": [
+            "0172b346-1064-4b51-af2f-090d89d1e8fa",
+            "10b149a4-34fa-4ffe-af91-8d3c4dc8f05a",
+            "3c9c211c-77cd-4244-843a-6069c89e8196"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 不新增购买 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "0172b346-1064-4b51-af2f-090d89d1e8fa",
+            "name": "旧纸盒",
+            "capabilities": [
+              "收纳",
+              "观察记录"
+            ]
+          },
+          {
+            "id": "10b149a4-34fa-4ffe-af91-8d3c4dc8f05a",
+            "name": "20张白纸",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          },
+          {
+            "id": "3c9c211c-77cd-4244-843a-6069c89e8196",
+            "name": "铅笔",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          }
+        ],
+        "source": "rejected-model",
+        "modelCalls": 3,
+        "tokens": {
+          "input": 12784,
+          "output": 4653
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。"
+        },
+        "missing": [
+          "本次没有可发布的AI方案；未用固定观察任务替代新用途。"
+        ]
+      },
+      "requests": 3
+    },
+    {
+      "id": "goal-with-official-products",
+      "arm": "alpha",
+      "error": "原创意未通过物品条件检查，修正请求超时。未发布该草稿；可缩小物品范围后重试，或选择明确标注的本地方案。",
+      "requests": 3
+    },
+    {
+      "id": "alpha-test-lin-ikea-samla-19440848",
+      "arm": "actual-chat",
+      "result": {
+        "session": {
+          "id": "fe05bdf5-d009-40d7-b7d4-ad1c092bb939",
+          "owner": "lin",
+          "itemId": "alpha-test-lin-ikea-samla-19440848",
+          "identity": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T08:43:28.952Z\\\"]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "a91ad623-5ca6-4abd-9779-a570a2c1233b",
+              "role": "user",
+              "text": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。",
+              "at": "2026-10-29T08:47:21.995Z",
+              "itemId": "alpha-test-lin-ikea-samla-19440848",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "1253894a-461b-4d29-86dc-3fa894354359",
+              "role": "assistant",
+              "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:size"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "section": "商品描述、商品尺寸、小贴士、材料",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件"
+              },
+              "at": "2026-10-29T08:47:21.995Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "da983e95-5dc6-4289-827a-fb62a6655efb",
+            "goal": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T08:47:21.896Z",
+          "updatedAt": "2026-10-29T08:47:21.996Z",
+          "expiresAt": "2026-11-05T08:47:21.896Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "samla:size"
+          ],
+          "citations": [
+            {
+              "id": "ikea-samla-19440848",
+              "title": "宜家中国 SAMLA 商品详情",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "section": "商品描述、商品尺寸、小贴士、材料",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T08:47:21.978Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:47:21.978Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T08:47:21.979Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0
+    },
+    {
+      "id": "alpha-test-lin-ikea-knagglig-10392601",
+      "arm": "actual-chat",
+      "result": {
+        "session": {
+          "id": "d756c900-d5aa-4e5f-8554-6e3be9c5844b",
+          "owner": "lin",
+          "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+          "identity": "[\"lin\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T08:43:28.952Z\\\"]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "6cc979fe-10e1-4198-9701-463befd64a8d",
+              "role": "user",
+              "text": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。",
+              "at": "2026-10-29T08:47:22.048Z",
+              "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "fd245b7f-7439-4f00-a943-5cc0113d5ec6",
+              "role": "assistant",
+              "text": "宽23、深16、高10厘米；不是内部净尺寸。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "宽23、深16、高10厘米；不是内部净尺寸。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "knagglig:size"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-knagglig-10392601",
+                    "title": "宜家中国 KNAGGLIG 商品详情与组装文件入口",
+                    "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+                    "section": "商品描述、尺寸、材料、小贴士",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "不得挂墙 承重上限2公斤不是可坐踏或悬挂许可 食品接触、耐热、内尺寸、具体实物紧固状态未知"
+              },
+              "at": "2026-10-29T08:47:22.048Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "239378ef-c5c4-437a-8805-36c931d5f92f",
+            "goal": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T08:47:22.000Z",
+          "updatedAt": "2026-10-29T08:47:22.048Z",
+          "expiresAt": "2026-11-05T08:47:22.000Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "宽23、深16、高10厘米；不是内部净尺寸。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "knagglig:size"
+          ],
+          "citations": [
+            {
+              "id": "ikea-knagglig-10392601",
+              "title": "宜家中国 KNAGGLIG 商品详情与组装文件入口",
+              "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+              "section": "商品描述、尺寸、材料、小贴士",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "不得挂墙 承重上限2公斤不是可坐踏或悬挂许可 食品接触、耐热、内尺寸、具体实物紧固状态未知"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T08:47:22.030Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:47:22.030Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T08:47:22.031Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0
+    }
+  ],
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

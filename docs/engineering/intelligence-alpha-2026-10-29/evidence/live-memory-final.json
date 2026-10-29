@@ -1,0 +1,629 @@
+{
+  "rows": [
+    {
+      "id": "interest",
+      "arm": "natural-chat",
+      "result": {
+        "session": {
+          "id": "bd092b05-2986-4699-91d5-cfb3e5fd3be8",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "4e918e04-32f4-47e1-a034-9b87f3b47ddd",
+              "role": "user",
+              "text": "我最近在学水彩，想练习把日常物品编成小故事。",
+              "at": "2026-10-29T08:12:11.715Z",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "83a1e9e3-ff01-45e0-a76c-01577fc7ce4a",
+              "role": "assistant",
+              "text": "听到了，你刚才说：“我最近在学水彩；想练习把日常物品编成小故事”。我整理成了待确认线索，你可以选择是否保留。",
+              "reply": {
+                "answer": "听到了，你刚才说：“我最近在学水彩；想练习把日常物品编成小故事”。我整理成了待确认线索，你可以选择是否保留。",
+                "outcome": "needs_info",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "citations": [],
+                "memoryIds": [],
+                "evidenceIds": [],
+                "route": {
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "先选择承载故事的物品"
+                },
+                "caveat": "整理了2条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。"
+              },
+              "at": "2026-10-29T08:12:11.715Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "6e5151e6-b310-4cf7-a708-6b7e4dcb1f23",
+            "turnScope": "home",
+            "lastIntent": "story"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T08:12:09.800Z",
+          "updatedAt": "2026-10-29T08:12:11.720Z",
+          "expiresAt": "2026-11-05T08:12:09.800Z"
+        },
+        "reply": {
+          "answer": "听到了，你刚才说：“我最近在学水彩；想练习把日常物品编成小故事”。我整理成了待确认线索，你可以选择是否保留。",
+          "outcome": "needs_info",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "citations": [],
+          "memoryIds": [],
+          "evidenceIds": [],
+          "route": {
+            "intent": "story",
+            "mode": "story",
+            "reason": "先选择承载故事的物品"
+          },
+          "caveat": "整理了2条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。"
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=home; router=home-router-v1",
+            "at": "2026-10-29T08:12:09.868Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0",
+            "at": "2026-10-29T08:12:09.897Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=c582bfc9-d905-47e9-9589-c93dbd1916b3; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:12:09.897Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "needs_info",
+            "at": "2026-10-29T08:12:09.900Z"
+          },
+          {
+            "stage": "memory_proposals",
+            "detail": "2 source-anchored candidates; confirmation required",
+            "at": "2026-10-29T08:12:11.715Z"
+          }
+        ],
+        "tokens": {
+          "input": 173,
+          "output": 33
+        },
+        "modelCalls": 1
+      },
+      "requests": 1,
+      "elapsedMs": 1928
+    },
+    {
+      "id": "gift",
+      "arm": "natural-chat",
+      "result": {
+        "session": {
+          "id": "f9894a05-c349-44a0-b4c0-8f6d170f74fa",
+          "owner": "lin",
+          "itemId": "b4b9022d-60d6-4f5c-a24c-df64f1e19a34",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "353f74d8-cb02-46cb-8def-df56e768e2f3",
+              "role": "user",
+              "text": "这幅画是朋友小夏送我的，我把它带到了新住处。",
+              "at": "2026-10-29T08:12:15.399Z",
+              "itemId": "b4b9022d-60d6-4f5c-a24c-df64f1e19a34",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "a513a13b-0d11-4838-99bc-0b237c92c567",
+              "role": "assistant",
+              "text": "真好呀，小夏送的画陪着你一起搬进了新住处——像一位安静的老朋友，也像一个温柔的开始。你愿意说说这幅画的样子，或者你们之间和它有关的小故事吗？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "真好呀，小夏送的画陪着你一起搬进了新住处——像一位安静的老朋友，也像一个温柔的开始。你愿意说说这幅画的样子，或者你们之间和它有关的小故事吗？",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。 整理了2条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+                }
+              },
+              "at": "2026-10-29T08:12:15.399Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "0ff73d91-6a1b-43e1-888c-06f131455621",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "这幅画是朋友小夏送我的，我把它带到了新住处。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T08:12:11.728Z",
+          "updatedAt": "2026-10-29T08:12:15.403Z",
+          "expiresAt": "2026-11-05T08:12:11.728Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "真好呀，小夏送的画陪着你一起搬进了新住处——像一位安静的老朋友，也像一个温柔的开始。你愿意说说这幅画的样子，或者你们之间和它有关的小故事吗？",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。 整理了2条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-29T08:12:11.760Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T08:12:11.781Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:12:11.781Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T08:12:11.802Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T08:12:13.841Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T08:12:13.872Z"
+          },
+          {
+            "stage": "memory_proposals",
+            "detail": "2 source-anchored candidates; confirmation required",
+            "at": "2026-10-29T08:12:15.399Z"
+          }
+        ],
+        "tokens": {
+          "input": 2755,
+          "output": 115
+        },
+        "modelCalls": 2
+      },
+      "requests": 2,
+      "elapsedMs": 3682
+    },
+    {
+      "id": "candidates-before-confirmation",
+      "candidates": [
+        {
+          "id": "ba992187-3cc9-405d-8f97-6fd168d99bab",
+          "owner": "lin",
+          "version": 1,
+          "kind": "interest",
+          "text": "这幅画是朋友小夏送我的，我把它带到了新住处。",
+          "status": "candidate",
+          "allowCloud": false,
+          "source": "automatic",
+          "demo": false,
+          "createdAt": "2026-10-29T08:12:15.403Z",
+          "updatedAt": "2026-10-29T08:12:15.403Z",
+          "provenance": {
+            "kind": "chat",
+            "sourceId": "0ff73d91-6a1b-43e1-888c-06f131455621",
+            "sessionId": "f9894a05-c349-44a0-b4c0-8f6d170f74fa",
+            "basis": "user_statement",
+            "at": "2026-10-29T08:12:15.400Z",
+            "extractor": "ambient-local-v1"
+          },
+          "archived": false
+        },
+        {
+          "id": "d945eebd-04c1-474d-9d4e-b8c52747c5f1",
+          "owner": "lin",
+          "version": 1,
+          "kind": "relationship",
+          "text": "这幅画是朋友小夏送我的",
+          "itemId": "b4b9022d-60d6-4f5c-a24c-df64f1e19a34",
+          "status": "candidate",
+          "allowCloud": false,
+          "source": "automatic",
+          "demo": false,
+          "createdAt": "2026-10-29T08:12:15.402Z",
+          "updatedAt": "2026-10-29T08:12:15.402Z",
+          "itemOwner": "lin",
+          "provenance": {
+            "kind": "chat",
+            "sourceId": "0ff73d91-6a1b-43e1-888c-06f131455621",
+            "sessionId": "f9894a05-c349-44a0-b4c0-8f6d170f74fa",
+            "basis": "user_statement",
+            "at": "2026-10-29T08:12:15.400Z",
+            "extractor": "ambient-local-v1"
+          },
+          "archived": false
+        },
+        {
+          "id": "9e7a792f-e3b8-41b5-9ca9-c1db93e2a773",
+          "owner": "lin",
+          "version": 1,
+          "kind": "interest",
+          "text": "想练习把日常物品编成小故事",
+          "status": "candidate",
+          "allowCloud": false,
+          "source": "automatic",
+          "demo": false,
+          "createdAt": "2026-10-29T08:12:11.719Z",
+          "updatedAt": "2026-10-29T08:12:11.719Z",
+          "provenance": {
+            "kind": "chat",
+            "sourceId": "6e5151e6-b310-4cf7-a708-6b7e4dcb1f23",
+            "sessionId": "bd092b05-2986-4699-91d5-cfb3e5fd3be8",
+            "basis": "user_statement",
+            "at": "2026-10-29T08:12:11.717Z",
+            "extractor": "ambient-local-v1"
+          },
+          "archived": false
+        },
+        {
+          "id": "4cb94c6a-967d-4ceb-8086-b05c2fd8c6d6",
+          "owner": "lin",
+          "version": 1,
+          "kind": "interest",
+          "text": "我最近在学水彩",
+          "status": "candidate",
+          "allowCloud": false,
+          "source": "automatic",
+          "demo": false,
+          "createdAt": "2026-10-29T08:12:11.719Z",
+          "updatedAt": "2026-10-29T08:12:11.719Z",
+          "provenance": {
+            "kind": "chat",
+            "sourceId": "6e5151e6-b310-4cf7-a708-6b7e4dcb1f23",
+            "sessionId": "bd092b05-2986-4699-91d5-cfb3e5fd3be8",
+            "basis": "user_statement",
+            "at": "2026-10-29T08:12:11.717Z",
+            "extractor": "ambient-local-v1"
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "gift-cross-session",
+      "arm": "alpha",
+      "result": {
+        "session": {
+          "id": "69430d77-fdfe-40a3-9691-b05f92afb8ec",
+          "owner": "lin",
+          "itemId": "b4b9022d-60d6-4f5c-a24c-df64f1e19a34",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "story",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "bb6e4246-a219-4495-a708-45098ca119ce",
+              "role": "user",
+              "text": "你还记得这幅画是谁送给我的？不要推测日期。",
+              "at": "2026-10-29T08:12:15.538Z",
+              "itemId": "b4b9022d-60d6-4f5c-a24c-df64f1e19a34",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "f91482c9-4e15-4868-958e-d870dcfd9ac2",
+              "role": "assistant",
+              "text": "记得，你曾提到，这幅画是朋友小夏送你的。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "记得，你曾提到，这幅画是朋友小夏送你的。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "d945eebd-04c1-474d-9d4e-b8c52747c5f1"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。"
+              },
+              "at": "2026-10-29T08:12:15.538Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "0c8e8711-2bee-4a87-846c-d56feea978e2"
+          },
+          "tried": [],
+          "memoryEpoch": 2,
+          "createdAt": "2026-10-29T08:12:15.421Z",
+          "updatedAt": "2026-10-29T08:12:15.539Z",
+          "expiresAt": "2026-11-05T08:12:15.421Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "记得，你曾提到，这幅画是朋友小夏送你的。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "d945eebd-04c1-474d-9d4e-b8c52747c5f1"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T08:12:15.484Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=story; memoryRefs=d945eebd-04c1-474d-9d4e-b8c52747c5f1; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:12:15.484Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=d945eebd-04c1-474d-9d4e-b8c52747c5f1",
+            "at": "2026-10-29T08:12:15.487Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-demo",
+            "at": "2026-10-29T08:12:15.487Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T08:12:15.487Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0,
+      "elapsedMs": 123
+    },
+    {
+      "id": "gift-corrected",
+      "arm": "alpha",
+      "result": {
+        "session": {
+          "id": "adc0305a-5d59-486b-84d4-c0fed6b706fe",
+          "owner": "lin",
+          "itemId": "b4b9022d-60d6-4f5c-a24c-df64f1e19a34",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "story",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "9ca37a3e-fa59-4d77-81e8-3fa13fe7046d",
+              "role": "user",
+              "text": "这幅画的赠送者是谁？请使用更正后的记录。",
+              "at": "2026-10-29T08:12:15.621Z",
+              "itemId": "b4b9022d-60d6-4f5c-a24c-df64f1e19a34",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "afc5b3c8-5b87-42b1-9edf-0ab6a0555725",
+              "role": "assistant",
+              "text": "记得，你曾提到，更正：这幅画是朋友小林送给你的，不是小夏。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "记得，你曾提到，更正：这幅画是朋友小林送给你的，不是小夏。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "d945eebd-04c1-474d-9d4e-b8c52747c5f1"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。"
+              },
+              "at": "2026-10-29T08:12:15.621Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "f2d741ad-5ae6-484a-85ed-65ebc90a2f9e"
+          },
+          "tried": [],
+          "memoryEpoch": 3,
+          "createdAt": "2026-10-29T08:12:15.556Z",
+          "updatedAt": "2026-10-29T08:12:15.621Z",
+          "expiresAt": "2026-11-05T08:12:15.556Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "记得，你曾提到，更正：这幅画是朋友小林送给你的，不是小夏。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "d945eebd-04c1-474d-9d4e-b8c52747c5f1"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T08:12:15.604Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=story; memoryRefs=d945eebd-04c1-474d-9d4e-b8c52747c5f1; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:12:15.604Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=d945eebd-04c1-474d-9d4e-b8c52747c5f1",
+            "at": "2026-10-29T08:12:15.605Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-demo",
+            "at": "2026-10-29T08:12:15.605Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T08:12:15.605Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0,
+      "elapsedMs": 69
+    },
+    {
+      "id": "private-other-role",
+      "pass": true
+    },
+    {
+      "id": "gift-forgotten",
+      "arm": "alpha",
+      "result": {
+        "session": {
+          "id": "4146c354-6c33-4c6c-8080-dd896118d52e",
+          "owner": "lin",
+          "itemId": "b4b9022d-60d6-4f5c-a24c-df64f1e19a34",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "story",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "7d81be00-af72-46dd-a2f5-ab664af2aa0c",
+              "role": "user",
+              "text": "你还记得这幅画是谁送给我的？",
+              "at": "2026-10-29T08:12:15.677Z",
+              "itemId": "b4b9022d-60d6-4f5c-a24c-df64f1e19a34",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "ec2e8804-3eb0-4899-af77-df848c7be104",
+              "role": "assistant",
+              "text": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。"
+              },
+              "at": "2026-10-29T08:12:15.677Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "48b78c51-719c-4a25-9227-ed51c7e913d9"
+          },
+          "tried": [],
+          "memoryEpoch": 4,
+          "createdAt": "2026-10-29T08:12:15.629Z",
+          "updatedAt": "2026-10-29T08:12:15.678Z",
+          "expiresAt": "2026-11-05T08:12:15.629Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T08:12:15.660Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=story; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:12:15.660Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=",
+            "at": "2026-10-29T08:12:15.660Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-demo",
+            "at": "2026-10-29T08:12:15.660Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T08:12:15.660Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0,
+      "elapsedMs": 52
+    }
+  ],
+  "requests": 42,
+  "estimatedCny": 9.073781199999999,
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

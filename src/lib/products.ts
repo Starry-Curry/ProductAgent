@@ -1,5 +1,16 @@
+import { alphaProductPacks } from "./catalog/alpha-products.ts";
 import { householdProductPacks } from "./catalog/household-products.ts";
 export type ProductPack = {
+  understanding?: {
+    properties: { key: string; value: string; factIds: string[] }[];
+    unknowns: string[];
+    possibilities: {
+      function: string;
+      principle: string;
+      basisFactIds: string[];
+      conditions: string[];
+    }[];
+  };
   id: string;
   product: string;
   model: string;
@@ -128,7 +139,7 @@ productPacks.push(
   },
 );
 
-productPacks.push(...householdProductPacks);
+productPacks.push(...householdProductPacks, ...alphaProductPacks);
 
 export function findPack(id: string) {
   return productPacks.find((p) => p.id === id);

@@ -1,0 +1,111 @@
+{
+  "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('article.source-card').filter({ has: getByText('我喜欢安静的故事', { exact: true }) }).getByRole('button', { name: '纠正 / 调整授权', exact: true })\u001b[22m\n",
+  "records": [
+    {
+      "input": "我喜欢安静的故事",
+      "result": {
+        "session": {
+          "id": "43309340-d544-413a-bdc7-86331773a9e2",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "63ebfe1f-5eba-4f0d-b9e8-0d172e4d4082",
+              "role": "user",
+              "text": "我喜欢安静的故事",
+              "at": "2026-10-29T07:40:16.319Z",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "2c1ec95b-3d6d-4a29-bb24-7c0d3706bbd3",
+              "role": "assistant",
+              "text": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+                "source": "local-dialogue",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+                "errorCode": "not_configured",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+                }
+              },
+              "at": "2026-10-29T07:40:16.319Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "55276edf-9e7f-4e88-89c9-bca2057dd712",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "我喜欢安静的故事"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-29T07:40:16.273Z",
+          "updatedAt": "2026-10-29T07:40:16.320Z",
+          "expiresAt": "2026-11-05T07:40:16.273Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我在这里，可以继续说说。当前是本地简短回应；云端 AI 尚未开启。",
+          "source": "local-dialogue",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "本地简短回应；AI 暂不可用，没有读取未授权的历史记忆。",
+          "errorCode": "not_configured",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-29T07:40:16.295Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T07:40:16.303Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T07:40:16.303Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T07:40:16.310Z"
+          },
+          {
+            "stage": "provider_failed",
+            "detail": "not_configured",
+            "at": "2026-10-29T07:40:16.310Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,396 @@
+{
+  "passed": true,
+  "live": true,
+  "records": [
+    {
+      "input": "我最近在学水彩，想把每天看到的东西编成小故事。",
+      "result": {
+        "session": {
+          "id": "449edbb4-0c00-44fd-b036-5d5168729e3d",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "149fb0ec-a108-44f9-a559-d82e68b6a862",
+              "role": "user",
+              "text": "我最近在学水彩，想把每天看到的东西编成小故事。",
+              "at": "2026-10-29T09:07:29.362Z",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "b7a9aa96-f84b-4355-a982-0ed229225ea1",
+              "role": "assistant",
+              "text": "听到了，你刚才说：“我最近在学水彩；想把每天看到的东西编成小故事”。我整理成了待确认线索，你可以选择是否保留。",
+              "reply": {
+                "answer": "听到了，你刚才说：“我最近在学水彩；想把每天看到的东西编成小故事”。我整理成了待确认线索，你可以选择是否保留。",
+                "outcome": "needs_info",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "citations": [],
+                "memoryIds": [],
+                "evidenceIds": [],
+                "route": {
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "先选择承载故事的物品"
+                },
+                "caveat": "整理了2条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。"
+              },
+              "at": "2026-10-29T09:07:29.362Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "4d4b6f73-fd8a-4c2f-8753-ff75983b5607",
+            "turnScope": "home",
+            "lastIntent": "story"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-29T09:07:27.776Z",
+          "updatedAt": "2026-10-29T09:07:29.362Z",
+          "expiresAt": "2026-11-05T09:07:27.776Z"
+        },
+        "reply": {
+          "answer": "听到了，你刚才说：“我最近在学水彩；想把每天看到的东西编成小故事”。我整理成了待确认线索，你可以选择是否保留。",
+          "outcome": "needs_info",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "citations": [],
+          "memoryIds": [],
+          "evidenceIds": [],
+          "route": {
+            "intent": "story",
+            "mode": "story",
+            "reason": "先选择承载故事的物品"
+          },
+          "caveat": "整理了2条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。"
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=home; router=home-router-v1",
+            "at": "2026-10-29T09:07:27.801Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0",
+            "at": "2026-10-29T09:07:27.808Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T09:07:27.808Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "needs_info",
+            "at": "2026-10-29T09:07:27.809Z"
+          },
+          {
+            "stage": "memory_proposals",
+            "detail": "2 source-anchored candidates; confirmation required",
+            "at": "2026-10-29T09:07:29.362Z"
+          }
+        ],
+        "tokens": {
+          "input": 173,
+          "output": 33
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "input": "这幅画是朋友小夏送我的，我把它带到了新住处。",
+      "result": {
+        "session": {
+          "id": "d838dfae-43bc-4feb-a63b-7751bc5f5dfb",
+          "owner": "lin",
+          "itemId": "738836d4-dc0f-4b19-bb60-87c0dbbf19d7",
+          "identity": "[\"lin\",\"[\\\"待确认\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "2240f0ba-46bf-480e-b029-b08100b0f487",
+              "role": "user",
+              "text": "这幅画是朋友小夏送我的，我把它带到了新住处。",
+              "at": "2026-10-29T09:07:33.934Z",
+              "itemId": "738836d4-dc0f-4b19-bb60-87c0dbbf19d7",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "e6a68ab1-aa02-40b0-a185-9c2efac129a4",
+              "role": "assistant",
+              "text": "真好呀，小夏送的画陪着你一起搬进了新住处——它不只是装饰，更像是一个带着温度的陪伴。你愿意说说这幅画的样子，或者你们之间和它有关的小故事吗？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "真好呀，小夏送的画陪着你一起搬进了新住处——它不只是装饰，更像是一个带着温度的陪伴。你愿意说说这幅画的样子，或者你们之间和它有关的小故事吗？",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。 整理了1条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+                }
+              },
+              "at": "2026-10-29T09:07:33.934Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "8594c03c-831d-40b3-b722-e87fa2a5196f",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "这幅画是朋友小夏送我的，我把它带到了新住处。"
+          },
+          "tried": [],
+          "memoryEpoch": 2,
+          "createdAt": "2026-10-29T09:07:29.784Z",
+          "updatedAt": "2026-10-29T09:07:33.937Z",
+          "expiresAt": "2026-11-05T09:07:29.784Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "真好呀，小夏送的画陪着你一起搬进了新住处——它不只是装饰，更像是一个带着温度的陪伴。你愿意说说这幅画的样子，或者你们之间和它有关的小故事吗？",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。 整理了1条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-29T09:07:29.793Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T09:07:29.799Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T09:07:29.799Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T09:07:29.805Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T09:07:32.489Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T09:07:32.529Z"
+          },
+          {
+            "stage": "memory_proposals",
+            "detail": "1 source-anchored candidates; confirmation required",
+            "at": "2026-10-29T09:07:33.934Z"
+          }
+        ],
+        "tokens": {
+          "input": 2755,
+          "output": 103
+        },
+        "modelCalls": 2
+      }
+    },
+    {
+      "case": "cross-session",
+      "result": {
+        "session": {
+          "id": "d9f3a838-d914-4a61-84dc-24530138ef8d",
+          "owner": "lin",
+          "itemId": "738836d4-dc0f-4b19-bb60-87c0dbbf19d7",
+          "identity": "[\"lin\",\"[\\\"待确认\\\",null,null,null]\"]",
+          "mode": "story",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "acf37b1b-ecfa-4e2f-a500-3f8f1861f35e",
+              "role": "user",
+              "text": "你还记得这幅画是谁送给我的吗？不要补充日期。",
+              "at": "2026-10-29T09:07:34.108Z",
+              "itemId": "738836d4-dc0f-4b19-bb60-87c0dbbf19d7",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "c594b24d-67b3-41e7-8d8e-84688b9ee4df",
+              "role": "assistant",
+              "text": "记得，你曾提到，这幅画是朋友小夏送你的。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "记得，你曾提到，这幅画是朋友小夏送你的。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "004c8bea-8672-426f-916f-93caacfa44bf"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。"
+              },
+              "at": "2026-10-29T09:07:34.108Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "fde924fb-9748-4112-a3d7-8363360388b0"
+          },
+          "tried": [],
+          "memoryEpoch": 3,
+          "createdAt": "2026-10-29T09:07:34.011Z",
+          "updatedAt": "2026-10-29T09:07:34.109Z",
+          "expiresAt": "2026-11-05T09:07:34.011Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "记得，你曾提到，这幅画是朋友小夏送你的。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "004c8bea-8672-426f-916f-93caacfa44bf"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T09:07:34.073Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=story; memoryRefs=004c8bea-8672-426f-916f-93caacfa44bf; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T09:07:34.073Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=004c8bea-8672-426f-916f-93caacfa44bf",
+            "at": "2026-10-29T09:07:34.076Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-demo",
+            "at": "2026-10-29T09:07:34.077Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T09:07:34.077Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    },
+    {
+      "case": "mobile-creative",
+      "result": {
+        "ideas": [],
+        "continuation": {
+          "goal": "只用登记的旧纸盒、白纸和铅笔，为安静练习口述故事设计一个具体新用途。不裁切不粘贴不加热，不增加材料，不要只有观察。",
+          "minutes": 30,
+          "itemIds": [
+            "cca7acb3-da87-48d4-9282-1dd93e35cc5f",
+            "8a0c9858-6096-4baf-8e08-7997a4d1efb4",
+            "1af9d434-c8a0-4c30-8c4a-66a2e0c37efb"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "cca7acb3-da87-48d4-9282-1dd93e35cc5f",
+            "name": "Alpha验收旧纸盒",
+            "capabilities": [
+              "收纳",
+              "观察记录"
+            ]
+          },
+          {
+            "id": "8a0c9858-6096-4baf-8e08-7997a4d1efb4",
+            "name": "Alpha验收白纸",
+            "capabilities": [
+              "观察记录"
+            ]
+          },
+          {
+            "id": "1af9d434-c8a0-4c30-8c4a-66a2e0c37efb",
+            "name": "Alpha验收铅笔",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          }
+        ],
+        "source": "rejected-model",
+        "modelCalls": 3,
+        "tokens": {
+          "input": 12439,
+          "output": 4767
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。"
+        },
+        "missing": [
+          "本次没有可发布的AI方案；未用固定观察任务替代新用途。"
+        ]
+      }
+    }
+  ],
+  "checks": [
+    "official test-product panel",
+    "private explicit synthetic import",
+    "natural source-backed memory candidate",
+    "confirmation and correction UI",
+    "other actor isolation",
+    "390px layout",
+    "no pageerror"
+  ],
+  "physicalTests": 0,
+  "humanCreativeJudgment": false
+}

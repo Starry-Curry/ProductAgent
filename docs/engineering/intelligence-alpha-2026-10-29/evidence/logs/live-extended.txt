@@ -1,0 +1,9 @@
+box-with-real-resources direct direct undefined
+box-with-real-resources baseline local-candidate 把一件常用物画成今天的小速写; 用现有容器做一次桌面分区
+box-with-real-resources alpha rejected-model
+goal-with-official-products direct direct undefined
+goal-with-official-products baseline model-creative 水彩故事种子盒：双盒轮转构思法
+goal-with-official-products alpha model-creative 铅笔盒叙事转盘：水彩构图与故事片段生成器
+goal-with-official-products-feedback alpha rejected-model
+alpha-test-lin-ikea-samla-19440848 actual-chat curated-guidance undefined
+alpha-test-lin-ikea-knagglig-10392601 actual-chat curated-guidance undefined

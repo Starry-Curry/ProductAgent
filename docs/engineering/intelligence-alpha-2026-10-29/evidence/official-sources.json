@@ -1,0 +1,85 @@
+{
+  "checkedAt": "2026-10-29T06:51:33.038Z",
+  "rows": [
+    {
+      "id": "ikea-samla-19440848",
+      "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+      "title": "SAMLA 萨姆拉 附盖储物盒 透明 - IKEA",
+      "characters": 1715,
+      "sha256": "8a35bea0a37824f875f2544c96160cedce4ff7c8c7dc0c0dd3a251acbf14e91e",
+      "modelFound": true,
+      "parser": "existing Cheerio/public document parser",
+      "reviewedFacts": [
+        {
+          "id": "samla:material",
+          "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。"
+        },
+        {
+          "id": "samla:size",
+          "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。"
+        },
+        {
+          "id": "samla:lid",
+          "text": "盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。"
+        },
+        {
+          "id": "samla:limits",
+          "text": "仅供室内使用，不可直接接触食物。"
+        },
+        {
+          "id": "samla:care",
+          "text": "可用软布蘸水及中性洗涤剂或皂液擦拭。"
+        }
+      ],
+      "unknowns": [
+        "耐热范围",
+        "承重上限",
+        "内部净尺寸",
+        "是否适合具体待放物",
+        "气密或水密"
+      ]
+    },
+    {
+      "id": "ikea-knagglig-10392601",
+      "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+      "title": "KNAGGLIG 卡纳格 盒 松木 - IKEA",
+      "characters": 1398,
+      "sha256": "e30b50b42ff687b3b8a19e4362ab5ea0cde8c28cd01d1c6ce9e955640dda9d04",
+      "modelFound": true,
+      "parser": "existing Cheerio/public document parser",
+      "reviewedFacts": [
+        {
+          "id": "knagglig:material",
+          "text": "主体为实心松木，其它部分为镀锌钢。"
+        },
+        {
+          "id": "knagglig:size",
+          "text": "宽23、深16、高10厘米；不是内部净尺寸。"
+        },
+        {
+          "id": "knagglig:structure",
+          "text": "带提手，可叠放；最大承重2公斤。"
+        },
+        {
+          "id": "knagglig:limits",
+          "text": "不得挂墙；可用干布清洁。"
+        }
+      ],
+      "unknowns": [
+        "内部净尺寸",
+        "耐热范围",
+        "食品接触适用性",
+        "实物紧固与磨损状态"
+      ]
+    },
+    {
+      "id": "knagglig-assembly-pdf",
+      "url": "https://resources.ikea.cn/cn/zh/assembly_instructions/knagglig-qia-na-ge-he-song-mu__AA-2019275-3-1.pdf",
+      "characters": 115,
+      "sha256": "e6afa56591f2df1a60b2f693b7b92caeb9c73d6712440aae61f5d17f083fb97a",
+      "parser": "existing PDF parser",
+      "text": "KNAGGLIG\n\n\n\n10\n9053\n1095\n35\n2\n\n\n\n109535\n4x\n3\n\n\n\n4x\n109053\n© Inter IKEA Systems B.V. 2014\t4 \t2017-02-08 AA-2019275-3",
+      "note": "Pictographic assembly instructions do not authorize invented steps."
+    }
+  ]
+}

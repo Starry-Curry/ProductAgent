@@ -17,9 +17,17 @@ export const STORYTELLING_INSTRUCTIONS = `你负责把检索到的记忆讲成�
 可以温柔地呼应原文已经表达的感受，不能替用户诊断情绪、推断喜好或制造依赖。最后最多问一个与具体片段有关、可以不回答的问题；用户只想听故事时可不追问。没有记忆就坦诚，不补编。
 输出 JSON：{"answer":"自然连贯的回应","memoryIds":["实际使用的来源ID"]}。只填本轮 memories 的 ID；无需工具、步骤、硬件知识或额外字段。`;
 
+export function isRelationshipFactQuestion(question: string) {
+  return (
+    /谁|哪位|什么时候|何时|哪年|什么关系|赠送者|更正/.test(question) &&
+    /送|赠|这幅|这件|来历|记录|关系/.test(question)
+  );
+}
 export function isMemoryRecallRequest(question: string) {
   const q = question.trim();
   return (
+    isRelationshipFactQuestion(q) ||
+    /赠送者|更正后的记录/.test(q) ||
     /^(?:帮我)?回忆(?:一下)?/.test(q) ||
     /^(?:你(?:还)?|还)?记得.*(?:吗|什么|哪些|故事|以前|[？?])/.test(q) ||
     /^(?:我(?:还)?想(?:听|知道)|想听|想知道|聊聊|说说|讲讲|回忆|回顾|给我讲|讲一个|讲个).*(?:故事|以前|过去|经历|记忆|来历)/.test(
@@ -272,6 +280,7 @@ export function localMemoryStory(plan: StoryPlan): AssistantReply {
 
 export function canComposeInCloud(plan: StoryPlan) {
   return (
+    !/谁|哪位|赠送者|什么时候|哪年|哪里|更正/.test(plan.question) &&
     plan.sources.length > 0 &&
     !plan.demo &&
     plan.sources.every((m) => m.allowCloud && !m.demo)
@@ -317,6 +326,10 @@ export function validateStorytelling(
   plan: StoryPlan,
 ): AssistantReply {
   const packet = narrativeSchema.parse(JSON.parse(text));
+  const original = plan.sources.map((m) => m.text).join("\n");
+  for (const match of packet.answer.matchAll(/[“‘「]([^”’」]{2,})[”’」]/g))
+    if (!original.includes(match[1]))
+      throw Error("Quoted dialogue must exist in the source memory");
   if (
     new Set(packet.memoryIds).size !== packet.memoryIds.length ||
     packet.memoryIds.some((id) => !plan.sources.some((m) => m.id === id))

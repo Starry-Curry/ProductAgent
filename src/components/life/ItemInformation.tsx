@@ -82,6 +82,26 @@ export function ItemInformation({
           <dt>保质期</dt>
           <dd>{item.attributes?.expiresOn || "未登记"}</dd>
         </dl>
+        {pack?.understanding && (
+          <section aria-label="有来源的物品理解">
+            <h3>资料告诉我们什么</h3>
+            {pack.understanding.properties.map((p) => (
+              <p key={p.key}>
+                {p.value} ·{" "}
+                <a href={pack.source.url} target="_blank" rel="noreferrer">
+                  官方来源
+                </a>
+              </p>
+            ))}
+            <p>仍未知：{pack.understanding.unknowns.join("、")}</p>
+            {pack.understanding.possibilities.map((p) => (
+              <p key={p.function}>
+                用途推导，未实物验证：{p.function}。{p.principle}；
+                {p.conditions.join("；")}
+              </p>
+            ))}
+          </section>
+        )}
         {item.owner === actor && (
           <details>
             <summary>更新数量、有效期和养护信息</summary>

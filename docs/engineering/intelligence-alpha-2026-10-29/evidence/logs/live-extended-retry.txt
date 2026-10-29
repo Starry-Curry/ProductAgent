@@ -1,0 +1,4 @@
+box-with-real-resources alpha rejected-model
+goal-with-official-products alpha FAILED 原创意未通过物品条件检查，修正请求超时。未发布该草稿；可缩小物品范围后重试，或选择明确标注的本地方案。
+alpha-test-lin-ikea-samla-19440848 actual-chat curated-guidance undefined
+alpha-test-lin-ikea-knagglig-10392601 actual-chat curated-guidance undefined

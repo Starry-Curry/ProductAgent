@@ -1,0 +1,626 @@
+{
+  "rows": [
+    {
+      "id": "interest",
+      "arm": "natural-chat",
+      "result": {
+        "session": {
+          "id": "177bb99e-9346-4a93-9980-3c16948299a4",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "1f142cbf-b534-4767-829d-78192e0f61d3",
+              "role": "user",
+              "text": "我最近在学水彩，想练习把日常物品编成小故事。",
+              "at": "2026-10-29T07:58:27.654Z",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "ac17d229-913f-4f9f-a6f0-b535a52b2883",
+              "role": "assistant",
+              "text": "目前没有找到可引用的相关生活片段。你可以补充事件线索，或到生活故事查看已保存的原话；普通聊天不要求先选物品。",
+              "reply": {
+                "answer": "目前没有找到可引用的相关生活片段。你可以补充事件线索，或到生活故事查看已保存的原话；普通聊天不要求先选物品。",
+                "outcome": "needs_info",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "citations": [],
+                "memoryIds": [],
+                "evidenceIds": [],
+                "route": {
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "先选择承载故事的物品"
+                }
+              },
+              "at": "2026-10-29T07:58:27.654Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "29e4c4b0-fe0d-4f3d-9539-6ddea03ecdfc",
+            "turnScope": "home",
+            "lastIntent": "story"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T07:58:25.894Z",
+          "updatedAt": "2026-10-29T07:58:27.658Z",
+          "expiresAt": "2026-11-05T07:58:25.894Z"
+        },
+        "reply": {
+          "answer": "目前没有找到可引用的相关生活片段。你可以补充事件线索，或到生活故事查看已保存的原话；普通聊天不要求先选物品。",
+          "outcome": "needs_info",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "citations": [],
+          "memoryIds": [],
+          "evidenceIds": [],
+          "route": {
+            "intent": "story",
+            "mode": "story",
+            "reason": "先选择承载故事的物品"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=home; router=home-router-v1",
+            "at": "2026-10-29T07:58:25.963Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0",
+            "at": "2026-10-29T07:58:25.989Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=96464ed1-f047-43eb-9419-6df2d52c5c9e; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T07:58:25.989Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "needs_info",
+            "at": "2026-10-29T07:58:25.990Z"
+          },
+          {
+            "stage": "memory_proposals",
+            "detail": "2 source-anchored candidates; confirmation required",
+            "at": "2026-10-29T07:58:27.654Z"
+          }
+        ],
+        "tokens": {
+          "input": 173,
+          "output": 33
+        },
+        "modelCalls": 1
+      },
+      "requests": 1,
+      "elapsedMs": 1770
+    },
+    {
+      "id": "gift",
+      "arm": "natural-chat",
+      "result": {
+        "session": {
+          "id": "449b5b90-df7d-4d57-a3c6-e06e04951d6a",
+          "owner": "lin",
+          "itemId": "eb594653-a80d-45eb-9ad4-c4962bcf4522",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "fb72df5a-48b6-49cf-a71f-5941ae799ce9",
+              "role": "user",
+              "text": "这幅画是朋友小夏送我的，我把它带到了新住处。",
+              "at": "2026-10-29T07:58:31.479Z",
+              "itemId": "eb594653-a80d-45eb-9ad4-c4962bcf4522",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "48c10ffb-446a-4afa-aad1-ce7f3cb0dd00",
+              "role": "assistant",
+              "text": "真好呀，小夏送的画陪着你一起搬进了新住处——像一位安静的老朋友，也像一份带着温度的祝福。你愿意说说这幅画的样子，或者它让你想起什么吗？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "真好呀，小夏送的画陪着你一起搬进了新住处——像一位安静的老朋友，也像一份带着温度的祝福。你愿意说说这幅画的样子，或者它让你想起什么吗？",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+                }
+              },
+              "at": "2026-10-29T07:58:31.479Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "7b860b0a-5d31-4179-992e-be96e7b9c311",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "这幅画是朋友小夏送我的，我把它带到了新住处。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T07:58:27.664Z",
+          "updatedAt": "2026-10-29T07:58:31.483Z",
+          "expiresAt": "2026-11-05T07:58:27.664Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "真好呀，小夏送的画陪着你一起搬进了新住处——像一位安静的老朋友，也像一份带着温度的祝福。你愿意说说这幅画的样子，或者它让你想起什么吗？",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "聊天叙述留在本次会话；生活故事需明确保存"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-29T07:58:27.697Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T07:58:27.716Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T07:58:27.716Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T07:58:27.730Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T07:58:29.983Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T07:58:30.013Z"
+          },
+          {
+            "stage": "memory_proposals",
+            "detail": "2 source-anchored candidates; confirmation required",
+            "at": "2026-10-29T07:58:31.479Z"
+          }
+        ],
+        "tokens": {
+          "input": 2755,
+          "output": 113
+        },
+        "modelCalls": 2
+      },
+      "requests": 2,
+      "elapsedMs": 3824
+    },
+    {
+      "id": "candidates-before-confirmation",
+      "candidates": [
+        {
+          "id": "a0232d66-409c-4cf5-b37c-383777aa5de5",
+          "owner": "lin",
+          "version": 1,
+          "kind": "interest",
+          "text": "这幅画是朋友小夏送我的，我把它带到了新住处。",
+          "status": "candidate",
+          "allowCloud": false,
+          "source": "automatic",
+          "demo": false,
+          "createdAt": "2026-10-29T07:58:31.483Z",
+          "updatedAt": "2026-10-29T07:58:31.483Z",
+          "provenance": {
+            "kind": "chat",
+            "sourceId": "7b860b0a-5d31-4179-992e-be96e7b9c311",
+            "sessionId": "449b5b90-df7d-4d57-a3c6-e06e04951d6a",
+            "basis": "user_statement",
+            "at": "2026-10-29T07:58:31.480Z",
+            "extractor": "ambient-local-v1"
+          },
+          "archived": false
+        },
+        {
+          "id": "e2edb1cd-8146-47d3-8665-8967672238e3",
+          "owner": "lin",
+          "version": 1,
+          "kind": "relationship",
+          "text": "这幅画是朋友小夏送我的",
+          "itemId": "eb594653-a80d-45eb-9ad4-c4962bcf4522",
+          "status": "candidate",
+          "allowCloud": false,
+          "source": "automatic",
+          "demo": false,
+          "createdAt": "2026-10-29T07:58:31.482Z",
+          "updatedAt": "2026-10-29T07:58:31.482Z",
+          "itemOwner": "lin",
+          "provenance": {
+            "kind": "chat",
+            "sourceId": "7b860b0a-5d31-4179-992e-be96e7b9c311",
+            "sessionId": "449b5b90-df7d-4d57-a3c6-e06e04951d6a",
+            "basis": "user_statement",
+            "at": "2026-10-29T07:58:31.480Z",
+            "extractor": "ambient-local-v1"
+          },
+          "archived": false
+        },
+        {
+          "id": "41130a89-bfff-41ea-8151-0902c1c3189b",
+          "owner": "lin",
+          "version": 1,
+          "kind": "interest",
+          "text": "想练习把日常物品编成小故事",
+          "status": "candidate",
+          "allowCloud": false,
+          "source": "automatic",
+          "demo": false,
+          "createdAt": "2026-10-29T07:58:27.658Z",
+          "updatedAt": "2026-10-29T07:58:27.658Z",
+          "provenance": {
+            "kind": "chat",
+            "sourceId": "29e4c4b0-fe0d-4f3d-9539-6ddea03ecdfc",
+            "sessionId": "177bb99e-9346-4a93-9980-3c16948299a4",
+            "basis": "user_statement",
+            "at": "2026-10-29T07:58:27.655Z",
+            "extractor": "ambient-local-v1"
+          },
+          "archived": false
+        },
+        {
+          "id": "08ac8371-e2f8-4a9b-a5f6-8b21e28d5620",
+          "owner": "lin",
+          "version": 1,
+          "kind": "interest",
+          "text": "我最近在学水彩",
+          "status": "candidate",
+          "allowCloud": false,
+          "source": "automatic",
+          "demo": false,
+          "createdAt": "2026-10-29T07:58:27.657Z",
+          "updatedAt": "2026-10-29T07:58:27.657Z",
+          "provenance": {
+            "kind": "chat",
+            "sourceId": "29e4c4b0-fe0d-4f3d-9539-6ddea03ecdfc",
+            "sessionId": "177bb99e-9346-4a93-9980-3c16948299a4",
+            "basis": "user_statement",
+            "at": "2026-10-29T07:58:27.655Z",
+            "extractor": "ambient-local-v1"
+          },
+          "archived": false
+        }
+      ]
+    },
+    {
+      "id": "gift-cross-session",
+      "arm": "alpha",
+      "result": {
+        "session": {
+          "id": "90ccc8b3-8583-4d99-bda6-d6f2152222b7",
+          "owner": "lin",
+          "itemId": "eb594653-a80d-45eb-9ad4-c4962bcf4522",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "story",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "4a235e93-e1dc-436c-bf4c-6b4380743900",
+              "role": "user",
+              "text": "你还记得这幅画是谁送给我的？不要推测日期。",
+              "at": "2026-10-29T07:58:34.145Z",
+              "itemId": "eb594653-a80d-45eb-9ad4-c4962bcf4522",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "e36d51c7-eed1-45ca-937c-6fbda41176e2",
+              "role": "assistant",
+              "text": "这幅画是朋友小夏送你的。她送的时候，你记得她说过：‘希望它能替我常在你身边。’",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这幅画是朋友小夏送你的。她送的时候，你记得她说过：‘希望它能替我常在你身边。’",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "e2edb1cd-8146-47d3-8665-8967672238e3"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+                "model": "qwen-plus"
+              },
+              "at": "2026-10-29T07:58:34.145Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "cec0595e-54e5-440a-8770-1eec591388e7"
+          },
+          "tried": [],
+          "memoryEpoch": 2,
+          "createdAt": "2026-10-29T07:58:31.499Z",
+          "updatedAt": "2026-10-29T07:58:34.145Z",
+          "expiresAt": "2026-11-05T07:58:31.499Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这幅画是朋友小夏送你的。她送的时候，你记得她说过：‘希望它能替我常在你身边。’",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "e2edb1cd-8146-47d3-8665-8967672238e3"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+          "model": "qwen-plus"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T07:58:31.563Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=story; memoryRefs=e2edb1cd-8146-47d3-8665-8967672238e3; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T07:58:31.563Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=e2edb1cd-8146-47d3-8665-8967672238e3",
+            "at": "2026-10-29T07:58:31.565Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "authorized-cloud",
+            "at": "2026-10-29T07:58:31.565Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T07:58:31.580Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T07:58:34.082Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T07:58:34.109Z"
+          }
+        ],
+        "tokens": {
+          "input": 550,
+          "output": 72
+        },
+        "modelCalls": 1
+      },
+      "requests": 1,
+      "elapsedMs": 2651
+    },
+    {
+      "id": "gift-corrected",
+      "arm": "alpha",
+      "result": {
+        "session": {
+          "id": "71389c4a-7326-4307-878a-4659330f1153",
+          "owner": "lin",
+          "itemId": "eb594653-a80d-45eb-9ad4-c4962bcf4522",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "story",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "32e1013c-7971-4dcf-95bf-cd991b799eff",
+              "role": "user",
+              "text": "这幅画的赠送者是谁？请使用更正后的记录。",
+              "at": "2026-10-29T07:58:34.215Z",
+              "itemId": "eb594653-a80d-45eb-9ad4-c4962bcf4522",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "37c7246d-adba-4cb6-8fae-90f9aaf7905e",
+              "role": "assistant",
+              "text": "这里是你与“朋友送的画”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这里是你与“朋友送的画”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": []
+              },
+              "at": "2026-10-29T07:58:34.215Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "340f0fde-111d-4b1e-bf38-1798595924db"
+          },
+          "tried": [],
+          "memoryEpoch": 3,
+          "createdAt": "2026-10-29T07:58:34.156Z",
+          "updatedAt": "2026-10-29T07:58:34.215Z",
+          "expiresAt": "2026-11-05T07:58:34.156Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这里是你与“朋友送的画”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": []
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0",
+            "at": "2026-10-29T07:58:34.195Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=story; memoryRefs=e2edb1cd-8146-47d3-8665-8967672238e3; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T07:58:34.195Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T07:58:34.195Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0,
+      "elapsedMs": 63
+    },
+    {
+      "id": "private-other-role",
+      "pass": true
+    },
+    {
+      "id": "gift-forgotten",
+      "arm": "alpha",
+      "result": {
+        "session": {
+          "id": "8f53a5d7-79e0-4e5e-bfb9-b93d27dfc6a4",
+          "owner": "lin",
+          "itemId": "eb594653-a80d-45eb-9ad4-c4962bcf4522",
+          "identity": "[\"lin\",\"[\\\"未知\\\",null,null,null]\"]",
+          "mode": "story",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "ac8ff6cf-64e0-48b8-aa85-7d373ecce7ad",
+              "role": "user",
+              "text": "你还记得这幅画是谁送给我的？",
+              "at": "2026-10-29T07:58:34.287Z",
+              "itemId": "eb594653-a80d-45eb-9ad4-c4962bcf4522",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "248c27b5-799f-46cb-b4ff-6f9e8af6aabd",
+              "role": "assistant",
+              "text": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。"
+              },
+              "at": "2026-10-29T07:58:34.287Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "10080dd3-30bd-444b-8d65-fc188eefa5d0"
+          },
+          "tried": [],
+          "memoryEpoch": 4,
+          "createdAt": "2026-10-29T07:58:34.225Z",
+          "updatedAt": "2026-10-29T07:58:34.288Z",
+          "expiresAt": "2026-11-05T07:58:34.225Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T07:58:34.259Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=story; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T07:58:34.259Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=",
+            "at": "2026-10-29T07:58:34.260Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-demo",
+            "at": "2026-10-29T07:58:34.260Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T07:58:34.260Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0,
+      "elapsedMs": 67
+    }
+  ],
+  "requests": 39,
+  "estimatedCny": 9.0711428,
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

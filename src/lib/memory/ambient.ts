@@ -7,7 +7,7 @@ import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 const EXTRACTOR = "ambient-local-v1";
 const digest = (text: string) =>
   createHash("sha256").update(text).digest("hex");
-type Candidate = Pick<MemoryRecord, "kind" | "text"> & {
+export type Candidate = Pick<MemoryRecord, "kind" | "text"> & {
   topic: string;
   expiresAt?: string;
   polarity?: "positive" | "negative";
@@ -224,7 +224,9 @@ export function captureEvent(
       text: candidate.text.slice(0, 1500),
       itemId,
       status: event.pending ? "candidate" : "active",
-      allowCloud: event.pending ? false : !item?.demo && (old?.allowCloud || false),
+      allowCloud: event.pending
+        ? false
+        : !item?.demo && (old?.allowCloud || false),
       source: "automatic",
       demo: !!item?.demo,
       expiresAt: candidate.expiresAt,
@@ -287,8 +289,10 @@ export function captureTurn(
   session: ServiceSession,
   requestId: string,
   question: string,
+  proposals?: Candidate[],
 ) {
-  if (/^记住[：:，,\s]/u.test(question) || session.known.memoryPolicy === "off") return [];
+  if (/^记住[：:，,\s]/u.test(question) || session.known.memoryPolicy === "off")
+    return [];
   return captureEvent(db, state, actor, {
     id: requestId,
     kind: "chat",
@@ -299,7 +303,8 @@ export function captureTurn(
     basis: "user_statement",
     pending: session.known.memoryPolicy === "candidates",
     candidates:
-      session.mode === "story" &&
+      proposals ??
+      (session.mode === "story" &&
       state.items.find((i) => i.id === session.itemId)?.demo &&
       isStoryNarration(question)
         ? [
@@ -312,9 +317,11 @@ export function captureTurn(
           ]
         : session.mode === "story"
           ? extractChat(question, session.id, session.updatedAt).filter(
-              (c) => c.kind !== "relationship",
+              (c) =>
+                session.known.memoryPolicy === "candidates" ||
+                c.kind !== "relationship",
             )
-          : undefined,
+          : undefined),
   });
 }
 export function captureFeedback(
@@ -331,7 +338,11 @@ export function captureFeedback(
   const text =
     "本次最后一轮建议；我反馈有效（用户报告，非设备检测）：\n" +
     steps.map((s) => s.text).join("\n");
-  if (session.known.memoryPolicy !== "off" && outcome === "completed" && steps.length)
+  if (
+    session.known.memoryPolicy !== "off" &&
+    outcome === "completed" &&
+    steps.length
+  )
     captureEvent(db, state, actor, {
       id: session.id + ":" + latest!.id,
       kind: "feedback",
@@ -398,7 +409,7 @@ export function captureWorkspace(
 ) {
   const observedAt = at || captureSettings(db, actor).createdAt;
   for (const item of state.items.filter(
-    (i) => i.owner === actor && i.source !== "示例数据",
+    (i) => i.owner === actor && !i.synthetic && i.source !== "示例数据",
   )) {
     captureEvent(db, state, actor, {
       id: item.id,
@@ -435,7 +446,11 @@ export function captureWorkspace(
   const demoStoryIds = new Set(seed().memories.map((m) => m.id));
   for (const story of state.memories.filter(
     (m) =>
-      m.author === actor && !m.origin && !m.demo && !m.giftSnapshot && !demoStoryIds.has(m.id),
+      m.author === actor &&
+      !m.origin &&
+      !m.demo &&
+      !m.giftSnapshot &&
+      !demoStoryIds.has(m.id),
   ))
     captureEvent(db, state, actor, {
       id: story.id,
@@ -554,7 +569,10 @@ export function reconcileMemories(
           itemId: message.itemId || session.itemId,
           sessionId: session.id,
           basis: "user_statement",
-          pending: message.memoryPolicy === "candidates" || (!message.memoryPolicy && session.known.memoryPolicy === "candidates"),
+          pending:
+            message.memoryPolicy === "candidates" ||
+            (!message.memoryPolicy &&
+              session.known.memoryPolicy === "candidates"),
         });
     }
     db.exec("COMMIT");

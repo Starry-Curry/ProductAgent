@@ -1,0 +1,35 @@
+scripts/verify-local.mjs 54ms (unchanged)
+src/app/api/life/route.ts 83ms
+src/components/MemoryCenter.tsx 41ms
+src/components/life/Discovery.tsx 46ms
+src/components/life/ItemInformation.tsx 31ms
+src/components/life/WujianApp.tsx 56ms
+src/lib/agent/safety-language.ts 3ms
+src/lib/agent/service.ts 23ms
+src/lib/context/items.ts 4ms (unchanged)
+src/lib/life/idea-audit.ts 12ms
+src/lib/life/ideas.ts 64ms
+src/lib/life/planning.ts 31ms
+src/lib/memory/ambient.ts 21ms
+src/lib/products.ts 5ms
+src/lib/repositories/sessions.ts 14ms (unchanged)
+src/lib/skills/memory-storytelling.ts 13ms
+tests/creative-evidence.test.ts 17ms (unchanged)
+tests/household-cases.test.ts 20ms (unchanged)
+tests/life-integration.mjs 17ms (unchanged)
+scripts/alpha/browser-live.mjs 4ms
+scripts/alpha/gateway.mjs 10ms
+scripts/alpha/live-extended-final.mjs 5ms
+scripts/alpha/live-extended-retry.mjs 5ms
+scripts/alpha/live-extended.mjs 5ms
+scripts/alpha/live.mjs 8ms
+scripts/alpha/network-hook.mjs 1ms
+scripts/alpha/shared.mjs 1ms
+scripts/alpha/sources.mjs 2ms
+src/components/life/ProductKnowledgeLab.tsx 3ms
+src/lib/catalog/alpha-products.ts 2ms
+src/lib/life/alpha-samples.ts 2ms
+src/lib/life/creative-reasoning.ts 7ms
+src/lib/memory/proposals.ts 3ms
+tests/alpha-integration.mjs 8ms
+tests/intelligence-alpha.test.ts 21ms

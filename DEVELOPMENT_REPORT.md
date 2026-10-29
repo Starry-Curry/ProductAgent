@@ -1,5 +1,16 @@
 # 开发记录
 
+## 2026-10-29：智能核心 Alpha（本轮）
+
+从功能基准1cb9764创建独立分支codex/wujian-intelligence-alpha，工作区D:\ProductAgent-LifeContext\.runtime\alpha-app。新增真实商品小样本知识、自然聊天的原话记忆候选与确认、事实型关系回忆保护、创意作用/条件契约与反例复核；修复物品范围丢失及修复上下文权限。没有迁库、换框架、合main或触碰硬件。
+
+289项离线通过（新增24），类型/构建/benchmark/隔离API及桌面移动浏览器通过。真实百炼72次尝试/60返回/12传输失败；已返回用量估算0.199881元，失败用量保守预留9.092990元，预算累计9.292870元。**创意产品验收仍失败，不能声称优于直接千问。**
+
+[业务交付与体验入口](docs/engineering/intelligence-alpha-2026-10-29/README.md)、[真实失败与对照](docs/engineering/intelligence-alpha-2026-10-29/MODEL_RESULTS.md)、[完整测试](docs/engineering/intelligence-alpha-2026-10-29/TEST_REPORT.md)。以下保留上一轮报告。
+
+---
+
+
 ## 2026-10-29：框架实证与首个共享物品切片
 
 从 main `ea32c3f` 开独立分支，研究 RFC `69eb7c8` 和 v1 `8eca3d7`。框架实测收敛为继续 LangGraph；Mastra/Pi 留在独立实验子包，不进入根应用依赖。

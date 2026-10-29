@@ -1,4 +1,5 @@
 import {
+  type Candidate,
   captureTurn,
   captureFeedback,
   captureWorkspace,
@@ -186,6 +187,7 @@ export function commitTurn(
   actor: Person,
   input: TurnInput,
   result: TurnResult,
+  proposals?: Candidate[],
 ) {
   db.exec("BEGIN IMMEDIATE");
   try {
@@ -238,6 +240,7 @@ export function commitTurn(
         },
         input.requestId,
         input.question,
+        proposals,
       );
     result.session.revision++;
     result.session.updatedAt = new Date().toISOString();

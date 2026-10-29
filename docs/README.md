@@ -2,6 +2,10 @@
 
 README 负责快速运行，以下文档分别回答产品、工程、演示和部署问题。
 
+## 2026-10-29：智能核心 Alpha
+
+- [业务交付、体验方法与真实失败](engineering/intelligence-alpha-2026-10-29/README.md)。商品知识和自然候选已接入；创意未过产品验收，不能以技术测试通过替代效果。
+
 ## 2026-10-29：框架实证与共享资料产品切片
 
 - [本轮结论与实际改动](engineering/framework-evidence-2026-10-29/README.md)：保留 LangGraph，移植 v1 修复，接入最小共享物品资料。

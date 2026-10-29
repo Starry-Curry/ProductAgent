@@ -164,9 +164,10 @@ test("真实失败回归：错误物理机制、隐含材料不可借有效来�
       t.read,
     );
     assert.equal(calls, 2); // First draft + one reason-guided repair; neither may bypass physical checks.
-    assert.equal(fallback.source, "local-candidate");
+    assert.equal(fallback.source, "rejected-model");
     assert.equal(fallback.cloudRejected, true);
-    assert.ok(fallback.missing.some((m) => m.includes("未冒充AI成功")));
+    assert.equal(fallback.ideas.length, 0);
+    assert.ok(fallback.missing.some((m) => m.includes("未用固定观察任务")));
     assert.ok(fallback.ideas.every((i) => i.source !== "model-creative"));
     await assert.rejects(
       planDiscovery(
@@ -412,6 +413,7 @@ test("一次真实协议替身可生成不同方向候选，逐个验证并保�
     };
     const input = {
       goal: "做不同方向的有趣活动",
+      candidates: 3,
       itemIds: [light, cup],
       model: true,
       publicEvidence: false,

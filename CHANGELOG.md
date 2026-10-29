@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-29 · 智能核心 Alpha（独立分支）
+
+- 新增两款型号明确的官方商品知识实验与显式合成测试入口；详情、聊天和创意共用资料。
+- 自然聊天可建议有原话来源的记忆候选，确认前不作为长期认识；保留私密、纠正与遗忘。事实型赠送者回忆避免编造留言。
+- 创意新增性质到作用/成果/条件结构，修复勾选物品被部分名称匹配删除、否定粘贴误判、引用命名空间和修复上下文隐私；明确否决不取回坏草稿，不自动用观察模板冒充新用途。
+- 增加24项离线回归、商品来源解析、同模型真实对照与桌面/移动验收脚本。创意真实质量未过关；[交付与完整证据](docs/engineering/intelligence-alpha-2026-10-29/README.md)。
+
+---
+
+
 Notable changes to ProductAgent / 物间 are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions use [Semantic Versioning](https://semver.org/) when the repository begins publishing tagged releases.

@@ -137,6 +137,8 @@ export function auditIdeaActions(
       );
     for (const [action, registered, name] of tools) {
       if (!action.test(text) || registered.test(inventory)) continue;
+      if (name === "尺寸测量工具" && !/测量|量出|量取|精确/.test(text))
+        continue;
       if (
         name === "精确计时工具" &&
         /约|大约|粗略|默数/.test(text) &&
@@ -228,16 +230,37 @@ export function auditIdeaActions(
   const allSteps = value.steps.join(" ");
   // Explicit photo deliverables need actual shutter actions, not drawings or
   // a title claiming completion. Restrict this check to unambiguous counts.
-  const requestedPhotos = goal.match(/(?:完成|拍摄|得到|产出)([一二三四五六七八九\d])(?:次拍照|张照片)/);
+  const requestedPhotos = goal.match(
+    /(?:完成|拍摄|得到|产出)([一二三四五六七八九\d])(?:次拍照|张照片)/,
+  );
   if (requestedPhotos) {
-    const numerals: Record<string, number> = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+    const numerals: Record<string, number> = {
+      一: 1,
+      二: 2,
+      三: 3,
+      四: 4,
+      五: 5,
+      六: 6,
+      七: 7,
+      八: 8,
+      九: 9,
+    };
     const target = numerals[requestedPhotos[1]] || Number(requestedPhotos[1]);
-    const actions = value.steps.map(withoutProhibitedActions).filter((step) => /拍摄|拍照|拍下|拍一张|快门/.test(step));
+    const actions = value.steps
+      .map(withoutProhibitedActions)
+      .filter((step) => /拍摄|拍照|拍下|拍一张|快门/.test(step));
     // Complex quantified instructions cannot be reliably counted locally.
-    const complex = actions.some((step) => /各|分别|每|重复|连拍|[二三四五六七八九\d]\s*张|(?:拍摄|拍照|拍下|按快门).{0,3}[二三四五六七八九\d]\s*次/.test(step));
+    const complex = actions.some((step) =>
+      /各|分别|每|重复|连拍|[二三四五六七八九\d]\s*张|(?:拍摄|拍照|拍下|按快门).{0,3}[二三四五六七八九\d]\s*次/.test(
+        step,
+      ),
+    );
     if (!complex && actions.length < target)
-      issues.push({ code: "completion-gap", step: -1,
-        reason: `目标要求${target}次实际拍照，但步骤只明确安排${actions.length}次；保留创意并补齐实际拍摄动作，不用绘画或成果描述替代照片` });
+      issues.push({
+        code: "completion-gap",
+        step: -1,
+        reason: `目标要求${target}次实际拍照，但步骤只明确安排${actions.length}次；保留创意并补齐实际拍摄动作，不用绘画或成果描述替代照片`,
+      });
   }
   if (
     /杯|玻璃/.test(inventory) &&

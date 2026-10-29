@@ -1,0 +1,5 @@
+interest natural-chat returned 1
+gift natural-chat returned 2
+gift-cross-session alpha returned 0
+gift-corrected alpha returned 0
+gift-forgotten alpha returned 0

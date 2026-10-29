@@ -1,5 +1,16 @@
 # 评审与交接
 
+## 当前交接：智能核心 Alpha，未合并main
+
+先读[本轮交付](docs/engineering/intelligence-alpha-2026-10-29/README.md)。不要把原main、RFC、框架实验与本分支能力混为一谈。代码基准1cb9764；LangGraph+SQLite+Next.js继续。当前工作区D:\ProductAgent-LifeContext\.runtime\alpha-app；原项目及其他未提交内容保留。
+
+可用：两款官方商品资料面板、明确合成测试记录、自然聊天记忆候选/确认/纠正/遗忘、当前事实型赠画召回。创意流程有可检查结构，但真实效果未过关；移动端真实验收显示拒绝而非发布成功。下一轮优先做作用/动作/资源的语义对应及人类盲评，不要立即换Pi或做设备探索。
+
+本轮72次真实尝试，现已停止付费；累计台账见证据目录，不能重置后继续花费。289项离线、构建、类型与浏览器等结果见报告。普通细节继续独立分支自动检查/提交/推送，不合main。以下为历史交接。
+
+---
+
+
 2026-10-29。先读 [交付入口](docs/engineering/framework-evidence-2026-10-29/README.md) 和 [简短决策](docs/engineering/framework-evidence-2026-10-29/DECISION.md)，无需转运文件。
 
 - 正式起点 main `ea32c3f4c9e18992ca267b6dd74e26e418c9e95a`，依据 RFC `69eb7c8`，移植 v1 `8eca3d7`。源码/测试已经在本分支复验，不是直接把成果分支当 main。

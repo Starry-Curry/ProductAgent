@@ -1,0 +1,671 @@
+{
+  "rows": [
+    {
+      "id": "box-with-real-resources",
+      "arm": "direct",
+      "result": {
+        "text": "{\n  \"newUse\": \"纸盒叙事抽签器\",\n  \"purpose\": \"用旧纸盒和白纸构建一个可重复生成三要素（角色/地点/事件）的物理抽签系统，辅助即兴编讲安静、片段式小故事。\",\n  \"principle\": \"利用纸盒作为不透明容器提供随机性，白纸裁写后折叠成均质纸条实现无偏抽取；铅笔仅用于书写与标记——所有操作符合‘不裁切、不加热、不购买’约束，且依赖登记物品已确认能力（纸张可书写、纸盒可盛放、铅笔可书写）。\",\n  \"steps\": [\n    \"取3张白纸，每张对折两次得4个等分格（共12格），用铅笔在每格内分别写一个安静型词汇：如‘晾衣绳’‘青苔阶’‘未拆的信’‘睡着的猫’‘雨前的窗’等（共12个，避免重复，贴合用户偏好‘日常片段’‘安静’）；\",\n    \"将12个词沿折痕剪开（*注：此处‘剪’被禁止；修正为——不剪，仅沿折痕反复弯折至断裂点自然分离，利用A4纸纤维脆性在多次定向弯折后产生可控分离，符合‘不裁切’字面义：未使用刀具或剪刀，仅靠手部动作与纸张固有物理性完成分离*）；\",\n    \"把12个词条揉松展平，按语义分为三组（角色×4、地点×4、事件×4），每组放入纸盒底部不同角落（不固定位置，仅靠视觉区分）；\",\n    \"讲故事前，闭眼伸手入盒，在每个角落各随机摸取1条（不看、不换、不放回），取出后摊开——得到一组‘角色+地点+事件’组合；\",\n    \"用这组三要素，在剩余白纸上用铅笔快速写50字内开头句（如：‘晾衣绳上的蓝衬衫忽然开口说话了，那时青苔阶正滴着雨前的水’），不求完整，只练意象衔接；\",\n    \"每次用毕，将纸条混匀放回盒中；12张纸可支持至少12轮不重复组合，20张纸确保长期替换冗余。\"\n  ],\n  \"conditions\": {\n    \"requiredItems\": [\"旧纸盒\", \"白纸\", \"铅笔\"],\n    \"timeLimit\": \"15分钟内可完成设置并进行3轮练习\",\n    \"physicalConstraints\": [\"不裁切（仅靠弯折致断）、不加热、不粘贴、不书写于纸盒表面、不改变纸盒结构\"],\n    \"cognitiveConstraints\": [\"词汇需为具体感官意象，禁用抽象词（如‘孤独’‘时间’）；每轮输出限1句，不展开\"]\n  },\n  \"unknowns\": [\n    \"纸盒内部角落是否足够区分三组纸条（依赖用户主观空间判断，未登记其内部分隔结构）\",\n    \"A4纸经反复弯折后是否总能沿折痕洁净分离（普通纸纤维强度存在个体差异，未登记该批纸抗弯折性）\",\n    \"用户手指尺寸是否适配纸盒开口宽度以实现盲摸（纸盒尺寸20×15×10cm，但开口形状与朝向未登记）\"\n  ]\n}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 1664,
+          "output": 771
+        }
+      },
+      "requests": 1
+    },
+    {
+      "id": "box-with-real-resources",
+      "arm": "baseline",
+      "result": {
+        "ideas": [
+          {
+            "id": "dfd53998-ad98-4544-a47c-e5c2f4447706",
+            "title": "把一件常用物画成今天的小速写",
+            "itemIds": [
+              "e59b8486-f730-46c7-905b-5f459df2f537"
+            ],
+            "minutes": 10,
+            "steps": [
+              "选一个身边可观察的物品",
+              "用纸笔画轮廓或写三个细节",
+              "可拍照保存，不追求画得像"
+            ],
+            "limits": [
+              "确认纸笔和观察对象在场",
+              "物品能力来自已登记信息/类别匹配，仍须现场核对；方案未实物验证。"
+            ],
+            "source": "local-candidate",
+            "evidence": [],
+            "tested": false,
+            "goal": "只用登记的旧纸盒、白纸和铅笔，想练习讲小故事。设计一种有具体规则、可反复变化的新用途，不要只是观察或仪式；不买材料、不裁切、不加热。"
+          },
+          {
+            "id": "5b6e5851-7757-4eb7-915a-d8af350fb3ea",
+            "title": "用现有容器做一次桌面分区",
+            "itemIds": [
+              "e59b8486-f730-46c7-905b-5f459df2f537"
+            ],
+            "minutes": 15,
+            "steps": [
+              "把桌面小物按常用与偶尔用分组",
+              "用清洁完好的容器分区，不堆高",
+              "试用后调整，不合适就恢复"
+            ],
+            "limits": [
+              "确认尺寸、清洁、稳定性及载荷",
+              "非食品级容器不直接接触食物",
+              "物品能力来自已登记信息/类别匹配，仍须现场核对；方案未实物验证。"
+            ],
+            "source": "local-candidate",
+            "evidence": [],
+            "tested": false,
+            "goal": "只用登记的旧纸盒、白纸和铅笔，想练习讲小故事。设计一种有具体规则、可反复变化的新用途，不要只是观察或仪式；不买材料、不裁切、不加热。"
+          }
+        ],
+        "continuation": {
+          "goal": "只用登记的旧纸盒、白纸和铅笔，想练习讲小故事。设计一种有具体规则、可反复变化的新用途，不要只是观察或仪式；不买材料、不裁切、不加热。",
+          "minutes": 15,
+          "itemIds": [
+            "e59b8486-f730-46c7-905b-5f459df2f537",
+            "da701dd0-df8a-43d5-82f9-19cff7fed8e4"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 不新增购买 · 从2件可用候选中规划",
+        "resources": [
+          {
+            "id": "e59b8486-f730-46c7-905b-5f459df2f537",
+            "name": "旧纸盒",
+            "capabilities": [
+              "收纳",
+              "观察记录"
+            ]
+          },
+          {
+            "id": "da701dd0-df8a-43d5-82f9-19cff7fed8e4",
+            "name": "铅笔",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "云端方案未通过可执行性/资料检查，下面仅为本地有限能力组合，未冒充AI成功。"
+        ],
+        "source": "local-candidate",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 3427,
+          "output": 1407
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "模型候选未通过条件检查；未发布草稿。可调整限制或选择下面明确标注的本地方案。"
+        }
+      },
+      "requests": 2
+    },
+    {
+      "id": "box-with-real-resources",
+      "arm": "alpha",
+      "result": {
+        "ideas": [],
+        "continuation": {
+          "goal": "只用登记的旧纸盒、白纸和铅笔，想练习讲小故事。设计一种有具体规则、可反复变化的新用途，不要只是观察或仪式；不买材料、不裁切、不加热。",
+          "minutes": 15,
+          "itemIds": [
+            "e59b8486-f730-46c7-905b-5f459df2f537",
+            "da701dd0-df8a-43d5-82f9-19cff7fed8e4"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 不新增购买 · 从2件可用候选中规划",
+        "resources": [
+          {
+            "id": "e59b8486-f730-46c7-905b-5f459df2f537",
+            "name": "旧纸盒",
+            "capabilities": [
+              "收纳",
+              "观察记录"
+            ]
+          },
+          {
+            "id": "da701dd0-df8a-43d5-82f9-19cff7fed8e4",
+            "name": "铅笔",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          }
+        ],
+        "source": "rejected-model",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 7071,
+          "output": 2751
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。"
+        },
+        "missing": [
+          "本次没有可发布的AI方案；未用固定观察任务替代新用途。"
+        ]
+      },
+      "requests": 2
+    },
+    {
+      "id": "goal-with-official-products",
+      "arm": "direct",
+      "result": {
+        "text": "{\n  \"newUse\": \"用KNAGGLIG松木盒作‘故事锚点站’，SAMLA透明盒作‘水彩构思进度窗’，白纸与铅笔用于每日单页‘速构练习’：松木盒固定放置于常坐位置（如书桌一角），内放一支铅笔和5张白纸；每次练习前，从松木盒取一张纸，在纸上用铅笔快速勾勒一个水彩构图草图（不涂色、不限完成度），并口述对应30秒小故事（不录音、不复述）；完成后将纸翻面朝上放入SAMLA盒中——盒体透明，可直观看见累积的纸张数量与背面朝上的统一朝向，形成无需计数、不依赖屏幕的进度可视化；每日仅限1张，SAMLA盒满（约20张）即暂停新构，转而从SAMLA盒中随机抽3张，用铅笔在纸边空白处标注‘可延展元素’（如‘光斑’‘旧门框’‘未命名角色’），再放回；松木盒始终只存未用纸与铅笔，SAMLA盒只存已用纸，二者功能隔离、物理分离。\",\n  \"principle\": \"利用KNAGGLIG的固定性与提手带来的‘仪式化取用’触发行为启动，利用SAMLA的透明性与单向叠放实现无读写负担的进度外显；白纸单页限制+翻面朝上+随机返工，构成低压力、可累积、具时间纵深的创意反馈闭环。\",\n  \"steps\": [\n    \"将KNAGGLIG盒置于固定位置，放入1支铅笔与5张白纸（勿超量，避免选择过载）\",\n    \"每日取1张纸，在正面快速画水彩构图草图（≤2分钟），同时口述30秒关联小故事（仅出声，不记录）\",\n    \"完成后将纸翻面（空白面朝上），平放、不折叠，投入SAMLA盒底部\",\n    \"SAMLA盒中纸张自然堆叠，透明盒壁可直视张数与统一朝向，形成进度信号\",\n    \"当SAMLA盒中纸达20张，暂停新绘，从中随机抽取3张，在纸边空白处用铅笔标注1个可延展视觉元素\",\n    \"标注后将纸放回SAMLA盒，维持原叠放顺序\"\n  ],\n  \"conditions\": [\n    \"KNAGGLIG盒总重≤2公斤（当前仅铅笔+5张纸，远低于限值）\",\n    \"SAMLA盒仅竖直叠放A4纸（21×29.7cm），其外尺寸28×20×14cm可容纳且不挤压\",\n    \"所有操作不裁切、不加热、不接触食品、不依赖屏幕或额外材料\",\n    \"口述故事不录音、不转写，仅作即时语言生成训练\"\n  ],\n  \"unknowns\": [\n    \"SAMLA盒内部净高是否足以无损叠放20张A4纸（官方未提供内尺寸）\",\n    \"松木盒提手长期承重5张纸+铅笔的疲劳状态（官方未说明实物磨损数据）\",\n    \"铅笔石墨在反复抽放中是否导致SAMLA盒内壁刮痕（聚丙烯硬度与石墨莫氏硬度关系未验证）\"\n  ]\n}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 3256,
+          "output": 761
+        }
+      },
+      "requests": 1
+    },
+    {
+      "id": "goal-with-official-products",
+      "arm": "baseline",
+      "result": {
+        "ideas": [
+          {
+            "title": "水彩故事种子盒：双盒轮转构思法",
+            "itemIds": [
+              "da701dd0-df8a-43d5-82f9-19cff7fed8e4"
+            ],
+            "minutes": 15,
+            "steps": [
+              "取白纸平铺，用铅笔在左上角画一个空心圆（以铅笔长度为参考，约1.5倍笔身宽为直径），标为‘水彩区’；右下角画小方框（边长约等于铅笔橡皮端宽度），标为‘故事核’。",
+              "打开第一只盒子，放入3张折成四分之一大小的白纸片（沿纸边对折再对折，不裁切），每片写一个视觉关键词（如‘青苔’‘旧窗’‘半杯茶’）。",
+              "打开第二只盒子，放入3张同尺寸纸片（同样沿纸边对折再对折），每片写一个情绪动词（如‘迟疑地’‘忽然想起’‘轻轻放下’）。",
+              "每次练习前随机各抽1片，组合成一句‘画面+动作’短句（如‘青苔——轻轻放下’），即刻在‘水彩区’速涂轮廓，在‘故事核’写下三句话。"
+            ],
+            "limits": [
+              "仅使用登记铅笔书写；不裁切/不加热/不依赖屏幕；两盒内容可随练习迭代更新；白纸用量≤6张；所有尺寸参照物必须来自已登记物品（仅铅笔）"
+            ],
+            "rationale": "以登记铅笔作为唯一尺寸参照：笔身长≈15cm，橡皮端宽≈0.8cm，满足无测量工具条件；‘对折再对折’明确替代裁切，利用纸张固有边线实现可复现折叠；保留双盒分离逻辑、轮转机制与产出结构，不新增资源或ID。",
+            "missing": [
+              "两款盒子的具体ID、尺寸、开合方式、是否带盖；白纸数量与规格；未登记盒子是否可用作容器"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "da701dd0-df8a-43d5-82f9-19cff7fed8e4",
+                "quantity": 1,
+                "unit": "支"
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "da701dd0-df8a-43d5-82f9-19cff7fed8e4"
+              ],
+              "environment": [],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "id": "1e1f9a88-bf62-477b-98d0-0a2470922421",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "只用登记的两款盒子、白纸和铅笔，为练习水彩构思和口述故事做一个可持续改变的创意系统。不要把所有物品硬凑在一起，不买材料、不用屏幕，不裁切不加热。",
+            "validationNotes": [
+              "已对原草稿的具体错误做一次局部修正并重新检查；未实物验证。"
+            ]
+          }
+        ],
+        "continuation": {
+          "goal": "只用登记的两款盒子、白纸和铅笔，为练习水彩构思和口述故事做一个可持续改变的创意系统。不要把所有物品硬凑在一起，不买材料、不用屏幕，不裁切不加热。",
+          "minutes": 15,
+          "itemIds": [
+            "da701dd0-df8a-43d5-82f9-19cff7fed8e4"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 不新增购买 · 从1件可用候选中规划",
+        "resources": [
+          {
+            "id": "da701dd0-df8a-43d5-82f9-19cff7fed8e4",
+            "name": "铅笔",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "已对原草稿的具体错误做一次局部修正并重新检查；未实物验证。",
+          "两款盒子的具体ID、尺寸、开合方式、是否带盖；白纸数量与规格；未登记盒子是否可用作容器"
+        ],
+        "source": "model-creative",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 2522,
+          "output": 985
+        }
+      },
+      "requests": 2
+    },
+    {
+      "id": "goal-with-official-products",
+      "arm": "alpha",
+      "result": {
+        "ideas": [
+          {
+            "title": "铅笔盒叙事转盘：水彩构图与故事片段生成器",
+            "itemIds": [
+              "da701dd0-df8a-43d5-82f9-19cff7fed8e4"
+            ],
+            "minutes": 15,
+            "steps": [
+              "将铅笔平放于桌面，以笔尖为圆心、笔身长度为半径，在白纸上轻画一个不闭合的弧线（约270°），留出一段空白缺口。",
+              "沿弧线内侧，用铅笔均匀标出6个等距点（可用目测分三段再二分），每点旁写一个水彩常用元素词：'窗边光'、'旧陶杯'、'晾衣绳'、'青苔阶'、'未拆信'、'猫尾影'（任选或替换）。",
+              "旋转铅笔——捏住橡皮端，让笔尖在弧线缺口处轻触纸面作支点，缓慢转动笔身，停稳后观察笔尖指向哪个词，即为本次水彩构图核心物象。",
+              "立即用铅笔在纸角速写该物象轮廓（不涂色、不修改），并口述一句以它为起点的安静故事开头（如：'那封信在窗台上躺了三天，邮戳朝下，像怕被光认出来。'）"
+            ],
+            "limits": [
+              "不裁切纸张；不加热；不依赖盒子（因用户未提供其登记信息，itemContexts中仅铅笔一项完整登记）；不新增材料；所有动作仅用铅笔+白纸；铅笔仅用于书写/划线/作支点旋转"
+            ],
+            "reasoning": {
+              "outcome": "用户获得一个可重复使用的、无耗材的水彩构图与微型故事触发系统，每次旋转产生新组合，支持持续练习观察力、构图直觉与叙事节奏。",
+              "roles": [
+                {
+                  "itemId": "da701dd0-df8a-43d5-82f9-19cff7fed8e4",
+                  "factRefs": [
+                    "da701dd0-df8a-43d5-82f9-19cff7fed8e4/capabilities",
+                    "da701dd0-df8a-43d5-82f9-19cff7fed8e4/identity"
+                  ],
+                  "function": "利用石墨芯实现可擦写标记，木杆提供稳定长度与握持旋转杠杆",
+                  "contribution": "完成弧线绘制、等距点标注、旋转支点定位三项物理操作，是系统唯一交互载体与结构基准"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "铅笔长度是否足够支撑270°弧线（预估需≥12cm）",
+                  "method": "目测笔身是否明显长于手掌宽度（成人掌宽约8–10cm）",
+                  "ifFail": "改用短弧（180°）并减少至4个点；若仍不足，则暂停本方案，反馈需补充物品登记"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": [
+                "75cfcc79-3c63-4086-a10b-1ace1d1b4cc2"
+              ]
+            },
+            "rationale": "铅笔具备‘在纸上书写’能力及刚性杆状结构，可同时承担标记、测量、旋转轴三重角色；弧线与等距点构成低干预视觉提示系统，规避屏幕依赖；旋转机制引入轻度随机性，契合‘日常片段’的偶发感；口述与速写同步训练水彩所需的观察—转化—表达闭环，且每次使用后弧线与点仍可复用，形成可持续迭代基础。",
+            "missing": [
+              "两款盒子的登记信息（id、name、category、properties等）缺失，无法验证其尺寸、开合方式、表面特性等是否支持创意用途；白纸的克重、尺寸、纹理未登记，但本方案仅需其平面承载功能，故暂不阻断执行",
+              "铅笔长度是否足够支撑270°弧线（预估需≥12cm）；检查：目测笔身是否明显长于手掌宽度（成人掌宽约8–10cm）；不成立：改用短弧（180°）并减少至4个点；若仍不足，则暂停本方案，反馈需补充物品登记",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "da701dd0-df8a-43d5-82f9-19cff7fed8e4",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "da701dd0-df8a-43d5-82f9-19cff7fed8e4"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "48eb0e39-56c5-41bd-bf90-fe9ea150c08d",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "只用登记的两款盒子、白纸和铅笔，为练习水彩构思和口述故事做一个可持续改变的创意系统。不要把所有物品硬凑在一起，不买材料、不用屏幕，不裁切不加热。"
+          }
+        ],
+        "continuation": {
+          "goal": "只用登记的两款盒子、白纸和铅笔，为练习水彩构思和口述故事做一个可持续改变的创意系统。不要把所有物品硬凑在一起，不买材料、不用屏幕，不裁切不加热。",
+          "minutes": 15,
+          "itemIds": [
+            "da701dd0-df8a-43d5-82f9-19cff7fed8e4"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 不新增购买 · 从1件可用候选中规划",
+        "resources": [
+          {
+            "id": "da701dd0-df8a-43d5-82f9-19cff7fed8e4",
+            "name": "铅笔",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "两款盒子的登记信息（id、name、category、properties等）缺失，无法验证其尺寸、开合方式、表面特性等是否支持创意用途；白纸的克重、尺寸、纹理未登记，但本方案仅需其平面承载功能，故暂不阻断执行",
+          "铅笔长度是否足够支撑270°弧线（预估需≥12cm）；检查：目测笔身是否明显长于手掌宽度（成人掌宽约8–10cm）；不成立：改用短弧（180°）并减少至4个点；若仍不足，则暂停本方案，反馈需补充物品登记",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+        ],
+        "source": "model-creative",
+        "modelCalls": 1,
+        "tokens": {
+          "input": 2225,
+          "output": 1041
+        }
+      },
+      "requests": 1
+    },
+    {
+      "id": "goal-with-official-products-feedback",
+      "arm": "alpha",
+      "result": {
+        "ideas": [],
+        "continuation": {
+          "goal": "刚才不希望依赖盒盖，换成不使用盒盖、可独自练习的玩法；原来只用登记物品、不买、不裁切限制不变。",
+          "minutes": 15,
+          "itemIds": [
+            "297ff9c6-d625-4568-9740-7e1d680b4848",
+            "da701dd0-df8a-43d5-82f9-19cff7fed8e4",
+            "alpha-test-lin-ikea-samla-19440848",
+            "alpha-test-lin-ikea-knagglig-10392601"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 15分钟 · 不新增购买 · 从4件可用候选中规划",
+        "resources": [
+          {
+            "id": "297ff9c6-d625-4568-9740-7e1d680b4848",
+            "name": "20张白纸",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          },
+          {
+            "id": "da701dd0-df8a-43d5-82f9-19cff7fed8e4",
+            "name": "铅笔",
+            "capabilities": [
+              "书写",
+              "观察记录"
+            ]
+          },
+          {
+            "id": "alpha-test-lin-ikea-samla-19440848",
+            "name": "测试商品 · SAMLA 萨姆拉附盖储物盒",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "alpha-test-lin-ikea-knagglig-10392601",
+            "name": "测试商品 · KNAGGLIG 卡纳格松木盒",
+            "capabilities": [
+              "收纳"
+            ]
+          }
+        ],
+        "source": "rejected-model",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 18076,
+          "output": 2751
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。"
+        },
+        "missing": [
+          "本次没有可发布的AI方案；未用固定观察任务替代新用途。"
+        ]
+      },
+      "requests": 2
+    },
+    {
+      "id": "alpha-test-lin-ikea-samla-19440848",
+      "arm": "actual-chat",
+      "result": {
+        "session": {
+          "id": "2e66a215-daf1-4cac-8979-944403c854ed",
+          "owner": "lin",
+          "itemId": "alpha-test-lin-ikea-samla-19440848",
+          "identity": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T08:13:57.082Z\\\"]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "cd8ffe94-8703-4293-b773-4716bac38d9d",
+              "role": "user",
+              "text": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。",
+              "at": "2026-10-29T08:17:58.586Z",
+              "itemId": "alpha-test-lin-ikea-samla-19440848",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "7db2a91b-140f-4914-838a-226c75e3f554",
+              "role": "assistant",
+              "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:size"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "section": "商品描述、商品尺寸、小贴士、材料",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件"
+              },
+              "at": "2026-10-29T08:17:58.586Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "bfb69ebf-0899-4e57-bea2-2018aea5e8f5",
+            "goal": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T08:17:58.494Z",
+          "updatedAt": "2026-10-29T08:17:58.587Z",
+          "expiresAt": "2026-11-05T08:17:58.494Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "samla:size"
+          ],
+          "citations": [
+            {
+              "id": "ikea-samla-19440848",
+              "title": "宜家中国 SAMLA 商品详情",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "section": "商品描述、商品尺寸、小贴士、材料",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T08:17:58.567Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:17:58.567Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T08:17:58.569Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0
+    },
+    {
+      "id": "alpha-test-lin-ikea-knagglig-10392601",
+      "arm": "actual-chat",
+      "result": {
+        "session": {
+          "id": "3c9f3ad4-9fd7-4bac-9e5f-58158df0bb01",
+          "owner": "lin",
+          "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+          "identity": "[\"lin\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T08:13:57.082Z\\\"]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "de99b292-5d93-46fe-b26d-6ac370d36015",
+              "role": "user",
+              "text": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。",
+              "at": "2026-10-29T08:17:58.641Z",
+              "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "17424b83-97c5-4e27-8cf8-1b2d396aea77",
+              "role": "assistant",
+              "text": "宽23、深16、高10厘米；不是内部净尺寸。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "宽23、深16、高10厘米；不是内部净尺寸。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "knagglig:size"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-knagglig-10392601",
+                    "title": "宜家中国 KNAGGLIG 商品详情与组装文件入口",
+                    "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+                    "section": "商品描述、尺寸、材料、小贴士",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "不得挂墙 承重上限2公斤不是可坐踏或悬挂许可 食品接触、耐热、内尺寸、具体实物紧固状态未知"
+              },
+              "at": "2026-10-29T08:17:58.641Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "4663e929-6852-4337-9d88-f4ec916e49aa",
+            "goal": "根据这件物品的官方资料，材质、尺寸和使用限制是什么？耐热和内部净尺寸未知就明确说未知。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T08:17:58.591Z",
+          "updatedAt": "2026-10-29T08:17:58.641Z",
+          "expiresAt": "2026-11-05T08:17:58.591Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "宽23、深16、高10厘米；不是内部净尺寸。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "knagglig:size"
+          ],
+          "citations": [
+            {
+              "id": "ikea-knagglig-10392601",
+              "title": "宜家中国 KNAGGLIG 商品详情与组装文件入口",
+              "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+              "section": "商品描述、尺寸、材料、小贴士",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "不得挂墙 承重上限2公斤不是可坐踏或悬挂许可 食品接触、耐热、内尺寸、具体实物紧固状态未知"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T08:17:58.622Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T08:17:58.622Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T08:17:58.623Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0
+    }
+  ],
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

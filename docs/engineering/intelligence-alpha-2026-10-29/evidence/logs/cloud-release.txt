@@ -1,0 +1,5 @@
+
+> product-agent@0.1.0 test:cloud
+> node scripts/test-cloud.mjs
+
+{"passed":true,"checks":["two visitor namespaces: items/stories/media/memory/sessions isolated; forged actor/tenant denied; no anonymous admin","server restart preserves opaque session, original story and photo","consistent SQLite snapshot and empty-volume restore preserve data and visitor isolation","browser story refresh, no local identity switch or developer setup UI; no API key in HTML/JS/API","enabled AI uses test-process-only stub; global budget survives restart and applies to another visitor (0 real model calls)","HTTP rate limit active; AI disabled and zero live model calls","logout revokes credentials; explicit expired-space cleanup preserves other spaces","public production HTTP: native tool -> rich item result -> final answer; exactly 2 governed requests; duplicate request uses cached answer (0 real model calls)"],"realModelCalls":0,"dockerBuildVerified":false}

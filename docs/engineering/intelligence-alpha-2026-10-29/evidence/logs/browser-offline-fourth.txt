@@ -1,0 +1,2 @@
+Alpha browser passed offline
+{"passed":true,"kind":"isolated-production-server","base":"http://127.0.0.1:58040","dataDirectory":"D:\\ProductAgent-LifeContext\\.runtime\\alpha-app\\.runtime\\verification-krUQ6Z","realModelCalls":0,"journeys":["tests/alpha-integration.mjs"]}

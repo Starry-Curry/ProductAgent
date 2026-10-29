@@ -1,6 +1,11 @@
+import { installAlphaSamples } from "@/lib/life/alpha-samples";
 import { publicDemo, CloudError } from "@/lib/cloud/runtime";
 import { withDemoRequest } from "@/lib/cloud/request";
-import { storyOrganization, organizeStories, suggestStoryOrganization } from "@/lib/life/organization";
+import {
+  storyOrganization,
+  organizeStories,
+  suggestStoryOrganization,
+} from "@/lib/life/organization";
 import { matchStoryPhoto } from "@/lib/life/story-photo";
 import {
   findOfficial,
@@ -197,7 +202,9 @@ async function POSTHandler(r: Request) {
     }
     const p = await r.json();
     if (p.action === "suggestStoryOrganization")
-      return Response.json(await suggestStoryOrganization(db, read, a, p.input, lifeProvider()));
+      return Response.json(
+        await suggestStoryOrganization(db, read, a, p.input, lifeProvider()),
+      );
     if (p.action === "storyOrganization")
       return Response.json(organizeStories(db, read, a, p.input));
     if (p.action === "storyPhoto")
@@ -327,6 +334,12 @@ async function POSTHandler(r: Request) {
           "已保存本人核对的官方站点摘录；不等于完整知识包或实物验证。" +
           knowledgeNotice,
       });
+    }
+    if (p.action === "alphaSamples") {
+      z.object({ confirmed: z.literal(true) })
+        .strict()
+        .parse(p.input);
+      return Response.json(installAlphaSamples(db, read, a));
     }
     if (p.action === "createItem")
       return Response.json(createLifeItem(db, read, a, p.input));

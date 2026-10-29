@@ -64,6 +64,7 @@ try {
     "tests/household-integration.mjs",
     "tests/home-integration.mjs",
     "tests/shared-knowledge-integration.mjs",
+    "tests/alpha-integration.mjs",
   ];
   const selected =
     process.argv[2] === "care"

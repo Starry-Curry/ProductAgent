@@ -1,0 +1,8 @@
+box-with-real-resources direct direct undefined
+box-with-real-resources baseline local-candidate 把一件常用物画成今天的小速写; 用现有容器做一次桌面分区
+box-with-real-resources alpha FAILED 模型请求超时，请稍后重试。
+goal-with-official-products direct direct undefined
+goal-with-official-products baseline local-candidate 把一件常用物画成今天的小速写
+goal-with-official-products alpha FAILED 模型请求超时，请稍后重试。
+alpha-test-lin-ikea-samla-19440848 actual-chat curated-guidance undefined
+alpha-test-lin-ikea-knagglig-10392601 actual-chat curated-guidance undefined

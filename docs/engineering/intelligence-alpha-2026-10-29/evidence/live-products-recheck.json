@@ -1,0 +1,36 @@
+{
+  "rows": [
+    {
+      "id": "product-alpha-test-lin-ikea-samla-19440848",
+      "arm": "alpha",
+      "result": {
+        "text": "{\n  \"material\": \"聚丙烯塑料（透明）\",\n  \"structure\": \"盒体与内嵌锁扣盖\",\n  \"dimensions\": \"28×20×14厘米（外尺寸），标称容量5升\",\n  \"function\": [\"防尘收纳\", \"叠放存储\", \"内容物可视识别\"],\n  \"operation_maintenance\": \"可用软布蘸水及中性洗涤剂或皂液擦拭\",\n  \"limits\": [\"仅供室内使用\", \"不可直接接触食物\", \"盖子不具气密性或水密性\", \"非承重台\", \"非经验证光学器件\"],\n  \"unknown\": [\"耐热范围\", \"承重上限\", \"内部净尺寸\", \"食品接触安全性\", \"气密性/水密性实测数据\", \"光学成像性能\"],\n  \"new_function_conditional\": {\n    \"name\": \"可见的进度容器\",\n    \"conditions\": [\"仅存放已登记的非食品类轻小物品\", \"不依赖透明度实现精确视觉识别（如文字辨识、颜色校准）\"]\n  }\n}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 834,
+          "output": 235
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 10177
+    },
+    {
+      "id": "product-alpha-test-lin-ikea-knagglig-10392601",
+      "arm": "alpha",
+      "result": {
+        "text": "{\n  \"material\": \"实心松木；镀锌钢部件\",\n  \"structure\": \"带提手、可叠放；最大承重2公斤\",\n  \"dimensions\": \"23×16×10厘米（外尺寸）\",\n  \"function\": \"收纳盒；可叠放；带提手便于移动\",\n  \"operation_maintenance\": \"可用干布清洁；不得挂墙\",\n  \"limits\": [\"不得挂墙\", \"最大承重2公斤\", \"非坐踏或悬挂设计\", \"未确认食品接触适用性\", \"未确认耐热范围\"],\n  \"unknown\": [\"内部净尺寸\", \"耐热范围\", \"食品接触适用性\", \"实物紧固与磨损状态\", \"具体几何结构细节\"],\n  \"new_function_conditional\": {\n    \"name\": \"可搬走的活动工作站\",\n    \"conditions\": [\"总重不超过2公斤\", \"先检查连接与毛刺\", \"放置平稳；不得挂墙或坐踏\"]\n  }\n}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 817,
+          "output": 213
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 5070
+    }
+  ],
+  "requests": 20,
+  "estimatedCny": 9.024584,
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

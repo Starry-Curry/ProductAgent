@@ -24,6 +24,7 @@ export function MemoryCenter({
   items: Item[];
   focusItemId?: string;
 }) {
+  const [expanded, setExpanded] = useState(false);
   const [records, setRecords] = useState<MemoryRecord[]>([]),
     [editing, setEditing] = useState<MemoryRecord | null>(null),
     [busy, setBusy] = useState(false),
@@ -122,11 +123,18 @@ export function MemoryCenter({
     }
   }
   const demoCount = records.filter((m) => m.demo).length;
+  useEffect(() => {
+    if (records.some((m) => m.status === "candidate")) setExpanded(true);
+  }, [records]);
   const shown = records.filter((m) =>
     focusItemId ? m.itemId === focusItemId : showDemo ? m.demo : !m.demo,
   );
   return (
-    <details className="panel memory-center">
+    <details
+      className="panel memory-center"
+      open={expanded}
+      onToggle={(e) => setExpanded(e.currentTarget.open)}
+    >
       <summary>记忆与陪伴 · 看看它记下了什么</summary>
       <p>
         以物品详情的“故事与记录”为主要窗口：讲述人与物的经历时静默整理；普通聊天、记录物品和反馈使用结果作为补充来源。无需填写个人资料；购买和持有不等于喜欢。私人记忆默认不上云。
@@ -328,6 +336,9 @@ export function MemoryCenter({
                 : "本人补充 / 纠正"}
           </strong>
           <p>{m.text}</p>
+          {m.status === "candidate" && (
+            <p className="life-notice">待你确认 · 还不会作为长期认识使用</p>
+          )}
           {m.archived && (
             <p className="muted">
               关联物品已离手或不可访问。这份私人记录仍属于你，仅主动回忆时使用，不随物品转交。
