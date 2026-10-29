@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "port": 54355,
+  "data": "D:\\ProductAgent-LifeContext\\.runtime\\behavior-app\\.runtime\\behavior-preview",
+  "logs": "   ▲ Next.js 15.5.28\n   - Local:        http://127.0.0.1:54355\n   - Network:      http://127.0.0.1:54355\n\n ✓ Starting...\n ✓ Ready in 388ms\n",
+  "requests": 60
+}

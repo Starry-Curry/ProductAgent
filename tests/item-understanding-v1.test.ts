@@ -108,7 +108,7 @@ test("候选资源检查失败返回明确本地降级，不当成模型成功�
     assert.equal(r.cloudRejected, true);
     assert.equal(r.failure?.kind, "candidate_invalid");
     assert.notEqual(r.source, "model-creative");
-    assert.equal(r.modelCalls, 1);
+    assert.equal(r.modelCalls, 2);
   } finally {
     t.db.close();
   }

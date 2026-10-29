@@ -1,0 +1,1601 @@
+{
+  "base": "7c513170a28d5dd76fe7845e0debdc163c53ea19",
+  "cases": [
+    {
+      "id": "01",
+      "kind": "qa",
+      "itemIds": [
+        "alpha-test-lin-ikea-samla-19440848"
+      ],
+      "goal": "这款SAMLA的材质、尺寸和使用限制分别是什么？能直接装食物吗？内尺寸和我这件现在是否完好能确认吗？",
+      "facts": [
+        {
+          "itemId": "alpha-test-lin-ikea-samla-19440848",
+          "name": "测试商品 · SAMLA 萨姆拉附盖储物盒",
+          "facts": [
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/identity",
+              "text": "测试商品 · SAMLA 萨姆拉附盖储物盒；类别：收纳用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:material",
+              "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:size",
+              "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:lid",
+              "text": "盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:limits",
+              "text": "仅供室内使用，不可直接接触食物。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:care",
+              "text": "可用软布蘸水及中性洗涤剂或皂液擦拭。",
+              "basis": "official_source"
+            }
+          ],
+          "unknowns": [
+            "耐热范围",
+            "承重上限",
+            "内部净尺寸",
+            "是否适合具体待放物",
+            "气密或水密"
+          ],
+          "limits": [
+            "不得直接接触食品；仅室内",
+            "耐热范围、承重上限、气密性、内部净尺寸未知",
+            "盖子不是承重台或经验证的光学器件"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "kind": "qa",
+      "itemIds": [
+        "517b971a-b43a-4f47-be07-43fc9582dd51"
+      ],
+      "goal": "JBL Go 4的连接方式、防水等级、双音箱立体声条件分别是什么？我只有一台，当前电量和能否正常连接能确认吗？",
+      "facts": [
+        {
+          "itemId": "517b971a-b43a-4f47-be07-43fc9582dd51",
+          "name": "测试商品 · JBL Go 4 便携音箱",
+          "facts": [
+            {
+              "ref": "517b971a-b43a-4f47-be07-43fc9582dd51/identity",
+              "text": "测试商品 · JBL Go 4 便携音箱；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "517b971a-b43a-4f47-be07-43fc9582dd51/capabilities",
+              "text": "连接手机播放音频；音箱不独立录音",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "kind": "chat",
+      "itemIds": [],
+      "goal": "今天开会开得很累，先随便聊聊，不用帮我做计划或记东西。",
+      "facts": []
+    },
+    {
+      "id": "04",
+      "kind": "creative",
+      "itemIds": [
+        "alpha-test-lin-ikea-knagglig-10392601",
+        "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+        "b02157a6-7f5f-4d91-a217-0fccad8fa181"
+      ],
+      "goal": "小木盒闲置了。我想练外语口头表达，用可用资源找一个不只是收纳的新用途；可以只选其中一部分，不购买、不裁切、不改装。室内桌面可用。",
+      "facts": [
+        {
+          "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+          "name": "测试商品 · KNAGGLIG 卡纳格松木盒",
+          "facts": [
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/identity",
+              "text": "测试商品 · KNAGGLIG 卡纳格松木盒；类别：收纳用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:material",
+              "text": "主体为实心松木，其它部分为镀锌钢。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:size",
+              "text": "宽23、深16、高10厘米；不是内部净尺寸。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:structure",
+              "text": "带提手，可叠放；最大承重2公斤。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:limits",
+              "text": "不得挂墙；可用干布清洁。",
+              "basis": "official_source"
+            }
+          ],
+          "unknowns": [
+            "内部净尺寸",
+            "耐热范围",
+            "食品接触适用性",
+            "实物紧固与磨损状态"
+          ],
+          "limits": [
+            "不得挂墙",
+            "承重上限2公斤不是可坐踏或悬挂许可",
+            "食品接触、耐热、内尺寸、具体实物紧固状态未知"
+          ]
+        },
+        {
+          "itemId": "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+          "name": "旧手机",
+          "facts": [
+            {
+              "ref": "4ff482cc-52e7-4342-be81-aaebc24dbce0/identity",
+              "text": "旧手机；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "4ff482cc-52e7-4342-be81-aaebc24dbce0/capabilities",
+              "text": "正常工作的摄像头、录音、蓝牙音频播放、计时器",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "b02157a6-7f5f-4d91-a217-0fccad8fa181",
+          "name": "已写外语词的卡片",
+          "facts": [
+            {
+              "ref": "b02157a6-7f5f-4d91-a217-0fccad8fa181/identity",
+              "text": "已写外语词的卡片；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "b02157a6-7f5f-4d91-a217-0fccad8fa181/material",
+              "text": "普通硬纸，正面外语词、背面中文；共20张",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "kind": "creative",
+      "itemIds": [
+        "988625e3-7fc5-4eb0-b530-ff9b8a78c41f",
+        "b02157a6-7f5f-4d91-a217-0fccad8fa181",
+        "356b8d68-b2a5-4944-a1b9-48ae882658a9"
+      ],
+      "goal": "我总是学十分钟就去做别的。用推车和这些可用物品，想一个能让我更容易继续学习的新用法；不做计时打卡，不新增材料，室内地面平整。",
+      "facts": [
+        {
+          "itemId": "988625e3-7fc5-4eb0-b530-ff9b8a78c41f",
+          "name": "测试商品 · IKEA RÅSKOG 米色推车",
+          "facts": [
+            {
+              "ref": "988625e3-7fc5-4eb0-b530-ff9b8a78c41f/identity",
+              "text": "测试商品 · IKEA RÅSKOG 米色推车；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "988625e3-7fc5-4eb0-b530-ff9b8a78c41f/capabilities",
+              "text": "三层托盘，带轮子，用户已核对组装完好",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "b02157a6-7f5f-4d91-a217-0fccad8fa181",
+          "name": "已写外语词的卡片",
+          "facts": [
+            {
+              "ref": "b02157a6-7f5f-4d91-a217-0fccad8fa181/identity",
+              "text": "已写外语词的卡片；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "b02157a6-7f5f-4d91-a217-0fccad8fa181/material",
+              "text": "普通硬纸，正面外语词、背面中文；共20张",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "356b8d68-b2a5-4944-a1b9-48ae882658a9",
+          "name": "长尾夹",
+          "facts": [
+            {
+              "ref": "356b8d68-b2a5-4944-a1b9-48ae882658a9/identity",
+              "text": "长尾夹；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "356b8d68-b2a5-4944-a1b9-48ae882658a9/material",
+              "text": "钢，带可翻动手柄",
+              "basis": "user_report"
+            },
+            {
+              "ref": "356b8d68-b2a5-4944-a1b9-48ae882658a9/capabilities",
+              "text": "夹持普通纸张",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "kind": "creative",
+      "itemIds": [
+        "alpha-test-lin-ikea-samla-19440848",
+        "a465fe9a-7fc8-4560-8a2c-a65fa3209a64",
+        "88b1c02a-1c99-4c4d-bded-9adb9f664d7f"
+      ],
+      "goal": "我出门常忘拿钥匙或钱包。只能用资源池里的东西，在门口室内平桌想个比普通收纳更有效的办法；不买、不贴标签、不剪裁，可只用一部分。",
+      "facts": [
+        {
+          "itemId": "alpha-test-lin-ikea-samla-19440848",
+          "name": "测试商品 · SAMLA 萨姆拉附盖储物盒",
+          "facts": [
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/identity",
+              "text": "测试商品 · SAMLA 萨姆拉附盖储物盒；类别：收纳用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:material",
+              "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:size",
+              "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:lid",
+              "text": "盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:limits",
+              "text": "仅供室内使用，不可直接接触食物。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:care",
+              "text": "可用软布蘸水及中性洗涤剂或皂液擦拭。",
+              "basis": "official_source"
+            }
+          ],
+          "unknowns": [
+            "耐热范围",
+            "承重上限",
+            "内部净尺寸",
+            "是否适合具体待放物",
+            "气密或水密"
+          ],
+          "limits": [
+            "不得直接接触食品；仅室内",
+            "耐热范围、承重上限、气密性、内部净尺寸未知",
+            "盖子不是承重台或经验证的光学器件"
+          ]
+        },
+        {
+          "itemId": "a465fe9a-7fc8-4560-8a2c-a65fa3209a64",
+          "name": "门钥匙",
+          "facts": [
+            {
+              "ref": "a465fe9a-7fc8-4560-8a2c-a65fa3209a64/identity",
+              "text": "门钥匙；类别：生活用品",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "88b1c02a-1c99-4c4d-bded-9adb9f664d7f",
+          "name": "钱包",
+          "facts": [
+            {
+              "ref": "88b1c02a-1c99-4c4d-bded-9adb9f664d7f/identity",
+              "text": "钱包；类别：生活用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "88b1c02a-1c99-4c4d-bded-9adb9f664d7f/material",
+              "text": "布，装有卡片，不公开内容",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "kind": "creative",
+      "itemIds": [
+        "e60709a9-434e-4a9a-a995-e465d7cdf76c",
+        "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+        "ad1095c9-8202-4fed-82ef-0ebdd8f19402"
+      ],
+      "goal": "我想给朋友寄来的明信片拍照，窗边光太硬。只有这些物品，找个不裁切、不改装、不会露出背面留言的拍摄办法；手机可手持，桌面可用。",
+      "facts": [
+        {
+          "itemId": "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+          "name": "旧手机",
+          "facts": [
+            {
+              "ref": "4ff482cc-52e7-4342-be81-aaebc24dbce0/identity",
+              "text": "旧手机；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "4ff482cc-52e7-4342-be81-aaebc24dbce0/capabilities",
+              "text": "正常工作的摄像头、录音、蓝牙音频播放、计时器",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "e60709a9-434e-4a9a-a995-e465d7cdf76c",
+          "name": "旧长柄伞",
+          "facts": [
+            {
+              "ref": "e60709a9-434e-4a9a-a995-e465d7cdf76c/identity",
+              "text": "旧长柄伞；类别：生活用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "e60709a9-434e-4a9a-a995-e465d7cdf76c/material",
+              "text": "不透明伞布，支架完整，能正常撑开",
+              "basis": "user_report"
+            },
+            {
+              "ref": "e60709a9-434e-4a9a-a995-e465d7cdf76c/capabilities",
+              "text": "遮挡侧向光线，非反光材质",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "ad1095c9-8202-4fed-82ef-0ebdd8f19402",
+          "name": "朋友寄来的明信片",
+          "facts": [
+            {
+              "ref": "ad1095c9-8202-4fed-82ef-0ebdd8f19402/identity",
+              "text": "朋友寄来的明信片；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "ad1095c9-8202-4fed-82ef-0ebdd8f19402/material",
+              "text": "普通硬卡纸，背面有私人留言",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "kind": "creative",
+      "itemIds": [
+        "517b971a-b43a-4f47-be07-43fc9582dd51",
+        "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+        "b02157a6-7f5f-4d91-a217-0fccad8fa181"
+      ],
+      "goal": "我想练习外语听到词就快速说中文。用已有手机、GO4和词卡想个能反复练习但不是单纯播放音乐的组合；我独自一人，白天能小音量说话，不买东西。",
+      "facts": [
+        {
+          "itemId": "517b971a-b43a-4f47-be07-43fc9582dd51",
+          "name": "测试商品 · JBL Go 4 便携音箱",
+          "facts": [
+            {
+              "ref": "517b971a-b43a-4f47-be07-43fc9582dd51/identity",
+              "text": "测试商品 · JBL Go 4 便携音箱；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "517b971a-b43a-4f47-be07-43fc9582dd51/capabilities",
+              "text": "连接手机播放音频；音箱不独立录音",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+          "name": "旧手机",
+          "facts": [
+            {
+              "ref": "4ff482cc-52e7-4342-be81-aaebc24dbce0/identity",
+              "text": "旧手机；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "4ff482cc-52e7-4342-be81-aaebc24dbce0/capabilities",
+              "text": "正常工作的摄像头、录音、蓝牙音频播放、计时器",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "b02157a6-7f5f-4d91-a217-0fccad8fa181",
+          "name": "已写外语词的卡片",
+          "facts": [
+            {
+              "ref": "b02157a6-7f5f-4d91-a217-0fccad8fa181/identity",
+              "text": "已写外语词的卡片；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "b02157a6-7f5f-4d91-a217-0fccad8fa181/material",
+              "text": "普通硬纸，正面外语词、背面中文；共20张",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "09",
+      "kind": "creative",
+      "itemIds": [
+        "7a968eb8-980e-4c6e-bf40-49e9facf811c",
+        "73f6ff21-db1b-42b1-b056-57b798c68432"
+      ],
+      "goal": "浴巾平时不用。用可用物品找一个在书桌打字时派得上用场的新用途，不剪裁不购买；干燥平桌可用，不作治疗承诺。",
+      "facts": [
+        {
+          "itemId": "7a968eb8-980e-4c6e-bf40-49e9facf811c",
+          "name": "闲置浴巾",
+          "facts": [
+            {
+              "ref": "7a968eb8-980e-4c6e-bf40-49e9facf811c/identity",
+              "text": "闲置浴巾；类别：家居",
+              "basis": "user_report"
+            },
+            {
+              "ref": "7a968eb8-980e-4c6e-bf40-49e9facf811c/material",
+              "text": "干燥棉布，柔软可折叠",
+              "basis": "user_report"
+            },
+            {
+              "ref": "7a968eb8-980e-4c6e-bf40-49e9facf811c/dimensions",
+              "text": "70×140厘米",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "73f6ff21-db1b-42b1-b056-57b798c68432",
+          "name": "有线键盘",
+          "facts": [
+            {
+              "ref": "73f6ff21-db1b-42b1-b056-57b798c68432/identity",
+              "text": "有线键盘；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "73f6ff21-db1b-42b1-b056-57b798c68432/capabilities",
+              "text": "平底，前沿没有支撑脚，高度不可调，正常打字",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "kind": "creative",
+      "itemIds": [
+        "a881e976-c40b-43f7-989f-837a950adb17",
+        "4ff482cc-52e7-4342-be81-aaebc24dbce0"
+      ],
+      "goal": "透明空饮料瓶还能做什么？我想给手机拍摄的短片加一个有实际表现效果的小道具，不用水、不加热、不切割，不买额外东西；室内平桌可用。",
+      "facts": [
+        {
+          "itemId": "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+          "name": "旧手机",
+          "facts": [
+            {
+              "ref": "4ff482cc-52e7-4342-be81-aaebc24dbce0/identity",
+              "text": "旧手机；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "4ff482cc-52e7-4342-be81-aaebc24dbce0/capabilities",
+              "text": "正常工作的摄像头、录音、蓝牙音频播放、计时器",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "a881e976-c40b-43f7-989f-837a950adb17",
+          "name": "空饮料瓶",
+          "facts": [
+            {
+              "ref": "a881e976-c40b-43f7-989f-837a950adb17/identity",
+              "text": "空饮料瓶；类别：生活用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "a881e976-c40b-43f7-989f-837a950adb17/material",
+              "text": "透明PET，带可拧瓶盖，干燥空瓶",
+              "basis": "user_report"
+            },
+            {
+              "ref": "a881e976-c40b-43f7-989f-837a950adb17/dimensions",
+              "text": "500毫升瓶，约20厘米高",
+              "basis": "user_report"
+            },
+            {
+              "ref": "a881e976-c40b-43f7-989f-837a950adb17/capabilities",
+              "text": "瓶盖可拧紧，瓶身可轻压变形",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "kind": "creative",
+      "itemIds": [
+        "356b8d68-b2a5-4944-a1b9-48ae882658a9",
+        "ad1095c9-8202-4fed-82ef-0ebdd8f19402",
+        "alpha-test-lin-ikea-knagglig-10392601"
+      ],
+      "goal": "想把朋友的三张明信片做一个随时换正面的桌上小展览，不能损伤或泄露背面留言，不买、不粘贴、不裁切；不要求用齐所有物品。",
+      "facts": [
+        {
+          "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+          "name": "测试商品 · KNAGGLIG 卡纳格松木盒",
+          "facts": [
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/identity",
+              "text": "测试商品 · KNAGGLIG 卡纳格松木盒；类别：收纳用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:material",
+              "text": "主体为实心松木，其它部分为镀锌钢。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:size",
+              "text": "宽23、深16、高10厘米；不是内部净尺寸。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:structure",
+              "text": "带提手，可叠放；最大承重2公斤。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:limits",
+              "text": "不得挂墙；可用干布清洁。",
+              "basis": "official_source"
+            }
+          ],
+          "unknowns": [
+            "内部净尺寸",
+            "耐热范围",
+            "食品接触适用性",
+            "实物紧固与磨损状态"
+          ],
+          "limits": [
+            "不得挂墙",
+            "承重上限2公斤不是可坐踏或悬挂许可",
+            "食品接触、耐热、内尺寸、具体实物紧固状态未知"
+          ]
+        },
+        {
+          "itemId": "356b8d68-b2a5-4944-a1b9-48ae882658a9",
+          "name": "长尾夹",
+          "facts": [
+            {
+              "ref": "356b8d68-b2a5-4944-a1b9-48ae882658a9/identity",
+              "text": "长尾夹；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "356b8d68-b2a5-4944-a1b9-48ae882658a9/material",
+              "text": "钢，带可翻动手柄",
+              "basis": "user_report"
+            },
+            {
+              "ref": "356b8d68-b2a5-4944-a1b9-48ae882658a9/capabilities",
+              "text": "夹持普通纸张",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "ad1095c9-8202-4fed-82ef-0ebdd8f19402",
+          "name": "朋友寄来的明信片",
+          "facts": [
+            {
+              "ref": "ad1095c9-8202-4fed-82ef-0ebdd8f19402/identity",
+              "text": "朋友寄来的明信片；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "ad1095c9-8202-4fed-82ef-0ebdd8f19402/material",
+              "text": "普通硬卡纸，背面有私人留言",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "kind": "creative",
+      "itemIds": [
+        "55afd083-1a76-4772-b99c-19a7ac375698"
+      ],
+      "goal": "只有这个型号不明的杯子，材质和耐热未知。我想用它安全盛刚烧开的水而且保温一小时，不得购买或用其他物品，有办法吗？",
+      "facts": [
+        {
+          "itemId": "55afd083-1a76-4772-b99c-19a7ac375698",
+          "name": "型号不明的杯子",
+          "facts": [
+            {
+              "ref": "55afd083-1a76-4772-b99c-19a7ac375698/identity",
+              "text": "型号不明的杯子；类别：容器",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "case": "01",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"SAMLA萨姆拉附盖储物盒材质为透明聚丙烯塑料；外尺寸为28×20×14厘米（标称容量5升），但内尺寸未公开，无法确认是否与您当前物品匹配；使用限制明确：仅供室内使用，不可直接接触食物（即不能装未包装的食品，如水果、熟食等），盖子仅防尘、助叠放，不气密、不水密。关于‘是否完好’：该商品在系统中标记为‘闲置’且‘usable: true’，但无实时物理状态图像或检测报告，无法远程确认外观或结构完整性——建议您目视检查盒体有无裂纹、盖子锁扣是否顺畅咬合、闭合后是否明显晃动或漏光。如需安全盛放食物，请改用明确标注‘食品接触级’（如PP5且符合GB 4806.7）并注明内尺寸的容器。\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 1279,
+          "output": 213
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 5410
+    },
+    {
+      "case": "01",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "result": {
+        "session": {
+          "id": "3d735bff-8766-4621-a733-a689642dd9d0",
+          "owner": "lin",
+          "itemId": "alpha-test-lin-ikea-samla-19440848",
+          "identity": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T13:10:45.790Z\\\"]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "89f9caa3-d053-4f19-a273-02e718d6898c",
+              "role": "user",
+              "text": "这款SAMLA的材质、尺寸和使用限制分别是什么？能直接装食物吗？内尺寸和我这件现在是否完好能确认吗？",
+              "at": "2026-10-29T13:10:51.417Z",
+              "itemId": "alpha-test-lin-ikea-samla-19440848",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "a46aedeb-edc5-48ac-80f5-8d4f9207cd24",
+              "role": "assistant",
+              "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n仅供室内使用，不可直接接触食物。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n仅供室内使用，不可直接接触食物。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:size",
+                  "samla:limits"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "section": "商品描述、商品尺寸、小贴士、材料",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "alpha-test-lin-ikea-samla-19440848",
+                  "itemName": "测试商品 · SAMLA 萨姆拉附盖储物盒"
+                }
+              },
+              "at": "2026-10-29T13:10:51.417Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "74aa2972-6772-4a02-b858-9affbb131c1d",
+            "turnScope": "alpha-test-lin-ikea-samla-19440848",
+            "lastIntent": "help",
+            "activeItemId": "alpha-test-lin-ikea-samla-19440848",
+            "goal": "这款SAMLA的材质、尺寸和使用限制分别是什么？能直接装食物吗？内尺寸和我这件现在是否完好能确认吗？"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T13:10:51.276Z",
+          "updatedAt": "2026-10-29T13:10:51.417Z",
+          "expiresAt": "2026-11-05T13:10:51.276Z",
+          "itemScopes": {
+            "alpha-test-lin-ikea-samla-19440848": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T13:10:45.790Z\\\"]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n仅供室内使用，不可直接接触食物。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "samla:size",
+            "samla:limits"
+          ],
+          "citations": [
+            {
+              "id": "ikea-samla-19440848",
+              "title": "宜家中国 SAMLA 商品详情",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "section": "商品描述、商品尺寸、小贴士、材料",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对已登记的物品性质、限制与未知条件",
+            "itemId": "alpha-test-lin-ikea-samla-19440848",
+            "itemName": "测试商品 · SAMLA 萨姆拉附盖储物盒"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=alpha-test-lin-ikea-samla-19440848; router=home-router-v1",
+            "at": "2026-10-29T13:10:51.343Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T13:10:51.380Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=1b1d5645-4ad7-47e2-82ce-43bf59305dd4; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T13:10:51.380Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T13:10:51.385Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      },
+      "requests": 0,
+      "elapsedMs": 152
+    },
+    {
+      "case": "01",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "session": {
+          "id": "d20623cf-509d-4160-9861-2ce847946b6b",
+          "owner": "lin",
+          "itemId": "alpha-test-lin-ikea-samla-19440848",
+          "identity": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T13:10:45.790Z\\\"]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "e8433872-4da5-467e-91bf-2c048d66f2c1",
+              "role": "user",
+              "text": "这款SAMLA的材质、尺寸和使用限制分别是什么？能直接装食物吗？内尺寸和我这件现在是否完好能确认吗？",
+              "at": "2026-10-29T13:11:00.557Z",
+              "itemId": "alpha-test-lin-ikea-samla-19440848",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "cc85ef48-d0ce-4376-96dc-fa14e2c1da0c",
+              "role": "assistant",
+              "text": "这款 IKEA SAMLA 萨姆拉附盖储物盒（型号 194.408.48）的官方信息如下：\n\n✅ 材质：透明聚丙烯塑料（PP），盒体透明便于查看内容物；\n✅ 尺寸：组合外尺寸为宽 28 × 深 20 × 高 14 厘米，标称容量 5 升；注意——这不是内部净尺寸，官方未提供内尺寸数据；\n✅ 使用限制：仅供室内使用，**不可直接接触食物**（明确标注为非食品接触用途）；盖子带内嵌锁扣，可防尘、支持叠放，但未宣称气密或水密；\n\n❌ 关于您的具体实物状态（如是否完好、有无划痕/变形/盖子锁扣是否正常等），当前资料无法确认——这需要您目视检查或拍照核对，我们没有接入设备传感器或远程检测能力；\n\n⚠️ 补充说明：耐热范围、承重上限、气密性、是否适合盛放特定物品（如粉末、液体、尖锐小件）等均未在官方资料中声明，属于未知项。若您有具体存放需求（例如想装手工材料、文具、药片分装等），我可以帮您判断是否适配已知条件。\n\n需要我帮您比对某类物品是否适合放入，或提供清洁/叠放/收纳优化建议吗？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这款 IKEA SAMLA 萨姆拉附盖储物盒（型号 194.408.48）的官方信息如下：\n\n✅ 材质：透明聚丙烯塑料（PP），盒体透明便于查看内容物；\n✅ 尺寸：组合外尺寸为宽 28 × 深 20 × 高 14 厘米，标称容量 5 升；注意——这不是内部净尺寸，官方未提供内尺寸数据；\n✅ 使用限制：仅供室内使用，**不可直接接触食物**（明确标注为非食品接触用途）；盖子带内嵌锁扣，可防尘、支持叠放，但未宣称气密或水密；\n\n❌ 关于您的具体实物状态（如是否完好、有无划痕/变形/盖子锁扣是否正常等），当前资料无法确认——这需要您目视检查或拍照核对，我们没有接入设备传感器或远程检测能力；\n\n⚠️ 补充说明：耐热范围、承重上限、气密性、是否适合盛放特定物品（如粉末、液体、尖锐小件）等均未在官方资料中声明，属于未知项。若您有具体存放需求（例如想装手工材料、文具、药片分装等），我可以帮您判断是否适配已知条件。\n\n需要我帮您比对某类物品是否适合放入，或提供清洁/叠放/收纳优化建议吗？",
+                "source": "model-with-evidence",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:material",
+                  "samla:size",
+                  "samla:lid",
+                  "samla:limits",
+                  "samla:care"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "kind": "official",
+                    "section": "商品描述、商品尺寸、小贴士、材料"
+                  }
+                ],
+                "memoryIds": [
+                  "1b1d5645-4ad7-47e2-82ce-43bf59305dd4"
+                ],
+                "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "alpha-test-lin-ikea-samla-19440848",
+                  "itemName": "测试商品 · SAMLA 萨姆拉附盖储物盒"
+                }
+              },
+              "at": "2026-10-29T13:11:00.557Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "77df5ff3-8490-405c-bfad-1d17fbf7a330",
+            "turnScope": "alpha-test-lin-ikea-samla-19440848",
+            "lastIntent": "help",
+            "activeItemId": "alpha-test-lin-ikea-samla-19440848",
+            "goal": "这款SAMLA的材质、尺寸和使用限制分别是什么？能直接装食物吗？内尺寸和我这件现在是否完好能确认吗？"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T13:10:51.428Z",
+          "updatedAt": "2026-10-29T13:11:00.559Z",
+          "expiresAt": "2026-11-05T13:10:51.428Z",
+          "itemScopes": {
+            "alpha-test-lin-ikea-samla-19440848": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T13:10:45.790Z\\\"]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这款 IKEA SAMLA 萨姆拉附盖储物盒（型号 194.408.48）的官方信息如下：\n\n✅ 材质：透明聚丙烯塑料（PP），盒体透明便于查看内容物；\n✅ 尺寸：组合外尺寸为宽 28 × 深 20 × 高 14 厘米，标称容量 5 升；注意——这不是内部净尺寸，官方未提供内尺寸数据；\n✅ 使用限制：仅供室内使用，**不可直接接触食物**（明确标注为非食品接触用途）；盖子带内嵌锁扣，可防尘、支持叠放，但未宣称气密或水密；\n\n❌ 关于您的具体实物状态（如是否完好、有无划痕/变形/盖子锁扣是否正常等），当前资料无法确认——这需要您目视检查或拍照核对，我们没有接入设备传感器或远程检测能力；\n\n⚠️ 补充说明：耐热范围、承重上限、气密性、是否适合盛放特定物品（如粉末、液体、尖锐小件）等均未在官方资料中声明，属于未知项。若您有具体存放需求（例如想装手工材料、文具、药片分装等），我可以帮您判断是否适配已知条件。\n\n需要我帮您比对某类物品是否适合放入，或提供清洁/叠放/收纳优化建议吗？",
+          "source": "model-with-evidence",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "samla:material",
+            "samla:size",
+            "samla:lid",
+            "samla:limits",
+            "samla:care"
+          ],
+          "citations": [
+            {
+              "id": "ikea-samla-19440848",
+              "title": "宜家中国 SAMLA 商品详情",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "kind": "official",
+              "section": "商品描述、商品尺寸、小贴士、材料"
+            }
+          ],
+          "memoryIds": [
+            "1b1d5645-4ad7-47e2-82ce-43bf59305dd4"
+          ],
+          "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对已登记的物品性质、限制与未知条件",
+            "itemId": "alpha-test-lin-ikea-samla-19440848",
+            "itemName": "测试商品 · SAMLA 萨姆拉附盖储物盒"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=alpha-test-lin-ikea-samla-19440848; router=home-router-v1",
+            "at": "2026-10-29T13:10:51.480Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T13:10:51.512Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=1b1d5645-4ad7-47e2-82ce-43bf59305dd4; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T13:10:51.513Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T13:10:51.539Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T13:11:00.467Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T13:11:00.510Z"
+          }
+        ],
+        "tokens": {
+          "input": 4369,
+          "output": 374
+        },
+        "modelCalls": 1
+      },
+      "requests": 1,
+      "elapsedMs": 9142
+    },
+    {
+      "case": "04",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"将小木盒用作‘外语口语练习站’：把20张外语词卡片平铺放入盒内（盒内净宽深约20×13cm，可容纳A6尺寸卡片单层平铺），盒盖不盖，置于桌面；旧手机开启录音功能并横放于盒前边缘（利用松木盒稳固台面支撑，避免滑动）；练习时面对手机朗读卡片内容，同步录音；完成后回放自查发音与流利度。全程无需改装、不新增物品，用毕5秒内收走卡片+手机，木盒恢复为收纳状态——契合小房间、安静、随手复原的需求。原理：松木盒提供稳定、中性视觉焦点与物理边界，降低认知负荷；录音闭环强化输出反馈；所有操作在承重（<0.1kg）、尺寸（卡片+手机总宽<23cm）、安全限制（不挂墙、不坐踏）内完全合规。\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 2084,
+          "output": 213
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 6893
+    },
+    {
+      "case": "04",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [
+          {
+            "title": "松木盒语音抽卡训练站",
+            "itemIds": [
+              "alpha-test-lin-ikea-knagglig-10392601",
+              "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+              "b02157a6-7f5f-4d91-a217-0fccad8fa181"
+            ],
+            "minutes": 30,
+            "steps": [
+              "将20张外语词卡片平铺放入松木盒内（检查盒内无尖锐毛刺、提手稳固；若盒底不平或卡片滑动，用手机压住一角固定）。",
+              "打开旧手机录音功能，横置放于盒盖上缘——利用松木盒10cm高度自然抬升手机麦克风位置，减少桌面反射杂音。",
+              "随机抽出一张卡片朗读正面外语词3遍，每遍后停顿2秒；手机同步录音；读错时轻敲盒体一声作标记（松木结构可传声清晰，不需额外工具）。",
+              "5分钟后暂停，回放最后1段录音，对照卡片背面中文自查发音；盒体即刻恢复收纳状态，全程无需挪动其他物品。"
+            ],
+            "limits": [
+              "不改装盒体",
+              "不裁切卡片",
+              "不加热/不挂墙",
+              "总重≤2kg（20张硬纸+手机＜0.3kg，安全冗余充足）"
+            ],
+            "reasoning": {
+              "outcome": "用户获得一个可立即启动、带声学反馈与即时回放的外语口语自测训练站，每次练习后桌面自动归位。",
+              "roles": [
+                {
+                  "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+                  "factRefs": [
+                    "alpha-test-lin-ikea-knagglig-10392601/knagglig:size",
+                    "alpha-test-lin-ikea-knagglig-10392601/knagglig:structure"
+                  ],
+                  "function": "提供刚性抬升平台与可敲击发声界面",
+                  "contribution": "10cm高度优化手机拾音角度；提手结构确保盒体放置稳定；松木材质使轻敲产生清晰可辨的节奏提示音"
+                },
+                {
+                  "itemId": "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+                  "factRefs": [
+                    "4ff482cc-52e7-4342-be81-aaebc24dbce0/capabilities"
+                  ],
+                  "function": "执行录音、存储与回放音频",
+                  "contribution": "捕获用户朗读实况，支撑发音比对；蓝牙音频播放非必需，仅录音与回放功能已满足闭环训练"
+                },
+                {
+                  "itemId": "b02157a6-7f5f-4d91-a217-0fccad8fa181",
+                  "factRefs": [
+                    "b02157a6-7f5f-4d91-a217-0fccad8fa181/material"
+                  ],
+                  "function": "提供可抽取、双面标注的离散语料单元",
+                  "contribution": "支持随机化输入激发即兴表达；硬纸材质确保抽卡手感明确、不易粘连，适配盒内有限空间操作"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "松木盒内部有毛刺或提手松动",
+                  "method": "手指沿内壁缓慢划过检查；轻提提手观察是否晃动异响",
+                  "ifFail": "改用卡片堆叠在桌面一角训练，放弃盒体抬升功能，仍保留录音与回放"
+                },
+                {
+                  "condition": "旧手机录音时拾音不清（如桌面共振干扰大）",
+                  "method": "试录10秒环境音并回放，听是否有低频嗡鸣或失真",
+                  "ifFail": "将手机移至盒侧，用盒体遮挡部分反射面，或垫书本微调高度"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": [
+                "1b1d5645-4ad7-47e2-82ce-43bf59305dd4"
+              ]
+            },
+            "rationale": "松木盒提供稳定抬升平台与声学辅助界面（盒体共振增强敲击反馈、抬高麦克风改善拾音），旧手机承担录音与回放核心功能，卡片提供即时语料。三者组合形成闭环口语训练系统：物理结构支持动作规范性，声音反馈强化自我校准，且全程30秒内可还原桌面原状，契合小房间安静、易复位的核心偏好。",
+            "missing": [
+              "松木盒内部有毛刺或提手松动；检查：手指沿内壁缓慢划过检查；轻提提手观察是否晃动异响；不成立：改用卡片堆叠在桌面一角训练，放弃盒体抬升功能，仍保留录音与回放",
+              "旧手机录音时拾音不清（如桌面共振干扰大）；检查：试录10秒环境音并回放，听是否有低频嗡鸣或失真；不成立：将手机移至盒侧，用盒体遮挡部分反射面，或垫书本微调高度",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+              "已写外语词的卡片：登记单位为张，方案用量单位待确认，不自动视为件数",
+              "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+            ],
+            "factIds": [
+              "knagglig:material",
+              "knagglig:size",
+              "knagglig:structure",
+              "knagglig:limits"
+            ],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "生活改善",
+            "requirements": [
+              {
+                "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+                "quantity": 1
+              },
+              {
+                "itemId": "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+                "quantity": 1
+              },
+              {
+                "itemId": "b02157a6-7f5f-4d91-a217-0fccad8fa181",
+                "quantity": 20
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "alpha-test-lin-ikea-knagglig-10392601",
+                "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+                "b02157a6-7f5f-4d91-a217-0fccad8fa181"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "d553f029-6b04-45a9-aaa9-f99f79aa4a2d",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [
+              {
+                "id": "knagglig:material",
+                "text": "主体为实心松木，其它部分为镀锌钢。",
+                "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/"
+              },
+              {
+                "id": "knagglig:size",
+                "text": "宽23、深16、高10厘米；不是内部净尺寸。",
+                "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/"
+              },
+              {
+                "id": "knagglig:structure",
+                "text": "带提手，可叠放；最大承重2公斤。",
+                "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/"
+              },
+              {
+                "id": "knagglig:limits",
+                "text": "不得挂墙；可用干布清洁。",
+                "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/"
+              }
+            ],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "小木盒闲置了。我想练外语口头表达，用可用资源找一个不只是收纳的新用途；可以只选其中一部分，不购买、不裁切、不改装。室内桌面可用。"
+          }
+        ],
+        "continuation": {
+          "goal": "小木盒闲置了。我想练外语口头表达，用可用资源找一个不只是收纳的新用途；可以只选其中一部分，不购买、不裁切、不改装。室内桌面可用。",
+          "minutes": 30,
+          "itemIds": [
+            "alpha-test-lin-ikea-knagglig-10392601",
+            "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+            "b02157a6-7f5f-4d91-a217-0fccad8fa181"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西",
+            "在家"
+          ]
+        },
+        "understanding": "利用已有收纳与整理能力，改善眼前的一小块空间 · 30分钟 · 不新增购买 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "alpha-test-lin-ikea-knagglig-10392601",
+            "name": "测试商品 · KNAGGLIG 卡纳格松木盒",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+            "name": "旧手机",
+            "capabilities": [
+              "声音"
+            ]
+          },
+          {
+            "id": "b02157a6-7f5f-4d91-a217-0fccad8fa181",
+            "name": "已写外语词的卡片",
+            "capabilities": [
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "松木盒内部有毛刺或提手松动；检查：手指沿内壁缓慢划过检查；轻提提手观察是否晃动异响；不成立：改用卡片堆叠在桌面一角训练，放弃盒体抬升功能，仍保留录音与回放",
+          "旧手机录音时拾音不清（如桌面共振干扰大）；检查：试录10秒环境音并回放，听是否有低频嗡鸣或失真；不成立：将手机移至盒侧，用盒体遮挡部分反射面，或垫书本微调高度",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+          "已写外语词的卡片：登记单位为张，方案用量单位待确认，不自动视为件数",
+          "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+        ],
+        "source": "model-creative",
+        "modelCalls": 1,
+        "tokens": {
+          "input": 5708,
+          "output": 1335
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 30114
+    },
+    {
+      "case": "04",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [],
+        "continuation": {
+          "goal": "小木盒闲置了。我想练外语口头表达，用可用资源找一个不只是收纳的新用途；可以只选其中一部分，不购买、不裁切、不改装。室内桌面可用。",
+          "minutes": 30,
+          "itemIds": [
+            "alpha-test-lin-ikea-knagglig-10392601",
+            "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+            "b02157a6-7f5f-4d91-a217-0fccad8fa181"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "利用已有收纳与整理能力，改善眼前的一小块空间 · 30分钟 · 不新增购买 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "alpha-test-lin-ikea-knagglig-10392601",
+            "name": "测试商品 · KNAGGLIG 卡纳格松木盒",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "4ff482cc-52e7-4342-be81-aaebc24dbce0",
+            "name": "旧手机",
+            "capabilities": [
+              "声音"
+            ]
+          },
+          {
+            "id": "b02157a6-7f5f-4d91-a217-0fccad8fa181",
+            "name": "已写外语词的卡片",
+            "capabilities": [
+              "观察记录"
+            ]
+          }
+        ],
+        "source": "rejected-model",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 6775,
+          "output": 1760
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。"
+        },
+        "missing": [
+          "本次没有可发布的AI方案；未用固定观察任务替代新用途。"
+        ]
+      },
+      "requests": 2,
+      "elapsedMs": 41349
+    },
+    {
+      "case": "11",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"用 KNAGGLIG 松木盒作底座，将三张明信片分别夹在三个长尾夹上（每张明信片仅夹住顶部边缘，不遮挡正面画面，且因长尾夹钢制手柄可翻转，夹持后明信片仍能绕夹口轴线自由翻转180°），再将长尾夹的尾部（细长金属杆）水平插入松木盒前侧边缘与箱体之间的自然缝隙中——利用松木盒结构中提手根部与箱壁形成的约2–3毫米宽、贯穿前侧的线性空隙（符合其‘可叠放’设计所隐含的边缘间隙特征），使夹子悬停固定。这样：① 明信片背面完全裸露朝外，留言不被遮挡、不接触任何表面；② 无粘贴、无裁切、无穿孔；③ 每张可随时用手捏住明信片中部轻推翻转，切换正/背面展示；④ 松木盒提供稳定基座与视觉框定，整体可随手端起收纳，符合小房间安静、易复原偏好；⑤ 总重远低于2公斤限制，安全可行。\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 2129,
+          "output": 279
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 8418
+    },
+    {
+      "case": "11",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "error": "模型请求超时，请稍后重试。",
+      "requests": 2,
+      "elapsedMs": 73938
+    },
+    {
+      "case": "11",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [
+          {
+            "title": "盒盖翻转式轮展台",
+            "itemIds": [
+              "alpha-test-lin-ikea-knagglig-10392601",
+              "ad1095c9-8202-4fed-82ef-0ebdd8f19402"
+            ],
+            "minutes": 10,
+            "steps": [
+              "将KNAGGLIG松木盒平放于桌面，开口朝前；确认盒体稳固、无晃动。",
+              "目测或轻试插入一张明信片：竖立靠在盒内前壁，上缘不高于盒外高10cm；若卡住/倾倒，则停止（说明内部净高＜明信片高度）。",
+              "若通过，将三张明信片竖立并排靠在盒内前壁，正面朝外，背面完全贴盒底、零暴露、零受力。",
+              "缓慢向后掀开盒盖至约90°，使其成为固定角度挡板；轻推最右明信片使其滑入盒内、被盖板与盒壁夹住仅露出正面；其余两张自然滑落盒底隐藏。换展时，仅需单手扶起下一张顶至盖板下缘，原卡自动滑落。"
+            ],
+            "limits": [
+              "不得挂墙",
+              "承重上限2公斤不是可坐踏或悬挂许可",
+              "明信片背面全程不可触碰或承力",
+              "不粘不裁不钉"
+            ],
+            "reasoning": {
+              "outcome": "实现三张明信片中任一张随时单手秒级展出，背面完全不可见、未受力、未遮挡、未翻开",
+              "roles": [
+                {
+                  "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+                  "factRefs": [
+                    "alpha-test-lin-ikea-knagglig-10392601/knagglig:size",
+                    "alpha-test-lin-ikea-knagglig-10392601/knagglig:structure"
+                  ],
+                  "function": "提供带提手的刚性容器，其外尺寸与可掀盖结构构成可复位限位槽和滑道",
+                  "contribution": "盒深16cm提供明信片竖立倾角空间，盒高10cm约束露出高度，盖板掀开角度形成物理止挡，共同实现无接触、可逆、零残留的正面轮展"
+                },
+                {
+                  "itemId": "ad1095c9-8202-4fed-82ef-0ebdd8f19402",
+                  "factRefs": [
+                    "ad1095c9-8202-4fed-82ef-0ebdd8f19402/material"
+                  ],
+                  "function": "作为被展示对象，其硬卡纸挺度支撑自立与滑动",
+                  "contribution": "依靠材质刚性维持竖立姿态，在盒内微摩擦与重力协同下实现稳定定位与可控滑移，背面全程贴盒底静止，无任何外力作用"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "明信片高度 > 盒内净高（未知），导致无法竖立靠稳",
+                  "method": "取一张明信片，尝试竖立插入盒内前壁与底部夹角处，观察是否能以约70–80°倾角稳定直立、上缘不超出盒外顶边（10cm）",
+                  "ifFail": "立即中止此方案；改用‘盒体侧立斜坡展槽’方向（需另核对明信片宽度与槽长匹配性）"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": []
+            },
+            "rationale": "利用盒体结构（宽23cm、深16cm、高10cm外尺）与盖板可掀特性，构建自重驱动的机械定位系统：盖板提供稳定限位面，明信片靠自身挺度与盒内前壁形成倾角支撑，滑动切换无需工具、不接触背面，且所有动作在盒内完成，背面始终贴底隐藏。",
+            "missing": [
+              "明信片高度 > 盒内净高（未知），导致无法竖立靠稳；检查：取一张明信片，尝试竖立插入盒内前壁与底部夹角处，观察是否能以约70–80°倾角稳定直立、上缘不超出盒外顶边（10cm）；不成立：立即中止此方案；改用‘盒体侧立斜坡展槽’方向（需另核对明信片宽度与槽长匹配性）",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+              "朋友寄来的明信片：登记单位为张，方案用量单位待确认，不自动视为件数"
+            ],
+            "factIds": [
+              "knagglig:size",
+              "knagglig:structure"
+            ],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+                "quantity": 1
+              },
+              {
+                "itemId": "ad1095c9-8202-4fed-82ef-0ebdd8f19402",
+                "quantity": 3
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "alpha-test-lin-ikea-knagglig-10392601",
+                "ad1095c9-8202-4fed-82ef-0ebdd8f19402"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "f84305bd-31d8-4028-be59-85e99428c8a6",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [
+              {
+                "id": "knagglig:size",
+                "text": "宽23、深16、高10厘米；不是内部净尺寸。",
+                "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/"
+              },
+              {
+                "id": "knagglig:structure",
+                "text": "带提手，可叠放；最大承重2公斤。",
+                "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/"
+              }
+            ],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "想把朋友的三张明信片做一个随时换正面的桌上小展览，不能损伤或泄露背面留言，不买、不粘贴、不裁切；不要求用齐所有物品。"
+          }
+        ],
+        "continuation": {
+          "goal": "想把朋友的三张明信片做一个随时换正面的桌上小展览，不能损伤或泄露背面留言，不买、不粘贴、不裁切；不要求用齐所有物品。",
+          "minutes": 30,
+          "itemIds": [
+            "356b8d68-b2a5-4944-a1b9-48ae882658a9",
+            "ad1095c9-8202-4fed-82ef-0ebdd8f19402",
+            "alpha-test-lin-ikea-knagglig-10392601"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "alpha-test-lin-ikea-knagglig-10392601",
+            "name": "测试商品 · KNAGGLIG 卡纳格松木盒",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "356b8d68-b2a5-4944-a1b9-48ae882658a9",
+            "name": "长尾夹",
+            "capabilities": [
+              "观察记录"
+            ]
+          },
+          {
+            "id": "ad1095c9-8202-4fed-82ef-0ebdd8f19402",
+            "name": "朋友寄来的明信片",
+            "capabilities": [
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "明信片高度 > 盒内净高（未知），导致无法竖立靠稳；检查：取一张明信片，尝试竖立插入盒内前壁与底部夹角处，观察是否能以约70–80°倾角稳定直立、上缘不超出盒外顶边（10cm）；不成立：立即中止此方案；改用‘盒体侧立斜坡展槽’方向（需另核对明信片宽度与槽长匹配性）",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+          "朋友寄来的明信片：登记单位为张，方案用量单位待确认，不自动视为件数"
+        ],
+        "source": "model-creative",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 7040,
+          "output": 1946
+        }
+      },
+      "requests": 2,
+      "elapsedMs": 46444
+    }
+  ],
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

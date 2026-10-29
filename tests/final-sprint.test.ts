@@ -55,7 +55,7 @@ test("只用已有物品是库存指代，不会阻止目标模型调用；多�
       t.read,
     );
     assert.equal(r.source, "model-creative");
-    assert.equal(calls, 1);
+    assert.equal(calls, 2);
     await assert.rejects(
       modelIdea(
         t.db,

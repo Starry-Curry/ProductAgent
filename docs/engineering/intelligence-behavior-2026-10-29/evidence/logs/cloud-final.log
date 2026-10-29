@@ -1,0 +1,13 @@
+
+> product-agent@0.1.0 test:cloud
+> node scripts/test-cloud.mjs
+
+file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/test-cloud.mjs:73
+      throw Error("production server exited unexpectedly");
+            ^
+
+Error: production server exited unexpectedly
+    at start (file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/test-cloud.mjs:73:13)
+    at async file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/test-cloud.mjs:121:3
+
+Node.js v24.16.0

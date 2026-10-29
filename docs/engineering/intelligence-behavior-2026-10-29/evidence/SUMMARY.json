@@ -1,0 +1,17 @@
+{
+  "measuredAt": "2026-10-29T14:09:19.783Z",
+  "base": "7c513170a28d5dd76fe7845e0debdc163c53ea19",
+  "branch": "codex/wujian-intelligence-behavior-v1",
+  "maxRequests": 60,
+  "maxEstimatedCny": 10,
+  "requests": 60,
+  "returned": 57,
+  "failed": 3,
+  "inputTokens": 173054,
+  "outputTokens": 36482,
+  "knownUsageCny": 0.2114072,
+  "unknownUsageReservedCny": 0.2827328,
+  "capCountedCny": 0.49414,
+  "physicalTests": 0,
+  "humanBlindReviewConducted": false
+}

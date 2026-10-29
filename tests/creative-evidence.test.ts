@@ -427,7 +427,7 @@ test("一次真实协议替身可生成不同方向候选，逐个验证并保�
       provider,
       t.read,
     );
-    assert.equal(calls, 1);
+    assert.equal(calls, 2);
     assert.equal(first.ideas.length, 3);
     assert.equal(first.ideas[0].creativeEvidenceSources?.[0].id, e.id);
     feedbackIdea(t.db, t.read(), "lin", {

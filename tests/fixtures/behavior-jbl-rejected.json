@@ -1,0 +1,14 @@
+{
+  "origin": "real Bailian response, attempt 55; replay is offline, not another live call",
+  "packet": {
+    "kind": "supported",
+    "answer": "JBL Go 4 的连接方式是蓝牙 5.3；防水等级为 IP67（防尘+可短时浸入1米水深）；双音箱立体声需同时使用两台同型号设备，并依赖手机或音源端支持 JBL Auracast 技术。\n\n您当前只有一台，因此无法组建立体声。另外，官方资料未提供电量指示方法，也未说明如何远程确认连接状态——这些需您亲自观察：开机后蓝灯快闪表示待配对，常亮表示已连接；电量需通过长按电源键听提示音（如有）或观察LED亮度变化（若支持）来大致判断，但该细节未在当前资料中明确记载。",
+    "factIds": [
+      "go4:bluetooth",
+      "go4:stereo",
+      "go4:protection"
+    ],
+    "procedureId": null,
+    "questions": []
+  }
+}

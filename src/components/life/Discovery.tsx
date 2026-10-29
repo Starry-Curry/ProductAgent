@@ -1,6 +1,6 @@
 "use client";
 import { ProductKnowledgeLab } from "./ProductKnowledgeLab";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePublicDemo } from "../DemoBoundary";
 import { Sparkles, ArrowUp, SlidersHorizontal } from "lucide-react";
 import { syntheticItem } from "@/lib/life/availability";
@@ -41,7 +41,7 @@ export function Discovery({
   );
   const [continuation, setContinuation] = useState<any>(undefined);
   const [cloud, setCloud] = useState(true);
-  const [review, setReview] = useState(true);
+
   const [experienceIds, setExperienceIds] = useState<string[]>([]);
   const [gaps, setGaps] = useState<string[]>([]);
   const [waitSeconds, setWaitSeconds] = useState(0);
@@ -80,7 +80,7 @@ export function Discovery({
         minutes: Number(minutes),
         includeSynthetic: synthetic,
         model,
-        review,
+        review: true,
       });
       setResults(d.ideas);
       setContinuation(d.continuation);
@@ -106,21 +106,36 @@ export function Discovery({
       setBusy(false);
     }
   }
+  const feedbackQueue = useRef(Promise.resolve());
+  const feedbackLatest = useRef(new Map<string, LifeIdea>());
   async function feedback(idea: LifeIdea, changes: Partial<LifeIdea>) {
-    try {
-      await request("ideaFeedback", {
-        id: idea.id,
-        saved: idea.saved || false,
-        outcome: idea.outcome || "未尝试",
-        note: idea.note || "",
-        ...changes,
+    // Rapid save/result/note changes must merge before sending the full contract.
+    // Serial requests prevent a slow earlier response overwriting a later edit.
+    const next = {
+      ...idea,
+      ...feedbackLatest.current.get(idea.id),
+      ...changes,
+    };
+    feedbackLatest.current.set(idea.id, next);
+    const operation = feedbackQueue.current
+      .catch(() => {})
+      .then(async () => {
+        await request("ideaFeedback", {
+          id: next.id,
+          saved: next.saved || false,
+          outcome: next.outcome || "未尝试",
+          note: next.note || "",
+        });
+        setResults(
+          (rows) =>
+            rows?.map((r) => (r.id === idea.id ? { ...r, ...changes } : r)) ||
+            null,
+        );
+        await refresh();
       });
-      setResults(
-        (rows) =>
-          rows?.map((r) => (r.id === idea.id ? { ...r, ...changes } : r)) ||
-          null,
-      );
-      await refresh();
+    feedbackQueue.current = operation;
+    try {
+      await operation;
     } catch (e) {
       setNotice((e as Error).message);
     }
@@ -173,7 +188,7 @@ export function Discovery({
           {[
             "我有一小时，不买东西，想做点有趣的事",
             "想整理桌面，看看已有物品能怎么利用",
-            "用选中的物品，换一个有趣的玩法",
+            "从可用物品中任选，换一个有实际作用的方向",
           ].map((text) => (
             <button key={text} onClick={() => setGoal(text)}>
               {text} ↗
@@ -287,15 +302,9 @@ export function Discovery({
                     ))}
                 </div>
               )}
-              <label className="life-check">
-                <input
-                  type="checkbox"
-                  checked={review}
-                  onChange={(e) => setReview(e.target.checked)}
-                />
-                云端方案再核对一次可执行性（额外1次模型请求，仍不等于实物验证）
-              </label>
-              <p>只用这些物品（不选则检索可用展柜）</p>
+              <p>
+                可用资源池：可以只用其中一部分，不必强行组合。未选时检索可用展柜。
+              </p>
               <div className="discovery-pick-items">
                 {items
                   .filter((i) => synthetic || !syntheticItem(i))
@@ -410,40 +419,46 @@ export function Discovery({
               · 未实物验证
             </span>
             <h3>{idea.title}</h3>
-            {idea.rationale && (
-              <p className="idea-rationale">{idea.rationale}</p>
-            )}
             {idea.reasoning && (
               <section aria-label="创意如何成立">
                 <p>
                   <strong>你会得到：</strong>
                   {idea.reasoning.outcome}
                 </p>
-                <ul>
-                  {idea.reasoning.roles.map((r) => (
-                    <li key={r.itemId}>
-                      {items.find((i) => i.id === r.itemId)?.name}：{r.function}{" "}
-                      → {r.contribution}（用途推导，待实践）
-                    </li>
+                <details>
+                  <summary>为什么这样用 · 依据与条件</summary>
+                  {idea.rationale && <p>{idea.rationale}</p>}
+                  <ul>
+                    {idea.reasoning.roles.map((r) => (
+                      <li key={r.itemId}>
+                        {items.find((i) => i.id === r.itemId)?.name}：
+                        {r.function} → {r.contribution}（用途推导，待实践）
+                      </li>
+                    ))}
+                  </ul>
+                  {idea.reasoning.checks.map((c, n) => (
+                    <p key={n}>
+                      先确认：{c.condition}。{c.method}；不成立时：{c.ifFail}
+                    </p>
                   ))}
-                </ul>
-                {idea.reasoning.checks.map((c, n) => (
-                  <p key={n}>
-                    先确认：{c.condition}。{c.method}；不成立时：{c.ifFail}
-                  </p>
-                ))}
-                {!!idea.reasoning.preferenceIds.length && (
-                  <small>
-                    采用了你已确认并授权的偏好；可在个人记忆中纠正或忘记。
-                  </small>
-                )}
+                  {!!idea.reasoning.preferenceIds.length && (
+                    <small>
+                      采用了你已确认并授权的偏好；可在个人记忆中纠正或忘记。
+                    </small>
+                  )}
+                </details>
               </section>
             )}
             {idea.direction && <small>{idea.direction} · 可尝试的方向</small>}
             {!!idea.missing?.length && (
-              <p className="life-notice">
-                待确认 / 缺口：{idea.missing.join("；")}
-              </p>
+              <details>
+                <summary>实施前需核对 {idea.missing.length} 项条件</summary>
+                <ul>
+                  {idea.missing.map((m, n) => (
+                    <li key={n}>{m}</li>
+                  ))}
+                </ul>
+              </details>
             )}
             <p className="life-muted">
               约 {idea.minutes} 分钟 ·{" "}
@@ -574,6 +589,7 @@ export function Discovery({
               <label>
                 实际结果 / 下次调整
                 <textarea
+                  aria-label={`${idea.title} 的反馈内容`}
                   defaultValue={idea.note || ""}
                   maxLength={1000}
                   placeholder="例如：缺一张纸；下次想换个方向"
@@ -583,6 +599,20 @@ export function Discovery({
                   }}
                 />
               </label>
+              <p className="life-muted">
+                备注默认只保存在本机。主动点下方按钮，才把这一条反馈用于新的模型探索。
+              </p>
+              <button
+                disabled={busy || !idea.note?.trim()}
+                onClick={() =>
+                  generate(
+                    undefined,
+                    `换个方向；上一方案“${idea.title}”；我这次的反馈：${idea.note?.slice(0, 300)}。请回应这个反馈重新探索。`,
+                  )
+                }
+              >
+                按这条反馈重新探索
+              </button>
             </details>
           </article>
         ))}

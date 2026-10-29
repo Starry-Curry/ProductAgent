@@ -1,0 +1,71 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('article.life-idea').filter({ has: getByRole('heading', { name: '手柄翻盖式立屏', exact: true }) }).getByRole('heading', { name: '手柄翻盖式立屏', exact: true })
+    - locator resolved to <h3>手柄翻盖式立屏</h3>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <div class="discovery-options">…</div> from <form class="goal-composer">…</form> subtree intercepts pointer events
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <div class="discovery-options">…</div> from <form class="goal-composer">…</form> subtree intercepts pointer events
+    - retrying click action
+      - waiting 100ms
+    56 × waiting for element to be visible, enabled and stable
+       - element is visible, enabled and stable
+       - scrolling into view if needed
+       - done scrolling
+       - <div class="discovery-options">…</div> from <form class="goal-composer">…</form> subtree intercepts pointer events
+     - retrying click action
+       - waiting 500ms
+
+    at D:\ProductAgent-LifeContext\.runtime\behavior-app\tests\behavior-integration.mjs:36:63 {
+  log: [
+    "  - waiting for locator('article.life-idea').filter({ has: getByRole('heading', { name: '手柄翻盖式立屏', exact: true }) }).getByRole('heading', { name: '手柄翻盖式立屏', exact: true })",
+    '    - locator resolved to <h3>手柄翻盖式立屏</h3>',
+    '  - attempting click action',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is visible, enabled and stable',
+    '      - scrolling into view if needed',
+    '      - done scrolling',
+    '      - <div class="discovery-options">…</div> from <form class="goal-composer">…</form> subtree intercepts pointer events',
+    '    - retrying click action',
+    '    - waiting 20ms',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is visible, enabled and stable',
+    '      - scrolling into view if needed',
+    '      - done scrolling',
+    '      - <div class="discovery-options">…</div> from <form class="goal-composer">…</form> subtree intercepts pointer events',
+    '    - retrying click action',
+    '      - waiting 100ms',
+    '    56 × waiting for element to be visible, enabled and stable',
+    '       - element is visible, enabled and stable',
+    '       - scrolling into view if needed',
+    '       - done scrolling',
+    '       - <div class="discovery-options">…</div> from <form class="goal-composer">…</form> subtree intercepts pointer events',
+    '     - retrying click action',
+    '       - waiting 500ms'
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.16.0
+file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/behavior/browser-live.mjs:75
+  if (code !== 0) throw Error("Browser test failed " + code);
+                        ^
+
+Error: Browser test failed 1
+    at file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/behavior/browser-live.mjs:75:25
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.16.0

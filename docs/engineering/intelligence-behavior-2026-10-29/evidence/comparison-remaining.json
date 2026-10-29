@@ -1,0 +1,3069 @@
+{
+  "base": "7c513170a28d5dd76fe7845e0debdc163c53ea19",
+  "cases": [
+    {
+      "id": "01",
+      "kind": "qa",
+      "itemIds": [
+        "alpha-test-lin-ikea-samla-19440848"
+      ],
+      "goal": "这款SAMLA的材质、尺寸和使用限制分别是什么？能直接装食物吗？内尺寸和我这件现在是否完好能确认吗？",
+      "facts": [
+        {
+          "itemId": "alpha-test-lin-ikea-samla-19440848",
+          "name": "测试商品 · SAMLA 萨姆拉附盖储物盒",
+          "quantity": 1,
+          "unit": "件",
+          "facts": [
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/identity",
+              "text": "测试商品 · SAMLA 萨姆拉附盖储物盒；类别：收纳用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:material",
+              "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:size",
+              "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:lid",
+              "text": "盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:limits",
+              "text": "仅供室内使用，不可直接接触食物。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:care",
+              "text": "可用软布蘸水及中性洗涤剂或皂液擦拭。",
+              "basis": "official_source"
+            }
+          ],
+          "unknowns": [
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质",
+            "耐热范围",
+            "承重上限",
+            "内部净尺寸",
+            "是否适合具体待放物",
+            "气密或水密"
+          ],
+          "limits": [
+            "不得直接接触食品；仅室内",
+            "耐热范围、承重上限、气密性、内部净尺寸未知",
+            "盖子不是承重台或经验证的光学器件"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "kind": "qa",
+      "itemIds": [
+        "73ec7813-e299-4230-aaa3-3efdfbe1fd2d"
+      ],
+      "goal": "JBL Go 4的连接方式、防水等级、双音箱立体声条件分别是什么？我只有一台，当前电量和能否正常连接能确认吗？",
+      "facts": [
+        {
+          "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+          "name": "测试商品 · JBL Go 4 便携音箱",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d/identity",
+              "text": "测试商品 · JBL Go 4 便携音箱；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d/capabilities",
+              "text": "连接手机播放音频；音箱不独立录音",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "kind": "chat",
+      "itemIds": [],
+      "goal": "今天开会开得很累，先随便聊聊，不用帮我做计划或记东西。",
+      "facts": []
+    },
+    {
+      "id": "04",
+      "kind": "creative",
+      "itemIds": [
+        "alpha-test-lin-ikea-knagglig-10392601",
+        "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+        "e18014a1-296d-485c-b3f6-a75e44173a40"
+      ],
+      "goal": "小木盒闲置了。我想练外语口头表达，用可用资源找一个不只是收纳的新用途；可以只选其中一部分，不购买、不裁切、不改装。室内桌面可用。",
+      "facts": [
+        {
+          "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+          "name": "测试商品 · KNAGGLIG 卡纳格松木盒",
+          "quantity": 1,
+          "unit": "件",
+          "facts": [
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/identity",
+              "text": "测试商品 · KNAGGLIG 卡纳格松木盒；类别：收纳用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:material",
+              "text": "主体为实心松木，其它部分为镀锌钢。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:size",
+              "text": "宽23、深16、高10厘米；不是内部净尺寸。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:structure",
+              "text": "带提手，可叠放；最大承重2公斤。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:limits",
+              "text": "不得挂墙；可用干布清洁。",
+              "basis": "official_source"
+            }
+          ],
+          "unknowns": [
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质",
+            "内部净尺寸",
+            "耐热范围",
+            "食品接触适用性",
+            "实物紧固与磨损状态"
+          ],
+          "limits": [
+            "不得挂墙",
+            "承重上限2公斤不是可坐踏或悬挂许可",
+            "食品接触、耐热、内尺寸、具体实物紧固状态未知"
+          ]
+        },
+        {
+          "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+          "name": "旧手机",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "84ae6e2c-075b-4695-9c07-35e59c691cbc/identity",
+              "text": "旧手机；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "84ae6e2c-075b-4695-9c07-35e59c691cbc/capabilities",
+              "text": "正常工作的摄像头、录音、蓝牙音频播放、计时器",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "e18014a1-296d-485c-b3f6-a75e44173a40",
+          "name": "已写外语词的卡片",
+          "quantity": 20,
+          "unit": "张",
+          "facts": [
+            {
+              "ref": "e18014a1-296d-485c-b3f6-a75e44173a40/identity",
+              "text": "已写外语词的卡片；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "e18014a1-296d-485c-b3f6-a75e44173a40/material",
+              "text": "普通硬纸，正面外语词、背面中文；共20张",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "kind": "creative",
+      "itemIds": [
+        "85aca5e7-5810-4a63-90f6-3830f8103cb6",
+        "e18014a1-296d-485c-b3f6-a75e44173a40",
+        "c4f31b35-978e-408c-a697-33cbb0cfacd2"
+      ],
+      "goal": "我总是学十分钟就去做别的。用推车和这些可用物品，想一个能让我更容易继续学习的新用法；不做计时打卡，不新增材料，室内地面平整。",
+      "facts": [
+        {
+          "itemId": "85aca5e7-5810-4a63-90f6-3830f8103cb6",
+          "name": "测试商品 · IKEA RÅSKOG 米色推车",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "85aca5e7-5810-4a63-90f6-3830f8103cb6/identity",
+              "text": "测试商品 · IKEA RÅSKOG 米色推车；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "85aca5e7-5810-4a63-90f6-3830f8103cb6/capabilities",
+              "text": "三层托盘，带轮子，用户已核对组装完好",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "e18014a1-296d-485c-b3f6-a75e44173a40",
+          "name": "已写外语词的卡片",
+          "quantity": 20,
+          "unit": "张",
+          "facts": [
+            {
+              "ref": "e18014a1-296d-485c-b3f6-a75e44173a40/identity",
+              "text": "已写外语词的卡片；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "e18014a1-296d-485c-b3f6-a75e44173a40/material",
+              "text": "普通硬纸，正面外语词、背面中文；共20张",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "c4f31b35-978e-408c-a697-33cbb0cfacd2",
+          "name": "长尾夹",
+          "quantity": 3,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "c4f31b35-978e-408c-a697-33cbb0cfacd2/identity",
+              "text": "长尾夹；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "c4f31b35-978e-408c-a697-33cbb0cfacd2/material",
+              "text": "钢，带可翻动手柄",
+              "basis": "user_report"
+            },
+            {
+              "ref": "c4f31b35-978e-408c-a697-33cbb0cfacd2/capabilities",
+              "text": "夹持普通纸张",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "kind": "creative",
+      "itemIds": [
+        "alpha-test-lin-ikea-samla-19440848",
+        "b953b5b4-c8a6-4a68-b357-714cab4659b4",
+        "83665644-610c-4e3e-b488-b57e703a3ab1"
+      ],
+      "goal": "我出门常忘拿钥匙或钱包。只能用资源池里的东西，在门口室内平桌想个比普通收纳更有效的办法；不买、不贴标签、不剪裁，可只用一部分。",
+      "facts": [
+        {
+          "itemId": "alpha-test-lin-ikea-samla-19440848",
+          "name": "测试商品 · SAMLA 萨姆拉附盖储物盒",
+          "quantity": 1,
+          "unit": "件",
+          "facts": [
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/identity",
+              "text": "测试商品 · SAMLA 萨姆拉附盖储物盒；类别：收纳用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:material",
+              "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:size",
+              "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:lid",
+              "text": "盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:limits",
+              "text": "仅供室内使用，不可直接接触食物。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-samla-19440848/samla:care",
+              "text": "可用软布蘸水及中性洗涤剂或皂液擦拭。",
+              "basis": "official_source"
+            }
+          ],
+          "unknowns": [
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质",
+            "耐热范围",
+            "承重上限",
+            "内部净尺寸",
+            "是否适合具体待放物",
+            "气密或水密"
+          ],
+          "limits": [
+            "不得直接接触食品；仅室内",
+            "耐热范围、承重上限、气密性、内部净尺寸未知",
+            "盖子不是承重台或经验证的光学器件"
+          ]
+        },
+        {
+          "itemId": "b953b5b4-c8a6-4a68-b357-714cab4659b4",
+          "name": "门钥匙",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "b953b5b4-c8a6-4a68-b357-714cab4659b4/identity",
+              "text": "门钥匙；类别：生活用品",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "83665644-610c-4e3e-b488-b57e703a3ab1",
+          "name": "钱包",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "83665644-610c-4e3e-b488-b57e703a3ab1/identity",
+              "text": "钱包；类别：生活用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "83665644-610c-4e3e-b488-b57e703a3ab1/material",
+              "text": "布，装有卡片，不公开内容",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "kind": "creative",
+      "itemIds": [
+        "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+        "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+        "c46ae187-f94d-489a-8937-e4ffdedd5b64"
+      ],
+      "goal": "我想给朋友寄来的明信片拍照，窗边光太硬。只有这些物品，找个不裁切、不改装、不会露出背面留言的拍摄办法；手机可手持，桌面可用。",
+      "facts": [
+        {
+          "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+          "name": "旧手机",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "84ae6e2c-075b-4695-9c07-35e59c691cbc/identity",
+              "text": "旧手机；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "84ae6e2c-075b-4695-9c07-35e59c691cbc/capabilities",
+              "text": "正常工作的摄像头、录音、蓝牙音频播放、计时器",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+          "name": "旧长柄伞",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "7d7e6ddb-5aa6-4b57-9a89-01b011e87337/identity",
+              "text": "旧长柄伞；类别：生活用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "7d7e6ddb-5aa6-4b57-9a89-01b011e87337/material",
+              "text": "不透明伞布，支架完整，能正常撑开",
+              "basis": "user_report"
+            },
+            {
+              "ref": "7d7e6ddb-5aa6-4b57-9a89-01b011e87337/capabilities",
+              "text": "遮挡侧向光线，非反光材质",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "c46ae187-f94d-489a-8937-e4ffdedd5b64",
+          "name": "朋友寄来的明信片",
+          "quantity": 3,
+          "unit": "张",
+          "facts": [
+            {
+              "ref": "c46ae187-f94d-489a-8937-e4ffdedd5b64/identity",
+              "text": "朋友寄来的明信片；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "c46ae187-f94d-489a-8937-e4ffdedd5b64/material",
+              "text": "普通硬卡纸，背面有私人留言",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "kind": "creative",
+      "itemIds": [
+        "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+        "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+        "e18014a1-296d-485c-b3f6-a75e44173a40"
+      ],
+      "goal": "我想练习外语听到词就快速说中文。用已有手机、GO4和词卡想个能反复练习但不是单纯播放音乐的组合；我独自一人，白天能小音量说话，不买东西。",
+      "facts": [
+        {
+          "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+          "name": "测试商品 · JBL Go 4 便携音箱",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d/identity",
+              "text": "测试商品 · JBL Go 4 便携音箱；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d/capabilities",
+              "text": "连接手机播放音频；音箱不独立录音",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+          "name": "旧手机",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "84ae6e2c-075b-4695-9c07-35e59c691cbc/identity",
+              "text": "旧手机；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "84ae6e2c-075b-4695-9c07-35e59c691cbc/capabilities",
+              "text": "正常工作的摄像头、录音、蓝牙音频播放、计时器",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "e18014a1-296d-485c-b3f6-a75e44173a40",
+          "name": "已写外语词的卡片",
+          "quantity": 20,
+          "unit": "张",
+          "facts": [
+            {
+              "ref": "e18014a1-296d-485c-b3f6-a75e44173a40/identity",
+              "text": "已写外语词的卡片；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "e18014a1-296d-485c-b3f6-a75e44173a40/material",
+              "text": "普通硬纸，正面外语词、背面中文；共20张",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "09",
+      "kind": "creative",
+      "itemIds": [
+        "1e04215b-c2fa-474e-8f2f-78d8d0bf080f",
+        "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3"
+      ],
+      "goal": "浴巾平时不用。用可用物品找一个在书桌打字时派得上用场的新用途，不剪裁不购买；干燥平桌可用，不作治疗承诺。",
+      "facts": [
+        {
+          "itemId": "1e04215b-c2fa-474e-8f2f-78d8d0bf080f",
+          "name": "闲置浴巾",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "1e04215b-c2fa-474e-8f2f-78d8d0bf080f/identity",
+              "text": "闲置浴巾；类别：家居",
+              "basis": "user_report"
+            },
+            {
+              "ref": "1e04215b-c2fa-474e-8f2f-78d8d0bf080f/material",
+              "text": "干燥棉布，柔软可折叠",
+              "basis": "user_report"
+            },
+            {
+              "ref": "1e04215b-c2fa-474e-8f2f-78d8d0bf080f/dimensions",
+              "text": "70×140厘米",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3",
+          "name": "有线键盘",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3/identity",
+              "text": "有线键盘；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3/capabilities",
+              "text": "平底，前沿没有支撑脚，高度不可调，正常打字",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "kind": "creative",
+      "itemIds": [
+        "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+        "84ae6e2c-075b-4695-9c07-35e59c691cbc"
+      ],
+      "goal": "透明空饮料瓶还能做什么？我想给手机拍摄的短片加一个有实际表现效果的小道具，不用水、不加热、不切割，不买额外东西；室内平桌可用。",
+      "facts": [
+        {
+          "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+          "name": "旧手机",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "84ae6e2c-075b-4695-9c07-35e59c691cbc/identity",
+              "text": "旧手机；类别：电子设备",
+              "basis": "user_report"
+            },
+            {
+              "ref": "84ae6e2c-075b-4695-9c07-35e59c691cbc/capabilities",
+              "text": "正常工作的摄像头、录音、蓝牙音频播放、计时器",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+          "name": "空饮料瓶",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "8c305738-359a-4e4b-88fb-45d4ab8fef6d/identity",
+              "text": "空饮料瓶；类别：生活用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "8c305738-359a-4e4b-88fb-45d4ab8fef6d/material",
+              "text": "透明PET，带可拧瓶盖，干燥空瓶",
+              "basis": "user_report"
+            },
+            {
+              "ref": "8c305738-359a-4e4b-88fb-45d4ab8fef6d/dimensions",
+              "text": "500毫升瓶，约20厘米高",
+              "basis": "user_report"
+            },
+            {
+              "ref": "8c305738-359a-4e4b-88fb-45d4ab8fef6d/capabilities",
+              "text": "瓶盖可拧紧，瓶身可轻压变形",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "kind": "creative",
+      "itemIds": [
+        "c4f31b35-978e-408c-a697-33cbb0cfacd2",
+        "c46ae187-f94d-489a-8937-e4ffdedd5b64",
+        "alpha-test-lin-ikea-knagglig-10392601"
+      ],
+      "goal": "想把朋友的三张明信片做一个随时换正面的桌上小展览，不能损伤或泄露背面留言，不买、不粘贴、不裁切；不要求用齐所有物品。",
+      "facts": [
+        {
+          "itemId": "alpha-test-lin-ikea-knagglig-10392601",
+          "name": "测试商品 · KNAGGLIG 卡纳格松木盒",
+          "quantity": 1,
+          "unit": "件",
+          "facts": [
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/identity",
+              "text": "测试商品 · KNAGGLIG 卡纳格松木盒；类别：收纳用品",
+              "basis": "user_report"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:material",
+              "text": "主体为实心松木，其它部分为镀锌钢。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:size",
+              "text": "宽23、深16、高10厘米；不是内部净尺寸。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:structure",
+              "text": "带提手，可叠放；最大承重2公斤。",
+              "basis": "official_source"
+            },
+            {
+              "ref": "alpha-test-lin-ikea-knagglig-10392601/knagglig:limits",
+              "text": "不得挂墙；可用干布清洁。",
+              "basis": "official_source"
+            }
+          ],
+          "unknowns": [
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质",
+            "内部净尺寸",
+            "耐热范围",
+            "食品接触适用性",
+            "实物紧固与磨损状态"
+          ],
+          "limits": [
+            "不得挂墙",
+            "承重上限2公斤不是可坐踏或悬挂许可",
+            "食品接触、耐热、内尺寸、具体实物紧固状态未知"
+          ]
+        },
+        {
+          "itemId": "c4f31b35-978e-408c-a697-33cbb0cfacd2",
+          "name": "长尾夹",
+          "quantity": 3,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "c4f31b35-978e-408c-a697-33cbb0cfacd2/identity",
+              "text": "长尾夹；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "c4f31b35-978e-408c-a697-33cbb0cfacd2/material",
+              "text": "钢，带可翻动手柄",
+              "basis": "user_report"
+            },
+            {
+              "ref": "c4f31b35-978e-408c-a697-33cbb0cfacd2/capabilities",
+              "text": "夹持普通纸张",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        },
+        {
+          "itemId": "c46ae187-f94d-489a-8937-e4ffdedd5b64",
+          "name": "朋友寄来的明信片",
+          "quantity": 3,
+          "unit": "张",
+          "facts": [
+            {
+              "ref": "c46ae187-f94d-489a-8937-e4ffdedd5b64/identity",
+              "text": "朋友寄来的明信片；类别：文具",
+              "basis": "user_report"
+            },
+            {
+              "ref": "c46ae187-f94d-489a-8937-e4ffdedd5b64/material",
+              "text": "普通硬卡纸，背面有私人留言",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "kind": "creative",
+      "itemIds": [
+        "749bcb92-3c8b-431c-9a33-d2705f0e3b63"
+      ],
+      "goal": "只有这个型号不明的杯子，材质和耐热未知。我想用它安全盛刚烧开的水而且保温一小时，不得购买或用其他物品，有办法吗？",
+      "facts": [
+        {
+          "itemId": "749bcb92-3c8b-431c-9a33-d2705f0e3b63",
+          "name": "型号不明的杯子",
+          "quantity": 1,
+          "unit": null,
+          "facts": [
+            {
+              "ref": "749bcb92-3c8b-431c-9a33-d2705f0e3b63/identity",
+              "text": "型号不明的杯子；类别：容器",
+              "basis": "user_report"
+            }
+          ],
+          "unknowns": [
+            "品牌",
+            "型号",
+            "材质",
+            "尺寸",
+            "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+          ],
+          "limits": []
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "case": "02",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"JBL Go 4的连接方式为蓝牙（依据其‘连接手机播放音频’能力推断，属便携音箱通用方式，但官方未明示协议版本）；防水等级未知（事实中未提供IP等级或防水描述）；双音箱立体声需两台同型号设备且支持JBL Portable Stereo Pairing功能——当前仅有一台，不满足条件。你无法仅凭本信息确认当前电量和是否能正常连接，因设备状态（如电量、蓝牙配对状态、固件响应）需实地操作验证：请长按电源键查看LED指示灯（通常亮起表示有电），再开启手机蓝牙搜索‘JBL GO 4’并尝试配对——成功连通即确认二者均正常。\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 656,
+          "output": 166
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 4866
+    },
+    {
+      "case": "02",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "result": {
+        "session": {
+          "id": "61bf2193-bb8c-4edc-b82d-9b274e45850e",
+          "owner": "lin",
+          "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+          "identity": "[\"lin\",\"[\\\"GO 4\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "28e168d5-9280-4cf1-baac-691da648a133",
+              "role": "user",
+              "text": "JBL Go 4的连接方式、防水等级、双音箱立体声条件分别是什么？我只有一台，当前电量和能否正常连接能确认吗？",
+              "at": "2026-10-29T13:17:04.328Z",
+              "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "5fa8d76a-ae3f-4635-bf8d-e308ab087974",
+              "role": "assistant",
+              "text": "本轮模型候选未通过资料或物品条件检查，修正后仍未得到可靠答案，未展示该草稿。可缩小到一个具体问题后重试；已登记的物品无需重复录入。",
+              "reply": {
+                "outcome": "unavailable",
+                "answer": "本轮模型候选未通过资料或物品条件检查，修正后仍未得到可靠答案，未展示该草稿。可缩小到一个具体问题后重试；已登记的物品无需重复录入。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "errorCode": "validation_failed",
+                "caveat": "候选未通过的原因：输出包含未核实的操作、状态或共同经历",
+                "route": {
+                  "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+                  "itemName": "测试商品 · JBL Go 4 便携音箱",
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "自然交流；明确的物品经历才进入故事"
+                }
+              },
+              "at": "2026-10-29T13:17:04.328Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "9357ebd8-117b-4520-822e-364585ecd15f",
+            "turnScope": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+            "lastIntent": "companion",
+            "activeItemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+            "goal": "JBL Go 4的连接方式、防水等级、双音箱立体声条件分别是什么？我只有一台，当前电量和能否正常连接能确认吗？"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T13:16:50.347Z",
+          "updatedAt": "2026-10-29T13:17:04.329Z",
+          "expiresAt": "2026-11-05T13:16:50.347Z",
+          "itemScopes": {
+            "73ec7813-e299-4230-aaa3-3efdfbe1fd2d": "[\"lin\",\"[\\\"GO 4\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "unavailable",
+          "answer": "本轮模型候选未通过资料或物品条件检查，修正后仍未得到可靠答案，未展示该草稿。可缩小到一个具体问题后重试；已登记的物品无需重复录入。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "errorCode": "validation_failed",
+          "caveat": "候选未通过的原因：输出包含未核实的操作、状态或共同经历",
+          "route": {
+            "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+            "itemName": "测试商品 · JBL Go 4 便携音箱",
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "自然交流；明确的物品经历才进入故事"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=73ec7813-e299-4230-aaa3-3efdfbe1fd2d; router=home-router-v1",
+            "at": "2026-10-29T13:16:50.396Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T13:16:50.419Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=36517fbc-6ce1-4a3f-8a72-bc6969b267aa; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T13:16:50.420Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T13:16:50.438Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=1",
+            "at": "2026-10-29T13:16:52.029Z"
+          },
+          {
+            "stage": "tool_completed",
+            "detail": "read_item_context",
+            "at": "2026-10-29T13:16:52.048Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2; round=2/4",
+            "at": "2026-10-29T13:16:52.063Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=1",
+            "at": "2026-10-29T13:16:53.160Z"
+          },
+          {
+            "stage": "tool_completed",
+            "detail": "search_personal_memory",
+            "at": "2026-10-29T13:16:53.184Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=3; round=3/4",
+            "at": "2026-10-29T13:16:53.203Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T13:16:58.797Z"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "输出包含未核实的操作、状态或共同经历",
+            "at": "2026-10-29T13:16:58.825Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=4; round=4/4",
+            "at": "2026-10-29T13:16:58.846Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T13:17:04.269Z"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "输出包含未核实的操作、状态或共同经历",
+            "at": "2026-10-29T13:17:04.295Z"
+          }
+        ],
+        "tokens": {
+          "input": 13304,
+          "output": 487
+        },
+        "modelCalls": 4
+      },
+      "requests": 4,
+      "elapsedMs": 13993
+    },
+    {
+      "case": "02",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "session": {
+          "id": "6e6518aa-91e7-4c03-bb04-bd8b15ce00cc",
+          "owner": "lin",
+          "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+          "identity": "[\"lin\",\"[\\\"GO 4\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "420591c6-6006-4e74-8d8c-486881bde2b8",
+              "role": "user",
+              "text": "JBL Go 4的连接方式、防水等级、双音箱立体声条件分别是什么？我只有一台，当前电量和能否正常连接能确认吗？",
+              "at": "2026-10-29T13:17:17.448Z",
+              "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "8c075bcf-582f-42cd-8319-bafbffe2dc72",
+              "role": "assistant",
+              "text": "本轮模型候选未通过资料或物品条件检查，修正后仍未得到可靠答案，未展示该草稿。可缩小到一个具体问题后重试；已登记的物品无需重复录入。",
+              "reply": {
+                "outcome": "unavailable",
+                "answer": "本轮模型候选未通过资料或物品条件检查，修正后仍未得到可靠答案，未展示该草稿。可缩小到一个具体问题后重试；已登记的物品无需重复录入。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "errorCode": "validation_failed",
+                "caveat": "候选未通过的原因：输出包含未核实的操作、状态或共同经历",
+                "route": {
+                  "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+                  "itemName": "测试商品 · JBL Go 4 便携音箱",
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "自然交流；明确的物品经历才进入故事"
+                }
+              },
+              "at": "2026-10-29T13:17:17.448Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "61441c7b-619b-478d-8233-9bca0d806380",
+            "turnScope": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+            "lastIntent": "companion",
+            "activeItemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+            "goal": "JBL Go 4的连接方式、防水等级、双音箱立体声条件分别是什么？我只有一台，当前电量和能否正常连接能确认吗？"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T13:17:04.349Z",
+          "updatedAt": "2026-10-29T13:17:17.449Z",
+          "expiresAt": "2026-11-05T13:17:04.349Z",
+          "itemScopes": {
+            "73ec7813-e299-4230-aaa3-3efdfbe1fd2d": "[\"lin\",\"[\\\"GO 4\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "unavailable",
+          "answer": "本轮模型候选未通过资料或物品条件检查，修正后仍未得到可靠答案，未展示该草稿。可缩小到一个具体问题后重试；已登记的物品无需重复录入。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "errorCode": "validation_failed",
+          "caveat": "候选未通过的原因：输出包含未核实的操作、状态或共同经历",
+          "route": {
+            "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+            "itemName": "测试商品 · JBL Go 4 便携音箱",
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "自然交流；明确的物品经历才进入故事"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=73ec7813-e299-4230-aaa3-3efdfbe1fd2d; router=home-router-v1",
+            "at": "2026-10-29T13:17:04.423Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T13:17:04.450Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=36517fbc-6ce1-4a3f-8a72-bc6969b267aa; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T13:17:04.450Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T13:17:04.477Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=1",
+            "at": "2026-10-29T13:17:06.155Z"
+          },
+          {
+            "stage": "tool_completed",
+            "detail": "read_item_context",
+            "at": "2026-10-29T13:17:06.197Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2; round=2/4",
+            "at": "2026-10-29T13:17:06.229Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T13:17:11.792Z"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "输出包含未核实的操作、状态或共同经历",
+            "at": "2026-10-29T13:17:11.818Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=3; round=3/4",
+            "at": "2026-10-29T13:17:11.840Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T13:17:17.366Z"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "输出包含未核实的操作、状态或共同经历",
+            "at": "2026-10-29T13:17:17.404Z"
+          }
+        ],
+        "tokens": {
+          "input": 10476,
+          "output": 501
+        },
+        "modelCalls": 3
+      },
+      "requests": 3,
+      "elapsedMs": 13111
+    },
+    {
+      "case": "03",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"啊，开会确实容易耗神，尤其是脑子一直绷着的时候～小房间的安静真是一种奢侈的治愈感呢。要是累了，可以试试靠在窗边发会儿呆，听点微风擦过树叶的声音；或者把桌上的东西轻轻归位——不用多整齐，只要随手一放就‘回到原样’，那种轻巧的掌控感，反而让人松一口气。不说话也没关系，安静本身就已经在帮你充电了 🌙\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 186,
+          "output": 105
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 3741
+    },
+    {
+      "case": "03",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "result": {
+        "session": {
+          "id": "36dd860e-e0cd-4ca7-bcb8-2c58afa38d93",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "f1c4a96b-682f-41b1-89ea-c5bb5e9d6417",
+              "role": "user",
+              "text": "今天开会开得很累，先随便聊聊，不用帮我做计划或记东西。",
+              "at": "2026-10-29T13:17:25.383Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "4a15a49e-fc72-4ae2-afb7-244b288be16e",
+              "role": "assistant",
+              "text": "嗯，开会确实容易让人身心俱疲呢——脑子转得快，身体却想悄悄按下暂停键。你愿意先聊聊天、松一口气，这本身就很值得肯定。小房间、安静、随手恢复原状……听起来你很懂得照顾自己的节奏。今天累成这样，有没有哪一刻，哪怕就一小会儿，让你觉得‘啊，这个瞬间还挺舒服的’？比如一杯刚好温度的水、窗外晃过的光，或者会议结束时深呼吸的那一秒？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "嗯，开会确实容易让人身心俱疲呢——脑子转得快，身体却想悄悄按下暂停键。你愿意先聊聊天、松一口气，这本身就很值得肯定。小房间、安静、随手恢复原状……听起来你很懂得照顾自己的节奏。今天累成这样，有没有哪一刻，哪怕就一小会儿，让你觉得‘啊，这个瞬间还挺舒服的’？比如一杯刚好温度的水、窗外晃过的光，或者会议结束时深呼吸的那一秒？",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "36517fbc-6ce1-4a3f-8a72-bc6969b267aa"
+                ],
+                "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "回应这次交流，不强行围绕物品"
+                }
+              },
+              "at": "2026-10-29T13:17:25.383Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "92e2a6b5-3169-46ca-93b6-ba4b9dfadf65",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "今天开会开得很累，先随便聊聊，不用帮我做计划或记东西。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T13:17:21.221Z",
+          "updatedAt": "2026-10-29T13:17:25.384Z",
+          "expiresAt": "2026-11-05T13:17:21.222Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "嗯，开会确实容易让人身心俱疲呢——脑子转得快，身体却想悄悄按下暂停键。你愿意先聊聊天、松一口气，这本身就很值得肯定。小房间、安静、随手恢复原状……听起来你很懂得照顾自己的节奏。今天累成这样，有没有哪一刻，哪怕就一小会儿，让你觉得‘啊，这个瞬间还挺舒服的’？比如一杯刚好温度的水、窗外晃过的光，或者会议结束时深呼吸的那一秒？",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "36517fbc-6ce1-4a3f-8a72-bc6969b267aa"
+          ],
+          "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "回应这次交流，不强行围绕物品"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-29T13:17:21.266Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T13:17:21.297Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=36517fbc-6ce1-4a3f-8a72-bc6969b267aa; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T13:17:21.297Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T13:17:21.329Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T13:17:25.307Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T13:17:25.342Z"
+          }
+        ],
+        "tokens": {
+          "input": 2646,
+          "output": 125
+        },
+        "modelCalls": 1
+      },
+      "requests": 1,
+      "elapsedMs": 4171
+    },
+    {
+      "case": "03",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "session": {
+          "id": "02d805ea-e1ff-4839-a251-7fdb958a806f",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "93f47d93-8d0f-479b-b37f-3d0685967bef",
+              "role": "user",
+              "text": "今天开会开得很累，先随便聊聊，不用帮我做计划或记东西。",
+              "at": "2026-10-29T13:17:28.571Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "9be0857a-1dd3-4ab0-ab0a-78b9049e0b71",
+              "role": "assistant",
+              "text": "嗯，开会确实容易让人身心俱疲——脑子转得快，身体却跟不上节奏。你愿意先放松聊聊，这本身就很值得肯定。小房间、安静、随手恢复原状……听起来你很懂得照顾自己的节奏。今天累成这样，有没有哪一刻，哪怕就几秒钟，让你悄悄松了口气？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "嗯，开会确实容易让人身心俱疲——脑子转得快，身体却跟不上节奏。你愿意先放松聊聊，这本身就很值得肯定。小房间、安静、随手恢复原状……听起来你很懂得照顾自己的节奏。今天累成这样，有没有哪一刻，哪怕就几秒钟，让你悄悄松了口气？",
+                "source": "model-general",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "36517fbc-6ce1-4a3f-8a72-bc6969b267aa"
+                ],
+                "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "回应这次交流，不强行围绕物品"
+                }
+              },
+              "at": "2026-10-29T13:17:28.571Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "f60f1438-b6ec-4297-9503-1c5273024f1a",
+            "turnScope": "home",
+            "lastIntent": "companion",
+            "goal": "今天开会开得很累，先随便聊聊，不用帮我做计划或记东西。"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-29T13:17:25.403Z",
+          "updatedAt": "2026-10-29T13:17:28.572Z",
+          "expiresAt": "2026-11-05T13:17:25.403Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "嗯，开会确实容易让人身心俱疲——脑子转得快，身体却跟不上节奏。你愿意先放松聊聊，这本身就很值得肯定。小房间、安静、随手恢复原状……听起来你很懂得照顾自己的节奏。今天累成这样，有没有哪一刻，哪怕就几秒钟，让你悄悄松了口气？",
+          "source": "model-general",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "36517fbc-6ce1-4a3f-8a72-bc6969b267aa"
+          ],
+          "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "回应这次交流，不强行围绕物品"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; router=home-router-v1",
+            "at": "2026-10-29T13:17:25.446Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "基于用户选择的风格与获准故事交流，创作与真实经历分开; version=1.0.1",
+            "at": "2026-10-29T13:17:25.477Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=36517fbc-6ce1-4a3f-8a72-bc6969b267aa; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T13:17:25.477Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T13:17:25.508Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T13:17:28.489Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T13:17:28.526Z"
+          }
+        ],
+        "tokens": {
+          "input": 2765,
+          "output": 90
+        },
+        "modelCalls": 1
+      },
+      "requests": 1,
+      "elapsedMs": 3177
+    },
+    {
+      "case": "05",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"把IKEA RÅSKOG推车变成‘学习锚点’：将20张外语卡片用3个长尾夹分组（如每组7张，余1张备用）夹在推车最上层托盘边缘——夹子手柄朝外，卡片自然垂落、正面朝前；推车静置在学习桌旁固定位置（如左前方45°角），轮子不锁。开始学习时，只允许自己从垂挂卡片中随机抽1张读背，完成后必须将卡片翻面（显中文）并插回原位；若想离开座位，需先将当前卡片翻面归位、推车整体轻推回原定点（靠轮子滚动的轻微阻力和定位感形成物理提示）。原理是利用推车三层结构提供稳定视觉焦点+触觉反馈（抽卡/插卡动作），长尾夹实现无胶无痕的卡片悬挂与即时翻面，而‘推回定点’这一微小闭环动作替代计时器，激活空间记忆与行为惯性——小房间内不占地、安静、随手可复位，且全程未新增材料。\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 1662,
+          "output": 252
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 7273
+    },
+    {
+      "case": "05",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [],
+        "continuation": {
+          "goal": "我总是学十分钟就去做别的。用推车和这些可用物品，想一个能让我更容易继续学习的新用法；不做计时打卡，不新增材料，室内地面平整。",
+          "minutes": 10,
+          "itemIds": [
+            "85aca5e7-5810-4a63-90f6-3830f8103cb6",
+            "e18014a1-296d-485c-b3f6-a75e44173a40",
+            "c4f31b35-978e-408c-a697-33cbb0cfacd2"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 10分钟 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "85aca5e7-5810-4a63-90f6-3830f8103cb6",
+            "name": "测试商品 · IKEA RÅSKOG 米色推车",
+            "capabilities": []
+          },
+          {
+            "id": "e18014a1-296d-485c-b3f6-a75e44173a40",
+            "name": "已写外语词的卡片",
+            "capabilities": [
+              "观察记录"
+            ]
+          },
+          {
+            "id": "c4f31b35-978e-408c-a697-33cbb0cfacd2",
+            "name": "长尾夹",
+            "capabilities": [
+              "观察记录"
+            ]
+          }
+        ],
+        "source": "rejected-model",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 9330,
+          "output": 2995
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。"
+        },
+        "missing": [
+          "本次没有可发布的AI方案；未用固定观察任务替代新用途。"
+        ]
+      },
+      "requests": 2,
+      "elapsedMs": 67216
+    },
+    {
+      "case": "05",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [
+          {
+            "title": "推车即学习站台：三步闭环续学法",
+            "itemIds": [
+              "85aca5e7-5810-4a63-90f6-3830f8103cb6",
+              "e18014a1-296d-485c-b3f6-a75e44173a40",
+              "c4f31b35-978e-408c-a697-33cbb0cfacd2"
+            ],
+            "minutes": 10,
+            "steps": [
+              "将推车固定停放在学习座位正前方（轮子不锁，但靠墙/桌腿轻抵防移位）",
+              "在推车三层托盘分别布置：①顶层放5张待学卡片（正面外语朝上）；②中层空置，作为‘刚学完翻面区’；③底层用1个长尾夹轻夹剩余15张未学卡片（夹住一短边，保持易抽）",
+              "每学完1张，立即翻面（中文朝上），滑入中层托盘——不取新卡、不整理、不决策",
+              "当想停下时，只做一件事：从中层拿起刚翻面的卡片，放入底层夹叠最上方；再从底层夹叠抽出1张新卡，放回顶层——动作全程手不离托盘范围（≤30cm）"
+            ],
+            "limits": [
+              "不新增材料",
+              "不做计时打卡",
+              "地面平整",
+              "小房间需随手恢复原状"
+            ],
+            "reasoning": {
+              "outcome": "用户在学满10分钟临界点时，因动作闭环已内化，大概率自然执行第4步（抽新卡放顶层），从而无缝延续学习流，而非中断起身。",
+              "roles": [
+                {
+                  "itemId": "85aca5e7-5810-4a63-90f6-3830f8103cb6",
+                  "factRefs": [
+                    "85aca5e7-5810-4a63-90f6-3830f8103cb6/capabilities"
+                  ],
+                  "function": "提供稳定、分层、可触达的物理工作平面",
+                  "contribution": "三层托盘定义三个不可混淆的学习状态区，消除‘下一步该做什么’的认知搜索；固定位置形成空间锚点，使手部运动半径最小化"
+                },
+                {
+                  "itemId": "e18014a1-296d-485c-b3f6-a75e44173a40",
+                  "factRefs": [
+                    "e18014a1-296d-485c-b3f6-a75e44173a40/material"
+                  ],
+                  "function": "承载可翻转、易滑动、单手操作的学习单元",
+                  "contribution": "硬纸材质确保翻面后能稳定滑入中层而不翘起；正反双语设计支持‘翻面即反馈’，无需额外工具或屏幕"
+                },
+                {
+                  "itemId": "c4f31b35-978e-408c-a697-33cbb0cfacd2",
+                  "factRefs": [
+                    "c4f31b35-978e-408c-a697-33cbb0cfacd2/capabilities"
+                  ],
+                  "function": "提供低阻力、可逆、单点固定的卡片集约管理",
+                  "contribution": "夹持普通纸张的能力足以约束15张卡片，抽出/插入时仅需指尖微力，避免散乱导致的注意力中断"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "推车在轻微触碰下是否发生位移（影响手部动作半径稳定性）",
+                  "method": "用手掌轻推推车侧面，观察是否移动＞2cm；若移动，用脚轻抵轮子或靠墙放置",
+                  "ifFail": "改用‘靠墙固定’：将推车一侧紧贴书桌侧沿或墙壁，确保三层托盘朝向身体方向不变"
+                },
+                {
+                  "condition": "长尾夹能否稳定夹住15张硬纸卡且仍易抽出最上一张",
+                  "method": "夹住15张卡片，尝试用拇指指甲轻勾最上张边缘抽出；若打滑或夹太紧，减少至12张或换用另1个长尾夹测试",
+                  "ifFail": "改用‘双夹错位法’：2个长尾夹分别夹住卡片叠的上1/3和下1/3，留中段松散供抽取"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": [
+                "36517fbc-6ce1-4a3f-8a72-bc6969b267aa"
+              ]
+            },
+            "rationale": "将‘继续学习’压缩为无认知负荷的物理惯性动作：翻→滑→抽→放。推车三层结构天然分隔学习状态（待学/刚学/待复习），长尾夹提供低阻力卡片管理，避免散落或决策延迟。关键不是记录进度，而是让‘再启动’比‘起身离开’更省力——因为起身需抬脚、转身、找位置、重摆物品；而本方案中，所有操作在坐姿下3秒内完成，且推车位置固定，视觉锚点稳定。",
+            "missing": [
+              "推车在轻微触碰下是否发生位移（影响手部动作半径稳定性）；检查：用手掌轻推推车侧面，观察是否移动＞2cm；若移动，用脚轻抵轮子或靠墙放置；不成立：改用‘靠墙固定’：将推车一侧紧贴书桌侧沿或墙壁，确保三层托盘朝向身体方向不变",
+              "长尾夹能否稳定夹住15张硬纸卡且仍易抽出最上一张；检查：夹住15张卡片，尝试用拇指指甲轻勾最上张边缘抽出；若打滑或夹太紧，减少至12张或换用另1个长尾夹测试；不成立：改用‘双夹错位法’：2个长尾夹分别夹住卡片叠的上1/3和下1/3，留中段松散供抽取",
+              "已写外语词的卡片：登记单位为张，方案用量单位待确认，不自动视为件数",
+              "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "85aca5e7-5810-4a63-90f6-3830f8103cb6",
+                "quantity": 1
+              },
+              {
+                "itemId": "e18014a1-296d-485c-b3f6-a75e44173a40",
+                "quantity": 20
+              },
+              {
+                "itemId": "c4f31b35-978e-408c-a697-33cbb0cfacd2",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "85aca5e7-5810-4a63-90f6-3830f8103cb6",
+                "e18014a1-296d-485c-b3f6-a75e44173a40",
+                "c4f31b35-978e-408c-a697-33cbb0cfacd2"
+              ],
+              "environment": [],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "13765fe6-b0ec-4f5e-94a9-dcf35f73db42",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "我总是学十分钟就去做别的。用推车和这些可用物品，想一个能让我更容易继续学习的新用法；不做计时打卡，不新增材料，室内地面平整。"
+          }
+        ],
+        "continuation": {
+          "goal": "我总是学十分钟就去做别的。用推车和这些可用物品，想一个能让我更容易继续学习的新用法；不做计时打卡，不新增材料，室内地面平整。",
+          "minutes": 10,
+          "itemIds": [
+            "85aca5e7-5810-4a63-90f6-3830f8103cb6",
+            "e18014a1-296d-485c-b3f6-a75e44173a40",
+            "c4f31b35-978e-408c-a697-33cbb0cfacd2"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "在家"
+          ]
+        },
+        "understanding": "本轮目标：我总是学十分钟就去做别的。用推车和这些可用物品，想一个能让我更容易继续学习的新用法；不做计时打卡，不新增材料，室内地面平整。 · 10分钟 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "85aca5e7-5810-4a63-90f6-3830f8103cb6",
+            "name": "测试商品 · IKEA RÅSKOG 米色推车",
+            "capabilities": []
+          },
+          {
+            "id": "e18014a1-296d-485c-b3f6-a75e44173a40",
+            "name": "已写外语词的卡片",
+            "capabilities": [
+              "观察记录"
+            ]
+          },
+          {
+            "id": "c4f31b35-978e-408c-a697-33cbb0cfacd2",
+            "name": "长尾夹",
+            "capabilities": [
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "推车在轻微触碰下是否发生位移（影响手部动作半径稳定性）；检查：用手掌轻推推车侧面，观察是否移动＞2cm；若移动，用脚轻抵轮子或靠墙放置；不成立：改用‘靠墙固定’：将推车一侧紧贴书桌侧沿或墙壁，确保三层托盘朝向身体方向不变",
+          "长尾夹能否稳定夹住15张硬纸卡且仍易抽出最上一张；检查：夹住15张卡片，尝试用拇指指甲轻勾最上张边缘抽出；若打滑或夹太紧，减少至12张或换用另1个长尾夹测试；不成立：改用‘双夹错位法’：2个长尾夹分别夹住卡片叠的上1/3和下1/3，留中段松散供抽取",
+          "已写外语词的卡片：登记单位为张，方案用量单位待确认，不自动视为件数",
+          "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+        ],
+        "source": "model-creative",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 5526,
+          "output": 2156
+        }
+      },
+      "requests": 2,
+      "elapsedMs": 49652
+    },
+    {
+      "case": "06",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"把SAMLA储物盒放在门口室内平桌上，专用于出门前‘必带双件’：钥匙和钱包。利用其透明盒体特性，将二者并排置于盒内（钥匙挂于盒内侧边或平放，钱包平放），盖上盖子——锁扣闭合声即为物理确认信号。每次出门前，只需完成‘开盒→取物→合盖’三步；若盖子未发出咔嗒声，说明未取全；若盒内为空，则提醒你尚未放入待带物。此法不依赖视觉检查（避免遗漏），而以听觉反馈+空间唯一性强化习惯回路；盒体透明便于快速确认内容，盖子锁扣提供明确操作终点，符合‘随手恢复原状’偏好，且全程仅用现有物品、不贴标、不剪裁、不新增购置。\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 2157,
+          "output": 192
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 5634
+    },
+    {
+      "case": "06",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [],
+        "continuation": {
+          "goal": "我出门常忘拿钥匙或钱包。只能用资源池里的东西，在门口室内平桌想个比普通收纳更有效的办法；不买、不贴标签、不剪裁，可只用一部分。",
+          "minutes": 30,
+          "itemIds": [
+            "alpha-test-lin-ikea-samla-19440848",
+            "b953b5b4-c8a6-4a68-b357-714cab4659b4",
+            "83665644-610c-4e3e-b488-b57e703a3ab1"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "利用已有收纳与整理能力，改善眼前的一小块空间 · 30分钟 · 不新增购买 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "alpha-test-lin-ikea-samla-19440848",
+            "name": "测试商品 · SAMLA 萨姆拉附盖储物盒",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "b953b5b4-c8a6-4a68-b357-714cab4659b4",
+            "name": "门钥匙",
+            "capabilities": []
+          },
+          {
+            "id": "83665644-610c-4e3e-b488-b57e703a3ab1",
+            "name": "钱包",
+            "capabilities": []
+          }
+        ],
+        "source": "rejected-model",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 11963,
+          "output": 2457
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。"
+        },
+        "missing": [
+          "本次没有可发布的AI方案；未用固定观察任务替代新用途。"
+        ]
+      },
+      "requests": 2,
+      "elapsedMs": 55635
+    },
+    {
+      "case": "06",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [],
+        "continuation": {
+          "goal": "我出门常忘拿钥匙或钱包。只能用资源池里的东西，在门口室内平桌想个比普通收纳更有效的办法；不买、不贴标签、不剪裁，可只用一部分。",
+          "minutes": 30,
+          "itemIds": [
+            "alpha-test-lin-ikea-samla-19440848",
+            "b953b5b4-c8a6-4a68-b357-714cab4659b4",
+            "83665644-610c-4e3e-b488-b57e703a3ab1"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "本轮目标：我出门常忘拿钥匙或钱包。只能用资源池里的东西，在门口室内平桌想个比普通收纳更有效的办法；不买、不贴标签、不剪裁，可只用一部分。 · 30分钟 · 不新增购买 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "alpha-test-lin-ikea-samla-19440848",
+            "name": "测试商品 · SAMLA 萨姆拉附盖储物盒",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "b953b5b4-c8a6-4a68-b357-714cab4659b4",
+            "name": "门钥匙",
+            "capabilities": []
+          },
+          {
+            "id": "83665644-610c-4e3e-b488-b57e703a3ab1",
+            "name": "钱包",
+            "capabilities": []
+          }
+        ],
+        "source": "rejected-model",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 6832,
+          "output": 1846
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。",
+          "details": "模型创意未通过资源或风险检查，请调整要求"
+        },
+        "missing": [
+          "本次没有可发布的AI方案；未用固定观察任务替代新用途。"
+        ]
+      },
+      "requests": 2,
+      "elapsedMs": 42888
+    },
+    {
+      "case": "07",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"将旧长柄伞撑开，倒扣在桌面（伞面朝下、伞柄朝上），形成一个半封闭的柔光罩；把明信片平放在伞面正下方的桌面上，确保完全处于伞布遮蔽范围内；手持旧手机，从伞柄开口处垂直向下拍摄——伞布自然散射窗边直射光，消除硬阴影与过曝，同时伞体阻挡侧向杂光，避免背面留言被透光显现；全程不裁切、不改装、不翻转明信片，桌面即用，拍完收伞即可恢复原状。\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 1627,
+          "output": 135
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 3592
+    },
+    {
+      "case": "07",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [
+          {
+            "title": "伞布柔光台：明信片无裁切平拍法",
+            "itemIds": [
+              "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+              "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+              "c46ae187-f94d-489a-8937-e4ffdedd5b64"
+            ],
+            "minutes": 30,
+            "steps": [
+              "将旧长柄伞完全撑开，伞面朝下倒置平放于桌面，伞骨支撑稳定；确认伞布平整无褶皱、无透光破洞。",
+              "把明信片正面朝上置于伞布中央，确保四边不悬空、不接触伞骨；手机摄像头对准明信片中心，保持垂直距离约30cm。",
+              "用手机手动模式（或自动模式）拍摄：关闭闪光灯，轻触屏幕对焦明信片文字区域，待取景框内整体亮度均匀、无强反光即完成。",
+              "回看照片：检查是否完整覆盖明信片全部正面、无阴影遮挡、背面留言未透出（硬卡纸不透光已登记，无需翻转验证）。"
+            ],
+            "limits": [
+              "不裁切明信片",
+              "不改装任何物品",
+              "不露出背面留言",
+              "仅用窗边自然光",
+              "手机手持操作",
+              "桌面为唯一承托面"
+            ],
+            "reasoning": {
+              "outcome": "一张完整、无裁切、无背面透显、光照均匀的明信片正面数字照片",
+              "roles": [
+                {
+                  "itemId": "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+                  "factRefs": [
+                    "7d7e6ddb-5aa6-4b57-9a89-01b011e87337/material",
+                    "7d7e6ddb-5aa6-4b57-9a89-01b011e87337/capabilities"
+                  ],
+                  "function": "提供大面积、非反光、不透明的漫射表面，衰减并散射窗边直射光",
+                  "contribution": "替代专业柔光箱，使明信片受光均匀，消除高光与硬阴影"
+                },
+                {
+                  "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                  "factRefs": [
+                    "84ae6e2c-075b-4695-9c07-35e59c691cbc/capabilities"
+                  ],
+                  "function": "执行图像捕获动作，具备基础成像控制能力",
+                  "contribution": "完成最终记录，输出可分享的数字影像"
+                },
+                {
+                  "itemId": "c46ae187-f94d-489a-8937-e4ffdedd5b64",
+                  "factRefs": [
+                    "c46ae187-f94d-489a-8937-e4ffdedd5b64/material"
+                  ],
+                  "function": "作为刚性、不透光的被摄主体，维持平面稳定性",
+                  "contribution": "确保拍摄时形态不变形，且背面留言因材质特性不可见于成像"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "倒置伞布存在明显破洞或局部透光",
+                  "method": "在窗边光下举伞布迎光目视检查，观察是否有光斑穿透",
+                  "ifFail": "改用明信片正面朝下、背面朝上放置于桌面，手机从正上方俯拍——但此方案违反‘不露出背面留言’限制，故应停止并提示用户暂不可行"
+                },
+                {
+                  "condition": "手机自动对焦无法锁定明信片文字区域导致模糊",
+                  "method": "轻触屏幕目标区域后观察取景框是否出现黄色方框并稳定",
+                  "ifFail": "改用手机‘专业/手动’模式（若支持），固定ISO 100、快门1/125s、对焦设为无限远；若无该模式，则微调手机高度至文字边缘清晰可见即停"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": []
+            },
+            "rationale": "利用旧长柄伞‘不透明伞布’与‘遮挡侧向光线’的登记能力，倒置后形成漫反射柔光罩，将硬直窗光转化为均匀面光源；明信片‘普通硬卡纸’材质已确认不透光，背面留言不会在正向拍摄中显现；旧手机摄像头功能明确可用，全程无需额外设备或调整环境光源。",
+            "missing": [
+              "倒置伞布存在明显破洞或局部透光；检查：在窗边光下举伞布迎光目视检查，观察是否有光斑穿透；不成立：改用明信片正面朝下、背面朝上放置于桌面，手机从正上方俯拍——但此方案违反‘不露出背面留言’限制，故应停止并提示用户暂不可行",
+              "手机自动对焦无法锁定明信片文字区域导致模糊；检查：轻触屏幕目标区域后观察取景框是否出现黄色方框并稳定；不成立：改用手机‘专业/手动’模式（若支持），固定ISO 100、快门1/125s、对焦设为无限远；若无该模式，则微调手机高度至文字边缘清晰可见即停",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+              "朋友寄来的明信片：登记单位为张，方案用量单位待确认，不自动视为件数",
+              "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+                "quantity": 1
+              },
+              {
+                "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "quantity": 1
+              },
+              {
+                "itemId": "c46ae187-f94d-489a-8937-e4ffdedd5b64",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+                "c46ae187-f94d-489a-8937-e4ffdedd5b64"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "52f5eab7-c6bc-4462-843d-54415705cf3d",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "我想给朋友寄来的明信片拍照，窗边光太硬。只有这些物品，找个不裁切、不改装、不会露出背面留言的拍摄办法；手机可手持，桌面可用。"
+          }
+        ],
+        "continuation": {
+          "goal": "我想给朋友寄来的明信片拍照，窗边光太硬。只有这些物品，找个不裁切、不改装、不会露出背面留言的拍摄办法；手机可手持，桌面可用。",
+          "minutes": 30,
+          "itemIds": [
+            "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+            "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+            "c46ae187-f94d-489a-8937-e4ffdedd5b64"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "利用已有收纳与整理能力，改善眼前的一小块空间 · 30分钟 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+            "name": "旧手机",
+            "capabilities": [
+              "声音"
+            ]
+          },
+          {
+            "id": "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+            "name": "旧长柄伞",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "c46ae187-f94d-489a-8937-e4ffdedd5b64",
+            "name": "朋友寄来的明信片",
+            "capabilities": [
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "倒置伞布存在明显破洞或局部透光；检查：在窗边光下举伞布迎光目视检查，观察是否有光斑穿透；不成立：改用明信片正面朝下、背面朝上放置于桌面，手机从正上方俯拍——但此方案违反‘不露出背面留言’限制，故应停止并提示用户暂不可行",
+          "手机自动对焦无法锁定明信片文字区域导致模糊；检查：轻触屏幕目标区域后观察取景框是否出现黄色方框并稳定；不成立：改用手机‘专业/手动’模式（若支持），固定ISO 100、快门1/125s、对焦设为无限远；若无该模式，则微调手机高度至文字边缘清晰可见即停",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+          "朋友寄来的明信片：登记单位为张，方案用量单位待确认，不自动视为件数",
+          "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+        ],
+        "source": "model-creative",
+        "modelCalls": 1,
+        "tokens": {
+          "input": 4056,
+          "output": 1310
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 29454
+    },
+    {
+      "case": "07",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [
+          {
+            "title": "伞布倒扣柔光罩法",
+            "itemIds": [
+              "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+              "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+              "c46ae187-f94d-489a-8937-e4ffdedd5b64"
+            ],
+            "minutes": 10,
+            "steps": [
+              "将旧长柄伞完全撑开，倒扣置于桌面，伞面朝下、伞尖轻触或悬空于桌面（形成半封闭帐篷）",
+              "把朋友寄来的明信片平放于伞下正中央，确保其完全被伞布覆盖且背面紧贴桌面（不翻转、不裁切）",
+              "手持旧手机，从伞口正上方垂直向下对准明信片中心，保持镜头与明信片距离≥20cm（避免畸变与失焦）",
+              "用旧手机摄像头拍摄——此时伞布阻隔直射窗光，仅允许散射环境光均匀照亮明信片正面"
+            ],
+            "limits": [
+              "不触碰明信片背面",
+              "不改装/裁切任何物品",
+              "不依赖额外光源或设备",
+              "全程使用桌面与手持操作"
+            ],
+            "reasoning": {
+              "outcome": "获得一张明信片正面完整、无背面信息泄露、无硬阴影、无需后期裁切的清晰照片",
+              "roles": [
+                {
+                  "itemId": "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+                  "factRefs": [
+                    "7d7e6ddb-5aa6-4b57-9a89-01b011e87337/material",
+                    "7d7e6ddb-5aa6-4b57-9a89-01b011e87337/capabilities"
+                  ],
+                  "function": "提供物理遮挡与漫反射表面",
+                  "contribution": "伞布不透明且非反光，倒扣后消除直射窗光路径，将入射光转化为柔和散射光，直接解决‘光太硬’核心问题"
+                },
+                {
+                  "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                  "factRefs": [
+                    "84ae6e2c-075b-4695-9c07-35e59c691cbc/capabilities"
+                  ],
+                  "function": "执行图像捕获",
+                  "contribution": "利用其正常工作的摄像头完成垂直构图拍摄，手持操作满足桌面场景限制"
+                },
+                {
+                  "itemId": "c46ae187-f94d-489a-8937-e4ffdedd5b64",
+                  "factRefs": [
+                    "c46ae187-f94d-489a-8937-e4ffdedd5b64/material"
+                  ],
+                  "function": "被摄主体",
+                  "contribution": "硬卡纸材质保证平放稳定性；背面留言朝下贴桌，天然满足‘不露出背面’约束"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "倒扣伞内部净高＜15cm，导致手机无法在对焦距离内垂直取景",
+                  "method": "撑开伞后，用手指测量伞面最低点到桌面的垂直距离（目测或借手机厚度粗略比对）",
+                  "ifFail": "改用方向2（侧光+伞吸杂光），或临时抬高明信片（如垫一本薄书，但本方案禁用未登记物品，故此情况视为失败并终止该方向）"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": []
+            },
+            "rationale": "伞布为不透明、非反光材质，倒扣后构成简易柔光腔体：窗边硬光被伞布吸收/漫反射，内部形成低对比度均匀照明场；明信片背面始终朝下贴桌，无信息暴露风险；手机垂直拍摄可完整捕获明信片全貌，无裁切需求。",
+            "missing": [
+              "倒扣伞内部净高＜15cm，导致手机无法在对焦距离内垂直取景；检查：撑开伞后，用手指测量伞面最低点到桌面的垂直距离（目测或借手机厚度粗略比对）；不成立：改用方向2（侧光+伞吸杂光），或临时抬高明信片（如垫一本薄书，但本方案禁用未登记物品，故此情况视为失败并终止该方向）",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+              "朋友寄来的明信片：登记单位为张，方案用量单位待确认，不自动视为件数",
+              "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+                "quantity": 1
+              },
+              {
+                "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "quantity": 1
+              },
+              {
+                "itemId": "c46ae187-f94d-489a-8937-e4ffdedd5b64",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+                "c46ae187-f94d-489a-8937-e4ffdedd5b64"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "3688156b-8344-42fe-afa1-6227395c2fdb",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "我想给朋友寄来的明信片拍照，窗边光太硬。只有这些物品，找个不裁切、不改装、不会露出背面留言的拍摄办法；手机可手持，桌面可用。"
+          }
+        ],
+        "continuation": {
+          "goal": "我想给朋友寄来的明信片拍照，窗边光太硬。只有这些物品，找个不裁切、不改装、不会露出背面留言的拍摄办法；手机可手持，桌面可用。",
+          "minutes": 30,
+          "itemIds": [
+            "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+            "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+            "c46ae187-f94d-489a-8937-e4ffdedd5b64"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "本轮目标：我想给朋友寄来的明信片拍照，窗边光太硬。只有这些物品，找个不裁切、不改装、不会露出背面留言的拍摄办法；手机可手持，桌面可用。 · 30分钟 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+            "name": "旧手机",
+            "capabilities": [
+              "声音"
+            ]
+          },
+          {
+            "id": "7d7e6ddb-5aa6-4b57-9a89-01b011e87337",
+            "name": "旧长柄伞",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "c46ae187-f94d-489a-8937-e4ffdedd5b64",
+            "name": "朋友寄来的明信片",
+            "capabilities": [
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "倒扣伞内部净高＜15cm，导致手机无法在对焦距离内垂直取景；检查：撑开伞后，用手指测量伞面最低点到桌面的垂直距离（目测或借手机厚度粗略比对）；不成立：改用方向2（侧光+伞吸杂光），或临时抬高明信片（如垫一本薄书，但本方案禁用未登记物品，故此情况视为失败并终止该方向）",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+          "朋友寄来的明信片：登记单位为张，方案用量单位待确认，不自动视为件数",
+          "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+        ],
+        "source": "model-creative",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 5257,
+          "output": 1853
+        }
+      },
+      "requests": 2,
+      "elapsedMs": 42605
+    },
+    {
+      "case": "08",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\n  \"answer\": \"用旧手机+词卡+GO4音箱组合一个‘听词抢答’循环练习法：1. 旧手机打开计时器设为5秒倒计时（或用录音功能录一段5秒静音作为间隔）；2. 每次练习前，随机抽一张词卡，看一眼外语词后翻面扣在桌上（不看中文）；3. 手机蓝牙连接GO4，播放你提前录好的单个外语词音频（可用旧手机录音功能，自己清晰朗读每个词，每词单独录成1秒音频，共20条，存为顺序播放列表）；4. GO4外放该词——你立刻口头说出中文，同时启动手机倒计时；5. 5秒内说完即完成一轮，立即翻卡核对；6. 答对则把卡放右堆，答错放左堆，每轮结束后用手机拍照记录左右堆数量（辅助复盘），再抽下一张；7. 全部练完后，只重练左堆（错词），用同样流程。全程无需联网、不购新物、音量可控（GO4小音量足够），结束一收词卡、关手机、音箱静音即恢复原状，契合小房间安静需求。\"\n}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 1594,
+          "output": 290
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 7294
+    },
+    {
+      "case": "08",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [
+          {
+            "title": "词卡触发式听译反应训练",
+            "itemIds": [
+              "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+              "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+              "e18014a1-296d-485c-b3f6-a75e44173a40"
+            ],
+            "minutes": 30,
+            "steps": [
+              "打开旧手机录音功能，将GO 4音箱通过蓝牙连接手机；把20张词卡按顺序排成一列，正面朝上。",
+              "随机选一张词卡，看词3秒后翻面——立刻用手机麦克风清晰说出中文释义（不看背面），同时GO 4播放1秒短促提示音（如系统‘滴’声）。",
+              "立即回放刚录的语音，对比自己说的中文是否准确、流利；若错误或迟疑，把该词卡移到队尾重练。",
+              "每轮完成5张后暂停，用手机计时器设1分钟静默复述：闭眼听GO 4循环播放前5个词的原始录音（需提前录好），边听边快速说中文。"
+            ],
+            "limits": [
+              "仅用小音量；不依赖词卡背面内容作提示；不加热/不拆解任何设备；全程不离开座位"
+            ],
+            "reasoning": {
+              "outcome": "用户获得可重复执行的听词→即时说中文→语音比对→动态调整的闭环训练流程，单轮5–10分钟可完成，30分钟内可迭代3–4轮并形成个人易错词追踪。",
+              "roles": [
+                {
+                  "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                  "factRefs": [
+                    "84ae6e2c-075b-4695-9c07-35e59c691cbc/capabilities"
+                  ],
+                  "function": "提供录音、蓝牙音频播放与计时器三项确定可用能力",
+                  "contribution": "承担语音采集、提示音播放及轮次计时核心功能，消除外部依赖"
+                },
+                {
+                  "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+                  "factRefs": [
+                    "73ec7813-e299-4230-aaa3-3efdfbe1fd2d/capabilities"
+                  ],
+                  "function": "作为蓝牙音频输出终端，发出可同步、可复位的短促声音信号",
+                  "contribution": "用固定音效标记‘输出窗口开启’，建立听觉-动作时间锚点，提升反应一致性"
+                },
+                {
+                  "itemId": "e18014a1-296d-485c-b3f6-a75e44173a40",
+                  "factRefs": [
+                    "e18014a1-296d-485c-b3f6-a75e44173a40/material"
+                  ],
+                  "function": "提供可手持、可翻动、正反信息分离的物理交互界面",
+                  "contribution": "通过翻卡动作强制3秒延迟与注意力切换，避免视觉依赖，激活听觉优先通路"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "手机蓝牙能否稳定向GO 4发送短音频（如系统提示音）",
+                  "method": "在设置中播放任意通知音，确认GO 4发声；若无声，改用手机扬声器外放并调至小音量",
+                  "ifFail": "跳过GO 4，改用手机自带扬声器播放提示音，步骤2中‘GO 4播放’替换为‘手机播放’"
+                },
+                {
+                  "condition": "词卡翻面后能否在3秒内完成中文口述（避免偷看背面）",
+                  "method": "试做1张：翻卡同时默数‘1-2-3’，开口说中文；若超时或犹豫，改为翻卡前默读词3秒再翻，开口即说",
+                  "ifFail": "启用‘翻卡前默读’规则，保持输出节奏，不延长单轮耗时"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": [
+                "36517fbc-6ce1-4a3f-8a72-bc6969b267aa"
+              ]
+            },
+            "rationale": "利用手机录音实现即时自我反馈闭环，GO 4提供低干扰、可同步的听觉触发信号（替代人工计时或点击），词卡物理排序支持无屏幕干预的节奏控制。三者协同构建‘听觉输入→口语输出→音频验证’最小闭环，符合神经语言学中‘感知-产出-校验’强化路径，且所有操作均在已登记能力范围内，无需新增资源或假设未验证性能。",
+            "missing": [
+              "手机蓝牙能否稳定向GO 4发送短音频（如系统提示音）；检查：在设置中播放任意通知音，确认GO 4发声；若无声，改用手机扬声器外放并调至小音量；不成立：跳过GO 4，改用手机自带扬声器播放提示音，步骤2中‘GO 4播放’替换为‘手机播放’",
+              "词卡翻面后能否在3秒内完成中文口述（避免偷看背面）；检查：试做1张：翻卡同时默数‘1-2-3’，开口说中文；若超时或犹豫，改为翻卡前默读词3秒再翻，开口即说；不成立：启用‘翻卡前默读’规则，保持输出节奏，不延长单轮耗时",
+              "已写外语词的卡片：登记单位为张，方案用量单位待确认，不自动视为件数",
+              "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "生活改善",
+            "requirements": [
+              {
+                "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "quantity": 1
+              },
+              {
+                "itemId": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+                "quantity": 1
+              },
+              {
+                "itemId": "e18014a1-296d-485c-b3f6-a75e44173a40",
+                "quantity": 20
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+                "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "e18014a1-296d-485c-b3f6-a75e44173a40"
+              ],
+              "environment": [],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "22458aac-c452-4e1a-b57e-cf8cecc60564",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "我想练习外语听到词就快速说中文。用已有手机、GO4和词卡想个能反复练习但不是单纯播放音乐的组合；我独自一人，白天能小音量说话，不买东西。"
+          }
+        ],
+        "continuation": {
+          "goal": "我想练习外语听到词就快速说中文。用已有手机、GO4和词卡想个能反复练习但不是单纯播放音乐的组合；我独自一人，白天能小音量说话，不买东西。",
+          "minutes": 30,
+          "itemIds": [
+            "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+            "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+            "e18014a1-296d-485c-b3f6-a75e44173a40"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+            "name": "测试商品 · JBL Go 4 便携音箱",
+            "capabilities": [
+              "携带",
+              "声音"
+            ]
+          },
+          {
+            "id": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+            "name": "旧手机",
+            "capabilities": [
+              "声音"
+            ]
+          },
+          {
+            "id": "e18014a1-296d-485c-b3f6-a75e44173a40",
+            "name": "已写外语词的卡片",
+            "capabilities": [
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "手机蓝牙能否稳定向GO 4发送短音频（如系统提示音）；检查：在设置中播放任意通知音，确认GO 4发声；若无声，改用手机扬声器外放并调至小音量；不成立：跳过GO 4，改用手机自带扬声器播放提示音，步骤2中‘GO 4播放’替换为‘手机播放’",
+          "词卡翻面后能否在3秒内完成中文口述（避免偷看背面）；检查：试做1张：翻卡同时默数‘1-2-3’，开口说中文；若超时或犹豫，改为翻卡前默读词3秒再翻，开口即说；不成立：启用‘翻卡前默读’规则，保持输出节奏，不延长单轮耗时",
+          "已写外语词的卡片：登记单位为张，方案用量单位待确认，不自动视为件数",
+          "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+        ],
+        "source": "model-creative",
+        "modelCalls": 1,
+        "tokens": {
+          "input": 4122,
+          "output": 1384
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 31173
+    },
+    {
+      "case": "08",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [
+          {
+            "title": "反向校验·人声即刻重放",
+            "itemIds": [
+              "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+              "e18014a1-296d-485c-b3f6-a75e44173a40"
+            ],
+            "minutes": 10,
+            "steps": [
+              "拿起一张词卡（正面外语词朝上），注视该词，清晰大声说出对应中文释义（如看到 'apple' 就说 '苹果'）；",
+              "立即用旧手机开启录音功能，录下自己刚说的这句中文（仅录这一句，不加停顿）；",
+              "点击停止录音，立刻通过蓝牙将该音频发送至 GO4 播放（GO4 已配对并设为默认蓝牙音频输出设备）；",
+              "听到 GO4 播出自己的中文发音后，马上翻转词卡核对背面——若所说中文与背面一致，则完成一轮；否则重抽此卡再练。"
+            ],
+            "limits": [
+              "GO4 不录音，故不能用于采集语音；旧手机必须支持‘录音后一键播放’或‘快速访问最近录音’（常见于系统自带录音机APP）；全程不依赖网络、不安装新APP；每轮闭环控制在 20 秒内以维持反应节奏"
+            ],
+            "reasoning": {
+              "outcome": "建立‘视觉触发→即时口语→自我听觉反馈→精准校验’的4步稳定反应链，提升外语词到中文释义的提取速度与准确率",
+              "roles": [
+                {
+                  "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                  "factRefs": [
+                    "84ae6e2c-075b-4695-9c07-35e59c691cbc/capabilities"
+                  ],
+                  "function": "承担录音+蓝牙播放双重角色，实现‘说即录、录即播’的零延迟反馈链",
+                  "contribution": "提供可操作的即时语音捕获与外放能力，使用户成为自身训练系统的唯一音源和唯一听众"
+                },
+                {
+                  "itemId": "e18014a1-296d-485c-b3f6-a75e44173a40",
+                  "factRefs": [
+                    "e18014a1-296d-485c-b3f6-a75e44173a40/material"
+                  ],
+                  "function": "提供离散、可手持、双面信息隔离的物理提示单元",
+                  "contribution": "确保每次练习目标唯一（单张卡）、输入模态明确（视觉先行）、验证动作即时（翻面即见答案），杜绝干扰与猜测"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "旧手机录音后无法快速播放（如需退出APP、多级菜单才能播放）",
+                  "method": "实测：打开录音APP → 录1秒 → 停止 → 观察是否能在2秒内播放该段录音",
+                  "ifFail": "改用‘录音时同步开启GO4播放’：先让GO4持续播放极低音量白噪音（用手机音乐APP循环1秒静音音频），录音时该声音被盖过，停止后白噪音继续——你靠‘声音中断→恢复’感知录制结束，立即开口说中文，用GO4当前播放状态作计时锚点；此法舍弃播放自己语音，但保留‘听觉事件标记+即时输出’结构"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": [
+                "36517fbc-6ce1-4a3f-8a72-bc6969b267aa"
+              ]
+            },
+            "rationale": "该方案将‘听→说’逆向重构为‘看→说→听自己说→自检’，用自身语音作为唯一反馈信号，彻底规避被动输入。关键承诺在于：每一次输出都触发一次即时、专属、无延迟的听觉反馈，且反馈内容完全由用户当次口语生成，形成强绑定的‘动作-结果’回路，强化神经通路。非播放音乐，非预设音频，而是实时生成-播放-验证闭环。",
+            "missing": [
+              "旧手机录音后无法快速播放（如需退出APP、多级菜单才能播放）；检查：实测：打开录音APP → 录1秒 → 停止 → 观察是否能在2秒内播放该段录音；不成立：改用‘录音时同步开启GO4播放’：先让GO4持续播放极低音量白噪音（用手机音乐APP循环1秒静音音频），录音时该声音被盖过，停止后白噪音继续——你靠‘声音中断→恢复’感知录制结束，立即开口说中文，用GO4当前播放状态作计时锚点；此法舍弃播放自己语音，但保留‘听觉事件标记+即时输出’结构",
+              "已写外语词的卡片：登记单位为张，方案用量单位待确认，不自动视为件数",
+              "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "quantity": 1
+              },
+              {
+                "itemId": "e18014a1-296d-485c-b3f6-a75e44173a40",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "e18014a1-296d-485c-b3f6-a75e44173a40"
+              ],
+              "environment": [],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "294a18e2-19fe-47f1-9b0d-13deeca1b9a0",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "我想练习外语听到词就快速说中文。用已有手机、GO4和词卡想个能反复练习但不是单纯播放音乐的组合；我独自一人，白天能小音量说话，不买东西。"
+          }
+        ],
+        "continuation": {
+          "goal": "我想练习外语听到词就快速说中文。用已有手机、GO4和词卡想个能反复练习但不是单纯播放音乐的组合；我独自一人，白天能小音量说话，不买东西。",
+          "minutes": 30,
+          "itemIds": [
+            "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+            "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+            "e18014a1-296d-485c-b3f6-a75e44173a40"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "本轮目标：我想练习外语听到词就快速说中文。用已有手机、GO4和词卡想个能反复练习但不是单纯播放音乐的组合；我独自一人，白天能小音量说话，不买东西。 · 30分钟 · 不新增购买 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "73ec7813-e299-4230-aaa3-3efdfbe1fd2d",
+            "name": "测试商品 · JBL Go 4 便携音箱",
+            "capabilities": [
+              "携带",
+              "声音"
+            ]
+          },
+          {
+            "id": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+            "name": "旧手机",
+            "capabilities": [
+              "声音"
+            ]
+          },
+          {
+            "id": "e18014a1-296d-485c-b3f6-a75e44173a40",
+            "name": "已写外语词的卡片",
+            "capabilities": [
+              "观察记录"
+            ]
+          }
+        ],
+        "missing": [
+          "旧手机录音后无法快速播放（如需退出APP、多级菜单才能播放）；检查：实测：打开录音APP → 录1秒 → 停止 → 观察是否能在2秒内播放该段录音；不成立：改用‘录音时同步开启GO4播放’：先让GO4持续播放极低音量白噪音（用手机音乐APP循环1秒静音音频），录音时该声音被盖过，停止后白噪音继续——你靠‘声音中断→恢复’感知录制结束，立即开口说中文，用GO4当前播放状态作计时锚点；此法舍弃播放自己语音，但保留‘听觉事件标记+即时输出’结构",
+          "已写外语词的卡片：登记单位为张，方案用量单位待确认，不自动视为件数",
+          "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+        ],
+        "source": "model-creative",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 5444,
+          "output": 1856
+        }
+      },
+      "requests": 2,
+      "elapsedMs": 43799
+    },
+    {
+      "case": "09",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"将干燥浴巾对折后平铺在书桌前沿，作为键盘腕托：利用其柔软棉布质地和70×140厘米尺寸，可横向铺展覆盖键盘前方桌面（约35–50 cm宽），为手腕提供温和承托与微缓冲，缓解长时间打字时前臂悬空压力；使用时仅需展开铺平，不用时一抖即收、无残留、不损伤桌面或键盘，完全符合‘不剪裁、不购买、干燥平桌可用、随手恢复原状’要求。原理基于棉布柔韧折叠性与适度厚度（单层约2–3 mm，对折后达4–6 mm）形成的被动支撑面，非刚性结构，不接触键盘电路，无治疗承诺。\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 1152,
+          "output": 172
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 4325
+    },
+    {
+      "case": "09",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [
+          {
+            "title": "键盘腕托缓冲垫",
+            "itemIds": [
+              "1e04215b-c2fa-474e-8f2f-78d8d0bf080f",
+              "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3"
+            ],
+            "minutes": 5,
+            "steps": [
+              "将闲置浴巾沿长边对折一次（140→70 cm），再对折一次成约70×35 cm矩形，确保表面平整无硬褶。",
+              "把折叠后的浴巾平铺在书桌前沿，紧贴键盘前方放置，使浴巾上缘与键盘前沿齐平或略低1–2 cm。",
+              "轻放有线键盘于浴巾中央区域，确认键盘平底完全接触浴巾，前沿悬空部分不压住浴巾边缘。",
+              "打字时手腕自然 rests 在浴巾垫高区，感受棉布柔软支撑；用毕可一键抬起键盘，抖开浴巾即复原。"
+            ],
+            "limits": [
+              "不剪裁浴巾",
+              "不加热/不固定",
+              "不依赖胶带/别针等额外物",
+              "不承诺医疗效果"
+            ],
+            "reasoning": {
+              "outcome": "打字时手腕获得柔软、可拆卸、高度适配的临时支撑面，缓解前臂悬空疲劳，且桌面随时可恢复整洁。",
+              "roles": [
+                {
+                  "itemId": "1e04215b-c2fa-474e-8f2f-78d8d0bf080f",
+                  "factRefs": [
+                    "1e04215b-c2fa-474e-8f2f-78d8d0bf080f/material",
+                    "1e04215b-c2fa-474e-8f2f-78d8d0bf080f/dimensions"
+                  ],
+                  "function": "提供可折叠、柔软、干燥、足尺的缓冲基材",
+                  "contribution": "双折后形成稳定3–4层棉布垫层，抬高键盘前方桌面约1.5–2.5 cm，支撑手腕而不滑移"
+                },
+                {
+                  "itemId": "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3",
+                  "factRefs": [
+                    "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3/capabilities"
+                  ],
+                  "function": "作为需支撑的刚性平底设备，定义支撑目标位置与高度基准",
+                  "contribution": "平底+无前脚结构使键盘前沿天然悬空，恰好由浴巾垫高区承接，形成连续支撑面"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "双折后浴巾厚度是否足以轻微抬升手腕（约1.5 cm）",
+                  "method": "目测折后厚度；手指按压确认回弹不塌陷",
+                  "ifFail": "改用三折（70×23 cm），若仍不足则停止使用，仅作桌面防滑垫"
+                },
+                {
+                  "condition": "键盘放置后前沿是否稳定接触浴巾、无前后滑动",
+                  "method": "轻推键盘前后端，观察是否位移",
+                  "ifFail": "微调浴巾下缘塞入桌沿缝隙增加摩擦，或改用单层铺展+键盘居中放置"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": [
+                "36517fbc-6ce1-4a3f-8a72-bc6969b267aa"
+              ]
+            },
+            "rationale": "浴巾的干燥棉布材质具柔软性与适度厚度（70×140 cm双折后约3–4层），可提供非刚性抬升与缓冲；键盘平底无前脚，前沿易悬空——浴巾垫高其前方桌面区域，形成符合人体工学的临时腕托面。全程可逆、零新增耗材，契合小房间随手恢复原状需求。",
+            "missing": [
+              "双折后浴巾厚度是否足以轻微抬升手腕（约1.5 cm）；检查：目测折后厚度；手指按压确认回弹不塌陷；不成立：改用三折（70×23 cm），若仍不足则停止使用，仅作桌面防滑垫",
+              "键盘放置后前沿是否稳定接触浴巾、无前后滑动；检查：轻推键盘前后端，观察是否位移；不成立：微调浴巾下缘塞入桌沿缝隙增加摩擦，或改用单层铺展+键盘居中放置",
+              "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "生活改善",
+            "requirements": [
+              {
+                "itemId": "1e04215b-c2fa-474e-8f2f-78d8d0bf080f",
+                "quantity": 1
+              },
+              {
+                "itemId": "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "1e04215b-c2fa-474e-8f2f-78d8d0bf080f",
+                "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3"
+              ],
+              "environment": [],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "3e4de636-abca-44de-bc17-c454b7bc07ac",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "浴巾平时不用。用可用物品找一个在书桌打字时派得上用场的新用途，不剪裁不购买；干燥平桌可用，不作治疗承诺。"
+          }
+        ],
+        "continuation": {
+          "goal": "浴巾平时不用。用可用物品找一个在书桌打字时派得上用场的新用途，不剪裁不购买；干燥平桌可用，不作治疗承诺。",
+          "minutes": 30,
+          "itemIds": [
+            "1e04215b-c2fa-474e-8f2f-78d8d0bf080f",
+            "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从2件可用候选中规划",
+        "resources": [
+          {
+            "id": "1e04215b-c2fa-474e-8f2f-78d8d0bf080f",
+            "name": "闲置浴巾",
+            "capabilities": []
+          },
+          {
+            "id": "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3",
+            "name": "有线键盘",
+            "capabilities": []
+          }
+        ],
+        "missing": [
+          "双折后浴巾厚度是否足以轻微抬升手腕（约1.5 cm）；检查：目测折后厚度；手指按压确认回弹不塌陷；不成立：改用三折（70×23 cm），若仍不足则停止使用，仅作桌面防滑垫",
+          "键盘放置后前沿是否稳定接触浴巾、无前后滑动；检查：轻推键盘前后端，观察是否位移；不成立：微调浴巾下缘塞入桌沿缝隙增加摩擦，或改用单层铺展+键盘居中放置",
+          "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+        ],
+        "source": "model-creative",
+        "modelCalls": 1,
+        "tokens": {
+          "input": 3172,
+          "output": 1132
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 25503
+    },
+    {
+      "case": "09",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [],
+        "continuation": {
+          "goal": "浴巾平时不用。用可用物品找一个在书桌打字时派得上用场的新用途，不剪裁不购买；干燥平桌可用，不作治疗承诺。",
+          "minutes": 30,
+          "itemIds": [
+            "1e04215b-c2fa-474e-8f2f-78d8d0bf080f",
+            "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "本轮目标：浴巾平时不用。用可用物品找一个在书桌打字时派得上用场的新用途，不剪裁不购买；干燥平桌可用，不作治疗承诺。 · 30分钟 · 不新增购买 · 从2件可用候选中规划",
+        "resources": [
+          {
+            "id": "1e04215b-c2fa-474e-8f2f-78d8d0bf080f",
+            "name": "闲置浴巾",
+            "capabilities": []
+          },
+          {
+            "id": "afc3d66a-29e8-4c23-b8ba-fb08f6f09ca3",
+            "name": "有线键盘",
+            "capabilities": []
+          }
+        ],
+        "source": "rejected-model",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 3905,
+          "output": 1566
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。",
+          "details": "方案动作依赖检查：步骤4依赖未登记的精确计时工具，改成无该工具的动作或明确条件与替代；免责声明不能代替资源"
+        },
+        "missing": [
+          "本次没有可发布的AI方案；未用固定观察任务替代新用途。"
+        ]
+      },
+      "requests": 2,
+      "elapsedMs": 36746
+    },
+    {
+      "case": "10",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"把空饮料瓶倒扣在桌面上，用旧手机摄像头从正上方垂直拍摄瓶底——瓶底弧面会自然形成凸透镜效果，轻微放大并柔化下方桌面纹理（如木纹、纸纹或布纹），同时产生中心清晰边缘渐虚的‘微距镜头’视觉；操作时只需拧紧瓶盖确保瓶身刚性，手机开启录像后轻触屏幕对焦瓶底中央即可。全程不需水、不加热、不切割、不添购物品，拍完拿走瓶子桌面即复原，符合小房间安静简洁的需求。\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 1244,
+          "output": 132
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 3555
+    },
+    {
+      "case": "10",
+      "arm": "alpha",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [
+          {
+            "title": "瓶身折射变焦镜：用饮料瓶制造手机镜头畸变效果",
+            "itemIds": [
+              "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+              "84ae6e2c-075b-4695-9c07-35e59c691cbc"
+            ],
+            "minutes": 15,
+            "steps": [
+              "将空饮料瓶平放于桌面，拧紧瓶盖，确保瓶身干燥透明无水渍。",
+              "打开旧手机相机，切换至视频模式；将瓶身竖直横置于镜头前约5–10厘米处，瓶身中段对准画面中心。",
+              "缓慢左右/上下平移瓶身（不旋转），观察取景框内背景出现流动式横向拉伸或鱼眼状边缘畸变。",
+              "录制5秒片段：保持手稳，以匀速水平拖动瓶身穿过画面中央，形成可控的光学扰动转场效果。"
+            ],
+            "limits": [
+              "不加水、不加热、不切割、不购买新物；仅用平桌表面；瓶盖必须拧紧以防意外形变干扰；手机需支持实时取景预览"
+            ],
+            "reasoning": {
+              "outcome": "一段含可控光学畸变转场的5秒手机短片素材，可用于短视频开场、节奏切换或抽象视觉强调。",
+              "roles": [
+                {
+                  "itemId": "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+                  "factRefs": [
+                    "8c305738-359a-4e4b-88fb-45d4ab8fef6d/material",
+                    "8c305738-359a-4e4b-88fb-45d4ab8fef6d/dimensions",
+                    "8c305738-359a-4e4b-88fb-45d4ab8fef6d/capabilities"
+                  ],
+                  "function": "提供刚性透明曲面介质，利用PET材质折射率与圆柱几何引发光线偏折",
+                  "contribution": "作为唯一光学元件，直接生成画面畸变；瓶高≈20cm便于手持控制视场覆盖范围"
+                },
+                {
+                  "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                  "factRefs": [
+                    "84ae6e2c-075b-4695-9c07-35e59c691cbc/capabilities"
+                  ],
+                  "function": "提供实时视频预览与录制能力",
+                  "contribution": "使用户能即时观察畸变位置与强度，并完成有效记录，构成闭环创作"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "瓶身表面存在划痕、雾化或残留油膜影响透光",
+                  "method": "在台灯光下斜向观察瓶身反光是否均匀；手指轻触瓶壁确认无黏腻感",
+                  "ifFail": "用干纸巾单向擦拭全瓶外壁后重试；若仍模糊则改用瓶底平面区域（更接近平凸透镜）尝试弱放大效果"
+                },
+                {
+                  "condition": "手机摄像头自动对焦持续锁定瓶身而非背景",
+                  "method": "长按取景框中背景区域强制对焦；或开启‘专业/手动’模式锁定焦点",
+                  "ifFail": "改用慢速垂直提拉瓶身（沿镜头光轴方向），利用景深变化制造虚实交替，同样具表现力"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": []
+            },
+            "rationale": "透明PET瓶身具有曲面柱状结构，可作简易非球面透镜；当平行光经其侧壁折射时，在手机CMOS前产生局部放大/扭曲，形成低成本光学特效。该效果不依赖液体填充或热塑变形，仅需稳定手持与实时构图反馈，符合所有约束条件。",
+            "missing": [
+              "瓶身表面存在划痕、雾化或残留油膜影响透光；检查：在台灯光下斜向观察瓶身反光是否均匀；手指轻触瓶壁确认无黏腻感；不成立：用干纸巾单向擦拭全瓶外壁后重试；若仍模糊则改用瓶底平面区域（更接近平凸透镜）尝试弱放大效果",
+              "手机摄像头自动对焦持续锁定瓶身而非背景；检查：长按取景框中背景区域强制对焦；或开启‘专业/手动’模式锁定焦点；不成立：改用慢速垂直提拉瓶身（沿镜头光轴方向），利用景深变化制造虚实交替，同样具表现力",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+              "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+                "quantity": 1
+              },
+              {
+                "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "8c305738-359a-4e4b-88fb-45d4ab8fef6d"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "2fdbd241-1780-49b7-850c-143d0d1d52c4",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "透明空饮料瓶还能做什么？我想给手机拍摄的短片加一个有实际表现效果的小道具，不用水、不加热、不切割，不买额外东西；室内平桌可用。"
+          }
+        ],
+        "continuation": {
+          "goal": "透明空饮料瓶还能做什么？我想给手机拍摄的短片加一个有实际表现效果的小道具，不用水、不加热、不切割，不买额外东西；室内平桌可用。",
+          "minutes": 30,
+          "itemIds": [
+            "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+            "84ae6e2c-075b-4695-9c07-35e59c691cbc"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西",
+            "在家"
+          ]
+        },
+        "understanding": "用已有物品做一个低风险、可尝试的小项目 · 30分钟 · 不新增购买 · 从2件可用候选中规划",
+        "resources": [
+          {
+            "id": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+            "name": "旧手机",
+            "capabilities": [
+              "声音"
+            ]
+          },
+          {
+            "id": "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+            "name": "空饮料瓶",
+            "capabilities": []
+          }
+        ],
+        "missing": [
+          "瓶身表面存在划痕、雾化或残留油膜影响透光；检查：在台灯光下斜向观察瓶身反光是否均匀；手指轻触瓶壁确认无黏腻感；不成立：用干纸巾单向擦拭全瓶外壁后重试；若仍模糊则改用瓶底平面区域（更接近平凸透镜）尝试弱放大效果",
+          "手机摄像头自动对焦持续锁定瓶身而非背景；检查：长按取景框中背景区域强制对焦；或开启‘专业/手动’模式锁定焦点；不成立：改用慢速垂直提拉瓶身（沿镜头光轴方向），利用景深变化制造虚实交替，同样具表现力",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+          "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+        ],
+        "source": "model-creative",
+        "modelCalls": 1,
+        "tokens": {
+          "input": 3237,
+          "output": 1095
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 24733
+    },
+    {
+      "case": "10",
+      "arm": "new",
+      "model": "qwen-plus",
+      "result": {
+        "ideas": [
+          {
+            "title": "呼吸式节奏放大器",
+            "itemIds": [
+              "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+              "8c305738-359a-4e4b-88fb-45d4ab8fef6d"
+            ],
+            "minutes": 10,
+            "steps": [
+              "拧紧空饮料瓶瓶盖，确保气密性；",
+              "将空瓶倒扣于平整桌面（瓶底朝上）；",
+              "把旧手机横置、平稳放置于瓶底中央区域；",
+              "开启手机录像功能，缓慢、稳定地用手指轻压瓶身中下部侧壁（单次或重复3–5次），观察画面是否出现柔和起伏节奏。"
+            ],
+            "limits": [
+              "不加水、不加热、不切割、不购买；仅用已有物品；室内平桌操作"
+            ],
+            "reasoning": {
+              "outcome": "手机拍摄画面呈现自然、有机的轻微浮动节奏，类似呼吸律动，增强短片情绪张力。",
+              "roles": [
+                {
+                  "itemId": "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+                  "factRefs": [
+                    "8c305738-359a-4e4b-88fb-45d4ab8fef6d/capabilities"
+                  ],
+                  "function": "提供可压缩气腔与弹性形变界面",
+                  "contribution": "瓶内密闭空气+PET瓶身弹性共同构成机械位移传递结构，将手指压力转化为瓶底位移。"
+                },
+                {
+                  "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                  "factRefs": [
+                    "84ae6e2c-075b-4695-9c07-35e59c691cbc/capabilities"
+                  ],
+                  "function": "作为成像平台与运动载体",
+                  "contribution": "摄像头实时记录自身随瓶底发生的物理位移，无需后期处理即得动态效果。"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "瓶盖未拧紧导致气密性不足",
+                  "method": "按压瓶身时听是否有漏气‘嘶’声，或观察瓶底是否无响应形变",
+                  "ifFail": "立即拧紧瓶盖重试；若仍无效，换用另一同类型空瓶（如有），否则放弃此方向。"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": []
+            },
+            "rationale": "PET瓶轻压后因密闭空气压缩/膨胀，导致瓶底发生微米级弹性形变，带动其上手机产生可被摄像机捕捉的位移；该位移非电子模拟，是真实物理反馈，符合‘实际表现效果’要求。",
+            "missing": [
+              "瓶盖未拧紧导致气密性不足；检查：按压瓶身时听是否有漏气‘嘶’声，或观察瓶底是否无响应形变；不成立：立即拧紧瓶盖重试；若仍无效，换用另一同类型空瓶（如有），否则放弃此方向。",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+              "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+                "quantity": 1
+              },
+              {
+                "itemId": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+                "8c305738-359a-4e4b-88fb-45d4ab8fef6d"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "8d65912f-2eb7-4136-b2a1-72458939a3bc",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "透明空饮料瓶还能做什么？我想给手机拍摄的短片加一个有实际表现效果的小道具，不用水、不加热、不切割，不买额外东西；室内平桌可用。"
+          }
+        ],
+        "continuation": {
+          "goal": "透明空饮料瓶还能做什么？我想给手机拍摄的短片加一个有实际表现效果的小道具，不用水、不加热、不切割，不买额外东西；室内平桌可用。",
+          "minutes": 30,
+          "itemIds": [
+            "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+            "84ae6e2c-075b-4695-9c07-35e59c691cbc"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西",
+            "在家"
+          ]
+        },
+        "understanding": "本轮目标：透明空饮料瓶还能做什么？我想给手机拍摄的短片加一个有实际表现效果的小道具，不用水、不加热、不切割，不买额外东西；室内平桌可用。 · 30分钟 · 不新增购买 · 从2件可用候选中规划",
+        "resources": [
+          {
+            "id": "84ae6e2c-075b-4695-9c07-35e59c691cbc",
+            "name": "旧手机",
+            "capabilities": [
+              "声音"
+            ]
+          },
+          {
+            "id": "8c305738-359a-4e4b-88fb-45d4ab8fef6d",
+            "name": "空饮料瓶",
+            "capabilities": []
+          }
+        ],
+        "missing": [
+          "瓶盖未拧紧导致气密性不足；检查：按压瓶身时听是否有漏气‘嘶’声，或观察瓶底是否无响应形变；不成立：立即拧紧瓶盖重试；若仍无效，换用另一同类型空瓶（如有），否则放弃此方向。",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+          "使用前确认设备可用、电量与现场条件；登记类别不证明专属模式或性能。"
+        ],
+        "source": "model-creative",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 4126,
+          "output": 1356
+        }
+      },
+      "requests": 2,
+      "elapsedMs": 31336
+    },
+    {
+      "case": "12",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "result": {
+        "text": "{\"answer\":\"未知杯子的材质和耐热性，无法确保其能安全盛装刚烧开的水（100℃）并保温一小时——此举存在破裂、烫伤或释放有害物质的风险。在无任何检测手段、不购买/添加物品、且拒绝使用其他器具的前提下，**没有安全可行的办法**。保温需依赖材料导热率低（如双层真空、陶瓷厚壁、食品级耐热玻璃等），但该杯子材质未知，无法推断是否具备；而‘盛刚烧开的水’已超出多数非标塑料、薄玻璃、劣质釉陶的安全极限。唯一符合所有约束的理性选择是：**不使用该杯子盛开水，改用已知耐热的容器（如有），或待水自然降温至约60℃以下再倒入此杯——此时多数常见材质（包括普通玻璃、陶瓷、304不锈钢）均相对安全，且仍可维持温热状态近一小时（取决于环境温度与杯体热容）。但此方案不满足‘盛刚烧开的水’这一前提，故原目标在给定条件下不可安全达成。\"}",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 596,
+          "output": 248
+        }
+      },
+      "requests": 1,
+      "elapsedMs": 5926
+    }
+  ],
+  "physicalTests": 0,
+  "humanBlindEvaluation": false
+}

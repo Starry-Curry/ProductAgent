@@ -292,14 +292,6 @@ export async function respond(
           ]
             .filter(Boolean)
             .join(" ");
-          if (
-            execution.reply.source === "local-memory" &&
-            /没有找到|还没找到|没有.*片段/.test(execution.reply.answer)
-          )
-            execution.reply.answer =
-              "听到了，你刚才说：“" +
-              proposals.map((p) => p.text).join("；") +
-              "”。我整理成了待确认线索，你可以选择是否保留。";
         }
         if (extracted.result?.tokens)
           execution.tokens = {

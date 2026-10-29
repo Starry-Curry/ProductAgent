@@ -9,6 +9,8 @@ export function creativeFacts(items: Item[]) {
     return {
       itemId: item.id,
       name: item.name,
+      quantity: card.properties.quantity,
+      unit: card.properties.unit,
       facts: [
         {
           ref: item.id + "/identity",
@@ -35,7 +37,12 @@ export function creativeFacts(items: Item[]) {
           basis: "official_source" as const,
         })),
       ],
-      unknowns: card.productUnderstanding?.unknowns || card.unknowns,
+      unknowns: [
+        ...new Set([
+          ...card.unknowns,
+          ...(card.productUnderstanding?.unknowns || []),
+        ]),
+      ],
       limits: card.limits,
     };
   });

@@ -339,7 +339,7 @@ test("开放规划使用真实资源/历史反馈与预算，生成新方案并�
       provider,
     );
     assert.equal(reply.reply.route!.intent, "plan");
-    assert.equal(reply.modelCalls, 1);
+    assert.equal(reply.modelCalls, 2);
     assert.equal(reply.reply.steps.length, 2);
     const m = saveMemory(t.db, t.read, "lin", {
       kind: "interest",

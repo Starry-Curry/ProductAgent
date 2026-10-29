@@ -1,0 +1,274 @@
+[
+  {
+    "case": "01",
+    "label": "A",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 5410
+  },
+  {
+    "case": "01",
+    "label": "B",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 0,
+    "elapsedMs": 152
+  },
+  {
+    "case": "01",
+    "label": "C",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 9142
+  },
+  {
+    "case": "02",
+    "label": "A",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 0,
+    "elapsedMs": 111
+  },
+  {
+    "case": "02",
+    "label": "B",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 3,
+    "elapsedMs": 13206
+  },
+  {
+    "case": "02",
+    "label": "C",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 5212
+  },
+  {
+    "case": "03",
+    "label": "A",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 4171
+  },
+  {
+    "case": "03",
+    "label": "B",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 3741
+  },
+  {
+    "case": "03",
+    "label": "C",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 3177
+  },
+  {
+    "case": "04",
+    "label": "A",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 30114
+  },
+  {
+    "case": "04",
+    "label": "B",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 6893
+  },
+  {
+    "case": "04",
+    "label": "C",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 41349
+  },
+  {
+    "case": "05",
+    "label": "A",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 7273
+  },
+  {
+    "case": "05",
+    "label": "B",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 67216
+  },
+  {
+    "case": "05",
+    "label": "C",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 49652
+  },
+  {
+    "case": "06",
+    "label": "A",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 5634
+  },
+  {
+    "case": "06",
+    "label": "B",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 55635
+  },
+  {
+    "case": "06",
+    "label": "C",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 42888
+  },
+  {
+    "case": "07",
+    "label": "A",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 42605
+  },
+  {
+    "case": "07",
+    "label": "B",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 3592
+  },
+  {
+    "case": "07",
+    "label": "C",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 29454
+  },
+  {
+    "case": "08",
+    "label": "A",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 31173
+  },
+  {
+    "case": "08",
+    "label": "B",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 7294
+  },
+  {
+    "case": "08",
+    "label": "C",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 43799
+  },
+  {
+    "case": "09",
+    "label": "A",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 25503
+  },
+  {
+    "case": "09",
+    "label": "B",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 4325
+  },
+  {
+    "case": "09",
+    "label": "C",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 36746
+  },
+  {
+    "case": "10",
+    "label": "A",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 24733
+  },
+  {
+    "case": "10",
+    "label": "B",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 31336
+  },
+  {
+    "case": "10",
+    "label": "C",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 3555
+  },
+  {
+    "case": "11",
+    "label": "A",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 8418
+  },
+  {
+    "case": "11",
+    "label": "B",
+    "arm": "alpha",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 73938
+  },
+  {
+    "case": "11",
+    "label": "C",
+    "arm": "new",
+    "model": "qwen-plus",
+    "requests": 2,
+    "elapsedMs": 46444
+  },
+  {
+    "case": "12",
+    "label": "A",
+    "arm": "direct",
+    "model": "qwen-plus",
+    "requests": 1,
+    "elapsedMs": 5926
+  }
+]

@@ -1,0 +1,28 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(stored?.saved)
+
+    at file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/tests/behavior-integration.mjs:40:68
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.16.0
+file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/behavior/browser-live.mjs:75
+  if (code !== 0) throw Error("Browser test failed " + code);
+                        ^
+
+Error: Browser test failed 1
+    at file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/behavior/browser-live.mjs:75:25
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.16.0

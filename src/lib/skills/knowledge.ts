@@ -82,17 +82,14 @@ export function relevantKnowledge(
   question: string,
   pack?: ProductPack,
 ): Knowledge {
-  const wanted = /介绍一下|有哪些功能|全部参数|产品规格|整体规格/.test(question)
-    ? Object.keys(topicPatterns)
-    : topics(question);
-  const facts = (pack?.claims || [])
-    .map((c) => ({
-      ...c,
-      topics: Object.keys(topicPatterns).filter((k) =>
-        topicPatterns[k].test(c.text),
-      ),
-    }))
-    .filter((c) => wanted.some((t) => c.topics.includes(t)));
+  // Packs are small, model-bound documents, not a search corpus. Topic matching
+  // may label facts, but must never discard material/limits in a multi-part query.
+  const facts = (pack?.claims || []).map((c) => ({
+    ...c,
+    topics: Object.keys(topicPatterns).filter((k) =>
+      topicPatterns[k].test(c.text),
+    ),
+  }));
   return { facts, procedures: [], pack };
 }
 export function knowledgeCatalog(query: string) {

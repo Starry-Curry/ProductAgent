@@ -1,0 +1,479 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "case": "real-model-creative",
+      "result": {
+        "ideas": [
+          {
+            "title": "手柄翻盖式立屏",
+            "itemIds": [
+              "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+              "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b"
+            ],
+            "minutes": 10,
+            "steps": [
+              "取1个长尾夹，张开夹口，夹住1张明信片短边（10cm边）中点，夹口朝上，确保明信片正面朝外；",
+              "将该夹子底座紧贴墙面竖直放置，靠墙面摩擦力与下垂手柄自重保持稳定；",
+              "重复前两步，用另2个长尾夹分别夹住其余2张明信片，三者等距并列立于墙面；",
+              "换正面时：轻压夹子手柄末端→夹口松开→明信片绕夹口轴向内平稳翻转180°→背面完全贴墙隐藏→松手，手柄回弹带动夹口轻扣明信片边缘复位固定。"
+            ],
+            "limits": [
+              "不使用棉浴巾",
+              "不损伤明信片",
+              "不暴露背面留言",
+              "不依赖胶粘/裁切/额外支撑"
+            ],
+            "reasoning": {
+              "outcome": "三张明信片独立立于墙面，每张均可随时单手翻转切换展示面，背面始终贴墙不可见，结构自稳可复原，无需额外材料。",
+              "roles": [
+                {
+                  "itemId": "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+                  "factRefs": [
+                    "1c4d917d-379c-486d-8f25-20365eaaa7ac/capabilities"
+                  ],
+                  "function": "提供可弹性开合的旋转轴心与自锁夹持力",
+                  "contribution": "手柄下垂提供配重与摩擦稳定性；压手柄释放夹口实现可控翻转；松手回弹完成自动复位夹持，确保明信片每次翻转后可靠固定。"
+                },
+                {
+                  "itemId": "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b",
+                  "factRefs": [
+                    "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b/material"
+                  ],
+                  "function": "提供具备足够挺括度与厚度的翻转体",
+                  "contribution": "硬卡纸材质保证绕夹口翻转时不弯折、不卡滞，且背面平整贴墙，彻底遮蔽留言区域。"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "长尾夹手柄弹性不足或回弹迟滞，导致松手后无法可靠闭合夹口",
+                  "method": "空夹状态下反复按压松开手柄3次，观察是否每次均能迅速、到位回弹至原始夹紧角度",
+                  "ifFail": "改用‘垂帘式翻页架’方向（需启用棉浴巾），本方案终止。"
+                },
+                {
+                  "condition": "墙面过于光滑（如玻璃、釉面砖），夹子底座易滑移",
+                  "method": "将夹子底座轻贴墙面静置5秒，观察是否发生位移或倾斜",
+                  "ifFail": "在夹子底座与墙面间垫入棉浴巾一角（仅用其柔软防滑性，不改变结构），本方案仍成立。"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": []
+            },
+            "rationale": "长尾夹钢制手柄具弹性回弹能力，夹口可作为旋转轴心；明信片硬卡纸刚性足以在夹持点支撑倾角立起，并在内翻后紧贴墙面隐藏背面；墙面提供垂直基准与摩擦支点，桌面仅作靠墙定位辅助；全程无外力维持、可单手操作、每次翻转后自动复位锁定。",
+            "missing": [
+              "长尾夹手柄弹性不足或回弹迟滞，导致松手后无法可靠闭合夹口；检查：空夹状态下反复按压松开手柄3次，观察是否每次均能迅速、到位回弹至原始夹紧角度；不成立：改用‘垂帘式翻页架’方向（需启用棉浴巾），本方案终止。",
+              "墙面过于光滑（如玻璃、釉面砖），夹子底座易滑移；检查：将夹子底座轻贴墙面静置5秒，观察是否发生位移或倾斜；不成立：在夹子底座与墙面间垫入棉浴巾一角（仅用其柔软防滑性，不改变结构），本方案仍成立。",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+              "合成验收明信片：登记单位为张，方案用量单位待确认，不自动视为件数"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+                "quantity": 3
+              },
+              {
+                "itemId": "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b",
+                "quantity": 3
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+                "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "ebb59ee8-d790-49cd-9f7d-1700bb1a2573",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "用这三件可用资源，给三张明信片做一个随时换正面、可复原的桌面小展览。可以只用一部分，不购买、不裁切、不粘贴，不损伤明信片，不公开背面留言。桌面靠墙可用。"
+          }
+        ],
+        "continuation": {
+          "goal": "用这三件可用资源，给三张明信片做一个随时换正面、可复原的桌面小展览。可以只用一部分，不购买、不裁切、不粘贴，不损伤明信片，不公开背面留言。桌面靠墙可用。",
+          "minutes": 30,
+          "itemIds": [
+            "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+            "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b",
+            "fe09f292-1170-44df-b814-1982553155d3"
+          ],
+          "excludedItemIds": [],
+          "restrictions": [
+            "不买东西"
+          ]
+        },
+        "understanding": "本轮目标：用这三件可用资源，给三张明信片做一个随时换正面、可复原的桌面小展览。可以只用一部分，不购买、不裁切、不粘贴，不损伤明信片，不公开背面留言。桌面靠墙可用。 · 30分钟 · 不新增购买 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+            "name": "合成验收长尾夹",
+            "capabilities": [
+              "观察记录"
+            ]
+          },
+          {
+            "id": "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b",
+            "name": "合成验收明信片",
+            "capabilities": [
+              "观察记录"
+            ]
+          },
+          {
+            "id": "fe09f292-1170-44df-b814-1982553155d3",
+            "name": "合成验收棉浴巾",
+            "capabilities": []
+          }
+        ],
+        "missing": [
+          "长尾夹手柄弹性不足或回弹迟滞，导致松手后无法可靠闭合夹口；检查：空夹状态下反复按压松开手柄3次，观察是否每次均能迅速、到位回弹至原始夹紧角度；不成立：改用‘垂帘式翻页架’方向（需启用棉浴巾），本方案终止。",
+          "墙面过于光滑（如玻璃、釉面砖），夹子底座易滑移；检查：将夹子底座轻贴墙面静置5秒，观察是否发生位移或倾斜；不成立：在夹子底座与墙面间垫入棉浴巾一角（仅用其柔软防滑性，不改变结构），本方案仍成立。",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+          "合成验收明信片：登记单位为张，方案用量单位待确认，不自动视为件数"
+        ],
+        "source": "model-creative",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 5705,
+          "output": 2036
+        }
+      }
+    },
+    {
+      "case": "real-feedback-reexploration",
+      "result": {
+        "ideas": [
+          {
+            "title": "浴巾基座斜靠式陈列",
+            "itemIds": [
+              "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+              "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b",
+              "fe09f292-1170-44df-b814-1982553155d3"
+            ],
+            "minutes": 10,
+            "steps": [
+              "将棉浴巾对折一次，铺平于稳固水平面（如桌面），形成约3–4cm厚、边缘微隆起的柔软基座；",
+              "取一张明信片，以其短边（约10cm边）为底边，以约60°–75°倾角斜靠在浴巾隆起边缘上，确保正面完全朝外、背面完全不可见；",
+              "用一只长尾夹轻轻夹住明信片上缘外侧（距顶边≤5mm，避开图案区），仅施加配重压力，不弯折卡片；",
+              "重复步骤2–3，用剩余两张明信片与两只长尾夹，在同一浴巾基座上平行排布，间距≥3cm，保持各卡片独立稳定。"
+            ],
+            "limits": [
+              "不改造任何物品",
+              "不触碰明信片背面",
+              "不损伤卡面（无粘贴、穿刺、弯折、压痕风险）",
+              "不依赖夹子机械复位功能"
+            ],
+            "reasoning": {
+              "outcome": "明信片正面稳定朝外、静态直立展示，背面完全隐藏，卡片零损伤，结构可一键拆解。",
+              "roles": [
+                {
+                  "itemId": "fe09f292-1170-44df-b814-1982553155d3",
+                  "factRefs": [
+                    "fe09f292-1170-44df-b814-1982553155d3/material"
+                  ],
+                  "function": "提供柔软、高静摩擦、可塑形基座",
+                  "contribution": "对折后形成微隆起边缘，支撑明信片倾角并防止滑移；棉布干燥状态确保不吸湿软化结构。"
+                },
+                {
+                  "itemId": "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b",
+                  "factRefs": [
+                    "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b/material"
+                  ],
+                  "function": "刚性展示面",
+                  "contribution": "硬卡纸材质保证斜靠时不变形，10×15cm尺寸适配单手夹持与视觉比例。"
+                },
+                {
+                  "itemId": "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+                  "factRefs": [
+                    "1c4d917d-379c-486d-8f25-20365eaaa7ac/capabilities"
+                  ],
+                  "function": "顶部限位配重",
+                  "contribution": "夹持明信片上缘外侧仅提供垂直向下的微压，防止倾倒，不参与角度生成或复位——彻底规避用户拒绝的‘可控转轴’机制。"
+                }
+              ],
+              "checks": [
+                {
+                  "condition": "浴巾对折后厚度不足3cm或表面过滑，导致明信片倾角不稳",
+                  "method": "目视确认对折后浴巾隆起高度；轻触表面感知摩擦感；试放一张明信片观察是否自行滑落",
+                  "ifFail": "改用三折（增加厚度）或在浴巾下垫一张明信片增强基座刚性；若仍滑，暂停此方案。"
+                },
+                {
+                  "condition": "长尾夹夹持时导致明信片上缘轻微弯折或留下压痕",
+                  "method": "夹后10秒内松开，检查卡面有无永久形变或印痕",
+                  "ifFail": "改用夹子仅轻搭于上缘（不闭合），或换为单点手指按压测试稳定性——若无需夹子亦稳，则省略该步。"
+                }
+              ],
+              "extraResources": [],
+              "preferenceIds": []
+            },
+            "rationale": "利用棉浴巾的柔软厚度与静摩擦力提供自稳斜面，明信片靠重力自然贴合倾角；长尾夹仅作顶部轻压配重，不参与角度调节或动态动作——全程无活动机构、无复位需求、无背面接触，符合用户全部硬性约束。",
+            "missing": [
+              "浴巾对折后厚度不足3cm或表面过滑，导致明信片倾角不稳；检查：目视确认对折后浴巾隆起高度；轻触表面感知摩擦感；试放一张明信片观察是否自行滑落；不成立：改用三折（增加厚度）或在浴巾下垫一张明信片增强基座刚性；若仍滑，暂停此方案。",
+              "长尾夹夹持时导致明信片上缘轻微弯折或留下压痕；检查：夹后10秒内松开，检查卡面有无永久形变或印痕；不成立：改用夹子仅轻搭于上缘（不闭合），或换为单点手指按压测试稳定性——若无需夹子亦稳，则省略该步。",
+              "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+              "合成验收明信片：登记单位为张，方案用量单位待确认，不自动视为件数"
+            ],
+            "factIds": [],
+            "experienceIds": [],
+            "creativeEvidenceIds": [],
+            "direction": "创作",
+            "requirements": [
+              {
+                "itemId": "fe09f292-1170-44df-b814-1982553155d3",
+                "quantity": 1
+              },
+              {
+                "itemId": "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b",
+                "quantity": 1
+              },
+              {
+                "itemId": "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+                "quantity": 1
+              }
+            ],
+            "resourceAudit": {
+              "owned": [
+                "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+                "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b",
+                "fe09f292-1170-44df-b814-1982553155d3"
+              ],
+              "environment": [
+                "可用场地、空间与访问条件须现场确认（不是已拥有物品）"
+              ],
+              "unconfirmed": [],
+              "additional": [],
+              "unsupported": [],
+              "fieldVerification": []
+            },
+            "reasoningBasis": "model_hypothesis_not_verified",
+            "id": "21f262d2-79c5-4181-aa52-4d9cc5d80c8c",
+            "source": "model-creative",
+            "experienceSources": [],
+            "evidence": [],
+            "creativeEvidenceSources": [],
+            "tested": false,
+            "goal": "换个方向；上一方案“手柄翻盖式立屏”；我这次的反馈：普通长尾夹没有可控转轴，松开后不会带动明信片自动复位；我不接受这种机构。换一个简单的静态展示方向，不要改造、不损伤卡片、不要展示背面留言。。请回应这个反馈重新探索。"
+          }
+        ],
+        "continuation": {
+          "goal": "换个方向；上一方案“手柄翻盖式立屏”；我这次的反馈：普通长尾夹没有可控转轴，松开后不会带动明信片自动复位；我不接受这种机构。换一个简单的静态展示方向，不要改造、不损伤卡片、不要展示背面留言。。请回应这个反馈重新探索。",
+          "minutes": 30,
+          "itemIds": [
+            "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+            "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b",
+            "fe09f292-1170-44df-b814-1982553155d3"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "本轮目标：换个方向；上一方案“手柄翻盖式立屏”；我这次的反馈：普通长尾夹没有可控转轴，松开后不会带动明信片自动复位；我不接受这种机构。换一个简单的静态展示方向，不要改造、不损伤卡片、不要展示背面留言。。请回应这个反馈重新探索。 · 30分钟 · 从3件可用候选中规划",
+        "resources": [
+          {
+            "id": "1c4d917d-379c-486d-8f25-20365eaaa7ac",
+            "name": "合成验收长尾夹",
+            "capabilities": [
+              "观察记录"
+            ]
+          },
+          {
+            "id": "724ed1e4-9d8e-4e91-a80d-84fa5ce0357b",
+            "name": "合成验收明信片",
+            "capabilities": [
+              "观察记录"
+            ]
+          },
+          {
+            "id": "fe09f292-1170-44df-b814-1982553155d3",
+            "name": "合成验收棉浴巾",
+            "capabilities": []
+          }
+        ],
+        "missing": [
+          "浴巾对折后厚度不足3cm或表面过滑，导致明信片倾角不稳；检查：目视确认对折后浴巾隆起高度；轻触表面感知摩擦感；试放一张明信片观察是否自行滑落；不成立：改用三折（增加厚度）或在浴巾下垫一张明信片增强基座刚性；若仍滑，暂停此方案。",
+          "长尾夹夹持时导致明信片上缘轻微弯折或留下压痕；检查：夹后10秒内松开，检查卡面有无永久形变或印痕；不成立：改用夹子仅轻搭于上缘（不闭合），或换为单点手指按压测试稳定性——若无需夹子亦稳，则省略该步。",
+          "可用场地、空间与访问条件须现场确认（不是已拥有物品）",
+          "合成验收明信片：登记单位为张，方案用量单位待确认，不自动视为件数"
+        ],
+        "source": "model-creative",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 5579,
+          "output": 1949
+        }
+      }
+    },
+    {
+      "case": "real-multi-question",
+      "result": {
+        "session": {
+          "id": "b2cb9e31-f747-458b-bbaf-a33d78717a2e",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "7cc9bc26-ba14-487d-9e0a-fdf02ade32d5",
+              "role": "user",
+              "text": "测试商品 · SAMLA 萨姆拉附盖储物盒的材质、尺寸和使用限制分别是什么？内尺寸和现在是否完好能确认吗？",
+              "at": "2026-10-29T13:44:06.343Z",
+              "itemId": "alpha-test-lin-ikea-samla-19440848",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "e0912ea0-4db5-41f1-9c32-1ec0d71bc385",
+              "role": "assistant",
+              "text": "根据宜家中国官方资料（商品编号 194.408.48）：\n\n• 材质：透明聚丙烯塑料（PP），盒体透明便于查看内容物；\n• 尺寸：组合外尺寸为宽28 × 深20 × 高14 厘米，标称容量5升；明确说明‘这些不是内部净尺寸’，因此内尺寸未提供；\n• 使用限制：仅供室内使用，不可直接接触食物；盖子具内嵌锁扣，可防尘、辅助叠放，但未宣称气密或水密；\n• 当前完好性：物品登记状态为‘闲置’且‘可用’，但该状态由用户报告，非实物检测结果；官方资料未包含外观/结构完好性验证，也未提供检查方法，因此‘是否完好’无法从现有资料确认。\n\n如需确认内尺寸或实际完好状况，建议您用软尺实测内腔（长×宽×深），并目视检查盒体与盖子有无裂纹、变形或锁扣失效。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "根据宜家中国官方资料（商品编号 194.408.48）：\n\n• 材质：透明聚丙烯塑料（PP），盒体透明便于查看内容物；\n• 尺寸：组合外尺寸为宽28 × 深20 × 高14 厘米，标称容量5升；明确说明‘这些不是内部净尺寸’，因此内尺寸未提供；\n• 使用限制：仅供室内使用，不可直接接触食物；盖子具内嵌锁扣，可防尘、辅助叠放，但未宣称气密或水密；\n• 当前完好性：物品登记状态为‘闲置’且‘可用’，但该状态由用户报告，非实物检测结果；官方资料未包含外观/结构完好性验证，也未提供检查方法，因此‘是否完好’无法从现有资料确认。\n\n如需确认内尺寸或实际完好状况，建议您用软尺实测内腔（长×宽×深），并目视检查盒体与盖子有无裂纹、变形或锁扣失效。",
+                "source": "model-with-evidence",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:material",
+                  "samla:size",
+                  "samla:lid",
+                  "samla:limits"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "kind": "official",
+                    "section": "商品描述、商品尺寸、小贴士、材料"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+                "model": "qwen-plus",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "alpha-test-lin-ikea-samla-19440848",
+                  "itemName": "测试商品 · SAMLA 萨姆拉附盖储物盒"
+                }
+              },
+              "at": "2026-10-29T13:44:06.343Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "turnRequestId": "fc5ecf6b-77ea-438f-9968-439886931f39",
+            "turnScope": "alpha-test-lin-ikea-samla-19440848",
+            "lastIntent": "help",
+            "activeItemId": "alpha-test-lin-ikea-samla-19440848",
+            "goal": "测试商品 · SAMLA 萨姆拉附盖储物盒的材质、尺寸和使用限制分别是什么？内尺寸和现在是否完好能确认吗？"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-29T13:43:59.347Z",
+          "updatedAt": "2026-10-29T13:44:06.344Z",
+          "expiresAt": "2026-11-05T13:43:59.347Z",
+          "itemScopes": {
+            "alpha-test-lin-ikea-samla-19440848": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T13:33:55.884Z\\\"]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "根据宜家中国官方资料（商品编号 194.408.48）：\n\n• 材质：透明聚丙烯塑料（PP），盒体透明便于查看内容物；\n• 尺寸：组合外尺寸为宽28 × 深20 × 高14 厘米，标称容量5升；明确说明‘这些不是内部净尺寸’，因此内尺寸未提供；\n• 使用限制：仅供室内使用，不可直接接触食物；盖子具内嵌锁扣，可防尘、辅助叠放，但未宣称气密或水密；\n• 当前完好性：物品登记状态为‘闲置’且‘可用’，但该状态由用户报告，非实物检测结果；官方资料未包含外观/结构完好性验证，也未提供检查方法，因此‘是否完好’无法从现有资料确认。\n\n如需确认内尺寸或实际完好状况，建议您用软尺实测内腔（长×宽×深），并目视检查盒体与盖子有无裂纹、变形或锁扣失效。",
+          "source": "model-with-evidence",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "samla:material",
+            "samla:size",
+            "samla:lid",
+            "samla:limits"
+          ],
+          "citations": [
+            {
+              "id": "ikea-samla-19440848",
+              "title": "宜家中国 SAMLA 商品详情",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "kind": "official",
+              "section": "商品描述、商品尺寸、小贴士、材料"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+          "model": "qwen-plus",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对已登记的物品性质、限制与未知条件",
+            "itemId": "alpha-test-lin-ikea-samla-19440848",
+            "itemName": "测试商品 · SAMLA 萨姆拉附盖储物盒"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=alpha-test-lin-ikea-samla-19440848; router=home-router-v1",
+            "at": "2026-10-29T13:43:59.432Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T13:43:59.458Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T13:43:59.458Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T13:43:59.476Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T13:44:06.311Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T13:44:06.327Z"
+          }
+        ],
+        "tokens": {
+          "input": 4320,
+          "output": 284
+        },
+        "modelCalls": 1
+      }
+    }
+  ],
+  "errors": [],
+  "syntheticDataOnly": true,
+  "physicalTests": 0,
+  "humanBlindEvaluation": false,
+  "checks": [
+    "real creative displayed",
+    "saved and feedback persisted",
+    "other actor isolation",
+    "390px no overflow",
+    "desktop rendering",
+    "model QA"
+  ]
+}

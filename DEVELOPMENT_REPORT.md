@@ -20,3 +20,12 @@
 265 项业务测试、类型、benchmark、构建、cloud 替身、新版浏览器与新增赠画旅程通过。真实百炼 42 请求，估算 ¥0.0196844：工具和显式赠送事实可用；纸盒创意仍不合格，不能以 HTTP 200 或本地降级宣布成功。没有人类盲评、私人数据迁移、真实设备操作。
 
 完整 [证据/失败](docs/engineering/framework-evidence-2026-10-29/TEST_REPORT.md)、[简短决策](docs/engineering/framework-evidence-2026-10-29/DECISION.md)、[下一轮源码清单](docs/engineering/framework-evidence-2026-10-29/NEXT_IMPLEMENTATION.md)。后续直接做关系来源与创意动作语义，不再扩展框架研究。
+
+
+## 2026-10-29 智能行为与创造力实验版
+
+独立分支 codex/wujian-intelligence-behavior-v1，从 Alpha 7c51317 开发，未合并 main。详见 [交付说明](docs/engineering/intelligence-behavior-2026-10-29/README.md)、[测试报告](docs/engineering/intelligence-behavior-2026-10-29/TEST_REPORT.md) 和 [匿名原始样本](docs/engineering/intelligence-behavior-2026-10-29/REVIEW_SAMPLES.md)。
+
+已实现：完整型号资料综合问答、诚实摘录回退、两回合创意资源池子集、反馈主动再探索、收藏/结果/备注并发写入修复。真实浏览器的生成—展示—收藏—否定—再探索及桌面/移动端跑通。307/307离线、类型、生产构建、benchmark、6个集成旅程及8组公开演示替身检查通过。真实模型60次、57返回/3失败；已知usage估算0.2114072元，含无usage保守预留合计0.49414元，额度耗尽停止。
+
+尚未实现：可靠的物理/动作语义验证或已证明的创造力提升。qwen3-max两次404，未启用。原始差样本、夹具错误和补测限制均保留；没有外部盲评或物理试用。下一步先解决创意机制错误，不扩展框架、数据库、数字分身或REA。本机独立预览费用关闭；凭证、SQLite、依赖和运行缓存不入Git。

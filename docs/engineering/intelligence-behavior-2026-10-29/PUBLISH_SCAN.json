@@ -1,0 +1,379 @@
+{
+  "at": "2026-10-29T14:09:21.660Z",
+  "scope": "all proposed changed/untracked non-ignored files; patterns, forbidden paths, sizes and Markdown links; not a universal secret detector",
+  "files": 74,
+  "totalBytes": 3560403,
+  "failures": [],
+  "hashes": [
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 4537,
+      "sha256": "7209784b70afdbc36f69c1e5afdf09cb28062828f5ff83b6cd9e0a16e707e8e2"
+    },
+    {
+      "file": "DEVELOPMENT_REPORT.md",
+      "bytes": 3591,
+      "sha256": "fb45fbfbc25473d792b0d6dae739e07fc79563ebb10eb9fdc0d97327878d1449"
+    },
+    {
+      "file": "IMPLEMENTATION_STATUS.md",
+      "bytes": 4102,
+      "sha256": "8ddab67241bfae428afba0c34943b8dd856a383ed71e7e3f8219583246ce4df1"
+    },
+    {
+      "file": "REVIEW_HANDOFF.md",
+      "bytes": 3534,
+      "sha256": "eb01d265184a96f711e8ae88b71ee99c4c2fad98f2e2c52b29d4d73d36828ab9"
+    },
+    {
+      "file": "docs/README.md",
+      "bytes": 2746,
+      "sha256": "74e6689c0f74ef15b2dfed5ef24fa27168d9567ad8fd5848d5d2f40953ad248b"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/DECISIONS.md",
+      "bytes": 2648,
+      "sha256": "0dcf35fcaa2f3b0682eb17a7f077776d45af9de881cab20454e95190b5f6e307"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/MODEL_RESULTS.md",
+      "bytes": 5201,
+      "sha256": "ba8755312e2385bbd523e56c180ea6237c4a156d76ef382691ec5b1325d913b8"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/README.md",
+      "bytes": 4929,
+      "sha256": "69a361ceb953e3c6ba76ee3f96c0bc45964a14231e8eef6d1170dd10d97163a7"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/REVIEW_KEY.json",
+      "bytes": 4496,
+      "sha256": "aa5df5117803a3bb7738304c428be805fbe1e0ddc70271f5f5adf7a2834b4c4b"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/REVIEW_SAMPLES.md",
+      "bytes": 44661,
+      "sha256": "8b2455251659bde1b045f5e9c251dd8c9e9251ff9d5304e35eb21ac419592fa8"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/TEST_REPORT.md",
+      "bytes": 7121,
+      "sha256": "ccce5051e3b497ac0e3a5d7cc5995655419e425b9f9aa99da0658c4313157e65"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/MANIFEST.json",
+      "bytes": 7936,
+      "sha256": "bcf919306b6d32af9a3dbbf1914b7823f644cfb619f823ea9530e96dff5967e3"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/SUMMARY.json",
+      "bytes": 459,
+      "sha256": "1000e07a5a6f923434801953a9300aced803736fb57699a73a965bb8ae5373c9"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/browser-live-server.json",
+      "bytes": 315,
+      "sha256": "a7353a33041a47527e720240bb8dae440e858bdc6ce44bb57961e6daa4850988"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/browser/creative-desktop.png",
+      "bytes": 176229,
+      "sha256": "176a619c4c56a863a30f2aab322642d4acba48742d4fd57ffc450a645fa5cfe7"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/browser/creative-mobile.png",
+      "bytes": 146445,
+      "sha256": "66dacce409715e0cc973a2190a1eb8b658ef3a58bc5b775e963e557fbebea573"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/browser/failure.json",
+      "bytes": 8722,
+      "sha256": "cdefea5c18f9d7d6ab1c2ddfd732ccf32d132a8978d6a834589e7cd1e0d0084e"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/browser/failure.png",
+      "bytes": 176549,
+      "sha256": "dbba84af02cc5950d3288310cb04fc705aa846161ef694bb71711a1e12f1fcfb"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/browser/feedback-race-failure.json",
+      "bytes": 8722,
+      "sha256": "cdefea5c18f9d7d6ab1c2ddfd732ccf32d132a8978d6a834589e7cd1e0d0084e"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/browser/qa-desktop.png",
+      "bytes": 143674,
+      "sha256": "bb6866ab43e1f01ad89f390ea1b0641fbfe9cae7a7046f721b938ec549c59689"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/browser/qa-mobile.png",
+      "bytes": 127005,
+      "sha256": "fc850e6216f27a78e9bf97d872e311031b1d626e0f77c2e81de99a147c8b1c88"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/browser/reexploration-mobile.png",
+      "bytes": 185819,
+      "sha256": "79fa66f3e54b50f08e6ea687900e57dfd1081086a2a53691f7aef74089df7629"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/browser/result.json",
+      "bytes": 26925,
+      "sha256": "bb3964149092c9d8ad5361f6600052399730df75017d3a364fe31f4f62cdd80e"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/comparison-bound-qa.json",
+      "bytes": 49839,
+      "sha256": "6ccc0ace9589552e603b6b774dbee0b08dd63054eac18017442665e25ac712a9"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/comparison-pilot.json",
+      "bytes": 71659,
+      "sha256": "7d1d812672f6ee6bd1cb26d2b2de65e1eb3d063011ed9972002ceb697e4adf9a"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/comparison-remaining.json",
+      "bytes": 142680,
+      "sha256": "faac911212e99a1e46637f85ef409e966bdcb7304bf5c196ce96bee472761039"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/comparison-strong.json",
+      "bytes": 31474,
+      "sha256": "80fdd2f982d65a021e4282ea7497ed2e3ecb3e92b7c854a9741abe150ea4def8"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/live-ledger.json",
+      "bytes": 1677687,
+      "sha256": "200c7b03574cb9a93b25932b335e3efab23dacc9acedd641f50c6bdd0bab0e84"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/behavior-unit-final.log",
+      "bytes": 1434,
+      "sha256": "b4a1635f24de901658e55c3d08b1f639e949b48a6a639c9f899debdacbd3bca6"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/benchmark-release-final.log",
+      "bytes": 4656,
+      "sha256": "556fe43b65113a4999e647bcc5b91cd35909bc14aeedbd04d0c8cb2ecdf48df7"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/bound-qa.log",
+      "bytes": 110,
+      "sha256": "a6372ae6ddf9ced8e8f0a040e2eb1f97d8397b9fa9c4bb74dac9e23525089f90"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/browser-live.log",
+      "bytes": 1070,
+      "sha256": "8e88100cb75e2eb7dc557e748ecc7edfdc9a2e8a5768ed856c4e3065ab25792a"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/browser-release.log",
+      "bytes": 33,
+      "sha256": "598f2bf027a92b86a6dcdb4d428e3181b4a53f10b91b15582ad3dc302b13c4f5"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/browser-resume.log",
+      "bytes": 3529,
+      "sha256": "2ef08edea23a06431fc23556c1144448e061a5fe0a4d63661d5e1a7c3347893c"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/browser-resume2.log",
+      "bytes": 920,
+      "sha256": "6074fda907e71466da8b94bfeec9d2b069eb7babb0e506273b989eb8d1a49f84"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/budget-unit.log",
+      "bytes": 225,
+      "sha256": "07cb3f908c209d1663cced94fe6ef167849535eef3a1dd5a095e155e4c769d57"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/build-delivery.log",
+      "bytes": 2029,
+      "sha256": "a88b718e757197d9b3ecbee4d3e1d993eeeefe140c4d39028eb2363929ac8349"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/cloud-final.log",
+      "bytes": 489,
+      "sha256": "61ba5763b141388498f0084cd0bb6e492a6780a5113f9fa156cc50cd60f296d2"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/cloud-retest.log",
+      "bytes": 950,
+      "sha256": "0db0302a6c74ef656483c0b86d29c08123321f464ff7fdc17e19dad5e3db0e2c"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/integration-final.log",
+      "bytes": 8672,
+      "sha256": "bae30a55028dca72e14783c846b37336ba1ba7e41f30c0783fdaa4dc02ad7061"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/integration-release.log",
+      "bytes": 1610,
+      "sha256": "f1fe1769d06e9de7431a4227d72c2d59efac4689635922bd1beb69027cd9c678"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/live-remaining.log",
+      "bytes": 1703,
+      "sha256": "f485cef7a0dcb1e77de5dda47b4091400c1f02d0c6bb5a09231e69ba1a9daf03"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/offline-first.log",
+      "bytes": 35536,
+      "sha256": "d41b04c16563fd3203145775a1334790547827233e3132712a3d8fc4d4b3af6a"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/test-delivery.log",
+      "bytes": 31699,
+      "sha256": "6622e21c7d5d848196497bb9e9a91749054fb6a8aa4793d2e3dd7a348817ab9d"
+    },
+    {
+      "file": "docs/engineering/intelligence-behavior-2026-10-29/evidence/logs/typecheck-final.log",
+      "bytes": 48,
+      "sha256": "8ecd2c9e217809de41e0ac3444a6bb794f588f6da1b28e1a41efc6b4c7f3ebed"
+    },
+    {
+      "file": "scripts/behavior/browser-live.mjs",
+      "bytes": 2553,
+      "sha256": "3340e55e3a3e04b6dacca78160249c94754d8df8365463cec21bc43ce8344613"
+    },
+    {
+      "file": "scripts/behavior/compare.mjs",
+      "bytes": 5598,
+      "sha256": "2809232bac892cb30809f94c9eef8f0ef0f7b4646d5e1202a97d5c8252448907"
+    },
+    {
+      "file": "scripts/behavior/fixtures.ts",
+      "bytes": 6855,
+      "sha256": "e6606ee39605d35d6aae19ae39a1f7348755f177649a3b4d371645abda246556"
+    },
+    {
+      "file": "scripts/behavior/gateway.mjs",
+      "bytes": 10368,
+      "sha256": "e9eb657184c1ff8cff1501b4ff3f6a6703c5e8accdd3a63433ad5461d2fbec50"
+    },
+    {
+      "file": "scripts/behavior/preview.mjs",
+      "bytes": 2419,
+      "sha256": "29d15d857316bfe9b4b4239136171ad212559bd2891b47b5438d850526c39199"
+    },
+    {
+      "file": "scripts/behavior/report.mjs",
+      "bytes": 7003,
+      "sha256": "f664e250006ed51ceda5115757e8fea4c36036e33f0f200aacd80a5d7660335d"
+    },
+    {
+      "file": "scripts/behavior/scan.mjs",
+      "bytes": 2821,
+      "sha256": "485e87355c1a407ec9c176ee9688553d70fa57377be2834016ebaa9364e8e7a8"
+    },
+    {
+      "file": "scripts/behavior/shared.mjs",
+      "bytes": 391,
+      "sha256": "4ba26dc7fc5ba4d430aba1f7e319fd2119a5e0d9dab211f98273b96db061e47a"
+    },
+    {
+      "file": "scripts/foundation-benchmark.ts",
+      "bytes": 6138,
+      "sha256": "0eb191285f7cff1de57ab3ebbdef5953da06e7ae9f60efecc4a9339b9da386e4"
+    },
+    {
+      "file": "src/components/life/Discovery.tsx",
+      "bytes": 27399,
+      "sha256": "0aa0eda5ad8033c4393edf6d279bba8257547eee7d2db7f69bd2e257d13f1378"
+    },
+    {
+      "file": "src/lib/agent/graph.ts",
+      "bytes": 66622,
+      "sha256": "84745d6e70ffabed90756c7478e2f811141723b9622f21cfc4e9e630a7979bcc"
+    },
+    {
+      "file": "src/lib/agent/prompts.ts",
+      "bytes": 8623,
+      "sha256": "042eb4f99c3839e8b863945de3823dbe6f454c7e42380fc8f0ef0116da1252f9"
+    },
+    {
+      "file": "src/lib/agent/safety-language.ts",
+      "bytes": 1692,
+      "sha256": "75cf9c7d9425ccbb736d0b055b9258e852fbb05272755fc765a417468b17c110"
+    },
+    {
+      "file": "src/lib/agent/service.ts",
+      "bytes": 13511,
+      "sha256": "ec184342c51e1d69e3bc3f569ba085d3802f3ff7bf6ef206c6f9d98415901010"
+    },
+    {
+      "file": "src/lib/ai/provider.ts",
+      "bytes": 15303,
+      "sha256": "d117a2ec8e8821bb0283a3770e5af2ea64661f3bfcd82dff26f82d534598c493"
+    },
+    {
+      "file": "src/lib/life/creative-exploration.ts",
+      "bytes": 4266,
+      "sha256": "3384690c6e1c7c303bc03b5580935d042ee8c1123ed3a93928212d6942c24f38"
+    },
+    {
+      "file": "src/lib/life/creative-reasoning.ts",
+      "bytes": 7684,
+      "sha256": "005f7b3aa398584f5429d4e80b629a2068ff9889b21beea6bc1a8c9b8615e308"
+    },
+    {
+      "file": "src/lib/life/ideas.ts",
+      "bytes": 53840,
+      "sha256": "30565ffae57a6afffdee3abf15b8b9a6f6960ba0eee2e1325405b3717fcadfcd"
+    },
+    {
+      "file": "src/lib/life/planning.ts",
+      "bytes": 27264,
+      "sha256": "812af6de536f51573135d355991d751e1a558dd9cee3fe85e794b7b860e88e74"
+    },
+    {
+      "file": "src/lib/skills/knowledge.ts",
+      "bytes": 4269,
+      "sha256": "aa9661db35767e5d684c8e68ef66bb388a74787aad19bf5c0898bda8b854ba16"
+    },
+    {
+      "file": "tests/behavior-budget.test.ts",
+      "bytes": 2632,
+      "sha256": "78f65e725c4bdddd2aef66630d19a24cb94ed11a696eb68a44ab08648641447d"
+    },
+    {
+      "file": "tests/behavior-integration.mjs",
+      "bytes": 9295,
+      "sha256": "9338ea785bb3a7d097dd35bee08f04adad5162b74abf4867d11ec216a021daba"
+    },
+    {
+      "file": "tests/creative-evidence.test.ts",
+      "bytes": 13705,
+      "sha256": "cc9c5514450d8bb25a40a6375ffd956d77c185633c634ba8a9faab258827dc70"
+    },
+    {
+      "file": "tests/final-sprint.test.ts",
+      "bytes": 17913,
+      "sha256": "d1969f4cd537f40327b0f2aa6263fd583c393d5f126bfc77b94d8732a17b8b69"
+    },
+    {
+      "file": "tests/fixtures/behavior-jbl-rejected.json",
+      "bytes": 911,
+      "sha256": "b4742a9df88f6502a5a5afbced8ffb7d1c3bac1bcd485683d0b536d6bffacedd"
+    },
+    {
+      "file": "tests/foundation.test.ts",
+      "bytes": 32295,
+      "sha256": "da86f5e80ec0e94efcb1cc5115063cbc79b839f0f21a270e22113a19845fd902"
+    },
+    {
+      "file": "tests/intelligence-behavior.test.ts",
+      "bytes": 14325,
+      "sha256": "f2f98a4f63a1f7c6188b4284a6686fa558dbdb2a0f1d6069cc97cb5b9a07addf"
+    },
+    {
+      "file": "tests/item-understanding-v1.test.ts",
+      "bytes": 16917,
+      "sha256": "34081d8146598f182ae68c5bf17a4d78f2a855acf1bda0fa4e8b8e0a9a1bf0dc"
+    },
+    {
+      "file": "tests/life-experience.test.ts",
+      "bytes": 13373,
+      "sha256": "cd72c5594e73cad1d78470b5309cecb6964139e50189f01352913aef5a60ad50"
+    }
+  ]
+}

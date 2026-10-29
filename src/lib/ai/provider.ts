@@ -100,7 +100,13 @@ export type Provider = {
   generate: (
     system: string,
     input: unknown,
-    options?: { maxTokens?: number; timeoutMs?: number },
+    options?: {
+      maxTokens?: number;
+      timeoutMs?: number;
+      temperature?: number;
+      json?: boolean;
+      purpose?: "creative";
+    },
   ) => Promise<ProviderResult>;
   search?: (query: string, sites?: string[]) => Promise<SearchResponse>;
   recognize?: (system: string, image: string) => Promise<ProviderResult>;
@@ -121,6 +127,11 @@ export function createProvider(
       env.AI_ALLOW_PAID_CALLS === "true",
     model: AI_MODEL || "unconfigured",
     async generate(system, input, options) {
+      const json = options?.json ?? env.AI_JSON_MODE === "true";
+      const model =
+        options?.purpose === "creative"
+          ? env.AI_CREATIVE_MODEL || AI_MODEL
+          : AI_MODEL;
       if (!AI_BASE_URL || !AI_API_KEY || !AI_MODEL)
         throw new ProviderError(
           "not_configured",
@@ -152,15 +163,14 @@ export function createProvider(
           },
           signal: AbortSignal.timeout(modelTimeout(env, options?.timeoutMs)),
           body: JSON.stringify({
-            model: AI_MODEL,
+            model,
+            ...(options?.temperature !== undefined
+              ? { temperature: Math.min(1.2, Math.max(0, options.temperature)) }
+              : {}),
             messages: [
               {
                 role: "system",
-                content:
-                  system +
-                  (env.AI_JSON_MODE === "true"
-                    ? "\n仅输出一个合法JSON对象。"
-                    : ""),
+                content: system + (json ? "\n仅输出一个合法JSON对象。" : ""),
               },
               { role: "user", content: JSON.stringify(input) },
             ],
@@ -172,9 +182,7 @@ export function createProvider(
               ? { enable_thinking: false }
               : {}),
             // Opt in only after checking this account/model's capabilities.
-            ...(env.AI_JSON_MODE === "true"
-              ? { response_format: { type: "json_object" } }
-              : {}),
+            ...(json ? { response_format: { type: "json_object" } } : {}),
           }),
         });
         if (!response.ok) throw await upstreamFailure(response);
@@ -204,7 +212,7 @@ export function createProvider(
           u.completion_tokens >= 0
             ? { input: u.prompt_tokens, output: u.completion_tokens }
             : null;
-        return { text: choice.message.content, model: AI_MODEL, tokens };
+        return { text: choice.message.content, model: model!, tokens };
       } catch (error) {
         if (error instanceof ProviderError) throw error;
         if (error instanceof CloudError)

@@ -133,7 +133,12 @@ export type DiscoveryResult = {
   source: "model-creative" | "local-candidate" | "rejected-model";
   modelCalls: number;
   tokens?: { input: number; output: number } | null;
-  failure?: { kind: "candidate_invalid"; retryable: boolean; message: string };
+  failure?: {
+    kind: "candidate_invalid";
+    retryable: boolean;
+    message: string;
+    details?: string;
+  };
   cloudRejected?: boolean;
 };
 export async function planDiscovery(
@@ -303,12 +308,7 @@ export async function planDiscovery(
   if (/多人|两人|三人|立体声|数量|几个/.test(goal))
     for (const p of profiles)
       if (p.quantity === "待确认") missing.push(`${p.name}：数量待现场核对`);
-  const positiveGoal = positiveGoalText(goal);
-  const focus = /整理|收纳|桌面/.test(positiveGoal)
-    ? "利用已有收纳与整理能力，改善眼前的一小块空间"
-    : /摄影|光影|拍照/.test(positiveGoal)
-      ? "围绕观察与记录，比较现有物品的组合可能"
-      : "用已有物品做一个低风险、可尝试的小项目";
+  const focus = `本轮目标：${goal.slice(0, 180)}`;
   const understood = `${followup ? `延续上一轮，调整为“${input.goal}”` : focus} · ${minutes}分钟${noPurchase(goal) ? " · 不新增购买" : ""} · 从${items.length}件可用候选中规划${excluded.size ? ` · 排除${excluded.size}件` : ""}`;
   let ideas: LifeIdea[] = [];
   let modelCalls = 0;
@@ -396,6 +396,7 @@ export async function planDiscovery(
           readCurrent,
           {
             minutes,
+            strategy: "explore",
             candidates: input.candidates,
             review: input.review,
             creativeEvidence: selectedEvidence,
@@ -408,8 +409,7 @@ export async function planDiscovery(
               recentFeedback: listLifeIdeas(db, state, actor)
                 .filter(
                   (i) =>
-                    i.outcome &&
-                    i.outcome !== "未尝试" &&
+                    (i.saved || (i.outcome && i.outcome !== "未尝试")) &&
                     i.itemIds.every((id) => items.some((x) => x.id === id)),
                 )
                 .slice(0, 12)
@@ -420,7 +420,8 @@ export async function planDiscovery(
                   saved: !!i.saved,
                 })),
               profiles,
-              goalUnderstanding: understood,
+              // The user's actual goal outranks coarse inventory category labels.
+              goal: input.goal,
               noPurchase: noPurchase(goal),
             },
           },
@@ -470,6 +471,7 @@ export async function planDiscovery(
             retryable: true,
             message:
               "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。",
+            details: error.message,
           },
           missing: ["本次没有可发布的AI方案；未用固定观察任务替代新用途。"],
         };

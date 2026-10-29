@@ -49,6 +49,7 @@ import {
   mouseSetup,
   procedureReply,
   relevantKnowledge,
+  topics,
 } from "../skills/knowledge.ts";
 import { skills } from "../skills/registry.ts";
 import {
@@ -116,6 +117,7 @@ export function curatedDecision(
   session: ServiceSession,
   ctx: ReturnType<typeof buildContext>,
   unified = false,
+  composeFacts = false,
 ): AssistantReply | undefined {
   if (unsafe.test(withoutProhibitedActions(question)))
     return {
@@ -306,6 +308,8 @@ export function curatedDecision(
   const knowledge = relevantKnowledge(goal, pack);
   if (
     knowledge.facts.length &&
+    !composeFacts &&
+    (session.mode === "service" || topics(goal).length > 0) &&
     !/怎么|如何|故障|不行|失灵|维修|修好/.test(goal)
   ) {
     return {
@@ -395,7 +399,7 @@ export function validateModelPacket(
       return validateModelPacket(
         JSON.stringify({
           kind: "supported",
-          answer: "",
+          answer: typeof value.answer === "string" ? value.answer : "",
           factIds: [...new Set(ids)],
           procedureId: null,
           questions: [],
@@ -415,6 +419,7 @@ export function validateModelPacket(
       ctx.knowledgeTask,
     );
   const packet = packetSchema.parse(value);
+  let supportedCitation: AssistantReply["citations"] = [];
   if (packet.itemIds?.some((id) => !ctx.itemContexts.some((i) => i.id === id)))
     throw new AgentError("回答引用了本轮未读取或未获准的物品");
   // A requested wording change for an ordinary action is general help.
@@ -441,24 +446,33 @@ export function validateModelPacket(
       throw new AgentError("操作过程须先满足服务端前置条件");
     if (!selected.length) throw new AgentError("没有相关证据");
     const pack = ctx.knowledge.pack!;
-    return {
-      ...blank(
-        selected.map((f) => f!.text).join("\n"),
-        "answered",
-        "model-with-evidence",
+    // IDs establish provenance only. Preserve synthesis and unknowns, then run
+    // the same action/property checks as other model answers.
+    packet.answer =
+      packet.answer.trim() || selected.map((f) => f!.text).join("\n");
+    // Numeric limits can be paraphrased, but not invented. This checks a narrow
+    // error class, not the semantic truth of every cited statement.
+    const numbers = (s: string) => s.match(/\d+(?:\.\d+)?/g) || [];
+    const provided = new Set(
+      numbers(
+        JSON.stringify({
+          facts: selected,
+          items: ctx.itemContexts,
+          limits: pack.limits,
+        }),
       ),
-      evidenceIds: packet.factIds,
-      citations: [
-        {
-          id: pack.id,
-          title: pack.source.title,
-          url: pack.source.url,
-          kind: "official",
-          section: pack.source.section,
-        },
-      ],
-      caveat: pack.limits.join(" "),
-    };
+    );
+    if (numbers(packet.answer).some((n) => !provided.has(n)))
+      throw new AgentError("回答增加了资料中未提供的数值，请保留未知");
+    supportedCitation = [
+      {
+        id: pack.id,
+        title: pack.source.title,
+        url: pack.source.url,
+        kind: "official",
+        section: pack.source.section,
+      },
+    ];
   }
   const actionable = packet.answer.replace(
     /(?:不要|不能|禁止|切勿|请勿|避免|不建议)[^，,。；！？\n]{0,120}/g,
@@ -490,22 +504,19 @@ export function validateModelPacket(
     throw new AgentError("没有相应行动授权，不能承诺自动记忆或设备行为");
   if (
     hazardousActions.test(withoutProhibitedActions(actionable)) ||
-    deviceClaims.test(
-      withoutFileSelectionGestures(withoutProhibitedActions(actionable)),
-    ) ||
+    (packet.kind === "supported"
+      ? /按住|长按|短按|拆卸|拆机|短接|已经(?:修复|检测|确认正常)|我亲眼|兼容任意|支持任意/.test(
+          withoutProhibitedActions(actionable),
+        )
+      : deviceClaims.test(
+          withoutFileSelectionGestures(withoutProhibitedActions(actionable)),
+        )) ||
     /我(?:已经|已)(?:帮你|为你)?(?:通知|联系|发送|下单|购买|移动|挪|创建|保存|安排|控制)/.test(
       actionable,
     ) ||
     questionsUnsafe
   )
     throw new AgentError("输出包含未核实的操作、状态或共同经历");
-  if (
-    packet.kind === "general" &&
-    ctx.knowledge.facts.length &&
-    !ctx.productConversation &&
-    mode !== "companion"
-  )
-    throw new AgentError("存在相关事实，请选择来源 ID 或说明还缺什么条件");
   if (packet.kind === "creative" && !["ideas", "companion"].includes(mode))
     throw new AgentError("当前任务不接受虚构替代事实");
   if (
@@ -525,15 +536,23 @@ export function validateModelPacket(
         : packet.kind === "referred"
           ? "referred"
           : "answered",
-      packet.kind === "creative" ? "model-creative" : "model-general",
+      packet.kind === "supported"
+        ? "model-with-evidence"
+        : packet.kind === "creative"
+          ? "model-creative"
+          : "model-general",
     ),
+    evidenceIds: packet.kind === "supported" ? packet.factIds : [],
+    citations: supportedCitation,
     questions: packet.questions,
     caveat:
-      packet.kind === "creative"
-        ? "这是可选交流或创作表达，不作为真实经历自动保存。"
-        : ctx.item
-          ? "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。"
-          : "一般交流与帮助；没有伪造用户经历或执行动作。",
+      packet.kind === "supported"
+        ? ctx.knowledge.pack!.limits.join(" ")
+        : packet.kind === "creative"
+          ? "这是可选交流或创作表达，不作为真实经历自动保存。"
+          : ctx.item
+            ? "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。"
+            : "一般交流与帮助；没有伪造用户经历或执行动作。",
   };
 }
 type Work = {
@@ -971,6 +990,7 @@ export async function executeGraph(
               effectiveSession,
               ctx,
               session.mode === "auto",
+              !!provider.ready,
             )
           : undefined);
       if (
@@ -1059,6 +1079,7 @@ export async function executeGraph(
             role: "system",
             content:
               SYSTEM_PROMPT +
+              "\n回答前核对用户这句话中的所有问题，分别覆盖，不以第一个命中的知识片段代替整个回答。相关物品资料是完整的小型型号资料包；综合使用其中的材质、结构、规格、限制和未知项。型号设计事实、用户登记及实物当前状态分开说。资料未覆盖的问题明确说未知，可给有用的核对路径。普通交流自然回应，不把分享感受变成录入、确认记忆或选择物品的任务。" +
               ITEM_CONTEXT_INSTRUCTIONS +
               "\n严格区分‘助手建议过’和‘用户明确说已经做过’。建议的选中、复制、连接或保存不能当成已经执行；继续下一步前保留未完成的前置动作，不假设剪贴板已有内容。当前对话只显示文字，没有语音朗读或代打电话；只能提供文字说明，不能声称能读给用户听。照片识别只在pageContext明确列为可用时才能建议走该入口，不保证一定识别成功或一定找到官方资料。" +
               (session.known.interfaceMode === "care"
@@ -1606,18 +1627,61 @@ export async function executeGraph(
                     : "。保持当前聊天/故事意图，不把校验反馈当成用户经历。仅输出合法JSON，使用标准双引号。"),
             },
           );
-        } else
-          w.reply = {
-            ...blank(
-              "本轮模型候选未通过资料或物品条件检查，修正后仍未得到可靠答案，未展示该草稿。可缩小到一个具体问题后重试；已登记的物品无需重复录入。",
-              "unavailable",
-            ),
-            errorCode: "validation_failed",
-            caveat:
-              error instanceof AgentError
-                ? "候选未通过的原因：" + error.message
-                : "模型输出格式未通过检查。",
-          };
+        } else {
+          const ctx = buildContext(db, read(), actor, {
+            question: w.question,
+            mode: effectiveSession.mode,
+            itemId: effectiveSession.itemId,
+            temporary,
+          });
+          const pack = ctx.knowledge.pack;
+          if (pack && ctx.knowledge.facts.length) {
+            // An unsafe paraphrase must not hide still-useful verified facts.
+            // This is explicitly extractive fallback, never a successful model answer.
+            w.reply = {
+              ...blank(
+                ctx.knowledge.facts.map((f) => f.text).join("\n") +
+                  "\n尚未确认：" +
+                  [
+                    ...new Set([
+                      ...(pack.understanding?.unknowns || []),
+                      "这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+                    ]),
+                  ].join("；"),
+                "needs_info",
+              ),
+              evidenceIds: ctx.knowledge.facts.map((f) => f.id),
+              citations: [
+                {
+                  id: pack.id,
+                  title: pack.source.title,
+                  url: pack.source.url,
+                  kind: "official",
+                },
+              ],
+              errorCode: "validation_failed_partial",
+              caveat:
+                "模型综合回答未通过检查；以上仅摘录当前型号资料，未展示未经支持的操作。" +
+                pack.limits.join(" "),
+            };
+            add(
+              w,
+              "verified_facts_fallback",
+              "model paraphrase rejected; extractive only",
+            );
+          } else
+            w.reply = {
+              ...blank(
+                "本轮模型候选未通过资料或物品条件检查，修正后仍未得到可靠答案，未展示该草稿。可缩小到一个具体问题后重试；已登记的物品无需重复录入。",
+                "unavailable",
+              ),
+              errorCode: "validation_failed",
+              caveat:
+                error instanceof AgentError
+                  ? "候选未通过的原因：" + error.message
+                  : "模型输出格式未通过检查。",
+            };
+        }
       }
       return { work: w };
     })

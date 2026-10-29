@@ -1,0 +1,34 @@
+02 direct qwen-plus returned 1 4866ms
+02 alpha qwen-plus returned 4 13993ms
+02 new qwen-plus returned 3 13111ms
+03 direct qwen-plus returned 1 3741ms
+03 alpha qwen-plus returned 1 4171ms
+03 new qwen-plus returned 1 3177ms
+05 direct qwen-plus returned 1 7273ms
+05 alpha qwen-plus returned 2 67216ms
+05 new qwen-plus returned 2 49653ms
+06 direct qwen-plus returned 1 5634ms
+06 alpha qwen-plus returned 2 55635ms
+06 new qwen-plus returned 2 42888ms
+07 direct qwen-plus returned 1 3592ms
+07 alpha qwen-plus returned 1 29454ms
+07 new qwen-plus returned 2 42605ms
+08 direct qwen-plus returned 1 7294ms
+08 alpha qwen-plus returned 1 31173ms
+08 new qwen-plus returned 2 43799ms
+09 direct qwen-plus returned 1 4325ms
+09 alpha qwen-plus returned 1 25503ms
+09 new qwen-plus returned 2 36746ms
+10 direct qwen-plus returned 1 3555ms
+10 alpha qwen-plus returned 1 24733ms
+10 new qwen-plus returned 2 31336ms
+12 direct qwen-plus returned 1 5926ms
+file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/behavior/compare.mjs:32
+ else if(stage==='remaining')for(const c of t.cases.filter(c=>!['01','04','11'].includes(c.id))){for(const arm of ['direct','alpha','new']){if(gate.ledger.attempts.length>50)throw Error('Reserve requests for browser acceptance');await run(c,arm);}}
+                                                                                                                                                                                    ^
+
+Error: Reserve requests for browser acceptance
+    at file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/behavior/compare.mjs:32:181
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.16.0

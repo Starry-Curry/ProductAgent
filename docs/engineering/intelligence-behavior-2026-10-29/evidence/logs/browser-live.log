@@ -1,0 +1,25 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('article.life-idea').filter({ has: getByRole('heading', { name: '手柄翻盖式立屏', exact: true }) }).getByRole('button', { name: '收藏', exact: true })
+
+    at D:\ProductAgent-LifeContext\.runtime\behavior-app\tests\behavior-integration.mjs:29:89 {
+  log: [
+    "  - waiting for locator('article.life-idea').filter({ has: getByRole('heading', { name: '手柄翻盖式立屏', exact: true }) }).getByRole('button', { name: '收藏', exact: true })"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.16.0
+file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/behavior/browser-live.mjs:75
+  if (code !== 0) throw Error("Browser test failed " + code);
+                        ^
+
+Error: Browser test failed 1
+    at file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/behavior/browser-live.mjs:75:25
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.16.0

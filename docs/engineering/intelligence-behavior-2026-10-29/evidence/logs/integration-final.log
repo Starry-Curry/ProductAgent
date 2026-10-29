@@ -1,0 +1,85 @@
+{"kind":"local-api-and-browser-no-real-model","passed":true,"elapsedMs":3565,"checks":["missing-model trace","replay authorization","cross-origin write denied","gift original author","dynamic candidate constraints","private Context","desktop/mobile no page errors"],"realModelCalls":0}
+{"kind":"isolated-api-and-edge-browser","passed":true,"realModelCalls":0,"elapsedMs":8120,"checks":["API scope/forget authorization","persistent clarification","tried-step feedback without repeat","attach unregistered session without losing attempts","previewed family summary with source context","automatically extract latest useful method from feedback","item story automatically extracts interest; present intent takes precedence","optional companion grounded in own story","forget removes old rendered and resumed story","missing provider is explicit","desktop/mobile/elder layout"]}
+Household cases and one-time introduction browser acceptance passed; realModelCalls=0.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+ExpectError: expect(locator).toContainText(expected) failed
+
+Locator: getByRole('region', { name: '物间统一对话', exact: true }).locator('.conversation-message.assistant').last()
+Timeout: 5000ms
+- Expected substring  - 1
++ Received string     + 3
+
+- 本地简短回应
++ 精选资料指导IKEA LACK 拉克黑色边桌 · 陪你聊聊货号 003.529.88 的长、宽、高分别为 55、55、45 厘米。
++ 该边桌桌面最大承重为 25 公斤。
++ 官方保养建议为湿布擦拭后擦干，并定期检查组装连接是否紧固。仅适用此货号；最大承重不表示可站人，也未核验实际组装或桌面载荷。 人工整理的有限公开资料；未接入设备、订单或实物检测，不提供未审核的维修步骤。查看依据IKEA 中国 · LACK 003.529.88 / 商品详情 ↗ 商品规格 / 安全与保养（对应页面）资料核对不代表已验证实物状态。
+
+Call log:
+  - Expect "toContainText" getByRole('region', { name: '物间统一对话', exact: true }).locator('.conversation-message.assistant').last() with timeout 5000ms
+  - waiting for getByRole('region', { name: '物间统一对话', exact: true }).locator('.conversation-message.assistant').last()
+    14 × locator resolved to <article class="conversation-message assistant">…</article>
+       - unexpected value "精选资料指导IKEA LACK 拉克黑色边桌 · 陪你聊聊货号 003.529.88 的长、宽、高分别为 55、55、45 厘米。
+该边桌桌面最大承重为 25 公斤。
+官方保养建议为湿布擦拭后擦干，并定期检查组装连接是否紧固。仅适用此货号；最大承重不表示可站人，也未核验实际组装或桌面载荷。 人工整理的有限公开资料；未接入设备、订单或实物检测，不提供未审核的维修步骤。查看依据IKEA 中国 · LACK 003.529.88 / 商品详情 ↗ 商品规格 / 安全与保养（对应页面）资料核对不代表已验证实物状态。"
+
+    at captureRawStack (D:\ProductAgent-LifeContext\.runtime\behavior-app\node_modules\playwright-core\lib\coreBundle.js:9282:17)
+    at callMatcherAsStep (D:\ProductAgent-LifeContext\.runtime\behavior-app\node_modules\playwright\lib\matchers\expect.js:13316:57)
+    at Object.toContainText (D:\ProductAgent-LifeContext\.runtime\behavior-app\node_modules\playwright\lib\matchers\expect.js:13308:23)
+    at D:\ProductAgent-LifeContext\.runtime\behavior-app\tests\home-integration.mjs:217:5 {
+  matcherResult: {
+    name: 'toContainText',
+    expected: '本地简短回应',
+    message: 'expect(locator).toContainText(expected) failed\n' +
+      '\n' +
+      "Locator: getByRole('region', { name: '物间统一对话', exact: true }).locator('.conversation-message.assistant').last()\n" +
+      'Timeout: 5000ms\n' +
+      '- Expected substring  - 1\n' +
+      '+ Received string     + 3\n' +
+      '\n' +
+      '- 本地简短回应\n' +
+      '+ 精选资料指导IKEA LACK 拉克黑色边桌 · 陪你聊聊货号 003.529.88 的长、宽、高分别为 55、55、45 厘米。\n' +
+      '+ 该边桌桌面最大承重为 25 公斤。\n' +
+      '+ 官方保养建议为湿布擦拭后擦干，并定期检查组装连接是否紧固。仅适用此货号；最大承重不表示可站人，也未核验实际组装或桌面载荷。 人工整理的有限公开资料；未接入设备、订单或实物检测，不提供未审核的维修步骤。查看依据IKEA 中国 · LACK 003.529.88 / 商品详情 ↗ 商品规格 / 安全与保养（对应页面）资料核对不代表已验证实物状态。\n' +
+      '\n' +
+      'Call log:\n' +
+      `  - Expect "toContainText" getByRole('region', { name: '物间统一对话', exact: true }).locator('.conversation-message.assistant').last() with timeout 5000ms\n` +
+      "  - waiting for getByRole('region', { name: '物间统一对话', exact: true }).locator('.conversation-message.assistant').last()\n" +
+      '    14 × locator resolved to <article class="conversation-message assistant">…</article>\n' +
+      '       - unexpected value "精选资料指导IKEA LACK 拉克黑色边桌 · 陪你聊聊货号 003.529.88 的长、宽、高分别为 55、55、45 厘米。\n' +
+      '该边桌桌面最大承重为 25 公斤。\n' +
+      '官方保养建议为湿布擦拭后擦干，并定期检查组装连接是否紧固。仅适用此货号；最大承重不表示可站人，也未核验实际组装或桌面载荷。 人工整理的有限公开资料；未接入设备、订单或实物检测，不提供未审核的维修步骤。查看依据IKEA 中国 · LACK 003.529.88 / 商品详情 ↗ 商品规格 / 安全与保养（对应页面）资料核对不代表已验证实物状态。"\n',
+    pass: false,
+    actual: '精选资料指导IKEA LACK 拉克黑色边桌 · 陪你聊聊货号 003.529.88 的长、宽、高分别为 55、55、45 厘米。\n' +
+      '该边桌桌面最大承重为 25 公斤。\n' +
+      '官方保养建议为湿布擦拭后擦干，并定期检查组装连接是否紧固。仅适用此货号；最大承重不表示可站人，也未核验实际组装或桌面载荷。 人工整理的有限公开资料；未接入设备、订单或实物检测，不提供未审核的维修步骤。查看依据IKEA 中国 · LACK 003.529.88 / 商品详情 ↗ 商品规格 / 安全与保养（对应页面）资料核对不代表已验证实物状态。',
+    log: [
+      `  - Expect "toContainText" getByRole('region', { name: '物间统一对话', exact: true }).locator('.conversation-message.assistant').last() with timeout 5000ms`,
+      "  - waiting for getByRole('region', { name: '物间统一对话', exact: true }).locator('.conversation-message.assistant').last()",
+      '    14 × locator resolved to <article class="conversation-message assistant">…</article>',
+      '       - unexpected value "精选资料指导IKEA LACK 拉克黑色边桌 · 陪你聊聊货号 003.529.88 的长、宽、高分别为 55、55、45 厘米。\n' +
+        '该边桌桌面最大承重为 25 公斤。\n' +
+        '官方保养建议为湿布擦拭后擦干，并定期检查组装连接是否紧固。仅适用此货号；最大承重不表示可站人，也未核验实际组装或桌面载荷。 人工整理的有限公开资料；未接入设备、订单或实物检测，不提供未审核的维修步骤。查看依据IKEA 中国 · LACK 003.529.88 / 商品详情 ↗ 商品规格 / 安全与保养（对应页面）资料核对不代表已验证实物状态。"'
+    ],
+    timeout: 5000,
+    ariaSnapshot: '- article:\n' +
+      '  - strong: 精选资料指导\n' +
+      '  - text: IKEA LACK 拉克黑色边桌 · 陪你聊聊\n' +
+      '  - paragraph: 货号 003.529.88 的长、宽、高分别为 55、55、45 厘米。 该边桌桌面最大承重为 25 公斤。 官方保养建议为湿布擦拭后擦干，并定期检查组装连接是否紧固。\n' +
+      '  - text: 仅适用此货号；最大承重不表示可站人，也未核验实际组装或桌面载荷。 人工整理的有限公开资料；未接入设备、订单或实物检测，不提供未审核的维修步骤。\n' +
+      '  - group: 查看依据'
+  }
+}
+
+Node.js v24.16.0
+file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/verify-local.mjs:101
+    if (code !== 0) throw Error(script + " failed (" + code + ")");
+                          ^
+
+Error: tests/home-integration.mjs failed (1)
+    at file:///D:/ProductAgent-LifeContext/.runtime/behavior-app/scripts/verify-local.mjs:101:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.16.0

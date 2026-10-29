@@ -472,7 +472,7 @@ test("有依据的概括选 ID 后输出来源事实，错误话题引用与无�
       "service",
     );
     assert.ok(result.evidenceIds.length);
-    assert.doesNotMatch(result.answer, /更自然的话/);
+    assert.match(result.answer, /更自然的话/);
     const irrelevant = buildContext(t.db, t.read(), "lin", {
       question: "怎么调双击速度",
       mode: "service",
@@ -480,7 +480,7 @@ test("有依据的概括选 ID 后输出来源事实，错误话题引用与无�
     });
     assert.throws(() =>
       validateModelPacket(
-        packet("supported", "", { factIds: [ctx.knowledge.facts[0].id] }),
+        packet("supported", "", { factIds: ["wrong-model:invented"] }),
         irrelevant,
         "service",
       ),

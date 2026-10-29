@@ -37,11 +37,13 @@ export async function foundationBenchmark() {
         expected: true,
       },
       {
-        name: "unrelated-valid-id",
+        // Relevance within the complete current pack is now evaluated in the
+        // live multi-question cases. Identity isolation remains a hard contract.
+        name: "different-model-valid-id",
         question: "怎么调双击速度",
         kind: "supported",
         answer: fact.text,
-        ids: [fact.id],
+        ids: ["go4:protection"],
         expected: false,
       },
       {
