@@ -19,6 +19,7 @@ export function buildHomeTaskContext(
     temporary?: boolean;
     memoryQuestion?: string;
     includeMemories?: boolean;
+    topics?: string[];
   } = {},
 ) {
   const scope = virtualHomeItems(state, actor),
@@ -69,7 +70,14 @@ export function buildHomeTaskContext(
         applicability: d.applicability,
         fetchedAt: d.fetchedAt,
       })),
-      passages: retrieveKnowledge(db, state, actor, i.id, question)
+      // Interleave sub-question results so one topic cannot consume every slot.
+      passages: (unique.includes(i.id)
+        ? homeTaskPassages(
+            (topic) => retrieveKnowledge(db, state, actor, i.id, topic),
+            options.topics?.length ? options.topics : [question],
+          )
+        : []
+      )
         .map((c) => ({
           id: c.id,
           text: c.text,
@@ -77,7 +85,7 @@ export function buildHomeTaskContext(
           title: c.title,
           region: c.region,
         }))
-        .slice(0, unique.includes(i.id) ? 6 : 2),
+        .slice(0, 6),
     })),
     memories: memories.map((m) => ({
       id: m.id,
@@ -88,4 +96,18 @@ export function buildHomeTaskContext(
       provenance: "explicitly-confirmed-synthetic-setting",
     })),
   };
+}
+
+export function homeTaskPassages<T extends { id: string }>(
+  retrieve: (topic: string) => T[],
+  topics: string[],
+): T[] {
+  const groups = [...new Set(topics)].slice(0, 6).map(retrieve);
+  const result = new Map<string, T>();
+  for (let rank = 0; rank < 6 && result.size < 6; rank++)
+    for (const group of groups) {
+      const passage = group[rank];
+      if (passage && result.size < 6) result.set(passage.id, passage);
+    }
+  return [...result.values()];
 }

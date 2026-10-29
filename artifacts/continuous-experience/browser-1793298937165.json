@@ -1,0 +1,485 @@
+{
+  "at": "2026-10-29T18:36:40.434Z",
+  "records": [
+    {
+      "label": "life-goal-retry",
+      "status": 200,
+      "input": {
+        "requestId": "3193ca47-4dd8-4b48-96e4-9283ee6f251d",
+        "mode": "auto",
+        "question": "今晚想在书桌上写旅行手账，帮我把桌面安排舒服一点。我喜欢安静，不想再买东西。",
+        "temporary": false,
+        "memoryPolicy": "off",
+        "uiContext": {
+          "homeId": "young-apartment-v1",
+          "page": "assistant",
+          "companion": false
+        }
+      },
+      "result": {
+        "session": {
+          "id": "72d5b91d-bef0-4b09-910f-8831438676c9",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "1d5d3f98-8470-4773-bae7-c7a0618cd59e",
+              "role": "user",
+              "text": "今晚想在书桌上写旅行手账，帮我把桌面安排舒服一点。我喜欢安静，不想再买东西。",
+              "at": "2026-10-29T18:36:00.788Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "172866b1-0de2-468c-8148-c684bd1eb6fd",
+              "role": "assistant",
+              "text": "今晚写旅行手账，目标是让书桌安静、舒适、不添新物。你已有米家台灯1S（可调亮度与色温）、MICKE书桌（73×50cm）、SAMLA透明盒（28×20×14cm）、KNAGGLIG松木盒（23×16×10cm）、GO 4音箱（当前未用）、毛绒兔、乐高玫瑰和朋友送的画（40×30cm）。为安静，先关闭或移走音箱；为专注书写，把台灯调至4000K以下暖光（按住旋钮转调节），灯头平行桌面、出光面距桌面约400mm（手册建议高度）；将手账本、笔放在桌面中央偏右（你惯用右手），留出左侧空间放参考物。SAMLA盒可平放右后侧，收纳纪念票根等小物（透明便于取用）；KNAGGLIG盒放左后侧，承重2kg内可暂放轻量工具或备用纸张。画作暂不放桌面——因无支架、未知重量与背面结构，靠放易滑，平放又占大面，建议先靠墙立于桌旁地面或保留原位。桌面空余足够：73×50cm减去台灯底座（约15cm宽）及两盒占地（28+23≈51cm宽但可错开前后摆放），书写区仍宽松。所有动作都不需购买新物，仅挪动现有物品。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "今晚写旅行手账，目标是让书桌安静、舒适、不添新物。你已有米家台灯1S（可调亮度与色温）、MICKE书桌（73×50cm）、SAMLA透明盒（28×20×14cm）、KNAGGLIG松木盒（23×16×10cm）、GO 4音箱（当前未用）、毛绒兔、乐高玫瑰和朋友送的画（40×30cm）。为安静，先关闭或移走音箱；为专注书写，把台灯调至4000K以下暖光（按住旋钮转调节），灯头平行桌面、出光面距桌面约400mm（手册建议高度）；将手账本、笔放在桌面中央偏右（你惯用右手），留出左侧空间放参考物。SAMLA盒可平放右后侧，收纳纪念票根等小物（透明便于取用）；KNAGGLIG盒放左后侧，承重2kg内可暂放轻量工具或备用纸张。画作暂不放桌面——因无支架、未知重量与背面结构，靠放易滑，平放又占大面，建议先靠墙立于桌旁地面或保留原位。桌面空余足够：73×50cm减去台灯底座（约15cm宽）及两盒占地（28+23≈51cm宽但可错开前后摆放），书写区仍宽松。所有动作都不需购买新物，仅挪动现有物品。",
+                "steps": [
+                  {
+                    "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:0",
+                    "text": "关闭GO 4音箱或移至窗边，确保全程静音"
+                  },
+                  {
+                    "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:1",
+                    "text": "调整米家台灯1S：灯头AB方向平行桌面，出光面高度约400mm；按住旋钮向左转，将色温设为3500K左右（暖黄光），再轻转旋钮调至中等亮度"
+                  },
+                  {
+                    "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:2",
+                    "text": "将手账本与笔放在桌面中央偏右区域（约距前边缘20cm、右边缘15cm）"
+                  },
+                  {
+                    "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:3",
+                    "text": "把SAMLA透明盒平放于书桌右后侧角落，用于收纳票根、胶带等小物"
+                  },
+                  {
+                    "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:4",
+                    "text": "把KNAGGLIG松木盒平放于左后侧，离台灯底座稍远，暂放备用纸或小工具"
+                  },
+                  {
+                    "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:5",
+                    "text": "朋友送的画暂不放桌面；若需参考，可短时立于桌旁地面（靠墙），写完即归位"
+                  }
+                ],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [
+                  "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+                ],
+                "evidenceIds": [
+                  "798ca4766b88f5f076e97ad4:1990",
+                  "798ca4766b88f5f076e97ad4:995",
+                  "798ca4766b88f5f076e97ad4:0",
+                  "8078f5eb423e8089279dde81:0",
+                  "samla:size",
+                  "knagglig:size",
+                  "knagglig:structure"
+                ],
+                "citations": [
+                  {
+                    "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+                    "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+                    "id": "798ca4766b88f5f076e97ad4:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "MICKE 米克 书桌 白色 - IKEA",
+                    "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+                    "id": "8078f5eb423e8089279dde81:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "id": "samla:size",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "宜家中国 KNAGGLIG 商品详情与组装文件入口",
+                    "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+                    "id": "knagglig:structure",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:lin:lamp",
+                    "name": "米家台灯1S",
+                    "model": "MJTD01SYL"
+                  },
+                  {
+                    "id": "virtual-home:lin:desk",
+                    "name": "MICKE 白色书桌",
+                    "model": "803.542.81"
+                  },
+                  {
+                    "id": "virtual-home:lin:samla",
+                    "name": "SAMLA 透明收纳盒",
+                    "model": "194.408.48"
+                  },
+                  {
+                    "id": "virtual-home:lin:knagglig",
+                    "name": "KNAGGLIG 松木盒",
+                    "model": "103.926.01"
+                  },
+                  {
+                    "id": "virtual-home:lin:speaker",
+                    "name": "GO 4 蓝牙音箱",
+                    "model": "GO 4"
+                  },
+                  {
+                    "id": "virtual-home:lin:painting",
+                    "name": "远山 · 朋友送的画",
+                    "model": "无商品型号"
+                  }
+                ],
+                "task": {
+                  "goal": "今晚在书桌上安静、舒适地写旅行手账",
+                  "parts": [
+                    {
+                      "title": "确保照明适宜且不刺眼",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "安排书写核心区（手账本、笔）",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "收纳旅行小物（票根、明信片等）",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "处理画作摆放，避免干扰或损伤",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "消除环境干扰（如音箱）",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T18:36:00.788Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "homeId": "young-apartment-v1",
+            "useItemMemories": "yes",
+            "turnRequestId": "3193ca47-4dd8-4b48-96e4-9283ee6f251d",
+            "homeTaskGoal": "今晚在书桌上安静、舒适地写旅行手账",
+            "homeTask": "{\"goal\":\"今晚在书桌上安静、舒适地写旅行手账\",\"parts\":[{\"title\":\"确保照明适宜且不刺眼\",\"status\":\"addressed\"},{\"title\":\"安排书写核心区（手账本、笔）\",\"status\":\"addressed\"},{\"title\":\"收纳旅行小物（票根、明信片等）\",\"status\":\"addressed\"},{\"title\":\"处理画作摆放，避免干扰或损伤\",\"status\":\"addressed\"},{\"title\":\"消除环境干扰（如音箱）\",\"status\":\"addressed\"}]}"
+          },
+          "tried": [],
+          "memoryEpoch": 6,
+          "createdAt": "2026-10-29T18:35:37.826Z",
+          "updatedAt": "2026-10-29T18:36:00.789Z",
+          "expiresAt": "2026-11-05T18:35:37.827Z",
+          "itemScopes": {
+            "virtual-home:lin:lamp": "[\"lin\",\"[\\\"MJTD01SYL\\\",null,null,null]\"]",
+            "virtual-home:lin:desk": "[\"lin\",\"[\\\"803.542.81\\\",null,null,null]\"]",
+            "virtual-home:lin:samla": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:knagglig": "[\"lin\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:speaker": "[\"lin\",\"[\\\"GO 4\\\",\\\"jbl-go4\\\",\\\"2026-10-17.1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:bunny": "[\"lin\",\"[\\\"BAS3B\\\",null,null,null]\"]",
+            "virtual-home:lin:roses": "[\"lin\",\"[\\\"10328\\\",null,null,null]\"]",
+            "virtual-home:lin:painting": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "今晚写旅行手账，目标是让书桌安静、舒适、不添新物。你已有米家台灯1S（可调亮度与色温）、MICKE书桌（73×50cm）、SAMLA透明盒（28×20×14cm）、KNAGGLIG松木盒（23×16×10cm）、GO 4音箱（当前未用）、毛绒兔、乐高玫瑰和朋友送的画（40×30cm）。为安静，先关闭或移走音箱；为专注书写，把台灯调至4000K以下暖光（按住旋钮转调节），灯头平行桌面、出光面距桌面约400mm（手册建议高度）；将手账本、笔放在桌面中央偏右（你惯用右手），留出左侧空间放参考物。SAMLA盒可平放右后侧，收纳纪念票根等小物（透明便于取用）；KNAGGLIG盒放左后侧，承重2kg内可暂放轻量工具或备用纸张。画作暂不放桌面——因无支架、未知重量与背面结构，靠放易滑，平放又占大面，建议先靠墙立于桌旁地面或保留原位。桌面空余足够：73×50cm减去台灯底座（约15cm宽）及两盒占地（28+23≈51cm宽但可错开前后摆放），书写区仍宽松。所有动作都不需购买新物，仅挪动现有物品。",
+          "steps": [
+            {
+              "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:0",
+              "text": "关闭GO 4音箱或移至窗边，确保全程静音"
+            },
+            {
+              "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:1",
+              "text": "调整米家台灯1S：灯头AB方向平行桌面，出光面高度约400mm；按住旋钮向左转，将色温设为3500K左右（暖黄光），再轻转旋钮调至中等亮度"
+            },
+            {
+              "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:2",
+              "text": "将手账本与笔放在桌面中央偏右区域（约距前边缘20cm、右边缘15cm）"
+            },
+            {
+              "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:3",
+              "text": "把SAMLA透明盒平放于书桌右后侧角落，用于收纳票根、胶带等小物"
+            },
+            {
+              "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:4",
+              "text": "把KNAGGLIG松木盒平放于左后侧，离台灯底座稍远，暂放备用纸或小工具"
+            },
+            {
+              "id": "home:72d5b91d-bef0-4b09-910f-8831438676c9:0:5",
+              "text": "朋友送的画暂不放桌面；若需参考，可短时立于桌旁地面（靠墙），写完即归位"
+            }
+          ],
+          "questions": [],
+          "source": "model-general",
+          "model": "qwen-plus",
+          "memoryIds": [
+            "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+          ],
+          "evidenceIds": [
+            "798ca4766b88f5f076e97ad4:1990",
+            "798ca4766b88f5f076e97ad4:995",
+            "798ca4766b88f5f076e97ad4:0",
+            "8078f5eb423e8089279dde81:0",
+            "samla:size",
+            "knagglig:size",
+            "knagglig:structure"
+          ],
+          "citations": [
+            {
+              "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+              "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+              "id": "798ca4766b88f5f076e97ad4:0",
+              "kind": "official"
+            },
+            {
+              "title": "MICKE 米克 书桌 白色 - IKEA",
+              "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+              "id": "8078f5eb423e8089279dde81:0",
+              "kind": "official"
+            },
+            {
+              "title": "宜家中国 SAMLA 商品详情",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "id": "samla:size",
+              "kind": "official"
+            },
+            {
+              "title": "宜家中国 KNAGGLIG 商品详情与组装文件入口",
+              "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+              "id": "knagglig:structure",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "virtual-home:lin:lamp",
+              "name": "米家台灯1S",
+              "model": "MJTD01SYL"
+            },
+            {
+              "id": "virtual-home:lin:desk",
+              "name": "MICKE 白色书桌",
+              "model": "803.542.81"
+            },
+            {
+              "id": "virtual-home:lin:samla",
+              "name": "SAMLA 透明收纳盒",
+              "model": "194.408.48"
+            },
+            {
+              "id": "virtual-home:lin:knagglig",
+              "name": "KNAGGLIG 松木盒",
+              "model": "103.926.01"
+            },
+            {
+              "id": "virtual-home:lin:speaker",
+              "name": "GO 4 蓝牙音箱",
+              "model": "GO 4"
+            },
+            {
+              "id": "virtual-home:lin:painting",
+              "name": "远山 · 朋友送的画",
+              "model": "无商品型号"
+            }
+          ],
+          "task": {
+            "goal": "今晚在书桌上安静、舒适地写旅行手账",
+            "parts": [
+              {
+                "title": "确保照明适宜且不刺眼",
+                "status": "addressed"
+              },
+              {
+                "title": "安排书写核心区（手账本、笔）",
+                "status": "addressed"
+              },
+              {
+                "title": "收纳旅行小物（票根、明信片等）",
+                "status": "addressed"
+              },
+              {
+                "title": "处理画作摆放，避免干扰或损伤",
+                "status": "addressed"
+              },
+              {
+                "title": "消除环境干扰（如音箱）",
+                "status": "addressed"
+              }
+            ]
+          },
+          "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+        },
+        "trace": [
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":1,\"toolCalls\":[\"read_home_items\"]}",
+            "at": "2026-10-29T18:35:40.346Z"
+          },
+          {
+            "stage": "task_read",
+            "detail": "{\"itemIds\":[\"item1\",\"item2\",\"item3\",\"item4\"],\"memoryIds\":[\"4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c\"],\"passages\":[\"798ca4766b88f5f076e97ad4:1990\",\"798ca4766b88f5f076e97ad4:995\",\"798ca4766b88f5f076e97ad4:2991\",\"798ca4766b88f5f076e97ad4:0\",\"798ca4766b88f5f076e97ad4:5987\",\"798ca4766b88f5f076e97ad4:3990\",\"d2e9c7729ba483a627aeea41:0\",\"8078f5eb423e8089279dde81:0\",\"d2e9c7729ba483a627aeea41:1001\",\"0bc7578244e7a1938f776477:0\",\"22c12c04c94d51d4088b85a9:0\",\"5d786c1031d43c397fafc527:0\"]}",
+            "at": "2026-10-29T18:35:40.377Z"
+          },
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":2,\"toolCalls\":[]}",
+            "at": "2026-10-29T18:35:41.751Z"
+          },
+          {
+            "stage": "task_review",
+            "detail": "Source-grounded synthesis after retrieval; not a creativity score or physical verification",
+            "at": "2026-10-29T18:36:00.776Z"
+          },
+          {
+            "stage": "task_complete",
+            "detail": "{\"parts\":[{\"title\":\"确保照明适宜且不刺眼\",\"status\":\"addressed\"},{\"title\":\"安排书写核心区（手账本、笔）\",\"status\":\"addressed\"},{\"title\":\"收纳旅行小物（票根、明信片等）\",\"status\":\"addressed\"},{\"title\":\"处理画作摆放，避免干扰或损伤\",\"status\":\"addressed\"},{\"title\":\"消除环境干扰（如音箱）\",\"status\":\"addressed\"}],\"usedItemIds\":[\"virtual-home:lin:lamp\",\"virtual-home:lin:desk\",\"virtual-home:lin:samla\",\"virtual-home:lin:knagglig\",\"virtual-home:lin:speaker\",\"virtual-home:lin:painting\"]}",
+            "at": "2026-10-29T18:36:00.785Z"
+          }
+        ],
+        "tokens": {
+          "input": 29692,
+          "output": 901
+        },
+        "modelCalls": 3
+      }
+    },
+    {
+      "label": "object-recreation",
+      "status": 200,
+      "input": {
+        "action": "discover",
+        "input": {
+          "goal": "我喜欢安静地写旅行手账，但每晚总不知道从哪段回忆开始。SAMLA盒里已有旅行纸质纪念品，希望这个盒子能帮助我做出选择，而不是继续收纳或纯观察。不购买、不裁切、不粘贴，不用纸笔或手机等未登记材料，不依赖投影、自动识别和设备自动化。可以只用一部分已有物品。",
+          "itemId": "virtual-home:lin:samla",
+          "itemIds": [
+            "virtual-home:lin:lamp",
+            "virtual-home:lin:desk",
+            "virtual-home:lin:samla",
+            "virtual-home:lin:knagglig",
+            "virtual-home:lin:speaker",
+            "virtual-home:lin:bunny",
+            "virtual-home:lin:roses",
+            "virtual-home:lin:painting"
+          ],
+          "excludedItemIds": [],
+          "experienceIds": [],
+          "creativeEvidenceIds": [],
+          "previousIdeaIds": [],
+          "feedbackIdeaIds": [],
+          "minutes": 30,
+          "includeSynthetic": true,
+          "model": true,
+          "review": true,
+          "page": "item",
+          "homeId": "young-apartment-v1"
+        }
+      },
+      "result": {
+        "ideas": [],
+        "continuation": {
+          "goal": "我喜欢安静地写旅行手账，但每晚总不知道从哪段回忆开始。SAMLA盒里已有旅行纸质纪念品，希望这个盒子能帮助我做出选择，而不是继续收纳或纯观察。不购买、不裁切、不粘贴，不用纸笔或手机等未登记材料，不依赖投影、自动识别和设备自动化。可以只用一部分已有物品。",
+          "minutes": 30,
+          "itemIds": [
+            "virtual-home:lin:lamp",
+            "virtual-home:lin:desk",
+            "virtual-home:lin:samla",
+            "virtual-home:lin:knagglig",
+            "virtual-home:lin:speaker",
+            "virtual-home:lin:bunny",
+            "virtual-home:lin:roses",
+            "virtual-home:lin:painting"
+          ],
+          "excludedItemIds": [],
+          "restrictions": []
+        },
+        "understanding": "本轮目标：我喜欢安静地写旅行手账，但每晚总不知道从哪段回忆开始。SAMLA盒里已有旅行纸质纪念品，希望这个盒子能帮助我做出选择，而不是继续收纳或纯观察。不购买、不裁切、不粘贴，不用纸笔或手机等未登记材料，不依赖投影、自动识别和设备自动化。可以只用一部分已有物品。 · 30分钟 · 不新增购买 · 从8件可用候选中规划",
+        "resources": [
+          {
+            "id": "virtual-home:lin:lamp",
+            "name": "米家台灯1S",
+            "capabilities": [
+              "照明"
+            ]
+          },
+          {
+            "id": "virtual-home:lin:desk",
+            "name": "MICKE 白色书桌",
+            "capabilities": []
+          },
+          {
+            "id": "virtual-home:lin:samla",
+            "name": "SAMLA 透明收纳盒",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "virtual-home:lin:knagglig",
+            "name": "KNAGGLIG 松木盒",
+            "capabilities": [
+              "收纳"
+            ]
+          },
+          {
+            "id": "virtual-home:lin:speaker",
+            "name": "GO 4 蓝牙音箱",
+            "capabilities": [
+              "声音"
+            ]
+          },
+          {
+            "id": "virtual-home:lin:bunny",
+            "name": "Bashful Beige Bunny",
+            "capabilities": []
+          },
+          {
+            "id": "virtual-home:lin:roses",
+            "name": "玫瑰花束",
+            "capabilities": []
+          },
+          {
+            "id": "virtual-home:lin:painting",
+            "name": "远山 · 朋友送的画",
+            "capabilities": [
+              "观察记录"
+            ]
+          }
+        ],
+        "source": "rejected-model",
+        "modelCalls": 2,
+        "tokens": {
+          "input": 37423,
+          "output": 1344
+        },
+        "cloudRejected": true,
+        "failure": {
+          "kind": "candidate_invalid",
+          "retryable": true,
+          "message": "这次草稿未通过物品与实施条件检查，没有发布。可缩小范围或补充关键条件后重试。",
+          "details": "方案动作依赖检查：步骤3依赖未登记的精确计时工具，改成无该工具的动作或明确条件与替代；免责声明不能代替资源"
+        },
+        "missing": [
+          "本次没有可发布的AI方案；未用固定观察任务替代新用途。"
+        ]
+      }
+    },
+    {
+      "failure": "real_model_returned_no_publishable_idea"
+    }
+  ],
+  "errors": []
+}

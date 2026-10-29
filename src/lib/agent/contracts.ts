@@ -32,6 +32,7 @@ export const turnInputSchema = z
         planContext: z
           .object({
             previousIdeaIds: z.array(z.string().uuid()).max(6),
+            feedbackIdeaIds: z.array(z.string().uuid()).max(6).optional(),
             continuation: z
               .object({
                 goal: z.string().max(1000),

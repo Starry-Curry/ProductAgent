@@ -139,6 +139,7 @@ export default function WujianApp() {
       fresh: true,
     }));
   }
+  const [homeQuestion, setHomeQuestion] = useState("");
   const [mission, setMission] = useState<{
     session: ServiceSession;
     origin: TurnInput["uiContext"];
@@ -157,6 +158,28 @@ export default function WujianApp() {
     go("assistant");
   }
   const [askSession, setAskSession] = useState<ServiceSession | null>(null);
+  function continueWithIdea(context: any, itemId?: string) {
+    if (!homeActive || !mission) {
+      ask(
+        "带着刚才的创意和反馈，帮我完善下一步；别把设想当成已验证结果。",
+        itemId,
+        context,
+      );
+      return;
+    }
+    setEntryQuestion(
+      "结合刚才选中的创意和我的反馈，调整当前任务的下一步；区分设想与已确认事实。",
+    );
+    setAskEntry((e) => ({
+      key: e.key + 1,
+      itemId: mission.session.itemId,
+      sessionId: mission.session.id,
+      origin: { ...mission.origin!, planContext: context },
+      fresh: false,
+    }));
+    setAskSession(mission.session);
+    go("assistant");
+  }
   const itemSessions = useRef<Record<string, string>>({});
   function ask(
     question = "",
@@ -301,7 +324,36 @@ export default function WujianApp() {
       }
     };
     window.addEventListener("popstate", back);
-    return () => window.removeEventListener("popstate", back);
+    const hash = () => {
+      const [next, id] = window.location.hash.slice(1).split("/");
+      if (
+        [
+          "home",
+          "items",
+          "discover",
+          "stories",
+          "assistant",
+          "family",
+          "social",
+          "add",
+          "item",
+        ].includes(next)
+      ) {
+        setView(next as View);
+        if (next === "item" && id) {
+          try {
+            setSelected(decodeURIComponent(id));
+          } catch {
+            setError("物品地址不完整");
+          }
+        }
+      }
+    };
+    window.addEventListener("hashchange", hash);
+    return () => {
+      window.removeEventListener("popstate", back);
+      window.removeEventListener("hashchange", hash);
+    };
   }, [actor]);
   useEffect(() => {
     const listener = () => load().catch((e) => setError(e.message));
@@ -545,28 +597,35 @@ export default function WujianApp() {
                   refresh={load}
                   onAsk={(q) => ask(q)}
                   onItem={(id) => open(id)}
+                  goalEntry={
+                    homeActive ? (
+                      <form
+                        className="home-ask apartment-ask"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          if (homeQuestion.trim()) {
+                            ask(homeQuestion);
+                            setHomeQuestion("");
+                          }
+                        }}
+                      >
+                        <label htmlFor="home-question">
+                          从你现在想做的事开始
+                        </label>
+                        <input
+                          id="home-question"
+                          value={homeQuestion}
+                          onChange={(e) => setHomeQuestion(e.target.value)}
+                          placeholder="例如：想把旅行手账和朋友送的画一起安排好…"
+                          maxLength={2000}
+                        />
+                        <button className="button" aria-label="开始家庭对话">
+                          一起想想 ↗
+                        </button>
+                      </form>
+                    ) : undefined
+                  }
                 />
-                {homeActive && (
-                  <form
-                    className="home-ask apartment-ask"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      if (entryQuestion.trim()) ask(entryQuestion);
-                    }}
-                  >
-                    <label htmlFor="home-question">从你现在想做的事开始</label>
-                    <input
-                      id="home-question"
-                      value={entryQuestion}
-                      onChange={(e) => setEntryQuestion(e.target.value)}
-                      placeholder="例如：想把旅行手账和朋友送的画一起安排好…"
-                      maxLength={2000}
-                    />
-                    <button className="button" aria-label="开始家庭对话">
-                      一起想想 ↗
-                    </button>
-                  </form>
-                )}
                 {!homeActive && (
                   <>
                     <section className="life-hero">
@@ -1123,7 +1182,7 @@ export default function WujianApp() {
                     ）
                   </button>
                   <button onClick={() => setTab("新玩法")}>
-                    从它开始找玩法
+                    让它多一种可能
                   </button>
                 </div>
                 <div className="life-tabs">
@@ -1171,12 +1230,11 @@ export default function WujianApp() {
                     itemId={item.id}
                     items={items}
                     ideas={data.ideas}
+                    homeId={homeActive ? "young-apartment-v1" : undefined}
                     request={request}
                     refresh={load}
                     modelAvailable={data.capabilities.model}
-                    onAsk={(context) =>
-                      ask("继续这个目标，帮我进一步完善方案", item.id, context)
-                    }
+                    onAsk={(context) => continueWithIdea(context, item.id)}
                   />
                 )}
                 {tab === "故事" && (

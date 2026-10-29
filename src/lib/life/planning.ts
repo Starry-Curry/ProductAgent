@@ -1,5 +1,6 @@
 import {
   readKnowledge,
+  retrieveKnowledge,
   documentCapabilities,
   type AcquiredDocument,
 } from "./acquisition.ts";
@@ -7,6 +8,7 @@ import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import { canRead, type State, type Person } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
+import { virtualHomeItems } from "./virtual-home.ts";
 import { ProviderError, type Provider } from "../ai/provider.ts";
 import { boundPack } from "../ai/harness.ts";
 import {
@@ -51,6 +53,7 @@ export const discoveryInput = z
     itemIds: z.array(z.string()).max(30).default([]),
     excludedItemIds: z.array(z.string()).max(100).default([]),
     previousIdeaIds: z.array(z.string().uuid()).max(6).default([]),
+    feedbackIdeaIds: z.array(z.string().uuid()).max(6).default([]),
     experienceIds: z.array(z.string().uuid()).max(6).default([]),
     creativeEvidenceIds: z.array(z.string().uuid()).max(6).default([]),
     publicEvidence: z.boolean().default(true),
@@ -60,6 +63,7 @@ export const discoveryInput = z
     includeSynthetic: z.boolean().default(false),
     model: z.boolean().default(false),
     page: z.enum(["discover", "assistant", "item"]).default("discover"),
+    homeId: z.literal("young-apartment-v1").optional(),
   })
   .strict();
 const declaresItems = (question: string) => {
@@ -149,8 +153,19 @@ export async function planDiscovery(
   provider: Provider,
   readCurrent: () => State,
 ): Promise<DiscoveryResult> {
-  const input = discoveryInput.parse(raw),
-    visible = state.items.filter((i) => canRead(i, actor));
+  const input = discoveryInput.parse(raw);
+  const checkHome = () => {
+    if (
+      input.homeId &&
+      (!readCurrent().virtualHomes?.[actor]?.allowCloud ||
+        virtualHomeItems(readCurrent(), actor).length !== 8)
+    )
+      throw new AgentError("请先在首页明确授权这套模拟家庭使用云端模型", 403);
+  };
+  checkHome();
+  const visible = input.homeId
+    ? virtualHomeItems(state, actor)
+    : state.items.filter((i) => canRead(i, actor));
   for (const id of [
     ...input.itemIds,
     ...input.excludedItemIds,
@@ -374,8 +389,10 @@ export async function planDiscovery(
       const countedProvider: Provider = {
         ...provider,
         generate: async (...args) => {
+          checkHome();
           modelCalls++;
           const result = await provider.generate(...args);
+          checkHome();
           if (result.tokens)
             tokens = {
               input: (tokens?.input || 0) + result.tokens.input,
@@ -397,6 +414,9 @@ export async function planDiscovery(
           {
             minutes,
             strategy: "explore",
+            preferenceScopeIds: input.homeId
+              ? virtualHomeItems(state, actor).map((i) => i.id)
+              : undefined,
             candidates: input.candidates,
             review: input.review,
             creativeEvidence: selectedEvidence,
@@ -418,8 +438,26 @@ export async function planDiscovery(
                   itemIds: i.itemIds,
                   outcome: i.outcome,
                   saved: !!i.saved,
+                  ...(input.feedbackIdeaIds.includes(i.id) &&
+                  input.previousIdeaIds.includes(i.id)
+                    ? { note: i.note?.slice(0, 300) }
+                    : {}),
                 })),
               profiles,
+              personalStates: input.homeId
+                ? items.map((i) => ({
+                    itemId: i.id,
+                    location: i.location,
+                    note: i.note,
+                    basis: "explicitly-authorized-simulated-user-report",
+                  }))
+                : [],
+              officialPassages: items.map((i) => ({
+                itemId: i.id,
+                passages: retrieveKnowledge(db, state, actor, i.id, goal)
+                  .slice(0, 3)
+                  .map((p) => ({ text: p.text, url: p.url, region: p.region })),
+              })),
               // The user's actual goal outranks coarse inventory category labels.
               goal: input.goal,
               noPurchase: noPurchase(goal),

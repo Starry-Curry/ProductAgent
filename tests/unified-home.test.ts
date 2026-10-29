@@ -47,6 +47,18 @@ function model(
     ready: true,
     model: "offline-scripted",
     generate: async (_system, input) => {
+      if (_system.startsWith("SOURCE_REVIEW")) {
+        const v = input as any;
+        return {
+          text: JSON.stringify({
+            keepSentenceIds: v.sentences.map((s: any) => s.id),
+            keepStepIds: v.steps.map((s: any) => s.id),
+            issues: [],
+          }),
+          model: "offline-scripted",
+          tokens: null,
+        };
+      }
       const value = input as {
         question: string;
         taskDraft: { goal: string; parts: unknown[] };
@@ -56,8 +68,11 @@ function model(
       return {
         text: JSON.stringify({
           answer: "仅使用当前资料回应完整目标，支撑结构未知。",
-          goal:"布置画与书桌",
-          tasks:[{title:"赠送关系",status:"addressed"},{title:"布局条件",status:"needs_info"}],
+          goal: "布置画与书桌",
+          tasks: [
+            { title: "赠送关系", status: "addressed" },
+            { title: "布局条件", status: "needs_info" },
+          ],
           usedItemIds: c.items?.map((i: any) => i.id) || [
             homeItemId("dad", "painting"),
           ],
@@ -499,10 +514,355 @@ test("云端授权在推理期间撤回，拒绝在途回答；提供者不可�
   }
 });
 
-test("模拟家庭与原空间不能复用已有聊天上下文；无关的私人物品不进入家庭模型",async()=>{
- const t=fixture();try{
-  installVirtualHome(t.db,t.read,"lin",true);
-  const r=await respond(t.db,t.read,"lin",input(),model());
-  await assert.rejects(respond(t.db,t.read,"lin",input({sessionId:r.session.id,uiContext:{page:"assistant"}}),model()),/开始新问题/);
- }finally{t.db.close();}
+test("模拟家庭与原空间不能复用已有聊天上下文；无关的私人物品不进入家庭模型", async () => {
+  const t = fixture();
+  try {
+    installVirtualHome(t.db, t.read, "lin", true);
+    const r = await respond(t.db, t.read, "lin", input(), model());
+    await assert.rejects(
+      respond(
+        t.db,
+        t.read,
+        "lin",
+        input({ sessionId: r.session.id, uiContext: { page: "assistant" } }),
+        model(),
+      ),
+      /开始新问题/,
+    );
+  } finally {
+    t.db.close();
+  }
+});
+
+test("多主题原文交错选取，后一个问题不会被前一个问题挤掉", async () => {
+  const { homeTaskPassages } = await import("../src/lib/context/home-task.ts");
+  const passages = homeTaskPassages(
+    (topic) => Array.from({ length: 8 }, (_, i) => ({ id: topic + i })),
+    ["尺寸", "材质", "限制"],
+  );
+  assert.deepEqual(
+    passages.map((p) => p.id),
+    ["尺寸0", "材质0", "限制0", "尺寸1", "材质1", "限制1"],
+  );
+});
+
+test("未请求的家庭资源不附带无关说明书原文", () => {
+  const t = fixture();
+  try {
+    installVirtualHome(t.db, t.read, "lin", true);
+    const c = buildHomeTaskContext(t.db, t.read(), "lin", "台灯调光", [
+      homeItemId("lin", "lamp"),
+    ]);
+    assert.equal(c.items.length, 8);
+    assert.ok(
+      c.items
+        .filter((i) => i.contextRole !== "requested-item")
+        .every((i) => i.passages.length === 0),
+    );
+  } finally {
+    t.db.close();
+  }
+});
+
+test("家庭再创造要求既有显式许可，不能扩大到原有真实空间", async () => {
+  const { planDiscovery } = await import("../src/lib/life/planning.ts");
+  const t = fixture();
+  try {
+    installVirtualHome(t.db, t.read, "lin", false);
+    let calls = 0;
+    const p = {
+      ...model(),
+      generate: async () => {
+        calls++;
+        throw Error("must not call");
+      },
+    };
+    await assert.rejects(
+      () =>
+        planDiscovery(
+          t.db,
+          t.read(),
+          "lin",
+          {
+            goal: "新用途",
+            homeId: "young-apartment-v1",
+            model: true,
+            includeSynthetic: true,
+          },
+          p,
+          t.read,
+        ),
+      /授权/,
+    );
+    setVirtualHomeCloud(t.db, t.read, "lin", true);
+    const foreign = t
+      .read()
+      .items.find((i) => !i.id.startsWith("virtual-home:"))!;
+    await assert.rejects(
+      () =>
+        planDiscovery(
+          t.db,
+          t.read(),
+          "lin",
+          {
+            goal: "新用途",
+            homeId: "young-apartment-v1",
+            itemIds: [foreign.id],
+            model: true,
+            includeSynthetic: true,
+          },
+          p,
+          t.read,
+        ),
+      /未获授权/,
+    );
+    assert.equal(calls, 0);
+  } finally {
+    t.db.close();
+  }
+});
+
+test("再创造途中撤回家庭云端许可，停止后续模型与方案保存", async () => {
+  const { planDiscovery } = await import("../src/lib/life/planning.ts");
+  const t = fixture();
+  try {
+    installVirtualHome(t.db, t.read, "lin", true);
+    let calls = 0;
+    const p = {
+      ...model(),
+      generate: async () => {
+        calls++;
+        setVirtualHomeCloud(t.db, t.read, "lin", false);
+        return { text: "draft", model: "offline", tokens: null };
+      },
+    };
+    await assert.rejects(
+      () =>
+        planDiscovery(
+          t.db,
+          t.read(),
+          "lin",
+          {
+            goal: "探索新用途",
+            homeId: "young-apartment-v1",
+            model: true,
+            includeSynthetic: true,
+            publicEvidence: false,
+          },
+          p,
+          t.read,
+        ),
+      /授权|变化/,
+    );
+    assert.equal(calls, 1);
+    assert.equal(
+      t.db.prepare("SELECT count(*) as n FROM life_ideas").get()!.n,
+      0,
+    );
+  } finally {
+    t.db.close();
+  }
+});
+
+test("旧助手建议不作为新目标的资料，用户限制保留", async () => {
+  const t = fixture();
+  try {
+    installVirtualHome(t.db, t.read, "lin", true);
+    const first = await respond(
+      t.db,
+      t.read,
+      "lin",
+      input({ question: "先写手账，不购买" }),
+      model(),
+    );
+    const base = model();
+    let checked = false;
+    const p = {
+      ...base,
+      generate: async (system: any, value: any, opts: any) => {
+        checked = true;
+        assert.ok(value.history.some((m: any) => m.text.includes("不购买")));
+        assert.ok(value.history.every((m: any) => m.role !== "assistant"));
+        assert.equal(value.question, "改成收拾桌面，不用画");
+        return base.generate(system, value, opts);
+      },
+    };
+    await respond(
+      t.db,
+      t.read,
+      "lin",
+      input({ sessionId: first.session.id, question: "改成收拾桌面，不用画" }),
+      p,
+    );
+    assert.ok(checked);
+  } finally {
+    t.db.close();
+  }
+});
+
+test("选中创意及反馈可回到原家庭任务，不把草稿当成已验证结果", async () => {
+  const { storeLifeIdea, feedbackIdea } =
+    await import("../src/lib/life/ideas.ts");
+  const t = fixture();
+  try {
+    installVirtualHome(t.db, t.read, "lin", true);
+    const itemId = homeItemId("lin", "samla"),
+      id = crypto.randomUUID();
+    storeLifeIdea(t.db, "lin", {
+      id,
+      title: "测试再创造",
+      itemIds: [itemId],
+      minutes: 10,
+      steps: ["先核对实际条件"],
+      limits: [],
+      source: "model-creative",
+      evidence: [],
+      tested: false,
+      goal: "测试目标",
+    });
+    feedbackIdea(t.db, t.read(), "lin", {
+      id,
+      saved: true,
+      outcome: "未成功",
+      note: "不要占桌面，请换一种作用",
+    });
+    const first = await respond(t.db, t.read, "lin", input(), model());
+    const base = model();
+    let seen = false;
+    const p = {
+      ...base,
+      generate: async (system: any, value: any, opts: any) => {
+        seen = true;
+        assert.equal(value.selectedPlans[0].note, "不要占桌面，请换一种作用");
+        assert.equal(
+          value.selectedPlans[0].verification,
+          "model-hypothesis-not-physical-verification",
+        );
+        return base.generate(system, value, opts);
+      },
+    };
+    const next = await respond(
+      t.db,
+      t.read,
+      "lin",
+      input({
+        sessionId: first.session.id,
+        question: "带着方案继续",
+        uiContext: {
+          page: "assistant",
+          homeId: "young-apartment-v1",
+          planContext: { previousIdeaIds: [id], feedbackIdeaIds: [id] },
+        },
+      }),
+      p,
+    );
+    assert.equal(next.session.id, first.session.id);
+    assert.ok(seen);
+  } finally {
+    t.db.close();
+  }
+});
+
+test("临时短引用准确还原授权物品；相似拼写不做模糊匹配", async () => {
+  const t = fixture();
+  try {
+    installVirtualHome(t.db, t.read, "lin", true);
+    const base = model();
+    const p = {
+      ...base,
+      complete: async (
+        ...args: Parameters<NonNullable<Provider["complete"]>>
+      ) => {
+        const result = await base.complete!(...args);
+        for (const call of result.toolCalls) {
+          const data = JSON.parse(call.function.arguments);
+          data.itemIds = ["item8", "item2"];
+          call.function.arguments = JSON.stringify(data);
+        }
+        return result;
+      },
+      generate: async (system: any, value: any, opts: any) => {
+        if (!system.startsWith("SOURCE_REVIEW"))
+          assert.ok(
+            value.readResults[0].items.every((i: any) =>
+              /^item[1-8]$/.test(i.id),
+            ),
+          );
+        return base.generate(system, value, opts);
+      },
+    };
+    const r = await respond(t.db, t.read, "lin", input(), p);
+    assert.ok(
+      r.reply.usedItems!.every((i) => i.id.startsWith("virtual-home:lin:")),
+    );
+    const bad = {
+      ...base,
+      complete: async (
+        ...args: Parameters<NonNullable<Provider["complete"]>>
+      ) => {
+        const result = await base.complete!(...args);
+        for (const call of result.toolCalls)
+          call.function.arguments = JSON.stringify({
+            itemIds: ["item8x"],
+            query: "story",
+          });
+        return result;
+      },
+    };
+    await assert.rejects(
+      () => respond(t.db, t.read, "lin", input(), bad),
+      /未读取|未授权/,
+    );
+  } finally {
+    t.db.close();
+  }
+});
+
+test("单件再创造可使用获准家庭偏好，但不读取全局私人偏好", async () => {
+  const { planDiscovery } = await import("../src/lib/life/planning.ts");
+  const { ProviderError } = await import("../src/lib/ai/provider.ts");
+  const t = fixture();
+  try {
+    installVirtualHome(t.db, t.read, "lin", true);
+    saveMemory(t.db, t.read, "lin", {
+      kind: "preference",
+      text: "我喜欢旅行与安静 GLOBAL_PRIVATE",
+      allowCloud: true,
+    });
+    let seen: any;
+    const p = {
+      ...model(),
+      generate: async (_system: any, value: any) => {
+        seen = value;
+        throw new ProviderError("network", "offline-stop");
+      },
+    };
+    await assert.rejects(
+      () =>
+        planDiscovery(
+          t.db,
+          t.read(),
+          "lin",
+          {
+            goal: "探索新的创意用法，我喜欢旅行和安静",
+            itemId: homeItemId("lin", "samla"),
+            itemIds: [homeItemId("lin", "samla")],
+            homeId: "young-apartment-v1",
+            includeSynthetic: true,
+            model: true,
+            publicEvidence: false,
+          },
+          p,
+          t.read,
+        ),
+      /offline-stop/,
+    );
+    assert.equal(seen.creativeFacts.length, 1);
+    assert.ok(
+      seen.authorizedPreferences.some((m: any) => m.text.includes("安静")),
+    );
+    assert.ok(!JSON.stringify(seen).includes("GLOBAL_PRIVATE"));
+  } finally {
+    t.db.close();
+  }
 });

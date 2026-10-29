@@ -15,6 +15,7 @@ export function Discovery({
   refresh,
   modelAvailable,
   onAsk,
+  homeId,
 }: {
   items: Item[];
   ideas: LifeIdea[];
@@ -23,11 +24,16 @@ export function Discovery({
   refresh: () => Promise<void>;
   modelAvailable: boolean;
   onAsk?: (context: any) => void;
+  homeId?: "young-apartment-v1";
 }) {
   const publicMode = usePublicDemo();
-  const [goal, setGoal] = useState("想用已有的东西，做点新鲜的小事"),
+  const focusedItem = items.find((i) => i.id === itemId);
+  const initialGoal = focusedItem
+    ? `我想让${focusedItem.name}更符合我的生活。结合我的偏好和家里已有物品，探索一个有实际作用的新用途；不购买、不裁切、不改电路。`
+    : "想用已有的东西，做点新鲜的小事";
+  const [goal, setGoal] = useState(initialGoal),
     [minutes, setMinutes] = useState("30"),
-    [synthetic, setSynthetic] = useState(publicMode),
+    [synthetic, setSynthetic] = useState(publicMode || !!homeId),
     [busy, setBusy] = useState(false),
     [notice, setNotice] = useState(""),
     [onlySaved, setOnlySaved] = useState(false),
@@ -41,6 +47,7 @@ export function Discovery({
   );
   const [continuation, setContinuation] = useState<any>(undefined);
   const [cloud, setCloud] = useState(true);
+  const [shareFeedback, setShareFeedback] = useState(false);
 
   const [experienceIds, setExperienceIds] = useState<string[]>([]);
   const [gaps, setGaps] = useState<string[]>([]);
@@ -77,10 +84,15 @@ export function Discovery({
         experienceIds,
         creativeEvidenceIds,
         previousIdeaIds: turns.findLast((t) => t.ids.length)?.ids || [],
+        feedbackIdeaIds: shareFeedback
+          ? turns.findLast((t) => t.ids.length)?.ids || []
+          : [],
         minutes: Number(minutes),
         includeSynthetic: synthetic,
         model,
         review: true,
+        page: itemId ? "item" : "discover",
+        ...(homeId ? { homeId } : {}),
       });
       setResults(d.ideas);
       setContinuation(d.continuation);
@@ -153,48 +165,83 @@ export function Discovery({
         )),
   );
   return (
-    <section className="life-discovery">
-      <ProductKnowledgeLab
-        onTry={async () => {
-          await request("alphaSamples", { confirmed: true });
-          setSynthetic(true);
-          await refresh();
-          setNotice(
-            "已添加测试商品。勾选范围后描述想实现的效果；这些记录不代表真实拥有。",
-          );
-        }}
-      />
+    <section
+      className={`life-discovery${itemId ? " object-reimagine" : ""}`}
+      aria-label={itemId ? "这件物品的新可能" : "探索新用途"}
+    >
+      {!itemId && (
+        <ProductKnowledgeLab
+          onTry={async () => {
+            await request("alphaSamples", { confirmed: true });
+            setSynthetic(true);
+            await refresh();
+            setNotice(
+              "已添加测试商品。勾选范围后描述想实现的效果；这些记录不代表真实拥有。",
+            );
+          }}
+        />
+      )}
       <div className="discovery-heading">
-        <span className="life-eyebrow">MAKE SOMETHING OF TODAY</span>
-        <h2>描述一个想法，让手边的物品参与。</h2>
+        <span className="life-eyebrow">
+          {itemId ? "REIMAGINE THIS OBJECT" : "MAKE SOMETHING OF TODAY"}
+        </span>
+        <h2>
+          {focusedItem
+            ? `让${focusedItem.name}，多一种可能。`
+            : "描述一个想法，让手边的物品参与。"}
+        </h2>
         <button
           className="text-button"
           onClick={() => {
             setTurns([]);
             setResults([]);
             setExcluded([]);
-            setGoal("想用已有的东西，做点新鲜的小事");
+            setGoal(initialGoal);
             setGaps([]);
           }}
         >
           新的探索
         </button>
         <p>
-          说说想做什么、有什么限制。物间会核对已有物品，再一起把想法变成可尝试的步骤。
+          {itemId
+            ? "从它已有的性质出发，找一个真正服务你生活的用法。创意和实施条件留在这里，尝试后的反馈会参与下次探索。"
+            : "说说想做什么、有什么限制。物间会核对已有物品，再一起把想法变成可尝试的步骤。"}
         </p>
       </div>
       {!turns.length && (
         <div className="goal-suggestions">
           {[
-            "我有一小时，不买东西，想做点有趣的事",
-            "想整理桌面，看看已有物品能怎么利用",
-            "从可用物品中任选，换一个有实际作用的方向",
+            ...(focusedItem
+              ? [
+                  `让${focusedItem.name}服务我的旅行手账习惯，只用家里现有物品，不购买、不裁切，提出一个不同于普通收纳的新用法。`,
+                  `探索${focusedItem.name}与其他物品的新组合，不必用齐；解释新作用怎样产生，未知条件先核对，不改装电路。`,
+                  `我希望${focusedItem.name}用起来更顺手；结合已有偏好，找一个不购买、不破坏的新用途。`,
+                ]
+              : [
+                  "我有一小时，不买东西，想做点有趣的事",
+                  "想整理桌面，看看已有物品能怎么利用",
+                  "从可用物品中任选，换一个有实际作用的方向",
+                ]),
           ].map((text) => (
             <button key={text} onClick={() => setGoal(text)}>
               {text} ↗
             </button>
           ))}
         </div>
+      )}
+      {homeId && itemId && (
+        <label className="life-check">
+          <input
+            type="checkbox"
+            checked={selectedIds.length > 1}
+            onChange={(e) =>
+              setSelectedIds(
+                e.target.checked ? items.map((i) => i.id) : [itemId],
+              )
+            }
+          />
+          也考虑这个家的其他物品（不必全部使用）
+        </label>
       )}
       {turns.length > 0 && (
         <div className="discovery-thread" aria-label="本次探索对话">
@@ -339,11 +386,24 @@ export function Discovery({
         </div>
       </form>
       {onAsk && (
+        <label className="life-check">
+          <input
+            type="checkbox"
+            checked={shareFeedback}
+            onChange={(e) => setShareFeedback(e.target.checked)}
+          />
+          本次允许把这些方案的反馈备注用于接下来的云端探索和对话
+        </label>
+      )}
+      {onAsk && (
         <button
           type="button"
           onClick={() =>
             onAsk({
               previousIdeaIds: turns.findLast((t) => t.ids.length)?.ids || [],
+              feedbackIdeaIds: shareFeedback
+                ? turns.findLast((t) => t.ids.length)?.ids || []
+                : [],
               continuation: continuation || {
                 goal,
                 minutes: Number(minutes),
@@ -412,7 +472,9 @@ export function Discovery({
               {idea.demo
                 ? "预置演示方案（非在线 AI）"
                 : idea.source === "model-creative"
-                  ? "AI 生成创意"
+                  ? idea.reasoning?.checks.length
+                    ? "有条件的创意方案"
+                    : "创意设想"
                   : idea.source === "user-submitted"
                     ? "用户提供的经验"
                     : "本地创意候选"}{" "}
@@ -565,6 +627,25 @@ export function Discovery({
               ))}
             </div>
             <div className="life-actions">
+              {onAsk && (
+                <button
+                  onClick={() =>
+                    onAsk({
+                      previousIdeaIds: [idea.id],
+                      feedbackIdeaIds: shareFeedback ? [idea.id] : [],
+                      continuation: continuation || {
+                        goal: idea.goal,
+                        minutes: idea.minutes,
+                        itemIds: idea.itemIds,
+                        excludedItemIds: [],
+                        restrictions: [],
+                      },
+                    })
+                  }
+                >
+                  带这个想法继续
+                </button>
+              )}
               <button onClick={() => feedback(idea, { saved: !idea.saved })}>
                 {idea.saved ? "已收藏 · 取消" : "收藏这个想法"}
               </button>

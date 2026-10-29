@@ -188,9 +188,15 @@ export async function respond(
       !getPersona(db, actor, session.known.companionItemId).enabled
     )
       delete session.known.companionItemId;
-    if (input.uiContext.planContext && !input.sessionId) {
+    if (
+      input.uiContext.planContext &&
+      (!input.sessionId || session.known.homeId === "young-apartment-v1")
+    ) {
       session.known.lifeIdeaIds = JSON.stringify(
         input.uiContext.planContext.previousIdeaIds,
+      );
+      session.known.lifeFeedbackIds = JSON.stringify(
+        input.uiContext.planContext.feedbackIdeaIds || [],
       );
       if (input.uiContext.planContext.continuation)
         session.known.lifePlanContext = JSON.stringify(

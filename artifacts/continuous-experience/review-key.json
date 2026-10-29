@@ -1,0 +1,146 @@
+[
+  {
+    "sample": "A1-1",
+    "arm": "direct",
+    "elapsedMs": 37052,
+    "status": "returned"
+  },
+  {
+    "sample": "A1-2",
+    "arm": "improved",
+    "elapsedMs": 25873,
+    "status": "returned"
+  },
+  {
+    "sample": "A1-3",
+    "arm": "experimental-source-review",
+    "elapsedMs": 30897,
+    "status": "returned"
+  },
+  {
+    "sample": "A1-4",
+    "arm": "baseline",
+    "elapsedMs": 20162,
+    "status": "returned"
+  },
+  {
+    "sample": "A2-1",
+    "arm": "improved",
+    "elapsedMs": 16692,
+    "status": "failed"
+  },
+  {
+    "sample": "A2-2",
+    "arm": "baseline",
+    "elapsedMs": 14606,
+    "status": "returned"
+  },
+  {
+    "sample": "A2-3",
+    "arm": "direct",
+    "elapsedMs": 46899,
+    "status": "returned"
+  },
+  {
+    "sample": "A2-4",
+    "arm": "experimental-source-review",
+    "elapsedMs": 19302,
+    "status": "returned"
+  },
+  {
+    "sample": "B1-1",
+    "arm": "baseline",
+    "elapsedMs": 14338,
+    "status": "returned"
+  },
+  {
+    "sample": "B1-2",
+    "arm": "direct",
+    "elapsedMs": 32570,
+    "status": "returned"
+  },
+  {
+    "sample": "B1-3",
+    "arm": "experimental-source-review",
+    "elapsedMs": 16411,
+    "status": "returned"
+  },
+  {
+    "sample": "B1-4",
+    "arm": "improved",
+    "elapsedMs": 13386,
+    "status": "returned"
+  },
+  {
+    "sample": "B2-1",
+    "arm": "improved",
+    "elapsedMs": 16684,
+    "status": "returned"
+  },
+  {
+    "sample": "B2-2",
+    "arm": "experimental-source-review",
+    "elapsedMs": 22893,
+    "status": "returned"
+  },
+  {
+    "sample": "B2-3",
+    "arm": "baseline",
+    "elapsedMs": 15616,
+    "status": "returned"
+  },
+  {
+    "sample": "B2-4",
+    "arm": "direct",
+    "elapsedMs": 53824,
+    "status": "returned"
+  },
+  {
+    "sample": "C1-1",
+    "arm": "direct",
+    "elapsedMs": 36449,
+    "status": "returned"
+  },
+  {
+    "sample": "C1-2",
+    "arm": "experimental-source-review",
+    "elapsedMs": 25599,
+    "status": "returned"
+  },
+  {
+    "sample": "C1-3",
+    "arm": "baseline",
+    "elapsedMs": 16037,
+    "status": "returned"
+  },
+  {
+    "sample": "C1-4",
+    "arm": "improved",
+    "elapsedMs": 18835,
+    "status": "returned"
+  },
+  {
+    "sample": "C2-1",
+    "arm": "baseline",
+    "elapsedMs": 12926,
+    "status": "returned"
+  },
+  {
+    "sample": "C2-2",
+    "arm": "direct",
+    "elapsedMs": 33715,
+    "status": "returned"
+  },
+  {
+    "sample": "C2-3",
+    "arm": "improved",
+    "elapsedMs": 13533,
+    "status": "returned"
+  },
+  {
+    "sample": "C2-4",
+    "arm": "experimental-source-review",
+    "elapsedMs": 20645,
+    "status": "returned"
+  }
+]

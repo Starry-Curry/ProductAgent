@@ -1746,3 +1746,15 @@ summary { cursor:pointer; }
 }
 
 .belong-profile-fields {border:0; padding:0; margin:0; min-width:0;}
+
+/* An object stays the anchor from understanding to re-creation and feedback. */
+.object-reimagine .discovery-heading { padding: 28px 30px; border-radius: 22px; background: #edf1e6; border: 1px solid #d5dfca; margin-bottom: 18px; }
+.object-reimagine .discovery-heading h2 { max-width: 750px; font-size: clamp(24px, 3vw, 34px); line-height: 1.5; font-weight: 500; letter-spacing: -.5px; }
+.object-reimagine .discovery-heading p { max-width: 650px; line-height: 1.9; color: #63745c; }
+.object-reimagine .goal-composer { border-color: #a8ba99; box-shadow: 0 6px 22px #4455360a; }
+.object-reimagine .life-idea-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.object-reimagine .life-idea { border-top: 4px solid #a0b58c; overflow-wrap: anywhere; }
+.object-reimagine .life-idea h3 { font-size: 25px; line-height: 1.5; }
+.object-reimagine .life-pill { white-space: normal; }
+.home-task-caption { border-left: 3px solid #a9bc93; padding-left: 12px; line-height: 1.8; }
+@media(max-width:600px) { .object-reimagine .discovery-heading { padding: 21px; } .object-reimagine .life-idea h3 { font-size: 22px; } .object-reimagine .composer-toolbar { gap: 10px; flex-wrap: wrap; } }

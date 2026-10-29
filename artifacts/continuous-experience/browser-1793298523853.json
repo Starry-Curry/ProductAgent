@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-29T18:29:07.167Z",
+  "records": [
+    {
+      "label": "life-goal-retry",
+      "status": 502,
+      "input": {
+        "requestId": "93ce73d4-54b6-4a14-a222-fede316df2fd",
+        "mode": "auto",
+        "question": "今晚想在书桌上写旅行手账，帮我把桌面安排舒服一点。我喜欢安静，不想再买东西。",
+        "temporary": false,
+        "memoryPolicy": "off",
+        "uiContext": {
+          "homeId": "young-apartment-v1",
+          "page": "assistant",
+          "companion": false
+        }
+      },
+      "result": {
+        "error": "回答引用了未读取或未授权的资料，本次草稿未展示"
+      }
+    },
+    {
+      "failure": "回答引用了未读取或未授权的资料，本次草稿未展示"
+    }
+  ],
+  "errors": []
+}

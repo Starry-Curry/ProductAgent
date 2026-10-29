@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   ArrowUpRight,
   LampDesk,
@@ -129,6 +129,7 @@ export function VirtualHome({
   refresh,
   onAsk,
   onItem,
+  goalEntry,
 }: {
   data: VirtualHomeData;
   items: Item[];
@@ -138,6 +139,7 @@ export function VirtualHome({
   refresh: () => Promise<void>;
   onAsk: (text: string) => void;
   onItem: (id: string) => void;
+  goalEntry?: ReactNode;
 }) {
   const [consent, setConsent] = useState(false),
     [busy, setBusy] = useState(false),
@@ -165,9 +167,9 @@ export function VirtualHome({
             A LITTLE HOME, A SHARED UNDERSTANDING
           </span>
           <h1>
-            把生活交给一句话，
+            让手边的物品，
             <br />
-            一起慢慢安排好。
+            回应你的生活。
           </h1>
           <p>
             一盏灯、一张书桌，还有朋友送的画。
@@ -252,6 +254,7 @@ export function VirtualHome({
           </div>
           {active && (
             <>
+              {goalEntry}
               <div className="apartment-journeys">
                 {homeJourneys.map((j, n) => (
                   <button
@@ -264,7 +267,7 @@ export function VirtualHome({
                     </small>
                     <h2>{j.title}</h2>
                     <span>
-                      和物间一起想想 <ArrowUpRight size={17} />
+                      从这个生活目标开始 <ArrowUpRight size={17} />
                     </span>
                   </button>
                 ))}

@@ -51,3 +51,5 @@ README 负责快速运行，以下文档分别回答产品、工程、演示和�
 演示图片、合成故事和 AI 生成类别图都不代表用户的真实物品、真实经历或型号实拍。
 
 - [2026-10-29 智能行为与创造力：业务实现、真实对照、失败与匿名样本](engineering/intelligence-behavior-2026-10-29/README.md)
+
+- [2026-10-30 统一家庭连续体验与真实质量失败记录](engineering/continuous-experience-2026-10-30/README.md)

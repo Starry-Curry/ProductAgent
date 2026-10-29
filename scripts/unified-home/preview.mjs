@@ -41,7 +41,16 @@ const child = spawn(
       AI_API_KEY: cloud ? "fixture-only" : "",
       AI_BASE_URL: "https://fixture.invalid/v1",
       AI_MODEL: gate?.model || "",
-      AI_TASK_MODEL:process.argv.find(a=>a.startsWith("--task-model="))?.slice(13)||gate?.model||"",
+      AI_CREATIVE_MODEL:
+        process.argv
+          .find((a) => a.startsWith("--creative-model="))
+          ?.slice(17) ||
+        gate?.model ||
+        "",
+      AI_TASK_MODEL:
+        process.argv.find((a) => a.startsWith("--task-model="))?.slice(13) ||
+        gate?.model ||
+        "",
       AI_JSON_MODE: "true",
       AI_ENABLE_THINKING: "false",
       AI_TIMEOUT_MS: "60000",

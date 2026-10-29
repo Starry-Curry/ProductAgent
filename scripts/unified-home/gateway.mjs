@@ -34,6 +34,11 @@ export async function gateway(configPath) {
   const ledger = fs.existsSync(file)
     ? JSON.parse(fs.readFileSync(file, "utf8"))
     : { task: "unified-home-beta", attempts: [] };
+  // Keep prior-stage attempts intact. All new continuous-development phases
+  // share one stricter 100-call / CNY50 ceiling, including failures and retries.
+  const stage = "continuous-experience-v1";
+  if (config.AI_MODEL !== "qwen-plus") throw Error("budget_model_not_priced");
+  const stageSpend = () => ledger.attempts.filter((a) => a.stage === stage);
   const clean = (value) =>
     JSON.parse(
       JSON.stringify(value).replaceAll(config.AI_API_KEY, "[removed]"),
@@ -55,8 +60,22 @@ export async function gateway(configPath) {
         if (Buffer.byteLength(raw) > 180000) throw Error("input_too_large");
       }
       const body = JSON.parse(raw);
-      if (![config.AI_MODEL,"qwen3-max","qwen-max"].includes(body.model) || body.stream)
+      if (![config.AI_MODEL, "qwen-max"].includes(body.model) || body.stream)
         throw Error("configured_nonstream_model_only");
+      const maxTokens = Math.min(body.max_tokens || 2600, 3200);
+      // UTF-8 byte count bounds input tokens; highest published Plus tier is
+      // reserved until actual usage arrives. An unknown failed charge stays reserved.
+      const reserve = (Buffer.byteLength(raw) * 4.8 + maxTokens * 48) / 1e6;
+      if (
+        stageSpend().length >= 100 ||
+        stageSpend().reduce(
+          (n, a) => n + (a.estimatedCny ?? a.reservedCny),
+          0,
+        ) +
+          reserve >
+          50
+      )
+        throw Error("stage_budget_exhausted");
       const user = body.messages?.find((m) => m.role === "user");
       let question = "";
       try {
@@ -66,6 +85,9 @@ export async function gateway(configPath) {
       }
       attempt = {
         number: ledger.attempts.length + 1,
+        stage,
+        reservedCny: reserve,
+        priceSource: "https://help.aliyun.com/zh/model-studio/model-pricing",
         startedAt: new Date().toISOString(),
         model: body.model,
         status: "started",
@@ -91,7 +113,7 @@ export async function gateway(configPath) {
           },
           body: JSON.stringify({
             ...body,
-            max_tokens: Math.min(body.max_tokens || 2600, 3200),
+            max_tokens: maxTokens,
             enable_thinking: false,
           }),
           signal: AbortSignal.any([
@@ -105,6 +127,22 @@ export async function gateway(configPath) {
       if (!response.ok) throw Error("provider_http_" + response.status);
       attempt.status = "returned";
       attempt.tokens = result.usage;
+      if (
+        Number.isFinite(result.usage?.prompt_tokens) &&
+        Number.isFinite(result.usage?.completion_tokens)
+      ) {
+        const input = result.usage.prompt_tokens,
+          output = result.usage.completion_tokens;
+        const [inputRate, outputRate] =
+          body.model === "qwen-max"
+            ? [2.4, 9.6]
+            : input <= 128000
+              ? [0.8, 2]
+              : input <= 256000
+                ? [2.4, 20]
+                : [4.8, 48];
+        attempt.estimatedCny = (input * inputRate + output * outputRate) / 1e6;
+      }
       attempt.finishReason = result.choices?.[0]?.finish_reason;
       attempt.output = clean(result.choices?.[0]?.message || {});
       attempt.elapsedMs = Date.now() - Date.parse(attempt.startedAt);
@@ -114,7 +152,7 @@ export async function gateway(configPath) {
     } catch (e) {
       if (attempt) {
         attempt.status = "failed";
-        attempt.transportCode=e.cause?.code||e.name;
+        attempt.transportCode = e.cause?.code || e.name;
         attempt.error = String(e.message).replaceAll(
           config.AI_API_KEY,
           "[removed]",

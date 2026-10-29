@@ -738,6 +738,7 @@ async function draftModelIdea(
     repairAttempt?: boolean;
     validateOnly?: boolean;
     strategy?: "explore";
+    preferenceScopeIds?: string[];
     creativeEvidence?: CreativeEvidence[];
     experiences?: {
       id: string;
@@ -785,10 +786,23 @@ async function draftModelIdea(
   ]
     .join(" ")
     .toLowerCase();
-  const authorizedPreferences = listMemories(db, state, actor)
+  const preferenceState = constraints.preferenceScopeIds
+    ? {
+        ...state,
+        items: (readCurrent?.() || state).items.filter(
+          (i) =>
+            constraints.preferenceScopeIds!.includes(i.id) && canRead(i, actor),
+        ),
+      }
+    : state;
+  const authorizedPreferences = listMemories(db, preferenceState, actor)
     .filter(
       (m) =>
         memoryPolicy !== "off" &&
+        (!constraints.preferenceScopeIds ||
+          (effectivePersona(db, actor, m.itemId).memoryUse !== "off" &&
+            (effectivePersona(db, actor, m.itemId).memoryUse !== "explicit" ||
+              isMemoryRecallRequest(goal)))) &&
         (memoryPolicy !== "explicit" || isMemoryRecallRequest(goal)) &&
         storyMemoryRelevant(db, actor, m, goal) &&
         (/(新用途|新玩法|创意|新鲜|探索|组合|讲故事)/.test(goal) ||
@@ -802,7 +816,9 @@ async function draftModelIdea(
         !m.demo &&
         !m.archived &&
         ["interest", "preference"].includes(m.kind) &&
-        (!m.itemId || items.some((i) => i.id === m.itemId)),
+        (constraints.preferenceScopeIds
+          ? !!m.itemId && constraints.preferenceScopeIds.includes(m.itemId)
+          : !m.itemId || items.some((i) => i.id === m.itemId)),
     )
     .slice(0, 4)
     .map((m) => ({ id: m.id, text: m.text, basis: "confirmed_user_report" }));

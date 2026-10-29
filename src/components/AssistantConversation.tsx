@@ -127,7 +127,10 @@ export function AssistantConversation({
             uiContext: uiContext
               ? {
                   ...uiContext,
-                  planContext: base ? undefined : uiContext.planContext,
+                  planContext:
+                    base && !uiContext.homeId
+                      ? undefined
+                      : uiContext.planContext,
                 }
               : undefined,
             expectedRevision: temporary ? undefined : base?.revision,
