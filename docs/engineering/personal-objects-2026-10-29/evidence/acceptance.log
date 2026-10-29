@@ -1,0 +1,11 @@
+
+> product-agent@0.1.0 test:acceptance
+> node scripts/verify-local.mjs
+
+{"kind":"local-api-and-browser-no-real-model","passed":true,"elapsedMs":3341,"checks":["missing-model trace","replay authorization","cross-origin write denied","gift original author","dynamic candidate constraints","private Context","desktop/mobile no page errors"],"realModelCalls":0}
+{"kind":"isolated-api-and-edge-browser","passed":true,"realModelCalls":0,"elapsedMs":8066,"checks":["API scope/forget authorization","persistent clarification","tried-step feedback without repeat","attach unregistered session without losing attempts","previewed family summary with source context","automatically extract latest useful method from feedback","item story automatically extracts interest; present intent takes precedence","optional companion grounded in own story","forget removes old rendered and resumed story","missing provider is explicit","desktop/mobile/elder layout"]}
+Household cases and one-time introduction browser acceptance passed; realModelCalls=0.
+Home scene and item companions browser acceptance passed; realModelCalls=0.
+共享物品浏览器验收通过：显式记住、跨会话召回、遗忘、越权与离线创意入口；0真实模型请求。
+Alpha browser passed offline
+{"passed":true,"kind":"isolated-production-server","base":"http://127.0.0.1:52292","dataDirectory":"D:\\ProductAgent-LifeContext\\.runtime\\personal-objects-app\\.runtime\\verification-qxGiwy","realModelCalls":0,"journeys":["tests/integration.mjs","tests/foundation-integration.mjs","tests/household-integration.mjs","tests/home-integration.mjs","tests/shared-knowledge-integration.mjs","tests/alpha-integration.mjs"]}
