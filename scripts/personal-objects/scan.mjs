@@ -7,7 +7,7 @@ const git = (...args) =>
 const files = [
   ...new Set(
     [
-      ...git("diff", "--name-only", "HEAD").trim().split("\n"),
+      ...git("diff", "--name-only", "d02b35e5df2de038299def6aacb56e0cc2a7b43f").trim().split("\n"),
       ...git("ls-files", "--others", "--exclude-standard").trim().split("\n"),
     ].filter(Boolean),
   ),
