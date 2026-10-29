@@ -1,0 +1,121 @@
+{
+  "generatedAt": "2026-10-29T04:22:41.690Z",
+  "scope": "RFC changed/untracked files only; pattern scan, not full security audit",
+  "baseline": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+  "filesScanned": 22,
+  "maxFileBytes": 11878,
+  "findings": [],
+  "manifest": [
+    {
+      "file": "AGENTS.md",
+      "bytes": 3265,
+      "sha256": "58f294abc9378884a865bbbbb13045c4170f27ec822c83be280fab816e5bd023"
+    },
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 2271,
+      "sha256": "f09cd536d5a5dbd982fe3269ee5e1d5711091aaec8ad1198e07b35a69c01dc92"
+    },
+    {
+      "file": "DEVELOPMENT_REPORT.md",
+      "bytes": 1004,
+      "sha256": "462063674cbc4a67fa0d8395f5e5348e814a34d00187e049e16149187494dd98"
+    },
+    {
+      "file": "IMPLEMENTATION_STATUS.md",
+      "bytes": 1146,
+      "sha256": "0c40a1936ab0b7cdcc94b5ff3cd6bc6a110469c3a760b80206f563874ccfa851"
+    },
+    {
+      "file": "REVIEW_HANDOFF.md",
+      "bytes": 1438,
+      "sha256": "1cbbd4944062927e8e5ad881c6a288fa660df1602c12fb2706b26a15639bcf50"
+    },
+    {
+      "file": "docs/README.md",
+      "bytes": 2076,
+      "sha256": "e7420a46f4ec387c212d10c67737705f7c0e299064890da98ecbedf208e1c137"
+    },
+    {
+      "file": "docs/architecture-v2/ACCEPTANCE.md",
+      "bytes": 11273,
+      "sha256": "6acde04e215056646270373dcb6bf4122775e542935b3ef609d3b15f01ebddd9"
+    },
+    {
+      "file": "docs/architecture-v2/AGENT_DESIGN.md",
+      "bytes": 9496,
+      "sha256": "cae1b8a640f34a84cb6f4c10209770070f176f3525ea62b00d13bd7386f674a8"
+    },
+    {
+      "file": "docs/architecture-v2/CREATIVITY_TASKS.md",
+      "bytes": 10787,
+      "sha256": "dd9a08aaa12f73b50f64da0430ac32653230f565211d3e20f759b95208a0a13f"
+    },
+    {
+      "file": "docs/architecture-v2/DECISIONS.md",
+      "bytes": 11526,
+      "sha256": "c849c031af9b14585953b0631055c010648e795bb5bce74f057a50fb2c4462e4"
+    },
+    {
+      "file": "docs/architecture-v2/DEVICE_EXPLORATION.md",
+      "bytes": 10721,
+      "sha256": "087b0365c8ade0020385445bd2e3b1da1c1bdf1ab2fcdd7cb66d38e4f7889d72"
+    },
+    {
+      "file": "docs/architecture-v2/DOMAIN_MODEL.md",
+      "bytes": 11873,
+      "sha256": "61388db3e151354a70b5f2b9d9eac8ab0458fe24c161da014e6110bb313257af"
+    },
+    {
+      "file": "docs/architecture-v2/MEMORY_PERSONA.md",
+      "bytes": 8434,
+      "sha256": "1d4818413068f95c2f4a9fab041e2107397b78ef38d86fc638037e35f243e146"
+    },
+    {
+      "file": "docs/architecture-v2/MIGRATION_PLAN.md",
+      "bytes": 10697,
+      "sha256": "2cd66da3a4b12edc463eca2f6df54665a8e62c45b0d2689f4d24f9a9cb9ebccf"
+    },
+    {
+      "file": "docs/architecture-v2/README.md",
+      "bytes": 6825,
+      "sha256": "9169923677c0ab4b059bbe0468c1f594b44581ed70d69a5907e0e6e7b7232cc5"
+    },
+    {
+      "file": "docs/architecture-v2/REVIEW.md",
+      "bytes": 4662,
+      "sha256": "5ef4e0569a42f710a43e3cdb4bfff54dbcc812e1fcb3e281bbc92fe15d596e9f"
+    },
+    {
+      "file": "docs/architecture-v2/check.mjs",
+      "bytes": 11878,
+      "sha256": "6e83694b9fbca31b79a373db73df76b90b8179b557e5d29ab5b40d2bac07fa04"
+    },
+    {
+      "file": "docs/architecture-v2/contracts/knowledge-core.sql",
+      "bytes": 5253,
+      "sha256": "eb01520475246786c75b981b53877c7ce4e8265cb156c334eecdf5e689dbe673"
+    },
+    {
+      "file": "docs/architecture-v2/contracts/source-map.json",
+      "bytes": 2066,
+      "sha256": "d0251727ebc183a8ed6ba9c0e028884b9e159e12ea6e0cdb10b588ac126c65e4"
+    },
+    {
+      "file": "docs/architecture-v2/evidence/CHECK_REPORT.json",
+      "bytes": 9313,
+      "sha256": "922a7faa3523dcf697c1bd7ccea0e079261fd31740fa0be9d14178f7fb3bcb1c"
+    },
+    {
+      "file": "docs/architecture-v2/fixtures/scenarios.json",
+      "bytes": 3626,
+      "sha256": "f944e724bdc05aaefce9d4ddaf8e3ca45420f5e404c68d98f90c317b924427ae"
+    },
+    {
+      "file": "docs/architecture-v2/publication-scan.mjs",
+      "bytes": 3214,
+      "sha256": "7b1ba09b219e1d6a45d58bfd21a1ec6f93c3684ee32aa5fad9046e60fe76f413"
+    }
+  ],
+  "selfExcluded": "docs/architecture-v2/evidence/PUBLICATION_SCAN.json"
+}

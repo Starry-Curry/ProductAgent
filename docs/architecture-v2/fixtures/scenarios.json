@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "wujian-rfc-fixtures-1",
+  "synthetic": true,
+  "productAcceptanceExecuted": false,
+  "scenarios": [
+    {
+      "id": "A",
+      "workspaceId": "home:synthetic",
+      "principalId": "principal:lin",
+      "sessions": ["session:A1", "session:A2", "session:A3"],
+      "item": {"id": "item:painting", "availability": "available", "revision": 1, "material": null},
+      "relation": {"predicate": "relation.gifted", "basis": "user_report", "status": "accepted", "value": {"giverId": "person:ning", "recipientId": "person:lin", "itemId": "item:painting", "eventId": "event:gift"}},
+      "storyPolicy": {"allowRecall": true, "allowCloud": false, "allowShare": false},
+      "persona": {"id": "persona:blue-sail", "itemId": "item:painting", "displayName": "蓝帆", "visibleOn": ["item_detail"], "isPrincipal": false},
+      "correction": {"from": "birthday", "to": "housewarming", "expectedRevision": 1},
+      "forget": {"predicateFamily": "relation.gifted.context", "retainItem": true, "retainPhotos": true, "suppressReextraction": true},
+      "requiredNegativeCases": ["provider_denied", "recipient_denied", "correction_invalidates_summary", "restore_requires_latest_fence"]
+    },
+    {
+      "id": "B",
+      "workspaceId": "home:synthetic",
+      "items": [
+        {"id": "item:box", "revision": 1, "availability": "available", "material": "paper_user_report", "dimensionsM": [0.20, 0.15, 0.10], "unknown": ["opacity", "load_capacity", "heat_resistance", "food_contact"]},
+        {"id": "item:phone", "revision": 1, "availability": "available", "capabilities": ["capture_video"]},
+        {"id": "item:clips", "revision": 1, "availability": "available", "quantity": 2, "unknown": ["clamping_force"]},
+        {"id": "item:lamp", "revision": 1, "availability": "available", "capabilities": ["emit_light"], "unknown": ["surface_temperature"]},
+        {"id": "item:broken", "revision": 1, "availability": "broken", "capabilities": []}
+      ],
+      "goal": {"entry": "goal", "objective": "制作桌面视频", "hardConstraints": {"onlyRegisteredItems": true, "noPurchase": true, "noHeat": true, "noWater": true, "noCutting": true, "noPhotograph": true}, "videoRequested": true},
+      "candidate": {"id": "plan:fixture-occlusion", "status": "draft", "mechanism": "利用遮挡和移动形成揭晓效果", "conditions": [{"predicate": "opacity", "state": "unknown", "requiredBefore": "recommend_ready"}], "verificationRefs": []},
+      "blindEvaluation": {"holdoutCases": 24, "independentRaters": 3, "arms": ["D0", "D1", "V2"], "primaryComparison": ["D1", "V2"], "executed": false},
+      "requiredNegativeCases": ["broken_excluded", "unknown_heat_blocks", "no_photo_is_not_no_video", "revised_item_invalidates_plan"]
+    },
+    {
+      "id": "C",
+      "workspaceId": "home:synthetic",
+      "device": {"id": "device:fixture-lamp", "modelId": "model:fixture-lamp", "firmware": "fixture-1", "isReal": false},
+      "routes": ["official_or_existing_adapter", "rea_if_gap"],
+      "research": {"mode": "offline_artifacts", "status": "evidence_ready", "controlAuthorized": false},
+      "adapter": {"id": "adapter:synthetic-lamp-v1", "digest": "sha256:fixture-only", "status": "candidate", "operation": "set_power", "readbackRequired": true},
+      "receipt": {"state": "acknowledged", "observedAt": null, "isVerified": false},
+      "faultPoints": ["before_dispatch", "after_dispatch_before_receipt", "after_observation_before_commit"],
+      "requiredNegativeCases": ["read_grant_cannot_write", "ack_is_not_observation", "crash_does_not_blind_retry", "firmware_change_stales_capability"]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "capturedOn": "2026-10-29",
+  "repository": "Starry-Curry/ProductAgent",
+  "refs": {
+    "main": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+    "audit": "bc03b76f53af8d6bf336e3f969c13014cea5c616",
+    "fixed": "8eca3d72fc93fce9d4cdb27b1ccd6bd70973a52e"
+  },
+  "anchors": [
+    {"ref": "main", "path": "src/lib/domain.ts", "contains": ["productBinding", "canRead"]},
+    {"ref": "main", "path": "src/lib/db.ts", "contains": ["DatabaseSync", "workspace"]},
+    {"ref": "main", "path": "src/lib/agent/graph.ts", "contains": ["StateGraph", "interrupt", "buildContext"]},
+    {"ref": "main", "path": "src/lib/agent/checkpointer.ts", "contains": ["SqliteCheckpointer"]},
+    {"ref": "main", "path": "src/lib/memory/store.ts", "contains": ["forgetMemory", "memory_epochs"]},
+    {"ref": "main", "path": "src/lib/life/organization.ts", "contains": ["life_understanding"]},
+    {"ref": "main", "path": "src/lib/life/acquisition.ts", "contains": ["documentCapabilities"]},
+    {"ref": "main", "path": "package.json", "contains": ["\"@langchain/langgraph\": \"1.5.1\"", "\"node\": \">=24 <25\""]},
+    {"ref": "audit", "path": "docs/finals/AUDIT.md", "contains": ["AI_ALLOW_PAID_CALLS"]},
+    {"ref": "audit", "path": "docs/finals/ARCHITECTURE.md", "contains": ["mermaid"]},
+    {"ref": "audit", "path": "docs/finals/DECISIONS.md", "contains": ["Pi"]},
+    {"ref": "audit", "path": "docs/finals/TEST_REPORT.md", "contains": ["测试"]},
+    {"ref": "fixed", "path": "src/lib/context/items.ts", "contains": ["nextOffset"]},
+    {"ref": "fixed", "path": "docs/finals/item-understanding-v1/TEST_REPORT.md", "contains": ["256/256", "148", "0.4329848", "F08", "没有再消耗付费请求"]},
+    {"ref": "fixed", "path": "docs/finals/item-understanding-v1/DECISIONS.md", "contains": ["Pi"]}
+  ],
+  "externalPins": {
+    "piGitHead": "e65b3b88c08412bb8ffbd21fb5dc5756064a6e5a",
+    "reaGitHead": "429355ca4d1078579fca7d286de85c512bed0a96",
+    "reaPackage": "rea-agents@6.8.0",
+    "reaNodeRange": "^22.23.4 || ^24.22.1 || >=26.12.1",
+    "localNodeObserved": "v24.16.0"
+  }
+}

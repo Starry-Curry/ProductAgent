@@ -1,0 +1,370 @@
+{
+  "schemaVersion": "wujian-rfc-check-1",
+  "generatedAt": "2026-10-29T04:22:41.338Z",
+  "command": "node docs/architecture-v2/check.mjs --repo=.",
+  "node": "v24.16.0",
+  "branch": "codex/wujian-architecture-v2-rfc",
+  "baseline": {
+    "main": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+    "audit": "bc03b76f53af8d6bf336e3f969c13014cea5c616",
+    "fixed": "8eca3d72fc93fce9d4cdb27b1ccd6bd70973a52e"
+  },
+  "scope": "L0 documentation + in-memory DDL + fixture consistency; NOT product implementation or acceptance",
+  "paidModelRequests": 0,
+  "hardwareOperations": 0,
+  "privateDatabasesOpened": 0,
+  "notExecuted": [
+    "V2 production behavior",
+    "historical 256 product tests",
+    "live model comparison",
+    "human blind evaluation",
+    "physical verification",
+    "production migration"
+  ],
+  "inputs": {
+    "README.md": {
+      "sha256": "9169923677c0ab4b059bbe0468c1f594b44581ed70d69a5907e0e6e7b7232cc5",
+      "bytes": 6825
+    },
+    "DOMAIN_MODEL.md": {
+      "sha256": "61388db3e151354a70b5f2b9d9eac8ab0458fe24c161da014e6110bb313257af",
+      "bytes": 11873
+    },
+    "AGENT_DESIGN.md": {
+      "sha256": "cae1b8a640f34a84cb6f4c10209770070f176f3525ea62b00d13bd7386f674a8",
+      "bytes": 9496
+    },
+    "MEMORY_PERSONA.md": {
+      "sha256": "1d4818413068f95c2f4a9fab041e2107397b78ef38d86fc638037e35f243e146",
+      "bytes": 8434
+    },
+    "CREATIVITY_TASKS.md": {
+      "sha256": "dd9a08aaa12f73b50f64da0430ac32653230f565211d3e20f759b95208a0a13f",
+      "bytes": 10787
+    },
+    "DEVICE_EXPLORATION.md": {
+      "sha256": "087b0365c8ade0020385445bd2e3b1da1c1bdf1ab2fcdd7cb66d38e4f7889d72",
+      "bytes": 10721
+    },
+    "MIGRATION_PLAN.md": {
+      "sha256": "2cd66da3a4b12edc463eca2f6df54665a8e62c45b0d2689f4d24f9a9cb9ebccf",
+      "bytes": 10697
+    },
+    "DECISIONS.md": {
+      "sha256": "c849c031af9b14585953b0631055c010648e795bb5bce74f057a50fb2c4462e4",
+      "bytes": 11526
+    },
+    "ACCEPTANCE.md": {
+      "sha256": "6acde04e215056646270373dcb6bf4122775e542935b3ef609d3b15f01ebddd9",
+      "bytes": 11273
+    },
+    "REVIEW.md": {
+      "sha256": "5ef4e0569a42f710a43e3cdb4bfff54dbcc812e1fcb3e281bbc92fe15d596e9f",
+      "bytes": 4662
+    },
+    "contracts/knowledge-core.sql": {
+      "sha256": "eb01520475246786c75b981b53877c7ce4e8265cb156c334eecdf5e689dbe673",
+      "bytes": 5253
+    },
+    "contracts/source-map.json": {
+      "sha256": "d0251727ebc183a8ed6ba9c0e028884b9e159e12ea6e0cdb10b588ac126c65e4",
+      "bytes": 2066
+    },
+    "fixtures/scenarios.json": {
+      "sha256": "f944e724bdc05aaefce9d4ddaf8e3ca45420f5e404c68d98f90c317b924427ae",
+      "bytes": 3626
+    },
+    "check.mjs": {
+      "sha256": "6e83694b9fbca31b79a373db73df76b90b8179b557e5d29ab5b40d2bac07fa04",
+      "bytes": 11878
+    }
+  },
+  "passed": 71,
+  "failed": 0,
+  "results": [
+    {
+      "name": "document:README.md",
+      "status": "passed"
+    },
+    {
+      "name": "document:DOMAIN_MODEL.md",
+      "status": "passed"
+    },
+    {
+      "name": "document:AGENT_DESIGN.md",
+      "status": "passed"
+    },
+    {
+      "name": "document:MEMORY_PERSONA.md",
+      "status": "passed"
+    },
+    {
+      "name": "document:CREATIVITY_TASKS.md",
+      "status": "passed"
+    },
+    {
+      "name": "document:DEVICE_EXPLORATION.md",
+      "status": "passed"
+    },
+    {
+      "name": "document:MIGRATION_PLAN.md",
+      "status": "passed"
+    },
+    {
+      "name": "document:DECISIONS.md",
+      "status": "passed"
+    },
+    {
+      "name": "document:ACCEPTANCE.md",
+      "status": "passed"
+    },
+    {
+      "name": "document:REVIEW.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:README.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:DOMAIN_MODEL.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:AGENT_DESIGN.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:MEMORY_PERSONA.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:CREATIVITY_TASKS.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:DEVICE_EXPLORATION.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:MIGRATION_PLAN.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:DECISIONS.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:ACCEPTANCE.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:REVIEW.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:../../AGENTS.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:../../DEVELOPMENT_REPORT.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:../../IMPLEMENTATION_STATUS.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:../../REVIEW_HANDOFF.md",
+      "status": "passed"
+    },
+    {
+      "name": "local-links:../README.md",
+      "status": "passed"
+    },
+    {
+      "name": "pinned-source:main",
+      "status": "passed"
+    },
+    {
+      "name": "pinned-source:audit",
+      "status": "passed"
+    },
+    {
+      "name": "pinned-source:fixed",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:main:src/lib/domain.ts",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:main:src/lib/db.ts",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:main:src/lib/agent/graph.ts",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:main:src/lib/agent/checkpointer.ts",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:main:src/lib/memory/store.ts",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:main:src/lib/life/organization.ts",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:main:src/lib/life/acquisition.ts",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:main:package.json",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:audit:docs/finals/AUDIT.md",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:audit:docs/finals/ARCHITECTURE.md",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:audit:docs/finals/DECISIONS.md",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:audit:docs/finals/TEST_REPORT.md",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:fixed:src/lib/context/items.ts",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:fixed:docs/finals/item-understanding-v1/TEST_REPORT.md",
+      "status": "passed"
+    },
+    {
+      "name": "source-anchor:fixed:docs/finals/item-understanding-v1/DECISIONS.md",
+      "status": "passed"
+    },
+    {
+      "name": "formal-baseline-is-main",
+      "status": "passed"
+    },
+    {
+      "name": "fixtures:explicitly-synthetic-and-not-product-results",
+      "status": "passed"
+    },
+    {
+      "name": "fixture:A:cross-session-relation-and-unknown-material",
+      "status": "passed"
+    },
+    {
+      "name": "fixture:A:privacy-and-forgetting-negative-cases-present",
+      "status": "passed"
+    },
+    {
+      "name": "fixture:B:canonical-states-and-constraints-present",
+      "status": "passed"
+    },
+    {
+      "name": "fixture:B:unknown-is-not-verification",
+      "status": "passed"
+    },
+    {
+      "name": "fixture:B:fair-evaluation-specification-not-result",
+      "status": "passed"
+    },
+    {
+      "name": "fixture:C:research-and-ack-are-not-control-or-verification",
+      "status": "passed"
+    },
+    {
+      "name": "sql:compile-seven-core-tables-and-enable-foreign-keys",
+      "status": "passed"
+    },
+    {
+      "name": "sql:seed-painting-resources-in-two-workspaces",
+      "status": "passed"
+    },
+    {
+      "name": "sql:seed-all-seven-tables-with-one-vertical-slice",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-cross-workspace-subject",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-cross-workspace-product-binding",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-cross-workspace-grant",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-legacy-invalid-availability",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-verified-as-claim-status",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-invalid-json",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-confidence-out-of-range",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-provenance-with-two-origins",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-provenance-with-no-origin",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-missing-parent-revision",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-direct-self-dependency",
+      "status": "passed"
+    },
+    {
+      "name": "sql:prevent-removing-referenced-source",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-duplicate-request-key-per-principal",
+      "status": "passed"
+    },
+    {
+      "name": "sql:reject-malformed-payload-digest",
+      "status": "passed"
+    },
+    {
+      "name": "sql:confidence-does-not-promote-basis-or-status",
+      "status": "passed"
+    },
+    {
+      "name": "sql:ack-is-not-verified",
+      "status": "passed"
+    },
+    {
+      "name": "sql:foreign-key-check-clean",
+      "status": "passed"
+    }
+  ]
+}

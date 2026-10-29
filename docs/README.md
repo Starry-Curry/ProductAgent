@@ -2,6 +2,12 @@
 
 README 负责快速运行，以下文档分别回答产品、工程、演示和部署问题。
 
+## V2 架构研究（2026-10-29，尚未实施）
+
+- [产品架构总览](architecture-v2/README.md)：从物品管理走向共同认识、能力组合和人与物关系。
+- [迁移计划](architecture-v2/MIGRATION_PLAN.md)、[技术决策](architecture-v2/DECISIONS.md)、[三案例验收](architecture-v2/ACCEPTANCE.md)。
+- [本轮设计检查](architecture-v2/evidence/CHECK_REPORT.json) 只证明文档/契约草案自洽，不等于产品、模型或设备验收。
+
 ## 推荐阅读顺序
 
 | 顺序 | 文档 | 适合谁 |
