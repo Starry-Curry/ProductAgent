@@ -574,3 +574,6 @@
   object-fit: cover;
   border-radius: inherit;
 }
+
+.belong-avatar-choices { flex-wrap: wrap; min-width: 0; }
+.belong-avatar-choices legend { max-width: 100%; white-space: normal; }

@@ -33,11 +33,11 @@
 
 ## 真实浏览器截图
 
-下面是1440px桌面与390px移动端的实际页面。照片与私人经历为明确标注的合成测试，截图中的回答来自真实模型或明确标注的资料/本地回忆，不是设计稿。
+下面是最终布局在1440px桌面与390px移动端的实际浏览器复验截图；这次布局复验关闭模型，显示资料/本地回忆，不冒充新的模型调用。照片与私人经历为明确标注的合成测试，不是设计稿。此前真实模型运行的截图与输出另外完整保留于测试回执。
 
-- [A 商品资料与私人记录（桌面）](evidence/live-1793286882827/A-product-desktop.png)
-- [B 赠画、故事、分身与交流（桌面）](evidence/live-1793286882827/B-persona-desktop.png)
-- [B 移动端](evidence/live-1793286882827/B-persona-mobile.png)
+- [A 商品资料与私人记录（桌面）](evidence/offline-1793288220204/A-product-desktop.png)
+- [B 赠画、故事、分身与交流（桌面）](evidence/offline-1793288220204/B-persona-desktop.png)
+- [B 移动端](evidence/offline-1793288220204/B-persona-mobile.png)
 
 ## 打开与复现
 

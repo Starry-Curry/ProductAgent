@@ -191,6 +191,7 @@ try {
     .getByRole("textbox", { name: "分身的名字", exact: true })
     .fill("山山");
   await page.getByRole("button", { name: "画框形象", exact: true }).click();
+  assert(await page.locator(".belong-avatar-choices").evaluate(el=>{const box=el.getBoundingClientRect();return [...el.querySelectorAll("button")].every(b=>b.getBoundingClientRect().right<=box.right+1);}),"Avatar choices must fit inside the sidebar");
   await page.getByRole("button", { name: "保存分身设置", exact: true }).click();
   await page
     .getByRole("checkbox", { name: "用数字分身的口吻交流", exact: true })

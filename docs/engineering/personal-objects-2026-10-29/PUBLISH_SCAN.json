@@ -1,8 +1,8 @@
 {
-  "at": "2026-10-29T15:31:48.290Z",
+  "at": "2026-10-29T15:49:45.960Z",
   "scope": "all proposed changed/untracked non-ignored files; patterns, forbidden paths, sizes and Markdown links; not a universal secret detector",
-  "files": 69,
-  "totalBytes": 6514446,
+  "files": 73,
+  "totalBytes": 7459190,
   "failures": [],
   "hashes": [
     {
@@ -42,13 +42,13 @@
     },
     {
       "file": "docs/engineering/personal-objects-2026-10-29/README.md",
-      "bytes": 5959,
-      "sha256": "ce15c8656dec75c764172cb569b80e5d08dabbd452a8dba6350afbe4e1d9afcc"
+      "bytes": 6091,
+      "sha256": "689f6eb59e46572b7720db802fb2258083b6306cfd8218b6e418ca08edda0325"
     },
     {
       "file": "docs/engineering/personal-objects-2026-10-29/TEST_REPORT.md",
-      "bytes": 6617,
-      "sha256": "49e47c8d1fd97c75246efe72b69d5e18f2928b1692657567f3f58074aa17a8f6"
+      "bytes": 7026,
+      "sha256": "dc96cd179911c04db48f32965377b63ded36d29224f38be8550be168b561c3ba"
     },
     {
       "file": "docs/engineering/personal-objects-2026-10-29/evidence/USAGE.json",
@@ -68,7 +68,7 @@
     {
       "file": "docs/engineering/personal-objects-2026-10-29/evidence/build.log",
       "bytes": 2075,
-      "sha256": "85b52490487e5ad23ca15951d376f38656f673ce75af83fd7a1119e12acf9b67"
+      "sha256": "54315e460bfd15d8f59ede6e9621c8b4ab1228a0b4477f39f18cf50e4f6439b4"
     },
     {
       "file": "docs/engineering/personal-objects-2026-10-29/evidence/cloud.log",
@@ -247,8 +247,8 @@
     },
     {
       "file": "src/app/belonging.css",
-      "bytes": 10779,
-      "sha256": "633c8300578ba1ff6e3172241751cf498298bb2ad39043d003efdab33a9f7b98"
+      "bytes": 11489,
+      "sha256": "f9616ca187519490aa5a0c1c00e93866eca5b0abe55b99e9a9f357665d394aab"
     },
     {
       "file": "src/app/layout.tsx",
@@ -342,13 +342,33 @@
     },
     {
       "file": "tests/personal-objects-integration.mjs",
-      "bytes": 11327,
-      "sha256": "7c4ef8df082e8a55b229458368abbae70bc4d1f7b5a577fae5b38bcede37cce2"
+      "bytes": 11580,
+      "sha256": "7c221b81b4b50ed5c698f0ce94d7a9d93203b44f06f627a07e99cf6a97e13b70"
     },
     {
       "file": "tests/personal-objects.test.ts",
       "bytes": 14451,
       "sha256": "7b1d753051341fe7e96526ba70b36bd20014606e0aeac10abeb5b24b9cb8c658"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793288220204/A-product-desktop.png",
+      "bytes": 361892,
+      "sha256": "7f0b601c54a01b021ed38364db729919d03b201c701fb5c586aa9645f22511a4"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793288220204/B-persona-desktop.png",
+      "bytes": 266499,
+      "sha256": "a8af577ba627e85167876c407bf1c4004a7d6106ff6627b9ad635f94fdf8f4bf"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793288220204/B-persona-mobile.png",
+      "bytes": 276053,
+      "sha256": "ca57e0b807573f5891e427c3abf76fd6e42abaf20b2ae7fc719ff67131ad1e48"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793288220204/results.json",
+      "bytes": 38796,
+      "sha256": "97d5570655a98fabca66f3b1b812d0ab82d8cd8de74b66ec1f2375aba1c599d0"
     }
   ]
 }
