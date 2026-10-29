@@ -1,3 +1,4 @@
+import { isProductManual } from "./manuals.ts";
 import { z } from "zod";
 import { productPacks } from "../products.ts";
 import { AgentError } from "../agent/contracts.ts";
@@ -72,9 +73,7 @@ export async function recognizeProduct(
           checkedAt: new Date().toISOString(),
           message:
             "已读取官方页面并核对型号；下方仍为经审核的事实，网页变化不会自动覆盖事实。",
-          manuals: doc.links
-            .filter((l) => /pdf|说明|manual/i.test(l.url + l.title))
-            .slice(0, 4),
+          manuals: doc.links.filter(isProductManual).slice(0, 4),
         };
       } catch {
         retrieval.message =

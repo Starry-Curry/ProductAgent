@@ -1,3 +1,4 @@
+import { isProductManual } from "./manuals.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { createHash } from "node:crypto";
 import { canRead, type Item, type Person, type State } from "../domain.ts";
@@ -28,6 +29,14 @@ export type KnowledgeChunk = {
   warnings?: string[];
 };
 export type AcquiredDocument = {
+  role?: "product" | "manual";
+  applicability?: string;
+  observations?: {
+    kind: "fact" | "operation" | "limitation";
+    topic: string;
+    value: string;
+    quote: string;
+  }[];
   processorVersion?: string;
   id: string;
   url: string;
@@ -289,7 +298,7 @@ export function knowledgeConflicts(documents: AcquiredDocument[]) {
       : [];
   });
 }
-function persist(
+export function storeOfficialDocument(
   db: DatabaseSync,
   actor: Person,
   item: Item,
@@ -355,7 +364,7 @@ export function indexOfficialSource(
   );
   db.exec("BEGIN IMMEDIATE");
   try {
-    persist(db, actor, item, document);
+    storeOfficialDocument(db, actor, item, document);
     db.exec("COMMIT");
   } catch (e) {
     db.exec("ROLLBACK");
@@ -535,7 +544,7 @@ export async function acquireKnowledge(
           makeKnowledgeDocument(d, { ...item, brand }, [d.url], sourceRegion),
         );
         for (const link of d.links
-          .filter((l) => /\.pdf(?:$|[?#])/i.test(l.url))
+          .filter((l) => /\.pdf(?:$|[?#])/i.test(l.url) && isProductManual(l))
           .slice(0, 1)) {
           const h = new URL(link.url).hostname;
           if (
@@ -619,7 +628,7 @@ export async function acquireKnowledge(
   if (options.persist !== false && tableExists(db)) {
     db.exec("BEGIN IMMEDIATE");
     try {
-      for (const d of documents) persist(db, actor, item, d);
+      for (const d of documents) storeOfficialDocument(db, actor, item, d);
       db.prepare(
         "INSERT INTO life_knowledge_fetches VALUES(?,?,?,?,?) ON CONFLICT(owner,item_id) DO UPDATE SET identity=excluded.identity,at=excluded.at,result=excluded.result",
       ).run(

@@ -13,6 +13,8 @@ export const turnInputSchema = z
     memoryPolicy: z.enum(["legacy", "candidates", "off"]).optional(),
     uiContext: z
       .object({
+        homeId: z.literal("young-apartment-v1").optional(),
+        voiceItemId: z.string().max(100).optional(),
         page: z.enum([
           "home",
           "item",
@@ -68,6 +70,11 @@ export type Citation = {
   section?: string;
 };
 export type AssistantReply = {
+  usedItems?: { id: string; name: string; model: string }[];
+  task?: {
+    goal: string;
+    parts: { title: string; status: "addressed" | "needs_info" }[];
+  };
   route?: HomeRoute;
   actionCards?: ActionCard[];
   outcome: "answered" | "needs_info" | "referred" | "unavailable" | "blocked";

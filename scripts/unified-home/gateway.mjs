@@ -1,0 +1,147 @@
+// The application receives a fake key. Only this local process authenticates to the existing provider.
+import http from "node:http";
+import fs from "node:fs";
+import path from "node:path";
+import { createHash } from "node:crypto";
+export async function gateway(configPath) {
+  if (!configPath || path.basename(configPath) !== ".env.local")
+    throw Error("existing_local_configuration_required");
+  const config = {};
+  for (const line of fs.readFileSync(configPath, "utf8").split(/\r?\n/)) {
+    const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*?)\s*$/);
+    if (m) config[m[1]] = m[2].replace(/^(['"])(.*)\1$/, "$2");
+  }
+  if (!config.AI_API_KEY || !config.AI_BASE_URL || !config.AI_MODEL)
+    throw Error("credential_or_model_missing");
+  const remote = new URL(config.AI_BASE_URL);
+  if (
+    remote.protocol !== "https:" ||
+    remote.hostname !== "dashscope.aliyuncs.com" ||
+    remote.username ||
+    remote.password ||
+    remote.search
+  )
+    throw Error("unexpected_provider_configuration");
+  const root = path.resolve("../unified-home-evidence");
+  fs.mkdirSync(root, { recursive: true });
+  const file = path.join(root, "model-calls.json"),
+    lockFile = path.join(root, "gateway.lock"),
+    lock = fs.openSync(lockFile, "wx");
+  fs.writeFileSync(
+    lock,
+    JSON.stringify({ pid: process.pid, at: new Date().toISOString() }),
+  );
+  const ledger = fs.existsSync(file)
+    ? JSON.parse(fs.readFileSync(file, "utf8"))
+    : { task: "unified-home-beta", attempts: [] };
+  const clean = (value) =>
+    JSON.parse(
+      JSON.stringify(value).replaceAll(config.AI_API_KEY, "[removed]"),
+    );
+  const save = () =>
+    fs.writeFileSync(file, JSON.stringify(clean(ledger), null, 2) + "\n");
+  const server = http.createServer(async (req, res) => {
+    let attempt;
+    try {
+      if (
+        req.headers.origin ||
+        req.headers.authorization !== "Bearer fixture-only" ||
+        req.method !== "POST"
+      )
+        throw Error("isolated_provider_required");
+      let raw = "";
+      for await (const c of req) {
+        raw += c;
+        if (Buffer.byteLength(raw) > 180000) throw Error("input_too_large");
+      }
+      const body = JSON.parse(raw);
+      if (![config.AI_MODEL,"qwen3-max","qwen-max"].includes(body.model) || body.stream)
+        throw Error("configured_nonstream_model_only");
+      const user = body.messages?.find((m) => m.role === "user");
+      let question = "";
+      try {
+        question = JSON.parse(user.content).question || "";
+      } catch {
+        question = String(user?.content || "").slice(0, 2000);
+      }
+      attempt = {
+        number: ledger.attempts.length + 1,
+        startedAt: new Date().toISOString(),
+        model: body.model,
+        status: "started",
+        question,
+        inputSha256: createHash("sha256").update(raw).digest("hex"),
+        inputBytes: Buffer.byteLength(raw),
+        tools: (body.tools || []).map((t) => t.function.name),
+      };
+      ledger.attempts.push(attempt);
+      save();
+      const controller = new AbortController();
+      res.on("close", () => {
+        if (!res.writableEnded) controller.abort();
+      });
+      const response = await fetch(
+        config.AI_BASE_URL.replace(/\/$/, "") + "/chat/completions",
+        {
+          method: "POST",
+          redirect: "error",
+          headers: {
+            Authorization: "Bearer " + config.AI_API_KEY,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...body,
+            max_tokens: Math.min(body.max_tokens || 2600, 3200),
+            enable_thinking: false,
+          }),
+          signal: AbortSignal.any([
+            AbortSignal.timeout(65000),
+            controller.signal,
+          ]),
+        },
+      );
+      attempt.httpStatus = response.status;
+      const result = await response.json();
+      if (!response.ok) throw Error("provider_http_" + response.status);
+      attempt.status = "returned";
+      attempt.tokens = result.usage;
+      attempt.finishReason = result.choices?.[0]?.finish_reason;
+      attempt.output = clean(result.choices?.[0]?.message || {});
+      attempt.elapsedMs = Date.now() - Date.parse(attempt.startedAt);
+      save();
+      res.writeHead(200, { "content-type": "application/json" });
+      res.end(JSON.stringify(result));
+    } catch (e) {
+      if (attempt) {
+        attempt.status = "failed";
+        attempt.transportCode=e.cause?.code||e.name;
+        attempt.error = String(e.message).replaceAll(
+          config.AI_API_KEY,
+          "[removed]",
+        );
+        attempt.elapsedMs = Date.now() - Date.parse(attempt.startedAt);
+        save();
+      }
+      if (!res.headersSent)
+        res.writeHead(503, { "content-type": "application/json" });
+      res.end(
+        JSON.stringify({
+          error: { message: attempt?.error || "isolated_gateway_rejected" },
+        }),
+      );
+    }
+  });
+  await new Promise((ok) => server.listen(0, "127.0.0.1", ok));
+  return {
+    url: `http://127.0.0.1:${server.address().port}`,
+    model: config.AI_MODEL,
+    close: () =>
+      new Promise((ok) =>
+        server.close(() => {
+          fs.closeSync(lock);
+          fs.unlinkSync(lockFile);
+          ok();
+        }),
+      ),
+  };
+}

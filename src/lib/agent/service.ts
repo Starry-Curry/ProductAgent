@@ -81,7 +81,17 @@ export async function respond(
       revision: 0,
       status: "active",
       messages: [],
-      known: input.uiContext ? { uiPage: input.uiContext.page } : {},
+      known: input.uiContext
+        ? {
+            uiPage: input.uiContext.page,
+            ...(input.uiContext.homeId
+              ? { homeId: input.uiContext.homeId }
+              : {}),
+            ...(input.uiContext.voiceItemId
+              ? { homeVoiceItemId: input.uiContext.voiceItemId }
+              : {}),
+          }
+        : {},
       tried: [],
       memoryEpoch: epoch(db, actor),
       createdAt: at,
@@ -118,6 +128,17 @@ export async function respond(
   }
   const { session, cached } = beginTurn(db, read, actor, input);
   if (cached) return cached;
+  if (
+    input.uiContext &&
+    session.messages.length &&
+    (session.known.homeId || "") !== (input.uiContext.homeId || "")
+  ) {
+    releaseTurn(db, actor, input, session.id);
+    throw new AgentError(
+      "切换模拟家庭与原有空间时请开始新问题，避免混入另一段私人上下文",
+      409,
+    );
+  }
   if (input.memoryPolicy) session.known.memoryPolicy = input.memoryPolicy;
   if (input.uiContext) {
     session.known.interfaceMode = input.uiContext.interfaceMode || "standard";
@@ -135,8 +156,18 @@ export async function respond(
       session.known.taskPlanId = plan.id;
     }
     session.known.uiPage = input.uiContext.page;
-    const memoryChoice =
-      input.uiContext.useItemMemories === true ? "yes" : "no";
+    if (input.uiContext.homeId) session.known.homeId = input.uiContext.homeId;
+    else delete session.known.homeId;
+    if (input.uiContext.voiceItemId)
+      session.known.homeVoiceItemId = input.uiContext.voiceItemId;
+    else delete session.known.homeVoiceItemId;
+    const memoryChoice = (
+      input.uiContext.homeId
+        ? input.uiContext.useItemMemories !== false
+        : input.uiContext.useItemMemories === true
+    )
+      ? "yes"
+      : "no";
     if (
       session.known.useItemMemories &&
       session.known.useItemMemories !== memoryChoice
@@ -177,7 +208,9 @@ export async function respond(
   }
   try {
     let execution: Omit<TurnResult, "session">;
-    const explicit = input.question.match(/^记住[：:，,\s]+([\s\S]+)$/u);
+    const explicit =
+      !session.known.homeId &&
+      input.question.match(/^记住[：:，,\s]+([\s\S]+)$/u);
     if (explicit) {
       const text = explicit[1].trim();
       const kind = /喜欢|爱好|兴趣/.test(text) ? "interest" : "experience";
@@ -216,7 +249,9 @@ export async function respond(
     } else {
       const itemId = input.itemId || session.known.activeItemId;
       const continued =
-        itemId && completedStepOrdinals(input.question).length
+        !session.known.homeId &&
+        itemId &&
+        completedStepOrdinals(input.question).length
           ? continueVerifiedGuidance(
               session,
               input.question,

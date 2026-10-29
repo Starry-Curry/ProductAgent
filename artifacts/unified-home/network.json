@@ -1,0 +1,407 @@
+{
+  "at": "2026-10-29T17:37:40.172Z",
+  "receipts": [
+    {
+      "itemId": "virtual-home:lin:speaker",
+      "status": "live-read",
+      "attempts": [
+        {
+          "url": "https://www.jbl.com/GO-4.html",
+          "status": "failed",
+          "reason": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。"
+        },
+        {
+          "url": "https://www.jbl.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw9308649c/pdfs/JBL%20Go%204_%20Specsheet_EN.pdf",
+          "status": "live-read",
+          "hash": "bbcd8cc2df4996bd7eaf9f8395185a6cb5e8fec08306830e18e5dd9295d9e903"
+        },
+        {
+          "url": "https://support.jbl.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwfff30b69/pdfs/PA_JBL_GO%204_QSG_Global_SOP.pdf",
+          "status": "failed",
+          "reason": "公开资料网络读取失败，可手动打开官网或上传说明书"
+        }
+      ],
+      "issues": [
+        "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+        "公开资料网络读取失败，可手动打开官网或上传说明书"
+      ],
+      "elapsedMs": 15899
+    }
+  ],
+  "knowledge": [
+    {
+      "itemId": "virtual-home:lin:lamp",
+      "model": "MJTD01SYL",
+      "at": "2026-10-29T17:34:14.912Z",
+      "status": "live-read",
+      "attempts": [
+        {
+          "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+          "status": "live-read",
+          "hash": "f4b0368f6f778dc9444f32d8a055ecd92002d15fe70278b92620455c42a9f218"
+        },
+        {
+          "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+          "status": "live-read",
+          "hash": "8cfad180d54f24734b6206bc6b14f62b6d6c48cafeccc52919f9f4e45e8f0454"
+        }
+      ],
+      "issues": [],
+      "successful": true,
+      "documents": [
+        {
+          "id": "798ca4766b88f5f076e97ad4",
+          "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+          "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+          "fetchedAt": "2026-10-29T17:34:14.904Z",
+          "role": "manual",
+          "applicability": "官方香港版，电气参数与大陆版不混用；操作需核对实物版本",
+          "observations": [],
+          "excerpt": "米家LED智能檯燈1S 使用說明書 \t01\nMi Smart LED Desk Lamp 1S User Manual \t08\nﻣﻦ Mi 1دﻟﻴﻞ اﻟﻤﺴﺘﺨﺪم ﻣﺼﺒﺎح إل إي دي اﻟﻤﻜﺘﺒﻲ اﻟﺬﻛﻲ S 17\n\n\n\n使用產品前請仔細閱讀本指南，並妥善保管。\n01\nHK\n產品介紹\n使用場所：書房、臥室等室內場所。檯燈處於正常工作位置時，AB 方\n向與桌面平行;出光口面水平，出光口面與桌面的垂直距離為 400mm。\n建議使\n用高度\n400mm\n感謝使用本產品，米家LED智能檯燈1S 光學上採用優質的 LED 燈珠，專業的\n光學結構，結合自然光混光演算法，呈現出均勻一致的照明體驗。\nA \tB\n\n\n\n02\nHK\n使用\n連接電源\n將電源線插入底部電源孔中。\n旋鈕鍵\n變壓器\n燈體\n可調節角度 135 度\n電源孔\n\n\n\n03\nHK\n按鍵操作說明\n按壓旋鈕鍵，\n開啓/關閉檯燈\n轉旋鈕鍵，\n調節燈光亮度\n按住並轉旋\n鈕鍵，調節色溫\n連接米家APP\n掃描二維碼，下載並安裝米家APP，已安裝米家APP的用戶將直接進入裝置連\n接頁面。或在Go"
+        },
+        {
+          "id": "af707ccc051cbe5c7e25d46c",
+          "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+          "title": "米家台灯1S-小米商城",
+          "fetchedAt": "2026-10-29T17:34:14.107Z",
+          "role": "product",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "小米商城|MIUI|IoT|云服务|天星数科|有品|小爱开放平台|企业团购|资质证照|协议规则|下载App|智能生活\n\n购物车\n\n登录|注册\n\n小米官网\n\n全部商品分类\n\nXiaomi手机\n\nXiaomi Civi 2\n2399元起\n\nXiaomi MIX Fold 2\n8999元起\n\nXiaomi 12S Ultra\n5999元起\n\nXiaomi 12S Pro\n4699元起\n\nXiaomi 12S\n3999元起\n\nXiaomi 12 Pro 天玑版\n3999元起\n\nRedmi手机\n\nRedmi Note 12 5G\n1199元起\n\nRedmi Note 12 Pro\n1699元起\n\nRedmi Note 12 Pro+\n2199元起\n\nRedmi K50 至尊版\n2999元起\n\nRedmi Note 11T Pro+\n2099元起\n\nRedmi Note 11T Pro\n1799元起\n\n电视\n\nRedmi智能电视X55 2022\n2999元\n\nRedmi智能电视X65 2022\n3999元\n\n小米电视6 65” OLED\n6999元\n\n小米"
+        }
+      ]
+    },
+    {
+      "itemId": "virtual-home:lin:desk",
+      "model": "803.542.81",
+      "at": "2026-10-29T17:34:16.307Z",
+      "status": "live-read",
+      "attempts": [
+        {
+          "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+          "status": "live-read",
+          "hash": "ab06d4442b56016f683d9133053a65795999b2a58affc13a7be8dbc4b929d6d7"
+        },
+        {
+          "url": "https://resources.ikea.cn/cn/zh/assembly_instructions/micke-mi-ke-shu-zhuo-bai-se__AA-1893317-6-2.pdf",
+          "status": "live-read",
+          "hash": "285237ced082cc85f80bbd1063d06e3c06e828a87e9bd1a870ea14829d4f725f"
+        }
+      ],
+      "issues": [],
+      "successful": true,
+      "documents": [
+        {
+          "id": "d2e9c7729ba483a627aeea41",
+          "url": "https://resources.ikea.cn/cn/zh/assembly_instructions/micke-mi-ke-shu-zhuo-bai-se__AA-1893317-6-2.pdf",
+          "title": "micke-mi-ke-shu-zhuo-bai-se__AA-1893317-6-2.pdf",
+          "fetchedAt": "2026-10-29T17:34:16.294Z",
+          "role": "manual",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "MICKE\n\n\n\n2 \tAA-1893317-6\n\n\n\n100086\n1x\n1x\n1x\n10081375\n3x\n1x \t1x \t2x\n2x\n8x\t12x\n2x \t4x \t8x \t2x\t14x \n118331\n\t110519\n\t110126\n\t103430\n\t103114\n121030\n\t100092\n\t101344\n\t105344\n\t100365\n153549\n\t112519\n\t121338\n123771\n3\n\n\n\n121304\n\t121208\n\t121186\n112482\n1x\n1x\n4 \tAA-1893317-6\n\n\n\n1x\n118331\n2x\n2x\n101344\n1\n2\n5\n\n\n\n123771\n2x\n103114\n103114\n103430\n \n110126\n1x\n105344\n3\n4\n6 \tAA-1893317-6\n\n\n\n2x\n110519\n1x\n105344\n5\n6\n7\n7\n\n\n\n112482\n112482\n100365\n4x\n8\n9\n8 \tAA-1893317-6\n\n\n\n17\n2x\n101344\n101344\n2x\n10\n11\n9\n\n"
+        },
+        {
+          "id": "8078f5eb423e8089279dde81",
+          "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+          "title": "MICKE 米克 书桌 白色 - IKEA",
+          "fetchedAt": "2026-10-29T17:34:15.753Z",
+          "role": "product",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "宜家家居官网-宜家电商-提供客厅，卧室，厨房，各类家居灵感和产品解决方案- IKEA\n宜家在中国召回部分批次BÄSINGEN 巴辛根 淋浴椅中文 | EN 搜索登录宜家账号 我的个人档案 我的收藏 购物袋所有商品\n房间\n活动和特惠\n设计和服务\n家居灵感\n新品\n企业购\n下载APP扫码下载宜家APP\n随时随地都能宜家！\n全部图片商品简介商品详情外观利落简洁，适合放在任何地方。 你可以把它和 MICKE 米克 系列的其他书桌或抽屉柜组合起来，扩大工作空间。背部设计巧妙，可以将杂乱的线缆隐藏起来。货号803.542.81宜家服务商品详情\n商品描述背面的走线口轻松将插座和电线置于视线之外，需要时又近在咫尺。\n可根据自己的需要将桌腿安装在右侧或左侧。\n抽屉制动装置可以防止抽屉被过分拉出。\n背面也经过表面处理；适合放在屋子中间。\n您可以通过组合书桌和抽屉单元，将工作台延长。MICKE 米克 系列所有书桌和抽屉单元高度相同。\n产地见包装\n小贴士在重量均匀分布的情况下，最大可承重为50公斤。 请注意桌面任意点的集中负重不应超过15公斤。\n桌子已经过测试，适合家庭使"
+        }
+      ]
+    },
+    {
+      "itemId": "virtual-home:lin:samla",
+      "model": "194.408.48",
+      "reviewedPack": {
+        "source": {
+          "title": "宜家中国 SAMLA 商品详情",
+          "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+          "section": "商品描述、商品尺寸、小贴士、材料",
+          "checkedAt": "2026-10-29",
+          "kind": "official"
+        },
+        "facts": [
+          {
+            "id": "samla:material",
+            "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。"
+          },
+          {
+            "id": "samla:size",
+            "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。"
+          },
+          {
+            "id": "samla:lid",
+            "text": "盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。"
+          },
+          {
+            "id": "samla:limits",
+            "text": "仅供室内使用，不可直接接触食物。"
+          },
+          {
+            "id": "samla:care",
+            "text": "可用软布蘸水及中性洗涤剂或皂液擦拭。"
+          }
+        ]
+      },
+      "at": "2026-10-29T17:34:17.149Z",
+      "status": "live-read",
+      "attempts": [
+        {
+          "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+          "status": "live-read",
+          "hash": "ab74c726174b1e8b2a7a1329c976c1782b150a3c1b0b48ac2c34681a7a265337"
+        }
+      ],
+      "issues": [],
+      "successful": true,
+      "documents": [
+        {
+          "id": "0bc7578244e7a1938f776477",
+          "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+          "title": "SAMLA 萨姆拉 附盖储物盒 透明 - IKEA",
+          "fetchedAt": "2026-10-29T17:34:17.137Z",
+          "role": "product",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "宜家家居官网-宜家电商-提供客厅，卧室，厨房，各类家居灵感和产品解决方案- IKEA\n宜家在中国召回部分批次BÄSINGEN 巴辛根 淋浴椅中文 | EN 搜索登录宜家账号 我的个人档案 我的收藏 购物袋所有商品\n房间\n活动和特惠\n设计和服务\n家居灵感\n新品\n企业购\n下载APP扫码下载宜家APP\n随时随地都能宜家！\n全部图片商品简介商品详情这款附盖储物盒可单独或组合使用，用来收纳一些细小物品，比如晒衣夹或小工具。 由透明塑料制成，一目了然，便于你轻松查找所需物品。货号194.408.48宜家服务商品详情\n商品描述这款多用途储物盒由透明塑料制成，结实耐用。 所用材料符合宜家所有安全要求，适合日常使用。\n带内嵌式锁扣功能，可将盖子固定在位，既可保护物品，避免沾染灰尘，也方便将储物盒叠放起来。\n无需寻寻觅觅——透明塑料盒可以清晰地显示盒内物品，方便你轻松找到所需物品。\n适合收纳小型工具、绳索和电线。\n该产品属于SAMLA 萨姆拉 系列，该系列产品尺寸不一，可相互组合搭配。\nSAMLA 萨姆拉 系列产品适合放入搁架单元，例如IVAR 伊娃 系列和BROR"
+        }
+      ]
+    },
+    {
+      "itemId": "virtual-home:lin:knagglig",
+      "model": "103.926.01",
+      "reviewedPack": {
+        "source": {
+          "title": "宜家中国 KNAGGLIG 商品详情与组装文件入口",
+          "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+          "section": "商品描述、尺寸、材料、小贴士",
+          "checkedAt": "2026-10-29",
+          "kind": "official"
+        },
+        "facts": [
+          {
+            "id": "knagglig:material",
+            "text": "主体为实心松木，其它部分为镀锌钢。"
+          },
+          {
+            "id": "knagglig:size",
+            "text": "宽23、深16、高10厘米；不是内部净尺寸。"
+          },
+          {
+            "id": "knagglig:structure",
+            "text": "带提手，可叠放；最大承重2公斤。"
+          },
+          {
+            "id": "knagglig:limits",
+            "text": "不得挂墙；可用干布清洁。"
+          }
+        ]
+      },
+      "at": "2026-10-29T17:34:18.190Z",
+      "status": "live-read",
+      "attempts": [
+        {
+          "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+          "status": "live-read",
+          "hash": "5e1eae40dfea57d0730be2233e6b2d2465a893ec7e75c575cbe4fbe589c1a35e"
+        },
+        {
+          "url": "https://resources.ikea.cn/cn/zh/assembly_instructions/knagglig-qia-na-ge-he-song-mu__AA-2019275-3-1.pdf",
+          "status": "live-read",
+          "hash": "e6afa56591f2df1a60b2f693b7b92caeb9c73d6712440aae61f5d17f083fb97a"
+        }
+      ],
+      "issues": [],
+      "successful": true,
+      "documents": [
+        {
+          "id": "22c12c04c94d51d4088b85a9",
+          "url": "https://resources.ikea.cn/cn/zh/assembly_instructions/knagglig-qia-na-ge-he-song-mu__AA-2019275-3-1.pdf",
+          "title": "knagglig-qia-na-ge-he-song-mu__AA-2019275-3-1.pdf",
+          "fetchedAt": "2026-10-29T17:34:18.184Z",
+          "role": "manual",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "KNAGGLIG\n\n\n\n10\n9053\n1095\n35\n2\n\n\n\n109535\n4x\n3\n\n\n\n4x\n109053\n© Inter IKEA Systems B.V. 2014\t4 \t2017-02-08 AA-2019275-3"
+        },
+        {
+          "id": "5d786c1031d43c397fafc527",
+          "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+          "title": "KNAGGLIG 卡纳格 盒 松木 - IKEA",
+          "fetchedAt": "2026-10-29T17:34:17.910Z",
+          "role": "product",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "宜家家居官网-宜家电商-提供客厅，卧室，厨房，各类家居灵感和产品解决方案- IKEA\n宜家在中国召回部分批次BÄSINGEN 巴辛根 淋浴椅中文 | EN 搜索登录宜家账号 我的个人档案 我的收藏 购物袋所有商品\n房间\n活动和特惠\n设计和服务\n家居灵感\n新品\n企业购\n下载APP扫码下载宜家APP\n随时随地都能宜家！\n全部图片商品简介商品详情这款盒子十分耐用，可以承载重物。你可以让它保持原样，也可以上油、打蜡或涂你喜欢的颜色。放在客厅或者车库都很漂亮，非常适合搭配 IVAR 伊娃 储物装置。货号103.926.01宜家服务商品详情\n商品描述可叠放\n盒子含把手，易于拉出或提拿。\n天然实木是一种坚固耐用的材料，表面上油、打蜡、涂漆或染色后，会更加耐用并易于打理。\n产地见包装\n小贴士不得挂在墙上。\n\n商品尺寸和包装信息商品尺寸宽度23 厘米深度16 厘米高度10 厘米最大可承重2 公斤包装信息包装数量1高度3 厘米长度23 厘米净重0.30 公斤容量1.5 公升重量0.33 公斤宽度22 厘米\n保养说明和环境和材料保养说明用干布块擦净。清除污迹，可使用橡"
+        }
+      ]
+    },
+    {
+      "itemId": "virtual-home:lin:speaker",
+      "model": "GO 4",
+      "reviewedPack": {
+        "source": {
+          "title": "JBL Go 4 official specifications",
+          "url": "https://www.jbl.com/GO-4.html",
+          "section": "Features / Control and Connection Specifications",
+          "checkedAt": "2026-10-17",
+          "kind": "official"
+        },
+        "facts": [
+          {
+            "id": "go4:bluetooth",
+            "text": "JBL Go 4 使用蓝牙 5.3。"
+          },
+          {
+            "id": "go4:stereo",
+            "text": "两台 JBL Go 4 可以组成立体声；多音箱连接要求兼容 JBL Auracast。"
+          },
+          {
+            "id": "go4:protection",
+            "text": "JBL Go 4 的官方防尘防水等级为 IP67。"
+          }
+        ]
+      },
+      "at": "2026-10-29T17:37:40.166Z",
+      "status": "live-read",
+      "attempts": [
+        {
+          "url": "https://www.jbl.com/GO-4.html",
+          "status": "failed",
+          "reason": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。"
+        },
+        {
+          "url": "https://www.jbl.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw9308649c/pdfs/JBL%20Go%204_%20Specsheet_EN.pdf",
+          "status": "live-read",
+          "hash": "bbcd8cc2df4996bd7eaf9f8395185a6cb5e8fec08306830e18e5dd9295d9e903"
+        },
+        {
+          "url": "https://support.jbl.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwfff30b69/pdfs/PA_JBL_GO%204_QSG_Global_SOP.pdf",
+          "status": "failed",
+          "reason": "公开资料网络读取失败，可手动打开官网或上传说明书"
+        }
+      ],
+      "issues": [
+        "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+        "公开资料网络读取失败，可手动打开官网或上传说明书"
+      ],
+      "successful": true,
+      "documents": [
+        {
+          "id": "eb6a6e8afe82d0fde869d2f5",
+          "url": "https://www.jbl.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw9308649c/pdfs/JBL%20Go%204_%20Specsheet_EN.pdf",
+          "title": "JBL Go 4_ Specsheet_EN.pdf",
+          "fetchedAt": "2026-10-29T17:37:28.151Z",
+          "role": "product",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "Features\n\u0017 \tUltra-portable JBL Pro Sound\nwith punchier bass\n\u0017 \tUp to 7 hours of playtime plus 2\nhours with Playtime Boost\n\u0017 \tWaterproof and dustproof\n\u0017 \tMulti-speaker connection by\nAuracast™\n\u0017 \tMade in part with recycled\nmaterials\n\u0017 \tVibrant color options\n\u0017 \tJBL Portable app\nGrab and go.\nTake big JBL Pro sound wherever you go. The bold, colorful JBL Go\n4 ultra-portable Bluetooth speaker fits in the palm of your hand,\ndelivering clear, loud JBL Pro Sound with rich, punchy bass"
+        }
+      ]
+    },
+    {
+      "itemId": "virtual-home:lin:bunny",
+      "model": "BAS3B",
+      "at": "2026-10-29T17:34:35.035Z",
+      "status": "live-read",
+      "attempts": [
+        {
+          "url": "https://jellycat.com/bashful-beige-bunny/?sku=BAS3B",
+          "status": "live-read",
+          "hash": "d53898458aac96997f9543065daddf6ef6eadf0052d755ee2d7937bf29075b21"
+        }
+      ],
+      "issues": [],
+      "successful": true,
+      "documents": [
+        {
+          "id": "ca9849e3dd1c6a296ce05c23",
+          "url": "https://jellycat.com/bashful-beige-bunny/?sku=BAS3B",
+          "title": "Bashful Beige Bunny - Official Jellycat",
+          "fetchedAt": "2026-10-29T17:34:35.020Z",
+          "role": "product",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "Bashful Beige Bunny\n\nManufacturer suggested retail price\n\nPrice was\n\nPrice now\n\n£25.00\n\n(You save\n\n)\n\n|\n\nEarn points\n\n(409 Reviews)\n\nWe Say...\n\nYou Say...\n\nSay hello to the dear little hopper that started it all: the one, the only – Bashful Bunny!\nShe’s a loyal friend and cheerful companion who always looks on the bright side of life. And with her velvety fur and personalisable, floppy ears – in a range of fonts and thread colours – she’s the perfect friend for someone truly "
+        }
+      ]
+    },
+    {
+      "itemId": "virtual-home:lin:roses",
+      "model": "10328",
+      "at": "2026-10-29T17:34:39.615Z",
+      "status": "live-read",
+      "attempts": [
+        {
+          "url": "https://www.lego.com/en-us/product/bouquet-of-roses-10328",
+          "status": "failed",
+          "reason": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。"
+        },
+        {
+          "url": "https://www.lego.com/en-us/service/building-instructions/10328",
+          "status": "live-read",
+          "hash": "37bb722b97b7053f43b11d4b14f5f59cb0366b6f9077c837a42bdc82d57738aa"
+        },
+        {
+          "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6536293.pdf",
+          "status": "live-read",
+          "hash": "a5b5583aa57f91a2e187d50f2c916359312aa9bf863fe535441b34d1a0c3eaf5"
+        },
+        {
+          "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6536294.pdf",
+          "status": "live-read",
+          "hash": "062b9b1e4492d9ba1e0a9ce013063a279d4c41d702a73164241c54ab67645d3e"
+        }
+      ],
+      "issues": [
+        "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。"
+      ],
+      "successful": true,
+      "documents": [
+        {
+          "id": "80e72a718550a99a5619efc3",
+          "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6536294.pdf",
+          "title": "6536294.pdf",
+          "fetchedAt": "2026-10-29T17:34:39.599Z",
+          "role": "manual",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "3\t3\n4\t4\n44\n\n\n\n4x\t4x\n33\n1x\t1x \t1x\t1x\n1\t1\n1x\t1x \t1x\t1x\n2\t2\n33 1:1\t1:1\n55\n\n\n\n1x\t1x \t1x\t1x\n3\t3 Thorns are often removed from cut roses, but some have\nescaped the pruning clippers. Here they are represented\nby horn elements which appear in dark red for the first time.\nLes épines sont souvent retirées des roses coupées,\nmais certaines ont échappé au sécateur. Elles sont\nreprésentées ici par des éléments de corne qui apparaissent\npour la première fois en rouge foncé.\nSi bien se suel"
+        },
+        {
+          "id": "c85fa893db54a85de9fb1987",
+          "url": "https://www.lego.com/cdn/product-assets/product.bi.core.pdf/6536293.pdf",
+          "title": "6536293.pdf",
+          "fetchedAt": "2026-10-29T17:34:38.735Z",
+          "role": "manual",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "66\n\n\n\n1\t1\n2\t2\n77\n\n\n\n4x\t4x\n1x\t1x\n1\t1\n2x\t2x\n2\t2\nIn 2006, the rare Juliet rose sold for 15.8 million dollars.\nEn 2006, la rare rose Juliet a été vendue pour\n15,8 millions de dollars.\nEn 2006, una rosa de la rara variedad Juliet se vendió por\n15,8 millones de dólares.\n88\n\n\n\n2x\t2x\n4\t4\n2x\t2x \t4x\t4x\n3\t3\n11 \t2\t2\n2x\t2x\n99\n\n\n\n2x\t2x\n6\t6\n2x\t2x\n5\t5\n10\t10\n\n\n\n1x\t1x \t2x\t2x\n7\t7\n2x\t2x \t2x\t2x\n8\t8\n11 \t2\t2\n11\t11\n\n\n\n2x\t2x\n9\t9\n2x\t2x\n10\t10\nThe world’s largest rose bush is a Lady Banks (Rosa banksiae"
+        },
+        {
+          "id": "2f497835e8a9841968ea0ab4",
+          "url": "https://www.lego.com/en-us/service/building-instructions/10328",
+          "title": "Building Instructions - Download",
+          "fetchedAt": "2026-10-29T17:34:37.664Z",
+          "role": "product",
+          "applicability": "对应官方页面的型号资料；不证明私人实物当前状态",
+          "observations": [],
+          "excerpt": "BackLEGO® Botanical Collection\nBouquet of Roses\n18+ | #10328 | 822 pieces\nYear: 2024\nSelect the instructions you want\nBouquet of Roses (1/3)\n4.85MB (PDF)\nDownload\nBouquet of Roses (2/3)\n3.93MB (PDF)\nDownload\nBouquet of Roses (3/3)\n3.93MB (PDF)\nDownload"
+        }
+      ]
+    },
+    {
+      "itemId": "virtual-home:lin:painting",
+      "model": "无商品型号",
+      "status": "not-fetched",
+      "issues": [
+        "尚未联网获取，不把型号名称当成已知规格"
+      ],
+      "documents": []
+    }
+  ]
+}

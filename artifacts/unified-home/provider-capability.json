@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-29T17:24:56.825Z",
+  "kind": "read-only-model-list-not-generation",
+  "status": 200,
+  "configuredModel": "qwen-plus",
+  "candidates": [
+    {
+      "id": "qwen-plus",
+      "listed": true
+    },
+    {
+      "id": "qwen-max",
+      "listed": true
+    },
+    {
+      "id": "qwen3-max",
+      "listed": false
+    }
+  ],
+  "note": "列表不证明当前账户对每个模型具备推理权限"
+}

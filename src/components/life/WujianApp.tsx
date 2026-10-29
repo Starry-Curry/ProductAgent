@@ -1,4 +1,5 @@
 "use client";
+import { VirtualHome, HomeSources, type VirtualHomeData } from "./VirtualHome";
 import { ProductArrival } from "./ProductArrival";
 import { ItemBelonging } from "./ItemBelonging";
 import { usePublicDemo } from "../DemoBoundary";
@@ -43,6 +44,7 @@ type View =
   | "add"
   | "item";
 type Data = {
+  virtualHome: VirtualHomeData;
   workspace: State;
   fragments: Fragment[];
   ideas: LifeIdea[];
@@ -121,6 +123,39 @@ export default function WujianApp() {
     origin: TurnInput["uiContext"];
     fresh?: boolean;
   }>({ key: 0, origin: { page: "assistant" } });
+  const [homeChoice, setHomeChoice] = useState<boolean | null>(null);
+  const homeActive = homeChoice ?? data?.virtualHome?.itemIds.length === 8;
+  function switchHome(value: boolean) {
+    setHomeChoice(value);
+    setMission(null);
+    setAskSession(null);
+    setEntryQuestion("");
+    setAskEntry((e) => ({
+      key: e.key + 1,
+      origin: {
+        page: "assistant",
+        ...(value ? { homeId: "young-apartment-v1" as const } : {}),
+      },
+      fresh: true,
+    }));
+  }
+  const [mission, setMission] = useState<{
+    session: ServiceSession;
+    origin: TurnInput["uiContext"];
+  } | null>(null);
+  function returnToTask(voiceItemId?: string) {
+    if (!mission) return;
+    setEntryQuestion("");
+    setAskEntry((e) => ({
+      key: e.key + 1,
+      itemId: mission.session.itemId,
+      sessionId: mission.session.id,
+      origin: { ...mission.origin!, voiceItemId, companion: false },
+      fresh: false,
+    }));
+    setAskSession(mission.session);
+    go("assistant");
+  }
   const [askSession, setAskSession] = useState<ServiceSession | null>(null);
   const itemSessions = useRef<Record<string, string>>({});
   function ask(
@@ -137,13 +172,14 @@ export default function WujianApp() {
       itemId,
       sessionId,
       origin: {
+        ...(homeActive ? { homeId: "young-apartment-v1" as const } : {}),
         page: planContext ? "discover" : itemId ? "item" : "assistant",
         goal: planContext?.continuation?.goal,
         planContext,
         companion,
         taskPlanId,
       },
-      fresh: !!planContext || !!taskPlanId,
+      fresh: (homeActive && !sessionId) || !!planContext || !!taskPlanId,
     }));
     setAskSession(null);
     go("assistant");
@@ -215,6 +251,8 @@ export default function WujianApp() {
   }
   useEffect(() => {
     setData(null);
+    setHomeChoice(null);
+    setMission(null);
     setSelected("");
     const initial = [
       "home",
@@ -288,7 +326,10 @@ export default function WujianApp() {
     setTab(nextTab);
     go("item", id, nextTab);
   }
-  const items = data?.workspace.items.filter((i) => !i.demo) || [];
+  const allItems = data?.workspace.items.filter((i) => !i.demo) || [];
+  const items = homeActive
+    ? allItems.filter((i) => data?.virtualHome.itemIds.includes(i.id))
+    : allItems;
   const item = items.find((i) => i.id === selected);
   const activeAskItemId = askSession ? askSession.itemId : askEntry.itemId;
   const heroItem =
@@ -297,7 +338,12 @@ export default function WujianApp() {
     items.find((i) => itemPhoto(i, actor));
   const photo = (i: Item) => itemPhoto(i, actor)?.src;
   const photoLabel = (i: Item) =>
-    itemPhoto(i, actor)?.label || (syntheticItem(i) ? "演示物品" : "我的物品");
+    itemPhoto(i, actor)?.label ||
+    (i.id.startsWith("virtual-home:")
+      ? "模拟持有 · 图标占位"
+      : syntheticItem(i)
+        ? "演示物品"
+        : "我的物品");
   const cards = (rows: Item[]) => (
     <div className="life-item-grid">
       {rows.map((i) => (
@@ -321,7 +367,11 @@ export default function WujianApp() {
             ) : (
               <div className="life-photo-placeholder">
                 <Package size={44} />
-                <span>等你留下一张照片</span>
+                <span>
+                  {i.id.startsWith("virtual-home:")
+                    ? "型号占位展示 · 非实拍"
+                    : "等你留下一张照片"}
+                </span>
               </div>
             )}
             <span className="life-image-label">{photoLabel(i)}</span>
@@ -486,184 +536,228 @@ export default function WujianApp() {
           <>
             {view === "home" && (
               <>
-                <section className="life-hero">
-                  <div>
-                    <span className="life-eyebrow">
-                      EVERYDAY THINGS, NEW POSSIBILITIES
-                    </span>
-                    <h1>
-                      物有所用，
-                      <br />
-                      生活有迹。
-                    </h1>
-                    <p>
-                      用好已经拥有的，发现意料之外的。
-                      <br />
-                      也留住那些，和它们一起发生的小事。
-                    </p>
-                    <form
-                      className="home-ask"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        if (entryQuestion.trim()) ask(entryQuestion);
-                      }}
-                    >
-                      <label className="sr-only" htmlFor="home-question">
-                        随时问物间
-                      </label>
-                      <input
-                        id="home-question"
-                        value={entryQuestion}
-                        onChange={(e) => setEntryQuestion(e.target.value)}
-                        maxLength={2000}
-                        placeholder="有件事想问问，或想一起试点新东西…"
-                      />
-                      <button className="button" aria-label="开始对话">
-                        ↗
-                      </button>
-                    </form>
-                    <div className="life-actions">
-                      <button
-                        className="button secondary"
-                        onClick={() => go("discover")}
-                      >
-                        今天，试点新鲜的 <ArrowUpRight size={16} />
-                      </button>
-                      <button className="life-text-link" onClick={() => ask()}>
-                        有件事想问问
-                      </button>
-                    </div>
-                  </div>
-                  <div className="life-hero-photos">
-                    {heroItem && photo(heroItem) ? (
-                      <button
-                        className="life-hero-object"
-                        onClick={() => open(heroItem.id)}
-                      >
-                        <img
-                          src={photo(heroItem)}
-                          alt={`${heroItem.name} · ${photoLabel(heroItem)}`}
-                          width={960}
-                          height={960}
-                          fetchPriority="high"
-                        />
-                      </button>
-                    ) : (
-                      <div className="life-upload-empty">
-                        <Package size={48} />
-                        <p>从一件身边的物品开始</p>
-                        <button onClick={() => go("add")}>
-                          留下它现在的样子
+                <VirtualHome
+                  data={data.virtualHome}
+                  items={allItems}
+                  active={homeActive}
+                  onActive={switchHome}
+                  request={request}
+                  refresh={load}
+                  onAsk={(q) => ask(q)}
+                  onItem={(id) => open(id)}
+                />
+                {homeActive && (
+                  <form
+                    className="home-ask apartment-ask"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (entryQuestion.trim()) ask(entryQuestion);
+                    }}
+                  >
+                    <label htmlFor="home-question">从你现在想做的事开始</label>
+                    <input
+                      id="home-question"
+                      value={entryQuestion}
+                      onChange={(e) => setEntryQuestion(e.target.value)}
+                      placeholder="例如：想把旅行手账和朋友送的画一起安排好…"
+                      maxLength={2000}
+                    />
+                    <button className="button" aria-label="开始家庭对话">
+                      一起想想 ↗
+                    </button>
+                  </form>
+                )}
+                {!homeActive && (
+                  <>
+                    <section className="life-hero">
+                      <div>
+                        <span className="life-eyebrow">
+                          EVERYDAY THINGS, NEW POSSIBILITIES
+                        </span>
+                        <h1>
+                          物有所用，
+                          <br />
+                          生活有迹。
+                        </h1>
+                        <p>
+                          用好已经拥有的，发现意料之外的。
+                          <br />
+                          也留住那些，和它们一起发生的小事。
+                        </p>
+                        <form
+                          className="home-ask"
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            if (entryQuestion.trim()) ask(entryQuestion);
+                          }}
+                        >
+                          <label className="sr-only" htmlFor="home-question">
+                            随时问物间
+                          </label>
+                          <input
+                            id="home-question"
+                            value={entryQuestion}
+                            onChange={(e) => setEntryQuestion(e.target.value)}
+                            maxLength={2000}
+                            placeholder="有件事想问问，或想一起试点新东西…"
+                          />
+                          <button className="button" aria-label="开始对话">
+                            ↗
+                          </button>
+                        </form>
+                        <div className="life-actions">
+                          <button
+                            className="button secondary"
+                            onClick={() => go("discover")}
+                          >
+                            今天，试点新鲜的 <ArrowUpRight size={16} />
+                          </button>
+                          <button
+                            className="life-text-link"
+                            onClick={() => ask()}
+                          >
+                            有件事想问问
+                          </button>
+                        </div>
+                      </div>
+                      <div className="life-hero-photos">
+                        {heroItem && photo(heroItem) ? (
+                          <button
+                            className="life-hero-object"
+                            onClick={() => open(heroItem.id)}
+                          >
+                            <img
+                              src={photo(heroItem)}
+                              alt={`${heroItem.name} · ${photoLabel(heroItem)}`}
+                              width={960}
+                              height={960}
+                              fetchPriority="high"
+                            />
+                          </button>
+                        ) : (
+                          <div className="life-upload-empty">
+                            <Package size={48} />
+                            <p>从一件身边的物品开始</p>
+                            <button onClick={() => go("add")}>
+                              留下它现在的样子
+                            </button>
+                          </div>
+                        )}
+                        <div className="life-hero-note">
+                          <Leaf size={22} />
+                          <span>
+                            让已有的东西，
+                            <br />
+                            陪生活多走一步。
+                          </span>
+                          <small>
+                            {heroItem
+                              ? `${heroItem.name} · ${photoLabel(heroItem)}`
+                              : "不必先布置虚拟空间"}
+                          </small>
+                        </div>
+                      </div>
+                    </section>
+                    <section>
+                      <div className="life-section-head">
+                        <div>
+                          <span className="life-eyebrow">
+                            YOUR EVERYDAY COLLECTION
+                          </span>
+                          <h2>身边的物品，熟悉的新可能</h2>
+                        </div>
+                        <button onClick={() => go("items")}>
+                          打开物品展柜 <ArrowUpRight size={16} />
                         </button>
                       </div>
+                      {cards(
+                        [
+                          ...items.filter(
+                            (i) => !i.synthetic && i.source !== "示例数据",
+                          ),
+                          ...[13, 14, 10, 12, 0, 1].flatMap((n) =>
+                            items.filter((i) => i.id === `life-sample-${n}`),
+                          ),
+                          ...items,
+                        ]
+                          .filter(
+                            (i, n, a) =>
+                              a.findIndex((x) => x.id === i.id) === n,
+                          )
+                          .slice(0, 8),
+                      )}
+                    </section>
+                    <section className="life-home-pair">
+                      <button
+                        className="life-story-teaser"
+                        onClick={() => go("stories")}
+                      >
+                        <BookOpen size={25} />
+                        <small>生活故事</small>
+                        <h2>
+                          照片之外，
+                          <br />
+                          再留下一句话。
+                        </h2>
+                        <p>
+                          {data.fragments[0]?.text ||
+                            "一件旧物的来历，一次新尝试，都值得被自己记住。"}
+                        </p>
+                        <span>写下一个生活片段 ↗</span>
+                      </button>
+                      <div className="life-card life-ask-teaser">
+                        <MessageCircle size={27} />
+                        <h2>
+                          怎么用，能怎么玩，
+                          <br />
+                          或者，只想聊聊。
+                        </h2>
+                        <p>
+                          普通交流不必绑定物品。具体型号和资料会在需要时核对。
+                        </p>
+                        <button
+                          className="button secondary"
+                          onClick={() => ask()}
+                        >
+                          问物间
+                        </button>
+                        <small>{data.capabilities.cloud.message}</small>
+                      </div>
+                    </section>
+                    {(publicMode ||
+                      !items.some((i) => i.id === "life-sample-0")) && (
+                      <section className="life-demo-banner">
+                        <div>
+                          <h3>先用一组生活案例逛一逛</h3>
+                          <p>
+                            合成展柜、预置新玩法与生活故事已为演示准备；它们不代表你的实际持有或经历。
+                          </p>
+                        </div>
+                        <button
+                          disabled={busy}
+                          onClick={async () => {
+                            if (items.some((i) => i.id === "life-sample-0")) {
+                              go("items");
+                              return;
+                            }
+                            setBusy(true);
+                            try {
+                              await request("demo", { confirmed: true });
+                              await load();
+                            } catch (e) {
+                              setError((e as Error).message);
+                            } finally {
+                              setBusy(false);
+                            }
+                          }}
+                        >
+                          {items.some((i) => i.id === "life-sample-0")
+                            ? "浏览演示物品"
+                            : "载入合成演示案例"}
+                        </button>
+                      </section>
                     )}
-                    <div className="life-hero-note">
-                      <Leaf size={22} />
-                      <span>
-                        让已有的东西，
-                        <br />
-                        陪生活多走一步。
-                      </span>
-                      <small>
-                        {heroItem
-                          ? `${heroItem.name} · ${photoLabel(heroItem)}`
-                          : "不必先布置虚拟空间"}
-                      </small>
-                    </div>
-                  </div>
-                </section>
-                <section>
-                  <div className="life-section-head">
-                    <div>
-                      <span className="life-eyebrow">
-                        YOUR EVERYDAY COLLECTION
-                      </span>
-                      <h2>身边的物品，熟悉的新可能</h2>
-                    </div>
-                    <button onClick={() => go("items")}>
-                      打开物品展柜 <ArrowUpRight size={16} />
-                    </button>
-                  </div>
-                  {cards(
-                    [
-                      ...items.filter(
-                        (i) => !i.synthetic && i.source !== "示例数据",
-                      ),
-                      ...[13, 14, 10, 12, 0, 1].flatMap((n) =>
-                        items.filter((i) => i.id === `life-sample-${n}`),
-                      ),
-                      ...items,
-                    ]
-                      .filter(
-                        (i, n, a) => a.findIndex((x) => x.id === i.id) === n,
-                      )
-                      .slice(0, 8),
-                  )}
-                </section>
-                <section className="life-home-pair">
-                  <button
-                    className="life-story-teaser"
-                    onClick={() => go("stories")}
-                  >
-                    <BookOpen size={25} />
-                    <small>生活故事</small>
-                    <h2>
-                      照片之外，
-                      <br />
-                      再留下一句话。
-                    </h2>
-                    <p>
-                      {data.fragments[0]?.text ||
-                        "一件旧物的来历，一次新尝试，都值得被自己记住。"}
-                    </p>
-                    <span>写下一个生活片段 ↗</span>
-                  </button>
-                  <div className="life-card life-ask-teaser">
-                    <MessageCircle size={27} />
-                    <h2>
-                      怎么用，能怎么玩，
-                      <br />
-                      或者，只想聊聊。
-                    </h2>
-                    <p>普通交流不必绑定物品。具体型号和资料会在需要时核对。</p>
-                    <button className="button secondary" onClick={() => ask()}>
-                      问物间
-                    </button>
-                    <small>{data.capabilities.cloud.message}</small>
-                  </div>
-                </section>
-                {(publicMode ||
-                  !items.some((i) => i.id === "life-sample-0")) && (
-                  <section className="life-demo-banner">
-                    <div>
-                      <h3>先用一组生活案例逛一逛</h3>
-                      <p>
-                        合成展柜、预置新玩法与生活故事已为演示准备；它们不代表你的实际持有或经历。
-                      </p>
-                    </div>
-                    <button
-                      disabled={busy}
-                      onClick={async () => {
-                        if (items.some((i) => i.id === "life-sample-0")) {
-                          go("items");
-                          return;
-                        }
-                        setBusy(true);
-                        try {
-                          await request("demo", { confirmed: true });
-                          await load();
-                        } catch (e) {
-                          setError((e as Error).message);
-                        } finally {
-                          setBusy(false);
-                        }
-                      }}
-                    >
-                      {items.some((i) => i.id === "life-sample-0")
-                        ? "浏览演示物品"
-                        : "载入合成演示案例"}
-                    </button>
-                  </section>
+                  </>
                 )}
               </>
             )}
@@ -782,8 +876,12 @@ export default function WujianApp() {
                     <span className="life-eyebrow">
                       HERE TO HELP, AND TO LISTEN
                     </span>
-                    <h1>问物间</h1>
-                    <p>需要时使用相关物品和获准信息；普通聊天不必围绕物品。</p>
+                    <h1>{homeActive ? "一起，把生活安排好" : "问物间"}</h1>
+                    <p>
+                      {homeActive
+                        ? "同一段对话，联系物品、获准故事与生活目标。这里使用独立标记的模拟家庭。"
+                        : "需要时使用相关物品和获准信息；普通聊天不必围绕物品。"}
+                    </p>
                   </div>
                 </div>
                 <label className="life-card life-check">
@@ -806,7 +904,34 @@ export default function WujianApp() {
                     <button onClick={() => ask()}>切换到普通聊天</button>
                   </div>
                 )}
-                <AISettings actor={actor} />
+                {homeActive && (
+                  <div className="home-task-banner">
+                    <span>虚拟年轻人公寓 · 8 件物品</span>
+                    <button onClick={() => go("home")}>
+                      查看这个家与资料授权 ↗
+                    </button>
+                    {askEntry.origin?.voiceItemId && (
+                      <button
+                        onClick={() => {
+                          setAskEntry((e) => ({
+                            ...e,
+                            origin: {
+                              ...e.origin!,
+                              voiceItemId: undefined,
+                              companion: false,
+                            },
+                          }));
+                        }}
+                      >
+                        让物间继续说
+                      </button>
+                    )}
+                  </div>
+                )}
+                <details className="home-model-settings">
+                  <summary>模型连接与设置</summary>
+                  <AISettings actor={actor} />
+                </details>
                 <PreparationPlans
                   plans={data.workspace.plans || []}
                   act={act}
@@ -822,7 +947,12 @@ export default function WujianApp() {
                   }
                 />
                 <AssistantConversation
-                  key={actor + policy + askEntry.key}
+                  key={
+                    actor +
+                    policy +
+                    askEntry.key +
+                    (homeActive ? "home" : "personal")
+                  }
                   actor={actor}
                   mode="auto"
                   initialQuestion={entryQuestion}
@@ -830,13 +960,30 @@ export default function WujianApp() {
                   initialSessionId={askEntry.sessionId}
                   startFresh={askEntry.fresh}
                   allHistory
-                  onSession={setAskSession}
+                  onSession={(s) => {
+                    setAskSession(s);
+                    if (s && s.known.homeId)
+                      setMission({
+                        session: s,
+                        origin: {
+                          ...askEntry.origin!,
+                          ...(homeActive
+                            ? { homeId: "young-apartment-v1" }
+                            : {}),
+                        },
+                      });
+                  }}
+                  onSelectItem={(id) => open(id)}
                   onBusy={setConversationBusy}
-                  uiContext={askEntry.origin}
+                  uiContext={
+                    homeActive
+                      ? { ...askEntry.origin!, homeId: "young-apartment-v1" }
+                      : askEntry.origin
+                  }
                   memoryPolicy={policy}
                   onActivity={() => load().catch(() => {})}
                 />
-                <details className="life-card" open>
+                <details className="life-card">
                   <summary>个人记忆、来源与可选交流方式</summary>
                   <MemoryCenter actor={actor} items={items} />
                 </details>
@@ -861,6 +1008,17 @@ export default function WujianApp() {
                     }[backView]
                   }
                 </button>
+                {homeActive && mission && (
+                  <div className="home-task-return">
+                    <div>
+                      <small>正在继续的生活任务</small>
+                      <strong>
+                        {mission.session.known.homeTaskGoal || "一起安排这个家"}
+                      </strong>
+                    </div>
+                    <button onClick={() => returnToTask()}>返回原任务 ↗</button>
+                  </div>
+                )}
                 <div className="life-detail-hero">
                   <div className="life-detail-photo">
                     {photo(item) ? (
@@ -936,6 +1094,16 @@ export default function WujianApp() {
                     )}
                   </div>
                 </div>
+                {homeActive &&
+                  data.virtualHome.knowledge.find(
+                    (k) => k.itemId === item.id && k.documents.length > 0,
+                  ) && (
+                    <HomeSources
+                      knowledge={data.virtualHome.knowledge.find(
+                        (k) => k.itemId === item.id,
+                      )!}
+                    />
+                  )}
                 <div className="life-card life-item-story-link">
                   <BookOpen size={20} />
                   <div>
@@ -977,6 +1145,15 @@ export default function WujianApp() {
                     items={items}
                     packs={data.packs}
                     fragments={data.fragments}
+                    homeId={homeActive ? "young-apartment-v1" : undefined}
+                    hasKnowledge={data.virtualHome.knowledge.some(
+                      (k) => k.itemId === item.id && k.documents.length > 0,
+                    )}
+                    onContinueMission={
+                      homeActive && mission
+                        ? (voiceId) => returnToTask(voiceId)
+                        : undefined
+                    }
                     request={request}
                     upload={upload}
                     refresh={load}

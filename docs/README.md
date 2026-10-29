@@ -1,5 +1,7 @@
 # 文档索引
 
+- [2026-10-30 统一家庭体验 Beta：流程、真实来源及未过关的内容](engineering/unified-home-beta-2026-10-30/README.md)
+
 ## 2026-10-29：商品、关系与可选分身纵向开发
 
 - [实际业务流程、测试与真实效果限制](engineering/personal-objects-2026-10-29/README.md)：已接入App；个性化回答未全部过关。

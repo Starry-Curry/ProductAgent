@@ -126,6 +126,7 @@ export type ContextFact = {
   allowCloud: boolean;
 };
 export type State = {
+  virtualHomes?: Partial<Record<Person,{id:string;allowCloud:boolean;installedAt:string}>>;
   contexts?: ContextFact[];
   plans?: Plan[];
   items: Item[];
@@ -310,6 +311,7 @@ export function visible(s: State, a: Person) {
   const ids = new Set(items.map((i) => i.id));
   return {
     ...s,
+    virtualHomes: s.virtualHomes?.[a] ? { [a]: s.virtualHomes[a] } : {},
     contexts: (s.contexts || []).filter((c) => c.owner === a),
     plans: (s.plans || [])
       .filter((p) => p.actor === a)

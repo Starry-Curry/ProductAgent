@@ -1,5 +1,16 @@
 # 开发记录
 
+## 2026-10-30：统一家庭体验 Beta（独立分支，内容验收未全部通过）
+
+基准 `codex/wujian-personal-objects-v1@113696effe5f7f162fe9dccfbdf0bb64a7737d55`，分支 `codex/wujian-unified-home-beta`，隔离工作区 `D:/ProductAgent-LifeContext/.runtime/unified-home-app`。保留原项目未提交的 `deliverables/`，未合main、迁私人数据库、换框架或控制硬件。
+
+已接入固定7款真实SKU与模拟赠画、一键家庭加载和明确云端许可；实际取得各商品至少一份官方资料（含规格、说明PDF和真实失败记录）。首页→统一任务→相关物品/故事→分身→原任务的流程已连通。使用现有LangGraph/SQLite会话、授权、记忆及反馈；普通真实物品空间仍保留旧路径，未宣称已把任意真实家庭全部迁入新机制。
+
+329项离线通过（新增14）；类型、生产构建、benchmark、原纵向6条替身浏览器旅程和公开演示8组离线检查通过。新家庭6次真实问答与反馈、桌面/移动页面实际跑通；移动端另一个合成角色的跨会话纠正、遗忘及越权阻止通过。真实模型52次请求，50次提供方返回、2次失败；API返回和引用检查不能代替内容验收。
+
+**内容仍有明确失败：未登记材料、未经证实的空余空间/支撑、旋钮方向及过早重置等。** 强模型小样本没有实证收益，未采用替换。下一轮先解决依据与动作、资源条件之间的约束，不先加REA或换框架。[可体验流程与来源](docs/engineering/unified-home-beta-2026-10-30/README.md)、[测试](docs/engineering/unified-home-beta-2026-10-30/TEST_REPORT.md)、[真实回答与失败](docs/engineering/unified-home-beta-2026-10-30/MODEL_RESULTS.md)。下方历史记录保留。
+
+
 ## 2026-10-29 最新交接：商品、关系与可选分身纵向版（未合并main）
 
 独立分支 `codex/wujian-personal-objects-v1`，基准行为版 `d02b35e`，工作区 `D:/ProductAgent-LifeContext/.runtime/personal-objects-app`。请先读[本轮可体验流程及明确限制](docs/engineering/personal-objects-2026-10-29/README.md)、[测试报告](docs/engineering/personal-objects-2026-10-29/TEST_REPORT.md)和[真实回答](docs/engineering/personal-objects-2026-10-29/MODEL_RESULTS.md)。原项目与私人数据库未修改，没有迁库、换框架、操作硬件或合并main。

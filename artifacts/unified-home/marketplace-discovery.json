@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-29T16:50:23.585Z",
+  "products": [
+    "MJTD01SYL",
+    "GO 4"
+  ],
+  "searches": [
+    "米家台灯1S detail.tmall.com/item.htm",
+    "JBL GO4 天猫 商品链接"
+  ],
+  "detailVerified": false,
+  "receipts": [
+    {
+      "url": "https://www.zhizhizhi.com/n/5cmtk",
+      "status": 200,
+      "location": null,
+      "title": "小米米家LED智能台灯1S  卧室家用学生书桌折叠简约床头灯护眼灯 - 价格179元 - 值值值",
+      "textSample": " 手机 APP请用3秒钟牢记域名zhizhizhi.com 今日已推荐条让你大喊三声\"值!值!值!\"的商品 所有内容国内优惠海淘推荐找优惠券购物攻略 老板模式商品分类 首 页 最新优惠 今日值榜国内优惠 促销活动 优惠券淘实惠 9.9包邮海淘推荐 找隐藏券好文攻略十佳评测排行榜开箱晒单购物攻略海淘攻略 ● ... 关闭"
+    },
+    {
+      "url": "https://www.zhizhizhi.com/link-yh-8987528",
+      "status": 200,
+      "location": null,
+      "title": "正在跳转到特价购物地址...",
+      "textSample": "var rdsurl='https://s.click.taobao.com/t?e=m%3D2%26s%3DsUYVQg42cHZw4vFB6t2Z2ueEDrYVVa64K7Vc7tFgwiHjf2vlNIV67nXChs9WBXPVQev46Oo1utQUcZ8wTwmpm4%2FJAuTWvO1FawudIUz"
+    },
+    {
+      "url": "https://s.click.taobao.com/t?e=m%3D2%26s%3DsUYVQg42cHZw4vFB6t2Z2ueEDrYVVa64K7Vc7tFgwiHjf2vlNIV67nXChs9WBXPVQev46Oo1utQUcZ8wTwmpm4%2FJAuTWvO1FawudIUzZ8SjBcKzPZaWYE10UFbVjXMP456F5Zqo3WVei5XVENb4b%2Byi8%2BsIbauD6G3JOz6pzBfIhhQs2DjqgEA%3D%3D&union_lens=lensId:21059853_09f9_18258fbe394_8ce9",
+      "status": 200,
+      "location": null,
+      "title": "",
+      "textSample": " /*<![CDATA[*/ function bol(){ if (top.location != self.location) { return false; } var real_jump_address = 'https://s.click.taobao.com/t?e=m%3D2%26s%3DsUYVQg42"
+    },
+    {
+      "url": "https://xiaomi.tmall.com/",
+      "status": 302,
+      "location": "https://login.taobao.com/jump?group=tao&target=https%3A%2F%2Fxiaomi.tmall.com%2Fshop%2Fview_shop.htm%3Ftbpm%3D1",
+      "title": "302 Found",
+      "textSample": " 302 Found The requested resource resides temporarily under a different URI. Powered by Tengine/Aserver "
+    }
+  ],
+  "note": "只发现公开历史导购和淘宝推广跳转，未取得能核对型号的商品详情。截断ID未补全、未虚构链接，未使用账号或Cookie。"
+}

@@ -49,6 +49,7 @@ export function sourceURL(value: string) {
 export async function fetchPublicDocument(
   value: string,
   redirects = 0,
+  maxPdfBytes = 12_000_000,
 ): Promise<{
   title: string;
   text: string;
@@ -58,10 +59,19 @@ export async function fetchPublicDocument(
 }> {
   const url = sourceURL(value);
   reservePublicFetch(url.hostname);
-  const addresses = await lookup(url.hostname, { all: true });
+  const addresses = await Promise.race([
+    lookup(url.hostname, { all: true }),
+    new Promise<never>((_, reject) => {
+      const timer = setTimeout(
+        () => reject(new AgentError("公开来源域名解析超时，请稍后重试")),
+        8000,
+      );
+      timer.unref();
+    }),
+  ]);
   if (!addresses.length || addresses.some((a) => !publicAddress(a.address)))
     throw new AgentError("不允许读取内网或保留地址");
-  const chosen = addresses[0];
+  const chosen = addresses.find((a) => a.family === 4) || addresses[0];
   const result = await new Promise<{
     bytes: Buffer;
     type: string;
@@ -71,6 +81,7 @@ export async function fetchPublicDocument(
       url,
       {
         method: "GET",
+        signal: AbortSignal.timeout(12000),
         family: chosen.family,
         headers: {
           "User-Agent":
@@ -111,7 +122,7 @@ export async function fetchPublicDocument(
           reject(new AgentError("来源不是网页、文本或 PDF，可手动上传说明书"));
           return;
         }
-        const limit = /pdf/i.test(type) ? 12_000_000 : 1_500_000;
+        const limit = /pdf/i.test(type) ? Math.min(16_000_000,maxPdfBytes) : 1_500_000;
         const chunks: Buffer[] = [];
         let size = 0;
         res.on("data", (chunk: Buffer) => {
@@ -144,7 +155,7 @@ export async function fetchPublicDocument(
       throw new AgentError(
         "来源跳转到其他站点或跳转过多；请核对最终链接后主动读取",
       );
-    return fetchPublicDocument(next.href, redirects + 1);
+    return fetchPublicDocument(next.href, redirects + 1,maxPdfBytes);
   }
   if (/pdf/i.test(result.type)) {
     const { extractManual } = await import("./documents.ts");
@@ -152,7 +163,7 @@ export async function fetchPublicDocument(
       result.bytes,
       "official-document.pdf",
       process.env.AUTH_MODE !== "public-demo",
-      12_000_000,
+      Math.min(16_000_000,maxPdfBytes),
       true,
     );
     return {

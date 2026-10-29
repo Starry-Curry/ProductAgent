@@ -1,0 +1,311 @@
+{
+  "at": "2026-10-29T17:43:36.730Z",
+  "records": [
+    {
+      "case": "separate-friend-synthetic-home-explicit-consent",
+      "items": [
+        "米家台灯1S",
+        "MICKE 白色书桌",
+        "SAMLA 透明收纳盒",
+        "KNAGGLIG 松木盒",
+        "GO 4 蓝牙音箱",
+        "Bashful Beige Bunny",
+        "玫瑰花束",
+        "远山 · 朋友送的画"
+      ]
+    },
+    {
+      "question": "这幅画是谁送我的？请只使用当前获准的关系记忆，不补充日期或情感经历。",
+      "status": 200,
+      "result": {
+        "session": {
+          "id": "4fdbea17-8330-4662-85f6-8a455750cce0",
+          "owner": "friend",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "9690303a-0db7-4bf1-a01c-063f4a1e9301",
+              "role": "user",
+              "text": "这幅画是谁送我的？请只使用当前获准的关系记忆，不补充日期或情感经历。",
+              "at": "2026-10-29T17:43:30.202Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "c53ecec0-faae-4ace-8349-1c5eaa5df3cd",
+              "role": "assistant",
+              "text": "这幅画是朋友小雨送给我的。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这幅画是朋友小雨送给我的。",
+                "steps": [],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [
+                  "9627f275-01ca-412f-9d89-5e192f383954"
+                ],
+                "evidenceIds": [],
+                "citations": [],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:friend:painting",
+                    "name": "远山 · 朋友送的画",
+                    "model": "无商品型号"
+                  }
+                ],
+                "task": {
+                  "goal": "确认画作赠送者",
+                  "parts": [
+                    {
+                      "title": "这幅画是谁送我的？",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T17:43:30.202Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "homeId": "young-apartment-v1",
+            "useItemMemories": "yes",
+            "turnRequestId": "1a7add20-989b-4b4d-ba8e-92c4f39aa6b5",
+            "homeTaskGoal": "确认画作赠送者",
+            "homeTask": "{\"goal\":\"确认画作赠送者\",\"parts\":[{\"title\":\"这幅画是谁送我的？\",\"status\":\"addressed\"}]}"
+          },
+          "tried": [],
+          "memoryEpoch": 5,
+          "createdAt": "2026-10-29T17:43:24.027Z",
+          "updatedAt": "2026-10-29T17:43:30.203Z",
+          "expiresAt": "2026-11-05T17:43:24.027Z",
+          "itemScopes": {
+            "virtual-home:friend:painting": "[\"friend\",\"[\\\"无商品型号\\\",null,null,null]\"]",
+            "virtual-home:friend:lamp": "[\"friend\",\"[\\\"MJTD01SYL\\\",null,null,null]\"]",
+            "virtual-home:friend:desk": "[\"friend\",\"[\\\"803.542.81\\\",null,null,null]\"]",
+            "virtual-home:friend:samla": "[\"friend\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T17:39:21.476Z\\\"]\"]",
+            "virtual-home:friend:knagglig": "[\"friend\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T17:39:21.476Z\\\"]\"]",
+            "virtual-home:friend:speaker": "[\"friend\",\"[\\\"GO 4\\\",\\\"jbl-go4\\\",\\\"2026-10-17.1\\\",\\\"2026-10-29T17:39:21.476Z\\\"]\"]",
+            "virtual-home:friend:bunny": "[\"friend\",\"[\\\"BAS3B\\\",null,null,null]\"]",
+            "virtual-home:friend:roses": "[\"friend\",\"[\\\"10328\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这幅画是朋友小雨送给我的。",
+          "steps": [],
+          "questions": [],
+          "source": "model-general",
+          "model": "qwen-plus",
+          "memoryIds": [
+            "9627f275-01ca-412f-9d89-5e192f383954"
+          ],
+          "evidenceIds": [],
+          "citations": [],
+          "usedItems": [
+            {
+              "id": "virtual-home:friend:painting",
+              "name": "远山 · 朋友送的画",
+              "model": "无商品型号"
+            }
+          ],
+          "task": {
+            "goal": "确认画作赠送者",
+            "parts": [
+              {
+                "title": "这幅画是谁送我的？",
+                "status": "addressed"
+              }
+            ]
+          },
+          "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+        },
+        "trace": [
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":1,\"toolCalls\":[\"read_home_items\"]}",
+            "at": "2026-10-29T17:43:25.321Z"
+          },
+          {
+            "stage": "task_read",
+            "detail": "{\"itemIds\":[\"virtual-home:friend:painting\"],\"memoryIds\":[\"9627f275-01ca-412f-9d89-5e192f383954\",\"ff9eba51-880b-4f14-ae9b-5bd60ce38f4d\"],\"passages\":[\"798ca4766b88f5f076e97ad4:2991\",\"798ca4766b88f5f076e97ad4:6981\",\"8078f5eb423e8089279dde81:0\",\"0bc7578244e7a1938f776477:0\",\"5d786c1031d43c397fafc527:0\",\"d6298567b044e1b9eef605aa:1002\",\"d6298567b044e1b9eef605aa:2001\",\"ca9849e3dd1c6a296ce05c23:998\",\"ca9849e3dd1c6a296ce05c23:1998\",\"80e72a718550a99a5619efc3:0\",\"80e72a718550a99a5619efc3:996\"]}",
+            "at": "2026-10-29T17:43:25.342Z"
+          },
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":2,\"toolCalls\":[]}",
+            "at": "2026-10-29T17:43:26.598Z"
+          },
+          {
+            "stage": "task_review",
+            "detail": "Source-grounded synthesis after retrieval; not a creativity score or physical verification",
+            "at": "2026-10-29T17:43:30.189Z"
+          },
+          {
+            "stage": "task_complete",
+            "detail": "{\"parts\":[{\"title\":\"这幅画是谁送我的？\",\"status\":\"addressed\"}],\"usedItemIds\":[\"virtual-home:friend:painting\"]}",
+            "at": "2026-10-29T17:43:30.200Z"
+          }
+        ],
+        "tokens": {
+          "input": 27379,
+          "output": 134
+        },
+        "modelCalls": 3
+      }
+    },
+    {
+      "question": "这幅画是谁送我的？没有获准记录就直接告诉我未知，不要从原故事补回。",
+      "status": 200,
+      "result": {
+        "session": {
+          "id": "cacda3fe-172b-4c84-8889-c815811e4172",
+          "owner": "friend",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "6786c6c0-6a29-4108-90aa-b53ec592abb9",
+              "role": "user",
+              "text": "这幅画是谁送我的？没有获准记录就直接告诉我未知，不要从原故事补回。",
+              "at": "2026-10-29T17:43:36.591Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "c020b1fc-79e5-4671-a6ad-17e0ebe10d5a",
+              "role": "assistant",
+              "text": "这幅画的赠送者未在当前登记资料中明确说明。物品名称‘远山 · 朋友送的画’仅表明来源为‘朋友’，但未记录具体是谁。根据要求，不从原故事或历史记忆中补全信息，因此答案为：未知。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这幅画的赠送者未在当前登记资料中明确说明。物品名称‘远山 · 朋友送的画’仅表明来源为‘朋友’，但未记录具体是谁。根据要求，不从原故事或历史记忆中补全信息，因此答案为：未知。",
+                "steps": [],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [],
+                "evidenceIds": [],
+                "citations": [],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:friend:painting",
+                    "name": "远山 · 朋友送的画",
+                    "model": "无商品型号"
+                  }
+                ],
+                "task": {
+                  "goal": "确认画作赠送者",
+                  "parts": [
+                    {
+                      "title": "这幅画是谁送我的？",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T17:43:36.591Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "homeId": "young-apartment-v1",
+            "useItemMemories": "yes",
+            "turnRequestId": "3e110bdb-91af-49be-ac18-ce5a805cb2a6",
+            "homeTaskGoal": "确认画作赠送者",
+            "homeTask": "{\"goal\":\"确认画作赠送者\",\"parts\":[{\"title\":\"这幅画是谁送我的？\",\"status\":\"addressed\"}]}"
+          },
+          "tried": [],
+          "memoryEpoch": 6,
+          "createdAt": "2026-10-29T17:43:30.688Z",
+          "updatedAt": "2026-10-29T17:43:36.591Z",
+          "expiresAt": "2026-11-05T17:43:30.688Z",
+          "itemScopes": {
+            "virtual-home:friend:painting": "[\"friend\",\"[\\\"无商品型号\\\",null,null,null]\"]",
+            "virtual-home:friend:lamp": "[\"friend\",\"[\\\"MJTD01SYL\\\",null,null,null]\"]",
+            "virtual-home:friend:desk": "[\"friend\",\"[\\\"803.542.81\\\",null,null,null]\"]",
+            "virtual-home:friend:samla": "[\"friend\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T17:39:21.476Z\\\"]\"]",
+            "virtual-home:friend:knagglig": "[\"friend\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T17:39:21.476Z\\\"]\"]",
+            "virtual-home:friend:speaker": "[\"friend\",\"[\\\"GO 4\\\",\\\"jbl-go4\\\",\\\"2026-10-17.1\\\",\\\"2026-10-29T17:39:21.476Z\\\"]\"]",
+            "virtual-home:friend:bunny": "[\"friend\",\"[\\\"BAS3B\\\",null,null,null]\"]",
+            "virtual-home:friend:roses": "[\"friend\",\"[\\\"10328\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这幅画的赠送者未在当前登记资料中明确说明。物品名称‘远山 · 朋友送的画’仅表明来源为‘朋友’，但未记录具体是谁。根据要求，不从原故事或历史记忆中补全信息，因此答案为：未知。",
+          "steps": [],
+          "questions": [],
+          "source": "model-general",
+          "model": "qwen-plus",
+          "memoryIds": [],
+          "evidenceIds": [],
+          "citations": [],
+          "usedItems": [
+            {
+              "id": "virtual-home:friend:painting",
+              "name": "远山 · 朋友送的画",
+              "model": "无商品型号"
+            }
+          ],
+          "task": {
+            "goal": "确认画作赠送者",
+            "parts": [
+              {
+                "title": "这幅画是谁送我的？",
+                "status": "addressed"
+              }
+            ]
+          },
+          "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+        },
+        "trace": [
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":1,\"toolCalls\":[\"read_home_items\"]}",
+            "at": "2026-10-29T17:43:31.891Z"
+          },
+          {
+            "stage": "task_read",
+            "detail": "{\"itemIds\":[\"virtual-home:friend:painting\"],\"memoryIds\":[\"ff9eba51-880b-4f14-ae9b-5bd60ce38f4d\"],\"passages\":[\"798ca4766b88f5f076e97ad4:2991\",\"798ca4766b88f5f076e97ad4:6981\",\"d2e9c7729ba483a627aeea41:0\",\"d2e9c7729ba483a627aeea41:1001\",\"22c12c04c94d51d4088b85a9:0\",\"d6298567b044e1b9eef605aa:1002\",\"d6298567b044e1b9eef605aa:2001\",\"ca9849e3dd1c6a296ce05c23:998\",\"ca9849e3dd1c6a296ce05c23:1998\",\"80e72a718550a99a5619efc3:0\",\"80e72a718550a99a5619efc3:996\"]}",
+            "at": "2026-10-29T17:43:31.917Z"
+          },
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":2,\"toolCalls\":[]}",
+            "at": "2026-10-29T17:43:33.031Z"
+          },
+          {
+            "stage": "task_review",
+            "detail": "Source-grounded synthesis after retrieval; not a creativity score or physical verification",
+            "at": "2026-10-29T17:43:36.584Z"
+          },
+          {
+            "stage": "task_complete",
+            "detail": "{\"parts\":[{\"title\":\"这幅画是谁送我的？\",\"status\":\"addressed\"}],\"usedItemIds\":[\"virtual-home:friend:painting\"]}",
+            "at": "2026-10-29T17:43:36.590Z"
+          }
+        ],
+        "tokens": {
+          "input": 24633,
+          "output": 151
+        },
+        "modelCalls": 3
+      }
+    },
+    {
+      "case": "different-actor-never-receives-lin-relationship",
+      "status": 403
+    }
+  ],
+  "errors": []
+}

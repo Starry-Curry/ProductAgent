@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-29T17:30:28.342Z",
+  "records": [
+    {
+      "case": "A-quiet-journaling-layout",
+      "status": 409,
+      "input": "今晚想在书桌上写旅行手账，帮我把桌面安排舒服一点。我喜欢安静，不想再买东西。",
+      "result": {
+        "error": "官方资料已更新，请重新提问"
+      }
+    },
+    {
+      "case": "browser-stopped",
+      "error": "{\"error\":\"官方资料已更新，请重新提问\"}"
+    }
+  ],
+  "errors": []
+}

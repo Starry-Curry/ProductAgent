@@ -1,0 +1,1675 @@
+{
+  "at": "2026-10-29T17:23:25.607Z",
+  "records": [
+    {
+      "case": "A-quiet-journaling-layout",
+      "status": 200,
+      "input": "今晚想在书桌上写旅行手账，帮我把桌面安排舒服一点。我喜欢安静，不想再买东西。",
+      "result": {
+        "session": {
+          "id": "0ba20de2-5693-4d4e-bd3e-222560c98db4",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "3fb8ad4a-6342-4c60-9587-ffd5778d78f4",
+              "role": "user",
+              "text": "今晚想在书桌上写旅行手账，帮我把桌面安排舒服一点。我喜欢安静，不想再买东西。",
+              "at": "2026-10-29T17:22:03.910Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "636de388-66a5-4d73-a3c2-b7b0db596a63",
+              "role": "assistant",
+              "text": "今晚写旅行手账，目标是安静、舒适、不添新物。书桌（73×50cm）空间有限，优先保障书写区：把米家台灯1S移至左前方，调至400mm出光高度（手册明确），按压开灯，旋转调亮度至柔和档（避免刺眼），按住旋转微调色温至偏暖（约3000K–3500K，助放松）。右手侧留出足够书写空间，暂不放SAMLA盒或KNAGGLIG盒——它们可挪至桌下或右后侧空位，避免遮挡和分散注意力。画作（40×30cm）尚未固定支撑，不靠放、不压重物，建议先平放于桌面右侧边缘（不占书写区），待手账完成再处理。蓝牙音箱当前在窗边，保持关闭状态，确保安静。所有物品均利用已有，无需购买。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "今晚写旅行手账，目标是安静、舒适、不添新物。书桌（73×50cm）空间有限，优先保障书写区：把米家台灯1S移至左前方，调至400mm出光高度（手册明确），按压开灯，旋转调亮度至柔和档（避免刺眼），按住旋转微调色温至偏暖（约3000K–3500K，助放松）。右手侧留出足够书写空间，暂不放SAMLA盒或KNAGGLIG盒——它们可挪至桌下或右后侧空位，避免遮挡和分散注意力。画作（40×30cm）尚未固定支撑，不靠放、不压重物，建议先平放于桌面右侧边缘（不占书写区），待手账完成再处理。蓝牙音箱当前在窗边，保持关闭状态，确保安静。所有物品均利用已有，无需购买。",
+                "steps": [
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:0",
+                    "text": "将米家台灯1S移至书桌左前方，确保出光口距桌面400mm"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:1",
+                    "text": "按压旋钮开灯，缓慢旋转调低亮度至舒适阅读档"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:2",
+                    "text": "按住旋钮并缓慢旋转，将色温调至偏暖（约3000K–3500K）"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:3",
+                    "text": "清空桌面右手侧30cm×25cm区域作为书写核心区，纸笔居中放置"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:4",
+                    "text": "将画作平放于桌面右边缘，不叠压、不倚靠，远离台灯热源"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:5",
+                    "text": "确认蓝牙音箱处于关闭状态，不播放任何音频"
+                  }
+                ],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [
+                  "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+                ],
+                "evidenceIds": [
+                  "798ca4766b88f5f076e97ad4:0",
+                  "8078f5eb423e8089279dde81:0"
+                ],
+                "citations": [
+                  {
+                    "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+                    "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+                    "id": "798ca4766b88f5f076e97ad4:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "MICKE 米克 书桌 白色 - IKEA",
+                    "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+                    "id": "8078f5eb423e8089279dde81:0",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:lin:lamp",
+                    "name": "米家台灯1S",
+                    "model": "MJTD01SYL"
+                  },
+                  {
+                    "id": "virtual-home:lin:desk",
+                    "name": "MICKE 白色书桌",
+                    "model": "803.542.81"
+                  },
+                  {
+                    "id": "virtual-home:lin:speaker",
+                    "name": "GO 4 蓝牙音箱",
+                    "model": "GO 4"
+                  },
+                  {
+                    "id": "virtual-home:lin:painting",
+                    "name": "远山 · 朋友送的画",
+                    "model": "无商品型号"
+                  }
+                ],
+                "task": {
+                  "goal": "在书桌上安静、舒适地写旅行手账",
+                  "parts": [
+                    {
+                      "title": "安排照明以支持夜间书写",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "规划书写操作空间与手部动线",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "安置画作，避免损伤且不干扰书写",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "管理环境声音，维持安静",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T17:22:03.910Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "homeId": "young-apartment-v1",
+            "useItemMemories": "yes",
+            "turnRequestId": "dfe5af1b-1a9a-4ab6-a237-921dabdcae82",
+            "homeTaskGoal": "在书桌上安静、舒适地写旅行手账",
+            "homeTask": "{\"goal\":\"在书桌上安静、舒适地写旅行手账\",\"parts\":[{\"title\":\"安排照明以支持夜间书写\",\"status\":\"addressed\"},{\"title\":\"规划书写操作空间与手部动线\",\"status\":\"addressed\"},{\"title\":\"安置画作，避免损伤且不干扰书写\",\"status\":\"addressed\"},{\"title\":\"管理环境声音，维持安静\",\"status\":\"addressed\"}]}"
+          },
+          "tried": [],
+          "memoryEpoch": 5,
+          "createdAt": "2026-10-29T17:21:45.408Z",
+          "updatedAt": "2026-10-29T17:22:03.910Z",
+          "expiresAt": "2026-11-05T17:21:45.408Z",
+          "itemScopes": {
+            "virtual-home:lin:lamp": "[\"lin\",\"[\\\"MJTD01SYL\\\",null,null,null]\"]",
+            "virtual-home:lin:desk": "[\"lin\",\"[\\\"803.542.81\\\",null,null,null]\"]",
+            "virtual-home:lin:samla": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:knagglig": "[\"lin\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:speaker": "[\"lin\",\"[\\\"GO 4\\\",\\\"jbl-go4\\\",\\\"2026-10-17.1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:bunny": "[\"lin\",\"[\\\"BAS3B\\\",null,null,null]\"]",
+            "virtual-home:lin:roses": "[\"lin\",\"[\\\"10328\\\",null,null,null]\"]",
+            "virtual-home:lin:painting": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "今晚写旅行手账，目标是安静、舒适、不添新物。书桌（73×50cm）空间有限，优先保障书写区：把米家台灯1S移至左前方，调至400mm出光高度（手册明确），按压开灯，旋转调亮度至柔和档（避免刺眼），按住旋转微调色温至偏暖（约3000K–3500K，助放松）。右手侧留出足够书写空间，暂不放SAMLA盒或KNAGGLIG盒——它们可挪至桌下或右后侧空位，避免遮挡和分散注意力。画作（40×30cm）尚未固定支撑，不靠放、不压重物，建议先平放于桌面右侧边缘（不占书写区），待手账完成再处理。蓝牙音箱当前在窗边，保持关闭状态，确保安静。所有物品均利用已有，无需购买。",
+          "steps": [
+            {
+              "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:0",
+              "text": "将米家台灯1S移至书桌左前方，确保出光口距桌面400mm"
+            },
+            {
+              "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:1",
+              "text": "按压旋钮开灯，缓慢旋转调低亮度至舒适阅读档"
+            },
+            {
+              "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:2",
+              "text": "按住旋钮并缓慢旋转，将色温调至偏暖（约3000K–3500K）"
+            },
+            {
+              "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:3",
+              "text": "清空桌面右手侧30cm×25cm区域作为书写核心区，纸笔居中放置"
+            },
+            {
+              "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:4",
+              "text": "将画作平放于桌面右边缘，不叠压、不倚靠，远离台灯热源"
+            },
+            {
+              "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:5",
+              "text": "确认蓝牙音箱处于关闭状态，不播放任何音频"
+            }
+          ],
+          "questions": [],
+          "source": "model-general",
+          "model": "qwen-plus",
+          "memoryIds": [
+            "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+          ],
+          "evidenceIds": [
+            "798ca4766b88f5f076e97ad4:0",
+            "8078f5eb423e8089279dde81:0"
+          ],
+          "citations": [
+            {
+              "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+              "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+              "id": "798ca4766b88f5f076e97ad4:0",
+              "kind": "official"
+            },
+            {
+              "title": "MICKE 米克 书桌 白色 - IKEA",
+              "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+              "id": "8078f5eb423e8089279dde81:0",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "virtual-home:lin:lamp",
+              "name": "米家台灯1S",
+              "model": "MJTD01SYL"
+            },
+            {
+              "id": "virtual-home:lin:desk",
+              "name": "MICKE 白色书桌",
+              "model": "803.542.81"
+            },
+            {
+              "id": "virtual-home:lin:speaker",
+              "name": "GO 4 蓝牙音箱",
+              "model": "GO 4"
+            },
+            {
+              "id": "virtual-home:lin:painting",
+              "name": "远山 · 朋友送的画",
+              "model": "无商品型号"
+            }
+          ],
+          "task": {
+            "goal": "在书桌上安静、舒适地写旅行手账",
+            "parts": [
+              {
+                "title": "安排照明以支持夜间书写",
+                "status": "addressed"
+              },
+              {
+                "title": "规划书写操作空间与手部动线",
+                "status": "addressed"
+              },
+              {
+                "title": "安置画作，避免损伤且不干扰书写",
+                "status": "addressed"
+              },
+              {
+                "title": "管理环境声音，维持安静",
+                "status": "addressed"
+              }
+            ]
+          },
+          "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+        },
+        "trace": [
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":1,\"toolCalls\":[\"read_home_items\"]}",
+            "at": "2026-10-29T17:21:47.791Z"
+          },
+          {
+            "stage": "task_read",
+            "detail": "{\"itemIds\":[\"virtual-home:lin:desk\",\"virtual-home:lin:lamp\",\"virtual-home:lin:samla\",\"virtual-home:lin:knagglig\"],\"memoryIds\":[\"4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c\"],\"passages\":[\"798ca4766b88f5f076e97ad4:0\",\"8078f5eb423e8089279dde81:0\",\"0bc7578244e7a1938f776477:0\",\"5d786c1031d43c397fafc527:0\",\"2f497835e8a9841968ea0ab4:0\"]}",
+            "at": "2026-10-29T17:21:47.810Z"
+          },
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":2,\"toolCalls\":[]}",
+            "at": "2026-10-29T17:21:49.066Z"
+          },
+          {
+            "stage": "task_review",
+            "detail": "One source-and-action revision; not a creativity score or physical verification",
+            "at": "2026-10-29T17:22:03.905Z"
+          },
+          {
+            "stage": "task_complete",
+            "detail": "{\"parts\":[{\"title\":\"安排照明以支持夜间书写\",\"status\":\"addressed\"},{\"title\":\"规划书写操作空间与手部动线\",\"status\":\"addressed\"},{\"title\":\"安置画作，避免损伤且不干扰书写\",\"status\":\"addressed\"},{\"title\":\"管理环境声音，维持安静\",\"status\":\"addressed\"}],\"usedItemIds\":[\"virtual-home:lin:desk\",\"virtual-home:lin:lamp\",\"virtual-home:lin:painting\",\"virtual-home:lin:speaker\"]}",
+            "at": "2026-10-29T17:22:03.908Z"
+          }
+        ],
+        "tokens": {
+          "input": 20699,
+          "output": 722
+        },
+        "modelCalls": 3
+      }
+    },
+    {
+      "case": "A-lamp-follow-up",
+      "status": 200,
+      "input": "延续刚才的安静手账安排。我想调亮一点、色温也调暖些，台灯旋钮具体怎么操作？请区分官方说明和我的模拟状态。",
+      "result": {
+        "session": {
+          "id": "0ba20de2-5693-4d4e-bd3e-222560c98db4",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 2,
+          "status": "active",
+          "messages": [
+            {
+              "id": "3fb8ad4a-6342-4c60-9587-ffd5778d78f4",
+              "role": "user",
+              "text": "今晚想在书桌上写旅行手账，帮我把桌面安排舒服一点。我喜欢安静，不想再买东西。",
+              "at": "2026-10-29T17:22:03.910Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "636de388-66a5-4d73-a3c2-b7b0db596a63",
+              "role": "assistant",
+              "text": "今晚写旅行手账，目标是安静、舒适、不添新物。书桌（73×50cm）空间有限，优先保障书写区：把米家台灯1S移至左前方，调至400mm出光高度（手册明确），按压开灯，旋转调亮度至柔和档（避免刺眼），按住旋转微调色温至偏暖（约3000K–3500K，助放松）。右手侧留出足够书写空间，暂不放SAMLA盒或KNAGGLIG盒——它们可挪至桌下或右后侧空位，避免遮挡和分散注意力。画作（40×30cm）尚未固定支撑，不靠放、不压重物，建议先平放于桌面右侧边缘（不占书写区），待手账完成再处理。蓝牙音箱当前在窗边，保持关闭状态，确保安静。所有物品均利用已有，无需购买。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "今晚写旅行手账，目标是安静、舒适、不添新物。书桌（73×50cm）空间有限，优先保障书写区：把米家台灯1S移至左前方，调至400mm出光高度（手册明确），按压开灯，旋转调亮度至柔和档（避免刺眼），按住旋转微调色温至偏暖（约3000K–3500K，助放松）。右手侧留出足够书写空间，暂不放SAMLA盒或KNAGGLIG盒——它们可挪至桌下或右后侧空位，避免遮挡和分散注意力。画作（40×30cm）尚未固定支撑，不靠放、不压重物，建议先平放于桌面右侧边缘（不占书写区），待手账完成再处理。蓝牙音箱当前在窗边，保持关闭状态，确保安静。所有物品均利用已有，无需购买。",
+                "steps": [
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:0",
+                    "text": "将米家台灯1S移至书桌左前方，确保出光口距桌面400mm"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:1",
+                    "text": "按压旋钮开灯，缓慢旋转调低亮度至舒适阅读档"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:2",
+                    "text": "按住旋钮并缓慢旋转，将色温调至偏暖（约3000K–3500K）"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:3",
+                    "text": "清空桌面右手侧30cm×25cm区域作为书写核心区，纸笔居中放置"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:4",
+                    "text": "将画作平放于桌面右边缘，不叠压、不倚靠，远离台灯热源"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:0:5",
+                    "text": "确认蓝牙音箱处于关闭状态，不播放任何音频"
+                  }
+                ],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [
+                  "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+                ],
+                "evidenceIds": [
+                  "798ca4766b88f5f076e97ad4:0",
+                  "8078f5eb423e8089279dde81:0"
+                ],
+                "citations": [
+                  {
+                    "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+                    "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+                    "id": "798ca4766b88f5f076e97ad4:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "MICKE 米克 书桌 白色 - IKEA",
+                    "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+                    "id": "8078f5eb423e8089279dde81:0",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:lin:lamp",
+                    "name": "米家台灯1S",
+                    "model": "MJTD01SYL"
+                  },
+                  {
+                    "id": "virtual-home:lin:desk",
+                    "name": "MICKE 白色书桌",
+                    "model": "803.542.81"
+                  },
+                  {
+                    "id": "virtual-home:lin:speaker",
+                    "name": "GO 4 蓝牙音箱",
+                    "model": "GO 4"
+                  },
+                  {
+                    "id": "virtual-home:lin:painting",
+                    "name": "远山 · 朋友送的画",
+                    "model": "无商品型号"
+                  }
+                ],
+                "task": {
+                  "goal": "在书桌上安静、舒适地写旅行手账",
+                  "parts": [
+                    {
+                      "title": "安排照明以支持夜间书写",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "规划书写操作空间与手部动线",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "安置画作，避免损伤且不干扰书写",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "管理环境声音，维持安静",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T17:22:03.910Z"
+            },
+            {
+              "id": "7feb4bc7-6901-4e85-8819-94294f1cf7d8",
+              "role": "user",
+              "text": "延续刚才的安静手账安排。我想调亮一点、色温也调暖些，台灯旋钮具体怎么操作？请区分官方说明和我的模拟状态。",
+              "at": "2026-10-29T17:22:17.304Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "027262c1-51eb-4a17-9194-21b1d47dbb10",
+              "role": "assistant",
+              "text": "官方说明（依据香港版说明书）：按压旋钮开灯；旋转旋钮调节亮度；按住并旋转旋钮调节色温（2600K–5000K，数值越小越暖）。你当前模拟状态为台灯已通电、未联网、旋钮外观完好，因此可直接执行物理操作——先轻按开启，再按住旋钮缓慢右旋（顺时针）直至光感明显变暖（如接近2700–3000K），同时微调旋转幅度控制亮度至舒适书写水平（建议40%–70%，避免眩光）。注意：无需APP或网络，所有操作均为本地机械式。若旋钮阻滞或无响应，请先确认电源连接稳固。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "官方说明（依据香港版说明书）：按压旋钮开灯；旋转旋钮调节亮度；按住并旋转旋钮调节色温（2600K–5000K，数值越小越暖）。你当前模拟状态为台灯已通电、未联网、旋钮外观完好，因此可直接执行物理操作——先轻按开启，再按住旋钮缓慢右旋（顺时针）直至光感明显变暖（如接近2700–3000K），同时微调旋转幅度控制亮度至舒适书写水平（建议40%–70%，避免眩光）。注意：无需APP或网络，所有操作均为本地机械式。若旋钮阻滞或无响应，请先确认电源连接稳固。",
+                "steps": [
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:1:0",
+                    "text": "轻按台灯旋钮开机"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:1:1",
+                    "text": "按住旋钮缓慢顺时针旋转，同步观察光线由冷白转为暖黄，直至感觉舒适"
+                  },
+                  {
+                    "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:1:2",
+                    "text": "微调旋转幅度，使亮度适中、不刺眼、不昏暗"
+                  }
+                ],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [
+                  "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+                ],
+                "evidenceIds": [
+                  "798ca4766b88f5f076e97ad4:0",
+                  "798ca4766b88f5f076e97ad4:995"
+                ],
+                "citations": [
+                  {
+                    "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+                    "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+                    "id": "798ca4766b88f5f076e97ad4:995",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:lin:lamp",
+                    "name": "米家台灯1S",
+                    "model": "MJTD01SYL"
+                  }
+                ],
+                "task": {
+                  "goal": "在书桌上安静、舒适地写旅行手账",
+                  "parts": [
+                    {
+                      "title": "安排照明以支持夜间书写",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T17:22:17.304Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "homeId": "young-apartment-v1",
+            "useItemMemories": "yes",
+            "turnRequestId": "f559ba2b-8f7d-424a-8e44-05f1c2437937",
+            "homeTaskGoal": "在书桌上安静、舒适地写旅行手账",
+            "homeTask": "{\"goal\":\"在书桌上安静、舒适地写旅行手账\",\"parts\":[{\"title\":\"安排照明以支持夜间书写\",\"status\":\"addressed\"}]}"
+          },
+          "tried": [],
+          "memoryEpoch": 5,
+          "createdAt": "2026-10-29T17:21:45.408Z",
+          "updatedAt": "2026-10-29T17:22:17.304Z",
+          "expiresAt": "2026-11-05T17:21:45.408Z",
+          "itemScopes": {
+            "virtual-home:lin:lamp": "[\"lin\",\"[\\\"MJTD01SYL\\\",null,null,null]\"]",
+            "virtual-home:lin:desk": "[\"lin\",\"[\\\"803.542.81\\\",null,null,null]\"]",
+            "virtual-home:lin:samla": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:knagglig": "[\"lin\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:speaker": "[\"lin\",\"[\\\"GO 4\\\",\\\"jbl-go4\\\",\\\"2026-10-17.1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:bunny": "[\"lin\",\"[\\\"BAS3B\\\",null,null,null]\"]",
+            "virtual-home:lin:roses": "[\"lin\",\"[\\\"10328\\\",null,null,null]\"]",
+            "virtual-home:lin:painting": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "官方说明（依据香港版说明书）：按压旋钮开灯；旋转旋钮调节亮度；按住并旋转旋钮调节色温（2600K–5000K，数值越小越暖）。你当前模拟状态为台灯已通电、未联网、旋钮外观完好，因此可直接执行物理操作——先轻按开启，再按住旋钮缓慢右旋（顺时针）直至光感明显变暖（如接近2700–3000K），同时微调旋转幅度控制亮度至舒适书写水平（建议40%–70%，避免眩光）。注意：无需APP或网络，所有操作均为本地机械式。若旋钮阻滞或无响应，请先确认电源连接稳固。",
+          "steps": [
+            {
+              "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:1:0",
+              "text": "轻按台灯旋钮开机"
+            },
+            {
+              "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:1:1",
+              "text": "按住旋钮缓慢顺时针旋转，同步观察光线由冷白转为暖黄，直至感觉舒适"
+            },
+            {
+              "id": "home:0ba20de2-5693-4d4e-bd3e-222560c98db4:1:2",
+              "text": "微调旋转幅度，使亮度适中、不刺眼、不昏暗"
+            }
+          ],
+          "questions": [],
+          "source": "model-general",
+          "model": "qwen-plus",
+          "memoryIds": [
+            "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+          ],
+          "evidenceIds": [
+            "798ca4766b88f5f076e97ad4:0",
+            "798ca4766b88f5f076e97ad4:995"
+          ],
+          "citations": [
+            {
+              "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+              "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+              "id": "798ca4766b88f5f076e97ad4:995",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "virtual-home:lin:lamp",
+              "name": "米家台灯1S",
+              "model": "MJTD01SYL"
+            }
+          ],
+          "task": {
+            "goal": "在书桌上安静、舒适地写旅行手账",
+            "parts": [
+              {
+                "title": "安排照明以支持夜间书写",
+                "status": "addressed"
+              }
+            ]
+          },
+          "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+        },
+        "trace": [
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":1,\"toolCalls\":[\"read_home_items\"]}",
+            "at": "2026-10-29T17:22:06.014Z"
+          },
+          {
+            "stage": "task_read",
+            "detail": "{\"itemIds\":[\"virtual-home:lin:lamp\"],\"memoryIds\":[\"4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c\"],\"passages\":[\"af707ccc051cbe5c7e25d46c:997\",\"af707ccc051cbe5c7e25d46c:0\",\"798ca4766b88f5f076e97ad4:0\",\"798ca4766b88f5f076e97ad4:995\",\"8078f5eb423e8089279dde81:0\",\"8078f5eb423e8089279dde81:1000\",\"0bc7578244e7a1938f776477:0\",\"0bc7578244e7a1938f776477:990\",\"5d786c1031d43c397fafc527:0\",\"2f497835e8a9841968ea0ab4:0\"]}",
+            "at": "2026-10-29T17:22:06.041Z"
+          },
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":2,\"toolCalls\":[]}",
+            "at": "2026-10-29T17:22:07.390Z"
+          },
+          {
+            "stage": "task_review",
+            "detail": "One source-and-action revision; not a creativity score or physical verification",
+            "at": "2026-10-29T17:22:17.297Z"
+          },
+          {
+            "stage": "task_complete",
+            "detail": "{\"parts\":[{\"title\":\"安排照明以支持夜间书写\",\"status\":\"addressed\"}],\"usedItemIds\":[\"virtual-home:lin:lamp\"]}",
+            "at": "2026-10-29T17:22:17.302Z"
+          }
+        ],
+        "tokens": {
+          "input": 29942,
+          "output": 459
+        },
+        "modelCalls": 3
+      }
+    },
+    {
+      "case": "B-gift-and-layout",
+      "status": 200,
+      "input": "这幅画是谁送我的？我现在想把它和桌上的其他东西重新布置一下，你帮我一起想想。",
+      "result": {
+        "session": {
+          "id": "a89faf0f-de13-47f9-b231-720cdc29e0d6",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "e40b2b79-0e82-4a89-861a-b98ed0495eba",
+              "role": "user",
+              "text": "这幅画是谁送我的？我现在想把它和桌上的其他东西重新布置一下，你帮我一起想想。",
+              "at": "2026-10-29T17:22:36.105Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "ed4a71bc-e0d3-4aad-b055-1ee3b5eab7a4",
+              "role": "assistant",
+              "text": "这幅画《远山 · 朋友送的画》是朋友小夏送给你的。目前它尚未固定摆放，仅知位于书桌旁、暂无支撑。你希望重新布置它和桌上其他物品，需兼顾展示安全与日常使用（如写手账）。现有可用资源包括：MICKE书桌（73×50厘米，承重50公斤）、米家台灯1S（左后侧）、SAMLA透明盒（右后侧，28×20×14厘米）、KNAGGLIG松木盒（桌下，23×16×10厘米，承重2公斤）、蓝牙音箱、毛绒兔与乐高玫瑰（均不在桌面）。建议优先为画作设置独立、平稳的平放区域——可将SAMLA盒移至桌角空位（其盖子不承重，不可垫画），KNAGGLIG盒因承重低且无盖，也不适合作为画架；最稳妥方式是暂时清出桌面中部约40×30厘米区域，铺软布防刮，平放画作正面朝上；台灯保持原位提供照明，书写时再稍作调整。所有动作均不依赖未知支架或挂绳，也未挪动非桌面物品。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这幅画《远山 · 朋友送的画》是朋友小夏送给你的。目前它尚未固定摆放，仅知位于书桌旁、暂无支撑。你希望重新布置它和桌上其他物品，需兼顾展示安全与日常使用（如写手账）。现有可用资源包括：MICKE书桌（73×50厘米，承重50公斤）、米家台灯1S（左后侧）、SAMLA透明盒（右后侧，28×20×14厘米）、KNAGGLIG松木盒（桌下，23×16×10厘米，承重2公斤）、蓝牙音箱、毛绒兔与乐高玫瑰（均不在桌面）。建议优先为画作设置独立、平稳的平放区域——可将SAMLA盒移至桌角空位（其盖子不承重，不可垫画），KNAGGLIG盒因承重低且无盖，也不适合作为画架；最稳妥方式是暂时清出桌面中部约40×30厘米区域，铺软布防刮，平放画作正面朝上；台灯保持原位提供照明，书写时再稍作调整。所有动作均不依赖未知支架或挂绳，也未挪动非桌面物品。",
+                "steps": [
+                  {
+                    "id": "home:a89faf0f-de13-47f9-b231-720cdc29e0d6:0:0",
+                    "text": "清出书桌中部约40×30厘米平整区域，铺软布；将画作正面朝上平放于此处"
+                  },
+                  {
+                    "id": "home:a89faf0f-de13-47f9-b231-720cdc29e0d6:0:1",
+                    "text": "保持米家台灯在书桌左后侧原位，用于照明"
+                  },
+                  {
+                    "id": "home:a89faf0f-de13-47f9-b231-720cdc29e0d6:0:2",
+                    "text": "将SAMLA透明盒移至书桌右前角空位，避免遮挡视线"
+                  },
+                  {
+                    "id": "home:a89faf0f-de13-47f9-b231-720cdc29e0d6:0:3",
+                    "text": "KNAGGLIG松木盒保留在桌下，不用于支撑画作"
+                  }
+                ],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [
+                  "e6ea1197-8159-402f-a520-a464ef8c6cc6"
+                ],
+                "evidenceIds": [
+                  "798ca4766b88f5f076e97ad4:0",
+                  "8078f5eb423e8089279dde81:0",
+                  "0bc7578244e7a1938f776477:0",
+                  "5d786c1031d43c397fafc527:0"
+                ],
+                "citations": [
+                  {
+                    "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+                    "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+                    "id": "798ca4766b88f5f076e97ad4:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "MICKE 米克 书桌 白色 - IKEA",
+                    "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+                    "id": "8078f5eb423e8089279dde81:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "SAMLA 萨姆拉 附盖储物盒 透明 - IKEA",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "id": "0bc7578244e7a1938f776477:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "KNAGGLIG 卡纳格 盒 松木 - IKEA",
+                    "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+                    "id": "5d786c1031d43c397fafc527:0",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:lin:lamp",
+                    "name": "米家台灯1S",
+                    "model": "MJTD01SYL"
+                  },
+                  {
+                    "id": "virtual-home:lin:desk",
+                    "name": "MICKE 白色书桌",
+                    "model": "803.542.81"
+                  },
+                  {
+                    "id": "virtual-home:lin:samla",
+                    "name": "SAMLA 透明收纳盒",
+                    "model": "194.408.48"
+                  },
+                  {
+                    "id": "virtual-home:lin:knagglig",
+                    "name": "KNAGGLIG 松木盒",
+                    "model": "103.926.01"
+                  },
+                  {
+                    "id": "virtual-home:lin:painting",
+                    "name": "远山 · 朋友送的画",
+                    "model": "无商品型号"
+                  }
+                ],
+                "task": {
+                  "goal": "把朋友送的画和桌上其他东西重新布置",
+                  "parts": [
+                    {
+                      "title": "确认画作赠送者",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "规划画作与桌面物品的安全共存布局",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T17:22:36.105Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "homeId": "young-apartment-v1",
+            "useItemMemories": "yes",
+            "turnRequestId": "dfeab00f-f312-4275-83b7-8b0c0d238fee",
+            "homeTaskGoal": "把朋友送的画和桌上其他东西重新布置",
+            "homeTask": "{\"goal\":\"把朋友送的画和桌上其他东西重新布置\",\"parts\":[{\"title\":\"确认画作赠送者\",\"status\":\"addressed\"},{\"title\":\"规划画作与桌面物品的安全共存布局\",\"status\":\"addressed\"}]}"
+          },
+          "tried": [],
+          "memoryEpoch": 5,
+          "createdAt": "2026-10-29T17:22:17.810Z",
+          "updatedAt": "2026-10-29T17:22:36.106Z",
+          "expiresAt": "2026-11-05T17:22:17.810Z",
+          "itemScopes": {
+            "virtual-home:lin:painting": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]",
+            "virtual-home:lin:lamp": "[\"lin\",\"[\\\"MJTD01SYL\\\",null,null,null]\"]",
+            "virtual-home:lin:desk": "[\"lin\",\"[\\\"803.542.81\\\",null,null,null]\"]",
+            "virtual-home:lin:samla": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:knagglig": "[\"lin\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:speaker": "[\"lin\",\"[\\\"GO 4\\\",\\\"jbl-go4\\\",\\\"2026-10-17.1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:bunny": "[\"lin\",\"[\\\"BAS3B\\\",null,null,null]\"]",
+            "virtual-home:lin:roses": "[\"lin\",\"[\\\"10328\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这幅画《远山 · 朋友送的画》是朋友小夏送给你的。目前它尚未固定摆放，仅知位于书桌旁、暂无支撑。你希望重新布置它和桌上其他物品，需兼顾展示安全与日常使用（如写手账）。现有可用资源包括：MICKE书桌（73×50厘米，承重50公斤）、米家台灯1S（左后侧）、SAMLA透明盒（右后侧，28×20×14厘米）、KNAGGLIG松木盒（桌下，23×16×10厘米，承重2公斤）、蓝牙音箱、毛绒兔与乐高玫瑰（均不在桌面）。建议优先为画作设置独立、平稳的平放区域——可将SAMLA盒移至桌角空位（其盖子不承重，不可垫画），KNAGGLIG盒因承重低且无盖，也不适合作为画架；最稳妥方式是暂时清出桌面中部约40×30厘米区域，铺软布防刮，平放画作正面朝上；台灯保持原位提供照明，书写时再稍作调整。所有动作均不依赖未知支架或挂绳，也未挪动非桌面物品。",
+          "steps": [
+            {
+              "id": "home:a89faf0f-de13-47f9-b231-720cdc29e0d6:0:0",
+              "text": "清出书桌中部约40×30厘米平整区域，铺软布；将画作正面朝上平放于此处"
+            },
+            {
+              "id": "home:a89faf0f-de13-47f9-b231-720cdc29e0d6:0:1",
+              "text": "保持米家台灯在书桌左后侧原位，用于照明"
+            },
+            {
+              "id": "home:a89faf0f-de13-47f9-b231-720cdc29e0d6:0:2",
+              "text": "将SAMLA透明盒移至书桌右前角空位，避免遮挡视线"
+            },
+            {
+              "id": "home:a89faf0f-de13-47f9-b231-720cdc29e0d6:0:3",
+              "text": "KNAGGLIG松木盒保留在桌下，不用于支撑画作"
+            }
+          ],
+          "questions": [],
+          "source": "model-general",
+          "model": "qwen-plus",
+          "memoryIds": [
+            "e6ea1197-8159-402f-a520-a464ef8c6cc6"
+          ],
+          "evidenceIds": [
+            "798ca4766b88f5f076e97ad4:0",
+            "8078f5eb423e8089279dde81:0",
+            "0bc7578244e7a1938f776477:0",
+            "5d786c1031d43c397fafc527:0"
+          ],
+          "citations": [
+            {
+              "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+              "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+              "id": "798ca4766b88f5f076e97ad4:0",
+              "kind": "official"
+            },
+            {
+              "title": "MICKE 米克 书桌 白色 - IKEA",
+              "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+              "id": "8078f5eb423e8089279dde81:0",
+              "kind": "official"
+            },
+            {
+              "title": "SAMLA 萨姆拉 附盖储物盒 透明 - IKEA",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "id": "0bc7578244e7a1938f776477:0",
+              "kind": "official"
+            },
+            {
+              "title": "KNAGGLIG 卡纳格 盒 松木 - IKEA",
+              "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+              "id": "5d786c1031d43c397fafc527:0",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "virtual-home:lin:lamp",
+              "name": "米家台灯1S",
+              "model": "MJTD01SYL"
+            },
+            {
+              "id": "virtual-home:lin:desk",
+              "name": "MICKE 白色书桌",
+              "model": "803.542.81"
+            },
+            {
+              "id": "virtual-home:lin:samla",
+              "name": "SAMLA 透明收纳盒",
+              "model": "194.408.48"
+            },
+            {
+              "id": "virtual-home:lin:knagglig",
+              "name": "KNAGGLIG 松木盒",
+              "model": "103.926.01"
+            },
+            {
+              "id": "virtual-home:lin:painting",
+              "name": "远山 · 朋友送的画",
+              "model": "无商品型号"
+            }
+          ],
+          "task": {
+            "goal": "把朋友送的画和桌上其他东西重新布置",
+            "parts": [
+              {
+                "title": "确认画作赠送者",
+                "status": "addressed"
+              },
+              {
+                "title": "规划画作与桌面物品的安全共存布局",
+                "status": "addressed"
+              }
+            ]
+          },
+          "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+        },
+        "trace": [
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":1,\"toolCalls\":[\"read_home_items\"]}",
+            "at": "2026-10-29T17:22:19.534Z"
+          },
+          {
+            "stage": "task_read",
+            "detail": "{\"itemIds\":[\"virtual-home:lin:painting\"],\"memoryIds\":[\"e6ea1197-8159-402f-a520-a464ef8c6cc6\",\"4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c\"],\"passages\":[\"798ca4766b88f5f076e97ad4:0\",\"798ca4766b88f5f076e97ad4:995\",\"8078f5eb423e8089279dde81:0\",\"0bc7578244e7a1938f776477:0\",\"5d786c1031d43c397fafc527:0\",\"2f497835e8a9841968ea0ab4:0\"]}",
+            "at": "2026-10-29T17:22:19.549Z"
+          },
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":2,\"toolCalls\":[]}",
+            "at": "2026-10-29T17:22:20.700Z"
+          },
+          {
+            "stage": "task_review",
+            "detail": "One source-and-action revision; not a creativity score or physical verification",
+            "at": "2026-10-29T17:22:36.101Z"
+          },
+          {
+            "stage": "task_complete",
+            "detail": "{\"parts\":[{\"title\":\"确认画作赠送者\",\"status\":\"addressed\"},{\"title\":\"规划画作与桌面物品的安全共存布局\",\"status\":\"addressed\"}],\"usedItemIds\":[\"virtual-home:lin:painting\",\"virtual-home:lin:desk\",\"virtual-home:lin:lamp\",\"virtual-home:lin:samla\",\"virtual-home:lin:knagglig\"]}",
+            "at": "2026-10-29T17:22:36.103Z"
+          }
+        ],
+        "tokens": {
+          "input": 22527,
+          "output": 718
+        },
+        "modelCalls": 3
+      }
+    },
+    {
+      "case": "B-persona-in-original-task",
+      "status": 200,
+      "input": "请用这幅画的分身身份继续刚才的布置任务。你叫什么？我没有支架，也不想买东西或粘贴。",
+      "result": {
+        "session": {
+          "id": "05c7598c-daa2-4080-9a4d-ddbfb17e9a90",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "2bb1b2b1-08e6-45ba-9b0a-c951933f186f",
+              "role": "user",
+              "text": "请用这幅画的分身身份继续刚才的布置任务。你叫什么？我没有支架，也不想买东西或粘贴。",
+              "at": "2026-10-29T17:22:56.498Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "39d86995-f734-42c0-81ab-3f0407a30e31",
+              "role": "assistant",
+              "text": "我是《远山》的分身，你可以叫我山山——这是你为这幅画取的昵称。没有支架、不买新物、不粘贴，我们完全尊重这个前提。当前画作尚未固定支撑，尺寸40×30厘米，纸本木框结构（用户报告），背面与挂绳情况未知，因此不能靠墙、不能悬垂、不能垫高或倚放。为保护画面，它必须平放且正面朝上，且需独立、稳定、无挤压的区域。书桌桌面宽73cm、深50cm，当前空余面积足够容纳该画（40×30＜73×50），但需腾出一块平整位置。建议：先将SAMLA盒（28×20×14cm）和KNAGGLIG盒（23×16×10cm）暂时移至桌下或旁侧——它们不承担支撑功能，也不可用于垫高；再清出书桌中央或左/右侧一块≥40×30cm的干净平面，铺一张手账纸或软布防刮，然后将画平放其上。灯光可调至阅读模式（色温约4000K，亮度适中），避免直射画面。全程无需任何粘贴、打孔、购买或改装。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我是《远山》的分身，你可以叫我山山——这是你为这幅画取的昵称。没有支架、不买新物、不粘贴，我们完全尊重这个前提。当前画作尚未固定支撑，尺寸40×30厘米，纸本木框结构（用户报告），背面与挂绳情况未知，因此不能靠墙、不能悬垂、不能垫高或倚放。为保护画面，它必须平放且正面朝上，且需独立、稳定、无挤压的区域。书桌桌面宽73cm、深50cm，当前空余面积足够容纳该画（40×30＜73×50），但需腾出一块平整位置。建议：先将SAMLA盒（28×20×14cm）和KNAGGLIG盒（23×16×10cm）暂时移至桌下或旁侧——它们不承担支撑功能，也不可用于垫高；再清出书桌中央或左/右侧一块≥40×30cm的干净平面，铺一张手账纸或软布防刮，然后将画平放其上。灯光可调至阅读模式（色温约4000K，亮度适中），避免直射画面。全程无需任何粘贴、打孔、购买或改装。",
+                "steps": [
+                  {
+                    "id": "home:05c7598c-daa2-4080-9a4d-ddbfb17e9a90:0:0",
+                    "text": "清出书桌一处≥40×30厘米的平整区域"
+                  },
+                  {
+                    "id": "home:05c7598c-daa2-4080-9a4d-ddbfb17e9a90:0:1",
+                    "text": "铺软布或手账纸防刮"
+                  },
+                  {
+                    "id": "home:05c7598c-daa2-4080-9a4d-ddbfb17e9a90:0:2",
+                    "text": "将《远山》正面朝上平放其上"
+                  },
+                  {
+                    "id": "home:05c7598c-daa2-4080-9a4d-ddbfb17e9a90:0:3",
+                    "text": "调整米家台灯至阅读模式，避免直射画面"
+                  }
+                ],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [
+                  "e6ea1197-8159-402f-a520-a464ef8c6cc6",
+                  "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+                ],
+                "evidenceIds": [
+                  "af707ccc051cbe5c7e25d46c:997",
+                  "798ca4766b88f5f076e97ad4:995",
+                  "8078f5eb423e8089279dde81:0",
+                  "0bc7578244e7a1938f776477:0",
+                  "5d786c1031d43c397fafc527:0"
+                ],
+                "citations": [
+                  {
+                    "title": "米家台灯1S-小米商城",
+                    "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+                    "id": "af707ccc051cbe5c7e25d46c:997",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+                    "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+                    "id": "798ca4766b88f5f076e97ad4:995",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "MICKE 米克 书桌 白色 - IKEA",
+                    "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+                    "id": "8078f5eb423e8089279dde81:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "SAMLA 萨姆拉 附盖储物盒 透明 - IKEA",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "id": "0bc7578244e7a1938f776477:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "KNAGGLIG 卡纳格 盒 松木 - IKEA",
+                    "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+                    "id": "5d786c1031d43c397fafc527:0",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:lin:desk",
+                    "name": "MICKE 白色书桌",
+                    "model": "803.542.81"
+                  },
+                  {
+                    "id": "virtual-home:lin:samla",
+                    "name": "SAMLA 透明收纳盒",
+                    "model": "194.408.48"
+                  },
+                  {
+                    "id": "virtual-home:lin:knagglig",
+                    "name": "KNAGGLIG 松木盒",
+                    "model": "103.926.01"
+                  },
+                  {
+                    "id": "virtual-home:lin:painting",
+                    "name": "远山 · 朋友送的画",
+                    "model": "无商品型号"
+                  }
+                ],
+                "task": {
+                  "goal": "在不使用支架、不购买、不粘贴的前提下，安全、得体地布置《远山》画作",
+                  "parts": [
+                    {
+                      "title": "确认画作身份与用户赋予的昵称",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "基于无支架、不购买、不粘贴约束，给出可行布置方案",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T17:22:56.498Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "homeId": "young-apartment-v1",
+            "homeVoiceItemId": "virtual-home:lin:painting",
+            "useItemMemories": "yes",
+            "turnRequestId": "5221e4cf-6a50-42d3-998b-310a792d8aad",
+            "homeTaskGoal": "在不使用支架、不购买、不粘贴的前提下，安全、得体地布置《远山》画作",
+            "homeTask": "{\"goal\":\"在不使用支架、不购买、不粘贴的前提下，安全、得体地布置《远山》画作\",\"parts\":[{\"title\":\"确认画作身份与用户赋予的昵称\",\"status\":\"addressed\"},{\"title\":\"基于无支架、不购买、不粘贴约束，给出可行布置方案\",\"status\":\"addressed\"}]}"
+          },
+          "tried": [],
+          "memoryEpoch": 6,
+          "createdAt": "2026-10-29T17:22:36.968Z",
+          "updatedAt": "2026-10-29T17:22:56.498Z",
+          "expiresAt": "2026-11-05T17:22:36.968Z",
+          "itemScopes": {
+            "virtual-home:lin:painting": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]",
+            "virtual-home:lin:lamp": "[\"lin\",\"[\\\"MJTD01SYL\\\",null,null,null]\"]",
+            "virtual-home:lin:desk": "[\"lin\",\"[\\\"803.542.81\\\",null,null,null]\"]",
+            "virtual-home:lin:samla": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:knagglig": "[\"lin\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:speaker": "[\"lin\",\"[\\\"GO 4\\\",\\\"jbl-go4\\\",\\\"2026-10-17.1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:bunny": "[\"lin\",\"[\\\"BAS3B\\\",null,null,null]\"]",
+            "virtual-home:lin:roses": "[\"lin\",\"[\\\"10328\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我是《远山》的分身，你可以叫我山山——这是你为这幅画取的昵称。没有支架、不买新物、不粘贴，我们完全尊重这个前提。当前画作尚未固定支撑，尺寸40×30厘米，纸本木框结构（用户报告），背面与挂绳情况未知，因此不能靠墙、不能悬垂、不能垫高或倚放。为保护画面，它必须平放且正面朝上，且需独立、稳定、无挤压的区域。书桌桌面宽73cm、深50cm，当前空余面积足够容纳该画（40×30＜73×50），但需腾出一块平整位置。建议：先将SAMLA盒（28×20×14cm）和KNAGGLIG盒（23×16×10cm）暂时移至桌下或旁侧——它们不承担支撑功能，也不可用于垫高；再清出书桌中央或左/右侧一块≥40×30cm的干净平面，铺一张手账纸或软布防刮，然后将画平放其上。灯光可调至阅读模式（色温约4000K，亮度适中），避免直射画面。全程无需任何粘贴、打孔、购买或改装。",
+          "steps": [
+            {
+              "id": "home:05c7598c-daa2-4080-9a4d-ddbfb17e9a90:0:0",
+              "text": "清出书桌一处≥40×30厘米的平整区域"
+            },
+            {
+              "id": "home:05c7598c-daa2-4080-9a4d-ddbfb17e9a90:0:1",
+              "text": "铺软布或手账纸防刮"
+            },
+            {
+              "id": "home:05c7598c-daa2-4080-9a4d-ddbfb17e9a90:0:2",
+              "text": "将《远山》正面朝上平放其上"
+            },
+            {
+              "id": "home:05c7598c-daa2-4080-9a4d-ddbfb17e9a90:0:3",
+              "text": "调整米家台灯至阅读模式，避免直射画面"
+            }
+          ],
+          "questions": [],
+          "source": "model-general",
+          "model": "qwen-plus",
+          "memoryIds": [
+            "e6ea1197-8159-402f-a520-a464ef8c6cc6",
+            "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+          ],
+          "evidenceIds": [
+            "af707ccc051cbe5c7e25d46c:997",
+            "798ca4766b88f5f076e97ad4:995",
+            "8078f5eb423e8089279dde81:0",
+            "0bc7578244e7a1938f776477:0",
+            "5d786c1031d43c397fafc527:0"
+          ],
+          "citations": [
+            {
+              "title": "米家台灯1S-小米商城",
+              "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+              "id": "af707ccc051cbe5c7e25d46c:997",
+              "kind": "official"
+            },
+            {
+              "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+              "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+              "id": "798ca4766b88f5f076e97ad4:995",
+              "kind": "official"
+            },
+            {
+              "title": "MICKE 米克 书桌 白色 - IKEA",
+              "url": "https://www.ikea.cn/cn/zh/p/micke-desk-white-80354281/",
+              "id": "8078f5eb423e8089279dde81:0",
+              "kind": "official"
+            },
+            {
+              "title": "SAMLA 萨姆拉 附盖储物盒 透明 - IKEA",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "id": "0bc7578244e7a1938f776477:0",
+              "kind": "official"
+            },
+            {
+              "title": "KNAGGLIG 卡纳格 盒 松木 - IKEA",
+              "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+              "id": "5d786c1031d43c397fafc527:0",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "virtual-home:lin:desk",
+              "name": "MICKE 白色书桌",
+              "model": "803.542.81"
+            },
+            {
+              "id": "virtual-home:lin:samla",
+              "name": "SAMLA 透明收纳盒",
+              "model": "194.408.48"
+            },
+            {
+              "id": "virtual-home:lin:knagglig",
+              "name": "KNAGGLIG 松木盒",
+              "model": "103.926.01"
+            },
+            {
+              "id": "virtual-home:lin:painting",
+              "name": "远山 · 朋友送的画",
+              "model": "无商品型号"
+            }
+          ],
+          "task": {
+            "goal": "在不使用支架、不购买、不粘贴的前提下，安全、得体地布置《远山》画作",
+            "parts": [
+              {
+                "title": "确认画作身份与用户赋予的昵称",
+                "status": "addressed"
+              },
+              {
+                "title": "基于无支架、不购买、不粘贴约束，给出可行布置方案",
+                "status": "addressed"
+              }
+            ]
+          },
+          "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+        },
+        "trace": [
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":1,\"toolCalls\":[\"read_home_items\"]}",
+            "at": "2026-10-29T17:22:38.620Z"
+          },
+          {
+            "stage": "task_read",
+            "detail": "{\"itemIds\":[\"virtual-home:lin:painting\"],\"memoryIds\":[\"e6ea1197-8159-402f-a520-a464ef8c6cc6\",\"4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c\"],\"passages\":[\"af707ccc051cbe5c7e25d46c:997\",\"798ca4766b88f5f076e97ad4:995\",\"8078f5eb423e8089279dde81:0\",\"8078f5eb423e8089279dde81:1000\",\"0bc7578244e7a1938f776477:0\",\"0bc7578244e7a1938f776477:990\",\"5d786c1031d43c397fafc527:0\",\"2f497835e8a9841968ea0ab4:0\"]}",
+            "at": "2026-10-29T17:22:38.646Z"
+          },
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":2,\"toolCalls\":[]}",
+            "at": "2026-10-29T17:22:39.735Z"
+          },
+          {
+            "stage": "task_review",
+            "detail": "One source-and-action revision; not a creativity score or physical verification",
+            "at": "2026-10-29T17:22:56.491Z"
+          },
+          {
+            "stage": "task_complete",
+            "detail": "{\"parts\":[{\"title\":\"确认画作身份与用户赋予的昵称\",\"status\":\"addressed\"},{\"title\":\"基于无支架、不购买、不粘贴约束，给出可行布置方案\",\"status\":\"addressed\"}],\"usedItemIds\":[\"virtual-home:lin:painting\",\"virtual-home:lin:desk\",\"virtual-home:lin:samla\",\"virtual-home:lin:knagglig\"]}",
+            "at": "2026-10-29T17:22:56.497Z"
+          }
+        ],
+        "tokens": {
+          "input": 25026,
+          "output": 773
+        },
+        "modelCalls": 3
+      }
+    },
+    {
+      "case": "C-lamp-operations-and-network",
+      "status": 200,
+      "input": "米家台灯1S MJTD01SYL怎样调亮度和色温？怎么连接家里的网络，连接不上时先检查什么？",
+      "result": {
+        "session": {
+          "id": "9cc0ed8c-0790-40a8-a29b-6efa93cefb82",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "ebee2683-1ad8-4b75-8f65-e65327942444",
+              "role": "user",
+              "text": "米家台灯1S MJTD01SYL怎样调亮度和色温？怎么连接家里的网络，连接不上时先检查什么？",
+              "at": "2026-10-29T17:23:10.677Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "05e3b463-1cca-47d8-a0a2-445a28b31bf8",
+              "role": "assistant",
+              "text": "调亮度和色温：按压旋钮键开关灯；旋转旋钮键调节亮度（1%–100%）；按住并旋转旋钮键调节色温（2600K–5000K）。连接网络需先下载米家App（Android 4.4+/iOS 9.0+），打开App→右上角“+”→按提示添加设备。连接不上时，请先检查：①台灯已通电且指示灯微亮；②手机连的是2.4GHz Wi-Fi（不支持5GHz）；③路由器工作正常、信号稳定；④台灯未处于其他网络绑定状态（若换网，需先恢复出厂设置：通电后用细物长按底座RESET孔5秒，待呼吸闪烁后松开）。操作前请确认实物旋钮功能与说明书一致。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "调亮度和色温：按压旋钮键开关灯；旋转旋钮键调节亮度（1%–100%）；按住并旋转旋钮键调节色温（2600K–5000K）。连接网络需先下载米家App（Android 4.4+/iOS 9.0+），打开App→右上角“+”→按提示添加设备。连接不上时，请先检查：①台灯已通电且指示灯微亮；②手机连的是2.4GHz Wi-Fi（不支持5GHz）；③路由器工作正常、信号稳定；④台灯未处于其他网络绑定状态（若换网，需先恢复出厂设置：通电后用细物长按底座RESET孔5秒，待呼吸闪烁后松开）。操作前请确认实物旋钮功能与说明书一致。",
+                "steps": [
+                  {
+                    "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:0:0",
+                    "text": "按压旋钮开关灯；旋转调节亮度；按住并旋转调节色温。"
+                  },
+                  {
+                    "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:0:1",
+                    "text": "下载米家App，确保手机连2.4GHz Wi-Fi，通过App添加设备。"
+                  },
+                  {
+                    "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:0:2",
+                    "text": "连接失败时，检查供电、Wi-Fi频段、路由器状态及是否需重置。"
+                  }
+                ],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [
+                  "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+                ],
+                "evidenceIds": [
+                  "798ca4766b88f5f076e97ad4:0",
+                  "af707ccc051cbe5c7e25d46c:997"
+                ],
+                "citations": [
+                  {
+                    "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+                    "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+                    "id": "798ca4766b88f5f076e97ad4:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "米家台灯1S-小米商城",
+                    "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+                    "id": "af707ccc051cbe5c7e25d46c:997",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:lin:lamp",
+                    "name": "米家台灯1S",
+                    "model": "MJTD01SYL"
+                  }
+                ],
+                "task": {
+                  "goal": "掌握米家台灯1S的基础操控与联网方法",
+                  "parts": [
+                    {
+                      "title": "说明亮度与色温调节方式",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "说明联网步骤及常见连接失败的自查项",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T17:23:10.677Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "homeId": "young-apartment-v1",
+            "useItemMemories": "yes",
+            "turnRequestId": "aad1b289-6ddd-402d-882e-5206eff82a29",
+            "homeTaskGoal": "掌握米家台灯1S的基础操控与联网方法",
+            "homeTask": "{\"goal\":\"掌握米家台灯1S的基础操控与联网方法\",\"parts\":[{\"title\":\"说明亮度与色温调节方式\",\"status\":\"addressed\"},{\"title\":\"说明联网步骤及常见连接失败的自查项\",\"status\":\"addressed\"}]}"
+          },
+          "tried": [],
+          "memoryEpoch": 6,
+          "createdAt": "2026-10-29T17:22:56.982Z",
+          "updatedAt": "2026-10-29T17:23:10.678Z",
+          "expiresAt": "2026-11-05T17:22:56.982Z",
+          "itemScopes": {
+            "virtual-home:lin:lamp": "[\"lin\",\"[\\\"MJTD01SYL\\\",null,null,null]\"]",
+            "virtual-home:lin:desk": "[\"lin\",\"[\\\"803.542.81\\\",null,null,null]\"]",
+            "virtual-home:lin:samla": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:knagglig": "[\"lin\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:speaker": "[\"lin\",\"[\\\"GO 4\\\",\\\"jbl-go4\\\",\\\"2026-10-17.1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:bunny": "[\"lin\",\"[\\\"BAS3B\\\",null,null,null]\"]",
+            "virtual-home:lin:roses": "[\"lin\",\"[\\\"10328\\\",null,null,null]\"]",
+            "virtual-home:lin:painting": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "调亮度和色温：按压旋钮键开关灯；旋转旋钮键调节亮度（1%–100%）；按住并旋转旋钮键调节色温（2600K–5000K）。连接网络需先下载米家App（Android 4.4+/iOS 9.0+），打开App→右上角“+”→按提示添加设备。连接不上时，请先检查：①台灯已通电且指示灯微亮；②手机连的是2.4GHz Wi-Fi（不支持5GHz）；③路由器工作正常、信号稳定；④台灯未处于其他网络绑定状态（若换网，需先恢复出厂设置：通电后用细物长按底座RESET孔5秒，待呼吸闪烁后松开）。操作前请确认实物旋钮功能与说明书一致。",
+          "steps": [
+            {
+              "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:0:0",
+              "text": "按压旋钮开关灯；旋转调节亮度；按住并旋转调节色温。"
+            },
+            {
+              "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:0:1",
+              "text": "下载米家App，确保手机连2.4GHz Wi-Fi，通过App添加设备。"
+            },
+            {
+              "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:0:2",
+              "text": "连接失败时，检查供电、Wi-Fi频段、路由器状态及是否需重置。"
+            }
+          ],
+          "questions": [],
+          "source": "model-general",
+          "model": "qwen-plus",
+          "memoryIds": [
+            "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+          ],
+          "evidenceIds": [
+            "798ca4766b88f5f076e97ad4:0",
+            "af707ccc051cbe5c7e25d46c:997"
+          ],
+          "citations": [
+            {
+              "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+              "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+              "id": "798ca4766b88f5f076e97ad4:0",
+              "kind": "official"
+            },
+            {
+              "title": "米家台灯1S-小米商城",
+              "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+              "id": "af707ccc051cbe5c7e25d46c:997",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "virtual-home:lin:lamp",
+              "name": "米家台灯1S",
+              "model": "MJTD01SYL"
+            }
+          ],
+          "task": {
+            "goal": "掌握米家台灯1S的基础操控与联网方法",
+            "parts": [
+              {
+                "title": "说明亮度与色温调节方式",
+                "status": "addressed"
+              },
+              {
+                "title": "说明联网步骤及常见连接失败的自查项",
+                "status": "addressed"
+              }
+            ]
+          },
+          "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+        },
+        "trace": [
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":1,\"toolCalls\":[\"read_home_items\"]}",
+            "at": "2026-10-29T17:22:58.383Z"
+          },
+          {
+            "stage": "task_read",
+            "detail": "{\"itemIds\":[\"virtual-home:lin:lamp\"],\"memoryIds\":[\"4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c\"],\"passages\":[\"af707ccc051cbe5c7e25d46c:997\",\"af707ccc051cbe5c7e25d46c:0\",\"af707ccc051cbe5c7e25d46c:1988\",\"798ca4766b88f5f076e97ad4:0\",\"8078f5eb423e8089279dde81:0\",\"22c12c04c94d51d4088b85a9:0\",\"2f497835e8a9841968ea0ab4:0\"]}",
+            "at": "2026-10-29T17:22:58.410Z"
+          },
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":2,\"toolCalls\":[]}",
+            "at": "2026-10-29T17:22:59.544Z"
+          },
+          {
+            "stage": "task_review",
+            "detail": "One source-and-action revision; not a creativity score or physical verification",
+            "at": "2026-10-29T17:23:10.673Z"
+          },
+          {
+            "stage": "task_complete",
+            "detail": "{\"parts\":[{\"title\":\"说明亮度与色温调节方式\",\"status\":\"addressed\"},{\"title\":\"说明联网步骤及常见连接失败的自查项\",\"status\":\"addressed\"}],\"usedItemIds\":[\"virtual-home:lin:lamp\"]}",
+            "at": "2026-10-29T17:23:10.676Z"
+          }
+        ],
+        "tokens": {
+          "input": 21689,
+          "output": 509
+        },
+        "modelCalls": 3
+      }
+    },
+    {
+      "case": "C-network-troubleshooting",
+      "status": 200,
+      "input": "我的手机只看到5GHz网络，米家里还没有添加这盏灯。接下来先检查什么？不要恢复出厂设置，也不要声称你已经控制了灯。",
+      "result": {
+        "session": {
+          "id": "9cc0ed8c-0790-40a8-a29b-6efa93cefb82",
+          "owner": "lin",
+          "mode": "auto",
+          "revision": 2,
+          "status": "active",
+          "messages": [
+            {
+              "id": "ebee2683-1ad8-4b75-8f65-e65327942444",
+              "role": "user",
+              "text": "米家台灯1S MJTD01SYL怎样调亮度和色温？怎么连接家里的网络，连接不上时先检查什么？",
+              "at": "2026-10-29T17:23:10.677Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "05e3b463-1cca-47d8-a0a2-445a28b31bf8",
+              "role": "assistant",
+              "text": "调亮度和色温：按压旋钮键开关灯；旋转旋钮键调节亮度（1%–100%）；按住并旋转旋钮键调节色温（2600K–5000K）。连接网络需先下载米家App（Android 4.4+/iOS 9.0+），打开App→右上角“+”→按提示添加设备。连接不上时，请先检查：①台灯已通电且指示灯微亮；②手机连的是2.4GHz Wi-Fi（不支持5GHz）；③路由器工作正常、信号稳定；④台灯未处于其他网络绑定状态（若换网，需先恢复出厂设置：通电后用细物长按底座RESET孔5秒，待呼吸闪烁后松开）。操作前请确认实物旋钮功能与说明书一致。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "调亮度和色温：按压旋钮键开关灯；旋转旋钮键调节亮度（1%–100%）；按住并旋转旋钮键调节色温（2600K–5000K）。连接网络需先下载米家App（Android 4.4+/iOS 9.0+），打开App→右上角“+”→按提示添加设备。连接不上时，请先检查：①台灯已通电且指示灯微亮；②手机连的是2.4GHz Wi-Fi（不支持5GHz）；③路由器工作正常、信号稳定；④台灯未处于其他网络绑定状态（若换网，需先恢复出厂设置：通电后用细物长按底座RESET孔5秒，待呼吸闪烁后松开）。操作前请确认实物旋钮功能与说明书一致。",
+                "steps": [
+                  {
+                    "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:0:0",
+                    "text": "按压旋钮开关灯；旋转调节亮度；按住并旋转调节色温。"
+                  },
+                  {
+                    "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:0:1",
+                    "text": "下载米家App，确保手机连2.4GHz Wi-Fi，通过App添加设备。"
+                  },
+                  {
+                    "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:0:2",
+                    "text": "连接失败时，检查供电、Wi-Fi频段、路由器状态及是否需重置。"
+                  }
+                ],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [
+                  "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+                ],
+                "evidenceIds": [
+                  "798ca4766b88f5f076e97ad4:0",
+                  "af707ccc051cbe5c7e25d46c:997"
+                ],
+                "citations": [
+                  {
+                    "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+                    "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+                    "id": "798ca4766b88f5f076e97ad4:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "米家台灯1S-小米商城",
+                    "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+                    "id": "af707ccc051cbe5c7e25d46c:997",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:lin:lamp",
+                    "name": "米家台灯1S",
+                    "model": "MJTD01SYL"
+                  }
+                ],
+                "task": {
+                  "goal": "掌握米家台灯1S的基础操控与联网方法",
+                  "parts": [
+                    {
+                      "title": "说明亮度与色温调节方式",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "说明联网步骤及常见连接失败的自查项",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T17:23:10.677Z"
+            },
+            {
+              "id": "a9ee28b9-e83f-4642-962a-e3ead5152338",
+              "role": "user",
+              "text": "我的手机只看到5GHz网络，米家里还没有添加这盏灯。接下来先检查什么？不要恢复出厂设置，也不要声称你已经控制了灯。",
+              "at": "2026-10-29T17:23:24.997Z",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "97017ca2-5898-47ee-968b-cf3f0e310bdf",
+              "role": "assistant",
+              "text": "先检查手机Wi-Fi是否已切换至2.4GHz频段，因为米家台灯1S仅支持2.4GHz Wi-Fi（IEEE 802.11 b/g/n），不支持5GHz。确认路由器已开启2.4GHz网络（部分双频路由器默认隐藏该频段或与5GHz同名合并广播，需登录路由器后台单独启用并设置独立名称）。同时确保台灯已通电、旋钮指示灯常亮或微闪（未响应时可短按旋钮确认开机）。无需恢复出厂设置，当前状态为待配网，仅需在米家App中选择添加设备，按提示操作即可。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "先检查手机Wi-Fi是否已切换至2.4GHz频段，因为米家台灯1S仅支持2.4GHz Wi-Fi（IEEE 802.11 b/g/n），不支持5GHz。确认路由器已开启2.4GHz网络（部分双频路由器默认隐藏该频段或与5GHz同名合并广播，需登录路由器后台单独启用并设置独立名称）。同时确保台灯已通电、旋钮指示灯常亮或微闪（未响应时可短按旋钮确认开机）。无需恢复出厂设置，当前状态为待配网，仅需在米家App中选择添加设备，按提示操作即可。",
+                "steps": [
+                  {
+                    "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:1:0",
+                    "text": "打开手机Wi-Fi设置，确认已连接2.4GHz网络（如名称含2.4G、24G或单独列出）；若仅见5GHz网络，请登录路由器管理页面启用2.4GHz频段并设为可见；确保台灯电源接通、旋钮灯亮；打开米家App，点击右上角“+”，选择“手动添加”，搜索“米家台灯1S”并按指引配网"
+                  }
+                ],
+                "questions": [],
+                "source": "model-general",
+                "model": "qwen-plus",
+                "memoryIds": [
+                  "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+                ],
+                "evidenceIds": [
+                  "798ca4766b88f5f076e97ad4:0",
+                  "af707ccc051cbe5c7e25d46c:997"
+                ],
+                "citations": [
+                  {
+                    "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+                    "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+                    "id": "798ca4766b88f5f076e97ad4:0",
+                    "kind": "official"
+                  },
+                  {
+                    "title": "米家台灯1S-小米商城",
+                    "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+                    "id": "af707ccc051cbe5c7e25d46c:997",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "virtual-home:lin:lamp",
+                    "name": "米家台灯1S",
+                    "model": "MJTD01SYL"
+                  }
+                ],
+                "task": {
+                  "goal": "掌握米家台灯1S的基础操控与联网方法",
+                  "parts": [
+                    {
+                      "title": "说明亮度与色温调节方式",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "说明联网步骤及常见连接失败的自查项",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+              },
+              "at": "2026-10-29T17:23:24.997Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "homeId": "young-apartment-v1",
+            "useItemMemories": "yes",
+            "turnRequestId": "5313aa79-7d5e-4b33-a131-42be21b12efc",
+            "homeTaskGoal": "掌握米家台灯1S的基础操控与联网方法",
+            "homeTask": "{\"goal\":\"掌握米家台灯1S的基础操控与联网方法\",\"parts\":[{\"title\":\"说明亮度与色温调节方式\",\"status\":\"addressed\"},{\"title\":\"说明联网步骤及常见连接失败的自查项\",\"status\":\"addressed\"}]}"
+          },
+          "tried": [],
+          "memoryEpoch": 6,
+          "createdAt": "2026-10-29T17:22:56.982Z",
+          "updatedAt": "2026-10-29T17:23:24.997Z",
+          "expiresAt": "2026-11-05T17:22:56.982Z",
+          "itemScopes": {
+            "virtual-home:lin:lamp": "[\"lin\",\"[\\\"MJTD01SYL\\\",null,null,null]\"]",
+            "virtual-home:lin:desk": "[\"lin\",\"[\\\"803.542.81\\\",null,null,null]\"]",
+            "virtual-home:lin:samla": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:knagglig": "[\"lin\",\"[\\\"103.926.01\\\",\\\"ikea-knagglig-10392601\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:speaker": "[\"lin\",\"[\\\"GO 4\\\",\\\"jbl-go4\\\",\\\"2026-10-17.1\\\",\\\"2026-10-29T16:51:31.843Z\\\"]\"]",
+            "virtual-home:lin:bunny": "[\"lin\",\"[\\\"BAS3B\\\",null,null,null]\"]",
+            "virtual-home:lin:roses": "[\"lin\",\"[\\\"10328\\\",null,null,null]\"]",
+            "virtual-home:lin:painting": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "先检查手机Wi-Fi是否已切换至2.4GHz频段，因为米家台灯1S仅支持2.4GHz Wi-Fi（IEEE 802.11 b/g/n），不支持5GHz。确认路由器已开启2.4GHz网络（部分双频路由器默认隐藏该频段或与5GHz同名合并广播，需登录路由器后台单独启用并设置独立名称）。同时确保台灯已通电、旋钮指示灯常亮或微闪（未响应时可短按旋钮确认开机）。无需恢复出厂设置，当前状态为待配网，仅需在米家App中选择添加设备，按提示操作即可。",
+          "steps": [
+            {
+              "id": "home:9cc0ed8c-0790-40a8-a29b-6efa93cefb82:1:0",
+              "text": "打开手机Wi-Fi设置，确认已连接2.4GHz网络（如名称含2.4G、24G或单独列出）；若仅见5GHz网络，请登录路由器管理页面启用2.4GHz频段并设为可见；确保台灯电源接通、旋钮灯亮；打开米家App，点击右上角“+”，选择“手动添加”，搜索“米家台灯1S”并按指引配网"
+            }
+          ],
+          "questions": [],
+          "source": "model-general",
+          "model": "qwen-plus",
+          "memoryIds": [
+            "4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c"
+          ],
+          "evidenceIds": [
+            "798ca4766b88f5f076e97ad4:0",
+            "af707ccc051cbe5c7e25d46c:997"
+          ],
+          "citations": [
+            {
+              "title": "Mi Smart LED Desk Lamp 1S User Manual.pdf",
+              "url": "https://user-guide2024.cnbj1.mi-fds.com/user-guide2024/Hong%20Kong/N/Mi%20Smart%20LED%20Desk%20Lamp%201S%20User%20Manual.pdf",
+              "id": "798ca4766b88f5f076e97ad4:0",
+              "kind": "official"
+            },
+            {
+              "title": "米家台灯1S-小米商城",
+              "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+              "id": "af707ccc051cbe5c7e25d46c:997",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "virtual-home:lin:lamp",
+              "name": "米家台灯1S",
+              "model": "MJTD01SYL"
+            }
+          ],
+          "task": {
+            "goal": "掌握米家台灯1S的基础操控与联网方法",
+            "parts": [
+              {
+                "title": "说明亮度与色温调节方式",
+                "status": "addressed"
+              },
+              {
+                "title": "说明联网步骤及常见连接失败的自查项",
+                "status": "addressed"
+              }
+            ]
+          },
+          "caveat": "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。"
+        },
+        "trace": [
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":1,\"toolCalls\":[\"read_home_items\"]}",
+            "at": "2026-10-29T17:23:12.231Z"
+          },
+          {
+            "stage": "task_read",
+            "detail": "{\"itemIds\":[\"virtual-home:lin:lamp\"],\"memoryIds\":[\"4e7ae6d4-1f56-47dc-9ca8-fab78e266b4c\"],\"passages\":[\"af707ccc051cbe5c7e25d46c:997\",\"af707ccc051cbe5c7e25d46c:0\",\"798ca4766b88f5f076e97ad4:0\",\"8078f5eb423e8089279dde81:0\",\"0bc7578244e7a1938f776477:0\",\"5d786c1031d43c397fafc527:0\",\"2f497835e8a9841968ea0ab4:0\"]}",
+            "at": "2026-10-29T17:23:12.255Z"
+          },
+          {
+            "stage": "task_model",
+            "detail": "{\"round\":2,\"toolCalls\":[]}",
+            "at": "2026-10-29T17:23:13.898Z"
+          },
+          {
+            "stage": "task_review",
+            "detail": "One source-and-action revision; not a creativity score or physical verification",
+            "at": "2026-10-29T17:23:24.994Z"
+          },
+          {
+            "stage": "task_complete",
+            "detail": "{\"parts\":[{\"title\":\"说明亮度与色温调节方式\",\"status\":\"addressed\"},{\"title\":\"说明联网步骤及常见连接失败的自查项\",\"status\":\"addressed\"}],\"usedItemIds\":[\"virtual-home:lin:lamp\"]}",
+            "at": "2026-10-29T17:23:24.996Z"
+          }
+        ],
+        "tokens": {
+          "input": 25546,
+          "output": 496
+        },
+        "modelCalls": 3
+      }
+    },
+    {
+      "case": "C-user-reported-step-feedback",
+      "status": "passed",
+      "kind": "user-report-not-device-verification"
+    },
+    {
+      "case": "mobile-390-home-and-navigation",
+      "status": "passed"
+    }
+  ],
+  "errors": []
+}

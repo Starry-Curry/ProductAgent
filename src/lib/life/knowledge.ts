@@ -5,6 +5,16 @@ import { fetchPublicDocument, sourceURL } from "./sources.ts";
 
 const brands = [
   {
+    names: ["jbl"],
+    domains: ["jbl.com", "jbl.com.cn"],
+    home: "https://www.jbl.com/",
+  },
+  {
+    names: ["jellycat"],
+    domains: ["jellycat.com"],
+    home: "https://jellycat.com/",
+  },
+  {
     names: ["乐高", "lego"],
     domains: ["lego.com"],
     home: "https://www.lego.com/service/buildinginstructions/",

@@ -1,3 +1,6 @@
+export const hazardousActions =
+  /短接|拆开.{0,8}电池|加热.{0,8}电池|电池.{0,8}加热|带电.{0,8}拆|湿.{0,8}充电/;
+
 /** Remove only explicitly forbidden action verbs, never the remainder of a sentence. */
 export function withoutProhibitedActions(text: string) {
   return text

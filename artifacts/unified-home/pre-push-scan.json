@@ -1,0 +1,386 @@
+{
+  "at": "2026-10-29T17:57:41.161Z",
+  "scope": "staged bytes only; no secrets/config/database read",
+  "base": "113696effe5f7f162fe9dccfbdf0bb64a7737d55",
+  "files": 75,
+  "totalBytes": 3556439,
+  "issues": [],
+  "manifest": [
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 7764,
+      "sha256": "649779a35b1ac298bc67cd98f67fca7817a4017899cd9f2019db95df4eab8c99"
+    },
+    {
+      "file": "DEVELOPMENT_REPORT.md",
+      "bytes": 6818,
+      "sha256": "0296b6c6aaa36697bb901f45dd19f03479e07221480a430c6095f32bd5ed51ae"
+    },
+    {
+      "file": "IMPLEMENTATION_STATUS.md",
+      "bytes": 7329,
+      "sha256": "03ce1380c02ea02ee6638aa34c333278df3a59da4423483ae7bf934cc6df8fbd"
+    },
+    {
+      "file": "REVIEW_HANDOFF.md",
+      "bytes": 6761,
+      "sha256": "7d9d6e3d11cff3d79505089378d6f3ede191e8b5d8951613348a5e882f7da5e3"
+    },
+    {
+      "file": "artifacts/unified-home/app-network.json",
+      "bytes": 27164,
+      "sha256": "780fa213d6efb11198104c69c6eee5430126933fbee757d32a2a1482220e80a2"
+    },
+    {
+      "file": "artifacts/unified-home/benchmark.txt",
+      "bytes": 4657,
+      "sha256": "ed78afe55afa65860bf53bec0b6586967254d1da5e9a948b355cb056a4c14a7c"
+    },
+    {
+      "file": "artifacts/unified-home/browser-draft-quality-failure.json",
+      "bytes": 43990,
+      "sha256": "d203c27df32b1c305e3ab35bf668f633880417010384fc199cd33c1a20bc88c0"
+    },
+    {
+      "file": "artifacts/unified-home/browser-failure.png",
+      "bytes": 86906,
+      "sha256": "e4ed7b752aa1f149d5ba0d63abe271d8f9e9a4e7c67a47d04aacf7f1739b01df"
+    },
+    {
+      "file": "artifacts/unified-home/browser-full-journeys.json",
+      "bytes": 90931,
+      "sha256": "62597e0854b978cb21ab4f1b89e3052278974d60c85e4ffcbd271e61c6914b24"
+    },
+    {
+      "file": "artifacts/unified-home/browser-initial-failure.json",
+      "bytes": 547,
+      "sha256": "044b2571cc613dbd0f3ba95d2d47fc38d15cc4464b9d87c34b9063b76dfd9073"
+    },
+    {
+      "file": "artifacts/unified-home/browser-live.json",
+      "bytes": 487,
+      "sha256": "9fe82a3910aed3c8b0f714f05a2ae47894570816281045a42b56466b3b03fd55"
+    },
+    {
+      "file": "artifacts/unified-home/browser-review-schema-failure.json",
+      "bytes": 41123,
+      "sha256": "b55a3af9ee6a0ed8472d3d04026dacfd468991ade2aedd0d845ce09c673a6e3a"
+    },
+    {
+      "file": "artifacts/unified-home/browser-run-history.json",
+      "bytes": 113470,
+      "sha256": "09f2a5b952c4edcab9da0b423d0d304af8c2c99989fa16599d16bf1f7a4d3dbe"
+    },
+    {
+      "file": "artifacts/unified-home/build.txt",
+      "bytes": 2029,
+      "sha256": "33077327fa2536a55afbf3deddd789356fe7ded41d57b7bb03acd0f8a39dabb3"
+    },
+    {
+      "file": "artifacts/unified-home/cloud-regression.txt",
+      "bytes": 950,
+      "sha256": "0db0302a6c74ef656483c0b86d29c08123321f464ff7fdc17e19dad5e3db0e2c"
+    },
+    {
+      "file": "artifacts/unified-home/home-before.png",
+      "bytes": 662174,
+      "sha256": "79159538bb8dddf7711c805ce00f13f75a26da05a125ca9d2da57360836bf16f"
+    },
+    {
+      "file": "artifacts/unified-home/home-desktop.png",
+      "bytes": 205101,
+      "sha256": "10997b2c18b150445c4da51ba7cb3547ab34e7fd28d1202adbf80cabebab854c"
+    },
+    {
+      "file": "artifacts/unified-home/home-mobile-viewport.png",
+      "bytes": 46476,
+      "sha256": "f8a9769c89fad9cd0946ed1a56fe7ec829a330f2533ea0c230e73dd7b732d9c1"
+    },
+    {
+      "file": "artifacts/unified-home/home-mobile.png",
+      "bytes": 167858,
+      "sha256": "5c432454c064e743419fe1485ff0e4928c85d99bc02136df5dc179fba1cb7eef"
+    },
+    {
+      "file": "artifacts/unified-home/journey-a-desktop.png",
+      "bytes": 154525,
+      "sha256": "e0d9bdb492d4b1425e82b8d60eaa1de9a97c18034ec31a8477aa024845532a5f"
+    },
+    {
+      "file": "artifacts/unified-home/journey-a-followup.png",
+      "bytes": 156577,
+      "sha256": "f6d52261f15ddc5939d34a8f1da2fc84e6e55c3b6fe4158469d815a9c49af21c"
+    },
+    {
+      "file": "artifacts/unified-home/journey-b-desktop.png",
+      "bytes": 158618,
+      "sha256": "c91a020843d89d2ddf348eb872066e2849b7a8fe800a3af965e1d7fcb8f0d356"
+    },
+    {
+      "file": "artifacts/unified-home/journey-b-persona.png",
+      "bytes": 156015,
+      "sha256": "8e78f4eda85d8601b6f6f032cc0947645dc89dd64cf46def73b30a39b5f57d1a"
+    },
+    {
+      "file": "artifacts/unified-home/journey-c-desktop.png",
+      "bytes": 145180,
+      "sha256": "8ec773b1e9602f931ca19f30a827bf31e8613d945aade086b16eed675e20267d"
+    },
+    {
+      "file": "artifacts/unified-home/journey-c-followup.png",
+      "bytes": 142334,
+      "sha256": "8520ace7d8390e348c8c6af02b03908a9908241412fe36b017541513f20577cd"
+    },
+    {
+      "file": "artifacts/unified-home/marketplace-discovery.json",
+      "bytes": 2346,
+      "sha256": "07c54e8bf28206e4522bf32bbbf25b636deb48eb5ca81e9760351e3599d28d16"
+    },
+    {
+      "file": "artifacts/unified-home/memory-browser-live.json",
+      "bytes": 13908,
+      "sha256": "a245b02e13d064c9c24dfe3afd06a67aaeac7843ba497f56d9e1b3fd9713e5f9"
+    },
+    {
+      "file": "artifacts/unified-home/memory-browser-selector-failure.json",
+      "bytes": 628,
+      "sha256": "5aeb296aaa5a8d12387870d98e64fe1a48a862704cb50a51e658b92df690b578"
+    },
+    {
+      "file": "artifacts/unified-home/memory-corrected-mobile.png",
+      "bytes": 83930,
+      "sha256": "b1169979d967a4b6680e718c6133dda604c1985182333e747b7c0b9a5d9404e0"
+    },
+    {
+      "file": "artifacts/unified-home/memory-failure.png",
+      "bytes": 293665,
+      "sha256": "f9c801dd5c4ad4288f5d4c4a3fce7d7bb765679b7fb51ccc3cd73c7c86917f1b"
+    },
+    {
+      "file": "artifacts/unified-home/memory-forgotten-mobile.png",
+      "bytes": 92634,
+      "sha256": "b54e4cedd93924fec5d2b6446c80671d0752d008a43e3616ab3061e14dda2d3c"
+    },
+    {
+      "file": "artifacts/unified-home/model-calls.json",
+      "bytes": 100604,
+      "sha256": "abb872d27fda9c77d40b0a1fa3379145b151836310c2543686acd8c49685ab60"
+    },
+    {
+      "file": "artifacts/unified-home/model-summary.json",
+      "bytes": 465,
+      "sha256": "6d9596ecfc4729008e9c80b7305207ccded097395c408576d8b0791c0e07d492"
+    },
+    {
+      "file": "artifacts/unified-home/network.json",
+      "bytes": 24459,
+      "sha256": "d999298ee3a9da15df455575e41d95491d418306d604ec0ddf94797008eb18f8"
+    },
+    {
+      "file": "artifacts/unified-home/offline-tests.txt",
+      "bytes": 33887,
+      "sha256": "27c446debc064b5db509548b8288efa640a03c612ebec70ca2700d5b0a7c1fdd"
+    },
+    {
+      "file": "artifacts/unified-home/personal-regression.txt",
+      "bytes": 156,
+      "sha256": "2b69c64c4a6de9218969fe9abe84814dd0d331a890b6b698e5c80a4947e120d5"
+    },
+    {
+      "file": "artifacts/unified-home/provider-capability.json",
+      "bytes": 411,
+      "sha256": "bd9bd204ef55507ad2d30e17d0b6c91cf7b819c9e98d7e75d668dde48a49c015"
+    },
+    {
+      "file": "artifacts/unified-home/targeted-final.txt",
+      "bytes": 1632,
+      "sha256": "d728c3ce6047a84665d153fdb5ba02eac13f0d5a7ce5b977bbb77897e24357d3"
+    },
+    {
+      "file": "artifacts/unified-home/typecheck.txt",
+      "bytes": 48,
+      "sha256": "8ecd2c9e217809de41e0ac3444a6bb794f588f6da1b28e1a41efc6b4c7f3ebed"
+    },
+    {
+      "file": "docs/README.md",
+      "bytes": 3099,
+      "sha256": "f9281e4b242a533f3e6ba3ce62127675ad151ffb183a6abf619d017cc98e9adc"
+    },
+    {
+      "file": "docs/engineering/unified-home-beta-2026-10-30/MODEL_RESULTS.md",
+      "bytes": 10001,
+      "sha256": "b226ab0d65c68f06c7019d22bdcd34d8fa5e77ca2b06f12acd2ffe65adfcff16"
+    },
+    {
+      "file": "docs/engineering/unified-home-beta-2026-10-30/README.md",
+      "bytes": 6983,
+      "sha256": "2465059e3ab2b0172b4a1b217aaf9ce0b6f0ccd6725787eaf08e3613fc92f4c1"
+    },
+    {
+      "file": "docs/engineering/unified-home-beta-2026-10-30/TEST_REPORT.md",
+      "bytes": 6432,
+      "sha256": "312d6027ebcb7bee94d0edeba7263179588b10ca528dc048f0e9eda7f7816c03"
+    },
+    {
+      "file": "public/virtual-home/painting.svg",
+      "bytes": 598,
+      "sha256": "33ef56ea451372649575061ac61b113a90a2b0e9b8bbaa50824344148fbbd040"
+    },
+    {
+      "file": "scripts/unified-home/browser.mjs",
+      "bytes": 7872,
+      "sha256": "89b01b9d7a3e7ad19e989cbab954afbe191825e31774a290aeb82a3b4bc2c5ed"
+    },
+    {
+      "file": "scripts/unified-home/gateway.mjs",
+      "bytes": 5224,
+      "sha256": "f2a8a37abe19035b47f13976b3c004ed6870d76c5ea2079bb36897e57f2984b6"
+    },
+    {
+      "file": "scripts/unified-home/memory-browser.mjs",
+      "bytes": 4517,
+      "sha256": "efdaa1559c99910f1bd14195ed11e630f52cec85a5c901fb7594b8de5b8af65e"
+    },
+    {
+      "file": "scripts/unified-home/network.ts",
+      "bytes": 1429,
+      "sha256": "b4569ddee06287462272a65a5ce98afb872829d2e9ad9c262c0da8e8138e9a1c"
+    },
+    {
+      "file": "scripts/unified-home/preview.mjs",
+      "bytes": 2334,
+      "sha256": "4f828ddb8dc2b359a2390be4d59c4bbc2cec49a225fa53e4ab8c106645cb3ce2"
+    },
+    {
+      "file": "scripts/unified-home/scan.mjs",
+      "bytes": 1936,
+      "sha256": "a7fb88db9a461ee9961a765f684b80ee9770f882e2ff38ea879e5296285ecdd4"
+    },
+    {
+      "file": "src/app/api/assistant/route.ts",
+      "bytes": 3720,
+      "sha256": "a87df8d3e8c82cf41688c96dc710c015f26c5b17032e66cc00c1a8fdff580935"
+    },
+    {
+      "file": "src/app/api/life/route.ts",
+      "bytes": 15683,
+      "sha256": "60f876fc3934093438c13601360ddf2573617e7fbd1909e3f99d62463a85543e"
+    },
+    {
+      "file": "src/app/globals.css",
+      "bytes": 40973,
+      "sha256": "745a66f15728b54df9b1a60bacb7814c779fe8cdefcbaa17e7aa356a9f9706e4"
+    },
+    {
+      "file": "src/components/AssistantConversation.tsx",
+      "bytes": 28592,
+      "sha256": "4f51c07fb909f6e257afb4076aa5efd85c0b75477f2a6ac033124d00e1eebff1"
+    },
+    {
+      "file": "src/components/life/ItemBelonging.tsx",
+      "bytes": 21152,
+      "sha256": "9679f9fbab9416e65c9eb284ec5dbe38471efb8615805bae109f26f121c72df5"
+    },
+    {
+      "file": "src/components/life/VirtualHome.tsx",
+      "bytes": 11266,
+      "sha256": "308471d3ad74dbb95160726c6118a10fe8ed9cd4773c8a526807781c7a9d0677"
+    },
+    {
+      "file": "src/components/life/WujianApp.tsx",
+      "bytes": 47031,
+      "sha256": "5d3a34ea1f02a3fdcb70caef705c1d9d42c16e56ac2f7a6a7af4217278a3617d"
+    },
+    {
+      "file": "src/lib/agent/contracts.ts",
+      "bytes": 6062,
+      "sha256": "0edf6febe2d51050ba0a19373a78e6dc56e6393670df4617880aefe5b20d80f6"
+    },
+    {
+      "file": "src/lib/agent/graph.ts",
+      "bytes": 68029,
+      "sha256": "f88d04b4df725618c7fd87972c3ed83c8fccd0448080eefcb84c06f917759594"
+    },
+    {
+      "file": "src/lib/agent/home-task.ts",
+      "bytes": 18943,
+      "sha256": "07e95f7ec9e1cff83300e90a2fb44f1ebbd3ef64caa8edf11715efae5d1698d2"
+    },
+    {
+      "file": "src/lib/agent/safety-language.ts",
+      "bytes": 1826,
+      "sha256": "2a9f1874180d1b3b5b38b0749dcd010055339076dbc01bfd483aac79e01c6d91"
+    },
+    {
+      "file": "src/lib/agent/service.ts",
+      "bytes": 14983,
+      "sha256": "8861b05f4057158e31daad46d5cafe340cc4caa23c07a92b08f24c5e1585f80f"
+    },
+    {
+      "file": "src/lib/ai/provider.ts",
+      "bytes": 15655,
+      "sha256": "0f40d81758a08a85f46be4a0b6ef7e85fd4020ff9107f1b55b556432c8907664"
+    },
+    {
+      "file": "src/lib/catalog/virtual-apartment.ts",
+      "bytes": 3855,
+      "sha256": "9332adf16eaf3d44b089105f391c834e2f0e7efcf7a7ee638d561160a6b8d77e"
+    },
+    {
+      "file": "src/lib/cloud/runtime.ts",
+      "bytes": 16193,
+      "sha256": "71644f1632753b831d95c2866df70b082349e58a935220d09d7478c58084c087"
+    },
+    {
+      "file": "src/lib/context/home-task.ts",
+      "bytes": 3317,
+      "sha256": "708673ab67a398665ea105e8c325c4580eebbfe8b179d892938e079f45ae4ae3"
+    },
+    {
+      "file": "src/lib/domain.ts",
+      "bytes": 24250,
+      "sha256": "07b316049885c720a260684f397602628f7f1a270e7a9a14c01d6688868d1a23"
+    },
+    {
+      "file": "src/lib/life/acquisition.ts",
+      "bytes": 21577,
+      "sha256": "f5d68e3afaf788028f93c52a3e424d3c970560b4f9420273269fc5edc9f2853b"
+    },
+    {
+      "file": "src/lib/life/item-photos.ts",
+      "bytes": 2518,
+      "sha256": "74b60bc251c69d0138176cecd1881780b145b75aaebf0d430e870a87f90b15b0"
+    },
+    {
+      "file": "src/lib/life/knowledge.ts",
+      "bytes": 6545,
+      "sha256": "8ec5abec0ae0971815a700d191b0fdfcf108ba4dfd7cab2626d8602139c427b7"
+    },
+    {
+      "file": "src/lib/life/manuals.ts",
+      "bytes": 785,
+      "sha256": "446dd7e8f1d714adb014397125240679a315d5dd1b2fcc6868ce159030919639"
+    },
+    {
+      "file": "src/lib/life/product-arrival.ts",
+      "bytes": 3260,
+      "sha256": "85a7daaabff0b1324b05ba6de83615a85f11339883dec142e7ed238f0639196f"
+    },
+    {
+      "file": "src/lib/life/sources.ts",
+      "bytes": 17643,
+      "sha256": "2a98488daf42317091e2a8f9451daa2bd986f2d368229b8d4d1a8d2e1fb60043"
+    },
+    {
+      "file": "src/lib/life/virtual-home.ts",
+      "bytes": 11020,
+      "sha256": "a37913654f6d2c57645ee154731c771539c8f0ca397e164a7141902081de764e"
+    },
+    {
+      "file": "tests/unified-home.test.ts",
+      "bytes": 16579,
+      "sha256": "ab7915d6d2612dcaac458609ee8d188e309fd22af312205821c987ef437b4532"
+    }
+  ],
+  "note": "Report excludes itself; signatures are an additional check, not a proof of absence of every possible secret."
+}

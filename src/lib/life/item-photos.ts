@@ -40,7 +40,11 @@ export function itemPhoto(item: Item, actor: Person) {
       src: item.photo.startsWith("/api/life/media/")
         ? item.photo.replace(/actor=[^&]+/, `actor=${actor}`)
         : item.photo,
-      label: syntheticItem(item) ? "演示物品 · 物品照片" : "我的物品",
+      label: item.id.startsWith("virtual-home:")
+        ? "模拟画作 · 非真实照片"
+        : syntheticItem(item)
+          ? "演示物品 · 物品照片"
+          : "我的物品",
       generated: false,
     };
   const match = illustrations[item.id];

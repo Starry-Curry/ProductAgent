@@ -3,6 +3,7 @@ import { z, ZodError } from "zod";
 import { actor, read, database, localOnly } from "@/lib/db";
 import { AgentError } from "@/lib/agent/contracts";
 import { respond, handoff } from "@/lib/agent/service";
+import { ProviderError } from "@/lib/ai/provider";
 import { lifeProvider } from "@/lib/life/provider";
 import {
   listSessions,
@@ -16,20 +17,27 @@ export const runtime = "nodejs";
 function fail(e: unknown) {
   return Response.json(
     {
+      code: e instanceof ProviderError ? e.code : undefined,
       error:
-        e instanceof AgentError
+        e instanceof ProviderError
           ? e.message
-          : e instanceof ZodError
-            ? "请求内容或长度无效"
-            : "请求未完成，请检查本机角色并重试",
+          : e instanceof AgentError
+            ? e.message
+            : e instanceof ZodError
+              ? "请求内容或长度无效"
+              : "请求未完成，请检查本机角色并重试",
     },
     {
       status:
-        e instanceof AgentError
-          ? e.status
-          : e instanceof ZodError || e instanceof SyntaxError
-            ? 400
-            : 403,
+        e instanceof ProviderError
+          ? e.code === "timeout"
+            ? 504
+            : 502
+          : e instanceof AgentError
+            ? e.status
+            : e instanceof ZodError || e instanceof SyntaxError
+              ? 400
+              : 403,
     },
   );
 }

@@ -45,7 +45,13 @@ export function ItemBelonging({
   refresh,
   onContinue,
   onSession,
+  homeId,
+  onContinueMission,
+  hasKnowledge,
 }: {
+  homeId?: "young-apartment-v1";
+  hasKnowledge?: boolean;
+  onContinueMission?: (voiceItemId?: string) => void;
   actor: Person;
   item: Item;
   items: Item[];
@@ -157,7 +163,9 @@ export function ItemBelonging({
               </>
             ) : (
               <p>
-                尚无已确认的官方型号资料。材质、尺寸等来自本人报告，不视为厂家认证。
+                {hasKnowledge
+                  ? "已联网读取官方型号资料，见上方原文与来源；尚未人工核对全部字段，个人状态独立记录。"
+                  : "尚无已确认的官方型号资料。材质、尺寸等来自本人报告，不视为厂家认证。"}
               </p>
             )}
             <div className="belong-personal-facts">
@@ -224,67 +232,72 @@ export function ItemBelonging({
                   }
                 }}
               >
-                <label className="belong-check">
-                  <input
-                    type="checkbox"
-                    checked={persona.enabled}
-                    onChange={(e) =>
-                      setPersona({ ...persona, enabled: e.target.checked })
-                    }
-                  />
-                  为它启用数字分身
-                </label>
-                <label>
-                  分身的名字
-                  <input
-                    aria-label="分身的名字"
-                    maxLength={40}
-                    value={persona.nickname}
-                    onChange={(e) =>
-                      setPersona({ ...persona, nickname: e.target.value })
-                    }
-                  />
-                </label>
-                <fieldset className="belong-avatar-choices">
-                  <legend>选择形象（照片使用物品自己的照片）</legend>
-                  {Object.entries(avatars).map(([id, Icon]) => (
-                    <button
-                      key={id}
-                      type="button"
-                      aria-label={
-                        avatarNames[id as keyof typeof avatarNames] + "形象"
+                <fieldset
+                  className="belong-profile-fields"
+                  disabled={!profileReady || busy}
+                >
+                  <label className="belong-check">
+                    <input
+                      type="checkbox"
+                      checked={persona.enabled}
+                      onChange={(e) =>
+                        setPersona({ ...persona, enabled: e.target.checked })
                       }
-                      aria-pressed={persona.avatar === id}
-                      onClick={() =>
+                    />
+                    为它启用数字分身
+                  </label>
+                  <label>
+                    分身的名字
+                    <input
+                      aria-label="分身的名字"
+                      maxLength={40}
+                      value={persona.nickname}
+                      onChange={(e) =>
+                        setPersona({ ...persona, nickname: e.target.value })
+                      }
+                    />
+                  </label>
+                  <fieldset className="belong-avatar-choices">
+                    <legend>选择形象（照片使用物品自己的照片）</legend>
+                    {Object.entries(avatars).map(([id, Icon]) => (
+                      <button
+                        key={id}
+                        type="button"
+                        aria-label={
+                          avatarNames[id as keyof typeof avatarNames] + "形象"
+                        }
+                        aria-pressed={persona.avatar === id}
+                        onClick={() =>
+                          setPersona({
+                            ...persona,
+                            avatar: id as Persona["avatar"],
+                          })
+                        }
+                      >
+                        <Icon size={24} />
+                      </button>
+                    ))}
+                  </fieldset>
+                  <label>
+                    交流风格
+                    <select
+                      value={persona.style}
+                      onChange={(e) =>
                         setPersona({
                           ...persona,
-                          avatar: id as Persona["avatar"],
+                          style: e.target.value as Persona["style"],
                         })
                       }
                     >
-                      <Icon size={24} />
-                    </button>
-                  ))}
+                      <option value="warm">亲切自然</option>
+                      <option value="neutral">简洁直接</option>
+                      <option value="playful">轻松俏皮</option>
+                    </select>
+                  </label>
+                  <button className="belong-primary" disabled={busy}>
+                    保存分身设置
+                  </button>
                 </fieldset>
-                <label>
-                  交流风格
-                  <select
-                    value={persona.style}
-                    onChange={(e) =>
-                      setPersona({
-                        ...persona,
-                        style: e.target.value as Persona["style"],
-                      })
-                    }
-                  >
-                    <option value="warm">亲切自然</option>
-                    <option value="neutral">简洁直接</option>
-                    <option value="playful">轻松俏皮</option>
-                  </select>
-                </label>
-                <button className="belong-primary" disabled={busy}>
-                  保存分身设置
-                </button>
               </form>
               <small>私人故事、对话和分身设置不会随共享或赠送转移。</small>
             </article>
@@ -512,6 +525,7 @@ export function ItemBelonging({
               startFresh
               onSession={onSession}
               uiContext={{
+                homeId,
                 page: "item",
                 companion: voice && savedEnabled,
                 useItemMemories: own && useStories,
@@ -519,7 +533,21 @@ export function ItemBelonging({
               memoryPolicy={capture ? "candidates" : "off"}
               onActivity={() => refresh().catch(() => {})}
             />
-            <button onClick={onContinue}>在问物间继续</button>
+            {onContinueMission ? (
+              <button
+                className="belong-primary"
+                onClick={() =>
+                  onContinueMission(voice && savedEnabled ? item.id : undefined)
+                }
+              >
+                {voice && savedEnabled
+                  ? `让${persona.nickname || item.name}加入原来的生活任务`
+                  : "回到原来的生活任务"}{" "}
+                ↗
+              </button>
+            ) : (
+              <button onClick={onContinue}>在问物间继续</button>
+            )}
             <MemoryCenter
               actor={actor}
               items={items}

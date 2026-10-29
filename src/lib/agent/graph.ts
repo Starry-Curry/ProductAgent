@@ -1,3 +1,5 @@
+import { executeHomeTask } from "./home-task.ts";
+import { hazardousActions } from "./safety-language.ts";
 import { publicDemo } from "../cloud/runtime.ts";
 import {
   itemContext,
@@ -94,8 +96,7 @@ const packetSchema = z
   .strict();
 const unsafe =
   /短接|拆开.{0,8}电池|加热.{0,8}电池|电池.{0,8}加热|带电.{0,8}拆|湿.{0,8}充电|冒烟|漏电|烧焦/;
-const hazardousActions =
-  /短接|拆开.{0,8}电池|加热.{0,8}电池|电池.{0,8}加热|带电.{0,8}拆|湿.{0,8}充电/;
+
 const deviceClaims =
   /蓝牙\s*\d|IP\d{2}|承重.{0,5}\d|\d.{0,3}(千克|公斤|瓦|伏)|按住.{0,8}\d.{0,3}秒|已经(修复|检测|确认正常)|我亲眼|我记得我们|按住|长按|短按|拆卸|拆机|短接|可直接充电|可以直接充电|兼容任意|支持任意|[一二两三四五六七八九十0-9]+.{0,3}节.{0,8}电池|[一二两三四五六七八九十0-9]+.{0,3}AAA?/;
 const blank = (
@@ -583,6 +584,16 @@ export async function executeGraph(
   provider: Provider,
   temporary = false,
 ) {
+  if (session.known.homeId === "young-apartment-v1")
+    return executeHomeTask(
+      db,
+      read,
+      actor,
+      session,
+      question,
+      provider,
+      temporary,
+    );
   let contextDeadline = Date.parse(session.expiresAt);
   const trackExpiry = (records: { expiresAt?: string }[]) => {
     for (const m of records)

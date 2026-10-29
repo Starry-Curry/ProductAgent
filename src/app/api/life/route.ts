@@ -1,3 +1,10 @@
+import {
+  installVirtualHome,
+  setVirtualHomeCloud,
+  homeKnowledgeStatus,
+  refreshHomeKnowledge,
+  virtualHomeItems,
+} from "@/lib/life/virtual-home";
 import { recognizeProduct } from "@/lib/life/product-arrival";
 import { installAlphaSamples } from "@/lib/life/alpha-samples";
 import { publicDemo, CloudError } from "@/lib/cloud/runtime";
@@ -111,6 +118,12 @@ async function GETHandler(r: Request) {
         ).map((c) => c.message),
       });
     return Response.json({
+      virtualHome: {
+        allowCloud: !!state.virtualHomes?.[a]?.allowCloud,
+        id: "young-apartment-v1",
+        itemIds: virtualHomeItems(state, a).map((i) => i.id),
+        knowledge: homeKnowledgeStatus(db, state, a),
+      },
       workspace: {
         ...visible(state, a),
         items: visible(state, a).items.map((i) => ({
@@ -341,6 +354,27 @@ async function POSTHandler(r: Request) {
         .strict()
         .parse(p.input);
       return Response.json(installAlphaSamples(db, read, a));
+    }
+    if (p.action === "setVirtualHomeCloud") {
+      const v = z.object({ allowCloud: z.boolean() }).strict().parse(p.input);
+      return Response.json(setVirtualHomeCloud(db, read, a, v.allowCloud));
+    }
+    if (p.action === "loadVirtualHome") {
+      const v = z
+        .object({
+          confirmed: z.literal(true),
+          allowCloud: z.boolean().default(false),
+        })
+        .strict()
+        .parse(p.input);
+      return Response.json(installVirtualHome(db, read, a, v.allowCloud));
+    }
+    if (p.action === "refreshHomeProduct") {
+      const v = z
+        .object({ key: z.string().max(30) })
+        .strict()
+        .parse(p.input);
+      return Response.json(await refreshHomeKnowledge(db, read, a, v.key));
     }
     if (p.action === "recognizeProduct")
       return Response.json(await recognizeProduct(p.input));

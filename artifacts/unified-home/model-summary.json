@@ -1,0 +1,27 @@
+{
+  "snapshotAt": "2026-10-29T17:43:33.042Z",
+  "total": 52,
+  "byModel": {
+    "qwen-plus": {
+      "attempts": 50,
+      "returned": 49,
+      "failed": 1,
+      "input": 359203,
+      "output": 15849
+    },
+    "qwen3-max": {
+      "attempts": 1,
+      "returned": 0,
+      "failed": 1,
+      "input": 0,
+      "output": 0
+    },
+    "qwen-max": {
+      "attempts": 1,
+      "returned": 1,
+      "failed": 0,
+      "input": 14218,
+      "output": 712
+    }
+  }
+}

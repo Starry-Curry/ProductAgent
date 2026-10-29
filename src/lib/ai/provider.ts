@@ -94,7 +94,11 @@ export type Provider = {
   complete?: (
     messages: ModelMessage[],
     tools: ToolDefinition[],
-    options?: { timeoutMs: number; maxTokens?: number },
+    options?: {
+      timeoutMs: number;
+      maxTokens?: number;
+      toolChoice?: { type: "function"; function: { name: string } };
+    },
   ) => Promise<ModelResponse>;
   model: string;
   generate: (
@@ -105,7 +109,7 @@ export type Provider = {
       timeoutMs?: number;
       temperature?: number;
       json?: boolean;
-      purpose?: "creative";
+      purpose?: "creative" | "task";
     },
   ) => Promise<ProviderResult>;
   search?: (query: string, sites?: string[]) => Promise<SearchResponse>;
@@ -131,7 +135,9 @@ export function createProvider(
       const model =
         options?.purpose === "creative"
           ? env.AI_CREATIVE_MODEL || AI_MODEL
-          : AI_MODEL;
+          : options?.purpose === "task"
+            ? env.AI_TASK_MODEL || AI_MODEL
+            : AI_MODEL;
       if (!AI_BASE_URL || !AI_API_KEY || !AI_MODEL)
         throw new ProviderError(
           "not_configured",
@@ -355,7 +361,11 @@ async function completeModel(
       }
   )[],
   tools: ToolDefinition[],
-  options?: { timeoutMs: number; maxTokens?: number },
+  options?: {
+    timeoutMs: number;
+    maxTokens?: number;
+    toolChoice?: { type: "function"; function: { name: string } };
+  },
 ): Promise<ModelResponse> {
   if (!env.AI_BASE_URL || !env.AI_API_KEY || !env.AI_MODEL)
     throw new ProviderError(
@@ -393,9 +403,13 @@ async function completeModel(
           env.AI_JSON_MODE === "true" && !tools.length
             ? [{ role: "system", content: "仅输出合法JSON对象。" }, ...messages]
             : messages,
-        ...(tools.length ? { tools, tool_choice: "auto" } : {}),
+        ...(tools.length
+          ? { tools, tool_choice: options?.toolChoice || "auto" }
+          : {}),
         max_tokens: Math.min(4000, Math.max(300, options?.maxTokens || 1500)),
-        enable_thinking: env.AI_ENABLE_THINKING === "true",
+        enable_thinking: options?.toolChoice
+          ? false
+          : env.AI_ENABLE_THINKING === "true",
         // DashScope tool selection must use its native protocol.
         // The graph still validates the final JSON packet server-side.
         ...(env.AI_JSON_MODE === "true" && !tools.length

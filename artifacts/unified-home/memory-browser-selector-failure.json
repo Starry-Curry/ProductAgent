@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-29T17:40:23.423Z",
+  "records": [
+    {
+      "case": "separate-friend-synthetic-home-explicit-consent",
+      "items": [
+        "米家台灯1S",
+        "MICKE 白色书桌",
+        "SAMLA 透明收纳盒",
+        "KNAGGLIG 松木盒",
+        "GO 4 蓝牙音箱",
+        "Bashful Beige Bunny",
+        "玫瑰花束",
+        "远山 · 朋友送的画"
+      ]
+    },
+    {
+      "case": "failed",
+      "error": "locator.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.memory-center').getByLabel('纠正内容', { exact: true })\u001b[22m\n"
+    }
+  ],
+  "errors": []
+}

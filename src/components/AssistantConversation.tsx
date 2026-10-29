@@ -162,7 +162,13 @@ export function AssistantConversation({
     const d = await r.json();
     if (!r.ok) throw Error(d.error);
     const rows = d.sessions as ServiceSession[];
-    return elder ? rows.filter((s) => s.known.interfaceMode === "care") : rows;
+    return elder
+      ? rows.filter((s) => s.known.interfaceMode === "care")
+      : rows.filter((s) =>
+          uiContext?.homeId
+            ? s.known.homeId === uiContext.homeId
+            : !s.known.homeId,
+        );
   }
   useEffect(() => {
     alive.current = true;
@@ -383,7 +389,9 @@ export function AssistantConversation({
                         : message.reply.errorCode === "payment_not_authorized"
                           ? "未开启费用授权"
                           : "请求失败"
-                      : labels[message.reply?.source || "curated-guidance"]}
+                      : message.reply?.task
+                        ? "物间 · 一起安排生活"
+                        : labels[message.reply?.source || "curated-guidance"]}
             </strong>
             {message.reply?.route && !elder && (
               <small className="home-route-label">
@@ -408,7 +416,38 @@ export function AssistantConversation({
                 }
               </small>
             )}
+            {message.reply?.task && (
+              <small className="home-task-caption">
+                正在一起完成：{message.reply.task.goal}
+              </small>
+            )}
             <p>{message.text}</p>
+            {!!message.reply?.usedItems?.length && (
+              <div className="home-used-items" aria-label="本次使用的物品">
+                {message.reply.usedItems.map((i) => (
+                  <button
+                    key={i.id}
+                    onClick={() => onSelectItem?.(i.id)}
+                    disabled={busy || !onSelectItem}
+                  >
+                    <span>{i.name}</span>
+                    <small>{i.model} · 看资料与故事 ↗</small>
+                  </button>
+                ))}
+              </div>
+            )}
+            {!!message.reply?.task?.parts?.length && (
+              <details className="home-task-parts">
+                <summary>这次一起考虑了什么</summary>
+                {message.reply.task.parts.map((p, i) => (
+                  <p key={i}>
+                    {p.status === "needs_info" ? "待核对" : "已回应"} ·{" "}
+                    {p.title}
+                  </p>
+                ))}
+                <small>回答的覆盖说明，不代表已在实物上执行。</small>
+              </details>
+            )}
             {!!message.reply?.route?.candidates?.length && onSelectItem && (
               <div className="home-candidate-items">
                 {message.reply.route.candidates.map((i) => (
@@ -549,12 +588,12 @@ export function AssistantConversation({
           {(elder
             ? [item ? "怎么用这件物品？" : "这个软件怎么用？"]
             : item
-            ? [
-                item.demo?.questions.find((q) => !q.includes("故事")) ||
-                  "怎么用这件物品？",
-                "聊聊以前的故事",
-              ]
-            : ["帮我准备周末野餐", "家里有哪些物品？"]
+              ? [
+                  item.demo?.questions.find((q) => !q.includes("故事")) ||
+                    "怎么用这件物品？",
+                  "聊聊以前的故事",
+                ]
+              : ["帮我准备周末野餐", "家里有哪些物品？"]
           ).map((q) => (
             <button
               key={q}
