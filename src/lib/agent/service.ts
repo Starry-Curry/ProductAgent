@@ -135,6 +135,16 @@ export async function respond(
       session.known.taskPlanId = plan.id;
     }
     session.known.uiPage = input.uiContext.page;
+    const memoryChoice =
+      input.uiContext.useItemMemories === true ? "yes" : "no";
+    if (
+      session.known.useItemMemories &&
+      session.known.useItemMemories !== memoryChoice
+    )
+      session.known.itemMemoryBoundary = String(session.messages.length);
+    session.known.useItemMemories = memoryChoice;
+    if (input.uiContext.companion === false)
+      delete session.known.companionItemId;
     if (input.uiContext.goal) session.known.uiGoal = input.uiContext.goal;
     if (
       input.uiContext.companion &&

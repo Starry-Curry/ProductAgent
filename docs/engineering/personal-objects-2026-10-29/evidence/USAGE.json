@@ -1,0 +1,11 @@
+{
+  "requests": 14,
+  "returned": 14,
+  "failed": 0,
+  "inputTokens": 65004,
+  "outputTokens": 4571,
+  "estimatedCny": 0.061145200000000004,
+  "maxRequests": 40,
+  "maxEstimatedCny": 10,
+  "note": "截至此次导出；预览继续沿用同一累计台账，后续手动提问会增加用量。非实际账单。"
+}

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./home.css";
 import "./life.css";
+import "./belonging.css";
 export const metadata: Metadata = {
   title: "物间 · Product Agent",
   description:

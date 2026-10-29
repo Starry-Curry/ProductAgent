@@ -29,9 +29,15 @@ export function createLifeItem(
       mediaId: z.string().uuid().optional(),
       packId: z.string().optional(),
       confirmed: z.boolean().default(false),
+      ownsConfirmed: z.boolean().optional(),
+      synthetic: z.boolean().default(false),
+      location: z.string().trim().max(80).optional(),
+      note: z.string().trim().max(1500).optional(),
     })
     .strict()
     .parse(input);
+  if (v.packId && v.ownsConfirmed !== true)
+    throw new AgentError("请明确确认拥有这件商品，再建立个人物品记录");
   db.exec("BEGIN IMMEDIATE");
   try {
     const payload = JSON.stringify(v);
@@ -56,6 +62,8 @@ export function createLifeItem(
     let state = mutate(read(), a, "createItem", v);
     const item = state.items.at(-1)!;
     state = mutate(state, a, "updateItem", { itemId: item.id, ...v });
+    item.synthetic = v.synthetic;
+    if (v.synthetic) item.source = "合成持有测试；非真实用户物品";
     if (v.mediaId) {
       if (
         !db

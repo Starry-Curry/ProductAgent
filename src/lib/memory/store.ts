@@ -141,12 +141,13 @@ export function saveMemory(
   input: unknown,
   id?: string,
   requestId?: string,
+  storySource?: { id: string; revision: number },
 ) {
   let value = memorySchema.parse(input);
   db.exec("BEGIN IMMEDIATE");
   try {
     const hash = createHash("sha256")
-      .update(JSON.stringify({ value, id }))
+      .update(JSON.stringify({ value, id, storySource }))
       .digest("hex");
     const receipt = requestId
       ? (db
@@ -169,6 +170,42 @@ export function saveMemory(
         throw new AgentError("此记忆已忘记", 409);
       db.exec("COMMIT");
       return JSON.parse(row.body) as MemoryRecord;
+    }
+    if (storySource) {
+      const row = db
+        .prepare(
+          "SELECT f.text,f.revision,d.origin FROM life_fragments f JOIN life_fragment_items i ON i.fragment_id=f.id LEFT JOIN life_fragment_details d ON d.fragment_id=f.id WHERE f.id=? AND f.owner=? AND i.item_id=?",
+        )
+        .get(storySource.id, actor, value.itemId || "") as
+        { text: string; revision: number; origin: string } | undefined;
+      if (
+        !row ||
+        row.revision !== storySource.revision ||
+        row.text !== value.text ||
+        row.origin === "fiction"
+      )
+        throw new AgentError("故事已变化或未获授权，请重新核对", 409);
+      const existing = db
+        .prepare(
+          "SELECT id FROM personal_memories WHERE owner=? AND status!='deleted' AND json_extract(body,'$.provenance.sourceId')=? AND json_extract(body,'$.provenance.extractor')='item-fragment-consent-v1'",
+        )
+        .get(actor, storySource.id);
+      if (existing)
+        throw new AgentError(
+          "这段故事已保留关系记忆，请在记忆中纠正或忘记",
+          409,
+        );
+      db.prepare(
+        "INSERT OR IGNORE INTO life_fragment_details SELECT id,NULL,CASE WHEN media_id IS NULL THEN '[]' ELSE json_array(media_id) END,0,0,'user-record' FROM life_fragments WHERE id=? AND owner=?",
+      ).run(storySource.id, actor);
+      // The confirmed memory becomes the sole recall source. Keep the private original for viewing,
+      // without allowing it to resurrect an outdated giver after correction or forgetting.
+      db.prepare(
+        "UPDATE life_fragment_details SET allow_recall=0,allow_cloud=0 WHERE fragment_id=?",
+      ).run(storySource.id);
+      db.prepare(
+        "UPDATE life_fragments SET revision=revision+1 WHERE id=?",
+      ).run(storySource.id);
     }
     const previous = id
       ? (db
@@ -208,7 +245,17 @@ export function saveMemory(
       source: "user" as const,
       demo: before?.demo || !!item?.demo,
       allowCloud: before?.demo || item?.demo ? false : value.allowCloud,
-      provenance: before?.provenance,
+      provenance:
+        before?.provenance ||
+        (storySource
+          ? {
+              kind: "story" as const,
+              sourceId: storySource.id,
+              basis: "user_statement" as const,
+              at: new Date().toISOString(),
+              extractor: "item-fragment-consent-v1",
+            }
+          : undefined),
       polarity:
         value.kind === "interest" && /不喜欢|不再喜欢/.test(value.text)
           ? ("negative" as const)
@@ -307,6 +354,7 @@ export function getPersona(
   return {
     enabled: saved.enabled,
     nickname: saved.nickname,
+    avatar: saved.avatar,
     style: saved.style,
     memoryUse: saved.memoryUse,
     itemId: saved.itemId,
@@ -363,6 +411,7 @@ export function recallMemories(
   mode: string,
   itemId?: string,
   sessionId?: string,
+  includeItemRelationships = false,
 ) {
   const q = question.toLowerCase();
   const wantsStory = isMemoryRecallRequest(question);
@@ -386,6 +435,7 @@ export function recallMemories(
         !(
           ["service", "auto"].includes(mode) &&
           !wantsStory &&
+          !(includeItemRelationships && !!itemId && m.itemId === itemId) &&
           ["story", "relationship", "experience"].includes(m.kind)
         ) &&
         (!m.demo ||

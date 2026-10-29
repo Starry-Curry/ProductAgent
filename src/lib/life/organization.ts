@@ -119,6 +119,24 @@ export function invalidateStoryUnderstanding(
   fragmentId: string,
 ) {
   if (!ready(db)) return;
+  for (const r of db
+    .prepare(
+      "SELECT id,body FROM personal_memories WHERE owner=? AND status!='deleted'",
+    )
+    .all(actor) as { id: string; body: string }[]) {
+    const m = JSON.parse(r.body) as MemoryRecord;
+    if (
+      m.provenance?.extractor === "item-fragment-consent-v1" &&
+      m.provenance.sourceId === fragmentId
+    ) {
+      db.prepare(
+        "UPDATE personal_memories SET body='{}',status='deleted',version=version+1 WHERE id=? AND owner=?",
+      ).run(r.id, actor);
+      db.prepare(
+        "UPDATE memory_capture_slots SET locked=1 WHERE owner=? AND memory_id=?",
+      ).run(actor, r.id);
+    }
+  }
   for (const row of db
     .prepare("SELECT body FROM life_understanding WHERE owner=?")
     .all(actor) as { body: string }[]) {

@@ -1,0 +1,307 @@
+{
+  "at": "2026-10-29T14:49:33.572Z",
+  "paidModelCalls": 0,
+  "rows": [
+    {
+      "query": "SAMLA",
+      "elapsedMs": 1042,
+      "result": {
+        "products": [
+          {
+            "pack": {
+              "id": "ikea-samla-19440848",
+              "product": "SAMLA 萨姆拉附盖储物盒",
+              "model": "194.408.48",
+              "version": "2026-10-29.alpha1",
+              "source": {
+                "title": "宜家中国 SAMLA 商品详情",
+                "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                "section": "商品描述、商品尺寸、小贴士、材料",
+                "checkedAt": "2026-10-29",
+                "kind": "official"
+              },
+              "claims": [
+                {
+                  "id": "samla:material",
+                  "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。"
+                },
+                {
+                  "id": "samla:size",
+                  "text": "组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。"
+                },
+                {
+                  "id": "samla:lid",
+                  "text": "盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。"
+                },
+                {
+                  "id": "samla:limits",
+                  "text": "仅供室内使用，不可直接接触食物。"
+                },
+                {
+                  "id": "samla:care",
+                  "text": "可用软布蘸水及中性洗涤剂或皂液擦拭。"
+                }
+              ],
+              "capabilities": [
+                "透明可视",
+                "容纳非食品轻小物",
+                "盖子锁扣防尘"
+              ],
+              "constraints": {
+                "indoorOnly": true,
+                "foodContact": false
+              },
+              "limits": [
+                "不得直接接触食品；仅室内",
+                "耐热范围、承重上限、气密性、内部净尺寸未知",
+                "盖子不是承重台或经验证的光学器件"
+              ],
+              "understanding": {
+                "properties": [
+                  {
+                    "key": "material",
+                    "value": "透明聚丙烯",
+                    "factIds": [
+                      "samla:material"
+                    ]
+                  },
+                  {
+                    "key": "dimensions",
+                    "value": "28×20×14厘米；5升（组合外尺寸/标称容量）",
+                    "factIds": [
+                      "samla:size"
+                    ]
+                  },
+                  {
+                    "key": "structure",
+                    "value": "盒体与锁扣盖",
+                    "factIds": [
+                      "samla:lid"
+                    ]
+                  }
+                ],
+                "unknowns": [
+                  "耐热范围",
+                  "承重上限",
+                  "内部净尺寸",
+                  "是否适合具体待放物",
+                  "气密或水密"
+                ],
+                "possibilities": [
+                  {
+                    "function": "可见的进度容器",
+                    "principle": "可透过盒壁区分内容物而不频繁开盖",
+                    "basisFactIds": [
+                      "samla:material"
+                    ],
+                    "conditions": [
+                      "只放已登记的非食品轻小物",
+                      "不把透明等同于光学成像性能"
+                    ]
+                  }
+                ]
+              }
+            },
+            "retrieval": {
+              "status": "official-page-read",
+              "checkedAt": "2026-10-29T14:49:32.061Z",
+              "message": "已读取官方页面并核对型号；下方仍为经审核的事实，网页变化不会自动覆盖事实。",
+              "manuals": [
+                {
+                  "title": "宜家AI购物助手算法 网信算备310104755117001240013号",
+                  "url": "https://beian.cac.gov.cn/api/static/fileUpload/principalOrithm/additional/user_345f5b47-b205-4c29-90fb-c8d505ca399c_1e9c4c5d-ac83-4f0f-8bef-b641982984f1.pdf"
+                },
+                {
+                  "title": "宜家智能搜索生成合成算法 网信算备310104755117001250025号",
+                  "url": "https://beian.cac.gov.cn/api/static/fileUpload/principalOrithm/additional/user_345f5b47-b205-4c29-90fb-c8d505ca399c_e1c8f1a7-592e-4b2e-8ec3-f128e6b1946c.pdf"
+                },
+                {
+                  "title": "宜家智能搭配生成合成算法 网信算备310104755117001260037号",
+                  "url": "https://beian.cac.gov.cn/api/static/fileUpload/principalOrithm/additional/user_345f5b47-b205-4c29-90fb-c8d505ca399c_0506417d-a35a-439e-b576-c594cce5cbfd.pdf"
+                }
+              ]
+            }
+          }
+        ],
+        "message": "型号资料不是你的持有证明；确认实物与型号相符后，再建立私人记录。"
+      }
+    },
+    {
+      "query": "KNAGGLIG",
+      "elapsedMs": 769,
+      "result": {
+        "products": [
+          {
+            "pack": {
+              "id": "ikea-knagglig-10392601",
+              "product": "KNAGGLIG 卡纳格松木盒",
+              "model": "103.926.01",
+              "version": "2026-10-29.alpha1",
+              "source": {
+                "title": "宜家中国 KNAGGLIG 商品详情与组装文件入口",
+                "url": "https://www.ikea.cn/cn/zh/p/knagglig-ka-na-ge-he-song-mu-10392601/",
+                "section": "商品描述、尺寸、材料、小贴士",
+                "checkedAt": "2026-10-29",
+                "kind": "official"
+              },
+              "claims": [
+                {
+                  "id": "knagglig:material",
+                  "text": "主体为实心松木，其它部分为镀锌钢。"
+                },
+                {
+                  "id": "knagglig:size",
+                  "text": "宽23、深16、高10厘米；不是内部净尺寸。"
+                },
+                {
+                  "id": "knagglig:structure",
+                  "text": "带提手，可叠放；最大承重2公斤。"
+                },
+                {
+                  "id": "knagglig:limits",
+                  "text": "不得挂墙；可用干布清洁。"
+                }
+              ],
+              "capabilities": [
+                "容纳",
+                "提拿",
+                "叠放"
+              ],
+              "constraints": {
+                "maxLoadKg": 2
+              },
+              "limits": [
+                "不得挂墙",
+                "承重上限2公斤不是可坐踏或悬挂许可",
+                "食品接触、耐热、内尺寸、具体实物紧固状态未知"
+              ],
+              "understanding": {
+                "properties": [
+                  {
+                    "key": "material",
+                    "value": "实心松木；镀锌钢部件",
+                    "factIds": [
+                      "knagglig:material"
+                    ]
+                  },
+                  {
+                    "key": "dimensions",
+                    "value": "23×16×10厘米（外尺寸）",
+                    "factIds": [
+                      "knagglig:size"
+                    ]
+                  },
+                  {
+                    "key": "structure",
+                    "value": "带提手、可叠放；最大承重2公斤",
+                    "factIds": [
+                      "knagglig:structure"
+                    ]
+                  }
+                ],
+                "unknowns": [
+                  "内部净尺寸",
+                  "耐热范围",
+                  "食品接触适用性",
+                  "实物紧固与磨损状态"
+                ],
+                "possibilities": [
+                  {
+                    "function": "可搬走的活动工作站",
+                    "principle": "容纳与提手使一组已登记的小物能一起移动",
+                    "basisFactIds": [
+                      "knagglig:structure"
+                    ],
+                    "conditions": [
+                      "总重不超过2公斤",
+                      "先检查连接与毛刺",
+                      "放置平稳；不得挂墙或坐踏"
+                    ]
+                  }
+                ]
+              }
+            },
+            "retrieval": {
+              "status": "official-page-read",
+              "checkedAt": "2026-10-29T14:49:32.830Z",
+              "message": "已读取官方页面并核对型号；下方仍为经审核的事实，网页变化不会自动覆盖事实。",
+              "manuals": [
+                {
+                  "title": "KNAGGLIG 卡纳格 盒",
+                  "url": "https://resources.ikea.cn/cn/zh/assembly_instructions/knagglig-qia-na-ge-he-song-mu__AA-2019275-3-1.pdf"
+                },
+                {
+                  "title": "宜家AI购物助手算法 网信算备310104755117001240013号",
+                  "url": "https://beian.cac.gov.cn/api/static/fileUpload/principalOrithm/additional/user_345f5b47-b205-4c29-90fb-c8d505ca399c_1e9c4c5d-ac83-4f0f-8bef-b641982984f1.pdf"
+                },
+                {
+                  "title": "宜家智能搜索生成合成算法 网信算备310104755117001250025号",
+                  "url": "https://beian.cac.gov.cn/api/static/fileUpload/principalOrithm/additional/user_345f5b47-b205-4c29-90fb-c8d505ca399c_e1c8f1a7-592e-4b2e-8ec3-f128e6b1946c.pdf"
+                },
+                {
+                  "title": "宜家智能搭配生成合成算法 网信算备310104755117001260037号",
+                  "url": "https://beian.cac.gov.cn/api/static/fileUpload/principalOrithm/additional/user_345f5b47-b205-4c29-90fb-c8d505ca399c_0506417d-a35a-439e-b576-c594cce5cbfd.pdf"
+                }
+              ]
+            }
+          }
+        ],
+        "message": "型号资料不是你的持有证明；确认实物与型号相符后，再建立私人记录。"
+      }
+    },
+    {
+      "query": "GO 4",
+      "elapsedMs": 741,
+      "result": {
+        "products": [
+          {
+            "pack": {
+              "id": "jbl-go4",
+              "product": "JBL Go 4 便携音箱",
+              "model": "GO 4",
+              "version": "2026-10-17.1",
+              "source": {
+                "title": "JBL Go 4 official specifications",
+                "url": "https://www.jbl.com/GO-4.html",
+                "section": "Features / Control and Connection Specifications",
+                "checkedAt": "2026-10-17",
+                "kind": "official"
+              },
+              "claims": [
+                {
+                  "id": "go4:bluetooth",
+                  "text": "JBL Go 4 使用蓝牙 5.3。"
+                },
+                {
+                  "id": "go4:stereo",
+                  "text": "两台 JBL Go 4 可以组成立体声；多音箱连接要求兼容 JBL Auracast。"
+                },
+                {
+                  "id": "go4:protection",
+                  "text": "JBL Go 4 的官方防尘防水等级为 IP67。"
+                }
+              ],
+              "limits": [
+                "必须核对 GO 4，不能套用于 GO 3 或其他型号。",
+                "资料没有证明当前电量、连接状态或配对成功；防水等级不是主动浸水或湿态充电建议。"
+              ],
+              "capabilities": [
+                "audio-playback"
+              ],
+              "constraints": {
+                "quantityForStereo": 2
+              }
+            },
+            "retrieval": {
+              "status": "reviewed-cache",
+              "checkedAt": "2026-10-17",
+              "message": "官方页面暂时无法完整读取或未能核实型号，保留已核对资料及原核对日期；不代表刚刚验证成功。",
+              "manuals": []
+            }
+          }
+        ],
+        "message": "型号资料不是你的持有证明；确认实物与型号相符后，再建立私人记录。"
+      }
+    }
+  ]
+}

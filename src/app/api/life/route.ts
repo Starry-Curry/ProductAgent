@@ -1,3 +1,4 @@
+import { recognizeProduct } from "@/lib/life/product-arrival";
 import { installAlphaSamples } from "@/lib/life/alpha-samples";
 import { publicDemo, CloudError } from "@/lib/cloud/runtime";
 import { withDemoRequest } from "@/lib/cloud/request";
@@ -341,6 +342,8 @@ async function POSTHandler(r: Request) {
         .parse(p.input);
       return Response.json(installAlphaSamples(db, read, a));
     }
+    if (p.action === "recognizeProduct")
+      return Response.json(await recognizeProduct(p.input));
     if (p.action === "createItem")
       return Response.json(createLifeItem(db, read, a, p.input));
     if (p.action === "fragment")

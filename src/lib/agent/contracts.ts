@@ -24,6 +24,7 @@ export const turnInputSchema = z
         ]),
         goal: z.string().max(500).optional(),
         companion: z.boolean().optional(),
+        useItemMemories: z.boolean().optional(),
         taskPlanId: z.string().uuid().optional(),
         interfaceMode: z.enum(["standard", "care"]).optional(),
         planContext: z
@@ -181,6 +182,7 @@ export type MemoryRecord = z.infer<typeof memorySchema> & {
 export type Persona = {
   enabled: boolean;
   nickname: string;
+  avatar?: "object" | "sprout" | "sun" | "moon" | "frame" | "photo";
   style: "neutral" | "warm" | "playful";
   memoryUse?: "off" | "explicit" | "relevant";
   itemId?: string;
@@ -189,6 +191,9 @@ export const personaSchema = z
   .object({
     enabled: z.boolean(),
     nickname: z.string().trim().max(40),
+    avatar: z
+      .enum(["object", "sprout", "sun", "moon", "frame", "photo"])
+      .optional(),
     style: z.enum(["neutral", "warm", "playful"]),
     memoryUse: z.enum(["off", "explicit", "relevant"]).optional(),
     itemId: z.string().max(100).optional(),

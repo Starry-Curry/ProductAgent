@@ -1,5 +1,13 @@
 # 开发记录
 
+## 2026-10-29 最新交接：商品、关系与可选分身纵向版（未合并main）
+
+独立分支 `codex/wujian-personal-objects-v1`，基准行为版 `d02b35e`，工作区 `D:/ProductAgent-LifeContext/.runtime/personal-objects-app`。请先读[本轮可体验流程及明确限制](docs/engineering/personal-objects-2026-10-29/README.md)、[测试报告](docs/engineering/personal-objects-2026-10-29/TEST_REPORT.md)和[真实回答](docs/engineering/personal-objects-2026-10-29/MODEL_RESULTS.md)。原项目与私人数据库未修改，没有迁库、换框架、操作硬件或合并main。
+
+已接入三款经核对商品的认识与明确持有、公共知识/个人状态分区、图文故事确认关系记忆、可选名字/六种形象/语气与统一Agent交流、来源撤回和隐私检查。新增8项，315离线通过；类型/构建/benchmark、既有6浏览器旅程、公开演示8组离线检查与生活/文件两旅程通过。本轮真实百炼14请求/14返回，输入65004、输出4571tokens，估算0.0611452元；预览后续操作继续累计40次/10元台账。
+
+**技术流程通过不等于产品效果通过：商品个性化帮助仍回退资料，分身错称用户、混合问题漏答、摆放建议缺乏实物依据仍未解决。** 下一轮先修回答与行动建议的证据衔接和角色身份，不扩大功能、换框架或宣称实体方案安全。以下保留历史记录。
+
 ## 2026-10-29：智能核心 Alpha（本轮）
 
 从功能基准1cb9764创建独立分支codex/wujian-intelligence-alpha，工作区D:\ProductAgent-LifeContext\.runtime\alpha-app。新增真实商品小样本知识、自然聊天的原话记忆候选与确认、事实型关系回忆保护、创意作用/条件契约与反例复核；修复物品范围丢失及修复上下文权限。没有迁库、换框架、合main或触碰硬件。

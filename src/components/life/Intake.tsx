@@ -412,6 +412,7 @@ export function Intake({
                 mediaId: photo?.id,
                 packId: packId || undefined,
                 confirmed: f.get("confirmed") === "on",
+                ownsConfirmed: f.get("ownsConfirmed") === "on",
                 attributes: {
                   material: f.get("material"),
                   quantityUnit: f.get("quantityUnit"),
@@ -605,6 +606,12 @@ export function Intake({
               <input name="material" maxLength={100} />
             </label>
           </div>
+          {packId && (
+            <label className="life-check">
+              <input type="checkbox" name="ownsConfirmed" required />
+              我确认拥有这件商品
+            </label>
+          )}
           <details className="intake-extra">
             <summary>补充能力与维护信息（可稍后填写）</summary>
             <div className="life-form-row">

@@ -1,4 +1,6 @@
 "use client";
+import { ProductArrival } from "./ProductArrival";
+import { ItemBelonging } from "./ItemBelonging";
 import { usePublicDemo } from "../DemoBoundary";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -724,18 +726,28 @@ export default function WujianApp() {
               </section>
             )}
             {view === "add" && (
-              <Intake
-                vision={data.capabilities.vision}
-                key={actor}
-                packs={data.packs}
+              <ProductArrival
                 request={request}
                 upload={upload}
                 onSaved={async (i) => {
                   await load();
                   open(i.id);
-                  setNotice("已录入；未知型号和状态仍保留为未知。");
+                  setNotice("已建立私人记录；官方事实与个人状态分别保留。");
                 }}
-              />
+              >
+                <Intake
+                  vision={data.capabilities.vision}
+                  key={actor}
+                  packs={data.packs}
+                  request={request}
+                  upload={upload}
+                  onSaved={async (i) => {
+                    await load();
+                    open(i.id);
+                    setNotice("已录入；未知型号和状态仍保留为未知。");
+                  }}
+                />
+              </ProductArrival>
             )}
             {view === "discover" && (
               <Discovery
@@ -958,50 +970,23 @@ export default function WujianApp() {
                   ))}
                 </div>
                 {tab === "帮助" && (
-                  <>
-                    <p className="life-muted">
-                      具体型号资料优先；无资料时说明未知。反馈来自本人报告，不能当作设备检测。
-                    </p>
-                    <div className="life-actions">
-                      <button
-                        onClick={() =>
-                          ask(
-                            "",
-                            item.id,
-                            undefined,
-                            itemSessions.current[item.id],
-                          )
-                        }
-                      >
-                        在问物间继续
-                      </button>
-                    </div>
-                    <AISettings
-                      actor={actor}
-                      item={item}
-                      onChat={() =>
-                        ask(
-                          "想和你聊聊今天的事",
-                          item.id,
-                          undefined,
-                          itemSessions.current[item.id],
-                          true,
-                        )
-                      }
-                    />
-                    <AssistantConversation
-                      key={actor + item.id}
-                      onSession={(s) => {
-                        if (s) itemSessions.current[item.id] = s.id;
-                      }}
-                      actor={actor}
-                      item={item}
-                      mode="auto"
-                      uiContext={{ page: "item" }}
-                      memoryPolicy="off"
-                      onActivity={() => load().catch(() => {})}
-                    />
-                  </>
+                  <ItemBelonging
+                    key={actor + item.id}
+                    actor={actor}
+                    item={item}
+                    items={items}
+                    packs={data.packs}
+                    fragments={data.fragments}
+                    request={request}
+                    upload={upload}
+                    refresh={load}
+                    onSession={(s) => {
+                      if (s) itemSessions.current[item.id] = s.id;
+                    }}
+                    onContinue={() =>
+                      ask("", item.id, undefined, itemSessions.current[item.id])
+                    }
+                  />
                 )}
                 {tab === "新玩法" && (
                   <Discovery

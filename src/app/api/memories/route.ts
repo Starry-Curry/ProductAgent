@@ -105,6 +105,41 @@ async function POSTHandler(r: Request) {
       return Response.json({
         persona: savePersona(database(), read(), a, p.input),
       });
+    if (p.action === "rememberItemStory") {
+      const v = z
+        .object({
+          fragmentId: z.string().uuid(),
+          revision: z.number().int().positive(),
+          itemId: z.string().max(100),
+          allowCloud: z.boolean(),
+          requestId: z.string().uuid(),
+        })
+        .strict()
+        .parse(p.input);
+      const row = database()
+        .prepare("SELECT text FROM life_fragments WHERE id=? AND owner=?")
+        .get(v.fragmentId, a) as { text: string } | undefined;
+      if (!row) throw new AgentError("故事不存在或未获授权", 403);
+      if (!read().items.some((i) => i.id === v.itemId && i.owner === a))
+        throw new AgentError("仅物品所有者可建立关系记忆", 403);
+      return Response.json({
+        memory: saveMemory(
+          database(),
+          read,
+          a,
+          {
+            kind: "relationship",
+            itemId: v.itemId,
+            text: row.text,
+            allowCloud: v.allowCloud,
+            status: "active",
+          },
+          undefined,
+          v.requestId,
+          { id: v.fragmentId, revision: v.revision },
+        ),
+      });
+    }
     if (p.action === "saveMethod") {
       const sessionId = z.string().uuid().parse(p.sessionId),
         requestId = z.string().uuid().parse(p.requestId);

@@ -23,6 +23,8 @@ export function buildContext(
     temporary?: boolean;
     excludeSynthetic?: boolean;
     taskMemoryOnly?: boolean;
+    includeItemRelationships?: boolean;
+    companion?: boolean;
     sessionId?: string;
   },
 ) {
@@ -47,6 +49,7 @@ export function buildContext(
         input.mode,
         item?.id,
         input.sessionId,
+        input.includeItemRelationships && item?.owner === actor,
       ).filter(
         (m) =>
           storyMemoryRelevant(db, actor, m, input.question) &&
@@ -54,6 +57,9 @@ export function buildContext(
           (persona.memoryUse !== "explicit" ||
             isMemoryRecallRequest(input.question)) &&
           (!input.taskMemoryOnly ||
+            (input.includeItemRelationships &&
+              item?.owner === actor &&
+              m.itemId === item.id) ||
             isMemoryRecallRequest(input.question) ||
             !["experience", "story", "relationship"].includes(m.kind)),
       );
@@ -134,7 +140,8 @@ export function buildContext(
     cloudPreferences: preferences
       .filter((p) => p.allowCloud)
       .map((p) => ({ key: p.key, value: p.value })),
-    persona,
+    persona:
+      input.companion === false ? { ...persona, enabled: false } : persona,
     resources:
       input.mode === "ideas"
         ? sharedItemKnowledge(

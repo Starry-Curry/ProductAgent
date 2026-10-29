@@ -87,6 +87,7 @@ const mouse = (
     lifecycle: "长期耐用",
     availability: "available",
     packId: "logitech-m185-m-r0061",
+    ownsConfirmed: true,
     confirmed: true,
   })
 ).item;
@@ -259,21 +260,28 @@ try {
     .fill("电池规格是什么");
   await page.getByRole("button", { name: "发送", exact: true }).click();
   await expect(
-    page.getByText("电源为一节可更换 AA 电池。", { exact: true }),
+    page
+      .getByRole("region", { name: "物间统一对话", exact: true })
+      .locator(".conversation-message.assistant")
+      .filter({ hasText: "电源为一节可更换 AA 电池。" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "在问物间继续", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "问物间", exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("电源为一节可更换 AA 电池。", { exact: true }),
+    page
+      .locator(".conversation-message.assistant")
+      .filter({ hasText: "电源为一节可更换 AA 电池。" }),
   ).toBeVisible();
   await page
     .getByRole("textbox", { name: "对物间说", exact: true })
     .fill("电池规格是什么");
   await page.getByRole("button", { name: "发送", exact: true }).click();
   await expect(
-    page.getByText("电源为一节可更换 AA 电池。", { exact: true }),
+    page
+      .locator(".conversation-message.assistant")
+      .filter({ hasText: "电源为一节可更换 AA 电池。" }),
   ).toHaveCount(2);
   await page.locator(".life-ai-settings > summary").click();
   await page.getByLabel("使用自定义称呼与交流风格").check();

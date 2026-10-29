@@ -333,5 +333,18 @@ export function routeProductTurn(
   const known = { ...session.known };
   delete known.uiPage;
   delete known.memoryPolicy;
-  return routeHome(q, state, actor, { ...session, itemId: target?.id, known });
+  const fallback = routeHome(q, state, actor, {
+    ...session,
+    itemId: target?.id,
+    known,
+  });
+  // The detail page names one resource. Implicit everyday goals here are item help;
+  // explicit creative/multi-resource requests have already taken the planning branch above.
+  if (target && session.known.uiPage === "item" && fallback.intent === "plan")
+    return result(
+      "help",
+      "service",
+      "围绕已选物品提供实际帮助，不转成全库存规划",
+    );
+  return fallback;
 }

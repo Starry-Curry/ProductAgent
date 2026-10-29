@@ -19,10 +19,12 @@ export function MemoryCenter({
   actor,
   items,
   focusItemId,
+  hidePersona = false,
 }: {
   actor: Person;
   items: Item[];
   focusItemId?: string;
+  hidePersona?: boolean;
 }) {
   const [expanded, setExpanded] = useState(false);
   const [records, setRecords] = useState<MemoryRecord[]>([]),
@@ -423,89 +425,95 @@ export function MemoryCenter({
           {showAll ? "收起记录" : "查看全部记忆"}
         </button>
       )}
-      <details>
-        <summary>可选陪伴的交流方式</summary>
-        <label>
-          应用范围
-          <select
-            value={scope}
-            onChange={(e) => {
-              setScope(e.target.value);
-              setPersona({ enabled: false, nickname: "", style: "warm" });
-            }}
-          >
-            <option value="">普通陪伴</option>
-            {items
-              .filter((i) => i.owner === actor)
-              .map((i) => (
-                <option value={i.id} key={i.id}>
-                  {i.name}
-                </option>
-              ))}
-          </select>
-        </label>
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            await change({
-              action: "persona",
-              input: { ...persona, itemId: scope || undefined },
-            });
-          }}
-        >
-          <label className="check-row">
-            <input
-              type="checkbox"
-              checked={persona.enabled}
-              onChange={(e) =>
-                setPersona({ ...persona, enabled: e.target.checked })
-              }
-            />
-            开启我选择的陪伴交流
-          </label>
+      {!hidePersona && (
+        <details>
+          <summary>可选陪伴的交流方式</summary>
           <label>
-            称呼
-            <input
-              value={persona.nickname}
-              maxLength={40}
-              onChange={(e) =>
-                setPersona({ ...persona, nickname: e.target.value })
-              }
-            />
-          </label>
-          <label>
-            语气
+            应用范围
             <select
-              value={persona.style}
-              onChange={(e) =>
-                setPersona({
-                  ...persona,
-                  style: e.target.value as Persona["style"],
-                })
-              }
+              value={scope}
+              onChange={(e) => {
+                setScope(e.target.value);
+                setPersona({ enabled: false, nickname: "", style: "warm" });
+              }}
             >
-              <option value="neutral">自然直接</option>
-              <option value="warm">温和陪伴</option>
-              <option value="playful">轻松活泼</option>
+              <option value="">普通陪伴</option>
+              {items
+                .filter((i) => i.owner === actor)
+                .map((i) => (
+                  <option value={i.id} key={i.id}>
+                    {i.name}
+                  </option>
+                ))}
             </select>
           </label>
-          <p>
-            开启后，称呼和语气用于交流。它是
-            AI，不会感知实物，也没有真实共同经历；可随时关闭。
-          </p>
-          <button className="button secondary" disabled={busy}>
-            保存交流方式
-          </button>
-        </form>
-        {persona.enabled && (
-          <AssistantConversation
-            key={actor + scope}
-            actor={actor}
-            item={items.find((i) => i.id === scope)}
-            mode="companion"
-          />
-        )}
-      </details>
+          {!hidePersona && (
+            <>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  await change({
+                    action: "persona",
+                    input: { ...persona, itemId: scope || undefined },
+                  });
+                }}
+              >
+                <label className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={persona.enabled}
+                    onChange={(e) =>
+                      setPersona({ ...persona, enabled: e.target.checked })
+                    }
+                  />
+                  开启我选择的陪伴交流
+                </label>
+                <label>
+                  称呼
+                  <input
+                    value={persona.nickname}
+                    maxLength={40}
+                    onChange={(e) =>
+                      setPersona({ ...persona, nickname: e.target.value })
+                    }
+                  />
+                </label>
+                <label>
+                  语气
+                  <select
+                    value={persona.style}
+                    onChange={(e) =>
+                      setPersona({
+                        ...persona,
+                        style: e.target.value as Persona["style"],
+                      })
+                    }
+                  >
+                    <option value="neutral">自然直接</option>
+                    <option value="warm">温和陪伴</option>
+                    <option value="playful">轻松活泼</option>
+                  </select>
+                </label>
+                <p>
+                  开启后，称呼和语气用于交流。它是
+                  AI，不会感知实物，也没有真实共同经历；可随时关闭。
+                </p>
+                <button className="button secondary" disabled={busy}>
+                  保存交流方式
+                </button>
+              </form>
+            </>
+          )}
+          {!hidePersona && persona.enabled && (
+            <AssistantConversation
+              key={actor + scope}
+              actor={actor}
+              item={items.find((i) => i.id === scope)}
+              mode="companion"
+            />
+          )}
+        </details>
+      )}
     </details>
   );
 }

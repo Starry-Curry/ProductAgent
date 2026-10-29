@@ -1,0 +1,354 @@
+{
+  "at": "2026-10-29T15:29:43.651Z",
+  "scope": "all proposed changed/untracked non-ignored files; patterns, forbidden paths, sizes and Markdown links; not a universal secret detector",
+  "files": 69,
+  "totalBytes": 6514182,
+  "failures": [],
+  "hashes": [
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 6037,
+      "sha256": "e4dae9fb3a101434921d1749403d8ff2ce7a48760b376f0b08c00e89c35f4921"
+    },
+    {
+      "file": "DEVELOPMENT_REPORT.md",
+      "bytes": 5060,
+      "sha256": "029a6628b2c5e972c54126fc9573dbb29819631f8ecfeb64171c671e2f2162a3"
+    },
+    {
+      "file": "IMPLEMENTATION_STATUS.md",
+      "bytes": 5580,
+      "sha256": "4669248c6b21cd41fd18e71d7f45afbf025f467ad31abb3a1a56c7bd293b8ae2"
+    },
+    {
+      "file": "REVIEW_HANDOFF.md",
+      "bytes": 5003,
+      "sha256": "44b2b5f7d0ac4ff231d5776bcda2e2f816d7323018ae3f582151e8712c4c818c"
+    },
+    {
+      "file": "docs/README.md",
+      "bytes": 3013,
+      "sha256": "aad47343cc82ed19e954e3594667a5a9591b3d48cd8a53ba1a1ca0121ccfa0d6"
+    },
+    {
+      "file": "src/app/api/life/route.ts",
+      "bytes": 14548,
+      "sha256": "f0d80ccb415b5937725556ac2ac2625d6b9f20e90c377b05d5b76a74718bc830"
+    },
+    {
+      "file": "src/app/api/memories/route.ts",
+      "bytes": 7159,
+      "sha256": "c1fef3b6563fe8407475b6698773c814da04fdc514da3945b26c03c73519f26f"
+    },
+    {
+      "file": "src/app/layout.tsx",
+      "bytes": 743,
+      "sha256": "c296f481de7378a9c28ef1280853cd71c37472f51b4aaf53cbb7158d12f01e6b"
+    },
+    {
+      "file": "src/components/MemoryCenter.tsx",
+      "bytes": 18020,
+      "sha256": "2cc93efb4fdc6cbd040610da03cd22e82234ab0a79546b0966edb11aeb22d45e"
+    },
+    {
+      "file": "src/components/life/Intake.tsx",
+      "bytes": 23458,
+      "sha256": "2418288d55dd1523b85734b00b9d6bef14604c96d355c6ce26b6ab4cf0e4e1dc"
+    },
+    {
+      "file": "src/components/life/WujianApp.tsx",
+      "bytes": 39576,
+      "sha256": "2b73b6338aac13c47069a25e1c827138b225b1857d1d95031e1584fa68de5df4"
+    },
+    {
+      "file": "src/lib/agent/contracts.ts",
+      "bytes": 5786,
+      "sha256": "156ebef255bd25ef463332b84c02f32ed04c42d8b9d79d8913f08d3ef7ee24e8"
+    },
+    {
+      "file": "src/lib/agent/graph.ts",
+      "bytes": 69626,
+      "sha256": "acded46c8b0e8754afe43a34b3c0dd4afa55adf0abf2d297eec313d6bc49f46b"
+    },
+    {
+      "file": "src/lib/agent/service.ts",
+      "bytes": 13919,
+      "sha256": "a1c459a2f9e9e9dee5634ee4c90a232fc5919ff7a27a55a8867c04db5ab05d80"
+    },
+    {
+      "file": "src/lib/cloud/runtime.ts",
+      "bytes": 16664,
+      "sha256": "7e5250cb086ff22a55bc08aef926cf765cbd04e8208cb42ff063d41eceeedd21"
+    },
+    {
+      "file": "src/lib/context/builder.ts",
+      "bytes": 5125,
+      "sha256": "8535cbf5883e6ce3c1b9575b5302e52d8be0691f8f54f24de64095a7d238ceac"
+    },
+    {
+      "file": "src/lib/home/router.ts",
+      "bytes": 12584,
+      "sha256": "f0288f43e594a8567fa8967553b2134c02b4438e9e45831a8da1a9a304e06020"
+    },
+    {
+      "file": "src/lib/life/intake.ts",
+      "bytes": 3311,
+      "sha256": "a9bfeab6c40faa008abc6dc13f01d2402acfcda232574d42ca3b01ea4b209816"
+    },
+    {
+      "file": "src/lib/life/organization.ts",
+      "bytes": 19903,
+      "sha256": "bee6c18a614e30d32e14f7a883715684d19405db6f2f76fb361b5088c9a70ff5"
+    },
+    {
+      "file": "src/lib/memory/store.ts",
+      "bytes": 15733,
+      "sha256": "e80aa3b3330f0713f70f591fd8b064a4875204f29b104cb7152c94c62f37ad4c"
+    },
+    {
+      "file": "tests/life-formats.mjs",
+      "bytes": 12447,
+      "sha256": "a4397bdf2a819b938024f942712bacabbdb7eaea0b0cf7950ce79642ce364529"
+    },
+    {
+      "file": "tests/life-integration.mjs",
+      "bytes": 15212,
+      "sha256": "9f9d639a6d5f0b094c0e95f4244bb72164553870af69bf3ffd516b665f18d91d"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/DECISIONS.md",
+      "bytes": 3479,
+      "sha256": "3b940045270e21aa645b8c6608ccc710e9ceabb7825f7ffdc8737ab783695b69"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/MODEL_RESULTS.md",
+      "bytes": 6033,
+      "sha256": "ed31fbe358707331545c1ea175f557a757ef884d8fe14f23d717c89918257015"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/README.md",
+      "bytes": 5959,
+      "sha256": "ce15c8656dec75c764172cb569b80e5d08dabbd452a8dba6350afbe4e1d9afcc"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/TEST_REPORT.md",
+      "bytes": 6468,
+      "sha256": "867650dbaa0d449b5b6287ad22878c7a4e63293c823eec0e530a8699ff6ecd6c"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/USAGE.json",
+      "bytes": 327,
+      "sha256": "b88b4a9872ebd3d028259c94914d79b71a09f4112bfca94b5515ce37f0829561"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793285562496/A-product-desktop.png",
+      "bytes": 339833,
+      "sha256": "0497a273a5dbe1463127156ae8618edc92c9b3b17c57f768cbf963acf2b19b25"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793285562496/B-persona-desktop.png",
+      "bytes": 289518,
+      "sha256": "0580139885b33f98f1ba0905c929c371160c9fae637d0702fe8f62cfc4e91424"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793285562496/B-persona-mobile.png",
+      "bytes": 305025,
+      "sha256": "4e2214acef50261f209bfc846760095a164c018b65509b2cb8866288d5e9e81e"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793285562496/results.json",
+      "bytes": 42565,
+      "sha256": "03ad15f356f331a773018e518477a7cebcb175282a55f4baf69f00b848e2a07c"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793286153123/A-product-desktop.png",
+      "bytes": 360516,
+      "sha256": "fc024265141f81c3cfa9bc1f0bab9664e7652527fe2c130c19ba599bc36a9aaf"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793286153123/failure.json",
+      "bytes": 22937,
+      "sha256": "2531c39e461397b59afb8b94def5ef8193ace6101228f2245d9f07a5d419b2f4"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793286153123/failure.png",
+      "bytes": 360516,
+      "sha256": "fc024265141f81c3cfa9bc1f0bab9664e7652527fe2c130c19ba599bc36a9aaf"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793286882827/A-product-desktop.png",
+      "bytes": 363293,
+      "sha256": "26a50029eb6dabad17a406382141f7a7209c72e48115c0efc8a97c516262cc2f"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793286882827/B-persona-desktop.png",
+      "bytes": 265624,
+      "sha256": "9762d87f0cb41553e237f3099e9e83bc82ebde3803e79c22832fd6475223e3a4"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793286882827/B-persona-mobile.png",
+      "bytes": 275462,
+      "sha256": "f52224ac60645a61eeddd43019845adc69a384dcddff57ed29285bce8c9b00f4"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-1793286882827/results.json",
+      "bytes": 48525,
+      "sha256": "28c1d5d7615187ee97a141c5714f49db7d47b78ffe59834c1ea83e3abeee1e9c"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/live-ledger.json",
+      "bytes": 582411,
+      "sha256": "bdee2dc8698f6d8351e2c0ccf9e4bf8f74aaa1265014301ba0cd32b95985bfb9"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/official-sources.json",
+      "bytes": 12328,
+      "sha256": "43a891c008dde621240dbe27ca042757fa0836312722bbd2fda3cd0007a5778a"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793285052597/A-product-desktop.png",
+      "bytes": 343908,
+      "sha256": "3a88dacaf2507db27152a20f289b029d4f14ea69ab4e6b8a0f274bd95eb011b2"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793285052597/failure.json",
+      "bytes": 15719,
+      "sha256": "e9935ee873b456d927e9a52461c093421ae4a5db9bdcc0f5e635d433dc9a1f5a"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793285052597/failure.png",
+      "bytes": 732561,
+      "sha256": "29727b8c82c855df76f73fe6aa3d837f9e6010ab5899241e745e3a4611524ab7"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793285450921/A-product-desktop.png",
+      "bytes": 343908,
+      "sha256": "3a88dacaf2507db27152a20f289b029d4f14ea69ab4e6b8a0f274bd95eb011b2"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793285450921/failure.json",
+      "bytes": 15719,
+      "sha256": "ef1225db12ddfe39e8c5e2bb89d69b11cd2440251baa038d34c81e3c3b91fc4f"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793285450921/failure.png",
+      "bytes": 343908,
+      "sha256": "3a88dacaf2507db27152a20f289b029d4f14ea69ab4e6b8a0f274bd95eb011b2"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793285538792/A-product-desktop.png",
+      "bytes": 343908,
+      "sha256": "3a88dacaf2507db27152a20f289b029d4f14ea69ab4e6b8a0f274bd95eb011b2"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793285538792/B-persona-desktop.png",
+      "bytes": 289518,
+      "sha256": "0580139885b33f98f1ba0905c929c371160c9fae637d0702fe8f62cfc4e91424"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793285538792/B-persona-mobile.png",
+      "bytes": 305068,
+      "sha256": "c55f628ded7a559b943052b736a0518348d865e28df990b43bbc096023d9fe54"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-1793285538792/results.json",
+      "bytes": 36533,
+      "sha256": "7d80ec3f88d4fd898c9e6cc024bc6b9400bedc3fdb211a7b932ba42608432ab9"
+    },
+    {
+      "file": "scripts/personal-objects/browser.mjs",
+      "bytes": 2740,
+      "sha256": "24a8c2c5f0f60f0249d601fac498bea9e726745b0700be85f8c66a3d614e97fd"
+    },
+    {
+      "file": "scripts/personal-objects/gateway.mjs",
+      "bytes": 10922,
+      "sha256": "71aacb854b7b7b9f3f4b4c7dd504b82c8bba0e95d1ee6984c0f65825705fa12f"
+    },
+    {
+      "file": "scripts/personal-objects/preview.mjs",
+      "bytes": 2419,
+      "sha256": "6b6f4a1cf857c85573c19ca5918d3ed7e9e2dd2329a7bf949eff0ef4f962bdcb"
+    },
+    {
+      "file": "scripts/personal-objects/scan.mjs",
+      "bytes": 2811,
+      "sha256": "ad332e2a4916b36f9dfe8182ae9a14f4268d9c1dfe789161fa639c0df674b335"
+    },
+    {
+      "file": "scripts/personal-objects/shared.mjs",
+      "bytes": 403,
+      "sha256": "f720d23c4b5c4389a1c18e0216811de63c0639dc120c139b500a35b500917c42"
+    },
+    {
+      "file": "scripts/personal-objects/sources.ts",
+      "bytes": 735,
+      "sha256": "548c6358d65c380a3cf39e381efae32212b8760fd7db2c401431059911669555"
+    },
+    {
+      "file": "src/app/belonging.css",
+      "bytes": 10779,
+      "sha256": "633c8300578ba1ff6e3172241751cf498298bb2ad39043d003efdab33a9f7b98"
+    },
+    {
+      "file": "src/components/life/ItemBelonging.tsx",
+      "bytes": 19983,
+      "sha256": "ede784f3e2a20aafedfa31584df3d860b1aa3896a601e751fcc0fdeedba319ae"
+    },
+    {
+      "file": "src/components/life/ProductArrival.tsx",
+      "bytes": 9430,
+      "sha256": "f0e09d0a94f583921597c3ef37afb7dca6857bb776b8c6f90ab17d0024d5027a"
+    },
+    {
+      "file": "src/lib/life/product-arrival.ts",
+      "bytes": 3272,
+      "sha256": "a98b574bdd059b592e3d99b85bd56c4c08ded8a97ce53b7b0a69de181bf718f7"
+    },
+    {
+      "file": "tests/personal-objects-integration.mjs",
+      "bytes": 11327,
+      "sha256": "7c4ef8df082e8a55b229458368abbae70bc4d1f7b5a577fae5b38bcede37cce2"
+    },
+    {
+      "file": "tests/personal-objects.test.ts",
+      "bytes": 14451,
+      "sha256": "7b1d753051341fe7e96526ba70b36bd20014606e0aeac10abeb5b24b9cb8c658"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/acceptance.log",
+      "bytes": 1700,
+      "sha256": "0ceef577155981b9ead82ec652e94aae48fe14cda0a474d1d2d4e9d46e968cad"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/benchmark.log",
+      "bytes": 4823,
+      "sha256": "0799e95a137219171036e61a783e5908f4a3ead6d47b0c66222744b19e9d559d"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/build.log",
+      "bytes": 2080,
+      "sha256": "d636c607844f981fe8b2b89132d6f8732c625ab0fb126ec0640c499965327d6c"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/cloud.log",
+      "bytes": 955,
+      "sha256": "08ab3e8b1eb7c1d56f3a629e185bb86e6562722a7dacf9a394b5306a6da3e5d7"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/life.log",
+      "bytes": 2409,
+      "sha256": "f9ecf2bb49d21c6c3cf76e4fa0e8ee3646b4ae446a7f7ad4dca85bb67c28d23c"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/offline-tests.log",
+      "bytes": 32814,
+      "sha256": "6879c6517d936938ff542272a0cb83174d692e857be39ba762db2569ffd10ebc"
+    },
+    {
+      "file": "docs/engineering/personal-objects-2026-10-29/evidence/typecheck.log",
+      "bytes": 53,
+      "sha256": "292fac678f539c5fa04b8e706c139afc861f9b6d084d64cec3fa76ce30472160"
+    }
+  ]
+}

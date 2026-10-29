@@ -147,6 +147,7 @@ page.on("pageerror", (e) => errors.push(e.message));
 try {
   await page.goto(base);
   await page.getByRole("button", { name: "录入物品", exact: true }).click();
+  await page.locator(".belong-manual > summary").click();
   await page.getByText("条形码 / 二维码", { exact: true }).click();
   await page
     .getByLabel("编码图片", { exact: true })
@@ -225,23 +226,19 @@ try {
   await expect(
     page.getByRole("button", { name: "添加照片", exact: true }),
   ).toBeVisible();
-  await page
-    .getByLabel(/照片（可选/)
-    .setInputFiles({
-      name: "invalid.gif",
-      mimeType: "image/gif",
-      buffer: Buffer.from("GIF89a"),
-    });
+  await page.getByLabel(/照片（可选/).setInputFiles({
+    name: "invalid.gif",
+    mimeType: "image/gif",
+    buffer: Buffer.from("GIF89a"),
+  });
   await expect(
     page.getByRole("status").filter({ hasText: "请选择 5MB 内" }),
   ).toBeVisible();
-  await page
-    .getByLabel(/照片（可选/)
-    .setInputFiles({
-      name: "synthetic-story.jpg",
-      mimeType: "image/jpeg",
-      buffer: photo,
-    });
+  await page.getByLabel(/照片（可选/).setInputFiles({
+    name: "synthetic-story.jpg",
+    mimeType: "image/jpeg",
+    buffer: photo,
+  });
   await expect(
     page.getByRole("button", { name: "更换照片", exact: true }),
   ).toBeEnabled();
@@ -261,7 +258,11 @@ try {
     .locator("article")
     .filter({ hasText: "浏览器图文验收：已更正" });
   await expect(article).toBeVisible();
-  if (!(await article.getByRole("button", { name: "删除片段", exact: true }).isVisible()))
+  if (
+    !(await article
+      .getByRole("button", { name: "删除片段", exact: true })
+      .isVisible())
+  )
     await article.getByLabel("故事选项", { exact: true }).click();
   page.once("dialog", (d) => d.accept());
   await article.getByRole("button", { name: "删除片段", exact: true }).click();
@@ -269,6 +270,7 @@ try {
   // Real server validation failure after instance creation: retry only the source.
   await page.getByRole("button", { name: "物品展柜", exact: true }).click();
   await page.getByRole("button", { name: "录入一件物品", exact: true }).click();
+  await page.locator(".belong-manual > summary").click();
   await page
     .getByLabel("物品名称", { exact: true })
     .fill("部分成功重试测试物品");
@@ -297,9 +299,7 @@ try {
   ).toBeVisible();
   assert.equal(await countItem(), 1);
   await page.goBack();
-  await expect(
-    page.getByRole("heading", { name: "认识一件身边的物品", exact: true }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: /从一件商品/ })).toBeVisible();
   assert.deepEqual(errors, []);
 } catch (e) {
   mkdirSync("artifacts/life", { recursive: true });

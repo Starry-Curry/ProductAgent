@@ -1,0 +1,440 @@
+{
+  "error": "TypeError: mediaResponse.ok is not a function\n    at file:///D:/ProductAgent-LifeContext/.runtime/personal-objects-app/tests/personal-objects-integration.mjs:133:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)",
+  "records": [
+    {
+      "case": "A-claimed-real-SKU-with-synthetic-possession",
+      "item": {
+        "id": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+        "name": "测试商品 · 我的旅行盒",
+        "category": "收纳用品",
+        "model": "194.408.48",
+        "location": "新房间书桌右侧",
+        "owner": "lin",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "合成测试：盖子有轻微划痕。我想把旅行纪念品放在这里。",
+        "source": "合成持有测试；非真实用户物品",
+        "brand": "IKEA",
+        "region": "cn",
+        "lifecycle": "长期耐用",
+        "availability": "available",
+        "availabilityAt": "2026-10-29T15:02:36.020Z",
+        "synthetic": true,
+        "productBinding": {
+          "packId": "ikea-samla-19440848",
+          "version": "2026-10-29.alpha1",
+          "confirmedBy": "lin",
+          "confirmedAt": "2026-10-29T15:02:36.020Z"
+        }
+      }
+    },
+    {
+      "case": "请完整介绍这件盒子的材质、尺寸和使用限制。我的盖子有划痕，能否据此判断它现在防水？",
+      "status": 200,
+      "result": {
+        "session": {
+          "id": "b6dc26ca-fb7a-4e0c-9ed4-50b98a2b647a",
+          "owner": "lin",
+          "itemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+          "identity": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T15:02:36.020Z\\\"]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "864ae703-5c5b-499d-bb82-6b567c6cda9d",
+              "role": "user",
+              "text": "请完整介绍这件盒子的材质、尺寸和使用限制。我的盖子有划痕，能否据此判断它现在防水？",
+              "at": "2026-10-29T15:02:55.030Z",
+              "itemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "0b53045b-4f7e-436c-817b-8332debe5f68",
+              "role": "assistant",
+              "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:material",
+                  "samla:size",
+                  "samla:lid",
+                  "samla:limits",
+                  "samla:care"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "errorCode": "validation_failed_partial",
+                "caveat": "模型综合回答未通过检查；以上仅摘录当前型号资料，未展示未经支持的操作。不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+                  "itemName": "测试商品 · 我的旅行盒"
+                }
+              },
+              "at": "2026-10-29T15:02:55.030Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "19faf9be-94ee-4769-9f02-e1086a2d8f94",
+            "turnScope": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+            "lastIntent": "help",
+            "activeItemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+            "goal": "请完整介绍这件盒子的材质、尺寸和使用限制。我的盖子有划痕，能否据此判断它现在防水？"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-29T15:02:36.246Z",
+          "updatedAt": "2026-10-29T15:02:55.031Z",
+          "expiresAt": "2026-11-05T15:02:36.246Z",
+          "itemScopes": {
+            "68af052c-63d4-46c3-b5af-0a9b59e64678": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T15:02:36.020Z\\\"]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "samla:material",
+            "samla:size",
+            "samla:lid",
+            "samla:limits",
+            "samla:care"
+          ],
+          "citations": [
+            {
+              "id": "ikea-samla-19440848",
+              "title": "宜家中国 SAMLA 商品详情",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "errorCode": "validation_failed_partial",
+          "caveat": "模型综合回答未通过检查；以上仅摘录当前型号资料，未展示未经支持的操作。不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对已登记的物品性质、限制与未知条件",
+            "itemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+            "itemName": "测试商品 · 我的旅行盒"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=68af052c-63d4-46c3-b5af-0a9b59e64678; router=home-router-v1",
+            "at": "2026-10-29T15:02:36.280Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T15:02:36.289Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T15:02:36.289Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T15:02:36.297Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T15:02:45.656Z"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "物品条件检查：测试商品 · 我的旅行盒：防水尚未确认，缺少当前属性或事实依据；测试商品 · 我的旅行盒：承重尚未确认，缺少当前属性或事实依据",
+            "at": "2026-10-29T15:02:45.678Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2; round=2/4",
+            "at": "2026-10-29T15:02:45.688Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T15:02:54.982Z"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "物品条件检查：测试商品 · 我的旅行盒：防水尚未确认，缺少当前属性或事实依据；测试商品 · 我的旅行盒：承重尚未确认，缺少当前属性或事实依据",
+            "at": "2026-10-29T15:02:55.003Z"
+          },
+          {
+            "stage": "verified_facts_fallback",
+            "detail": "model paraphrase rejected; extractive only",
+            "at": "2026-10-29T15:02:55.006Z"
+          }
+        ],
+        "tokens": {
+          "input": 9278,
+          "output": 775
+        },
+        "modelCalls": 2
+      }
+    },
+    {
+      "case": "我想在新房间书桌上放旅行纪念品，怎样利用它，同时不让灰尘落进去？请区分官方设计与我这件物品的实际状态。",
+      "status": 200,
+      "result": {
+        "session": {
+          "id": "b6dc26ca-fb7a-4e0c-9ed4-50b98a2b647a",
+          "owner": "lin",
+          "itemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+          "identity": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T15:02:36.020Z\\\"]\"]",
+          "mode": "auto",
+          "revision": 2,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "864ae703-5c5b-499d-bb82-6b567c6cda9d",
+              "role": "user",
+              "text": "请完整介绍这件盒子的材质、尺寸和使用限制。我的盖子有划痕，能否据此判断它现在防水？",
+              "at": "2026-10-29T15:02:55.030Z",
+              "itemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "0b53045b-4f7e-436c-817b-8332debe5f68",
+              "role": "assistant",
+              "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:material",
+                  "samla:size",
+                  "samla:lid",
+                  "samla:limits",
+                  "samla:care"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "errorCode": "validation_failed_partial",
+                "caveat": "模型综合回答未通过检查；以上仅摘录当前型号资料，未展示未经支持的操作。不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+                  "itemName": "测试商品 · 我的旅行盒"
+                }
+              },
+              "at": "2026-10-29T15:02:55.030Z"
+            },
+            {
+              "id": "40d8eede-1108-4b0d-b897-db8995270aca",
+              "role": "user",
+              "text": "我想在新房间书桌上放旅行纪念品，怎样利用它，同时不让灰尘落进去？请区分官方设计与我这件物品的实际状态。",
+              "at": "2026-10-29T15:03:19.046Z",
+              "itemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "ab2e1a92-5024-4d03-90d5-a2f198c85814",
+              "role": "assistant",
+              "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:material",
+                  "samla:size",
+                  "samla:lid",
+                  "samla:limits",
+                  "samla:care"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "errorCode": "validation_failed_partial",
+                "caveat": "模型综合回答未通过检查；以上仅摘录当前型号资料，未展示未经支持的操作。不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "围绕已选物品提供实际帮助，不转成全库存规划",
+                  "itemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+                  "itemName": "测试商品 · 我的旅行盒"
+                }
+              },
+              "at": "2026-10-29T15:03:19.046Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "e0ab6544-d6f3-4ce9-bcb5-3a2c3b675c66",
+            "turnScope": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+            "lastIntent": "help",
+            "activeItemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+            "goal": "我想在新房间书桌上放旅行纪念品，怎样利用它，同时不让灰尘落进去？请区分官方设计与我这件物品的实际状态。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-29T15:02:36.246Z",
+          "updatedAt": "2026-10-29T15:03:19.047Z",
+          "expiresAt": "2026-11-05T15:02:36.246Z",
+          "itemScopes": {
+            "68af052c-63d4-46c3-b5af-0a9b59e64678": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T15:02:36.020Z\\\"]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "samla:material",
+            "samla:size",
+            "samla:lid",
+            "samla:limits",
+            "samla:care"
+          ],
+          "citations": [
+            {
+              "id": "ikea-samla-19440848",
+              "title": "宜家中国 SAMLA 商品详情",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "errorCode": "validation_failed_partial",
+          "caveat": "模型综合回答未通过检查；以上仅摘录当前型号资料，未展示未经支持的操作。不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "围绕已选物品提供实际帮助，不转成全库存规划",
+            "itemId": "68af052c-63d4-46c3-b5af-0a9b59e64678",
+            "itemName": "测试商品 · 我的旅行盒"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=68af052c-63d4-46c3-b5af-0a9b59e64678; router=home-router-v1",
+            "at": "2026-10-29T15:02:55.280Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T15:02:55.300Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T15:02:55.300Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T15:02:55.331Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=1",
+            "at": "2026-10-29T15:02:57.076Z"
+          },
+          {
+            "stage": "tool_completed",
+            "detail": "read_item_context",
+            "at": "2026-10-29T15:02:57.111Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2; round=2/4",
+            "at": "2026-10-29T15:02:57.144Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T15:03:07.969Z"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "物品条件检查：测试商品 · 我的旅行盒：防水尚未确认，缺少当前属性或事实依据",
+            "at": "2026-10-29T15:03:07.982Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=3; round=3/4",
+            "at": "2026-10-29T15:03:08.008Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T15:03:19.011Z"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "物品条件检查：测试商品 · 我的旅行盒：防水尚未确认，缺少当前属性或事实依据",
+            "at": "2026-10-29T15:03:19.026Z"
+          },
+          {
+            "stage": "verified_facts_fallback",
+            "detail": "model paraphrase rejected; extractive only",
+            "at": "2026-10-29T15:03:19.028Z"
+          }
+        ],
+        "tokens": {
+          "input": 15755,
+          "output": 984
+        },
+        "modelCalls": 3
+      }
+    }
+  ],
+  "errors": []
+}

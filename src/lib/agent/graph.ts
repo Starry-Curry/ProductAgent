@@ -457,6 +457,8 @@ export function validateModelPacket(
       numbers(
         JSON.stringify({
           facts: selected,
+          // User-stated room dimensions are usable conditions, not manufacturer specifications.
+          userConditions: ctx.knowledgeTask.question,
           items: ctx.itemContexts,
           limits: pack.limits,
         }),
@@ -821,6 +823,10 @@ export async function executeGraph(
       const ctx = buildContext(db, read(), actor, {
         excludeSynthetic: session.known.memoryPolicy !== undefined,
         taskMemoryOnly: !!session.known.uiPage,
+        includeItemRelationships: session.known.useItemMemories === "yes",
+        companion: session.known.uiPage
+          ? !!session.known.companionItemId
+          : undefined,
         question: w.question,
         knowledgeQuery,
         mode: effectiveSession.mode,
@@ -1058,6 +1064,7 @@ export async function executeGraph(
       }
       if (!w.reply && !storyPlan) {
         const prior = session.messages
+          .slice(Number(session.known.itemMemoryBoundary || 0))
           .filter(
             (m) =>
               !(
@@ -1095,7 +1102,7 @@ export async function executeGraph(
                       "轻松有趣，可以有少量明确比喻；不假装实物移动或感知。",
                   }[ctx.persona.style]
                 : "\n默认正常自然交流，不扮演拟人物品。") +
-              "没有提供获准经历时，不能预设‘我们上次一起去过’；应直接说没有可确认的记录。不能承诺自动保存、开机提醒或控制实物；用户需主动确认保存。" +
+              "个人关系记忆是用户报告，不代表已核实情感或当前状态。回答当前实际目标时，结合给出的尺寸、限制和获准故事，不要只复述回忆。分身只是一种表达方式，不具有感知或控制实物的能力。没有提供获准经历时，不能预设‘我们上次一起去过’；应直接说没有可确认的记录。不能承诺自动保存、开机提醒或控制实物；用户需主动确认保存。" +
               (route
                 ? "\n统一对话：当前意图=" +
                   route.intent +
@@ -1267,6 +1274,10 @@ export async function executeGraph(
           const ctx = buildContext(db, read(), actor, {
             excludeSynthetic: session.known.memoryPolicy !== undefined,
             taskMemoryOnly: !!session.known.uiPage,
+            includeItemRelationships: session.known.useItemMemories === "yes",
+            companion: session.known.uiPage
+              ? !!session.known.companionItemId
+              : undefined,
             question: w.question,
             mode: "story",
             itemId: effectiveSession.itemId,
@@ -1346,6 +1357,10 @@ export async function executeGraph(
           const ctx = buildContext(db, read(), actor, {
             excludeSynthetic: session.known.memoryPolicy !== undefined,
             taskMemoryOnly: !!session.known.uiPage,
+            includeItemRelationships: session.known.useItemMemories === "yes",
+            companion: session.known.uiPage
+              ? !!session.known.companionItemId
+              : undefined,
             question: query || w.question,
             mode: effectiveSession.mode,
             sessionId: session.id,
@@ -1461,6 +1476,10 @@ export async function executeGraph(
         const ctx = buildContext(db, read(), actor, {
           excludeSynthetic: session.known.memoryPolicy !== undefined,
           taskMemoryOnly: !!session.known.uiPage,
+          includeItemRelationships: session.known.useItemMemories === "yes",
+          companion: session.known.uiPage
+            ? !!session.known.companionItemId
+            : undefined,
           question: session.known.goal || w.question,
           mode: effectiveSession.mode,
           sessionId: session.id,

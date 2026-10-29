@@ -1,0 +1,856 @@
+{
+  "passed": true,
+  "live": true,
+  "records": [
+    {
+      "case": "A-claimed-real-SKU-with-synthetic-possession",
+      "item": {
+        "id": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+        "name": "测试商品 · 我的旅行盒",
+        "category": "收纳用品",
+        "model": "194.408.48",
+        "location": "新房间书桌右侧",
+        "owner": "lin",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "合成测试：盖子有轻微划痕。我想把旅行纪念品放在这里。",
+        "source": "合成持有测试；非真实用户物品",
+        "brand": "IKEA",
+        "region": "cn",
+        "lifecycle": "长期耐用",
+        "availability": "available",
+        "availabilityAt": "2026-10-29T14:52:44.430Z",
+        "synthetic": true,
+        "productBinding": {
+          "packId": "ikea-samla-19440848",
+          "version": "2026-10-29.alpha1",
+          "confirmedBy": "lin",
+          "confirmedAt": "2026-10-29T14:52:44.430Z"
+        }
+      }
+    },
+    {
+      "case": "请完整介绍这件盒子的材质、尺寸和使用限制。我的盖子有划痕，能否据此判断它现在防水？",
+      "status": 200,
+      "result": {
+        "session": {
+          "id": "5952c600-be20-4ea8-afa5-1189a7b74e64",
+          "owner": "lin",
+          "itemId": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+          "identity": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T14:52:44.430Z\\\"]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "9cbeb3e7-7278-4613-bcbe-2c963cdc7335",
+              "role": "user",
+              "text": "请完整介绍这件盒子的材质、尺寸和使用限制。我的盖子有划痕，能否据此判断它现在防水？",
+              "at": "2026-10-29T14:53:00.615Z",
+              "itemId": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "8c387f75-d5bf-4885-afbc-953919e24708",
+              "role": "assistant",
+              "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:material",
+                  "samla:size",
+                  "samla:lid",
+                  "samla:limits",
+                  "samla:care"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "errorCode": "validation_failed_partial",
+                "caveat": "模型综合回答未通过检查；以上仅摘录当前型号资料，未展示未经支持的操作。不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+                  "itemName": "测试商品 · 我的旅行盒"
+                }
+              },
+              "at": "2026-10-29T14:53:00.615Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "a457fb6b-c688-45a2-b28b-a03fb4de0d2e",
+            "turnScope": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+            "lastIntent": "help",
+            "activeItemId": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+            "goal": "请完整介绍这件盒子的材质、尺寸和使用限制。我的盖子有划痕，能否据此判断它现在防水？"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-29T14:52:44.599Z",
+          "updatedAt": "2026-10-29T14:53:00.616Z",
+          "expiresAt": "2026-11-05T14:52:44.599Z",
+          "itemScopes": {
+            "d323ceb5-9a49-493a-acb3-b1e43d4b5165": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T14:52:44.430Z\\\"]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "samla:material",
+            "samla:size",
+            "samla:lid",
+            "samla:limits",
+            "samla:care"
+          ],
+          "citations": [
+            {
+              "id": "ikea-samla-19440848",
+              "title": "宜家中国 SAMLA 商品详情",
+              "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "errorCode": "validation_failed_partial",
+          "caveat": "模型综合回答未通过检查；以上仅摘录当前型号资料，未展示未经支持的操作。不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对已登记的物品性质、限制与未知条件",
+            "itemId": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+            "itemName": "测试商品 · 我的旅行盒"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=d323ceb5-9a49-493a-acb3-b1e43d4b5165; router=home-router-v1",
+            "at": "2026-10-29T14:52:44.631Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试; version=1.0.1",
+            "at": "2026-10-29T14:52:44.648Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T14:52:44.648Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T14:52:44.663Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T14:52:52.470Z"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "物品条件检查：测试商品 · 我的旅行盒：防水尚未确认，缺少当前属性或事实依据；测试商品 · 我的旅行盒：食品级尚未确认，缺少当前属性或事实依据",
+            "at": "2026-10-29T14:52:52.488Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2; round=2/4",
+            "at": "2026-10-29T14:52:52.499Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T14:53:00.564Z"
+          },
+          {
+            "stage": "validation_failed",
+            "detail": "物品条件检查：测试商品 · 我的旅行盒：防水尚未确认，缺少当前属性或事实依据；测试商品 · 我的旅行盒：食品级尚未确认，缺少当前属性或事实依据",
+            "at": "2026-10-29T14:53:00.585Z"
+          },
+          {
+            "stage": "verified_facts_fallback",
+            "detail": "model paraphrase rejected; extractive only",
+            "at": "2026-10-29T14:53:00.587Z"
+          }
+        ],
+        "tokens": {
+          "input": 9203,
+          "output": 657
+        },
+        "modelCalls": 2
+      }
+    },
+    {
+      "case": "我想在新房间书桌上放旅行纪念品，怎样利用它，同时不让灰尘落进去？请区分官方设计与我这件物品的实际状态。",
+      "status": 200,
+      "result": {
+        "session": {
+          "id": "5952c600-be20-4ea8-afa5-1189a7b74e64",
+          "owner": "lin",
+          "itemId": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+          "identity": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T14:52:44.430Z\\\"]\"]",
+          "mode": "auto",
+          "revision": 2,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "9cbeb3e7-7278-4613-bcbe-2c963cdc7335",
+              "role": "user",
+              "text": "请完整介绍这件盒子的材质、尺寸和使用限制。我的盖子有划痕，能否据此判断它现在防水？",
+              "at": "2026-10-29T14:53:00.615Z",
+              "itemId": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "8c387f75-d5bf-4885-afbc-953919e24708",
+              "role": "assistant",
+              "text": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "材质为聚丙烯塑料，透明盒体便于查看内容物。\n组合商品尺寸为宽28、深20、高14厘米，标称容量5升；这些不是内部净尺寸。\n盖子使用内嵌锁扣，可防尘并帮助叠放；没有宣称气密或水密。\n仅供室内使用，不可直接接触食物。\n可用软布蘸水及中性洗涤剂或皂液擦拭。\n尚未确认：耐热范围；承重上限；内部净尺寸；是否适合具体待放物；气密或水密；这件实物当前的完好程度、设备电量及实际连接状态；登记状态不是实时检测",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "samla:material",
+                  "samla:size",
+                  "samla:lid",
+                  "samla:limits",
+                  "samla:care"
+                ],
+                "citations": [
+                  {
+                    "id": "ikea-samla-19440848",
+                    "title": "宜家中国 SAMLA 商品详情",
+                    "url": "https://www.ikea.cn/cn/zh/p/samla-box-with-lid-transparent-s19440848/",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "errorCode": "validation_failed_partial",
+                "caveat": "模型综合回答未通过检查；以上仅摘录当前型号资料，未展示未经支持的操作。不得直接接触食品；仅室内 耐热范围、承重上限、气密性、内部净尺寸未知 盖子不是承重台或经验证的光学器件",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+                  "itemName": "测试商品 · 我的旅行盒"
+                }
+              },
+              "at": "2026-10-29T14:53:00.615Z"
+            },
+            {
+              "id": "edbc40ee-1072-4cf9-9451-91381a142fec",
+              "role": "user",
+              "text": "我想在新房间书桌上放旅行纪念品，怎样利用它，同时不让灰尘落进去？请区分官方设计与我这件物品的实际状态。",
+              "at": "2026-10-29T14:53:00.865Z",
+              "itemId": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "1a862463-42b1-4f96-acbb-7df611d950dc",
+              "role": "assistant",
+              "text": "本轮目标：我想在新房间书桌上放旅行纪念品，怎样利用它，同时不让灰尘落进去？请区分官方设计与我这件物品的实际状态。 · 30分钟 · 从0件可用候选中规划\n\n先核对可用物品，再继续规划。",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "本轮目标：我想在新房间书桌上放旅行纪念品，怎样利用它，同时不让灰尘落进去？请区分官方设计与我这件物品的实际状态。 · 30分钟 · 从0件可用候选中规划\n\n先核对可用物品，再继续规划。",
+                "source": "local-planning",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "当前没有符合选择与可用状态的本人物品；先录入/确认状态，或明确选择体验合成案例。",
+                "route": {
+                  "intent": "plan",
+                  "mode": "ideas",
+                  "reason": "结合日常可用物品准备有限场景计划"
+                }
+              },
+              "at": "2026-10-29T14:53:00.865Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "705990af-15a7-4bae-bb1c-ffe5ac8c3136",
+            "turnScope": "home",
+            "lastIntent": "plan",
+            "activeItemId": "d323ceb5-9a49-493a-acb3-b1e43d4b5165",
+            "lifePlanContext": "{\"goal\":\"我想在新房间书桌上放旅行纪念品，怎样利用它，同时不让灰尘落进去？请区分官方设计与我这件物品的实际状态。\",\"minutes\":30,\"itemIds\":[],\"excludedItemIds\":[],\"restrictions\":[]}"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-29T14:52:44.599Z",
+          "updatedAt": "2026-10-29T14:53:00.866Z",
+          "expiresAt": "2026-11-05T14:52:44.599Z",
+          "itemScopes": {
+            "d323ceb5-9a49-493a-acb3-b1e43d4b5165": "[\"lin\",\"[\\\"194.408.48\\\",\\\"ikea-samla-19440848\\\",\\\"2026-10-29.alpha1\\\",\\\"2026-10-29T14:52:44.430Z\\\"]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "本轮目标：我想在新房间书桌上放旅行纪念品，怎样利用它，同时不让灰尘落进去？请区分官方设计与我这件物品的实际状态。 · 30分钟 · 从0件可用候选中规划\n\n先核对可用物品，再继续规划。",
+          "source": "local-planning",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "当前没有符合选择与可用状态的本人物品；先录入/确认状态，或明确选择体验合成案例。",
+          "route": {
+            "intent": "plan",
+            "mode": "ideas",
+            "reason": "结合日常可用物品准备有限场景计划"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "plan; target=home; router=home-router-v1",
+            "at": "2026-10-29T14:53:00.821Z"
+          },
+          {
+            "stage": "goal_planning",
+            "detail": "local-candidate",
+            "at": "2026-10-29T14:53:00.844Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    },
+    {
+      "case": "新房间书桌宽80厘米，我想把这幅40×30厘米的画放在桌上，尽量不打孔。请结合它的来历给我实际的布置帮助；不知道的支撑条件请说清楚，不编造日期或感情。",
+      "status": 200,
+      "result": {
+        "session": {
+          "id": "2a2697fc-dc8d-4934-93bc-fb85a3ff6977",
+          "owner": "lin",
+          "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+          "identity": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "1012c8c5-a7b0-4f97-b675-012221a6eb9d",
+              "role": "user",
+              "text": "新房间书桌宽80厘米，我想把这幅40×30厘米的画放在桌上，尽量不打孔。请结合它的来历给我实际的布置帮助；不知道的支撑条件请说清楚，不编造日期或感情。",
+              "at": "2026-10-29T14:53:11.270Z",
+              "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "ed46e75b-d06d-4c1f-81fa-e9d71269d0b6",
+              "role": "assistant",
+              "text": "这幅画是朋友小夏送给你的，你搬到新房间时带来了它——这份心意很实在。画作尺寸40×30厘米，书桌宽80厘米，横向放置完全有空间（两侧各留20厘米），也适合居中摆放或靠一侧留出工作区。\n\n由于画框是木质、纸本，且未确认是否带玻璃、挂件或背面支撑结构（如支架、锯齿挂钩、防滑垫等），目前**无法确定它能否稳定立在桌面上而不倾倒或滑动**。若背面无立式支架，可考虑以下不打孔方案：\n\n• 用小型亚克力/木质画架（高度适配30cm画高）托起；\n• 在画框底部贴防滑硅胶垫（需确认画框背面材质是否允许粘贴）；\n• 将画斜靠在台灯、书立或一摞书后方固定（注意避免压弯或刮伤画面）。\n\n但需你亲自检查：画框背面是否有预装支架？是否平整？有无挂绳或金属钩？这些将直接决定能否自立。若不确定，可以描述或拍照（当前视觉识物暂未启用），我可帮你进一步判断适配方式。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这幅画是朋友小夏送给你的，你搬到新房间时带来了它——这份心意很实在。画作尺寸40×30厘米，书桌宽80厘米，横向放置完全有空间（两侧各留20厘米），也适合居中摆放或靠一侧留出工作区。\n\n由于画框是木质、纸本，且未确认是否带玻璃、挂件或背面支撑结构（如支架、锯齿挂钩、防滑垫等），目前**无法确定它能否稳定立在桌面上而不倾倒或滑动**。若背面无立式支架，可考虑以下不打孔方案：\n\n• 用小型亚克力/木质画架（高度适配30cm画高）托起；\n• 在画框底部贴防滑硅胶垫（需确认画框背面材质是否允许粘贴）；\n• 将画斜靠在台灯、书立或一摞书后方固定（注意避免压弯或刮伤画面）。\n\n但需你亲自检查：画框背面是否有预装支架？是否平整？有无挂绳或金属钩？这些将直接决定能否自立。若不确定，可以描述或拍照（当前视觉识物暂未启用），我可帮你进一步判断适配方式。",
+                "source": "model-general",
+                "steps": [],
+                "questions": [
+                  "画框背面是否有立式支架、挂绳、锯齿挂钩或其它支撑结构？"
+                ],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "9abe58b0-4abf-4864-9664-b51f5fa9fed5"
+                ],
+                "caveat": "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。",
+                "model": "qwen-plus",
+                "route": {
+                  "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+                  "itemName": "测试赠画 · 远山",
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "围绕当前物品的真实经历与记忆"
+                }
+              },
+              "at": "2026-10-29T14:53:11.270Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "yes",
+            "companionItemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "turnRequestId": "397d6a64-9fcb-40d1-8d3f-c42ba95b9f80",
+            "turnScope": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "lastIntent": "story",
+            "activeItemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8"
+          },
+          "tried": [],
+          "memoryEpoch": 3,
+          "createdAt": "2026-10-29T14:53:03.187Z",
+          "updatedAt": "2026-10-29T14:53:11.271Z",
+          "expiresAt": "2026-11-05T14:53:03.187Z",
+          "itemScopes": {
+            "2ef76ab7-264e-401b-b139-1f226e15d9c8": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这幅画是朋友小夏送给你的，你搬到新房间时带来了它——这份心意很实在。画作尺寸40×30厘米，书桌宽80厘米，横向放置完全有空间（两侧各留20厘米），也适合居中摆放或靠一侧留出工作区。\n\n由于画框是木质、纸本，且未确认是否带玻璃、挂件或背面支撑结构（如支架、锯齿挂钩、防滑垫等），目前**无法确定它能否稳定立在桌面上而不倾倒或滑动**。若背面无立式支架，可考虑以下不打孔方案：\n\n• 用小型亚克力/木质画架（高度适配30cm画高）托起；\n• 在画框底部贴防滑硅胶垫（需确认画框背面材质是否允许粘贴）；\n• 将画斜靠在台灯、书立或一摞书后方固定（注意避免压弯或刮伤画面）。\n\n但需你亲自检查：画框背面是否有预装支架？是否平整？有无挂绳或金属钩？这些将直接决定能否自立。若不确定，可以描述或拍照（当前视觉识物暂未启用），我可帮你进一步判断适配方式。",
+          "source": "model-general",
+          "steps": [],
+          "questions": [
+            "画框背面是否有立式支架、挂绳、锯齿挂钩或其它支撑结构？"
+          ],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "9abe58b0-4abf-4864-9664-b51f5fa9fed5"
+          ],
+          "caveat": "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。",
+          "model": "qwen-plus",
+          "route": {
+            "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "itemName": "测试赠画 · 远山",
+            "intent": "story",
+            "mode": "story",
+            "reason": "围绕当前物品的真实经历与记忆"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=2ef76ab7-264e-401b-b139-1f226e15d9c8; router=home-router-v1",
+            "at": "2026-10-29T14:53:03.214Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0",
+            "at": "2026-10-29T14:53:03.228Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=9abe58b0-4abf-4864-9664-b51f5fa9fed5; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T14:53:03.228Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-29T14:53:03.243Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-29T14:53:11.238Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-29T14:53:11.253Z"
+          }
+        ],
+        "tokens": {
+          "input": 2887,
+          "output": 334
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "case": "这幅画是谁送的？我现在想换到新房间，应该先核对哪些摆放条件？",
+      "status": 200,
+      "result": {
+        "session": {
+          "id": "985aa916-7776-4e0b-89a7-03f7462a1935",
+          "owner": "lin",
+          "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+          "identity": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "f830588c-a225-4f99-a8c5-7082f7b937a5",
+              "role": "user",
+              "text": "这幅画是谁送的？我现在想换到新房间，应该先核对哪些摆放条件？",
+              "at": "2026-10-29T14:53:11.517Z",
+              "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "028a3559-d126-48a6-a9e3-89db8f885d60",
+              "role": "assistant",
+              "text": "记得，你曾提到，合成经历：这幅画是朋友小夏送给你的。你搬到新房间时带来了它。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "记得，你曾提到，合成经历：这幅画是朋友小夏送给你的。你搬到新房间时带来了它。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "9abe58b0-4abf-4864-9664-b51f5fa9fed5"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+                "route": {
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "按当前授权回忆本人记录",
+                  "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+                  "itemName": "测试赠画 · 远山"
+                }
+              },
+              "at": "2026-10-29T14:53:11.517Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "yes",
+            "companionItemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "turnRequestId": "079df194-bcc9-4151-a0ef-015f285b059b",
+            "turnScope": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "lastIntent": "story",
+            "activeItemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8"
+          },
+          "tried": [],
+          "memoryEpoch": 3,
+          "createdAt": "2026-10-29T14:53:11.447Z",
+          "updatedAt": "2026-10-29T14:53:11.518Z",
+          "expiresAt": "2026-11-05T14:53:11.447Z",
+          "itemScopes": {
+            "2ef76ab7-264e-401b-b139-1f226e15d9c8": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "记得，你曾提到，合成经历：这幅画是朋友小夏送给你的。你搬到新房间时带来了它。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "9abe58b0-4abf-4864-9664-b51f5fa9fed5"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+          "route": {
+            "intent": "story",
+            "mode": "story",
+            "reason": "按当前授权回忆本人记录",
+            "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "itemName": "测试赠画 · 远山"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=2ef76ab7-264e-401b-b139-1f226e15d9c8; router=home-router-v1",
+            "at": "2026-10-29T14:53:11.468Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T14:53:11.490Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=9abe58b0-4abf-4864-9664-b51f5fa9fed5; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T14:53:11.490Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=9abe58b0-4abf-4864-9664-b51f5fa9fed5",
+            "at": "2026-10-29T14:53:11.493Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-demo",
+            "at": "2026-10-29T14:53:11.493Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T14:53:11.493Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    },
+    {
+      "case": "请核对你现在获准记住的赠送者，不要沿用旧记录。尺寸40×30厘米是本人报告，挂件状态未知。",
+      "status": 200,
+      "result": {
+        "session": {
+          "id": "db1d4f09-3ba5-40fb-b96e-51dc5b1f7af9",
+          "owner": "lin",
+          "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+          "identity": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "391ec9c0-b27d-45dc-b57d-bde986b3482c",
+              "role": "user",
+              "text": "请核对你现在获准记住的赠送者，不要沿用旧记录。尺寸40×30厘米是本人报告，挂件状态未知。",
+              "at": "2026-10-29T14:53:12.307Z",
+              "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "43a20ded-96bf-4bca-a2fa-4e63f8957bcb",
+              "role": "assistant",
+              "text": "记得，你曾提到，合成经历纠正：这幅画是同事阿禾送的，不是小夏。没有记录赠送日期。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "记得，你曾提到，合成经历纠正：这幅画是同事阿禾送的，不是小夏。没有记录赠送日期。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "9abe58b0-4abf-4864-9664-b51f5fa9fed5"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+                "route": {
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "按当前授权回忆本人记录",
+                  "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+                  "itemName": "测试赠画 · 远山"
+                }
+              },
+              "at": "2026-10-29T14:53:12.307Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "yes",
+            "companionItemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "turnRequestId": "d9ad17a7-687b-4b41-b8ee-8fff96def8e3",
+            "turnScope": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "lastIntent": "story",
+            "activeItemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8"
+          },
+          "tried": [],
+          "memoryEpoch": 4,
+          "createdAt": "2026-10-29T14:53:12.265Z",
+          "updatedAt": "2026-10-29T14:53:12.308Z",
+          "expiresAt": "2026-11-05T14:53:12.265Z",
+          "itemScopes": {
+            "2ef76ab7-264e-401b-b139-1f226e15d9c8": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "记得，你曾提到，合成经历纠正：这幅画是同事阿禾送的，不是小夏。没有记录赠送日期。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "9abe58b0-4abf-4864-9664-b51f5fa9fed5"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+          "route": {
+            "intent": "story",
+            "mode": "story",
+            "reason": "按当前授权回忆本人记录",
+            "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "itemName": "测试赠画 · 远山"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=2ef76ab7-264e-401b-b139-1f226e15d9c8; router=home-router-v1",
+            "at": "2026-10-29T14:53:12.280Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T14:53:12.290Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=9abe58b0-4abf-4864-9664-b51f5fa9fed5; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T14:53:12.290Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=9abe58b0-4abf-4864-9664-b51f5fa9fed5",
+            "at": "2026-10-29T14:53:12.290Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-demo",
+            "at": "2026-10-29T14:53:12.290Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T14:53:12.290Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    },
+    {
+      "case": "这幅画是谁送的？如果没有已获准的关系记忆，请直接说明不知道，不要根据分身名字猜。",
+      "status": 200,
+      "result": {
+        "session": {
+          "id": "bc448c53-1d3c-4c3e-b90c-6294116e341e",
+          "owner": "lin",
+          "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+          "identity": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "62d2481b-439b-4fee-85ac-f545095adab0",
+              "role": "user",
+              "text": "这幅画是谁送的？如果没有已获准的关系记忆，请直接说明不知道，不要根据分身名字猜。",
+              "at": "2026-10-29T14:53:12.548Z",
+              "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "966613fc-2d4b-436c-9210-8c54dabfbd41",
+              "role": "assistant",
+              "text": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+                "route": {
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "按当前授权回忆本人记录",
+                  "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+                  "itemName": "测试赠画 · 远山"
+                }
+              },
+              "at": "2026-10-29T14:53:12.548Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "yes",
+            "companionItemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "turnRequestId": "a209bfc9-7431-4b1d-bff7-1ea83c046ab2",
+            "turnScope": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "lastIntent": "story",
+            "activeItemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8"
+          },
+          "tried": [],
+          "memoryEpoch": 5,
+          "createdAt": "2026-10-29T14:53:12.502Z",
+          "updatedAt": "2026-10-29T14:53:12.549Z",
+          "expiresAt": "2026-11-05T14:53:12.502Z",
+          "itemScopes": {
+            "2ef76ab7-264e-401b-b139-1f226e15d9c8": "[\"lin\",\"[\\\"无商品型号\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+          "route": {
+            "intent": "story",
+            "mode": "story",
+            "reason": "按当前授权回忆本人记录",
+            "itemId": "2ef76ab7-264e-401b-b139-1f226e15d9c8",
+            "itemName": "测试赠画 · 远山"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=2ef76ab7-264e-401b-b139-1f226e15d9c8; router=home-router-v1",
+            "at": "2026-10-29T14:53:12.519Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从有来源的记忆中选取相关片段，组织自然、有物品特色的故事回应; version=1.0.0",
+            "at": "2026-10-29T14:53:12.532Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-29T14:53:12.532Z"
+          },
+          {
+            "stage": "memory_story_planned",
+            "detail": "memory-storytelling-v1.0; refs=",
+            "at": "2026-10-29T14:53:12.533Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-demo",
+            "at": "2026-10-29T14:53:12.533Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-29T14:53:12.533Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0
+      }
+    }
+  ],
+  "errors": []
+}

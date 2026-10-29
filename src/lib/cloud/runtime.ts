@@ -281,7 +281,7 @@ export function reservePublicFetch(host: string) {
   if (!scope) throw new CloudError("session_required", "未授权资料读取", 401);
   const allowed = (
     process.env.DEMO_SOURCE_HOSTS ||
-    "mi.com,mi-img.com,mi-fds.com,xiaomi.com,sony.com,sony.net,sony-asia.com,ikea.com,ikea.cn,lego.com,philips.com,philips.com.cn,patagonia.com,logitech.com,logi.com,loc.gov,first8studios.org,en.wikibooks.org,openfoodfacts.org,openlibrary.org"
+    "mi.com,mi-img.com,mi-fds.com,xiaomi.com,sony.com,sony.net,sony-asia.com,ikea.com,ikea.cn,jbl.com,lego.com,philips.com,philips.com.cn,patagonia.com,logitech.com,logi.com,loc.gov,first8studios.org,en.wikibooks.org,openfoodfacts.org,openlibrary.org"
   )
     .split(",")
     .map((h) => h.trim().toLowerCase())
