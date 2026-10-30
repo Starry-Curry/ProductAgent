@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-30T20:29:36.126Z",
+  "at": "2026-10-30T20:40:25.532Z",
   "synthetic": true,
   "paidCalls": 0,
   "checks": [
@@ -26,12 +26,34 @@
     }
   ],
   "errors": [],
+  "responses": [
+    {
+      "question": "请读取这个型号的资料",
+      "source": "curated-guidance",
+      "answer": "已找到这件型号的官方操作/养护原文。云端关闭时直接展示摘录，不冒充模型翻译；可核对来源后使用。",
+      "outcome": "answered",
+      "modelCalls": 0,
+      "tokens": null,
+      "elapsedMs": 71,
+      "note": "模型关闭的本机路径，不是模型正确完成延迟"
+    },
+    {
+      "question": "请读取这个型号的资料",
+      "source": "curated-guidance",
+      "answer": "云端 AI 尚未配置，可以先核对资料或记录尝试。",
+      "outcome": "unavailable",
+      "modelCalls": 1,
+      "tokens": null,
+      "elapsedMs": 44,
+      "note": "模型关闭的本机路径，不是模型正确完成延迟"
+    }
+  ],
   "sourceImport": {
     "ok": true,
-    "sourceId": "8848cd72-81f9-4bd7-8843-1b00a21d086a"
+    "sourceId": "0448747b-1b21-42f9-88cb-90a84af507a8"
   },
   "creativity": {
-    "taskId": "e38a7b40-22a2-4e68-908b-c8e4fd1e63f4",
+    "taskId": "de94b6b7-50d1-4ae8-809d-78d34916c357",
     "status": 502,
     "error": "千问尚未配置。当前精选指导可用，但不是模型回答。",
     "acceptance": "blocked_model_budget",

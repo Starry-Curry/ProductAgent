@@ -1,0 +1,1 @@
+{"kind":"local-api-and-browser-no-real-model","passed":true,"elapsedMs":3413,"checks":["missing-model trace","replay authorization","cross-origin write denied","gift original author","dynamic candidate constraints","private Context","desktop/mobile no page errors"],"realModelCalls":0}

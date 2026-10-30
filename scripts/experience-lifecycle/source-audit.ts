@@ -8,7 +8,7 @@ const dir="docs/engineering/experience-lifecycle-2026-10-31/evidence";
 fs.mkdirSync(dir,{recursive:true});fs.mkdirSync(".runtime",{recursive:true});
 const targets=[...new Map(sourceReviews.map(r=>[r.url,{url:r.url,model:r.model,region:r.region}])).values(),
  {url:"https://helpguide.sony.net/mdr/2958/v1/en/print.pdf",model:"WH-CH520",region:"unspecified"},
- {url:"https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",model:"Osmo Mobile 6",region:"unspecified"}];
+ {url:"https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",model:"Osmo Mobile 6",region:"unspecified"}].filter((t,i,all)=>all.findIndex(x=>x.url===t.url)===i);
 const report:{at:string;paidCalls:number;results:any[]}={at:new Date().toISOString(),paidCalls:0,results:[]},documents:any[]=[];
 // Bounded batches; no authentication, proxy bypass, paid search, retry loop or external writes.
 for(let offset=0;offset<targets.length;offset+=3){

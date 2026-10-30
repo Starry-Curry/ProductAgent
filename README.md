@@ -1,3 +1,5 @@
+> 最新实验分支：[长期经验与跨模块闭环交付](docs/engineering/experience-lifecycle-2026-10-31/README.md)。经验缺陷已复现修复，34项真实模型验收仍阻塞；本机预览3224，旧3222保留。
+
 <div align="center">
   <img src="docs/assets/wunori.png" alt="物间 Wujian：让身边的物品成为 AI 与生活的入口" width="100%" />
 

@@ -1,0 +1,29 @@
+{
+  "cases": 85,
+  "products": 9,
+  "official_source_urls": 15,
+  "modes": {
+    "integration": 16,
+    "live_model": 34,
+    "browser": 23,
+    "software_lab": 3,
+    "prototype": 9
+  },
+  "categories": {
+    "INTAKE": 9,
+    "QA": 22,
+    "CONSTRAINT": 10,
+    "PERSONA": 8,
+    "FAMILY": 10,
+    "GIFT": 8,
+    "AGENT": 9,
+    "ENTRY": 9
+  },
+  "result_statuses": {
+    "not_run": 51,
+    "blocked_model_budget": 34
+  },
+  "issues": [],
+  "outcome": "input_validation_pass",
+  "note": "This validates file structure and result documentation ONLY, never application quality."
+}

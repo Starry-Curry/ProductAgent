@@ -1,3 +1,5 @@
+当前交接：[2026-10-31 长期经验与跨模块闭环](engineering/experience-lifecycle-2026-10-31/README.md)，含失败复现、四旅程、模型未测及恢复点。
+
 # 最新：统一智能基座V2实验交付
 
 [产品变化、运行与未过门禁](engineering/unified-foundation-v2-2026-10-30/README.md)。46/85案在对应模式通过，34模型案未授权、5其他阻断；不等于全产品验收。

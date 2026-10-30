@@ -1,3 +1,13 @@
+## 2026-10-31｜长期经验与跨模块闭环（真实模型未验收）
+
+基线 unified-foundation-v2 7d682465，新分支 codex/wujian-experience-lifecycle-v1。先复现并修复：新增台灯反馈令旧耳机经验丢失；拆开运行epoch与长期隐私scope，保留有效旧经验，支持纠正、停止复用、忘记与已知派生失效。单物品指导/开放创造接收获准经验，家庭报告同事务更新原任务。保留原有故事、赠礼、分身与REA软件实验；未改Instructions、main或私人库。
+
+398项离线、类型、生产构建、benchmark、新旅程及旧10组真实浏览器通过；付费请求0。有限厂家主张核对仍是实验，默认不开事实综合；34个真实模型案保持预算阻塞，没有直接千问或创造力质量新认证。来源获取失败与B创造场景模型关闭502保留，用户报告不算实物验证。
+
+[本轮运行及交付](docs/engineering/experience-lifecycle-2026-10-31/README.md) · [测试证据](docs/engineering/experience-lifecycle-2026-10-31/TEST_EVIDENCE.md) · [未达标及待授权验证](docs/engineering/experience-lifecycle-2026-10-31/REMAINING_GAPS.md)
+
+---
+
 ## 2026-10-31｜统一智能基座 V2 实验分支（最终验收未通过）
 
 以 product-foundation-v1 d8eee930 为正式本轮基线，在 codex/wujian-unified-foundation-v2 隔离升级；未合 main、未修改私人库或项目 Instructions。物品/型号适配、独立 Grant、TaskSpec/Run/Context/Outcome、故事赠礼与家人引用桥接、未知运行保护及软件能力证据已落地。新目标直接发起，旧任务可跨页面恢复；普通视图刷新、自然/大字问答交家人已修复。软件运行按数据空间/账号/实物隔离，历史赠礼不能重复赠出或复用控制。

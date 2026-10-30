@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-30T20:47:57.167275+00:00",
+  "sourceCommit": "e26bb85",
+  "offlineTests": 398,
+  "newTestsVsBaseline": 16,
+  "newBrowserChecks": 4,
+  "legacyBrowserChecks": 10,
+  "paidRequests": 0,
+  "creativityLiveStatus": "blocked_model_budget",
+  "markdownLinksValid": true,
+  "typecheck": "pass",
+  "build": ".next-experience-final",
+  "realModelQuality": "not_run"
+}

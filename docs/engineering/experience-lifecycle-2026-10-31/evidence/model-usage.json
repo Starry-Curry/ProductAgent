@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-30T20:46:48.843222+00:00",
+  "newPaidRequests": 0,
+  "estimatedCny": 0,
+  "authorization": false,
+  "historicalLedgerUnchanged": true,
+  "historicalLedgerSha256": "f24bef4a70c079a01b47074ec374b9d3f72c8a5119693792903507ade41cb369",
+  "blockedLiveCases": 34,
+  "proposedFutureCap": {
+    "requests": 24,
+    "cny": 5,
+    "approved": false
+  }
+}
