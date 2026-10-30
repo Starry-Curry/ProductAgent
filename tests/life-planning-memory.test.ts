@@ -218,7 +218,7 @@ test("收藏和失败反馈参与规划排序与云端上下文；不相关获�
         };
       },
     };
-    await t.plan({ goal: "整理桌面，不花钱", model: true }, model);
+    await t.plan({ goal: "整理桌面，不花钱", engine: "legacy", model: true }, model);
     assert.ok(
       seen.planning.recentFeedback.some((i: any) => i.outcome === "未成功"),
     );
@@ -237,7 +237,7 @@ test("收藏和失败反馈参与规划排序与云端上下文；不相关获�
       tokens: null,
     });
     await assert.rejects(
-      t.plan({ goal: "整理桌面", model: true }, model),
+      t.plan({ goal: "整理桌面", engine: "legacy", model: true }, model),
       /超出实际登记数量/,
     );
     const repeated = await t.plan({ goal: "整理桌面" });
@@ -362,11 +362,11 @@ test("仅明确选择的本人经验可进入模型，引用可追溯；外部�
       },
     };
     await assert.rejects(
-      t.plan({ goal: "整理桌面", model: true }, p),
+      t.plan({ goal: "整理桌面", engine: "legacy", model: true }, p),
       /未获准提供的经验/,
     );
     const result = await t.plan(
-      { goal: "整理桌面", experienceIds: [reference.id], model: true },
+      { goal: "整理桌面", experienceIds: [reference.id], engine: "legacy", model: true },
       p,
     );
     assert.equal(seen.userProvidedExperiences[0].id, reference.id);

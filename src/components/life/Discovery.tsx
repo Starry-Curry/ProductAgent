@@ -29,7 +29,7 @@ export function Discovery({
   const publicMode = usePublicDemo();
   const focusedItem = items.find((i) => i.id === itemId);
   const initialGoal = focusedItem
-    ? `我想让${focusedItem.name}更符合我的生活。结合我的偏好和家里已有物品，探索一个有实际作用的新用途；不购买、不裁切、不改电路。`
+    ? `我想让${focusedItem.name}更符合我的生活。结合我的偏好和家里已有物品，探索不同的新用途，也可以考虑已有物品的组合。`
     : "想用已有的东西，做点新鲜的小事";
   const [goal, setGoal] = useState(initialGoal),
     [minutes, setMinutes] = useState("30"),
@@ -48,6 +48,7 @@ export function Discovery({
   const [continuation, setContinuation] = useState<any>(undefined);
   const [cloud, setCloud] = useState(true);
   const [shareFeedback, setShareFeedback] = useState(false);
+  const [useInspiration, setUseInspiration] = useState(false);
 
   const [experienceIds, setExperienceIds] = useState<string[]>([]);
   const [gaps, setGaps] = useState<string[]>([]);
@@ -71,6 +72,7 @@ export function Discovery({
     model = modelAvailable && cloud,
     followup?: string,
     omit: string[] = excluded,
+    selectedIdea?: LifeIdea,
   ) {
     setBusy(true);
     setNotice("");
@@ -90,11 +92,13 @@ export function Discovery({
         minutes: Number(minutes),
         includeSynthetic: synthetic,
         model,
-        review: true,
+        review: false,
+        engine: selectedIdea ? "goal" : useInspiration ? "hybrid" : "free",
+        selectedIdeaId: selectedIdea?.id,
         page: itemId ? "item" : "discover",
         ...(homeId ? { homeId } : {}),
       });
-      setResults(d.ideas);
+      if(d.ideas.length || !selectedIdea) setResults(d.ideas);
       setContinuation(d.continuation);
       if (d.continuation) setMinutes(String(d.continuation.minutes));
       setGaps(d.missing || []);
@@ -204,7 +208,7 @@ export function Discovery({
         </button>
         <p>
           {itemId
-            ? "从它已有的性质出发，找一个真正服务你生活的用法。创意和实施条件留在这里，尝试后的反馈会参与下次探索。"
+            ? "从它已有的性质出发，找一个真正服务你生活的用法。先发现新可能，感兴趣再一起推敲怎么实现。反馈由你决定是否用于下一次探索。"
             : "说说想做什么、有什么限制。物间会核对已有物品，再一起把想法变成可尝试的步骤。"}
         </p>
       </div>
@@ -380,11 +384,19 @@ export function Discovery({
               : "离线能力规划 · 有限规则"}
           </span>
           <button className="button" disabled={busy} aria-label="找点新灵感">
-            {busy ? "正在推敲…" : turns.length ? "继续探索" : "开始探索"}
+            {busy ? "正在探索…" : turns.length ? "继续探索" : "开始探索"}
             <ArrowUp size={16} />
           </button>
         </div>
       </form>
+      <label className="life-check">
+        <input
+          type="checkbox"
+          checked={useInspiration}
+          onChange={(e) => setUseInspiration(e.target.checked)}
+        />
+        参考有出处的社区原理，也保留自由创作（当前为小型已复核索引）
+      </label>
       {onAsk && (
         <label className="life-check">
           <input
@@ -472,15 +484,92 @@ export function Discovery({
               {idea.demo
                 ? "预置演示方案（非在线 AI）"
                 : idea.source === "model-creative"
-                  ? idea.reasoning?.checks.length
-                    ? "有条件的创意方案"
-                    : "创意设想"
+                  ? idea.exploration
+                    ? "开放构想 · 还不是实施说明"
+                    : idea.assessment
+                      ? {
+                          low_risk: "可逆操作候选 · 效果待验证",
+                          conditional: "先核对关键条件",
+                          concept: "概念方向 · 暂不提供实施步骤",
+                        }[idea.assessment.level]
+                      : idea.reasoning?.checks.length
+                        ? "有条件的创意方案"
+                        : "创意设想"
                   : idea.source === "user-submitted"
                     ? "用户提供的经验"
                     : "本地创意候选"}{" "}
               · 未实物验证
             </span>
             <h3>{idea.title}</h3>
+            {idea.exploration && (
+              <section aria-label="开放创意内容" className="open-idea-prose">
+                {idea.exploration.text.split(/\n\s*\n/).map((paragraph, n) => (
+                  <p
+                    key={n}
+                    style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}
+                  >
+                    {paragraph.replace(/\*\*/g, "")}
+                  </p>
+                ))}
+                <button
+                  disabled={busy || !modelAvailable}
+                  onClick={() =>
+                    generate(
+                      true,
+                      `我对“${idea.title}”感兴趣。请沿这个方向解释机制与必要条件；不把未知当事实，条件不成立时说明替代路径。当前目标：${goal.slice(0, 300)}`,
+                      excluded,
+                      idea,
+                    )
+                  }
+                >
+                  深入这个方向 · 核对条件
+                </button>
+                {!!idea.exploration.inspirations.length && (
+                  <details>
+                    <summary>这次检索到的真实灵感 · 非实施证明</summary>
+                    {idea.exploration.inspirations.map((c) => (
+                      <p key={c.id}>
+                        <a href={c.url} target="_blank" rel="noreferrer">
+                          {c.title} ↗
+                        </a>{" "}
+                        · {c.author}
+                        <br />
+                        {c.transfer}
+                        <br />
+                        <small>
+                          {c.evidence} {c.license}
+                        </small>
+                      </p>
+                    ))}
+                  </details>
+                )}
+              </section>
+            )}
+            {idea.assessment && (
+              <section aria-label="创意条件检查">
+                <p>
+                  <strong>希望得到：</strong>
+                  {idea.expectedEffect}（模型设想）
+                </p>
+                <p>{idea.assessment.hypothesis}</p>
+                <details>
+                  <summary>哪些条件有依据，哪些还不知道？</summary>
+                  {idea.assessment.checks.map((c, n) => (
+                    <p key={n}>
+                      {
+                        {
+                          supported: "已有对应资料",
+                          unknown: "待确认",
+                          contradiction: "存在冲突",
+                        }[c.status]
+                      }
+                      ：{c.detail}
+                    </p>
+                  ))}
+                </details>
+                <small>计算只核对列出的必要条件，不是完整物理验证。</small>
+              </section>
+            )}
             {idea.reasoning && (
               <section aria-label="创意如何成立">
                 <p>
@@ -523,7 +612,10 @@ export function Discovery({
               </details>
             )}
             <p className="life-muted">
-              约 {idea.minutes} 分钟 ·{" "}
+              {idea.exploration
+                ? "本次可用资源（不代表每件都要使用）"
+                : `约 ${idea.minutes} 分钟`}{" "}
+              ·{" "}
               {idea.itemIds
                 .map(
                   (id) =>
@@ -531,14 +623,16 @@ export function Discovery({
                 )
                 .join(" ＋ ")}
             </p>
-            <details className="idea-steps" open>
-              <summary>怎么开始 · {idea.steps.length} 步</summary>
-              <ol>
-                {idea.steps.map((s, n) => (
-                  <li key={n}>{s}</li>
-                ))}
-              </ol>
-            </details>
+            {!!idea.steps.length && (
+              <details className="idea-steps" open>
+                <summary>怎么开始 · {idea.steps.length} 步</summary>
+                <ol>
+                  {idea.steps.map((s, n) => (
+                    <li key={n}>{s}</li>
+                  ))}
+                </ol>
+              </details>
+            )}
             <details>
               <summary>关键条件与资料来源</summary>
               <ul>

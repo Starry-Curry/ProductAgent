@@ -1,3 +1,4 @@
+import { epoch } from "../memory/store.ts";
 import {
   readKnowledge,
   retrieveKnowledge,
@@ -52,13 +53,17 @@ export const discoveryInput = z
     itemId: z.string().optional(),
     itemIds: z.array(z.string()).max(30).default([]),
     excludedItemIds: z.array(z.string()).max(100).default([]),
-    previousIdeaIds: z.array(z.string().uuid()).max(6).default([]),
-    feedbackIdeaIds: z.array(z.string().uuid()).max(6).default([]),
+    previousIdeaIds: z.array(z.string().uuid()).max(64).default([]),
+    feedbackIdeaIds: z.array(z.string().uuid()).max(64).default([]),
     experienceIds: z.array(z.string().uuid()).max(6).default([]),
     creativeEvidenceIds: z.array(z.string().uuid()).max(6).default([]),
     publicEvidence: z.boolean().default(true),
     candidates: z.number().int().min(1).max(3).default(1),
     review: z.boolean().default(false),
+    selectedIdeaId: z.string().uuid().optional(),
+    engine: z
+      .enum(["legacy", "goal", "analogy", "free", "retrieval", "hybrid"])
+      .default("free"),
     minutes: z.number().int().min(1).max(240).optional(),
     includeSynthetic: z.boolean().default(false),
     model: z.boolean().default(false),
@@ -183,6 +188,8 @@ export async function planDiscovery(
       .get(id, actor) as { body: string; outcome: string | null } | undefined;
     if (!row) throw new AgentError("上一轮候选不存在或未获授权", 403);
     const idea = JSON.parse(row.body) as LifeIdea;
+    if (idea.memoryEpoch !== undefined && idea.memoryEpoch !== epoch(db, actor))
+      throw new AgentError("记忆或授权已变化，请重新探索", 409);
     if (idea.itemIds.some((id) => !visible.some((i) => i.id === id)))
       throw new AgentError("上一轮物品权限已变化，请重新开始", 409);
     return {
@@ -193,6 +200,7 @@ export async function planDiscovery(
       minutes: idea.minutes,
       outcome: row.outcome || "未尝试",
       creativeEvidenceSources: idea.creativeEvidenceSources,
+      mechanismSignature: idea.assessment?.signature,
     };
   });
   const lastGoal = input.continuation?.goal || previous.at(-1)?.goal;
@@ -373,6 +381,7 @@ export async function planDiscovery(
   ) {
     if (input.model) {
       if (
+        input.engine === "legacy" &&
         input.publicEvidence &&
         process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "true"
       ) {
@@ -414,6 +423,8 @@ export async function planDiscovery(
           {
             minutes,
             strategy: "explore",
+            engine: input.engine,
+            selectedIdeaId: input.selectedIdeaId,
             preferenceScopeIds: input.homeId
               ? virtualHomeItems(state, actor).map((i) => i.id)
               : undefined,
@@ -430,6 +441,8 @@ export async function planDiscovery(
                 .filter(
                   (i) =>
                     (i.saved || (i.outcome && i.outcome !== "未尝试")) &&
+                    (i.memoryEpoch === undefined ||
+                      i.memoryEpoch === epoch(db, actor)) &&
                     i.itemIds.every((id) => items.some((x) => x.id === id)),
                 )
                 .slice(0, 12)
@@ -696,7 +709,12 @@ export async function planDiscovery(
         Number(!!b.saved || b.outcome === "用户报告有效") -
           Number(!!a.saved || a.outcome === "用户报告有效"),
     )
-    .slice(0, 6);
+    .slice(
+      0,
+      input.model && ["free", "retrieval", "hybrid"].includes(input.engine)
+        ? undefined
+        : 6,
+    );
   return {
     ideas,
     continuation: {

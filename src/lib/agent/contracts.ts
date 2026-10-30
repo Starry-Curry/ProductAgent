@@ -31,8 +31,8 @@ export const turnInputSchema = z
         interfaceMode: z.enum(["standard", "care"]).optional(),
         planContext: z
           .object({
-            previousIdeaIds: z.array(z.string().uuid()).max(6),
-            feedbackIdeaIds: z.array(z.string().uuid()).max(6).optional(),
+            previousIdeaIds: z.array(z.string().uuid()).max(64),
+            feedbackIdeaIds: z.array(z.string().uuid()).max(64).optional(),
             continuation: z
               .object({
                 goal: z.string().max(1000),

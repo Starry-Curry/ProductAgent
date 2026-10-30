@@ -1,6 +1,7 @@
 import { findPack } from "./products.ts";
 import type { Preparation } from "./life/task-types.ts";
 import { currentPreparation, mutatePreparation } from "./life/task-planning.ts";
+import { physicalFactSchema, type PhysicalFact } from "./life/physical-facts.ts";
 export type Person = "lin" | "dad" | "friend";
 export const people: Record<Person, string> = {
   lin: "小林",
@@ -11,7 +12,7 @@ export type Item = {
   brand?: string;
   region?: string;
   lifecycle?: "一次性" | "消耗型" | "可重复使用" | "长期耐用" | "持续养护";
-  attributes?: { material?: string; dimensions?: string; power?: string; care?: string; quantity?: number; quantityUnit?: string; expiresOn?: string; capabilities?: string[] };
+  attributes?: { material?: string; dimensions?: string; power?: string; care?: string; quantity?: number; quantityUnit?: string; expiresOn?: string; capabilities?: string[]; physicalFacts?: PhysicalFact[] };
   availability?: "unknown" | "available" | "loaned" | "gifted" | "lost" | "broken" | "consumed";
   availabilityAt?: string;
   synthetic?: boolean;
@@ -465,6 +466,7 @@ export function mutate(
         quantity: Number.isFinite(v.quantity) && v.quantity >= 0 ? Math.min(v.quantity, 100000) : undefined,
         expiresOn: /^\d{4}-\d{2}-\d{2}$/.test(v.expiresOn || "") ? v.expiresOn : undefined,
         capabilities: Array.isArray(v.capabilities) ? v.capabilities.filter((x: unknown) => typeof x === "string").map((x: string) => str(x, 60)).slice(0, 20) : [],
+        physicalFacts: v.physicalFacts === undefined ? undefined : physicalFactSchema.array().max(40).parse(v.physicalFacts),
       };
     }
   } else if (action === "memory") {

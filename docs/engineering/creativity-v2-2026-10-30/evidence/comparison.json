@@ -1,0 +1,1779 @@
+{
+  "base": "a2a9a23d5d05bc187300c57aaa01b400772d727e",
+  "model": "qwen-plus",
+  "method": "24 paired synthetic tasks; same raw inventory/facts/preferences; original two-turn pipeline with validation, direct model, one-call goal causal program, one-call affordance graph causal program. No model quality scores. Transport errors count. Not a whole historical App rebuild.",
+  "records": [
+    {
+      "caseId": "01",
+      "arm": "old",
+      "model": "qwen-plus",
+      "input": {
+        "goal": "让收纳盒变成一次只弹出一张旅行纸条的抽签机。不买不剪不粘。",
+        "inventory": {
+          "items": [
+            {
+              "ref": "i1",
+              "id": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7",
+              "name": "01 SAMLA透明盒",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f1",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 SAMLA透明盒",
+                  "text": "01 SAMLA透明盒",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/identity"
+                },
+                {
+                  "ref": "f2",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "聚丙烯塑料",
+                  "text": "聚丙烯塑料",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/material"
+                },
+                {
+                  "ref": "f3",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "outer_mm",
+                  "value": [
+                    280,
+                    200,
+                    140
+                  ],
+                  "text": "28×20×14厘米",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/dimensions"
+                }
+              ],
+              "unknowns": [
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            },
+            {
+              "ref": "i2",
+              "id": "54931b32-9d20-4add-98bf-d3398b58d559",
+              "name": "01 20张旅行纸条",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f4",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 20张旅行纸条",
+                  "text": "01 20张旅行纸条",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/identity"
+                },
+                {
+                  "ref": "f5",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "纸",
+                  "text": "纸",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/material"
+                },
+                {
+                  "ref": "f6",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "contents",
+                  "value": "20张旅行目的地",
+                  "text": "本体：contents=\"20张旅行目的地\"（本人报告）",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/physical/3b2d9409-5de1-400a-bc24-27cad8b49f76"
+                }
+              ],
+              "unknowns": [
+                "品牌",
+                "型号",
+                "尺寸",
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            }
+          ]
+        },
+        "preferences": [
+          {
+            "id": "synthetic-preference-01",
+            "text": "喜欢旅行，希望公平抽签"
+          }
+        ],
+        "physicalFacts": [
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7",
+            "name": "01 SAMLA透明盒",
+            "category": "生活物品",
+            "brand": "IKEA",
+            "model": "194.408.48",
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": "聚丙烯塑料",
+              "dimensions": "28×20×14厘米",
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          },
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "54931b32-9d20-4add-98bf-d3398b58d559",
+            "name": "01 20张旅行纸条",
+            "category": "生活物品",
+            "brand": null,
+            "model": null,
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": "纸",
+              "dimensions": null,
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [
+              {
+                "id": "3b2d9409-5de1-400a-bc24-27cad8b49f76",
+                "component": "本体",
+                "key": "contents",
+                "value": "20张旅行目的地",
+                "basis": "user_report"
+              }
+            ],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "品牌",
+              "型号",
+              "尺寸",
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          }
+        ],
+        "synthetic": true
+      },
+      "reviewTarget": "旧失败：PP不证明弹性、倾斜不保证单张弹出",
+      "startedAt": "2026-10-30T01:37:39.095Z",
+      "status": "failed",
+      "error": {
+        "name": "Error",
+        "message": "模型创意格式未通过：title:invalid_type；itemIds:invalid_type；minutes:invalid_type；steps:invalid_type。未保存候选。"
+      },
+      "calls": 2,
+      "elapsedMs": 49898
+    },
+    {
+      "caseId": "01",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "input": {
+        "goal": "让收纳盒变成一次只弹出一张旅行纸条的抽签机。不买不剪不粘。",
+        "inventory": {
+          "items": [
+            {
+              "ref": "i1",
+              "id": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7",
+              "name": "01 SAMLA透明盒",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f1",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 SAMLA透明盒",
+                  "text": "01 SAMLA透明盒",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/identity"
+                },
+                {
+                  "ref": "f2",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "聚丙烯塑料",
+                  "text": "聚丙烯塑料",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/material"
+                },
+                {
+                  "ref": "f3",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "outer_mm",
+                  "value": [
+                    280,
+                    200,
+                    140
+                  ],
+                  "text": "28×20×14厘米",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/dimensions"
+                }
+              ],
+              "unknowns": [
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            },
+            {
+              "ref": "i2",
+              "id": "54931b32-9d20-4add-98bf-d3398b58d559",
+              "name": "01 20张旅行纸条",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f4",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 20张旅行纸条",
+                  "text": "01 20张旅行纸条",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/identity"
+                },
+                {
+                  "ref": "f5",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "纸",
+                  "text": "纸",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/material"
+                },
+                {
+                  "ref": "f6",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "contents",
+                  "value": "20张旅行目的地",
+                  "text": "本体：contents=\"20张旅行目的地\"（本人报告）",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/physical/3b2d9409-5de1-400a-bc24-27cad8b49f76"
+                }
+              ],
+              "unknowns": [
+                "品牌",
+                "型号",
+                "尺寸",
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            }
+          ]
+        },
+        "preferences": [
+          {
+            "id": "synthetic-preference-01",
+            "text": "喜欢旅行，希望公平抽签"
+          }
+        ],
+        "physicalFacts": [
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7",
+            "name": "01 SAMLA透明盒",
+            "category": "生活物品",
+            "brand": "IKEA",
+            "model": "194.408.48",
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": "聚丙烯塑料",
+              "dimensions": "28×20×14厘米",
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          },
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "54931b32-9d20-4add-98bf-d3398b58d559",
+            "name": "01 20张旅行纸条",
+            "category": "生活物品",
+            "brand": null,
+            "model": null,
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": "纸",
+              "dimensions": null,
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [
+              {
+                "id": "3b2d9409-5de1-400a-bc24-27cad8b49f76",
+                "component": "本体",
+                "key": "contents",
+                "value": "20张旅行目的地",
+                "basis": "user_report"
+              }
+            ],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "品牌",
+              "型号",
+              "尺寸",
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          }
+        ],
+        "synthetic": true
+      },
+      "reviewTarget": "旧失败：PP不证明弹性、倾斜不保证单张弹出",
+      "startedAt": "2026-10-30T01:38:28.996Z",
+      "result": {
+        "text": "**方案：利用 SAMLA 盒的倾斜滑道 + 重力+纸条刚性，构建「单张限出式抽签滑槽」**\n\n✅ **完全满足约束**：  \n- 不买、不剪、不粘；  \n- 仅使用已有物品（i1：SAMLA 盒；i2：20张旅行纸条）；  \n- 无需改造盒体结构（不钻孔、不弯折、不移除部件）；  \n- 每次操作仅弹出/滑出**一张**纸条，可手动取走后继续下一轮。\n\n---\n\n### 🔬 作用原理（基于已知物理事实）\n- **SAMLA 盒为硬质聚丙烯塑料**（f2），表面光滑、刚性强，内壁平整无卡扣或分隔结构（未知项中未提内部结构，但 IKEA SAMLA 系列为标准矩形收纳盒，实测底部平坦、四壁垂直，符合滑道基础）；  \n- **纸条为普通纸**（f5），具适度挺括性与静摩擦系数，叠放时层间有微弱吸附力，但单张在倾斜面上可依靠重力缓慢滑动；  \n- **盒体尺寸 28×20×14 cm**（f3）——足够容纳20张纸条平铺堆叠（假设单张纸条尺寸 ≤ A6 或更小，常见旅行纸条约 10×15 cm，20张厚度＜1 cm），且长边（28 cm）可作滑道长度，提供可控减速距离。\n\n→ 关键机制：**将盒体旋转为斜面，使纸条堆叠成“斜坡垛”，最底端纸条受重力分量驱动向低侧滑出，而上方纸条因静摩擦+侧壁限位被暂时阻挡，实现「逐张释放」。**\n\n---\n\n### ⚙️ 关键操作步骤（三步，无工具）\n\n1. **整理纸条**：  \n   将20张旅行纸条**对齐短边、整齐叠成一摞**（确保边缘无卷曲、无错位），厚度方向朝向盒体深度（20 cm），长度方向沿盒体长边（28 cm）摆放。\n\n2. **构建滑道**：  \n   将 SAMLA 盒**一侧长边垫高约 3–5 cm**（例如：用一本厚书、手机、钥匙包等身边任意小硬物临时支撑盒底一角；⚠️注意：此支撑物**不属于 inventory**，但题目仅禁止「不买不剪不粘」，未禁用环境中的临时支点——且该支点**不成为装置永久部分**，用完即撤，符合合成测试中「仅调用 inventory 子集」的要求）。  \n   → 盒体形成约 5°–10° 倾角，纸条垛自然倾向低侧。\n\n3. **单张抽取**：  \n   轻轻晃动盒体（或用指尖轻推纸垛顶部），使**最底端一张纸条从低侧长边缝隙中缓慢滑出约 3–5 cm**（SAMLA 盒盖为分离式，但即使闭盖，其长边与盖之间存在约 1–2 mm 缝隙；若盖紧，可**暂不盖盖**——盒体本身已满足收纳与展示需求，且题目未要求必须闭合）。  \n   此时：  \n   - 滑出纸条可被手指轻松抽出；  \n   - 上方纸条因侧壁约束 + 叠加静摩擦，**不会连续滑出**；  \n   - 抽出后，重力自动使新底张纸条就位，等待下一次触发。\n\n✅ 每次仅出一张｜✅ 公平随机（摇晃+重力主导，无偏好方向）｜✅ 可重复20次｜✅ 全程可逆，盒与纸条零损伤。\n\n---\n\n### ❓ 未知条件与鲁棒性说明（诚实声明）\n- **纸条确切尺寸未知**（f6 未提供）：若单张＞20 cm（盒深），则无法竖立堆叠；但旅行纸条通常≤A6（10.5×14.8 cm），适配20 cm深度。若实际过大，可旋转90°改用14 cm高度方向堆叠（仍满足28 cm滑道长度）。  \n- **SAMLA 盒盖缝隙宽度未知**：若盖严丝合缝无间隙，则需开盖操作——但题目未要求密闭，且开盖状态仍为「收纳盒正常使用态」，不违反任何限制。  \n- **纸张湿度/表面光滑度未知**：极端潮湿可能增大粘连，但日常环境纸张摩擦系数足以支持逐张滑移（经大量同类DIY验证）。\n\n> ✅ **结论：该方案是当前 inventory 下唯一可行、零添加、可立即实施的解法。无需额外确认，即可执行。**\n\n如需我为你生成配套的「抽签仪式话术」或「纸条排版建议」以增强体验感，可随时提出。",
+        "model": "qwen-plus",
+        "tokens": {
+          "input": 1409,
+          "output": 1147
+        }
+      },
+      "status": "returned",
+      "calls": 1,
+      "elapsedMs": 25786
+    },
+    {
+      "caseId": "01",
+      "arm": "goal",
+      "model": "qwen-plus",
+      "input": {
+        "goal": "让收纳盒变成一次只弹出一张旅行纸条的抽签机。不买不剪不粘。",
+        "inventory": {
+          "items": [
+            {
+              "ref": "i1",
+              "id": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7",
+              "name": "01 SAMLA透明盒",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f1",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 SAMLA透明盒",
+                  "text": "01 SAMLA透明盒",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/identity"
+                },
+                {
+                  "ref": "f2",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "聚丙烯塑料",
+                  "text": "聚丙烯塑料",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/material"
+                },
+                {
+                  "ref": "f3",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "outer_mm",
+                  "value": [
+                    280,
+                    200,
+                    140
+                  ],
+                  "text": "28×20×14厘米",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/dimensions"
+                }
+              ],
+              "unknowns": [
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            },
+            {
+              "ref": "i2",
+              "id": "54931b32-9d20-4add-98bf-d3398b58d559",
+              "name": "01 20张旅行纸条",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f4",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 20张旅行纸条",
+                  "text": "01 20张旅行纸条",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/identity"
+                },
+                {
+                  "ref": "f5",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "纸",
+                  "text": "纸",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/material"
+                },
+                {
+                  "ref": "f6",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "contents",
+                  "value": "20张旅行目的地",
+                  "text": "本体：contents=\"20张旅行目的地\"（本人报告）",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/physical/3b2d9409-5de1-400a-bc24-27cad8b49f76"
+                }
+              ],
+              "unknowns": [
+                "品牌",
+                "型号",
+                "尺寸",
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            }
+          ]
+        },
+        "preferences": [
+          {
+            "id": "synthetic-preference-01",
+            "text": "喜欢旅行，希望公平抽签"
+          }
+        ],
+        "physicalFacts": [
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7",
+            "name": "01 SAMLA透明盒",
+            "category": "生活物品",
+            "brand": "IKEA",
+            "model": "194.408.48",
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": "聚丙烯塑料",
+              "dimensions": "28×20×14厘米",
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          },
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "54931b32-9d20-4add-98bf-d3398b58d559",
+            "name": "01 20张旅行纸条",
+            "category": "生活物品",
+            "brand": null,
+            "model": null,
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": "纸",
+              "dimensions": null,
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [
+              {
+                "id": "3b2d9409-5de1-400a-bc24-27cad8b49f76",
+                "component": "本体",
+                "key": "contents",
+                "value": "20张旅行目的地",
+                "basis": "user_report"
+              }
+            ],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "品牌",
+              "型号",
+              "尺寸",
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          }
+        ],
+        "synthetic": true
+      },
+      "reviewTarget": "旧失败：PP不证明弹性、倾斜不保证单张弹出",
+      "startedAt": "2026-10-30T01:38:54.784Z",
+      "result": {
+        "raw": "{\n  \"ideas\": [\n    {\n      \"title\": \"倾斜盒底+侧边窄缝实现单张纸条滑出\",\n      \"outcome\": \"每次轻敲盒体，仅一张旅行纸条从侧边窄缝中弹出或滑出\",\n      \"mechanism\": \"利用聚丙烯塑料盒本体的刚性与微弹性，将纸条竖直叠放于盒内一角；通过倾斜盒体使最底端纸条受重力滑向一侧带限位间隙的边缘；该间隙宽度略大于单张纸厚度但小于两张叠加厚度，配合纸张自身挺度与盒壁摩擦，实现逐张分离释放。\",\n      \"roles\": [\n        {\n          \"item\": \"i1\",\n          \"function\": \"提供刚性容器、可调控倾角的底面、可形成限位窄缝的侧壁\",\n          \"evidence\": [\"f1\", \"f2\", \"f3\"]\n        },\n        {\n          \"item\": \"i2\",\n          \"function\": \"作为柔性薄片堆叠体，依赖重力与单张厚度尺寸参与机械选片\",\n          \"evidence\": [\"f4\", \"f5\", \"f6\"]\n        }\n      ],\n      \"actions\": [\n        {\n          \"kind\": \"stack\",\n          \"items\": [\"i2\"],\n          \"target\": \"i1\",\n          \"component\": \"本体\"\n        },\n        {\n          \"kind\": \"support\",\n          \"items\": [\"i2\"],\n          \"target\": \"i1\",\n          \"component\": \"底部内表面\"\n        },\n        {\n          \"kind\": \"side_by_side\",\n          \"items\": [\"i1\"],\n          \"target\": \"水平平面\"\n        },\n        {\n          \"kind\": \"elastic_release\",\n          \"items\": [\"i1\"],\n          \"target\": \"i1\",\n          \"component\": \"侧壁近底端区域（手动按压后释放产生微形变）\"\n        },\n        {\n          \"kind\": \"friction_select\",\n          \"items\": [\"i2\"],\n          \"target\": \"i1\",\n          \"component\": \"侧壁与纸条接触面形成的可控静摩擦+间隙限厚\"\n        }\n      ],\n      \"requirements\": [\n        {\n          \"item\": \"i1\",\n          \"key\": \"outer_mm\",\n          \"evidence\": [\"f3\"],\n          \"why\": \"需确认盒体高度≥纸条长度、宽度≥纸条宽度×2以便竖叠+留出侧缝空间\"\n        },\n        {\n          \"item\": \"i1\",\n          \"key\": \"material\",\n          \"evidence\": [\"f2\"],\n          \"why\": \"聚丙烯具备足够刚性维持结构，又具微量弹性便于按压侧壁辅助首张释放\"\n        },\n        {\n          \"item\": \"i2\",\n          \"key\": \"material\",\n          \"evidence\": [\"f5\"],\n          \"why\": \"纸张需有基本挺度以维持竖叠不塌，且单张厚度稳定以适配窄缝限位\"\n        }\n      ],\n      \"assumptions\": [\n        \"旅行纸条为矩形、厚度均匀（约0.1mm）、长度≤140mm、宽度≤100mm（适配盒内竖叠）\",\n        \"SAMLA盒侧壁在靠近底部处可通过手指按压产生0.3–0.8mm瞬时弹性形变，释放后恢复，足以扰动最底纸条使其滑入窄缝\",\n        \"盒内无防滑纹/涂层，纸张与聚丙烯间静摩擦系数≈0.3–0.5，足以滞留上层纸条而仅释放最底一张\"\n      ],\n      \"extraResources\": [],\n      \"preferenceIds\": [\"synthetic-preference-01\"],\n      \"minutes\": 10\n    }\n  ],\n  \"question\": \"\"\n}",
+        "question": "",
+        "candidates": [
+          {
+            "proposal": {
+              "title": "倾斜盒底+侧边窄缝实现单张纸条滑出",
+              "outcome": "每次轻敲盒体，仅一张旅行纸条从侧边窄缝中弹出或滑出",
+              "mechanism": "利用聚丙烯塑料盒本体的刚性与微弹性，将纸条竖直叠放于盒内一角；通过倾斜盒体使最底端纸条受重力滑向一侧带限位间隙的边缘；该间隙宽度略大于单张纸厚度但小于两张叠加厚度，配合纸张自身挺度与盒壁摩擦，实现逐张分离释放。",
+              "roles": [
+                {
+                  "item": "i1",
+                  "function": "提供刚性容器、可调控倾角的底面、可形成限位窄缝的侧壁",
+                  "evidence": [
+                    "f1",
+                    "f2",
+                    "f3"
+                  ]
+                },
+                {
+                  "item": "i2",
+                  "function": "作为柔性薄片堆叠体，依赖重力与单张厚度尺寸参与机械选片",
+                  "evidence": [
+                    "f4",
+                    "f5",
+                    "f6"
+                  ]
+                }
+              ],
+              "actions": [
+                {
+                  "kind": "stack",
+                  "items": [
+                    "i2"
+                  ],
+                  "target": "i1",
+                  "component": "本体"
+                },
+                {
+                  "kind": "support",
+                  "items": [
+                    "i2"
+                  ],
+                  "target": "i1",
+                  "component": "底部内表面"
+                },
+                {
+                  "kind": "side_by_side",
+                  "items": [
+                    "i1"
+                  ],
+                  "target": "水平平面",
+                  "component": "本体"
+                },
+                {
+                  "kind": "elastic_release",
+                  "items": [
+                    "i1"
+                  ],
+                  "target": "i1",
+                  "component": "侧壁近底端区域（手动按压后释放产生微形变）"
+                },
+                {
+                  "kind": "friction_select",
+                  "items": [
+                    "i2"
+                  ],
+                  "target": "i1",
+                  "component": "侧壁与纸条接触面形成的可控静摩擦+间隙限厚"
+                }
+              ],
+              "requirements": [
+                {
+                  "item": "i1",
+                  "key": "outer_mm",
+                  "evidence": [
+                    "f3"
+                  ],
+                  "why": "需确认盒体高度≥纸条长度、宽度≥纸条宽度×2以便竖叠+留出侧缝空间"
+                },
+                {
+                  "item": "i1",
+                  "key": "material",
+                  "evidence": [
+                    "f2"
+                  ],
+                  "why": "聚丙烯具备足够刚性维持结构，又具微量弹性便于按压侧壁辅助首张释放"
+                },
+                {
+                  "item": "i2",
+                  "key": "material",
+                  "evidence": [
+                    "f5"
+                  ],
+                  "why": "纸张需有基本挺度以维持竖叠不塌，且单张厚度稳定以适配窄缝限位"
+                }
+              ],
+              "assumptions": [
+                "旅行纸条为矩形、厚度均匀（约0.1mm）、长度≤140mm、宽度≤100mm（适配盒内竖叠）",
+                "SAMLA盒侧壁在靠近底部处可通过手指按压产生0.3–0.8mm瞬时弹性形变，释放后恢复，足以扰动最底纸条使其滑入窄缝",
+                "盒内无防滑纹/涂层，纸张与聚丙烯间静摩擦系数≈0.3–0.5，足以滞留上层纸条而仅释放最底一张"
+              ],
+              "extraResources": [],
+              "preferenceIds": [
+                "synthetic-preference-01"
+              ],
+              "minutes": 10
+            },
+            "assessment": {
+              "engine": "mechanism-v2",
+              "strategy": "goal",
+              "level": "concept",
+              "checks": [
+                {
+                  "code": "property:outer_mm",
+                  "status": "supported",
+                  "detail": "28×20×14厘米",
+                  "evidence": [
+                    "f3"
+                  ]
+                },
+                {
+                  "code": "property:material",
+                  "status": "supported",
+                  "detail": "聚丙烯塑料",
+                  "evidence": [
+                    "f2"
+                  ]
+                },
+                {
+                  "code": "property:material",
+                  "status": "supported",
+                  "detail": "纸",
+                  "evidence": [
+                    "f5"
+                  ]
+                },
+                {
+                  "code": "property:flat_surface",
+                  "status": "unknown",
+                  "detail": "i1 的 本体 / flat_surface 未确认或来源冲突",
+                  "evidence": []
+                },
+                {
+                  "code": "property:max_load_kg",
+                  "status": "unknown",
+                  "detail": "i1 的 本体 / max_load_kg 未确认或来源冲突",
+                  "evidence": []
+                },
+                {
+                  "code": "property:mass_kg",
+                  "status": "unknown",
+                  "detail": "i2 的 本体 / mass_kg 未确认或来源冲突",
+                  "evidence": []
+                },
+                {
+                  "code": "stability",
+                  "status": "unknown",
+                  "detail": "载荷上限不证明这个姿态的支撑与抗倾倒；需核对接触面与重心",
+                  "evidence": []
+                },
+                {
+                  "code": "property:flat_surface",
+                  "status": "unknown",
+                  "detail": "i1 的 本体 / flat_surface 未确认或来源冲突",
+                  "evidence": []
+                },
+                {
+                  "code": "property:max_load_kg",
+                  "status": "unknown",
+                  "detail": "i1 的 本体 / max_load_kg 未确认或来源冲突",
+                  "evidence": []
+                },
+                {
+                  "code": "property:mass_kg",
+                  "status": "unknown",
+                  "detail": "i2 的 本体 / mass_kg 未确认或来源冲突",
+                  "evidence": []
+                },
+                {
+                  "code": "stability",
+                  "status": "unknown",
+                  "detail": "载荷上限不证明这个姿态的支撑与抗倾倒；需核对接触面与重心",
+                  "evidence": []
+                },
+                {
+                  "code": "action-resource",
+                  "status": "contradiction",
+                  "detail": "动作引用未提供的资源或未说明作用的物品",
+                  "evidence": []
+                },
+                {
+                  "code": "property:elastic",
+                  "status": "unknown",
+                  "detail": "i1 的 侧壁近底端区域（手动按压后释放产生微形变） / elastic 未确认或来源冲突",
+                  "evidence": []
+                },
+                {
+                  "code": "effect-condition",
+                  "status": "unknown",
+                  "detail": "需核对 弹性释放 的具体作用对象、强度及使用条件；存在该性质不证明效果",
+                  "evidence": []
+                },
+                {
+                  "code": "unmodelled-action",
+                  "status": "unknown",
+                  "detail": "尚无足够证据核验 利用摩擦选择 的机制；保留概念，不生成实施指令",
+                  "evidence": []
+                },
+                {
+                  "code": "assumption",
+                  "status": "unknown",
+                  "detail": "旅行纸条为矩形、厚度均匀（约0.1mm）、长度≤140mm、宽度≤100mm（适配盒内竖叠）",
+                  "evidence": []
+                },
+                {
+                  "code": "assumption",
+                  "status": "unknown",
+                  "detail": "SAMLA盒侧壁在靠近底部处可通过手指按压产生0.3–0.8mm瞬时弹性形变，释放后恢复，足以扰动最底纸条使其滑入窄缝",
+                  "evidence": []
+                },
+                {
+                  "code": "assumption",
+                  "status": "unknown",
+                  "detail": "盒内无防滑纹/涂层，纸张与聚丙烯间静摩擦系数≈0.3–0.5，足以滞留上层纸条而仅释放最底一张",
+                  "evidence": []
+                }
+              ],
+              "hypothesis": "利用聚丙烯塑料盒本体的刚性与微弹性，将纸条竖直叠放于盒内一角；通过倾斜盒体使最底端纸条受重力滑向一侧带限位间隙的边缘；该间隙宽度略大于单张纸厚度但小于两张叠加厚度，配合纸张自身挺度与盒壁摩擦，实现逐张分离释放。",
+              "actions": [
+                {
+                  "kind": "stack",
+                  "items": [
+                    "i2"
+                  ],
+                  "target": "i1",
+                  "component": "本体"
+                },
+                {
+                  "kind": "support",
+                  "items": [
+                    "i2"
+                  ],
+                  "target": "i1",
+                  "component": "底部内表面"
+                },
+                {
+                  "kind": "side_by_side",
+                  "items": [
+                    "i1"
+                  ],
+                  "target": "水平平面",
+                  "component": "本体"
+                },
+                {
+                  "kind": "elastic_release",
+                  "items": [
+                    "i1"
+                  ],
+                  "target": "i1",
+                  "component": "侧壁近底端区域（手动按压后释放产生微形变）"
+                },
+                {
+                  "kind": "friction_select",
+                  "items": [
+                    "i2"
+                  ],
+                  "target": "i1",
+                  "component": "侧壁与纸条接触面形成的可控静摩擦+间隙限厚"
+                }
+              ],
+              "facts": [
+                {
+                  "ref": "f1",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 SAMLA透明盒",
+                  "text": "01 SAMLA透明盒",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/identity"
+                },
+                {
+                  "ref": "f2",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "聚丙烯塑料",
+                  "text": "聚丙烯塑料",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/material"
+                },
+                {
+                  "ref": "f3",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "outer_mm",
+                  "value": [
+                    280,
+                    200,
+                    140
+                  ],
+                  "text": "28×20×14厘米",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/dimensions"
+                },
+                {
+                  "ref": "f4",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 20张旅行纸条",
+                  "text": "01 20张旅行纸条",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/identity"
+                },
+                {
+                  "ref": "f5",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "纸",
+                  "text": "纸",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/material"
+                },
+                {
+                  "ref": "f6",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "contents",
+                  "value": "20张旅行目的地",
+                  "text": "本体：contents=\"20张旅行目的地\"（本人报告）",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/physical/3b2d9409-5de1-400a-bc24-27cad8b49f76"
+                }
+              ],
+              "verifiedPhysical": false,
+              "signature": "[[\"elastic_release\",[\"i1\"],\"i1\",\"侧壁近底端区域（手动按压后释放产生微形变）\",\"\"],[\"friction_select\",[\"i2\"],\"i1\",\"侧壁与纸条接触面形成的可控静摩擦+间隙限厚\",\"\"],[\"side_by_side\",[\"i1\"],\"水平平面\",\"本体\",\"\"],[\"stack\",[\"i2\"],\"i1\",\"本体\",\"\"],[\"support\",[\"i2\"],\"i1\",\"底部内表面\",\"\"]]"
+            },
+            "renderedActions": []
+          }
+        ]
+      },
+      "status": "returned",
+      "calls": 1,
+      "elapsedMs": 18851
+    },
+    {
+      "caseId": "01",
+      "arm": "analogy",
+      "model": "qwen-plus",
+      "input": {
+        "goal": "让收纳盒变成一次只弹出一张旅行纸条的抽签机。不买不剪不粘。",
+        "inventory": {
+          "items": [
+            {
+              "ref": "i1",
+              "id": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7",
+              "name": "01 SAMLA透明盒",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f1",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 SAMLA透明盒",
+                  "text": "01 SAMLA透明盒",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/identity"
+                },
+                {
+                  "ref": "f2",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "聚丙烯塑料",
+                  "text": "聚丙烯塑料",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/material"
+                },
+                {
+                  "ref": "f3",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "outer_mm",
+                  "value": [
+                    280,
+                    200,
+                    140
+                  ],
+                  "text": "28×20×14厘米",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/dimensions"
+                }
+              ],
+              "unknowns": [
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            },
+            {
+              "ref": "i2",
+              "id": "54931b32-9d20-4add-98bf-d3398b58d559",
+              "name": "01 20张旅行纸条",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f4",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 20张旅行纸条",
+                  "text": "01 20张旅行纸条",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/identity"
+                },
+                {
+                  "ref": "f5",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "纸",
+                  "text": "纸",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/material"
+                },
+                {
+                  "ref": "f6",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "contents",
+                  "value": "20张旅行目的地",
+                  "text": "本体：contents=\"20张旅行目的地\"（本人报告）",
+                  "basis": "user_report",
+                  "sourceRef": "54931b32-9d20-4add-98bf-d3398b58d559/physical/3b2d9409-5de1-400a-bc24-27cad8b49f76"
+                }
+              ],
+              "unknowns": [
+                "品牌",
+                "型号",
+                "尺寸",
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            }
+          ]
+        },
+        "preferences": [
+          {
+            "id": "synthetic-preference-01",
+            "text": "喜欢旅行，希望公平抽签"
+          }
+        ],
+        "physicalFacts": [
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7",
+            "name": "01 SAMLA透明盒",
+            "category": "生活物品",
+            "brand": "IKEA",
+            "model": "194.408.48",
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": "聚丙烯塑料",
+              "dimensions": "28×20×14厘米",
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          },
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "54931b32-9d20-4add-98bf-d3398b58d559",
+            "name": "01 20张旅行纸条",
+            "category": "生活物品",
+            "brand": null,
+            "model": null,
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": "纸",
+              "dimensions": null,
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [
+              {
+                "id": "3b2d9409-5de1-400a-bc24-27cad8b49f76",
+                "component": "本体",
+                "key": "contents",
+                "value": "20张旅行目的地",
+                "basis": "user_report"
+              }
+            ],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "品牌",
+              "型号",
+              "尺寸",
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          }
+        ],
+        "synthetic": true
+      },
+      "reviewTarget": "旧失败：PP不证明弹性、倾斜不保证单张弹出",
+      "startedAt": "2026-10-30T01:39:13.638Z",
+      "result": {
+        "raw": "{\n  \"ideas\": [\n    {\n      \"title\": \"单张纸条弹性限位弹出\",\n      \"outcome\": \"轻推盒盖后，仅最上层旅行纸条被弹性结构顶出盒口1–2厘米，其余纸条被约束在盒内不滑落\",\n      \"mechanism\": \"利用SAMLA盒本体刚性侧壁与纸条堆叠高度差形成垂直限位；将整叠纸条竖直立放于盒底，靠盒内壁自然对齐；通过轻微下压再释放盒盖（聚丙烯盖具微弹性），使盖内面短暂接触纸条堆顶部并施加向下预紧力；松手瞬间盖回弹，其内面突起或边缘对纸条堆顶部产生瞬时向上反冲，但仅最上层纸条因无上方约束而获得净向上位移；下方纸条受盒壁摩擦与自身重力抑制，无法同步移动。\",\n      \"roles\": [\n        {\n          \"item\": \"i1\",\n          \"function\": \"贡献弹性回弹、侧壁限位、顶部接触面\",\n          \"evidence\": [\"f1\", \"f2\", \"f3\"]\n        }\n      ],\n      \"actions\": [\n        {\n          \"kind\": \"stack\",\n          \"items\": [\"i2\"],\n          \"target\": \"i1\"\n        },\n        {\n          \"kind\": \"support\",\n          \"items\": [\"i2\"],\n          \"target\": \"i1\"\n        },\n        {\n          \"kind\": \"elastic_release\",\n          \"items\": [\"i1\"],\n          \"target\": \"i2\"\n        }\n      ],\n      \"requirements\": [\n        {\n          \"item\": \"i1\",\n          \"key\": \"elastic\",\n          \"evidence\": [],\n          \"why\": \"盖需具备可测微变形与自发回弹能力，以产生瞬时反冲动作；聚丙烯材料在薄壁结构中常见此特性，但未实测确认\"\n        },\n        {\n          \"item\": \"i1\",\n          \"key\": \"outer_mm\",\n          \"evidence\": [\"f3\"],\n          \"why\": \"盒内宽高需略大于单张纸条尺寸且小于两倍纸条厚度×20，确保纸条竖立稳定、侧壁提供有效摩擦约束\"\n        }\n      ],\n      \"assumptions\": [\n        \"旅行纸条为矩形、厚度均匀、可竖直叠放而不倾倒\",\n        \"SAMLA盒盖闭合时内面与纸条堆顶部存在可控接触间隙（<1mm）\",\n        \"纸条堆叠总高度 ≤ 盒内净高 − 盖内凸起深度\"\n      ],\n      \"extraResources\": [],\n      \"preferenceIds\": [\"synthetic-preference-01\"],\n      \"minutes\": 10\n    }\n  ],\n  \"question\": \"\"\n}",
+        "question": "",
+        "candidates": [
+          {
+            "proposal": {
+              "title": "单张纸条弹性限位弹出",
+              "outcome": "轻推盒盖后，仅最上层旅行纸条被弹性结构顶出盒口1–2厘米，其余纸条被约束在盒内不滑落",
+              "mechanism": "利用SAMLA盒本体刚性侧壁与纸条堆叠高度差形成垂直限位；将整叠纸条竖直立放于盒底，靠盒内壁自然对齐；通过轻微下压再释放盒盖（聚丙烯盖具微弹性），使盖内面短暂接触纸条堆顶部并施加向下预紧力；松手瞬间盖回弹，其内面突起或边缘对纸条堆顶部产生瞬时向上反冲，但仅最上层纸条因无上方约束而获得净向上位移；下方纸条受盒壁摩擦与自身重力抑制，无法同步移动。",
+              "roles": [
+                {
+                  "item": "i1",
+                  "function": "贡献弹性回弹、侧壁限位、顶部接触面",
+                  "evidence": [
+                    "f1",
+                    "f2",
+                    "f3"
+                  ]
+                }
+              ],
+              "actions": [
+                {
+                  "kind": "stack",
+                  "items": [
+                    "i2"
+                  ],
+                  "target": "i1",
+                  "component": "本体"
+                },
+                {
+                  "kind": "support",
+                  "items": [
+                    "i2"
+                  ],
+                  "target": "i1",
+                  "component": "本体"
+                },
+                {
+                  "kind": "elastic_release",
+                  "items": [
+                    "i1"
+                  ],
+                  "target": "i2",
+                  "component": "本体"
+                }
+              ],
+              "requirements": [
+                {
+                  "item": "i1",
+                  "key": "elastic",
+                  "evidence": [],
+                  "why": "盖需具备可测微变形与自发回弹能力，以产生瞬时反冲动作；聚丙烯材料在薄壁结构中常见此特性，但未实测确认"
+                },
+                {
+                  "item": "i1",
+                  "key": "outer_mm",
+                  "evidence": [
+                    "f3"
+                  ],
+                  "why": "盒内宽高需略大于单张纸条尺寸且小于两倍纸条厚度×20，确保纸条竖立稳定、侧壁提供有效摩擦约束"
+                }
+              ],
+              "assumptions": [
+                "旅行纸条为矩形、厚度均匀、可竖直叠放而不倾倒",
+                "SAMLA盒盖闭合时内面与纸条堆顶部存在可控接触间隙（<1mm）",
+                "纸条堆叠总高度 ≤ 盒内净高 − 盖内凸起深度"
+              ],
+              "extraResources": [],
+              "preferenceIds": [
+                "synthetic-preference-01"
+              ],
+              "minutes": 10
+            },
+            "assessment": {
+              "engine": "mechanism-v2",
+              "strategy": "analogy",
+              "level": "concept",
+              "checks": [
+                {
+                  "code": "property:elastic",
+                  "status": "unknown",
+                  "detail": "i1 的 本体 / elastic 未确认或来源冲突",
+                  "evidence": []
+                },
+                {
+                  "code": "property:outer_mm",
+                  "status": "supported",
+                  "detail": "28×20×14厘米",
+                  "evidence": [
+                    "f3"
+                  ]
+                },
+                {
+                  "code": "action-resource",
+                  "status": "contradiction",
+                  "detail": "动作引用未提供的资源或未说明作用的物品",
+                  "evidence": []
+                },
+                {
+                  "code": "action-resource",
+                  "status": "contradiction",
+                  "detail": "动作引用未提供的资源或未说明作用的物品",
+                  "evidence": []
+                },
+                {
+                  "code": "action-resource",
+                  "status": "contradiction",
+                  "detail": "动作引用未提供的资源或未说明作用的物品",
+                  "evidence": []
+                },
+                {
+                  "code": "assumption",
+                  "status": "unknown",
+                  "detail": "旅行纸条为矩形、厚度均匀、可竖直叠放而不倾倒",
+                  "evidence": []
+                },
+                {
+                  "code": "assumption",
+                  "status": "unknown",
+                  "detail": "SAMLA盒盖闭合时内面与纸条堆顶部存在可控接触间隙（<1mm）",
+                  "evidence": []
+                },
+                {
+                  "code": "assumption",
+                  "status": "unknown",
+                  "detail": "纸条堆叠总高度 ≤ 盒内净高 − 盖内凸起深度",
+                  "evidence": []
+                }
+              ],
+              "hypothesis": "利用SAMLA盒本体刚性侧壁与纸条堆叠高度差形成垂直限位；将整叠纸条竖直立放于盒底，靠盒内壁自然对齐；通过轻微下压再释放盒盖（聚丙烯盖具微弹性），使盖内面短暂接触纸条堆顶部并施加向下预紧力；松手瞬间盖回弹，其内面突起或边缘对纸条堆顶部产生瞬时向上反冲，但仅最上层纸条因无上方约束而获得净向上位移；下方纸条受盒壁摩擦与自身重力抑制，无法同步移动。",
+              "actions": [
+                {
+                  "kind": "stack",
+                  "items": [
+                    "i2"
+                  ],
+                  "target": "i1",
+                  "component": "本体"
+                },
+                {
+                  "kind": "support",
+                  "items": [
+                    "i2"
+                  ],
+                  "target": "i1",
+                  "component": "本体"
+                },
+                {
+                  "kind": "elastic_release",
+                  "items": [
+                    "i1"
+                  ],
+                  "target": "i2",
+                  "component": "本体"
+                }
+              ],
+              "facts": [
+                {
+                  "ref": "f1",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "01 SAMLA透明盒",
+                  "text": "01 SAMLA透明盒",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/identity"
+                },
+                {
+                  "ref": "f2",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "material",
+                  "value": "聚丙烯塑料",
+                  "text": "聚丙烯塑料",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/material"
+                },
+                {
+                  "ref": "f3",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "outer_mm",
+                  "value": [
+                    280,
+                    200,
+                    140
+                  ],
+                  "text": "28×20×14厘米",
+                  "basis": "user_report",
+                  "sourceRef": "2dfa451c-13ac-4a8c-a9b1-55bba967b7a7/dimensions"
+                }
+              ],
+              "verifiedPhysical": false,
+              "signature": "[[\"elastic_release\",[\"i1\"],\"i2\",\"本体\",\"\"],[\"stack\",[\"i2\"],\"i1\",\"本体\",\"\"],[\"support\",[\"i2\"],\"i1\",\"本体\",\"\"]]"
+            },
+            "renderedActions": []
+          }
+        ]
+      },
+      "status": "returned",
+      "calls": 1,
+      "elapsedMs": 14361
+    },
+    {
+      "caseId": "02",
+      "arm": "old",
+      "model": "qwen-plus",
+      "input": {
+        "goal": "松木盒放进透明盒，做一个可取出的分类芯，不买东西。",
+        "inventory": {
+          "items": [
+            {
+              "ref": "i1",
+              "id": "7a402793-97ad-435e-a2fd-b35b627f8753",
+              "name": "02 透明盒",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f1",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "02 透明盒",
+                  "text": "02 透明盒",
+                  "basis": "user_report",
+                  "sourceRef": "7a402793-97ad-435e-a2fd-b35b627f8753/identity"
+                },
+                {
+                  "ref": "f2",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "outer_mm",
+                  "value": [
+                    280,
+                    200,
+                    140
+                  ],
+                  "text": "28×20×14厘米",
+                  "basis": "user_report",
+                  "sourceRef": "7a402793-97ad-435e-a2fd-b35b627f8753/dimensions"
+                },
+                {
+                  "ref": "f3",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "open_container",
+                  "value": true,
+                  "text": "本体：open_container=true（本人报告）",
+                  "basis": "user_report",
+                  "sourceRef": "7a402793-97ad-435e-a2fd-b35b627f8753/physical/25716f06-2b6b-41ce-b647-5f73316dee27"
+                }
+              ],
+              "unknowns": [
+                "品牌",
+                "型号",
+                "材质",
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            },
+            {
+              "ref": "i2",
+              "id": "3211f09f-b368-4d65-bd39-4a87991a0dce",
+              "name": "02 松木盒",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f4",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "02 松木盒",
+                  "text": "02 松木盒",
+                  "basis": "user_report",
+                  "sourceRef": "3211f09f-b368-4d65-bd39-4a87991a0dce/identity"
+                },
+                {
+                  "ref": "f5",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "outer_mm",
+                  "value": [
+                    230,
+                    160,
+                    100
+                  ],
+                  "text": "23×16×10厘米",
+                  "basis": "user_report",
+                  "sourceRef": "3211f09f-b368-4d65-bd39-4a87991a0dce/dimensions"
+                }
+              ],
+              "unknowns": [
+                "品牌",
+                "型号",
+                "材质",
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            }
+          ]
+        },
+        "preferences": [
+          {
+            "id": "synthetic-preference-02",
+            "text": "桌面尽量整洁"
+          }
+        ],
+        "physicalFacts": [
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "7a402793-97ad-435e-a2fd-b35b627f8753",
+            "name": "02 透明盒",
+            "category": "生活物品",
+            "brand": null,
+            "model": null,
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": null,
+              "dimensions": "28×20×14厘米",
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [
+              {
+                "id": "25716f06-2b6b-41ce-b647-5f73316dee27",
+                "component": "本体",
+                "key": "open_container",
+                "value": true,
+                "basis": "user_report"
+              }
+            ],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "品牌",
+              "型号",
+              "材质",
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          },
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "3211f09f-b368-4d65-bd39-4a87991a0dce",
+            "name": "02 松木盒",
+            "category": "生活物品",
+            "brand": null,
+            "model": null,
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": null,
+              "dimensions": "23×16×10厘米",
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "品牌",
+              "型号",
+              "材质",
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          }
+        ],
+        "synthetic": true
+      },
+      "reviewTarget": "外尺寸不能证明内净尺寸",
+      "startedAt": "2026-10-30T01:39:28.285Z",
+      "status": "failed",
+      "error": {
+        "name": "Error",
+        "message": "模型创意格式未通过：title:invalid_type；itemIds:invalid_type；minutes:invalid_type；steps:invalid_type。未保存候选。"
+      },
+      "calls": 2,
+      "elapsedMs": 54047
+    },
+    {
+      "caseId": "02",
+      "arm": "direct",
+      "model": "qwen-plus",
+      "input": {
+        "goal": "松木盒放进透明盒，做一个可取出的分类芯，不买东西。",
+        "inventory": {
+          "items": [
+            {
+              "ref": "i1",
+              "id": "7a402793-97ad-435e-a2fd-b35b627f8753",
+              "name": "02 透明盒",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f1",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "02 透明盒",
+                  "text": "02 透明盒",
+                  "basis": "user_report",
+                  "sourceRef": "7a402793-97ad-435e-a2fd-b35b627f8753/identity"
+                },
+                {
+                  "ref": "f2",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "outer_mm",
+                  "value": [
+                    280,
+                    200,
+                    140
+                  ],
+                  "text": "28×20×14厘米",
+                  "basis": "user_report",
+                  "sourceRef": "7a402793-97ad-435e-a2fd-b35b627f8753/dimensions"
+                },
+                {
+                  "ref": "f3",
+                  "item": "i1",
+                  "component": "本体",
+                  "key": "open_container",
+                  "value": true,
+                  "text": "本体：open_container=true（本人报告）",
+                  "basis": "user_report",
+                  "sourceRef": "7a402793-97ad-435e-a2fd-b35b627f8753/physical/25716f06-2b6b-41ce-b647-5f73316dee27"
+                }
+              ],
+              "unknowns": [
+                "品牌",
+                "型号",
+                "材质",
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            },
+            {
+              "ref": "i2",
+              "id": "3211f09f-b368-4d65-bd39-4a87991a0dce",
+              "name": "02 松木盒",
+              "quantity": 1,
+              "facts": [
+                {
+                  "ref": "f4",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "identity",
+                  "value": "02 松木盒",
+                  "text": "02 松木盒",
+                  "basis": "user_report",
+                  "sourceRef": "3211f09f-b368-4d65-bd39-4a87991a0dce/identity"
+                },
+                {
+                  "ref": "f5",
+                  "item": "i2",
+                  "component": "本体",
+                  "key": "outer_mm",
+                  "value": [
+                    230,
+                    160,
+                    100
+                  ],
+                  "text": "23×16×10厘米",
+                  "basis": "user_report",
+                  "sourceRef": "3211f09f-b368-4d65-bd39-4a87991a0dce/dimensions"
+                }
+              ],
+              "unknowns": [
+                "品牌",
+                "型号",
+                "材质",
+                "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+              ],
+              "operations": []
+            }
+          ]
+        },
+        "preferences": [
+          {
+            "id": "synthetic-preference-02",
+            "text": "桌面尽量整洁"
+          }
+        ],
+        "physicalFacts": [
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "7a402793-97ad-435e-a2fd-b35b627f8753",
+            "name": "02 透明盒",
+            "category": "生活物品",
+            "brand": null,
+            "model": null,
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": null,
+              "dimensions": "28×20×14厘米",
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [
+              {
+                "id": "25716f06-2b6b-41ce-b647-5f73316dee27",
+                "component": "本体",
+                "key": "open_container",
+                "value": true,
+                "basis": "user_report"
+              }
+            ],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "品牌",
+              "型号",
+              "材质",
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          },
+          {
+            "schemaVersion": "item-context-v1",
+            "id": "3211f09f-b368-4d65-bd39-4a87991a0dce",
+            "name": "02 松木盒",
+            "category": "生活物品",
+            "brand": null,
+            "model": null,
+            "region": null,
+            "state": "在用",
+            "availability": "available",
+            "usable": true,
+            "synthetic": false,
+            "properties": {
+              "material": null,
+              "dimensions": "23×16×10厘米",
+              "power": null,
+              "care": null,
+              "quantity": 1,
+              "unit": null,
+              "capabilities": []
+            },
+            "physicalFacts": [],
+            "sources": {
+              "registration": {
+                "kind": "user_report",
+                "verified": false
+              },
+              "official": null
+            },
+            "officialFacts": [],
+            "productUnderstanding": null,
+            "limits": [],
+            "unknowns": [
+              "品牌",
+              "型号",
+              "材质",
+              "未明确给出的几何结构、耐热范围、承重、食品接触适用性、设备专属功能均未确认；名称或类别不证明这些性质"
+            ],
+            "evidencePolicy": "登记属性是用户报告；官方事实仅限列出的原文。未知不等于不支持，也不等于已确认可用。建议前先核对任务所需条件。"
+          }
+        ],
+        "synthetic": true
+      },
+      "reviewTarget": "外尺寸不能证明内净尺寸",
+      "startedAt": "2026-10-30T01:40:22.336Z",
+      "status": "interrupted",
+      "error": {
+        "message": "User replaced task; old experiment stopped. No result claimed; associated request stays in shared ledger."
+      }
+    }
+  ]
+}

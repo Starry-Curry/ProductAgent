@@ -317,7 +317,7 @@ test("开放规划使用真实资源/历史反馈与预算，生成新方案并�
       t.db,
       t.read(),
       "lin",
-      { goal: "我有一小时，不买东西，想做点有趣的事", model: true },
+      { goal: "我有一小时，不买东西，想做点有趣的事", engine: "legacy", model: true },
       provider,
       t.read,
     );
@@ -339,8 +339,9 @@ test("开放规划使用真实资源/历史反馈与预算，生成新方案并�
       provider,
     );
     assert.equal(reply.reply.route!.intent, "plan");
-    assert.equal(reply.modelCalls, 2);
-    assert.equal(reply.reply.steps.length, 2);
+    assert.equal(reply.modelCalls, 1);
+    assert.equal(reply.reply.steps.length, 0);
+    assert.match(reply.reply.answer, /新可能/);
     const m = saveMemory(t.db, t.read, "lin", {
       kind: "interest",
       text: "合成测试：喜欢观察",
@@ -351,7 +352,7 @@ test("开放规划使用真实资源/历史反馈与预算，生成新方案并�
         t.db,
         t.read(),
         "lin",
-        { goal: "来个新玩法", model: true },
+        { goal: "来个新玩法", engine: "legacy", model: true },
         {
           ...provider,
           async generate(s, x) {

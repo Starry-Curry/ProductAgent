@@ -895,9 +895,13 @@ export async function executeGraph(
             ...blank(
               plan.understanding +
                 "\n\n" +
-                (plan.ideas[0]?.title ||
-                  plan.failure?.message ||
-                  "先核对可用物品，再继续规划。") +
+                (plan.ideas.some((i) => i.exploration)
+                  ? plan.ideas
+                      .map((i) => i.title + "\n" + (i.exploration?.text || ""))
+                      .join("\n\n")
+                  : plan.ideas[0]?.title ||
+                    plan.failure?.message ||
+                    "先核对可用物品，再继续规划。") +
                 (plan.source === "model-creative" && plan.ideas[0]?.rationale
                   ? "\n关键原理与条件：" + plan.ideas[0].rationale
                   : ""),

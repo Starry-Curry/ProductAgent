@@ -1,0 +1,47 @@
+{
+  "requests": 107,
+  "returned": 103,
+  "failedOrInterrupted": 4,
+  "estimatedOrReservedCny": 1.2395848,
+  "inputTokens": 101953,
+  "outputTokens": 164713,
+  "arms": {
+    "free": {
+      "returned": 23,
+      "failed": 1,
+      "medianMs": 42716
+    },
+    "retrieval": {
+      "returned": 22,
+      "failed": 2,
+      "medianMs": 44054
+    },
+    "hybrid": {
+      "returned": 24,
+      "failed": 0,
+      "medianMs": 44165
+    }
+  },
+  "variants": {
+    "3.7-minimal": {
+      "returned": 4,
+      "medianMs": 20203
+    },
+    "3.7-thinking": {
+      "returned": 4,
+      "medianMs": 51735
+    },
+    "plus-json": {
+      "returned": 4,
+      "medianMs": 8350
+    },
+    "plus-minimal": {
+      "returned": 4,
+      "medianMs": 28256
+    },
+    "plus-thinking": {
+      "returned": 4,
+      "medianMs": 65067
+    }
+  }
+}

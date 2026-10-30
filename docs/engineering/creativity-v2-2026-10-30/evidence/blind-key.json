@@ -1,0 +1,554 @@
+[
+  {
+    "label": "01-A",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "01-B",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "01-C",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "02-A",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "02-B",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "02-C",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "03-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "03-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "03-C",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "04-A",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "04-B",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "04-C",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "05-A",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "05-B",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "05-C",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "06-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "06-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "06-C",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "07-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "07-B",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "07-C",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "08-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "08-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "08-C",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "09-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "09-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "09-C",
+    "arm": null,
+    "variant": "plus-thinking",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "09-D",
+    "arm": null,
+    "variant": "plus-minimal",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "09-E",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "09-F",
+    "arm": null,
+    "variant": "plus-json",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "09-G",
+    "arm": null,
+    "variant": "3.7-minimal",
+    "model": "qwen3.7-plus"
+  },
+  {
+    "label": "09-H",
+    "arm": null,
+    "variant": "3.7-thinking",
+    "model": "qwen3.7-plus"
+  },
+  {
+    "label": "10-A",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "10-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "10-C",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "11-A",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "11-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "11-C",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "12-A",
+    "arm": null,
+    "variant": "plus-json",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "12-B",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "12-C",
+    "arm": null,
+    "variant": "3.7-minimal",
+    "model": "qwen3.7-plus"
+  },
+  {
+    "label": "12-D",
+    "arm": null,
+    "variant": "3.7-thinking",
+    "model": "qwen3.7-plus"
+  },
+  {
+    "label": "12-E",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "12-F",
+    "arm": null,
+    "variant": "plus-minimal",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "12-G",
+    "arm": null,
+    "variant": "plus-thinking",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "12-H",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "13-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "13-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "13-C",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "14-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "14-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "14-C",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "15-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "15-B",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "15-C",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "16-A",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "16-B",
+    "arm": null,
+    "variant": "plus-json",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "16-C",
+    "arm": null,
+    "variant": "3.7-thinking",
+    "model": "qwen3.7-plus"
+  },
+  {
+    "label": "16-D",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "16-E",
+    "arm": null,
+    "variant": "plus-minimal",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "16-F",
+    "arm": null,
+    "variant": "3.7-minimal",
+    "model": "qwen3.7-plus"
+  },
+  {
+    "label": "16-G",
+    "arm": null,
+    "variant": "plus-thinking",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "16-H",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "17-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "17-B",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "17-C",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "18-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "18-B",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "18-C",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "19-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "19-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "19-C",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "20-A",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "20-B",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "20-C",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "21-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "21-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "21-C",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "22-A",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "22-B",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "22-C",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "23-A",
+    "arm": null,
+    "variant": "plus-thinking",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "23-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "23-C",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "23-D",
+    "arm": null,
+    "variant": "3.7-minimal",
+    "model": "qwen3.7-plus"
+  },
+  {
+    "label": "23-E",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "23-F",
+    "arm": null,
+    "variant": "plus-minimal",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "23-G",
+    "arm": null,
+    "variant": "plus-json",
+    "model": "qwen-plus"
+  },
+  {
+    "label": "23-H",
+    "arm": null,
+    "variant": "3.7-thinking",
+    "model": "qwen3.7-plus"
+  },
+  {
+    "label": "24-A",
+    "arm": "hybrid",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "24-B",
+    "arm": "free",
+    "variant": null,
+    "model": "qwen-plus"
+  },
+  {
+    "label": "24-C",
+    "arm": "retrieval",
+    "variant": null,
+    "model": "qwen-plus"
+  }
+]

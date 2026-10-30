@@ -98,7 +98,7 @@ test("候选资源检查失败返回明确本地降级，不当成模型成功�
       "lin",
       {
         goal: "只用我登记的物品想个新用途",
-        model: true,
+        engine: "legacy", model: true,
         publicEvidence: false,
         candidates: 1,
       },
@@ -179,7 +179,7 @@ for (const phrase of [
           "lin",
           {
             goal: `想找个有趣玩法，${phrase}，不买东西，不要拍照`,
-            model: true,
+            engine: "legacy", model: true,
             publicEvidence: false,
           },
           p,

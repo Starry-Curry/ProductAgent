@@ -2,7 +2,10 @@ import type { Provider } from "../ai/provider.ts";
 import { ProviderError } from "../ai/provider.ts";
 import { creativeOutputContract } from "./creative-reasoning.ts";
 
-/** Two bounded model turns. The first explores mechanisms without a serialization
+/** Historical engine retained for reproducible comparisons (engine=legacy).
+ * App discovery now uses open-exploration.ts; these old count/format constraints
+ * are not applied to the open first stage.
+ * Two bounded model turns. The first explores mechanisms without a serialization
  * contract; the second challenges actions and selects, never rates its creativity.
  * Persistence, identity, consent and resource checks remain in modelIdea. */
 export async function exploreCreativeUses(

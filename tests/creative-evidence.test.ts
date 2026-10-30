@@ -141,7 +141,7 @@ test("真实失败回归：错误物理机制、隐含材料不可借有效来�
       {
         goal: "只用现有物品整理桌面",
         itemIds: [light, cup, paper],
-        model: true,
+        engine: "legacy", model: true,
         publicEvidence: false,
       },
       {
@@ -177,7 +177,7 @@ test("真实失败回归：错误物理机制、隐含材料不可借有效来�
         {
           goal: "整理桌面",
           itemIds: [cup],
-          model: true,
+          engine: "legacy", model: true,
           publicEvidence: false,
         },
         {
@@ -238,7 +238,7 @@ test("复核发生在候选发布前，不把草稿错误当成功；草稿和�
       {
         goal: "用现有物品整理桌面",
         itemIds: [cup],
-        model: true,
+        engine: "legacy", model: true,
         review: true,
         publicEvidence: false,
       },
@@ -415,7 +415,7 @@ test("一次真实协议替身可生成不同方向候选，逐个验证并保�
       goal: "做不同方向的有趣活动",
       candidates: 3,
       itemIds: [light, cup],
-      model: true,
+      engine: "legacy", model: true,
       publicEvidence: false,
       creativeEvidenceIds: [e.id],
     };

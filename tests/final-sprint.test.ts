@@ -47,7 +47,7 @@ test("只用已有物品是库存指代，不会阻止目标模型调用；多�
       "lin",
       {
         goal: "只用已有物品，五分钟整理桌面",
-        model: true,
+        engine: "legacy", model: true,
         candidates: 1,
         publicEvidence: false,
       },

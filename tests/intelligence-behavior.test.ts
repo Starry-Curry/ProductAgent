@@ -159,7 +159,7 @@ test("实际规划走两步且允许资源池子集；保存反馈进入下一�
     const input = {
       goal: "只用这些已有物品，给我新的桌面待办提示方式",
       itemIds: ids,
-      model: true,
+      engine: "legacy", model: true,
       publicEvidence: false,
     };
     const first = await planDiscovery(t.db, t.read(), "lin", input, p, t.read);
@@ -198,7 +198,7 @@ test("发散之后撤销记忆立即停止，不发送选择请求或写入草�
         t.db,
         t.read(),
         "lin",
-        { goal: "新用途", itemIds: ids, model: true, publicEvidence: false },
+        { goal: "新用途", itemIds: ids, engine: "legacy", model: true, publicEvidence: false },
         fake(t, ids[0], () => {
           calls++;
           forgetMemory(t.db, "lin", m.id);
@@ -223,7 +223,7 @@ test("发散之后物品撤权停止第二回合", async () => {
         t.db,
         t.read(),
         "lin",
-        { goal: "新用途", itemIds: ids, model: true, publicEvidence: false },
+        { goal: "新用途", itemIds: ids, engine: "legacy", model: true, publicEvidence: false },
         fake(t, ids[0], () => {
           calls++;
           const state = t.read();
@@ -434,7 +434,7 @@ test("仅收藏而未尝试的方案也影响下一轮，不需要伪造成功�
       input = {
         goal: "找一个新用途",
         itemIds: ids,
-        model: true,
+        engine: "legacy", model: true,
         publicEvidence: false,
       };
     const first = await planDiscovery(t.db, t.read(), "lin", input, p, t.read);

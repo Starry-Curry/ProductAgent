@@ -31,6 +31,7 @@ export function itemContext(item: Item) {
       unit: attributes.quantityUnit || null,
       capabilities: attributes.capabilities || [],
     },
+    physicalFacts: attributes.physicalFacts || [],
     sources: {
       registration: { kind: "user_report" as const, verified: false },
       official: pack

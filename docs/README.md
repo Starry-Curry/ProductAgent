@@ -53,3 +53,5 @@ README 负责快速运行，以下文档分别回答产品、工程、演示和�
 - [2026-10-29 智能行为与创造力：业务实现、真实对照、失败与匿名样本](engineering/intelligence-behavior-2026-10-29/README.md)
 
 - [2026-10-30 统一家庭连续体验与真实质量失败记录](engineering/continuous-experience-2026-10-30/README.md)
+
+- [2026-10-30 开放创造力 V2：实际交互、对照与失败证据](engineering/creativity-v2-2026-10-30/README.md)

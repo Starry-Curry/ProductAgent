@@ -1,0 +1,32 @@
+[
+  {
+    "file": "rea-readme.txt",
+    "bytes": 29837,
+    "sha256": "5445e4633b4b099cfc59f474c51eac53283025269e224e06a6d9025927f3a7f2",
+    "access": "public raw GitHub; source read, not executed"
+  },
+  {
+    "file": "package.json.txt",
+    "bytes": 27542,
+    "sha256": "2cd4388f0578942c8c9098b92dbb0128533736879afa822dcf1f5c591aaf43b9",
+    "access": "public raw GitHub; source read, not executed"
+  },
+  {
+    "file": "docs-mcp-contracts.md.txt",
+    "bytes": 111251,
+    "sha256": "ab1b46428e9fdde168b08ed9125d9828a9acbae6ee12effdf83d8bc2628a4b8d",
+    "access": "public raw GitHub; source read, not executed"
+  },
+  {
+    "file": "docs-installation.md.txt",
+    "bytes": 107216,
+    "sha256": "df56d394477fd9dd04c629d8ee511117701f9cadb98c3c0facf6223a176a4df9",
+    "access": "public raw GitHub; source read, not executed"
+  },
+  {
+    "file": "docs-cli.md.txt",
+    "bytes": 68602,
+    "sha256": "7df1f5165f1249a53cc25430ca379029f68766b081b275b0b8de0a4f55fca48b",
+    "access": "public raw GitHub; source read, not executed"
+  }
+]

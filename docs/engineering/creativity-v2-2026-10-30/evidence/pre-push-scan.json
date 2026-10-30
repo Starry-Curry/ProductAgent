@@ -1,0 +1,466 @@
+{
+  "at": "2026-10-30T02:49:13.667Z",
+  "scope": "staged bytes only; no secrets/config/database read",
+  "base": "a2a9a23d5d05bc187300c57aaa01b400772d727e",
+  "files": 91,
+  "totalBytes": 4673267,
+  "issues": [],
+  "manifest": [
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 10249,
+      "sha256": "00d1fc96e99c1e0a1fdf359548714accbd0ea9322a920b6f756326e6af6bb646"
+    },
+    {
+      "file": "DEVELOPMENT_REPORT.md",
+      "bytes": 9303,
+      "sha256": "dcec97a4dbfca78248c9890277b6d3ea103221a735f22e3fa2607222d2182392"
+    },
+    {
+      "file": "IMPLEMENTATION_STATUS.md",
+      "bytes": 9814,
+      "sha256": "7d44aaf390ab4f4c1941d6685092831dbf9cf98821462b936997be8d3982d855"
+    },
+    {
+      "file": "REVIEW_HANDOFF.md",
+      "bytes": 9246,
+      "sha256": "bf96e2c1696392135b5970581aa0f9b2a0a64a6f1057bc23ffce439b897f3b3a"
+    },
+    {
+      "file": "docs/README.md",
+      "bytes": 3345,
+      "sha256": "130c35c6a2b43f34fa403f01e0c238fc5bf8dde87854563f291d0987c77cccfd"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/DECISIONS.md",
+      "bytes": 2650,
+      "sha256": "77cd54b59874e255e63f5e8fd272973e4830db6ba00725c6f7bf3751cd8f8d4a"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/QUALITY_REVIEW.md",
+      "bytes": 4749,
+      "sha256": "acf0c80e4bc276c14da3b8b5b11d5f9f73af7d758a701fc2664d781d676be80a"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/README.md",
+      "bytes": 2496,
+      "sha256": "ece48b8c76eb6eb56b12320e5e24ebb7dbe57166d1bedd3610fe3e431d35165b"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/REA_RESEARCH.md",
+      "bytes": 4913,
+      "sha256": "7685c7062900033c1dfd8e4f79c4dde4282022db92186b13568ddb69fb6f34a8"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/SOURCES.md",
+      "bytes": 4322,
+      "sha256": "80952e04766b0305d6548a8d01607c7ed561c57671d89d535fdf2c226decf4bb"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/TEST_REPORT.md",
+      "bytes": 6416,
+      "sha256": "a9359f56cd62d0666ae8e4537e5facb34d264ada75863c307c5739cc2ba287b8"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/benchmark.txt",
+      "bytes": 4656,
+      "sha256": "2eeb3c92b8154e720a4c4b6ef841cfd6d40c54ce126bee2868765a14e627897b"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind-key.json",
+      "bytes": 9083,
+      "sha256": "4db9e0090d866da543d87a633a400ff061f0ec18d6887f4924be61195c5a703d"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/01.md",
+      "bytes": 24779,
+      "sha256": "f239d4a54b4cab0546fe6d9186f60a02f11144d1e56bd2f8f6fd7584a7949466"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/02.md",
+      "bytes": 21171,
+      "sha256": "e167e8650699b184c15057b99832e88ce38d492f1e0315167825484b84c6da20"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/03.md",
+      "bytes": 25441,
+      "sha256": "c263d7dfb387aa9f51886fb5aeb8a9b5f65d80b499abeaaa5d34607393ed1500"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/04.md",
+      "bytes": 21465,
+      "sha256": "bee3a2d5a7a8893f873e72863862649548fa5419495f800f2f3e7995acfcac2e"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/05.md",
+      "bytes": 22911,
+      "sha256": "d52e657e486a108249b194f6b877735a7a6d33add1fff38a4d0aeb506011574d"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/06.md",
+      "bytes": 22075,
+      "sha256": "b6b00a96566240c74cbe7ae24cb398ccacf2831b5810195ba906e6b4650a6be9"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/07.md",
+      "bytes": 21799,
+      "sha256": "8198f2ae573bc3803473854f8b78d73043b6f255d3fbba0d7c8a7fc446cd957b"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/08.md",
+      "bytes": 19231,
+      "sha256": "81731107f67660223302d26c9e25a5326bf628f73c963aa39dbc8c70f1a0c2d8"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/09.md",
+      "bytes": 45515,
+      "sha256": "3094099c62696af276be51e43e320dcf9ee763675a9a2d3f19993aadfac017b4"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/10.md",
+      "bytes": 17340,
+      "sha256": "33e4ee97c71e91ae1c874383745d3807723ac7db17e247468321109e4d22319e"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/11.md",
+      "bytes": 24021,
+      "sha256": "1de58f24207d82448b9f55a467d2b421709590b773c9f614836f79b7887c77d5"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/12.md",
+      "bytes": 38642,
+      "sha256": "3db5d0e8027045fc93b7b50daaedafc1c1b7161dbe89868d0c7ea41eeb099985"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/13.md",
+      "bytes": 17615,
+      "sha256": "311f2f9c1363c2dfaf0a2ff0eb22a7aa2aeb2388ad3458f7a7ca026c1290237e"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/14.md",
+      "bytes": 21026,
+      "sha256": "3cfdbdf1c9b7b537cb9e96dc823dcf1caab47e6401f97ce247ace9172bcd8d91"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/15.md",
+      "bytes": 21525,
+      "sha256": "a26018bf42440f47927f19f021e66f5f8227804789468ef38f526606b0bde28c"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/16.md",
+      "bytes": 40846,
+      "sha256": "fcfb692b24948d228190ba20546221afc095f399ab497db7f08317d957b1fa6f"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/17.md",
+      "bytes": 19214,
+      "sha256": "a74bf129e89c261ae2eca0ae646486dc89d10044dd3c15e9e1375f824f3b51dd"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/18.md",
+      "bytes": 23916,
+      "sha256": "13544187640a6cfe8bd8d27806da28c5235c471d8a6bb2b295d37f39a685baa3"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/19.md",
+      "bytes": 18912,
+      "sha256": "0fe684eeafb5a4f23f89f4b61af9f1c5ed9068224c151c2a71689208b41af0ae"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/20.md",
+      "bytes": 14420,
+      "sha256": "392a89ee6b0219b028d9a208f96fc80ca3f5274315fd596bc11ccb8b308778a2"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/21.md",
+      "bytes": 18688,
+      "sha256": "d67cb0cb934bb6ac6462508fc783802eccc713cd63ef5f6f4d799a17345966f1"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/22.md",
+      "bytes": 21629,
+      "sha256": "3f76551ea0491f7b2d1c07808c9c5e03b8c299101fed651f6d38481b3a82e9b8"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/23.md",
+      "bytes": 37831,
+      "sha256": "c3568f0d48864403ef591eb658027133d0b0088b798583414b8d8b3b644fda3b"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/blind/24.md",
+      "bytes": 21832,
+      "sha256": "6bc248e37e939df8813e7b15091479448fd6c243c1dded71d76f0c12e5352da8"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/browser-first-failure.json",
+      "bytes": 29520,
+      "sha256": "b04ed16773a2190882d6cf2561ee9f5bfb4b5f1be93e78845e5b2779665cc5fb"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/browser-resume-harness-failure.json",
+      "bytes": 216,
+      "sha256": "b7732b7efe7c45f15755406ed62abc22b149d3d35861a2b1ba105ae2ceabf045"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/browser-resume.json",
+      "bytes": 29201,
+      "sha256": "bc71bd54ea2e2630647a53b0c725efc986a22a8880ab27031a283573a31dfdc3"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/browser.json",
+      "bytes": 29520,
+      "sha256": "b04ed16773a2190882d6cf2561ee9f5bfb4b5f1be93e78845e5b2779665cc5fb"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/build.txt",
+      "bytes": 2030,
+      "sha256": "54bb4ea6a5ec8ea2fba47df7e233f662587a677b384e0ec37c5aa30f129dcdab"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/comparison.json",
+      "bytes": 76822,
+      "sha256": "9be16191e9abbcb2fa00be8df505c75e48798926ce03b6974d0e2b20629cef9a"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/conditions-desktop.png",
+      "bytes": 75107,
+      "sha256": "2bb8636a43ce25635ef599f2e70073cb91092b021b4da38e43b1420dbec5ccfc"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/continued-desktop.png",
+      "bytes": 101878,
+      "sha256": "375b3353dbed81b68399ff9d2cda1a2f84be6924322ffe0c0c31a95802809b8d"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/continued-mobile.png",
+      "bytes": 58204,
+      "sha256": "1a07d2be2bc978d78592715db49cb195fbd4036fb232a5c5083bb71d71a7aa42"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/explore-desktop.png",
+      "bytes": 165587,
+      "sha256": "69bd01b64986d2908c0d82f2dc28dd6619df427c002b951f04b93e528fba97cc"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/explore-mobile.png",
+      "bytes": 66951,
+      "sha256": "4b4db6fd99a1c1c6820db75ccb7a8c37822ed86a368d7c0b16df0e0ddac089f3"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/human-review.csv",
+      "bytes": 1411,
+      "sha256": "74a2732660d2d585124544972e499e3e14397a163e1407a3495807ce30754372"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/integration.txt",
+      "bytes": 356,
+      "sha256": "9a558839a8238c31e6324434d7fbdc95565f52116e68325e393b48b5ee7be210"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/model-availability.json",
+      "bytes": 5203,
+      "sha256": "1d48c2cef74d2943adceba1cabe5258c9a3e0464ea1cd467e950b68895ad631f"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/model-calls.json",
+      "bytes": 1102837,
+      "sha256": "b2f140b912ecc35b0a120f2e292e1055d1b18a0ee345d71d7fec8ee8e8149146"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/model-variants.json",
+      "bytes": 231329,
+      "sha256": "abe92f3696928a2a5252793f1994620ebcb7f934528765b4cfa71a310e337b3e"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/offline.txt",
+      "bytes": 36821,
+      "sha256": "b0994508b3c3b8f0fdb793ead235f8aaaaa5a15dc6f6b56fca1458a4f676b18a"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/open-comparison.json",
+      "bytes": 1488775,
+      "sha256": "eb446b46dfa30058cee5e844d91c74584bcc495eed1bf6321f965a90bacf69bf"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/rea-pin.json",
+      "bytes": 252,
+      "sha256": "5203f36debe50e5d8a625cafdbcd316a4aff56b25855585cd381f900e10c817e"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/read-receipts.json",
+      "bytes": 1039,
+      "sha256": "90afb08389b7e0d08e03b663847d97c96a78be4f996f3051003a0f9c20ffe006"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/summary.json",
+      "bytes": 826,
+      "sha256": "116a94eb1e9eb127485c559937382396ab51764575878a472f45a809ee534a17"
+    },
+    {
+      "file": "docs/engineering/creativity-v2-2026-10-30/evidence/typecheck.txt",
+      "bytes": 48,
+      "sha256": "8ecd2c9e217809de41e0ac3444a6bb794f588f6da1b28e1a41efc6b4c7f3ebed"
+    },
+    {
+      "file": "scripts/creativity-v2/browser.mjs",
+      "bytes": 6918,
+      "sha256": "271a5595bac165e2b3f16b48b1a4d24e3cd4ec7949b8f8ff43e96a95611c76c1"
+    },
+    {
+      "file": "scripts/creativity-v2/cases.ts",
+      "bytes": 10823,
+      "sha256": "505ad72abf8aa94a048fad877abac1efc7c788594bdddd4716fa54531c1d1600"
+    },
+    {
+      "file": "scripts/creativity-v2/compare.ts",
+      "bytes": 8003,
+      "sha256": "26c5185d034d97d193ae03b4996462b07e2b19773c5e4d67cc9c4139a5961b4c"
+    },
+    {
+      "file": "scripts/creativity-v2/export-evidence.py",
+      "bytes": 4774,
+      "sha256": "273c92b64e3fcd4816f11c867e776d81eeb9ff43d1f1227a4c65bc545959d017"
+    },
+    {
+      "file": "scripts/creativity-v2/gateway.mjs",
+      "bytes": 9427,
+      "sha256": "b799e4901ca918f22845450096d30755a00c9f8910168347b4cd1877dc31499d"
+    },
+    {
+      "file": "scripts/creativity-v2/preview.mjs",
+      "bytes": 2709,
+      "sha256": "1e4c14a5a7f63e0b493d56307b36191d8add1d045f8e1a8c2e80883c65c9ac42"
+    },
+    {
+      "file": "scripts/creativity-v2/resume-browser.mjs",
+      "bytes": 4219,
+      "sha256": "8659447393317ff179660426c26c99ecf49c3fa48c24c1a26d5d0d0105cd7867"
+    },
+    {
+      "file": "scripts/creativity-v2/variants.ts",
+      "bytes": 4412,
+      "sha256": "1633db1a9c742d7beeb368d2748b7149a9102468f4121fa7e474ddacf5654646"
+    },
+    {
+      "file": "src/app/api/life/route.ts",
+      "bytes": 15886,
+      "sha256": "1b31c6d26b7ae6a7ac6babd27dbb516d9a495f5bb1a1ca3c28d159ff2c6fb9d8"
+    },
+    {
+      "file": "src/components/life/Discovery.tsx",
+      "bytes": 34829,
+      "sha256": "a1e7c17979cd73037a4efff456fa1ebbdec7b67a738abb2f8bf71092ade94019"
+    },
+    {
+      "file": "src/lib/agent/contracts.ts",
+      "bytes": 6139,
+      "sha256": "e3708d2c3dd177e540738c3db70e52c499fe1d256839a79ef876214ee9ba0b1e"
+    },
+    {
+      "file": "src/lib/agent/graph.ts",
+      "bytes": 68238,
+      "sha256": "94ce941fff840d5cc36f226800b8386eca22e115d6754f97152c951e353198cc"
+    },
+    {
+      "file": "src/lib/agent/home-task.ts",
+      "bytes": 24710,
+      "sha256": "4bdb41277affc8c1610c32971c7409cfd437558b056827da17fb72937531ed7a"
+    },
+    {
+      "file": "src/lib/context/items.ts",
+      "bytes": 3194,
+      "sha256": "e3b6cc9cbb7f365ae7eaf08a2e52ce0c12e3149bb950495e9b09741b59c1f18c"
+    },
+    {
+      "file": "src/lib/domain.ts",
+      "bytes": 24490,
+      "sha256": "fefa6a06e6bfaeb1ee3cb3aabebb3334f86e3b4cda96500ff42e04e68c07a0ce"
+    },
+    {
+      "file": "src/lib/life/affordances.ts",
+      "bytes": 9437,
+      "sha256": "0c955bec7125856f1bb8a1f5c9e65a11e00f7a8bf40d81bd345c4961601aa64f"
+    },
+    {
+      "file": "src/lib/life/creative-engine-v2.ts",
+      "bytes": 19521,
+      "sha256": "04d80a88f7362b3fb0685534dfa3a7693dc1e077b61a8b8808619c7ad60b41c0"
+    },
+    {
+      "file": "src/lib/life/creative-exploration.ts",
+      "bytes": 4468,
+      "sha256": "85702224e1bd6ce7a572c8999b97a0628068ff0ff524c4524b0c5e7570c2135b"
+    },
+    {
+      "file": "src/lib/life/ideas.ts",
+      "bytes": 61576,
+      "sha256": "22d48ed3a735a43fb6b133aebcdfd32e3c34de3a42c208e2cf67499bd604eb14"
+    },
+    {
+      "file": "src/lib/life/inspiration.ts",
+      "bytes": 8955,
+      "sha256": "3886a0395a9b5695e4159772c64d6969f263ab83fde2ba3b63317f6fd721d313"
+    },
+    {
+      "file": "src/lib/life/open-exploration.ts",
+      "bytes": 6325,
+      "sha256": "20e193b0ca7bd4e6827452fd228cbf93e978ac06f30b2a5bc39f3384642c58c4"
+    },
+    {
+      "file": "src/lib/life/physical-facts.ts",
+      "bytes": 1872,
+      "sha256": "2e0a2aa6438e7f10a48e2c66213db4c114e03b126b9661e9883773a4e6645fe5"
+    },
+    {
+      "file": "src/lib/life/planning.ts",
+      "bytes": 29579,
+      "sha256": "a5dc3f63bf8c38444fdf36234c5c83d069db528159578d7a117022010485aebf"
+    },
+    {
+      "file": "tests/creative-engine-v2.test.ts",
+      "bytes": 10606,
+      "sha256": "46a58d7b0303115ced18a917220e8d538236ddd6f05a9417a915a42b33efc7b3"
+    },
+    {
+      "file": "tests/creative-evidence.test.ts",
+      "bytes": 13777,
+      "sha256": "88868c4e71331209c5e30aa5dd708adb7ee2e75ae48af43320dac54a2e06faa2"
+    },
+    {
+      "file": "tests/final-sprint.test.ts",
+      "bytes": 17931,
+      "sha256": "dd3ecddb74e46a92e31faf85f6fc6bdc5258d9f19aab5b625f9bd2f18ce7565d"
+    },
+    {
+      "file": "tests/intelligence-behavior.test.ts",
+      "bytes": 14397,
+      "sha256": "169e52303236445478cbf20eff78a5bebb873a6ad41a40e25afe77779c5003ba"
+    },
+    {
+      "file": "tests/item-understanding-v1.test.ts",
+      "bytes": 16953,
+      "sha256": "abe82fccb09f64627133122a17ed53a497e3636d322c1e073b8c62223bf70769"
+    },
+    {
+      "file": "tests/life-experience.test.ts",
+      "bytes": 13460,
+      "sha256": "7d7e50378c6380e8284c918ecd62691b129f1bf7a062df660c902cdc9a867b9d"
+    },
+    {
+      "file": "tests/life-planning-memory.test.ts",
+      "bytes": 12781,
+      "sha256": "1fd56d7ae12974a5431e265c1c955b217b123a8d63f78f33ea5081434c842a90"
+    },
+    {
+      "file": "tests/open-exploration.test.ts",
+      "bytes": 9348,
+      "sha256": "cc092b9372d8b6baee29f111e4d1f5305c1655dfe83ba263f627da4bf12a8103"
+    },
+    {
+      "file": "tests/unified-home.test.ts",
+      "bytes": 26491,
+      "sha256": "b13d18b05c283ecb3c1fd317d4ba469de55b0f7670ccacd9947c4a302210a3a9"
+    }
+  ],
+  "note": "Report excludes itself; signatures are an additional check, not a proof of absence of every possible secret."
+}

@@ -23,6 +23,7 @@ import {
 } from "@/lib/life/knowledge";
 import { visionStatus, recognizeOwnedPhoto } from "@/lib/life/vision";
 import { planDiscovery } from "@/lib/life/planning";
+import { searchInspiration } from "@/lib/life/inspiration";
 import {
   importCreativeEvidence,
   listCreativeEvidence,
@@ -97,6 +98,10 @@ async function GETHandler(r: Request) {
       db = database(),
       state = read(),
       p = new URL(r.url).searchParams;
+    if (p.has("inspiration"))
+      return Response.json(
+        searchInspiration(z.string().max(500).parse(p.get("inspiration"))),
+      );
     if (p.has("itemId"))
       return Response.json({
         sources: listSources(db, state, a, p.get("itemId")!).map((s) => ({

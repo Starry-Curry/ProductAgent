@@ -1,4 +1,14 @@
 import {
+  exploreOpen,
+  explorationSections,
+  type ExplorationRecord,
+} from "./open-exploration.ts";
+import {
+  generateMechanisms,
+  renderActions,
+  type CreativeAssessment,
+} from "./creative-engine-v2.ts";
+import {
   normalizeCreativePacket,
   creativeOutputContract,
   creativeFacts,
@@ -204,6 +214,10 @@ const recipes: Recipe[] = [
   },
 ];
 export type LifeIdea = {
+  memoryEpoch?: number;
+  exploration?: ExplorationRecord;
+  assessment?: CreativeAssessment;
+  expectedEffect?: string;
   reasoning?: CreativeReasoning;
   reasoningBasis?: "model_hypothesis_not_verified";
   demo?: boolean;
@@ -282,6 +296,8 @@ function candidateKey(idea: LifeIdea) {
         idea.requirements || [],
         idea.experienceSources || [],
         idea.creativeEvidenceSources?.map((e) => e.id) || [],
+        idea.exploration?.text,
+        idea.assessment,
       ]),
     )
     .digest("hex");
@@ -738,6 +754,8 @@ async function draftModelIdea(
     repairAttempt?: boolean;
     validateOnly?: boolean;
     strategy?: "explore";
+    engine?: "legacy" | "goal" | "analogy" | "free" | "retrieval" | "hybrid";
+    selectedIdeaId?: string;
     preferenceScopeIds?: string[];
     creativeEvidence?: CreativeEvidence[];
     experiences?: {
@@ -822,6 +840,201 @@ async function draftModelIdea(
     )
     .slice(0, 4)
     .map((m) => ({ id: m.id, text: m.text, basis: "confirmed_user_report" }));
+  const creativityGuard = () => {
+    if (epoch(db, actor) !== contextEpoch)
+      throw new AgentError("个人授权或记忆已变化，停止探索", 409);
+    const current = readCurrent?.() || state;
+    if (
+      items.some(
+        (i) =>
+          !current.items.some(
+            (c) =>
+              c.id === i.id &&
+              canRead(c, actor) &&
+              usable(c) &&
+              JSON.stringify(itemContext(c)) === JSON.stringify(itemContext(i)),
+          ),
+      )
+    )
+      throw new AgentError("物品资料或权限已变化，停止探索", 409);
+  };
+  if (["free", "retrieval", "hybrid"].includes(constraints.engine || "")) {
+    const generated = await exploreOpen(
+      provider,
+      items,
+      goal,
+      {
+        strategy: constraints.engine as "free" | "retrieval" | "hybrid",
+        preferences: authorizedPreferences,
+        feedback: constraints.planning || {},
+        requiredItemId: constraints.itemId,
+        context: { experiences: constraints.experiences || [] },
+      },
+      creativityGuard,
+    );
+    creativityGuard();
+    const values = explorationSections(generated.result.text).map(
+      (section) => ({
+        id: crypto.randomUUID(),
+        memoryEpoch: contextEpoch,
+        title: section.title,
+        itemIds: items.map((i) => i.id),
+        minutes: budget,
+        steps: [],
+        limits: [
+          "开放创意，尚未核对实施条件或实物验证；请先选择感兴趣的方向。",
+        ],
+        source: "model-creative" as const,
+        evidence: [],
+        tested: false as const,
+        goal,
+        exploration: {
+          ...generated.record,
+          text: riskyGoal.test(withoutProhibitedActions(section.text))
+            ? "这个方向涉及未经核实的危险操作，暂不展示操作细节。可以继续讨论希望达到的效果与低风险替代。"
+            : section.text,
+        },
+      }),
+    );
+    const saved = values.map((i) =>
+      constraints.validateOnly ? i : store(db, actor, i),
+    );
+    return { ...saved[0], alternatives: saved };
+  }
+  if (constraints.engine === "goal" || constraints.engine === "analogy") {
+    const guard = () => {
+      if (epoch(db, actor) !== contextEpoch)
+        throw new AgentError("个人授权或记忆已变化，停止探索", 409);
+      const current = readCurrent?.() || state;
+      if (
+        items.some(
+          (i) =>
+            !current.items.some(
+              (c) =>
+                c.id === i.id &&
+                canRead(c, actor) &&
+                usable(c) &&
+                JSON.stringify(itemContext(c)) ===
+                  JSON.stringify(itemContext(i)),
+            ),
+        )
+      )
+        throw new AgentError("物品资料或权限已变化，停止探索", 409);
+    };
+    const chosenIdea = constraints.selectedIdeaId
+      ? listLifeIdeas(db, state, actor).find(
+          (i) => i.id === constraints.selectedIdeaId,
+        )
+      : undefined;
+    if (
+      constraints.selectedIdeaId &&
+      (!chosenIdea ||
+        chosenIdea.itemIds.some((id) => !items.some((i) => i.id === id)))
+    )
+      throw new AgentError("所选创意未获授权或资源范围已变化", 403);
+    if (
+      chosenIdea?.memoryEpoch !== undefined &&
+      chosenIdea.memoryEpoch !== contextEpoch
+    )
+      throw new AgentError("记忆或授权已变化，请重新探索后再深入", 409);
+    const generated = await generateMechanisms(
+      provider,
+      items,
+      goal,
+      {
+        strategy: constraints.engine,
+        preferences: authorizedPreferences,
+        candidates: constraints.candidates || 1,
+        requiredItemId: constraints.itemId,
+        feedback: [constraints.planning || {}],
+        context: {
+          selectedDirection: chosenIdea
+            ? {
+                title: chosenIdea.title,
+                text: chosenIdea.exploration?.text || chosenIdea.rationale,
+              }
+            : undefined,
+          minutes: budget,
+          experiences: constraints.experiences || [],
+          creativeEvidence: constraints.creativeEvidence || [],
+        },
+      },
+      guard,
+    );
+    guard();
+    const previous = listLifeIdeas(db, state, actor);
+    const selected = generated.candidates.filter(
+      ({ proposal: p, assessment: a }) =>
+        p.roles.every((r) =>
+          generated.inventory.items.some((i) => i.ref === r.item),
+        ) &&
+        (!constraints.itemId ||
+          p.roles.some(
+            (r) =>
+              generated.inventory.items.find((i) => i.ref === r.item)?.id ===
+              constraints.itemId,
+          )) &&
+        !a.checks.some(
+          (c) =>
+            [
+              "preference",
+              "resource",
+              "quantity",
+              "restriction",
+              "goal-restriction",
+            ].includes(c.code) && c.status === "contradiction",
+        ) &&
+        !previous.some(
+          (old) =>
+            ["不感兴趣", "未成功"].includes(old.outcome || "") &&
+            old.assessment?.signature === a.signature,
+        ),
+    );
+    if (!selected.length)
+      throw new ProviderError(
+        "insufficient_conditions",
+        generated.question ||
+          "本轮没有满足资源与授权条件的新创意；未用固定任务代替。",
+      );
+    const values = selected.map(({ proposal: p, assessment: a }): LifeIdea => ({
+      id: crypto.randomUUID(),
+      memoryEpoch: contextEpoch,
+      title: p.title,
+      expectedEffect: p.outcome,
+      itemIds: p.roles.map(
+        (r) => generated.inventory.items.find((i) => i.ref === r.item)!.id,
+      ),
+      minutes: p.minutes,
+      steps: renderActions(p, a, generated.inventory),
+      limits: [
+        "这是模型创意设想；条件检查不代表实物验证。",
+        ...a.checks
+          .filter((c) => c.status !== "supported")
+          .map((c) => c.detail),
+      ],
+      missing: a.checks
+        .filter((c) => c.status === "unknown")
+        .map((c) => c.detail),
+      rationale: p.mechanism,
+      assessment: a,
+      reasoningBasis: "model_hypothesis_not_verified",
+      source: "model-creative",
+      tested: false,
+      goal,
+      evidence: a.facts
+        .filter((f) => f.url)
+        .map((f) => ({ id: f.sourceRef, text: f.text, url: f.url! })),
+    }));
+    guard();
+    const saved = values.map((i) =>
+      constraints.validateOnly ? i : store(db, actor, i),
+    );
+    return {
+      ...saved[0],
+      alternatives: saved,
+      validationNotes: generated.question ? [generated.question] : [],
+    };
+  }
   let result =
     constraints.precomputed ||
     (constraints.strategy === "explore"
