@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-30T16:30:47.270Z",
+  "paidModelCalls": 0,
+  "synthetic": true,
+  "passed": true,
+  "errors": [],
+  "task": {
+    "id": "3992c5d7-53e5-4c1b-af8b-43bc6bd4128c",
+    "summary": "使用求助：[合成]给家人使用的M185；M185应该用什么电池？",
+    "basis": "user_confirmed_summary"
+  }
+}

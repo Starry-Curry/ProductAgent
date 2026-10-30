@@ -1,0 +1,18 @@
+{
+  "recordedAt": "2026-10-30T16:32:00.202804+00:00",
+  "manifestFilesVerified": 14,
+  "historicLedgerUnchanged": true,
+  "passEvidenceFilesExist": true,
+  "caseCount": 85,
+  "testedSourceCommit": "6154dc4",
+  "productionBuild": ".next-unified-v2-final-safe",
+  "paidCalls": 0,
+  "offlineTestsPassed": 382,
+  "typecheck": "pass",
+  "browserFinalSuites": [
+    "legacy-browser-final/browser.json",
+    "focus-browser.json",
+    "care-browser.json"
+  ],
+  "legacyBrowserChecks": 10
+}

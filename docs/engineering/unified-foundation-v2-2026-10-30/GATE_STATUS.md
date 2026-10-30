@@ -14,4 +14,6 @@
 
 ## G3 / G4 / G5
 
-实施中。最终状态以 DELIVERY_REPORT、TEST_EVIDENCE 和逐案结果为准；本阶段记录不等于最终验收。
+统一任务/运行/Context/Outcome与专业模块兼容桥接已落地；真实浏览器覆盖多账号、任务续接、故事、赠礼、家人与大字求助。软件灯按数据库/账号/实例隔离，保留软件验证等级；历史赠礼档案不能再次赠出或继续操作。最后自审发现的问题均保留修复记录。
+
+G5未通过：46案pass（含9原型路径）、5案blocked、34案blocked_model_budget。382离线、类型、构建与基准通过，不能据此替代真实模型内容与用户价值验收。最终状态及恢复命令见 DELIVERY_REPORT、TEST_EVIDENCE、REMAINING_GAPS。

@@ -1,0 +1,282 @@
+{
+  "at": "2026-10-30T09:59:08.717Z",
+  "paidModelCalls": 0,
+  "synthetic": true,
+  "cases": [
+    {
+      "id": "QA-22",
+      "status": "pass",
+      "text": "/81测试资料不能证明/90的操作，不混合地区；此处是适用性集成，不是厂商事实复测",
+      "actual": {
+        "version": "evidence-claim/1",
+        "claimId": "1d55f66bca1e5127c72575ab5ff0724e09d6be2ecacfd02573d2c409a84e6f63",
+        "subjectModelKey": "p",
+        "predicate": "首次清洗",
+        "normalizedValue": "测试片段：第一步清洗配件",
+        "verdict": "not_found",
+        "derivation": "explicit",
+        "assertedScope": {
+          "region": "uk",
+          "firmware": "unknown"
+        },
+        "sourceRefs": [],
+        "confidenceBasis": "缺少适用型号的逐字依据；不是明确否定"
+      }
+    },
+    {
+      "id": "CONSTRAINT-10",
+      "status": "blocked",
+      "text": "实际状态保持unknown；完整规划需模型，当前未授权，未用静态断言冒充计划完成",
+      "actual": {
+        "version": "task-context/1",
+        "task": {
+          "version": "task-spec/1",
+          "contextEpoch": 0,
+          "taskId": "e37891af-79db-4cc1-aca8-5b9d60d8f211",
+          "revision": 1,
+          "createdBy": "lin",
+          "goal": "准备拍摄角，但台灯状态未知",
+          "intent": "plan",
+          "itemInstanceIds": [
+            "959770a0-6668-4ac3-81d4-90e5cff76186",
+            "e0d72d50-3f24-4496-b00d-548df504f9e3"
+          ],
+          "participantIds": [],
+          "participantSummaries": {},
+          "currentStage": "draft",
+          "contextRefs": [
+            {
+              "kind": "item",
+              "id": "959770a0-6668-4ac3-81d4-90e5cff76186",
+              "revision": "8a8a545935bda74a52b81722364c56f92d04b16c8214ceea509dc8393796288e",
+              "whyNeeded": "用户选择或确认的业务对象"
+            },
+            {
+              "kind": "item",
+              "id": "e0d72d50-3f24-4496-b00d-548df504f9e3",
+              "revision": "f4220509fe24a70569dec3eb549b77adb20a62f9553d9ac249e7f176e9bf8832",
+              "whyNeeded": "用户选择或确认的业务对象"
+            }
+          ],
+          "createdAt": "2026-10-30T09:59:08.874Z",
+          "updatedAt": "2026-10-30T09:59:08.874Z"
+        },
+        "modelGoal": "准备拍摄角，但台灯状态未知",
+        "policyRevision": "394e2c1c718cbcf5acb5a5f12b1cdaea249e908072498ca3b26d62d59f68885f",
+        "previousOutcomes": [],
+        "items": [
+          {
+            "instance": {
+              "version": "item-instance/1",
+              "itemInstanceId": "959770a0-6668-4ac3-81d4-90e5cff76186",
+              "modelKey": "pm_abd826b28218185c87cc54f8aab8d3cb",
+              "owner": "lin",
+              "state": "待确认",
+              "availability": "unknown",
+              "location": "未设置",
+              "personalFacts": {
+                "basis": "user_report",
+                "attributes": {}
+              },
+              "synthetic": false,
+              "revision": "8a8a545935bda74a52b81722364c56f92d04b16c8214ceea509dc8393796288e"
+            },
+            "product": {
+              "version": "product-model/1",
+              "modelKey": "pm_abd826b28218185c87cc54f8aab8d3cb",
+              "brand": "小米",
+              "model": "MJTD01SYL",
+              "region": "unknown",
+              "firmware": "unknown"
+            }
+          },
+          {
+            "instance": {
+              "version": "item-instance/1",
+              "itemInstanceId": "e0d72d50-3f24-4496-b00d-548df504f9e3",
+              "modelKey": "pm_c2bec6f2d6c36e16c2a12422a2736548",
+              "owner": "lin",
+              "state": "在用",
+              "availability": "available",
+              "location": "未设置",
+              "personalFacts": {
+                "basis": "user_report",
+                "attributes": {}
+              },
+              "synthetic": false,
+              "revision": "f4220509fe24a70569dec3eb549b77adb20a62f9553d9ac249e7f176e9bf8832"
+            },
+            "product": {
+              "version": "product-model/1",
+              "modelKey": "pm_c2bec6f2d6c36e16c2a12422a2736548",
+              "brand": "SONY",
+              "model": "WH-CH520",
+              "region": "unknown",
+              "firmware": "unknown"
+            }
+          }
+        ],
+        "notice": "私人记忆按当前执行器的既有许可另外检索，任务引用不自动授予访问权"
+      }
+    },
+    {
+      "id": "GIFT-08",
+      "status": "blocked",
+      "text": "缺少实物持有确认时确实拒绝建实例；订单与预定接收者的独立模型尚未实现，整案未通过",
+      "actual": {
+        "ownershipConfirmationRequired": true,
+        "orderEntity": false
+      }
+    },
+    {
+      "id": "AGENT-03",
+      "status": "pass",
+      "text": "上传后保持同一TaskId；只有实际读回用户资料才算恢复成功，不以模型不可用替代完成",
+      "actual": {
+        "before": {
+          "outcome": "unavailable",
+          "answer": "云端 AI 尚未配置，可以先核对资料或记录尝试。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "errorCode": "not_configured"
+        },
+        "after": {
+          "outcome": "needs_info",
+          "answer": "资料已保存，但目前未找到能直接回答这个问题的原文。关键词出现不代表参数或操作已经确认；请补充对应型号的相关章节，或换一个更具体的问题。",
+          "steps": [],
+          "questions": [
+            "能补充与问题直接相关的原文及型号吗？"
+          ],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "source": "user-source",
+          "caveat": "尚未确认答案，不推断官方参数。"
+        }
+      }
+    },
+    {
+      "id": "AGENT-04",
+      "status": "pass",
+      "text": "读取后撤权，完成/写入前重新鉴权并拒绝旧任务；两进程并发另见单元原始日志",
+      "actual": {
+        "runId": "38c0ab06-b73b-4ccc-96ed-1962f0cc15b0",
+        "afterRevocation": "blocked"
+      }
+    },
+    {
+      "id": "AGENT-05",
+      "status": "pass",
+      "text": "真实型号MJTD01SYL不会被自有软件灯REA执行器接受；没有发起任何实物控制",
+      "actual": {
+        "hardwareExecuted": false,
+        "refused": true
+      }
+    },
+    {
+      "id": "AGENT-09",
+      "status": "pass",
+      "text": "用户自报有效方法可明确选择本人下次参考；未允许上云仍不传云端，不升格硬件回读",
+      "actual": {
+        "outcome": {
+          "version": "outcome/1",
+          "outcomeId": "6586831d-467f-466f-b825-a99bed9f9e8a",
+          "taskId": "718d837e-1406-4128-a688-b1ba9c508777",
+          "runId": "d195bc94-71d7-4cb9-91ed-1674fcb7fb04",
+          "goalStatus": "achieved",
+          "basis": "user_report",
+          "reporterId": "lin",
+          "notes": "[合成用户报告]按资料更换电池后已解决",
+          "itemInstanceIds": [
+            "88432289-b199-4295-b9ff-bea7a2d6c1f3"
+          ],
+          "occurredAt": "2026-10-30T09:59:09.158Z",
+          "canReuseForFutureTasks": true,
+          "allowCloud": false,
+          "memoryEpoch": 1
+        },
+        "context": {
+          "version": "task-context/1",
+          "task": {
+            "version": "task-spec/1",
+            "contextEpoch": 1,
+            "taskId": "47fed944-f40b-45c7-b876-0fa226e92fb4",
+            "revision": 1,
+            "createdBy": "lin",
+            "goal": "下次鼠标排查",
+            "intent": "guide",
+            "itemInstanceIds": [
+              "88432289-b199-4295-b9ff-bea7a2d6c1f3"
+            ],
+            "participantIds": [],
+            "participantSummaries": {},
+            "currentStage": "draft",
+            "contextRefs": [
+              {
+                "kind": "item",
+                "id": "88432289-b199-4295-b9ff-bea7a2d6c1f3",
+                "revision": "0771295aff0bd398bb9d61679cbc64e254264c81bd5d51678e0006695aff9549",
+                "whyNeeded": "用户选择或确认的业务对象"
+              }
+            ],
+            "createdAt": "2026-10-30T09:59:09.161Z",
+            "updatedAt": "2026-10-30T09:59:09.161Z"
+          },
+          "modelGoal": "下次鼠标排查",
+          "policyRevision": "e1ea3159653b4e4ab4dc40c0dccf351b9ac9d986b9c3e01a40520c7cba741ce8",
+          "previousOutcomes": [
+            {
+              "version": "outcome/1",
+              "outcomeId": "6586831d-467f-466f-b825-a99bed9f9e8a",
+              "taskId": "718d837e-1406-4128-a688-b1ba9c508777",
+              "runId": "d195bc94-71d7-4cb9-91ed-1674fcb7fb04",
+              "goalStatus": "achieved",
+              "basis": "user_report",
+              "reporterId": "lin",
+              "notes": "[合成用户报告]按资料更换电池后已解决",
+              "itemInstanceIds": [
+                "88432289-b199-4295-b9ff-bea7a2d6c1f3"
+              ],
+              "occurredAt": "2026-10-30T09:59:09.158Z",
+              "canReuseForFutureTasks": true,
+              "allowCloud": false,
+              "memoryEpoch": 1
+            }
+          ],
+          "items": [
+            {
+              "instance": {
+                "version": "item-instance/1",
+                "itemInstanceId": "88432289-b199-4295-b9ff-bea7a2d6c1f3",
+                "modelKey": "pm_24dcaf2903b02c9e39b3ee5432f115bf",
+                "owner": "lin",
+                "state": "在用",
+                "availability": "available",
+                "location": "未设置",
+                "personalFacts": {
+                  "basis": "user_report",
+                  "attributes": {}
+                },
+                "synthetic": false,
+                "revision": "0771295aff0bd398bb9d61679cbc64e254264c81bd5d51678e0006695aff9549"
+              },
+              "product": {
+                "version": "product-model/1",
+                "modelKey": "pm_24dcaf2903b02c9e39b3ee5432f115bf",
+                "brand": "LOGITECH",
+                "model": "M185",
+                "region": "unknown",
+                "firmware": "unknown"
+              }
+            }
+          ],
+          "notice": "私人记忆按当前执行器的既有许可另外检索，任务引用不自动授予访问权"
+        }
+      }
+    }
+  ]
+}

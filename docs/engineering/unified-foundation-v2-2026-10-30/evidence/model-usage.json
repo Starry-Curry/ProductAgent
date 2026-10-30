@@ -1,0 +1,11 @@
+{
+  "recordedAt": "2026-10-30T16:32:00.202804+00:00",
+  "phase": "unified-foundation-v2",
+  "newPaidRequests": 0,
+  "estimatedCny": 0,
+  "newPaidAuthorization": false,
+  "historicalLedgerSha256": "f24bef4a70c079a01b47074ec374b9d3f72c8a5119693792903507ade41cb369",
+  "historicalRequestsExhausted": 150,
+  "liveModelCasesBlocked": 34,
+  "note": "不读取或复制凭证；历史账目只计算哈希，不重置、不作为本轮模型输出。"
+}

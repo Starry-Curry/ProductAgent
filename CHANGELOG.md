@@ -1,3 +1,12 @@
+## 2026-10-31｜统一智能基座 V2 实验分支（最终验收未通过）
+
+以 product-foundation-v1 d8eee930 为正式本轮基线，在 codex/wujian-unified-foundation-v2 隔离升级；未合 main、未修改私人库或项目 Instructions。物品/型号适配、独立 Grant、TaskSpec/Run/Context/Outcome、故事赠礼与家人引用桥接、未知运行保护及软件能力证据已落地。新目标直接发起，旧任务可跨页面恢复；普通视图刷新、自然/大字问答交家人已修复。软件运行按数据空间/账号/实物隔离，历史赠礼不能重复赠出或复用控制。
+
+382项离线通过（新增11项及既有测试扩展）；类型、生产构建、benchmark、原有API与新旧真实浏览器通过。85案46通过（含9原型路径）、5其他阻断、34真实模型预算阻断。新增付费调用0；旧150次账目不重置，事实综合实验仍关闭，不能宣称模型更聪明或G5通过。普通报告与失败证据完整保留。
+
+[本轮交付与运行](docs/engineering/unified-foundation-v2-2026-10-30/README.md)、[测试](docs/engineering/unified-foundation-v2-2026-10-30/TEST_EVIDENCE.md)、[未达标项](docs/engineering/unified-foundation-v2-2026-10-30/REMAINING_GAPS.md)。产品正式依据为 docs/product/PRODUCT_FINAL_V1.md：释放人与物的价值；兑现、创造、延续、传递。导航未真人定案，硬件/公开部署/付费仍单独授权。
+
+---
 # Changelog
 
 ## 2026-10-30：统一家庭体验 Beta（独立分支，内容验收未全部通过）

@@ -1,0 +1,248 @@
+{
+  "humanStudy": false,
+  "paths": [
+    {
+      "id": "ENTRY-01",
+      "scheme": "A",
+      "path": [
+        "此刻",
+        "我要做件事"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-02",
+      "scheme": "A",
+      "path": [
+        "我的物品",
+        "物品使用帮助"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-03",
+      "scheme": "A",
+      "path": [
+        "生活与关系",
+        "写故事"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-04",
+      "scheme": "A",
+      "path": [
+        "我的物品",
+        "发现新玩法"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-05",
+      "scheme": "A",
+      "path": [
+        "生活与关系",
+        "家庭求助"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-06",
+      "scheme": "A",
+      "path": [
+        "生活与关系",
+        "分享与赠礼"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-07",
+      "scheme": "A",
+      "path": [
+        "此刻",
+        "接续任务"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-08",
+      "scheme": "A",
+      "path": [
+        "此刻",
+        "待办与提醒"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-09",
+      "scheme": "A",
+      "path": [
+        "此刻",
+        "问物间"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-01",
+      "scheme": "B",
+      "path": [
+        "此刻",
+        "我要做件事"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-02",
+      "scheme": "B",
+      "path": [
+        "我的物品",
+        "物品使用帮助"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-03",
+      "scheme": "B",
+      "path": [
+        "生活故事",
+        "写故事"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-04",
+      "scheme": "B",
+      "path": [
+        "此刻",
+        "发现新玩法"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-05",
+      "scheme": "B",
+      "path": [
+        "家人与分享",
+        "家庭求助"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-06",
+      "scheme": "B",
+      "path": [
+        "家人与分享",
+        "分享与赠礼"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-07",
+      "scheme": "B",
+      "path": [
+        "此刻",
+        "接续任务"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-08",
+      "scheme": "B",
+      "path": [
+        "此刻",
+        "待办与提醒"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-09",
+      "scheme": "B",
+      "path": [
+        "此刻",
+        "问物间"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-01",
+      "scheme": "C",
+      "path": [
+        "生活首页",
+        "我要做件事"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-02",
+      "scheme": "C",
+      "path": [
+        "问物间",
+        "物品使用帮助"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-03",
+      "scheme": "C",
+      "path": [
+        "生活故事",
+        "写故事"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-04",
+      "scheme": "C",
+      "path": [
+        "发现新玩法",
+        "发现新玩法"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-05",
+      "scheme": "C",
+      "path": [
+        "家庭",
+        "家庭求助"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-06",
+      "scheme": "C",
+      "path": [
+        "社交",
+        "分享与赠礼"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-07",
+      "scheme": "C",
+      "path": [
+        "生活首页",
+        "接续任务"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-08",
+      "scheme": "C",
+      "path": [
+        "生活首页",
+        "待办与提醒"
+      ],
+      "passed": true
+    },
+    {
+      "id": "ENTRY-09",
+      "scheme": "C",
+      "path": [
+        "问物间",
+        "问物间"
+      ],
+      "passed": true
+    }
+  ]
+}

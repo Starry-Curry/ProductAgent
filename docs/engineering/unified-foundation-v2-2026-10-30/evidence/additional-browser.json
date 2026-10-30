@@ -1,0 +1,128 @@
+{
+  "at": "2026-10-30T09:55:52.103Z",
+  "paidModelCalls": 0,
+  "synthetic": true,
+  "checks": [
+    {
+      "ids": [
+        "PERSONA-01"
+      ],
+      "passed": true,
+      "detail": "R50实际页面启用并保存小光；人格不附造用户历史，未测试付费模型表现"
+    },
+    {
+      "ids": [
+        "PERSONA-02"
+      ],
+      "passed": true,
+      "detail": "合成相机故事保存并建立有来源的关系记忆，浏览器故事页可读；原始内容为用户叙述，不是外部事实"
+    },
+    {
+      "ids": [
+        "PERSONA-05"
+      ],
+      "passed": true,
+      "detail": "通过真实账号更正已确认偏好；后端不再返回旧断言；不声称已验证模型推荐改变"
+    },
+    {
+      "ids": [
+        "PERSONA-06"
+      ],
+      "passed": true,
+      "detail": "撤回关系记忆后新会话不召回旧事实，原故事保留但不会充当第二来源自动补回"
+    },
+    {
+      "ids": [
+        "PERSONA-08"
+      ],
+      "passed": true,
+      "detail": "父亲使用的任务目标不自动改写本人长期偏好；未验证模型的个性化表达"
+    },
+    {
+      "ids": [
+        "FAMILY-02"
+      ],
+      "passed": true,
+      "detail": "仅共享KALLAX，另一独立账号展柜只显示该物品，不能读取Canon私人物品或故事"
+    },
+    {
+      "ids": [
+        "FAMILY-04"
+      ],
+      "passed": true,
+      "detail": "任务刚创建无已读、接手及完成时间；真实页面显示尚未读取"
+    },
+    {
+      "ids": [
+        "FAMILY-05"
+      ],
+      "passed": true,
+      "detail": "浏览器显式标记已读，尚未接手；两种状态分开保存"
+    },
+    {
+      "ids": [
+        "FAMILY-06"
+      ],
+      "passed": true,
+      "detail": "米家台灯事项由家人接手并报告完成，状态明确为user_report，未伪称设备回读"
+    },
+    {
+      "ids": [
+        "FAMILY-09"
+      ],
+      "passed": true,
+      "detail": "共享R50型号档案没有共享A的大学私人故事、记忆和上传文件"
+    },
+    {
+      "ids": [
+        "PERSONA-04"
+      ],
+      "passed": true,
+      "detail": "同款WH-CH520分别有自己的实例与人格设置，两个浏览器账号不能读取对方私人物品"
+    },
+    {
+      "ids": [
+        "GIFT-01",
+        "GIFT-02"
+      ],
+      "passed": true,
+      "detail": "仅选中寄语出现在真实收礼预览；私人经历不显示，预览未认领时所有权未变化"
+    },
+    {
+      "ids": [
+        "GIFT-03"
+      ],
+      "passed": true,
+      "detail": "WH-CH520真实页面认领形成独立实例；接收者实际状态重新待确认，未声称真实实物已经交付"
+    },
+    {
+      "ids": [
+        "GIFT-04"
+      ],
+      "passed": true,
+      "detail": "R50由独立接收者认领后，新私人故事不回流原主人"
+    },
+    {
+      "ids": [
+        "GIFT-05"
+      ],
+      "passed": true,
+      "detail": "未认领KALLAX礼物撤回后API拒绝预览，物主不变；不伪造运输状态"
+    },
+    {
+      "ids": [
+        "GIFT-06"
+      ],
+      "passed": true,
+      "detail": "台灯仍有未完成事项时认领被阻断，归属未静默转移；当前在认领环节阻止，创建预览仍允许"
+    },
+    {
+      "ids": [
+        "GIFT-07"
+      ],
+      "passed": true,
+      "detail": "SAMLA所选文字保留A的原作者与来源，B的新备注是独立私人实例数据"
+    }
+  ],
+  "errors": []
+}

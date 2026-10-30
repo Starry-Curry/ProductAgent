@@ -1,0 +1,280 @@
+{
+  "at": "2026-10-30T09:54:16.659Z",
+  "paidModelCalls": 0,
+  "synthetic": true,
+  "checks": [
+    {
+      "name": "独立账号缺少本人持有确认时不建实例",
+      "passed": true
+    },
+    {
+      "name": "真实界面创建统一任务",
+      "passed": true,
+      "taskId": "0b4d94f2-c9b5-4b93-adf8-d2f6103da88d"
+    },
+    {
+      "name": "跨页面与刷新后恢复任务ID与物品",
+      "passed": true
+    },
+    {
+      "name": "模型未授权时诚实不可用，任务仍有运行记录",
+      "passed": true,
+      "reply": {
+        "outcome": "unavailable",
+        "answer": "统一家庭任务需要模型来理解完整目标，当前模型尚未可用；不会用单条本地资料冒充完整回答。资料、故事与记忆管理仍可查看。",
+        "steps": [],
+        "questions": [],
+        "citations": [],
+        "evidenceIds": [],
+        "memoryIds": [],
+        "source": "local-dialogue",
+        "errorCode": "not_configured"
+      },
+      "foundation": {
+        "taskId": "0b4d94f2-c9b5-4b93-adf8-d2f6103da88d",
+        "runId": "d2a390f0-5271-4f03-a719-767d08a8989b",
+        "status": "partial",
+        "basis": "not_verified"
+      }
+    },
+    {
+      "name": "真实界面反馈写入用户报告，不称设备回读",
+      "passed": true
+    },
+    {
+      "name": "同一TaskId交接家人，私人原始目标与结果备注不传递",
+      "passed": true
+    },
+    {
+      "name": "桌面与390px移动端任务界面，无JS错误/横向溢出",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "network": [
+    {
+      "product": "SONY-WH-CH520",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+      "finalUrl": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+      "status": 200,
+      "official": true,
+      "title": "WH-CH520 | 帮助指南 | 首页",
+      "elapsedMs": 215,
+      "error": null,
+      "textHash": "4014d0ca90d0329373b36518edd51413a0af9ec29ec6be2d819023295bcb38ca",
+      "excerpt": "型号：YY2958\n\n快速入门指南\n\n下载应用程序并设置耳机\n\n若要使用所有功能和改善的性能，将耳机软件和“Sony | Headphones Connect”应用程序更新至最新版本。如需了解详情，请参阅以下网站：\n\nhttps://www.sony.net/elesupport/\n\n开始使用\n\n打开耳机按住（电源）按钮约2秒或以上直到指示灯（蓝色）闪烁。购买后首次打开耳机时，耳机自动进入配对模式。\n\n建立BLUETOOTH®连接按照下载的“Sony | Headphones Connect”应用程序说明操作。\n\n操作耳机可使用耳机右单元的按钮执行以下操作。\n\n（播放）按钮\n暂停期间按一下：播放\n播放期间按一下：暂停\n\n–（音量–）/（上一首）按钮\n短按一次：减小音量\n按住直到听见通知声：跳至上一首歌曲（或正在播放中的曲目）的开头\n\n+（音量+）/（下一首）按钮\n短按一次：增大音量\n按住直到听见通知声：跳至下一首歌曲的开头\n\n有关操作的更多详细信息，请参阅“控制音频设备（Bluetooth连接）”。\n\n防止因受潮而燃烧或故障\n\n耳机不防喷水。\n\n如果耳机在被雨水或汗水等浸湿的情况下充电",
+      "manualLinks": [],
+      "basis": "live_fetch",
+      "indexed": true,
+      "importError": null
+    },
+    {
+      "product": "SONY-WH-CH520",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777286.html",
+      "finalUrl": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777286.html",
+      "status": 200,
+      "official": true,
+      "title": "WH-CH520 | 帮助指南 | 配对和连接Bluetooth设备",
+      "elapsedMs": 341,
+      "error": null,
+      "textHash": "084274ad7ca6091c9762f8ce0f25ade98431fe5981a88b79e61ea56e626f12fe",
+      "excerpt": "配对和连接Bluetooth设备\n\n注册所要连接设备的操作称为“配对”。首次配合耳机使用设备时，请先配对设备。\n\n开始操作前，请确认以下事项：\n\n将Bluetooth设备放在距离耳机1 m范围内。\n\n耳机电量充足。\n\n准备好Bluetooth设备的使用说明书。\n\n进入此耳机上的配对模式。\n\n在您购买耳机后首次与设备配对时，或初始化耳机后（耳机没有配对信息），打开耳机。耳机自动进入配对模式。在这种情况下，执行步骤\n\n。\n\n当您配对第二个或后续设备（耳机已具有其他设备的配对信息）时，按住\n\n（Bluetooth）按钮约5秒钟或以上手动进入配对模式。\n\n指示灯（蓝色）连续双闪2次。您会听见语音指导播报“配对中”。\n\n在Bluetooth设备上执行配对步骤以搜索本耳机。\n\n[WH-CH520]将显示在Bluetooth设备屏幕上已检测到的设备列表中。\n\n如果没有显示，请从步骤\n\n开始重复操作。\n\n选择Bluetooth设备屏幕上显示的[WH-CH520]进行配对。\n\n如果要求输入密钥*，请输入“0000”。\n\n*密钥可能称为“密码”、“PIN码”、“PIN号”或“口令”。\n\n从Bluetoot",
+      "manualLinks": [],
+      "basis": "live_fetch"
+    },
+    {
+      "product": "SONY-WH-CH520",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+      "finalUrl": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+      "status": 200,
+      "official": true,
+      "title": "WH-CH520 | 帮助指南 | 部件的位置和功能",
+      "elapsedMs": 335,
+      "error": null,
+      "textHash": "441c588ff0d182835fb5e74053aa5daadd42b156c93ec91bc564b59cb39759a2",
+      "excerpt": "部件的位置和功能\n\n头带\n\n（左）标记\n\n左侧单元\n\n触点\n左单元上存在触点。\n\n滑块（左、右）\n滑动以调节头带的长度。\n\n（右）标记\n\n右侧单元\n\n+（音量+）/\n\n（下一首）按钮\n\n+按钮上存在触点。操作耳机时，请将该点作为指导。\n\n（播放/通话）/\n\n（电源）/\n\n（Bluetooth）按钮\n\n–（音量–）/\n\n（上一首）按钮\n\n指示灯（蓝色/橙色）\n\n亮为蓝色或橙色以表示耳机的电源或通讯状态。\n\nUSB Type-C端口\n\n用附带的USB Type-C连接线将耳机连接到电脑，或通过市售USB交流电源适配器连接到交流电源插座，可对耳机充电。\n\n麦克风\n\n内置天线\n\n耳机中内置一根Bluetooth天线。\n\n返回页首\n\n相关主题\n\n关于指示灯\n\n检查电池剩余电量",
+      "manualLinks": [],
+      "basis": "live_fetch"
+    },
+    {
+      "product": "JBL-CLIP5",
+      "url": "https://www.jbl.com/CLIP-5.html",
+      "status": 400,
+      "official": false,
+      "elapsedMs": 1012,
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+      "textHash": null,
+      "manualLinks": [],
+      "basis": "live_fetch_failed_no_cache"
+    },
+    {
+      "product": "LOGI-M185",
+      "url": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+      "finalUrl": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+      "status": 200,
+      "official": true,
+      "title": "M185 Technical Specifications – Logitech Support + DownloadSustainability Navigation",
+      "elapsedMs": 984,
+      "error": null,
+      "textHash": "b8ce31ca249614ea64e9cdb6ebc3eb6264f062f1540a84833b680f51a32cab0b",
+      "excerpt": "Welcome to Logitech Support\n\nDownloads\n\nGetting Started\n\nFAQ\n\nVideos\n\nProduct Support\n\nContact Us\n\nRegister\n\nGetting Started\n\nFAQ\n\nDownloads\n\nVideos\n\nWarranty\n\nSpecifications\n\nSpare Parts\n\nContact Us\n\nThere are no Downloads for this Product\n\nThere are no FAQs for this Product\n\nThere are no Documents available for this Product. If you have questions, browse the topics on the left.\n\nThere are no Spare Parts available for this Product\n\nThere are no videos available for this product\n\nThere are no FA",
+      "manualLinks": [],
+      "basis": "live_fetch",
+      "indexed": true,
+      "importError": null
+    },
+    {
+      "product": "CANON-R50",
+      "url": "https://www.canon.com.cn/product/r50/",
+      "finalUrl": "https://www.canon.com.cn/product/r50/",
+      "status": 200,
+      "official": true,
+      "title": "EOS R50 - EOS专微相机 - 佳能(中国)",
+      "elapsedMs": 493,
+      "error": null,
+      "textHash": "ebf6a850ef35655483bd24a284c0bbf8dcc74d7fba6ab4df20063031d50097bb",
+      "excerpt": "联系我们\n\n返回顶部\n\n首页\n\n产品\n\n个人产品\n\n个人产品首页\n\nEOS微单/单反相机\n\nRF/EF镜头\n\nEOS数码相机附件\n\n小型数码相机\n\n数码摄像机\n\n打印机\n\n图片扫描仪\n\n望远镜\n\n新概念相机\n\n耗材\n\n办公及工业产品\n\n办公及工业产品首页\n\n数码复合机\n\n数码复合机租赁(印量包)\n\n打印机\n\n网络摄像机及解决方案\n\n高速文件扫描仪\n\n商用印刷系统\n\n大幅面打印机\n\n专业影视设备\n\n广播器材\n\n摄控一体机\n\n虚拟现实系统/VR解决方案\n\n耗材\n\n系统解决方案（佳创空间）\n\n电子元器件\n\n商务解决方案\n\n购买\n\n购买指南首页\n\n经销商查询\n\n官方旗舰店\n\n官方旗舰店首页\n\n官方线上商城\n\n天猫官方旗舰店\n\n天猫打印旗舰店\n\n天猫冲印服务旗舰店\n\n京东官方旗舰店\n\n京东打印机旗舰店\n\n京东冲印服务旗舰店\n\n抖音官方旗舰店\n\n请在抖音平台搜索佳能官方旗舰店\n\n小红书官方旗舰店\n\n请在小红书平台搜索佳能官方旗舰店\n\n微信佳能线上商城\n\n请在微信平台搜索佳能线上商城\n\n电商旗舰店\n\n电商旗舰店首页\n\n影像产品京东自营旗舰店\n\n打印机京东自营旗舰店\n\n商务办公京东自营旗舰店\n\n专业打",
+      "manualLinks": [],
+      "basis": "live_fetch",
+      "indexed": true,
+      "importError": null
+    },
+    {
+      "product": "CANON-R50",
+      "url": "https://cam.start.canon/en/C011/manual/html/",
+      "finalUrl": "https://cam.start.canon/en/C011/manual/html/",
+      "status": 200,
+      "official": true,
+      "title": "Canon : Product Manual : EOS R50",
+      "elapsedMs": 496,
+      "error": null,
+      "textHash": "21a87fabfb6aaa671fe16e4917d9adc74dc269144a0c0b5bbc5181d6c71e506b",
+      "excerpt": "Advanced User Guide\n\nThese operating instructions are for the EOS R50 with firmware ver. 1.5.0 or later installed.",
+      "manualLinks": [],
+      "basis": "live_fetch"
+    },
+    {
+      "product": "PHILIPS-HD9252-90",
+      "url": "https://www.philips.co.uk/c-p/HD9252_90/essential-airfryer/support",
+      "status": 400,
+      "official": false,
+      "elapsedMs": 845,
+      "error": "来源跳转到其他站点或跳转过多；请核对最终链接后主动读取",
+      "textHash": null,
+      "manualLinks": [],
+      "basis": "live_fetch_failed_no_cache"
+    },
+    {
+      "product": "DJI-OM6",
+      "url": "https://www.dji.com/osmo-mobile-6/specs",
+      "finalUrl": "https://www.dji.com/cn/osmo-mobile-6/specs",
+      "status": 200,
+      "official": true,
+      "title": "Osmo Mobile 6 - 技术参数 - DJI 大疆创新",
+      "elapsedMs": 201,
+      "error": null,
+      "textHash": "6241f35b153d5ffc67a58053bccc1ecd91d8f32a6c9ec5d966a5596da261eeef",
+      "excerpt": "Osmo Mobile 6 - 技术参数 - DJI 大疆创新",
+      "manualLinks": [],
+      "basis": "live_fetch",
+      "indexed": true,
+      "importError": null
+    },
+    {
+      "product": "DJI-OM6",
+      "url": "https://www.dji.com/osmo-mobile-6/faq",
+      "finalUrl": "https://www.dji.com/cn/osmo-mobile-6/faq",
+      "status": 200,
+      "official": true,
+      "title": "Osmo Mobile 6 - 常见问题 - DJI 大疆创新",
+      "elapsedMs": 174,
+      "error": null,
+      "textHash": "54e7b97a93b1e7c1a2e0562008d7f70e3758a846df9d18c6d290c8b8b54ddcaa",
+      "excerpt": "Osmo Mobile 6 - 常见问题 - DJI 大疆创新",
+      "manualLinks": [],
+      "basis": "live_fetch"
+    },
+    {
+      "product": "DJI-OM6",
+      "url": "https://www.dji.com/osmo-mobile-6/downloads",
+      "finalUrl": "https://www.dji.com/cn/osmo-mobile-6/downloads",
+      "status": 200,
+      "official": true,
+      "title": "Osmo Mobile 6 - 相关下载 - DJI 大疆创新",
+      "elapsedMs": 174,
+      "error": null,
+      "textHash": "6f001c4d954729f6025dccf96cc3dd4938468bf14405e88a90cba83286652090",
+      "excerpt": "Osmo Mobile 6 - 相关下载 - DJI 大疆创新",
+      "manualLinks": [],
+      "basis": "live_fetch"
+    },
+    {
+      "product": "XIAOMI-1S",
+      "url": "https://www.mi.com/ae-en/product/mi-led-desk-lamp-1s/",
+      "finalUrl": "https://www.mi.com/ae-en/product/mi-led-desk-lamp-1s/",
+      "status": 200,
+      "official": false,
+      "title": "Mi LED Desk Lamp 1S | Xiaomi United Arab Emirates | All Specs, Features",
+      "elapsedMs": 867,
+      "error": null,
+      "textHash": "c7a19e1b7b6f3f14b10fb8079bac43240366f1711423f83514525d6f7492cafa",
+      "excerpt": "Mi LED Desk Lamp 1S\n\nOverview\n\nSpecs\n\nBuy Now\n\nMi LED Desk Lamp 1S\n\nThe premium light quality reveals a more vivid world of color\n\nRa 90 Color Rendering Index [1]\n\nAnother step closer to perfect natural light\n\nImproved lighting with the same classic design as the first-generation lamp\n\nProvides even illumination over a wide area\n\nAt up to 520 lm, the light flux of the Mi LED Desk Lamp 1S is 73% higher than the first-generation lamp, considering the same lamp dimensions. Central illuminance incre",
+      "manualLinks": [],
+      "basis": "live_fetch"
+    },
+    {
+      "product": "XIAOMI-1S",
+      "url": "https://www.mi.com/sg/product/mi-led-desk-lamp-1s/specs/",
+      "finalUrl": "https://www.mi.com/sg/product/mi-led-desk-lamp-1s/specs/",
+      "status": 200,
+      "official": true,
+      "title": "Mi Led Desk Lamp 1s Specs, Features | Xiaomi Singapore",
+      "elapsedMs": 612,
+      "error": null,
+      "textHash": "8c6cda38cc12b22d544b8cc3ea71c940c5a5f82f78ed832fbc8dfa5e2cc304d7",
+      "excerpt": "Mi LED Desk Lamp 1S\n\nSpecs\n\nOverview\n\nSpecs\n\nMi LED Desk Lamp 1S\n\nProduct specs\n\nModel no:\n\nMJTD01SYL\n\nColor:\n\nWhite\n\nBrightness range\n\n1%-100%\n\nColor range\n\n2600 K – 5000 K\n\nLuminous flux\n\n520 lm\n\nColor rendering index\n\nRa 90\n\nLamp input\n\n12 V 0.8 A\n\nRated input\n\n220-240 V–50/60Hz 0.45 A\n\nRated input power:\n\n9 W (Lamp + LED Driver)\n\nService life: approx.\n\n25,000 hours\n\nCompatible with:\n\nAndroid 4.4 or iOS 9.0 and above\n\nWireless connectivity:\n\nWi-Fi IEEE 802.11 b/g/n 2.4 GHz\n\nStandards implemen",
+      "manualLinks": [],
+      "basis": "live_fetch",
+      "indexed": true,
+      "importError": null
+    },
+    {
+      "product": "IKEA-SAMLA11",
+      "url": "https://www.ikea.com/jp/en/p/samla-box-with-lid-transparent-s49440837/",
+      "finalUrl": "https://www.ikea.com/jp/en/p/samla-box-with-lid-transparent-s49440837/",
+      "status": 200,
+      "official": true,
+      "title": "SAMLA box with lid, transparent, 39x28x14 cm/11 l  - IKEA",
+      "elapsedMs": 1942,
+      "error": null,
+      "textHash": "90589879a24a6633897492b30f02827f7f7880ffd4cb1b17d3e44f212d559372",
+      "excerpt": "Parcel delivery from ¥500 for IKEA Family members * Price depends on size\n\n7 SAMLA images\n\nSkip images\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nAll media\n\nMore from the SAMLA series\n\nSAMLA\n\nBox with lid, transparent, 39x28x14 cm/11 l\n\n¥\n\n499\n\n¥ 499\n\nPrice incl. sales tax\n\nReview: 4.7 out of 5 stars. Total reviews: 7645\n\n(7645)\n\nChoose size\n\n28x20x14 cm",
+      "manualLinks": [],
+      "basis": "live_fetch",
+      "indexed": true,
+      "importError": null
+    },
+    {
+      "product": "IKEA-KALLAX77",
+      "url": "https://www.ikea.com/jp/en/p/kallax-shelving-unit-white-70351886/",
+      "finalUrl": "https://www.ikea.com/jp/en/p/kallax-shelving-unit-white-70351886/",
+      "status": 200,
+      "official": true,
+      "title": "KALLAX shelving unit, white, 77x77 cm  - IKEA",
+      "elapsedMs": 1724,
+      "error": null,
+      "textHash": "96b1f2ddf765ad0eeefa6f46fdb26e8d55894c00cd0bd81d656eb9c83ddecf9c",
+      "excerpt": "Truck delivery from ¥2,900 for IKEA Family members * Conditions apply\n\n7 KALLAX images\n\nSkip images\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nImage zoomed out, normal view\n\nAll media\n\nMore from the KALLAX series\n\nKALLAX\n\nShelving unit, white, 77x77 cm\n\n¥\n\n5,999\n\n¥ 5999\n\nPrice incl. sales tax\n\nReview: 4.7 out of 5 stars. Total reviews: 5716\n\n(5716)\n\nKALL",
+      "manualLinks": [
+        {
+          "title": "KALLAX Shelving unit703.518.86",
+          "url": "https://www.ikea.com/jp/en/assembly_instructions/kallax-shelving-unit-white__AA-2703327-1-100.pdf"
+        }
+      ],
+      "basis": "live_fetch",
+      "indexed": true,
+      "importError": null
+    }
+  ],
+  "networkReuseRef": "acceptance-first-run.json"
+}

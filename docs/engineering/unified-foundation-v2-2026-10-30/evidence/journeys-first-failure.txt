@@ -1,0 +1,13 @@
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.waitForResponse: Timeout 30000ms exceeded while waiting for event "response"
+    at D:\ProductAgent-LifeContext\.runtime\unified-foundation-v2\scripts\unified-foundation\journeys.mjs:20:303
+    at async scenario (D:\ProductAgent-LifeContext\.runtime\unified-foundation-v2\scripts\unified-foundation\journeys.mjs:8:50)
+    at async file:///D:/ProductAgent-LifeContext/.runtime/unified-foundation-v2/scripts/unified-foundation/journeys.mjs:20:2 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.22.2

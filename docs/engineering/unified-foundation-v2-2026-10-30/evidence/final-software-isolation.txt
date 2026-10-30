@@ -1,0 +1,10 @@
+✔ 独立账号、会话、家庭邀请、状态、赠礼与双向隐私 (347.7698ms)
+✔ 自有软件灯：真实REA→静态候选→授权→执行回读；坏参数、重放、撤权 (6812.1751ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7628.4127
