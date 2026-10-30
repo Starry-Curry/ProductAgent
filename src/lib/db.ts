@@ -11,6 +11,7 @@ import { migrateLife } from "./life/schema.ts";
 import { installLifeDemo } from "./life/demo.ts";
 import { seed, mutate, type State, type Person } from "./domain";
 import { migrate } from "./migrations";
+import { migrateUnified } from "./foundation/schema.ts";
 let connection: DatabaseSync | undefined;
 export function database() {
   const scope = visitorContext.getStore();
@@ -31,6 +32,7 @@ export function database() {
   migrate(db, path.join(dir, "demo.sqlite"));
   installHouseholdCases(db);
   migrateLife(db, path.join(dir, "demo.sqlite"));
+  migrateUnified(db, path.join(dir, "demo.sqlite"));
   // The visitor consented to an isolated demonstration space, never a real user's database.
   if (scope) installLifeDemo(db);
   if (scope) {

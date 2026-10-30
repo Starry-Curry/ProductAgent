@@ -4,9 +4,12 @@ import { z } from "zod";
 import { mutate, visible, canRead, type State, type Person } from "./domain.ts";
 import { AgentError } from "./agent/contracts.ts";
 import { accountDB } from "./accounts.ts";
+import { migrateUnified } from "./foundation/schema.ts";
+import { mirrorItemGrant } from "./foundation/policy.ts";
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
 const at = () => new Date().toISOString();
 function schema(db: DatabaseSync) {
+  migrateUnified(db);
   db.exec(`CREATE TABLE IF NOT EXISTS household_members(group_id TEXT NOT NULL,account_id TEXT NOT NULL,PRIMARY KEY(group_id,account_id));
     CREATE TABLE IF NOT EXISTS household_invites(hash TEXT PRIMARY KEY,group_id TEXT NOT NULL,inviter TEXT NOT NULL,expires INTEGER NOT NULL,claimed_by TEXT);
     CREATE TABLE IF NOT EXISTS collaboration_receipts(actor TEXT NOT NULL,id TEXT NOT NULL,payload TEXT NOT NULL,result TEXT NOT NULL,PRIMARY KEY(actor,id));`);
@@ -141,6 +144,7 @@ export function collaborate(
         ),
       ];
       item.shared = item.sharedWith.length > 0;
+      mirrorItemGrant(db, state, actor, v.memberId as Person, item.id, !!v.enabled);
       result = {
         shared: item.shared,
         notice:
