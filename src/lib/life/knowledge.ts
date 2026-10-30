@@ -4,6 +4,8 @@ import { productPacks } from "../products.ts";
 import { fetchPublicDocument, sourceURL } from "./sources.ts";
 
 const brands = [
+  { names: ["canon", "佳能"], domains: ["canon.com.cn", "canon.com", "canon-europe.com", "canon.jp", "cam.start.canon"], home: "https://www.canon.com.cn/support/" },
+  { names: ["dji", "大疆"], domains: ["dji.com", "djicdn.com"], home: "https://www.dji.com/support" },
   {
     names: ["jbl"],
     domains: ["jbl.com", "jbl.com.cn"],
@@ -41,6 +43,7 @@ const brands = [
       "philips.com",
       "philips.com.tw",
       "documents.philips.com",
+      "philips.co.uk",
     ],
     home: "https://www.philips.com.cn/c-w/support-home.html",
   },
