@@ -193,7 +193,7 @@ export function saveFragment(
     );
     recordSpecialist(db,state,actor,{kind:"story",refId:id,revision:(old?.revision||0)+1,itemIds:value.itemIds,intent:"record",goal:"保存这段物品经历",basis:"saved_personal_experience",taskId});
     if (old) invalidateStoryUnderstanding(db, actor, id);
-    clearOwnerContext(db, actor, !!old);
+    clearOwnerContext(db, actor, !!old, ids.length || previous.length ? [...new Set([...previous,...ids])] : null);
     for (const previousPhoto of previousDetails?.mediaIds || [])
       if (!photos.includes(previousPhoto))
         removeUnusedMedia(db, state, actor, previousPhoto);
@@ -219,10 +219,11 @@ export function deleteFragment(
     if (!r) throw new AgentError("生活片段不存在或未获授权", 403);
     if (r.revision !== revision) throw new AgentError("片段已更新", 409);
     const oldPhotos = details(db, r).mediaIds;
+    const oldItemIds = links(db, id);
     invalidateStoryUnderstanding(db, actor, id);
     db.prepare("DELETE FROM life_fragments WHERE id=?").run(id);
     for (const photo of oldPhotos) removeUnusedMedia(db, state, actor, photo);
-    clearOwnerContext(db, actor, true);
+    clearOwnerContext(db, actor, true, oldItemIds.length ? oldItemIds : null);
     db.exec("COMMIT");
   } catch (e) {
     db.exec("ROLLBACK");

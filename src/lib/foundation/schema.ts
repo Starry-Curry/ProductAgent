@@ -1,5 +1,6 @@
 import type { DatabaseSync } from "node:sqlite";
 import { existsSync } from "node:fs";
+import { ensurePrivacyScopes } from "../memory/context-lifecycle.ts";
 
 /** Additive schema only. Call outside an existing transaction. Legacy body is untouched. */
 export function migrateUnified(db: DatabaseSync, filename?: string) {
@@ -12,7 +13,14 @@ export function migrateUnified(db: DatabaseSync, filename?: string) {
         v: number;
       }
     ).v;
-    if (v !== 1) throw Error("统一基座版本不兼容，拒绝写入");
+    if (v !== 1 && v !== 2) throw Error("统一基座版本不兼容，拒绝写入");
+    if (v === 1) {
+      if (filename && !existsSync(filename + ".before-unified-v2.sqlite"))
+        db.exec("VACUUM INTO '" + (filename + ".before-unified-v2.sqlite").replaceAll("'", "''") + "'");
+      db.exec("BEGIN IMMEDIATE");
+      try { ensurePrivacyScopes(db); db.exec("INSERT INTO foundation_schema VALUES(2,strftime('%Y-%m-%dT%H:%M:%fZ','now'))"); db.exec("COMMIT"); }
+      catch (e) { db.exec("ROLLBACK"); throw e; }
+    }
     return;
   }
   if (filename && !existsSync(filename + ".before-unified-v1.sqlite"))
@@ -33,6 +41,8 @@ export function migrateUnified(db: DatabaseSync, filename?: string) {
       CREATE TABLE foundation_outcomes(id TEXT PRIMARY KEY,task_id TEXT NOT NULL,actor TEXT NOT NULL,request_id TEXT NOT NULL,payload TEXT NOT NULL,body TEXT NOT NULL,UNIQUE(actor,request_id));
       CREATE TABLE foundation_links(kind TEXT NOT NULL,ref_id TEXT NOT NULL,task_id TEXT NOT NULL,PRIMARY KEY(kind,ref_id));
     `);
+    ensurePrivacyScopes(db);
+    db.exec("INSERT INTO foundation_schema VALUES(2,strftime('%Y-%m-%dT%H:%M:%fZ','now'))");
     db.exec("COMMIT");
   } catch (e) {
     db.exec("ROLLBACK");

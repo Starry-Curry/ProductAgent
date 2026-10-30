@@ -10,6 +10,7 @@ import {
   taskOutcomes,
   recordOutcome,
   recoverRun,
+  amendOutcome,
 } from "@/lib/foundation/tasks";
 import { readEvidenceClaims } from "@/lib/foundation/evidence";
 import { registeredCapabilities } from "@/lib/foundation/capabilities";
@@ -55,7 +56,7 @@ export const POST = withDemoRequest(async (r: Request) => {
       db = database(),
       p = z
         .object({
-          action: z.enum(["create", "outcome", "recover"]),
+          action: z.enum(["create", "outcome", "recover", "amend_outcome"]),
           input: z.unknown(),
         })
         .strict()
@@ -64,6 +65,7 @@ export const POST = withDemoRequest(async (r: Request) => {
       return Response.json({ task: createTask(db, read, a, p.input) });
     if (p.action === "outcome")
       return Response.json({ outcome: recordOutcome(db, read, a, p.input) });
+    if (p.action === "amend_outcome") return Response.json({outcome:amendOutcome(db,read,a,p.input)});
     const v = z.object({ runId: z.string().uuid() }).strict().parse(p.input);
     return Response.json({ run: recoverRun(db, read(), a, v.runId) });
   } catch (e) {

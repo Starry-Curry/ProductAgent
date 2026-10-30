@@ -6,6 +6,7 @@ import { epoch, clearOwnerContext } from "../memory/store.ts";
 import { authorize, policyRevision } from "./policy.ts";
 import { itemInstance, productModel, fingerprint } from "./legacy.ts";
 import { migrateUnified } from "./schema.ts";
+import { privacyStamp, privacyCurrent } from "../memory/context-lifecycle.ts";
 const now = () => new Date().toISOString();
 export const taskIntent = z.enum([
   "answer",
@@ -29,6 +30,7 @@ export type TaskSpec = {
   participantIds: Person[];
   participantSummaries?: Record<string, string>;
   contextEpoch?: number;
+  privacyStamp?: Record<string, number>;
   currentStage:
     | "draft"
     | "active"
@@ -62,6 +64,7 @@ export type TaskRun = {
   observedPolicyRevision: string;
   memoryEpoch: number;
   itemRevisions: Record<string, string>;
+  experienceRefs?: {id:string;revision:number}[];
   startedAt: string;
   finishedAt?: string;
   sessionId?: string;
@@ -117,6 +120,7 @@ export function getTask(
     contextRefs: t.contextRefs.filter((r) => allowed.includes(r.id)),
     participantIds: [a],
     participantSummaries: undefined,
+    privacyStamp: t.privacyStamp ? Object.fromEntries(Object.entries(t.privacyStamp).filter(([key])=>key==="*"||allowed.some(id=>key==="item:"+id))) : undefined,
   };
 }
 export function listTasks(db: DatabaseSync, s: State, a: Person) {
@@ -160,6 +164,7 @@ export function linkTask(
     if (t.createdBy !== a) throw new AgentError("仅发起者可交接任务", 403);
     t = {
       ...t,
+      privacyStamp: t.privacyStamp ? {...privacyStamp(db,a,input.itemIds),...t.privacyStamp} : t.contextEpoch===epoch(db,a) ? privacyStamp(db,a,[...t.itemInstanceIds,...input.itemIds]) : undefined,
       itemInstanceIds: [...new Set([...t.itemInstanceIds, ...input.itemIds])],
       contextRefs: [
         ...t.contextRefs,
@@ -188,6 +193,7 @@ export function linkTask(
     t = {
       version: "task-spec/1",
       contextEpoch:epoch(db,a),
+      privacyStamp:privacyStamp(db,a,input.itemIds),
       taskId: crypto.randomUUID(),
       revision: 1,
       createdBy: a,
@@ -258,22 +264,24 @@ export function resolveTaskContext(
   const previous = (
     db
       .prepare(
-        "SELECT body FROM foundation_outcomes WHERE actor=? ORDER BY rowid DESC LIMIT 100",
+        "SELECT body FROM foundation_outcomes WHERE actor=? AND EXISTS (SELECT 1 FROM json_each(foundation_outcomes.body,'$.itemInstanceIds') h JOIN json_each(?) q ON h.value=q.value) ORDER BY rowid DESC",
       )
-      .all(a) as { body: string }[]
+      .all(a,JSON.stringify(task.itemInstanceIds)) as { body: string }[]
   )
     .map((r) => JSON.parse(r.body))
     .filter(o=>{if(seen.has(o.taskId))return false;seen.add(o.taskId);return true;})
     .filter(
       (o) =>
-        o.canReuseForFutureTasks && o.memoryEpoch===epoch(db,a) &&
+        o.canReuseForFutureTasks && o.status !== "forgotten" &&
+        (o.privacyStamp ? privacyCurrent(db,a,o.privacyStamp) : o.memoryEpoch===epoch(db,a)) &&
+        o.itemInstanceIds.every((i:string)=>authorize(db,s,a,i).allowed) && dependenciesCurrent(db,s,a,o) &&
         o.itemInstanceIds.some((i: string) => task.itemInstanceIds.includes(i)),
     )
     .slice(0, 5);
   return {
     version: "task-context/1",
     task,
-    modelGoal:task.contextEpoch===epoch(db,task.createdBy)?task.goal:"旧任务涉及的个人语境已经变更；仅按本轮请求重新核对，不从旧目标补回关系事实",
+    modelGoal:(task.privacyStamp ? privacyCurrent(db,task.createdBy,task.privacyStamp) : task.contextEpoch===epoch(db,task.createdBy))?task.goal:"旧任务涉及的个人语境已经变更；仅按本轮请求重新核对，不从旧目标补回关系事实",
     policyRevision: policyRevision(db, s),
     previousOutcomes: previous,
     items: task.itemInstanceIds.map((id) => {
@@ -336,6 +344,7 @@ export function beginRun(
         itemInstance(s.items.find((i) => i.id === id)!).revision,
       ]),
     ),
+    experienceRefs:task ? resolveTaskContext(db,s,a,task.taskId).previousOutcomes.map(o=>({id:o.outcomeId,revision:o.revision||1})) : [],
     startedAt: now(),
     resultBasis: "not_verified",
   };
@@ -472,7 +481,7 @@ export function recordOutcome(
       )
       .get(a, v.requestId) as { payload: string; body: string } | undefined;
     if (prior) {
-      if (prior.payload !== payload)
+      if (prior.payload !== payload && prior.payload !== "sha256:"+fingerprint(v))
         throw new AgentError("反馈请求内容不同", 409);
       db.exec("COMMIT");
       return JSON.parse(prior.body);
@@ -484,7 +493,6 @@ export function recordOutcome(
     );
     if (!run || run.status === "running")
       throw new AgentError("请先完成或核对该次运行", 409);
-    clearOwnerContext(db,a,false);
     const result = {
       version: "outcome/1",
       outcomeId: crypto.randomUUID(),
@@ -497,8 +505,12 @@ export function recordOutcome(
       itemInstanceIds: t.itemInstanceIds,
       occurredAt: now(),
       canReuseForFutureTasks: v.reuse,
-      allowCloud:v.allowCloud,
+      allowCloud:v.reuse&&v.allowCloud,
       memoryEpoch:epoch(db,a),
+      revision:1,
+      status:"active",
+      privacyStamp:privacyStamp(db,a,t.itemInstanceIds),
+      experienceRefs:run.experienceRefs||[],
     };
     db.prepare("INSERT INTO foundation_outcomes VALUES(?,?,?,?,?,?)").run(
       result.outcomeId,
@@ -527,6 +539,19 @@ export function recordOutcome(
     throw e;
   }
 }
+
+function dependenciesCurrent(db:DatabaseSync, s:State, a:Person, outcome:any, seen=new Set<string>()):boolean {
+  if(seen.size>20||seen.has(outcome.outcomeId))return false;
+  const next=new Set(seen).add(outcome.outcomeId);
+  return (outcome.experienceRefs||[]).every((ref:{id:string;revision:number})=>{
+    const row=db.prepare("SELECT body FROM foundation_outcomes WHERE id=? AND actor=?").get(ref.id,a) as {body:string}|undefined;
+    if(!row)return false;
+    const current=JSON.parse(row.body);
+    return current.status!=="forgotten"&&current.canReuseForFutureTasks&&(current.revision||1)===ref.revision&&
+      current.itemInstanceIds.every((id:string)=>authorize(db,s,a,id).allowed)&&
+      (current.privacyStamp ? privacyCurrent(db,a,current.privacyStamp) : current.memoryEpoch===epoch(db,a))&&dependenciesCurrent(db,s,a,current,next);
+  });
+}
 export function taskOutcomes(
   db: DatabaseSync,
   s: State,
@@ -541,4 +566,38 @@ export function taskOutcomes(
       )
       .all(id, a) as { body: string }[]
   ).map((r) => JSON.parse(r.body));
+}
+
+const amendSchema = z.object({
+  outcomeId:z.string().uuid(), requestId:z.string().uuid(), expectedRevision:z.number().int().positive(),
+  operation:z.enum(["correct","forget","revoke_reuse"]), confirmed:z.literal(true),
+  notes:z.string().trim().min(1).max(1200).optional(), reuse:z.boolean().default(false), allowCloud:z.boolean().default(false),
+}).strict();
+/** The author can erase their own record even after losing access to its item. No permission is restored. */
+export function amendOutcome(db:DatabaseSync, read:()=>State, a:Person, raw:unknown) {
+  const v=amendSchema.parse(raw), hash=fingerprint(v);
+  db.exec("BEGIN IMMEDIATE");
+  try {
+    const row=db.prepare("SELECT body,payload FROM foundation_outcomes WHERE id=? AND actor=?").get(v.outcomeId,a) as {body:string;payload:string}|undefined;
+    if(!row)throw new AgentError("经验不存在或未获授权",403);
+    const o=JSON.parse(row.body);
+    const receipt=db.prepare("SELECT hash,target_id FROM action_receipts WHERE owner=? AND request_id=?").get(a,v.requestId) as {hash:string;target_id:string}|undefined;
+    if(receipt){if(receipt.hash!==hash||receipt.target_id!==v.outcomeId)throw new AgentError("重复操作内容不同",409);db.exec("COMMIT");return o;}
+    if(o.basis!=="user_report"||o.status==="forgotten")throw new AgentError("该记录不能修改",409);
+    if((o.revision||1)!==v.expectedRevision)throw new AgentError("经验已经更新，请重新查看",409);
+    if(v.operation!=="forget") getTask(db,read(),a,o.taskId);
+    if(v.operation==="correct"&&!v.notes)throw new AgentError("请填写纠正后的实际经历");
+    // Erase transient prompts/results without invalidating other lasting experiences.
+    clearOwnerContext(db,a,true,[]);
+    const next={...o, revision:(o.revision||1)+1, updatedAt:now(),
+      notes:v.operation==="forget"?"":v.operation==="correct"?v.notes:o.notes,
+      status:v.operation==="forget"?"forgotten":"active",
+      canReuseForFutureTasks:v.operation==="correct"&&v.reuse,
+      allowCloud:v.operation==="correct"&&v.reuse&&v.allowCloud,
+      privacyStamp:privacyStamp(db,a,o.itemInstanceIds), memoryEpoch:epoch(db,a)};
+    const payload=v.operation==="forget"?(row.payload.startsWith("sha256:")?row.payload:"sha256:"+fingerprint(JSON.parse(row.payload))):row.payload;
+    db.prepare("UPDATE foundation_outcomes SET body=?,payload=? WHERE id=? AND actor=?").run(JSON.stringify(next),payload,v.outcomeId,a);
+    db.prepare("INSERT INTO action_receipts VALUES(?,?,?,?)").run(a,v.requestId,hash,v.outcomeId);
+    db.exec("COMMIT");return next;
+  } catch(e){db.exec("ROLLBACK");throw e;}
 }

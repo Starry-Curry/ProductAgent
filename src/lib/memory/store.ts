@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 import { canRead, type State, type Person } from "../domain.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
+import { invalidatePrivacyScopes } from "./context-lifecycle.ts";
 import {
   AgentError,
   memorySchema,
@@ -22,7 +23,9 @@ export function clearOwnerContext(
   db: DatabaseSync,
   actor: string,
   erase: boolean,
+  privacyScopes?: string[] | null,
 ) {
+  if (erase) invalidatePrivacyScopes(db, actor, privacyScopes);
   db.prepare(
     "INSERT INTO memory_epochs VALUES (?,1) ON CONFLICT(owner) DO UPDATE SET version=version+1",
   ).run(actor);
@@ -64,6 +67,7 @@ export function clearDemoContext(
   itemId?: string,
 ) {
   if (!itemId) return;
+  invalidatePrivacyScopes(db, actor, [itemId]);
   const rows = db
     .prepare("SELECT id,body FROM agent_sessions WHERE owner=? AND item_id=?")
     .all(actor, itemId) as { id: string; body: string }[];
@@ -291,7 +295,7 @@ export function saveMemory(
       ).run(actor, before.id);
     if (memory.demo)
       clearDemoContext(db, actor, before?.itemId || memory.itemId);
-    else clearOwnerContext(db, actor, !!before);
+    else clearOwnerContext(db, actor, !!before, before?.itemId ? [...new Set([before.itemId, ...(memory.itemId ? [memory.itemId] : [])])] : null);
     if (requestId)
       db.prepare("INSERT INTO action_receipts VALUES (?,?,?,?)").run(
         actor,
@@ -334,7 +338,7 @@ export function forgetMemory(db: DatabaseSync, actor: Person, id: string) {
     );
     const forgotten = JSON.parse(row.body) as MemoryRecord;
     if (forgotten.demo) clearDemoContext(db, actor, forgotten.itemId);
-    else clearOwnerContext(db, actor, true);
+    else clearOwnerContext(db, actor, true, forgotten.itemId ? [forgotten.itemId] : null);
     db.exec("COMMIT");
   } catch (error) {
     db.exec("ROLLBACK");

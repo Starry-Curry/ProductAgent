@@ -26,6 +26,7 @@ export function TaskContinuity({
     [busy, setBusy] = useState(false);
   const [reuse, setReuse] = useState(false);
   const [allowCloud,setAllowCloud]=useState(false);
+  const [editing,setEditing]=useState<any>(null),[correction,setCorrection]=useState("");
   async function request(action?: string, input?: unknown, id?: string) {
     const r = await fetch(
       "/api/foundation" + (id ? "?taskId=" + encodeURIComponent(id) : ""),
@@ -132,6 +133,14 @@ export function TaskContinuity({
       setBusy(false);
     }
   }
+  async function amend(o:any, operation:"correct"|"forget"|"revoke_reuse") {
+    if(!current)return;
+    setBusy(true);setError("");
+    try {
+      await request("amend_outcome",{outcomeId:o.outcomeId,requestId:crypto.randomUUID(),expectedRevision:o.revision||1,operation,confirmed:true,...(operation==="correct"?{notes:correction,reuse,allowCloud}:{})});
+      setEditing(null);setCorrection("");await open(current.task,false);
+    }catch(e){setError(e instanceof Error?e.message:"经验更新失败");}finally{setBusy(false);}
+  }
   return (
     <details className="life-task-continuity" data-testid="task-continuity">
       <summary>继续我的事{current ? " · " + current.task.goal : ""}</summary>
@@ -200,7 +209,22 @@ export function TaskContinuity({
             </>
           )}
           {current.outcomes.map((o) => (
-            <p key={o.outcomeId}>用户报告：{o.notes}</p>
+            <div key={o.outcomeId}>
+              <p>{o.status==="forgotten"?"这条经验已忘记":`用户报告：${o.notes}`}</p>
+              {o.basis==="user_report"&&o.status!=="forgotten"&&<>
+                <small>{o.canReuseForFutureTasks?"你允许以后参考；仍须核对当前条件":"不用于后续任务"}</small>
+                <button disabled={busy} onClick={()=>{setEditing(o);setCorrection(o.notes);setReuse(false);setAllowCloud(false);}}>纠正这条经验</button>
+                <button disabled={busy||!o.canReuseForFutureTasks} onClick={()=>amend(o,"revoke_reuse")}>不再复用</button>
+                <button disabled={busy} onClick={()=>{if(window.confirm("忘记这条经验？之后不再用于回答，正文将从当前记录删除。"))void amend(o,"forget");}}>忘记这条经验</button>
+                {editing?.outcomeId===o.outcomeId&&<div>
+                  <label>纠正后的实际经历<input value={correction} onChange={e=>setCorrection(e.target.value)} maxLength={1200}/></label>
+                  <label><input type="checkbox" checked={reuse} onChange={e=>setReuse(e.target.checked)}/>允许以后参考这条更正</label>
+                  {reuse&&<label><input type="checkbox" checked={allowCloud} onChange={e=>setAllowCloud(e.target.checked)}/>允许云端 AI 使用这条更正</label>}
+                  <button disabled={busy||!correction.trim()} onClick={()=>amend(o,"correct")}>确认更正经验</button>
+                  <button onClick={()=>setEditing(null)}>取消更正</button>
+                </div>}
+              </>}
+            </div>
           ))}
         </section>
       )}

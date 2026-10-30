@@ -1,0 +1,27 @@
+✖ 长期经验复现：完成台灯任务B后，耳机任务A的经验仍可供新任务C参考 (157.1502ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 490.807
+
+✖ failing tests:
+
+test at tests\experience-lifecycle.test.ts:25:1
+✖ 长期经验复现：完成台灯任务B后，耳机任务A的经验仍可供新任务C参考 (157.1502ms)
+  AssertionError [ERR_ASSERTION]: 正常新增经验不应让无关旧经验消失
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/experience-lifecycle-v1/tests/experience-lifecycle.test.ts:32:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

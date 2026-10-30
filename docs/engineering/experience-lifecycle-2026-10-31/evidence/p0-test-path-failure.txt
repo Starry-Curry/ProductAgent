@@ -1,0 +1,42 @@
+✔ 长期经验复现：完成台灯任务B后，耳机任务A的经验仍可供新任务C参考 (159.0838ms)
+✔ 新增经验不清理无关在途任务；纠正或忘记经验立即使旧在途语境失效 (144.7359ms)
+✔ 经验纠正、撤销复用、忘记有版本和幂等；旧正文不从重试恢复 (162.8413ms)
+✔ 普通新增记忆不使长期经验失效；物品记忆纠正只影响相关物品，遗忘不复活旧关系 (170.094ms)
+✔ 撤权后，多物品历史经验不能借另一件仍获准物品泄露 (183.9819ms)
+✔ 纠正被引用的经验后，派生经验不再自动复用 (188.9483ms)
+✖ 大量无关物品记录不挤掉旧耳机经验；无损V1到V2升级不恢复历史已失效记录 (643.0896ms)
+✔ 纠正或遗忘后，旧任务目标不作为模型事实再注入 (163.8721ms)
+✔ 同一任务跨人只给批准摘要与获准物品，不复制原始目标和私人对象 (171.1904ms)
+✔ G1 无损迁移、SQLite备份、重启和两件同款独立身份 (132.5766ms)
+✔ G1 关系不授予权限，逐件共享与撤权，读写分离 (135.5664ms)
+✔ G3 任务刷新、幂等、反馈revision与非硬件结果 (178.7846ms)
+✔ G3 中断结果不明，不自动重新执行；运行中撤权阻止返回 (166.7333ms)
+✔ G2 缺证不等于否定，近似型号、推断及未引原文不能获准 (0.4196ms)
+✔ G3 陌生实物共用任务检索，不依赖八件模拟家庭；替身只验证工具协议 (413.546ms)
+✔ G1 两个真实Node进程并发新增任务，无丢更新且旧正文不变 (517.2721ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 15
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2822.602
+
+✖ failing tests:
+
+test at tests\experience-lifecycle.test.ts:97:1
+✖ 大量无关物品记录不挤掉旧耳机经验；无损V1到V2升级不恢复历史已失效记录 (643.0896ms)
+  Error: unable to open database: D:\ProductAgent-LifeContext\.runtime\experience-lifecycle-v1\D:\ProductAgent-LifeContext\.runtime\experience-lifecycle-v1\.runtime\experience-aU1pdX\test.sqlite.before-unified-v2.sqlite
+      at migrateUnified (file:///D:/ProductAgent-LifeContext/.runtime/experience-lifecycle-v1/src/lib/foundation/schema.ts:19:12)
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/experience-lifecycle-v1/tests/experience-lifecycle.test.ts:106:61)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'ERR_SQLITE_ERROR',
+    errcode: 14,
+    errstr: 'unable to open database file'
+  }
