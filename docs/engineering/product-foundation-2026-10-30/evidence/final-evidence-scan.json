@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-30T07:21:36.579Z",
+  "scope": "staged bytes only; no secrets/config/database read",
+  "base": "d32d8e88b2a371793b552bd1a3498ac87bebdac6",
+  "files": 2,
+  "totalBytes": 7514,
+  "issues": [],
+  "manifest": [
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/MODEL_SAMPLES.md",
+      "bytes": 5042,
+      "sha256": "efad0d91c072a465db378f6fce14057625e58915fa903eebccb19abc0873c39c"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/build.txt",
+      "bytes": 2472,
+      "sha256": "c597f883a0113a08b3761aba959262a8828ff8d41753875dce66132a073f327a"
+    }
+  ],
+  "note": "Report excludes itself; signatures are an additional check, not a proof of absence of every possible secret."
+}
