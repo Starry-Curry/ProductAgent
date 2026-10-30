@@ -44,4 +44,4 @@ Node 24.22.2，Next.js 15.5.28，Edge Playwright；使用 package-lock，未改�
 
 ## 截图
 
-[任务手机](evidence/task-mobile.png)、[任务桌面](evidence/task-desktop.png)、[大字交接](evidence/care-handoff-mobile.png)、[R50分身](evidence/r50-persona-desktop.png)、[Sony赠礼](evidence/sony-gift-mobile.png)、[REA软件验证](evidence/legacy-browser-final/software-desktop.png)。全部为本机实际页面，合成内容，非设计稿。控件局部排版在最终聚焦截图另存。
+[任务手机](evidence/task-mobile-final.png)、[任务桌面](evidence/task-desktop-final.png)、[大字交接](evidence/care-handoff-mobile.png)、[R50分身](evidence/r50-persona-desktop.png)、[Sony赠礼](evidence/sony-gift-mobile.png)、[REA软件验证](evidence/legacy-browser-final/software-readback-desktop.png)。全部为本机实际页面，合成内容，非设计稿。早期布局截图另存保留。
