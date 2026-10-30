@@ -51,7 +51,7 @@ export function clearOwnerContext(
           if(r.taskId){const task=db.prepare("SELECT body FROM foundation_tasks WHERE id=?").get(r.taskId) as {body:string}|undefined;if(task)for(const id of JSON.parse(task.body).itemInstanceIds||[])ids.add(id);}
         }
         // Preserve only histories with tracked dependencies. Legacy unknown scopes remain conservative.
-        if(related.length&&![...scoped].some(id=>ids.has(id)))continue;
+        if(related.length&&session.itemId&&!["ideas","auto"].includes(session.mode)&&![...scoped].some(id=>ids.has(id)))continue;
       }
       session.messages = [];
       session.known = {};

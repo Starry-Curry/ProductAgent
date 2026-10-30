@@ -123,7 +123,7 @@ test("已知单物品纠正不删除无关的已跟踪会话；相关会话与�
  const f=setup();try{
    const sessions=[f.headset,f.lamp].map(id=>{
      const sessionId=crypto.randomUUID(),expires=new Date(Date.now()+86400000).toISOString();
-     f.db.prepare("INSERT INTO agent_sessions VALUES(?,?,?,?,?,?,?)").run(sessionId,"lin",id,1,JSON.stringify({id:sessionId,itemId:id,revision:1,messages:[{role:"user",text:"应保留的独立会话"}],known:{},tried:[],memoryEpoch:epoch(f.db,"lin"),expiresAt:expires}),0,expires);
+     f.db.prepare("INSERT INTO agent_sessions VALUES(?,?,?,?,?,?,?)").run(sessionId,"lin",id,1,JSON.stringify({id:sessionId,itemId:id,mode:"service",revision:1,messages:[{role:"user",text:"应保留的独立会话"}],known:{},tried:[],memoryEpoch:epoch(f.db,"lin"),expiresAt:expires}),0,expires);
      const r=beginRun(f.db,f.read,"lin",{requestId:crypto.randomUUID(),itemIds:[id],entryPoint:"test",executor:"offline",input:{}});finishRun(f.db,f.read,r,"waiting_user",sessionId);return sessionId;
    });
    const m=saveMemory(f.db,f.read,"lin",{itemId:f.lamp,kind:"experience",text:"合成台灯经历",allowCloud:false});forgetMemory(f.db,"lin",m.id);

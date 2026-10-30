@@ -1,5 +1,5 @@
 {
-  "preparedAt": "2026-10-30T20:31:44.185Z",
+  "preparedAt": "2026-10-30T20:41:33.287Z",
   "execution": "blocked_model_budget",
   "paidCalls": 0,
   "cases": [
@@ -645,6 +645,16 @@
   },
   "proposedFirstGate": {
     "representativeCases": 8,
+    "caseIds": [
+      "QA-02",
+      "QA-05",
+      "QA-06",
+      "QA-07",
+      "QA-11",
+      "QA-18",
+      "CONSTRAINT-01",
+      "PERSONA-07"
+    ],
     "pairedOutputs": 16,
     "maxPaidRequestsIncludingFailures": 24,
     "maxInputTokensPerRequest": 6000,
