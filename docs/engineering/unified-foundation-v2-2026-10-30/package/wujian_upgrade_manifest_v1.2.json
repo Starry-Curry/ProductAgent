@@ -1,0 +1,78 @@
+{
+  "package": "wujian-full-upgrade-handoff-v1.2",
+  "date": "2026-10-30",
+  "source_branch": "codex/wujian-product-foundation-v1",
+  "source_sha": "d8eee9306e8eb53975e80eb98d3b1ace812777b7",
+  "files": [
+    {
+      "path": "物间_整体升级_执行包_README.md",
+      "bytes": 1996,
+      "sha256": "682248399b638ee7783822a998f4a6e5d966fe0f4ba996a24b6deb70f69955f4"
+    },
+    {
+      "path": "物间_产品理念价值与功能体系_定稿_V1.0_20261030.md",
+      "bytes": 24627,
+      "sha256": "5a5684f1f52089b62f390c3f2d1a2f8bb4c97d08272d15a30e2ea1fc7e3be46e"
+    },
+    {
+      "path": "物间_统一智能架构与产品升级_RFC_V1.0_20261030.md",
+      "bytes": 25625,
+      "sha256": "b68e60cabf7ab59a9178fd1a6cfe31f7bb3ea091fd6e20cfd930ff46e1eb3003"
+    },
+    {
+      "path": "物间_统一智能基座_实施级设计评审_V1.1_20261030.md",
+      "bytes": 26174,
+      "sha256": "d3bf1b726f4164b5312d8131ce6a432ca1edefbb107363252e728725903dc585"
+    },
+    {
+      "path": "物间_整体升级_架构冻结与代码差距核查_V1.2_20261030.md",
+      "bytes": 11390,
+      "sha256": "8a1d0e22bf918cab8c7e0de2bbb6b7f7a3ab73997eb07aea3adcdaea702cf0e0"
+    },
+    {
+      "path": "物间_整体升级_实施准备与验收门禁_20261030.md",
+      "bytes": 5923,
+      "sha256": "3f27fbbc282a7109e83598acb7b2be1463337b69c3ff652b8a5177546ef2e55a"
+    },
+    {
+      "path": "物间_Codex_整体升级一次性执行任务书_V1.0_20261030.md",
+      "bytes": 11345,
+      "sha256": "6c567f24f6adb6590517e1439b8a84a1132775a05043b3dc724f560482730922"
+    },
+    {
+      "path": "物间_真实物品与跨模块验收场景_V1.0_20261030.md",
+      "bytes": 28335,
+      "sha256": "f129d8e8b93f35fb55c474b93e65d8139578aa5c185a7c6d3036e2eb01ceecae"
+    },
+    {
+      "path": "wujian_real_product_fixtures_v1.json",
+      "bytes": 7165,
+      "sha256": "1c8441f2dc42b58333a3e764573fb2c5dc1dbfa7c051f1aea52e84babb3624e7"
+    },
+    {
+      "path": "wujian_realworld_acceptance_v1.jsonl",
+      "bytes": 65292,
+      "sha256": "f0e86c0821e44ab4ec7469b151f127ddde575b9dda2aac4f06efc8a0feabeaea"
+    },
+    {
+      "path": "wujian_acceptance_preflight.py",
+      "bytes": 5692,
+      "sha256": "f20f0702fd18b6c93b2325a1111eca1a0de576753f834df7ed00b91b8cde2700"
+    },
+    {
+      "path": "wujian_acceptance_results_template_v1.jsonl",
+      "bytes": 12535,
+      "sha256": "713e16fe82ab5339c0bf03188b58fb95515ead3a789592f2154abdddb2dd44e2"
+    },
+    {
+      "path": "物间_导航与任务连续性_三方案可点击原型.html",
+      "bytes": 14214,
+      "sha256": "6e29a8cfdf09bedceccdd4ee1f39f92f9c256233a3ad9a8450ad504edc4059db"
+    },
+    {
+      "path": "wujian_nav_27paths_smoketest.json",
+      "bytes": 2259,
+      "sha256": "b6de2dde0fae9462aa696b52f6ae507efdcbfcc70d8a6afcdd89ca385a6d66fe"
+    }
+  ]
+}

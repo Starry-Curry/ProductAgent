@@ -1,0 +1,197 @@
+{
+  "generatedAt": "2026-10-30",
+  "products": {
+    "SONY-WH-CH520": {
+      "name": "Sony WH-CH520 无线耳机",
+      "category": "头戴式蓝牙耳机",
+      "model": "WH-CH520 / YY2958",
+      "official": [
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+          "role": "官方中文帮助指南"
+        },
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777286.html",
+          "role": "官方蓝牙配对步骤"
+        },
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+          "role": "官方部件位置"
+        }
+      ],
+      "verified": [
+        "长按电源约2秒或以上开机；初次开机自动进入配对",
+        "之后的配对按蓝牙按钮约5秒或以上",
+        "右侧按钮支持播放暂停和音量/切歌",
+        "耳机不防水，潮湿时不应充电"
+      ],
+      "negative_example": "帮助页未提及主动降噪，不自动推断“官方证明没有ANC”"
+    },
+    "JBL-CLIP5": {
+      "name": "JBL Clip 5 蓝牙音箱",
+      "category": "便携音箱",
+      "model": "CLIP 5",
+      "official": [
+        {
+          "url": "https://www.jbl.com/CLIP-5.html",
+          "role": "JBL官方商品页及规格"
+        }
+      ],
+      "verified": [
+        "IP67 防尘防水等级（按官方页面的范围）",
+        "标准播放时长最长约12小时，Playtime Boost 条件下可更长",
+        "可通过 Auracast 与兼容音箱连接；两台 Clip 5 可组成立体声"
+      ],
+      "negative_example": "IP67不等于任何水下场景都可安全使用"
+    },
+    "LOGI-M185": {
+      "name": "Logitech M185 无线鼠标",
+      "category": "电脑外设",
+      "model": "M185",
+      "official": [
+        {
+          "url": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+          "role": "Logitech官方支持规格"
+        }
+      ],
+      "verified": [
+        "使用一节可更换 AA 碱性电池",
+        "使用USB纳米接收器；官方规格的Bluetooth Feature为N/A",
+        "鼠标有电源开关"
+      ],
+      "negative_example": "不能把其他罗技无线鼠标的蓝牙/Unifying能力套到M185"
+    },
+    "CANON-R50": {
+      "name": "Canon EOS R50 微单相机",
+      "category": "相机",
+      "model": "EOS R50",
+      "official": [
+        {
+          "url": "https://www.canon.com.cn/product/r50/",
+          "role": "佳能中国官方产品页"
+        },
+        {
+          "url": "https://cam.start.canon/en/C011/manual/html/",
+          "role": "佳能英文电子说明书（特定固件适用）"
+        }
+      ],
+      "verified": [
+        "场景智能自动与多种SCN拍摄模式",
+        "可通过Canon Camera Connect与手机无线互联及遥控",
+        "电子说明书页面注明适用于所写固件版本条件"
+      ],
+      "negative_example": "不同固件、镜头、配件的能力不应自动当作用户这台相机已具备"
+    },
+    "XIAOMI-1S": {
+      "name": "Mi LED Desk Lamp 1S 米家台灯",
+      "category": "智能台灯",
+      "model": "MJTD01SYL / 1S",
+      "official": [
+        {
+          "url": "https://www.mi.com/ae-en/product/mi-led-desk-lamp-1s/",
+          "role": "小米1S官方产品页"
+        },
+        {
+          "url": "https://www.mi.com/sg/product/mi-led-desk-lamp-1s/specs/",
+          "role": "小米1S官方规格"
+        }
+      ],
+      "verified": [
+        "旋转旋钮调亮度，按住再旋转调色温，双击可切换专注模式",
+        "支持2.4GHz Wi-Fi",
+        "官方规格亮度1%-100%、色温2600K-5000K",
+        "1S型号MJTD01SYL，勿和上一代MJTD01YL混淆"
+      ],
+      "negative_example": "官网写支持智能生态并不证明用户授权了米家账户或当前可以远程操控"
+    },
+    "PHILIPS-HD9252-90": {
+      "name": "Philips Essential Airfryer 飞利浦空气炸锅",
+      "category": "厨房家电",
+      "model": "HD9252/90",
+      "official": [
+        {
+          "url": "https://www.philips.co.uk/c-p/HD9252_90/essential-airfryer/support",
+          "role": "飞利浦该具体地区型号官方支持与手册入口"
+        }
+      ],
+      "verified": [
+        "官网存在HD9252/90的官方支持入口和用户手册",
+        "部分知识需要打开对应手册并确认地区、语言和产品版本"
+      ],
+      "negative_example": "HD9252/81或HD9252/20页面不能直接当作/90版本同一资料"
+    },
+    "IKEA-SAMLA11": {
+      "name": "IKEA SAMLA 11L 透明收纳盒含盖",
+      "category": "收纳用品",
+      "model": "SAMLA 39×28×14 cm / 11L, 494.408.37",
+      "official": [
+        {
+          "url": "https://www.ikea.com/jp/en/p/samla-box-with-lid-transparent-s49440837/",
+          "role": "宜家官方11L含盖商品页"
+        }
+      ],
+      "verified": [
+        "外部尺寸约39×28×14厘米，容积11L",
+        "主要材料为聚丙烯塑料",
+        "官方明确不批准食品接触、建议室内使用",
+        "宜家建议堆叠高度最多约90厘米，重物放下方"
+      ],
+      "negative_example": "可收纳不等于食品接触安全；外部尺寸不等于与任意柜子内部兼容"
+    },
+    "IKEA-KALLAX77": {
+      "name": "IKEA KALLAX 77×77 cm 置物架",
+      "category": "家具",
+      "model": "703.518.86 / 77×77白色",
+      "official": [
+        {
+          "url": "https://www.ikea.com/jp/en/p/kallax-shelving-unit-white-70351886/",
+          "role": "宜家官方产品页/尺寸/安全"
+        }
+      ],
+      "verified": [
+        "该页面标称系列77×77厘米，商品实测外尺寸约76.5×39×76.5厘米",
+        "单层最大承重13公斤",
+        "存在必须稳固固定、避免倾倒的安全提醒"
+      ],
+      "negative_example": "不能把外框尺寸当作内部格子的净宽；不能为了展示创意省略上墙固定"
+    },
+    "DJI-OM6": {
+      "name": "DJI Osmo Mobile 6 手机稳定器",
+      "category": "手机摄影配件",
+      "model": "Osmo Mobile 6",
+      "official": [
+        {
+          "url": "https://www.dji.com/osmo-mobile-6/specs",
+          "role": "DJI官方规格"
+        },
+        {
+          "url": "https://www.dji.com/osmo-mobile-6/faq",
+          "role": "DJI官方FAQ"
+        },
+        {
+          "url": "https://www.dji.com/osmo-mobile-6/downloads",
+          "role": "DJI官方说明书索引"
+        }
+      ],
+      "verified": [
+        "官方推荐手机重量170-290克、宽67-84毫米、厚6.9-10毫米",
+        "使用DJI Mimo应用进行功能设置",
+        "官方FAQ明确设备不防水",
+        "适用于手机而非佳能EOS R50相机"
+      ],
+      "negative_example": "不能用手机云台夹持微单相机，不能无视重量和体积约束"
+    }
+  },
+  "caseCount": 85,
+  "groupCounts": {
+    "INTAKE": 9,
+    "QA": 22,
+    "CONSTRAINT": 10,
+    "PERSONA": 8,
+    "FAMILY": 10,
+    "GIFT": 8,
+    "AGENT": 9,
+    "ENTRY": 9
+  },
+  "note": "real SKU official evidence; synthetic ownership and user scenarios; no live execution claimed"
+}

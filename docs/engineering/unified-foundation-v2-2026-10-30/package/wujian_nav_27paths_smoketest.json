@@ -1,0 +1,142 @@
+{
+  "tested": 27,
+  "passed": 27,
+  "pageErrors": [],
+  "cases": [
+    {
+      "scheme": "A",
+      "case": "ENTRY-01",
+      "passed": true
+    },
+    {
+      "scheme": "A",
+      "case": "ENTRY-02",
+      "passed": true
+    },
+    {
+      "scheme": "A",
+      "case": "ENTRY-03",
+      "passed": true
+    },
+    {
+      "scheme": "A",
+      "case": "ENTRY-04",
+      "passed": true
+    },
+    {
+      "scheme": "A",
+      "case": "ENTRY-05",
+      "passed": true
+    },
+    {
+      "scheme": "A",
+      "case": "ENTRY-06",
+      "passed": true
+    },
+    {
+      "scheme": "A",
+      "case": "ENTRY-07",
+      "passed": true
+    },
+    {
+      "scheme": "A",
+      "case": "ENTRY-08",
+      "passed": true
+    },
+    {
+      "scheme": "A",
+      "case": "ENTRY-09",
+      "passed": true
+    },
+    {
+      "scheme": "B",
+      "case": "ENTRY-01",
+      "passed": true
+    },
+    {
+      "scheme": "B",
+      "case": "ENTRY-02",
+      "passed": true
+    },
+    {
+      "scheme": "B",
+      "case": "ENTRY-03",
+      "passed": true
+    },
+    {
+      "scheme": "B",
+      "case": "ENTRY-04",
+      "passed": true
+    },
+    {
+      "scheme": "B",
+      "case": "ENTRY-05",
+      "passed": true
+    },
+    {
+      "scheme": "B",
+      "case": "ENTRY-06",
+      "passed": true
+    },
+    {
+      "scheme": "B",
+      "case": "ENTRY-07",
+      "passed": true
+    },
+    {
+      "scheme": "B",
+      "case": "ENTRY-08",
+      "passed": true
+    },
+    {
+      "scheme": "B",
+      "case": "ENTRY-09",
+      "passed": true
+    },
+    {
+      "scheme": "C",
+      "case": "ENTRY-01",
+      "passed": true
+    },
+    {
+      "scheme": "C",
+      "case": "ENTRY-02",
+      "passed": true
+    },
+    {
+      "scheme": "C",
+      "case": "ENTRY-03",
+      "passed": true
+    },
+    {
+      "scheme": "C",
+      "case": "ENTRY-04",
+      "passed": true
+    },
+    {
+      "scheme": "C",
+      "case": "ENTRY-05",
+      "passed": true
+    },
+    {
+      "scheme": "C",
+      "case": "ENTRY-06",
+      "passed": true
+    },
+    {
+      "scheme": "C",
+      "case": "ENTRY-07",
+      "passed": true
+    },
+    {
+      "scheme": "C",
+      "case": "ENTRY-08",
+      "passed": true
+    },
+    {
+      "scheme": "C",
+      "case": "ENTRY-09",
+      "passed": true
+    }
+  ]
+}
