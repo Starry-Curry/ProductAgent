@@ -4,6 +4,8 @@ import { canRead, type State, type Person } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
 import { invalidateStoryUnderstanding } from "./organization.ts";
 import { clearOwnerContext } from "../memory/store.ts";
+import { migrateUnified } from "../foundation/schema.ts";
+import { recordSpecialist } from "../foundation/specialists.ts";
 
 export const fragmentInput = z
   .object({
@@ -101,8 +103,10 @@ export function saveFragment(
   read: () => State,
   actor: Person,
   input: unknown,
+  taskId?: string,
 ) {
   const value = fragmentInput.parse(input);
+  migrateUnified(db);
   db.exec("BEGIN IMMEDIATE");
   try {
     const old = value.id
@@ -187,6 +191,7 @@ export function saveFragment(
       Number(value.allowCloud ?? previousDetails?.allowCloud ?? false),
       value.origin ?? previousDetails?.origin ?? "user-record",
     );
+    recordSpecialist(db,state,actor,{kind:"story",refId:id,revision:(old?.revision||0)+1,itemIds:value.itemIds,intent:"record",goal:"保存这段物品经历",basis:"saved_personal_experience",taskId});
     if (old) invalidateStoryUnderstanding(db, actor, id);
     clearOwnerContext(db, actor, !!old);
     for (const previousPhoto of previousDetails?.mediaIds || [])

@@ -3,11 +3,14 @@ import { z } from "zod";
 import { mutate, type State, type Person } from "../domain.ts";
 import { listFragments } from "./stories.ts";
 import { AgentError } from "../agent/contracts.ts";
+import { migrateUnified } from "../foundation/schema.ts";
+import { recordSpecialist } from "../foundation/specialists.ts";
 export function createLifeGift(
   db: DatabaseSync,
   read: () => State,
   actor: Person,
   input: unknown,
+  taskId?: string,
 ) {
   const v = z
     .object({
@@ -16,6 +19,7 @@ export function createLifeGift(
       fragmentIds: z.array(z.string().uuid()).max(20),
     })
     .parse(input);
+  migrateUnified(db);
   db.exec("BEGIN IMMEDIATE");
   try {
     const state = read();
@@ -49,6 +53,7 @@ export function createLifeGift(
       memoryIds,
       includeKnowledge: false,
     });
+    recordSpecialist(db,state,actor,{kind:"gift",refId:state.gifts.at(-1)!.id,revision:1,itemIds:[v.itemId],intent:"gift",goal:"准备一份经过选择的物品赠礼",basis:"not_verified",taskId});
     db.prepare("UPDATE workspace SET body=? WHERE id=1").run(
       JSON.stringify(state),
     );

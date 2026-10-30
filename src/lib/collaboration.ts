@@ -6,6 +6,7 @@ import { AgentError } from "./agent/contracts.ts";
 import { accountDB } from "./accounts.ts";
 import { migrateUnified } from "./foundation/schema.ts";
 import { mirrorItemGrant } from "./foundation/policy.ts";
+import { recordSpecialist } from "./foundation/specialists.ts";
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
 const at = () => new Date().toISOString();
 function schema(db: DatabaseSync) {
@@ -61,6 +62,7 @@ export function collaborate(
       taskId: z.string().max(100).optional(),
       confirmed: z.boolean().optional(),
       enabled: z.boolean().optional(),
+      sourceTaskId: z.string().uuid().optional(),
     })
     .strict()
     .parse(raw);
@@ -163,6 +165,7 @@ export function collaborate(
         taskId: state.tasks.at(-1)!.id,
         notice: "事项已创建；对方尚未读取，未发送短信或外部通知。",
       };
+      recordSpecialist(db,state,actor,{kind:"family",refId:state.tasks.at(-1)!.id,revision:1,itemIds:[v.itemId!],participants:[v.memberId as Person],intent:"collaborate",goal:v.summary!,basis:"not_verified",taskId:v.sourceTaskId});
     } else {
       const task = state.tasks.find(
         (t) => t.id === v.taskId && t.assignee === actor,

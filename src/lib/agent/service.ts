@@ -23,6 +23,8 @@ import { buildContext } from "../context/builder.ts";
 import { identity } from "../ai/harness.ts";
 import { readKnowledge } from "../life/acquisition.ts";
 import { continueVerifiedGuidance } from "./guidance-continuation.ts";
+import { beginRun, finishRun, assertRunCurrent, linkTask } from "../foundation/tasks.ts";
+import { migrateUnified } from "../foundation/schema.ts";
 export function completedStepOrdinal(question: string): number | undefined {
   for (const part of question.split(/[，。；！？,;!?\n]/).reverse()) {
     if (/没(?:有)?|尚未|未曾|还未|未完成|未做完/.test(part)) continue;
@@ -59,6 +61,27 @@ export function completedStepOrdinals(question: string): number[] {
   return [...result];
 }
 export async function respond(
+  db: DatabaseSync, read: () => State, actor: Person, raw: unknown, provider: Provider,
+): Promise<TurnResult> {
+  const input=turnInputSchema.parse(raw);
+  // Temporary conversations retain no task/run history.
+  if(input.temporary) return respondLegacy(db,read,actor,input,provider);
+  const linked=input.sessionId ? db.prepare("SELECT 1 FROM sqlite_master WHERE name='foundation_links'").get() : undefined;
+  const existing=linked ? db.prepare("SELECT task_id FROM foundation_links WHERE kind='session' AND ref_id=?").get(input.sessionId!) as {task_id:string}|undefined : undefined;
+  const taskId=input.taskId||existing?.task_id;
+  const run=beginRun(db,read,actor,{requestId:input.requestId,taskId,itemIds:input.itemId?[input.itemId]:[],entryPoint:input.uiContext?.page||"assistant",executor:"existing-langgraph-and-specialists/1",input});
+  try {
+    const result=await respondLegacy(db,read,actor,input,provider);
+    // Legacy commit has already validated its memory epoch, including the caller's
+    // own explicitly requested memory write. Do not reject that successful write.
+    run.memoryEpoch=result.session.memoryEpoch;
+    assertRunCurrent(db,read(),run);
+    const finished=finishRun(db,read,run,result.reply.outcome==="blocked"?"blocked":result.reply.outcome==="unavailable"?"partial":"waiting_user",result.session.id);
+    if(taskId)db.prepare("INSERT OR IGNORE INTO foundation_links VALUES('session',?,?)").run(result.session.id,taskId);
+    return {...result,foundation:{taskId,runId:run.runId,status:finished.status,basis:finished.resultBasis}};
+  } catch(error) { finishRun(db,read,run,"blocked"); throw error; }
+}
+async function respondLegacy(
   db: DatabaseSync,
   read: () => State,
   actor: Person,
@@ -128,6 +151,8 @@ export async function respond(
   }
   const { session, cached } = beginTurn(db, read, actor, input);
   if (cached) return cached;
+  if(input.taskId)session.known.foundationTaskId=input.taskId;
+  if(input.taskId)session.known.foundationHasItems=String(!!read().items.some(i=>input.itemId===i.id));
   if (
     input.uiContext &&
     session.messages.length &&
@@ -423,6 +448,7 @@ export function handoff(
   raw: unknown,
 ) {
   const input = handoffSchema.parse(raw);
+  migrateUnified(db);
   db.exec("BEGIN IMMEDIATE");
   try {
     const s = readSession(db, read(), actor, input.sessionId);
@@ -449,6 +475,7 @@ export function handoff(
     db.prepare("UPDATE workspace SET body=? WHERE id=1").run(
       JSON.stringify(state),
     );
+    linkTask(db,state,actor,{kind:"family",refId:task.id,goal:input.summary,intent:"collaborate",itemIds:[task.itemId],participants:[task.assignee]});
     db.exec("COMMIT");
     return { taskId: task.id, summary: task.title };
   } catch (e) {

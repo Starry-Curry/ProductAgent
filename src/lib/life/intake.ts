@@ -36,7 +36,7 @@ export function createLifeItem(
     })
     .strict()
     .parse(input);
-  if (v.packId && v.ownsConfirmed !== true)
+  if ((v.packId || a.startsWith("u_")) && v.ownsConfirmed !== true)
     throw new AgentError("请明确确认拥有这件商品，再建立个人物品记录");
   db.exec("BEGIN IMMEDIATE");
   try {

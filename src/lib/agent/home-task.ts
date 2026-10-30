@@ -30,6 +30,7 @@ import { identity } from "../ai/harness.ts";
 import { itemContext } from "../context/items.ts";
 import { listLifeIdeas } from "../life/ideas.ts";
 import { reviewHomeAnswer } from "./source-review.ts";
+import { resolveTaskContext } from "../foundation/tasks.ts";
 import {
   hazardousActions,
   withoutProhibitedActions,
@@ -83,7 +84,9 @@ export async function executeHomeTask(
   const trace: Trace[] = [],
     add = (stage: string, detail: string) =>
       trace.push({ stage, detail, at: new Date().toISOString() });
-  const initial = virtualHomeItems(read(), actor),
+  const taskId=session.known.foundationTaskId;
+  const scope=()=>taskId ? read().items.filter(i=>resolveTaskContext(db,read(),actor,taskId).task.itemInstanceIds.includes(i.id)) : virtualHomeItems(read(),actor);
+  const initial = scope(),
     snapshots = new Map(
       initial.map((i) => [
         i.id,
@@ -106,12 +109,12 @@ export async function executeHomeTask(
       )
         throw new AgentError("会话或物品授权已变化", 409);
     }
-    if (!read().virtualHomes?.[actor]?.allowCloud)
+    if (!taskId && !read().virtualHomes?.[actor]?.allowCloud)
       throw new AgentError("模拟家庭云端授权已撤回", 409);
     if (epoch(db, actor) !== version)
       throw new AgentError("记忆或授权已变化，请重新提问", 409);
     for (const [id, s] of snapshots) {
-      const i = virtualHomeItems(read(), actor).find((i) => i.id === id);
+      const i = scope().find((i) => i.id === id);
       if (
         !i ||
         JSON.stringify([i.owner, itemContext(i), i.location, i.note]) !== s
@@ -119,8 +122,8 @@ export async function executeHomeTask(
         throw new AgentError("家庭物品已变化，请重新核对", 409);
     }
   };
-  if (initial.length !== 8) throw new AgentError("模拟家庭尚未完整加载", 409);
-  if (!read().virtualHomes?.[actor]?.allowCloud)
+  if (!taskId && initial.length !== 8) throw new AgentError("模拟家庭尚未完整加载", 409);
+  if (!taskId && !read().virtualHomes?.[actor]?.allowCloud)
     return {
       reply: {
         outcome: "blocked",
@@ -279,6 +282,7 @@ export async function executeHomeTask(
               memoryQuestion: question,
               includeMemories: session.known.useItemMemories !== "no",
               topics: args.topics,
+              taskId,
             },
           );
           for (const i of context.items) {
@@ -377,6 +381,7 @@ export async function executeHomeTask(
       {
         temporary,
         includeMemories: session.known.useItemMemories !== "no",
+        taskId,
       },
     ).memories.map((m) => m.id),
   );
@@ -413,22 +418,23 @@ export async function executeHomeTask(
         calls: 0,
         tools: 0,
         messages: [
-          { role: "system", content: instructions },
+          { role: "system", content: taskId ? instructions.replace("统一家庭任务","统一物品任务").replace("homeIndex只是模拟持有索引","homeIndex是本任务已授权物品索引").replace("八件家庭资源","任务范围资源").replace("不要读取其他用户或真实物品","不要读取任务范围之外的物品") : instructions },
           {
             role: "user",
             content: JSON.stringify({
               question,
               currentTask: session.known.homeTask
                 ? JSON.parse(session.known.homeTask)
-                : undefined,
+                : taskId ? {goal:resolveTaskContext(db,read(),actor,taskId).task.goal} : undefined,
+              ...(taskId ? {previousUserReports:resolveTaskContext(db,read(),actor,taskId).previousOutcomes} : {}),
               history,
               selectedPlans,
               homeIndex: initial.map((i) => ({
                 id: handles.get(i.id),
                 name: i.name,
                 model: i.model,
-                location: i.location,
-                personalState: i.note,
+                location: i.owner===actor ? i.location : "未共享",
+                personalState: i.owner===actor ? i.note : "未共享",
               })),
               voice: voice?.enabled
                 ? {
@@ -438,7 +444,7 @@ export async function executeHomeTask(
                   }
                 : null,
               focusItemId: session.itemId ? handles.get(session.itemId) : null,
-              taskBoundary: "本次仅模拟家庭；没有设备控制工具或实体检测",
+              taskBoundary: taskId ? "仅本任务已授权物品；私人状态为用户报告，未执行硬件动作" : "本次仅模拟家庭；没有设备控制工具或实体检测",
             }),
           },
         ],
@@ -599,7 +605,7 @@ export async function executeHomeTask(
     usedItems,
     task: { goal, parts: p.tasks },
     caveat:
-      "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。",
+      taskId ? "实例状态及经历来自获准用户报告；建议未进行实物验证，未执行设备控制。" : "持有、位置与私人经历为模拟设定；建议未进行实物验证，未执行任何设备控制。",
   };
   add(
     "task_complete",

@@ -136,6 +136,29 @@ test("自有软件灯：真实REA→静态候选→授权→执行回读；坏�
     );
     const observed = await readSoftware(f.db, f.read, "lin", id);
     assert.equal(observed.observed.brightness, 37);
+    // Real local HTTP write with an injected concurrent revocation. The write may
+    // have happened, so never convert this into a claimed successful result.
+    const originalFetch=globalThis.fetch;
+    let writes=0;
+    try {
+      globalThis.fetch=async (url,init)=>{
+        const response=await originalFetch(url,init);
+        if(init?.method==="POST"&&String(url).endsWith("/brightness")){
+          writes++;
+          grantSoftware(f.db,f.read,"lin",id,false);
+        }
+        return response;
+      };
+      await assert.rejects(()=>executeSoftware(f.db,f.read,"lin",{...input,requestId:crypto.randomUUID(),brightness:42}),/授权已撤销/);
+      assert.equal(writes,1);
+    } finally {globalThis.fetch=originalFetch;}
+    grantSoftware(f.db,f.read,"lin",id,true);
+    const interrupted={...input,requestId:crypto.randomUUID(),brightness:25};
+    f.db.prepare("INSERT INTO software_operations VALUES(?,?,?,?)").run("lin",interrupted.requestId,JSON.stringify(interrupted),JSON.stringify({status:"pending-verification",simulated:true}));
+    const beforePending=await readSoftware(f.db,f.read,"lin",id);
+    assert.equal((await executeSoftware(f.db,f.read,"lin",interrupted)).status,"pending-verification");
+    const afterPending=await readSoftware(f.db,f.read,"lin",id);
+    assert.equal(afterPending.observed.revision,beforePending.observed.revision);
     grantSoftware(f.db, f.read, "lin", id, false);
     await assert.rejects(() => readSoftware(f.db, f.read, "lin", id), /授权/);
     await assert.rejects(

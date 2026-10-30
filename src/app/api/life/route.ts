@@ -392,9 +392,9 @@ async function POSTHandler(r: Request) {
     if (p.action === "createItem")
       return Response.json(createLifeItem(db, read, a, p.input));
     if (p.action === "fragment")
-      return Response.json({ fragment: saveFragment(db, read, a, p.input) });
+      return Response.json({ fragment: saveFragment(db, read, a, p.input, z.string().uuid().optional().parse(r.headers.get("x-wujian-task")||undefined)) });
     if (p.action === "gift")
-      return Response.json({ gift: createLifeGift(db, read, a, p.input) });
+      return Response.json({ gift: createLifeGift(db, read, a, p.input, z.string().uuid().optional().parse(r.headers.get("x-wujian-task")||undefined)) });
     if (p.action === "deleteFragment") {
       const v = z
         .object({

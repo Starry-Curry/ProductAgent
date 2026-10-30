@@ -329,7 +329,7 @@ export function visible(s: State, a: Person) {
       .map((p) =>
         p.preparation ? { ...p, preparation: currentPreparation(s, a, p) } : p,
       ),
-    items,
+    items: items.map(i=>i.owner===a ? i : {...i,note:"",photo:undefined,source:"已授权的物品档案",maintenance:undefined,supportUrl:undefined}),
     tasks: s.tasks.filter(
       (t) =>
         a !== "friend" &&

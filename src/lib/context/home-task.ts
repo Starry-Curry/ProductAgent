@@ -7,6 +7,7 @@ import { effectivePersona, listMemories } from "../memory/store.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 import { storyMemoryRelevant } from "../life/organization.ts";
 import { AgentError } from "../agent/contracts.ts";
+import { resolveTaskContext } from "../foundation/tasks.ts";
 
 /** One authorized scope across knowledge, private relationships and voice. No intent-specific early answer. */
 export function buildHomeTaskContext(
@@ -20,9 +21,11 @@ export function buildHomeTaskContext(
     memoryQuestion?: string;
     includeMemories?: boolean;
     topics?: string[];
+    taskId?: string;
   } = {},
 ) {
-  const scope = virtualHomeItems(state, actor),
+  const task=options.taskId?resolveTaskContext(db,state,actor,options.taskId):undefined;
+  const scope = task ? state.items.filter(i=>task.task.itemInstanceIds.includes(i.id)) : virtualHomeItems(state, actor),
     unique = [...new Set(itemIds)];
   if (unique.some((id) => !scope.some((i) => i.id === id)))
     throw new AgentError("物品不在本人的模拟家庭范围", 403);
@@ -58,9 +61,9 @@ export function buildHomeTaskContext(
         ? "requested-item"
         : "bounded-household-resource",
       personalInstance: {
-        kind: "simulated-user-report",
-        location: i.location,
-        note: i.note,
+        kind: i.synthetic ? "simulated-user-report" : "user_report",
+        location: i.owner===actor ? i.location : "未共享",
+        note: i.owner===actor ? i.note : "未共享",
       },
       documents: readKnowledge(db, state, actor, i.id).map((d) => ({
         title: d.title,

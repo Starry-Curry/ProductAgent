@@ -3,6 +3,7 @@ import type { HomeRoute, ActionCard } from "../home/contracts.ts";
 export const turnInputSchema = z
   .object({
     sessionId: z.string().uuid().optional(),
+    taskId: z.string().uuid().optional(),
     requestId: z.string().uuid(),
     itemId: z.string().max(100).optional(),
     question: z.string().trim().min(1).max(2000),
@@ -133,6 +134,7 @@ export type ServiceSession = {
 };
 export type Trace = { stage: string; detail: string; at: string };
 export type TurnResult = {
+  foundation?: { taskId?: string; runId: string; status: string; basis: string };
   session: ServiceSession;
   reply: AssistantReply;
   trace: Trace[];

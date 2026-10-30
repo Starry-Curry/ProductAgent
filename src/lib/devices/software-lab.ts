@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { createHash } from "node:crypto";
+import { createTask, beginRun, finishRun } from "../foundation/tasks.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { canRead, type Person, type State } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
@@ -241,6 +242,8 @@ export async function executeSoftware(
     return { ...JSON.parse(prior.result), replayed: true };
   }
   const runtime = await lamp();
+  const task=createTask(db,read,actor,{requestId:input.requestId,goal:"明确授权后调整自有软件灯",intent:"control",itemInstanceIds:[input.itemId]});
+  const taskRun=beginRun(db,read,actor,{requestId:input.requestId,taskId:task.taskId,itemIds:[input.itemId],entryPoint:"software_lab",executor:"fixed-owned-software-lamp/1",input});
   // Durable intent precedes execution. Unfinished records cannot be silently repeated.
   db.prepare("INSERT INTO software_operations VALUES(?,?,?,?)").run(
     actor,
@@ -280,8 +283,14 @@ export async function executeSoftware(
     db.prepare(
       "UPDATE software_operations SET result=? WHERE owner=? AND request_id=?",
     ).run(JSON.stringify(result), actor, input.requestId);
+    finishRun(db,read,taskRun,result.status==="verified"?"waiting_user":"partial");
+    if(result.status==="verified"){
+      const outcome={version:"outcome/1",outcomeId:crypto.randomUUID(),taskId:task.taskId,runId:taskRun.runId,goalStatus:"achieved",basis:"software_simulator_readback",evidenceRefs:[a.evidenceId],reporterId:actor,itemInstanceIds:[input.itemId],occurredAt:new Date().toISOString(),notes:"自有软件灯回读已匹配；不是实体台灯",canReuseForFutureTasks:false};
+      db.prepare("INSERT OR IGNORE INTO foundation_outcomes VALUES(?,?,?,?,?,?)").run(outcome.outcomeId,task.taskId,actor,input.requestId,payload,JSON.stringify(outcome));
+    }
     return result;
   } catch (e) {
+    finishRun(db,read,taskRun,"blocked");
     db.prepare(
       "UPDATE software_operations SET result=? WHERE owner=? AND request_id=?",
     ).run(
