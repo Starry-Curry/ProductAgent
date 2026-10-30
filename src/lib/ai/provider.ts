@@ -90,6 +90,7 @@ export type ToolDefinition = {
   };
 };
 export type Provider = {
+  onText?: (text: string) => void;
   ready?: boolean;
   complete?: (
     messages: ModelMessage[],
@@ -110,6 +111,8 @@ export type Provider = {
       temperature?: number;
       json?: boolean;
       purpose?: "creative" | "task";
+      /** Text deltas are provisional until the final provider result is validated. */
+      onText?: (text: string) => void;
     },
   ) => Promise<ProviderResult>;
   search?: (query: string, sites?: string[]) => Promise<SearchResponse>;
@@ -184,6 +187,7 @@ export function createProvider(
               4000,
               Math.max(300, options?.maxTokens || 1500),
             ),
+            ...(options?.onText ? { stream: true, stream_options: { include_usage: true } } : {}),
             ...(env.AI_ENABLE_THINKING !== "true"
               ? { enable_thinking: false }
               : {}),
@@ -192,7 +196,9 @@ export function createProvider(
           }),
         });
         if (!response.ok) throw await upstreamFailure(response);
-        const result = await response.json().catch(() => {
+        const result = options?.onText
+          ? await readCompletionStream(response, options.onText)
+          : await response.json().catch(() => {
           throw new ProviderError(
             "invalid_response",
             "请求失败：模型服务返回了无效 JSON。",
@@ -345,6 +351,39 @@ export function createProvider(
     };
   };
   return provider;
+}
+
+/** Handles UTF-8 / SSE boundary splits; never forwards reasoning content. */
+export async function readCompletionStream(response: Response, onText: (text: string) => void) {
+  if (!response.body) throw new ProviderError("invalid_response", "模型没有返回内容");
+  const reader = response.body.getReader(), decoder = new TextDecoder();
+  let pending = "", text = "", finish: string | undefined, usage: unknown;
+  function line(line: string) {
+    if (!line.startsWith("data:")) return;
+    const data = line.slice(5).trim();
+    if (!data || data === "[DONE]") return;
+    const packet = JSON.parse(data);
+    if (packet.error) throw new ProviderError("upstream", "模型流中断");
+    if (packet.usage) usage = packet.usage;
+    const choice = packet.choices?.[0];
+    if (choice?.finish_reason) finish = choice.finish_reason;
+    const delta = choice?.delta?.content;
+    if (typeof delta === "string" && delta) {
+      text += delta;
+      if (text.length > 12000) throw new ProviderError("invalid_response", "模型回答过长");
+      onText(delta);
+    }
+  }
+  try {
+    while (true) {
+      const part = await reader.read();
+      pending += decoder.decode(part.value, { stream: !part.done });
+      const lines = pending.split(/\r?\n/); pending = lines.pop() || "";
+      for (const value of lines) line(value);
+      if (part.done) { if (pending.trim()) line(pending); break; }
+    }
+  } finally { await reader.cancel().catch(() => {}); }
+  return { choices: [{ finish_reason: finish, message: { content: text } }], usage };
 }
 
 async function completeModel(

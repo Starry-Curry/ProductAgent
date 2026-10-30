@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { accountContext, assertAccountOrigin, readAccount } from "../accounts.ts";
 import {
   assertPublicRequest,
   publicDemo,
@@ -45,6 +46,18 @@ export function withDemoRequest<T extends unknown[]>(
   handler: (r: Request, ...args: T) => Response | Promise<Response>,
 ) {
   return async (r: Request, ...args: T): Promise<Response> => {
+    if (process.env.AUTH_MODE === "authenticated") {
+      try {
+        assertAccountOrigin(r);
+        return await accountContext.run(readAccount(r), async () => {
+          const response = await handler(r, ...args);
+          response.headers.set("Cache-Control", "private, no-store");
+          return response;
+        });
+      } catch (e) {
+        return Response.json({ error: e instanceof Error ? e.message : "请登录" }, { status: typeof (e as any)?.status === "number" ? (e as any).status : 401 });
+      }
+    }
     if (!publicDemo()) return handler(r, ...args);
     const requestId = randomUUID(),
       start = Date.now();

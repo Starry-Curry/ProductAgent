@@ -29,6 +29,7 @@ export const skills = {
       "先区分通用设置与硬件专属问题。通用问题不要求建档；专属过程必须有当前型号资料。每次最多追问两项会改变下一步的信息。复用系统与接收器条件，已尝试步骤不重复。完成只能由用户反馈确认。",
     goal: "帮助用户使用具体物品或完成通用设置，按需追问并记录尝试",
     tools: [
+      "explore_owned_software",
       "list_accessible_items",
       "read_item_context",
       "search_product_knowledge",

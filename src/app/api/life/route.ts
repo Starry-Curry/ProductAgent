@@ -6,6 +6,7 @@ import {
   virtualHomeItems,
 } from "@/lib/life/virtual-home";
 import { recognizeProduct } from "@/lib/life/product-arrival";
+import { inspectProduct } from "@/lib/life/product-inspection";
 import { installAlphaSamples } from "@/lib/life/alpha-samples";
 import { publicDemo, CloudError } from "@/lib/cloud/runtime";
 import { withDemoRequest } from "@/lib/cloud/request";
@@ -142,6 +143,7 @@ async function GETHandler(r: Request) {
       creativeEvidence: listCreativeEvidence(db, a),
       packs: productPacks,
       capabilities: {
+        softwareLab: process.env.WUJIAN_ENABLE_DEVICE_LAB === "true",
         visual: visionStatus().ready,
         vision: visionStatus(),
         model: cloudStatus().ready,
@@ -255,6 +257,10 @@ async function POSTHandler(r: Request) {
         notice:
           "用户主动读取的公开正文；不会绕过登录，也不自动认证为官方资料。",
       });
+    if (p.action === "inspectProduct") {
+      if (process.env.WUJIAN_ALLOW_PUBLIC_FETCH === "false") throw new AgentError("当前服务已关闭资料联网", 403);
+      return Response.json(await inspectProduct(p.input));
+    }
     if (p.action === "findOfficial")
       return Response.json(await findOfficial(p.input));
     if (p.action === "acquireKnowledge") {

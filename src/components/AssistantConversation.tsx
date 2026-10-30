@@ -69,6 +69,15 @@ export function AssistantConversation({
     handoffId = useRef("");
   const headers = { "Content-Type": "application/json", "x-demo-actor": actor };
   const [waitSeconds, setWaitSeconds] = useState(0);
+  const [draft, setDraft] = useState("");
+  const [recipients, setRecipients] = useState<{ id: string; name: string }[]>([]), [recipient, setRecipient] = useState("");
+  useEffect(() => {
+    if (!actor.startsWith("u_")) return;
+    fetch("/api/collaboration", { cache: "no-store" }).then(r => r.json()).then(d => {
+      const rows = (d.members || []).filter((m: any) => m.id !== actor && (item?.owner === m.id || item?.sharedWith?.includes(m.id)));
+      setRecipients(rows); setRecipient(rows[0]?.id || "");
+    }).catch(() => {});
+  }, [actor, item?.id, item?.shared]);
   useEffect(() => {
     setWaitSeconds(0);
     if (!busy) return;
@@ -98,9 +107,28 @@ export function AssistantConversation({
   async function request(body: unknown, method = "POST") {
     const r = await fetch("/api/assistant", {
       method,
-      headers,
+      headers: { ...headers, ...(method === "POST" && !(body as any)?.action ? { Accept: "text/event-stream" } : {}) },
       body: JSON.stringify(body),
     });
+    if (r.ok && r.headers.get("content-type")?.includes("text/event-stream")) {
+      const reader = r.body!.getReader(), decoder = new TextDecoder();
+      let pending = "", result: TurnResult | undefined;
+      while (true) {
+        const part = await reader.read();
+        pending += decoder.decode(part.value, { stream: !part.done });
+        const frames = pending.split("\n\n"); pending = frames.pop() || "";
+        for (const frame of frames) {
+          const event = frame.match(/^event: (.+)$/m)?.[1];
+          const data = JSON.parse(frame.match(/^data: (.+)$/m)?.[1] || "{}");
+          if (event === "failure") { setDraft(""); throw Error(data.error); }
+          if (event === "text" && alive.current) setDraft(value => value + data.text);
+          if (event === "result") result = data;
+        }
+        if (part.done) break;
+      }
+      if (!result) throw Error("回答连接中断，尚未取得完整结果");
+      return result;
+    }
     const d = await r.json();
     if (!r.ok) throw Error(d.error || "请求未完成");
     return d;
@@ -108,6 +136,7 @@ export function AssistantConversation({
   async function send(text: string, base = current.current, resend = false) {
     if (!text.trim()) return;
     setBusy(true);
+    setDraft("");
     setError("");
     const input =
       resend && retry.current
@@ -151,7 +180,7 @@ export function AssistantConversation({
       if (alive.current)
         setError(e instanceof Error ? e.message : "连接未完成，可以重试");
     } finally {
-      if (alive.current) setBusy(false);
+      if (alive.current) { setBusy(false); setDraft(""); }
     }
   }
   async function refresh() {
@@ -543,6 +572,7 @@ export function AssistantConversation({
           </article>
         ))}
       </div>
+      {busy && draft && <article className="assistant-message" aria-label="正在生成的回答"><small>正在生成，完整回答尚未核对</small><p style={{ whiteSpace: "pre-wrap" }}>{draft}</p></article>}
       {busy && (
         <p role="status">
           {waitSeconds < 8
@@ -788,7 +818,7 @@ export function AssistantConversation({
                         expectedRevision: session!.revision,
                         requestId: handoffId.current,
                         summary,
-                        assignee: actor === "dad" ? "lin" : "dad",
+                        assignee: actor.startsWith("u_") ? recipient : actor === "dad" ? "lin" : "dad",
                       },
                     });
                     if (alive.current) {
@@ -803,6 +833,7 @@ export function AssistantConversation({
                   }
                 }}
               >
+                {actor.startsWith("u_") && <label>交给哪位获准家人<select value={recipient} onChange={e => setRecipient(e.target.value)} required><option value="">请选择</option>{recipients.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}</select></label>}
                 <label>
                   家人将看到这段求助摘要
                   <input

@@ -1,0 +1,52 @@
+   ▲ Next.js 15.5.28
+   - Experiments (use with caution):
+     · cpus: 1
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 10.4s
+   Linting and checking validity of types ...
+
+   We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
+   The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
+
+   	- include was updated to add '.next-closeout/types/**/*.ts'
+
+   Collecting page data ...
+   Generating static pages (0/7) ...
+   Generating static pages (1/7)
+   Generating static pages (3/7)
+   Generating static pages (5/7)
+ ✓ Generating static pages (7/7)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                    50.8 kB         202 kB
+├ ƒ /_not-found                            993 B         104 kB
+├ ƒ /api/account                           161 B         103 kB
+├ ƒ /api/ai                                161 B         103 kB
+├ ƒ /api/assistant                         161 B         103 kB
+├ ƒ /api/collaboration                     161 B         103 kB
+├ ƒ /api/demo/session                      161 B         103 kB
+├ ƒ /api/device-lab                        161 B         103 kB
+├ ƒ /api/discover                          161 B         103 kB
+├ ƒ /api/gift/[token]                      161 B         103 kB
+├ ƒ /api/health                            161 B         103 kB
+├ ƒ /api/home                              161 B         103 kB
+├ ƒ /api/life                              161 B         103 kB
+├ ƒ /api/life/media/[id]                   161 B         103 kB
+├ ƒ /api/memories                          161 B         103 kB
+├ ƒ /api/products                          161 B         103 kB
+├ ƒ /api/service-runs                      161 B         103 kB
+├ ƒ /api/workspace                         161 B         103 kB
+├ ƒ /gift/[token]                        2.35 kB         139 kB
+├ ƒ /guide                               3.45 kB         106 kB
+└ ƒ /legacy                              24.1 kB         175 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/255-b1e2483a7e02feee.js       46.6 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          2.05 kB
+
+
+ƒ  (Dynamic)  server-rendered on demand
+

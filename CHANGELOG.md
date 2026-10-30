@@ -95,3 +95,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 362项离线、类型、生产构建、API集成及桌面/移动真实浏览器通过；22项新增测试。107次真实请求，103次API返回、3次超时、1次指令替换中止；估算含失败预留约1.2396元。24任务三策略与20次调用方式消融保留原文，不用响应成功或模型自评分代表创造力。物理/资源幻觉仍明显，未证明创新质量成熟；本轮停止，不自动开发V3/V4。REA仅源码预研，当前Node补丁版本低于其要求，未安装执行。
 
 详见 [本轮入口](docs/engineering/creativity-v2-2026-10-30/README.md)、[质量审阅](docs/engineering/creativity-v2-2026-10-30/QUALITY_REVIEW.md)、[真实测试与账目](docs/engineering/creativity-v2-2026-10-30/TEST_REPORT.md)。本机隔离预览 http://127.0.0.1:3207/#home → 物品 → 让它多一种可能。剩余：创意价值/物理推理不可靠、案例覆盖窄、真人盲评未做、REA未实测；下一阶段转整体Agent体验与授权设备探索基础。
+
+## 2026-10-30｜完整产品基础收口（未合并 main）
+
+分支 codex/wujian-product-foundation-v1，基准创造力V2 a24bfd7。陌生SKU真实界面录入与官方资料索引连通、英文说明书检索遗漏修复；保留单轮操作校验、快速事实问答与流式实验源码。自然事实综合仍会编造结论，WUJIAN_EXPERIMENTAL_FACT_QA 默认关闭，未为交付而默认发布。
+
+独立本机账号、家庭邀请/逐物品授权、已读/接手/用户报告完成、赠礼独立实例及双向隐私通过生产浏览器；保留分身并验证本地纠正遗忘。REA 6.8.0 实际分析自有JS软件灯，经明确授权执行调光与回读；是软件模拟，非硬件验证。未换框架、重构创造力、迁移私人数据库、修改AGENTS或合并main。
+
+371项离线、类型、生产构建、benchmark和新旧桌面/移动浏览器回归通过。150次真实百炼上游请求，548881输入/30350输出tokens，估算0.4998048元，已停付费。answered不等于正确；问答内容质量、完整响应目标及全产品五旅程未全部达标。用户已要求本轮正式结束，不自动启动下一轮重构。
+
+本机可体验：http://127.0.0.1:3216/ （独立账号，费用关闭）。[交付与截图](docs/engineering/product-foundation-2026-10-30/README.md)、[测试与性能](docs/engineering/product-foundation-2026-10-30/TEST_REPORT.md)、[失败原文](docs/engineering/product-foundation-2026-10-30/MODEL_SAMPLES.md)、[环境](docs/engineering/product-foundation-2026-10-30/ENVIRONMENT.md)、[恢复点](docs/engineering/product-foundation-2026-10-30/HANDOFF.md)。

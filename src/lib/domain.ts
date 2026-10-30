@@ -2,8 +2,8 @@ import { findPack } from "./products.ts";
 import type { Preparation } from "./life/task-types.ts";
 import { currentPreparation, mutatePreparation } from "./life/task-planning.ts";
 import { physicalFactSchema, type PhysicalFact } from "./life/physical-facts.ts";
-export type Person = "lin" | "dad" | "friend";
-export const people: Record<Person, string> = {
+export type Person = "lin" | "dad" | "friend" | `u_${string}`;
+export const people: Record<string, string> = {
   lin: "小林",
   dad: "爸爸",
   friend: "小夏",
@@ -29,6 +29,8 @@ export type Item = {
   location: string;
   owner: Person;
   shared: boolean;
+  sharedWith?: Person[];
+  transferredFrom?: { itemId: string; giftId: string };
   state: string;
   icon: string;
   photo?: string;
@@ -45,6 +47,10 @@ export type Item = {
   };
 };
 export type Task = {
+  seenAt?: string;
+  acceptedAt?: string;
+  reportedAt?: string;
+  completionBasis?: "user_report" | "device_readback";
   serviceContext?: {
     sourceSessionId: string;
     sourceRevision: number;
@@ -81,6 +87,7 @@ export type Memory = {
   shared: boolean;
 };
 export type Gift = {
+  receivedItemId?: string;
   id: string;
   itemId: string;
   sender: Person;
@@ -146,7 +153,10 @@ export type State = {
   care: Care;
 };
 export function canRead(item: Item, actor: Person) {
-  return item.owner === actor || (item.shared && actor !== "friend");
+  return item.owner === actor || (item.shared &&
+    (actor.startsWith("u_") || item.owner.startsWith("u_")
+      ? !!item.sharedWith?.includes(actor)
+      : actor !== "friend"));
 }
 export function careMessage(c: Care) {
   if (!c.consent) return "尚未授权，不评估使用信号";
@@ -323,6 +333,7 @@ export function visible(s: State, a: Person) {
     tasks: s.tasks.filter(
       (t) =>
         a !== "friend" &&
+        (!a.startsWith("u_") || t.createdBy === a || t.assignee === a) &&
         (!t.itemId ||
           (ids.has(t.itemId) &&
             items.some((i) => i.id === t.itemId && i.shared))),
@@ -331,9 +342,9 @@ export function visible(s: State, a: Person) {
       (m) => (m.owner ?? m.author) === a || (m.shared && ids.has(m.itemId)),
     ),
     gifts: s.gifts.filter((g) => g.sender === a || g.claimedBy === a),
-    saved: { [a]: s.saved[a] },
+    saved: { [a]: s.saved[a] || [] },
     attempts: s.attempts.filter((t) => t.actor === a),
-    care: a === "friend" ? null : s.care,
+    care: a === "friend" || a.startsWith("u_") ? null : s.care,
   };
 }
 export function mutate(
@@ -342,6 +353,7 @@ export function mutate(
   action: string,
   p: Record<string, any>,
 ): State {
+  s.saved[a] ||= [];
   const id = () => crypto.randomUUID();
   const now = () => new Date().toISOString();
   const fail = (m: string): never => {
@@ -447,7 +459,7 @@ export function mutate(
     for (const k of ["name", "location", "model", "note", "state"] as const) {
       if (typeof p[k] === "string" && str(p[k])) item[k] = str(p[k]);
     }
-    if (typeof p.shared === "boolean") item.shared = p.shared;
+    if (typeof p.shared === "boolean") { item.shared = p.shared; if (!p.shared) item.sharedWith = []; }
     if (typeof p.brand === "string") item.brand = str(p.brand, 80);
     if (typeof p.region === "string") item.region = str(p.region,20) || undefined;
     if (["一次性", "消耗型", "可重复使用", "长期耐用", "持续养护"].includes(p.lifecycle)) item.lifecycle = p.lifecycle;
@@ -528,12 +540,15 @@ export function mutate(
     });
   } else if (action === "quickTask") {
     if (a === "friend") fail("你不是家庭成员");
-    if (!["lin", "dad"].includes(p.assignee)) fail("请选择家庭成员");
     const title = str(p.title, 120);
     if (!title) fail("请写下需要做的事");
     if (!["repair", "clean", "purchase", "notice", "help"].includes(p.kind))
       fail("事项类型无效");
     const itemId = str(p.itemId, 100);
+    if (a.startsWith("u_")) {
+      const item = itemId ? get(itemId) : undefined;
+      if (!item?.shared || !(p.assignee === item.owner || item.sharedWith?.includes(p.assignee))) fail("请选择获得该物品授权的家庭成员");
+    } else if (!["lin", "dad"].includes(p.assignee)) fail("请选择家庭成员");
     if (itemId && !get(itemId).shared)
       fail("请先由所有者共享物品，或不关联私人物品");
     const requestId = str(p.requestId, 100);
@@ -581,7 +596,9 @@ export function mutate(
     const item = get(p.itemId);
     if (!item.shared) fail("请先由所有者共享物品再创建家庭事项");
     if (a === "friend") fail("你不是家庭成员");
-    if (!["lin", "dad"].includes(p.assignee)) fail("请选择家庭成员");
+    if (a.startsWith("u_")
+      ? !(p.assignee === item.owner || item.sharedWith?.includes(p.assignee))
+      : !["lin", "dad"].includes(p.assignee)) fail("请选择获得该物品授权的家庭成员");
     const title = str(p.title, 120);
     if (!title) fail("请填写事项");
     s.tasks.push({
@@ -589,6 +606,7 @@ export function mutate(
       itemId: item.id,
       title,
       assignee: p.assignee,
+      createdBy: a,
       status: "待处理",
       logs: [{ by: a, text: str(p.context) || "用户创建协助事项", at: now() }],
     });
@@ -677,7 +695,7 @@ export function mutate(
     if (!g || g.revoked || g.claimedBy) fail("链接已失效或礼物已被认领");
     if (g!.sender === a) fail("请选择接收者演示身份");
     if (p.received !== true) fail("请确认已实际取得物品");
-    const item = s.items.find((i) => i.id === g!.itemId);
+    let item = s.items.find((i) => i.id === g!.itemId);
     if (!item || item.owner !== g!.sender) fail("物品归属已改变");
     if (
       s.tasks.some((t) => t.itemId === item!.id && t.status !== "用户确认完成")
@@ -685,6 +703,14 @@ export function mutate(
       fail("该物品仍有关联事项，请先处理完成");
     g!.claimedBy = a;
     g!.claimedAt = now();
+    if (a.startsWith("u_")) {
+      const original = item!;
+      item = { ...original, id: id(), transferredFrom: { itemId: original.id, giftId: g!.id }, sharedWith: [] };
+      original.availability = "gifted"; original.shared = false; original.sharedWith = [];
+      s.items.push(item);
+      item.attributes = undefined;
+      g!.receivedItemId = item.id;
+    }
     s.memories
       .filter((m) => m.itemId === item!.id)
       .forEach((m) => {

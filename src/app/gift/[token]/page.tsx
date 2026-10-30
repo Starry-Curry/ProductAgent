@@ -12,8 +12,10 @@ export default function GiftPage({
   const [error, setError] = useState("");
   const [received, setReceived] = useState(false);
   const [actor, setActor] = useState("friend");
+  const [account, setAccount] = useState<{ id: string; name: string } | null>(null);
   const [busy, setBusy] = useState(false);
   useEffect(() => {
+    fetch("/api/account", { cache: "no-store" }).then(r => r.json()).then(d => { if (d.account) { setAccount(d.account); setActor(d.account.id); } }).catch(() => {});
     fetch(`/api/gift/${token}`)
       .then(async (r) => {
         const d = await r.json();
@@ -51,7 +53,7 @@ export default function GiftPage({
         </span>
         <div className="eyebrow">SOMETHING SPECIAL, FOR YOU</div>
         <h1>有一份心意，想交到你手里。</h1>
-        <p>无需注册即可阅读 · 本地接收预览</p>
+        <p>{account ? `由${account.name}的独立账号接收` : "本地接收预览；独立账号服务需要先登录"}</p>
       </div>
       {error && (
         <p className="notice" role="alert">
@@ -74,9 +76,9 @@ export default function GiftPage({
               <p>{story}</p>
               <small>
                 原作者：
-                {gift.storyAuthors?.[i]
+                {gift.storyAuthorNames?.[i] || (gift.storyAuthors?.[i]
                   ? people[gift.storyAuthors[i] as Person]
-                  : "未知（旧记录未保留来源）"}
+                  : "未知（旧记录未保留来源）")}
               </small>
             </article>
           ))}
@@ -94,7 +96,7 @@ export default function GiftPage({
             <>
               <h3>愿意让故事继续吗？</h3>
               <p>阅读不会改变归属。请在实际取得物品后认领。</p>
-              <label>
+              {account ? <p>认领到：{account.name}的物品空间</p> : <label>
                 演示接收身份（非真实账号）
                 <select
                   value={actor}
@@ -104,7 +106,7 @@ export default function GiftPage({
                   <option value="dad">爸爸</option>
                   <option value="lin">小林</option>
                 </select>
-              </label>
+              </label>}
               <label className="check-row">
                 <input
                   type="checkbox"

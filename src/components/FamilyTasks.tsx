@@ -136,8 +136,8 @@ export function TaskList({
           key={t.id}
         >
           <small>
-            {t.kind === "notice" ? "重要提醒" : "待办"} · {people[t.assignee]}
-            {t.createdBy ? ` · ${people[t.createdBy]}留下的` : ""}
+            {t.kind === "notice" ? "重要提醒" : "待办"} · {people[t.assignee] || (t.assignee === actor ? "给你" : "家人")}
+            {t.createdBy ? ` · ${people[t.createdBy] || "家人"}留下的` : ""}
           </small>
           <h3>{t.title}</h3>
           {t.serviceContext && (
@@ -164,9 +164,10 @@ export function TaskList({
               </>
             ) : (
               <div className="inline">
+                {actor.startsWith("u_") && !t.acceptedAt && <button className="button" disabled={!!busy} onClick={() => update(t, "task", { taskId: t.id, status: "进行中" })}>我来接手</button>}
                 <button
                   className="button"
-                  disabled={!!busy}
+                  disabled={!!busy || (actor.startsWith("u_") && !t.acceptedAt)}
                   onClick={() =>
                     update(t, "task", {
                       taskId: t.id,

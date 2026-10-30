@@ -13,6 +13,14 @@ export const tools = [
   {
     type: "function" as const,
     function: {
+      name: "explore_owned_software",
+      description: "仅对当前自有 WUJIAN-SOFTWARE-LAMP-1 合成软件灯运行固定版REA，取得静态接口证据与只读探测；不控制设备，不允许任意路径或目标。控制必须另由用户明确授权确认。",
+      parameters: { type: "object", properties: { itemId: { type: "string" } }, required: ["itemId"], additionalProperties: false },
+    },
+  },
+  {
+    type: "function" as const,
+    function: {
       name: "fetch_official_knowledge",
       description:
         "为当前已录入且型号明确的物品按需获取、缓存官方说明书/支持页，不猜URL或跨型号",

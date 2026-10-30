@@ -1,5 +1,6 @@
 import { withDemoRequest } from "@/lib/cloud/request";
 import { read, localOnly } from "@/lib/db";
+import { accountName } from "@/lib/accounts";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 async function GETHandler(
@@ -21,6 +22,7 @@ async function GETHandler(
       nickname: g.nickname,
       stories: g.stories,
       storyAuthors: (g.storySnapshots || []).map((s) => s.author),
+      storyAuthorNames: (g.storySnapshots || []).map((s) => accountName(s.author) || null),
       includeKnowledge: g.includeKnowledge,
       claimed: !!g.claimedBy,
     });

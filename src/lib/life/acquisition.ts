@@ -171,9 +171,11 @@ export function readKnowledge(
   return (
     db
       .prepare(
-        "SELECT body FROM life_knowledge_documents WHERE owner=? AND item_id=? AND identity=? AND status='active' ORDER BY created_at DESC LIMIT 8",
+        "SELECT body FROM life_knowledge_documents WHERE owner IN (?,?) AND item_id=? AND identity=? AND status='active' ORDER BY created_at DESC LIMIT 8",
       )
-      .all(actor, itemId, knowledgeIdentity(item)) as { body: string }[]
+      // Only server-verified public product documents travel with explicitly
+      // authorized item access. Private life_sources, stories and chats do not.
+      .all(actor, item.sharedWith?.includes(actor) ? item.owner : actor, itemId, knowledgeIdentity(item)) as { body: string }[]
   ).map((r) => {
     const d = JSON.parse(r.body) as AcquiredDocument;
     return d.processorVersion === "extractive-3-overlap"
@@ -258,7 +260,9 @@ export function retrieveKnowledge(
     question + " " + (state.items.find((i) => i.id === itemId)?.name || ""),
     ranked.length
       ? ranked
-      : eligible.filter((c) => c.category === "facts").slice(0, 2),
+      // A Chinese question may have no literal match in an English manual.
+      // Operation/safety paragraphs still contain facts; do not silently lose them.
+      : eligible.slice(0, 8),
   );
 }
 /** Conservative exact-field conflict detection only; never silently pick a value across sources. */

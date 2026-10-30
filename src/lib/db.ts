@@ -2,6 +2,7 @@ import { publicDemo, visitorContext, CloudError } from "./cloud/runtime.ts";
 import { installHouseholdCases } from "./demo/install.ts";
 import { captureWorkspace } from "./memory/ambient.ts";
 import { assertLocalDemo } from "./auth.ts";
+import { accountContext } from "./accounts.ts";
 import { DatabaseSync } from "node:sqlite";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
@@ -64,6 +65,11 @@ export function write(a: Person, action: string, p: Record<string, unknown>) {
   }
 }
 export function actor(r: Request): Person {
+  if (process.env.AUTH_MODE === "authenticated") {
+    const account = accountContext.getStore();
+    if (!account) throw new Error("请先登录自己的账号");
+    return account.id;
+  }
   if (publicDemo()) {
     if (!visitorContext.getStore())
       throw new CloudError("session_required", "请先进入演示空间", 401);
@@ -74,6 +80,10 @@ export function actor(r: Request): Person {
   throw new Error("请选择演示角色");
 }
 export function localOnly(r: Request) {
+  if (process.env.AUTH_MODE === "authenticated") {
+    if (!accountContext.getStore()) throw new Error("请先登录自己的账号");
+    return;
+  }
   if (publicDemo()) {
     if (!visitorContext.getStore())
       throw new CloudError("session_required", "请先进入演示空间", 401);

@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-30T07:16:19.377Z",
+  "synthetic": true,
+  "paidModelCalls": 0,
+  "pageErrors": [],
+  "checks": [
+    {
+      "name": "两独立浏览器实际注册登录，没有角色下拉模拟",
+      "passed": true
+    },
+    {
+      "name": "陌生SKU经真实录入界面读取官方资料、确认持有并保存",
+      "passed": true
+    },
+    {
+      "name": "真实界面保存分身、跨会话本地召回、纠正与遗忘；未冒充模型表现",
+      "passed": true
+    },
+    {
+      "name": "独立账号不能通过演示头冒充另一用户",
+      "passed": true
+    },
+    {
+      "name": "加入家庭不等于共享；共享档案不泄露私人故事",
+      "passed": true
+    },
+    {
+      "name": "家庭事项在真实独立身份间创建、已读、接手、用户报告完成",
+      "passed": true
+    },
+    {
+      "name": "独立收礼者预览认领、独立实例、选择故事作者保留、新私密不回流",
+      "passed": true
+    },
+    {
+      "name": "陌生产品真实官网资料导入，非预置资料包",
+      "passed": true,
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html"
+    },
+    {
+      "name": "真实浏览器REA分析、明确授权、执行软件灯调光42、回读、撤权",
+      "passed": true
+    },
+    {
+      "name": "390px移动端无横向溢出",
+      "passed": true
+    }
+  ]
+}

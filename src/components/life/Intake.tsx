@@ -42,13 +42,15 @@ export function Intake({
   async function savePendingSource(item: Item) {
     try {
       if (source?.text?.trim())
-        await request("source", {
+        await (source.official && source.url ? request("importOfficial", {
+          itemId: item.id, url: source.url, confirmed: true,
+        }) : request("source", {
           itemId: item.id,
           title: source.title || "用户提供的资料",
           text: source.text,
           url: source.url,
           kind: source.kind || "user-text",
-        });
+        }));
     } catch (e) {
       setNotice(
         `物品已成功建档，资料尚未保存：${(e as Error).message}。请修正资料后单独重试，无需再次录入。`,
@@ -296,7 +298,7 @@ export function Intake({
               disabled={busy || !url}
               onClick={() =>
                 run(async () => {
-                  const d = await request("fetchSource", { url });
+                  const d = await request("inspectProduct", { url, brand, model });
                   setSource(d);
                   setNotice(d.notice);
                 })
@@ -413,6 +415,7 @@ export function Intake({
                 packId: packId || undefined,
                 confirmed: f.get("confirmed") === "on",
                 ownsConfirmed: f.get("ownsConfirmed") === "on",
+                synthetic: f.get("synthetic") === "on",
                 attributes: {
                   material: f.get("material"),
                   quantityUnit: f.get("quantityUnit"),
@@ -508,7 +511,7 @@ export function Intake({
             model={model}
             request={request}
             onChoose={(d) => {
-              setSource({ ...d, kind: "user-link" });
+              setSource({ ...d, kind: "user-link", official: true });
               setNotice(
                 "已采用公开资料草稿；请核对实物与型号后录入，不自动绑定资料包。",
               );
@@ -531,6 +534,7 @@ export function Intake({
               我已核对实物型号与页面地区版本，确认绑定该资料包
             </label>
           )}
+          <label className="life-check"><input name="synthetic" type="checkbox" />这是体验用测试物品，不代表真实持有</label>
           <div className="life-form-row">
             <label>
               类别
@@ -606,7 +610,7 @@ export function Intake({
               <input name="material" maxLength={100} />
             </label>
           </div>
-          {packId && (
+          {(
             <label className="life-check">
               <input type="checkbox" name="ownsConfirmed" required />
               我确认拥有这件商品

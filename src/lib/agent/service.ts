@@ -412,7 +412,7 @@ export const handoffSchema = z
     expectedRevision: z.number().int().nonnegative(),
     requestId: z.string().uuid(),
     summary: z.string().trim().min(1).max(120),
-    assignee: z.enum(["lin", "dad"]),
+    assignee: z.string().refine(v => ["lin", "dad"].includes(v) || /^u_[a-f0-9-]{36}$/.test(v)),
   })
   .strict();
 /** Explicit user-confirmed summary; model output never directly creates a family task. */

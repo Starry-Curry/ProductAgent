@@ -5,6 +5,10 @@ import { AgentError } from "@/lib/agent/contracts";
 import { respond, handoff } from "@/lib/agent/service";
 import { ProviderError } from "@/lib/ai/provider";
 import { lifeProvider } from "@/lib/life/provider";
+import { publicDemo } from "@/lib/cloud/runtime";
+import { canRead } from "@/lib/domain";
+import { epoch } from "@/lib/memory/store";
+import { readAccount } from "@/lib/accounts";
 import {
   listSessions,
   attachSession,
@@ -108,6 +112,39 @@ async function POSTHandler(r: Request) {
     }
     if (p.action === "handoff")
       return Response.json(handoff(database(), read, a, p.input));
+    // Visitor scopes currently close on response headers; keep public-demo JSON
+    // until its streaming lifetime can be governed with the same quota guarantees.
+    if (!publicDemo() && r.headers.get("accept") === "text/event-stream") {
+      const db = database(), provider = lifeProvider(), memoryEpoch = epoch(db, a);
+      const identity = p.itemId ? JSON.stringify(read().items.find(i => i.id === p.itemId && canRead(i, a))) : undefined;
+      const encoder = new TextEncoder(); let cancelled = false;
+      const body = new ReadableStream({
+        start(controller) {
+          const emit = (event: string, data: unknown) => {
+            if (cancelled) return;
+            if (process.env.AUTH_MODE === "authenticated") {
+              try { readAccount(r); }
+              catch { cancelled = true; controller.error(new Error("登录已失效")); return; }
+            }
+            if (!cancelled) controller.enqueue(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
+          };
+          provider.onText = text => {
+            if (cancelled) return;
+            if (epoch(db, a) !== memoryEpoch ||
+                (identity && JSON.stringify(read().items.find(i => i.id === p.itemId && canRead(i, a))) !== identity))
+              throw new AgentError("资料或权限已变化，请重新提问", 409);
+            emit("text", { text });
+          };
+          void respond(db, read, a, p, provider).then(result => {
+            emit("result", result);
+          }).catch(error => {
+            emit("failure", { error: error instanceof AgentError || error instanceof ProviderError ? error.message : "回答未完成，请重试" });
+          }).finally(() => { if (!cancelled) controller.close(); });
+        },
+        cancel() { cancelled = true; },
+      });
+      return new Response(body, { headers: { "Content-Type": "text/event-stream; charset=utf-8", "Cache-Control": "private, no-store", "X-Accel-Buffering": "no" } });
+    }
     return Response.json(await respond(database(), read, a, p, lifeProvider()));
   } catch (e) {
     return fail(e);

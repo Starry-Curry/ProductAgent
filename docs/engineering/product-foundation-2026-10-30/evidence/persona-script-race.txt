@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+'' !== '旅途'
+
+    at file:///D:/ProductAgent-LifeContext/.runtime/product-foundation-app/scripts/product-foundation/browser.mjs:48:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '',
+  expected: '旅途',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.2

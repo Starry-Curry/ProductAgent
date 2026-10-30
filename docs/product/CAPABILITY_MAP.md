@@ -18,3 +18,5 @@
 | 12 设备能力与 REA | 仅源码预研，无真实设备控制 | 运行环境、实际 REA 分析和版本化授权适配器 | 自有 JS 虚拟灯分析→授权→执行→回读；不是硬件 |
 
 现有 SQLite / Next.js / LangGraph 保留；没有必要预建完整知识图谱或更换运行框架。未完成项必须留在 CURRENT_STATE，不隐藏为演示成功。
+
+本轮收口的实际增量与边界已更新到 [CURRENT_STATE](../engineering/CURRENT_STATE.md) 和[交付报告](../engineering/product-foundation-2026-10-30/README.md)。本表保留为开发起点的事实快照，不能据此忽略新独立身份、协作和真实REA软件验证。

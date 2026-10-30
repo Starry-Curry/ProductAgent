@@ -1,0 +1,431 @@
+{
+  "at": "2026-10-30T07:19:50.504Z",
+  "scope": "staged bytes only; no secrets/config/database read",
+  "base": "a24bfd7f49147e80c08077c9c168bae640255078",
+  "files": 84,
+  "totalBytes": 5810175,
+  "issues": [],
+  "manifest": [
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 11889,
+      "sha256": "fed4e7e1addcb0afbf335e3f4ef31c715d6902550760e2d71b5d3fb782b43f8f"
+    },
+    {
+      "file": "DEVELOPMENT_REPORT.md",
+      "bytes": 10943,
+      "sha256": "f46fd994a35fcb5f12dca180ab85d52dbb7c4e9083503bc10006914442a46818"
+    },
+    {
+      "file": "IMPLEMENTATION_STATUS.md",
+      "bytes": 11454,
+      "sha256": "1c48c697cb68e16be852fd03b153edc9a95c26fbc6095b4f0f3e24300e69cc09"
+    },
+    {
+      "file": "README.md",
+      "bytes": 11949,
+      "sha256": "4bbd7035dc57510c665f823d7063b216924e4a5595ee8165efa4df773b2ee24f"
+    },
+    {
+      "file": "REVIEW_HANDOFF.md",
+      "bytes": 10886,
+      "sha256": "c9ef9c87cf8670189c7ea04be467ca4afa29495cc500a50c0f6dba82d097d689"
+    },
+    {
+      "file": "docs/README.md",
+      "bytes": 3586,
+      "sha256": "dcdf5ec43ff84e132c57ef4ebea122dfc078a1c7f9a7a7d6e9072107a3860b80"
+    },
+    {
+      "file": "docs/engineering/CURRENT_STATE.md",
+      "bytes": 2161,
+      "sha256": "0be3e3936c00e1bbfe40f412f9fcd13a483757c5b0c906c380cd149d95616b36"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/ENVIRONMENT.md",
+      "bytes": 3303,
+      "sha256": "1f8d38e6654923a8bbc2337d1a522b4ae7c93a7e2f690f15a2a0af5335d2d45c"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/HANDOFF.md",
+      "bytes": 3728,
+      "sha256": "f7c4e32a024479baaef5dac993f0a440fa8ace4e15eb0b9b44cb7537a452d9b1"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/MODEL_SAMPLES.md",
+      "bytes": 5044,
+      "sha256": "146142dfcf58565c1efde9bc1cc5561cd1e7c066a8ef7ed4852a625cebea2451"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/README.md",
+      "bytes": 3598,
+      "sha256": "dd21247c7f2c766c6caeb1bdd36e78b1f522e4474c94e21db19247a3fc87cbe0"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/TEST_REPORT.md",
+      "bytes": 4908,
+      "sha256": "2f249b5d2f10eb60b87a6d81da4177727da4c67b5f9cc06a1b9f64d046d69ad8"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/benchmark.txt",
+      "bytes": 4561,
+      "sha256": "ba4ac13526e4ebf7de9f106315e55e383854d6bc4c90d08172ec5f62cd4923e7"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/browser-production.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/browser.json",
+      "bytes": 1388,
+      "sha256": "e35eae2c8271e6b9c62faaba03375f5861db18b59be408ffaa791587d9a9aa2a"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/build.txt",
+      "bytes": 2473,
+      "sha256": "1a2164d30090fb7dea8a7118abc3861aa35a6e80a786a9bc99d1fbe098f9c749"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/care-mobile.png",
+      "bytes": 47519,
+      "sha256": "3ce4db0bb70b304e1b6e379123dc18ab00826369f5ee7a623592895d2746accb"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/family-mobile.png",
+      "bytes": 93161,
+      "sha256": "f7ebef62447319add72b414b4e7a63bedccdd9f8826288c0f22e4e06944b5ff6"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/gift-mobile.png",
+      "bytes": 41099,
+      "sha256": "371145a8cb011527b3a869b64082052a5dc3b48cc2c4833f462b419eb242e8c9"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/initial-browser-failure.txt",
+      "bytes": 618,
+      "sha256": "5206874d0a44c3adc49061754a70b1ec3bb5663354b45f5ec43e96cef5862f61"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/initial-regression-failures.txt",
+      "bytes": 40632,
+      "sha256": "e75d4898a37a5d1b08b8a4f7aadf0829c12b9e1c84fbdcd8fcc69aaf20d288ea"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/intake-browser-failure.txt",
+      "bytes": 445,
+      "sha256": "cff89d0a8022442aaa3699b13dc87107c61010555c7743bcde71646110d1254a"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/legacy-integration.txt",
+      "bytes": 287,
+      "sha256": "4b1ce8ea7f7c8f8d40cb9956a52e2f5520210bad08888b84f66c8269728676f3"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/model-calls.json",
+      "bytes": 2396972,
+      "sha256": "f24bef4a70c079a01b47074ec374b9d3f72c8a5119693792903507ade41cb369"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/model-summary.json",
+      "bytes": 805,
+      "sha256": "6775e29fbe5689ea59cff1431ad47f6bd97503a2ae1144f5a93c3cd27e13bac0"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/new-item-desktop.png",
+      "bytes": 209874,
+      "sha256": "42357899cd9ca78c278000669e9b41e8fcd8aced27e7b2ea95ccbc2d568ce3ab"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/offline.txt",
+      "bytes": 37661,
+      "sha256": "e43aff2854315798236551019d5bbb8a9ea104ea4616ffdbeec6fed581520e35"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/persona-desktop.png",
+      "bytes": 278134,
+      "sha256": "0161e0b3083051f85e422b45718d67b3a090cc775c0099f0b7acb5290c26f27f"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/persona-script-race.txt",
+      "bytes": 433,
+      "sha256": "367fc03b9daaf96045f07f25dc5117688872ff6ca0abc69e9cb5c057749e417a"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/qa-live-onecall-final.json",
+      "bytes": 93277,
+      "sha256": "ff9236650fc78640d687ec69ae483a97866391635c37849aca16e0d99132e72c"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/qa-live-retrieval-fixed.json",
+      "bytes": 91826,
+      "sha256": "dd723d7832b9a963620de4e992e0e1f81c98f2a3b238dee3067d876929c104e9"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/qa-live-stream-fixed.json",
+      "bytes": 283213,
+      "sha256": "383eb0bc02187cd1d2de923bb97451be3888796796f107d43dd891ca49937241"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/qa-live.json",
+      "bytes": 271980,
+      "sha256": "14a68087039e31dc5a5d3bf31b33633748cc7cab7596e516010d57084ef2490b"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/rea-server-only.json",
+      "bytes": 354914,
+      "sha256": "ebd5b83ea7f1094959495886b9ef1278f0a624cd432d8b84f6b9ab446fa7093f"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/rea-tool-loop.txt",
+      "bytes": 229,
+      "sha256": "ea2f2f2c4734373628a0f34a50cbc40983120d25be1c7291e902d96075b1d48d"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/rea-with-client.json",
+      "bytes": 533085,
+      "sha256": "dccc7acbe2cd23c20246590026d6a6a87624c694cad9f48a499a5583984bb72d"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/software-mobile.png",
+      "bytes": 227577,
+      "sha256": "7faecab143b9ea03feda855cfd165ec5910cf1a629503dc9df92cf5121a88f0a"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/software-readback-desktop.png",
+      "bytes": 247641,
+      "sha256": "f158ccb2557dcc52281e9c7512e5b66c00df0b56a4deaf4947ae91a024234e4f"
+    },
+    {
+      "file": "docs/engineering/product-foundation-2026-10-30/evidence/typecheck.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "docs/product/CAPABILITY_MAP.md",
+      "bytes": 2959,
+      "sha256": "2812fd0165043a1f38203ccbdd1eaf81758ba541bd587708022dabfa18602693"
+    },
+    {
+      "file": "scripts/product-foundation/browser.mjs",
+      "bytes": 14318,
+      "sha256": "2ad01354c1566cd047d99323b1a3997241fabcbd425c3b1a8ee36472542b04cd"
+    },
+    {
+      "file": "scripts/product-foundation/export.mjs",
+      "bytes": 3235,
+      "sha256": "fb423ca990f1623a470f5f8e5615035f3064108d83d611d37bc17880c3249d77"
+    },
+    {
+      "file": "scripts/product-foundation/gateway.mjs",
+      "bytes": 10444,
+      "sha256": "35102a856b8bfe1048d0cd039726e973b5272a2c346db000051ba4d547bfbd13"
+    },
+    {
+      "file": "scripts/product-foundation/preview.mjs",
+      "bytes": 2987,
+      "sha256": "717ea805594e33759774989ebc57ddf1b9d354354eca509f3ad47844e69ae614"
+    },
+    {
+      "file": "scripts/product-foundation/qa.ts",
+      "bytes": 7344,
+      "sha256": "ee7118dfa7a590cf8b6b17744720186140c2cb41e95dad0e126ffb4c51d5195e"
+    },
+    {
+      "file": "src/app/api/account/route.ts",
+      "bytes": 1862,
+      "sha256": "ac78dfa0929d37402b9133d59e8242c8d98b15eabce02c9f991c984f9c405efc"
+    },
+    {
+      "file": "src/app/api/assistant/route.ts",
+      "bytes": 5877,
+      "sha256": "bd6431e68292207e51bb0a1c617a8864003f66417a053e94e575dfab05edc233"
+    },
+    {
+      "file": "src/app/api/collaboration/route.ts",
+      "bytes": 1101,
+      "sha256": "557ec3f2ce8d09c72b9fb3926cc8341fbf60ad80980ba3a1488991943ca3e12b"
+    },
+    {
+      "file": "src/app/api/device-lab/route.ts",
+      "bytes": 3083,
+      "sha256": "569b4fd44e4e29f9e3516eb71bf8b8590ab2530e2d0371707dd90845bc66bbfd"
+    },
+    {
+      "file": "src/app/api/gift/[token]/route.ts",
+      "bytes": 1116,
+      "sha256": "a50a11c810b1a0d31efad9af92eca3e0d09b01363012bd3e860121ef4e1dc4ca"
+    },
+    {
+      "file": "src/app/api/life/route.ts",
+      "bytes": 16251,
+      "sha256": "1e021e6588fb4cbf57a7fb227e053086bf549d12c74192abbb6b54829d83bb3e"
+    },
+    {
+      "file": "src/app/gift/[token]/page.tsx",
+      "bytes": 4941,
+      "sha256": "a73a0929b63915019dfd9baa8d50232ccbbe200e4fe27bd871146abab061b942"
+    },
+    {
+      "file": "src/app/page.tsx",
+      "bytes": 287,
+      "sha256": "1c526b9c3d7f2e5e9a221099a9c34a8bb1113194eaf0653f206980235535a495"
+    },
+    {
+      "file": "src/components/AssistantConversation.tsx",
+      "bytes": 30885,
+      "sha256": "d2c28f0dee39b38754b580a3a4f310a1b3cfdc3412f4473bd3d0b954212be81d"
+    },
+    {
+      "file": "src/components/FamilyTasks.tsx",
+      "bytes": 8315,
+      "sha256": "bd77907f7e84830fe67b298d38d639f198a3095695a27d21cc5c795573f75c9f"
+    },
+    {
+      "file": "src/components/life/AccountBoundary.tsx",
+      "bytes": 3428,
+      "sha256": "58ed1f61689395033ea8e3a58fd5e6c57f29912b6c71d9440900874d144751d9"
+    },
+    {
+      "file": "src/components/life/AccountFamily.tsx",
+      "bytes": 7768,
+      "sha256": "9c001df43525670bac022fd02aed48906c67111c1478a7c256bb81b2d6803ff8"
+    },
+    {
+      "file": "src/components/life/CareView.tsx",
+      "bytes": 4789,
+      "sha256": "f16aff5e3d14afe814d694cf268cdab0b0ad2bdeb176a1003cb7cc7f085ee8fb"
+    },
+    {
+      "file": "src/components/life/Intake.tsx",
+      "bytes": 23815,
+      "sha256": "630773ac7db3618334d1d96de608f3edddd5bc036899565834f2c74b2df57066"
+    },
+    {
+      "file": "src/components/life/ItemInformation.tsx",
+      "bytes": 20573,
+      "sha256": "ec7dbb1076c2e9820d6387c1c69ac8d02a765ce433fd237e8c067bd8bab94d9b"
+    },
+    {
+      "file": "src/components/life/ProductArrival.tsx",
+      "bytes": 9430,
+      "sha256": "0985b96242ea2cf16d818eb4f33b2e8b21d21018fdf76712d703f469c78af2d0"
+    },
+    {
+      "file": "src/components/life/SoftwareCapability.tsx",
+      "bytes": 3714,
+      "sha256": "63f3e0229bb799eddb05b6cc650673abc3b64c684de4c88c098cc2bef2e236db"
+    },
+    {
+      "file": "src/components/life/WujianApp.tsx",
+      "bytes": 50919,
+      "sha256": "dea9aab76a33116658ba2670ae579fe87befa82cb4ded0945f82b8e21010f029"
+    },
+    {
+      "file": "src/lib/accounts.ts",
+      "bytes": 5381,
+      "sha256": "8b9f433ea510041776471fe6682878d982010bb33d7da4c30b90625efd3cc5b7"
+    },
+    {
+      "file": "src/lib/agent/graph.ts",
+      "bytes": 70845,
+      "sha256": "a906d4078bf9ba02584513dafc28e1d79b3a173776794a6e907b37e7582573ba"
+    },
+    {
+      "file": "src/lib/agent/grounded-answer.ts",
+      "bytes": 4873,
+      "sha256": "f39b0f6705bbf14016d7f304ce13eb820933b200a72dfcbd8556aebb0ca4688b"
+    },
+    {
+      "file": "src/lib/agent/prompts.ts",
+      "bytes": 9096,
+      "sha256": "ab6e5675f8bc27812e1991ca77200eaaf90865b1a120df2b9b93f1b3a2059723"
+    },
+    {
+      "file": "src/lib/agent/service.ts",
+      "bytes": 15233,
+      "sha256": "f7dd8966f8bf9d2a5c383fcc65fef2be46837d1c1e429113d21642aa898d8dbe"
+    },
+    {
+      "file": "src/lib/ai/provider.ts",
+      "bytes": 17555,
+      "sha256": "46233e2ac0a247907c69dcac76ebfee3ef6dc80ed15610c8c87bb4c45df9391e"
+    },
+    {
+      "file": "src/lib/cloud/request.ts",
+      "bytes": 6493,
+      "sha256": "92fce6fa7c77ae7a0e512e8ed7683642241f714b53513099b4dc6b3f7b4f5856"
+    },
+    {
+      "file": "src/lib/collaboration.ts",
+      "bytes": 7679,
+      "sha256": "c533e0b5f3885ec1e1b0a1224ffffeaf64ed5926a14e334cc5e6e5852efdab2c"
+    },
+    {
+      "file": "src/lib/db.ts",
+      "bytes": 3334,
+      "sha256": "2bc3896385fcdcfeb31cfddfefc860553c54a1860d8fa3bf8b5c8a8d8da255b9"
+    },
+    {
+      "file": "src/lib/devices/software-lab.ts",
+      "bytes": 10015,
+      "sha256": "2dcbc1a47f094de676e7f7e1993ec28fbc5e85ef5b00374f7bf192902b82ed97"
+    },
+    {
+      "file": "src/lib/domain.ts",
+      "bytes": 25765,
+      "sha256": "35795425d8946eb75d5f816c21993ee2efe55e110f03c0e69bac144d0234d6db"
+    },
+    {
+      "file": "src/lib/life/acquisition.ts",
+      "bytes": 21921,
+      "sha256": "d36aa181325ae5c01f5da082f669b4c075b70659a228b2c299eff642ecd971fd"
+    },
+    {
+      "file": "src/lib/life/product-inspection.ts",
+      "bytes": 1291,
+      "sha256": "4d6ea256b3d38668467353d1ddfa8c86cb97583ef606f86d916d8812ffa4122a"
+    },
+    {
+      "file": "src/lib/skills/registry.ts",
+      "bytes": 6231,
+      "sha256": "b9b7c81b697daa575177a9a8abfbd8b909a5db949ada7345dedb407741577986"
+    },
+    {
+      "file": "tests/account-collaboration.test.ts",
+      "bytes": 5607,
+      "sha256": "9f8f5c6019800d0b8d378ee74e02509b20a0973dc630981adf9db457b237aeb0"
+    },
+    {
+      "file": "tests/fixtures/virtual-lamp/client.mjs",
+      "bytes": 512,
+      "sha256": "3c218a3356a8dacf705919e3b41a4b6895101e2f2419b93209a2166316f3e5dc"
+    },
+    {
+      "file": "tests/fixtures/virtual-lamp/lamp.mjs",
+      "bytes": 2242,
+      "sha256": "f7c8328ab6b73be7bb1e65590da6f5d528e4c198296880e7b9ad79b95efaa8f8"
+    },
+    {
+      "file": "tests/fixtures/virtual-lamp/package.json",
+      "bytes": 104,
+      "sha256": "4a5723eab103716d5afe3e8286a89e8d2cf8f3153d45f7bfaf1b6706a83e9512"
+    },
+    {
+      "file": "tests/persona-foundation.test.ts",
+      "bytes": 3454,
+      "sha256": "8f403971db08a6838edf0102e9bda8b908cf86f610db23637a88678db1189ec0"
+    },
+    {
+      "file": "tests/product-foundation.test.ts",
+      "bytes": 5005,
+      "sha256": "e6d67a249ba0dbc474f76187ea4d8cef3de5957c137d6c4abbc6482ec267c7f7"
+    },
+    {
+      "file": "tests/software-lab.test.ts",
+      "bytes": 4845,
+      "sha256": "41758d49dd1524918bc28275e9952c3d3f79bab639d2d9ac2d0c70f8a4744927"
+    }
+  ],
+  "note": "Report excludes itself; signatures are an additional check, not a proof of absence of every possible secret."
+}

@@ -1,0 +1,26 @@
+{
+  "stage": "product-foundation-v1",
+  "calls": 150,
+  "status": {
+    "returned": 150
+  },
+  "inputTokens": 548881,
+  "outputTokens": 30350,
+  "estimatedCny": 0.4998047999999999,
+  "uniqueLedgerQuestions": 29,
+  "thirtyCaseCandidateRound": {
+    "cases": 30,
+    "outcomes": {
+      "answered": 18,
+      "blocked": 2,
+      "unavailable": 6,
+      "needs_info": 4
+    },
+    "totalP50Ms": 11134.306899999996,
+    "totalP95Ms": 31115.06759999998,
+    "streamedCases": 16,
+    "streamedFirstP50Ms": 610.8938999999955,
+    "streamedFirstP95Ms": 974.1875000000001,
+    "caveat": "Core/service timings, not browser end-to-end; first-token values cover streamed subset only. Answered is transport/application outcome, not correctness. Later selected retests are separate, not a new full 30-case pass."
+  }
+}

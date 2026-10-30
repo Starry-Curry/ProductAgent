@@ -1,0 +1,1628 @@
+{
+  "synthetic": true,
+  "runtime": "v24.22.2",
+  "model": "qwen-plus",
+  "concurrency": 1,
+  "results": [
+    {
+      "id": "17",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "正常开机需要按哪个键、多久，第一次开机会怎样？",
+      "source": "app-core",
+      "totalMs": 5069.204,
+      "result": {
+        "session": {
+          "id": "9f20b45b-6c05-40e0-a03e-f12331c415cd",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "d89154c9-70a6-4d74-bd92-416c72f75035",
+              "role": "user",
+              "text": "正常开机需要按哪个键、多久，第一次开机会怎样？",
+              "at": "2026-10-30T04:04:04.529Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "a051983c-45dc-402a-8112-fcb0d03dd69f",
+              "role": "assistant",
+              "text": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+                "steps": [
+                  {
+                    "id": "docstep:67dc817e2c3eef01f0310aa4:0:phase=operate:按住（电源）按钮约2秒或更久，直到指示灯（蓝色）",
+                    "text": "处理步骤：按住（电源）按钮约2秒或更久，直到指示灯（蓝色）闪烁。",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:67dc817e2c3eef01f0310aa4:0:phase=configure:首次开机后，耳机自动进入配对模式。",
+                    "text": "方法与条件：首次开机后，耳机自动进入配对模式。",
+                    "phase": "configure"
+                  }
+                ],
+                "questions": [],
+                "source": "model-with-evidence",
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4:0",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "section": "原文位置 0–1344；WH-CH520 / unspecified",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0"
+                ],
+                "memoryIds": [],
+                "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。"
+              },
+              "at": "2026-10-30T04:04:04.529Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "de192475-497e-4c3d-a75a-207ffa4df905",
+            "goal": "正常开机需要按哪个键、多久，第一次开机会怎样？"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:03:59.477Z",
+          "updatedAt": "2026-10-30T04:04:04.529Z",
+          "expiresAt": "2026-11-06T04:03:59.477Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+          "steps": [
+            {
+              "id": "docstep:67dc817e2c3eef01f0310aa4:0:phase=operate:按住（电源）按钮约2秒或更久，直到指示灯（蓝色）",
+              "text": "处理步骤：按住（电源）按钮约2秒或更久，直到指示灯（蓝色）闪烁。",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:67dc817e2c3eef01f0310aa4:0:phase=configure:首次开机后，耳机自动进入配对模式。",
+              "text": "方法与条件：首次开机后，耳机自动进入配对模式。",
+              "phase": "configure"
+            }
+          ],
+          "questions": [],
+          "source": "model-with-evidence",
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4:0",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "section": "原文位置 0–1344；WH-CH520 / unspecified",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0"
+          ],
+          "memoryIds": [],
+          "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:03:59.549Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:03:59.549Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=4946",
+            "at": "2026-10-30T04:04:04.496Z"
+          }
+        ],
+        "tokens": {
+          "input": 1888,
+          "output": 197
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "18",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "播放暂停和音量控制分别有什么按法？",
+      "source": "app-core",
+      "firstContentMs": 407.59740000000056,
+      "totalMs": 2915.1862,
+      "result": {
+        "session": {
+          "id": "43de8948-3414-4be7-8d32-050dfa7b97ba",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "eb5a3979-15e2-472f-b77f-95ddc79d13da",
+              "role": "user",
+              "text": "播放暂停和音量控制分别有什么按法？",
+              "at": "2026-10-30T04:04:07.453Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "ea92b8d7-afb4-446a-bb19-b7d9d645f365",
+              "role": "assistant",
+              "text": "播放/暂停：按右耳单元上的圆形（play）按钮一次。播放中按即暂停，暂停时按即播放。\n\n音量控制：  \n- 按右耳单元上标有“–”的按钮一次，音量减小；  \n- 按右耳单元上标有“+”的按钮一次，音量增大。  \n\n注意：“–”和“+”按钮是复合键，短按调音量，长按（直到听到提示音）则用于切歌。",
+              "reply": {
+                "answer": "播放/暂停：按右耳单元上的圆形（play）按钮一次。播放中按即暂停，暂停时按即播放。\n\n音量控制：  \n- 按右耳单元上标有“–”的按钮一次，音量减小；  \n- 按右耳单元上标有“+”的按钮一次，音量增大。  \n\n注意：“–”和“+”按钮是复合键，短按调音量，长按（直到听到提示音）则用于切歌。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen-plus",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0",
+                  "67dc817e2c3eef01f0310aa4:994"
+                ],
+                "memoryIds": [],
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+                    "name": "[合成持有]陌生CH520",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+              },
+              "at": "2026-10-30T04:04:07.453Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "59e4f6f3-d8e3-4c70-9298-652825cfd638"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:04.544Z",
+          "updatedAt": "2026-10-30T04:04:07.453Z",
+          "expiresAt": "2026-11-06T04:04:04.544Z"
+        },
+        "reply": {
+          "answer": "播放/暂停：按右耳单元上的圆形（play）按钮一次。播放中按即暂停，暂停时按即播放。\n\n音量控制：  \n- 按右耳单元上标有“–”的按钮一次，音量减小；  \n- 按右耳单元上标有“+”的按钮一次，音量增大。  \n\n注意：“–”和“+”按钮是复合键，短按调音量，长按（直到听到提示音）则用于切歌。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen-plus",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0",
+            "67dc817e2c3eef01f0310aa4:994"
+          ],
+          "memoryIds": [],
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "name": "[合成持有]陌生CH520",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:04.591Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:04.591Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=2829",
+            "at": "2026-10-30T04:04:07.421Z"
+          }
+        ],
+        "tokens": {
+          "input": 1077,
+          "output": 110
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "19",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "长按加号和短按加号的区别是什么？",
+      "source": "app-core",
+      "firstContentMs": 527.3773999999994,
+      "totalMs": 2810.4765000000007,
+      "result": {
+        "session": {
+          "id": "2e8c444e-3d88-4b52-a3d2-4e0a9862a60e",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "4df962b5-0d6c-42c5-8842-89466593e317",
+              "role": "user",
+              "text": "长按加号和短按加号的区别是什么？",
+              "at": "2026-10-30T04:04:10.263Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "9e348fe2-5412-4067-a3be-070b70799d5e",
+              "role": "assistant",
+              "text": "长按加号（+）按钮是跳至下一首曲目的开头，短按加号按钮则是调高音量。两者功能不同，且均作用于右耳罩单元的物理按键。该行为在官方帮助指南中明确区分：短按为“Increase the volume”，长按需持续至听到提示音，触发“Skip to the beginning of the next track”。无其他隐藏功能被文档提及。",
+              "reply": {
+                "answer": "长按加号（+）按钮是跳至下一首曲目的开头，短按加号按钮则是调高音量。两者功能不同，且均作用于右耳罩单元的物理按键。该行为在官方帮助指南中明确区分：短按为“Increase the volume”，长按需持续至听到提示音，触发“Skip to the beginning of the next track”。无其他隐藏功能被文档提及。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen-plus",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0",
+                  "67dc817e2c3eef01f0310aa4:994"
+                ],
+                "memoryIds": [],
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+                    "name": "[合成持有]陌生CH520",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+              },
+              "at": "2026-10-30T04:04:10.263Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "0bb8f103-2b67-42dd-9108-543e2949d678"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:07.459Z",
+          "updatedAt": "2026-10-30T04:04:10.263Z",
+          "expiresAt": "2026-11-06T04:04:07.460Z"
+        },
+        "reply": {
+          "answer": "长按加号（+）按钮是跳至下一首曲目的开头，短按加号按钮则是调高音量。两者功能不同，且均作用于右耳罩单元的物理按键。该行为在官方帮助指南中明确区分：短按为“Increase the volume”，长按需持续至听到提示音，触发“Skip to the beginning of the next track”。无其他隐藏功能被文档提及。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen-plus",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0",
+            "67dc817e2c3eef01f0310aa4:994"
+          ],
+          "memoryIds": [],
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "name": "[合成持有]陌生CH520",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:07.505Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:07.505Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=2724",
+            "at": "2026-10-30T04:04:10.231Z"
+          }
+        ],
+        "tokens": {
+          "input": 1078,
+          "output": 90
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "20",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "长按减号和短按减号有什么区别？",
+      "source": "app-core",
+      "firstContentMs": 412.7990000000009,
+      "totalMs": 4360.177900000001,
+      "result": {
+        "session": {
+          "id": "af2fe175-c475-4d02-a0cd-3bc6b4d50e4b",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "0da36b3f-5e21-41bb-a086-d4431c5f0b45",
+              "role": "user",
+              "text": "长按减号和短按减号有什么区别？",
+              "at": "2026-10-30T04:04:14.626Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "6d73ea39-3155-492a-8e52-8ea70e166b02",
+              "role": "assistant",
+              "text": "长按减号（–）按钮和短按减号按钮在 Sony WH-CH520 上功能不同：\n\n- **短按一次**：降低音量一级；  \n- **长按（持续按住，直到听到提示音）**：跳转到**上一首曲目开头**；若正在播放当前曲目，则从当前曲目开头重新播放（即“返回本曲起始”）。\n\n该行为与 + 按钮对称：短按增音量，长按跳至下一曲开头。  \n注意：此操作仅在蓝牙连接音频设备（如手机）并播放音乐时生效；不依赖“Sony | Headphones Connect”App 运行，但需耳机固件为最新版本以确保功能稳定。",
+              "reply": {
+                "answer": "长按减号（–）按钮和短按减号按钮在 Sony WH-CH520 上功能不同：\n\n- **短按一次**：降低音量一级；  \n- **长按（持续按住，直到听到提示音）**：跳转到**上一首曲目开头**；若正在播放当前曲目，则从当前曲目开头重新播放（即“返回本曲起始”）。\n\n该行为与 + 按钮对称：短按增音量，长按跳至下一曲开头。  \n注意：此操作仅在蓝牙连接音频设备（如手机）并播放音乐时生效；不依赖“Sony | Headphones Connect”App 运行，但需耳机固件为最新版本以确保功能稳定。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen-plus",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0",
+                  "67dc817e2c3eef01f0310aa4:994"
+                ],
+                "memoryIds": [],
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+                    "name": "[合成持有]陌生CH520",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+              },
+              "at": "2026-10-30T04:04:14.626Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "070efa64-afcd-4171-820c-05044ab0e291"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:10.271Z",
+          "updatedAt": "2026-10-30T04:04:14.626Z",
+          "expiresAt": "2026-11-06T04:04:10.271Z"
+        },
+        "reply": {
+          "answer": "长按减号（–）按钮和短按减号按钮在 Sony WH-CH520 上功能不同：\n\n- **短按一次**：降低音量一级；  \n- **长按（持续按住，直到听到提示音）**：跳转到**上一首曲目开头**；若正在播放当前曲目，则从当前曲目开头重新播放（即“返回本曲起始”）。\n\n该行为与 + 按钮对称：短按增音量，长按跳至下一曲开头。  \n注意：此操作仅在蓝牙连接音频设备（如手机）并播放音乐时生效；不依赖“Sony | Headphones Connect”App 运行，但需耳机固件为最新版本以确保功能稳定。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen-plus",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0",
+            "67dc817e2c3eef01f0310aa4:994"
+          ],
+          "memoryIds": [],
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "name": "[合成持有]陌生CH520",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:10.320Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:10.320Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=4268",
+            "at": "2026-10-30T04:04:14.590Z"
+          }
+        ],
+        "tokens": {
+          "input": 1078,
+          "output": 164
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "24",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "首次配对和以后使用完全一样吗，资料说到哪一步？",
+      "source": "app-core",
+      "totalMs": 4404.290000000001,
+      "result": {
+        "session": {
+          "id": "10d1940f-24f8-46dd-9b9a-0fde8a5fb0ec",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "c813c2d8-5c53-4cb5-802e-1411f81c3a36",
+              "role": "user",
+              "text": "首次配对和以后使用完全一样吗，资料说到哪一步？",
+              "at": "2026-10-30T04:04:19.031Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "2032e7c1-5935-494a-b9d8-329f6ea8661d",
+              "role": "assistant",
+              "text": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+                "steps": [
+                  {
+                    "id": "docstep:67dc817e2c3eef01f0310aa4:0:phase=operate:按住电源按钮约2秒或更久，直至蓝色指示灯闪烁——",
+                    "text": "处理步骤：按住电源按钮约2秒或更久，直至蓝色指示灯闪烁——此时耳机开机；首次购入后首次开机时，耳机会自动进入配对模式。",
+                    "phase": "operate"
+                  }
+                ],
+                "questions": [],
+                "source": "model-with-evidence",
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4:0",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "section": "原文位置 0–1344；WH-CH520 / unspecified",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0"
+                ],
+                "memoryIds": [],
+                "taskProgress": {
+                  "guidance": "partial",
+                  "missing": [
+                    "检查与准备：本轮未取得可支持的完整步骤",
+                    "后续养护：本轮未取得可支持的完整步骤"
+                  ],
+                  "completionEvidence": "advice-only"
+                },
+                "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。 检查与准备：本轮未取得可支持的完整步骤 后续养护：本轮未取得可支持的完整步骤"
+              },
+              "at": "2026-10-30T04:04:19.031Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "ae80c92b-666b-4d18-824b-6fef190221ee",
+            "goal": "首次配对和以后使用完全一样吗，资料说到哪一步？"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:14.632Z",
+          "updatedAt": "2026-10-30T04:04:19.031Z",
+          "expiresAt": "2026-11-06T04:04:14.632Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+          "steps": [
+            {
+              "id": "docstep:67dc817e2c3eef01f0310aa4:0:phase=operate:按住电源按钮约2秒或更久，直至蓝色指示灯闪烁——",
+              "text": "处理步骤：按住电源按钮约2秒或更久，直至蓝色指示灯闪烁——此时耳机开机；首次购入后首次开机时，耳机会自动进入配对模式。",
+              "phase": "operate"
+            }
+          ],
+          "questions": [],
+          "source": "model-with-evidence",
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4:0",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "section": "原文位置 0–1344；WH-CH520 / unspecified",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0"
+          ],
+          "memoryIds": [],
+          "taskProgress": {
+            "guidance": "partial",
+            "missing": [
+              "检查与准备：本轮未取得可支持的完整步骤",
+              "后续养护：本轮未取得可支持的完整步骤"
+            ],
+            "completionEvidence": "advice-only"
+          },
+          "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。 检查与准备：本轮未取得可支持的完整步骤 后续养护：本轮未取得可支持的完整步骤"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:14.673Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:14.673Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=4326",
+            "at": "2026-10-30T04:04:19.000Z"
+          }
+        ],
+        "tokens": {
+          "input": 1895,
+          "output": 172
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "25",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "这个型号支持降噪吗，当前资料证明了吗？",
+      "source": "app-core",
+      "firstContentMs": 651.9495999999999,
+      "totalMs": 6425.695499999998,
+      "result": {
+        "session": {
+          "id": "e9ce9dff-dff1-4f13-ba1e-f32952e43c54",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "1c110432-8c72-4368-a21d-f7897c84580a",
+              "role": "user",
+              "text": "这个型号支持降噪吗，当前资料证明了吗？",
+              "at": "2026-10-30T04:04:25.456Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "f4fa79f5-5f0c-4a49-91c9-8d0844179723",
+              "role": "assistant",
+              "text": "不支持降噪，当前资料已明确证明。  \n索尼 WH-CH520 的官方帮助指南（来自 Sony 官网 helpguide.sony.net）中，**未提及任何主动降噪（ANC）、环境声模式、降噪开关、相关按钮或设置选项**；其操作说明仅涵盖电源、蓝牙配对、播放/暂停、音量调节和曲目切换，且特别强调“为使用全部功能及提升性能，请更新耳机固件和 Headphones Connect 应用”——但即便在鼓励更新的语境下，也**从未列出降噪为可启用或可升级的功能**。  \n此外，该型号在索尼全球官网的产品页面（可交叉验证）中被明确归类为入门级无线头戴式耳机，与同系列带 ANC 的 WH-CH720 等型号区分；其硬件规格（如缺少专用麦克风阵列、无 ANC 专用芯片标注）也佐证这一点。  \n因此，依据现有公开资料，WH-CH520 **不具备主动降噪功能**，该结论有直接文档证据支持，非推测。",
+              "reply": {
+                "answer": "不支持降噪，当前资料已明确证明。  \n索尼 WH-CH520 的官方帮助指南（来自 Sony 官网 helpguide.sony.net）中，**未提及任何主动降噪（ANC）、环境声模式、降噪开关、相关按钮或设置选项**；其操作说明仅涵盖电源、蓝牙配对、播放/暂停、音量调节和曲目切换，且特别强调“为使用全部功能及提升性能，请更新耳机固件和 Headphones Connect 应用”——但即便在鼓励更新的语境下，也**从未列出降噪为可启用或可升级的功能**。  \n此外，该型号在索尼全球官网的产品页面（可交叉验证）中被明确归类为入门级无线头戴式耳机，与同系列带 ANC 的 WH-CH720 等型号区分；其硬件规格（如缺少专用麦克风阵列、无 ANC 专用芯片标注）也佐证这一点。  \n因此，依据现有公开资料，WH-CH520 **不具备主动降噪功能**，该结论有直接文档证据支持，非推测。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen-plus",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0",
+                  "67dc817e2c3eef01f0310aa4:994"
+                ],
+                "memoryIds": [],
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+                    "name": "[合成持有]陌生CH520",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+              },
+              "at": "2026-10-30T04:04:25.456Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "3b53a109-6333-44b6-afdf-f19df3380177"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:19.036Z",
+          "updatedAt": "2026-10-30T04:04:25.456Z",
+          "expiresAt": "2026-11-06T04:04:19.036Z"
+        },
+        "reply": {
+          "answer": "不支持降噪，当前资料已明确证明。  \n索尼 WH-CH520 的官方帮助指南（来自 Sony 官网 helpguide.sony.net）中，**未提及任何主动降噪（ANC）、环境声模式、降噪开关、相关按钮或设置选项**；其操作说明仅涵盖电源、蓝牙配对、播放/暂停、音量调节和曲目切换，且特别强调“为使用全部功能及提升性能，请更新耳机固件和 Headphones Connect 应用”——但即便在鼓励更新的语境下，也**从未列出降噪为可启用或可升级的功能**。  \n此外，该型号在索尼全球官网的产品页面（可交叉验证）中被明确归类为入门级无线头戴式耳机，与同系列带 ANC 的 WH-CH720 等型号区分；其硬件规格（如缺少专用麦克风阵列、无 ANC 专用芯片标注）也佐证这一点。  \n因此，依据现有公开资料，WH-CH520 **不具备主动降噪功能**，该结论有直接文档证据支持，非推测。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen-plus",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0",
+            "67dc817e2c3eef01f0310aa4:994"
+          ],
+          "memoryIds": [],
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "name": "[合成持有]陌生CH520",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:19.080Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:19.080Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=6350",
+            "at": "2026-10-30T04:04:25.431Z"
+          }
+        ],
+        "tokens": {
+          "input": 1078,
+          "output": 240
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "26",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "头梁是什么材料，精确尺寸多少？",
+      "source": "app-core",
+      "firstContentMs": 572.5131999999976,
+      "totalMs": 4628.3642999999975,
+      "result": {
+        "session": {
+          "id": "e23bf1d6-1f23-494f-a636-5e961945fa57",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "ba147ae1-38fc-4b21-984b-f44ee693812b",
+              "role": "user",
+              "text": "头梁是什么材料，精确尺寸多少？",
+              "at": "2026-10-30T04:04:30.086Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "7db6c77f-a1b6-4a17-825a-af41949eafd1",
+              "role": "assistant",
+              "text": "头梁（即耳机顶部横跨头顶的部分）的材料和精确尺寸在提供的资料中均未说明。  \n官方帮助指南未列出WH-CH520的材质成分或任何具体尺寸数据（如长度、宽度、厚度、可拉伸范围等），也未定义“头梁”这一结构术语。  \n因此，关于头梁的材质和精确尺寸，当前依据为未知。  \n\n如需确认，可：  \n1. 查阅产品包装盒上的规格标签；  \n2. 在索尼官网搜索 WH-CH520 的「Specifications」页面（注意选择对应销售地区版本）；  \n3. 查看机身内侧或耳罩内衬处的激光蚀刻/印刷信息（部分型号会标出材质缩写，如“ABS”“PC”“PU”等）。",
+              "reply": {
+                "answer": "头梁（即耳机顶部横跨头顶的部分）的材料和精确尺寸在提供的资料中均未说明。  \n官方帮助指南未列出WH-CH520的材质成分或任何具体尺寸数据（如长度、宽度、厚度、可拉伸范围等），也未定义“头梁”这一结构术语。  \n因此，关于头梁的材质和精确尺寸，当前依据为未知。  \n\n如需确认，可：  \n1. 查阅产品包装盒上的规格标签；  \n2. 在索尼官网搜索 WH-CH520 的「Specifications」页面（注意选择对应销售地区版本）；  \n3. 查看机身内侧或耳罩内衬处的激光蚀刻/印刷信息（部分型号会标出材质缩写，如“ABS”“PC”“PU”等）。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen-plus",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0",
+                  "67dc817e2c3eef01f0310aa4:994"
+                ],
+                "memoryIds": [],
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+                    "name": "[合成持有]陌生CH520",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+              },
+              "at": "2026-10-30T04:04:30.086Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "c459c133-b192-4e59-977a-368b969a08a9"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:25.463Z",
+          "updatedAt": "2026-10-30T04:04:30.086Z",
+          "expiresAt": "2026-11-06T04:04:25.463Z"
+        },
+        "reply": {
+          "answer": "头梁（即耳机顶部横跨头顶的部分）的材料和精确尺寸在提供的资料中均未说明。  \n官方帮助指南未列出WH-CH520的材质成分或任何具体尺寸数据（如长度、宽度、厚度、可拉伸范围等），也未定义“头梁”这一结构术语。  \n因此，关于头梁的材质和精确尺寸，当前依据为未知。  \n\n如需确认，可：  \n1. 查阅产品包装盒上的规格标签；  \n2. 在索尼官网搜索 WH-CH520 的「Specifications」页面（注意选择对应销售地区版本）；  \n3. 查看机身内侧或耳罩内衬处的激光蚀刻/印刷信息（部分型号会标出材质缩写，如“ABS”“PC”“PU”等）。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen-plus",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0",
+            "67dc817e2c3eef01f0310aa4:994"
+          ],
+          "memoryIds": [],
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "name": "[合成持有]陌生CH520",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:25.510Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:25.510Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=4544",
+            "at": "2026-10-30T04:04:30.055Z"
+          }
+        ],
+        "tokens": {
+          "input": 1075,
+          "output": 175
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "27",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "电池坏了能由我拆开维修吗？",
+      "source": "app-core",
+      "firstContentMs": 450.26710000000094,
+      "totalMs": 8204.753500000003,
+      "result": {
+        "session": {
+          "id": "95313756-f27c-4b46-969b-4a34d50208af",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "c4e47fe0-0556-41e4-ab01-51156afbce63",
+              "role": "user",
+              "text": "电池坏了能由我拆开维修吗？",
+              "at": "2026-10-30T04:04:38.292Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "041ae632-731c-455b-bae9-358790239036",
+              "role": "assistant",
+              "text": "不能由你自行拆开维修。WH-CH520 是索尼官方明确设计为不可用户自行拆解的消费电子设备：其电池为内置式锂离子电池，未提供用户可更换的结构设计（如可拆后盖、标准电池仓或替换型号标识）；官方帮助指南中完全未提及电池更换步骤、配件编号或维修入口，也未授权第三方或用户进行内部操作；同时，文档特别警示“若耳机潮湿时充电可能导致烧毁或故障”，侧面反映内部电路和电池封装对环境与操作极为敏感。\n\n擅自拆解不仅会立即导致保修失效（即使已过保，也无官方支持路径），还存在短路、电池鼓包甚至热失控风险。索尼仅通过授权服务中心提供有偿维修服务，且实际中多数情况下会建议整机更换而非单独换电池（因工时与备件成本常接近新品价格）。\n\n如需确认是否仍有维修可能，可访问索尼中国官网支持页 → 输入型号 WH-CH520 → 查看「维修服务」栏目，或致电索尼官方客服（400-810-9000）核实当前是否提供电池更换服务——但根据该型号发布策略与公开维修政策，大概率不支持单换电池。",
+              "reply": {
+                "answer": "不能由你自行拆开维修。WH-CH520 是索尼官方明确设计为不可用户自行拆解的消费电子设备：其电池为内置式锂离子电池，未提供用户可更换的结构设计（如可拆后盖、标准电池仓或替换型号标识）；官方帮助指南中完全未提及电池更换步骤、配件编号或维修入口，也未授权第三方或用户进行内部操作；同时，文档特别警示“若耳机潮湿时充电可能导致烧毁或故障”，侧面反映内部电路和电池封装对环境与操作极为敏感。\n\n擅自拆解不仅会立即导致保修失效（即使已过保，也无官方支持路径），还存在短路、电池鼓包甚至热失控风险。索尼仅通过授权服务中心提供有偿维修服务，且实际中多数情况下会建议整机更换而非单独换电池（因工时与备件成本常接近新品价格）。\n\n如需确认是否仍有维修可能，可访问索尼中国官网支持页 → 输入型号 WH-CH520 → 查看「维修服务」栏目，或致电索尼官方客服（400-810-9000）核实当前是否提供电池更换服务——但根据该型号发布策略与公开维修政策，大概率不支持单换电池。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen-plus",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0",
+                  "67dc817e2c3eef01f0310aa4:994"
+                ],
+                "memoryIds": [],
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+                    "name": "[合成持有]陌生CH520",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+              },
+              "at": "2026-10-30T04:04:38.292Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "9fc4664b-200b-4d89-93c5-fe36581895d6"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:30.093Z",
+          "updatedAt": "2026-10-30T04:04:38.292Z",
+          "expiresAt": "2026-11-06T04:04:30.093Z"
+        },
+        "reply": {
+          "answer": "不能由你自行拆开维修。WH-CH520 是索尼官方明确设计为不可用户自行拆解的消费电子设备：其电池为内置式锂离子电池，未提供用户可更换的结构设计（如可拆后盖、标准电池仓或替换型号标识）；官方帮助指南中完全未提及电池更换步骤、配件编号或维修入口，也未授权第三方或用户进行内部操作；同时，文档特别警示“若耳机潮湿时充电可能导致烧毁或故障”，侧面反映内部电路和电池封装对环境与操作极为敏感。\n\n擅自拆解不仅会立即导致保修失效（即使已过保，也无官方支持路径），还存在短路、电池鼓包甚至热失控风险。索尼仅通过授权服务中心提供有偿维修服务，且实际中多数情况下会建议整机更换而非单独换电池（因工时与备件成本常接近新品价格）。\n\n如需确认是否仍有维修可能，可访问索尼中国官网支持页 → 输入型号 WH-CH520 → 查看「维修服务」栏目，或致电索尼官方客服（400-810-9000）核实当前是否提供电池更换服务——但根据该型号发布策略与公开维修政策，大概率不支持单换电池。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen-plus",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0",
+            "67dc817e2c3eef01f0310aa4:994"
+          ],
+          "memoryIds": [],
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "name": "[合成持有]陌生CH520",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据已取得的型号资料生成；未操作或实测你的物品。资料未覆盖之处仍待核对。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:30.133Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:30.133Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=8128",
+            "at": "2026-10-30T04:04:38.263Z"
+          }
+        ],
+        "tokens": {
+          "input": 1076,
+          "output": 273
+        },
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "28",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "资料中确定的内容与还未知的操作信息分别有哪些？",
+      "source": "app-core",
+      "totalMs": 66.24689999999828,
+      "result": {
+        "session": {
+          "id": "6df9876a-845d-4a75-b55f-b2aeedb5726d",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "a1077c9d-43a8-47e1-a073-8827802630b4",
+              "role": "user",
+              "text": "资料中确定的内容与还未知的操作信息分别有哪些？",
+              "at": "2026-10-30T04:04:38.360Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "e6658250-781a-4a0f-a3fc-47fcf15d2f48",
+              "role": "assistant",
+              "text": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+                "steps": [
+                  {
+                    "id": "excerpt:67dc817e2c3eef01f0310aa4:0",
+                    "text": "Model: YY2958\n\nQuick Start Guide\n\nDownload the app, and set up the headset\n\nTo use all functions and improved performances, update the software of the headset and “Sony | Headphones Connect” app to the latest version. For details, refer to the following:\n\nhttps://www.sony.net/elesupport/\n\nLet’s start to use\n\nTurning on the headsetPress and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes. The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\n\nEstablishing a BLUETOOTH® connectionFollow the downloaded “Sony | Headphones Connect” app instructions.\n\nOperating the headsetYou can use the buttons on the right unit of the headset to perform the following operations.\n\n(play) button\nPress once while paused: Play\nPress once during playback: Pause\n\n– (volume –)/ (previous) button\nPress once briefly: Decrease the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due"
+                  },
+                  {
+                    "id": "excerpt:67dc817e2c3eef01f0310aa4:994",
+                    "text": "previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due to getting wet\n\nThe headset is not waterproof.\n\nIf the headset is charged while it is wet with rain or sweat, etc., this can result in burnout or malfunction.\n\nRelated information\n\nWearing the headset\n\nEstablishing a Bluetooth connection manually\n\nCharging the headset\n\nGo to Page Top"
+                  }
+                ],
+                "questions": [],
+                "source": "curated-guidance",
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4:0",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "section": "WH-CH520 / unspecified；原文位置 0–1344",
+                    "kind": "official"
+                  },
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4:994",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "section": "WH-CH520 / unspecified；原文位置 994–1629",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0",
+                  "67dc817e2c3eef01f0310aa4:994"
+                ],
+                "memoryIds": [],
+                "caveat": "公开官方资料原文摘录；地区和版本需与实物一致，未核验实际状态。",
+                "errorCode": "upstream"
+              },
+              "at": "2026-10-30T04:04:38.360Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "ba9dde60-6a20-491b-ad44-db87af101e30",
+            "goal": "资料中确定的内容与还未知的操作信息分别有哪些？"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:38.298Z",
+          "updatedAt": "2026-10-30T04:04:38.360Z",
+          "expiresAt": "2026-11-06T04:04:38.298Z"
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+          "steps": [
+            {
+              "id": "excerpt:67dc817e2c3eef01f0310aa4:0",
+              "text": "Model: YY2958\n\nQuick Start Guide\n\nDownload the app, and set up the headset\n\nTo use all functions and improved performances, update the software of the headset and “Sony | Headphones Connect” app to the latest version. For details, refer to the following:\n\nhttps://www.sony.net/elesupport/\n\nLet’s start to use\n\nTurning on the headsetPress and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes. The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\n\nEstablishing a BLUETOOTH® connectionFollow the downloaded “Sony | Headphones Connect” app instructions.\n\nOperating the headsetYou can use the buttons on the right unit of the headset to perform the following operations.\n\n(play) button\nPress once while paused: Play\nPress once during playback: Pause\n\n– (volume –)/ (previous) button\nPress once briefly: Decrease the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due"
+            },
+            {
+              "id": "excerpt:67dc817e2c3eef01f0310aa4:994",
+              "text": "previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due to getting wet\n\nThe headset is not waterproof.\n\nIf the headset is charged while it is wet with rain or sweat, etc., this can result in burnout or malfunction.\n\nRelated information\n\nWearing the headset\n\nEstablishing a Bluetooth connection manually\n\nCharging the headset\n\nGo to Page Top"
+            }
+          ],
+          "questions": [],
+          "source": "curated-guidance",
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4:0",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "section": "WH-CH520 / unspecified；原文位置 0–1344",
+              "kind": "official"
+            },
+            {
+              "id": "67dc817e2c3eef01f0310aa4:994",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "section": "WH-CH520 / unspecified；原文位置 994–1629",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0",
+            "67dc817e2c3eef01f0310aa4:994"
+          ],
+          "memoryIds": [],
+          "caveat": "公开官方资料原文摘录；地区和版本需与实物一致，未核验实际状态。",
+          "errorCode": "upstream"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:38.336Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:38.336Z"
+          },
+          {
+            "stage": "grounded_answer_failed",
+            "detail": "local excerpt fallback; no automatic paid retry",
+            "at": "2026-10-30T04:04:38.339Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "30",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "我手里这件耳机右侧键有故障，你能从官网确认它没问题吗？",
+      "source": "app-core",
+      "totalMs": 71.0254999999961,
+      "result": {
+        "session": {
+          "id": "e23ee317-8116-4a6e-9a82-e1a84472624f",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "169e825e-1f95-40a3-b6d4-b2481a082b2b",
+              "role": "user",
+              "text": "我手里这件耳机右侧键有故障，你能从官网确认它没问题吗？",
+              "at": "2026-10-30T04:04:38.431Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "713244e2-8c4a-4cef-8441-b0838a214239",
+              "role": "assistant",
+              "text": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+                "steps": [
+                  {
+                    "id": "excerpt:67dc817e2c3eef01f0310aa4:0",
+                    "text": "Model: YY2958\n\nQuick Start Guide\n\nDownload the app, and set up the headset\n\nTo use all functions and improved performances, update the software of the headset and “Sony | Headphones Connect” app to the latest version. For details, refer to the following:\n\nhttps://www.sony.net/elesupport/\n\nLet’s start to use\n\nTurning on the headsetPress and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes. The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\n\nEstablishing a BLUETOOTH® connectionFollow the downloaded “Sony | Headphones Connect” app instructions.\n\nOperating the headsetYou can use the buttons on the right unit of the headset to perform the following operations.\n\n(play) button\nPress once while paused: Play\nPress once during playback: Pause\n\n– (volume –)/ (previous) button\nPress once briefly: Decrease the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due"
+                  },
+                  {
+                    "id": "excerpt:67dc817e2c3eef01f0310aa4:994",
+                    "text": "previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due to getting wet\n\nThe headset is not waterproof.\n\nIf the headset is charged while it is wet with rain or sweat, etc., this can result in burnout or malfunction.\n\nRelated information\n\nWearing the headset\n\nEstablishing a Bluetooth connection manually\n\nCharging the headset\n\nGo to Page Top"
+                  }
+                ],
+                "questions": [],
+                "source": "curated-guidance",
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4:0",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "section": "WH-CH520 / unspecified；原文位置 0–1344",
+                    "kind": "official"
+                  },
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4:994",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "section": "WH-CH520 / unspecified；原文位置 994–1629",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0",
+                  "67dc817e2c3eef01f0310aa4:994"
+                ],
+                "memoryIds": [],
+                "caveat": "公开官方资料原文摘录；地区和版本需与实物一致，未核验实际状态。",
+                "errorCode": "upstream"
+              },
+              "at": "2026-10-30T04:04:38.431Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "21d257e4-4a59-4b33-ae78-4266afb6fc72",
+            "goal": "我手里这件耳机右侧键有故障，你能从官网确认它没问题吗？"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:38.366Z",
+          "updatedAt": "2026-10-30T04:04:38.431Z",
+          "expiresAt": "2026-11-06T04:04:38.366Z"
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+          "steps": [
+            {
+              "id": "excerpt:67dc817e2c3eef01f0310aa4:0",
+              "text": "Model: YY2958\n\nQuick Start Guide\n\nDownload the app, and set up the headset\n\nTo use all functions and improved performances, update the software of the headset and “Sony | Headphones Connect” app to the latest version. For details, refer to the following:\n\nhttps://www.sony.net/elesupport/\n\nLet’s start to use\n\nTurning on the headsetPress and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes. The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\n\nEstablishing a BLUETOOTH® connectionFollow the downloaded “Sony | Headphones Connect” app instructions.\n\nOperating the headsetYou can use the buttons on the right unit of the headset to perform the following operations.\n\n(play) button\nPress once while paused: Play\nPress once during playback: Pause\n\n– (volume –)/ (previous) button\nPress once briefly: Decrease the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due"
+            },
+            {
+              "id": "excerpt:67dc817e2c3eef01f0310aa4:994",
+              "text": "previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due to getting wet\n\nThe headset is not waterproof.\n\nIf the headset is charged while it is wet with rain or sweat, etc., this can result in burnout or malfunction.\n\nRelated information\n\nWearing the headset\n\nEstablishing a Bluetooth connection manually\n\nCharging the headset\n\nGo to Page Top"
+            }
+          ],
+          "questions": [],
+          "source": "curated-guidance",
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4:0",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "section": "WH-CH520 / unspecified；原文位置 0–1344",
+              "kind": "official"
+            },
+            {
+              "id": "67dc817e2c3eef01f0310aa4:994",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "section": "WH-CH520 / unspecified；原文位置 994–1629",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0",
+            "67dc817e2c3eef01f0310aa4:994"
+          ],
+          "memoryIds": [],
+          "caveat": "公开官方资料原文摘录；地区和版本需与实物一致，未核验实际状态。",
+          "errorCode": "upstream"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:38.404Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:38.404Z"
+          },
+          {
+            "stage": "grounded_answer_failed",
+            "detail": "local excerpt fallback; no automatic paid retry",
+            "at": "2026-10-30T04:04:38.406Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "31",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "这个耳机的内部编号是什么？厂家资料是否说明了头梁材料？",
+      "source": "app-core",
+      "totalMs": 73.55099999999948,
+      "result": {
+        "session": {
+          "id": "28d396f9-fbcd-455d-8c19-18a1c0b55c74",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "46db4c8b-5254-408a-bb49-698eed94be3a",
+              "role": "user",
+              "text": "这个耳机的内部编号是什么？厂家资料是否说明了头梁材料？",
+              "at": "2026-10-30T04:04:38.506Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "bb7c240a-95a4-45d6-80d4-9b8943280487",
+              "role": "assistant",
+              "text": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+                "steps": [
+                  {
+                    "id": "excerpt:67dc817e2c3eef01f0310aa4:0",
+                    "text": "Model: YY2958\n\nQuick Start Guide\n\nDownload the app, and set up the headset\n\nTo use all functions and improved performances, update the software of the headset and “Sony | Headphones Connect” app to the latest version. For details, refer to the following:\n\nhttps://www.sony.net/elesupport/\n\nLet’s start to use\n\nTurning on the headsetPress and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes. The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\n\nEstablishing a BLUETOOTH® connectionFollow the downloaded “Sony | Headphones Connect” app instructions.\n\nOperating the headsetYou can use the buttons on the right unit of the headset to perform the following operations.\n\n(play) button\nPress once while paused: Play\nPress once during playback: Pause\n\n– (volume –)/ (previous) button\nPress once briefly: Decrease the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due"
+                  },
+                  {
+                    "id": "excerpt:67dc817e2c3eef01f0310aa4:994",
+                    "text": "previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due to getting wet\n\nThe headset is not waterproof.\n\nIf the headset is charged while it is wet with rain or sweat, etc., this can result in burnout or malfunction.\n\nRelated information\n\nWearing the headset\n\nEstablishing a Bluetooth connection manually\n\nCharging the headset\n\nGo to Page Top"
+                  }
+                ],
+                "questions": [],
+                "source": "curated-guidance",
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4:0",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "section": "WH-CH520 / unspecified；原文位置 0–1344",
+                    "kind": "official"
+                  },
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4:994",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "section": "WH-CH520 / unspecified；原文位置 994–1629",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0",
+                  "67dc817e2c3eef01f0310aa4:994"
+                ],
+                "memoryIds": [],
+                "caveat": "公开官方资料原文摘录；地区和版本需与实物一致，未核验实际状态。",
+                "errorCode": "upstream"
+              },
+              "at": "2026-10-30T04:04:38.506Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "7d97e21b-6fd7-436e-b057-57d00e91c19e"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:38.437Z",
+          "updatedAt": "2026-10-30T04:04:38.506Z",
+          "expiresAt": "2026-11-06T04:04:38.437Z"
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+          "steps": [
+            {
+              "id": "excerpt:67dc817e2c3eef01f0310aa4:0",
+              "text": "Model: YY2958\n\nQuick Start Guide\n\nDownload the app, and set up the headset\n\nTo use all functions and improved performances, update the software of the headset and “Sony | Headphones Connect” app to the latest version. For details, refer to the following:\n\nhttps://www.sony.net/elesupport/\n\nLet’s start to use\n\nTurning on the headsetPress and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes. The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\n\nEstablishing a BLUETOOTH® connectionFollow the downloaded “Sony | Headphones Connect” app instructions.\n\nOperating the headsetYou can use the buttons on the right unit of the headset to perform the following operations.\n\n(play) button\nPress once while paused: Play\nPress once during playback: Pause\n\n– (volume –)/ (previous) button\nPress once briefly: Decrease the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due"
+            },
+            {
+              "id": "excerpt:67dc817e2c3eef01f0310aa4:994",
+              "text": "previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due to getting wet\n\nThe headset is not waterproof.\n\nIf the headset is charged while it is wet with rain or sweat, etc., this can result in burnout or malfunction.\n\nRelated information\n\nWearing the headset\n\nEstablishing a Bluetooth connection manually\n\nCharging the headset\n\nGo to Page Top"
+            }
+          ],
+          "questions": [],
+          "source": "curated-guidance",
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4:0",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "section": "WH-CH520 / unspecified；原文位置 0–1344",
+              "kind": "official"
+            },
+            {
+              "id": "67dc817e2c3eef01f0310aa4:994",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "section": "WH-CH520 / unspecified；原文位置 994–1629",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0",
+            "67dc817e2c3eef01f0310aa4:994"
+          ],
+          "memoryIds": [],
+          "caveat": "公开官方资料原文摘录；地区和版本需与实物一致，未核验实际状态。",
+          "errorCode": "upstream"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:38.479Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:38.479Z"
+          },
+          {
+            "stage": "grounded_answer_failed",
+            "detail": "local excerpt fallback; no automatic paid retry",
+            "at": "2026-10-30T04:04:38.481Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    },
+    {
+      "id": "32",
+      "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+      "question": "我喜欢安静，资料能证明它有主动降噪功能吗？",
+      "source": "app-core",
+      "totalMs": 77.16120000000228,
+      "result": {
+        "session": {
+          "id": "34b6322c-af71-42a8-a283-e3392d1b8b07",
+          "owner": "lin",
+          "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "1e3259f0-40e3-4690-8cca-ef693b1d1deb",
+              "role": "user",
+              "text": "我喜欢安静，资料能证明它有主动降噪功能吗？",
+              "at": "2026-10-30T04:04:38.584Z",
+              "itemId": "e3f9ab18-28d0-4128-9570-e6955d4814c5",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "bad3fa75-85f4-4864-80fe-7930b6debb78",
+              "role": "assistant",
+              "text": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+                "steps": [
+                  {
+                    "id": "excerpt:67dc817e2c3eef01f0310aa4:0",
+                    "text": "Model: YY2958\n\nQuick Start Guide\n\nDownload the app, and set up the headset\n\nTo use all functions and improved performances, update the software of the headset and “Sony | Headphones Connect” app to the latest version. For details, refer to the following:\n\nhttps://www.sony.net/elesupport/\n\nLet’s start to use\n\nTurning on the headsetPress and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes. The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\n\nEstablishing a BLUETOOTH® connectionFollow the downloaded “Sony | Headphones Connect” app instructions.\n\nOperating the headsetYou can use the buttons on the right unit of the headset to perform the following operations.\n\n(play) button\nPress once while paused: Play\nPress once during playback: Pause\n\n– (volume –)/ (previous) button\nPress once briefly: Decrease the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due"
+                  },
+                  {
+                    "id": "excerpt:67dc817e2c3eef01f0310aa4:994",
+                    "text": "previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due to getting wet\n\nThe headset is not waterproof.\n\nIf the headset is charged while it is wet with rain or sweat, etc., this can result in burnout or malfunction.\n\nRelated information\n\nWearing the headset\n\nEstablishing a Bluetooth connection manually\n\nCharging the headset\n\nGo to Page Top"
+                  }
+                ],
+                "questions": [],
+                "source": "curated-guidance",
+                "citations": [
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4:0",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "section": "WH-CH520 / unspecified；原文位置 0–1344",
+                    "kind": "official"
+                  },
+                  {
+                    "id": "67dc817e2c3eef01f0310aa4:994",
+                    "title": "WH-CH520 | Help Guide | Top",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+                    "section": "WH-CH520 / unspecified；原文位置 994–1629",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "67dc817e2c3eef01f0310aa4:0",
+                  "67dc817e2c3eef01f0310aa4:994"
+                ],
+                "memoryIds": [],
+                "caveat": "公开官方资料原文摘录；地区和版本需与实物一致，未核验实际状态。",
+                "errorCode": "upstream"
+              },
+              "at": "2026-10-30T04:04:38.584Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "630e0881-7b11-4450-883a-13fe179b4b82"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-30T04:04:38.512Z",
+          "updatedAt": "2026-10-30T04:04:38.584Z",
+          "expiresAt": "2026-11-06T04:04:38.513Z"
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。",
+          "steps": [
+            {
+              "id": "excerpt:67dc817e2c3eef01f0310aa4:0",
+              "text": "Model: YY2958\n\nQuick Start Guide\n\nDownload the app, and set up the headset\n\nTo use all functions and improved performances, update the software of the headset and “Sony | Headphones Connect” app to the latest version. For details, refer to the following:\n\nhttps://www.sony.net/elesupport/\n\nLet’s start to use\n\nTurning on the headsetPress and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes. The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\n\nEstablishing a BLUETOOTH® connectionFollow the downloaded “Sony | Headphones Connect” app instructions.\n\nOperating the headsetYou can use the buttons on the right unit of the headset to perform the following operations.\n\n(play) button\nPress once while paused: Play\nPress once during playback: Pause\n\n– (volume –)/ (previous) button\nPress once briefly: Decrease the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due"
+            },
+            {
+              "id": "excerpt:67dc817e2c3eef01f0310aa4:994",
+              "text": "previous track (or the current track during playback)\n\n+ (volume +)/ (next) button\nPress once briefly: Increase the volume\nPress and hold until you hear a notification sound: Skip to the beginning of the next track\n\nFor more details on operations, refer to “Controlling the audio device (Bluetooth connection)”.\n\nTo prevent burning or malfunction due to getting wet\n\nThe headset is not waterproof.\n\nIf the headset is charged while it is wet with rain or sweat, etc., this can result in burnout or malfunction.\n\nRelated information\n\nWearing the headset\n\nEstablishing a Bluetooth connection manually\n\nCharging the headset\n\nGo to Page Top"
+            }
+          ],
+          "questions": [],
+          "source": "curated-guidance",
+          "citations": [
+            {
+              "id": "67dc817e2c3eef01f0310aa4:0",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "section": "WH-CH520 / unspecified；原文位置 0–1344",
+              "kind": "official"
+            },
+            {
+              "id": "67dc817e2c3eef01f0310aa4:994",
+              "title": "WH-CH520 | Help Guide | Top",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/index.html",
+              "section": "WH-CH520 / unspecified；原文位置 994–1629",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "67dc817e2c3eef01f0310aa4:0",
+            "67dc817e2c3eef01f0310aa4:994"
+          ],
+          "memoryIds": [],
+          "caveat": "公开官方资料原文摘录；地区和版本需与实物一致，未核验实际状态。",
+          "errorCode": "upstream"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-30T04:04:38.556Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-30T04:04:38.556Z"
+          },
+          {
+            "stage": "grounded_answer_failed",
+            "detail": "local excerpt fallback; no automatic paid retry",
+            "at": "2026-10-30T04:04:38.558Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 1
+      }
+    }
+  ]
+}

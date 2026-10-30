@@ -22,6 +22,7 @@ import type { LifeIdea } from "@/lib/life/ideas";
 import { AssistantConversation } from "../AssistantConversation";
 import { MemoryCenter } from "../MemoryCenter";
 import { FamilyPanel, SocialPanel } from "./FamilyPanel";
+import { AccountFamily } from "./AccountFamily";
 import { ActivityPlanner } from "../ActivityPlanner";
 import { PreparationPlans } from "./PreparationPlans";
 import { CareView } from "./CareView";
@@ -50,6 +51,7 @@ type Data = {
   ideas: LifeIdea[];
   packs: ProductPack[];
   capabilities: {
+    softwareLab?: boolean;
     model: boolean;
     vision?: { ready: boolean; message: string };
     cloud: { state: string; ready: boolean; message: string };
@@ -72,14 +74,14 @@ const nav = [
   ["family", "家庭", Users],
   ["social", "社交", BookOpen],
 ] as const;
-export default function WujianApp() {
+export default function WujianApp({ authenticatedAccount }: { authenticatedAccount?: { id: Person; name: string } } = {}) {
   const publicMode = usePublicDemo();
   const [elder, setElder] = useState(false);
   const [preferencesReady, setPreferencesReady] = useState(false);
   const [conversationBusy, setConversationBusy] = useState(false);
   const [mutating, setMutating] = useState(false);
   const mutationPending = useRef(false);
-  const [actor, setActor] = useState<Person>("lin"),
+  const [actor, setActor] = useState<Person>(authenticatedAccount?.id || "lin"),
     [data, setData] = useState<Data | null>(null),
     [view, setView] = useState<View>("home"),
     [selected, setSelected] = useState(""),
@@ -100,7 +102,7 @@ export default function WujianApp() {
         localStorage.getItem("wujian-demo-actor") ||
         localStorage.getItem("product-agent-actor");
       if (
-        !publicMode &&
+        !publicMode && !authenticatedAccount &&
         (saved === "lin" || saved === "dad" || saved === "friend")
       )
         setActor(saved);
@@ -254,6 +256,17 @@ export default function WujianApp() {
     generation.current++;
     setMutating(true);
     try {
+      if (authenticatedAccount && ["task", "ackTask"].includes(action)) {
+        const command = action === "ackTask" ? "seen" : ({ "进行中": "accept", "用户确认完成": "report_done", "未解决": "unresolved" } as Record<string,string>)[String(p.status)];
+        if (!command) throw Error("请在家庭事项中确认接手或报告结果");
+        const response = await fetch("/api/collaboration", {
+          method: "POST", headers,
+          body: JSON.stringify({ action: command, taskId: p.taskId, requestId: crypto.randomUUID(), confirmed: true, summary: typeof p.text === "string" ? p.text : undefined }),
+        });
+        const result = await response.json();
+        if (!response.ok) throw Error(result.error);
+        await load(); setNotice(message); return true;
+      }
       const r = await fetch("/api/workspace", {
         method: "POST",
         headers,
@@ -478,7 +491,7 @@ export default function WujianApp() {
           ))}
         </nav>
         <div className="life-header-controls">
-          {publicMode ? (
+          {authenticatedAccount ? <span className="life-actor">{authenticatedAccount.name}的空间</span> : publicMode ? (
             <span className="life-actor">我的演示空间</span>
           ) : (
             <label className="life-actor">
@@ -888,6 +901,7 @@ export default function WujianApp() {
                   setNotice("已建立私人记录；官方事实与个人状态分别保留。");
                 }}
               >
+                {data.capabilities.softwareLab && <section className="life-card"><h2>体验一次可验证的软件能力</h2><p>创建自有虚拟灯的合成记录。分析与调光都在本机软件中发生，不代表连接真实台灯。</p><button disabled={busy} onClick={async () => { setBusy(true); try { const r = await fetch("/api/device-lab", { method: "POST", headers: { "Content-Type": "application/json", "x-demo-actor": actor }, body: JSON.stringify({ action: "create", confirmed: true, requestId: crypto.randomUUID() }) }); const d = await r.json(); if (!r.ok) throw Error(d.error); await load(); open(d.item.id); } catch (e) { setError((e as Error).message); } finally { setBusy(false); } }}>创建软件灯测试物品</button></section>}
                 <Intake
                   vision={data.capabilities.vision}
                   key={actor}
@@ -1137,7 +1151,7 @@ export default function WujianApp() {
                           ))}
                         </select>
                         <button
-                          onClick={() =>
+                          onClick={() => authenticatedAccount ? (go("family"), setNotice("请在家庭中明确选择要授权的成员；不会自动共享私人故事。")) :
                             act(
                               "updateItem",
                               { itemId: item.id, shared: !item.shared },
@@ -1147,7 +1161,7 @@ export default function WujianApp() {
                             )
                           }
                         >
-                          {item.shared ? "停止家庭共享" : "共享给家庭"}
+                          {authenticatedAccount ? "管理家人使用权限" : item.shared ? "停止家庭共享" : "共享给家庭"}
                         </button>
                       </div>
                     )}
@@ -1268,13 +1282,13 @@ export default function WujianApp() {
             )}
             {view === "family" && (
               <>
-                <FamilyPanel
+                {authenticatedAccount ? <AccountFamily actor={actor} items={items} refresh={load} onItem={open} /> : <FamilyPanel
                   workspace={data.workspace}
                   actor={actor}
                   items={items}
                   act={act}
                   onItem={open}
-                />
+                />}
                 <details className="life-card life-extra-plans">
                   <summary>活动准备与已保存计划</summary>
                   <ActivityPlanner

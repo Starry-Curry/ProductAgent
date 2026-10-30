@@ -1,4 +1,6 @@
 import { executeHomeTask } from "./home-task.ts";
+import { answerKnownItem } from "./grounded-answer.ts";
+import { analyzeOwnedLamp } from "../devices/software-lab.ts";
 import { hazardousActions } from "./safety-language.ts";
 import { publicDemo } from "../cloud/runtime.ts";
 import {
@@ -969,6 +971,31 @@ export async function executeGraph(
         "context_ready",
         `purpose=${session.mode}; memoryRefs=${ctx.cloudMemories.map((m) => m.id).join(",")}; prompt=${PROMPT_VERSION}`,
       );
+      // Synthesize the whole question before local excerpt shortcuts can finish it.
+      // Keep hazardous guidance, creative planning and story composition on their existing paths.
+      if (provider.ready && ctx.item && ctx.externalKnowledge.length &&
+          effectiveSession.mode === "service" && !storyPlan &&
+          (operationQuestion(knowledgeQuery) || process.env.WUJIAN_EXPERIMENTAL_FACT_QA === "true") &&
+          !unsafe.test(withoutProhibitedActions(w.question)) &&
+          (!route || route.intent === "help")) {
+        try {
+          guard();
+          w.calls++;
+          const result = await answerKnownItem(ctx, session, w.question, provider, operationQuestion(knowledgeQuery));
+          w.modelTurns++; w.tokens = result.tokens;
+          guard();
+          w.reply = result.reply;
+          add(w, "grounded_answer", `one-round; modelMs=${Math.round(result.modelMs)}`);
+          return { work: w };
+        } catch (error) {
+          if (error instanceof AgentError && error.status !== 400) throw error;
+          w.reply = { ...(offlineDocumentHelp(ctx.externalKnowledge, session) || blank("模型暂未完成回答，可重试或查看原始资料。", "unavailable")), errorCode: error instanceof ProviderError ? error.code : "network" };
+          w.reply.answer = "本轮模型回答未完成或未通过资料核对，以下保留原始摘录供查看；不是完整操作指导。";
+          w.reply.outcome = "needs_info";
+          add(w, "grounded_answer_failed", "local excerpt fallback; no automatic paid retry");
+          return { work: w };
+        }
+      }
       w.reply =
         (session.known.memoryPolicy !== undefined &&
         !temporary &&
@@ -1146,11 +1173,11 @@ export async function executeGraph(
                         "目标规划与反馈",
                         "图文故事手动保存",
                         "记忆候选与明确保存",
-                        "本机演示家庭与社交礼物",
+                        process.env.AUTH_MODE === "authenticated" ? "独立账号家庭、明确授权共享与选择故事的礼物认领" : "本机演示家庭与社交礼物",
                       ],
                       unavailable: [
                         ...(!visionStatus().ready ? ["视觉识物尚未启用"] : []),
-                        "真实家庭账户/跨设备通知",
+                        ...(process.env.AUTH_MODE === "authenticated" ? ["短信、推送和其他外部通知未接入"] : ["真实家庭账户/跨设备通知"]),
                         "当前对话语音朗读、自动拨号或接通真人客服",
                         "自动购物下单",
                         "受限社区全站API",
@@ -1238,6 +1265,9 @@ export async function executeGraph(
             : tools.filter(
                 (t) =>
                   allowedNames.includes(t.function.name) &&
+                  (t.function.name !== "explore_owned_software" ||
+                    (process.env.WUJIAN_ENABLE_DEVICE_LAB === "true" &&
+                     read().items.some(i => i.id === effectiveSession.itemId && i.owner === actor && i.synthetic && i.model === "WUJIAN-SOFTWARE-LAMP-1"))) &&
                   !(
                     w.officialLookup &&
                     t.function.name === "fetch_official_knowledge"
@@ -1362,7 +1392,7 @@ export async function executeGraph(
                     limit: z.number().int().min(1).max(40).optional(),
                   })
                   .strict()
-              : call.function.name === "read_item_context"
+              : ["read_item_context", "explore_owned_software"].includes(call.function.name)
                 ? z.object({ itemId: z.string().min(1).max(100) }).strict()
                 : z
                     .object({ query: z.string().trim().min(1).max(200) })
@@ -1383,7 +1413,11 @@ export async function executeGraph(
             temporary,
           });
           trackExpiry(ctx.cloudMemories);
-          if (call.function.name === "read_item_context") {
+          if (call.function.name === "explore_owned_software") {
+            if (args.itemId !== effectiveSession.itemId || temporary) throw new AgentError("只分析当前物品，临时提问不保存探索结果", 403);
+            value = await analyzeOwnedLamp(db, read, actor, args.itemId!);
+            guard();
+          } else if (call.function.name === "read_item_context") {
             value = readItemContext(
               read(),
               actor,

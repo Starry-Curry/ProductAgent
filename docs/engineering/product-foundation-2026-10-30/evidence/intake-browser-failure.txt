@@ -1,0 +1,14 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.check: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByLabel('我确认拥有这件商品', { exact: true })
+
+    at D:\ProductAgent-LifeContext\.runtime\product-foundation-app\scripts\product-foundation\browser.mjs:36:53 {
+  log: [ "  - waiting for getByLabel('我确认拥有这件商品', { exact: true })" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.22.2

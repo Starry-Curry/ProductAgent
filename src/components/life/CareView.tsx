@@ -36,7 +36,7 @@ export function CareView({
     <div className="care-view">
       {view === "family" ? (
         <section aria-labelledby="care-tasks-title">
-          <h1 id="care-tasks-title">{people[actor]}，家人交代的事</h1>
+          <h1 id="care-tasks-title">{people[actor] || "你"}，家人交代的事</h1>
           <p>这里只显示交给你的事项。收到提醒后，点“我知道了”。</p>
           <TaskList tasks={own} actor={actor} act={act} elder />
           <p className="care-note">
@@ -115,7 +115,7 @@ export function CareView({
             <SellerSupport item={item} actor={actor} question={question} />
           </section>
           <section className="care-inbox" aria-labelledby="care-inbox-title">
-            <h2 id="care-inbox-title">{people[actor]}，还有这些事</h2>
+            <h2 id="care-inbox-title">{people[actor] || "你"}，还有这些事</h2>
             <TaskList
               tasks={own.filter((t) => t.kind !== "notice")}
               actor={actor}
@@ -126,7 +126,7 @@ export function CareView({
         </>
       )}
       <p className="care-note">
-        本机演示身份。页面打开时会刷新家人事项，暂不支持跨设备同步或手机通知。
+        {actor.startsWith("u_") ? "独立账号的家庭事项；当前为本机服务，未接入短信或手机通知。" : "本机演示身份。页面打开时会刷新家人事项，暂不支持跨设备同步或手机通知。"}
       </p>
     </div>
   );

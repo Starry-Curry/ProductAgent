@@ -272,7 +272,7 @@ export function ProductArrival({
         </form>
       )}
       <details className="belong-manual">
-        <summary>不是这些商品？录入画作、礼物或其他物品</summary>
+        <summary>录入其他真实商品、说明书或自己的纪念物</summary>
         {children}
       </details>
     </section>
