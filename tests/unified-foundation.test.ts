@@ -28,11 +28,28 @@ import { respond } from "../src/lib/agent/service.ts";
 import type { Provider } from "../src/lib/ai/provider.ts";
 import { spawn } from "node:child_process";
 import { pathToFileURL } from "node:url";
+import { saveMemory,forgetMemory } from "../src/lib/memory/store.ts";
+import { linkTask } from "../src/lib/foundation/tasks.ts";
+test("纠正或遗忘后，旧任务目标不作为模型事实再注入",()=>{
+ const f=fixture();try{const memory=saveMemory(f.db,f.read,'lin',{itemId:f.id,kind:'relationship',text:'合成：朋友小周送的',allowCloud:false});
+ const t=createTask(f.db,f.read,'lin',{requestId:crypto.randomUUID(),goal:'朋友小周赠送的耳机要配对',intent:'guide',itemInstanceIds:[f.id]});
+ assert.ok(resolveTaskContext(f.db,f.read(),'lin',t.taskId).modelGoal.includes('小周'));
+ forgetMemory(f.db,'lin',memory.id);assert.ok(!resolveTaskContext(f.db,f.read(),'lin',t.taskId).modelGoal.includes('小周'));
+ }finally{f.db.close();}
+});
+test("同一任务跨人只给批准摘要与获准物品，不复制原始目标和私人对象",()=>{
+ const f=fixture();try{const s=f.read(),i=s.items.find(i=>i.id===f.id)!;i.owner='u_owner';i.shared=true;i.sharedWith=['u_peer'];f.write(s);
+ const privateId=f.add('私有相机','其他','Canon','EOS R50');const s2=f.read();s2.items.find(i=>i.id===privateId)!.owner='u_owner';f.write(s2);
+ const t=createTask(f.db,f.read,'u_owner',{requestId:crypto.randomUUID(),goal:'秘密原始目标',intent:'plan',itemInstanceIds:[i.id,privateId]});
+ linkTask(f.db,f.read(),'u_owner',{kind:'family',refId:crypto.randomUUID(),taskId:t.taskId,goal:'批准的耳机协助摘要',intent:'collaborate',itemIds:[i.id],participants:['u_peer']});
+ const view=getTask(f.db,f.read(),'u_peer',t.taskId);assert.equal(view.goal,'批准的耳机协助摘要');assert.deepEqual(view.itemInstanceIds,[i.id]);assert.ok(!JSON.stringify(view).includes(privateId));assert.ok(!JSON.stringify(view).includes('秘密原始目标'));
+ }finally{f.db.close();}
+});
 function fixture() {
   const dir = mkdtempSync(path.join(process.cwd(), ".runtime", "unified-"));
   const f = validationFixture(dir);
-  migrateUnified(f.db, path.join(dir, "test.sqlite"));
   const id = f.add("合成耳机", "电子设备", "Sony", "WH-CH520");
+  migrateUnified(f.db, path.join(dir, "test.sqlite"));
   return { ...f, dir, id };
 }
 test("G1 无损迁移、SQLite备份、重启和两件同款独立身份", () => {
@@ -50,6 +67,8 @@ test("G1 无损迁移、SQLite备份、重启和两件同款独立身份", () =>
     assert.ok(
       existsSync(path.join(f.dir, "test.sqlite.before-unified-v1.sqlite")),
     );
+    const backup=new DatabaseSync(path.join(f.dir,"test.sqlite.before-unified-v1.sqlite"),{readOnly:true});
+    assert.equal((backup.prepare("SELECT body FROM workspace").get() as {body:string}).body,body);backup.close();
     const i = f.read().items.find((i) => i.id === f.id)!;
     assert.equal(
       productModel(i)?.modelKey,
@@ -229,6 +248,10 @@ test("G2 缺证不等于否定，近似型号、推断及未引原文不能获�
 test("G3 陌生实物共用任务检索，不依赖八件模拟家庭；替身只验证工具协议", async () => {
   const f = fixture();
   try {
+    const prior=createTask(f.db,f.read,"lin",{requestId:crypto.randomUUID(),goal:"之前的耳机问题",intent:"guide",itemInstanceIds:[f.id]});
+    const previousRun=beginRun(f.db,f.read,"lin",{requestId:crypto.randomUUID(),taskId:prior.taskId,itemIds:[f.id],entryPoint:"item",executor:"offline-read",input:{}});
+    finishRun(f.db,f.read,previousRun,"waiting_user");
+    recordOutcome(f.db,f.read,"lin",{requestId:crypto.randomUUID(),taskId:prior.taskId,runId:previousRun.runId,expectedRevision:getTask(f.db,f.read(),"lin",prior.taskId).revision,goalStatus:"partial",notes:"PRIVATE-OUTCOME-NO-CLOUD",confirmed:true,reuse:true,allowCloud:false});
     const t = createTask(f.db, f.read, "lin", {
       requestId: crypto.randomUUID(),
       goal: "了解耳机并留待家人协助",
@@ -240,6 +263,7 @@ test("G3 陌生实物共用任务检索，不依赖八件模拟家庭；替身�
       ready: true,
       model: "offline-contract-fixture",
       complete: async (messages) => {
+        assert.ok(!JSON.stringify(messages).includes("PRIVATE-OUTCOME-NO-CLOUD"));
         if (!messages.some((m) => m.role === "tool"))
           return {
             text: "",

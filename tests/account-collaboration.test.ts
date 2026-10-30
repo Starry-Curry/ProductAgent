@@ -153,6 +153,9 @@ test("独立账号、会话、家庭邀请、状态、赠礼与双向隐私", ()
     assert.notEqual(recipientItem.id, item.id);
     assert.equal(recipientItem.owner, bid);
     assert.equal(recipientItem.transferredFrom?.giftId, gift.id);
+    assert.throws(()=>mutate(state,aid,"gift",{itemId:item.id,message:"不能再送一次",memoryIds:[]}),/历史档案|不再持有/);
+    state.items.find(i=>i.id===item.id)!.availability="available";
+    assert.throws(()=>mutate(state,aid,"gift",{itemId:item.id,message:"修改状态也不能重赠",memoryIds:[]}),/历史档案|不再持有/);
     assert.ok(
       visible(state, bid).memories.some(
         (m) => m.text === "朋友小周赠送（合成）" && m.author === aid,

@@ -425,8 +425,8 @@ export async function executeHomeTask(
               question,
               currentTask: session.known.homeTask
                 ? JSON.parse(session.known.homeTask)
-                : taskId ? {goal:resolveTaskContext(db,read(),actor,taskId).task.goal} : undefined,
-              ...(taskId ? {previousUserReports:resolveTaskContext(db,read(),actor,taskId).previousOutcomes} : {}),
+                : taskId ? {goal:resolveTaskContext(db,read(),actor,taskId).modelGoal} : undefined,
+              ...(taskId ? {previousUserReports:resolveTaskContext(db,read(),actor,taskId).previousOutcomes.filter(o=>o.allowCloud===true)} : {}),
               history,
               selectedPlans,
               homeIndex: initial.map((i) => ({
@@ -478,7 +478,8 @@ export async function executeHomeTask(
       question,
       currentTask: session.known.homeTask
         ? JSON.parse(session.known.homeTask)
-        : null,
+        : taskId ? {goal:resolveTaskContext(db,read(),actor,taskId).modelGoal} : null,
+      ...(taskId ? {previousUserReports:resolveTaskContext(db,read(),actor,taskId).previousOutcomes.filter(o=>o.allowCloud===true)} : {}),
       executionState: {
         performedBySystem: false,
         userReportedStepIds: session.tried,

@@ -34,10 +34,12 @@ export function AssistantConversation({
   initialSessionId,
   startFresh = false,
   allHistory = false,
+  taskId,
 }: {
   initialSessionId?: string;
   startFresh?: boolean;
   allHistory?: boolean;
+  taskId?: string;
   actor: Person;
   item?: Item;
   initialQuestion?: string;
@@ -143,6 +145,7 @@ export function AssistantConversation({
         ? retry.current
         : {
             requestId: crypto.randomUUID(),
+            taskId: temporary ? undefined : taskId,
             sessionId: temporary ? undefined : base?.id,
             itemId:
               allHistory && base
@@ -788,7 +791,7 @@ export function AssistantConversation({
           </div>
         )}
       {last &&
-        mode === "service" &&
+        (mode === "service" || mode === "auto") &&
         item?.shared &&
         actor !== "friend" &&
         !temporary && (
@@ -798,7 +801,7 @@ export function AssistantConversation({
               disabled={busy || handed}
               onClick={() => {
                 setPreview(true);
-                setSummary("使用求助：" + item.name);
+                setSummary(("使用求助：" + item.name + "；" + (session?.messages.filter(m=>m.role==="user").at(-1)?.text||"")).slice(0,120));
                 handoffId.current = crypto.randomUUID();
               }}
             >

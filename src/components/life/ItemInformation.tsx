@@ -1,5 +1,6 @@
 "use client";
 import { OfficialSources } from "./OfficialSources";
+import { EvidenceClaims } from "./EvidenceClaims";
 import { SoftwareCapability } from "./SoftwareCapability";
 import { useEffect, useState } from "react";
 import type { Item, Person } from "@/lib/domain";
@@ -62,6 +63,7 @@ export function ItemInformation({
   }
   return (
     <div className="life-home-pair">
+      <EvidenceClaims key={item.id} actor={actor} itemId={item.id}/>
       {item.model === "WUJIAN-SOFTWARE-LAMP-1" && item.owner === actor && <SoftwareCapability item={item} actor={actor} />}
       <section className="life-card">
         <h2>物品资料与属性</h2>

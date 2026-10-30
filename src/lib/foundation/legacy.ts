@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import type { Item, State } from "../domain.ts";
+import { syntheticItem } from "../life/availability.ts";
 export const fingerprint = (v: unknown) =>
   createHash("sha256").update(JSON.stringify(v)).digest("hex");
 export function productModel(item: Item) {
@@ -29,7 +30,7 @@ export function itemInstance(item: Item) {
       basis: "user_report" as const,
       attributes: item.attributes || {},
     },
-    synthetic: !!item.synthetic,
+    synthetic: syntheticItem(item),
     revision: fingerprint(item),
   };
 }
@@ -42,6 +43,7 @@ export function legacyRelations(state: State, itemId: string) {
       subjectId: item.owner,
       objectId: item.id,
       type: "owns",
+      effectiveTo:state.gifts.find(g=>g.itemId===item.id&&g.claimedBy)?.claimedAt,
       source: "confirmed_action",
     },
     ...(item.transferredFrom

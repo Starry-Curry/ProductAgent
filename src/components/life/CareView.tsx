@@ -107,6 +107,7 @@ export function CareView({
               uiContext={{ page: "assistant", interfaceMode: "care" }}
               onQuestion={setQuestion}
               onActivity={() => refresh().catch(() => {})}
+              onHandoff={()=>refresh().catch(()=>{})}
               onBusy={(v) => {
                 setAsking(v);
                 onBusy(v);

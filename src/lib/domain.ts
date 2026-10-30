@@ -649,6 +649,8 @@ export function mutate(
   } else if (action === "gift") {
     const item = get(p.itemId);
     if (item.owner !== a) fail("仅所有者可赠送");
+    if(["gifted","loaned","lost","consumed"].includes(item.availability||"")||s.gifts.some(g=>g.itemId===item.id&&g.claimedBy))
+      fail("这件物品已不再持有；历史档案不能再次赠送，请确认当前实物实例");
     if (s.gifts.some((g) => g.itemId === item.id && !g.revoked && !g.claimedBy))
       fail("这件物品已有待认领礼物，请先撤销");
     const stories = s.memories
@@ -696,7 +698,7 @@ export function mutate(
     if (g!.sender === a) fail("请选择接收者演示身份");
     if (p.received !== true) fail("请确认已实际取得物品");
     let item = s.items.find((i) => i.id === g!.itemId);
-    if (!item || item.owner !== g!.sender) fail("物品归属已改变");
+    if (!item || item.owner !== g!.sender || ["gifted","loaned","lost","consumed"].includes(item.availability||"") || s.gifts.some(other=>other.itemId===item!.id&&other.claimedBy)) fail("物品归属或持有状态已改变");
     if (
       s.tasks.some((t) => t.itemId === item!.id && t.status !== "用户确认完成")
     )

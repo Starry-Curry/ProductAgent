@@ -269,7 +269,10 @@ export async function extractPublicHTML(raw: string, address: string) {
       } catch {}
   });
   $("script,style,noscript,nav,footer,header,iframe,form").remove();
-  $("p,li,h1,h2,h3,h4,br,tr,dt,dd").append("\n");
+  // Product specs often use adjacent div/span cells. Without separators, an
+  // exact model becomes e.g. MJTD01SYLColor and fails safe boundary matching.
+  // Preserve DOM text boundaries instead of weakening model matching.
+  $("p,li,h1,h2,h3,h4,br,tr,dt,dd,div,section,span").prepend("\n").append("\n");
   const title =
     $("title").text().trim().slice(0, 150) ||
     $("h1").first().text().trim().slice(0, 150) ||

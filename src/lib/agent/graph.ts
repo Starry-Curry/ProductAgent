@@ -586,7 +586,7 @@ export async function executeGraph(
   provider: Provider,
   temporary = false,
 ) {
-  if (session.known.homeId === "young-apartment-v1" || session.known.foundationTaskId && session.known.foundationHasItems === "true" && session.known.uiPage)
+  if (session.known.homeId === "young-apartment-v1" || session.known.foundationTaskId && session.known.foundationHasItems === "true" && session.known.foundationComplexTask === "true" && session.known.uiPage)
     return executeHomeTask(
       db,
       read,

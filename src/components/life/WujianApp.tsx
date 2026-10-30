@@ -1,6 +1,7 @@
 "use client";
 import { VirtualHome, HomeSources, type VirtualHomeData } from "./VirtualHome";
 import { ProductArrival } from "./ProductArrival";
+import { TaskContinuity } from "./TaskContinuity";
 import { ItemBelonging } from "./ItemBelonging";
 import { usePublicDemo } from "../DemoBoundary";
 import { useEffect, useRef, useState } from "react";
@@ -118,6 +119,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
       ] as const)
     : nav;
   const [entryQuestion, setEntryQuestion] = useState("");
+  const [activeTaskId,setActiveTaskId]=useState<string>();
   const [askEntry, setAskEntry] = useState<{
     key: number;
     itemId?: string;
@@ -190,7 +192,9 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     sessionId?: string,
     companion = false,
     taskPlanId?: string,
+    taskId: string|undefined = activeTaskId,
   ) {
+    setActiveTaskId(taskId);
     setEntryQuestion(question);
     setAskEntry((e) => ({
       key: e.key + 1,
@@ -217,14 +221,14 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     const v = ++generation.current;
     const r = await fetch("/api/life", { headers, cache: "no-store" });
     const d = await r.json();
-    if (!r.ok) throw Error(d.error);
+    if (!r.ok) { if(r.status===401||r.status===403)setData(null); throw Error(d.error); }
     if (v === generation.current) setData(d);
   }
   async function request(action: string, input?: unknown) {
     const top = ["code", "lookup", "fetchSource", "demo"].includes(action);
     const r = await fetch("/api/life", {
       method: "POST",
-      headers,
+      headers:{...headers,...(activeTaskId?{"x-wujian-task":activeTaskId}:{})},
       body: JSON.stringify(
         top ? { action, ...(input as object) } : { action, input },
       ),
@@ -313,12 +317,11 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     };
   }, [actor]);
   useEffect(() => {
-    if (!elder) return;
     const refresh = () => {
       if (document.visibilityState === "visible" && !mutationPending.current)
         load().catch((e) => setError(e.message));
     };
-    const timer = setInterval(refresh, 15000);
+    const timer = setInterval(refresh, elder ? 15000 : 10000);
     window.addEventListener("focus", refresh);
     return () => {
       clearInterval(timer);
@@ -327,6 +330,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
   }, [elder, actor]);
   useEffect(() => {
     const back = (event: PopStateEvent) => {
+      if(!mutationPending.current)void load().catch(e=>setError(e.message));
       const s = event.state;
       if (s?.wujian && s.actor === actor) {
         setView(s.view);
@@ -338,6 +342,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     };
     window.addEventListener("popstate", back);
     const hash = () => {
+      if(!mutationPending.current)void load().catch(e=>setError(e.message));
       const [next, id] = window.location.hash.slice(1).split("/");
       if (
         [
@@ -374,6 +379,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     return () => window.removeEventListener("workspace-updated", listener);
   }, [actor]);
   function go(v: View, id = selected, nextTab = tab) {
+    if(!mutationPending.current)void load().catch(e=>setError(e.message));
     if (v !== "items") setGiftPicking(false);
     setView(v);
     window.history.pushState(
@@ -541,6 +547,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
         </div>
       </header>
       <main className="life-main">
+        {data && <TaskContinuity actor={actor} items={data.workspace.items} onExit={()=>setActiveTaskId(undefined)} onResume={(taskId,itemId,sessionId,newGoal)=>{ask(newGoal||"",itemId,undefined,sessionId,false,undefined,taskId);}}/>}
         {!elder && (
           <div className="life-topline">
             <span>把日常用好，把生活留住。</span>
@@ -1020,6 +1027,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                   }
                 />
                 <AssistantConversation
+                  taskId={activeTaskId}
                   key={
                     actor +
                     policy +
@@ -1282,7 +1290,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
             )}
             {view === "family" && (
               <>
-                {authenticatedAccount ? <AccountFamily actor={actor} items={items} refresh={load} onItem={open} /> : <FamilyPanel
+                {authenticatedAccount ? <AccountFamily actor={actor} items={items} refresh={load} onItem={open} taskId={activeTaskId}/> : <FamilyPanel
                   workspace={data.workspace}
                   actor={actor}
                   items={items}

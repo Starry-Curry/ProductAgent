@@ -3,7 +3,7 @@ import fs from "node:fs";
 import { randomBytes, randomUUID } from "node:crypto";
 import assert from "node:assert/strict";
 const base = process.env.TEST_BASE_URL || "http://127.0.0.1:3213";
-const dir = "docs/engineering/product-foundation-2026-10-30/evidence";
+const dir = process.env.TEST_EVIDENCE_DIR || "docs/engineering/product-foundation-2026-10-30/evidence";
 fs.mkdirSync(dir, { recursive: true });
 const browser = await chromium.launch({
   executablePath:

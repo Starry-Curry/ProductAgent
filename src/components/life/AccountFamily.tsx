@@ -6,11 +6,13 @@ export function AccountFamily({
   items,
   refresh,
   onItem,
+  taskId,
 }: {
   actor: Person;
   items: Item[];
   refresh: () => Promise<void>;
   onItem: (id: string) => void;
+  taskId?: string;
 }) {
   const [data, setData] = useState<any>(),
     [notice, setNotice] = useState(""),
@@ -38,7 +40,7 @@ export function AccountFamily({
       const r = await fetch("/api/collaboration", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...input, requestId: crypto.randomUUID() }),
+        body: JSON.stringify({ ...input, ...(input.action==="task"&&taskId?{sourceTaskId:taskId}:{}), requestId: crypto.randomUUID() }),
       });
       const d = await r.json();
       if (!r.ok) throw Error(d.error);

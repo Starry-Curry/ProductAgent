@@ -2,7 +2,7 @@ import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import type { Person, State } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
-import { epoch } from "../memory/store.ts";
+import { epoch, clearOwnerContext } from "../memory/store.ts";
 import { authorize, policyRevision } from "./policy.ts";
 import { itemInstance, productModel, fingerprint } from "./legacy.ts";
 import { migrateUnified } from "./schema.ts";
@@ -27,7 +27,8 @@ export type TaskSpec = {
   intent: z.infer<typeof taskIntent>;
   itemInstanceIds: string[];
   participantIds: Person[];
-  participantSummaries?: Record<string,string>;
+  participantSummaries?: Record<string, string>;
+  contextEpoch?: number;
   currentStage:
     | "draft"
     | "active"
@@ -100,10 +101,23 @@ export function getTask(
   const t = JSON.parse(row.body) as TaskSpec;
   if (t.createdBy !== a && !t.participantIds.includes(a))
     throw new AgentError("任务不存在或未获授权", 403);
-  if(t.createdBy===a){assertItems(db,s,a,t.itemInstanceIds);return t;}
-  const allowed=t.itemInstanceIds.filter(id=>authorize(db,s,a,id).allowed);
-  if(t.itemInstanceIds.length&&!allowed.length)throw new AgentError("任务涉及的物品授权已失效",403);
-  return {...t,goal:t.participantSummaries?.[a]||"经授权的共同物品事项",itemInstanceIds:allowed,contextRefs:t.contextRefs.filter(r=>allowed.includes(r.id)),participantIds:[a],participantSummaries:undefined};
+  if (t.createdBy === a) {
+    assertItems(db, s, a, t.itemInstanceIds);
+    return t;
+  }
+  const allowed = t.itemInstanceIds.filter(
+    (id) => authorize(db, s, a, id).allowed,
+  );
+  if (t.itemInstanceIds.length && !allowed.length)
+    throw new AgentError("任务涉及的物品授权已失效", 403);
+  return {
+    ...t,
+    goal: t.participantSummaries?.[a] || "经授权的共同物品事项",
+    itemInstanceIds: allowed,
+    contextRefs: t.contextRefs.filter((r) => allowed.includes(r.id)),
+    participantIds: [a],
+    participantSummaries: undefined,
+  };
 }
 export function listTasks(db: DatabaseSync, s: State, a: Person) {
   return (
@@ -146,9 +160,24 @@ export function linkTask(
     if (t.createdBy !== a) throw new AgentError("仅发起者可交接任务", 403);
     t = {
       ...t,
-      itemInstanceIds:[...new Set([...t.itemInstanceIds,...input.itemIds])],
-      contextRefs:[...t.contextRefs,...input.itemIds.filter(id=>!t.itemInstanceIds.includes(id)).map(id=>({kind:"item" as const,id,revision:itemInstance(s.items.find(i=>i.id===id)!).revision,whyNeeded:"用户明确关联的后续业务对象"}))],
-      participantSummaries:{...t.participantSummaries,...Object.fromEntries((input.participants||[]).map(id=>[id,input.goal]))},
+      itemInstanceIds: [...new Set([...t.itemInstanceIds, ...input.itemIds])],
+      contextRefs: [
+        ...t.contextRefs,
+        ...input.itemIds
+          .filter((id) => !t.itemInstanceIds.includes(id))
+          .map((id) => ({
+            kind: "item" as const,
+            id,
+            revision: itemInstance(s.items.find((i) => i.id === id)!).revision,
+            whyNeeded: "用户明确关联的后续业务对象",
+          })),
+      ],
+      participantSummaries: {
+        ...t.participantSummaries,
+        ...Object.fromEntries(
+          (input.participants || []).map((id) => [id, input.goal]),
+        ),
+      },
       participantIds: [
         ...new Set([...t.participantIds, ...(input.participants || [])]),
       ],
@@ -158,6 +187,7 @@ export function linkTask(
   } else
     t = {
       version: "task-spec/1",
+      contextEpoch:epoch(db,a),
       taskId: crypto.randomUUID(),
       revision: 1,
       createdBy: a,
@@ -165,7 +195,9 @@ export function linkTask(
       intent: input.intent,
       itemInstanceIds: [...new Set(input.itemIds)],
       participantIds: input.participants || [],
-      participantSummaries:Object.fromEntries((input.participants||[]).map(id=>[id,input.goal])),
+      participantSummaries: Object.fromEntries(
+        (input.participants || []).map((id) => [id, input.goal]),
+      ),
       currentStage: "draft",
       contextRefs: input.itemIds.map((id) => ({
         kind: "item",
@@ -222,6 +254,7 @@ export function resolveTaskContext(
   id: string,
 ) {
   const task = getTask(db, s, a, id);
+  const seen=new Set<string>();
   const previous = (
     db
       .prepare(
@@ -230,15 +263,17 @@ export function resolveTaskContext(
       .all(a) as { body: string }[]
   )
     .map((r) => JSON.parse(r.body))
+    .filter(o=>{if(seen.has(o.taskId))return false;seen.add(o.taskId);return true;})
     .filter(
       (o) =>
-        o.canReuseForFutureTasks &&
+        o.canReuseForFutureTasks && o.memoryEpoch===epoch(db,a) &&
         o.itemInstanceIds.some((i: string) => task.itemInstanceIds.includes(i)),
     )
     .slice(0, 5);
   return {
     version: "task-context/1",
     task,
+    modelGoal:task.contextEpoch===epoch(db,task.createdBy)?task.goal:"旧任务涉及的个人语境已经变更；仅按本轮请求重新核对，不从旧目标补回关系事实",
     policyRevision: policyRevision(db, s),
     previousOutcomes: previous,
     items: task.itemInstanceIds.map((id) => {
@@ -316,8 +351,13 @@ export function beginRun(
 export function assertRunCurrent(db: DatabaseSync, s: State, run: TaskRun) {
   assertItems(db, s, run.actorId, Object.keys(run.itemRevisions));
   if (run.taskId) {
-    const t=getTask(db,s,run.actorId,run.taskId);
-    if(run.status==="running"&&run.taskRevision!==undefined&&t.revision!==run.taskRevision)throw new AgentError("任务已在其他入口更新，请重新核对",409);
+    const t = getTask(db, s, run.actorId, run.taskId);
+    if (
+      run.status === "running" &&
+      run.taskRevision !== undefined &&
+      t.revision !== run.taskRevision
+    )
+      throw new AgentError("任务已在其他入口更新，请重新核对", 409);
   }
   if (
     epoch(db, run.actorId) !== run.memoryEpoch ||
@@ -337,39 +377,44 @@ export function finishRun(
 ) {
   db.exec("BEGIN IMMEDIATE");
   try {
-  if (status !== "blocked" && status !== "failed")
-    assertRunCurrent(db, read(), run);
-  const r = {
-    ...run,
-    status,
-    sessionId,
-    finishedAt: now(),
-    resultBasis:
-      status === "waiting_user"
-        ? ("advice_only" as const)
-        : ("not_verified" as const),
-  };
-  db.prepare("UPDATE foundation_runs SET body=? WHERE id=?").run(
-    JSON.stringify(r),
-    r.runId,
-  );
-  if (r.taskId) {
-    const row = db
-      .prepare("SELECT body FROM foundation_tasks WHERE id=?")
-      .get(r.taskId) as { body: string };
-    const t = JSON.parse(row.body) as TaskSpec;
-    if(t.createdBy===run.actorId)put(db, {
-      ...t,
-      revision: t.revision + 1,
-      currentStage:
-        status === "failed" || status === "blocked"
-          ? "blocked"
-          : "waiting_user",
-      updatedAt: now(),
-    });
+    if (status !== "blocked" && status !== "failed")
+      assertRunCurrent(db, read(), run);
+    const r = {
+      ...run,
+      status,
+      sessionId,
+      finishedAt: now(),
+      resultBasis:
+        status === "waiting_user"
+          ? ("advice_only" as const)
+          : ("not_verified" as const),
+    };
+    db.prepare("UPDATE foundation_runs SET body=? WHERE id=?").run(
+      JSON.stringify(r),
+      r.runId,
+    );
+    if (r.taskId) {
+      const row = db
+        .prepare("SELECT body FROM foundation_tasks WHERE id=?")
+        .get(r.taskId) as { body: string };
+      const t = JSON.parse(row.body) as TaskSpec;
+      if (t.createdBy === run.actorId)
+        put(db, {
+          ...t,
+          revision: t.revision + 1,
+          currentStage:
+            status === "failed" || status === "blocked"
+              ? "blocked"
+              : "waiting_user",
+          updatedAt: now(),
+        });
+    }
+    db.exec("COMMIT");
+    return r;
+  } catch (e) {
+    db.exec("ROLLBACK");
+    throw e;
   }
-  db.exec("COMMIT");return r;
-  }catch(e){db.exec("ROLLBACK");throw e;}
 }
 export function taskRuns(db: DatabaseSync, s: State, a: Person, id: string) {
   getTask(db, s, a, id);
@@ -407,6 +452,7 @@ const outcomeSchema = z
     notes: z.string().max(1200),
     confirmed: z.literal(true),
     reuse: z.boolean().default(false),
+    allowCloud: z.boolean().default(false),
   })
   .strict();
 export function recordOutcome(
@@ -438,6 +484,7 @@ export function recordOutcome(
     );
     if (!run || run.status === "running")
       throw new AgentError("请先完成或核对该次运行", 409);
+    clearOwnerContext(db,a,false);
     const result = {
       version: "outcome/1",
       outcomeId: crypto.randomUUID(),
@@ -450,6 +497,8 @@ export function recordOutcome(
       itemInstanceIds: t.itemInstanceIds,
       occurredAt: now(),
       canReuseForFutureTasks: v.reuse,
+      allowCloud:v.allowCloud,
+      memoryEpoch:epoch(db,a),
     };
     db.prepare("INSERT INTO foundation_outcomes VALUES(?,?,?,?,?,?)").run(
       result.outcomeId,
@@ -459,17 +508,18 @@ export function recordOutcome(
       payload,
       JSON.stringify(result),
     );
-    if(t.createdBy===a)put(db, {
-      ...t,
-      revision: t.revision + 1,
-      currentStage:
-        v.goalStatus === "achieved"
-          ? "completed"
-          : v.goalStatus === "partial"
-            ? "partial"
-            : "waiting_user",
-      updatedAt: now(),
-    });
+    if (t.createdBy === a)
+      put(db, {
+        ...t,
+        revision: t.revision + 1,
+        currentStage:
+          v.goalStatus === "achieved"
+            ? "completed"
+            : v.goalStatus === "partial"
+              ? "partial"
+              : "waiting_user",
+        updatedAt: now(),
+      });
     db.exec("COMMIT");
     return result;
   } catch (e) {

@@ -9,7 +9,9 @@ import type { DatabaseSync } from "node:sqlite";
 import { canRead, type Person, type State } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
 const run = promisify(execFile);
-let simulator: Promise<{ url: string; close: () => Promise<void> }> | undefined;
+type SoftwareRuntime=Promise<{url:string;close:()=>Promise<void>}>;
+let simulators=new WeakMap<DatabaseSync,Map<string,SoftwareRuntime>>();
+const activeSimulators=new Set<SoftwareRuntime>();
 const target = () => path.resolve("tests/fixtures/virtual-lamp");
 function targetHash() {
   return createHash("sha256")
@@ -32,13 +34,20 @@ function owned(state: State, actor: Person, itemId: string) {
   );
   if (!item?.synthetic || item.model !== "WUJIAN-SOFTWARE-LAMP-1")
     throw new AgentError("仅允许明确标记为测试物品的自有软件模拟灯", 403);
+  if(["gifted","loaned","lost","consumed"].includes(item.availability||"")||state.gifts.some(g=>g.itemId===item.id&&g.claimedBy))
+    throw new AgentError("物品已流转或不再持有，旧软件授权不可继续执行",403);
 }
-async function lamp() {
-  if (!simulator)
+async function lamp(db:DatabaseSync,actor:Person,itemId:string) {
+  let scope=simulators.get(db);if(!scope){scope=new Map();simulators.set(db,scope);}
+  const key=JSON.stringify([actor,itemId]);let simulator=scope.get(key);
+  if (!simulator){
+    if(activeSimulators.size>=64)throw new AgentError("软件实验运行实例达到上限，请结束旧实验后重试",429);
     simulator = import(
       /* webpackIgnore: true */ pathToFileURL(path.join(target(), "lamp.mjs"))
         .href
     ).then((m) => m.startLamp());
+    scope.set(key,simulator);activeSimulators.add(simulator);
+  }
   return simulator!;
 }
 export async function analyzeOwnedLamp(
@@ -48,6 +57,7 @@ export async function analyzeOwnedLamp(
   itemId: string,
 ) {
   owned(read(), actor, itemId);
+  const analyzedHash=targetHash();
   schema(db);
   const cli = path.resolve(
     ".runtime/rea-tools/node_modules/rea-agents/scripts/rea.mjs",
@@ -105,7 +115,8 @@ export async function analyzeOwnedLamp(
   ];
   if (!paths.length)
     throw new AgentError("REA没有取得网络接口候选，未创建适配器", 422);
-  const runtime = await lamp();
+  const runtime = await lamp(db,actor,itemId);
+  owned(read(),actor,itemId);
   let readPath: string | undefined;
   // Probe only read-only GETs on the fixed owned loopback target. Never arbitrary URLs.
   for (const p of paths) {
@@ -129,9 +140,11 @@ export async function analyzeOwnedLamp(
       422,
     );
   owned(read(), actor, itemId);
+  if(targetHash()!==analyzedHash)throw new AgentError("分析期间软件版本变化，请重新分析",409);
   const body = {
     version: "software-lamp-v1",
-    targetHash: targetHash(),
+    targetHash: analyzedHash,
+    grantEpoch:1,
     reaVersion: pkg.version,
     evidenceId: evidence.evidence_id,
     artifactHash: evidence.subject.digest.sha256,
@@ -147,9 +160,9 @@ export async function analyzeOwnedLamp(
     JSON.stringify(evidence),
   );
   db.prepare(
-    "INSERT INTO software_adapters VALUES(?,?,?,0) ON CONFLICT(owner,item_id) DO UPDATE SET body=excluded.body,granted=0",
+    "INSERT INTO software_adapters VALUES(?,?,?,0) ON CONFLICT(owner,item_id) DO UPDATE SET body=json_set(excluded.body,'$.grantEpoch',coalesce(json_extract(software_adapters.body,'$.grantEpoch'),0)+1),granted=0",
   ).run(actor, itemId, JSON.stringify(body));
-  return body;
+  return adapterState(db,actor,itemId)!;
 }
 export function adapterState(db: DatabaseSync, actor: Person, itemId: string) {
   schema(db);
@@ -158,7 +171,7 @@ export function adapterState(db: DatabaseSync, actor: Person, itemId: string) {
       "SELECT body,granted FROM software_adapters WHERE owner=? AND item_id=?",
     )
     .get(actor, itemId) as { body: string; granted: number } | undefined;
-  return row ? { ...JSON.parse(row.body), granted: !!row.granted } : null;
+  return row ? { grantEpoch:0, ...JSON.parse(row.body), granted: !!row.granted } : null;
 }
 export function grantSoftware(
   db: DatabaseSync,
@@ -172,7 +185,7 @@ export function grantSoftware(
   if (!adapterState(db, actor, itemId))
     throw new AgentError("请先完成能力分析", 409);
   db.prepare(
-    "UPDATE software_adapters SET granted=? WHERE owner=? AND item_id=?",
+    "UPDATE software_adapters SET granted=?,body=json_set(body,'$.grantEpoch',coalesce(json_extract(body,'$.grantEpoch'),0)+1) WHERE owner=? AND item_id=?",
   ).run(enabled ? 1 : 0, actor, itemId);
   return { granted: enabled, simulated: true };
 }
@@ -185,13 +198,15 @@ export async function readSoftware(
   owned(read(), actor, itemId);
   const a = adapterState(db, actor, itemId);
   if (!a?.granted) throw new AgentError("读取模拟设备状态也需要有效授权", 403);
-  const runtime = await lamp();
+  const runtime = await lamp(db,actor,itemId);
+  owned(read(),actor,itemId);
+  if(!adapterState(db,actor,itemId)?.granted||adapterState(db,actor,itemId)?.grantEpoch!==a.grantEpoch)throw new AgentError("授权已变化，未读取软件状态",403);
   const response = await fetch(runtime.url + a.readPath, {
     signal: AbortSignal.timeout(3000),
   });
   const observed = await response.json();
   owned(read(), actor, itemId);
-  if (!adapterState(db, actor, itemId)?.granted)
+  if (!adapterState(db, actor, itemId)?.granted || adapterState(db,actor,itemId)?.grantEpoch!==a.grantEpoch)
     throw new AgentError("授权已撤销", 403);
   return {
     observed,
@@ -200,11 +215,8 @@ export async function readSoftware(
   };
 }
 export async function closeSoftwareLab() {
-  if (simulator) {
-    const live = await simulator;
-    await live.close();
-    simulator = undefined;
-  }
+  await Promise.allSettled([...activeSimulators].map(async p=>(await p).close()));
+  activeSimulators.clear();simulators=new WeakMap();
 }
 export async function executeSoftware(
   db: DatabaseSync,
@@ -241,7 +253,10 @@ export async function executeSoftware(
       throw new AgentError("同一请求内容变化", 409);
     return { ...JSON.parse(prior.result), replayed: true };
   }
-  const runtime = await lamp();
+  const runtime = await lamp(db,actor,input.itemId);
+  owned(read(),actor,input.itemId);
+  const latest=adapterState(db,actor,input.itemId);
+  if(!latest?.granted||latest.grantEpoch!==a.grantEpoch||latest.targetHash!==a.targetHash)throw new AgentError("授权或软件版本已变化，未发送操作",409);
   const task=createTask(db,read,actor,{requestId:input.requestId,goal:"明确授权后调整自有软件灯",intent:"control",itemInstanceIds:[input.itemId]});
   const taskRun=beginRun(db,read,actor,{requestId:input.requestId,taskId:task.taskId,itemIds:[input.itemId],entryPoint:"software_lab",executor:"fixed-owned-software-lamp/1",input});
   // Durable intent precedes execution. Unfinished records cannot be silently repeated.
@@ -261,7 +276,7 @@ export async function executeSoftware(
     if (!response.ok) throw new AgentError("模拟器拒绝执行，未声称成功", 502);
     const current = adapterState(db, actor, input.itemId);
     owned(read(), actor, input.itemId);
-    if (!current?.granted)
+    if (!current?.granted || current.grantEpoch!==a.grantEpoch)
       throw new AgentError("授权已撤销，本次结果须重新读取后人工核对", 409);
     const observed = await (
       await fetch(runtime.url + a.readPath, {
@@ -269,9 +284,11 @@ export async function executeSoftware(
       })
     ).json();
     owned(read(), actor, input.itemId);
-    if (!adapterState(db, actor, input.itemId)?.granted)
+    if (!adapterState(db, actor, input.itemId)?.granted || adapterState(db,actor,input.itemId)?.grantEpoch!==a.grantEpoch)
       throw new AgentError("读取期间授权已撤销，结果未展示", 409);
     const result = {
+      adapterTargetHash:a.targetHash,
+      adapterVersion:a.version,
       status:
         observed.simulated === true && observed.brightness === input.brightness
           ? "verified"

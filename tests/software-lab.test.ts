@@ -11,6 +11,7 @@ import {
   closeSoftwareLab,
 } from "../src/lib/devices/software-lab.ts";
 import { respond } from "../src/lib/agent/service.ts";
+import { registeredCapabilities } from "../src/lib/foundation/capabilities.ts";
 test("自有软件灯：真实REA→静态候选→授权→执行回读；坏参数、重放、撤权", async (t) => {
   if (
     !fs.existsSync(".runtime/rea-tools/node_modules/rea-agents/scripts/rea.mjs")
@@ -127,6 +128,9 @@ test("自有软件灯：真实REA→静态候选→授权→执行回读；坏�
     const result = await executeSoftware(f.db, f.read, "lin", input);
     assert.equal(result.status, "verified");
     assert.equal(result.observed.brightness, 37);
+    assert.equal(registeredCapabilities(f.db,f.read(),"lin",id)[0].sourceState,"software_verified");
+    assert.equal(registeredCapabilities(f.db,f.read(),"lin",id)[0].targetType,"software_simulator");
+    assert.deepEqual(registeredCapabilities(f.db,f.read(),"friend",id),[]);
     const replay = await executeSoftware(f.db, f.read, "lin", input);
     assert.equal(replay.replayed, true);
     assert.equal(replay.observed.revision, result.observed.revision);
@@ -136,6 +140,19 @@ test("自有软件灯：真实REA→静态候选→授权→执行回读；坏�
     );
     const observed = await readSoftware(f.db, f.read, "lin", id);
     assert.equal(observed.observed.brightness, 37);
+    const guardedFetch=globalThis.fetch;let dispatched=0;
+    try{globalThis.fetch=async(url,init)=>{if(init?.method==="POST")dispatched++;return guardedFetch(url,init);};
+      const delayed=executeSoftware(f.db,f.read,"lin",{...input,requestId:crypto.randomUUID(),brightness:39});
+      grantSoftware(f.db,f.read,"lin",id,false);
+      grantSoftware(f.db,f.read,"lin",id,true);
+      await assert.rejects(()=>delayed,/授权|变化/);assert.equal(dispatched,0);
+    }finally{globalThis.fetch=guardedFetch;}
+    const otherId=f.add("[合成]第二盏独立软件灯","电子设备","Wujian","WUJIAN-SOFTWARE-LAMP-1");
+    const another=f.read();another.items.find(i=>i.id===otherId)!.synthetic=true;f.write(another);
+    await analyzeOwnedLamp(f.db,f.read,"lin",otherId);
+    grantSoftware(f.db,f.read,"lin",otherId,true);
+    assert.equal((await readSoftware(f.db,f.read,"lin",otherId)).observed.brightness,40);
+    assert.equal((await readSoftware(f.db,f.read,"lin",id)).observed.brightness,37);
     // Real local HTTP write with an injected concurrent revocation. The write may
     // have happened, so never convert this into a claimed successful result.
     const originalFetch=globalThis.fetch;
@@ -159,6 +176,9 @@ test("自有软件灯：真实REA→静态候选→授权→执行回读；坏�
     assert.equal((await executeSoftware(f.db,f.read,"lin",interrupted)).status,"pending-verification");
     const afterPending=await readSoftware(f.db,f.read,"lin",id);
     assert.equal(afterPending.observed.revision,beforePending.observed.revision);
+    const transferred=f.read();transferred.items.find(i=>i.id===otherId)!.availability="gifted";f.write(transferred);
+    await assert.rejects(()=>executeSoftware(f.db,f.read,"lin",{...input,itemId:otherId,requestId:crypto.randomUUID()}),/流转|持有/);
+    assert.deepEqual(registeredCapabilities(f.db,f.read(),"lin",otherId),[]);
     grantSoftware(f.db, f.read, "lin", id, false);
     await assert.rejects(() => readSoftware(f.db, f.read, "lin", id), /授权/);
     await assert.rejects(

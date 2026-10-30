@@ -12,6 +12,7 @@ import {
   recoverRun,
 } from "@/lib/foundation/tasks";
 import { readEvidenceClaims } from "@/lib/foundation/evidence";
+import { registeredCapabilities } from "@/lib/foundation/capabilities";
 export const runtime = "nodejs";
 const error = (e: unknown) =>
   Response.json(
@@ -33,7 +34,7 @@ export const GET = withDemoRequest(async (r: Request) => {
       s = read(),
       p = new URL(r.url).searchParams;
     if (p.has("itemId"))
-      return Response.json(readEvidenceClaims(db, s, a, p.get("itemId")!));
+      return Response.json({...readEvidenceClaims(db, s, a, p.get("itemId")!),capabilities:registeredCapabilities(db,s,a,p.get("itemId")!)});
     if (p.has("taskId")) {
       const id = z.string().uuid().parse(p.get("taskId"));
       return Response.json({

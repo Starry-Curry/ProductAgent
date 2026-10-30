@@ -1,5 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { extractPublicHTML } from "../src/lib/life/sources.ts";
+import { modelMentioned } from "../src/lib/life/knowledge.ts";
+test("官网相邻参数单元格保留边界，不放宽近似型号匹配",async()=>{
+ const d=await extractPublicHTML('<main><div>Model no:<span>MJTD01SYL</span></div><div>Color:<span>White</span></div><div>Article number<span>703.518.86</span></div><div>Materials<span>Wood</span></div></main>','https://www.mi.com/test');
+ assert.ok(modelMentioned(d.text,'MJTD01SYL'));assert.ok(modelMentioned(d.text,'703.518.86'));assert.equal(modelMentioned(d.text,'MJTD01YL'),false);
+});
 import {
   adjudicateClaim,
   checkNumericRange,

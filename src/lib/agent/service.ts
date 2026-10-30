@@ -23,7 +23,7 @@ import { buildContext } from "../context/builder.ts";
 import { identity } from "../ai/harness.ts";
 import { readKnowledge } from "../life/acquisition.ts";
 import { continueVerifiedGuidance } from "./guidance-continuation.ts";
-import { beginRun, finishRun, assertRunCurrent, linkTask } from "../foundation/tasks.ts";
+import { beginRun, finishRun, assertRunCurrent, linkTask, getTask } from "../foundation/tasks.ts";
 import { migrateUnified } from "../foundation/schema.ts";
 export function completedStepOrdinal(question: string): number | undefined {
   for (const part of question.split(/[，。；！？,;!?\n]/).reverse()) {
@@ -152,7 +152,7 @@ async function respondLegacy(
   const { session, cached } = beginTurn(db, read, actor, input);
   if (cached) return cached;
   if(input.taskId)session.known.foundationTaskId=input.taskId;
-  if(input.taskId)session.known.foundationHasItems=String(!!read().items.some(i=>input.itemId===i.id));
+  if(input.taskId){const task=getTask(db,read(),actor,input.taskId);session.known.foundationHasItems=String(task.itemInstanceIds.length>0);session.known.foundationComplexTask=String(["plan","explore"].includes(task.intent));}
   if (
     input.uiContext &&
     session.messages.length &&
@@ -215,7 +215,7 @@ async function respondLegacy(
       delete session.known.companionItemId;
     if (
       input.uiContext.planContext &&
-      (!input.sessionId || session.known.homeId === "young-apartment-v1")
+      (!input.sessionId || session.known.homeId === "young-apartment-v1" || !!session.known.foundationTaskId)
     ) {
       session.known.lifeIdeaIds = JSON.stringify(
         input.uiContext.planContext.previousIdeaIds,
@@ -475,7 +475,11 @@ export function handoff(
     db.prepare("UPDATE workspace SET body=? WHERE id=1").run(
       JSON.stringify(state),
     );
-    linkTask(db,state,actor,{kind:"family",refId:task.id,goal:input.summary,intent:"collaborate",itemIds:[task.itemId],participants:[task.assignee]});
+    const source=db.prepare("SELECT task_id FROM foundation_links WHERE kind='session' AND ref_id=?").get(s.id) as {task_id:string}|undefined;
+    const unified=linkTask(db,state,actor,{kind:"family",refId:task.id,goal:input.summary,intent:"collaborate",itemIds:[task.itemId],participants:[task.assignee],taskId:source?.task_id});
+    db.prepare("INSERT OR IGNORE INTO foundation_links VALUES('session',?,?)").run(s.id,unified.taskId);
+    const priorRuns=db.prepare("SELECT id,body FROM foundation_runs WHERE actor=? AND json_extract(body,'$.sessionId')=?").all(actor,s.id) as {id:string;body:string}[];
+    for(const row of priorRuns){const body=JSON.parse(row.body);body.taskId=unified.taskId;db.prepare("UPDATE foundation_runs SET task_id=?,body=? WHERE id=?").run(unified.taskId,JSON.stringify(body),row.id);}
     db.exec("COMMIT");
     return { taskId: task.id, summary: task.title };
   } catch (e) {
