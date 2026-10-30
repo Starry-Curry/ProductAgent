@@ -1,0 +1,57 @@
+
+> product-agent@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.28
+   - Experiments (use with caution):
+     · cpus: 1
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 10.6s
+   Linting and checking validity of types ...
+
+   We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
+   The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
+
+   	- include was updated to add '.next-experience-v1/types/**/*.ts'
+
+   Collecting page data ...
+   Generating static pages (0/8) ...
+   Generating static pages (2/8) 
+   Generating static pages (4/8) 
+   Generating static pages (6/8) 
+ ✓ Generating static pages (8/8)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                    53.7 kB         205 kB
+├ ƒ /_not-found                            990 B         104 kB
+├ ƒ /api/account                           164 B         103 kB
+├ ƒ /api/ai                                164 B         103 kB
+├ ƒ /api/assistant                         164 B         103 kB
+├ ƒ /api/collaboration                     164 B         103 kB
+├ ƒ /api/demo/session                      164 B         103 kB
+├ ƒ /api/device-lab                        164 B         103 kB
+├ ƒ /api/discover                          164 B         103 kB
+├ ƒ /api/foundation                        164 B         103 kB
+├ ƒ /api/gift/[token]                      164 B         103 kB
+├ ƒ /api/health                            164 B         103 kB
+├ ƒ /api/home                              164 B         103 kB
+├ ƒ /api/life                              164 B         103 kB
+├ ƒ /api/life/media/[id]                   164 B         103 kB
+├ ƒ /api/memories                          164 B         103 kB
+├ ƒ /api/products                          164 B         103 kB
+├ ƒ /api/service-runs                      164 B         103 kB
+├ ƒ /api/workspace                         164 B         103 kB
+├ ƒ /gift/[token]                        2.35 kB         139 kB
+├ ƒ /guide                               3.46 kB         106 kB
+└ ƒ /legacy                              24.1 kB         175 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/255-b1e2483a7e02feee.js       46.6 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  └ other shared chunks (total)          2.05 kB
+
+
+ƒ  (Dynamic)  server-rendered on demand
+

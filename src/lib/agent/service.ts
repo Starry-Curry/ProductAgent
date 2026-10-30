@@ -25,6 +25,7 @@ import { readKnowledge } from "../life/acquisition.ts";
 import { continueVerifiedGuidance } from "./guidance-continuation.ts";
 import { beginRun, finishRun, assertRunCurrent, linkTask, getTask } from "../foundation/tasks.ts";
 import { migrateUnified } from "../foundation/schema.ts";
+import { syncFamilyProgress } from "../foundation/specialists.ts";
 export function completedStepOrdinal(question: string): number | undefined {
   for (const part of question.split(/[，。；！？,;!?\n]/).reverse()) {
     if (/没(?:有)?|尚未|未曾|还未|未完成|未做完/.test(part)) continue;
@@ -480,6 +481,7 @@ export function handoff(
     db.prepare("INSERT OR IGNORE INTO foundation_links VALUES('session',?,?)").run(s.id,unified.taskId);
     const priorRuns=db.prepare("SELECT id,body FROM foundation_runs WHERE actor=? AND json_extract(body,'$.sessionId')=?").all(actor,s.id) as {id:string;body:string}[];
     for(const row of priorRuns){const body=JSON.parse(row.body);body.taskId=unified.taskId;db.prepare("UPDATE foundation_runs SET task_id=?,body=? WHERE id=?").run(unified.taskId,JSON.stringify(body),row.id);}
+    syncFamilyProgress(db,state,actor,task.id,input.requestId);
     db.exec("COMMIT");
     return { taskId: task.id, summary: task.title };
   } catch (e) {

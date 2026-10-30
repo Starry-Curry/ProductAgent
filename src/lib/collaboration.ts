@@ -5,8 +5,8 @@ import { mutate, visible, canRead, type State, type Person } from "./domain.ts";
 import { AgentError } from "./agent/contracts.ts";
 import { accountDB } from "./accounts.ts";
 import { migrateUnified } from "./foundation/schema.ts";
-import { mirrorItemGrant } from "./foundation/policy.ts";
-import { recordSpecialist } from "./foundation/specialists.ts";
+import { mirrorItemGrant, authorize } from "./foundation/policy.ts";
+import { recordSpecialist, syncFamilyProgress } from "./foundation/specialists.ts";
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
 const at = () => new Date().toISOString();
 function schema(db: DatabaseSync) {
@@ -166,6 +166,7 @@ export function collaborate(
         notice: "事项已创建；对方尚未读取，未发送短信或外部通知。",
       };
       recordSpecialist(db,state,actor,{kind:"family",refId:state.tasks.at(-1)!.id,revision:1,itemIds:[v.itemId!],participants:[v.memberId as Person],intent:"collaborate",goal:v.summary!,basis:"not_verified",taskId:v.sourceTaskId});
+      syncFamilyProgress(db,state,actor,state.tasks.at(-1)!.id,v.requestId);
     } else {
       const task = state.tasks.find(
         (t) => t.id === v.taskId && t.assignee === actor,
@@ -173,7 +174,7 @@ export function collaborate(
       const item = state.items.find(
         (i) => i.id === task?.itemId && canRead(i, actor),
       );
-      if (!task || !item || !item.shared)
+      if (!task || !item || !item.shared || !authorize(db,state,actor,item.id).allowed)
         throw new AgentError("任务或物品未获授权", 403);
       if (v.action === "seen") { task.seenAt ||= at(); if (task.kind === "notice") task.acknowledged = true; }
       else if (v.action === "accept") {
@@ -198,6 +199,7 @@ export function collaborate(
         }
       }
       task.logs.push({ by: actor, text: v.summary || v.action, at: at() });
+      syncFamilyProgress(db,state,actor,task.id,v.requestId);
       result = {
         taskId: task.id,
         status: task.status,

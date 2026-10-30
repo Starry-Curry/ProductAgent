@@ -11,6 +11,7 @@ import {
 import { validationFixture } from "../scripts/life-validation-fixture.ts";
 import { collaborate } from "../src/lib/collaboration.ts";
 import { canRead, mutate, visible } from "../src/lib/domain.ts";
+import { createTask, getTask, resolveTaskContext } from "../src/lib/foundation/tasks.ts";
 test("独立账号、会话、家庭邀请、状态、赠礼与双向隐私", () => {
   const directory = mkdtempSync(
     path.join(process.cwd(), ".runtime", "accounts-test-"),
@@ -84,6 +85,7 @@ test("独立账号、会话、家庭邀请、状态、赠礼与双向隐私", ()
     });
     assert.equal(canRead(f.read().items.at(-1)!, bid), true);
     assert.equal(canRead(f.read().items.at(-1)!, outsider.account.id), false);
+    const unified=createTask(f.db,f.read,aid,{requestId:crypto.randomUUID(),goal:"帮爸爸处理画框；不共享的私人背景",intent:"collaborate",itemInstanceIds:[item.id]});
     const task = act(aid, {
       action: "task",
       itemId: item.id,
@@ -91,6 +93,7 @@ test("独立账号、会话、家庭邀请、状态、赠礼与双向隐私", ()
       title: "帮忙检查画框支撑",
       summary: "还不知道能否站稳，先不要放到桌沿",
       confirmed: true,
+      sourceTaskId:unified.taskId,
     });
     assert.throws(() =>
       act(bid, { action: "report_done", taskId: task.taskId, confirmed: true }),
@@ -112,6 +115,10 @@ test("独立账号、会话、家庭邀请、状态、赠礼与双向隐私", ()
     act(bid, { action: "accept", taskId: task.taskId });
     act(bid, { action: "report_done", taskId: task.taskId, confirmed: true });
     assert.equal(f.read().tasks.at(-1)!.completionBasis, "user_report");
+    assert.equal(getTask(f.db,f.read(),aid,unified.taskId).currentStage,"waiting_user");
+    const sharedContext=resolveTaskContext(f.db,f.read(),bid,unified.taskId);
+    assert.ok(!JSON.stringify(sharedContext).includes("不共享的私人背景"));
+    assert.equal(resolveTaskContext(f.db,f.read(),aid,unified.taskId).familyProgress[0].basis,"user_report");
     assert.throws(
       () => act(bid, { action: "accept", taskId: task.taskId }),
       /已报告完成/,

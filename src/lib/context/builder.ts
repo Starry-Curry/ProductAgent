@@ -1,6 +1,6 @@
 import { storyMemoryRelevant } from "../life/organization.ts";
 import { sharedItemKnowledge } from "./knowledge.ts";
-import { retrieveKnowledge } from "../life/acquisition.ts";
+import { retrieveKnowledge, readKnowledge } from "../life/acquisition.ts";
 import { taskEvidence } from "../life/knowledge-task.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { canRead, type State, type Person } from "../domain.ts";
@@ -11,6 +11,7 @@ import { syntheticItem, usable } from "../life/availability.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 import { listFragments } from "../life/stories.ts";
 import { recallLifeFragments } from "../life/recall.ts";
+import { recallOutcomes } from "../foundation/tasks.ts";
 export function buildContext(
   db: DatabaseSync,
   state: State,
@@ -26,6 +27,7 @@ export function buildContext(
     includeItemRelationships?: boolean;
     companion?: boolean;
     sessionId?: string;
+    useExperiences?: boolean;
   },
 ) {
   const item = input.itemId
@@ -124,6 +126,7 @@ export function buildContext(
     question: input.question,
     productConversation: !!input.taskMemoryOnly,
     externalKnowledge,
+    factDocuments:item?readKnowledge(db,state,actor,item.id):[],
     knowledgeTask: taskEvidence(
       externalKnowledge,
       input.knowledgeQuery || input.question,
@@ -135,6 +138,9 @@ export function buildContext(
     knowledge,
     memories,
     cloudMemories: memories.filter((m) => m.allowCloud && !m.demo),
+    cloudExperiences: !input.temporary && input.useExperiences!==false && item && persona.memoryUse!=="off" &&
+      (persona.memoryUse!=="explicit"||isMemoryRecallRequest(input.question))
+      ? recallOutcomes(db,state,actor,[item.id]).filter(o=>o.allowCloud===true).map(o=>({outcomeId:o.outcomeId,revision:o.revision||1,notes:o.notes,goalStatus:o.goalStatus,basis:o.basis,occurredAt:o.occurredAt,itemInstanceIds:o.itemInstanceIds})) : [],
     cloudFragments,
     preferences,
     cloudPreferences: preferences

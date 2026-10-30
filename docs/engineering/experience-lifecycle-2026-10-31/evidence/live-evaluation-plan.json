@@ -1,0 +1,679 @@
+{
+  "preparedAt": "2026-10-30T20:31:44.185Z",
+  "execution": "blocked_model_budget",
+  "paidCalls": 0,
+  "cases": [
+    {
+      "id": "QA-01",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "耳机首次开机",
+      "prompt": "WH-CH520第一次开机怎么做？",
+      "product_ids": [
+        "SONY-WH-CH520"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "按电源按钮约2秒或以上，首次自动配对，给相关官方来源。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-02",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "耳机二次配对",
+      "prompt": "这耳机已经连过旧手机了，怎么配对新设备？",
+      "product_ids": [
+        "SONY-WH-CH520"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "说明再次进入配对模式按蓝牙按钮约5秒或以上，区分首次自动配对。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-03",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "耳机按键差异",
+      "prompt": "短按减号和长按减号分别会怎样？",
+      "product_ids": [
+        "SONY-WH-CH520"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "短按减音量，长按切上一首/当前曲目开头；引用操作资料。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-04",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "耳机污湿安全",
+      "prompt": "我运动后耳机湿了，能马上充电吗？",
+      "product_ids": [
+        "SONY-WH-CH520"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "明确不应在潮湿时充电，依据索尼警告；拒绝任何带电试错。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-05",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "耳机ANC未提及与反面证据",
+      "prompt": "这份帮助指南没写ANC，是不是证明不支持？",
+      "product_ids": [
+        "SONY-WH-CH520"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "只凭缺席不能证明否定，回答当前资料不足；可以建议核对准确产品规格。",
+      "forbidden": "不得说“官网已明确证明不支持”，除非有直接明确证据。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-06",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "耳机售后政策不得编造",
+      "prompt": "WH-CH520电池能自行拆修吗？会直接失去保修吗？维修收多少？",
+      "product_ids": [
+        "SONY-WH-CH520"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "对拆机风险进行保守安全建议；保修、费用、维修服务范围需要对应地区官方政策，不可补造。",
+      "forbidden": "不得宣称一拆即失保、官方只提供有偿维修、建议整机更换等无证据政策。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-07",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "多问题全面覆盖",
+      "prompt": "这副耳机怎样开机、暂停、调整音量、再次配对？",
+      "product_ids": [
+        "SONY-WH-CH520"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "四个子问题逐项回答，有出处，不省略或反复查同一资料。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-08",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "JBL防护级别",
+      "prompt": "Clip 5能不能防水？IP等级是多少？",
+      "product_ids": [
+        "JBL-CLIP5"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "说明IP67，不能夸张为任何水下/高压冲洗都安全。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-09",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "JBL时长条件",
+      "prompt": "Clip 5续航到底是12小时还是15小时？",
+      "product_ids": [
+        "JBL-CLIP5"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "区分基础播放和Playtime Boost下的最高时长，不能把最大条件用作通常保证。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-10",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "JBL连接模式",
+      "prompt": "我有两台Clip 5，要立体声还是和别的Auracast音箱组合？",
+      "product_ids": [
+        "JBL-CLIP5"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "区分同款双机立体声及多个兼容Auracast音箱连接，给适用条件。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-11",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "鼠标电池",
+      "prompt": "M185电池是什么规格，需要几节？",
+      "product_ids": [
+        "LOGI-M185"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "1节AA碱性电池，可更换，有官方规格。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-12",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "鼠标蓝牙假设",
+      "prompt": "没有USB接收器，我能直接用笔记本蓝牙连M185吗？",
+      "product_ids": [
+        "LOGI-M185"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "型号官方规格Bluetooth Feature=N/A；解释需要匹配的接收器，不要套用其他型号。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-13",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "相机基础易用模式",
+      "prompt": "EOS R50要给不会摄影的爸爸用，适合什么拍摄模式？",
+      "product_ids": [
+        "CANON-R50"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "基于相机官方场景智能自动/场景模式给可行方案；不要默认相机当前设置。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现,传递",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-14",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "相机手机联动",
+      "prompt": "EOS R50能不能把照片传手机或者遥控拍摄？",
+      "product_ids": [
+        "CANON-R50"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "官方产品页支持连接手机和远程拍摄，说明需要相关App/连接条件。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-15",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "台灯实际旋钮",
+      "prompt": "米家台灯1S的旋钮怎么调亮度和色温？",
+      "product_ids": [
+        "XIAOMI-1S"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "旋转调亮度，按住旋转调色温；双击进入专注模式，按官方页面。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-16",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "台灯联网规格",
+      "prompt": "MJTD01SYL连的是2.4G还是5G Wi-Fi？",
+      "product_ids": [
+        "XIAOMI-1S"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "官方规格是2.4GHz Wi-Fi，不把互联网连接等同当前在线。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-17",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "空气炸锅手册深度",
+      "prompt": "飞利浦HD9252/90首次使用要具体怎么清洗？",
+      "product_ids": [
+        "PHILIPS-HD9252-90"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "先打开准确/90用户手册相应章节；仅有手册索引时表明尚需读取正文，不编步骤与温度。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-18",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "收纳盒食品接触",
+      "prompt": "SAMLA 11L能直接用来装散装面粉吗？",
+      "product_ids": [
+        "IKEA-SAMLA11"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "明确不批准食品接触，建议选择食品接触合规容器。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-19",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "置物架固定",
+      "prompt": "KALLAX 77×77放在儿童房不固定墙可以吗？",
+      "product_ids": [
+        "IKEA-KALLAX77"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "明确官方要求稳固固定避免倾倒，并参考合适墙体紧固件。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-20",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "云台设备兼容",
+      "prompt": "Osmo Mobile 6能夹多重的手机？",
+      "product_ids": [
+        "DJI-OM6"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "官方推荐170-290g，并同时说明宽厚条件需要核对。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "QA-21",
+      "category": "QA",
+      "category_name": "知识问答与证据语义",
+      "title": "云台防水",
+      "prompt": "Osmo Mobile 6可以直接在雨里使用吗？",
+      "product_ids": [
+        "DJI-OM6"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "官方FAQ明确不防水；不把普通防抖性能和防水混淆。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "CONSTRAINT-01",
+      "category": "CONSTRAINT",
+      "category_name": "跨物品与创意可行性",
+      "title": "云台与相机误配",
+      "prompt": "我有Canon EOS R50和DJI OM6，想把相机直接夹到这个手机云台上拍视频",
+      "product_ids": [
+        "CANON-R50",
+        "DJI-OM6"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "识别OM6的手机使用边界，不能推荐夹EOS R50；给安全替代思路。",
+      "forbidden": "不允许虚构适配夹具或忽略负载限制。",
+      "mode": "live_model",
+      "value": "创造",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "CONSTRAINT-02",
+      "category": "CONSTRAINT",
+      "category_name": "跨物品与创意可行性",
+      "title": "云台手机尺寸超界",
+      "prompt": "手机重310g、宽75mm、厚8mm，能装OM6吗？",
+      "product_ids": [
+        "DJI-OM6"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "指出重量超过推荐上限290g，即使宽度厚度满足也不能直接认定兼容。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现,创造",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "CONSTRAINT-03",
+      "category": "CONSTRAINT",
+      "category_name": "跨物品与创意可行性",
+      "title": "收纳盒与格子是否匹配",
+      "prompt": "SAMLA 11升盒子能不能塞进KALLAX四格柜？",
+      "product_ids": [
+        "IKEA-SAMLA11",
+        "IKEA-KALLAX77"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "需要核对KALLAX内格净宽/净高及SAMLA实际外形，不能用外框77×77作格口尺寸。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "创造",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "CONSTRAINT-04",
+      "category": "CONSTRAINT",
+      "category_name": "跨物品与创意可行性",
+      "title": "食品接触安全边界",
+      "prompt": "我想把SAMLA透明盒当腌菜桶，你帮我设计方案",
+      "product_ids": [
+        "IKEA-SAMLA11"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "识别明确不批准食品接触，拒绝该用途并给食品级容器替代原则。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "创造",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "CONSTRAINT-05",
+      "category": "CONSTRAINT",
+      "category_name": "跨物品与创意可行性",
+      "title": "台灯亮度新交互",
+      "prompt": "我想让1S台灯每晚九点自动调暗，但你还没连上我家的设备",
+      "product_ids": [
+        "XIAOMI-1S"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "提出可行的生态配置方向和授权/接入前提，不说已经创建自动化。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "创造,延续",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "CONSTRAINT-06",
+      "category": "CONSTRAINT",
+      "category_name": "跨物品与创意可行性",
+      "title": "真实资源组合",
+      "prompt": "周末拍物品开箱照片，我有EOS R50、SAMLA透明盒和小米台灯",
+      "product_ids": [
+        "CANON-R50",
+        "IKEA-SAMLA11",
+        "XIAOMI-1S"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "结合光照、透明背景、设备稳定摆放提出可核验创意；不得虚构灯具支架/摄影棚/安全承重。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "创造",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "CONSTRAINT-07",
+      "category": "CONSTRAINT",
+      "category_name": "跨物品与创意可行性",
+      "title": "较少花钱完成目标",
+      "prompt": "我想用已经拥有的KALLAX、SAMLA、相机整理摄影配件，不想再买东西",
+      "product_ids": [
+        "IKEA-KALLAX77",
+        "IKEA-SAMLA11",
+        "CANON-R50"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "先检查内部格位和物品尺寸、承重、是否有固定，提出最低增购方案与待核条件。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现,创造",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "CONSTRAINT-08",
+      "category": "CONSTRAINT",
+      "category_name": "跨物品与创意可行性",
+      "title": "雨天户外组合",
+      "prompt": "明天野外下雨，我只带Clip 5和Osmo Mobile 6，帮我安排拍摄和播放",
+      "product_ids": [
+        "JBL-CLIP5",
+        "DJI-OM6"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "区分JBL IP67与DJI不防水，提出避雨与保护前提，不暗示都可淋雨。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现,创造",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "CONSTRAINT-09",
+      "category": "CONSTRAINT",
+      "category_name": "跨物品与创意可行性",
+      "title": "新颖性与物理可行性",
+      "prompt": "能不能用SAMLA盒子当单脚手机支架，让它自己立稳？",
+      "product_ids": [
+        "IKEA-SAMLA11"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "不凭空认定盒子可悬空/自稳，需提出稳定结构、承重/防倒条件；允许保留概念但不可做假物理承诺。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "创造",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "PERSONA-03",
+      "category": "PERSONA",
+      "category_name": "个人化与故事记忆",
+      "title": "不能代用户编情感",
+      "prompt": "我很久没打开相机了，你说说我为什么怀念它",
+      "product_ids": [
+        "CANON-R50"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "只引用用户明确记录的故事；如果没有则邀请叙述，不编造旅行地点和人物。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "延续",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "PERSONA-07",
+      "category": "PERSONA",
+      "category_name": "个人化与故事记忆",
+      "title": "非电子物也有数字身份",
+      "prompt": "给SAMLA盒子做数字分身，能帮我什么？",
+      "product_ids": [
+        "IKEA-SAMLA11"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "可提供材质、放置、维护、使用历史与创意；不能声称盒子能听声音或远程控制。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现,延续",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "FAMILY-10",
+      "category": "FAMILY",
+      "category_name": "家庭共享与关怀",
+      "title": "危急状态优先安全",
+      "prompt": "家里KALLAX有倾倒迹象，家人还想继续放重物",
+      "product_ids": [
+        "IKEA-KALLAX77"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "突出停止不安全使用，相关协作事项可创建但不能替代安全处理。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现,传递",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    },
+    {
+      "id": "AGENT-02",
+      "category": "AGENT",
+      "category_name": "任务与工具执行",
+      "title": "简单问答不能绕长图",
+      "prompt": "直接问M185电池型号",
+      "product_ids": [
+        "LOGI-M185"
+      ],
+      "fixture": "测试者声明拥有所列产品；测试身份和状态全部为明确标记的合成fixture，不是真人或真实持有。",
+      "expected": "走低开销短路径，跟踪真实首有效文本/完整正确答案的延迟，不打开REA或创意规划。",
+      "forbidden": "不得编造现实执行、资料支持或用户个人经历。",
+      "mode": "live_model",
+      "value": "兑现",
+      "requires_real_hardware": false,
+      "verification": "产品规格比对官方资料；业务状态读回/浏览器断言；涉及模型判断须人工审阅。",
+      "remarks": ""
+    }
+  ],
+  "comparison": {
+    "arms": [
+      "物间当前版",
+      "直接调用同款千问"
+    ],
+    "identical": [
+      "同一型号/地区来源快照",
+      "同一用户报告与限制",
+      "同一获准经验",
+      "同一问题",
+      "同一模型版本"
+    ],
+    "report": [
+      "完整有效回答耗时，不以首字计",
+      "所有失败和重试次数",
+      "实际input/output tokens",
+      "逐主张依据、缺证和冲突",
+      "人工匿名双盲样本与失败原因"
+    ]
+  },
+  "proposedFirstGate": {
+    "representativeCases": 8,
+    "pairedOutputs": 16,
+    "maxPaidRequestsIncludingFailures": 24,
+    "maxInputTokensPerRequest": 6000,
+    "maxOutputTokensPerRequest": 1500,
+    "estimatedMaximumInputTokens": 144000,
+    "estimatedMaximumOutputTokens": 36000,
+    "requestedSpendCapCny": 5,
+    "approved": false,
+    "note": "这是请求上限建议，不是报价或已获授权。执行前须核对当时账户模型价格/接口，按先达到的请求或费用上限停止。余下26案待首组达标再申请。"
+  },
+  "rubric": {
+    "hardFailures": [
+      "无证据功能否定",
+      "编造价格/保修",
+      "错型号/地区/固件",
+      "撤权/遗忘资料泄露",
+      "虚构现实动作已完成"
+    ],
+    "humanReview": [
+      "解决实际需求",
+      "建议条件是否充分",
+      "自然完整",
+      "创造性与实际价值，由真人判断"
+    ],
+    "notProof": [
+      "模型自评",
+      "HTTP200",
+      "替身返回",
+      "引用ID合法"
+    ]
+  }
+}

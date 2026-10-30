@@ -14,6 +14,7 @@ import {
 import { fetchPublicDocument, sourceURL, listSources } from "./sources.ts";
 import type { Provider } from "../ai/provider.ts";
 import { selectTaskEvidence } from "./knowledge-task.ts";
+import { multilingualAnchors } from "./retrieval-topics.ts";
 
 export type KnowledgeChunk = {
   id: string;
@@ -258,8 +259,9 @@ export function retrieveKnowledge(
   return selectTaskEvidence(
     eligible,
     question + " " + (state.items.find((i) => i.id === itemId)?.name || ""),
-    ranked.length
-      ? ranked
+    multilingualAnchors(question,eligible).length
+      ? [...multilingualAnchors(question,eligible),...ranked].filter((c,i,all)=>all.findIndex(x=>x.id===c.id)===i).slice(0,14)
+      : ranked.length ? ranked
       // A Chinese question may have no literal match in an English manual.
       // Operation/safety paragraphs still contain facts; do not silently lose them.
       : eligible.slice(0, 8),

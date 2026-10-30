@@ -108,3 +108,26 @@ test("大量无关物品记录不挤掉旧耳机经验；无损V1到V2升级不�
    assert.equal(resolveTaskContext(f.db,f.read(),"lin",c.taskId).previousOutcomes.length,0);
  }finally{f.db.close();}
 });
+
+test("升级保留当时仍有效的旧经验，之后普通新增记忆不再令其丢失",()=>{
+ const f=setup();try{
+   const a=f.complete([f.headset],"有效旧经验"),old={...a};delete (old as any).privacyStamp;
+   f.db.prepare("UPDATE foundation_outcomes SET body=? WHERE id=?").run(JSON.stringify(old),a.outcomeId);
+   f.db.exec("DELETE FROM foundation_schema WHERE version=2;DROP TABLE memory_privacy_scopes");migrateUnified(f.db,f.db.location()!);
+   saveMemory(f.db,f.read,"lin",{itemId:f.lamp,kind:"preference",text:"正常新增记忆",allowCloud:false});
+   const c=f.task([f.headset],"升级后再问");assert.equal(resolveTaskContext(f.db,f.read(),"lin",c.taskId).previousOutcomes[0].outcomeId,a.outcomeId);
+ }finally{f.db.close();}
+});
+
+test("已知单物品纠正不删除无关的已跟踪会话；相关会话与检查点仍失效",()=>{
+ const f=setup();try{
+   const sessions=[f.headset,f.lamp].map(id=>{
+     const sessionId=crypto.randomUUID(),expires=new Date(Date.now()+86400000).toISOString();
+     f.db.prepare("INSERT INTO agent_sessions VALUES(?,?,?,?,?,?,?)").run(sessionId,"lin",id,1,JSON.stringify({id:sessionId,itemId:id,revision:1,messages:[{role:"user",text:"应保留的独立会话"}],known:{},tried:[],memoryEpoch:epoch(f.db,"lin"),expiresAt:expires}),0,expires);
+     const r=beginRun(f.db,f.read,"lin",{requestId:crypto.randomUUID(),itemIds:[id],entryPoint:"test",executor:"offline",input:{}});finishRun(f.db,f.read,r,"waiting_user",sessionId);return sessionId;
+   });
+   const m=saveMemory(f.db,f.read,"lin",{itemId:f.lamp,kind:"experience",text:"合成台灯经历",allowCloud:false});forgetMemory(f.db,"lin",m.id);
+   const readSession=(id:string)=>JSON.parse(f.db.prepare("SELECT body FROM agent_sessions WHERE id=?").get(id)!.body as string);
+   assert.equal(readSession(sessions[0]).messages.length,1);assert.equal(readSession(sessions[1]).messages.length,0);
+ }finally{f.db.close();}
+});

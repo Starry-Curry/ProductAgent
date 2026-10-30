@@ -1,0 +1,215 @@
+{
+  "at": "2026-10-30T20:30:57.353Z",
+  "networkReusedFrom": "official-fetch.json",
+  "newNetworkRequests": 0,
+  "paidCalls": 0,
+  "verifiedAtoms": 5,
+  "rows": [
+    {
+      "model": "WH-CH520",
+      "region": "unspecified",
+      "predicate": "active_noise_cancellation",
+      "value": false,
+      "expected": "not_found",
+      "result": {
+        "predicate": "active_noise_cancellation",
+        "value": false,
+        "verdict": "not_found",
+        "basis": "insufficient_evidence",
+        "facts": [],
+        "notice": "仅核对已审阅的原子主张和适用范围；资料未提及不等于否定，未覆盖语义不得扩写。"
+      }
+    },
+    {
+      "model": "WH-CH520",
+      "region": "unspecified",
+      "predicate": "repair_price",
+      "value": 99,
+      "expected": "not_found",
+      "result": {
+        "predicate": "repair_price",
+        "value": 99,
+        "verdict": "not_found",
+        "basis": "insufficient_evidence",
+        "facts": [],
+        "notice": "仅核对已审阅的原子主张和适用范围；资料未提及不等于否定，未覆盖语义不得扩写。"
+      }
+    },
+    {
+      "model": "WH-CH520",
+      "region": "unspecified",
+      "predicate": "subsequent_pairing_hold_seconds",
+      "value": 5,
+      "expected": "supported",
+      "result": {
+        "predicate": "subsequent_pairing_hold_seconds",
+        "value": 5,
+        "verdict": "supported",
+        "basis": "official_direct",
+        "facts": [
+          {
+            "model": "WH-CH520",
+            "region": "unspecified",
+            "firmware": "unknown",
+            "predicate": "subsequent_pairing_hold_seconds",
+            "value": 5,
+            "description": "已有配对信息、连接后续设备时，手动进入配对模式需约5秒或更久；不是初始化。",
+            "basis": "official_direct",
+            "source": {
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "documentId": "d6cf3f096000b9bcc84fb01b",
+              "hash": "aa6a13f3ac1774a8540736d030ae648920510ea66066f8f8bbea8b254ea81f4a",
+              "quote": "for about 5 seconds or more",
+              "fetchedAt": "2026-10-30T20:16:49.670Z"
+            }
+          }
+        ],
+        "notice": "仅核对已审阅的原子主张和适用范围；资料未提及不等于否定，未覆盖语义不得扩写。"
+      }
+    },
+    {
+      "model": "WH-CH720N",
+      "region": "unspecified",
+      "predicate": "subsequent_pairing_hold_seconds",
+      "value": 5,
+      "expected": "not_found",
+      "result": {
+        "predicate": "subsequent_pairing_hold_seconds",
+        "value": 5,
+        "verdict": "not_found",
+        "basis": "insufficient_evidence",
+        "facts": [],
+        "notice": "仅核对已审阅的原子主张和适用范围；资料未提及不等于否定，未覆盖语义不得扩写。"
+      }
+    },
+    {
+      "model": "WH-CH520",
+      "region": "cn",
+      "predicate": "initialize_hold_seconds",
+      "value": 10,
+      "expected": "not_found",
+      "result": {
+        "predicate": "initialize_hold_seconds",
+        "value": 10,
+        "verdict": "not_found",
+        "basis": "insufficient_evidence",
+        "facts": [],
+        "notice": "仅核对已审阅的原子主张和适用范围；资料未提及不等于否定，未覆盖语义不得扩写。"
+      }
+    },
+    {
+      "model": "M185",
+      "region": "my",
+      "predicate": "battery",
+      "value": "1xAA alkaline",
+      "expected": "supported",
+      "result": {
+        "predicate": "battery",
+        "value": "1xAA alkaline",
+        "verdict": "supported",
+        "basis": "official_direct",
+        "facts": [
+          {
+            "model": "M185",
+            "region": "my",
+            "firmware": "unknown",
+            "predicate": "battery",
+            "value": "1xAA alkaline",
+            "description": "规格表：一节可更换AA碱性电池。实际电池状态仍需用户确认。",
+            "basis": "official_direct",
+            "source": {
+              "url": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+              "documentId": "90dd1f6a40d76d5d1fda2b39",
+              "hash": "8791ff9ff42581d914e9be6a74bef9fba5e8b388d4400c8744c43270ff826ab3",
+              "quote": "Battery Type and Size 1xAA Alkaline, Removable/ Replaceable",
+              "fetchedAt": "2026-10-30T20:16:51.427Z"
+            }
+          }
+        ],
+        "notice": "仅核对已审阅的原子主张和适用范围；资料未提及不等于否定，未覆盖语义不得扩写。"
+      }
+    },
+    {
+      "model": "M185",
+      "region": "my",
+      "predicate": "receiver_bluetooth_feature",
+      "value": true,
+      "expected": "refuted",
+      "result": {
+        "predicate": "receiver_bluetooth_feature",
+        "value": true,
+        "verdict": "refuted",
+        "basis": "official_direct",
+        "facts": [
+          {
+            "model": "M185",
+            "region": "my",
+            "firmware": "unknown",
+            "predicate": "receiver_bluetooth_feature",
+            "value": "N/A",
+            "description": "该接收器规格的Bluetooth Feature为N/A；这不是任意型号鼠标的完整能力声明，不补造手机蓝牙连接步骤。",
+            "basis": "official_direct",
+            "source": {
+              "url": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+              "documentId": "90dd1f6a40d76d5d1fda2b39",
+              "hash": "8791ff9ff42581d914e9be6a74bef9fba5e8b388d4400c8744c43270ff826ab3",
+              "quote": "Bluetooth Feature N/A",
+              "fetchedAt": "2026-10-30T20:16:51.427Z"
+            }
+          }
+        ],
+        "notice": "仅核对已审阅的原子主张和适用范围；资料未提及不等于否定，未覆盖语义不得扩写。"
+      }
+    },
+    {
+      "model": "Osmo Mobile 6",
+      "region": "unspecified",
+      "predicate": "phone_weight_g",
+      "value": [
+        170,
+        290
+      ],
+      "expected": "supported",
+      "result": {
+        "predicate": "phone_weight_g",
+        "value": [
+          170,
+          290
+        ],
+        "verdict": "supported",
+        "basis": "official_direct",
+        "facts": [
+          {
+            "model": "Osmo Mobile 6",
+            "region": "unspecified",
+            "firmware": "unknown",
+            "predicate": "phone_weight_g",
+            "value": [
+              170,
+              290
+            ],
+            "description": "V1.8英文说明书的手机重量范围170—290克；还须核对宽度、厚度及软件适用条件，不能当作完整兼容结论。",
+            "basis": "official_direct",
+            "source": {
+              "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+              "documentId": "e547877cab61933d55743d55",
+              "hash": "acc71a313fa9e9f8be090aed49477cff32f1865e3d888df4ac8badcc656134f5",
+              "quote": "Compatible Phone Weight 170-290 g",
+              "fetchedAt": "2026-10-30T20:16:55.369Z"
+            }
+          }
+        ],
+        "notice": "仅核对已审阅的原子主张和适用范围；资料未提及不等于否定，未覆盖语义不得扩写。"
+      }
+    }
+  ],
+  "dimensionOnly": {
+    "verdict": "refuted",
+    "derivation": "deterministic_rule",
+    "scope": "仅判断该数值是否在给定范围；不证明整体兼容、三维结构或安全",
+    "actual": 310,
+    "min": 170,
+    "max": 290
+  },
+  "note": "读取本轮真实抓取的本地缓存进行确定性核对，不是新增联网或真实模型回答。SAMLA读取受限未冒充成功。"
+}

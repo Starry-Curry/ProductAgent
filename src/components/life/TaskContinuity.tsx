@@ -18,6 +18,8 @@ export function TaskContinuity({
       task: TaskSpec;
       runs: TaskRun[];
       outcomes: any[];
+      familyProgress?:any[];
+      previousOutcomes?:any[];
     } | null>(null),
     [goal, setGoal] = useState(""),
     [chosen, setChosen] = useState<string[]>([]),
@@ -59,6 +61,8 @@ export function TaskContinuity({
                 task: detail.task,
                 runs: detail.runs,
                 outcomes: detail.outcomes,
+                familyProgress:detail.familyProgress,
+                previousOutcomes:detail.previousOutcomes,
               });
           }
         }
@@ -81,7 +85,7 @@ export function TaskContinuity({
   }, [actor]);
   async function open(t: TaskSpec, resume = true, fresh = false) {
     const d = await request(undefined, undefined, t.taskId);
-    setCurrent({ task: d.task, runs: d.runs, outcomes: d.outcomes });
+    setCurrent({ task: d.task, runs: d.runs, outcomes: d.outcomes,familyProgress:d.familyProgress,previousOutcomes:d.previousOutcomes });
     localStorage.setItem("wujian-task:" + actor, t.taskId);
     if (resume) {
       const session = d.runs.find((r: TaskRun) => r.sessionId)?.sessionId;
@@ -159,6 +163,8 @@ export function TaskContinuity({
                 : "等待你的下一步"}{" "}
             · {current.runs.length}次运行
           </p>
+          {current.familyProgress?.map(f=><p key={f.familyTaskId}>家庭协作：{f.reportedAt?"家人已报告处理完成，仍需你核对结果":f.status==="未解决"?"家人报告尚未解决":f.acceptedAt?"家人已接手":f.seenAt?"家人已查看":"等待家人查看"}。{f.basis==="user_report"?"这是家人的报告，不是设备验证。":""}</p>)}
+          {!!current.previousOutcomes?.length&&<details><summary>本次可参考的经验</summary>{current.previousOutcomes.map(o=><p key={o.outcomeId}>你的报告：{o.notes} <small>{o.allowCloud?"已允许云端使用":"仅本机查看，不传云端"}；仍须核对本次条件。</small></p>)}</details>}
           <button
             onClick={() => open(current.task).catch((e) => setError(e.message))}
           >

@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-30T20:29:36.126Z",
+  "synthetic": true,
+  "paidCalls": 0,
+  "checks": [
+    {
+      "name": "A 跨物品任务后旧经验仍可见，独立云许可和桌面/390px",
+      "passed": true,
+      "detail": {
+        "answerSource": "curated-guidance",
+        "reportBasis": "user_report",
+        "modelQuality": "not_run"
+      }
+    },
+    {
+      "name": "A 真实界面纠正、忘记后C不再召回，未用模型生成冒充",
+      "passed": true
+    },
+    {
+      "name": "C 家庭报告更新原任务，私人目标隔离，撤权后403",
+      "passed": true
+    },
+    {
+      "name": "D 实际赠礼认领界面与独立实例，双方新旧私人经历不自动转移",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "sourceImport": {
+    "ok": true,
+    "sourceId": "8848cd72-81f9-4bd7-8843-1b00a21d086a"
+  },
+  "creativity": {
+    "taskId": "e38a7b40-22a2-4e68-908b-c8e4fd1e63f4",
+    "status": 502,
+    "error": "千问尚未配置。当前精选指导可用，但不是模型回答。",
+    "acceptance": "blocked_model_budget",
+    "note": "实际调用本机App；模型关闭返回502且原任务标记阻塞，没有伪造方案或完成结果。"
+  }
+}

@@ -24,18 +24,35 @@ export function clearOwnerContext(
   actor: string,
   erase: boolean,
   privacyScopes?: string[] | null,
+  transientScopes: string[] | null | undefined = privacyScopes,
 ) {
   if (erase) invalidatePrivacyScopes(db, actor, privacyScopes);
   db.prepare(
     "INSERT INTO memory_epochs VALUES (?,1) ON CONFLICT(owner) DO UPDATE SET version=version+1",
   ).run(actor);
   if (erase) {
-    db.prepare("DELETE FROM agent_feedback WHERE owner=?").run(actor);
+    const scoped=transientScopes?.length ? new Set(transientScopes) : undefined;
+    const hasRuns=!!db.prepare("SELECT 1 FROM sqlite_master WHERE name='foundation_runs'").get();
+    const runs=hasRuns?(db.prepare("SELECT body FROM foundation_runs WHERE actor=?").all(actor) as {body:string}[]).map(r=>JSON.parse(r.body)):[];
     const rows = db
       .prepare("SELECT id,body FROM agent_sessions WHERE owner=?")
       .all(actor) as { id: string; body: string }[];
     for (const row of rows) {
       const session = JSON.parse(row.body);
+      if(scoped){
+        const related=runs.filter(r=>r.sessionId===row.id);
+        const ids=new Set<string>([session.itemId,...Object.keys(session.itemScopes||{})].filter(Boolean));
+        for(const r of related){
+          Object.keys(r.itemRevisions||{}).forEach(id=>ids.add(id));
+          for(const ref of r.experienceRefs||[]){
+            const source=db.prepare("SELECT body FROM foundation_outcomes WHERE id=? AND actor=?").get(ref.id,actor) as {body:string}|undefined;
+            if(source)for(const id of JSON.parse(source.body).itemInstanceIds||[])ids.add(id);
+          }
+          if(r.taskId){const task=db.prepare("SELECT body FROM foundation_tasks WHERE id=?").get(r.taskId) as {body:string}|undefined;if(task)for(const id of JSON.parse(task.body).itemInstanceIds||[])ids.add(id);}
+        }
+        // Preserve only histories with tracked dependencies. Legacy unknown scopes remain conservative.
+        if(related.length&&![...scoped].some(id=>ids.has(id)))continue;
+      }
       session.messages = [];
       session.known = {};
       session.tried = [];
@@ -47,10 +64,10 @@ export function clearOwnerContext(
         session.revision,
         row.id,
       );
+      db.prepare("DELETE FROM agent_feedback WHERE owner=? AND session_id=?").run(actor,row.id);
+      db.prepare("UPDATE agent_requests SET result=NULL WHERE owner=? AND session_id=?").run(actor,row.id);
     }
-    db.prepare("UPDATE agent_requests SET result=NULL WHERE owner=?").run(
-      actor,
-    );
+    if(!scoped){db.prepare("DELETE FROM agent_feedback WHERE owner=?").run(actor);db.prepare("UPDATE agent_requests SET result=NULL WHERE owner=?").run(actor);}
   }
   const prefix = actor + ":";
   db.prepare(

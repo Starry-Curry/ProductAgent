@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"url":"/api/life","status":502,"error":"千问尚未配置。当前精选指导可用，但不是模型回答。"}
+    at post (file:///D:/ProductAgent-LifeContext/.runtime/experience-lifecycle-v1/scripts/experience-lifecycle/browser.mjs:12:125)
+    at async file:///D:/ProductAgent-LifeContext/.runtime/experience-lifecycle-v1/scripts/experience-lifecycle/browser.mjs:42:18 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.22.2

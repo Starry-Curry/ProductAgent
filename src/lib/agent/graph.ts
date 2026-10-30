@@ -1214,6 +1214,7 @@ export async function executeGraph(
               })),
               preferences: ctx.cloudPreferences,
               authorizedLifeStories: ctx.cloudFragments,
+              previousUserReports: session.known.memoryPolicy!=="off" ? ctx.cloudExperiences : [],
               resources: ctx.resources,
               persona: ctx.persona.enabled ? ctx.persona : undefined,
               prior,

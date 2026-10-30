@@ -40,6 +40,7 @@ export function EvidenceClaims({
           <p>
             完整型号：{data.model.model} · 地区：{data.model.region} · 固件未知
           </p>
+          {!!data.reviewedFacts?.length&&<section><h4>已核对的具体主张</h4>{data.reviewedFacts.map((f:any)=><p key={f.source.documentId+f.predicate}>{f.description} <a href={f.source.url} target="_blank" rel="noreferrer">官方依据 · {f.region}</a></p>)}<small>只覆盖已审阅片段，不能据此认定其他属性或个人实物状态。</small></section>}
             {data.capabilities?.map((c:any)=><p key={c.capabilityId}>软件实验能力：亮度调整 · {c.sourceState==="software_verified"?"自有软件已执行并回读验证":"仅完成只读探测"}。不是硬件验证；操作仍需单独授权与确认。</p>)}
           {!data.claims.length && (
             <p>

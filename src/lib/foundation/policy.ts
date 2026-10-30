@@ -2,6 +2,7 @@ import type { DatabaseSync } from "node:sqlite";
 import { canRead, type Person, type State } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
 import { fingerprint } from "./legacy.ts";
+import { clearOwnerContext } from "../memory/store.ts";
 export type Grant = {
   version: "grant/1";
   grantId: string;
@@ -93,5 +94,6 @@ export function mirrorItemGrant(
     grant.revision,
     JSON.stringify(grant),
   );
+  if(!enabled)clearOwnerContext(db,subject,true,[resourceId]);
   return grant;
 }

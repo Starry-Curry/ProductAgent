@@ -1,0 +1,34 @@
+✔ 独立账号、会话、家庭邀请、状态、赠礼与双向隐私 (389.6108ms)
+✔ 旅程A｜耳机操作→用户经验→跨会话实际送到执行器；替身验证而非模型质量 (389.7452ms)
+✔ 旅程B｜开放创造沿同一任务记录→用户反馈→后续探索复用；物理可行性未实测 (145.008ms)
+✖ 旅程D｜同任务保存故事→选择性赠礼→独立实例，双方后续私人经历隔离 (140.2867ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1565.0548
+
+✖ failing tests:
+
+test at tests\cross-module-experience.test.ts:50:1
+✖ 旅程D｜同任务保存故事→选择性赠礼→独立实例，双方后续私人经历隔离 (140.2867ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  '1a3d350f-072d-4322-9df2-6c570376d5f9'
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/experience-lifecycle-v1/tests/cross-module-experience.test.ts:59:41)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '1a3d350f-072d-4322-9df2-6c570376d5f9',
+    expected: '1a3d350f-072d-4322-9df2-6c570376d5f9',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }

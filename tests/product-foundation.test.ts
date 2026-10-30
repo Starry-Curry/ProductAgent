@@ -68,7 +68,7 @@ test("SSE截断不能伪造stop；provider仍能拒绝未完成内容", async ()
   );
   assert.equal(result.choices[0].finish_reason, undefined);
 });
-test("普通多问题用一轮综合；操作指导保留原步骤校验；越权不能读资料", async () => {
+test("实验事实问答一轮提取主张；未审阅属性不能因引用存在就发布；越权不能读资料", async () => {
   const previous = process.env.WUJIAN_EXPERIMENTAL_FACT_QA;
   process.env.WUJIAN_EXPERIMENTAL_FACT_QA = "true";
   const f = validationFixture(
@@ -98,10 +98,10 @@ test("普通多问题用一轮综合；操作指导保留原步骤校验；越�
       model: "test-only",
       generate: async (_s: string, input: any, options: any) => {
         calls++;
-        assert.equal(options.json, false);
+        assert.equal(options.json, true);
         assert.equal(input.question, "尺寸、重量、防水等级各是多少？");
         return {
-          text: "尺寸86.3×134.5×46毫米，重285克，IP67；你的实际密封状态未知。",
+          text: JSON.stringify({claims:[{predicate:"dimensions",value:"86.3×134.5×46毫米"},{predicate:"weight",value:285},{predicate:"waterproof",value:"IP67"}]}),
           model: "test-only",
           tokens: { input: 10, output: 20 },
         };
@@ -122,8 +122,9 @@ test("普通多问题用一轮综合；操作指导保留原步骤校验；越�
     );
     assert.equal(calls, 1);
     assert.equal(result.modelCalls, 1);
-    assert.equal(result.reply.citations.length, 1);
-    assert.match(result.reply.answer, /285/);
+    assert.equal(result.reply.citations.length, 0);
+    assert.equal(result.reply.outcome,"needs_info");
+    assert.doesNotMatch(result.reply.answer, /285|IP67/);
     assert.ok(result.trace.some((t) => t.stage === "grounded_answer"));
     await assert.rejects(() =>
       respond(

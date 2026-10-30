@@ -31,6 +31,7 @@ export type TaskSpec = {
   participantSummaries?: Record<string, string>;
   contextEpoch?: number;
   privacyStamp?: Record<string, number>;
+  experienceRefs?: {id:string;revision:number}[];
   currentStage:
     | "draft"
     | "active"
@@ -120,6 +121,7 @@ export function getTask(
     contextRefs: t.contextRefs.filter((r) => allowed.includes(r.id)),
     participantIds: [a],
     participantSummaries: undefined,
+    experienceRefs:undefined,
     privacyStamp: t.privacyStamp ? Object.fromEntries(Object.entries(t.privacyStamp).filter(([key])=>key==="*"||allowed.some(id=>key==="item:"+id))) : undefined,
   };
 }
@@ -194,6 +196,7 @@ export function linkTask(
       version: "task-spec/1",
       contextEpoch:epoch(db,a),
       privacyStamp:privacyStamp(db,a,input.itemIds),
+      experienceRefs:recallOutcomes(db,s,a,input.itemIds).map(o=>({id:o.outcomeId,revision:o.revision||1})),
       taskId: crypto.randomUUID(),
       revision: 1,
       createdBy: a,
@@ -260,13 +263,34 @@ export function resolveTaskContext(
   id: string,
 ) {
   const task = getTask(db, s, a, id);
+  const previous=recallOutcomes(db,s,a,task.itemInstanceIds);
+  return {
+    version: "task-context/1",
+    task,
+    modelGoal:(task.privacyStamp ? privacyCurrent(db,task.createdBy,task.privacyStamp) : task.contextEpoch===epoch(db,task.createdBy))&&dependenciesCurrent(db,s,a,{outcomeId:task.taskId,experienceRefs:task.experienceRefs||[]})?task.goal:"旧任务涉及的个人语境已经变更；仅按本轮请求重新核对，不从旧目标补回关系事实",
+    policyRevision: policyRevision(db, s),
+    previousOutcomes: previous,
+    familyProgress: s.tasks.filter(f=>
+      (f.createdBy===a||f.assignee===a)&&authorize(db,s,a,f.itemId).allowed&&
+      (db.prepare("SELECT task_id FROM foundation_links WHERE kind='family' AND ref_id=?").get(f.id) as {task_id:string}|undefined)?.task_id===id
+    ).map(f=>({familyTaskId:f.id,status:f.status,seenAt:f.seenAt,acceptedAt:f.acceptedAt,reportedAt:f.reportedAt,basis:f.completionBasis||"not_verified"})),
+    items: task.itemInstanceIds.map((id) => {
+      const i = s.items.find((i) => i.id === id)!;
+      return { instance: itemInstance(i), product: productModel(i) };
+    }),
+    notice: "私人记忆按当前执行器的既有许可另外检索，任务引用不自动授予访问权",
+  };
+}
+export function recallOutcomes(db:DatabaseSync,s:State,a:Person,itemIds:string[]) {
+  if(!itemIds.length||!db.prepare("SELECT 1 FROM sqlite_master WHERE name='foundation_outcomes'").get())return [];
+  assertItems(db,s,a,itemIds);
   const seen=new Set<string>();
   const previous = (
     db
       .prepare(
         "SELECT body FROM foundation_outcomes WHERE actor=? AND EXISTS (SELECT 1 FROM json_each(foundation_outcomes.body,'$.itemInstanceIds') h JOIN json_each(?) q ON h.value=q.value) ORDER BY rowid DESC",
       )
-      .all(a,JSON.stringify(task.itemInstanceIds)) as { body: string }[]
+      .all(a,JSON.stringify(itemIds)) as { body: string }[]
   )
     .map((r) => JSON.parse(r.body))
     .filter(o=>{if(seen.has(o.taskId))return false;seen.add(o.taskId);return true;})
@@ -275,21 +299,10 @@ export function resolveTaskContext(
         o.canReuseForFutureTasks && o.status !== "forgotten" &&
         (o.privacyStamp ? privacyCurrent(db,a,o.privacyStamp) : o.memoryEpoch===epoch(db,a)) &&
         o.itemInstanceIds.every((i:string)=>authorize(db,s,a,i).allowed) && dependenciesCurrent(db,s,a,o) &&
-        o.itemInstanceIds.some((i: string) => task.itemInstanceIds.includes(i)),
+        o.itemInstanceIds.some((i: string) => itemIds.includes(i)),
     )
     .slice(0, 5);
-  return {
-    version: "task-context/1",
-    task,
-    modelGoal:(task.privacyStamp ? privacyCurrent(db,task.createdBy,task.privacyStamp) : task.contextEpoch===epoch(db,task.createdBy))?task.goal:"旧任务涉及的个人语境已经变更；仅按本轮请求重新核对，不从旧目标补回关系事实",
-    policyRevision: policyRevision(db, s),
-    previousOutcomes: previous,
-    items: task.itemInstanceIds.map((id) => {
-      const i = s.items.find((i) => i.id === id)!;
-      return { instance: itemInstance(i), product: productModel(i) };
-    }),
-    notice: "私人记忆按当前执行器的既有许可另外检索，任务引用不自动授予访问权",
-  };
+  return previous;
 }
 export function beginRun(
   db: DatabaseSync,
@@ -344,7 +357,7 @@ export function beginRun(
         itemInstance(s.items.find((i) => i.id === id)!).revision,
       ]),
     ),
-    experienceRefs:task ? resolveTaskContext(db,s,a,task.taskId).previousOutcomes.map(o=>({id:o.outcomeId,revision:o.revision||1})) : [],
+    experienceRefs:recallOutcomes(db,s,a,ids).map(o=>({id:o.outcomeId,revision:o.revision||1})),
     startedAt: now(),
     resultBasis: "not_verified",
   };
@@ -588,7 +601,7 @@ export function amendOutcome(db:DatabaseSync, read:()=>State, a:Person, raw:unkn
     if(v.operation!=="forget") getTask(db,read(),a,o.taskId);
     if(v.operation==="correct"&&!v.notes)throw new AgentError("请填写纠正后的实际经历");
     // Erase transient prompts/results without invalidating other lasting experiences.
-    clearOwnerContext(db,a,true,[]);
+    clearOwnerContext(db,a,true,[],o.itemInstanceIds);
     const next={...o, revision:(o.revision||1)+1, updatedAt:now(),
       notes:v.operation==="forget"?"":v.operation==="correct"?v.notes:o.notes,
       status:v.operation==="forget"?"forgotten":"active",

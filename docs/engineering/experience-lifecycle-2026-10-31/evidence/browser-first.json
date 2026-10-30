@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-30T20:27:40.977Z",
+  "synthetic": true,
+  "paidCalls": 0,
+  "checks": [
+    {
+      "name": "A 跨物品任务后旧经验仍可见，独立云许可和桌面/390px",
+      "passed": true,
+      "detail": {
+        "answerSource": "curated-guidance",
+        "reportBasis": "user_report",
+        "modelQuality": "not_run"
+      }
+    },
+    {
+      "name": "A 真实界面纠正、忘记后C不再召回，未用模型生成冒充",
+      "passed": true
+    }
+  ],
+  "errors": [
+    "AssertionError [ERR_ASSERTION]: {\"url\":\"/api/life\",\"status\":502,\"error\":\"千问尚未配置。当前精选指导可用，但不是模型回答。\"}\n    at post (file:///D:/ProductAgent-LifeContext/.runtime/experience-lifecycle-v1/scripts/experience-lifecycle/browser.mjs:12:125)\n    at async file:///D:/ProductAgent-LifeContext/.runtime/experience-lifecycle-v1/scripts/experience-lifecycle/browser.mjs:42:18"
+  ],
+  "sourceImport": {
+    "ok": true,
+    "sourceId": "82b486f2-2678-43b8-b9c2-df703b77fc75"
+  }
+}

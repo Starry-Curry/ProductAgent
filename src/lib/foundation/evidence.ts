@@ -5,6 +5,7 @@ import { readKnowledge, type KnowledgeChunk } from "../life/acquisition.ts";
 import { productModel } from "./legacy.ts";
 import { authorize } from "./policy.ts";
 import { AgentError } from "../agent/contracts.ts";
+import { bindReviewedFacts } from "./reviewed-facts.ts";
 export type ClaimVerdict =
   "supported" | "refuted" | "not_found" | "conflicting";
 export type EvidenceClaim = {
@@ -25,6 +26,7 @@ export type EvidenceClaim = {
     retrievedAt: string;
   }[];
   confidenceBasis: string;
+  verification:"literal_only";
 };
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
 /** Only literal evidence is accepted here. Semantic paraphrases require independent review. */
@@ -99,6 +101,7 @@ export function adjudicateClaim(input: {
       verdict === "not_found"
         ? "缺少适用型号的逐字依据；不是明确否定"
         : "仅证明列出的原文存在；不自动认可原文之外的语义扩写",
+    verification:"literal_only",
   };
 }
 export function readEvidenceClaims(
@@ -114,6 +117,8 @@ export function readEvidenceClaims(
   return {
     itemId,
     model,
+    reviewedFacts:bindReviewedFacts(readKnowledge(db,state,actor,itemId)),
+    instanceObservation:{basis:"user_report",availability:item.availability||"unknown",attributes:item.attributes||{},notice:"这是用户报告的个人实例信息，未由厂家或设备回读验证。"},
     claims: readKnowledge(db, state, actor, itemId).flatMap((d) =>
       d.chunks.map((chunk) =>
         adjudicateClaim({

@@ -1,6 +1,6 @@
 import type { DatabaseSync } from "node:sqlite";
 import { existsSync } from "node:fs";
-import { ensurePrivacyScopes } from "../memory/context-lifecycle.ts";
+import { ensurePrivacyScopes,privacyStamp } from "../memory/context-lifecycle.ts";
 
 /** Additive schema only. Call outside an existing transaction. Legacy body is untouched. */
 export function migrateUnified(db: DatabaseSync, filename?: string) {
@@ -18,7 +18,18 @@ export function migrateUnified(db: DatabaseSync, filename?: string) {
       if (filename && !existsSync(filename + ".before-unified-v2.sqlite"))
         db.exec("VACUUM INTO '" + (filename + ".before-unified-v2.sqlite").replaceAll("'", "''") + "'");
       db.exec("BEGIN IMMEDIATE");
-      try { ensurePrivacyScopes(db); db.exec("INSERT INTO foundation_schema VALUES(2,strftime('%Y-%m-%dT%H:%M:%fZ','now'))"); db.exec("COMMIT"); }
+      try {
+        ensurePrivacyScopes(db);
+        // Preserve only legacy reports that were still reusable under the old epoch rule.
+        // Never resurrect reports already made stale by correction/forgetting.
+        const rows=db.prepare("SELECT id,actor,body FROM foundation_outcomes").all() as {id:string;actor:string;body:string}[];
+        for(const row of rows){
+          const o=JSON.parse(row.body),current=(db.prepare("SELECT version FROM memory_epochs WHERE owner=?").get(row.actor) as {version:number}|undefined)?.version||0;
+          if(!o.privacyStamp&&o.canReuseForFutureTasks&&o.memoryEpoch===current&&Array.isArray(o.itemInstanceIds))
+            db.prepare("UPDATE foundation_outcomes SET body=? WHERE id=?").run(JSON.stringify({...o,privacyStamp:privacyStamp(db,row.actor,o.itemInstanceIds)}),row.id);
+        }
+        db.exec("INSERT INTO foundation_schema VALUES(2,strftime('%Y-%m-%dT%H:%M:%fZ','now'))"); db.exec("COMMIT");
+      }
       catch (e) { db.exec("ROLLBACK"); throw e; }
     }
     return;

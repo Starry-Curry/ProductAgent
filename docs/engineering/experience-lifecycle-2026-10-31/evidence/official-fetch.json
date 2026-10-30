@@ -1,0 +1,151 @@
+{
+  "at": "2026-10-30T20:16:48.929Z",
+  "paidCalls": 0,
+  "results": [
+    {
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+      "model": "WH-CH520",
+      "region": "unspecified",
+      "ok": true,
+      "actualURL": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+      "modelMentioned": true,
+      "characters": 3293,
+      "hash": "aa6a13f3ac1774a8540736d030ae648920510ea66066f8f8bbea8b254ea81f4a",
+      "ms": 740,
+      "facts": [
+        {
+          "predicate": "subsequent_pairing_hold_seconds",
+          "value": 5,
+          "description": "已有配对信息、连接后续设备时，手动进入配对模式需约5秒或更久；不是初始化。",
+          "source": {
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+            "documentId": "d6cf3f096000b9bcc84fb01b",
+            "hash": "aa6a13f3ac1774a8540736d030ae648920510ea66066f8f8bbea8b254ea81f4a",
+            "quote": "for about 5 seconds or more",
+            "fetchedAt": "2026-10-30T20:16:49.670Z"
+          }
+        }
+      ],
+      "links": []
+    },
+    {
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+      "model": "WH-CH520",
+      "region": "unspecified",
+      "ok": true,
+      "actualURL": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+      "modelMentioned": true,
+      "characters": 774,
+      "hash": "859620cc617db6dee287a116fc50185324d5a036f053747cef296f5bd8f90f11",
+      "ms": 743,
+      "facts": [
+        {
+          "predicate": "initialize_hold_seconds",
+          "value": 10,
+          "description": "指南中的初始化需先关机、移除USB线，再按电源与音量减约10秒或更久；会删除配对信息。",
+          "source": {
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+            "documentId": "5d286afe62be538821d82c46",
+            "hash": "859620cc617db6dee287a116fc50185324d5a036f053747cef296f5bd8f90f11",
+            "quote": "for about 10 seconds or more",
+            "fetchedAt": "2026-10-30T20:16:49.679Z"
+          }
+        }
+      ],
+      "links": []
+    },
+    {
+      "url": "https://www.sony.co.uk/electronics/support/wireless-headphones-bluetooth-headphones/wf-1000xm4/articles/00297348",
+      "model": "WH-CH520",
+      "region": "uk",
+      "ok": false,
+      "ms": 802,
+      "error": "公开资料网络读取失败，可手动打开官网或上传说明书"
+    },
+    {
+      "url": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+      "model": "M185",
+      "region": "my",
+      "ok": true,
+      "actualURL": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+      "modelMentioned": true,
+      "characters": 5792,
+      "hash": "8791ff9ff42581d914e9be6a74bef9fba5e8b388d4400c8744c43270ff826ab3",
+      "ms": 1689,
+      "facts": [
+        {
+          "predicate": "battery",
+          "value": "1xAA alkaline",
+          "description": "规格表：一节可更换AA碱性电池。实际电池状态仍需用户确认。",
+          "source": {
+            "url": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+            "documentId": "90dd1f6a40d76d5d1fda2b39",
+            "hash": "8791ff9ff42581d914e9be6a74bef9fba5e8b388d4400c8744c43270ff826ab3",
+            "quote": "Battery Type and Size 1xAA Alkaline, Removable/ Replaceable",
+            "fetchedAt": "2026-10-30T20:16:51.427Z"
+          }
+        },
+        {
+          "predicate": "bluetooth_feature",
+          "value": false,
+          "description": "该接收器规格的Bluetooth Feature为N/A；不把其他型号的蓝牙能力套过来。",
+          "source": {
+            "url": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+            "documentId": "90dd1f6a40d76d5d1fda2b39",
+            "hash": "8791ff9ff42581d914e9be6a74bef9fba5e8b388d4400c8744c43270ff826ab3",
+            "quote": "Bluetooth Feature N/A",
+            "fetchedAt": "2026-10-30T20:16:51.427Z"
+          }
+        }
+      ],
+      "links": []
+    },
+    {
+      "url": "https://www.ikea.com/jp/en/p/samla-box-with-lid-transparent-s49440837/",
+      "model": "494.408.37",
+      "region": "jp",
+      "ok": false,
+      "ms": 2390,
+      "error": "资料过大，请选择相关章节上传"
+    },
+    {
+      "url": "https://www.dji.com/osmo-mobile-6/specs",
+      "model": "Osmo Mobile 6",
+      "region": "unspecified",
+      "ok": true,
+      "actualURL": "https://www.dji.com/cn/osmo-mobile-6/specs",
+      "modelMentioned": true,
+      "characters": 31,
+      "hash": "6241f35b153d5ffc67a58053bccc1ecd91d8f32a6c9ec5d966a5596da261eeef",
+      "ms": 531,
+      "facts": [],
+      "links": []
+    },
+    {
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/print.pdf",
+      "model": "WH-CH520",
+      "region": "unspecified",
+      "ok": true,
+      "actualURL": "https://helpguide.sony.net/mdr/2958/v1/en/print.pdf",
+      "modelMentioned": true,
+      "characters": 79592,
+      "hash": "532176f5a2205ded43aa9dd39d84683817453286f8184bb740c4904ed6010297",
+      "ms": 1951,
+      "facts": [],
+      "links": []
+    },
+    {
+      "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+      "model": "Osmo Mobile 6",
+      "region": "unspecified",
+      "ok": true,
+      "actualURL": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+      "modelMentioned": true,
+      "characters": 23072,
+      "hash": "acc71a313fa9e9f8be090aed49477cff32f1865e3d888df4ac8badcc656134f5",
+      "ms": 3240,
+      "facts": [],
+      "links": []
+    }
+  ]
+}

@@ -39,6 +39,7 @@ import { itemContext } from "../context/items.ts";
 import { sharedItemKnowledge } from "../context/knowledge.ts";
 import { itemAdviceIssues } from "../context/item-advice.ts";
 import { ITEM_CONTEXT_INSTRUCTIONS } from "../agent/prompts.ts";
+import { recallOutcomes } from "../foundation/tasks.ts";
 
 type Recipe = {
   id: string;
@@ -868,7 +869,7 @@ async function draftModelIdea(
         preferences: authorizedPreferences,
         feedback: constraints.planning || {},
         requiredItemId: constraints.itemId,
-        context: { experiences: constraints.experiences || [] },
+        context: { experiences: constraints.experiences || [], previousUserReports:memoryPolicy!=="off"&&(memoryPolicy!=="explicit"||isMemoryRecallRequest(goal))?recallOutcomes(db,readCurrent?.()||state,actor,items.map(i=>i.id)).filter(o=>o.allowCloud&&items.every(i=>{const policy=effectivePersona(db,actor,i.id).memoryUse;return policy!=="off"&&(policy!=="explicit"||isMemoryRecallRequest(goal));})):[] },
       },
       creativityGuard,
     );

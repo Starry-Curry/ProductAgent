@@ -67,6 +67,7 @@ import { storePhoto } from "@/lib/life/media";
 import { productPacks, searchProducts } from "@/lib/products";
 import { installLifeDemo } from "@/lib/life/demo";
 import { createLifeGift } from "@/lib/life/gifts";
+import { discoverInTask } from "@/lib/foundation/creative";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 function fail(e: unknown) {
@@ -419,7 +420,7 @@ async function POSTHandler(r: Request) {
     }
     if (p.action === "discover")
       return Response.json(
-        await planDiscovery(db, read(), a, p.input, lifeProvider(), read),
+        await discoverInTask(db,read,a,p.input,lifeProvider(),z.string().uuid().optional().parse(r.headers.get("x-wujian-task")||undefined)),
       );
     if (p.action === "submitIdea")
       return Response.json({ idea: submitIdea(db, read(), a, p.input) });
