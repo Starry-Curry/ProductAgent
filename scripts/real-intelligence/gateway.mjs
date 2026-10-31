@@ -107,7 +107,7 @@ export async function gateway(configPath,options) {
         question = String(user?.content || "").slice(0, 2000);
       }
       attempt = {
-        number: ledger.attempts.length + 1, evaluation: String(req.headers["x-wujian-evaluation"] || "unlabeled"),
+        number: ledger.attempts.length + 1, evaluation: options?.recordContent === false ? 'private-preview' : String(req.headers["x-wujian-evaluation"] || "unlabeled"),
         stage,
         reservedCny: reserve,
         priceSource: "https://help.aliyun.com/zh/model-studio/model-pricing",
@@ -115,10 +115,11 @@ export async function gateway(configPath,options) {
         model: body.model,
         enableThinking: body.enable_thinking === true,
         status: "started",
-        question,
-        inputSha256: createHash("sha256").update(raw).digest("hex"),
+        question: options?.recordContent === false ? '[preview content not recorded]' : question,
+        contentRecorded: options?.recordContent !== false,
+        inputSha256: options?.recordContent === false ? undefined : createHash("sha256").update(raw).digest("hex"),
         inputBytes: Buffer.byteLength(raw),
-        input: clean(body.messages),
+        input: options?.recordContent === false ? undefined : clean(body.messages),
         tools: (body.tools || []).map((t) => t.function.name),
       };
       ledger.attempts.push(attempt);
@@ -227,7 +228,7 @@ export async function gateway(configPath,options) {
         attempt.estimatedCny = (input * inputRate + output * outputRate) / 1e6;
       }
       attempt.finishReason = result.choices?.[0]?.finish_reason;
-      attempt.output = clean(result.choices?.[0]?.message || {});
+      if (options?.recordContent !== false) attempt.output = clean(result.choices?.[0]?.message || {});
       attempt.elapsedMs = Date.now() - Date.parse(attempt.startedAt);
       save();
       if (body.stream === true) {

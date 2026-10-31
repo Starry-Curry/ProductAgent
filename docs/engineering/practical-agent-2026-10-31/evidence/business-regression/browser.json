@@ -1,0 +1,62 @@
+{
+  "at": "2026-10-31T13:47:56.130Z",
+  "synthetic": true,
+  "paidCalls": 0,
+  "checks": [
+    {
+      "name": "A 跨物品任务后旧经验仍可见，独立云许可和桌面/390px",
+      "passed": true,
+      "detail": {
+        "answerSource": "curated-guidance",
+        "reportBasis": "user_report",
+        "modelQuality": "not_run"
+      }
+    },
+    {
+      "name": "A 真实界面纠正、忘记后C不再召回，未用模型生成冒充",
+      "passed": true
+    },
+    {
+      "name": "C 家庭报告更新原任务，私人目标隔离，撤权后403",
+      "passed": true
+    },
+    {
+      "name": "D 实际赠礼认领界面与独立实例，双方新旧私人经历不自动转移",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "responses": [
+    {
+      "question": "请读取这个型号的资料",
+      "source": "curated-guidance",
+      "answer": "已找到这件型号的官方操作/养护原文。云端关闭时直接展示摘录，不冒充模型翻译；可核对来源后使用。",
+      "outcome": "answered",
+      "modelCalls": 0,
+      "tokens": null,
+      "elapsedMs": 102,
+      "note": "模型关闭的本机路径，不是模型正确完成延迟"
+    },
+    {
+      "question": "请读取这个型号的资料",
+      "source": "curated-guidance",
+      "answer": "云端 AI 尚未配置，可以先核对资料或记录尝试。",
+      "outcome": "unavailable",
+      "modelCalls": 1,
+      "tokens": null,
+      "elapsedMs": 72,
+      "note": "模型关闭的本机路径，不是模型正确完成延迟"
+    }
+  ],
+  "sourceImport": {
+    "ok": true,
+    "sourceId": "ad07d725-b9b3-4db9-a47a-0d112d1dd7eb"
+  },
+  "creativity": {
+    "taskId": "b23c1547-7680-4906-9011-2413fa7f3f70",
+    "status": 502,
+    "error": "千问尚未配置。当前精选指导可用，但不是模型回答。",
+    "acceptance": "blocked_model_budget",
+    "note": "实际调用本机App；模型关闭返回502且原任务标记阻塞，没有伪造方案或完成结果。"
+  }
+}

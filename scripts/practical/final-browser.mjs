@@ -1,0 +1,14 @@
+import {chromium} from '@playwright/test';import fs from 'node:fs';import {ROOT} from './gateway.mjs';import {observeAssistant,ask} from './browser-helpers.mjs';
+const file=ROOT+'/final-browser.json';if(fs.existsSync(file))throw Error('preserve_previous_evidence');
+const report={at:new Date().toISOString(),syntheticOwnership:true,physicalTests:0,responses:[],checks:[],errors:[]},ledger=()=>JSON.parse(fs.readFileSync(ROOT+'/model-calls.json')).attempts,before=ledger().length;
+const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true}),context=await browser.newContext({storageState:'.runtime/practical-browser-state.json',viewport:{width:1440,height:1000}});await observeAssistant(context);const page=await context.newPage();page.on('pageerror',e=>report.errors.push(e.message));const ids=JSON.parse(fs.readFileSync('.runtime/practical-browser-item.json'));
+try{for(const c of [{name:'sony',id:ids.sonyItemId,q:'这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。',follow:'那恢复出厂初始化和重新配对是一回事吗？初始化按多久，原配对信息会怎样？',url:'helpguide.sony.net'},
+ {name:'canon',id:ids.canonItemId,q:'SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。',follow:'那装19张会更省事吗？印过一面的纸还能重复使用吗？',url:'cam.start.canon'}]){
+ await page.setViewportSize({width:1440,height:1000});await page.goto('http://127.0.0.1:3232/?final='+c.name+'#item/'+c.id);await page.getByRole('region',{name:'物间统一对话',exact:true}).waitFor();
+ if(await page.getByLabel('使用这件物品已获准的故事与经验',{exact:true}).isChecked())throw Error('unexpected_memory_opt_in');
+ const r=await ask(page,c.q,report);if(!r.reply.citations.some(s=>s.url.includes(c.url)))throw Error('official_source_missing');if(r.reply.taskFrame)throw Error('unexpected_v3_pipeline');
+ await page.locator('.assistant-prose').last().scrollIntoViewIfNeeded();await page.screenshot({path:ROOT+'/final-'+c.name+'-desktop.png'});
+ const follow=await ask(page,c.follow,report);if(follow.session.id!==r.session.id)throw Error('followup_lost_session');await page.setViewportSize({width:390,height:844});await page.locator('.assistant-prose').last().scrollIntoViewIfNeeded();await page.screenshot({path:ROOT+'/final-'+c.name+'-mobile.png'});
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth+2);if(overflow)throw Error('mobile_horizontal_overflow');report.checks.push({name:c.name+'：真实资料/模型/同会话追问/安全Markdown/390px无横向溢出',passed:true,semanticReview:'单独核对原文，不以此机械检查证明完整事实正确'});
+}}catch(e){report.errors.push(e.message);await page.screenshot({path:ROOT+'/final-browser-failure.png'}).catch(()=>{});process.exitCode=1;}
+finally{report.upstreamRequests=ledger().length-before;fs.writeFileSync(file,JSON.stringify(report,null,2)+'\n');await browser.close();console.log(JSON.stringify({checks:report.checks,errors:report.errors,upstreamRequests:report.upstreamRequests}));}

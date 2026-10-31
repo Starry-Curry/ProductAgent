@@ -208,7 +208,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
         companion,
         taskPlanId,
       },
-      fresh: (homeActive && !sessionId) || !!planContext || !!taskPlanId,
+      fresh: ((homeActive || !!taskId) && !sessionId) || !!planContext || !!taskPlanId,
     }));
     setAskSession(null);
     go("assistant");

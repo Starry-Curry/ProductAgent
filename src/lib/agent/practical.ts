@@ -78,7 +78,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  try{for(let round=0;round<4;round++){
   guard();const inputBytes=Buffer.byteLength(JSON.stringify(messages));if(inputBytes>150000)throw Error('context_budget_exceeded');
   const reserve=(inputBytes*12+2400*36)/1e6;if(reservedCny+reserve>1.5)throw Error('turn_cost_budget_exceeded');reservedCny+=reserve;calls++;
-  const firstItem=initial.items[0];const mustRead=round===0&&firstItem?.model&&!session.messages.length;
+  const firstItem=initial.items[0];const mustRead=round===0&&firstItem?.model&&!initial.evidence.some(e=>e.itemId===firstItem.id&&e.basis==='official');
   const result=await provider.converse!(messages,practicalTools,{timeoutMs:Math.min(45000,deadline-Date.now()),maxTokens:2400,
    toolChoice:round===3?'none':mustRead?{type:'function',function:{name:'search_product_knowledge'}}:'auto',onText:text=>{guard();provider.onText?.(text);}});
   guard();if(result.tokens){tokens.input+=result.tokens.input;tokens.output+=result.tokens.output;reservedCny-=reserve;reservedCny+=(result.tokens.input*12+result.tokens.output*36)/1e6;}

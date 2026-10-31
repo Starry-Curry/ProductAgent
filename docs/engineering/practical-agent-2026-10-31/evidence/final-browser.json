@@ -1,0 +1,796 @@
+{
+  "at": "2026-10-31T13:49:47.822Z",
+  "syntheticOwnership": true,
+  "physicalTests": 0,
+  "responses": [
+    {
+      "question": "这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。",
+      "result": {
+        "session": {
+          "id": "9d7850e7-4b47-4910-95d5-63ad7fa2b9fe",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "c1da301b-94e3-46eb-9cb7-339867179b55",
+              "role": "user",
+              "text": "这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。",
+              "at": "2026-10-31T13:49:56.511Z",
+              "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "6030e918-632d-453a-a876-953aae408c39",
+              "role": "assistant",
+              "text": "WH-CH520 已经连过其他设备时，不会在开机后自动进入配对模式，需要手动触发。完整步骤如下（依据 Sony 官方帮助指南）：\n\n1.  **准备**\n    确保耳机电量充足，并将新手机放在耳机 1 米范围内。打开新手机的蓝牙设置界面，准备搜索设备。\n\n2.  **手动进入配对模式**\n    在耳机开机状态下，长按耳机上的 **（Bluetooth）按钮约 5 秒或更久**。\n    确认指示灯（蓝色）开始**连续两次闪烁**，并听到语音提示“Pairing”，此时耳机才处于可被发现的配对状态。仅短按电源键开机通常只会回连旧设备，不会进入此模式。\n\n3.  **在手机端完成配对**\n    在新手机的蓝牙设备列表中找到并选择 **[WH-CH520]**。若手机要求输入密码（Passkey/PIN），请输入 **“0000”**。\n\n4.  **确认连接**\n    配对成功后，部分手机会自动建立音频连接；若未自动连接，请在手机蓝牙列表中点击该设备手动连接。听到连接成功的提示音即表示完成。\n\n**注意事项：**\n*   配对模式开启后 **5 分钟内** 若未成功配对，耳机会自动退出该模式并关机，需从第 2 步重新开始。\n*   如果长按 Bluetooth 键始终无法进入配对模式，或新手机搜不到设备，可尝试**初始化耳机**：关机并拔掉 USB-C 线，同时长按电源键和音量减（–）键约 10 秒以上，直到蓝灯闪烁 4 次。这会清除所有旧配对信息，之后重新开机即可自动进入配对模式。注意初始化后旧手机上的配对记录也需手动删除才能再次使用。\n\n来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+              "reply": {
+                "answer": "WH-CH520 已经连过其他设备时，不会在开机后自动进入配对模式，需要手动触发。完整步骤如下（依据 Sony 官方帮助指南）：\n\n1.  **准备**\n    确保耳机电量充足，并将新手机放在耳机 1 米范围内。打开新手机的蓝牙设置界面，准备搜索设备。\n\n2.  **手动进入配对模式**\n    在耳机开机状态下，长按耳机上的 **（Bluetooth）按钮约 5 秒或更久**。\n    确认指示灯（蓝色）开始**连续两次闪烁**，并听到语音提示“Pairing”，此时耳机才处于可被发现的配对状态。仅短按电源键开机通常只会回连旧设备，不会进入此模式。\n\n3.  **在手机端完成配对**\n    在新手机的蓝牙设备列表中找到并选择 **[WH-CH520]**。若手机要求输入密码（Passkey/PIN），请输入 **“0000”**。\n\n4.  **确认连接**\n    配对成功后，部分手机会自动建立音频连接；若未自动连接，请在手机蓝牙列表中点击该设备手动连接。听到连接成功的提示音即表示完成。\n\n**注意事项：**\n*   配对模式开启后 **5 分钟内** 若未成功配对，耳机会自动退出该模式并关机，需从第 2 步重新开始。\n*   如果长按 Bluetooth 键始终无法进入配对模式，或新手机搜不到设备，可尝试**初始化耳机**：关机并拔掉 USB-C 线，同时长按电源键和音量减（–）键约 10 秒以上，直到蓝灯闪烁 4 次。这会清除所有旧配对信息，之后重新开机即可自动进入配对模式。注意初始化后旧手机上的配对记录也需手动删除才能再次使用。\n\n来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999",
+                  "e547877cab61933d55743d55:4983",
+                  "e547877cab61933d55743d55:17958",
+                  "e547877cab61933d55743d55:0",
+                  "e547877cab61933d55743d55:996",
+                  "e547877cab61933d55743d55:1991",
+                  "e547877cab61933d55743d55:2988",
+                  "e547877cab61933d55743d55:3984",
+                  "e547877cab61933d55743d55:5975",
+                  "e547877cab61933d55743d55:6975",
+                  "e547877cab61933d55743d55:7975",
+                  "e547877cab61933d55743d55:8973",
+                  "e547877cab61933d55743d55:9971",
+                  "e547877cab61933d55743d55:10971",
+                  "e547877cab61933d55743d55:11972",
+                  "e547877cab61933d55743d55:12967",
+                  "e547877cab61933d55743d55:13967",
+                  "e547877cab61933d55743d55:14967",
+                  "e547877cab61933d55743d55:15963",
+                  "e547877cab61933d55743d55:16962",
+                  "e547877cab61933d55743d55:18956",
+                  "e547877cab61933d55743d55:19954",
+                  "e547877cab61933d55743d55:20953",
+                  "e547877cab61933d55743d55:21954",
+                  "e547877cab61933d55743d55:22940"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "e547877cab61933d55743d55",
+                    "title": "Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+                    "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+                    "kind": "official",
+                    "section": "Osmo Mobile 6；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+                    "name": "[模拟持有]我的Sony耳机",
+                    "model": "WH-CH520"
+                  },
+                  {
+                    "id": "9f7454b8-6291-40fe-9367-4eba50472591",
+                    "name": "[模拟持有]手机云台",
+                    "model": "Osmo Mobile 6"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:49:56.511Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "9706abd0-da66-40c8-bab7-c6cc67bd029a"
+          },
+          "tried": [],
+          "memoryEpoch": 3,
+          "createdAt": "2026-10-31T13:49:49.309Z",
+          "updatedAt": "2026-10-31T13:49:56.511Z",
+          "expiresAt": "2026-11-07T13:49:49.309Z",
+          "itemScopes": {
+            "94dd5f7c-c6ac-497c-b104-e6429d3ff207": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+            "9f7454b8-6291-40fe-9367-4eba50472591": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"Osmo Mobile 6\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "WH-CH520 已经连过其他设备时，不会在开机后自动进入配对模式，需要手动触发。完整步骤如下（依据 Sony 官方帮助指南）：\n\n1.  **准备**\n    确保耳机电量充足，并将新手机放在耳机 1 米范围内。打开新手机的蓝牙设置界面，准备搜索设备。\n\n2.  **手动进入配对模式**\n    在耳机开机状态下，长按耳机上的 **（Bluetooth）按钮约 5 秒或更久**。\n    确认指示灯（蓝色）开始**连续两次闪烁**，并听到语音提示“Pairing”，此时耳机才处于可被发现的配对状态。仅短按电源键开机通常只会回连旧设备，不会进入此模式。\n\n3.  **在手机端完成配对**\n    在新手机的蓝牙设备列表中找到并选择 **[WH-CH520]**。若手机要求输入密码（Passkey/PIN），请输入 **“0000”**。\n\n4.  **确认连接**\n    配对成功后，部分手机会自动建立音频连接；若未自动连接，请在手机蓝牙列表中点击该设备手动连接。听到连接成功的提示音即表示完成。\n\n**注意事项：**\n*   配对模式开启后 **5 分钟内** 若未成功配对，耳机会自动退出该模式并关机，需从第 2 步重新开始。\n*   如果长按 Bluetooth 键始终无法进入配对模式，或新手机搜不到设备，可尝试**初始化耳机**：关机并拔掉 USB-C 线，同时长按电源键和音量减（–）键约 10 秒以上，直到蓝灯闪烁 4 次。这会清除所有旧配对信息，之后重新开机即可自动进入配对模式。注意初始化后旧手机上的配对记录也需手动删除才能再次使用。\n\n来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0",
+            "d6cf3f096000b9bcc84fb01b:0",
+            "d6cf3f096000b9bcc84fb01b:1000",
+            "d6cf3f096000b9bcc84fb01b:1998",
+            "d6cf3f096000b9bcc84fb01b:2999",
+            "e547877cab61933d55743d55:4983",
+            "e547877cab61933d55743d55:17958",
+            "e547877cab61933d55743d55:0",
+            "e547877cab61933d55743d55:996",
+            "e547877cab61933d55743d55:1991",
+            "e547877cab61933d55743d55:2988",
+            "e547877cab61933d55743d55:3984",
+            "e547877cab61933d55743d55:5975",
+            "e547877cab61933d55743d55:6975",
+            "e547877cab61933d55743d55:7975",
+            "e547877cab61933d55743d55:8973",
+            "e547877cab61933d55743d55:9971",
+            "e547877cab61933d55743d55:10971",
+            "e547877cab61933d55743d55:11972",
+            "e547877cab61933d55743d55:12967",
+            "e547877cab61933d55743d55:13967",
+            "e547877cab61933d55743d55:14967",
+            "e547877cab61933d55743d55:15963",
+            "e547877cab61933d55743d55:16962",
+            "e547877cab61933d55743d55:18956",
+            "e547877cab61933d55743d55:19954",
+            "e547877cab61933d55743d55:20953",
+            "e547877cab61933d55743d55:21954",
+            "e547877cab61933d55743d55:22940"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "d6cf3f096000b9bcc84fb01b",
+              "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "e547877cab61933d55743d55",
+              "title": "Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+              "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+              "kind": "official",
+              "section": "Osmo Mobile 6；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "name": "[模拟持有]我的Sony耳机",
+              "model": "WH-CH520"
+            },
+            {
+              "id": "9f7454b8-6291-40fe-9367-4eba50472591",
+              "name": "[模拟持有]手机云台",
+              "model": "Osmo Mobile 6"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:49:56.496Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":7197,\"calls\":1,\"tools\":0,\"reservedCny\":0.234456,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:49:56.508Z"
+          }
+        ],
+        "tokens": {
+          "input": 18086,
+          "output": 484
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "03e5a70e-921d-4d65-83d4-efdb4dcfd580",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 7384,
+      "streamTextEvents": 147
+    },
+    {
+      "question": "那恢复出厂初始化和重新配对是一回事吗？初始化按多久，原配对信息会怎样？",
+      "result": {
+        "session": {
+          "id": "9d7850e7-4b47-4910-95d5-63ad7fa2b9fe",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 2,
+          "status": "active",
+          "messages": [
+            {
+              "id": "c1da301b-94e3-46eb-9cb7-339867179b55",
+              "role": "user",
+              "text": "这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。",
+              "at": "2026-10-31T13:49:56.511Z",
+              "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "6030e918-632d-453a-a876-953aae408c39",
+              "role": "assistant",
+              "text": "WH-CH520 已经连过其他设备时，不会在开机后自动进入配对模式，需要手动触发。完整步骤如下（依据 Sony 官方帮助指南）：\n\n1.  **准备**\n    确保耳机电量充足，并将新手机放在耳机 1 米范围内。打开新手机的蓝牙设置界面，准备搜索设备。\n\n2.  **手动进入配对模式**\n    在耳机开机状态下，长按耳机上的 **（Bluetooth）按钮约 5 秒或更久**。\n    确认指示灯（蓝色）开始**连续两次闪烁**，并听到语音提示“Pairing”，此时耳机才处于可被发现的配对状态。仅短按电源键开机通常只会回连旧设备，不会进入此模式。\n\n3.  **在手机端完成配对**\n    在新手机的蓝牙设备列表中找到并选择 **[WH-CH520]**。若手机要求输入密码（Passkey/PIN），请输入 **“0000”**。\n\n4.  **确认连接**\n    配对成功后，部分手机会自动建立音频连接；若未自动连接，请在手机蓝牙列表中点击该设备手动连接。听到连接成功的提示音即表示完成。\n\n**注意事项：**\n*   配对模式开启后 **5 分钟内** 若未成功配对，耳机会自动退出该模式并关机，需从第 2 步重新开始。\n*   如果长按 Bluetooth 键始终无法进入配对模式，或新手机搜不到设备，可尝试**初始化耳机**：关机并拔掉 USB-C 线，同时长按电源键和音量减（–）键约 10 秒以上，直到蓝灯闪烁 4 次。这会清除所有旧配对信息，之后重新开机即可自动进入配对模式。注意初始化后旧手机上的配对记录也需手动删除才能再次使用。\n\n来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+              "reply": {
+                "answer": "WH-CH520 已经连过其他设备时，不会在开机后自动进入配对模式，需要手动触发。完整步骤如下（依据 Sony 官方帮助指南）：\n\n1.  **准备**\n    确保耳机电量充足，并将新手机放在耳机 1 米范围内。打开新手机的蓝牙设置界面，准备搜索设备。\n\n2.  **手动进入配对模式**\n    在耳机开机状态下，长按耳机上的 **（Bluetooth）按钮约 5 秒或更久**。\n    确认指示灯（蓝色）开始**连续两次闪烁**，并听到语音提示“Pairing”，此时耳机才处于可被发现的配对状态。仅短按电源键开机通常只会回连旧设备，不会进入此模式。\n\n3.  **在手机端完成配对**\n    在新手机的蓝牙设备列表中找到并选择 **[WH-CH520]**。若手机要求输入密码（Passkey/PIN），请输入 **“0000”**。\n\n4.  **确认连接**\n    配对成功后，部分手机会自动建立音频连接；若未自动连接，请在手机蓝牙列表中点击该设备手动连接。听到连接成功的提示音即表示完成。\n\n**注意事项：**\n*   配对模式开启后 **5 分钟内** 若未成功配对，耳机会自动退出该模式并关机，需从第 2 步重新开始。\n*   如果长按 Bluetooth 键始终无法进入配对模式，或新手机搜不到设备，可尝试**初始化耳机**：关机并拔掉 USB-C 线，同时长按电源键和音量减（–）键约 10 秒以上，直到蓝灯闪烁 4 次。这会清除所有旧配对信息，之后重新开机即可自动进入配对模式。注意初始化后旧手机上的配对记录也需手动删除才能再次使用。\n\n来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999",
+                  "e547877cab61933d55743d55:4983",
+                  "e547877cab61933d55743d55:17958",
+                  "e547877cab61933d55743d55:0",
+                  "e547877cab61933d55743d55:996",
+                  "e547877cab61933d55743d55:1991",
+                  "e547877cab61933d55743d55:2988",
+                  "e547877cab61933d55743d55:3984",
+                  "e547877cab61933d55743d55:5975",
+                  "e547877cab61933d55743d55:6975",
+                  "e547877cab61933d55743d55:7975",
+                  "e547877cab61933d55743d55:8973",
+                  "e547877cab61933d55743d55:9971",
+                  "e547877cab61933d55743d55:10971",
+                  "e547877cab61933d55743d55:11972",
+                  "e547877cab61933d55743d55:12967",
+                  "e547877cab61933d55743d55:13967",
+                  "e547877cab61933d55743d55:14967",
+                  "e547877cab61933d55743d55:15963",
+                  "e547877cab61933d55743d55:16962",
+                  "e547877cab61933d55743d55:18956",
+                  "e547877cab61933d55743d55:19954",
+                  "e547877cab61933d55743d55:20953",
+                  "e547877cab61933d55743d55:21954",
+                  "e547877cab61933d55743d55:22940"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "e547877cab61933d55743d55",
+                    "title": "Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+                    "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+                    "kind": "official",
+                    "section": "Osmo Mobile 6；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+                    "name": "[模拟持有]我的Sony耳机",
+                    "model": "WH-CH520"
+                  },
+                  {
+                    "id": "9f7454b8-6291-40fe-9367-4eba50472591",
+                    "name": "[模拟持有]手机云台",
+                    "model": "Osmo Mobile 6"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:49:56.511Z"
+            },
+            {
+              "id": "84ff1ecd-e6d7-4479-82dd-1994f64e964c",
+              "role": "user",
+              "text": "那恢复出厂初始化和重新配对是一回事吗？初始化按多久，原配对信息会怎样？",
+              "at": "2026-10-31T13:50:02.399Z",
+              "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "cea26e6c-039b-4462-9f22-65825cd1e8b9",
+              "role": "assistant",
+              "text": "不是一回事。对 WH-CH520 来说，“重新配对”只是让耳机进入可被发现的状态以连接新设备，旧设备的配对记录仍保留；“恢复出厂初始化”则会清除耳机内所有配对信息和音量等设置，使其回到刚开箱的状态。\n\n**初始化按键时长与现象**\n在关机且拔掉 USB-C 线的状态下，同时长按 **电源键** 和 **音量减（–）键约 10 秒或更久**。当蓝色指示灯 **闪烁 4 次** 时，表示初始化完成。\n\n**原配对信息的变化**\n初始化后，耳机内部存储的 **所有蓝牙配对信息都会被删除**。这意味着：\n1.  耳机不再认识任何旧设备，下次开机将自动进入配对模式（如同新机）。\n2.  之前连接过的手机/电脑端仍可能保留该耳机的名称，但实际已无法连接。**你需要手动去那些旧设备的蓝牙设置里删除“WH-CH520”的记录**，否则旧设备可能会尝试无效回连或干扰新配对。\n\n如果你只是想连一台新手机而保留旧设备的连接能力，只需长按 Bluetooth 键 5 秒手动进入配对模式即可，不必执行初始化。只有在耳机异常、需要彻底清空设备列表或转手他人时，才建议使用初始化。\n\n来源：[Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html) | [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+              "reply": {
+                "answer": "不是一回事。对 WH-CH520 来说，“重新配对”只是让耳机进入可被发现的状态以连接新设备，旧设备的配对记录仍保留；“恢复出厂初始化”则会清除耳机内所有配对信息和音量等设置，使其回到刚开箱的状态。\n\n**初始化按键时长与现象**\n在关机且拔掉 USB-C 线的状态下，同时长按 **电源键** 和 **音量减（–）键约 10 秒或更久**。当蓝色指示灯 **闪烁 4 次** 时，表示初始化完成。\n\n**原配对信息的变化**\n初始化后，耳机内部存储的 **所有蓝牙配对信息都会被删除**。这意味着：\n1.  耳机不再认识任何旧设备，下次开机将自动进入配对模式（如同新机）。\n2.  之前连接过的手机/电脑端仍可能保留该耳机的名称，但实际已无法连接。**你需要手动去那些旧设备的蓝牙设置里删除“WH-CH520”的记录**，否则旧设备可能会尝试无效回连或干扰新配对。\n\n如果你只是想连一台新手机而保留旧设备的连接能力，只需长按 Bluetooth 键 5 秒手动进入配对模式即可，不必执行初始化。只有在耳机异常、需要彻底清空设备列表或转手他人时，才建议使用初始化。\n\n来源：[Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html) | [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+                    "name": "[模拟持有]我的Sony耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:50:02.399Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "8e761909-8e53-4940-8bd8-171ec17487cf"
+          },
+          "tried": [],
+          "memoryEpoch": 3,
+          "createdAt": "2026-10-31T13:49:49.309Z",
+          "updatedAt": "2026-10-31T13:50:02.400Z",
+          "expiresAt": "2026-11-07T13:49:49.309Z",
+          "itemScopes": {
+            "94dd5f7c-c6ac-497c-b104-e6429d3ff207": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+            "9f7454b8-6291-40fe-9367-4eba50472591": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"Osmo Mobile 6\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "不是一回事。对 WH-CH520 来说，“重新配对”只是让耳机进入可被发现的状态以连接新设备，旧设备的配对记录仍保留；“恢复出厂初始化”则会清除耳机内所有配对信息和音量等设置，使其回到刚开箱的状态。\n\n**初始化按键时长与现象**\n在关机且拔掉 USB-C 线的状态下，同时长按 **电源键** 和 **音量减（–）键约 10 秒或更久**。当蓝色指示灯 **闪烁 4 次** 时，表示初始化完成。\n\n**原配对信息的变化**\n初始化后，耳机内部存储的 **所有蓝牙配对信息都会被删除**。这意味着：\n1.  耳机不再认识任何旧设备，下次开机将自动进入配对模式（如同新机）。\n2.  之前连接过的手机/电脑端仍可能保留该耳机的名称，但实际已无法连接。**你需要手动去那些旧设备的蓝牙设置里删除“WH-CH520”的记录**，否则旧设备可能会尝试无效回连或干扰新配对。\n\n如果你只是想连一台新手机而保留旧设备的连接能力，只需长按 Bluetooth 键 5 秒手动进入配对模式即可，不必执行初始化。只有在耳机异常、需要彻底清空设备列表或转手他人时，才建议使用初始化。\n\n来源：[Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html) | [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0",
+            "d6cf3f096000b9bcc84fb01b:0",
+            "d6cf3f096000b9bcc84fb01b:1000",
+            "d6cf3f096000b9bcc84fb01b:1998",
+            "d6cf3f096000b9bcc84fb01b:2999"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "d6cf3f096000b9bcc84fb01b",
+              "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "name": "[模拟持有]我的Sony耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:50:02.393Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":5360,\"calls\":1,\"tools\":0,\"reservedCny\":0.06894,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:50:02.397Z"
+          }
+        ],
+        "tokens": {
+          "input": 4641,
+          "output": 368
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "934170fb-ab6b-4668-ba7f-63e5a041aab5",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 5684,
+      "streamTextEvents": 112
+    },
+    {
+      "question": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。",
+      "result": {
+        "session": {
+          "id": "e90fb857-c0a6-4524-9d8b-827754c9642f",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "bde58d3d-5050-42dd-9537-bf34797d476a",
+              "role": "user",
+              "text": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。",
+              "at": "2026-10-31T13:50:06.585Z",
+              "itemId": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "bc8e1a3e-78b2-4627-b2f7-57d0cc2470b4",
+              "role": "assistant",
+              "text": "根据 Canon SELPHY CP1500 官方手册，装相纸的要点如下：\n\n-   **光面朝向**：相纸必须**光面朝上**（glossy side up）放入纸盒。切勿放反，也不要触摸光面打印区域，以免留下指纹或污渍影响打印质量甚至损坏打印机。\n-   **最多放多少张**：纸盒内最多装入 **18 张**相纸。装入 19 张或以上可能导致打印机损坏或故障。\n-   **盖子处理**：\n    -   **内盖**：装好纸后，必须将内盖**用力关紧直到听到“咔哒”声**。\n    -   **外盖**：在打印过程中，外盖需要**保持打开状态**。只有在确认外盖已打开的情况下，才能将纸盒完全推入机身插槽（约滑入 2 cm）。\n\n来源：[Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+              "reply": {
+                "answer": "根据 Canon SELPHY CP1500 官方手册，装相纸的要点如下：\n\n-   **光面朝向**：相纸必须**光面朝上**（glossy side up）放入纸盒。切勿放反，也不要触摸光面打印区域，以免留下指纹或污渍影响打印质量甚至损坏打印机。\n-   **最多放多少张**：纸盒内最多装入 **18 张**相纸。装入 19 张或以上可能导致打印机损坏或故障。\n-   **盖子处理**：\n    -   **内盖**：装好纸后，必须将内盖**用力关紧直到听到“咔哒”声**。\n    -   **外盖**：在打印过程中，外盖需要**保持打开状态**。只有在确认外盖已打开的情况下，才能将纸盒完全推入机身插槽（约滑入 2 cm）。\n\n来源：[Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0",
+                  "f0b09e65ef8cba87965e4dc9:997",
+                  "f0b09e65ef8cba87965e4dc9:1997"
+                ],
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "kind": "official",
+                    "section": "SELPHY CP1500；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+                    "name": "[模拟持有]照片小打印机",
+                    "model": "SELPHY CP1500"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:50:06.585Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "2fa3fadb-64b5-4b0a-b867-81b866557f2e"
+          },
+          "tried": [],
+          "memoryEpoch": 3,
+          "createdAt": "2026-10-31T13:50:02.765Z",
+          "updatedAt": "2026-10-31T13:50:06.586Z",
+          "expiresAt": "2026-11-07T13:50:02.765Z",
+          "itemScopes": {
+            "9092e49f-d24d-4a7d-ab57-8cf927a5c841": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "根据 Canon SELPHY CP1500 官方手册，装相纸的要点如下：\n\n-   **光面朝向**：相纸必须**光面朝上**（glossy side up）放入纸盒。切勿放反，也不要触摸光面打印区域，以免留下指纹或污渍影响打印质量甚至损坏打印机。\n-   **最多放多少张**：纸盒内最多装入 **18 张**相纸。装入 19 张或以上可能导致打印机损坏或故障。\n-   **盖子处理**：\n    -   **内盖**：装好纸后，必须将内盖**用力关紧直到听到“咔哒”声**。\n    -   **外盖**：在打印过程中，外盖需要**保持打开状态**。只有在确认外盖已打开的情况下，才能将纸盒完全推入机身插槽（约滑入 2 cm）。\n\n来源：[Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "f0b09e65ef8cba87965e4dc9:0",
+            "f0b09e65ef8cba87965e4dc9:997",
+            "f0b09e65ef8cba87965e4dc9:1997"
+          ],
+          "citations": [
+            {
+              "id": "f0b09e65ef8cba87965e4dc9",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "kind": "official",
+              "section": "SELPHY CP1500；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+              "name": "[模拟持有]照片小打印机",
+              "model": "SELPHY CP1500"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:50:06.582Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":3819,\"calls\":1,\"tools\":0,\"reservedCny\":0.045888,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:50:06.584Z"
+          }
+        ],
+        "tokens": {
+          "input": 3095,
+          "output": 243
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "1b8fa594-ec36-41d4-9cbc-5099f4c2d34f",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 3920,
+      "streamTextEvents": 71
+    },
+    {
+      "question": "那装19张会更省事吗？印过一面的纸还能重复使用吗？",
+      "result": {
+        "session": {
+          "id": "e90fb857-c0a6-4524-9d8b-827754c9642f",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 2,
+          "status": "active",
+          "messages": [
+            {
+              "id": "bde58d3d-5050-42dd-9537-bf34797d476a",
+              "role": "user",
+              "text": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。",
+              "at": "2026-10-31T13:50:06.585Z",
+              "itemId": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "bc8e1a3e-78b2-4627-b2f7-57d0cc2470b4",
+              "role": "assistant",
+              "text": "根据 Canon SELPHY CP1500 官方手册，装相纸的要点如下：\n\n-   **光面朝向**：相纸必须**光面朝上**（glossy side up）放入纸盒。切勿放反，也不要触摸光面打印区域，以免留下指纹或污渍影响打印质量甚至损坏打印机。\n-   **最多放多少张**：纸盒内最多装入 **18 张**相纸。装入 19 张或以上可能导致打印机损坏或故障。\n-   **盖子处理**：\n    -   **内盖**：装好纸后，必须将内盖**用力关紧直到听到“咔哒”声**。\n    -   **外盖**：在打印过程中，外盖需要**保持打开状态**。只有在确认外盖已打开的情况下，才能将纸盒完全推入机身插槽（约滑入 2 cm）。\n\n来源：[Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+              "reply": {
+                "answer": "根据 Canon SELPHY CP1500 官方手册，装相纸的要点如下：\n\n-   **光面朝向**：相纸必须**光面朝上**（glossy side up）放入纸盒。切勿放反，也不要触摸光面打印区域，以免留下指纹或污渍影响打印质量甚至损坏打印机。\n-   **最多放多少张**：纸盒内最多装入 **18 张**相纸。装入 19 张或以上可能导致打印机损坏或故障。\n-   **盖子处理**：\n    -   **内盖**：装好纸后，必须将内盖**用力关紧直到听到“咔哒”声**。\n    -   **外盖**：在打印过程中，外盖需要**保持打开状态**。只有在确认外盖已打开的情况下，才能将纸盒完全推入机身插槽（约滑入 2 cm）。\n\n来源：[Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0",
+                  "f0b09e65ef8cba87965e4dc9:997",
+                  "f0b09e65ef8cba87965e4dc9:1997"
+                ],
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "kind": "official",
+                    "section": "SELPHY CP1500；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+                    "name": "[模拟持有]照片小打印机",
+                    "model": "SELPHY CP1500"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:50:06.585Z"
+            },
+            {
+              "id": "11156440-842b-4405-8cae-1bde7580cbea",
+              "role": "user",
+              "text": "那装19张会更省事吗？印过一面的纸还能重复使用吗？",
+              "at": "2026-10-31T13:50:10.542Z",
+              "itemId": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "9248f1e9-b088-4b47-a746-433feae14d6a",
+              "role": "assistant",
+              "text": "不会更省事，反而有风险。Canon SELPHY CP1500 官方手册明确说明：纸盒最多装 18 张相纸，装入 19 张或以上可能损坏打印机或导致故障。因此请严格按 18 张上限装纸，不要为了少换一次纸而超量。\n\n印过一面的纸也不能重复使用。手册在“Caution”中明确禁止“Reusing paper, as by printing on blank areas”，即不允许把已打印过的纸再次放入打印，哪怕还有空白区域。热升华打印过程会改变纸张涂层和色带状态，复用容易造成卡纸、色带错位或损伤打印头。\n\n如果中途提示缺纸，可以在不断电的情况下取出纸盒补充新纸（未打印过的原装相纸），再重新插入继续打印。\n\n来源：[Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+              "reply": {
+                "answer": "不会更省事，反而有风险。Canon SELPHY CP1500 官方手册明确说明：纸盒最多装 18 张相纸，装入 19 张或以上可能损坏打印机或导致故障。因此请严格按 18 张上限装纸，不要为了少换一次纸而超量。\n\n印过一面的纸也不能重复使用。手册在“Caution”中明确禁止“Reusing paper, as by printing on blank areas”，即不允许把已打印过的纸再次放入打印，哪怕还有空白区域。热升华打印过程会改变纸张涂层和色带状态，复用容易造成卡纸、色带错位或损伤打印头。\n\n如果中途提示缺纸，可以在不断电的情况下取出纸盒补充新纸（未打印过的原装相纸），再重新插入继续打印。\n\n来源：[Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0",
+                  "f0b09e65ef8cba87965e4dc9:997",
+                  "f0b09e65ef8cba87965e4dc9:1997"
+                ],
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "kind": "official",
+                    "section": "SELPHY CP1500；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+                    "name": "[模拟持有]照片小打印机",
+                    "model": "SELPHY CP1500"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:50:10.542Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "53531a27-20b9-43ba-ad1e-d9a811dd4b8e"
+          },
+          "tried": [],
+          "memoryEpoch": 3,
+          "createdAt": "2026-10-31T13:50:02.765Z",
+          "updatedAt": "2026-10-31T13:50:10.542Z",
+          "expiresAt": "2026-11-07T13:50:02.765Z",
+          "itemScopes": {
+            "9092e49f-d24d-4a7d-ab57-8cf927a5c841": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "不会更省事，反而有风险。Canon SELPHY CP1500 官方手册明确说明：纸盒最多装 18 张相纸，装入 19 张或以上可能损坏打印机或导致故障。因此请严格按 18 张上限装纸，不要为了少换一次纸而超量。\n\n印过一面的纸也不能重复使用。手册在“Caution”中明确禁止“Reusing paper, as by printing on blank areas”，即不允许把已打印过的纸再次放入打印，哪怕还有空白区域。热升华打印过程会改变纸张涂层和色带状态，复用容易造成卡纸、色带错位或损伤打印头。\n\n如果中途提示缺纸，可以在不断电的情况下取出纸盒补充新纸（未打印过的原装相纸），再重新插入继续打印。\n\n来源：[Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "f0b09e65ef8cba87965e4dc9:0",
+            "f0b09e65ef8cba87965e4dc9:997",
+            "f0b09e65ef8cba87965e4dc9:1997"
+          ],
+          "citations": [
+            {
+              "id": "f0b09e65ef8cba87965e4dc9",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "kind": "official",
+              "section": "SELPHY CP1500；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+              "name": "[模拟持有]照片小打印机",
+              "model": "SELPHY CP1500"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:50:10.538Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":3507,\"calls\":1,\"tools\":0,\"reservedCny\":0.048588,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:50:10.541Z"
+          }
+        ],
+        "tokens": {
+          "input": 3377,
+          "output": 224
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "8bebe320-1444-46ec-8a00-93470a127b04",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 3795,
+      "streamTextEvents": 67
+    }
+  ],
+  "checks": [
+    {
+      "name": "sony：真实资料/模型/同会话追问/安全Markdown/390px无横向溢出",
+      "passed": true,
+      "semanticReview": "单独核对原文，不以此机械检查证明完整事实正确"
+    },
+    {
+      "name": "canon：真实资料/模型/同会话追问/安全Markdown/390px无横向溢出",
+      "passed": true,
+      "semanticReview": "单独核对原文，不以此机械检查证明完整事实正确"
+    }
+  ],
+  "errors": [],
+  "upstreamRequests": 4
+}

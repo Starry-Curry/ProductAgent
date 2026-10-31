@@ -152,6 +152,10 @@ async function respondLegacy(
   }
   const { session, cached } = beginTurn(db, read, actor, input);
   if (cached) return cached;
+  if (input.taskId && session.messages.length && session.known.foundationTaskId !== input.taskId) {
+    releaseTurn(db, actor, input, session.id);
+    throw new AgentError("这是另一件任务，请开始新问题后继续，避免带入旧任务的私人上下文", 409);
+  }
   if(input.taskId)session.known.foundationTaskId=input.taskId;
   if(input.taskId){const task=getTask(db,read(),actor,input.taskId);session.known.foundationHasItems=String(task.itemInstanceIds.length>0);session.known.foundationComplexTask=String(["plan","explore"].includes(task.intent));}
   if (

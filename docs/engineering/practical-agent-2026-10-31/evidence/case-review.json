@@ -1,0 +1,141 @@
+{
+  "method": "工程人员逐项对照实际取得的原文与用户条件；不是外部真人盲测，也未调用模型自评分。自动检查只测流程/明确字段，不能代替此记录。",
+  "cases": [
+    {
+      "id": "sony-final",
+      "evidence": "final-browser.json#responses[0]",
+      "required": [
+        "手动配对约5秒",
+        "两次蓝闪/Pairing",
+        "手机选择WH-CH520",
+        "需要密码时0000"
+      ],
+      "requiredCoverage": "4/4",
+      "status": "core_pass_extended_not_certified",
+      "risks": [
+        "模型添加“在开机状态”前提，当前抓取原文未明确支持",
+        "“短按开机”含糊；不要当已核实的电源操作",
+        "首次/再次配对指令含无alt的按钮图标，纯文本丢失图示，尚无图示理解闭环",
+        "未被要求仍主动展开初始化，虽有清除记录说明，表达不够克制"
+      ]
+    },
+    {
+      "id": "sony-followup",
+      "evidence": "final-browser.json#responses[1]",
+      "required": [
+        "初始化与普通配对不同",
+        "关机拔USB，电源与音量减约10秒或以上",
+        "蓝闪4次",
+        "删除全部配对信息"
+      ],
+      "requiredCoverage": "4/4",
+      "status": "core_pass_extended_not_certified",
+      "risks": [
+        "关于旧设备干扰的因果解释未由当前来源证明",
+        "没有操作真实耳机，不证明能完成实际连接"
+      ]
+    },
+    {
+      "id": "canon-paper",
+      "evidence": "final-browser.json#responses[2]",
+      "required": [
+        "光面朝上",
+        "18张上限",
+        "内盖关紧/外盖打印时开"
+      ],
+      "requiredCoverage": "3/3",
+      "status": "core_pass",
+      "risks": [
+        "必须使用适用纸盒/纸张；不扩展为任意第三方介质保证",
+        "约2cm滑入及听到卡扣声有原文依据，并非幻觉"
+      ]
+    },
+    {
+      "id": "canon-followup",
+      "evidence": "final-browser.json#responses[3]",
+      "required": [
+        "不要装19张以上",
+        "不要重复用已印相纸"
+      ],
+      "requiredCoverage": "2/2",
+      "status": "core_pass_extended_fail",
+      "risks": [
+        "模型添加涂层/色带错位/打印头损伤的具体机理，当前原文只给禁止及风险，不能认证具体原因"
+      ]
+    },
+    {
+      "id": "experience",
+      "evidence": [
+        "experience-browser-v4.json",
+        "experience-browser-v5.json"
+      ],
+      "status": "permission_lifecycle_pass_reasoning_partial",
+      "observations": [
+        "已保存获准云端使用的合成失败报告",
+        "真实模型读取、改变排查路径",
+        "更正后不再把换手机成功当事实",
+        "撤销后无该memoryId，遗忘后正文为空且新会话无此经历"
+      ],
+      "risks": [
+        "未被资料支持的开发者选项、协议栈及故障因果推断仍出现",
+        "不是硬件试验；一次换手机结果不证明根因"
+      ]
+    },
+    {
+      "id": "cross-v1-v2",
+      "evidence": [
+        "cross-item-browser-v1.json",
+        "cross-item-browser-v2.json"
+      ],
+      "status": "failed",
+      "observations": [
+        "v1缺末尾规格；v2补齐后仍受旧错误回答影响",
+        "v2自动检查因出现310和290而通过，但实际仍把310g当兼容，明确人工推翻该通过结论"
+      ],
+      "risks": [
+        "不得算兼容成功；语义不是关键词包含"
+      ]
+    },
+    {
+      "id": "cross-final",
+      "evidence": "cross-item-browser-v3.json",
+      "status": "compatibility_pass_plan_partial",
+      "observations": [
+        "独立新任务无旧会话",
+        "真实模型正确指出310比290多20g",
+        "放弃将相机/超重手机装OM6，继续安排父子拍摄",
+        "两个真实SKU及官方原文同时进入上下文"
+      ],
+      "risks": [
+        "建议中仍假定书本、平面或胶带等现有资源",
+        "把照片模式等商品功能迁移到视频操作，具体适用性未核对",
+        "稳定性与现实镜头未知，不能称可直接照做的完整拍摄方案"
+      ]
+    },
+    {
+      "id": "business-regression",
+      "evidence": "business-regression/browser.json",
+      "status": "offline_deterministic_pass",
+      "observations": [
+        "跨物品新增结果不清掉旧有效经验",
+        "真实浏览器纠正/遗忘",
+        "家庭共享摘要、处理回报、撤权403",
+        "赠礼新实例与私人经历隔离"
+      ],
+      "risks": [
+        "paidCalls=0，不能用来证明模型智能或现实家庭成功"
+      ]
+    },
+    {
+      "id": "original-default-canon-correction",
+      "evidence": "small-comparison-final.json#rows[5].result.reply.steps",
+      "status": "core_pass_3_of_3",
+      "observations": [
+        "旧版正文是泛化导语，但界面实际渲染的四条steps已覆盖三问",
+        "不宣称Canon正确覆盖率高于旧默认路径",
+        "此前聊天错误判定已更正；原始模型/业务结果未改写"
+      ]
+    }
+  ],
+  "decision": "交付可运行的原生只读工具Agent和显式记忆控制；不宣布全面可靠或优于同资料直接千问。WUJIAN_AGENT_RUNTIME=native明确启用，legacy保留恢复；V3及自由事实QA实验继续关闭。跨物品建议与复杂排障继续按未实物验证建议处理。"
+}

@@ -1,0 +1,26 @@
+{
+  "roundId": "practical-agent-20261031-r1",
+  "requests": 49,
+  "maxRequests": 60,
+  "estimatedCny": 4.717812,
+  "maxEstimatedCny": 15,
+  "inputTokens": 325120,
+  "outputTokens": 22677,
+  "returned": 49,
+  "providerFailed": 0,
+  "pending": 0,
+  "costBasis": "API usage + 公布标价12/36元每百万Token；非账单；历史授权轮次未改动",
+  "model": "qwen3.8-max-0902",
+  "thinking": false,
+  "priorRoundRequests": 247,
+  "browserCompleteAnswerMs": [
+    7384,
+    5684,
+    3920,
+    3795
+  ],
+  "browserP50Ms": 4802.0,
+  "browserNearestRankP95Ms": 7384,
+  "sampleSizeCaveat": "仅四个缓存资料问答，不能推广为全产品P95，也不包括用户实际设备操作时间",
+  "snapshotAt": "2026-10-31T14:00:01.595848+00:00"
+}

@@ -488,6 +488,7 @@ export function ItemBelonging({
                       checked={useStories}
                       onChange={(e) => {
                         setUseStories(e.target.checked);
+                        if (!e.target.checked) setCapture(false);
                         setSessionKey((k) => k + 1);
                       }}
                     />
@@ -497,9 +498,10 @@ export function ItemBelonging({
                     <input
                       type="checkbox"
                       checked={capture}
+                      disabled={!useStories}
                       onChange={(e) => setCapture(e.target.checked)}
                     />
-                    从自然交流中建议记忆，保存前由我确认
+                    同时从自然交流中建议新记忆，保存前由我确认
                   </label>
                   {savedEnabled && (
                     <label className="belong-check">

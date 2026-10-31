@@ -215,7 +215,7 @@ export function AssistantConversation({
         setSessions(rows);
         let s = startFresh
           ? null
-          : (allHistory && !item ? rows.find((r) => !r.itemId) : rows[0]) ||
+          : (item ? rows.find(r => r.itemId === item.id) : allHistory ? rows.find(r => !r.itemId) : rows[0]) ||
             null;
         if (initialSessionId) {
           const response = await fetch(
@@ -590,7 +590,7 @@ export function AssistantConversation({
           </article>
         ))}
       </div>
-      {busy && draft && <article className="assistant-message" aria-label="正在生成的回答"><small>正在生成，完整回答尚未核对</small><p style={{ whiteSpace: "pre-wrap" }}>{draft}</p></article>}
+      {busy && draft && <article className="assistant-message" aria-label="正在生成的回答"><small>正在生成，回答尚未完整</small><p style={{ whiteSpace: "pre-wrap" }}>{draft}</p></article>}
       {busy && (
         <p role="status">
           {waitSeconds < 8

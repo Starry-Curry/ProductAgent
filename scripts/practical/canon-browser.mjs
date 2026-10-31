@@ -8,7 +8,7 @@ try{
  if(!/18|十八/.test(first.reply.answer)||!/光面|光泽/.test(first.reply.answer)||!first.reply.citations.some(c=>c.url.includes('cam.start.canon')))throw Error('paper_guidance_or_official_source_missing');
  report.checks.push({name:'真实公开网页→型号核对→录入/官方摘录→工具检索→真实模型完整多问',passed:true});await page.screenshot({path:ROOT+'/canon-desktop.png',fullPage:false});
  const second=await ask(page,'那装19张会更省事吗？印过一面的纸还能重复使用吗？',report);if(!/19|十九/.test(second.reply.answer)||!/不能|不要|不可以|禁止|不建议/.test(second.reply.answer))throw Error('paper_limits_missing');
- await page.setViewportSize({width:390,height:844});await page.getByText(second.reply.answer,{exact:true}).scrollIntoViewIfNeeded();await page.screenshot({path:ROOT+'/canon-mobile.png',fullPage:false});report.checks.push({name:'同型号追问19张和重复用纸限制，桌面/390px真实UI',passed:true});
+ await page.setViewportSize({width:390,height:844});await page.locator('.assistant-prose').last().scrollIntoViewIfNeeded();await page.screenshot({path:ROOT+'/canon-mobile.png',fullPage:false});report.checks.push({name:'同型号追问19张和重复用纸限制，桌面/390px真实UI',passed:true});
  const local=JSON.parse(fs.readFileSync('.runtime/practical-browser-item.json'));fs.writeFileSync('.runtime/practical-browser-item.json',JSON.stringify({...local,canonItemId:item.id}));
 }catch(e){report.errors.push(e.message);fs.writeFileSync('.runtime/canon-failure-dom.txt',await page.locator('body').innerText().catch(()=>''));await page.screenshot({path:ROOT+'/canon-failure.png'}).catch(()=>{});process.exitCode=1;}
 finally{report.upstreamRequests=ledger().length-before;fs.writeFileSync(ROOT+'/'+stage+'.json',JSON.stringify(report,null,2)+'\n');await browser.close();console.log(JSON.stringify({checks:report.checks,errors:report.errors,upstreamRequests:report.upstreamRequests}));}

@@ -1,0 +1,10 @@
+import {chromium,expect} from '@playwright/test';import fs from 'node:fs';import {ROOT} from './gateway.mjs';
+const file=ROOT+'/ui-privacy-smoke.json';if(fs.existsSync(file))throw Error('preserve_previous_evidence');
+const count=()=>JSON.parse(fs.readFileSync(ROOT+'/model-calls.json')).attempts.length,before=count(),report={at:new Date().toISOString(),checks:[],errors:[],modelRequests:0};
+const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true}),context=await browser.newContext({storageState:'.runtime/practical-browser-state.json',viewport:{width:390,height:844}}),page=await context.newPage();page.on('pageerror',e=>report.errors.push(e.message));
+try{
+ const id=JSON.parse(fs.readFileSync('.runtime/practical-browser-item.json')).sonyItemId;await page.goto('http://127.0.0.1:3232/#item/'+id);await page.getByRole('region',{name:'物间统一对话',exact:true}).waitFor();
+ const read=page.getByLabel('使用这件物品已获准的故事与经验',{exact:true}),capture=page.getByLabel('同时从自然交流中建议新记忆，保存前由我确认',{exact:true});await expect(read).not.toBeChecked();await expect(capture).toBeDisabled();await read.check();await expect(capture).toBeEnabled();await expect(capture).not.toBeChecked();await capture.check();await read.uncheck();await expect(capture).not.toBeChecked();await expect(capture).toBeDisabled();
+ report.checks.push('读取可以单独启用；关闭读取同时关闭提取，不以提取暗中打开旧记忆');await page.goto('http://127.0.0.1:3232/?privacy=main#assistant');const mainRead=page.getByLabel('使用已获准的个人记忆与经历',{exact:false}),mainCapture=page.getByLabel('允许从这段对话建议记忆',{exact:false});await expect(mainRead).not.toBeChecked();await expect(mainCapture).toBeDisabled();await mainRead.check();await expect(mainCapture).toBeEnabled();await expect(mainCapture).not.toBeChecked();report.checks.push('统一对话默认关闭读取/提取；勾选读取不自动提取');
+ if(count()!==before)throw Error('unexpected_paid_request');
+}catch(e){report.errors.push(e.message);process.exitCode=1;}finally{report.modelRequests=count()-before;fs.writeFileSync(file,JSON.stringify(report,null,2)+'\n');await browser.close();console.log(JSON.stringify(report));}
