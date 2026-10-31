@@ -161,6 +161,15 @@ test('显式撤权优先于遗留shared字段，不能进目录和模型',()=>{
  const s=f.read(),i=s.items.find(i=>i.id===f.id)!;i.owner='dad';i.shared=true;i.sharedWith=['lin'];f.write(s);
  mirrorItemGrant(f.db,f.read(),'dad','lin',f.id,false);
  const ctx=kernelContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off'},messages:[],tried:[]} as any,'怎样操作？');
- assert.ok(!ctx.catalogue.some(i=>i.id===f.id));assert.equal(ctx.items.length,0);assert.equal(ctx.evidence.length,0);
+ assert.ok(!ctx.catalogue.some(i=>i.id===f.id));assert.equal(ctx.items.length,0);assert.ok(ctx.evidence.every(e=>e.id==='user:current-turn'));
+ }finally{f.db.close();}
+});
+test('本轮明确陈述可用于本轮关系理解，不自动变成长期记忆或厂家证据',()=>{
+ const f=fixture();try{
+ const q='这副耳机是小星送我的，帮我安排一次使用。';
+ const ctx=kernelContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off'},messages:[],tried:[]} as any,q);
+ assert.equal(ctx.evidence.find(e=>e.id==='user:current-turn')?.basis,'user_report');
+ assert.equal(ctx.evidence.find(e=>e.id==='user:current-turn')?.text,q);
+ assert.equal(ctx.experiences.length,0);
  }finally{f.db.close();}
 });

@@ -56,6 +56,9 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
     return retrieveTaskPassages(docs,[question,...queries],seed,Math.floor(36000/Math.max(1,selected.length)))
       .map(c=>({id:c.id,itemId:i.id,model:c.model,region:docs.find(d=>d.id===c.documentId)?.region||c.region,title:c.title,text:c.text,url:c.url,documentId:c.documentId,fetchedAt:docs.find(d=>d.id===c.documentId)?.fetchedAt,scopeBasis:documents.find(d=>d.document.id===c.documentId)?.scopeBasis,basis:'official' as const}));
   });
+  // The current user statement is authorized for THIS reply, not automatically
+  // confirmed long-term memory, manufacturer evidence or a device observation.
+  evidence.push({id:'user:current-turn',itemId:focus||'',model:'',region:'',title:'本轮用户陈述（未独立验证）',text:question,basis:'user_report'});
   const experiences=memoryOn?contexts.flatMap(c=>c.cloudExperiences).filter((e,n,a)=>a.findIndex(r=>r.outcomeId===e.outcomeId)===n):[];
   const memories=memoryOn?contexts.flatMap(c=>c.cloudMemories).filter((e,n,a)=>a.findIndex(r=>r.id===e.id)===n):[];
   const stories=memoryOn?contexts.flatMap(c=>c.cloudFragments).filter((e,n,a)=>a.findIndex(r=>r.id===e.id)===n):[];
