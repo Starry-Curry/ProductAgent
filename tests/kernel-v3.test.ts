@@ -92,6 +92,20 @@ test('无需品牌规则便可附加范围推导，前提仍逐字来自问题�
 test('把厂家操作标成advice不能绕过原文校验',()=>{
  assert.match(precheck({...candidate,kind:'advice',sources:[]},frame,context).join(),/缺少原文/);
 });
+test('真实反例回归：维修经销商引文不能发布行业免责或失保推断',()=>{
+ const c={...candidate,text:'自行拆修电池将导致保修责任免除。',sources:[{id:'s',quote:'Consult the nearest Sony dealer.'}]};
+ const ctx={...context,evidence:[{...context.evidence[0],text:c.sources[0].quote}]};
+ assert.equal(adjudicateCandidates(frame,[c],ctx,review)[0].published,false);
+ assert.match(precheck(c,frame,ctx).join(),/政策原文/);
+});
+test('真实反例回归：QSG未提及Auracast不能得出不支持',()=>{
+ const c={...candidate,text:'不支持Auracast；所有文档均未出现Auracast，只有MULTI-SPEAKER CONNECTION。',sources:[{id:'s',quote:'MULTI-SPEAKER CONNECTION'}]};
+ assert.match(precheck(c,frame,{...context,evidence:[{...context.evidence[0],text:c.sources[0].quote}]}).join(),/明确否定/);
+});
+test('用户经历不能从产品官方功能推断',()=>{
+ const f={...frame,parts:[{...frame.parts[0],kind:'relationship' as const}]};
+ assert.match(precheck({...candidate,kind:'advice',text:'它曾帮你和朋友建立联系。'},f,context).join(),/产品说明不能/);
+});
 test('候选协议错误局部降级，不让正确兄弟项消失',()=>{
  const result=parseDraft({frame,candidates:[candidate,{id:'bad',partId:'p',kind:'unexpected'}],gaps:[]});
  assert.equal(result.candidates.length,1);assert.match(result.gaps[0].reason,/不完整/);

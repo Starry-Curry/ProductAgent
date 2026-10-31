@@ -79,6 +79,15 @@ export function precheck(candidate:Candidate,frame:TaskFrame,context:KernelConte
   const part=frame.parts.find(p=>p.id===candidate.partId);
   if(!part)reasons.push('候选不属于当前子问题');
   if(candidate.itemIds.some(id=>!context.items.some(i=>i.id===id)))reasons.push('引用了未读取或未获准的物品');
+  const quotes=candidate.sources.map(s=>s.quote).join('\n');
+  // Necessary epistemic constraints, independent of the review model's approval.
+  // They do not claim general semantic entailment or replace the source audit.
+  const absent=/未提及|没有提及|没有证据|无证据|未出现|未列|没写|not mentioned|not listed/i;
+  const negative=/不支持|不能|无法|不具备|没有.{0,12}(?:功能|模块|能力)|无.{0,8}(?:功能|能力)/;
+  if(candidate.kind!=='user_report'&&absent.test(candidate.text)&&negative.test(candidate.text)&&!/不等于|不代表|不能(?:证明|据此|认定)|不足以/.test(candidate.text))reasons.push('不能用未提及或缺少证据推出明确否定');
+  const warrantyClaim=/保修|免责|失保|保修责任|warranty|refund/i.test(candidate.text);
+  if(candidate.kind!=='user_report'&&warrantyClaim&&!/保修|warranty|guarantee|refund|return policy|免修|免责/i.test(quotes))reasons.push('保修或责任主张缺少适用的官方政策原文；维修联系指引不等于保修政策');
+  if(part?.kind==='relationship'&&candidate.kind!=='hypothesis'&&!candidate.sources.some(r=>context.evidence.some(s=>s.id===r.id&&s.basis!=='official')))reasons.push('产品说明不能证明用户曾经的经历、情感或人物关系');
   const requiresOfficial=candidate.kind==='fact'||candidate.kind==='operation'||!!part&&['fact','procedure'].includes(part.kind)&&candidate.kind==='advice'&&!candidate.calculation;
   if(requiresOfficial){
     if(!candidate.sources.length)reasons.push('型号事实或操作缺少原文');

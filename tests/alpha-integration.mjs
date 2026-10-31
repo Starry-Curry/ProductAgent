@@ -136,6 +136,9 @@ try {
   );
   assert(candidate, "Natural statement must produce source-anchored candidate");
   assert.equal(candidate.allowCloud, false);
+  await page.locator('summary').filter({hasText:'个人记忆、来源与可选交流方式'}).click();
+  const memoryPanel=page.locator('details').filter({has:page.locator('summary').filter({hasText:'记忆与陪伴 · 看看它记下了什么'})}).last();
+  if((await memoryPanel.getAttribute('open'))===null)await page.locator('summary').filter({hasText:'记忆与陪伴 · 看看它记下了什么'}).click();
   const card = page
     .locator("article.source-card")
     .filter({ has: page.getByText(candidate.text, { exact: true }) });

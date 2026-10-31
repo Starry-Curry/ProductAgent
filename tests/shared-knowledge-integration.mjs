@@ -75,7 +75,7 @@ async function send(question) {
   await page.getByRole("button", { name: "发送", exact: true }).click();
   const r = await response;
   assert.equal(r.status(), 200);
-  const data = await r.json();
+  const data = await assistantResponse(r);
   replies.push({ question, sessionId: data.session.id, reply: data.reply });
   await expect(
     page.getByRole("button", { name: "发送", exact: true }),

@@ -1,6 +1,6 @@
 /** Browser responses may be JSON or SSE; transport success is not task success. */
 export async function assistantResponse(response){
- const headers=response.headers();
+ const headers=typeof response.headers==='function'?response.headers():Object.fromEntries(response.headers.entries());
  if(!headers['content-type']?.includes('text/event-stream'))return response.json();
  const body=(await response.text()).replaceAll('\r\n','\n');let result;
  for(const frame of body.split('\n\n')){
