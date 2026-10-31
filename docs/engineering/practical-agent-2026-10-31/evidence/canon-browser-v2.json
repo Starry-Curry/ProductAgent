@@ -1,0 +1,366 @@
+{
+  "at": "2026-10-31T13:07:42.328Z",
+  "syntheticOwnership": true,
+  "physicalTests": 0,
+  "responses": [
+    {
+      "question": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。",
+      "result": {
+        "session": {
+          "id": "8bf2d698-ad04-4dcb-b27a-b3811182abbe",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "c3e0d2b7-b036-43b8-bc86-988ed2e1090e",
+              "role": "user",
+              "text": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。",
+              "at": "2026-10-31T13:07:53.465Z",
+              "itemId": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "01955f56-0cfa-42ad-b936-14420a45ed1e",
+              "role": "assistant",
+              "text": "根据 Canon SELPHY CP1500 官方手册，装相纸的完整操作如下：\n\n### 1. 光面朝向\n-   **光面朝上**（glossy side up）。\n-   注意不要触摸光面打印区域，避免留下指纹或污渍影响打印质量。若纸张正反面放反，可能损坏打印机或导致故障。\n\n### 2. 最多放多少张\n-   纸盒内**最多放入 18 张**相纸（即一整包标准配置的数量）。\n-   **严禁放入 19 张或以上**，否则可能损坏打印机或造成卡纸等故障。\n\n### 3. 内盖与外盖的处理\n-   **打开顺序**：先打开外层盖（outer cover），再打开内层盖（inner cover）。\n-   **装纸后**：将内盖**用力关紧直到听到“咔哒”声**，确保完全闭合。\n-   **打印时**：**外盖必须保持打开状态**。确认外盖处于开启位置后，再将纸盒完全推入机身插槽（约滑入 2 cm）。\n\n> ⚠️ **额外提醒**\n> -   装纸前请移除相纸包装中的保护页；若使用明信片尺寸且装有 L 尺寸适配器，需先取下适配器。\n> -   补充纸张时，无需关闭电源，直接取出纸盒添加后再重新插入即可。\n> -   切勿触碰纸盒上的弹簧部件，以免变形导致进纸不畅。\n\n来源：[Canon SELPHY CP1500 官方手册 - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+              "reply": {
+                "answer": "根据 Canon SELPHY CP1500 官方手册，装相纸的完整操作如下：\n\n### 1. 光面朝向\n-   **光面朝上**（glossy side up）。\n-   注意不要触摸光面打印区域，避免留下指纹或污渍影响打印质量。若纸张正反面放反，可能损坏打印机或导致故障。\n\n### 2. 最多放多少张\n-   纸盒内**最多放入 18 张**相纸（即一整包标准配置的数量）。\n-   **严禁放入 19 张或以上**，否则可能损坏打印机或造成卡纸等故障。\n\n### 3. 内盖与外盖的处理\n-   **打开顺序**：先打开外层盖（outer cover），再打开内层盖（inner cover）。\n-   **装纸后**：将内盖**用力关紧直到听到“咔哒”声**，确保完全闭合。\n-   **打印时**：**外盖必须保持打开状态**。确认外盖处于开启位置后，再将纸盒完全推入机身插槽（约滑入 2 cm）。\n\n> ⚠️ **额外提醒**\n> -   装纸前请移除相纸包装中的保护页；若使用明信片尺寸且装有 L 尺寸适配器，需先取下适配器。\n> -   补充纸张时，无需关闭电源，直接取出纸盒添加后再重新插入即可。\n> -   切勿触碰纸盒上的弹簧部件，以免变形导致进纸不畅。\n\n来源：[Canon SELPHY CP1500 官方手册 - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0",
+                  "f0b09e65ef8cba87965e4dc9:997",
+                  "f0b09e65ef8cba87965e4dc9:1997"
+                ],
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "kind": "official",
+                    "section": "SELPHY CP1500；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+                    "name": "[模拟持有]照片小打印机",
+                    "model": "SELPHY CP1500"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:07:53.465Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "7373c9f8-8fa7-4184-8b95-a7e29cf257df"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:07:46.307Z",
+          "updatedAt": "2026-10-31T13:07:53.465Z",
+          "expiresAt": "2026-11-07T13:07:46.307Z",
+          "itemScopes": {
+            "9092e49f-d24d-4a7d-ab57-8cf927a5c841": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "根据 Canon SELPHY CP1500 官方手册，装相纸的完整操作如下：\n\n### 1. 光面朝向\n-   **光面朝上**（glossy side up）。\n-   注意不要触摸光面打印区域，避免留下指纹或污渍影响打印质量。若纸张正反面放反，可能损坏打印机或导致故障。\n\n### 2. 最多放多少张\n-   纸盒内**最多放入 18 张**相纸（即一整包标准配置的数量）。\n-   **严禁放入 19 张或以上**，否则可能损坏打印机或造成卡纸等故障。\n\n### 3. 内盖与外盖的处理\n-   **打开顺序**：先打开外层盖（outer cover），再打开内层盖（inner cover）。\n-   **装纸后**：将内盖**用力关紧直到听到“咔哒”声**，确保完全闭合。\n-   **打印时**：**外盖必须保持打开状态**。确认外盖处于开启位置后，再将纸盒完全推入机身插槽（约滑入 2 cm）。\n\n> ⚠️ **额外提醒**\n> -   装纸前请移除相纸包装中的保护页；若使用明信片尺寸且装有 L 尺寸适配器，需先取下适配器。\n> -   补充纸张时，无需关闭电源，直接取出纸盒添加后再重新插入即可。\n> -   切勿触碰纸盒上的弹簧部件，以免变形导致进纸不畅。\n\n来源：[Canon SELPHY CP1500 官方手册 - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "f0b09e65ef8cba87965e4dc9:0",
+            "f0b09e65ef8cba87965e4dc9:997",
+            "f0b09e65ef8cba87965e4dc9:1997"
+          ],
+          "citations": [
+            {
+              "id": "f0b09e65ef8cba87965e4dc9",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "kind": "official",
+              "section": "SELPHY CP1500；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+              "name": "[模拟持有]照片小打印机",
+              "model": "SELPHY CP1500"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-10-31T13:07:48.170Z"
+          },
+          {
+            "stage": "practical_knowledge",
+            "detail": "{\"itemId\":\"9092e49f-d24d-4a7d-ab57-8cf927a5c841\",\"cached\":true,\"readURLs\":[],\"issues\":[],\"sources\":[{\"id\":\"f0b09e65ef8cba87965e4dc9:0\",\"url\":\"https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html\",\"model\":\"SELPHY CP1500\"},{\"id\":\"f0b09e65ef8cba87965e4dc9:997\",\"url\":\"https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html\",\"model\":\"SELPHY CP1500\"},{\"id\":\"f0b09e65ef8cba87965e4dc9:1997\",\"url\":\"https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html\",\"model\":\"SELPHY CP1500\"}]}",
+            "at": "2026-10-31T13:07:48.180Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "search_product_knowledge completed",
+            "at": "2026-10-31T13:07:48.180Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:07:53.460Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":7154,\"calls\":2,\"tools\":1,\"reservedCny\":0.411276,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:07:53.463Z"
+          }
+        ],
+        "tokens": {
+          "input": 7314,
+          "output": 467
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "7f859740-40a9-452e-bbc0-a174813d4fef",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 7244,
+      "streamTextEvents": 115
+    },
+    {
+      "question": "那装19张会更省事吗？印过一面的纸还能重复使用吗？",
+      "result": {
+        "session": {
+          "id": "8bf2d698-ad04-4dcb-b27a-b3811182abbe",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 2,
+          "status": "active",
+          "messages": [
+            {
+              "id": "c3e0d2b7-b036-43b8-bc86-988ed2e1090e",
+              "role": "user",
+              "text": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。",
+              "at": "2026-10-31T13:07:53.465Z",
+              "itemId": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "01955f56-0cfa-42ad-b936-14420a45ed1e",
+              "role": "assistant",
+              "text": "根据 Canon SELPHY CP1500 官方手册，装相纸的完整操作如下：\n\n### 1. 光面朝向\n-   **光面朝上**（glossy side up）。\n-   注意不要触摸光面打印区域，避免留下指纹或污渍影响打印质量。若纸张正反面放反，可能损坏打印机或导致故障。\n\n### 2. 最多放多少张\n-   纸盒内**最多放入 18 张**相纸（即一整包标准配置的数量）。\n-   **严禁放入 19 张或以上**，否则可能损坏打印机或造成卡纸等故障。\n\n### 3. 内盖与外盖的处理\n-   **打开顺序**：先打开外层盖（outer cover），再打开内层盖（inner cover）。\n-   **装纸后**：将内盖**用力关紧直到听到“咔哒”声**，确保完全闭合。\n-   **打印时**：**外盖必须保持打开状态**。确认外盖处于开启位置后，再将纸盒完全推入机身插槽（约滑入 2 cm）。\n\n> ⚠️ **额外提醒**\n> -   装纸前请移除相纸包装中的保护页；若使用明信片尺寸且装有 L 尺寸适配器，需先取下适配器。\n> -   补充纸张时，无需关闭电源，直接取出纸盒添加后再重新插入即可。\n> -   切勿触碰纸盒上的弹簧部件，以免变形导致进纸不畅。\n\n来源：[Canon SELPHY CP1500 官方手册 - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+              "reply": {
+                "answer": "根据 Canon SELPHY CP1500 官方手册，装相纸的完整操作如下：\n\n### 1. 光面朝向\n-   **光面朝上**（glossy side up）。\n-   注意不要触摸光面打印区域，避免留下指纹或污渍影响打印质量。若纸张正反面放反，可能损坏打印机或导致故障。\n\n### 2. 最多放多少张\n-   纸盒内**最多放入 18 张**相纸（即一整包标准配置的数量）。\n-   **严禁放入 19 张或以上**，否则可能损坏打印机或造成卡纸等故障。\n\n### 3. 内盖与外盖的处理\n-   **打开顺序**：先打开外层盖（outer cover），再打开内层盖（inner cover）。\n-   **装纸后**：将内盖**用力关紧直到听到“咔哒”声**，确保完全闭合。\n-   **打印时**：**外盖必须保持打开状态**。确认外盖处于开启位置后，再将纸盒完全推入机身插槽（约滑入 2 cm）。\n\n> ⚠️ **额外提醒**\n> -   装纸前请移除相纸包装中的保护页；若使用明信片尺寸且装有 L 尺寸适配器，需先取下适配器。\n> -   补充纸张时，无需关闭电源，直接取出纸盒添加后再重新插入即可。\n> -   切勿触碰纸盒上的弹簧部件，以免变形导致进纸不畅。\n\n来源：[Canon SELPHY CP1500 官方手册 - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0",
+                  "f0b09e65ef8cba87965e4dc9:997",
+                  "f0b09e65ef8cba87965e4dc9:1997"
+                ],
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "kind": "official",
+                    "section": "SELPHY CP1500；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+                    "name": "[模拟持有]照片小打印机",
+                    "model": "SELPHY CP1500"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:07:53.465Z"
+            },
+            {
+              "id": "8d9594db-2a39-45a9-b303-a94770768c27",
+              "role": "user",
+              "text": "那装19张会更省事吗？印过一面的纸还能重复使用吗？",
+              "at": "2026-10-31T13:07:57.610Z",
+              "itemId": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "4d50a501-3ec3-4253-b3e8-dd824ca445e0",
+              "role": "assistant",
+              "text": "不会更省事，反而有风险。Canon SELPHY CP1500 官方手册明确说明：纸盒最多装入 18 张相纸，**装入 19 张或以上可能损坏打印机或导致故障**。标准包装即为 18 张，直接整包放入是最稳妥的做法；若强行多塞一张，卡纸或进纸机构受损的概率会显著增加，得不偿失。\n\n印过一面的纸**不能重复使用**。手册在“Caution”中明确禁止“Reusing paper, as by printing on blank areas”，即不允许在已打印纸张的空白区域再次打印。SELPHY 采用热升华工艺，纸张经过加热和色带转印后，涂层与表面状态已改变，再次进纸容易造成卡纸、色带污染或打印头损伤，也无法保证成像质量。若需要节省耗材，建议在排版时一次性排满画面，而不是尝试复用纸张。\n\n来源：[Canon SELPHY CP1500 官方手册 - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+              "reply": {
+                "answer": "不会更省事，反而有风险。Canon SELPHY CP1500 官方手册明确说明：纸盒最多装入 18 张相纸，**装入 19 张或以上可能损坏打印机或导致故障**。标准包装即为 18 张，直接整包放入是最稳妥的做法；若强行多塞一张，卡纸或进纸机构受损的概率会显著增加，得不偿失。\n\n印过一面的纸**不能重复使用**。手册在“Caution”中明确禁止“Reusing paper, as by printing on blank areas”，即不允许在已打印纸张的空白区域再次打印。SELPHY 采用热升华工艺，纸张经过加热和色带转印后，涂层与表面状态已改变，再次进纸容易造成卡纸、色带污染或打印头损伤，也无法保证成像质量。若需要节省耗材，建议在排版时一次性排满画面，而不是尝试复用纸张。\n\n来源：[Canon SELPHY CP1500 官方手册 - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0",
+                  "f0b09e65ef8cba87965e4dc9:997",
+                  "f0b09e65ef8cba87965e4dc9:1997"
+                ],
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "kind": "official",
+                    "section": "SELPHY CP1500；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+                    "name": "[模拟持有]照片小打印机",
+                    "model": "SELPHY CP1500"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:07:57.610Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "aa76bd2d-1082-4105-bff2-a9438f41803c"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:07:46.307Z",
+          "updatedAt": "2026-10-31T13:07:57.610Z",
+          "expiresAt": "2026-11-07T13:07:46.307Z",
+          "itemScopes": {
+            "9092e49f-d24d-4a7d-ab57-8cf927a5c841": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "不会更省事，反而有风险。Canon SELPHY CP1500 官方手册明确说明：纸盒最多装入 18 张相纸，**装入 19 张或以上可能损坏打印机或导致故障**。标准包装即为 18 张，直接整包放入是最稳妥的做法；若强行多塞一张，卡纸或进纸机构受损的概率会显著增加，得不偿失。\n\n印过一面的纸**不能重复使用**。手册在“Caution”中明确禁止“Reusing paper, as by printing on blank areas”，即不允许在已打印纸张的空白区域再次打印。SELPHY 采用热升华工艺，纸张经过加热和色带转印后，涂层与表面状态已改变，再次进纸容易造成卡纸、色带污染或打印头损伤，也无法保证成像质量。若需要节省耗材，建议在排版时一次性排满画面，而不是尝试复用纸张。\n\n来源：[Canon SELPHY CP1500 官方手册 - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "f0b09e65ef8cba87965e4dc9:0",
+            "f0b09e65ef8cba87965e4dc9:997",
+            "f0b09e65ef8cba87965e4dc9:1997"
+          ],
+          "citations": [
+            {
+              "id": "f0b09e65ef8cba87965e4dc9",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "kind": "official",
+              "section": "SELPHY CP1500；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+              "name": "[模拟持有]照片小打印机",
+              "model": "SELPHY CP1500"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:07:57.606Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":3732,\"calls\":1,\"tools\":0,\"reservedCny\":0.19566,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:07:57.608Z"
+          }
+        ],
+        "tokens": {
+          "input": 3401,
+          "output": 243
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "3f5d475f-0f24-4239-b801-d0b18dd3ca98",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 4017,
+      "streamTextEvents": 71
+    }
+  ],
+  "checks": [
+    {
+      "name": "真实公开网页→型号核对→录入/官方摘录→工具检索→真实模型完整多问",
+      "passed": true
+    },
+    {
+      "name": "同型号追问19张和重复用纸限制，桌面/390px真实UI",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "acquisition": {
+    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+    "official": true,
+    "textCharacters": 2161,
+    "result": {
+      "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+      "text": "Loading the Paper Cassette\n\nOpen the covers.\n\nThere are two layers of covers. First open the outer cover (①) and then the inner cover (②).\n\nLoad the paper.\n\nRemove the paper cassette paper from the bag, remove any protective sheets from the paper, and load all paper (18 sheets) in the paper cassette.\n\nLoading 19 or more sheets may damage the printer or cause malfunction.\n\nHolding the paper as shown, load it with the glossy side up.\n\nDo not touch the printing surface, which is glossy.\n\nWhen printing on postcard-size paper, before loading the paper, remove the adapter for L-size paper\n*\nas shown, if it is attached.\n\nAn adapter for L-size paper is not included in some countries or regions.\n\nWhen making postcard prints with space for a stamp, load the paper with the stamp area facing as shown.\n\nClose the inner cover.\n\nClose the inner cover firmly until it clicks into place.\n\nLeave the outer cover open when printing.\n\nOpen the paper cassette compartment cover.\n\nLoad the paper cassette.\n\nMaking sure the outer cover is open, insert the paper cassette all the way into the compartment. (It slides about 2 cm (0.8 in.) into the compartment.)\n\nAdding paper\n\nIf a message indicates that the paper has run out, remove the paper cassette without turning off the power.\n\nAdd more paper to the cassette and reinsert the cassette in SELPHY ().\n\nCaution\n\nNever do the following. This may damage the printer or cause malfunction.\n\nLoading paper upside-down, with the glossy and back sides reversed\n\nBending or separating paper at the perforations before printing\n\nUsing label paper whose upper label surface is peeling off or has been partially pulled up\n\nWriting on paper before printing\n\nReusing paper, as by printing on blank areas ()\n\nDo not touch the springs on the paper cassette. Accidentally bending the springs may prevent efficient paper feeding.\n\nNote that one spring is attached in the center on the top of card-size paper cassettes.\n\nAvoid touching or rubbing the glossy, printing side of the paper. Do not handle paper with wet hands, and keep paper free of dust. Dirt or moisture may cause banding or affect print quality, or damage the printer ().",
+      "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+      "links": [],
+      "official": true,
+      "kind": "user-link",
+      "retrievedAt": "2026-10-31T13:07:45.475Z",
+      "manuals": [],
+      "notice": "已联网取得官方站点、匹配完整型号的资料草稿。确认实物及地区版本后录入；保存时服务器重新核对来源，不把公开资料当作你的实物状态。"
+    }
+  },
+  "item": {
+    "id": "9092e49f-d24d-4a7d-ab57-8cf927a5c841",
+    "name": "[模拟持有]照片小打印机",
+    "model": "SELPHY CP1500"
+  },
+  "upstreamRequests": 3
+}

@@ -1,0 +1,1 @@
+{"checks":[{"name":"真实公开网页→型号核对→录入/官方摘录→工具检索→真实模型完整多问","passed":true},{"name":"同型号追问19张和重复用纸限制，桌面/390px真实UI","passed":true}],"errors":[],"upstreamRequests":3}
