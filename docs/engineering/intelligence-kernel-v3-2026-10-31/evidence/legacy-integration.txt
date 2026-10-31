@@ -1,0 +1,26 @@
+{"kind":"local-api-and-browser-no-real-model","passed":true,"elapsedMs":2636,"checks":["missing-model trace","replay authorization","cross-origin write denied","gift original author","dynamic candidate constraints","private Context","desktop/mobile no page errors"],"realModelCalls":0}
+{"kind":"isolated-api-and-edge-browser","passed":true,"realModelCalls":0,"elapsedMs":5915,"checks":["API scope/forget authorization","persistent clarification","tried-step feedback without repeat","attach unregistered session without losing attempts","previewed family summary with source context","automatically extract latest useful method from feedback","item story automatically extracts interest; present intent takes precedence","optional companion grounded in own story","forget removes old rendered and resumed story","missing provider is explicit","desktop/mobile/elder layout"]}
+Household cases and one-time introduction browser acceptance passed; realModelCalls=0.
+Home scene and item companions browser acceptance passed; realModelCalls=0.
+<anonymous_script>:1
+event: result
+^
+
+SyntaxError: Unexpected token 'e', "event: res"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at _Response.json (D:\ProductAgent-LifeContext\.runtime\intelligence-kernel-v3\node_modules\playwright-core\lib\coreBundle.js:61550:21)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:541:9)
+    at async send (file:///D:/ProductAgent-LifeContext/.runtime/intelligence-kernel-v3/tests/shared-knowledge-integration.mjs:77:16)
+    at async file:///D:/ProductAgent-LifeContext/.runtime/intelligence-kernel-v3/tests/shared-knowledge-integration.mjs:90:17
+
+Node.js v24.22.2
+file:///D:/ProductAgent-LifeContext/.runtime/intelligence-kernel-v3/scripts/verify-local.mjs:101
+    if (code !== 0) throw Error(script + " failed (" + code + ")");
+                          ^
+
+Error: tests/shared-knowledge-integration.mjs failed (1)
+    at file:///D:/ProductAgent-LifeContext/.runtime/intelligence-kernel-v3/scripts/verify-local.mjs:101:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.22.2

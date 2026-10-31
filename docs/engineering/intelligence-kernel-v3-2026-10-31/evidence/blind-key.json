@@ -1,0 +1,770 @@
+[
+  {
+    "sampleId": "780c06fa2069",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-01/v3"
+  },
+  {
+    "sampleId": "576ce6e53f1b",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-01/direct"
+  },
+  {
+    "sampleId": "75b917fb9f1f",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-02/v3"
+  },
+  {
+    "sampleId": "23bdb845c823",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-02/direct"
+  },
+  {
+    "sampleId": "0fd4e2bf047a",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-03/v3"
+  },
+  {
+    "sampleId": "b3ddac1bc47a",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-03/direct"
+  },
+  {
+    "sampleId": "c224c25e40fd",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-04/v3"
+  },
+  {
+    "sampleId": "f39d15030551",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-04/direct"
+  },
+  {
+    "sampleId": "2e955aaa9039",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-05/v3"
+  },
+  {
+    "sampleId": "a93f12a763d9",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-05/direct"
+  },
+  {
+    "sampleId": "16b765718815",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-06/v3"
+  },
+  {
+    "sampleId": "8429c7ef39fd",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-06/direct"
+  },
+  {
+    "sampleId": "c1644f9792f7",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-07/v3"
+  },
+  {
+    "sampleId": "df090e46acff",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-07/direct"
+  },
+  {
+    "sampleId": "26b991351944",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-08/v3"
+  },
+  {
+    "sampleId": "c16e2e647b38",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-08/direct"
+  },
+  {
+    "sampleId": "3cdadcb3b49d",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-09/v3"
+  },
+  {
+    "sampleId": "0a6cba547b72",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-09/direct"
+  },
+  {
+    "sampleId": "df6373bda348",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-10/v3"
+  },
+  {
+    "sampleId": "8e21b59e403f",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-10/direct"
+  },
+  {
+    "sampleId": "288197dd73b5",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-11/v3"
+  },
+  {
+    "sampleId": "e69fd0387d4a",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-11/direct"
+  },
+  {
+    "sampleId": "5e592a9cc67f",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-12/v3"
+  },
+  {
+    "sampleId": "fb7039272a35",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-12/direct"
+  },
+  {
+    "sampleId": "84840e4cb74a",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-13/v3"
+  },
+  {
+    "sampleId": "d9d4b7f4136d",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-13/direct"
+  },
+  {
+    "sampleId": "17461d4edd1a",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-14/v3"
+  },
+  {
+    "sampleId": "f40817887621",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-14/direct"
+  },
+  {
+    "sampleId": "eb405f79f316",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-15/v3"
+  },
+  {
+    "sampleId": "873e32740acd",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-15/direct"
+  },
+  {
+    "sampleId": "8888cc84bf04",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-16/v3"
+  },
+  {
+    "sampleId": "dd78d3a7d583",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-16/direct"
+  },
+  {
+    "sampleId": "19d43edf481f",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-17/v3"
+  },
+  {
+    "sampleId": "e5baedcdf6f9",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-17/direct"
+  },
+  {
+    "sampleId": "3eed09918f81",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-18/v3"
+  },
+  {
+    "sampleId": "4019e02c843e",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-18/direct"
+  },
+  {
+    "sampleId": "a28ee6003770",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-19/v3"
+  },
+  {
+    "sampleId": "ceeedb97459c",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-19/direct"
+  },
+  {
+    "sampleId": "7b6ff1e05f13",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-20/v3"
+  },
+  {
+    "sampleId": "d9dc26d4c001",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-20/direct"
+  },
+  {
+    "sampleId": "a04661ad7caf",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#QA-21/v3"
+  },
+  {
+    "sampleId": "e15406e6223f",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#QA-21/direct"
+  },
+  {
+    "sampleId": "3b78113e8ece",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-01/v3"
+  },
+  {
+    "sampleId": "8ac885ac6347",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-01/direct"
+  },
+  {
+    "sampleId": "bced2ec5070b",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-02/v3"
+  },
+  {
+    "sampleId": "3ce1ba4fd12c",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-02/direct"
+  },
+  {
+    "sampleId": "dc0af125f96e",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-03/v3"
+  },
+  {
+    "sampleId": "bb6d0a0fade3",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-03/direct"
+  },
+  {
+    "sampleId": "8e65505a64d4",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-04/v3"
+  },
+  {
+    "sampleId": "deed79935f5c",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-04/direct"
+  },
+  {
+    "sampleId": "ea4568116d3f",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-05/v3"
+  },
+  {
+    "sampleId": "9fe9cb97eb5e",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-05/direct"
+  },
+  {
+    "sampleId": "c4ca2970bf9a",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-06/v3"
+  },
+  {
+    "sampleId": "939da2a80cc7",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-06/direct"
+  },
+  {
+    "sampleId": "bd9866ed3767",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-07/v3"
+  },
+  {
+    "sampleId": "e050e058017c",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-07/direct"
+  },
+  {
+    "sampleId": "25b6e959ef7f",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-08/v3"
+  },
+  {
+    "sampleId": "ce99b8d17d13",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-08/direct"
+  },
+  {
+    "sampleId": "26dc6610dea5",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-09/v3"
+  },
+  {
+    "sampleId": "b25e3075ac87",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#CONSTRAINT-09/direct"
+  },
+  {
+    "sampleId": "fe8d988f3a57",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#PERSONA-03/v3"
+  },
+  {
+    "sampleId": "83a04b9c03a6",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#PERSONA-03/direct"
+  },
+  {
+    "sampleId": "2aa807b3439c",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#PERSONA-07/v3"
+  },
+  {
+    "sampleId": "7c6e9b1611c4",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#PERSONA-07/direct"
+  },
+  {
+    "sampleId": "8396d39dca8b",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#FAMILY-10/v3"
+  },
+  {
+    "sampleId": "fa9754200ba0",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#FAMILY-10/direct"
+  },
+  {
+    "sampleId": "0fc33d99cdbf",
+    "stage": "historical-final-v3",
+    "arm": "v3",
+    "outputRef": "historical-final-v3.json#AGENT-02/v3"
+  },
+  {
+    "sampleId": "2d3d9cb92233",
+    "stage": "historical-final-v3",
+    "arm": "direct",
+    "outputRef": "historical-final-v3.json#AGENT-02/direct"
+  },
+  {
+    "sampleId": "acbdeebb2857",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-SONY-PX470-1/v3"
+  },
+  {
+    "sampleId": "18c9db9dd9d2",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-SONY-PX470-1/direct"
+  },
+  {
+    "sampleId": "8ad84b9d06d0",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-SONY-PX470-2/v3"
+  },
+  {
+    "sampleId": "43da56a20ec7",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-SONY-PX470-2/direct"
+  },
+  {
+    "sampleId": "46a59d49a354",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-SONY-PX470-3/v3"
+  },
+  {
+    "sampleId": "963fb6b7ad45",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-SONY-PX470-3/direct"
+  },
+  {
+    "sampleId": "da22940b10db",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-SONY-PX470-4/v3"
+  },
+  {
+    "sampleId": "5e8d8ff5f3ae",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-SONY-PX470-4/direct"
+  },
+  {
+    "sampleId": "03399bd9ed51",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-SONY-PX470-5/v3"
+  },
+  {
+    "sampleId": "ffa29e48cec3",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-SONY-PX470-5/direct"
+  },
+  {
+    "sampleId": "39e015da44ca",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-CANON-CP1500-1/v3"
+  },
+  {
+    "sampleId": "969181df3022",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-CANON-CP1500-1/direct"
+  },
+  {
+    "sampleId": "b17a152f24d0",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-CANON-CP1500-2/v3"
+  },
+  {
+    "sampleId": "bec80626c44b",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-CANON-CP1500-2/direct"
+  },
+  {
+    "sampleId": "459bbc332652",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-CANON-CP1500-3/v3"
+  },
+  {
+    "sampleId": "8400b3e47fcc",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-CANON-CP1500-3/direct"
+  },
+  {
+    "sampleId": "88925092a181",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-CANON-CP1500-4/v3"
+  },
+  {
+    "sampleId": "934593e6e429",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-CANON-CP1500-4/direct"
+  },
+  {
+    "sampleId": "dd5456ab889d",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-CANON-CP1500-5/v3"
+  },
+  {
+    "sampleId": "f43b75e543b6",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-CANON-CP1500-5/direct"
+  },
+  {
+    "sampleId": "fd6084062c02",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-LOGI-K380-1/v3"
+  },
+  {
+    "sampleId": "d35df8f67751",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-LOGI-K380-1/direct"
+  },
+  {
+    "sampleId": "91a1bd4370a7",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-LOGI-K380-2/v3"
+  },
+  {
+    "sampleId": "86d15e3fa704",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-LOGI-K380-2/direct"
+  },
+  {
+    "sampleId": "fc54d62cdb0c",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-LOGI-K380-3/v3"
+  },
+  {
+    "sampleId": "538bbc305f7b",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-LOGI-K380-3/direct"
+  },
+  {
+    "sampleId": "2e48077da309",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-LOGI-K380-4/v3"
+  },
+  {
+    "sampleId": "9b9fa5a97997",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-LOGI-K380-4/direct"
+  },
+  {
+    "sampleId": "3425a2ca9156",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-LOGI-K380-5/v3"
+  },
+  {
+    "sampleId": "b4a49bae61b2",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-LOGI-K380-5/direct"
+  },
+  {
+    "sampleId": "8248d200929b",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-IKEA-RASKOG-1/v3"
+  },
+  {
+    "sampleId": "335ee59a9e4b",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-IKEA-RASKOG-1/direct"
+  },
+  {
+    "sampleId": "dffb18d3dd70",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-IKEA-RASKOG-2/v3"
+  },
+  {
+    "sampleId": "6a0725992480",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-IKEA-RASKOG-2/direct"
+  },
+  {
+    "sampleId": "6b67c664ebe9",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-IKEA-RASKOG-3/v3"
+  },
+  {
+    "sampleId": "d97de767119a",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-IKEA-RASKOG-3/direct"
+  },
+  {
+    "sampleId": "98c205644e56",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-IKEA-RASKOG-4/v3"
+  },
+  {
+    "sampleId": "f80f1e273d00",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-IKEA-RASKOG-4/direct"
+  },
+  {
+    "sampleId": "03b6018a377c",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-IKEA-RASKOG-5/v3"
+  },
+  {
+    "sampleId": "31806918d38a",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-IKEA-RASKOG-5/direct"
+  },
+  {
+    "sampleId": "5eb47081a618",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-LEGO-42179-1/v3"
+  },
+  {
+    "sampleId": "eee2f24dc4d9",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-LEGO-42179-1/direct"
+  },
+  {
+    "sampleId": "6aeb95b056e8",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-LEGO-42179-2/v3"
+  },
+  {
+    "sampleId": "34937b049199",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-LEGO-42179-2/direct"
+  },
+  {
+    "sampleId": "63f0a55fdc89",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-LEGO-42179-3/v3"
+  },
+  {
+    "sampleId": "bbd009d4d013",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-LEGO-42179-3/direct"
+  },
+  {
+    "sampleId": "abf9d17c0bea",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-LEGO-42179-4/v3"
+  },
+  {
+    "sampleId": "b1b059ba6867",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-LEGO-42179-4/direct"
+  },
+  {
+    "sampleId": "17f1307dcf1b",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-LEGO-42179-5/v3"
+  },
+  {
+    "sampleId": "b3cfc749111e",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-LEGO-42179-5/direct"
+  },
+  {
+    "sampleId": "aa1f57cf3594",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-MI-PURIFIER4-1/v3"
+  },
+  {
+    "sampleId": "d7f33571f633",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-MI-PURIFIER4-1/direct"
+  },
+  {
+    "sampleId": "fc0591ccb760",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-MI-PURIFIER4-2/v3"
+  },
+  {
+    "sampleId": "c6fa2237285e",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-MI-PURIFIER4-2/direct"
+  },
+  {
+    "sampleId": "0185a5658d9e",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-MI-PURIFIER4-3/v3"
+  },
+  {
+    "sampleId": "e26c4303623c",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-MI-PURIFIER4-3/direct"
+  },
+  {
+    "sampleId": "93a70eb3e317",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-MI-PURIFIER4-4/v3"
+  },
+  {
+    "sampleId": "de9c290e979a",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-MI-PURIFIER4-4/direct"
+  },
+  {
+    "sampleId": "6c2ceda292ce",
+    "stage": "holdout-frozen-v1",
+    "arm": "v3",
+    "outputRef": "holdout-frozen-v1.json#H-MI-PURIFIER4-5/v3"
+  },
+  {
+    "sampleId": "cf54e2471550",
+    "stage": "holdout-frozen-v1",
+    "arm": "direct",
+    "outputRef": "holdout-frozen-v1.json#H-MI-PURIFIER4-5/direct"
+  }
+]

@@ -1,0 +1,3651 @@
+{
+  "roundId": "intelligence-kernel-v3-20261031-r1",
+  "stage": "development-final-v1",
+  "set": "development",
+  "model": "qwen-plus-2025-12-01",
+  "commit": "0fba36522abdc957e88e5edf79bee005ece09169",
+  "kernelSourceHash": "a7c584e773ea8e82998c7f32c08f7e89f29cc76177c3d208de4ce7d7d460fb9f",
+  "arms": [
+    "v3"
+  ],
+  "syntheticOwners": true,
+  "physicalTests": 0,
+  "independentHumanBlindReview": false,
+  "method": "All arms access same authorized product corpus and question. Direct receives exact V3 initial context. Previous runs baseline default routes, retrieval differences are treatment and explicitly logged; not identical per-model payload. Historical outcomes never substituted for fresh arms.",
+  "rows": [
+    {
+      "id": "DEV-01",
+      "arm": "v3",
+      "question": "ICD-PX470用什么电池、几节？录音要怎样传到电脑？",
+      "expected": "2节AAA，USB滑出接电脑并检查检测结果；不把文件传输当充电。",
+      "result": {
+        "session": {
+          "id": "0dd30756-809c-4c48-89d0-2eb800d75e1a",
+          "owner": "lin",
+          "itemId": "9955c5fd-de51-4253-a4ec-bb75c4d70281",
+          "identity": "[\"lin\",\"[\\\"ICD-PX470\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "a916adf9-b200-42fc-b47b-fcc8ce53aeaa",
+              "role": "user",
+              "text": "ICD-PX470用什么电池、几节？录音要怎样传到电脑？",
+              "at": "2026-10-31T09:37:45.002Z",
+              "itemId": "9955c5fd-de51-4253-a4ec-bb75c4d70281",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "28ea95ea-ad56-4045-ba5c-da8f382456d4",
+              "role": "assistant",
+              "text": "ICD-PX470使用什么型号、几节电池：\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n录音文件如何传到电脑：\n按以下条件再尝试：将录音笔背部的 USB 滑杆按住并沿箭头方向滑出内置 USB-A 接口，插入已开机的电脑 USB 端口；连接后录音笔屏幕显示 'Connecting'，Windows 中在‘此电脑’或‘PC’里可见‘IC RECORDER’或‘MEMORY CARD’盘符，macOS 中在 Finder 中可见同名驱动器；录音文件位于该设备根目录下的‘RECORD’文件夹内，可直接拖拽复制。\n先核对：电脑已开机并正常运行；USB端口功能正常；操作系统为 Windows 或 macOS\n\n仍待回答：ICD-PX470用什么电池、几节？",
+              "reply": {
+                "answer": "ICD-PX470使用什么型号、几节电池：\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n录音文件如何传到电脑：\n按以下条件再尝试：将录音笔背部的 USB 滑杆按住并沿箭头方向滑出内置 USB-A 接口，插入已开机的电脑 USB 端口；连接后录音笔屏幕显示 'Connecting'，Windows 中在‘此电脑’或‘PC’里可见‘IC RECORDER’或‘MEMORY CARD’盘符，macOS 中在 Finder 中可见同名驱动器；录音文件位于该设备根目录下的‘RECORD’文件夹内，可直接拖拽复制。\n先核对：电脑已开机并正常运行；USB端口功能正常；操作系统为 Windows 或 macOS\n\n仍待回答：ICD-PX470用什么电池、几节？",
+                "outcome": "needs_info",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "725d85db7d8860da5f238a07:0"
+                ],
+                "citations": [
+                  {
+                    "id": "725d85db7d8860da5f238a07",
+                    "title": "ICD-PX470 | Help Guide | Connecting the IC recorder to a computer",
+                    "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html",
+                    "kind": "official",
+                    "section": "ICD-PX470；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "9955c5fd-de51-4253-a4ec-bb75c4d70281",
+                    "name": "[合成持有，仅测试] Sony ICD-PX470 录音笔",
+                    "model": "ICD-PX470"
+                  }
+                ],
+                "task": {
+                  "goal": "回答ICD-PX470的电池规格与录音传输至电脑的操作方法",
+                  "parts": [
+                    {
+                      "title": "ICD-PX470使用什么型号、几节电池？",
+                      "status": "needs_info"
+                    },
+                    {
+                      "title": "录音文件如何传到电脑？",
+                      "status": "needs_info"
+                    }
+                  ]
+                },
+                "taskFrame": {
+                  "goal": "回答ICD-PX470的电池规格与录音传输至电脑的操作方法",
+                  "itemIds": [
+                    "9955c5fd-de51-4253-a4ec-bb75c4d70281"
+                  ],
+                  "parts": [
+                    {
+                      "id": "battery_type",
+                      "question": "ICD-PX470使用什么型号、几节电池？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "9955c5fd-de51-4253-a4ec-bb75c4d70281"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "power_requirements"
+                      ],
+                      "expectedResult": "明确电池型号、数量、化学类型及标称电压"
+                    },
+                    {
+                      "id": "transfer_method",
+                      "question": "录音文件如何传到电脑？",
+                      "kind": "procedure",
+                      "itemIds": [
+                        "9955c5fd-de51-4253-a4ec-bb75c4d70281"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "USB_connector",
+                        "computer_detection_behavior",
+                        "file_system_visibility"
+                      ],
+                      "expectedResult": "完整可执行的连接步骤、电脑端识别状态确认方式、文件访问路径说明"
+                    }
+                  ],
+                  "tried": [],
+                  "constraints": [],
+                  "version": "task-frame/3",
+                  "originalQuestion": "ICD-PX470用什么电池、几节？录音要怎样传到电脑？",
+                  "evidenceIds": [
+                    "725d85db7d8860da5f238a07:0",
+                    "9f37d1ff54c2f4149edca3c8:998",
+                    "9f37d1ff54c2f4149edca3c8:0",
+                    "9f37d1ff54c2f4149edca3c8:1997",
+                    "user:current-turn"
+                  ],
+                  "permission": "read_only",
+                  "progress": "partial"
+                },
+                "claimChecks": [
+                  {
+                    "id": "battery_spec",
+                    "partId": "battery_type",
+                    "text": "ICD-PX470 使用两节 LR03（即 AAA 尺寸）碱性电池，标称电压为 3.0 V DC。",
+                    "verdict": "insufficient",
+                    "published": false,
+                    "reasons": [
+                      "数值/单位超出所引原文：2节",
+                      "没有唯一的语义核对记录"
+                    ],
+                    "sourceIds": [
+                      "9f37d1ff54c2f4149edca3c8:998"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "9f37d1ff54c2f4149edca3c8:998",
+                        "quote": "Power requirements\n\nTwo\nLR03\n(size AAA) alkaline batteries (supplied): 3.0 V DC",
+                        "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155309.html",
+                        "model": "ICD-PX470",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T08:10:07.737Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "transfer_steps",
+                    "partId": "transfer_method",
+                    "text": "将录音笔背部的 USB 滑杆按住并沿箭头方向滑出内置 USB-A 接口，插入已开机的电脑 USB 端口；连接后录音笔屏幕显示 'Connecting'，Windows 中在‘此电脑’或‘PC’里可见‘IC RECORDER’或‘MEMORY CARD’盘符，macOS 中在 Finder 中可见同名驱动器；录音文件位于该设备根目录下的‘RECORD’文件夹内，可直接拖拽复制。",
+                    "verdict": "conditional",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "725d85db7d8860da5f238a07:0"
+                    ],
+                    "conditions": [
+                      "电脑已开机并正常运行",
+                      "USB端口功能正常",
+                      "操作系统为 Windows 或 macOS"
+                    ],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "725d85db7d8860da5f238a07:0",
+                        "quote": "Press and hold the\nUSB\nslide lever on the back of the IC recorder, and then slide it in the direction of the arrow to push out the USB connector. Insert the connector into the USB port on a computer that is up and running.\n\nMake sure the IC recorder is successfully detected by the computer.\n\nOn the\nWindows\ncomputer, open “\nComputer\n” or “\nPC\n,” and make sure that “\nIC RECORDER\n” or “\nMEMORY CARD\n” is detected.\n\nOn the\nMac\n, make sure that an “\nIC RECORDER\n” or “\nMEMORY CARD\n” drive appears on the Finder.\n\nThe IC recorder is detected by the computer as soon as a connection is made. While the IC recorder is connected to the computer, “\nConnecting\n” appears on the display window of the IC recorder.",
+                        "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html",
+                        "model": "ICD-PX470",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T08:10:08.172Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  }
+                ],
+                "taskProgress": {
+                  "guidance": "partial",
+                  "missing": [
+                    "ICD-PX470用什么电池、几节？",
+                    "数值/单位超出所引原文：2节",
+                    "没有唯一的语义核对记录"
+                  ],
+                  "completionEvidence": "advice-only"
+                },
+                "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+              },
+              "at": "2026-10-31T09:37:45.002Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "4ff40191-d323-43cb-8371-459430a2e33b"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T09:37:16.099Z",
+          "updatedAt": "2026-10-31T09:37:45.004Z",
+          "expiresAt": "2026-11-07T09:37:16.099Z",
+          "itemScopes": {
+            "9955c5fd-de51-4253-a4ec-bb75c4d70281": "[\"lin\",\"[\\\"ICD-PX470\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "ICD-PX470使用什么型号、几节电池：\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n录音文件如何传到电脑：\n按以下条件再尝试：将录音笔背部的 USB 滑杆按住并沿箭头方向滑出内置 USB-A 接口，插入已开机的电脑 USB 端口；连接后录音笔屏幕显示 'Connecting'，Windows 中在‘此电脑’或‘PC’里可见‘IC RECORDER’或‘MEMORY CARD’盘符，macOS 中在 Finder 中可见同名驱动器；录音文件位于该设备根目录下的‘RECORD’文件夹内，可直接拖拽复制。\n先核对：电脑已开机并正常运行；USB端口功能正常；操作系统为 Windows 或 macOS\n\n仍待回答：ICD-PX470用什么电池、几节？",
+          "outcome": "needs_info",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "725d85db7d8860da5f238a07:0"
+          ],
+          "citations": [
+            {
+              "id": "725d85db7d8860da5f238a07",
+              "title": "ICD-PX470 | Help Guide | Connecting the IC recorder to a computer",
+              "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html",
+              "kind": "official",
+              "section": "ICD-PX470；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "9955c5fd-de51-4253-a4ec-bb75c4d70281",
+              "name": "[合成持有，仅测试] Sony ICD-PX470 录音笔",
+              "model": "ICD-PX470"
+            }
+          ],
+          "task": {
+            "goal": "回答ICD-PX470的电池规格与录音传输至电脑的操作方法",
+            "parts": [
+              {
+                "title": "ICD-PX470使用什么型号、几节电池？",
+                "status": "needs_info"
+              },
+              {
+                "title": "录音文件如何传到电脑？",
+                "status": "needs_info"
+              }
+            ]
+          },
+          "taskFrame": {
+            "goal": "回答ICD-PX470的电池规格与录音传输至电脑的操作方法",
+            "itemIds": [
+              "9955c5fd-de51-4253-a4ec-bb75c4d70281"
+            ],
+            "parts": [
+              {
+                "id": "battery_type",
+                "question": "ICD-PX470使用什么型号、几节电池？",
+                "kind": "fact",
+                "itemIds": [
+                  "9955c5fd-de51-4253-a4ec-bb75c4d70281"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "power_requirements"
+                ],
+                "expectedResult": "明确电池型号、数量、化学类型及标称电压"
+              },
+              {
+                "id": "transfer_method",
+                "question": "录音文件如何传到电脑？",
+                "kind": "procedure",
+                "itemIds": [
+                  "9955c5fd-de51-4253-a4ec-bb75c4d70281"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "USB_connector",
+                  "computer_detection_behavior",
+                  "file_system_visibility"
+                ],
+                "expectedResult": "完整可执行的连接步骤、电脑端识别状态确认方式、文件访问路径说明"
+              }
+            ],
+            "tried": [],
+            "constraints": [],
+            "version": "task-frame/3",
+            "originalQuestion": "ICD-PX470用什么电池、几节？录音要怎样传到电脑？",
+            "evidenceIds": [
+              "725d85db7d8860da5f238a07:0",
+              "9f37d1ff54c2f4149edca3c8:998",
+              "9f37d1ff54c2f4149edca3c8:0",
+              "9f37d1ff54c2f4149edca3c8:1997",
+              "user:current-turn"
+            ],
+            "permission": "read_only",
+            "progress": "partial"
+          },
+          "claimChecks": [
+            {
+              "id": "battery_spec",
+              "partId": "battery_type",
+              "text": "ICD-PX470 使用两节 LR03（即 AAA 尺寸）碱性电池，标称电压为 3.0 V DC。",
+              "verdict": "insufficient",
+              "published": false,
+              "reasons": [
+                "数值/单位超出所引原文：2节",
+                "没有唯一的语义核对记录"
+              ],
+              "sourceIds": [
+                "9f37d1ff54c2f4149edca3c8:998"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "9f37d1ff54c2f4149edca3c8:998",
+                  "quote": "Power requirements\n\nTwo\nLR03\n(size AAA) alkaline batteries (supplied): 3.0 V DC",
+                  "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155309.html",
+                  "model": "ICD-PX470",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T08:10:07.737Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "transfer_steps",
+              "partId": "transfer_method",
+              "text": "将录音笔背部的 USB 滑杆按住并沿箭头方向滑出内置 USB-A 接口，插入已开机的电脑 USB 端口；连接后录音笔屏幕显示 'Connecting'，Windows 中在‘此电脑’或‘PC’里可见‘IC RECORDER’或‘MEMORY CARD’盘符，macOS 中在 Finder 中可见同名驱动器；录音文件位于该设备根目录下的‘RECORD’文件夹内，可直接拖拽复制。",
+              "verdict": "conditional",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "725d85db7d8860da5f238a07:0"
+              ],
+              "conditions": [
+                "电脑已开机并正常运行",
+                "USB端口功能正常",
+                "操作系统为 Windows 或 macOS"
+              ],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "725d85db7d8860da5f238a07:0",
+                  "quote": "Press and hold the\nUSB\nslide lever on the back of the IC recorder, and then slide it in the direction of the arrow to push out the USB connector. Insert the connector into the USB port on a computer that is up and running.\n\nMake sure the IC recorder is successfully detected by the computer.\n\nOn the\nWindows\ncomputer, open “\nComputer\n” or “\nPC\n,” and make sure that “\nIC RECORDER\n” or “\nMEMORY CARD\n” is detected.\n\nOn the\nMac\n, make sure that an “\nIC RECORDER\n” or “\nMEMORY CARD\n” drive appears on the Finder.\n\nThe IC recorder is detected by the computer as soon as a connection is made. While the IC recorder is connected to the computer, “\nConnecting\n” appears on the display window of the IC recorder.",
+                  "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html",
+                  "model": "ICD-PX470",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T08:10:08.172Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            }
+          ],
+          "taskProgress": {
+            "guidance": "partial",
+            "missing": [
+              "ICD-PX470用什么电池、几节？",
+              "数值/单位超出所引原文：2节",
+              "没有唯一的语义核对记录"
+            ],
+            "completionEvidence": "advice-only"
+          },
+          "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+        },
+        "trace": [
+          {
+            "stage": "kernel_context",
+            "detail": "readOnly; selected=1; documents=2; passages=5; no persistent TaskFrame required",
+            "at": "2026-10-31T09:37:16.106Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "1; fullResponseMs=22840",
+            "at": "2026-10-31T09:37:38.951Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "2; fullResponseMs=6031",
+            "at": "2026-10-31T09:37:44.993Z"
+          },
+          {
+            "stage": "kernel_completion",
+            "detail": "parts=0/2; claims=1/2; adviceOnly",
+            "at": "2026-10-31T09:37:44.999Z"
+          }
+        ],
+        "tokens": {
+          "input": 6636,
+          "output": 1222
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "2e4775f5-5bbe-4391-bb4c-cb6c3ba23400",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 28944,
+      "effectiveContextHash": "3b90459ede459db0ce1d2fcf1e517c53912d1af1f06ce80d0551a9d3c3f2fa5a",
+      "sourcePool": {
+        "documents": [
+          {
+            "itemId": "9955c5fd-de51-4253-a4ec-bb75c4d70281",
+            "id": "725d85db7d8860da5f238a07",
+            "hash": "fd22cb989ac920ea46a788b5f09b60f6addd0202c6c68e3677fe6cdac00ec223",
+            "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html",
+            "model": "ICD-PX470",
+            "region": "unspecified"
+          },
+          {
+            "itemId": "9955c5fd-de51-4253-a4ec-bb75c4d70281",
+            "id": "9f37d1ff54c2f4149edca3c8",
+            "hash": "e1b75811004ed48d0682ba8700283d0dd8b34024dae0d0987125a7087e4c0e71",
+            "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155309.html",
+            "model": "ICD-PX470",
+            "region": "unspecified"
+          }
+        ],
+        "missingItemIds": []
+      },
+      "upstreamRequests": 2,
+      "attemptNumbers": [
+        230,
+        233
+      ],
+      "inputTokens": 6636,
+      "outputTokens": 1222,
+      "estimatedCny": 0.007752800000000001,
+      "firstPayloadHash": "89f1a79c0edb32451ba38df10061a61fc2608ac0b382f9c80260e267254a42ac",
+      "sourceStatus": "readable_cached_official"
+    },
+    {
+      "id": "DEV-03",
+      "arm": "v3",
+      "question": "K380第一次和手机配对怎样操作？以后换回电脑怎样切换？",
+      "expected": "依据Easy-Switch已配对与首次配对，必要设备端选择步骤，不新增固件功能。",
+      "result": {
+        "session": {
+          "id": "ea9d38ed-44ee-4011-999a-c95107d9c70b",
+          "owner": "lin",
+          "itemId": "7f384415-9a1c-4db3-8722-d8094e2585b6",
+          "identity": "[\"lin\",\"[\\\"K380\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "13a1cc50-f477-461d-a726-3adbffe96670",
+              "role": "user",
+              "text": "K380第一次和手机配对怎样操作？以后换回电脑怎样切换？",
+              "at": "2026-10-31T09:37:53.818Z",
+              "itemId": "7f384415-9a1c-4db3-8722-d8094e2585b6",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "efbc5d2e-4242-4a08-bde1-f68ac52ec85e",
+              "role": "assistant",
+              "text": "K380第一次和手机配对怎样操作：\n1. 拉出键盘背面电池仓的拉条以开机；此时Easy-Switch按钮LED应快速闪烁。若未闪烁，长按该按钮3秒强制进入配对模式。\n2. 在手机蓝牙设置中，确保蓝牙已开启并搜索新设备。\n3. 在可用设备列表中选择“Logitech Bluetooth® Multi-Device Keyboard K380”。\n4. 按提示完成配对（部分系统可能无需输入码）。\n5. 配对成功后，对应Easy-Switch按钮LED将常亮5秒。\n\n以后换回电脑怎样切换：\n1. 确保K380已预先与目标电脑完成配对（如尚未配对，请先执行‘PAIR TO A SECOND COMPUTER WITH EASY-SWITCH’流程）。\n2. 短按任一Easy-Switch按钮（标有1、2或3），即可立即切换至该通道绑定的设备（例如：按按钮1切至手机，按按钮2切至电脑）。\n3. 切换后，对应按钮LED常亮，键盘输入即路由至该设备。",
+              "reply": {
+                "answer": "K380第一次和手机配对怎样操作：\n1. 拉出键盘背面电池仓的拉条以开机；此时Easy-Switch按钮LED应快速闪烁。若未闪烁，长按该按钮3秒强制进入配对模式。\n2. 在手机蓝牙设置中，确保蓝牙已开启并搜索新设备。\n3. 在可用设备列表中选择“Logitech Bluetooth® Multi-Device Keyboard K380”。\n4. 按提示完成配对（部分系统可能无需输入码）。\n5. 配对成功后，对应Easy-Switch按钮LED将常亮5秒。\n\n以后换回电脑怎样切换：\n1. 确保K380已预先与目标电脑完成配对（如尚未配对，请先执行‘PAIR TO A SECOND COMPUTER WITH EASY-SWITCH’流程）。\n2. 短按任一Easy-Switch按钮（标有1、2或3），即可立即切换至该通道绑定的设备（例如：按按钮1切至手机，按按钮2切至电脑）。\n3. 切换后，对应按钮LED常亮，键盘输入即路由至该设备。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "179584a3850243398fb0853e:997",
+                  "179584a3850243398fb0853e:1996"
+                ],
+                "citations": [
+                  {
+                    "id": "179584a3850243398fb0853e",
+                    "title": "Getting started - K380 Multi-Device Bluetooth Keyboard – Logitech Support + DownloadSustainability Navigation",
+                    "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+                    "kind": "official",
+                    "section": "K380；hk"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "7f384415-9a1c-4db3-8722-d8094e2585b6",
+                    "name": "[合成持有，仅测试] Logitech K380 键盘",
+                    "model": "K380"
+                  }
+                ],
+                "task": {
+                  "goal": "指导K380键盘首次与手机配对，以及后续在手机与电脑间切换连接",
+                  "parts": [
+                    {
+                      "title": "K380第一次和手机配对怎样操作？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "以后换回电脑怎样切换？",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "taskFrame": {
+                  "goal": "指导K380键盘首次与手机配对，以及后续在手机与电脑间切换连接",
+                  "itemIds": [
+                    "7f384415-9a1c-4db3-8722-d8094e2585b6"
+                  ],
+                  "parts": [
+                    {
+                      "id": "first-pairing-phone",
+                      "question": "K380第一次和手机配对怎样操作？",
+                      "kind": "procedure",
+                      "itemIds": [
+                        "7f384415-9a1c-4db3-8722-d8094e2585b6"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "手机蓝牙已开启",
+                        "K380电源已打开",
+                        "手机处于可发现设备列表刷新状态"
+                      ],
+                      "expectedResult": "K380与手机建立稳定蓝牙连接，Easy-Switch按钮LED常亮5秒"
+                    },
+                    {
+                      "id": "switch-to-computer",
+                      "question": "以后换回电脑怎样切换？",
+                      "kind": "procedure",
+                      "itemIds": [
+                        "7f384415-9a1c-4db3-8722-d8094e2585b6"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "K380已预先配对电脑",
+                        "电脑蓝牙已开启且可见",
+                        "当前连接设备（手机）未主动占用键盘输入"
+                      ],
+                      "expectedResult": "键盘输入立即路由至电脑，对应Easy-Switch按钮LED常亮"
+                    }
+                  ],
+                  "tried": [],
+                  "constraints": [],
+                  "version": "task-frame/3",
+                  "originalQuestion": "K380第一次和手机配对怎样操作？以后换回电脑怎样切换？",
+                  "evidenceIds": [
+                    "e547877cab61933d55743d55:1991",
+                    "e547877cab61933d55743d55:2988",
+                    "e547877cab61933d55743d55:3984",
+                    "e547877cab61933d55743d55:4983",
+                    "e547877cab61933d55743d55:5975",
+                    "e547877cab61933d55743d55:6975",
+                    "e547877cab61933d55743d55:7975",
+                    "e547877cab61933d55743d55:8973",
+                    "e547877cab61933d55743d55:17958",
+                    "e547877cab61933d55743d55:0",
+                    "e547877cab61933d55743d55:996",
+                    "e547877cab61933d55743d55:9971",
+                    "e547877cab61933d55743d55:10971",
+                    "e547877cab61933d55743d55:22940",
+                    "aba44a0f5b67953327519964:0",
+                    "aba44a0f5b67953327519964:1001",
+                    "179584a3850243398fb0853e:0",
+                    "179584a3850243398fb0853e:997",
+                    "179584a3850243398fb0853e:5980",
+                    "179584a3850243398fb0853e:1996",
+                    "aba44a0f5b67953327519964:2998",
+                    "179584a3850243398fb0853e:4984",
+                    "179584a3850243398fb0853e:2989",
+                    "179584a3850243398fb0853e:6979",
+                    "aba44a0f5b67953327519964:1997",
+                    "179584a3850243398fb0853e:3984",
+                    "aba44a0f5b67953327519964:3996",
+                    "179584a3850243398fb0853e:11970",
+                    "user:current-turn"
+                  ],
+                  "permission": "read_only",
+                  "progress": "ready_to_confirm"
+                },
+                "claimChecks": [
+                  {
+                    "id": "first-pairing-phone-operation",
+                    "partId": "first-pairing-phone",
+                    "text": "1. 拉出键盘背面电池仓的拉条以开机；此时Easy-Switch按钮LED应快速闪烁。若未闪烁，长按该按钮3秒强制进入配对模式。\n2. 在手机蓝牙设置中，确保蓝牙已开启并搜索新设备。\n3. 在可用设备列表中选择“Logitech Bluetooth® Multi-Device Keyboard K380”。\n4. 按提示完成配对（部分系统可能无需输入码）。\n5. 配对成功后，对应Easy-Switch按钮LED将常亮5秒。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "179584a3850243398fb0853e:997"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "179584a3850243398fb0853e:997",
+                        "quote": "Pull the tab on the back side of the keyboard to power it on.\n\nThe LED on the Easy-Switch button should blink rapidly. If not, hold down the button for three seconds.\n\nConnect your device using Bluetooth:\n\nOpen the Bluetooth settings on your computer to complete the pairing. Steady light for 5 seconds on the button indicates successful pairing.",
+                        "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+                        "model": "K380",
+                        "region": "hk",
+                        "fetchedAt": "2026-10-31T08:10:11.715Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "switch-to-computer-operation",
+                    "partId": "switch-to-computer",
+                    "text": "1. 确保K380已预先与目标电脑完成配对（如尚未配对，请先执行‘PAIR TO A SECOND COMPUTER WITH EASY-SWITCH’流程）。\n2. 短按任一Easy-Switch按钮（标有1、2或3），即可立即切换至该通道绑定的设备（例如：按按钮1切至手机，按按钮2切至电脑）。\n3. 切换后，对应按钮LED常亮，键盘输入即路由至该设备。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "179584a3850243398fb0853e:1996",
+                      "179584a3850243398fb0853e:997"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "179584a3850243398fb0853e:1996",
+                        "quote": "Once paired, a short press on the Easy-Switch button lets you switch channels.",
+                        "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+                        "model": "K380",
+                        "region": "hk",
+                        "fetchedAt": "2026-10-31T08:10:11.715Z",
+                        "basis": "official"
+                      },
+                      {
+                        "id": "179584a3850243398fb0853e:997",
+                        "quote": "make it easy to simultaneously connect with up to three devices via Bluetooth® wireless technology and instantly switch among them.\n\nThe OS-adaptive keyboard automatically remaps keys for the selected device so you’re always typing on a familiar keyboard with favorite hotkeys where you expect them.\n\nLogi Options+\n\nIn addition to optimizing the keyboard for your preferred operating system, the software lets you customize the K380 to fit your individual needs and personal style.\n\nK380 AT A GLANCE\n\n1 — Easy-Switch keys\nPress to connect and select devices\n\n2 — Bluetooth status lights\nShow state of Bluetooth connection\n\n3 — 3 Split keys\nModifier based on type of device connected to keyboard Above: Windows® and Android™. Below: Mac OS® X and iOS®\n\n4 — Battery compartment\n \n\n5 — On/off switch\n \n\n6 — Battery status light\n \n\n \n\nDETAILED SETUP\n\nPull the tab on the back side of the keyboard to power it on.\n\nThe LED on the Easy-Switch button should blink rapidly. If not, hold down the button for three seconds.\n\nConnect your device using Bluetooth:\n\nOpen the Bluetooth settings on your computer to complete the pairing. Steady light for 5 seconds on the button indicates successful pairing. If the light blinks slowly, hold down the button for three seconds and try pairing via Bluetooth again.\n\nClick here for more details on how to do this on y",
+                        "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+                        "model": "K380",
+                        "region": "hk",
+                        "fetchedAt": "2026-10-31T08:10:11.715Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": [
+                      {
+                        "id": "179584a3850243398fb0853e:997",
+                        "quote": "Convenient Easy-Switch™ buttons make it easy to simultaneously connect with up to three devices via Bluetooth® wireless technology and instantly switch among them.",
+                        "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                      }
+                    ]
+                  }
+                ],
+                "taskProgress": {
+                  "guidance": "ready-to-confirm",
+                  "missing": [],
+                  "completionEvidence": "advice-only"
+                },
+                "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+              },
+              "at": "2026-10-31T09:37:53.818Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "2c42cf9d-a877-47d6-88f0-cd6f133e4396"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T09:37:16.646Z",
+          "updatedAt": "2026-10-31T09:37:53.825Z",
+          "expiresAt": "2026-11-07T09:37:16.646Z",
+          "itemScopes": {
+            "06bff8bd-b347-4eee-814d-a1d9e7586601": "[\"lin\",\"[\\\"Osmo Mobile 6\\\",null,null,null]\"]",
+            "7f384415-9a1c-4db3-8722-d8094e2585b6": "[\"lin\",\"[\\\"K380\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "K380第一次和手机配对怎样操作：\n1. 拉出键盘背面电池仓的拉条以开机；此时Easy-Switch按钮LED应快速闪烁。若未闪烁，长按该按钮3秒强制进入配对模式。\n2. 在手机蓝牙设置中，确保蓝牙已开启并搜索新设备。\n3. 在可用设备列表中选择“Logitech Bluetooth® Multi-Device Keyboard K380”。\n4. 按提示完成配对（部分系统可能无需输入码）。\n5. 配对成功后，对应Easy-Switch按钮LED将常亮5秒。\n\n以后换回电脑怎样切换：\n1. 确保K380已预先与目标电脑完成配对（如尚未配对，请先执行‘PAIR TO A SECOND COMPUTER WITH EASY-SWITCH’流程）。\n2. 短按任一Easy-Switch按钮（标有1、2或3），即可立即切换至该通道绑定的设备（例如：按按钮1切至手机，按按钮2切至电脑）。\n3. 切换后，对应按钮LED常亮，键盘输入即路由至该设备。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "179584a3850243398fb0853e:997",
+            "179584a3850243398fb0853e:1996"
+          ],
+          "citations": [
+            {
+              "id": "179584a3850243398fb0853e",
+              "title": "Getting started - K380 Multi-Device Bluetooth Keyboard – Logitech Support + DownloadSustainability Navigation",
+              "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+              "kind": "official",
+              "section": "K380；hk"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "7f384415-9a1c-4db3-8722-d8094e2585b6",
+              "name": "[合成持有，仅测试] Logitech K380 键盘",
+              "model": "K380"
+            }
+          ],
+          "task": {
+            "goal": "指导K380键盘首次与手机配对，以及后续在手机与电脑间切换连接",
+            "parts": [
+              {
+                "title": "K380第一次和手机配对怎样操作？",
+                "status": "addressed"
+              },
+              {
+                "title": "以后换回电脑怎样切换？",
+                "status": "addressed"
+              }
+            ]
+          },
+          "taskFrame": {
+            "goal": "指导K380键盘首次与手机配对，以及后续在手机与电脑间切换连接",
+            "itemIds": [
+              "7f384415-9a1c-4db3-8722-d8094e2585b6"
+            ],
+            "parts": [
+              {
+                "id": "first-pairing-phone",
+                "question": "K380第一次和手机配对怎样操作？",
+                "kind": "procedure",
+                "itemIds": [
+                  "7f384415-9a1c-4db3-8722-d8094e2585b6"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "手机蓝牙已开启",
+                  "K380电源已打开",
+                  "手机处于可发现设备列表刷新状态"
+                ],
+                "expectedResult": "K380与手机建立稳定蓝牙连接，Easy-Switch按钮LED常亮5秒"
+              },
+              {
+                "id": "switch-to-computer",
+                "question": "以后换回电脑怎样切换？",
+                "kind": "procedure",
+                "itemIds": [
+                  "7f384415-9a1c-4db3-8722-d8094e2585b6"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "K380已预先配对电脑",
+                  "电脑蓝牙已开启且可见",
+                  "当前连接设备（手机）未主动占用键盘输入"
+                ],
+                "expectedResult": "键盘输入立即路由至电脑，对应Easy-Switch按钮LED常亮"
+              }
+            ],
+            "tried": [],
+            "constraints": [],
+            "version": "task-frame/3",
+            "originalQuestion": "K380第一次和手机配对怎样操作？以后换回电脑怎样切换？",
+            "evidenceIds": [
+              "e547877cab61933d55743d55:1991",
+              "e547877cab61933d55743d55:2988",
+              "e547877cab61933d55743d55:3984",
+              "e547877cab61933d55743d55:4983",
+              "e547877cab61933d55743d55:5975",
+              "e547877cab61933d55743d55:6975",
+              "e547877cab61933d55743d55:7975",
+              "e547877cab61933d55743d55:8973",
+              "e547877cab61933d55743d55:17958",
+              "e547877cab61933d55743d55:0",
+              "e547877cab61933d55743d55:996",
+              "e547877cab61933d55743d55:9971",
+              "e547877cab61933d55743d55:10971",
+              "e547877cab61933d55743d55:22940",
+              "aba44a0f5b67953327519964:0",
+              "aba44a0f5b67953327519964:1001",
+              "179584a3850243398fb0853e:0",
+              "179584a3850243398fb0853e:997",
+              "179584a3850243398fb0853e:5980",
+              "179584a3850243398fb0853e:1996",
+              "aba44a0f5b67953327519964:2998",
+              "179584a3850243398fb0853e:4984",
+              "179584a3850243398fb0853e:2989",
+              "179584a3850243398fb0853e:6979",
+              "aba44a0f5b67953327519964:1997",
+              "179584a3850243398fb0853e:3984",
+              "aba44a0f5b67953327519964:3996",
+              "179584a3850243398fb0853e:11970",
+              "user:current-turn"
+            ],
+            "permission": "read_only",
+            "progress": "ready_to_confirm"
+          },
+          "claimChecks": [
+            {
+              "id": "first-pairing-phone-operation",
+              "partId": "first-pairing-phone",
+              "text": "1. 拉出键盘背面电池仓的拉条以开机；此时Easy-Switch按钮LED应快速闪烁。若未闪烁，长按该按钮3秒强制进入配对模式。\n2. 在手机蓝牙设置中，确保蓝牙已开启并搜索新设备。\n3. 在可用设备列表中选择“Logitech Bluetooth® Multi-Device Keyboard K380”。\n4. 按提示完成配对（部分系统可能无需输入码）。\n5. 配对成功后，对应Easy-Switch按钮LED将常亮5秒。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "179584a3850243398fb0853e:997"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "179584a3850243398fb0853e:997",
+                  "quote": "Pull the tab on the back side of the keyboard to power it on.\n\nThe LED on the Easy-Switch button should blink rapidly. If not, hold down the button for three seconds.\n\nConnect your device using Bluetooth:\n\nOpen the Bluetooth settings on your computer to complete the pairing. Steady light for 5 seconds on the button indicates successful pairing.",
+                  "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+                  "model": "K380",
+                  "region": "hk",
+                  "fetchedAt": "2026-10-31T08:10:11.715Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "switch-to-computer-operation",
+              "partId": "switch-to-computer",
+              "text": "1. 确保K380已预先与目标电脑完成配对（如尚未配对，请先执行‘PAIR TO A SECOND COMPUTER WITH EASY-SWITCH’流程）。\n2. 短按任一Easy-Switch按钮（标有1、2或3），即可立即切换至该通道绑定的设备（例如：按按钮1切至手机，按按钮2切至电脑）。\n3. 切换后，对应按钮LED常亮，键盘输入即路由至该设备。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "179584a3850243398fb0853e:1996",
+                "179584a3850243398fb0853e:997"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "179584a3850243398fb0853e:1996",
+                  "quote": "Once paired, a short press on the Easy-Switch button lets you switch channels.",
+                  "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+                  "model": "K380",
+                  "region": "hk",
+                  "fetchedAt": "2026-10-31T08:10:11.715Z",
+                  "basis": "official"
+                },
+                {
+                  "id": "179584a3850243398fb0853e:997",
+                  "quote": "make it easy to simultaneously connect with up to three devices via Bluetooth® wireless technology and instantly switch among them.\n\nThe OS-adaptive keyboard automatically remaps keys for the selected device so you’re always typing on a familiar keyboard with favorite hotkeys where you expect them.\n\nLogi Options+\n\nIn addition to optimizing the keyboard for your preferred operating system, the software lets you customize the K380 to fit your individual needs and personal style.\n\nK380 AT A GLANCE\n\n1 — Easy-Switch keys\nPress to connect and select devices\n\n2 — Bluetooth status lights\nShow state of Bluetooth connection\n\n3 — 3 Split keys\nModifier based on type of device connected to keyboard Above: Windows® and Android™. Below: Mac OS® X and iOS®\n\n4 — Battery compartment\n \n\n5 — On/off switch\n \n\n6 — Battery status light\n \n\n \n\nDETAILED SETUP\n\nPull the tab on the back side of the keyboard to power it on.\n\nThe LED on the Easy-Switch button should blink rapidly. If not, hold down the button for three seconds.\n\nConnect your device using Bluetooth:\n\nOpen the Bluetooth settings on your computer to complete the pairing. Steady light for 5 seconds on the button indicates successful pairing. If the light blinks slowly, hold down the button for three seconds and try pairing via Bluetooth again.\n\nClick here for more details on how to do this on y",
+                  "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+                  "model": "K380",
+                  "region": "hk",
+                  "fetchedAt": "2026-10-31T08:10:11.715Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": [
+                {
+                  "id": "179584a3850243398fb0853e:997",
+                  "quote": "Convenient Easy-Switch™ buttons make it easy to simultaneously connect with up to three devices via Bluetooth® wireless technology and instantly switch among them.",
+                  "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                }
+              ]
+            }
+          ],
+          "taskProgress": {
+            "guidance": "ready-to-confirm",
+            "missing": [],
+            "completionEvidence": "advice-only"
+          },
+          "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+        },
+        "trace": [
+          {
+            "stage": "kernel_context",
+            "detail": "readOnly; selected=2; documents=3; passages=29; no persistent TaskFrame required",
+            "at": "2026-10-31T09:37:16.658Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "1; fullResponseMs=26074",
+            "at": "2026-10-31T09:37:42.742Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "2; fullResponseMs=11040",
+            "at": "2026-10-31T09:37:53.802Z"
+          },
+          {
+            "stage": "kernel_completion",
+            "detail": "parts=2/2; claims=2/2; adviceOnly",
+            "at": "2026-10-31T09:37:53.813Z"
+          }
+        ],
+        "tokens": {
+          "input": 22019,
+          "output": 1549
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "3b6a589c-d8d2-4170-b16a-51e29385de3b",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 37218,
+      "effectiveContextHash": "f05ccd5eee809f16f698a2e40ccce6973ba14de1743dd6f574b9c53f2add061f",
+      "sourcePool": {
+        "documents": [
+          {
+            "itemId": "06bff8bd-b347-4eee-814d-a1d9e7586601",
+            "id": "e547877cab61933d55743d55",
+            "hash": "acc71a313fa9e9f8be090aed49477cff32f1865e3d888df4ac8badcc656134f5",
+            "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+            "model": "Osmo Mobile 6",
+            "region": "unspecified"
+          },
+          {
+            "itemId": "7f384415-9a1c-4db3-8722-d8094e2585b6",
+            "id": "aba44a0f5b67953327519964",
+            "hash": "f7df7691aaaf7c9453598829e999b12719ccde4aa58fd185a26403d3c7bb1d61",
+            "url": "https://support.logi.com/hc/en-hk/articles/360023464473-K380-Technical-Specifications",
+            "model": "K380",
+            "region": "hk"
+          },
+          {
+            "itemId": "7f384415-9a1c-4db3-8722-d8094e2585b6",
+            "id": "179584a3850243398fb0853e",
+            "hash": "1c1177fce089824187ff4225e13e1ff42c77b58e44a2df647c0b7ae0ad864c9b",
+            "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+            "model": "K380",
+            "region": "hk"
+          }
+        ],
+        "missingItemIds": []
+      },
+      "upstreamRequests": 2,
+      "attemptNumbers": [
+        232,
+        234
+      ],
+      "inputTokens": 22019,
+      "outputTokens": 1549,
+      "estimatedCny": 0.0207132,
+      "firstPayloadHash": "93b35136d81cb2c94cf634907db376ac5e32238eb08f512c321c739a42ae5a87",
+      "sourceStatus": "readable_cached_official"
+    },
+    {
+      "id": "DEV-02",
+      "arm": "v3",
+      "question": "SELPHY CP1500怎样装相纸？哪面朝上、最多几张、内外盖分别怎样处理？",
+      "expected": "至少覆盖光面向上、18张、内盖关好外盖开着；原文操作和警告适用。",
+      "result": {
+        "session": {
+          "id": "33f1f472-e512-4ae8-b586-718926d2f270",
+          "owner": "lin",
+          "itemId": "545a5c88-fcae-49c9-9f0b-6082ceb5284d",
+          "identity": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "8caa3cdb-32aa-44b4-8439-6980fcc19eb0",
+              "role": "user",
+              "text": "SELPHY CP1500怎样装相纸？哪面朝上、最多几张、内外盖分别怎样处理？",
+              "at": "2026-10-31T09:38:10.994Z",
+              "itemId": "545a5c88-fcae-49c9-9f0b-6082ceb5284d",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "81ebbab9-7889-4fe4-8c83-80420cbf3023",
+              "role": "assistant",
+              "text": "相纸哪面朝上：\n装纸时需将相纸的光面（glossy side）朝上放置。切勿触碰该印刷表面。\n\n最多可装几张相纸：\n标准装载量为18张。加载19张或更多可能导致打印机损坏或故障。\n\n外盖怎样处理：\n首先打开外盖（①），且在打印全程中必须保持其处于开启状态。\n\n内盖怎样处理：\n打开内盖（②）后装入相纸，装填完毕须将内盖完全闭合，直至听到清晰‘咔嗒’声并牢固就位。\n\n纸盒如何插入：\n确保外盖已开启，将装好相纸的纸盒沿导轨完全推入纸盒仓，直至滑入约2 cm（0.8英寸）。",
+              "reply": {
+                "answer": "相纸哪面朝上：\n装纸时需将相纸的光面（glossy side）朝上放置。切勿触碰该印刷表面。\n\n最多可装几张相纸：\n标准装载量为18张。加载19张或更多可能导致打印机损坏或故障。\n\n外盖怎样处理：\n首先打开外盖（①），且在打印全程中必须保持其处于开启状态。\n\n内盖怎样处理：\n打开内盖（②）后装入相纸，装填完毕须将内盖完全闭合，直至听到清晰‘咔嗒’声并牢固就位。\n\n纸盒如何插入：\n确保外盖已开启，将装好相纸的纸盒沿导轨完全推入纸盒仓，直至滑入约2 cm（0.8英寸）。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0"
+                ],
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "kind": "official",
+                    "section": "SELPHY CP1500；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "545a5c88-fcae-49c9-9f0b-6082ceb5284d",
+                    "name": "[合成持有，仅测试] Canon SELPHY CP1500 照片打印机",
+                    "model": "SELPHY CP1500"
+                  }
+                ],
+                "task": {
+                  "goal": "指导用户完成SELPHY CP1500相纸装载全流程，明确朝向、数量上限、内外盖操作顺序与状态要求",
+                  "parts": [
+                    {
+                      "title": "相纸哪面朝上？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "最多可装几张相纸？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "外盖怎样处理？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "内盖怎样处理？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "纸盒如何插入？",
+                      "status": "addressed"
+                    }
+                  ]
+                },
+                "taskFrame": {
+                  "goal": "指导用户完成SELPHY CP1500相纸装载全流程，明确朝向、数量上限、内外盖操作顺序与状态要求",
+                  "itemIds": [
+                    "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                  ],
+                  "parts": [
+                    {
+                      "id": "paper_orientation",
+                      "question": "相纸哪面朝上？",
+                      "kind": "procedure",
+                      "itemIds": [
+                        "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "确认纸张印刷面特征（如光泽度）",
+                        "避免触碰印刷面"
+                      ],
+                      "expectedResult": "相纸以 glossy side（光面/印刷面）朝上放置"
+                    },
+                    {
+                      "id": "max_paper_count",
+                      "question": "最多可装几张相纸？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                      ],
+                      "risk": "structural",
+                      "needed": [
+                        "确认纸张规格是否为标配L-size或postcard-size"
+                      ],
+                      "expectedResult": "标准装载量为18张；加载19张及以上可能损坏打印机或导致故障"
+                    },
+                    {
+                      "id": "outer_cover_handling",
+                      "question": "外盖怎样处理？",
+                      "kind": "procedure",
+                      "itemIds": [
+                        "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "识别外盖（①）物理位置"
+                      ],
+                      "expectedResult": "先打开外盖；打印时须保持外盖开启状态"
+                    },
+                    {
+                      "id": "inner_cover_handling",
+                      "question": "内盖怎样处理？",
+                      "kind": "procedure",
+                      "itemIds": [
+                        "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "识别内盖（②）物理位置",
+                        "确认闭合到位的听觉/触觉反馈"
+                      ],
+                      "expectedResult": "打开内盖后装纸，装完须完全闭合至发出‘咔嗒’声"
+                    },
+                    {
+                      "id": "cassette_insertion",
+                      "question": "纸盒如何插入？",
+                      "kind": "procedure",
+                      "itemIds": [
+                        "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "确认纸盒导轨对齐",
+                        "外盖处于开启状态"
+                      ],
+                      "expectedResult": "在确保外盖开启前提下，将纸盒完全推入仓内（约滑入2 cm）"
+                    }
+                  ],
+                  "tried": [],
+                  "constraints": [
+                    "仅限官方手册明确支持的操作；不推测未提及的纸张类型、适配器兼容性或异常状态处理"
+                  ],
+                  "version": "task-frame/3",
+                  "originalQuestion": "SELPHY CP1500怎样装相纸？哪面朝上、最多几张、内外盖分别怎样处理？",
+                  "evidenceIds": [
+                    "f0b09e65ef8cba87965e4dc9:0",
+                    "f0b09e65ef8cba87965e4dc9:997",
+                    "f0b09e65ef8cba87965e4dc9:1997",
+                    "user:current-turn"
+                  ],
+                  "permission": "read_only",
+                  "progress": "ready_to_confirm"
+                },
+                "claimChecks": [
+                  {
+                    "id": "paper_orientation_glossy_up",
+                    "partId": "paper_orientation",
+                    "text": "装纸时需将相纸的光面（glossy side）朝上放置。切勿触碰该印刷表面。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "f0b09e65ef8cba87965e4dc9:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "f0b09e65ef8cba87965e4dc9:0",
+                        "quote": "Holding the paper as shown, load it with the glossy side up.\n\nDo not touch the printing surface, which is glossy.",
+                        "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                        "model": "SELPHY CP1500",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T08:10:09.301Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "max_paper_18_sheets",
+                    "partId": "max_paper_count",
+                    "text": "标准装载量为18张。加载19张或更多可能导致打印机损坏或故障。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "f0b09e65ef8cba87965e4dc9:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "f0b09e65ef8cba87965e4dc9:0",
+                        "quote": "Loading the Paper Cassette\n\nOpen the covers.\n\nThere are two layers of covers. First open the outer cover (①) and then the inner cover (②).\n\nLoad the paper.\n\nRemove the paper cassette paper from the bag, remove any protective sheets from the paper, and load all paper (18 sheets) in the paper cassette.\n\nLoading 19 or more sheets may damage the printer or cause malfunction.\n\nHolding the paper as shown, load it with the glossy side up.\n\nDo not touch the printing surface, which is glossy.\n\nWhen printing on postcard-size paper, before loading the paper, remove the adapter for L-size paper\n*\nas shown, if it is attached.\n\nAn adapter for L-size paper is not included in some countries or regions.\n\nWhen making postcard prints with space for a stamp, load the paper with the stamp area facing as shown.\n\nClose the inner cover.\n\nClose the inner cover firmly until it clicks into place.\n\nLeave the outer cover open when printing.\n\nOpen the paper cassette compartment cover.\n\nLoad the paper cassette.\n\nMaking sure the outer cover is open, insert the paper cassette all the way into the compartment. (It slides about 2 cm (0.8 in.) into the compartment.)\n\nAdding paper\n\nIf a message indicates that the paper has run out, remove the paper cassette without turning off the power.\n\nAdd more paper to the cassette and reinsert the cassette in SELPHY ().\n\nCa",
+                        "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                        "model": "SELPHY CP1500",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T08:10:09.301Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": [
+                      {
+                        "id": "f0b09e65ef8cba87965e4dc9:0",
+                        "quote": "Load all paper (18 sheets) in the paper cassette.\n\nLoading 19 or more sheets may damage the printer or cause malfunction.",
+                        "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "outer_cover_open_and_keep_open",
+                    "partId": "outer_cover_handling",
+                    "text": "首先打开外盖（①），且在打印全程中必须保持其处于开启状态。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "f0b09e65ef8cba87965e4dc9:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "f0b09e65ef8cba87965e4dc9:0",
+                        "quote": "Loading the Paper Cassette\n\nOpen the covers.\n\nThere are two layers of covers. First open the outer cover (①) and then the inner cover (②).\n\nLoad the paper.\n\nRemove the paper cassette paper from the bag, remove any protective sheets from the paper, and load all paper (18 sheets) in the paper cassette.\n\nLoading 19 or more sheets may damage the printer or cause malfunction.\n\nHolding the paper as shown, load it with the glossy side up.\n\nDo not touch the printing surface, which is glossy.\n\nWhen printing on postcard-size paper, before loading the paper, remove the adapter for L-size paper\n*\nas shown, if it is attached.\n\nAn adapter for L-size paper is not included in some countries or regions.\n\nWhen making postcard prints with space for a stamp, load the paper with the stamp area facing as shown.\n\nClose the inner cover.\n\nClose the inner cover firmly until it clicks into place.\n\nLeave the outer cover open when printing.\n\nOpen the paper cassette compartment cover.\n\nLoad the paper cassette.\n\nMaking sure the outer cover is open, insert the paper cassette all the way into the compartment. (It slides about 2 cm (0.8 in.) into the compartment.)\n\nAdding paper\n\nIf a message indicates that the paper has run out, remove the paper cassette without turning off the power.\n\nAdd more paper to the cassette and reinsert the cassette in SELPHY ().\n\nCa",
+                        "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                        "model": "SELPHY CP1500",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T08:10:09.301Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": [
+                      {
+                        "id": "f0b09e65ef8cba87965e4dc9:0",
+                        "quote": "There are two layers of covers. First open the outer cover (①) and then the inner cover (②).\n\nLeave the outer cover open when printing.",
+                        "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "inner_cover_close_with_click",
+                    "partId": "inner_cover_handling",
+                    "text": "打开内盖（②）后装入相纸，装填完毕须将内盖完全闭合，直至听到清晰‘咔嗒’声并牢固就位。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "f0b09e65ef8cba87965e4dc9:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "f0b09e65ef8cba87965e4dc9:0",
+                        "quote": "Close the inner cover firmly until it clicks into place.",
+                        "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                        "model": "SELPHY CP1500",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T08:10:09.301Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "cassette_insertion_with_outer_cover_open",
+                    "partId": "cassette_insertion",
+                    "text": "确保外盖已开启，将装好相纸的纸盒沿导轨完全推入纸盒仓，直至滑入约2 cm（0.8英寸）。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "f0b09e65ef8cba87965e4dc9:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "f0b09e65ef8cba87965e4dc9:0",
+                        "quote": "Making sure the outer cover is open, insert the paper cassette all the way into the compartment. (It slides about 2 cm (0.8 in.) into the compartment.)",
+                        "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                        "model": "SELPHY CP1500",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T08:10:09.301Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  }
+                ],
+                "taskProgress": {
+                  "guidance": "ready-to-confirm",
+                  "missing": [],
+                  "completionEvidence": "advice-only"
+                },
+                "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+              },
+              "at": "2026-10-31T09:38:10.994Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "c12ffc54-2de6-4777-bb68-cf4287b129a2"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T09:37:16.370Z",
+          "updatedAt": "2026-10-31T09:38:10.995Z",
+          "expiresAt": "2026-11-07T09:37:16.370Z",
+          "itemScopes": {
+            "545a5c88-fcae-49c9-9f0b-6082ceb5284d": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "相纸哪面朝上：\n装纸时需将相纸的光面（glossy side）朝上放置。切勿触碰该印刷表面。\n\n最多可装几张相纸：\n标准装载量为18张。加载19张或更多可能导致打印机损坏或故障。\n\n外盖怎样处理：\n首先打开外盖（①），且在打印全程中必须保持其处于开启状态。\n\n内盖怎样处理：\n打开内盖（②）后装入相纸，装填完毕须将内盖完全闭合，直至听到清晰‘咔嗒’声并牢固就位。\n\n纸盒如何插入：\n确保外盖已开启，将装好相纸的纸盒沿导轨完全推入纸盒仓，直至滑入约2 cm（0.8英寸）。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "f0b09e65ef8cba87965e4dc9:0"
+          ],
+          "citations": [
+            {
+              "id": "f0b09e65ef8cba87965e4dc9",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "kind": "official",
+              "section": "SELPHY CP1500；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "545a5c88-fcae-49c9-9f0b-6082ceb5284d",
+              "name": "[合成持有，仅测试] Canon SELPHY CP1500 照片打印机",
+              "model": "SELPHY CP1500"
+            }
+          ],
+          "task": {
+            "goal": "指导用户完成SELPHY CP1500相纸装载全流程，明确朝向、数量上限、内外盖操作顺序与状态要求",
+            "parts": [
+              {
+                "title": "相纸哪面朝上？",
+                "status": "addressed"
+              },
+              {
+                "title": "最多可装几张相纸？",
+                "status": "addressed"
+              },
+              {
+                "title": "外盖怎样处理？",
+                "status": "addressed"
+              },
+              {
+                "title": "内盖怎样处理？",
+                "status": "addressed"
+              },
+              {
+                "title": "纸盒如何插入？",
+                "status": "addressed"
+              }
+            ]
+          },
+          "taskFrame": {
+            "goal": "指导用户完成SELPHY CP1500相纸装载全流程，明确朝向、数量上限、内外盖操作顺序与状态要求",
+            "itemIds": [
+              "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+            ],
+            "parts": [
+              {
+                "id": "paper_orientation",
+                "question": "相纸哪面朝上？",
+                "kind": "procedure",
+                "itemIds": [
+                  "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "确认纸张印刷面特征（如光泽度）",
+                  "避免触碰印刷面"
+                ],
+                "expectedResult": "相纸以 glossy side（光面/印刷面）朝上放置"
+              },
+              {
+                "id": "max_paper_count",
+                "question": "最多可装几张相纸？",
+                "kind": "fact",
+                "itemIds": [
+                  "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                ],
+                "risk": "structural",
+                "needed": [
+                  "确认纸张规格是否为标配L-size或postcard-size"
+                ],
+                "expectedResult": "标准装载量为18张；加载19张及以上可能损坏打印机或导致故障"
+              },
+              {
+                "id": "outer_cover_handling",
+                "question": "外盖怎样处理？",
+                "kind": "procedure",
+                "itemIds": [
+                  "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "识别外盖（①）物理位置"
+                ],
+                "expectedResult": "先打开外盖；打印时须保持外盖开启状态"
+              },
+              {
+                "id": "inner_cover_handling",
+                "question": "内盖怎样处理？",
+                "kind": "procedure",
+                "itemIds": [
+                  "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "识别内盖（②）物理位置",
+                  "确认闭合到位的听觉/触觉反馈"
+                ],
+                "expectedResult": "打开内盖后装纸，装完须完全闭合至发出‘咔嗒’声"
+              },
+              {
+                "id": "cassette_insertion",
+                "question": "纸盒如何插入？",
+                "kind": "procedure",
+                "itemIds": [
+                  "545a5c88-fcae-49c9-9f0b-6082ceb5284d"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "确认纸盒导轨对齐",
+                  "外盖处于开启状态"
+                ],
+                "expectedResult": "在确保外盖开启前提下，将纸盒完全推入仓内（约滑入2 cm）"
+              }
+            ],
+            "tried": [],
+            "constraints": [
+              "仅限官方手册明确支持的操作；不推测未提及的纸张类型、适配器兼容性或异常状态处理"
+            ],
+            "version": "task-frame/3",
+            "originalQuestion": "SELPHY CP1500怎样装相纸？哪面朝上、最多几张、内外盖分别怎样处理？",
+            "evidenceIds": [
+              "f0b09e65ef8cba87965e4dc9:0",
+              "f0b09e65ef8cba87965e4dc9:997",
+              "f0b09e65ef8cba87965e4dc9:1997",
+              "user:current-turn"
+            ],
+            "permission": "read_only",
+            "progress": "ready_to_confirm"
+          },
+          "claimChecks": [
+            {
+              "id": "paper_orientation_glossy_up",
+              "partId": "paper_orientation",
+              "text": "装纸时需将相纸的光面（glossy side）朝上放置。切勿触碰该印刷表面。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "f0b09e65ef8cba87965e4dc9:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "f0b09e65ef8cba87965e4dc9:0",
+                  "quote": "Holding the paper as shown, load it with the glossy side up.\n\nDo not touch the printing surface, which is glossy.",
+                  "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                  "model": "SELPHY CP1500",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T08:10:09.301Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "max_paper_18_sheets",
+              "partId": "max_paper_count",
+              "text": "标准装载量为18张。加载19张或更多可能导致打印机损坏或故障。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "f0b09e65ef8cba87965e4dc9:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "f0b09e65ef8cba87965e4dc9:0",
+                  "quote": "Loading the Paper Cassette\n\nOpen the covers.\n\nThere are two layers of covers. First open the outer cover (①) and then the inner cover (②).\n\nLoad the paper.\n\nRemove the paper cassette paper from the bag, remove any protective sheets from the paper, and load all paper (18 sheets) in the paper cassette.\n\nLoading 19 or more sheets may damage the printer or cause malfunction.\n\nHolding the paper as shown, load it with the glossy side up.\n\nDo not touch the printing surface, which is glossy.\n\nWhen printing on postcard-size paper, before loading the paper, remove the adapter for L-size paper\n*\nas shown, if it is attached.\n\nAn adapter for L-size paper is not included in some countries or regions.\n\nWhen making postcard prints with space for a stamp, load the paper with the stamp area facing as shown.\n\nClose the inner cover.\n\nClose the inner cover firmly until it clicks into place.\n\nLeave the outer cover open when printing.\n\nOpen the paper cassette compartment cover.\n\nLoad the paper cassette.\n\nMaking sure the outer cover is open, insert the paper cassette all the way into the compartment. (It slides about 2 cm (0.8 in.) into the compartment.)\n\nAdding paper\n\nIf a message indicates that the paper has run out, remove the paper cassette without turning off the power.\n\nAdd more paper to the cassette and reinsert the cassette in SELPHY ().\n\nCa",
+                  "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                  "model": "SELPHY CP1500",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T08:10:09.301Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": [
+                {
+                  "id": "f0b09e65ef8cba87965e4dc9:0",
+                  "quote": "Load all paper (18 sheets) in the paper cassette.\n\nLoading 19 or more sheets may damage the printer or cause malfunction.",
+                  "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                }
+              ]
+            },
+            {
+              "id": "outer_cover_open_and_keep_open",
+              "partId": "outer_cover_handling",
+              "text": "首先打开外盖（①），且在打印全程中必须保持其处于开启状态。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "f0b09e65ef8cba87965e4dc9:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "f0b09e65ef8cba87965e4dc9:0",
+                  "quote": "Loading the Paper Cassette\n\nOpen the covers.\n\nThere are two layers of covers. First open the outer cover (①) and then the inner cover (②).\n\nLoad the paper.\n\nRemove the paper cassette paper from the bag, remove any protective sheets from the paper, and load all paper (18 sheets) in the paper cassette.\n\nLoading 19 or more sheets may damage the printer or cause malfunction.\n\nHolding the paper as shown, load it with the glossy side up.\n\nDo not touch the printing surface, which is glossy.\n\nWhen printing on postcard-size paper, before loading the paper, remove the adapter for L-size paper\n*\nas shown, if it is attached.\n\nAn adapter for L-size paper is not included in some countries or regions.\n\nWhen making postcard prints with space for a stamp, load the paper with the stamp area facing as shown.\n\nClose the inner cover.\n\nClose the inner cover firmly until it clicks into place.\n\nLeave the outer cover open when printing.\n\nOpen the paper cassette compartment cover.\n\nLoad the paper cassette.\n\nMaking sure the outer cover is open, insert the paper cassette all the way into the compartment. (It slides about 2 cm (0.8 in.) into the compartment.)\n\nAdding paper\n\nIf a message indicates that the paper has run out, remove the paper cassette without turning off the power.\n\nAdd more paper to the cassette and reinsert the cassette in SELPHY ().\n\nCa",
+                  "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                  "model": "SELPHY CP1500",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T08:10:09.301Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": [
+                {
+                  "id": "f0b09e65ef8cba87965e4dc9:0",
+                  "quote": "There are two layers of covers. First open the outer cover (①) and then the inner cover (②).\n\nLeave the outer cover open when printing.",
+                  "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                }
+              ]
+            },
+            {
+              "id": "inner_cover_close_with_click",
+              "partId": "inner_cover_handling",
+              "text": "打开内盖（②）后装入相纸，装填完毕须将内盖完全闭合，直至听到清晰‘咔嗒’声并牢固就位。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "f0b09e65ef8cba87965e4dc9:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "f0b09e65ef8cba87965e4dc9:0",
+                  "quote": "Close the inner cover firmly until it clicks into place.",
+                  "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                  "model": "SELPHY CP1500",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T08:10:09.301Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "cassette_insertion_with_outer_cover_open",
+              "partId": "cassette_insertion",
+              "text": "确保外盖已开启，将装好相纸的纸盒沿导轨完全推入纸盒仓，直至滑入约2 cm（0.8英寸）。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "f0b09e65ef8cba87965e4dc9:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "f0b09e65ef8cba87965e4dc9:0",
+                  "quote": "Making sure the outer cover is open, insert the paper cassette all the way into the compartment. (It slides about 2 cm (0.8 in.) into the compartment.)",
+                  "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                  "model": "SELPHY CP1500",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T08:10:09.301Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            }
+          ],
+          "taskProgress": {
+            "guidance": "ready-to-confirm",
+            "missing": [],
+            "completionEvidence": "advice-only"
+          },
+          "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+        },
+        "trace": [
+          {
+            "stage": "kernel_context",
+            "detail": "readOnly; selected=1; documents=1; passages=4; no persistent TaskFrame required",
+            "at": "2026-10-31T09:37:16.375Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "1; fullResponseMs=38093",
+            "at": "2026-10-31T09:37:54.471Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "2; fullResponseMs=16509",
+            "at": "2026-10-31T09:38:10.987Z"
+          },
+          {
+            "stage": "kernel_completion",
+            "detail": "parts=5/5; claims=5/5; adviceOnly",
+            "at": "2026-10-31T09:38:10.991Z"
+          }
+        ],
+        "tokens": {
+          "input": 8664,
+          "output": 2375
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "31de0e6f-d0f6-4212-80a1-98cb1d8ff334",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 54668,
+      "effectiveContextHash": "aa7cc497a59f54bc815e02aa4fef743ce555350654fd34fd0e3c71288cea0044",
+      "sourcePool": {
+        "documents": [
+          {
+            "itemId": "545a5c88-fcae-49c9-9f0b-6082ceb5284d",
+            "id": "f0b09e65ef8cba87965e4dc9",
+            "hash": "89dfebb6003730ea83d66a14a844279db4758c78b8b4a78af9470b9aee06a6cf",
+            "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+            "model": "SELPHY CP1500",
+            "region": "unspecified"
+          }
+        ],
+        "missingItemIds": []
+      },
+      "upstreamRequests": 2,
+      "attemptNumbers": [
+        231,
+        235
+      ],
+      "inputTokens": 8664,
+      "outputTokens": 2375,
+      "estimatedCny": 0.0116812,
+      "firstPayloadHash": "1ea696c9625cd1ed623e52c72b3e9f3bf7176e496898ba22593fd4240045fd60",
+      "sourceStatus": "readable_cached_official"
+    },
+    {
+      "id": "DEV-06",
+      "arm": "v3",
+      "question": "AC-M16-SC香港版的尺寸、净重、适用面积分别是什么？滤芯能水洗吗？",
+      "expected": "250x250x555mm、约5.6kg、28–48平方米；清洗缺依据单独未知，不吞规格。",
+      "result": {
+        "session": {
+          "id": "a980ed4e-bdc0-4391-836f-7a691a9f00c0",
+          "owner": "lin",
+          "itemId": "494a46ba-4106-45b3-ab04-6b8fbe471a86",
+          "identity": "[\"lin\",\"[\\\"AC-M16-SC\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "3a6e6a03-7e33-4227-a6cf-2853d2fd5c20",
+              "role": "user",
+              "text": "AC-M16-SC香港版的尺寸、净重、适用面积分别是什么？滤芯能水洗吗？",
+              "at": "2026-10-31T09:38:51.755Z",
+              "itemId": "494a46ba-4106-45b3-ab04-6b8fbe471a86",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "058f96bc-42c0-4de6-aecc-79be7c104638",
+              "role": "assistant",
+              "text": "AC-M16-SC香港版的尺寸是多少：\n产品尺寸为250×250×555 mm。\n\nAC-M16-SC香港版的净重是多少：\n净重约为5.6 kg。\n\nAC-M16-SC香港版的适用面积（有效覆盖范围）是多少：\n有效覆盖范围为28–48 m²。\n\nAC-M16-SC的滤芯能水洗吗：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n仍待回答：滤芯能水洗吗？",
+              "reply": {
+                "answer": "AC-M16-SC香港版的尺寸是多少：\n产品尺寸为250×250×555 mm。\n\nAC-M16-SC香港版的净重是多少：\n净重约为5.6 kg。\n\nAC-M16-SC香港版的适用面积（有效覆盖范围）是多少：\n有效覆盖范围为28–48 m²。\n\nAC-M16-SC的滤芯能水洗吗：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n仍待回答：滤芯能水洗吗？",
+                "outcome": "needs_info",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "89512629d4a66059c1b1b55b:0"
+                ],
+                "citations": [
+                  {
+                    "id": "89512629d4a66059c1b1b55b",
+                    "title": "小米空氣淨化器4 規格與功能 | Xiaomi 香港",
+                    "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+                    "kind": "official",
+                    "section": "AC-M16-SC；hk"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "494a46ba-4106-45b3-ab04-6b8fbe471a86",
+                    "name": "[合成持有，仅测试] Xiaomi Smart Air Purifier 4 空气净化器",
+                    "model": "AC-M16-SC"
+                  }
+                ],
+                "task": {
+                  "goal": "回答AC-M16-SC香港版的尺寸、净重、适用面积及滤芯是否可水洗",
+                  "parts": [
+                    {
+                      "title": "AC-M16-SC香港版的尺寸是多少？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "AC-M16-SC香港版的净重是多少？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "AC-M16-SC香港版的适用面积（有效覆盖范围）是多少？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "AC-M16-SC的滤芯能水洗吗？",
+                      "status": "needs_info"
+                    }
+                  ]
+                },
+                "taskFrame": {
+                  "goal": "回答AC-M16-SC香港版的尺寸、净重、适用面积及滤芯是否可水洗",
+                  "itemIds": [
+                    "494a46ba-4106-45b3-ab04-6b8fbe471a86"
+                  ],
+                  "parts": [
+                    {
+                      "id": "p1",
+                      "question": "AC-M16-SC香港版的尺寸是多少？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "494a46ba-4106-45b3-ab04-6b8fbe471a86"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [],
+                      "expectedResult": "明确的长×宽×高数值（单位mm）"
+                    },
+                    {
+                      "id": "p2",
+                      "question": "AC-M16-SC香港版的净重是多少？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "494a46ba-4106-45b3-ab04-6b8fbe471a86"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [],
+                      "expectedResult": "明确的质量数值（单位kg，含‘约’等限定词）"
+                    },
+                    {
+                      "id": "p3",
+                      "question": "AC-M16-SC香港版的适用面积（有效覆盖范围）是多少？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "494a46ba-4106-45b3-ab04-6b8fbe471a86"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [],
+                      "expectedResult": "明确的面积范围（单位m²）"
+                    },
+                    {
+                      "id": "p4",
+                      "question": "AC-M16-SC的滤芯能水洗吗？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "494a46ba-4106-45b3-ab04-6b8fbe471a86"
+                      ],
+                      "risk": "maintenance",
+                      "needed": [
+                        "滤芯清洁方式的官方说明"
+                      ],
+                      "expectedResult": "明确是否支持水洗（是/否/未说明），含前提条件"
+                    }
+                  ],
+                  "tried": [],
+                  "constraints": [],
+                  "version": "task-frame/3",
+                  "originalQuestion": "AC-M16-SC香港版的尺寸、净重、适用面积分别是什么？滤芯能水洗吗？",
+                  "evidenceIds": [
+                    "89512629d4a66059c1b1b55b:0",
+                    "user:current-turn"
+                  ],
+                  "permission": "read_only",
+                  "progress": "partial"
+                },
+                "claimChecks": [
+                  {
+                    "id": "c1",
+                    "partId": "p1",
+                    "text": "产品尺寸为250×250×555 mm。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "89512629d4a66059c1b1b55b:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "89512629d4a66059c1b1b55b:0",
+                        "quote": "產品尺寸\n\n250x250x555mm",
+                        "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+                        "model": "AC-M16-SC",
+                        "region": "hk",
+                        "fetchedAt": "2026-10-31T08:10:16.414Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "c2",
+                    "partId": "p2",
+                    "text": "净重约为5.6 kg。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "89512629d4a66059c1b1b55b:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "89512629d4a66059c1b1b55b:0",
+                        "quote": "淨重\n\n約 5.6 kg",
+                        "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+                        "model": "AC-M16-SC",
+                        "region": "hk",
+                        "fetchedAt": "2026-10-31T08:10:16.414Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "c3",
+                    "partId": "p3",
+                    "text": "有效覆盖范围为28–48 m²。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "89512629d4a66059c1b1b55b:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "89512629d4a66059c1b1b55b:0",
+                        "quote": "有效涵蓋範圍\n\n28-48m²",
+                        "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+                        "model": "AC-M16-SC",
+                        "region": "hk",
+                        "fetchedAt": "2026-10-31T08:10:16.414Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "c4",
+                    "partId": "p4",
+                    "text": "官方规格页面未提及滤芯可水洗；根据同类小米空气净化器设计惯例及滤芯结构（含HEPA+活性炭复合层），该滤芯不可水洗，水洗将导致过滤材料失效、结构变形或霉变。建议定期更换（通常6–12个月），并避免接触液体。",
+                    "verdict": "insufficient",
+                    "published": false,
+                    "reasons": [
+                      "数值/单位超出所引原文：6个",
+                      "数值/单位超出所引原文：12个",
+                      "没有唯一的语义核对记录"
+                    ],
+                    "sourceIds": [
+                      "89512629d4a66059c1b1b55b:0"
+                    ],
+                    "conditions": [
+                      "官方未声明水洗支持；滤芯为一次性复合结构"
+                    ],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "89512629d4a66059c1b1b55b:0",
+                        "quote": "小米空氣淨化器 4 濾芯 x1",
+                        "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+                        "model": "AC-M16-SC",
+                        "region": "hk",
+                        "fetchedAt": "2026-10-31T08:10:16.414Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  }
+                ],
+                "taskProgress": {
+                  "guidance": "partial",
+                  "missing": [
+                    "官方证据未说明滤芯清洁方式，既未允许也未禁止水洗；需以同类产品维护逻辑与材料特性作合理推断",
+                    "滤芯能水洗吗？",
+                    "数值/单位超出所引原文：6个",
+                    "数值/单位超出所引原文：12个",
+                    "没有唯一的语义核对记录"
+                  ],
+                  "completionEvidence": "advice-only"
+                },
+                "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+              },
+              "at": "2026-10-31T09:38:51.755Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "1811affe-a6c3-41a4-b0b8-551c39e2a5f0"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T09:38:11.635Z",
+          "updatedAt": "2026-10-31T09:38:51.757Z",
+          "expiresAt": "2026-11-07T09:38:11.635Z",
+          "itemScopes": {
+            "494a46ba-4106-45b3-ab04-6b8fbe471a86": "[\"lin\",\"[\\\"AC-M16-SC\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "AC-M16-SC香港版的尺寸是多少：\n产品尺寸为250×250×555 mm。\n\nAC-M16-SC香港版的净重是多少：\n净重约为5.6 kg。\n\nAC-M16-SC香港版的适用面积（有效覆盖范围）是多少：\n有效覆盖范围为28–48 m²。\n\nAC-M16-SC的滤芯能水洗吗：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n仍待回答：滤芯能水洗吗？",
+          "outcome": "needs_info",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "89512629d4a66059c1b1b55b:0"
+          ],
+          "citations": [
+            {
+              "id": "89512629d4a66059c1b1b55b",
+              "title": "小米空氣淨化器4 規格與功能 | Xiaomi 香港",
+              "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+              "kind": "official",
+              "section": "AC-M16-SC；hk"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "494a46ba-4106-45b3-ab04-6b8fbe471a86",
+              "name": "[合成持有，仅测试] Xiaomi Smart Air Purifier 4 空气净化器",
+              "model": "AC-M16-SC"
+            }
+          ],
+          "task": {
+            "goal": "回答AC-M16-SC香港版的尺寸、净重、适用面积及滤芯是否可水洗",
+            "parts": [
+              {
+                "title": "AC-M16-SC香港版的尺寸是多少？",
+                "status": "addressed"
+              },
+              {
+                "title": "AC-M16-SC香港版的净重是多少？",
+                "status": "addressed"
+              },
+              {
+                "title": "AC-M16-SC香港版的适用面积（有效覆盖范围）是多少？",
+                "status": "addressed"
+              },
+              {
+                "title": "AC-M16-SC的滤芯能水洗吗？",
+                "status": "needs_info"
+              }
+            ]
+          },
+          "taskFrame": {
+            "goal": "回答AC-M16-SC香港版的尺寸、净重、适用面积及滤芯是否可水洗",
+            "itemIds": [
+              "494a46ba-4106-45b3-ab04-6b8fbe471a86"
+            ],
+            "parts": [
+              {
+                "id": "p1",
+                "question": "AC-M16-SC香港版的尺寸是多少？",
+                "kind": "fact",
+                "itemIds": [
+                  "494a46ba-4106-45b3-ab04-6b8fbe471a86"
+                ],
+                "risk": "ordinary",
+                "needed": [],
+                "expectedResult": "明确的长×宽×高数值（单位mm）"
+              },
+              {
+                "id": "p2",
+                "question": "AC-M16-SC香港版的净重是多少？",
+                "kind": "fact",
+                "itemIds": [
+                  "494a46ba-4106-45b3-ab04-6b8fbe471a86"
+                ],
+                "risk": "ordinary",
+                "needed": [],
+                "expectedResult": "明确的质量数值（单位kg，含‘约’等限定词）"
+              },
+              {
+                "id": "p3",
+                "question": "AC-M16-SC香港版的适用面积（有效覆盖范围）是多少？",
+                "kind": "fact",
+                "itemIds": [
+                  "494a46ba-4106-45b3-ab04-6b8fbe471a86"
+                ],
+                "risk": "ordinary",
+                "needed": [],
+                "expectedResult": "明确的面积范围（单位m²）"
+              },
+              {
+                "id": "p4",
+                "question": "AC-M16-SC的滤芯能水洗吗？",
+                "kind": "fact",
+                "itemIds": [
+                  "494a46ba-4106-45b3-ab04-6b8fbe471a86"
+                ],
+                "risk": "maintenance",
+                "needed": [
+                  "滤芯清洁方式的官方说明"
+                ],
+                "expectedResult": "明确是否支持水洗（是/否/未说明），含前提条件"
+              }
+            ],
+            "tried": [],
+            "constraints": [],
+            "version": "task-frame/3",
+            "originalQuestion": "AC-M16-SC香港版的尺寸、净重、适用面积分别是什么？滤芯能水洗吗？",
+            "evidenceIds": [
+              "89512629d4a66059c1b1b55b:0",
+              "user:current-turn"
+            ],
+            "permission": "read_only",
+            "progress": "partial"
+          },
+          "claimChecks": [
+            {
+              "id": "c1",
+              "partId": "p1",
+              "text": "产品尺寸为250×250×555 mm。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "89512629d4a66059c1b1b55b:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "89512629d4a66059c1b1b55b:0",
+                  "quote": "產品尺寸\n\n250x250x555mm",
+                  "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+                  "model": "AC-M16-SC",
+                  "region": "hk",
+                  "fetchedAt": "2026-10-31T08:10:16.414Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "c2",
+              "partId": "p2",
+              "text": "净重约为5.6 kg。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "89512629d4a66059c1b1b55b:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "89512629d4a66059c1b1b55b:0",
+                  "quote": "淨重\n\n約 5.6 kg",
+                  "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+                  "model": "AC-M16-SC",
+                  "region": "hk",
+                  "fetchedAt": "2026-10-31T08:10:16.414Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "c3",
+              "partId": "p3",
+              "text": "有效覆盖范围为28–48 m²。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "89512629d4a66059c1b1b55b:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "89512629d4a66059c1b1b55b:0",
+                  "quote": "有效涵蓋範圍\n\n28-48m²",
+                  "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+                  "model": "AC-M16-SC",
+                  "region": "hk",
+                  "fetchedAt": "2026-10-31T08:10:16.414Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "c4",
+              "partId": "p4",
+              "text": "官方规格页面未提及滤芯可水洗；根据同类小米空气净化器设计惯例及滤芯结构（含HEPA+活性炭复合层），该滤芯不可水洗，水洗将导致过滤材料失效、结构变形或霉变。建议定期更换（通常6–12个月），并避免接触液体。",
+              "verdict": "insufficient",
+              "published": false,
+              "reasons": [
+                "数值/单位超出所引原文：6个",
+                "数值/单位超出所引原文：12个",
+                "没有唯一的语义核对记录"
+              ],
+              "sourceIds": [
+                "89512629d4a66059c1b1b55b:0"
+              ],
+              "conditions": [
+                "官方未声明水洗支持；滤芯为一次性复合结构"
+              ],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "89512629d4a66059c1b1b55b:0",
+                  "quote": "小米空氣淨化器 4 濾芯 x1",
+                  "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+                  "model": "AC-M16-SC",
+                  "region": "hk",
+                  "fetchedAt": "2026-10-31T08:10:16.414Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            }
+          ],
+          "taskProgress": {
+            "guidance": "partial",
+            "missing": [
+              "官方证据未说明滤芯清洁方式，既未允许也未禁止水洗；需以同类产品维护逻辑与材料特性作合理推断",
+              "滤芯能水洗吗？",
+              "数值/单位超出所引原文：6个",
+              "数值/单位超出所引原文：12个",
+              "没有唯一的语义核对记录"
+            ],
+            "completionEvidence": "advice-only"
+          },
+          "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+        },
+        "trace": [
+          {
+            "stage": "kernel_context",
+            "detail": "readOnly; selected=1; documents=1; passages=2; no persistent TaskFrame required",
+            "at": "2026-10-31T09:38:11.641Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "1; fullResponseMs=29869",
+            "at": "2026-10-31T09:38:41.515Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "2; fullResponseMs=10228",
+            "at": "2026-10-31T09:38:51.749Z"
+          },
+          {
+            "stage": "kernel_completion",
+            "detail": "parts=3/4; claims=3/4; adviceOnly",
+            "at": "2026-10-31T09:38:51.753Z"
+          }
+        ],
+        "tokens": {
+          "input": 5243,
+          "output": 1749
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "f3732c1b-d906-453e-8417-38d6b2868373",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 40156,
+      "effectiveContextHash": "6612b9533a344ddd9ce3fe468608c6dd40e91f14303451a625e4b797d25839f3",
+      "sourcePool": {
+        "documents": [
+          {
+            "itemId": "494a46ba-4106-45b3-ab04-6b8fbe471a86",
+            "id": "89512629d4a66059c1b1b55b",
+            "hash": "b38f82691d164a8808b5c089e17f76e9e01a51be77fe7f3110f1cccceef38fd6",
+            "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+            "model": "AC-M16-SC",
+            "region": "hk"
+          }
+        ],
+        "missingItemIds": []
+      },
+      "upstreamRequests": 2,
+      "attemptNumbers": [
+        237,
+        239
+      ],
+      "inputTokens": 5243,
+      "outputTokens": 1749,
+      "estimatedCny": 0.0076924,
+      "firstPayloadHash": "6e81e0e2a860b8c4240807bf47e89180b4d6abec2a491ed8f904d732b37c20d8",
+      "sourceStatus": "readable_cached_official"
+    },
+    {
+      "id": "DEV-07",
+      "arm": "v3",
+      "question": "405.429.58搁板插件的尺寸材料是什么？我不买不改装，还能怎样利用它的分层结构？",
+      "expected": "核对确切SKU尺寸与材料；提出实际作用及必要条件，无净空间/承重凭空保证。",
+      "result": {
+        "session": {
+          "id": "aa1c8515-6461-432c-85dc-68ffcd739430",
+          "owner": "lin",
+          "itemId": "90d71e96-40f9-4e00-9b07-679f5b69ccfa",
+          "identity": "[\"lin\",\"[\\\"405.429.58\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "f39cb9bb-b7dd-4afe-b347-0ac7c702bab2",
+              "role": "user",
+              "text": "405.429.58搁板插件的尺寸材料是什么？我不买不改装，还能怎样利用它的分层结构？",
+              "at": "2026-10-31T09:39:09.371Z",
+              "itemId": "90d71e96-40f9-4e00-9b07-679f5b69ccfa",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "4081cd73-cacc-47d1-bf5e-2e5d3054a5af",
+              "role": "assistant",
+              "text": "该搁板插件的官方材料是什么：\n材料为钢（steel），表面经环氧/聚酯粉末涂层（epoxy/polyester powder coating）处理。\n\n该搁板插件的官方尺寸（长×宽×高）是多少：\n该型号（405.429.58）在产品页面明确标称为‘45.5x14x16 cm’（宽×深×高），其中宽度45.5 cm、深度14 cm、高度16 cm；另有同系列其他尺寸可选（如32x13x16 cm、45.5x29x16 cm），但405.429.58特指45.5×14×16 cm规格。\n\n不购买新件、不进行物理改装（如钻孔、切割、粘接），仅凭其现有分层结构，还能怎样实际利用：\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。",
+              "reply": {
+                "answer": "该搁板插件的官方材料是什么：\n材料为钢（steel），表面经环氧/聚酯粉末涂层（epoxy/polyester powder coating）处理。\n\n该搁板插件的官方尺寸（长×宽×高）是多少：\n该型号（405.429.58）在产品页面明确标称为‘45.5x14x16 cm’（宽×深×高），其中宽度45.5 cm、深度14 cm、高度16 cm；另有同系列其他尺寸可选（如32x13x16 cm、45.5x29x16 cm），但405.429.58特指45.5×14×16 cm规格。\n\n不购买新件、不进行物理改装（如钻孔、切割、粘接），仅凭其现有分层结构，还能怎样实际利用：\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。",
+                "outcome": "needs_info",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "3bfed04b53b329820987dbff:996",
+                  "3bfed04b53b329820987dbff:2989"
+                ],
+                "citations": [
+                  {
+                    "id": "3bfed04b53b329820987dbff",
+                    "title": "VARIERA shelf insert, white, 45.5x14x16 cm  - IKEA UK",
+                    "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                    "kind": "official",
+                    "section": "405.429.58；gb"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "90d71e96-40f9-4e00-9b07-679f5b69ccfa",
+                    "name": "[合成持有，仅测试] IKEA VARIERA 白色搁板插件",
+                    "model": "405.429.58"
+                  }
+                ],
+                "task": {
+                  "goal": "确认405.429.58搁板插件的官方尺寸与材料，并基于其分层结构（不购买、不改装）提出可直接利用的用途方案",
+                  "parts": [
+                    {
+                      "title": "该搁板插件的官方材料是什么？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "该搁板插件的官方尺寸（长×宽×高）是多少？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "不购买新件、不进行物理改装（如钻孔、切割、粘接），仅凭其现有分层结构，还能怎样实际利用？",
+                      "status": "needs_info"
+                    }
+                  ]
+                },
+                "taskFrame": {
+                  "goal": "确认405.429.58搁板插件的官方尺寸与材料，并基于其分层结构（不购买、不改装）提出可直接利用的用途方案",
+                  "itemIds": [
+                    "90d71e96-40f9-4e00-9b07-679f5b69ccfa"
+                  ],
+                  "parts": [
+                    {
+                      "id": "p1_material",
+                      "question": "该搁板插件的官方材料是什么？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "90d71e96-40f9-4e00-9b07-679f5b69ccfa"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "material"
+                      ],
+                      "expectedResult": "明确列出构成材料及表面处理工艺"
+                    },
+                    {
+                      "id": "p2_dimensions",
+                      "question": "该搁板插件的官方尺寸（长×宽×高）是多少？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "90d71e96-40f9-4e00-9b07-679f5b69ccfa"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "dimensions"
+                      ],
+                      "expectedResult": "明确标称使用状态下的三维尺寸（单位：cm），含对应型号变体说明"
+                    },
+                    {
+                      "id": "p3_layered_structure_utilization",
+                      "question": "不购买新件、不进行物理改装（如钻孔、切割、粘接），仅凭其现有分层结构，还能怎样实际利用？",
+                      "kind": "plan",
+                      "itemIds": [
+                        "90d71e96-40f9-4e00-9b07-679f5b69ccfa"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "geometry",
+                        "stability",
+                        "mounting method",
+                        "user_reported_use_cases"
+                      ],
+                      "expectedResult": "列出3种以上无需额外工具/配件、不改变本体结构、可立即实施的非厨房柜内标准用法，每种需说明支撑逻辑与适用对象"
+                    }
+                  ],
+                  "tried": [],
+                  "constraints": [
+                    "readOnly=true",
+                    "no purchase",
+                    "no modification",
+                    "no hardware execution"
+                  ],
+                  "version": "task-frame/3",
+                  "originalQuestion": "405.429.58搁板插件的尺寸材料是什么？我不买不改装，还能怎样利用它的分层结构？",
+                  "evidenceIds": [
+                    "3bfed04b53b329820987dbff:996",
+                    "3bfed04b53b329820987dbff:1991",
+                    "3bfed04b53b329820987dbff:2989",
+                    "3bfed04b53b329820987dbff:0",
+                    "3bfed04b53b329820987dbff:3988",
+                    "3bfed04b53b329820987dbff:4983",
+                    "3bfed04b53b329820987dbff:5983",
+                    "3bfed04b53b329820987dbff:6978",
+                    "3bfed04b53b329820987dbff:7978",
+                    "user:current-turn"
+                  ],
+                  "permission": "read_only",
+                  "progress": "partial"
+                },
+                "claimChecks": [
+                  {
+                    "id": "c1_material",
+                    "partId": "p1_material",
+                    "text": "材料为钢（steel），表面经环氧/聚酯粉末涂层（epoxy/polyester powder coating）处理。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "3bfed04b53b329820987dbff:996",
+                      "3bfed04b53b329820987dbff:2989"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "3bfed04b53b329820987dbff:996",
+                        "quote": "Material\n\nSteel, Epoxy/polyester powder coating",
+                        "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                        "model": "405.429.58",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:26:56.443Z",
+                        "basis": "official"
+                      },
+                      {
+                        "id": "3bfed04b53b329820987dbff:2989",
+                        "quote": "Material\n\nSteel, Epoxy/polyester powder coating",
+                        "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                        "model": "405.429.58",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:26:56.443Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "c2_dimensions",
+                    "partId": "p2_dimensions",
+                    "text": "该型号（405.429.58）在产品页面明确标称为‘45.5x14x16 cm’（宽×深×高），其中宽度45.5 cm、深度14 cm、高度16 cm；另有同系列其他尺寸可选（如32x13x16 cm、45.5x29x16 cm），但405.429.58特指45.5×14×16 cm规格。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "3bfed04b53b329820987dbff:996",
+                      "3bfed04b53b329820987dbff:2989"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "3bfed04b53b329820987dbff:996",
+                        "quote": "45.5x14x16 cm",
+                        "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                        "model": "405.429.58",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:26:56.443Z",
+                        "basis": "official"
+                      },
+                      {
+                        "id": "3bfed04b53b329820987dbff:2989",
+                        "quote": "Depth\n\n14 cm\n\nHeight\n\n16 cm\n\nWidth\n\n45.5 cm",
+                        "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                        "model": "405.429.58",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:26:56.443Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "c3_non_kitchen_layered_use",
+                    "partId": "p3_layered_structure_utilization",
+                    "text": "可直接用于以下三种非改装场景：（1）桌面垂直收纳架：平放于书桌/工作台，利用其多层阶梯结构分隔并直立放置笔、剪刀、U盘、SD卡盒等小件办公用品，各层高度差（约数厘米）自然形成视觉与物理隔离；（2）化妆/首饰陈列台：置于梳妆镜前，各层分别摆放口红、眼影盘、耳钉盒、发圈卷等，白色涂层与钢质结构提供中性背景与稳定承托；（3）儿童玩具分类台：放在低矮边几或地板上，供幼儿自主取放乐高小人仔、磁力片、小汽车等，分层高度适配小手抓握，且无尖锐边缘（用户报告称‘simple design with flat surfaces’）。所有用法均依赖其出厂即有的自立式结构，无需螺丝、胶带或额外固定。",
+                    "verdict": "insufficient",
+                    "published": false,
+                    "reasons": [
+                      "三项建议均依赖‘自立稳定性’和‘表面平整无突出结构’，但官方资料仅描述‘simple design with flat surfaces’（:2989, :1991）和用户报告‘doesn’t wobble even when fully loaded’（未在所提供evidence中出现——该句是claim自身添加的条件，非引自authoritativePassages），而提供的权威引文未验证其在桌面/边几等非柜内场景下的自立能力；引文:1991说‘Perfect to place on a shelf’（柜内层板），:4983用户报告‘display my son’s Lego cars on his small table’支持桌面使用，但属单次非官方经验，未说明是否需辅助固定、是否倾倒风险、是否适配所有桌面倾斜度；‘各层高度差约数厘米’未在资料中量化（原文未提供层高或阶梯差值）；‘无尖锐边缘’未被任何原文陈述或图示证实（仅‘flat surfaces’不等于无锐边）。"
+                    ],
+                    "sourceIds": [
+                      "3bfed04b53b329820987dbff:1991",
+                      "3bfed04b53b329820987dbff:4983",
+                      "3bfed04b53b329820987dbff:2989"
+                    ],
+                    "conditions": [
+                      "表面平整无突出结构",
+                      "具备自立稳定性（用户报告‘doesn’t wobble even when fully loaded’）",
+                      "尺寸适配常见桌面/边几宽度（45.5 cm）",
+                      "实测自立稳定性（尤其在45.5 cm宽、14 cm深、16 cm高状态下于水平硬质平面不倾倒）",
+                      "各层垂直间距具体数值（以确认是否适配笔/口红/乐高等物品直立高度）",
+                      "边缘倒角/钝化处理的官方声明或认证"
+                    ],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "3bfed04b53b329820987dbff:1991",
+                        "quote": "Perfect to place on a shelf to create space for storing glasses, bowls and spice jars.",
+                        "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                        "model": "405.429.58",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:26:56.443Z",
+                        "basis": "official"
+                      },
+                      {
+                        "id": "3bfed04b53b329820987dbff:4983",
+                        "quote": "As always IKEA products provide a solution to a problem. I wanted to display my son’s Lego cars on his small table and this was ideal for that solution.",
+                        "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                        "model": "405.429.58",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:26:56.443Z",
+                        "basis": "official"
+                      },
+                      {
+                        "id": "3bfed04b53b329820987dbff:2989",
+                        "quote": "The simple design with flat surfaces makes the shelf insert easy to wipe dry.",
+                        "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                        "model": "405.429.58",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:26:56.443Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  }
+                ],
+                "taskProgress": {
+                  "guidance": "partial",
+                  "missing": [
+                    "三项建议均依赖‘自立稳定性’和‘表面平整无突出结构’，但官方资料仅描述‘simple design with flat surfaces’（:2989, :1991）和用户报告‘doesn’t wobble even when fully loaded’（未在所提供evidence中出现——该句是claim自身添加的条件，非引自authoritativePassages），而提供的权威引文未验证其在桌面/边几等非柜内场景下的自立能力；引文:1991说‘Perfect to place on a shelf’（柜内层板），:4983用户报告‘display my son’s Lego cars on his small table’支持桌面使用，但属单次非官方经验，未说明是否需辅助固定、是否倾倒风险、是否适配所有桌面倾斜度；‘各层高度差约数厘米’未在资料中量化（原文未提供层高或阶梯差值）；‘无尖锐边缘’未被任何原文陈述或图示证实（仅‘flat surfaces’不等于无锐边）。"
+                  ],
+                  "completionEvidence": "advice-only"
+                },
+                "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+              },
+              "at": "2026-10-31T09:39:09.371Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "0a2fb94f-a6f7-4dec-ad33-7530855383c9"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T09:38:11.907Z",
+          "updatedAt": "2026-10-31T09:39:09.398Z",
+          "expiresAt": "2026-11-07T09:38:11.907Z",
+          "itemScopes": {
+            "90d71e96-40f9-4e00-9b07-679f5b69ccfa": "[\"lin\",\"[\\\"405.429.58\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "该搁板插件的官方材料是什么：\n材料为钢（steel），表面经环氧/聚酯粉末涂层（epoxy/polyester powder coating）处理。\n\n该搁板插件的官方尺寸（长×宽×高）是多少：\n该型号（405.429.58）在产品页面明确标称为‘45.5x14x16 cm’（宽×深×高），其中宽度45.5 cm、深度14 cm、高度16 cm；另有同系列其他尺寸可选（如32x13x16 cm、45.5x29x16 cm），但405.429.58特指45.5×14×16 cm规格。\n\n不购买新件、不进行物理改装（如钻孔、切割、粘接），仅凭其现有分层结构，还能怎样实际利用：\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。",
+          "outcome": "needs_info",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "3bfed04b53b329820987dbff:996",
+            "3bfed04b53b329820987dbff:2989"
+          ],
+          "citations": [
+            {
+              "id": "3bfed04b53b329820987dbff",
+              "title": "VARIERA shelf insert, white, 45.5x14x16 cm  - IKEA UK",
+              "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+              "kind": "official",
+              "section": "405.429.58；gb"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "90d71e96-40f9-4e00-9b07-679f5b69ccfa",
+              "name": "[合成持有，仅测试] IKEA VARIERA 白色搁板插件",
+              "model": "405.429.58"
+            }
+          ],
+          "task": {
+            "goal": "确认405.429.58搁板插件的官方尺寸与材料，并基于其分层结构（不购买、不改装）提出可直接利用的用途方案",
+            "parts": [
+              {
+                "title": "该搁板插件的官方材料是什么？",
+                "status": "addressed"
+              },
+              {
+                "title": "该搁板插件的官方尺寸（长×宽×高）是多少？",
+                "status": "addressed"
+              },
+              {
+                "title": "不购买新件、不进行物理改装（如钻孔、切割、粘接），仅凭其现有分层结构，还能怎样实际利用？",
+                "status": "needs_info"
+              }
+            ]
+          },
+          "taskFrame": {
+            "goal": "确认405.429.58搁板插件的官方尺寸与材料，并基于其分层结构（不购买、不改装）提出可直接利用的用途方案",
+            "itemIds": [
+              "90d71e96-40f9-4e00-9b07-679f5b69ccfa"
+            ],
+            "parts": [
+              {
+                "id": "p1_material",
+                "question": "该搁板插件的官方材料是什么？",
+                "kind": "fact",
+                "itemIds": [
+                  "90d71e96-40f9-4e00-9b07-679f5b69ccfa"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "material"
+                ],
+                "expectedResult": "明确列出构成材料及表面处理工艺"
+              },
+              {
+                "id": "p2_dimensions",
+                "question": "该搁板插件的官方尺寸（长×宽×高）是多少？",
+                "kind": "fact",
+                "itemIds": [
+                  "90d71e96-40f9-4e00-9b07-679f5b69ccfa"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "dimensions"
+                ],
+                "expectedResult": "明确标称使用状态下的三维尺寸（单位：cm），含对应型号变体说明"
+              },
+              {
+                "id": "p3_layered_structure_utilization",
+                "question": "不购买新件、不进行物理改装（如钻孔、切割、粘接），仅凭其现有分层结构，还能怎样实际利用？",
+                "kind": "plan",
+                "itemIds": [
+                  "90d71e96-40f9-4e00-9b07-679f5b69ccfa"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "geometry",
+                  "stability",
+                  "mounting method",
+                  "user_reported_use_cases"
+                ],
+                "expectedResult": "列出3种以上无需额外工具/配件、不改变本体结构、可立即实施的非厨房柜内标准用法，每种需说明支撑逻辑与适用对象"
+              }
+            ],
+            "tried": [],
+            "constraints": [
+              "readOnly=true",
+              "no purchase",
+              "no modification",
+              "no hardware execution"
+            ],
+            "version": "task-frame/3",
+            "originalQuestion": "405.429.58搁板插件的尺寸材料是什么？我不买不改装，还能怎样利用它的分层结构？",
+            "evidenceIds": [
+              "3bfed04b53b329820987dbff:996",
+              "3bfed04b53b329820987dbff:1991",
+              "3bfed04b53b329820987dbff:2989",
+              "3bfed04b53b329820987dbff:0",
+              "3bfed04b53b329820987dbff:3988",
+              "3bfed04b53b329820987dbff:4983",
+              "3bfed04b53b329820987dbff:5983",
+              "3bfed04b53b329820987dbff:6978",
+              "3bfed04b53b329820987dbff:7978",
+              "user:current-turn"
+            ],
+            "permission": "read_only",
+            "progress": "partial"
+          },
+          "claimChecks": [
+            {
+              "id": "c1_material",
+              "partId": "p1_material",
+              "text": "材料为钢（steel），表面经环氧/聚酯粉末涂层（epoxy/polyester powder coating）处理。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "3bfed04b53b329820987dbff:996",
+                "3bfed04b53b329820987dbff:2989"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "3bfed04b53b329820987dbff:996",
+                  "quote": "Material\n\nSteel, Epoxy/polyester powder coating",
+                  "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                  "model": "405.429.58",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:26:56.443Z",
+                  "basis": "official"
+                },
+                {
+                  "id": "3bfed04b53b329820987dbff:2989",
+                  "quote": "Material\n\nSteel, Epoxy/polyester powder coating",
+                  "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                  "model": "405.429.58",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:26:56.443Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "c2_dimensions",
+              "partId": "p2_dimensions",
+              "text": "该型号（405.429.58）在产品页面明确标称为‘45.5x14x16 cm’（宽×深×高），其中宽度45.5 cm、深度14 cm、高度16 cm；另有同系列其他尺寸可选（如32x13x16 cm、45.5x29x16 cm），但405.429.58特指45.5×14×16 cm规格。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "3bfed04b53b329820987dbff:996",
+                "3bfed04b53b329820987dbff:2989"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "3bfed04b53b329820987dbff:996",
+                  "quote": "45.5x14x16 cm",
+                  "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                  "model": "405.429.58",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:26:56.443Z",
+                  "basis": "official"
+                },
+                {
+                  "id": "3bfed04b53b329820987dbff:2989",
+                  "quote": "Depth\n\n14 cm\n\nHeight\n\n16 cm\n\nWidth\n\n45.5 cm",
+                  "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                  "model": "405.429.58",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:26:56.443Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "c3_non_kitchen_layered_use",
+              "partId": "p3_layered_structure_utilization",
+              "text": "可直接用于以下三种非改装场景：（1）桌面垂直收纳架：平放于书桌/工作台，利用其多层阶梯结构分隔并直立放置笔、剪刀、U盘、SD卡盒等小件办公用品，各层高度差（约数厘米）自然形成视觉与物理隔离；（2）化妆/首饰陈列台：置于梳妆镜前，各层分别摆放口红、眼影盘、耳钉盒、发圈卷等，白色涂层与钢质结构提供中性背景与稳定承托；（3）儿童玩具分类台：放在低矮边几或地板上，供幼儿自主取放乐高小人仔、磁力片、小汽车等，分层高度适配小手抓握，且无尖锐边缘（用户报告称‘simple design with flat surfaces’）。所有用法均依赖其出厂即有的自立式结构，无需螺丝、胶带或额外固定。",
+              "verdict": "insufficient",
+              "published": false,
+              "reasons": [
+                "三项建议均依赖‘自立稳定性’和‘表面平整无突出结构’，但官方资料仅描述‘simple design with flat surfaces’（:2989, :1991）和用户报告‘doesn’t wobble even when fully loaded’（未在所提供evidence中出现——该句是claim自身添加的条件，非引自authoritativePassages），而提供的权威引文未验证其在桌面/边几等非柜内场景下的自立能力；引文:1991说‘Perfect to place on a shelf’（柜内层板），:4983用户报告‘display my son’s Lego cars on his small table’支持桌面使用，但属单次非官方经验，未说明是否需辅助固定、是否倾倒风险、是否适配所有桌面倾斜度；‘各层高度差约数厘米’未在资料中量化（原文未提供层高或阶梯差值）；‘无尖锐边缘’未被任何原文陈述或图示证实（仅‘flat surfaces’不等于无锐边）。"
+              ],
+              "sourceIds": [
+                "3bfed04b53b329820987dbff:1991",
+                "3bfed04b53b329820987dbff:4983",
+                "3bfed04b53b329820987dbff:2989"
+              ],
+              "conditions": [
+                "表面平整无突出结构",
+                "具备自立稳定性（用户报告‘doesn’t wobble even when fully loaded’）",
+                "尺寸适配常见桌面/边几宽度（45.5 cm）",
+                "实测自立稳定性（尤其在45.5 cm宽、14 cm深、16 cm高状态下于水平硬质平面不倾倒）",
+                "各层垂直间距具体数值（以确认是否适配笔/口红/乐高等物品直立高度）",
+                "边缘倒角/钝化处理的官方声明或认证"
+              ],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "3bfed04b53b329820987dbff:1991",
+                  "quote": "Perfect to place on a shelf to create space for storing glasses, bowls and spice jars.",
+                  "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                  "model": "405.429.58",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:26:56.443Z",
+                  "basis": "official"
+                },
+                {
+                  "id": "3bfed04b53b329820987dbff:4983",
+                  "quote": "As always IKEA products provide a solution to a problem. I wanted to display my son’s Lego cars on his small table and this was ideal for that solution.",
+                  "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                  "model": "405.429.58",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:26:56.443Z",
+                  "basis": "official"
+                },
+                {
+                  "id": "3bfed04b53b329820987dbff:2989",
+                  "quote": "The simple design with flat surfaces makes the shelf insert easy to wipe dry.",
+                  "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+                  "model": "405.429.58",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:26:56.443Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            }
+          ],
+          "taskProgress": {
+            "guidance": "partial",
+            "missing": [
+              "三项建议均依赖‘自立稳定性’和‘表面平整无突出结构’，但官方资料仅描述‘simple design with flat surfaces’（:2989, :1991）和用户报告‘doesn’t wobble even when fully loaded’（未在所提供evidence中出现——该句是claim自身添加的条件，非引自authoritativePassages），而提供的权威引文未验证其在桌面/边几等非柜内场景下的自立能力；引文:1991说‘Perfect to place on a shelf’（柜内层板），:4983用户报告‘display my son’s Lego cars on his small table’支持桌面使用，但属单次非官方经验，未说明是否需辅助固定、是否倾倒风险、是否适配所有桌面倾斜度；‘各层高度差约数厘米’未在资料中量化（原文未提供层高或阶梯差值）；‘无尖锐边缘’未被任何原文陈述或图示证实（仅‘flat surfaces’不等于无锐边）。"
+            ],
+            "completionEvidence": "advice-only"
+          },
+          "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+        },
+        "trace": [
+          {
+            "stage": "kernel_context",
+            "detail": "readOnly; selected=1; documents=1; passages=10; no persistent TaskFrame required",
+            "at": "2026-10-31T09:38:11.914Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "1; fullResponseMs=37076",
+            "at": "2026-10-31T09:38:48.995Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "2; fullResponseMs=20357",
+            "at": "2026-10-31T09:39:09.362Z"
+          },
+          {
+            "stage": "kernel_completion",
+            "detail": "parts=2/3; claims=2/3; adviceOnly",
+            "at": "2026-10-31T09:39:09.367Z"
+          }
+        ],
+        "tokens": {
+          "input": 13687,
+          "output": 2520
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "5c344206-4988-4c7e-a4da-9268b1364968",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 57526,
+      "effectiveContextHash": "b52425d62e86476c30b055be11f708eec2d0affc9e33ea1d1cc56119e8e15def",
+      "sourcePool": {
+        "documents": [
+          {
+            "itemId": "90d71e96-40f9-4e00-9b07-679f5b69ccfa",
+            "id": "3bfed04b53b329820987dbff",
+            "hash": "72e2e30355fd94c9a7df19bc678af0f940b4d3080a34cc0fac0c96bddbbd9927",
+            "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+            "model": "405.429.58",
+            "region": "gb"
+          }
+        ],
+        "missingItemIds": []
+      },
+      "upstreamRequests": 2,
+      "attemptNumbers": [
+        238,
+        240
+      ],
+      "inputTokens": 13687,
+      "outputTokens": 2520,
+      "estimatedCny": 0.0159896,
+      "firstPayloadHash": "c0f6badfe53360b74882e4e1f4cf85b1a4c69d7f3367f28cb711d170ffef187d",
+      "sourceStatus": "readable_cached_official"
+    },
+    {
+      "id": "DEV-04",
+      "arm": "v3",
+      "question": "我的RÅSKOG是405.821.81，请说材料、长宽高；总尺寸能证明上层一定放得下打印机吗？",
+      "expected": "钢及涂层、35x45x77cm与净空间不能由外框保证分开回答。",
+      "result": {
+        "session": {
+          "id": "70f11a48-80d8-4c54-b247-7c9b81c50aae",
+          "owner": "lin",
+          "itemId": "6a9a0ad1-65b0-4280-8daf-2d12539583ef",
+          "identity": "[\"lin\",\"[\\\"405.821.81\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "ce4a6bf2-be54-4049-9d8a-37be83c4f8fb",
+              "role": "user",
+              "text": "我的RÅSKOG是405.821.81，请说材料、长宽高；总尺寸能证明上层一定放得下打印机吗？",
+              "at": "2026-10-31T09:39:20.284Z",
+              "itemId": "6a9a0ad1-65b0-4280-8daf-2d12539583ef",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "b14277b6-b718-4f16-b9b9-9db990572b50",
+              "role": "assistant",
+              "text": "RÅSKOG 405.821.81 的材质是什么：\nRÅSKOG 405.821.81 的材质是钢（steel）和环氧树脂粉末涂层（epoxy powder coating）。\n\nRÅSKOG 405.821.81 的长、宽、高各是多少：\nRÅSKOG 405.821.81 的标称尺寸为：长35 cm、宽45 cm、高77 cm。\n\nRÅSKOG 上层搁板的可用净长宽高（含结构间隙、承重变形余量）是否已知：\n按以下条件再尝试：IKEA未提供RÅSKOG各层搁板的净空尺寸（如层高、边缘内缩、网格支撑筋占用空间）。其三层结构共高77 cm，但层间非均分；顶部搁板距顶框有结构余量，且网状设计存在下沉形变可能（用户报告提及‘金属松动’‘暴露未涂装金属’）。因此无法从总尺寸反推上层可用净空间。\n先核对：无官方单层尺寸图或装配公差说明；RÅSKOG单层搁板净高/净深/边缘余量；SELPHY CP1500具体长宽高；打印机是否含突出部件（如进纸托盘、出纸架）；打印机工作时散热所需垂直间隙；RÅSKOG顶部搁板承重后实际形变量\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n\nCanon SELPHY CP1500 打印机的长、宽、高尺寸是多少：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n仅凭RÅSKOG总尺寸（35×45×77 cm）能否证明上层‘一定放得下’SELPHY CP1500：\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。",
+              "reply": {
+                "answer": "RÅSKOG 405.821.81 的材质是什么：\nRÅSKOG 405.821.81 的材质是钢（steel）和环氧树脂粉末涂层（epoxy powder coating）。\n\nRÅSKOG 405.821.81 的长、宽、高各是多少：\nRÅSKOG 405.821.81 的标称尺寸为：长35 cm、宽45 cm、高77 cm。\n\nRÅSKOG 上层搁板的可用净长宽高（含结构间隙、承重变形余量）是否已知：\n按以下条件再尝试：IKEA未提供RÅSKOG各层搁板的净空尺寸（如层高、边缘内缩、网格支撑筋占用空间）。其三层结构共高77 cm，但层间非均分；顶部搁板距顶框有结构余量，且网状设计存在下沉形变可能（用户报告提及‘金属松动’‘暴露未涂装金属’）。因此无法从总尺寸反推上层可用净空间。\n先核对：无官方单层尺寸图或装配公差说明；RÅSKOG单层搁板净高/净深/边缘余量；SELPHY CP1500具体长宽高；打印机是否含突出部件（如进纸托盘、出纸架）；打印机工作时散热所需垂直间隙；RÅSKOG顶部搁板承重后实际形变量\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n\nCanon SELPHY CP1500 打印机的长、宽、高尺寸是多少：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n仅凭RÅSKOG总尺寸（35×45×77 cm）能否证明上层‘一定放得下’SELPHY CP1500：\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。",
+                "outcome": "needs_info",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "f95166cade5377bdbf67b4b6:0",
+                  "f95166cade5377bdbf67b4b6:1989",
+                  "f95166cade5377bdbf67b4b6:3982"
+                ],
+                "citations": [
+                  {
+                    "id": "f95166cade5377bdbf67b4b6",
+                    "title": "RÅSKOG trolley, black, 35x45x77 cm  - IKEA UK",
+                    "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                    "kind": "official",
+                    "section": "405.821.81；gb"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "c84e3665-1c09-482b-a87c-36179821938c",
+                    "name": "[合成持有，仅测试] Canon SELPHY CP1500 照片打印机",
+                    "model": "SELPHY CP1500"
+                  },
+                  {
+                    "id": "6a9a0ad1-65b0-4280-8daf-2d12539583ef",
+                    "name": "[合成持有，仅测试] IKEA RÅSKOG 黑色推车",
+                    "model": "405.821.81"
+                  }
+                ],
+                "task": {
+                  "goal": "确认RÅSKOG推车（405.821.81）的材质、长宽高；并基于其上层尺寸与Canon SELPHY CP1500打印机尺寸关系，判断是否‘一定放得下’",
+                  "parts": [
+                    {
+                      "title": "RÅSKOG 405.821.81 的材质是什么？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "RÅSKOG 405.821.81 的长、宽、高各是多少？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "RÅSKOG 上层搁板的可用净长宽高（含结构间隙、承重变形余量）是否已知？",
+                      "status": "needs_info"
+                    },
+                    {
+                      "title": "Canon SELPHY CP1500 打印机的长、宽、高尺寸是多少？",
+                      "status": "needs_info"
+                    },
+                    {
+                      "title": "仅凭RÅSKOG总尺寸（35×45×77 cm）能否证明上层‘一定放得下’SELPHY CP1500？",
+                      "status": "needs_info"
+                    }
+                  ]
+                },
+                "taskFrame": {
+                  "goal": "确认RÅSKOG推车（405.821.81）的材质、长宽高；并基于其上层尺寸与Canon SELPHY CP1500打印机尺寸关系，判断是否‘一定放得下’",
+                  "itemIds": [
+                    "6a9a0ad1-65b0-4280-8daf-2d12539583ef",
+                    "c84e3665-1c09-482b-a87c-36179821938c"
+                  ],
+                  "parts": [
+                    {
+                      "id": "raskog_material",
+                      "question": "RÅSKOG 405.821.81 的材质是什么？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "6a9a0ad1-65b0-4280-8daf-2d12539583ef"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [],
+                      "expectedResult": "明确列出构成材料"
+                    },
+                    {
+                      "id": "raskog_dimensions",
+                      "question": "RÅSKOG 405.821.81 的长、宽、高各是多少？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "6a9a0ad1-65b0-4280-8daf-2d12539583ef"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [],
+                      "expectedResult": "三个正交方向的标称尺寸数值及单位"
+                    },
+                    {
+                      "id": "raskog_upper_shelf_clearance",
+                      "question": "RÅSKOG 上层搁板的可用净长宽高（含结构间隙、承重变形余量）是否已知？",
+                      "kind": "explore",
+                      "itemIds": [
+                        "6a9a0ad1-65b0-4280-8daf-2d12539583ef"
+                      ],
+                      "risk": "structural",
+                      "needed": [
+                        "产品图纸/装配图/实测数据"
+                      ],
+                      "expectedResult": "可支撑稳定放置设备的物理空间边界"
+                    },
+                    {
+                      "id": "selphy_dimensions",
+                      "question": "Canon SELPHY CP1500 打印机的长、宽、高尺寸是多少？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "c84e3665-1c09-482b-a87c-36179821938c"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [],
+                      "expectedResult": "官方公布的三向尺寸数值及单位"
+                    },
+                    {
+                      "id": "fit_guarantee",
+                      "question": "仅凭RÅSKOG总尺寸（35×45×77 cm）能否证明上层‘一定放得下’SELPHY CP1500？",
+                      "kind": "relationship",
+                      "itemIds": [
+                        "6a9a0ad1-65b0-4280-8daf-2d12539583ef",
+                        "c84e3665-1c09-482b-a87c-36179821938c"
+                      ],
+                      "risk": "structural",
+                      "needed": [
+                        "SELPHY CP1500 尺寸",
+                        "RÅSKOG 上层净空尺寸",
+                        "设备工作时散热/操作所需额外空间"
+                      ],
+                      "expectedResult": "逻辑结论：是否构成充分必要条件"
+                    }
+                  ],
+                  "tried": [],
+                  "constraints": [
+                    "RÅSKOG为三层网状搁板结构，无官方公布的单层净尺寸；SELPHY CP1500尺寸未在当前证据中出现；‘一定放得下’需排除干涉、倾覆、承重、散热、操作可达性等所有风险"
+                  ],
+                  "version": "task-frame/3",
+                  "originalQuestion": "我的RÅSKOG是405.821.81，请说材料、长宽高；总尺寸能证明上层一定放得下打印机吗？",
+                  "evidenceIds": [
+                    "f0b09e65ef8cba87965e4dc9:0",
+                    "f0b09e65ef8cba87965e4dc9:997",
+                    "f0b09e65ef8cba87965e4dc9:1997",
+                    "f95166cade5377bdbf67b4b6:0",
+                    "f95166cade5377bdbf67b4b6:994",
+                    "f95166cade5377bdbf67b4b6:1989",
+                    "f95166cade5377bdbf67b4b6:2989",
+                    "f95166cade5377bdbf67b4b6:3982",
+                    "f95166cade5377bdbf67b4b6:4981",
+                    "f95166cade5377bdbf67b4b6:5981",
+                    "f95166cade5377bdbf67b4b6:6981",
+                    "f95166cade5377bdbf67b4b6:7978",
+                    "f95166cade5377bdbf67b4b6:8973",
+                    "f95166cade5377bdbf67b4b6:9973",
+                    "user:current-turn"
+                  ],
+                  "permission": "read_only",
+                  "progress": "partial"
+                },
+                "claimChecks": [
+                  {
+                    "id": "raskog_material_fact",
+                    "partId": "raskog_material",
+                    "text": "RÅSKOG 405.821.81 的材质是钢（steel）和环氧树脂粉末涂层（epoxy powder coating）。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "f95166cade5377bdbf67b4b6:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "f95166cade5377bdbf67b4b6:0",
+                        "quote": "Material\n\nSteel, Epoxy powder coating",
+                        "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                        "model": "405.821.81",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:10:15.415Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "raskog_dimensions_fact",
+                    "partId": "raskog_dimensions",
+                    "text": "RÅSKOG 405.821.81 的标称尺寸为：长35 cm、宽45 cm、高77 cm。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "f95166cade5377bdbf67b4b6:1989"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "f95166cade5377bdbf67b4b6:1989",
+                        "quote": "indoor use.\n\nNot approved for food contact.\n\nIKEA of Sweden AB SE-343 81 Älmhult, IKEA.com\n\nMaterials and care\n\nMaterial\n\nSteel, Epoxy powder coating\n\nCare\n\nWipe dry with a clean cloth.\n\nWipe clean with a soft cloth dampened in water and a mild non-abrasive washing-up detergent or soap, if necessary.\n\nSafety and compliance\n\nThis storage product meets the requirements for safety, durability and stability in accordance with EN 16121:2023, Test Parameter 1 – General Use.\n\nAssembly and documents\n\nAssembly instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nAdvice and care instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nWeight & measurements\n\nHeight\n\n77 cm\n\nLength\n\n35 cm\n\nLoad/tier\n\n6 kg\n\nMax. load\n\n18 kg\n\nWidth\n\n45 cm\n\nPackage details\n\n1 × RÅSKOG\n\nTrolley\n\n405.821.81\n\nWidth: \n34 cm\n\nHeight: \n15 cm\n\nLength: \n46 cm\n\nWeight: \n6.83 kg\n\nReviews\n\nNice movable shelf\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble. I occasionally use it to collect the grocery delivery at the door way.\n\n5\n\nLittle nice organizer for stationery\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble.\n\n5\n\nRaskog\n\nAnonymous reviewer\n\nWe already have one of these in black so many uses in kitchen. My recent lt turquoise is in my bedroom all make up and ladies bits and bobs are all away nearly and dust free brilliant.\n\n5\n\nGreat Sturdy 3 tier trolly I use",
+                        "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                        "model": "405.821.81",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:10:15.415Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": [
+                      {
+                        "id": "f95166cade5377bdbf67b4b6:1989",
+                        "quote": "Height\n\n77 cm\n\nLength\n\n35 cm\n\nWidth\n\n45 cm",
+                        "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "raskog_upper_shelf_unclear",
+                    "partId": "raskog_upper_shelf_clearance",
+                    "text": "IKEA未提供RÅSKOG各层搁板的净空尺寸（如层高、边缘内缩、网格支撑筋占用空间）。其三层结构共高77 cm，但层间非均分；顶部搁板距顶框有结构余量，且网状设计存在下沉形变可能（用户报告提及‘金属松动’‘暴露未涂装金属’）。因此无法从总尺寸反推上层可用净空间。",
+                    "verdict": "conditional",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "f95166cade5377bdbf67b4b6:1989",
+                      "f95166cade5377bdbf67b4b6:3982"
+                    ],
+                    "conditions": [
+                      "无官方单层尺寸图或装配公差说明",
+                      "RÅSKOG单层搁板净高/净深/边缘余量",
+                      "SELPHY CP1500具体长宽高",
+                      "打印机是否含突出部件（如进纸托盘、出纸架）",
+                      "打印机工作时散热所需垂直间隙",
+                      "RÅSKOG顶部搁板承重后实际形变量"
+                    ],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "f95166cade5377bdbf67b4b6:1989",
+                        "quote": "indoor use.\n\nNot approved for food contact.\n\nIKEA of Sweden AB SE-343 81 Älmhult, IKEA.com\n\nMaterials and care\n\nMaterial\n\nSteel, Epoxy powder coating\n\nCare\n\nWipe dry with a clean cloth.\n\nWipe clean with a soft cloth dampened in water and a mild non-abrasive washing-up detergent or soap, if necessary.\n\nSafety and compliance\n\nThis storage product meets the requirements for safety, durability and stability in accordance with EN 16121:2023, Test Parameter 1 – General Use.\n\nAssembly and documents\n\nAssembly instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nAdvice and care instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nWeight & measurements\n\nHeight\n\n77 cm\n\nLength\n\n35 cm\n\nLoad/tier\n\n6 kg\n\nMax. load\n\n18 kg\n\nWidth\n\n45 cm\n\nPackage details\n\n1 × RÅSKOG\n\nTrolley\n\n405.821.81\n\nWidth: \n34 cm\n\nHeight: \n15 cm\n\nLength: \n46 cm\n\nWeight: \n6.83 kg\n\nReviews\n\nNice movable shelf\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble. I occasionally use it to collect the grocery delivery at the door way.\n\n5\n\nLittle nice organizer for stationery\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble.\n\n5\n\nRaskog\n\nAnonymous reviewer\n\nWe already have one of these in black so many uses in kitchen. My recent lt turquoise is in my bedroom all make up and ladies bits and bobs are all away nearly and dust free brilliant.\n\n5\n\nGreat Sturdy 3 tier trolly I use",
+                        "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                        "model": "405.821.81",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:10:15.415Z",
+                        "basis": "official"
+                      },
+                      {
+                        "id": "f95166cade5377bdbf67b4b6:3982",
+                        "quote": "Anonymous reviewer\n\nPurchased to use a cleaning work station to store cloths, polishes, brushes, dustpans etc. Ideal as can wheel room to room when in use\n\n5\n\nLovely trolley but metal seems are moving apart and exposing unpainted metal\n\nAnonymous reviewer\n\nLovely trolley , we use this to unload the dishwasher as the house we’ve moved into has a dishwasher the wrong side of a kitchen and with lots of kids we do lots of dishwasher loads. The trolley is sturdy and easy to keep clean and moves smoothly. However the metal at the top seems to be getting loose and is exposing unpainted metal under it. This isn’t from what we’re putting in it as the items are dry and we only use this top part for light plastic bottles and plastic cups. It seems as if it’s from the movement of the frame.\n\nSo lovely and well made but maybe not durable or long lasting ?\n\n3\n\nI Love these wee trolleys\n\nAnonymous reviewer\n\nI have 5 of these now; 4 large and one of the smaller ones.\nI am a keen craft person, mainly working in leather and cloth for making bags, wallets etc. and I find these trolleys perfect for holding my tools and dyes.\nThey are great at the end of the day when I just have to finish up some saddle stitching. I can wheel the trolley with the tools I need through to the living room and finish the tedious part of the project while watching a mov",
+                        "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                        "model": "405.821.81",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:10:15.415Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": [
+                      {
+                        "id": "f95166cade5377bdbf67b4b6:1989",
+                        "quote": "Height\n\n77 cm\n\nLength\n\n35 cm\n\nWidth\n\n45 cm",
+                        "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                      },
+                      {
+                        "id": "f95166cade5377bdbf67b4b6:3982",
+                        "quote": "Lovely trolley but metal seems are moving apart and exposing unpainted metal\n\nAnonymous reviewer\n\nLovely trolley , we use this to unload the dishwasher [...] However the metal at the top seems to be getting loose and is exposing unpainted metal under it.",
+                        "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "selphy_dimensions_unknown",
+                    "partId": "selphy_dimensions",
+                    "text": "当前提供的Canon SELPHY CP1500官方手册（UG-01_Preparations_0030.html）未列出设备本体的长、宽、高尺寸。仅描述纸盒插入深度（约2 cm）、纸张装载方式及操作盖开合结构，无法从中推导整机外形尺寸。",
+                    "verdict": "insufficient",
+                    "published": false,
+                    "reasons": [
+                      "不能用未提及或缺少证据推出明确否定",
+                      "没有唯一的语义核对记录"
+                    ],
+                    "sourceIds": [
+                      "f0b09e65ef8cba87965e4dc9:0"
+                    ],
+                    "conditions": [
+                      "手册未提供产品规格表或外形尺寸图"
+                    ],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "f0b09e65ef8cba87965e4dc9:0",
+                        "quote": "Making sure the outer cover is open, insert the paper cassette all the way into the compartment. (It slides about 2 cm (0.8 in.) into the compartment.)",
+                        "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                        "model": "SELPHY CP1500",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T08:10:09.301Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "fit_guarantee_impossible",
+                    "partId": "fit_guarantee",
+                    "text": "不能。RÅSKOG总尺寸（35×45×77 cm）是整机外部轮廓，不等于上层搁板可用净空间；SELPHY CP1500尺寸未知；且‘一定放得下’还需满足：① 打印机底面完全落在搁板支撑范围内（避开网格悬空区），② 高度方向留出散热与开盖操作空间（手册要求外盖开启状态下工作），③ 承重≤6 kg/层（RÅSKOG单层限载）。三者缺一不可，当前证据链断裂，无法保证。",
+                    "verdict": "insufficient",
+                    "published": false,
+                    "reasons": [
+                      "产品说明不能证明用户曾经的经历、情感或人物关系",
+                      "没有唯一的语义核对记录"
+                    ],
+                    "sourceIds": [
+                      "f95166cade5377bdbf67b4b6:1989",
+                      "f0b09e65ef8cba87965e4dc9:0"
+                    ],
+                    "conditions": [
+                      "SELPHY CP1500尺寸缺失",
+                      "RÅSKOG上层净空缺失",
+                      "无两设备相对朝向与固定方案"
+                    ],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "f95166cade5377bdbf67b4b6:1989",
+                        "quote": "indoor use.\n\nNot approved for food contact.\n\nIKEA of Sweden AB SE-343 81 Älmhult, IKEA.com\n\nMaterials and care\n\nMaterial\n\nSteel, Epoxy powder coating\n\nCare\n\nWipe dry with a clean cloth.\n\nWipe clean with a soft cloth dampened in water and a mild non-abrasive washing-up detergent or soap, if necessary.\n\nSafety and compliance\n\nThis storage product meets the requirements for safety, durability and stability in accordance with EN 16121:2023, Test Parameter 1 – General Use.\n\nAssembly and documents\n\nAssembly instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nAdvice and care instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nWeight & measurements\n\nHeight\n\n77 cm\n\nLength\n\n35 cm\n\nLoad/tier\n\n6 kg\n\nMax. load\n\n18 kg\n\nWidth\n\n45 cm\n\nPackage details\n\n1 × RÅSKOG\n\nTrolley\n\n405.821.81\n\nWidth: \n34 cm\n\nHeight: \n15 cm\n\nLength: \n46 cm\n\nWeight: \n6.83 kg\n\nReviews\n\nNice movable shelf\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble. I occasionally use it to collect the grocery delivery at the door way.\n\n5\n\nLittle nice organizer for stationery\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble.\n\n5\n\nRaskog\n\nAnonymous reviewer\n\nWe already have one of these in black so many uses in kitchen. My recent lt turquoise is in my bedroom all make up and ladies bits and bobs are all away nearly and dust free brilliant.\n\n5\n\nGreat Sturdy 3 tier trolly I use",
+                        "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                        "model": "405.821.81",
+                        "region": "gb",
+                        "fetchedAt": "2026-10-31T08:10:15.415Z",
+                        "basis": "official"
+                      },
+                      {
+                        "id": "f0b09e65ef8cba87965e4dc9:0",
+                        "quote": "Leave the outer cover open when printing.",
+                        "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                        "model": "SELPHY CP1500",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T08:10:09.301Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": [
+                      {
+                        "id": "f95166cade5377bdbf67b4b6:1989",
+                        "quote": "Max. load/shelf: 6 kg.",
+                        "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                      }
+                    ]
+                  }
+                ],
+                "taskProgress": {
+                  "guidance": "partial",
+                  "missing": [
+                    "Canon官方手册未提供SELPHY CP1500本体尺寸；需补充该型号规格页（如官网产品页或完整规格表）",
+                    "IKEA未公布RÅSKOG各层搁板净尺寸或装配公差；需实测或查找技术图纸",
+                    "不能用未提及或缺少证据推出明确否定",
+                    "没有唯一的语义核对记录",
+                    "产品说明不能证明用户曾经的经历、情感或人物关系",
+                    "没有唯一的语义核对记录"
+                  ],
+                  "completionEvidence": "advice-only"
+                },
+                "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+              },
+              "at": "2026-10-31T09:39:20.284Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "ff4afe31-5fe9-4c73-b307-0bda8783b5c0"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T09:38:11.358Z",
+          "updatedAt": "2026-10-31T09:39:20.285Z",
+          "expiresAt": "2026-11-07T09:38:11.358Z",
+          "itemScopes": {
+            "c84e3665-1c09-482b-a87c-36179821938c": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]",
+            "6a9a0ad1-65b0-4280-8daf-2d12539583ef": "[\"lin\",\"[\\\"405.821.81\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "RÅSKOG 405.821.81 的材质是什么：\nRÅSKOG 405.821.81 的材质是钢（steel）和环氧树脂粉末涂层（epoxy powder coating）。\n\nRÅSKOG 405.821.81 的长、宽、高各是多少：\nRÅSKOG 405.821.81 的标称尺寸为：长35 cm、宽45 cm、高77 cm。\n\nRÅSKOG 上层搁板的可用净长宽高（含结构间隙、承重变形余量）是否已知：\n按以下条件再尝试：IKEA未提供RÅSKOG各层搁板的净空尺寸（如层高、边缘内缩、网格支撑筋占用空间）。其三层结构共高77 cm，但层间非均分；顶部搁板距顶框有结构余量，且网状设计存在下沉形变可能（用户报告提及‘金属松动’‘暴露未涂装金属’）。因此无法从总尺寸反推上层可用净空间。\n先核对：无官方单层尺寸图或装配公差说明；RÅSKOG单层搁板净高/净深/边缘余量；SELPHY CP1500具体长宽高；打印机是否含突出部件（如进纸托盘、出纸架）；打印机工作时散热所需垂直间隙；RÅSKOG顶部搁板承重后实际形变量\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n\nCanon SELPHY CP1500 打印机的长、宽、高尺寸是多少：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n仅凭RÅSKOG总尺寸（35×45×77 cm）能否证明上层‘一定放得下’SELPHY CP1500：\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。",
+          "outcome": "needs_info",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "f95166cade5377bdbf67b4b6:0",
+            "f95166cade5377bdbf67b4b6:1989",
+            "f95166cade5377bdbf67b4b6:3982"
+          ],
+          "citations": [
+            {
+              "id": "f95166cade5377bdbf67b4b6",
+              "title": "RÅSKOG trolley, black, 35x45x77 cm  - IKEA UK",
+              "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+              "kind": "official",
+              "section": "405.821.81；gb"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "c84e3665-1c09-482b-a87c-36179821938c",
+              "name": "[合成持有，仅测试] Canon SELPHY CP1500 照片打印机",
+              "model": "SELPHY CP1500"
+            },
+            {
+              "id": "6a9a0ad1-65b0-4280-8daf-2d12539583ef",
+              "name": "[合成持有，仅测试] IKEA RÅSKOG 黑色推车",
+              "model": "405.821.81"
+            }
+          ],
+          "task": {
+            "goal": "确认RÅSKOG推车（405.821.81）的材质、长宽高；并基于其上层尺寸与Canon SELPHY CP1500打印机尺寸关系，判断是否‘一定放得下’",
+            "parts": [
+              {
+                "title": "RÅSKOG 405.821.81 的材质是什么？",
+                "status": "addressed"
+              },
+              {
+                "title": "RÅSKOG 405.821.81 的长、宽、高各是多少？",
+                "status": "addressed"
+              },
+              {
+                "title": "RÅSKOG 上层搁板的可用净长宽高（含结构间隙、承重变形余量）是否已知？",
+                "status": "needs_info"
+              },
+              {
+                "title": "Canon SELPHY CP1500 打印机的长、宽、高尺寸是多少？",
+                "status": "needs_info"
+              },
+              {
+                "title": "仅凭RÅSKOG总尺寸（35×45×77 cm）能否证明上层‘一定放得下’SELPHY CP1500？",
+                "status": "needs_info"
+              }
+            ]
+          },
+          "taskFrame": {
+            "goal": "确认RÅSKOG推车（405.821.81）的材质、长宽高；并基于其上层尺寸与Canon SELPHY CP1500打印机尺寸关系，判断是否‘一定放得下’",
+            "itemIds": [
+              "6a9a0ad1-65b0-4280-8daf-2d12539583ef",
+              "c84e3665-1c09-482b-a87c-36179821938c"
+            ],
+            "parts": [
+              {
+                "id": "raskog_material",
+                "question": "RÅSKOG 405.821.81 的材质是什么？",
+                "kind": "fact",
+                "itemIds": [
+                  "6a9a0ad1-65b0-4280-8daf-2d12539583ef"
+                ],
+                "risk": "ordinary",
+                "needed": [],
+                "expectedResult": "明确列出构成材料"
+              },
+              {
+                "id": "raskog_dimensions",
+                "question": "RÅSKOG 405.821.81 的长、宽、高各是多少？",
+                "kind": "fact",
+                "itemIds": [
+                  "6a9a0ad1-65b0-4280-8daf-2d12539583ef"
+                ],
+                "risk": "ordinary",
+                "needed": [],
+                "expectedResult": "三个正交方向的标称尺寸数值及单位"
+              },
+              {
+                "id": "raskog_upper_shelf_clearance",
+                "question": "RÅSKOG 上层搁板的可用净长宽高（含结构间隙、承重变形余量）是否已知？",
+                "kind": "explore",
+                "itemIds": [
+                  "6a9a0ad1-65b0-4280-8daf-2d12539583ef"
+                ],
+                "risk": "structural",
+                "needed": [
+                  "产品图纸/装配图/实测数据"
+                ],
+                "expectedResult": "可支撑稳定放置设备的物理空间边界"
+              },
+              {
+                "id": "selphy_dimensions",
+                "question": "Canon SELPHY CP1500 打印机的长、宽、高尺寸是多少？",
+                "kind": "fact",
+                "itemIds": [
+                  "c84e3665-1c09-482b-a87c-36179821938c"
+                ],
+                "risk": "ordinary",
+                "needed": [],
+                "expectedResult": "官方公布的三向尺寸数值及单位"
+              },
+              {
+                "id": "fit_guarantee",
+                "question": "仅凭RÅSKOG总尺寸（35×45×77 cm）能否证明上层‘一定放得下’SELPHY CP1500？",
+                "kind": "relationship",
+                "itemIds": [
+                  "6a9a0ad1-65b0-4280-8daf-2d12539583ef",
+                  "c84e3665-1c09-482b-a87c-36179821938c"
+                ],
+                "risk": "structural",
+                "needed": [
+                  "SELPHY CP1500 尺寸",
+                  "RÅSKOG 上层净空尺寸",
+                  "设备工作时散热/操作所需额外空间"
+                ],
+                "expectedResult": "逻辑结论：是否构成充分必要条件"
+              }
+            ],
+            "tried": [],
+            "constraints": [
+              "RÅSKOG为三层网状搁板结构，无官方公布的单层净尺寸；SELPHY CP1500尺寸未在当前证据中出现；‘一定放得下’需排除干涉、倾覆、承重、散热、操作可达性等所有风险"
+            ],
+            "version": "task-frame/3",
+            "originalQuestion": "我的RÅSKOG是405.821.81，请说材料、长宽高；总尺寸能证明上层一定放得下打印机吗？",
+            "evidenceIds": [
+              "f0b09e65ef8cba87965e4dc9:0",
+              "f0b09e65ef8cba87965e4dc9:997",
+              "f0b09e65ef8cba87965e4dc9:1997",
+              "f95166cade5377bdbf67b4b6:0",
+              "f95166cade5377bdbf67b4b6:994",
+              "f95166cade5377bdbf67b4b6:1989",
+              "f95166cade5377bdbf67b4b6:2989",
+              "f95166cade5377bdbf67b4b6:3982",
+              "f95166cade5377bdbf67b4b6:4981",
+              "f95166cade5377bdbf67b4b6:5981",
+              "f95166cade5377bdbf67b4b6:6981",
+              "f95166cade5377bdbf67b4b6:7978",
+              "f95166cade5377bdbf67b4b6:8973",
+              "f95166cade5377bdbf67b4b6:9973",
+              "user:current-turn"
+            ],
+            "permission": "read_only",
+            "progress": "partial"
+          },
+          "claimChecks": [
+            {
+              "id": "raskog_material_fact",
+              "partId": "raskog_material",
+              "text": "RÅSKOG 405.821.81 的材质是钢（steel）和环氧树脂粉末涂层（epoxy powder coating）。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "f95166cade5377bdbf67b4b6:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "f95166cade5377bdbf67b4b6:0",
+                  "quote": "Material\n\nSteel, Epoxy powder coating",
+                  "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                  "model": "405.821.81",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:10:15.415Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "raskog_dimensions_fact",
+              "partId": "raskog_dimensions",
+              "text": "RÅSKOG 405.821.81 的标称尺寸为：长35 cm、宽45 cm、高77 cm。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "f95166cade5377bdbf67b4b6:1989"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "f95166cade5377bdbf67b4b6:1989",
+                  "quote": "indoor use.\n\nNot approved for food contact.\n\nIKEA of Sweden AB SE-343 81 Älmhult, IKEA.com\n\nMaterials and care\n\nMaterial\n\nSteel, Epoxy powder coating\n\nCare\n\nWipe dry with a clean cloth.\n\nWipe clean with a soft cloth dampened in water and a mild non-abrasive washing-up detergent or soap, if necessary.\n\nSafety and compliance\n\nThis storage product meets the requirements for safety, durability and stability in accordance with EN 16121:2023, Test Parameter 1 – General Use.\n\nAssembly and documents\n\nAssembly instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nAdvice and care instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nWeight & measurements\n\nHeight\n\n77 cm\n\nLength\n\n35 cm\n\nLoad/tier\n\n6 kg\n\nMax. load\n\n18 kg\n\nWidth\n\n45 cm\n\nPackage details\n\n1 × RÅSKOG\n\nTrolley\n\n405.821.81\n\nWidth: \n34 cm\n\nHeight: \n15 cm\n\nLength: \n46 cm\n\nWeight: \n6.83 kg\n\nReviews\n\nNice movable shelf\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble. I occasionally use it to collect the grocery delivery at the door way.\n\n5\n\nLittle nice organizer for stationery\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble.\n\n5\n\nRaskog\n\nAnonymous reviewer\n\nWe already have one of these in black so many uses in kitchen. My recent lt turquoise is in my bedroom all make up and ladies bits and bobs are all away nearly and dust free brilliant.\n\n5\n\nGreat Sturdy 3 tier trolly I use",
+                  "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                  "model": "405.821.81",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:10:15.415Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": [
+                {
+                  "id": "f95166cade5377bdbf67b4b6:1989",
+                  "quote": "Height\n\n77 cm\n\nLength\n\n35 cm\n\nWidth\n\n45 cm",
+                  "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                }
+              ]
+            },
+            {
+              "id": "raskog_upper_shelf_unclear",
+              "partId": "raskog_upper_shelf_clearance",
+              "text": "IKEA未提供RÅSKOG各层搁板的净空尺寸（如层高、边缘内缩、网格支撑筋占用空间）。其三层结构共高77 cm，但层间非均分；顶部搁板距顶框有结构余量，且网状设计存在下沉形变可能（用户报告提及‘金属松动’‘暴露未涂装金属’）。因此无法从总尺寸反推上层可用净空间。",
+              "verdict": "conditional",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "f95166cade5377bdbf67b4b6:1989",
+                "f95166cade5377bdbf67b4b6:3982"
+              ],
+              "conditions": [
+                "无官方单层尺寸图或装配公差说明",
+                "RÅSKOG单层搁板净高/净深/边缘余量",
+                "SELPHY CP1500具体长宽高",
+                "打印机是否含突出部件（如进纸托盘、出纸架）",
+                "打印机工作时散热所需垂直间隙",
+                "RÅSKOG顶部搁板承重后实际形变量"
+              ],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "f95166cade5377bdbf67b4b6:1989",
+                  "quote": "indoor use.\n\nNot approved for food contact.\n\nIKEA of Sweden AB SE-343 81 Älmhult, IKEA.com\n\nMaterials and care\n\nMaterial\n\nSteel, Epoxy powder coating\n\nCare\n\nWipe dry with a clean cloth.\n\nWipe clean with a soft cloth dampened in water and a mild non-abrasive washing-up detergent or soap, if necessary.\n\nSafety and compliance\n\nThis storage product meets the requirements for safety, durability and stability in accordance with EN 16121:2023, Test Parameter 1 – General Use.\n\nAssembly and documents\n\nAssembly instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nAdvice and care instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nWeight & measurements\n\nHeight\n\n77 cm\n\nLength\n\n35 cm\n\nLoad/tier\n\n6 kg\n\nMax. load\n\n18 kg\n\nWidth\n\n45 cm\n\nPackage details\n\n1 × RÅSKOG\n\nTrolley\n\n405.821.81\n\nWidth: \n34 cm\n\nHeight: \n15 cm\n\nLength: \n46 cm\n\nWeight: \n6.83 kg\n\nReviews\n\nNice movable shelf\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble. I occasionally use it to collect the grocery delivery at the door way.\n\n5\n\nLittle nice organizer for stationery\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble.\n\n5\n\nRaskog\n\nAnonymous reviewer\n\nWe already have one of these in black so many uses in kitchen. My recent lt turquoise is in my bedroom all make up and ladies bits and bobs are all away nearly and dust free brilliant.\n\n5\n\nGreat Sturdy 3 tier trolly I use",
+                  "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                  "model": "405.821.81",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:10:15.415Z",
+                  "basis": "official"
+                },
+                {
+                  "id": "f95166cade5377bdbf67b4b6:3982",
+                  "quote": "Anonymous reviewer\n\nPurchased to use a cleaning work station to store cloths, polishes, brushes, dustpans etc. Ideal as can wheel room to room when in use\n\n5\n\nLovely trolley but metal seems are moving apart and exposing unpainted metal\n\nAnonymous reviewer\n\nLovely trolley , we use this to unload the dishwasher as the house we’ve moved into has a dishwasher the wrong side of a kitchen and with lots of kids we do lots of dishwasher loads. The trolley is sturdy and easy to keep clean and moves smoothly. However the metal at the top seems to be getting loose and is exposing unpainted metal under it. This isn’t from what we’re putting in it as the items are dry and we only use this top part for light plastic bottles and plastic cups. It seems as if it’s from the movement of the frame.\n\nSo lovely and well made but maybe not durable or long lasting ?\n\n3\n\nI Love these wee trolleys\n\nAnonymous reviewer\n\nI have 5 of these now; 4 large and one of the smaller ones.\nI am a keen craft person, mainly working in leather and cloth for making bags, wallets etc. and I find these trolleys perfect for holding my tools and dyes.\nThey are great at the end of the day when I just have to finish up some saddle stitching. I can wheel the trolley with the tools I need through to the living room and finish the tedious part of the project while watching a mov",
+                  "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                  "model": "405.821.81",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:10:15.415Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": [
+                {
+                  "id": "f95166cade5377bdbf67b4b6:1989",
+                  "quote": "Height\n\n77 cm\n\nLength\n\n35 cm\n\nWidth\n\n45 cm",
+                  "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                },
+                {
+                  "id": "f95166cade5377bdbf67b4b6:3982",
+                  "quote": "Lovely trolley but metal seems are moving apart and exposing unpainted metal\n\nAnonymous reviewer\n\nLovely trolley , we use this to unload the dishwasher [...] However the metal at the top seems to be getting loose and is exposing unpainted metal under it.",
+                  "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                }
+              ]
+            },
+            {
+              "id": "selphy_dimensions_unknown",
+              "partId": "selphy_dimensions",
+              "text": "当前提供的Canon SELPHY CP1500官方手册（UG-01_Preparations_0030.html）未列出设备本体的长、宽、高尺寸。仅描述纸盒插入深度（约2 cm）、纸张装载方式及操作盖开合结构，无法从中推导整机外形尺寸。",
+              "verdict": "insufficient",
+              "published": false,
+              "reasons": [
+                "不能用未提及或缺少证据推出明确否定",
+                "没有唯一的语义核对记录"
+              ],
+              "sourceIds": [
+                "f0b09e65ef8cba87965e4dc9:0"
+              ],
+              "conditions": [
+                "手册未提供产品规格表或外形尺寸图"
+              ],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "f0b09e65ef8cba87965e4dc9:0",
+                  "quote": "Making sure the outer cover is open, insert the paper cassette all the way into the compartment. (It slides about 2 cm (0.8 in.) into the compartment.)",
+                  "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                  "model": "SELPHY CP1500",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T08:10:09.301Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "fit_guarantee_impossible",
+              "partId": "fit_guarantee",
+              "text": "不能。RÅSKOG总尺寸（35×45×77 cm）是整机外部轮廓，不等于上层搁板可用净空间；SELPHY CP1500尺寸未知；且‘一定放得下’还需满足：① 打印机底面完全落在搁板支撑范围内（避开网格悬空区），② 高度方向留出散热与开盖操作空间（手册要求外盖开启状态下工作），③ 承重≤6 kg/层（RÅSKOG单层限载）。三者缺一不可，当前证据链断裂，无法保证。",
+              "verdict": "insufficient",
+              "published": false,
+              "reasons": [
+                "产品说明不能证明用户曾经的经历、情感或人物关系",
+                "没有唯一的语义核对记录"
+              ],
+              "sourceIds": [
+                "f95166cade5377bdbf67b4b6:1989",
+                "f0b09e65ef8cba87965e4dc9:0"
+              ],
+              "conditions": [
+                "SELPHY CP1500尺寸缺失",
+                "RÅSKOG上层净空缺失",
+                "无两设备相对朝向与固定方案"
+              ],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "f95166cade5377bdbf67b4b6:1989",
+                  "quote": "indoor use.\n\nNot approved for food contact.\n\nIKEA of Sweden AB SE-343 81 Älmhult, IKEA.com\n\nMaterials and care\n\nMaterial\n\nSteel, Epoxy powder coating\n\nCare\n\nWipe dry with a clean cloth.\n\nWipe clean with a soft cloth dampened in water and a mild non-abrasive washing-up detergent or soap, if necessary.\n\nSafety and compliance\n\nThis storage product meets the requirements for safety, durability and stability in accordance with EN 16121:2023, Test Parameter 1 – General Use.\n\nAssembly and documents\n\nAssembly instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nAdvice and care instructions\n\nRÅSKOG Trolley\n\n405.821.81\n\nWeight & measurements\n\nHeight\n\n77 cm\n\nLength\n\n35 cm\n\nLoad/tier\n\n6 kg\n\nMax. load\n\n18 kg\n\nWidth\n\n45 cm\n\nPackage details\n\n1 × RÅSKOG\n\nTrolley\n\n405.821.81\n\nWidth: \n34 cm\n\nHeight: \n15 cm\n\nLength: \n46 cm\n\nWeight: \n6.83 kg\n\nReviews\n\nNice movable shelf\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble. I occasionally use it to collect the grocery delivery at the door way.\n\n5\n\nLittle nice organizer for stationery\n\nAnonymous reviewer\n\nGreat design. Nice colour. Easy to assemble.\n\n5\n\nRaskog\n\nAnonymous reviewer\n\nWe already have one of these in black so many uses in kitchen. My recent lt turquoise is in my bedroom all make up and ladies bits and bobs are all away nearly and dust free brilliant.\n\n5\n\nGreat Sturdy 3 tier trolly I use",
+                  "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+                  "model": "405.821.81",
+                  "region": "gb",
+                  "fetchedAt": "2026-10-31T08:10:15.415Z",
+                  "basis": "official"
+                },
+                {
+                  "id": "f0b09e65ef8cba87965e4dc9:0",
+                  "quote": "Leave the outer cover open when printing.",
+                  "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                  "model": "SELPHY CP1500",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T08:10:09.301Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": [
+                {
+                  "id": "f95166cade5377bdbf67b4b6:1989",
+                  "quote": "Max. load/shelf: 6 kg.",
+                  "reason": "候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据"
+                }
+              ]
+            }
+          ],
+          "taskProgress": {
+            "guidance": "partial",
+            "missing": [
+              "Canon官方手册未提供SELPHY CP1500本体尺寸；需补充该型号规格页（如官网产品页或完整规格表）",
+              "IKEA未公布RÅSKOG各层搁板净尺寸或装配公差；需实测或查找技术图纸",
+              "不能用未提及或缺少证据推出明确否定",
+              "没有唯一的语义核对记录",
+              "产品说明不能证明用户曾经的经历、情感或人物关系",
+              "没有唯一的语义核对记录"
+            ],
+            "completionEvidence": "advice-only"
+          },
+          "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+        },
+        "trace": [
+          {
+            "stage": "kernel_context",
+            "detail": "readOnly; selected=2; documents=2; passages=15; no persistent TaskFrame required",
+            "at": "2026-10-31T09:38:11.367Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "1; fullResponseMs=55724",
+            "at": "2026-10-31T09:39:07.100Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "2; fullResponseMs=13156",
+            "at": "2026-10-31T09:39:20.271Z"
+          },
+          {
+            "stage": "kernel_completion",
+            "detail": "parts=2/5; claims=3/5; adviceOnly",
+            "at": "2026-10-31T09:39:20.280Z"
+          }
+        ],
+        "tokens": {
+          "input": 15526,
+          "output": 3016
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "c6f430c1-009d-42ef-aca5-a0176092a7a3",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 68963,
+      "effectiveContextHash": "54fbc63979011aa5ec530c539cc6c922d73c74bfe92f385ff46531ff5305a0e4",
+      "sourcePool": {
+        "documents": [
+          {
+            "itemId": "c84e3665-1c09-482b-a87c-36179821938c",
+            "id": "f0b09e65ef8cba87965e4dc9",
+            "hash": "89dfebb6003730ea83d66a14a844279db4758c78b8b4a78af9470b9aee06a6cf",
+            "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+            "model": "SELPHY CP1500",
+            "region": "unspecified"
+          },
+          {
+            "itemId": "6a9a0ad1-65b0-4280-8daf-2d12539583ef",
+            "id": "f95166cade5377bdbf67b4b6",
+            "hash": "2f6514536980933243c3fd466ae5d296dce56bfe7c543cace98a9b207cd0a1b2",
+            "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+            "model": "405.821.81",
+            "region": "gb"
+          }
+        ],
+        "missingItemIds": []
+      },
+      "upstreamRequests": 2,
+      "attemptNumbers": [
+        236,
+        241
+      ],
+      "inputTokens": 15526,
+      "outputTokens": 3016,
+      "estimatedCny": 0.0184528,
+      "firstPayloadHash": "33361441bcc2ce3373e2a9ed85d29a3a9aa70f6ae56e71792834ae67d349b18c",
+      "sourceStatus": "readable_cached_official"
+    }
+  ]
+}

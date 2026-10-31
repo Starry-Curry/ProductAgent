@@ -1,0 +1,1 @@
+{"checks":[{"name":"桌面UI→真实模型→最终完整回复渲染（内容质量单独审阅）","passed":true},{"name":"390px新会话→真实模型→最终回复呈现（非实物操作验证）","passed":true}],"errors":[],"upstreamRequests":4}

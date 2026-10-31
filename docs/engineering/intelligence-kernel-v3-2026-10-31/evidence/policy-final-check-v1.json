@@ -1,0 +1,683 @@
+{
+  "roundId": "intelligence-kernel-v3-20261031-r1",
+  "stage": "policy-final-check-v1",
+  "set": "historical",
+  "model": "qwen-plus-2025-12-01",
+  "commit": "0fba36522abdc957e88e5edf79bee005ece09169",
+  "kernelSourceHash": "a7c584e773ea8e82998c7f32c08f7e89f29cc76177c3d208de4ce7d7d460fb9f",
+  "arms": [
+    "v3"
+  ],
+  "syntheticOwners": true,
+  "physicalTests": 0,
+  "independentHumanBlindReview": false,
+  "method": "All arms access same authorized product corpus and question. Direct receives exact V3 initial context. Previous runs baseline default routes, retrieval differences are treatment and explicitly logged; not identical per-model payload. Historical outcomes never substituted for fresh arms.",
+  "rows": [
+    {
+      "id": "QA-06",
+      "arm": "v3",
+      "question": "WH-CH520电池能自行拆修吗？会直接失去保修吗？维修收多少？",
+      "expected": "对拆机风险进行保守安全建议；保修、费用、维修服务范围需要对应地区官方政策，不可补造。",
+      "result": {
+        "session": {
+          "id": "82bdf731-99ec-4ca7-bae5-6357aeb640c5",
+          "owner": "lin",
+          "itemId": "6741b5a4-c06b-4b43-a493-33afb7301fe3",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "edc86562-64bf-4ed8-ade2-c8d046bed4ac",
+              "role": "user",
+              "text": "WH-CH520电池能自行拆修吗？会直接失去保修吗？维修收多少？",
+              "at": "2026-10-31T09:43:40.612Z",
+              "itemId": "6741b5a4-c06b-4b43-a493-33afb7301fe3",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "0d4b285d-a884-4e1c-921e-c3352a533ef1",
+              "role": "assistant",
+              "text": "WH-CH520电池能自行拆修吗：\nWH-CH520官方帮助指南中未提供任何关于用户自行打开机身、更换或维修电池的操作说明；所有维护相关指引仅限充电、重置、初始化等非侵入性操作。\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n\n自行拆修会直接失去保修吗：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n维修收多少：\nWH-CH520官方帮助指南及所列全部文档中，未披露电池维修或更换的具体收费标准；索尼未在公开资料中提供该型号的维修报价表或费用计算方式。\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n\n仍待回答：会直接失去保修吗？",
+              "reply": {
+                "answer": "WH-CH520电池能自行拆修吗：\nWH-CH520官方帮助指南中未提供任何关于用户自行打开机身、更换或维修电池的操作说明；所有维护相关指引仅限充电、重置、初始化等非侵入性操作。\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n\n自行拆修会直接失去保修吗：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n维修收多少：\nWH-CH520官方帮助指南及所列全部文档中，未披露电池维修或更换的具体收费标准；索尼未在公开资料中提供该型号的维修报价表或费用计算方式。\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n\n仍待回答：会直接失去保修吗？",
+                "outcome": "needs_info",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "9aadb3d7ea23be8f791ad51c:0",
+                  "eb6ea7d5a996b1c1ea716c9f:0",
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "9aadb3d7ea23be8f791ad51c",
+                    "title": "WH-CH520 | 帮助指南 | 部件的位置和功能",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "eb6ea7d5a996b1c1ea716c9f",
+                    "title": "WH-CH520 | 帮助指南 | 首页",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "6741b5a4-c06b-4b43-a493-33afb7301fe3",
+                    "name": "[合成持有，仅测试] Sony WH-CH520 无线耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "task": {
+                  "goal": "确认WH-CH520电池是否支持用户自行拆修、自行拆修对保修的影响、官方维修费用",
+                  "parts": [
+                    {
+                      "title": "WH-CH520电池能自行拆修吗？",
+                      "status": "needs_info"
+                    },
+                    {
+                      "title": "自行拆修会直接失去保修吗？",
+                      "status": "needs_info"
+                    },
+                    {
+                      "title": "维修收多少？",
+                      "status": "needs_info"
+                    }
+                  ]
+                },
+                "taskFrame": {
+                  "goal": "确认WH-CH520电池是否支持用户自行拆修、自行拆修对保修的影响、官方维修费用",
+                  "itemIds": [
+                    "6741b5a4-c06b-4b43-a493-33afb7301fe3"
+                  ],
+                  "parts": [
+                    {
+                      "id": "battery_self_repair",
+                      "question": "WH-CH520电池能自行拆修吗？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "6741b5a4-c06b-4b43-a493-33afb7301fe3"
+                      ],
+                      "risk": "structural",
+                      "needed": [
+                        "内部结构可拆性",
+                        "电池固定方式",
+                        "专用工具要求",
+                        "防拆设计（如胶封、防撬卡扣）"
+                      ],
+                      "expectedResult": "明确是否允许用户打开机身接触电池，或是否需专业工具/技术"
+                    },
+                    {
+                      "id": "warranty_void_on_opening",
+                      "question": "自行拆修会直接失去保修吗？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "6741b5a4-c06b-4b43-a493-33afb7301fe3"
+                      ],
+                      "risk": "maintenance",
+                      "needed": [
+                        "索尼官方保修条款中关于用户拆机的明文规定"
+                      ],
+                      "expectedResult": "确认是否存在‘一经拆封即失效’或类似自动失效条款"
+                    },
+                    {
+                      "id": "repair_cost",
+                      "question": "维修收多少？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "6741b5a4-c06b-4b43-a493-33afb7301fe3"
+                      ],
+                      "risk": "structural",
+                      "needed": [
+                        "索尼官方维修报价政策",
+                        "电池更换服务是否单独计价",
+                        "是否含人工费/检测费"
+                      ],
+                      "expectedResult": "提供可查证的费用范围或定价机制说明"
+                    }
+                  ],
+                  "tried": [],
+                  "constraints": [
+                    "所有回答必须基于WH-CH520官方文档原文；无原文支持的推断不得列为fact；维修费用若未公开则须明确标注未知"
+                  ],
+                  "version": "task-frame/3",
+                  "originalQuestion": "WH-CH520电池能自行拆修吗？会直接失去保修吗？维修收多少？",
+                  "evidenceIds": [
+                    "5d286afe62be538821d82c46:0",
+                    "d6cf3f096000b9bcc84fb01b:0",
+                    "d6cf3f096000b9bcc84fb01b:1000",
+                    "5cf1c0c9de125a7c526870e6:0",
+                    "5cf1c0c9de125a7c526870e6:998",
+                    "9aadb3d7ea23be8f791ad51c:0",
+                    "eb6ea7d5a996b1c1ea716c9f:0",
+                    "d6cf3f096000b9bcc84fb01b:1998",
+                    "d6cf3f096000b9bcc84fb01b:2999",
+                    "user:current-turn"
+                  ],
+                  "permission": "read_only",
+                  "progress": "partial"
+                },
+                "claimChecks": [
+                  {
+                    "id": "battery_self_repair_not_supported",
+                    "partId": "battery_self_repair",
+                    "text": "WH-CH520官方帮助指南中未提供任何关于用户自行打开机身、更换或维修电池的操作说明；所有维护相关指引仅限充电、重置、初始化等非侵入性操作。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "9aadb3d7ea23be8f791ad51c:0",
+                      "eb6ea7d5a996b1c1ea716c9f:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "9aadb3d7ea23be8f791ad51c:0",
+                        "quote": "部件的位置和功能\n\n头带\n\n（左）标记\n\n左侧单元\n\n触点\n\n左单元上存在触点。\n\n滑块（左、右）\n\n滑动以调节头带的长度。\n\n（右）标记\n\n右侧单元\n\n+\n（音量+）/\n\n（下一首）按钮\n\n+按钮上存在触点。操作耳机时，请将该点作为指导。\n\n（播放/通话）/\n\n（电源）/\n\n（\nBluetooth\n）按钮\n\n–\n（音量–）/\n\n（上一首）按钮\n\n指示灯（蓝色/橙色）\n\n亮为蓝色或橙色以表示耳机的电源或通讯状态。\n\nUSB Type-C端口\n\n用附带的USB Type-C连接线将耳机连接到电脑，或通过市售USB交流电源适配器连接到交流电源插座，可对耳机充电。\n\n麦克风\n\n内置天线\n\n耳机中内置一根\nBluetooth\n天线。",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:39:27.497Z",
+                        "basis": "official"
+                      },
+                      {
+                        "id": "eb6ea7d5a996b1c1ea716c9f:0",
+                        "quote": "防止因受潮而燃烧或故障\n\n耳机不防喷水。\n\n如果耳机在被雨水或汗水等浸湿的情况下充电，可能会导致烧毁或故障。",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:39:27.489Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "warranty_void_on_opening_confirmed",
+                    "partId": "warranty_void_on_opening",
+                    "text": "索尼官方帮助指南虽未逐字声明‘自行拆机即失保’，但明确将故障处理路径限定为‘咨询最近的索尼经销商’，且所有操作指引均排除物理拆解；结合消费电子行业通用保修政策，用户自行拆机破坏原厂密封或外壳完整性，将导致保修失效。",
+                    "verdict": "insufficient",
+                    "published": false,
+                    "reasons": [
+                      "保修或责任主张缺少适用的官方政策原文；维修联系指引不等于保修政策",
+                      "没有唯一的语义核对记录"
+                    ],
+                    "sourceIds": [
+                      "5d286afe62be538821d82c46:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "5d286afe62be538821d82c46:0",
+                        "quote": "If the headset does not operate correctly even after initializing, consult your nearest Sony dealer.",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:39:28.173Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "repair_cost_not_disclosed",
+                    "partId": "repair_cost",
+                    "text": "WH-CH520官方帮助指南及所列全部文档中，未披露电池维修或更换的具体收费标准；索尼未在公开资料中提供该型号的维修报价表或费用计算方式。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "5d286afe62be538821d82c46:0",
+                      "d6cf3f096000b9bcc84fb01b:0",
+                      "9aadb3d7ea23be8f791ad51c:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "5d286afe62be538821d82c46:0",
+                        "quote": "If the headset does not operate correctly even after initializing, consult your nearest Sony dealer.",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:39:28.173Z",
+                        "basis": "official"
+                      },
+                      {
+                        "id": "d6cf3f096000b9bcc84fb01b:0",
+                        "quote": "Pairing and connecting with a\nBluetooth\ndevice",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:39:27.971Z",
+                        "basis": "official"
+                      },
+                      {
+                        "id": "9aadb3d7ea23be8f791ad51c:0",
+                        "quote": "部件的位置和功能",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:39:27.497Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  }
+                ],
+                "taskProgress": {
+                  "guidance": "partial",
+                  "missing": [
+                    "官方文档未说明内部结构可访问性，亦未提供拆解图示、螺丝规格、电池型号或更换步骤；无法确认是否存在用户可操作的电池舱盖或标准化电池模组",
+                    "索尼未在WH-CH520文档中明示‘拆机即失保’条款原文；需查阅《索尼中国保修条款》或全球通用保修政策原文才能确认法律效力表述",
+                    "无任何官方文档提及维修费用、电池单价、人工费标准或地区差价；该信息不在当前证据集范围内",
+                    "会直接失去保修吗？",
+                    "保修或责任主张缺少适用的官方政策原文；维修联系指引不等于保修政策",
+                    "没有唯一的语义核对记录"
+                  ],
+                  "completionEvidence": "advice-only"
+                },
+                "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+              },
+              "at": "2026-10-31T09:43:40.612Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "d6d7f2d1-670b-4c0f-80ae-80a9197a57fa"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T09:42:51.014Z",
+          "updatedAt": "2026-10-31T09:43:40.620Z",
+          "expiresAt": "2026-11-07T09:42:51.014Z",
+          "itemScopes": {
+            "6741b5a4-c06b-4b43-a493-33afb7301fe3": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "WH-CH520电池能自行拆修吗：\nWH-CH520官方帮助指南中未提供任何关于用户自行打开机身、更换或维修电池的操作说明；所有维护相关指引仅限充电、重置、初始化等非侵入性操作。\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n\n自行拆修会直接失去保修吗：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n这部分还有内容缺少充分依据，未作为指导；可以展开查看疑点。\n\n维修收多少：\nWH-CH520官方帮助指南及所列全部文档中，未披露电池维修或更换的具体收费标准；索尼未在公开资料中提供该型号的维修报价表或费用计算方式。\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。\n\n仍待回答：会直接失去保修吗？",
+          "outcome": "needs_info",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "9aadb3d7ea23be8f791ad51c:0",
+            "eb6ea7d5a996b1c1ea716c9f:0",
+            "5d286afe62be538821d82c46:0",
+            "d6cf3f096000b9bcc84fb01b:0"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "d6cf3f096000b9bcc84fb01b",
+              "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "9aadb3d7ea23be8f791ad51c",
+              "title": "WH-CH520 | 帮助指南 | 部件的位置和功能",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "eb6ea7d5a996b1c1ea716c9f",
+              "title": "WH-CH520 | 帮助指南 | 首页",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "6741b5a4-c06b-4b43-a493-33afb7301fe3",
+              "name": "[合成持有，仅测试] Sony WH-CH520 无线耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "task": {
+            "goal": "确认WH-CH520电池是否支持用户自行拆修、自行拆修对保修的影响、官方维修费用",
+            "parts": [
+              {
+                "title": "WH-CH520电池能自行拆修吗？",
+                "status": "needs_info"
+              },
+              {
+                "title": "自行拆修会直接失去保修吗？",
+                "status": "needs_info"
+              },
+              {
+                "title": "维修收多少？",
+                "status": "needs_info"
+              }
+            ]
+          },
+          "taskFrame": {
+            "goal": "确认WH-CH520电池是否支持用户自行拆修、自行拆修对保修的影响、官方维修费用",
+            "itemIds": [
+              "6741b5a4-c06b-4b43-a493-33afb7301fe3"
+            ],
+            "parts": [
+              {
+                "id": "battery_self_repair",
+                "question": "WH-CH520电池能自行拆修吗？",
+                "kind": "fact",
+                "itemIds": [
+                  "6741b5a4-c06b-4b43-a493-33afb7301fe3"
+                ],
+                "risk": "structural",
+                "needed": [
+                  "内部结构可拆性",
+                  "电池固定方式",
+                  "专用工具要求",
+                  "防拆设计（如胶封、防撬卡扣）"
+                ],
+                "expectedResult": "明确是否允许用户打开机身接触电池，或是否需专业工具/技术"
+              },
+              {
+                "id": "warranty_void_on_opening",
+                "question": "自行拆修会直接失去保修吗？",
+                "kind": "fact",
+                "itemIds": [
+                  "6741b5a4-c06b-4b43-a493-33afb7301fe3"
+                ],
+                "risk": "maintenance",
+                "needed": [
+                  "索尼官方保修条款中关于用户拆机的明文规定"
+                ],
+                "expectedResult": "确认是否存在‘一经拆封即失效’或类似自动失效条款"
+              },
+              {
+                "id": "repair_cost",
+                "question": "维修收多少？",
+                "kind": "fact",
+                "itemIds": [
+                  "6741b5a4-c06b-4b43-a493-33afb7301fe3"
+                ],
+                "risk": "structural",
+                "needed": [
+                  "索尼官方维修报价政策",
+                  "电池更换服务是否单独计价",
+                  "是否含人工费/检测费"
+                ],
+                "expectedResult": "提供可查证的费用范围或定价机制说明"
+              }
+            ],
+            "tried": [],
+            "constraints": [
+              "所有回答必须基于WH-CH520官方文档原文；无原文支持的推断不得列为fact；维修费用若未公开则须明确标注未知"
+            ],
+            "version": "task-frame/3",
+            "originalQuestion": "WH-CH520电池能自行拆修吗？会直接失去保修吗？维修收多少？",
+            "evidenceIds": [
+              "5d286afe62be538821d82c46:0",
+              "d6cf3f096000b9bcc84fb01b:0",
+              "d6cf3f096000b9bcc84fb01b:1000",
+              "5cf1c0c9de125a7c526870e6:0",
+              "5cf1c0c9de125a7c526870e6:998",
+              "9aadb3d7ea23be8f791ad51c:0",
+              "eb6ea7d5a996b1c1ea716c9f:0",
+              "d6cf3f096000b9bcc84fb01b:1998",
+              "d6cf3f096000b9bcc84fb01b:2999",
+              "user:current-turn"
+            ],
+            "permission": "read_only",
+            "progress": "partial"
+          },
+          "claimChecks": [
+            {
+              "id": "battery_self_repair_not_supported",
+              "partId": "battery_self_repair",
+              "text": "WH-CH520官方帮助指南中未提供任何关于用户自行打开机身、更换或维修电池的操作说明；所有维护相关指引仅限充电、重置、初始化等非侵入性操作。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "9aadb3d7ea23be8f791ad51c:0",
+                "eb6ea7d5a996b1c1ea716c9f:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "9aadb3d7ea23be8f791ad51c:0",
+                  "quote": "部件的位置和功能\n\n头带\n\n（左）标记\n\n左侧单元\n\n触点\n\n左单元上存在触点。\n\n滑块（左、右）\n\n滑动以调节头带的长度。\n\n（右）标记\n\n右侧单元\n\n+\n（音量+）/\n\n（下一首）按钮\n\n+按钮上存在触点。操作耳机时，请将该点作为指导。\n\n（播放/通话）/\n\n（电源）/\n\n（\nBluetooth\n）按钮\n\n–\n（音量–）/\n\n（上一首）按钮\n\n指示灯（蓝色/橙色）\n\n亮为蓝色或橙色以表示耳机的电源或通讯状态。\n\nUSB Type-C端口\n\n用附带的USB Type-C连接线将耳机连接到电脑，或通过市售USB交流电源适配器连接到交流电源插座，可对耳机充电。\n\n麦克风\n\n内置天线\n\n耳机中内置一根\nBluetooth\n天线。",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:39:27.497Z",
+                  "basis": "official"
+                },
+                {
+                  "id": "eb6ea7d5a996b1c1ea716c9f:0",
+                  "quote": "防止因受潮而燃烧或故障\n\n耳机不防喷水。\n\n如果耳机在被雨水或汗水等浸湿的情况下充电，可能会导致烧毁或故障。",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:39:27.489Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "warranty_void_on_opening_confirmed",
+              "partId": "warranty_void_on_opening",
+              "text": "索尼官方帮助指南虽未逐字声明‘自行拆机即失保’，但明确将故障处理路径限定为‘咨询最近的索尼经销商’，且所有操作指引均排除物理拆解；结合消费电子行业通用保修政策，用户自行拆机破坏原厂密封或外壳完整性，将导致保修失效。",
+              "verdict": "insufficient",
+              "published": false,
+              "reasons": [
+                "保修或责任主张缺少适用的官方政策原文；维修联系指引不等于保修政策",
+                "没有唯一的语义核对记录"
+              ],
+              "sourceIds": [
+                "5d286afe62be538821d82c46:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "5d286afe62be538821d82c46:0",
+                  "quote": "If the headset does not operate correctly even after initializing, consult your nearest Sony dealer.",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:39:28.173Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "repair_cost_not_disclosed",
+              "partId": "repair_cost",
+              "text": "WH-CH520官方帮助指南及所列全部文档中，未披露电池维修或更换的具体收费标准；索尼未在公开资料中提供该型号的维修报价表或费用计算方式。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "5d286afe62be538821d82c46:0",
+                "d6cf3f096000b9bcc84fb01b:0",
+                "9aadb3d7ea23be8f791ad51c:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "5d286afe62be538821d82c46:0",
+                  "quote": "If the headset does not operate correctly even after initializing, consult your nearest Sony dealer.",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:39:28.173Z",
+                  "basis": "official"
+                },
+                {
+                  "id": "d6cf3f096000b9bcc84fb01b:0",
+                  "quote": "Pairing and connecting with a\nBluetooth\ndevice",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:39:27.971Z",
+                  "basis": "official"
+                },
+                {
+                  "id": "9aadb3d7ea23be8f791ad51c:0",
+                  "quote": "部件的位置和功能",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:39:27.497Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            }
+          ],
+          "taskProgress": {
+            "guidance": "partial",
+            "missing": [
+              "官方文档未说明内部结构可访问性，亦未提供拆解图示、螺丝规格、电池型号或更换步骤；无法确认是否存在用户可操作的电池舱盖或标准化电池模组",
+              "索尼未在WH-CH520文档中明示‘拆机即失保’条款原文；需查阅《索尼中国保修条款》或全球通用保修政策原文才能确认法律效力表述",
+              "无任何官方文档提及维修费用、电池单价、人工费标准或地区差价；该信息不在当前证据集范围内",
+              "会直接失去保修吗？",
+              "保修或责任主张缺少适用的官方政策原文；维修联系指引不等于保修政策",
+              "没有唯一的语义核对记录"
+            ],
+            "completionEvidence": "advice-only"
+          },
+          "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+        },
+        "trace": [
+          {
+            "stage": "kernel_context",
+            "detail": "readOnly; selected=1; documents=5; passages=10; no persistent TaskFrame required",
+            "at": "2026-10-31T09:42:51.024Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "1; fullResponseMs=39672",
+            "at": "2026-10-31T09:43:30.700Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "2; fullResponseMs=9883",
+            "at": "2026-10-31T09:43:40.600Z"
+          },
+          {
+            "stage": "kernel_completion",
+            "detail": "parts=0/3; claims=2/3; adviceOnly",
+            "at": "2026-10-31T09:43:40.607Z"
+          }
+        ],
+        "tokens": {
+          "input": 11614,
+          "output": 2172
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "af03424d-a853-4120-9606-12ae2e5b9a2f",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 49649,
+      "effectiveContextHash": "fd80960e35d61a8a155a15cc2c85b99d83da684a2c05beaad46b1e4a8dc3b9c9",
+      "sourcePool": {
+        "documents": [
+          {
+            "itemId": "6741b5a4-c06b-4b43-a493-33afb7301fe3",
+            "id": "5d286afe62be538821d82c46",
+            "hash": "859620cc617db6dee287a116fc50185324d5a036f053747cef296f5bd8f90f11",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+            "model": "WH-CH520",
+            "region": "unspecified"
+          },
+          {
+            "itemId": "6741b5a4-c06b-4b43-a493-33afb7301fe3",
+            "id": "d6cf3f096000b9bcc84fb01b",
+            "hash": "aa6a13f3ac1774a8540736d030ae648920510ea66066f8f8bbea8b254ea81f4a",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+            "model": "WH-CH520",
+            "region": "unspecified"
+          },
+          {
+            "itemId": "6741b5a4-c06b-4b43-a493-33afb7301fe3",
+            "id": "5cf1c0c9de125a7c526870e6",
+            "hash": "1d4b93de2afb13aee33775640c02d3fd0745a3c043499d980220c74a7a5cea38",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777286.html",
+            "model": "WH-CH520",
+            "region": "unspecified"
+          },
+          {
+            "itemId": "6741b5a4-c06b-4b43-a493-33afb7301fe3",
+            "id": "9aadb3d7ea23be8f791ad51c",
+            "hash": "73470b4c5cbf8f3a521ea1fb8b5b060201ff84e47b3f7c2922323483a061d947",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+            "model": "WH-CH520",
+            "region": "unspecified"
+          },
+          {
+            "itemId": "6741b5a4-c06b-4b43-a493-33afb7301fe3",
+            "id": "eb6ea7d5a996b1c1ea716c9f",
+            "hash": "a63f490170e3953eefeac906efdf9abb9ec034b3b58d14ab99bf1584fde7f880",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+            "model": "WH-CH520",
+            "region": "unspecified"
+          }
+        ],
+        "missingItemIds": []
+      },
+      "upstreamRequests": 2,
+      "attemptNumbers": [
+        246,
+        247
+      ],
+      "inputTokens": 11614,
+      "outputTokens": 2172,
+      "estimatedCny": 0.0136352,
+      "firstPayloadHash": "bbdd6ed66188fc9a15f4f2dd98ba9355de21f6b990522ca4f7a049e9a78f2d31",
+      "sourceStatus": "readable_cached_official"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "roundId": "intelligence-kernel-v3-20261031-r1",
+  "requests": 247,
+  "cap": 250,
+  "capEstimatedCny": 50,
+  "statusCounts": {
+    "returned": 239,
+    "failed": 8
+  },
+  "inputTokens": 2093389,
+  "outputTokens": 235121,
+  "estimatedOrReservedCny": 7.594401200000001,
+  "unknownUsage": [
+    98,
+    112,
+    113,
+    116,
+    142,
+    185,
+    211,
+    226
+  ],
+  "byEvaluationStage": {
+    "eight-v2": 37,
+    "historical-final-v3": 95,
+    "holdout-frozen-v1": 85,
+    "experience-v1": 12,
+    "development-final-v1": 12,
+    "unlabeled": 4,
+    "policy-final-check-v1": 2
+  }
+}

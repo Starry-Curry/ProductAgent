@@ -1,0 +1,2 @@
+共享物品浏览器验收通过：显式记住、跨会话召回、遗忘、越权与离线创意入口；0真实模型请求。
+{"passed":true,"kind":"isolated-production-server","base":"http://127.0.0.1:58440","dataDirectory":"D:\\ProductAgent-LifeContext\\.runtime\\intelligence-kernel-v3\\.runtime\\verification-brvDyZ","realModelCalls":0,"journeys":["tests/shared-knowledge-integration.mjs"]}

@@ -1,0 +1,1023 @@
+{
+  "at": "2026-10-31T09:40:07.482Z",
+  "synthetic": true,
+  "physicalTests": 0,
+  "checks": [
+    {
+      "name": "桌面UI→真实模型→最终完整回复渲染（内容质量单独审阅）",
+      "passed": true
+    },
+    {
+      "name": "390px新会话→真实模型→最终回复呈现（非实物操作验证）",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "responses": [
+    {
+      "question": "WH-CH520短按音量减和长按音量减有什么不同？请都说。",
+      "result": {
+        "session": {
+          "id": "5a00f68e-772d-4683-b243-ec0b1ed4c411",
+          "owner": "u_29d6174f-94b9-4eaa-9eb4-9e1a9b652237",
+          "itemId": "fca4317b-1e40-4dac-abe0-a1f3be08b7e8",
+          "identity": "[\"u_29d6174f-94b9-4eaa-9eb4-9e1a9b652237\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "f33a695c-02ff-49aa-ab22-6f0b15e3c70e",
+              "role": "user",
+              "text": "WH-CH520短按音量减和长按音量减有什么不同？请都说。",
+              "at": "2026-10-31T09:40:44.187Z",
+              "itemId": "fca4317b-1e40-4dac-abe0-a1f3be08b7e8",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "01405a1f-0d4a-4533-9f62-1f4c68856253",
+              "role": "assistant",
+              "text": "短按音量减（–）按钮的作用是什么：\n短按一次音量减（–）按钮可减小音量。\n\n长按音量减（–）按钮的作用是什么：\n按以下条件再尝试：按住音量减（–）按钮直到听见通知声，可跳至上一首歌曲的开头（或正在播放中曲目的开头）。\n先核对：耳机需处于音频播放状态（该功能为媒体控制，非系统级快捷键）\n\n两者在操作逻辑、触发条件和结果类型上有何本质不同：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。",
+              "reply": {
+                "answer": "短按音量减（–）按钮的作用是什么：\n短按一次音量减（–）按钮可减小音量。\n\n长按音量减（–）按钮的作用是什么：\n按以下条件再尝试：按住音量减（–）按钮直到听见通知声，可跳至上一首歌曲的开头（或正在播放中曲目的开头）。\n先核对：耳机需处于音频播放状态（该功能为媒体控制，非系统级快捷键）\n\n两者在操作逻辑、触发条件和结果类型上有何本质不同：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。",
+                "outcome": "needs_info",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "eb6ea7d5a996b1c1ea716c9f:0"
+                ],
+                "citations": [
+                  {
+                    "id": "eb6ea7d5a996b1c1ea716c9f",
+                    "title": "WH-CH520 | 帮助指南 | 首页",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "fca4317b-1e40-4dac-abe0-a1f3be08b7e8",
+                    "name": "[合成持有，仅测试]浏览器耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "task": {
+                  "goal": "区分WH-CH520耳机短按与长按音量减（–）按钮的功能差异",
+                  "parts": [
+                    {
+                      "title": "短按音量减（–）按钮的作用是什么？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "长按音量减（–）按钮的作用是什么？",
+                      "status": "needs_info"
+                    },
+                    {
+                      "title": "两者在操作逻辑、触发条件和结果类型上有何本质不同？",
+                      "status": "needs_info"
+                    }
+                  ]
+                },
+                "taskFrame": {
+                  "goal": "区分WH-CH520耳机短按与长按音量减（–）按钮的功能差异",
+                  "itemIds": [
+                    "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                  ],
+                  "parts": [
+                    {
+                      "id": "short_press_volume_minus",
+                      "question": "短按音量减（–）按钮的作用是什么？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "确认按钮物理位置",
+                        "确认当前蓝牙连接状态（非必需，但影响上下文）"
+                      ],
+                      "expectedResult": "音量立即减小一级"
+                    },
+                    {
+                      "id": "long_press_volume_minus",
+                      "question": "长按音量减（–）按钮的作用是什么？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "确认耳机处于播放状态（因功能依赖播放上下文）"
+                      ],
+                      "expectedResult": "跳至上一首歌曲开头（或当前曲目开头）"
+                    },
+                    {
+                      "id": "functional_distinction",
+                      "question": "两者在操作逻辑、触发条件和结果类型上有何本质不同？",
+                      "kind": "relationship",
+                      "itemIds": [
+                        "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "对比两个操作的触发时长阈值、反馈形式（声音/指示灯）、作用对象（音量 vs 播放进度）"
+                      ],
+                      "expectedResult": "短按为瞬时音量调节；长按为媒体控制（曲目导航），需持续按压至通知声提示完成"
+                    }
+                  ],
+                  "tried": [],
+                  "constraints": [
+                    "仅依据WH-CH520官方帮助指南原文；无固件版本限定说明，默认适用当前文档所覆盖版本"
+                  ],
+                  "version": "task-frame/3",
+                  "originalQuestion": "WH-CH520短按音量减和长按音量减有什么不同？请都说。",
+                  "evidenceIds": [
+                    "5d286afe62be538821d82c46:0",
+                    "eb6ea7d5a996b1c1ea716c9f:0",
+                    "user:current-turn"
+                  ],
+                  "permission": "read_only",
+                  "progress": "partial"
+                },
+                "claimChecks": [
+                  {
+                    "id": "short_press_volume_minus_action",
+                    "partId": "short_press_volume_minus",
+                    "text": "短按一次音量减（–）按钮可减小音量。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "eb6ea7d5a996b1c1ea716c9f:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "eb6ea7d5a996b1c1ea716c9f:0",
+                        "quote": "–（音量–）/（上一首）按钮\n短按一次：减小音量",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:40:08.853Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "long_press_volume_minus_action",
+                    "partId": "long_press_volume_minus",
+                    "text": "按住音量减（–）按钮直到听见通知声，可跳至上一首歌曲的开头（或正在播放中曲目的开头）。",
+                    "verdict": "conditional",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "eb6ea7d5a996b1c1ea716c9f:0"
+                    ],
+                    "conditions": [
+                      "耳机需处于音频播放状态（该功能为媒体控制，非系统级快捷键）"
+                    ],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "eb6ea7d5a996b1c1ea716c9f:0",
+                        "quote": "–（音量–）/（上一首）按钮\n短按一次：减小音量\n按住直到听见通知声：跳至上一首歌曲（或正在播放中的曲目）的开头",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:40:08.853Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  }
+                ],
+                "taskProgress": {
+                  "guidance": "partial",
+                  "missing": [
+                    "一条候选格式不完整，未作为指导：kind"
+                  ],
+                  "completionEvidence": "advice-only"
+                },
+                "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+              },
+              "at": "2026-10-31T09:40:44.187Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "d03f409c-8962-4959-8561-81b422175751"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T09:40:09.194Z",
+          "updatedAt": "2026-10-31T09:40:44.187Z",
+          "expiresAt": "2026-11-07T09:40:09.194Z",
+          "itemScopes": {
+            "fca4317b-1e40-4dac-abe0-a1f3be08b7e8": "[\"u_29d6174f-94b9-4eaa-9eb4-9e1a9b652237\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "短按音量减（–）按钮的作用是什么：\n短按一次音量减（–）按钮可减小音量。\n\n长按音量减（–）按钮的作用是什么：\n按以下条件再尝试：按住音量减（–）按钮直到听见通知声，可跳至上一首歌曲的开头（或正在播放中曲目的开头）。\n先核对：耳机需处于音频播放状态（该功能为媒体控制，非系统级快捷键）\n\n两者在操作逻辑、触发条件和结果类型上有何本质不同：\n这一部分仍缺适用资料或必要条件，暂不能作确定结论。",
+          "outcome": "needs_info",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "eb6ea7d5a996b1c1ea716c9f:0"
+          ],
+          "citations": [
+            {
+              "id": "eb6ea7d5a996b1c1ea716c9f",
+              "title": "WH-CH520 | 帮助指南 | 首页",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "fca4317b-1e40-4dac-abe0-a1f3be08b7e8",
+              "name": "[合成持有，仅测试]浏览器耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "task": {
+            "goal": "区分WH-CH520耳机短按与长按音量减（–）按钮的功能差异",
+            "parts": [
+              {
+                "title": "短按音量减（–）按钮的作用是什么？",
+                "status": "addressed"
+              },
+              {
+                "title": "长按音量减（–）按钮的作用是什么？",
+                "status": "needs_info"
+              },
+              {
+                "title": "两者在操作逻辑、触发条件和结果类型上有何本质不同？",
+                "status": "needs_info"
+              }
+            ]
+          },
+          "taskFrame": {
+            "goal": "区分WH-CH520耳机短按与长按音量减（–）按钮的功能差异",
+            "itemIds": [
+              "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+            ],
+            "parts": [
+              {
+                "id": "short_press_volume_minus",
+                "question": "短按音量减（–）按钮的作用是什么？",
+                "kind": "fact",
+                "itemIds": [
+                  "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "确认按钮物理位置",
+                  "确认当前蓝牙连接状态（非必需，但影响上下文）"
+                ],
+                "expectedResult": "音量立即减小一级"
+              },
+              {
+                "id": "long_press_volume_minus",
+                "question": "长按音量减（–）按钮的作用是什么？",
+                "kind": "fact",
+                "itemIds": [
+                  "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "确认耳机处于播放状态（因功能依赖播放上下文）"
+                ],
+                "expectedResult": "跳至上一首歌曲开头（或当前曲目开头）"
+              },
+              {
+                "id": "functional_distinction",
+                "question": "两者在操作逻辑、触发条件和结果类型上有何本质不同？",
+                "kind": "relationship",
+                "itemIds": [
+                  "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "对比两个操作的触发时长阈值、反馈形式（声音/指示灯）、作用对象（音量 vs 播放进度）"
+                ],
+                "expectedResult": "短按为瞬时音量调节；长按为媒体控制（曲目导航），需持续按压至通知声提示完成"
+              }
+            ],
+            "tried": [],
+            "constraints": [
+              "仅依据WH-CH520官方帮助指南原文；无固件版本限定说明，默认适用当前文档所覆盖版本"
+            ],
+            "version": "task-frame/3",
+            "originalQuestion": "WH-CH520短按音量减和长按音量减有什么不同？请都说。",
+            "evidenceIds": [
+              "5d286afe62be538821d82c46:0",
+              "eb6ea7d5a996b1c1ea716c9f:0",
+              "user:current-turn"
+            ],
+            "permission": "read_only",
+            "progress": "partial"
+          },
+          "claimChecks": [
+            {
+              "id": "short_press_volume_minus_action",
+              "partId": "short_press_volume_minus",
+              "text": "短按一次音量减（–）按钮可减小音量。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "eb6ea7d5a996b1c1ea716c9f:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "eb6ea7d5a996b1c1ea716c9f:0",
+                  "quote": "–（音量–）/（上一首）按钮\n短按一次：减小音量",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:40:08.853Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "long_press_volume_minus_action",
+              "partId": "long_press_volume_minus",
+              "text": "按住音量减（–）按钮直到听见通知声，可跳至上一首歌曲的开头（或正在播放中曲目的开头）。",
+              "verdict": "conditional",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "eb6ea7d5a996b1c1ea716c9f:0"
+              ],
+              "conditions": [
+                "耳机需处于音频播放状态（该功能为媒体控制，非系统级快捷键）"
+              ],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "eb6ea7d5a996b1c1ea716c9f:0",
+                  "quote": "–（音量–）/（上一首）按钮\n短按一次：减小音量\n按住直到听见通知声：跳至上一首歌曲（或正在播放中的曲目）的开头",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:40:08.853Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            }
+          ],
+          "taskProgress": {
+            "guidance": "partial",
+            "missing": [
+              "一条候选格式不完整，未作为指导：kind"
+            ],
+            "completionEvidence": "advice-only"
+          },
+          "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+        },
+        "trace": [
+          {
+            "stage": "kernel_context",
+            "detail": "readOnly; selected=1; documents=2; passages=3; no persistent TaskFrame required",
+            "at": "2026-10-31T09:40:09.212Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "1; fullResponseMs=26340",
+            "at": "2026-10-31T09:40:35.553Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "2; fullResponseMs=8621",
+            "at": "2026-10-31T09:40:44.183Z"
+          },
+          {
+            "stage": "kernel_completion",
+            "detail": "parts=1/3; claims=2/2; adviceOnly",
+            "at": "2026-10-31T09:40:44.186Z"
+          }
+        ],
+        "tokens": {
+          "input": 4855,
+          "output": 1530
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "207f16a0-58d7-4d81-9820-69e22e8af500",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 35082
+    },
+    {
+      "question": "WH-CH520恢复出厂初始化要按什么键、多久？配对信息会怎样？",
+      "result": {
+        "session": {
+          "id": "adf011b8-8e77-4d46-8019-f278dea003b3",
+          "owner": "u_29d6174f-94b9-4eaa-9eb4-9e1a9b652237",
+          "itemId": "fca4317b-1e40-4dac-abe0-a1f3be08b7e8",
+          "identity": "[\"u_29d6174f-94b9-4eaa-9eb4-9e1a9b652237\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "42907394-27dd-4fe0-bdd6-60c2627be9eb",
+              "role": "user",
+              "text": "WH-CH520恢复出厂初始化要按什么键、多久？配对信息会怎样？",
+              "at": "2026-10-31T09:41:19.897Z",
+              "itemId": "fca4317b-1e40-4dac-abe0-a1f3be08b7e8",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "1205d365-f8b2-49bc-992e-fc012764f9f8",
+              "role": "assistant",
+              "text": "恢复出厂初始化需按哪两个键：\n按以下条件再尝试：需同时按住（电源）按钮和“–”（音量减）按钮。\n先核对：耳机已关机；USB Type-C电缆已移除\n\n需按住多久：\n需按住约10秒或更长时间，直至蓝色指示灯连续闪烁4次（— — — —），表示初始化完成。\n\n配对信息会怎样：\n按以下条件再尝试：该操作会删除耳机内存储的所有蓝牙配对信息；同时需在已连接的设备（如手机、电脑）上手动删除该耳机的配对记录，之后才能重新配对。\n先核对：配对设备支持手动删除蓝牙设备记录",
+              "reply": {
+                "answer": "恢复出厂初始化需按哪两个键：\n按以下条件再尝试：需同时按住（电源）按钮和“–”（音量减）按钮。\n先核对：耳机已关机；USB Type-C电缆已移除\n\n需按住多久：\n需按住约10秒或更长时间，直至蓝色指示灯连续闪烁4次（— — — —），表示初始化完成。\n\n配对信息会怎样：\n按以下条件再尝试：该操作会删除耳机内存储的所有蓝牙配对信息；同时需在已连接的设备（如手机、电脑）上手动删除该耳机的配对记录，之后才能重新配对。\n先核对：配对设备支持手动删除蓝牙设备记录",
+                "outcome": "needs_info",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "fca4317b-1e40-4dac-abe0-a1f3be08b7e8",
+                    "name": "[合成持有，仅测试]浏览器耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "task": {
+                  "goal": "WH-CH520恢复出厂初始化的操作步骤、按键组合与持续时间，以及该操作对配对信息的影响",
+                  "parts": [
+                    {
+                      "title": "恢复出厂初始化需按哪两个键？",
+                      "status": "needs_info"
+                    },
+                    {
+                      "title": "需按住多久？",
+                      "status": "addressed"
+                    },
+                    {
+                      "title": "配对信息会怎样？",
+                      "status": "needs_info"
+                    }
+                  ]
+                },
+                "taskFrame": {
+                  "goal": "WH-CH520恢复出厂初始化的操作步骤、按键组合与持续时间，以及该操作对配对信息的影响",
+                  "itemIds": [
+                    "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                  ],
+                  "parts": [
+                    {
+                      "id": "init_key_combo",
+                      "question": "恢复出厂初始化需按哪两个键？",
+                      "kind": "procedure",
+                      "itemIds": [
+                        "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [
+                        "电源关闭",
+                        "USB-C线已拔除"
+                      ],
+                      "expectedResult": "触发初始化流程"
+                    },
+                    {
+                      "id": "init_duration",
+                      "question": "需按住多久？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                      ],
+                      "risk": "ordinary",
+                      "needed": [],
+                      "expectedResult": "完成初始化判定（指示灯蓝闪4次）"
+                    },
+                    {
+                      "id": "pairing_effect",
+                      "question": "配对信息会怎样？",
+                      "kind": "fact",
+                      "itemIds": [
+                        "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                      ],
+                      "risk": "external_action",
+                      "needed": [
+                        "配对设备端同步清理旧记录"
+                      ],
+                      "expectedResult": "耳机内所有蓝牙配对记录被清除，需重新配对"
+                    }
+                  ],
+                  "tried": [],
+                  "constraints": [
+                    "必须先关机且拔除USB-C线；无其他快捷方式或App替代路径"
+                  ],
+                  "version": "task-frame/3",
+                  "originalQuestion": "WH-CH520恢复出厂初始化要按什么键、多久？配对信息会怎样？",
+                  "evidenceIds": [
+                    "5d286afe62be538821d82c46:0",
+                    "eb6ea7d5a996b1c1ea716c9f:0",
+                    "user:current-turn"
+                  ],
+                  "permission": "read_only",
+                  "progress": "partial"
+                },
+                "claimChecks": [
+                  {
+                    "id": "init_key_combo_action",
+                    "partId": "init_key_combo",
+                    "text": "需同时按住（电源）按钮和“–”（音量减）按钮。",
+                    "verdict": "conditional",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "5d286afe62be538821d82c46:0"
+                    ],
+                    "conditions": [
+                      "耳机已关机",
+                      "USB Type-C电缆已移除"
+                    ],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "5d286afe62be538821d82c46:0",
+                        "quote": "Press and hold the\n\n(power) button and\n–\n(volume –) button for about 10 seconds or more.",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:40:09.048Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "init_duration_spec",
+                    "partId": "init_duration",
+                    "text": "需按住约10秒或更长时间，直至蓝色指示灯连续闪烁4次（— — — —），表示初始化完成。",
+                    "verdict": "supported",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "5d286afe62be538821d82c46:0"
+                    ],
+                    "conditions": [],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "5d286afe62be538821d82c46:0",
+                        "quote": "Press and hold the\n\n(power) button and\n–\n(volume –) button for about 10 seconds or more.\n\nWhen the initializing is complete, the indicator (blue) flashes 4 times (\n\n-\n\n-\n\n-\n\n-).",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:40:09.048Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  },
+                  {
+                    "id": "pairing_info_cleared",
+                    "partId": "pairing_effect",
+                    "text": "该操作会删除耳机内存储的所有蓝牙配对信息；同时需在已连接的设备（如手机、电脑）上手动删除该耳机的配对记录，之后才能重新配对。",
+                    "verdict": "conditional",
+                    "published": true,
+                    "reasons": [],
+                    "sourceIds": [
+                      "5d286afe62be538821d82c46:0"
+                    ],
+                    "conditions": [
+                      "配对设备支持手动删除蓝牙设备记录"
+                    ],
+                    "verification": "scope_quote_quantity_and_limited_semantic_review",
+                    "sources": [
+                      {
+                        "id": "5d286afe62be538821d82c46:0",
+                        "quote": "This operation resets volume settings, etc. to the factory settings, and deletes all pairing information. In this case, delete the pairing information for the headset from the connected device and then pair them again.",
+                        "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                        "model": "WH-CH520",
+                        "region": "unspecified",
+                        "fetchedAt": "2026-10-31T09:40:09.048Z",
+                        "basis": "official"
+                      }
+                    ],
+                    "excludedSources": []
+                  }
+                ],
+                "taskProgress": {
+                  "guidance": "partial",
+                  "missing": [],
+                  "completionEvidence": "advice-only"
+                },
+                "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+              },
+              "at": "2026-10-31T09:41:19.897Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "4ad6d075-5ca3-41eb-b6be-57eee9a1ab3b"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T09:40:44.433Z",
+          "updatedAt": "2026-10-31T09:41:19.898Z",
+          "expiresAt": "2026-11-07T09:40:44.433Z",
+          "itemScopes": {
+            "fca4317b-1e40-4dac-abe0-a1f3be08b7e8": "[\"u_29d6174f-94b9-4eaa-9eb4-9e1a9b652237\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "恢复出厂初始化需按哪两个键：\n按以下条件再尝试：需同时按住（电源）按钮和“–”（音量减）按钮。\n先核对：耳机已关机；USB Type-C电缆已移除\n\n需按住多久：\n需按住约10秒或更长时间，直至蓝色指示灯连续闪烁4次（— — — —），表示初始化完成。\n\n配对信息会怎样：\n按以下条件再尝试：该操作会删除耳机内存储的所有蓝牙配对信息；同时需在已连接的设备（如手机、电脑）上手动删除该耳机的配对记录，之后才能重新配对。\n先核对：配对设备支持手动删除蓝牙设备记录",
+          "outcome": "needs_info",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "fca4317b-1e40-4dac-abe0-a1f3be08b7e8",
+              "name": "[合成持有，仅测试]浏览器耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "task": {
+            "goal": "WH-CH520恢复出厂初始化的操作步骤、按键组合与持续时间，以及该操作对配对信息的影响",
+            "parts": [
+              {
+                "title": "恢复出厂初始化需按哪两个键？",
+                "status": "needs_info"
+              },
+              {
+                "title": "需按住多久？",
+                "status": "addressed"
+              },
+              {
+                "title": "配对信息会怎样？",
+                "status": "needs_info"
+              }
+            ]
+          },
+          "taskFrame": {
+            "goal": "WH-CH520恢复出厂初始化的操作步骤、按键组合与持续时间，以及该操作对配对信息的影响",
+            "itemIds": [
+              "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+            ],
+            "parts": [
+              {
+                "id": "init_key_combo",
+                "question": "恢复出厂初始化需按哪两个键？",
+                "kind": "procedure",
+                "itemIds": [
+                  "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                ],
+                "risk": "ordinary",
+                "needed": [
+                  "电源关闭",
+                  "USB-C线已拔除"
+                ],
+                "expectedResult": "触发初始化流程"
+              },
+              {
+                "id": "init_duration",
+                "question": "需按住多久？",
+                "kind": "fact",
+                "itemIds": [
+                  "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                ],
+                "risk": "ordinary",
+                "needed": [],
+                "expectedResult": "完成初始化判定（指示灯蓝闪4次）"
+              },
+              {
+                "id": "pairing_effect",
+                "question": "配对信息会怎样？",
+                "kind": "fact",
+                "itemIds": [
+                  "fca4317b-1e40-4dac-abe0-a1f3be08b7e8"
+                ],
+                "risk": "external_action",
+                "needed": [
+                  "配对设备端同步清理旧记录"
+                ],
+                "expectedResult": "耳机内所有蓝牙配对记录被清除，需重新配对"
+              }
+            ],
+            "tried": [],
+            "constraints": [
+              "必须先关机且拔除USB-C线；无其他快捷方式或App替代路径"
+            ],
+            "version": "task-frame/3",
+            "originalQuestion": "WH-CH520恢复出厂初始化要按什么键、多久？配对信息会怎样？",
+            "evidenceIds": [
+              "5d286afe62be538821d82c46:0",
+              "eb6ea7d5a996b1c1ea716c9f:0",
+              "user:current-turn"
+            ],
+            "permission": "read_only",
+            "progress": "partial"
+          },
+          "claimChecks": [
+            {
+              "id": "init_key_combo_action",
+              "partId": "init_key_combo",
+              "text": "需同时按住（电源）按钮和“–”（音量减）按钮。",
+              "verdict": "conditional",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "5d286afe62be538821d82c46:0"
+              ],
+              "conditions": [
+                "耳机已关机",
+                "USB Type-C电缆已移除"
+              ],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "5d286afe62be538821d82c46:0",
+                  "quote": "Press and hold the\n\n(power) button and\n–\n(volume –) button for about 10 seconds or more.",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:40:09.048Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "init_duration_spec",
+              "partId": "init_duration",
+              "text": "需按住约10秒或更长时间，直至蓝色指示灯连续闪烁4次（— — — —），表示初始化完成。",
+              "verdict": "supported",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "5d286afe62be538821d82c46:0"
+              ],
+              "conditions": [],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "5d286afe62be538821d82c46:0",
+                  "quote": "Press and hold the\n\n(power) button and\n–\n(volume –) button for about 10 seconds or more.\n\nWhen the initializing is complete, the indicator (blue) flashes 4 times (\n\n-\n\n-\n\n-\n\n-).",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:40:09.048Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            },
+            {
+              "id": "pairing_info_cleared",
+              "partId": "pairing_effect",
+              "text": "该操作会删除耳机内存储的所有蓝牙配对信息；同时需在已连接的设备（如手机、电脑）上手动删除该耳机的配对记录，之后才能重新配对。",
+              "verdict": "conditional",
+              "published": true,
+              "reasons": [],
+              "sourceIds": [
+                "5d286afe62be538821d82c46:0"
+              ],
+              "conditions": [
+                "配对设备支持手动删除蓝牙设备记录"
+              ],
+              "verification": "scope_quote_quantity_and_limited_semantic_review",
+              "sources": [
+                {
+                  "id": "5d286afe62be538821d82c46:0",
+                  "quote": "This operation resets volume settings, etc. to the factory settings, and deletes all pairing information. In this case, delete the pairing information for the headset from the connected device and then pair them again.",
+                  "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                  "model": "WH-CH520",
+                  "region": "unspecified",
+                  "fetchedAt": "2026-10-31T09:40:09.048Z",
+                  "basis": "official"
+                }
+              ],
+              "excludedSources": []
+            }
+          ],
+          "taskProgress": {
+            "guidance": "partial",
+            "missing": [],
+            "completionEvidence": "advice-only"
+          },
+          "caveat": "依据当前适用资料与获准报告；语义核对仍可能出错，未操作或实测物品。创意条件不等于可行性认证。"
+        },
+        "trace": [
+          {
+            "stage": "kernel_context",
+            "detail": "readOnly; selected=1; documents=2; passages=3; no persistent TaskFrame required",
+            "at": "2026-10-31T09:40:44.440Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "1; fullResponseMs=23621",
+            "at": "2026-10-31T09:41:08.058Z"
+          },
+          {
+            "stage": "kernel_model",
+            "detail": "2; fullResponseMs=11832",
+            "at": "2026-10-31T09:41:19.894Z"
+          },
+          {
+            "stage": "kernel_completion",
+            "detail": "parts=1/3; claims=3/3; adviceOnly",
+            "at": "2026-10-31T09:41:19.896Z"
+          }
+        ],
+        "tokens": {
+          "input": 5072,
+          "output": 1551
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "56ff3626-c454-42c0-a464-6c34ae479ff3",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 35537
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+      "result": {
+        "source": {
+          "id": "2f3c0285-78a7-471c-a0ae-34fc2d56ccc3",
+          "title": "WH-CH520 | 帮助指南 | 首页",
+          "text": "型号\n：\nYY2958\n\n快速入门指南\n\n下载应用程序并设置耳机\n\n若要使用所有功能和改善的性能，将耳机软件和“\nSony | Headphones Connect\n”应用程序更新至最新版本。如需了解详情，请参阅以下网站：\n\nhttps://www.sony.net/elesupport/\n\n开始使用\n\n打开耳机\n\n按住\n\n（电源）按钮约2秒或以上直到指示灯（蓝色）闪烁。购买后首次打开耳机时，耳机自动进入配对模式。\n\n建立BLUETOOTH®连接\n\n按照下载的“\nSony | Headphones Connect\n”应用程序说明操作。\n\n操作耳机\n\n可使用耳机右单元的按钮执行以下操作。\n\n（播放）按钮\n\n暂停期间按一下：播放\n\n播放期间按一下：暂停\n\n–\n（音量–）/\n\n（上一首）按钮\n\n短按一次：减小音量\n\n按住直到听见通知声：跳至上一首歌曲（或正在播放中的曲目）的开头\n\n+\n（音量+）/\n\n（下一首）按钮\n\n短按一次：增大音量\n\n按住直到听见通知声：跳至下一首歌曲的开头\n\n有关操作的更多详细信息，请参阅“\n控制音频设备（Bluetooth连接）\n”。\n\n防止因受潮而燃烧或故障\n\n耳机不防喷水。\n\n如果耳机在被雨水或汗水等浸湿的情况下充电，可能会导致烧毁或故障。\n\n相关信息\n\n佩戴耳机\n\n手动建立Bluetooth连接\n\n对耳机充电\n\n返回页首",
+          "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+          "kind": "official-public",
+          "knowledge": {
+            "applicableModel": "WH-CH520",
+            "modelInDocument": true,
+            "provenance": "已核对官方站点的公开摘录，未做实物或完整语义验证",
+            "sections": [
+              {
+                "id": "e789a731b59f7534",
+                "category": "功能",
+                "quote": "若要使用所有功能和改善的性能，将耳机软件和“",
+                "start": 34,
+                "end": 56
+              },
+              {
+                "id": "c38619d858a53708",
+                "category": "使用方法",
+                "quote": "Sony | Headphones Connect",
+                "start": 57,
+                "end": 82
+              },
+              {
+                "id": "9ff20b84252c1017",
+                "category": "使用方法",
+                "quote": "建立BLUETOOTH®连接",
+                "start": 211,
+                "end": 225
+              },
+              {
+                "id": "0658703dbd99e440",
+                "category": "使用方法",
+                "quote": "Sony | Headphones Connect",
+                "start": 234,
+                "end": 259
+              },
+              {
+                "id": "bea9d5762d34dc28",
+                "category": "使用方法",
+                "quote": "”应用程序说明操作。",
+                "start": 260,
+                "end": 270
+              },
+              {
+                "id": "ce6c97aa5d9a0f78",
+                "category": "使用方法",
+                "quote": "可使用耳机右单元的按钮执行以下操作。",
+                "start": 278,
+                "end": 296
+              },
+              {
+                "id": "1e61e57031273d17",
+                "category": "使用方法",
+                "quote": "有关操作的更多详细信息，请参阅“",
+                "start": 445,
+                "end": 461
+              },
+              {
+                "id": "b4a0d6c04f07b236",
+                "category": "使用方法",
+                "quote": "控制音频设备（Bluetooth连接）",
+                "start": 462,
+                "end": 481
+              },
+              {
+                "id": "04abbc2c2163e42e",
+                "category": "使用方法",
+                "quote": "手动建立Bluetooth连接",
+                "start": 554,
+                "end": 569
+              }
+            ]
+          }
+        },
+        "notice": "已保存本人核对的官方站点摘录；不等于完整知识包或实物验证。"
+      }
+    },
+    {
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+      "result": {
+        "source": {
+          "id": "ec59a6f2-cc97-4b86-b69a-025a00b5d3da",
+          "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+          "text": "Initializing the headset to restore factory settings\n\nIf the headset does not operate correctly even after resetting, initialize the headset.\n\nTurn off the headset.\n\nRemove the USB Type-C cable.\n\nPress and hold the\n\n(power) button and\n–\n(volume –) button for about 10 seconds or more.\n\nWhen the initializing is complete, the indicator (blue) flashes 4 times (\n\n-\n\n-\n\n-\n\n-).\n\nThis operation resets volume settings, etc. to the factory settings, and deletes all pairing information. In this case, delete the pairing information for the headset from the connected device and then pair them again.\n\nIf the headset does not operate correctly even after initializing, consult your nearest Sony dealer.\n\nGo to Page Top\n\nRelated Topic\n\nTurning off the headset\n\nResetting the headset",
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+          "kind": "official-public",
+          "knowledge": {
+            "applicableModel": "WH-CH520",
+            "modelInDocument": true,
+            "provenance": "已核对官方站点的公开摘录，未做实物或完整语义验证",
+            "sections": [
+              {
+                "id": "2bc7cf1244cf8bc6",
+                "category": "使用方法",
+                "quote": "Press and hold the",
+                "start": 196,
+                "end": 214
+              },
+              {
+                "id": "ab526c1191a6b3fd",
+                "category": "使用方法",
+                "quote": "This operation resets volume settings, etc. to the factory settings, and deletes all pairing information. In this case, delete the pairing information for the headset from the connected device and then pair them again.",
+                "start": 375,
+                "end": 593
+              }
+            ]
+          }
+        },
+        "notice": "已保存本人核对的官方站点摘录；不等于完整知识包或实物验证。"
+      }
+    }
+  ],
+  "horizontalOverflow": false,
+  "upstreamRequests": 4,
+  "attempts": [
+    242,
+    243,
+    244,
+    245
+  ]
+}

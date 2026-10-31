@@ -1,0 +1,53 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('summary').filter({ hasText: '记忆与陪伴 · 看看它记下了什么' })
+    - locator resolved to <summary>记忆与陪伴 · 看看它记下了什么</summary>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    57 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+
+    at D:\ProductAgent-LifeContext\.runtime\intelligence-kernel-v3\tests\alpha-integration.mjs:140:115 {
+  log: [
+    "  - waiting for locator('summary').filter({ hasText: '记忆与陪伴 · 看看它记下了什么' })",
+    '    - locator resolved to <summary>记忆与陪伴 · 看看它记下了什么</summary>',
+    '  - attempting click action',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '    - waiting 20ms',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '      - waiting 100ms',
+    '    57 × waiting for element to be visible, enabled and stable',
+    '       - element is not visible',
+    '     - retrying click action',
+    '       - waiting 500ms'
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.22.2
+file:///D:/ProductAgent-LifeContext/.runtime/intelligence-kernel-v3/scripts/verify-local.mjs:101
+    if (code !== 0) throw Error(script + " failed (" + code + ")");
+                          ^
+
+Error: tests/alpha-integration.mjs failed (1)
+    at file:///D:/ProductAgent-LifeContext/.runtime/intelligence-kernel-v3/scripts/verify-local.mjs:101:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.22.2

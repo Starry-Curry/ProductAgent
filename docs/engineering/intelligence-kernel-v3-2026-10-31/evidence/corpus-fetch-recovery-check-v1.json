@@ -1,0 +1,312 @@
+{
+  "at": "2026-10-31T09:39:40.218Z",
+  "paidCalls": 0,
+  "rows": [
+    {
+      "id": "SONY-WH-CH520",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+      "actualURL": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 582,
+      "hash": "a63f490170e3953eefeac906efdf9abb9ec034b3b58d14ab99bf1584fde7f880",
+      "elapsedMs": 819
+    },
+    {
+      "id": "SONY-WH-CH520",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777286.html",
+      "actualURL": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777286.html",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 1110,
+      "hash": "1d4b93de2afb13aee33775640c02d3fd0745a3c043499d980220c74a7a5cea38",
+      "elapsedMs": 1007
+    },
+    {
+      "id": "SONY-WH-CH520",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+      "actualURL": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/contents/TP1000777279.html",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 345,
+      "hash": "73470b4c5cbf8f3a521ea1fb8b5b060201ff84e47b3f7c2922323483a061d947",
+      "elapsedMs": 821
+    },
+    {
+      "id": "SONY-WH-CH520",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+      "actualURL": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 3293,
+      "hash": "aa6a13f3ac1774a8540736d030ae648920510ea66066f8f8bbea8b254ea81f4a",
+      "elapsedMs": 288
+    },
+    {
+      "id": "SONY-WH-CH520",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+      "actualURL": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 774,
+      "hash": "859620cc617db6dee287a116fc50185324d5a036f053747cef296f5bd8f90f11",
+      "elapsedMs": 489
+    },
+    {
+      "id": "JBL-CLIP5",
+      "url": "https://www.jbl.com/CLIP-5.html",
+      "readable": false,
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+      "elapsedMs": 550
+    },
+    {
+      "id": "LOGI-M185",
+      "url": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+      "actualURL": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 5792,
+      "hash": "8791ff9ff42581d914e9be6a74bef9fba5e8b388d4400c8744c43270ff826ab3",
+      "elapsedMs": 1139
+    },
+    {
+      "id": "CANON-R50",
+      "url": "https://www.canon.com.cn/product/r50/",
+      "actualURL": "https://www.canon.com.cn/product/r50/",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 8078,
+      "hash": "ab3f2aa34938f04840069536835b750547490a6357ba4d91d2533231d1173ca9",
+      "elapsedMs": 632
+    },
+    {
+      "id": "CANON-R50",
+      "url": "https://cam.start.canon/en/C011/manual/html/",
+      "actualURL": "https://cam.start.canon/en/C011/manual/html/",
+      "official": true,
+      "modelMentioned": true,
+      "readable": false,
+      "characters": 114,
+      "hash": "cd23524d1a4036a2ca74b59ef0b694cce48809f649f0313cb74c2393516c9c0d",
+      "elapsedMs": 937
+    },
+    {
+      "id": "XIAOMI-1S",
+      "url": "https://www.mi.com/ae-en/product/mi-led-desk-lamp-1s/",
+      "actualURL": "https://www.mi.com/ae-en/product/mi-led-desk-lamp-1s/",
+      "official": true,
+      "modelMentioned": false,
+      "readable": true,
+      "characters": 3500,
+      "hash": "c7a19e1b7b6f3f14b10fb8079bac43240366f1711423f83514525d6f7492cafa",
+      "elapsedMs": 592
+    },
+    {
+      "id": "XIAOMI-1S",
+      "url": "https://www.mi.com/sg/product/mi-led-desk-lamp-1s/specs/",
+      "actualURL": "https://www.mi.com/sg/product/mi-led-desk-lamp-1s/specs/",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 591,
+      "hash": "8c6cda38cc12b22d544b8cc3ea71c940c5a5f82f78ed832fbc8dfa5e2cc304d7",
+      "elapsedMs": 539
+    },
+    {
+      "id": "PHILIPS-HD9252-90",
+      "url": "https://www.philips.co.uk/c-p/HD9252_90/essential-airfryer/support",
+      "readable": false,
+      "error": "来源跳转到其他站点或跳转过多；请核对最终链接后主动读取",
+      "elapsedMs": 1135
+    },
+    {
+      "id": "IKEA-SAMLA11",
+      "url": "https://www.ikea.com/jp/en/p/samla-box-with-lid-transparent-s49440837/",
+      "actualURL": "https://www.ikea.com/jp/en/p/samla-box-with-lid-transparent-s49440837/",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 4339,
+      "hash": "d7942998df3de519e5e5e955f6ced0ff3ec439ee82ec261cc262231d16c46ae2",
+      "elapsedMs": 2302
+    },
+    {
+      "id": "IKEA-KALLAX77",
+      "url": "https://www.ikea.com/jp/en/p/kallax-shelving-unit-white-70351886/",
+      "actualURL": "https://www.ikea.com/jp/en/p/kallax-shelving-unit-white-70351886/",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 5171,
+      "hash": "168daf95e8aa3cf97bbb05e0c958359b7725ee42d7bd5bc9a81b1f67618ac2d8",
+      "elapsedMs": 2525
+    },
+    {
+      "id": "DJI-OM6",
+      "url": "https://www.dji.com/osmo-mobile-6/specs",
+      "actualURL": "https://www.dji.com/cn/osmo-mobile-6/specs",
+      "official": true,
+      "modelMentioned": true,
+      "readable": false,
+      "characters": 31,
+      "hash": "6241f35b153d5ffc67a58053bccc1ecd91d8f32a6c9ec5d966a5596da261eeef",
+      "elapsedMs": 251
+    },
+    {
+      "id": "DJI-OM6",
+      "url": "https://www.dji.com/osmo-mobile-6/faq",
+      "actualURL": "https://www.dji.com/cn/osmo-mobile-6/faq",
+      "official": true,
+      "modelMentioned": true,
+      "readable": false,
+      "characters": 31,
+      "hash": "54e7b97a93b1e7c1a2e0562008d7f70e3758a846df9d18c6d290c8b8b54ddcaa",
+      "elapsedMs": 201
+    },
+    {
+      "id": "DJI-OM6",
+      "url": "https://www.dji.com/osmo-mobile-6/downloads",
+      "actualURL": "https://www.dji.com/cn/osmo-mobile-6/downloads",
+      "official": true,
+      "modelMentioned": true,
+      "readable": false,
+      "characters": 31,
+      "hash": "6f001c4d954729f6025dccf96cc3dd4938468bf14405e88a90cba83286652090",
+      "elapsedMs": 159
+    },
+    {
+      "id": "DJI-OM6",
+      "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+      "actualURL": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 23072,
+      "hash": "acc71a313fa9e9f8be090aed49477cff32f1865e3d888df4ac8badcc656134f5",
+      "elapsedMs": 1285
+    },
+    {
+      "id": "NEW-SONY-PX470",
+      "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155309.html",
+      "actualURL": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155309.html",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 2487,
+      "hash": "e1b75811004ed48d0682ba8700283d0dd8b34024dae0d0987125a7087e4c0e71",
+      "elapsedMs": 849
+    },
+    {
+      "id": "NEW-SONY-PX470",
+      "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html",
+      "actualURL": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 927,
+      "hash": "fd22cb989ac920ea46a788b5f09b60f6addd0202c6c68e3677fe6cdac00ec223",
+      "elapsedMs": 1813
+    },
+    {
+      "id": "NEW-SONY-PX470",
+      "url": "https://www.sony.com/electronics/support/digital-voice-recorders-icd-series/icd-px470/specifications",
+      "readable": false,
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+      "elapsedMs": 571
+    },
+    {
+      "id": "NEW-CANON-CP1500",
+      "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+      "actualURL": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 2161,
+      "hash": "89dfebb6003730ea83d66a14a844279db4758c78b8b4a78af9470b9aee06a6cf",
+      "elapsedMs": 1108
+    },
+    {
+      "id": "NEW-CANON-CP1500",
+      "url": "https://www.usa.canon.com/support/p/selphy-cp1500",
+      "readable": false,
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+      "elapsedMs": 467
+    },
+    {
+      "id": "NEW-LOGI-K380",
+      "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+      "actualURL": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 12477,
+      "hash": "1c1177fce089824187ff4225e13e1ff42c77b58e44a2df647c0b7ae0ad864c9b",
+      "elapsedMs": 974
+    },
+    {
+      "id": "NEW-LOGI-K380",
+      "url": "https://support.logi.com/hc/en-hk/articles/360023464473-K380-Technical-Specifications",
+      "actualURL": "https://support.logi.com/hc/en-hk/articles/360023464473-K380-Technical-Specifications",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 4925,
+      "hash": "f7df7691aaaf7c9453598829e999b12719ccde4aa58fd185a26403d3c7bb1d61",
+      "elapsedMs": 642
+    },
+    {
+      "id": "NEW-IKEA-RASKOG",
+      "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+      "actualURL": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 10170,
+      "hash": "7a4dd89499476c219986866f396d3d2e3f10fc9f59437ed58aebf67385de3d3d",
+      "elapsedMs": 1471
+    },
+    {
+      "id": "NEW-LEGO-42179",
+      "url": "https://www.lego.com/en-us/product/planet-earth-and-moon-in-orbit-42179",
+      "readable": false,
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+      "elapsedMs": 652
+    },
+    {
+      "id": "NEW-LEGO-42179",
+      "url": "https://www.lego.com/static/product/planet-earth-and-moon-in-orbit-42179",
+      "readable": false,
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+      "elapsedMs": 1298
+    },
+    {
+      "id": "NEW-MI-PURIFIER4",
+      "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+      "actualURL": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 187,
+      "hash": "b38f82691d164a8808b5c089e17f76e9e01a51be77fe7f3110f1cccceef38fd6",
+      "elapsedMs": 860
+    },
+    {
+      "id": "NEW-IKEA-VARIERA",
+      "url": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+      "actualURL": "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/",
+      "official": true,
+      "modelMentioned": true,
+      "readable": true,
+      "characters": 8503,
+      "hash": "6f545bd86c5d529115d5d66f39d78bf1d2ec7ae8b11a400d3a1952ab34497d39",
+      "elapsedMs": 1502
+    }
+  ]
+}

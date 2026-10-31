@@ -2,7 +2,7 @@ import { chromium, expect } from '@playwright/test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { randomUUID, randomBytes } from 'node:crypto';
-const base=process.env.TEST_BASE_URL||'http://127.0.0.1:3223',dir='docs/engineering/real-intelligence-2026-10-31/evidence';
+const base=process.env.TEST_BASE_URL||'http://127.0.0.1:3223',dir=process.env.TEST_REPORT_DIR||'docs/engineering/real-intelligence-2026-10-31/evidence';
 const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});
 const ac=await browser.newContext({viewport:{width:1440,height:1000}}),bc=await browser.newContext({viewport:{width:390,height:844},isMobile:true});
 const a=await ac.newPage(),b=await bc.newPage(),report={at:new Date().toISOString(),synthetic:true,paidCalls:0,checks:[],errors:[],responses:[]};

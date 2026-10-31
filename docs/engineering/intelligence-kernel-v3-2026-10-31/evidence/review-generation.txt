@@ -1,0 +1,132 @@
+{
+  "metrics": [
+    {
+      "stage": "historical-final-v3",
+      "arm": "v3",
+      "tasks": 34,
+      "correctCoreUnits": 27,
+      "totalCoreUnits": 71,
+      "pass": 3,
+      "partial": 15,
+      "unavailable": 4,
+      "observedUnsupportedExpansionTasks": 14,
+      "returnedMs": {
+        "p50": 53746,
+        "p95": 99133
+      },
+      "effectivePassedMs": {
+        "n": 3,
+        "p50": 24850,
+        "p95": 33807
+      },
+      "upstreamRequests": 61,
+      "inputTokens": 556930,
+      "outputTokens": 64393,
+      "estimatedCny": 3.69837
+    },
+    {
+      "stage": "historical-final-v3",
+      "arm": "direct",
+      "tasks": 34,
+      "correctCoreUnits": 45,
+      "totalCoreUnits": 71,
+      "pass": 0,
+      "partial": 26,
+      "unavailable": 0,
+      "observedUnsupportedExpansionTasks": 34,
+      "returnedMs": {
+        "p50": 16233,
+        "p95": 51142
+      },
+      "effectivePassedMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null
+      },
+      "upstreamRequests": 34,
+      "inputTokens": 460456,
+      "outputTokens": 28714,
+      "estimatedCny": 0.4257928
+    },
+    {
+      "stage": "holdout-frozen-v1",
+      "arm": "v3",
+      "tasks": 30,
+      "correctCoreUnits": 26,
+      "totalCoreUnits": 63,
+      "pass": 3,
+      "partial": 14,
+      "unavailable": 4,
+      "observedUnsupportedExpansionTasks": 15,
+      "returnedMs": {
+        "p50": 48618,
+        "p95": 72988
+      },
+      "effectivePassedMs": {
+        "n": 3,
+        "p50": 36459,
+        "p95": 39510
+      },
+      "upstreamRequests": 55,
+      "inputTokens": 265642,
+      "outputTokens": 56743,
+      "estimatedCny": 1.8785756
+    },
+    {
+      "stage": "holdout-frozen-v1",
+      "arm": "direct",
+      "tasks": 30,
+      "correctCoreUnits": 40,
+      "totalCoreUnits": 63,
+      "pass": 2,
+      "partial": 21,
+      "unavailable": 0,
+      "observedUnsupportedExpansionTasks": 28,
+      "returnedMs": {
+        "p50": 20979,
+        "p95": 43304
+      },
+      "effectivePassedMs": {
+        "n": 2,
+        "p50": 14405,
+        "p95": 27092
+      },
+      "upstreamRequests": 30,
+      "inputTokens": 185140,
+      "outputTokens": 29655,
+      "estimatedCny": 0.20742200000000002
+    }
+  ],
+  "budget": {
+    "roundId": "intelligence-kernel-v3-20261031-r1",
+    "requests": 247,
+    "cap": 250,
+    "capEstimatedCny": 50,
+    "statusCounts": {
+      "returned": 239,
+      "failed": 8
+    },
+    "inputTokens": 2093389,
+    "outputTokens": 235121,
+    "estimatedOrReservedCny": 7.594401200000001,
+    "unknownUsage": [
+      98,
+      112,
+      113,
+      116,
+      142,
+      185,
+      211,
+      226
+    ],
+    "byEvaluationStage": {
+      "eight-v2": 37,
+      "historical-final-v3": 95,
+      "holdout-frozen-v1": 85,
+      "experience-v1": 12,
+      "development-final-v1": 12,
+      "unlabeled": 4,
+      "policy-final-check-v1": 2
+    }
+  }
+}

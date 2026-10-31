@@ -1,6 +1,6 @@
-## 2026-10-31｜智能内核 V3（开发与真实验收中）
+## 2026-10-31｜智能内核 V3（工程交付，真实质量未过门禁）
 
-从4d210bcd隔离升级，codex/wujian-intelligence-kernel-v3。新TaskFrame、动态来源/主张核对与逐子问呈现已接入实验开关；保留原事务和隐私机制，默认未发布。旧轮次追加9次至146，前137次不变；新轮次独立授权250次/50元。首轮失败及后续复测分开保留，不能以离线回归代替真实任务验收。见 docs/engineering/intelligence-kernel-v3-2026-10-31/ 。
+从4d210bcd隔离升级，codex/wujian-intelligence-kernel-v3。TaskFrame、动态来源/主张核对、必要条件计算与逐子问呈现已接入App实验开关；两项事实实验均默认false，保留原事务和默认业务。最终442项离线、类型、生产构建和桌面/390px真实浏览器通过；真实质量没有通过：历史关键项27/71，留出26/63，低于直接同模型45/71与40/63；同模型语义复核误拒/漏放、经验错误归因及创意超时仍在。新授权轮次247/250次，239返回8失败，估算含未知usage预留7.5945元以内；旧轮次另追加9次至146，前137次不改。仅8题新鲜三臂，历史34+留出30本轮双臂，不能冒称全量三方验收。保留原始失败、匿名样本、官方来源、四条旅程和恢复命令。见 [本轮交付](docs/engineering/intelligence-kernel-v3-2026-10-31/README.md)、[真实结果](docs/engineering/intelligence-kernel-v3-2026-10-31/MODEL_RESULTS.md)、[测试与运行](docs/engineering/intelligence-kernel-v3-2026-10-31/TEST_REPORT.md)。未合并main、未迁移私人库、未操作硬件。
 
 ---
 
