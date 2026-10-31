@@ -1,0 +1,38 @@
+{
+  "method": "确定性反例+官方规格核对，未进行实物试验，不构成完整物理仿真",
+  "checks": [
+    {
+      "claim": "加热室温PP盒会自然形成凝结纹理",
+      "assumptions": {
+        "ambientC": 20,
+        "relativeHumidity": 60,
+        "initialSurfaceC": 20,
+        "heatedSurfaceC": 24
+      },
+      "dewpointC": 11.995453892411351,
+      "belowDewpoint": false,
+      "conclusion": "此普通环境反例中加热后仍高于露点，不能支持草稿承诺；实际湿度/温度未知。"
+    },
+    {
+      "claim": "3个14cm盒叠放达92cm",
+      "computedHeightCm": 42,
+      "claimedHeightCm": 92,
+      "conclusion": "直接模型样本PERSONA-07的算术错误。"
+    },
+    {
+      "claim": "310g手机可用OM6",
+      "officialRangeG": [
+        170,
+        290
+      ],
+      "reportedWeightG": 310,
+      "excessG": 20,
+      "conclusion": "超过官方重量范围，尺寸满足也不能认定兼容。"
+    },
+    {
+      "claim": "旋钮已试用证明倒置铰链可悬空稳定",
+      "basis": "没有质量、重心、支撑点、锁止和载荷证据",
+      "conclusion": "个人操作报告不证明另一机械能力，不能放行为可执行结构。"
+    }
+  ]
+}

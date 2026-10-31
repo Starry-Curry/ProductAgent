@@ -1,0 +1,10 @@
+{
+  "roundId": "real-intelligence-20261031-r1",
+  "stage": "first-eight",
+  "model": "qwen-plus-2025-12-01",
+  "experimentalFactQA": "true",
+  "syntheticOwners": true,
+  "physicalTests": 0,
+  "independentHumanBlindReview": false,
+  "rows": []
+}

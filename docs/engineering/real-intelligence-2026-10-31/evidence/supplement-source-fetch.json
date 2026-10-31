@@ -1,0 +1,20 @@
+[
+  {
+    "productId": "JBL-CLIP5",
+    "model": "CLIP 5",
+    "url": "https://support.jbl.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw699a6c43/pdfs/PA_JBL_Clip%205_QSG_Global_SOP_V7_online.pdf",
+    "ok": true,
+    "characters": 46134,
+    "hash": "de93b7c86ca49617b34d0a10b1719a9ccb17b01583a8df9153fea68670f26cb5",
+    "ms": 4562
+  },
+  {
+    "productId": "DJI-OM6",
+    "model": "Osmo Mobile 6",
+    "url": "https://www.dji.com/global/osmo-mobile-6/faq",
+    "ok": true,
+    "characters": 31,
+    "hash": "54e7b97a93b1e7c1a2e0562008d7f70e3758a846df9d18c6d290c8b8b54ddcaa",
+    "ms": 360
+  }
+]

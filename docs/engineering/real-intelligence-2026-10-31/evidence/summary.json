@@ -1,0 +1,74 @@
+{
+  "roundId": "real-intelligence-20261031-r1",
+  "requests": 137,
+  "reportedUsageRequests": 136,
+  "unknownUsageRequests": 1,
+  "inputTokens": 603996,
+  "outputTokens": 61524,
+  "estimatedCnyKnown": 0.6062447999999998,
+  "reservedCnyUnknown": 0.451952,
+  "models": [
+    "qwen-plus-2025-12-01"
+  ],
+  "returnedModels": [
+    "qwen-plus-2025-12-01"
+  ],
+  "uniqueCases": 34,
+  "physicalTests": 0,
+  "humanBlindReview": "pending",
+  "arms": {
+    "wujian": {
+      "reviewedCases": 34,
+      "factVerdicts": {
+        "correct": 8,
+        "unanswered": 22,
+        "correct_limited": 2,
+        "correct_unknown": 2
+      },
+      "tasks": {
+        "pass": 6,
+        "fail": 16,
+        "partial": 6,
+        "blocked_source": 5,
+        "blocked_scope": 1
+      },
+      "criticalFactCaseCorrectRate": {
+        "numerator": 10,
+        "denominator": 34,
+        "meaning": "案级有限核心事实/未知判断满足率；不是所有主张的正确率，也不是创造力评分"
+      },
+      "questionCoverage": {
+        "covered": 20,
+        "total": 71
+      },
+      "observedWrongInferenceCases": 0
+    },
+    "direct": {
+      "reviewedCases": 34,
+      "factVerdicts": {
+        "unverified_expansion": 10,
+        "wrong_inference": 19,
+        "correct": 2,
+        "scope_overreach": 1,
+        "correct_unknown": 1,
+        "not_returned": 1
+      },
+      "tasks": {
+        "partial": 20,
+        "pass": 2,
+        "fail": 11,
+        "blocked_source": 1
+      },
+      "criticalFactCaseCorrectRate": {
+        "numerator": 3,
+        "denominator": 34,
+        "meaning": "案级有限核心事实/未知判断满足率；不是所有主张的正确率，也不是创造力评分"
+      },
+      "questionCoverage": {
+        "covered": 46,
+        "total": 71
+      },
+      "observedWrongInferenceCases": 19
+    }
+  }
+}

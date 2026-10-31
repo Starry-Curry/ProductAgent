@@ -1,0 +1,678 @@
+{
+  "roundId": "real-intelligence-20261031-r1",
+  "stage": "retarget-v1",
+  "model": "qwen-plus-2025-12-01",
+  "experimentalFactQA": "true",
+  "syntheticOwners": true,
+  "physicalTests": 0,
+  "independentHumanBlindReview": false,
+  "rows": [
+    {
+      "id": "QA-05",
+      "arm": "wujian",
+      "result": {
+        "session": {
+          "id": "af49f2f1-87ba-4bc4-a694-293d0c600573",
+          "owner": "lin",
+          "itemId": "3274c040-5e26-4257-ae4b-6d567254c25e",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "8ae08a2a-77e9-429c-b111-298ceffb107f",
+              "role": "user",
+              "text": "这份帮助指南没写ANC，是不是证明不支持？",
+              "at": "2026-10-31T03:47:00.589Z",
+              "itemId": "3274c040-5e26-4257-ae4b-6d567254c25e",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "9ca1fd89-7de3-495d-985c-873270722b92",
+              "role": "assistant",
+              "text": "主动降噪能力：证据不足，不能认定支持或不支持，也不能补出售后政策。",
+              "reply": {
+                "answer": "主动降噪能力：证据不足，不能认定支持或不支持，也不能补出售后政策。",
+                "outcome": "needs_info",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "memoryIds": [],
+                "evidenceIds": [],
+                "citations": [],
+                "usedItems": [
+                  {
+                    "id": "3274c040-5e26-4257-ae4b-6d567254c25e",
+                    "name": "[合成持有] Sony WH-CH520 无线耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "实验性逐主张核对，仅覆盖经审阅的有限属性。没有真实模型质量认证；不是一般语义证明，也未验证个人实物。"
+              },
+              "at": "2026-10-31T03:47:00.589Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "e0b235c2-4ac2-412a-b44a-e3f26c8a1cbf"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T03:46:59.191Z",
+          "updatedAt": "2026-10-31T03:47:00.591Z",
+          "expiresAt": "2026-11-07T03:46:59.191Z"
+        },
+        "reply": {
+          "answer": "主动降噪能力：证据不足，不能认定支持或不支持，也不能补出售后政策。",
+          "outcome": "needs_info",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "memoryIds": [],
+          "evidenceIds": [],
+          "citations": [],
+          "usedItems": [
+            {
+              "id": "3274c040-5e26-4257-ae4b-6d567254c25e",
+              "name": "[合成持有] Sony WH-CH520 无线耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "实验性逐主张核对，仅覆盖经审阅的有限属性。没有真实模型质量认证；不是一般语义证明，也未验证个人实物。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-31T03:46:59.585Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-31T03:46:59.585Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=967",
+            "at": "2026-10-31T03:47:00.553Z"
+          }
+        ],
+        "tokens": {
+          "input": 3972,
+          "output": 13
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "e158b245-cd39-481e-9bb7-b3075155be43",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 1425,
+      "upstreamCalls": 1,
+      "attempts": [
+        97
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 13,
+          "prompt_tokens": 3972,
+          "total_tokens": 3985
+        }
+      ],
+      "estimatedCny": 0.0032036000000000005,
+      "comparisonDataOrigin": "identical_first_upstream_user_payload"
+    },
+    {
+      "id": "QA-06",
+      "arm": "wujian",
+      "result": {
+        "session": {
+          "id": "6bb08190-0300-4401-a80c-85b6c8d0d166",
+          "owner": "lin",
+          "itemId": "f974035e-0c09-4ac4-a616-eddf8e98e52d",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "72c3f21f-d258-484c-824f-ce3a880f9050",
+              "role": "user",
+              "text": "WH-CH520电池能自行拆修吗？会直接失去保修吗？维修收多少？",
+              "at": "2026-10-31T03:47:01.650Z",
+              "itemId": "f974035e-0c09-4ac4-a616-eddf8e98e52d",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "acb25667-6286-4e3a-a210-17f487fe723a",
+              "role": "assistant",
+              "text": "未覆盖的提问、维修费用：证据不足，不能认定支持或不支持，也不能补出售后政策。",
+              "reply": {
+                "answer": "未覆盖的提问、维修费用：证据不足，不能认定支持或不支持，也不能补出售后政策。",
+                "outcome": "needs_info",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "memoryIds": [],
+                "evidenceIds": [],
+                "citations": [],
+                "usedItems": [
+                  {
+                    "id": "f974035e-0c09-4ac4-a616-eddf8e98e52d",
+                    "name": "[合成持有] Sony WH-CH520 无线耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "实验性逐主张核对，仅覆盖经审阅的有限属性。没有真实模型质量认证；不是一般语义证明，也未验证个人实物。"
+              },
+              "at": "2026-10-31T03:47:01.650Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "b523cb9e-6ca0-4900-86ce-39e7d28332de"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T03:46:59.466Z",
+          "updatedAt": "2026-10-31T03:47:01.651Z",
+          "expiresAt": "2026-11-07T03:46:59.466Z"
+        },
+        "reply": {
+          "answer": "未覆盖的提问、维修费用：证据不足，不能认定支持或不支持，也不能补出售后政策。",
+          "outcome": "needs_info",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "memoryIds": [],
+          "evidenceIds": [],
+          "citations": [],
+          "usedItems": [
+            {
+              "id": "f974035e-0c09-4ac4-a616-eddf8e98e52d",
+              "name": "[合成持有] Sony WH-CH520 无线耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "实验性逐主张核对，仅覆盖经审阅的有限属性。没有真实模型质量认证；不是一般语义证明，也未验证个人实物。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-31T03:46:59.600Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-31T03:46:59.600Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=2007",
+            "at": "2026-10-31T03:47:01.608Z"
+          }
+        ],
+        "tokens": {
+          "input": 5646,
+          "output": 37
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "ff7b936a-119d-4a9c-b80c-aea42fc3b007",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 2209,
+      "upstreamCalls": 1,
+      "attempts": [
+        98
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 37,
+          "prompt_tokens": 5646,
+          "total_tokens": 5683
+        }
+      ],
+      "estimatedCny": 0.0045908,
+      "comparisonDataOrigin": "identical_first_upstream_user_payload"
+    },
+    {
+      "id": "QA-05",
+      "arm": "direct",
+      "result": {
+        "text": "不是。这份帮助指南中未提及 ANC（主动降噪），**并不证明 WH-CH520 不支持 ANC**，而是因为——**该型号本身就不具备 ANC 功能**。\n\n根据索尼官方公开的产品规格和权威资料（如 Sony 官网产品页、规格表及多国版帮助指南），**WH-CH520 是一款不带主动降噪（ANC）功能的入门级无线头戴耳机**。它主打轻便、长续航（最高约 40 小时）和基础蓝牙音频体验，但**硬件上未配备用于 ANC 的麦克风阵列及相应处理芯片**。\n\n这一点也可从您提供的证据中得到间接印证：\n- 所有帮助指南文本（中/英文版）均**未出现 “ANC”、“Noise Canceling”、“Active Noise Cancellation” 或任何相关操作说明（如 ANC 开关、模式切换等）**；\n- 功能描述仅涵盖：蓝牙配对、播放/音量控制、语音提示、DSEE 音质增强（非降噪）、电池管理等；\n- 规格部分明确列出支持的功能（如 DSEE、蓝牙编解码、通话麦克风），但**ANC 从未被列为一项特性**；\n- 同系列中带 ANC 的型号（如 WH-CH720、WH-1000XM 系列）的帮助指南中均有专门章节详述 ANC 设置与使用，而 WH-CH520 全无此类内容。\n\n✅ 结论：  \n指南没写 ANC，是因为 WH-CH520 **确实不支持 ANC** —— 这是产品本身的硬件定位决定的，而非文档遗漏或隐藏功能。若您需要 ANC，建议考虑索尼其他明确标注支持该功能的型号。\n\n如需确认，可查阅索尼官网 WH-CH520 产品页的「Specifications」栏目，或在 Sony | Headphones Connect 应用中查看设备设置界面（WH-CH520 的 App 界面中亦无 ANC 相关选项）。",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 3899,
+          "output": 439
+        }
+      },
+      "elapsedMs": 10185,
+      "upstreamCalls": 1,
+      "attempts": [
+        99
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 439,
+          "prompt_tokens": 3899,
+          "total_tokens": 4338
+        }
+      ],
+      "estimatedCny": 0.0039972
+    },
+    {
+      "id": "QA-06",
+      "arm": "direct",
+      "result": {
+        "text": "根据现有资料，关于 WH-CH520 电池的自行拆修、保修影响及维修费用问题，结论如下：\n\n🔹 **1. 电池能否自行拆修？**  \n**不建议，且实际不可行。**  \n- 官方帮助指南中**未提供任何关于拆解耳机、更换电池或维修内部部件（包括电池）的操作说明**。所有文档仅涵盖外部操作（如充电、配对、按键功能、指示灯识别等）。  \n- WH-CH520 是一体化密封设计的消费级无线耳机，电池为内置可充电锂离子电池，无用户可更换电池仓，也未标注电池型号、规格或拆机指引。  \n- 拆机需专用工具、热风/撬棒等，并极可能损坏卡扣、排线或外壳结构（如USB-C接口、麦克风、天线模块），导致功能失效。  \n✅ **结论：不属于用户可自行维修范畴；官方不支持、不提供拆修指导。**\n\n🔹 **2. 自行拆修会直接失去保修吗？**  \n**是的，几乎必然导致保修失效。**  \n- 虽然资料中未明文引用索尼保修条款原文，但行业通用规则及索尼全球服务政策明确：**任何非授权拆解、改装或非官方维修行为，均视为“人为损坏”或“违反使用条件”，自动丧失剩余保修权益。**  \n- 帮助指南多处强调“请勿让设备受潮”“请使用原装配件”等规范性提示（如：“If the headset is charged while it is wet… this can result in burnout or malfunction”），侧面印证对非规范操作的免责立场。  \n✅ **结论：自行拆修即构成保修终止条件，售后将拒绝受理保修服务。**\n\n🔹 **3. 维修收费多少？**  \n**官方未公开具体费用，且维修可行性取决于故障性质与地区政策。**  \n- 所有提供的证据材料（含中英文帮助指南全文）**均未提及维修价格、电池更换报价、或授权服务中心收费标准。**  \n- 索尼通常对 WH-CH520 这类入门级产品采用“以换代修”策略：若在保修期内且属非人为故障，可能免费更换整机；若过保或判定为人为损坏，则可能提供付费维修（含电池更换），但费用需由当地授权服务中心检测后报价——常见范围约 ¥200–¥400 元（仅供参考，非官方数据，且因地区/汇率/备件成本而异）。  \n- 需注意：WH-CH520 电池非独立模块化设计，更换电池往往需拆焊+重装，维修成本可能接近或超过耳机当前市价（约 ¥299–¥399），经济性较低。  \n\n✅ **结论：无统一收费标准；须联系索尼官方客服或授权售后点检测后报价；过保维修未必划算，建议优先考虑整机更换。**\n\n📌 **建议操作路径：**  \n① 若电池续航明显下降（如充满仅用1–2小时），先尝试**彻底初始化（恢复出厂设置）** 并观察是否改善（初始化会重置电源管理逻辑，但不修复老化电池）；  \n② 若确认为电池老化，**勿自行拆机**，直接访问 [Sony 官方支持页面](https://www.sony.net/elesupport/) 或拨打客服热线，查询就近授权维修点；  \n③ 提前备好购机凭证（发票/电子订单），以便判断是否仍在保修期（通常为1年）。\n\n如需，我可为您整理初始化步骤或提供联系索尼售后的官方渠道指引。",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 5573,
+          "output": 805
+        }
+      },
+      "elapsedMs": 21419,
+      "upstreamCalls": 1,
+      "attempts": [
+        100
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 805,
+          "prompt_tokens": 5573,
+          "total_tokens": 6378
+        }
+      ],
+      "estimatedCny": 0.006068400000000001
+    },
+    {
+      "id": "QA-11",
+      "arm": "wujian",
+      "result": {
+        "session": {
+          "id": "22468e3d-f7fd-41b7-a224-7672312d6f4a",
+          "owner": "lin",
+          "itemId": "0e0b0c95-f038-4594-b57f-5e4278519219",
+          "identity": "[\"lin\",\"[\\\"M185\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "2aa71fe7-a6df-4fdb-af44-d9939acf7c93",
+              "role": "user",
+              "text": "M185电池是什么规格，需要几节？",
+              "at": "2026-10-31T03:47:25.161Z",
+              "itemId": "0e0b0c95-f038-4594-b57f-5e4278519219",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "4b90781c-674f-4e64-8731-b7ba712d41c6",
+              "role": "assistant",
+              "text": "规格表：一节可更换AA碱性电池。实际电池状态仍需用户确认。\n未覆盖的提问：证据不足，不能认定支持或不支持，也不能补出售后政策。",
+              "reply": {
+                "answer": "规格表：一节可更换AA碱性电池。实际电池状态仍需用户确认。\n未覆盖的提问：证据不足，不能认定支持或不支持，也不能补出售后政策。",
+                "outcome": "needs_info",
+                "source": "model-with-evidence",
+                "model": "qwen-plus-2025-12-01",
+                "steps": [],
+                "questions": [],
+                "memoryIds": [],
+                "evidenceIds": [
+                  "90dd1f6a40d76d5d1fda2b39"
+                ],
+                "citations": [
+                  {
+                    "id": "90dd1f6a40d76d5d1fda2b39",
+                    "title": "M185 官方资料",
+                    "url": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+                    "kind": "official"
+                  }
+                ],
+                "usedItems": [
+                  {
+                    "id": "0e0b0c95-f038-4594-b57f-5e4278519219",
+                    "name": "[合成持有] Logitech M185 无线鼠标",
+                    "model": "M185"
+                  }
+                ],
+                "caveat": "实验性逐主张核对，仅覆盖经审阅的有限属性。没有真实模型质量认证；不是一般语义证明，也未验证个人实物。"
+              },
+              "at": "2026-10-31T03:47:25.161Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "2225339e-04e2-492a-a896-83ce6eb5f0ab"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T03:47:23.389Z",
+          "updatedAt": "2026-10-31T03:47:25.164Z",
+          "expiresAt": "2026-11-07T03:47:23.389Z"
+        },
+        "reply": {
+          "answer": "规格表：一节可更换AA碱性电池。实际电池状态仍需用户确认。\n未覆盖的提问：证据不足，不能认定支持或不支持，也不能补出售后政策。",
+          "outcome": "needs_info",
+          "source": "model-with-evidence",
+          "model": "qwen-plus-2025-12-01",
+          "steps": [],
+          "questions": [],
+          "memoryIds": [],
+          "evidenceIds": [
+            "90dd1f6a40d76d5d1fda2b39"
+          ],
+          "citations": [
+            {
+              "id": "90dd1f6a40d76d5d1fda2b39",
+              "title": "M185 官方资料",
+              "url": "https://support.logi.com/hc/en-my/articles/360023241934-M185-Technical-Specifications",
+              "kind": "official"
+            }
+          ],
+          "usedItems": [
+            {
+              "id": "0e0b0c95-f038-4594-b57f-5e4278519219",
+              "name": "[合成持有] Logitech M185 无线鼠标",
+              "model": "M185"
+            }
+          ],
+          "caveat": "实验性逐主张核对，仅覆盖经审阅的有限属性。没有真实模型质量认证；不是一般语义证明，也未验证个人实物。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-31T03:47:23.747Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-31T03:47:23.747Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=1378",
+            "at": "2026-10-31T03:47:25.127Z"
+          }
+        ],
+        "tokens": {
+          "input": 1373,
+          "output": 24
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "4aa57fac-391f-4e8e-a1d4-1578ba7739dd",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 1812,
+      "upstreamCalls": 1,
+      "attempts": [
+        101
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 24,
+          "prompt_tokens": 1373,
+          "total_tokens": 1397
+        }
+      ],
+      "estimatedCny": 0.0011464000000000001,
+      "comparisonDataOrigin": "identical_first_upstream_user_payload"
+    },
+    {
+      "id": "QA-11",
+      "arm": "direct",
+      "result": {
+        "text": "M185 鼠标使用 **1 节 AA 碱性电池**（1xAA alkaline），电池为可更换式（removable/replacement）。  \n根据官方技术规格（Logitech 官方支持页面），**仅需 1 节电池**，无需多节。\n\n补充说明：  \n- 电池寿命最长可达约 12 个月（视使用频率而定）；  \n- 包装内已预装该电池（“Battery(s)” 列于 Package Contents 中）；  \n- 鼠标底部配有物理电源开关（On/Off switch），可手动关闭以节省电量。\n\n⚠️ 注意：资料中未提及可使用充电电池（如 Ni-MH）或锂电池，建议优先使用碱性 AA 电池以确保兼容性与续航表现。若用户自行尝试可充电电池，请注意电压匹配（标准 AA 碱性电池标称电压为 1.5V，镍氢充电电池为 1.2V），可能影响续航指示或长期使用稳定性。",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 1300,
+          "output": 225
+        }
+      },
+      "elapsedMs": 5451,
+      "upstreamCalls": 1,
+      "attempts": [
+        103
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 225,
+          "prompt_tokens": 1300,
+          "total_tokens": 1525
+        }
+      ],
+      "estimatedCny": 0.00149
+    },
+    {
+      "id": "INIT-01",
+      "arm": "wujian",
+      "result": {
+        "session": {
+          "id": "adacedb1-afc8-4837-b1ae-44454851d172",
+          "owner": "lin",
+          "itemId": "9fea634c-1b5d-4ef4-951d-6abb6facfb53",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "faec8d7a-4afd-40d0-8901-04b65842d0a3",
+              "role": "user",
+              "text": "WH-CH520如何操作恢复出厂初始化，按什么键、多久，配对信息会怎样？",
+              "at": "2026-10-31T03:47:33.374Z",
+              "itemId": "9fea634c-1b5d-4ef4-951d-6abb6facfb53",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "b99268f3-2a07-4b47-a12a-678b8542f67c",
+              "role": "assistant",
+              "text": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+                "steps": [
+                  {
+                    "id": "docstep:5d286afe62be538821d82c46:0:phase=prepare:关机。",
+                    "text": "检查与准备：关机。",
+                    "phase": "prepare"
+                  },
+                  {
+                    "id": "docstep:5d286afe62be538821d82c46:0:phase=prepare:拔掉USBType-C充电线。",
+                    "text": "检查与准备：拔掉USB Type-C充电线。",
+                    "phase": "prepare"
+                  },
+                  {
+                    "id": "docstep:5d286afe62be538821d82c46:0:phase=operate:按住（电源）按钮和–（音量–）按钮约10秒或更长",
+                    "text": "处理步骤：按住（电源）按钮和–（音量–）按钮约10秒或更长时间。",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:5d286afe62be538821d82c46:0:phase=finish:初始化完成后，指示灯（蓝色）闪烁4次（————）",
+                    "text": "完成与检查：初始化完成后，指示灯（蓝色）闪烁4次（— — — —）。",
+                    "phase": "finish"
+                  },
+                  {
+                    "id": "docstep:5d286afe62be538821d82c46:0:phase=finish:此操作会重置音量等设置为出厂值，并删除所有配对信",
+                    "text": "完成与检查：此操作会重置音量等设置为出厂值，并删除所有配对信息。",
+                    "phase": "finish"
+                  }
+                ],
+                "questions": [],
+                "source": "model-with-evidence",
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46:0",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "section": "原文位置 0–774；WH-CH520 / unspecified",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0"
+                ],
+                "memoryIds": [],
+                "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。"
+              },
+              "at": "2026-10-31T03:47:33.374Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "ccd8b46f-3a65-4f1c-b367-d5fdfb03a5ba",
+            "goal": "WH-CH520如何操作恢复出厂初始化，按什么键、多久，配对信息会怎样？"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T03:47:23.662Z",
+          "updatedAt": "2026-10-31T03:47:33.376Z",
+          "expiresAt": "2026-11-07T03:47:23.662Z"
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+          "steps": [
+            {
+              "id": "docstep:5d286afe62be538821d82c46:0:phase=prepare:关机。",
+              "text": "检查与准备：关机。",
+              "phase": "prepare"
+            },
+            {
+              "id": "docstep:5d286afe62be538821d82c46:0:phase=prepare:拔掉USBType-C充电线。",
+              "text": "检查与准备：拔掉USB Type-C充电线。",
+              "phase": "prepare"
+            },
+            {
+              "id": "docstep:5d286afe62be538821d82c46:0:phase=operate:按住（电源）按钮和–（音量–）按钮约10秒或更长",
+              "text": "处理步骤：按住（电源）按钮和–（音量–）按钮约10秒或更长时间。",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:5d286afe62be538821d82c46:0:phase=finish:初始化完成后，指示灯（蓝色）闪烁4次（————）",
+              "text": "完成与检查：初始化完成后，指示灯（蓝色）闪烁4次（— — — —）。",
+              "phase": "finish"
+            },
+            {
+              "id": "docstep:5d286afe62be538821d82c46:0:phase=finish:此操作会重置音量等设置为出厂值，并删除所有配对信",
+              "text": "完成与检查：此操作会重置音量等设置为出厂值，并删除所有配对信息。",
+              "phase": "finish"
+            }
+          ],
+          "questions": [],
+          "source": "model-with-evidence",
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46:0",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "section": "原文位置 0–774；WH-CH520 / unspecified",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0"
+          ],
+          "memoryIds": [],
+          "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-31T03:47:23.761Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-31T03:47:23.761Z"
+          },
+          {
+            "stage": "grounded_answer",
+            "detail": "one-round; modelMs=9563",
+            "at": "2026-10-31T03:47:33.326Z"
+          }
+        ],
+        "tokens": {
+          "input": 6362,
+          "output": 387
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "56c2dd42-c04b-4052-86ef-94b7084518af",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 9735,
+      "upstreamCalls": 1,
+      "attempts": [
+        102
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 387,
+          "prompt_tokens": 6362,
+          "total_tokens": 6749
+        }
+      ],
+      "estimatedCny": 0.0058636,
+      "comparisonDataOrigin": "identical_first_upstream_user_payload"
+    },
+    {
+      "id": "INIT-01",
+      "arm": "direct",
+      "result": {
+        "text": "根据索尼官方《帮助指南》（WH-CH520 型号），恢复出厂初始化（即“初始化耳机以恢复出厂设置”）的操作步骤如下：\n\n✅ **操作方法（按键组合与时长）：**  \n- 确保耳机**已关机**；  \n- **拔掉 USB Type-C 充电线**（如有连接）；  \n- **同时按住电源按钮（  ）和音量减小按钮（–）约 10 秒或更长时间**，直至指示灯（蓝色）**连续闪烁 4 次**（— — — —），表示初始化完成。\n\n⚠️ 注意：  \n- 此操作**不是长按单个按钮**，而是**电源键 + 音量–键 同时按住**；  \n- 必须在**关机状态下**执行，开机状态下无效；  \n- 指示灯闪烁 4 次是关键完成信号，中途松手可能导致失败。\n\n🗑️ **配对信息会怎样？**  \n- **所有蓝牙配对信息将被彻底删除**（即已记忆的最多 8 台设备全部清除）；  \n- 其他个性化设置（如音量默认值等）也会恢复为出厂状态；  \n- 初始化后，耳机相当于“全新首次开机”：下次打开时将**自动进入配对模式**，可重新与设备配对。\n\n🔁 **后续建议：**  \n- 初始化完成后，需在您要连接的手机/电脑等设备上：  \n  ✅ 先在该设备的蓝牙设置中**手动删除“WH-CH520”的旧配对记录**（避免系统尝试连接已失效的旧信息）；  \n  ✅ 再按常规流程重新配对（设备搜索 → 选择 WH-CH520 → 输入 PIN 码“0000”，如提示）。\n\n📌 补充说明：  \n- 此操作**不涉及耳机固件重装或APP干预**，纯硬件按键触发；  \n- 官方未提及需配合“Sony | Headphones Connect”App 执行初始化，全程可离线完成；  \n- 若初始化后仍异常，指南建议联系索尼授权售后。\n\n如需确认当前是否已成功初始化，可观察：开机后是否自动进入配对模式（蓝灯双闪 + 语音提示“Pairing”），即为生效标志。",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 5780,
+          "output": 519
+        }
+      },
+      "elapsedMs": 12208,
+      "upstreamCalls": 1,
+      "attempts": [
+        104
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 519,
+          "prompt_tokens": 5780,
+          "total_tokens": 6299
+        }
+      ],
+      "estimatedCny": 0.005662
+    }
+  ]
+}

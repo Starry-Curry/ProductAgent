@@ -1,3 +1,5 @@
+> 本轮最新：[真实智能实测、经验闭环与门禁修复](docs/engineering/real-intelligence-2026-10-31/README.md)。137次真实请求，保留失败样本；整体质量门禁未通过。离线独立预览3226。
+
 > 最新实验分支：[长期经验与跨模块闭环交付](docs/engineering/experience-lifecycle-2026-10-31/README.md)。经验缺陷已复现修复，34项真实模型验收仍阻塞；本机预览3224，旧3222保留。
 
 <div align="center">

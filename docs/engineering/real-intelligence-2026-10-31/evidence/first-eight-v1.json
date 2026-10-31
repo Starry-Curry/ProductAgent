@@ -1,0 +1,283 @@
+{
+  "roundId": "real-intelligence-20261031-r1",
+  "stage": "first-eight-v1",
+  "model": "qwen-plus-2025-12-01",
+  "experimentalFactQA": "true",
+  "syntheticOwners": true,
+  "physicalTests": 0,
+  "independentHumanBlindReview": false,
+  "rows": [
+    {
+      "id": "QA-02",
+      "arm": "wujian",
+      "error": "[\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"legacy\",\n      \"candidates\",\n      \"off\"\n    ],\n    \"path\": [\n      \"memoryPolicy\"\n    ],\n    \"message\": \"Invalid option: expected one of \\\"legacy\\\"|\\\"candidates\\\"|\\\"off\\\"\"\n  }\n]",
+      "elapsedMs": 3,
+      "upstreamCalls": 0,
+      "attempts": [],
+      "comparisonDataOrigin": "same_context_builder_no_app_upstream"
+    },
+    {
+      "id": "QA-02",
+      "arm": "direct",
+      "result": {
+        "text": "要将已连接过旧手机的 **Sony WH-CH520 无线耳机** 配对到新设备（如新手机），请按以下步骤操作：\n\n### ✅ 正确配对新设备的方法（手动进入配对模式）：\n由于耳机**已存有旧设备的配对信息**（即不是首次配对），它**不会自动进入配对模式**，必须**手动触发**：\n\n1. **确保耳机已开机**（指示灯亮起，蓝色常亮或呼吸闪烁表示已开机）。\n2. **长按 `Bluetooth` 按钮约 5 秒或更久**（注意：不是电源键，是专门标有 Bluetooth 图标 / 符号的按钮，位于右耳罩上，与音量/播放键集成；根据说明书，该功能由右单元的特定按键组合实现，实际为「按住 Bluetooth 按钮」——在 WH-CH520 上，即**同时按住 `音量+` 和 `音量−` 按钮约 5 秒**，这是官方确认的进入配对模式方式）  \n   🔹 你会看到**蓝色指示灯连续双闪 2 次**，并听到语音提示：**“配对中”**。\n\n3. **在新手机上操作**：\n   - 打开「设置」→「蓝牙」，确保蓝牙已开启；\n   - 点击「搜索设备」或「扫描附近设备」；\n   - 在设备列表中找到 **`WH-CH520`**（可能显示为 `WH-CH520` 或类似名称）；\n   - 点击它进行配对；\n   - 如提示输入配对码（PIN / 密钥），请输入：**`0000`**（四个零）。\n\n4. 配对成功后，会听到语音提示“已连接”，且手机端显示已连接状态。\n\n---\n\n### ⚠️ 注意事项：\n- 耳机最多可保存 **8 个设备的配对记录**。若已满 8 个，新增配对会自动覆盖**最早配对的那个设备**（旧手机记录可能被删除）。\n- 若你希望**彻底清除旧手机的配对信息**（例如担心隐私或避免自动重连干扰），可执行「初始化耳机」（恢复出厂设置），但此操作会**删除所有已配对设备记录**，需重新配对所有设备。方法见说明书「初始化耳机以恢复出厂设置」章节（通常为关机状态下长按电源键约 10 秒，指示灯红蓝交替闪烁后松开）。\n\n---\n\n如尝试后未发现设备或无法配对，建议：\n- 检查耳机电量是否充足；\n- 将新手机靠近耳机（1 米内）；\n- 关闭旧手机的蓝牙，避免干扰；\n- 确保新手机系统蓝牙功能正常（可尝试与其他蓝牙设备配对测试）。\n\n需要我帮你整理初始化步骤或连接后如何切换设备，也可以告诉我 😊",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 1803,
+          "output": 664
+        }
+      },
+      "elapsedMs": 14977,
+      "upstreamCalls": 1,
+      "attempts": [
+        1
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 664,
+          "prompt_tokens": 1803,
+          "total_tokens": 2467
+        }
+      ],
+      "estimatedCny": 0.0027704
+    },
+    {
+      "id": "QA-05",
+      "arm": "wujian",
+      "error": "[\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"legacy\",\n      \"candidates\",\n      \"off\"\n    ],\n    \"path\": [\n      \"memoryPolicy\"\n    ],\n    \"message\": \"Invalid option: expected one of \\\"legacy\\\"|\\\"candidates\\\"|\\\"off\\\"\"\n  }\n]",
+      "elapsedMs": 1,
+      "upstreamCalls": 0,
+      "attempts": [],
+      "comparisonDataOrigin": "same_context_builder_no_app_upstream"
+    },
+    {
+      "id": "QA-05",
+      "arm": "direct",
+      "result": {
+        "text": "不是。这份帮助指南中没有提到 ANC（主动降噪），**并不能直接证明 WH-CH520 不支持 ANC**，但结合**官方公开规格和产品定位**，可以明确得出结论：**Sony WH-CH520 确实不支持主动降噪（ANC）功能**。\n\n理由如下：\n\n1. **指南内容未提及 ANC 是符合事实的**：  \n   所有提供的帮助指南文本（中/英文版）均未出现 “ANC”、“Active Noise Cancellation”、“降噪”、“噪声抑制” 等相关术语，也未描述任何与开启/关闭降噪、降噪模式切换或相关按钮操作有关的内容。这与索尼其他支持 ANC 的型号（如 WH-1000XM 系列、WH-CH720N）的帮助文档形成鲜明对比——后者均有专门章节说明 ANC 功能设置与使用。\n\n2. **官方规格与产品定位一致佐证**：  \n   WH-CH520 是索尼入门级无线头戴耳机，主打轻便、长续航（约40小时）和性价比。其型号后缀 **“CH”** 系列（如 CH510、CH520、CH720N）中，**仅 CH720N 明确带 “N”（代表 Noise cancellation）并支持 ANC**；而 CH520 在索尼全球官网、电商页面及所有公开技术规格表中，**均未列出 ANC 作为功能项**。其核心音频技术仅提及 DSEE 数字声音增强引擎（用于音质提升），而非降噪。\n\n3. **硬件设计无 ANC 特征**：  \n   支持 ANC 的耳机通常需配备额外的麦克风（尤其是耳罩外侧的反馈麦克风）以及专用降噪处理器。WH-CH520 的物理结构（单麦克风设计、无外置麦克风开孔、无对应按键或 App 中的 ANC 控制选项）也与不支持 ANC 的设计一致。\n\n✅ 结论：  \n虽然“指南没写 ANC”本身不能 *逻辑上绝对证明* 不支持（例如文档遗漏），但在本例中，**该缺失与索尼官方规格、产品命名规则、硬件配置及全渠道公开信息完全一致**，因此可确定：**Sony WH-CH520 不支持主动降噪（ANC）功能**。它提供的是被动隔音（靠耳垫物理隔绝），而非电子主动降噪。\n\n如需 ANC 功能，建议考虑 WH-CH720N 或更高阶的 WH-1000XM5 等型号。",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 3939,
+          "output": 567
+        }
+      },
+      "elapsedMs": 12937,
+      "upstreamCalls": 1,
+      "attempts": [
+        2
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 567,
+          "prompt_tokens": 3939,
+          "total_tokens": 4506
+        }
+      ],
+      "estimatedCny": 0.004285200000000001
+    },
+    {
+      "id": "QA-06",
+      "arm": "wujian",
+      "error": "[\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"legacy\",\n      \"candidates\",\n      \"off\"\n    ],\n    \"path\": [\n      \"memoryPolicy\"\n    ],\n    \"message\": \"Invalid option: expected one of \\\"legacy\\\"|\\\"candidates\\\"|\\\"off\\\"\"\n  }\n]",
+      "elapsedMs": 0,
+      "upstreamCalls": 0,
+      "attempts": [],
+      "comparisonDataOrigin": "same_context_builder_no_app_upstream"
+    },
+    {
+      "id": "QA-06",
+      "arm": "direct",
+      "result": {
+        "text": "根据您提供的资料和索尼官方帮助指南内容，关于 **WH-CH520 电池能否自行拆修、是否影响保修、维修费用** 的问题，回答如下：\n\n---\n\n### ❌ 1. WH-CH520 电池**不能自行拆修**（不建议且技术上极困难）  \n- 官方资料中**未提供任何关于电池更换、拆机步骤、可替换电池型号或维修手册的信息**。  \n- WH-CH520 是一款高度集成的消费级无线耳机，采用**内置不可拆卸锂电池**（典型设计为焊接在主板上的软包锂电），无用户可接触的电池仓或标准更换接口。  \n- 其结构（如头带滑块、触点布局、USB-C 充电口位置等）表明机身需专用工具拆解，且内部空间紧凑、胶粘/卡扣固定多，**非专业人员强行拆机会极易损坏外壳、线缆、PCB 或电池本身，导致短路、鼓包甚至安全隐患**。\n\n> ✅ 提示：该机型仅支持通过 USB-C 接口充电，**不支持电池热插拔或用户更换**——这与索尼对入门级产品“免维护、长周期使用”的设计定位一致。\n\n---\n\n### ⚠️ 2. **自行拆机 = 自动失去官方保修**  \n- 虽然资料中未明文写出“拆机即失保”条款，但索尼全球保修政策（含中国大陆）明确规定：  \n  > **“因用户自行拆解、改装、修理或非授权第三方维修造成的损坏，不在保修范围内。”**  \n- 帮助指南多处强调“请勿让液体进入设备”“防止跌落/挤压”等使用注意事项，侧面印证其**非用户可维护设计**；一旦拆机痕迹（如螺丝划痕、胶层破坏、排线撕裂）被售后检测到，即视为人为损坏，**保修资格立即终止**。\n\n---\n\n### 💰 3. 维修费用：**官方未公开报价，需送修后评估**  \n- 所有提供的证据材料（帮助指南、PDF 文档、网页链接）**均未提及维修价格、电池更换费用或收费标准**。  \n- 索尼官方售后通常按故障类型收费：  \n  - 若确认为电池老化/失效（如充电无效、续航骤降），且整机在保修期内 → **免费更换（需验证购机凭证+无拆修）**；  \n  - 若已过保或存在拆修 → **需承担检测费 + 零件费 + 人工费**，其中电池组件成本通常占维修总价 30–50%，预估人民币 ¥200–¥400 区间（仅供参考，以当地授权服务中心实报为准）。  \n- ⚠️ 注意：WH-CH520 定位入门款，部分服务中心可能因配件成本/工时比过高，建议直接换新（尤其购机超1年）。\n\n---\n\n### ✅ 建议操作路径：\n| 情况 | 推荐做法 |\n|------|----------|\n| **仍在保修期（通常1年）且未拆机** | 立即联系 [索尼中国售后服务热线 400-810-9000](https://www.sony.com.cn/support) 或通过「Sony Support」App 预约检测，说明“无法充电/续航异常”，争取免费维修。 |\n| **已过保或曾自行拆机** | 不建议尝试网购电池 DIY（无匹配型号、无焊接能力、风险极高）；可咨询授权中心是否提供付费更换服务，或考虑升级至 WH-CH720/WH-1000XM5 等支持更长生命周期的型号。 |\n| **仅需延长使用时间** | 优化充电习惯（避免长期满电存放、减少边充边用）、关闭语音提示/蓝牙闲置自动断连等省电设置，可缓解老化影响。 |\n\n---\n\n如需进一步协助（例如：查找最近的索尼授权维修点、生成保修查询话术、判断是否符合换新条件），可随时告知，我会为您继续支持。",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 5609,
+          "output": 915
+        }
+      },
+      "elapsedMs": 20772,
+      "upstreamCalls": 1,
+      "attempts": [
+        3
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 915,
+          "prompt_tokens": 5609,
+          "total_tokens": 6524
+        }
+      ],
+      "estimatedCny": 0.0063172
+    },
+    {
+      "id": "QA-07",
+      "arm": "wujian",
+      "error": "[\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"legacy\",\n      \"candidates\",\n      \"off\"\n    ],\n    \"path\": [\n      \"memoryPolicy\"\n    ],\n    \"message\": \"Invalid option: expected one of \\\"legacy\\\"|\\\"candidates\\\"|\\\"off\\\"\"\n  }\n]",
+      "elapsedMs": 0,
+      "upstreamCalls": 0,
+      "attempts": [],
+      "comparisonDataOrigin": "same_context_builder_no_app_upstream"
+    },
+    {
+      "id": "QA-07",
+      "arm": "direct",
+      "result": {
+        "text": "根据 Sony WH-CH520 官方帮助指南（来源：Sony 官网支持文档），这副耳机的操作方式如下：\n\n✅ **1. 开机**  \n按住右侧单元上的 **（电源）按钮**（即标有 ⏻ 或兼作 Bluetooth 按钮的按键）约 **2 秒或更长时间**，直到 **蓝色指示灯开始闪烁**，即表示已开机。  \n> ⚠️ 注：首次开机会自动进入配对模式；若已配对过设备，则开机后会尝试连接最近使用的设备。\n\n⏸️ **2. 暂停/播放**  \n使用右侧单元的 **（播放/暂停）按钮**（即中间圆形按钮）：  \n- **播放中** → 短按一次 → **暂停**  \n- **暂停中** → 短按一次 → **继续播放**\n\n🔊 **3. 调整音量**  \n使用右侧单元的两个侧边按钮：  \n- **（音量–）／上一首按钮**（左侧按钮）：**短按一次 → 音量减小**  \n- **（音量+）／下一首按钮**（右侧按钮）：**短按一次 → 音量增大**  \n> ✅ 提示：长按可实现“上一首”或“下一首”，但音量调节只需单击。\n\n🔄 **4. 再次配对（手动进入配对模式）**  \n适用于已配对过其他设备、需连接新设备时：  \n- 确保耳机 **已开机**（如关机，请先按电源键开机）；  \n- **长按右侧的（Bluetooth）按钮约 5 秒或以上**（该按钮与电源键为同一物理按键）；  \n- 直到 **蓝色指示灯连续双闪 2 次**，并听到语音提示 **“配对中”**；  \n- 此时在手机/电脑等设备的蓝牙设置中搜索设备，选择 **“WH-CH520”** 并完成配对（如提示输入 PIN 码，输入 **0000**）。  \n> ⚠️ 注意：若 5 分钟内未完成配对，耳机将自动退出配对模式并可能关机。\n\n📌 补充说明：  \n- 耳机最多可保存 **8 个设备的配对信息**，第 9 次配对会自动覆盖最早的一个；  \n- 如需清除所有配对记录（例如转赠、故障排查），需执行「初始化」操作（详见官方指南中“初始化耳机以恢复出厂设置”章节，非本问所涉，此处不展开）。\n\n如有其他操作需求（如充电、App 设置、多设备切换等），欢迎继续提问 😊",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 2200,
+          "output": 603
+        }
+      },
+      "elapsedMs": 13603,
+      "upstreamCalls": 1,
+      "attempts": [
+        4
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 603,
+          "prompt_tokens": 2200,
+          "total_tokens": 2803
+        }
+      ],
+      "estimatedCny": 0.002966
+    },
+    {
+      "id": "QA-11",
+      "arm": "wujian",
+      "error": "[\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"legacy\",\n      \"candidates\",\n      \"off\"\n    ],\n    \"path\": [\n      \"memoryPolicy\"\n    ],\n    \"message\": \"Invalid option: expected one of \\\"legacy\\\"|\\\"candidates\\\"|\\\"off\\\"\"\n  }\n]",
+      "elapsedMs": 1,
+      "upstreamCalls": 0,
+      "attempts": [],
+      "comparisonDataOrigin": "same_context_builder_no_app_upstream"
+    },
+    {
+      "id": "QA-11",
+      "arm": "direct",
+      "result": {
+        "text": "Logitech M185 无线鼠标使用 **1 节 AA 碱性电池**（即 1 号电池，标准五号电池的尺寸为 AA，非 AAA 或其他型号）。\n\n根据官方技术规格文档（Logitech 支持页面）：\n- **Battery Type and Size：1xAA Alkaline, Removable/Replaceable**  \n- 即：1 节可更换的 AA 碱性电池  \n- 电池寿命长达约 12 个月（视使用情况而定）\n\n✅ 补充说明：  \n- 包装内已预装 1 节 AA 电池（“What is in the box: Mouse, Nano Receiver, Battery(s), User documentation”）；  \n- 鼠标底部有物理电源开关，可关闭以节省电量；  \n- 不支持充电电池（原厂未声明兼容镍氢/锂电等可充 AA，但部分用户实际使用低自放电镍氢 AA 亦可工作，属非官方适配）。\n\n因此，**M185 电池规格是 1 节 AA 碱性电池，仅需 1 节**。",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 1348,
+          "output": 256
+        }
+      },
+      "elapsedMs": 6108,
+      "upstreamCalls": 1,
+      "attempts": [
+        5
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 256,
+          "prompt_tokens": 1348,
+          "total_tokens": 1604
+        }
+      ],
+      "estimatedCny": 0.0015904
+    },
+    {
+      "id": "QA-18",
+      "arm": "wujian",
+      "error": "[\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"legacy\",\n      \"candidates\",\n      \"off\"\n    ],\n    \"path\": [\n      \"memoryPolicy\"\n    ],\n    \"message\": \"Invalid option: expected one of \\\"legacy\\\"|\\\"candidates\\\"|\\\"off\\\"\"\n  }\n]",
+      "elapsedMs": 1,
+      "upstreamCalls": 0,
+      "attempts": [],
+      "comparisonDataOrigin": "same_context_builder_no_app_upstream"
+    },
+    {
+      "id": "QA-18",
+      "arm": "direct",
+      "result": {
+        "text": "不能。  \n根据宜家日本官网对 **SAMLA 11L（型号 494.408.37）** 的官方说明，该收纳盒明确标注：  \n> **“Not approved for food contact.”**（*未获批准用于食品接触*）\n\n这意味着：\n- 它的材质（聚丙烯塑料，polypropylene）虽安全、耐用、符合日常使用安全要求，但**未通过食品级安全认证**；\n- 不适用于直接盛装、长期储存或反复取用散装食品（如面粉、糖、大米、坚果等）；\n- 面粉属于直接入口的干燥食品，易吸潮、易受污染，且可能残留细粉于盒体缝隙中，若非食品级材质，存在潜在迁移风险（如添加剂析出）或卫生隐患。\n\n✅ 可替代方案建议：  \n- 选择明确标注 **“食品级”、“FDA/GB 4806.7 认证”、“可接触食品”** 的密封收纳罐（如 IKEA 的 **VARIERA** 或 **365+** 系列部分食品专用容器）；  \n- 若坚持使用 SAMLA，仅限**短期、非直接食用用途**（例如临时分装待烘焙用面粉后立即转移至食品级容器），且需确保彻底清洁、避免长期存放。\n\n结论：**SAMLA 11L 不适合直接、长期、安全地装散装面粉。**",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 3014,
+          "output": 316
+        }
+      },
+      "elapsedMs": 7349,
+      "upstreamCalls": 1,
+      "attempts": [
+        6
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 316,
+          "prompt_tokens": 3014,
+          "total_tokens": 3330
+        }
+      ],
+      "estimatedCny": 0.0030432000000000002
+    },
+    {
+      "id": "CONSTRAINT-01",
+      "arm": "wujian",
+      "error": "[\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"legacy\",\n      \"candidates\",\n      \"off\"\n    ],\n    \"path\": [\n      \"memoryPolicy\"\n    ],\n    \"message\": \"Invalid option: expected one of \\\"legacy\\\"|\\\"candidates\\\"|\\\"off\\\"\"\n  }\n]",
+      "elapsedMs": 1,
+      "upstreamCalls": 0,
+      "attempts": [],
+      "comparisonDataOrigin": "same_context_builder_no_app_upstream"
+    },
+    {
+      "id": "CONSTRAINT-01",
+      "arm": "direct",
+      "result": {
+        "text": "不可以直接将 Canon EOS R50 夹在 DJI OM 6 手机云台上拍摄视频。\n\n原因如下：\n\n✅ **物理尺寸与重量适配性差**：  \nEOS R50（含电池、存储卡）机身重量约 **375 克**，而 DJI OM 6 的官方设计承重范围为 **290 克以内**（适用于主流智能手机 + 小型配件）。虽然 375g 略超限，但更关键的是——  \n❌ **OM 6 的夹持结构是专为手机（厚度 6–10mm、宽度 62–85mm、无突出部件）优化的**，其夹臂行程短、夹口无调节余量，无法稳固夹持 EOS R50 这类微单相机：  \n- R50 宽度约 **116 mm**（远超 OM 6 最大夹持宽度）；  \n- 厚度约 **87 mm**（含手柄），且顶部有热靴、肩部有突起拨盘，夹臂根本无法闭合；  \n- 底部为标准 1/4\"-20 螺纹孔，但 OM 6 **没有底部快装板或三脚架螺纹接口**，无法通过转接方式安装。\n\n✅ **功能层面不支持**：  \n- OM 6 的智能跟随、手势控制、动态变焦等功能，均依赖手机摄像头的实时画面和算法识别；它**不具备 HDMI 输入或相机控制协议（如 USB-C 视频输出或 PTZ 控制）**，无法接入 R50 的视频信号或遥控其参数。  \n- R50 虽支持 Wi-Fi/蓝牙连接 Canon Camera Connect 实现遥控，但 OM 6 **无法作为中继设备或显示终端**，不能替代手机运行该 App 或接收实时图传。\n\n✅ **实际使用风险高**：  \n强行夹持会导致：  \n- 夹臂过度张开而失效，相机易滑落；  \n- 挤压 R50 侧边接口（USB-C、HDMI Micro）、热靴或按键，造成损伤；  \n- 重心严重偏高前倾，云台电机过载、抖动加剧甚至自动关机。\n\n🔹 **可行替代方案**：  \n1. ✅ 使用 **DJI RS 系列（如 RS 3 Mini）**：专为微单设计，承重 2kg，带快装板、跟焦轮、图传支持，可稳定搭载 R50 并实现专业运镜；  \n2. ✅ 使用 **R50 自身防抖 + 手持+轻型稳定器（如 Zhiyun Smooth 5S）**：需搭配相机冷靴转接板及底部螺丝固定；  \n3. ✅ 利用 R50 的 **Wi-Fi + Canon Camera Connect 配合手机+OM 6**：手机用 OM 6 稳定持握，运行 App 实时遥控 R50 拍摄（此时 OM 6 稳的是手机，不是相机）。\n\n总结：**DJI OM 6 是手机云台，不是相机云台；EOS R50 不是手机，二者物理与功能层面均不兼容直接夹持使用。** 强行尝试存在损坏设备与拍摄失败双重风险。建议选择专业级云台或调整工作流（如手机遥控+稳定手持）。",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 8028,
+          "output": 749
+        }
+      },
+      "elapsedMs": 17350,
+      "upstreamCalls": 1,
+      "attempts": [
+        7
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 749,
+          "prompt_tokens": 8028,
+          "total_tokens": 8777
+        }
+      ],
+      "estimatedCny": 0.007920400000000001
+    },
+    {
+      "id": "PERSONA-07",
+      "arm": "wujian",
+      "error": "[\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"legacy\",\n      \"candidates\",\n      \"off\"\n    ],\n    \"path\": [\n      \"memoryPolicy\"\n    ],\n    \"message\": \"Invalid option: expected one of \\\"legacy\\\"|\\\"candidates\\\"|\\\"off\\\"\"\n  }\n]",
+      "elapsedMs": 1,
+      "upstreamCalls": 0,
+      "attempts": [],
+      "comparisonDataOrigin": "same_context_builder_no_app_upstream"
+    },
+    {
+      "id": "PERSONA-07",
+      "arm": "direct",
+      "result": {
+        "text": "为你的 IKEA SAMLA 11L 透明收纳盒（型号 494.408.37，当前状态：在用）构建「数字分身」，意味着为其创建一个结构化、可交互、持续更新的虚拟镜像。它不只是电子版标签，而是融合物品本体信息、使用上下文与个人习惯的智能数字档案。具体能帮你：\n\n✅ **一目了然掌握实物关键属性**  \n- 自动同步并结构化呈现：尺寸（39×28×14 cm）、容量（11 L）、材质（聚丙烯塑料）、堆叠特性（带卡扣式盖子，可安全堆叠）、适用场景（玩具、清洁工具、季节性物品等）；  \n- 明确限制提醒：*仅限室内使用*、*不可接触食品*、*建议最大堆叠高度 90 cm*（防倾倒），避免误用风险。\n\n✅ **告别“找东西5分钟，用10秒”**  \n- 因盒子透明，数字分身可关联你手动录入或拍照识别的「内部存放内容」（例如：“左上角：儿童积木套装；中层：备用电池；底层：LED灯串”），相当于给透明盒子加一层可搜索的「内容索引」；  \n- 支持添加标签（如 #玩具收纳 #待整理 #节日专用），配合搜索/筛选，快速定位目标物品所在哪个SAMLA盒——尤其当你拥有多个同系列盒子时。\n\n✅ **延长使用寿命 & 科学维护**  \n- 内置养护指南：根据官方说明，自动提醒「清洁方式」——用微湿软布+中性洗洁精擦拭，避免强溶剂；  \n- 可记录你自己的使用痕迹（如：某次跌落导致轻微划痕、盖子卡扣变松），形成专属维护日志，辅助判断是否需更换。\n\n✅ **无缝衔接你的收纳系统**  \n- 已知 SAMLA 系列与 IKEA IVAR / OMAR / BROR 等货架兼容，数字分身可标记该盒子当前所在位置（例如：“放在书房IVAR柜第二层左侧”），未来支持与空间地图联动；  \n- 若你后续购入其他 SAMLA 尺寸（5L/22L/45L等），系统可自动提示尺寸兼容性与堆叠逻辑，助你规划扩容。\n\n✅ **轻量级生命周期管理**  \n- 当前状态为「在用」，有效期至 2026-10-31（基于耐用性预估）；数字分身可设置提醒（如“使用满2年时检查盖子密封性”），让长期耐用真正落地。\n\n⚠️ 注意：目前该数字分身尚不包含实时传感器（如重量/开合检测），也不连接智能家居平台——它聚焦于「以人为主、增强记忆、减少重复劳动」的务实价值。你可以随时用文字、照片或语音补充它的“所见所用”，让它越用越懂你。\n\n需要我帮你：  \n🔹 自动生成一份可打印的「SAMLA 数字分身速查卡片」？  \n🔹 设计一套简单易行的内容标注模板（比如如何高效记录盒内物品）？  \n🔹 或者，开始为你的下一个收纳盒（比如另一个 SAMLA 或 BROR 货架）创建分身？  \n欢迎告诉我 👇",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 3017,
+          "output": 734
+        }
+      },
+      "elapsedMs": 16946,
+      "upstreamCalls": 1,
+      "attempts": [
+        8
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 734,
+          "prompt_tokens": 3017,
+          "total_tokens": 3751
+        }
+      ],
+      "estimatedCny": 0.0038816
+    }
+  ]
+}

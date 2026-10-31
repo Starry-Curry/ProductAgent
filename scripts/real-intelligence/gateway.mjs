@@ -49,8 +49,9 @@ export async function gateway(configPath) {
       2,
     ),
   );
+  fs.mkdirSync('.runtime',{recursive:true});
   const file = path.join(root, "model-calls.json"),
-    lockFile = path.join(root, "gateway.lock"),
+    lockFile = path.resolve('.runtime/real-intelligence-round.lock'),
     lock = fs.openSync(lockFile, "wx");
   fs.writeFileSync(
     lock,
@@ -59,11 +60,10 @@ export async function gateway(configPath) {
   const ledger = fs.existsSync(file)
     ? JSON.parse(fs.readFileSync(file, "utf8"))
     : { task: "real-intelligence-20261031-r1", attempts: [] };
-  // Keep prior-stage attempts intact. All new continuous-development phases
-  // share one 150-call / CNY50 ceiling, including failures and retries.
+  // This authorized round has one fixed ledger across all experiment stages.
+  // The historical product-foundation ledger is never opened by this gateway.
   const stage = "real-intelligence-20261031-r1";
   config.AI_MODEL = "qwen-plus-2025-12-01"; if (!available.includes(config.AI_MODEL)) throw Error("pinned_model_not_available");
-  const stageSpend = () => ledger.attempts.filter((a) => a.stage === stage);
   const clean = (value) =>
     JSON.parse(
       JSON.stringify(value).replaceAll(config.AI_API_KEY, "[removed]"),

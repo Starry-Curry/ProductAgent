@@ -1,0 +1,203 @@
+{
+  "roundId": "real-intelligence-20261031-r1",
+  "stage": "gate-fixed-v1",
+  "model": "qwen-plus-2025-12-01",
+  "experimentalFactQA": "false",
+  "syntheticOwners": true,
+  "physicalTests": 0,
+  "independentHumanBlindReview": false,
+  "rows": [
+    {
+      "id": "QA-05",
+      "arm": "wujian",
+      "result": {
+        "session": {
+          "id": "4277f6c1-7110-4bc5-85fd-fcc63af2becc",
+          "owner": "lin",
+          "itemId": "46c652dc-dca6-4397-a7a2-2f1554c94ffb",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "service",
+          "revision": 1,
+          "status": "waiting_user",
+          "messages": [
+            {
+              "id": "df3cf3c7-47b6-4db1-b2a5-7b3312bacd72",
+              "role": "user",
+              "text": "这份帮助指南没写ANC，是不是证明不支持？",
+              "at": "2026-10-31T03:55:09.053Z",
+              "itemId": "46c652dc-dca6-4397-a7a2-2f1554c94ffb",
+              "memoryPolicy": "legacy",
+              "capture": true
+            },
+            {
+              "id": "9b7968c7-aaa6-4bbe-a06f-d7e707a63a73",
+              "role": "assistant",
+              "text": "这份答复没有可核对的型号依据，因此没有作为商品事实展示。资料未提及不等于支持或不支持；可查看现有来源，或补充适用型号与地区的官方资料。",
+              "reply": {
+                "outcome": "needs_info",
+                "answer": "这份答复没有可核对的型号依据，因此没有作为商品事实展示。资料未提及不等于支持或不支持；可查看现有来源，或补充适用型号与地区的官方资料。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [
+                  {
+                    "id": "eb6ea7d5a996b1c1ea716c9f",
+                    "title": "WH-CH520 | 帮助指南 | 首页",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+                    "kind": "official"
+                  },
+                  {
+                    "id": "cc270f155b572a8ad5cc92b5",
+                    "title": "print.pdf",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/print.pdf",
+                    "kind": "official"
+                  }
+                ],
+                "memoryIds": [],
+                "caveat": "型号帮助的自由事实综合仍未通过质量门禁；不会用general标签绕过核对。",
+                "model": "qwen-plus-2025-12-01"
+              },
+              "at": "2026-10-31T03:55:09.053Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "legacy",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "8f3706a9-f3ba-4fb8-986a-c6c4edbc7128",
+            "goal": "这份帮助指南没写ANC，是不是证明不支持？"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T03:55:02.328Z",
+          "updatedAt": "2026-10-31T03:55:09.056Z",
+          "expiresAt": "2026-11-07T03:55:02.328Z"
+        },
+        "reply": {
+          "outcome": "needs_info",
+          "answer": "这份答复没有可核对的型号依据，因此没有作为商品事实展示。资料未提及不等于支持或不支持；可查看现有来源，或补充适用型号与地区的官方资料。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [
+            {
+              "id": "eb6ea7d5a996b1c1ea716c9f",
+              "title": "WH-CH520 | 帮助指南 | 首页",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/zh-cn/index.html",
+              "kind": "official"
+            },
+            {
+              "id": "cc270f155b572a8ad5cc92b5",
+              "title": "print.pdf",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/print.pdf",
+              "kind": "official"
+            }
+          ],
+          "memoryIds": [],
+          "caveat": "型号帮助的自由事实综合仍未通过质量门禁；不会用general标签绕过核对。",
+          "model": "qwen-plus-2025-12-01"
+        },
+        "trace": [
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-31T03:55:02.403Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=service; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-31T03:55:02.403Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-31T03:55:02.426Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=1",
+            "at": "2026-10-31T03:55:03.959Z"
+          },
+          {
+            "stage": "tool_completed",
+            "detail": "search_product_knowledge",
+            "at": "2026-10-31T03:55:03.984Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=2; round=2/4",
+            "at": "2026-10-31T03:55:04.003Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-31T03:55:08.984Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "needs_info",
+            "at": "2026-10-31T03:55:09.012Z"
+          }
+        ],
+        "tokens": {
+          "input": 17964,
+          "output": 182
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "ecbe851e-e54d-482f-9089-325569f371d4",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 6764,
+      "upstreamCalls": 2,
+      "attempts": [
+        133,
+        134
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 31,
+          "prompt_tokens": 7160,
+          "total_tokens": 7191
+        },
+        {
+          "completion_tokens": 151,
+          "prompt_tokens": 10804,
+          "total_tokens": 10955
+        }
+      ],
+      "estimatedCny": 0.0147352,
+      "comparisonDataOrigin": "identical_first_upstream_user_payload"
+    },
+    {
+      "id": "QA-05",
+      "arm": "direct",
+      "result": {
+        "text": "不是。这份帮助指南中未提及 ANC（主动降噪），**不能证明 WH-CH520 不支持 ANC**，但结合官方公开资料和产品定位，可以明确：**Sony WH-CH520 确实不支持主动降噪（ANC）功能**。\n\n理由如下：\n\n✅ **官方规格确认（外部可验证事实）**：  \n根据索尼中国官网、全球官网及权威评测（如 Sony 官方产品页、GSMArena、CNET 等），WH-CH520 是一款入门级无线头戴耳机，其明确列出的功能包括：  \n- Bluetooth 5.2  \n- 约 40 小时续航（关闭 DSEE 时）  \n- DSEE 数字声音增强引擎（非 ANC）  \n- 语音助手支持（通过手机）  \n- 无 ANC、无环境声模式（Ambient Sound Mode）、无佩戴检测自动暂停  \n\n⚠️ **帮助指南未写 ≠ 功能存在**：  \n您观察正确——所有提供的帮助文档（中/英文 Quick Start Guide 和 Help Guide）均**完全未出现 “ANC”、“Active Noise Cancellation”、“Noise Canceling”、“NC” 或任何相关设置、按钮、App 控制项或说明文字**。这与索尼其他支持 ANC 的型号（如 WH-1000XM5、WH-CH720N）的帮助文档形成鲜明对比——后者在“功能介绍”“App 设置”“指示灯含义”等章节中均有详细 ANC 相关描述。\n\n🔍 **进一步佐证**：  \n- WH-CH520 的型号命名中 **不含 “N” 后缀**（例如 WH-CH720N 中的 “N” 即代表 Noise Canceling），而索尼自 WH-CH700N 起已将 “N” 作为 ANC 型号的统一标识；  \n- WH-CH520 无麦克风阵列硬件设计（仅单个通话麦克风），不具备 ANC 所需的反馈麦克风+专用处理芯片的物理基础；  \n- 官方规格表（Specifications）在帮助指南末尾（如 `cc270f155b572a8ad5cc92b5:3982` 及后续页）仅列出“Bluetooth 功能”“DSEE”“电池”“充电”等，**“Noise Cancellation” 未出现在任何规格条目中**。\n\n📌 结论：  \n帮助指南未提 ANC，**本身不是逻辑上的充分证明**（因文档可能遗漏），但**结合该型号的官方定位、硬件配置、命名惯例及全部可查公开资料，可确定 WH-CH520 不支持 ANC**。这不是推测，而是基于一致、可交叉验证的官方信息得出的确定性结论。\n\n如需 ANC 功能，建议考虑 WH-CH720N 或更高阶型号。",
+        "model": "qwen-plus-2025-12-01",
+        "tokens": {
+          "input": 4986,
+          "output": 632
+        }
+      },
+      "elapsedMs": 16089,
+      "upstreamCalls": 1,
+      "attempts": [
+        135
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 632,
+          "prompt_tokens": 4986,
+          "total_tokens": 5618
+        }
+      ],
+      "estimatedCny": 0.0052528
+    }
+  ]
+}

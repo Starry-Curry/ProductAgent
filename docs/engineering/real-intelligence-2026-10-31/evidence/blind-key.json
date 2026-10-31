@@ -1,0 +1,410 @@
+[
+  {
+    "id": "QA-01",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-01",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-02",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "first-eight-v2"
+  },
+  {
+    "id": "QA-02",
+    "label": "B",
+    "arm": "direct",
+    "stage": "first-eight-v2"
+  },
+  {
+    "id": "QA-03",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-03",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-04",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-04",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-05",
+    "label": "A",
+    "arm": "direct",
+    "stage": "retarget-v1"
+  },
+  {
+    "id": "QA-05",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "retarget-v1"
+  },
+  {
+    "id": "QA-06",
+    "label": "A",
+    "arm": "direct",
+    "stage": "retarget-v1"
+  },
+  {
+    "id": "QA-06",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "retarget-v1"
+  },
+  {
+    "id": "QA-07",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "first-eight-v2"
+  },
+  {
+    "id": "QA-07",
+    "label": "B",
+    "arm": "direct",
+    "stage": "first-eight-v2"
+  },
+  {
+    "id": "QA-08",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-08",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-09",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-09",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-10",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-10",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-11",
+    "label": "A",
+    "arm": "direct",
+    "stage": "retarget-v1"
+  },
+  {
+    "id": "QA-11",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "retarget-v1"
+  },
+  {
+    "id": "QA-12",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-12",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-13",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-13",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-14",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-14",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-15",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-15",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-16",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-16",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-17",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-17",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-18",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "first-eight-v2"
+  },
+  {
+    "id": "QA-18",
+    "label": "B",
+    "arm": "direct",
+    "stage": "first-eight-v2"
+  },
+  {
+    "id": "QA-19",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-19",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-20",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-20",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-21",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "QA-21",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-01",
+    "label": "A",
+    "arm": "direct",
+    "stage": "first-eight-v2"
+  },
+  {
+    "id": "CONSTRAINT-01",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "first-eight-v2"
+  },
+  {
+    "id": "CONSTRAINT-02",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-02",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-03",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-03",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-04",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-04",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-05",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-05",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-06",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-06",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-07",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-07",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-08",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-08",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-09",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "CONSTRAINT-09",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "PERSONA-03",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "PERSONA-03",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "PERSONA-07",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "first-eight-v2"
+  },
+  {
+    "id": "PERSONA-07",
+    "label": "B",
+    "arm": "direct",
+    "stage": "first-eight-v2"
+  },
+  {
+    "id": "FAMILY-10",
+    "label": "A",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "FAMILY-10",
+    "label": "B",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "AGENT-02",
+    "label": "A",
+    "arm": "direct",
+    "stage": "remaining-26-v1"
+  },
+  {
+    "id": "AGENT-02",
+    "label": "B",
+    "arm": "wujian",
+    "stage": "remaining-26-v1"
+  }
+]

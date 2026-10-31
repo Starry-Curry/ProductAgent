@@ -1,0 +1,162 @@
+{
+  "at": "2026-10-31T03:59:10.317Z",
+  "synthetic": true,
+  "physicalTests": 0,
+  "checks": [
+    {
+      "name": "桌面真实UI发送→真实千问→SSE最终结果→5秒配对步骤呈现",
+      "passed": true
+    },
+    {
+      "name": "新会话10秒初始化步骤渲染；390px页面读取同一真实回答（不认证全问题覆盖）",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "responses": [
+    {
+      "question": "这耳机已经配对过旧手机，如何配对另一台手机？",
+      "result": {
+        "outcome": "needs_info",
+        "answer": "以下保留了可核对的步骤；缺失环节见说明，不将部分指导当作完整任务。",
+        "steps": [
+          {
+            "id": "docstep:d6cf3f096000b9bcc84fb01b:0:phase=operate:按住蓝牙按钮约5秒或更长时间，直到蓝色指示灯成对",
+            "text": "处理步骤：按住蓝牙按钮约5秒或更长时间，直到蓝色指示灯成对闪烁，同时听到语音提示“Pairing”。",
+            "phase": "operate"
+          },
+          {
+            "id": "docstep:d6cf3f096000b9bcc84fb01b:1000:phase=operate:如提示输入配对码，请输入“0000”。",
+            "text": "处理步骤：如提示输入配对码，请输入“0000”。",
+            "phase": "operate"
+          },
+          {
+            "id": "docstep:d6cf3f096000b9bcc84fb01b:1000:phase=finish:等待连接建立，听到提示音表示已连接成功。",
+            "text": "完成与检查：等待连接建立，听到提示音表示已连接成功。",
+            "phase": "finish"
+          }
+        ],
+        "questions": [],
+        "source": "model-with-evidence",
+        "citations": [
+          {
+            "id": "d6cf3f096000b9bcc84fb01b:0",
+            "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+            "section": "原文位置 0–1349；WH-CH520 / unspecified",
+            "kind": "official"
+          },
+          {
+            "id": "d6cf3f096000b9bcc84fb01b:1000",
+            "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+            "section": "原文位置 1000–2348；WH-CH520 / unspecified",
+            "kind": "official"
+          }
+        ],
+        "evidenceIds": [
+          "d6cf3f096000b9bcc84fb01b:0",
+          "d6cf3f096000b9bcc84fb01b:1000"
+        ],
+        "memoryIds": [],
+        "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。 已隐藏1条未通过证据检查的步骤，未据此宣称完整完成任务。",
+        "route": {
+          "itemId": "6c65bd54-c5e1-4c8a-96ed-595f2c0be414",
+          "itemName": "[合成持有]浏览器耳机",
+          "intent": "help",
+          "mode": "service",
+          "reason": "核对适用资料与使用条件"
+        }
+      },
+      "modelCalls": 1,
+      "tokens": {
+        "input": 2259,
+        "output": 474
+      },
+      "elapsedMs": 11668
+    },
+    {
+      "question": "WH-CH520如何操作恢复出厂初始化，按什么键、多久，配对信息会怎样？",
+      "result": {
+        "outcome": "needs_info",
+        "answer": "以下保留了可核对的步骤；缺失环节见说明，不将部分指导当作完整任务。",
+        "steps": [
+          {
+            "id": "docstep:5d286afe62be538821d82c46:0:phase=prepare:关闭耳机。",
+            "text": "检查与准备：关闭耳机。",
+            "phase": "prepare"
+          },
+          {
+            "id": "docstep:5d286afe62be538821d82c46:0:phase=prepare:拔下USBType-C充电线。",
+            "text": "检查与准备：拔下USB Type-C充电线。",
+            "phase": "prepare"
+          },
+          {
+            "id": "docstep:5d286afe62be538821d82c46:0:phase=operate:按住电源键和–（音量减）键约10秒或更长时间。",
+            "text": "处理步骤：按住电源键和–（音量减）键约10秒或更长时间。",
+            "phase": "operate"
+          },
+          {
+            "id": "docstep:5d286afe62be538821d82c46:0:phase=finish:初始化完成后，蓝色指示灯闪烁4次（————）。",
+            "text": "完成与检查：初始化完成后，蓝色指示灯闪烁4次（— — — —）。",
+            "phase": "finish"
+          },
+          {
+            "id": "docstep:5d286afe62be538821d82c46:0:phase=finish:需先从已连接设备中删除该耳机的配对信息，再重新配",
+            "text": "完成与检查：需先从已连接设备中删除该耳机的配对信息，再重新配对。",
+            "phase": "finish"
+          }
+        ],
+        "questions": [],
+        "source": "model-with-evidence",
+        "citations": [
+          {
+            "id": "5d286afe62be538821d82c46:0",
+            "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+            "section": "原文位置 0–774；WH-CH520 / unspecified",
+            "kind": "official"
+          },
+          {
+            "id": "d6cf3f096000b9bcc84fb01b:1998",
+            "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+            "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+            "section": "原文位置 1998–3293；WH-CH520 / unspecified",
+            "kind": "official"
+          }
+        ],
+        "evidenceIds": [
+          "5d286afe62be538821d82c46:0",
+          "d6cf3f096000b9bcc84fb01b:1998"
+        ],
+        "memoryIds": [],
+        "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。 已隐藏1条未通过证据检查的步骤，未据此宣称完整完成任务。",
+        "route": {
+          "itemId": "6c65bd54-c5e1-4c8a-96ed-595f2c0be414",
+          "itemName": "[合成持有]浏览器耳机",
+          "intent": "help",
+          "mode": "service",
+          "reason": "核对适用资料与使用条件"
+        }
+      },
+      "modelCalls": 1,
+      "tokens": {
+        "input": 3168,
+        "output": 493
+      },
+      "elapsedMs": 11427
+    }
+  ],
+  "horizontalOverflow": false,
+  "upstreamRequests": 2,
+  "attempts": [
+    136,
+    137
+  ],
+  "manualQualityReview": {
+    "pairing": "partial: 被拒绝步骤导致缺少明确的设备列表选择动作",
+    "initialization": "partial: 明确10秒/关机拔线，但未完整说明耳机端全部配对信息被删除",
+    "fullEffectiveAnswerMs": null,
+    "reviewer": "工程审阅，不是独立真人盲评"
+  }
+}
