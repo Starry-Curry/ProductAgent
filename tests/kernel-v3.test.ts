@@ -61,6 +61,7 @@ test('伪造或已遗忘经验ID拒绝',()=>assert.match(precheck({...candidate,
 test('范围计算实际使用用户问题与官方引文，310超过290',()=>{
  const c={...candidate,kind:'advice' as const,calculation:{kind:'range' as const,actual:310,min:170,max:290,unit:'g',sourceId:'s',quote:context.evidence[0].text,inputQuote:'310g',assertion:'outside' as const}};
  assert.equal(verifyCalculation(c,frame,context)?.satisfied,false);
+ assert.match(precheck({...c,text:'310g超出范围20g，但承重100kg。'},frame,context).join(),/数值/);
  assert.throws(()=>verifyCalculation({...c,calculation:{...c.calculation,assertion:'within'}},frame,context),/相反/);
  assert.throws(()=>verifyCalculation({...c,calculation:{...c.calculation,actual:270}},frame,context),/不一致/);
 });

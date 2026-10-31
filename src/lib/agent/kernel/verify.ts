@@ -101,10 +101,17 @@ export function precheck(candidate:Candidate,frame:TaskFrame,context:KernelConte
   }
   const official=candidate.sources.map(r=>context.evidence.find(s=>s.id===r.id)).filter(s=>s?.basis==='official');
   if(candidate.kind==='user_report'&&!candidate.sources.some(r=>context.evidence.some(s=>s.id===r.id&&s.basis!=='official')))reasons.push('个人经历缺少本轮获准报告');
-  if(requiresOfficial){
+  if(requiresOfficial||candidate.calculation){
     let text=candidate.text;
     for(const i of context.items)if(i.model)text=text.replaceAll(i.model,'');
     const supplied=quantities(candidate.sources.filter(r=>official.some(s=>s?.id===r.id)).map(r=>r.quote).join('\n'));
+    if(candidate.calculation){
+      try{const result=verifyCalculation(candidate,frame,context);if(result){
+        const unit=quantities(candidate.calculation.actual+' '+candidate.calculation.unit)[0]?.unit;
+        supplied.push(...quantities(candidate.calculation.inputQuote));
+        if(unit)supplied.push({value:result.excess,unit});
+      }}catch{/* already rejected above; never extend numeric permission */}
+    }
     for(const q of quantities(text))if(!supplied.some(x=>x.unit===q.unit&&Math.abs(x.value-q.value)<1e-7))reasons.push('数值/单位超出所引原文：'+q.value+q.unit);
   }
   const reports=candidate.experienceIds.map(id=>context.experiences.find(r=>r.outcomeId===id));
