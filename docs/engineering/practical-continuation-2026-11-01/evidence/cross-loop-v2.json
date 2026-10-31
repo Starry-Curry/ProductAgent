@@ -1,0 +1,891 @@
+{
+  "at": "2026-10-31T21:10:11.709Z",
+  "basis": "synthetic_user_report_not_hardware_verification",
+  "responses": [
+    {
+      "question": "只用我登记的EOS R50相机、Osmo Mobile 6云台给爸爸拍做饭视频，不买东西，没有已知三脚架、支撑物或配件，镜头和固件未知。相机能装这台云台吗？我的手机实测310克、宽75毫米、厚8毫米。先核对必要条件，然后给我和爸爸可以照做的分工与三个视频镜头；照片功能不能当视频功能。",
+      "result": {
+        "session": {
+          "id": "4a2a9ebf-8b64-46af-9d1a-03463151d964",
+          "owner": "u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33",
+          "itemId": "8515a18b-4b25-4086-853a-cf97fe721bbf",
+          "identity": "[\"u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33\",\"[\\\"EOS R50\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "f14971f3-444e-4c74-895b-575798f1a8b3",
+              "role": "user",
+              "text": "只用我登记的EOS R50相机、Osmo Mobile 6云台给爸爸拍做饭视频，不买东西，没有已知三脚架、支撑物或配件，镜头和固件未知。相机能装这台云台吗？我的手机实测310克、宽75毫米、厚8毫米。先核对必要条件，然后给我和爸爸可以照做的分工与三个视频镜头；照片功能不能当视频功能。",
+              "at": "2026-10-31T21:10:34.136Z",
+              "itemId": "8515a18b-4b25-4086-853a-cf97fe721bbf",
+              "memoryPolicy": "read",
+              "capture": false
+            },
+            {
+              "id": "4b4df9dc-cf88-4b86-95d3-6eb2bc7594ea",
+              "role": "assistant",
+              "text": "### 1. 必要条件核对结论\n\n**EOS R50 不能装在 Osmo Mobile 6 上。**\nOsmo Mobile 6 是专为手机设计的云台，官方手册明确其兼容设备重量为 170–290g、宽度 67–84mm、厚度 6.9–10mm（来源：[Osmo Mobile 6 User Manual V1.8](https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf)）。EOS R50 仅机身含电池存储卡即重约 375g（来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），加上镜头后必然远超云台承重上限，且相机机身形状无法被磁吸手机夹固定。强行安装会导致电机过载、无法调平甚至损坏云台。\n\n**你的手机也不建议用于此云台。**\n你实测手机重 310g，超出 Osmo Mobile 6 官方兼容上限 290g 达 20g。虽然宽度和厚度在范围内，但超重会导致电机持续高负载、发热保护或续航大幅缩短，无法保证做饭视频所需的长时间稳定拍摄。\n\n### 2. 当前可用方案与分工\n\n既然不购买任何配件且无三脚架，**唯一可靠的视频设备是 EOS R50 手持拍摄**。R50 具备短片数码 IS 防抖和人物识别对焦（来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），适合手持记录做饭过程。Osmo Mobile 6 和手机在本次任务中仅作备用或录音辅助，不作为主力视频机位。\n\n**你和爸爸的分工：**\n\n*   **爸爸（被摄者）：** 正常做饭，无需配合表演。只需在开始做菜前告诉你“要切菜了”“要下锅了”，给你预留 3-5 秒准备时间；动作保持自然节奏，不必刻意放慢。\n*   **你（拍摄者）：** 双手握持 R50，肘部贴紧身体形成支撑；每个镜头开拍前先站稳、屏息 1 秒再按录制；每段连续录制不超过 30 秒，避免手抖累积和相机过热；利用厨房台面边缘短暂 resting 相机底部来模拟固定机位（注意防滑和远离热源/水源）。\n\n### 3. 三个可执行的视频镜头\n\n以下镜头均基于 R50 手持+短片数码 IS，不依赖云台或三脚架：\n\n1.  **备料特写（静态支撑）**\n    *   **操作：** 将 R50 底部轻靠在灶台或砧板旁的干燥台面上，镜头对准砧板区域。开启 R50 的“特写演示短片记录模式”（来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），当爸爸的手或食材进入画面时相机会自动优先对焦近处物体。\n    *   **内容：** 记录切菜、调味等手部动作细节，时长 15-20 秒。\n    *   **关键未知：** 你的镜头最近对焦距离未知，若画面模糊需后退至清晰为止；台面是否平稳、是否有震动传导需实拍检查。\n\n2.  **烹饪中景（手持跟随）**\n    *   **操作：** 双手握机，站在爸爸侧后方约 1-1.5 米处，使用 R50 的人物识别对焦锁定爸爸身体或面部。采用 Tilt Locked 思路（仅水平摇移，保持地平线稳定），随爸爸移动缓慢平移机身。\n    *   **内容：** 记录翻炒、颠勺等动态过程，展现人与灶台的关系，时长 20-30 秒。\n    *   **关键未知：** 当前镜头焦距未知，若太窄拍不全人则需后退；厨房光线是否足够影响 ISO 和快门速度，需现场试拍确认画面亮度与噪点。\n\n3.  **成品展示（低角度静置）**\n    *   **操作：** 将 R50 放在餐桌上（可用书本垫高调整俯仰角），镜头略低于菜品高度，营造食欲感。手动对焦到菜品主体，关闭自动对焦避免呼吸效应。\n    *   **内容：** 记录装盘后的成品全貌，可让爸爸的手入画撒葱花或淋汁作为点睛，时长 10-15 秒。\n    *   **关键未知：** 桌面高度与菜品位置关系需现场调整；R50 翻转屏是否便于低角度取景取决于你的具体机型配置（登记信息未确认屏幕类型）。\n\n### 4. 重要提醒\n\n*   **照片功能≠视频功能：** 以上所有操作均使用 R50 的视频录制模式，不可用照片连拍替代。R50 的视频防抖、对焦逻辑和色彩科学与照片模式完全不同。\n*   **Osmo Mobile 6 的替代用途：** 虽然不能承载相机或你的手机，但若手机支持蓝牙遥控快门，可尝试将手机固定在云台上作为 R50 的无线监视器/遥控器（通过 Canon Camera Connect App，来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），但这需要验证手机 App 兼容性和蓝牙连接稳定性，属于可选探索，不是必要步骤。\n*   **安全边界：** 手持拍摄时务必系好相机腕带或肩带；相机靠近灶台时注意蒸汽和油溅；每次放置相机前确认台面干燥、稳固、远离明火。",
+              "reply": {
+                "necessaryConditionChecks": [
+                  {
+                    "id": "condition:369d750494516c9bb13e",
+                    "label": "手机重量必要条件",
+                    "itemIds": [
+                      "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+                    ],
+                    "satisfied": false,
+                    "detail": "310 g；官方范围 170–290 g；不满足此范围，超出 20 g",
+                    "operands": [
+                      {
+                        "sourceId": "user:current-turn",
+                        "quote": "实测310克",
+                        "value": 310,
+                        "basis": "user_report"
+                      },
+                      {
+                        "sourceId": "e547877cab61933d55743d55:20953",
+                        "quote": "Compatible Phone Weight \t170-290 g",
+                        "value": [
+                          170,
+                          290
+                        ],
+                        "basis": "official",
+                        "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                      }
+                    ],
+                    "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+                    "physicallyVerified": false
+                  },
+                  {
+                    "id": "condition:2eee60d51672cd22d75b",
+                    "label": "手机宽度必要条件",
+                    "itemIds": [
+                      "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+                    ],
+                    "satisfied": true,
+                    "detail": "75 mm；官方范围 67–84 mm；在此范围内",
+                    "operands": [
+                      {
+                        "sourceId": "user:current-turn",
+                        "quote": "宽75毫米",
+                        "value": 75,
+                        "basis": "user_report"
+                      },
+                      {
+                        "sourceId": "e547877cab61933d55743d55:20953",
+                        "quote": "Compatible Phone Width \t67-84 mm",
+                        "value": [
+                          67,
+                          84
+                        ],
+                        "basis": "official",
+                        "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                      }
+                    ],
+                    "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+                    "physicallyVerified": false
+                  },
+                  {
+                    "id": "condition:70df1e875a5b3807615e",
+                    "label": "手机厚度必要条件",
+                    "itemIds": [
+                      "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+                    ],
+                    "satisfied": true,
+                    "detail": "8 mm；官方范围 6.9–10 mm；在此范围内",
+                    "operands": [
+                      {
+                        "sourceId": "user:current-turn",
+                        "quote": "厚8毫米",
+                        "value": 8,
+                        "basis": "user_report"
+                      },
+                      {
+                        "sourceId": "e547877cab61933d55743d55:20953",
+                        "quote": "Compatible Phone Thickness \t6.9-10 mm",
+                        "value": [
+                          6.9,
+                          10
+                        ],
+                        "basis": "official",
+                        "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                      }
+                    ],
+                    "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+                    "physicallyVerified": false
+                  }
+                ],
+                "knowledgeWarnings": [],
+                "answer": "### 1. 必要条件核对结论\n\n**EOS R50 不能装在 Osmo Mobile 6 上。**\nOsmo Mobile 6 是专为手机设计的云台，官方手册明确其兼容设备重量为 170–290g、宽度 67–84mm、厚度 6.9–10mm（来源：[Osmo Mobile 6 User Manual V1.8](https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf)）。EOS R50 仅机身含电池存储卡即重约 375g（来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），加上镜头后必然远超云台承重上限，且相机机身形状无法被磁吸手机夹固定。强行安装会导致电机过载、无法调平甚至损坏云台。\n\n**你的手机也不建议用于此云台。**\n你实测手机重 310g，超出 Osmo Mobile 6 官方兼容上限 290g 达 20g。虽然宽度和厚度在范围内，但超重会导致电机持续高负载、发热保护或续航大幅缩短，无法保证做饭视频所需的长时间稳定拍摄。\n\n### 2. 当前可用方案与分工\n\n既然不购买任何配件且无三脚架，**唯一可靠的视频设备是 EOS R50 手持拍摄**。R50 具备短片数码 IS 防抖和人物识别对焦（来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），适合手持记录做饭过程。Osmo Mobile 6 和手机在本次任务中仅作备用或录音辅助，不作为主力视频机位。\n\n**你和爸爸的分工：**\n\n*   **爸爸（被摄者）：** 正常做饭，无需配合表演。只需在开始做菜前告诉你“要切菜了”“要下锅了”，给你预留 3-5 秒准备时间；动作保持自然节奏，不必刻意放慢。\n*   **你（拍摄者）：** 双手握持 R50，肘部贴紧身体形成支撑；每个镜头开拍前先站稳、屏息 1 秒再按录制；每段连续录制不超过 30 秒，避免手抖累积和相机过热；利用厨房台面边缘短暂 resting 相机底部来模拟固定机位（注意防滑和远离热源/水源）。\n\n### 3. 三个可执行的视频镜头\n\n以下镜头均基于 R50 手持+短片数码 IS，不依赖云台或三脚架：\n\n1.  **备料特写（静态支撑）**\n    *   **操作：** 将 R50 底部轻靠在灶台或砧板旁的干燥台面上，镜头对准砧板区域。开启 R50 的“特写演示短片记录模式”（来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），当爸爸的手或食材进入画面时相机会自动优先对焦近处物体。\n    *   **内容：** 记录切菜、调味等手部动作细节，时长 15-20 秒。\n    *   **关键未知：** 你的镜头最近对焦距离未知，若画面模糊需后退至清晰为止；台面是否平稳、是否有震动传导需实拍检查。\n\n2.  **烹饪中景（手持跟随）**\n    *   **操作：** 双手握机，站在爸爸侧后方约 1-1.5 米处，使用 R50 的人物识别对焦锁定爸爸身体或面部。采用 Tilt Locked 思路（仅水平摇移，保持地平线稳定），随爸爸移动缓慢平移机身。\n    *   **内容：** 记录翻炒、颠勺等动态过程，展现人与灶台的关系，时长 20-30 秒。\n    *   **关键未知：** 当前镜头焦距未知，若太窄拍不全人则需后退；厨房光线是否足够影响 ISO 和快门速度，需现场试拍确认画面亮度与噪点。\n\n3.  **成品展示（低角度静置）**\n    *   **操作：** 将 R50 放在餐桌上（可用书本垫高调整俯仰角），镜头略低于菜品高度，营造食欲感。手动对焦到菜品主体，关闭自动对焦避免呼吸效应。\n    *   **内容：** 记录装盘后的成品全貌，可让爸爸的手入画撒葱花或淋汁作为点睛，时长 10-15 秒。\n    *   **关键未知：** 桌面高度与菜品位置关系需现场调整；R50 翻转屏是否便于低角度取景取决于你的具体机型配置（登记信息未确认屏幕类型）。\n\n### 4. 重要提醒\n\n*   **照片功能≠视频功能：** 以上所有操作均使用 R50 的视频录制模式，不可用照片连拍替代。R50 的视频防抖、对焦逻辑和色彩科学与照片模式完全不同。\n*   **Osmo Mobile 6 的替代用途：** 虽然不能承载相机或你的手机，但若手机支持蓝牙遥控快门，可尝试将手机固定在云台上作为 R50 的无线监视器/遥控器（通过 Canon Camera Connect App，来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），但这需要验证手机 App 兼容性和蓝牙连接稳定性，属于可选探索，不是必要步骤。\n*   **安全边界：** 手持拍摄时务必系好相机腕带或肩带；相机靠近灶台时注意蒸汽和油溅；每次放置相机前确认台面干燥、稳固、远离明火。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "8b22b60dad681c5e6db023e4:3991",
+                  "8b22b60dad681c5e6db023e4:6917",
+                  "8b22b60dad681c5e6db023e4:4992",
+                  "8b22b60dad681c5e6db023e4:7912",
+                  "8b22b60dad681c5e6db023e4:8902",
+                  "8b22b60dad681c5e6db023e4:5987",
+                  "8b22b60dad681c5e6db023e4:2992",
+                  "8b22b60dad681c5e6db023e4:0",
+                  "8b22b60dad681c5e6db023e4:997",
+                  "8b22b60dad681c5e6db023e4:1994",
+                  "8b22b60dad681c5e6db023e4:9899",
+                  "e547877cab61933d55743d55:0",
+                  "e547877cab61933d55743d55:996",
+                  "e547877cab61933d55743d55:8973",
+                  "e547877cab61933d55743d55:9971",
+                  "e547877cab61933d55743d55:14967",
+                  "e547877cab61933d55743d55:1991",
+                  "e547877cab61933d55743d55:2988",
+                  "e547877cab61933d55743d55:3984",
+                  "e547877cab61933d55743d55:21954",
+                  "e547877cab61933d55743d55:4983",
+                  "e547877cab61933d55743d55:5975",
+                  "e547877cab61933d55743d55:6975",
+                  "e547877cab61933d55743d55:7975",
+                  "e547877cab61933d55743d55:10971",
+                  "e547877cab61933d55743d55:12967",
+                  "e547877cab61933d55743d55:15963",
+                  "e547877cab61933d55743d55:16962",
+                  "e547877cab61933d55743d55:17958",
+                  "e547877cab61933d55743d55:18956",
+                  "e547877cab61933d55743d55:19954",
+                  "e547877cab61933d55743d55:20953",
+                  "e547877cab61933d55743d55:13967",
+                  "e547877cab61933d55743d55:11972",
+                  "e547877cab61933d55743d55:22940"
+                ],
+                "citations": [
+                  {
+                    "id": "8b22b60dad681c5e6db023e4",
+                    "title": "EOS R50 - EOS专微相机 - 佳能(中国)",
+                    "url": "https://www.canon.com.cn/product/r50/",
+                    "kind": "official",
+                    "section": "EOS R50；unspecified"
+                  },
+                  {
+                    "id": "e547877cab61933d55743d55",
+                    "title": "Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+                    "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+                    "kind": "official",
+                    "section": "Osmo Mobile 6；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "8515a18b-4b25-4086-853a-cf97fe721bbf",
+                    "name": "[模拟持有]拍家庭视频的相机",
+                    "model": "EOS R50"
+                  },
+                  {
+                    "id": "e1a44bb7-7103-4789-b4a9-edd71e7cd75b",
+                    "name": "[模拟持有]手机云台",
+                    "model": "Osmo Mobile 6"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T21:10:34.136Z"
+            }
+          ],
+          "known": {
+            "foundationTaskId": "e5adbac3-2570-482e-9f24-5e0bd07b88b4",
+            "foundationHasItems": "true",
+            "foundationComplexTask": "true",
+            "memoryPolicy": "read",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "9650659f-fcea-4c2e-bd9b-bdcc12146c3c"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T21:10:18.574Z",
+          "updatedAt": "2026-10-31T21:10:34.136Z",
+          "expiresAt": "2026-11-07T21:10:18.574Z",
+          "itemScopes": {
+            "8515a18b-4b25-4086-853a-cf97fe721bbf": "[\"u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33\",\"[\\\"EOS R50\\\",null,null,null]\"]",
+            "e1a44bb7-7103-4789-b4a9-edd71e7cd75b": "[\"u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33\",\"[\\\"Osmo Mobile 6\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "necessaryConditionChecks": [
+            {
+              "id": "condition:369d750494516c9bb13e",
+              "label": "手机重量必要条件",
+              "itemIds": [
+                "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+              ],
+              "satisfied": false,
+              "detail": "310 g；官方范围 170–290 g；不满足此范围，超出 20 g",
+              "operands": [
+                {
+                  "sourceId": "user:current-turn",
+                  "quote": "实测310克",
+                  "value": 310,
+                  "basis": "user_report"
+                },
+                {
+                  "sourceId": "e547877cab61933d55743d55:20953",
+                  "quote": "Compatible Phone Weight \t170-290 g",
+                  "value": [
+                    170,
+                    290
+                  ],
+                  "basis": "official",
+                  "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                }
+              ],
+              "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+              "physicallyVerified": false
+            },
+            {
+              "id": "condition:2eee60d51672cd22d75b",
+              "label": "手机宽度必要条件",
+              "itemIds": [
+                "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+              ],
+              "satisfied": true,
+              "detail": "75 mm；官方范围 67–84 mm；在此范围内",
+              "operands": [
+                {
+                  "sourceId": "user:current-turn",
+                  "quote": "宽75毫米",
+                  "value": 75,
+                  "basis": "user_report"
+                },
+                {
+                  "sourceId": "e547877cab61933d55743d55:20953",
+                  "quote": "Compatible Phone Width \t67-84 mm",
+                  "value": [
+                    67,
+                    84
+                  ],
+                  "basis": "official",
+                  "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                }
+              ],
+              "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+              "physicallyVerified": false
+            },
+            {
+              "id": "condition:70df1e875a5b3807615e",
+              "label": "手机厚度必要条件",
+              "itemIds": [
+                "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+              ],
+              "satisfied": true,
+              "detail": "8 mm；官方范围 6.9–10 mm；在此范围内",
+              "operands": [
+                {
+                  "sourceId": "user:current-turn",
+                  "quote": "厚8毫米",
+                  "value": 8,
+                  "basis": "user_report"
+                },
+                {
+                  "sourceId": "e547877cab61933d55743d55:20953",
+                  "quote": "Compatible Phone Thickness \t6.9-10 mm",
+                  "value": [
+                    6.9,
+                    10
+                  ],
+                  "basis": "official",
+                  "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                }
+              ],
+              "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+              "physicallyVerified": false
+            }
+          ],
+          "knowledgeWarnings": [],
+          "answer": "### 1. 必要条件核对结论\n\n**EOS R50 不能装在 Osmo Mobile 6 上。**\nOsmo Mobile 6 是专为手机设计的云台，官方手册明确其兼容设备重量为 170–290g、宽度 67–84mm、厚度 6.9–10mm（来源：[Osmo Mobile 6 User Manual V1.8](https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf)）。EOS R50 仅机身含电池存储卡即重约 375g（来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），加上镜头后必然远超云台承重上限，且相机机身形状无法被磁吸手机夹固定。强行安装会导致电机过载、无法调平甚至损坏云台。\n\n**你的手机也不建议用于此云台。**\n你实测手机重 310g，超出 Osmo Mobile 6 官方兼容上限 290g 达 20g。虽然宽度和厚度在范围内，但超重会导致电机持续高负载、发热保护或续航大幅缩短，无法保证做饭视频所需的长时间稳定拍摄。\n\n### 2. 当前可用方案与分工\n\n既然不购买任何配件且无三脚架，**唯一可靠的视频设备是 EOS R50 手持拍摄**。R50 具备短片数码 IS 防抖和人物识别对焦（来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），适合手持记录做饭过程。Osmo Mobile 6 和手机在本次任务中仅作备用或录音辅助，不作为主力视频机位。\n\n**你和爸爸的分工：**\n\n*   **爸爸（被摄者）：** 正常做饭，无需配合表演。只需在开始做菜前告诉你“要切菜了”“要下锅了”，给你预留 3-5 秒准备时间；动作保持自然节奏，不必刻意放慢。\n*   **你（拍摄者）：** 双手握持 R50，肘部贴紧身体形成支撑；每个镜头开拍前先站稳、屏息 1 秒再按录制；每段连续录制不超过 30 秒，避免手抖累积和相机过热；利用厨房台面边缘短暂 resting 相机底部来模拟固定机位（注意防滑和远离热源/水源）。\n\n### 3. 三个可执行的视频镜头\n\n以下镜头均基于 R50 手持+短片数码 IS，不依赖云台或三脚架：\n\n1.  **备料特写（静态支撑）**\n    *   **操作：** 将 R50 底部轻靠在灶台或砧板旁的干燥台面上，镜头对准砧板区域。开启 R50 的“特写演示短片记录模式”（来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），当爸爸的手或食材进入画面时相机会自动优先对焦近处物体。\n    *   **内容：** 记录切菜、调味等手部动作细节，时长 15-20 秒。\n    *   **关键未知：** 你的镜头最近对焦距离未知，若画面模糊需后退至清晰为止；台面是否平稳、是否有震动传导需实拍检查。\n\n2.  **烹饪中景（手持跟随）**\n    *   **操作：** 双手握机，站在爸爸侧后方约 1-1.5 米处，使用 R50 的人物识别对焦锁定爸爸身体或面部。采用 Tilt Locked 思路（仅水平摇移，保持地平线稳定），随爸爸移动缓慢平移机身。\n    *   **内容：** 记录翻炒、颠勺等动态过程，展现人与灶台的关系，时长 20-30 秒。\n    *   **关键未知：** 当前镜头焦距未知，若太窄拍不全人则需后退；厨房光线是否足够影响 ISO 和快门速度，需现场试拍确认画面亮度与噪点。\n\n3.  **成品展示（低角度静置）**\n    *   **操作：** 将 R50 放在餐桌上（可用书本垫高调整俯仰角），镜头略低于菜品高度，营造食欲感。手动对焦到菜品主体，关闭自动对焦避免呼吸效应。\n    *   **内容：** 记录装盘后的成品全貌，可让爸爸的手入画撒葱花或淋汁作为点睛，时长 10-15 秒。\n    *   **关键未知：** 桌面高度与菜品位置关系需现场调整；R50 翻转屏是否便于低角度取景取决于你的具体机型配置（登记信息未确认屏幕类型）。\n\n### 4. 重要提醒\n\n*   **照片功能≠视频功能：** 以上所有操作均使用 R50 的视频录制模式，不可用照片连拍替代。R50 的视频防抖、对焦逻辑和色彩科学与照片模式完全不同。\n*   **Osmo Mobile 6 的替代用途：** 虽然不能承载相机或你的手机，但若手机支持蓝牙遥控快门，可尝试将手机固定在云台上作为 R50 的无线监视器/遥控器（通过 Canon Camera Connect App，来源：[Canon EOS R50 官网](https://www.canon.com.cn/product/r50/)），但这需要验证手机 App 兼容性和蓝牙连接稳定性，属于可选探索，不是必要步骤。\n*   **安全边界：** 手持拍摄时务必系好相机腕带或肩带；相机靠近灶台时注意蒸汽和油溅；每次放置相机前确认台面干燥、稳固、远离明火。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "8b22b60dad681c5e6db023e4:3991",
+            "8b22b60dad681c5e6db023e4:6917",
+            "8b22b60dad681c5e6db023e4:4992",
+            "8b22b60dad681c5e6db023e4:7912",
+            "8b22b60dad681c5e6db023e4:8902",
+            "8b22b60dad681c5e6db023e4:5987",
+            "8b22b60dad681c5e6db023e4:2992",
+            "8b22b60dad681c5e6db023e4:0",
+            "8b22b60dad681c5e6db023e4:997",
+            "8b22b60dad681c5e6db023e4:1994",
+            "8b22b60dad681c5e6db023e4:9899",
+            "e547877cab61933d55743d55:0",
+            "e547877cab61933d55743d55:996",
+            "e547877cab61933d55743d55:8973",
+            "e547877cab61933d55743d55:9971",
+            "e547877cab61933d55743d55:14967",
+            "e547877cab61933d55743d55:1991",
+            "e547877cab61933d55743d55:2988",
+            "e547877cab61933d55743d55:3984",
+            "e547877cab61933d55743d55:21954",
+            "e547877cab61933d55743d55:4983",
+            "e547877cab61933d55743d55:5975",
+            "e547877cab61933d55743d55:6975",
+            "e547877cab61933d55743d55:7975",
+            "e547877cab61933d55743d55:10971",
+            "e547877cab61933d55743d55:12967",
+            "e547877cab61933d55743d55:15963",
+            "e547877cab61933d55743d55:16962",
+            "e547877cab61933d55743d55:17958",
+            "e547877cab61933d55743d55:18956",
+            "e547877cab61933d55743d55:19954",
+            "e547877cab61933d55743d55:20953",
+            "e547877cab61933d55743d55:13967",
+            "e547877cab61933d55743d55:11972",
+            "e547877cab61933d55743d55:22940"
+          ],
+          "citations": [
+            {
+              "id": "8b22b60dad681c5e6db023e4",
+              "title": "EOS R50 - EOS专微相机 - 佳能(中国)",
+              "url": "https://www.canon.com.cn/product/r50/",
+              "kind": "official",
+              "section": "EOS R50；unspecified"
+            },
+            {
+              "id": "e547877cab61933d55743d55",
+              "title": "Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+              "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+              "kind": "official",
+              "section": "Osmo Mobile 6；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "8515a18b-4b25-4086-853a-cf97fe721bbf",
+              "name": "[模拟持有]拍家庭视频的相机",
+              "model": "EOS R50"
+            },
+            {
+              "id": "e1a44bb7-7103-4789-b4a9-edd71e7cd75b",
+              "name": "[模拟持有]手机云台",
+              "model": "Osmo Mobile 6"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T21:10:34.115Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":15549,\"calls\":1,\"tools\":0,\"reservedCny\":0.38262,\"adviceOnly\":true}",
+            "at": "2026-10-31T21:10:34.128Z"
+          }
+        ],
+        "tokens": {
+          "input": 28129,
+          "output": 1252
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "taskId": "e5adbac3-2570-482e-9f24-5e0bd07b88b4",
+          "runId": "67c27592-4163-45de-95d3-c7886bb6618e",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 15741,
+      "streamTextEvents": 385
+    },
+    {
+      "question": "我下次还想用EOS R50和Osmo Mobile 6给爸爸拍做饭视频，只用这两件已有物品，不购买或添加支撑物。手机仍实测310克，宽75毫米、厚8毫米。请参考我获准保存的上次经历，给我一个调整后的简短行动方案，不要再推荐已失败的拍法。",
+      "result": {
+        "session": {
+          "id": "c1c9f2ff-229e-4c16-9534-034079db6064",
+          "owner": "u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33",
+          "itemId": "8515a18b-4b25-4086-853a-cf97fe721bbf",
+          "identity": "[\"u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33\",\"[\\\"EOS R50\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "ee3344a0-12aa-4eb1-a3ab-bbd742126c79",
+              "role": "user",
+              "text": "我下次还想用EOS R50和Osmo Mobile 6给爸爸拍做饭视频，只用这两件已有物品，不购买或添加支撑物。手机仍实测310克，宽75毫米、厚8毫米。请参考我获准保存的上次经历，给我一个调整后的简短行动方案，不要再推荐已失败的拍法。",
+              "at": "2026-10-31T21:10:42.862Z",
+              "itemId": "8515a18b-4b25-4086-853a-cf97fe721bbf",
+              "memoryPolicy": "read",
+              "capture": false
+            },
+            {
+              "id": "5490d1cc-9cd1-4259-b49f-c9f4b68eb52b",
+              "role": "assistant",
+              "text": "根据你保存的经历和当前物品状态，上次“边走边拍长镜头”导致画面摇晃且手机无法连接DJI Mimo，这次应避开移动运镜和云台App依赖。同时，你的手机实测310克已超出Osmo Mobile 6官方兼容重量上限（170–290克），即使宽度与厚度符合，电机也可能因过载无法稳定或自动保护停机，因此本方案不再将手机装上云台作为拍摄手段。\n\n调整后的简短行动方案如下：\n\n1.  **只用EOS R50定点拍摄**：利用机身约375克轻量优势，双手持机站在固定位置记录爸爸做饭片段。开启“短片数码IS”补偿手持微抖，使用“特写演示短片记录模式”让焦点在爸爸面部与手中食材/厨具间自动切换，避免手动跟焦失误。\n2.  **分段录制代替长镜头**：每个动作单独录一段（如切菜、翻炒、调味），每段控制在30秒以内，后期拼接。这既规避了手持疲劳导致的抖动加剧，也绕开了上次移动运镜失败的问题。\n3.  **Osmo Mobile 6仅作备用支撑物尝试**：若现场确实需要低角度或桌面视角，可将云台折叠后平放于台面充当临时底座（不装手机），把EOS R50轻靠其手柄侧面辅助稳定——但此用法非官方设计，需先确认相机底部与云台接触面无滑动风险，且仅适用于静态短片段；一旦不稳立即停止，回归纯手持。\n4.  **不尝试任何手机+云台组合**：鉴于超重事实及上次Mimo连接失败未解决，本次完全不将手机夹上云台，避免重复无效操作和设备损伤风险。\n\n关键未知提醒：EOS R50搭配的具体镜头型号未提供，若所用镜头无光学防抖，短片数码IS会裁切画面并可能影响边缘画质；建议开拍前先试录5秒检查防抖效果与构图余量。若试拍仍明显抖动，说明当前手持条件不足，应暂停拍摄而非强行继续。",
+              "reply": {
+                "necessaryConditionChecks": [
+                  {
+                    "id": "condition:369d750494516c9bb13e",
+                    "label": "手机重量必要条件",
+                    "itemIds": [
+                      "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+                    ],
+                    "satisfied": false,
+                    "detail": "310 g；官方范围 170–290 g；不满足此范围，超出 20 g",
+                    "operands": [
+                      {
+                        "sourceId": "user:current-turn",
+                        "quote": "实测310克",
+                        "value": 310,
+                        "basis": "user_report"
+                      },
+                      {
+                        "sourceId": "e547877cab61933d55743d55:20953",
+                        "quote": "Compatible Phone Weight \t170-290 g",
+                        "value": [
+                          170,
+                          290
+                        ],
+                        "basis": "official",
+                        "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                      }
+                    ],
+                    "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+                    "physicallyVerified": false
+                  },
+                  {
+                    "id": "condition:2eee60d51672cd22d75b",
+                    "label": "手机宽度必要条件",
+                    "itemIds": [
+                      "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+                    ],
+                    "satisfied": true,
+                    "detail": "75 mm；官方范围 67–84 mm；在此范围内",
+                    "operands": [
+                      {
+                        "sourceId": "user:current-turn",
+                        "quote": "宽75毫米",
+                        "value": 75,
+                        "basis": "user_report"
+                      },
+                      {
+                        "sourceId": "e547877cab61933d55743d55:20953",
+                        "quote": "Compatible Phone Width \t67-84 mm",
+                        "value": [
+                          67,
+                          84
+                        ],
+                        "basis": "official",
+                        "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                      }
+                    ],
+                    "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+                    "physicallyVerified": false
+                  },
+                  {
+                    "id": "condition:70df1e875a5b3807615e",
+                    "label": "手机厚度必要条件",
+                    "itemIds": [
+                      "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+                    ],
+                    "satisfied": true,
+                    "detail": "8 mm；官方范围 6.9–10 mm；在此范围内",
+                    "operands": [
+                      {
+                        "sourceId": "user:current-turn",
+                        "quote": "厚8毫米",
+                        "value": 8,
+                        "basis": "user_report"
+                      },
+                      {
+                        "sourceId": "e547877cab61933d55743d55:20953",
+                        "quote": "Compatible Phone Thickness \t6.9-10 mm",
+                        "value": [
+                          6.9,
+                          10
+                        ],
+                        "basis": "official",
+                        "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                      }
+                    ],
+                    "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+                    "physicallyVerified": false
+                  }
+                ],
+                "knowledgeWarnings": [],
+                "answer": "根据你保存的经历和当前物品状态，上次“边走边拍长镜头”导致画面摇晃且手机无法连接DJI Mimo，这次应避开移动运镜和云台App依赖。同时，你的手机实测310克已超出Osmo Mobile 6官方兼容重量上限（170–290克），即使宽度与厚度符合，电机也可能因过载无法稳定或自动保护停机，因此本方案不再将手机装上云台作为拍摄手段。\n\n调整后的简短行动方案如下：\n\n1.  **只用EOS R50定点拍摄**：利用机身约375克轻量优势，双手持机站在固定位置记录爸爸做饭片段。开启“短片数码IS”补偿手持微抖，使用“特写演示短片记录模式”让焦点在爸爸面部与手中食材/厨具间自动切换，避免手动跟焦失误。\n2.  **分段录制代替长镜头**：每个动作单独录一段（如切菜、翻炒、调味），每段控制在30秒以内，后期拼接。这既规避了手持疲劳导致的抖动加剧，也绕开了上次移动运镜失败的问题。\n3.  **Osmo Mobile 6仅作备用支撑物尝试**：若现场确实需要低角度或桌面视角，可将云台折叠后平放于台面充当临时底座（不装手机），把EOS R50轻靠其手柄侧面辅助稳定——但此用法非官方设计，需先确认相机底部与云台接触面无滑动风险，且仅适用于静态短片段；一旦不稳立即停止，回归纯手持。\n4.  **不尝试任何手机+云台组合**：鉴于超重事实及上次Mimo连接失败未解决，本次完全不将手机夹上云台，避免重复无效操作和设备损伤风险。\n\n关键未知提醒：EOS R50搭配的具体镜头型号未提供，若所用镜头无光学防抖，短片数码IS会裁切画面并可能影响边缘画质；建议开拍前先试录5秒检查防抖效果与构图余量。若试拍仍明显抖动，说明当前手持条件不足，应暂停拍摄而非强行继续。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "8b22b60dad681c5e6db023e4:3991",
+                  "8b22b60dad681c5e6db023e4:8902",
+                  "8b22b60dad681c5e6db023e4:2992",
+                  "8b22b60dad681c5e6db023e4:6917",
+                  "8b22b60dad681c5e6db023e4:7912",
+                  "8b22b60dad681c5e6db023e4:0",
+                  "8b22b60dad681c5e6db023e4:997",
+                  "8b22b60dad681c5e6db023e4:5987",
+                  "8b22b60dad681c5e6db023e4:4992",
+                  "8b22b60dad681c5e6db023e4:1994",
+                  "8b22b60dad681c5e6db023e4:9899",
+                  "e547877cab61933d55743d55:0",
+                  "e547877cab61933d55743d55:996",
+                  "e547877cab61933d55743d55:8973",
+                  "e547877cab61933d55743d55:9971",
+                  "e547877cab61933d55743d55:14967",
+                  "e547877cab61933d55743d55:1991",
+                  "e547877cab61933d55743d55:2988",
+                  "e547877cab61933d55743d55:3984",
+                  "e547877cab61933d55743d55:21954",
+                  "e547877cab61933d55743d55:4983",
+                  "e547877cab61933d55743d55:5975",
+                  "e547877cab61933d55743d55:6975",
+                  "e547877cab61933d55743d55:7975",
+                  "e547877cab61933d55743d55:10971",
+                  "e547877cab61933d55743d55:12967",
+                  "e547877cab61933d55743d55:15963",
+                  "e547877cab61933d55743d55:16962",
+                  "e547877cab61933d55743d55:17958",
+                  "e547877cab61933d55743d55:18956",
+                  "e547877cab61933d55743d55:19954",
+                  "e547877cab61933d55743d55:20953",
+                  "e547877cab61933d55743d55:13967",
+                  "e547877cab61933d55743d55:11972",
+                  "e547877cab61933d55743d55:22940"
+                ],
+                "citations": [
+                  {
+                    "id": "8b22b60dad681c5e6db023e4",
+                    "title": "EOS R50 - EOS专微相机 - 佳能(中国)",
+                    "url": "https://www.canon.com.cn/product/r50/",
+                    "kind": "official",
+                    "section": "EOS R50；unspecified"
+                  },
+                  {
+                    "id": "e547877cab61933d55743d55",
+                    "title": "Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+                    "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+                    "kind": "official",
+                    "section": "Osmo Mobile 6；unspecified"
+                  }
+                ],
+                "memoryIds": [
+                  "2ed55fa3-7c39-43ab-8bdb-e7464ae65dde"
+                ],
+                "usedItems": [
+                  {
+                    "id": "8515a18b-4b25-4086-853a-cf97fe721bbf",
+                    "name": "[模拟持有]拍家庭视频的相机",
+                    "model": "EOS R50"
+                  },
+                  {
+                    "id": "e1a44bb7-7103-4789-b4a9-edd71e7cd75b",
+                    "name": "[模拟持有]手机云台",
+                    "model": "Osmo Mobile 6"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T21:10:42.862Z"
+            }
+          ],
+          "known": {
+            "foundationTaskId": "c4fc0e15-a03c-4c1f-ab3f-6b992b10d645",
+            "foundationHasItems": "true",
+            "foundationComplexTask": "true",
+            "memoryPolicy": "read",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "15bf5e28-2288-43af-beac-7e6b3538a1a0"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T21:10:34.955Z",
+          "updatedAt": "2026-10-31T21:10:42.862Z",
+          "expiresAt": "2026-11-07T21:10:34.955Z",
+          "itemScopes": {
+            "8515a18b-4b25-4086-853a-cf97fe721bbf": "[\"u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33\",\"[\\\"EOS R50\\\",null,null,null]\"]",
+            "e1a44bb7-7103-4789-b4a9-edd71e7cd75b": "[\"u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33\",\"[\\\"Osmo Mobile 6\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "necessaryConditionChecks": [
+            {
+              "id": "condition:369d750494516c9bb13e",
+              "label": "手机重量必要条件",
+              "itemIds": [
+                "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+              ],
+              "satisfied": false,
+              "detail": "310 g；官方范围 170–290 g；不满足此范围，超出 20 g",
+              "operands": [
+                {
+                  "sourceId": "user:current-turn",
+                  "quote": "实测310克",
+                  "value": 310,
+                  "basis": "user_report"
+                },
+                {
+                  "sourceId": "e547877cab61933d55743d55:20953",
+                  "quote": "Compatible Phone Weight \t170-290 g",
+                  "value": [
+                    170,
+                    290
+                  ],
+                  "basis": "official",
+                  "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                }
+              ],
+              "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+              "physicallyVerified": false
+            },
+            {
+              "id": "condition:2eee60d51672cd22d75b",
+              "label": "手机宽度必要条件",
+              "itemIds": [
+                "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+              ],
+              "satisfied": true,
+              "detail": "75 mm；官方范围 67–84 mm；在此范围内",
+              "operands": [
+                {
+                  "sourceId": "user:current-turn",
+                  "quote": "宽75毫米",
+                  "value": 75,
+                  "basis": "user_report"
+                },
+                {
+                  "sourceId": "e547877cab61933d55743d55:20953",
+                  "quote": "Compatible Phone Width \t67-84 mm",
+                  "value": [
+                    67,
+                    84
+                  ],
+                  "basis": "official",
+                  "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                }
+              ],
+              "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+              "physicallyVerified": false
+            },
+            {
+              "id": "condition:70df1e875a5b3807615e",
+              "label": "手机厚度必要条件",
+              "itemIds": [
+                "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+              ],
+              "satisfied": true,
+              "detail": "8 mm；官方范围 6.9–10 mm；在此范围内",
+              "operands": [
+                {
+                  "sourceId": "user:current-turn",
+                  "quote": "厚8毫米",
+                  "value": 8,
+                  "basis": "user_report"
+                },
+                {
+                  "sourceId": "e547877cab61933d55743d55:20953",
+                  "quote": "Compatible Phone Thickness \t6.9-10 mm",
+                  "value": [
+                    6.9,
+                    10
+                  ],
+                  "basis": "official",
+                  "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf"
+                }
+              ],
+              "scope": "仅适用于手机；不得据此确认相机可安装、稳定、重心、夹具或完整设备兼容",
+              "physicallyVerified": false
+            }
+          ],
+          "knowledgeWarnings": [],
+          "answer": "根据你保存的经历和当前物品状态，上次“边走边拍长镜头”导致画面摇晃且手机无法连接DJI Mimo，这次应避开移动运镜和云台App依赖。同时，你的手机实测310克已超出Osmo Mobile 6官方兼容重量上限（170–290克），即使宽度与厚度符合，电机也可能因过载无法稳定或自动保护停机，因此本方案不再将手机装上云台作为拍摄手段。\n\n调整后的简短行动方案如下：\n\n1.  **只用EOS R50定点拍摄**：利用机身约375克轻量优势，双手持机站在固定位置记录爸爸做饭片段。开启“短片数码IS”补偿手持微抖，使用“特写演示短片记录模式”让焦点在爸爸面部与手中食材/厨具间自动切换，避免手动跟焦失误。\n2.  **分段录制代替长镜头**：每个动作单独录一段（如切菜、翻炒、调味），每段控制在30秒以内，后期拼接。这既规避了手持疲劳导致的抖动加剧，也绕开了上次移动运镜失败的问题。\n3.  **Osmo Mobile 6仅作备用支撑物尝试**：若现场确实需要低角度或桌面视角，可将云台折叠后平放于台面充当临时底座（不装手机），把EOS R50轻靠其手柄侧面辅助稳定——但此用法非官方设计，需先确认相机底部与云台接触面无滑动风险，且仅适用于静态短片段；一旦不稳立即停止，回归纯手持。\n4.  **不尝试任何手机+云台组合**：鉴于超重事实及上次Mimo连接失败未解决，本次完全不将手机夹上云台，避免重复无效操作和设备损伤风险。\n\n关键未知提醒：EOS R50搭配的具体镜头型号未提供，若所用镜头无光学防抖，短片数码IS会裁切画面并可能影响边缘画质；建议开拍前先试录5秒检查防抖效果与构图余量。若试拍仍明显抖动，说明当前手持条件不足，应暂停拍摄而非强行继续。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "8b22b60dad681c5e6db023e4:3991",
+            "8b22b60dad681c5e6db023e4:8902",
+            "8b22b60dad681c5e6db023e4:2992",
+            "8b22b60dad681c5e6db023e4:6917",
+            "8b22b60dad681c5e6db023e4:7912",
+            "8b22b60dad681c5e6db023e4:0",
+            "8b22b60dad681c5e6db023e4:997",
+            "8b22b60dad681c5e6db023e4:5987",
+            "8b22b60dad681c5e6db023e4:4992",
+            "8b22b60dad681c5e6db023e4:1994",
+            "8b22b60dad681c5e6db023e4:9899",
+            "e547877cab61933d55743d55:0",
+            "e547877cab61933d55743d55:996",
+            "e547877cab61933d55743d55:8973",
+            "e547877cab61933d55743d55:9971",
+            "e547877cab61933d55743d55:14967",
+            "e547877cab61933d55743d55:1991",
+            "e547877cab61933d55743d55:2988",
+            "e547877cab61933d55743d55:3984",
+            "e547877cab61933d55743d55:21954",
+            "e547877cab61933d55743d55:4983",
+            "e547877cab61933d55743d55:5975",
+            "e547877cab61933d55743d55:6975",
+            "e547877cab61933d55743d55:7975",
+            "e547877cab61933d55743d55:10971",
+            "e547877cab61933d55743d55:12967",
+            "e547877cab61933d55743d55:15963",
+            "e547877cab61933d55743d55:16962",
+            "e547877cab61933d55743d55:17958",
+            "e547877cab61933d55743d55:18956",
+            "e547877cab61933d55743d55:19954",
+            "e547877cab61933d55743d55:20953",
+            "e547877cab61933d55743d55:13967",
+            "e547877cab61933d55743d55:11972",
+            "e547877cab61933d55743d55:22940"
+          ],
+          "citations": [
+            {
+              "id": "8b22b60dad681c5e6db023e4",
+              "title": "EOS R50 - EOS专微相机 - 佳能(中国)",
+              "url": "https://www.canon.com.cn/product/r50/",
+              "kind": "official",
+              "section": "EOS R50；unspecified"
+            },
+            {
+              "id": "e547877cab61933d55743d55",
+              "title": "Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+              "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+              "kind": "official",
+              "section": "Osmo Mobile 6；unspecified"
+            }
+          ],
+          "memoryIds": [
+            "2ed55fa3-7c39-43ab-8bdb-e7464ae65dde"
+          ],
+          "usedItems": [
+            {
+              "id": "8515a18b-4b25-4086-853a-cf97fe721bbf",
+              "name": "[模拟持有]拍家庭视频的相机",
+              "model": "EOS R50"
+            },
+            {
+              "id": "e1a44bb7-7103-4789-b4a9-edd71e7cd75b",
+              "name": "[模拟持有]手机云台",
+              "model": "Osmo Mobile 6"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T21:10:42.844Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":7899,\"calls\":1,\"tools\":0,\"reservedCny\":0.355812,\"adviceOnly\":true}",
+            "at": "2026-10-31T21:10:42.856Z"
+          }
+        ],
+        "tokens": {
+          "input": 28304,
+          "output": 449
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "taskId": "c4fc0e15-a03c-4c1f-ab3f-6b992b10d645",
+          "runId": "241638da-83f8-4423-9582-6c775683e863",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 8005,
+      "streamTextEvents": 152
+    }
+  ],
+  "checks": [
+    {
+      "name": "服务端带来源的重量不满足（不是比较字符串）",
+      "passed": true
+    },
+    {
+      "name": "同一TaskRun使用两件获准物品",
+      "passed": true
+    },
+    {
+      "name": "另一Task实际取得获准Outcome",
+      "passed": true,
+      "needsIndependentReview": "必须实际减少无效长镜头、避免重复安装App；仅引用往事不算任务质量通过"
+    }
+  ],
+  "errors": [],
+  "acquisition": {
+    "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+    "title": "Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+    "official": true,
+    "textCharacters": 23072,
+    "result": {
+      "title": "Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+      "text": "User Manual \t2026.5\tV1.8\n\n\n\n2 \t© 2026 DJI All Rights Reserved.\nSearching for Keywords\nSearch for keywords such as “battery” and “install” to find a topic. If you are\nusing Adobe Acrobat Reader to read this document, press Ctrl+F on Windows or\nCommand+F on Mac to begin a search.\nNavigating to a Topic\nView a complete list of topics in the table of contents. Click on a topic to navigate to\nthat section.\nPrinting this Document\nThis document supports high resolution printing.\nThis document is copyrighted by DJI with all rights reserved. Unless otherwise authorized by\nDJI, you are not eligible to use or allow others to use the document or any part of the document\nby reproducing, transferring or selling the document. Users should only refer to this document\nand the content thereof as instructions to operate DJI UAV. The document should not be used\nfor other purposes.\nVersion \tDate \tRevisions\nv1.2 \t2023.07 \tAdded Extended Tilt Mode.\nv1.4 \t2023.09 \tAdded Parents & Kids Mode.\nv1.6 \t2024.06 \tAdded support for Remote Control with Watch.\nRevision Log\n\n\n\n© 2026 DJI All Rights Reserved. \t3\nUsing this Manual\nLegend\nImportant \tHints and Tips\nBefore Use\nRead the following documents before using DJITM OSMOTM Mobile 6:\n1. Safety Guidelines\n2. Quick Start Guide\n3. User Manual\nIt is recommend to watch all tutorial videos on the official DJI website (www.dji.com/\nosmo-mobile-6/video) or in the DJI Mimo app. Read the safety guidelines and quick start\nguide before using for the first time. Refer to this user manual for more information.\nDownloading the DJI Mimo App\nScan the QR code above to download the latest version of DJI Mimo app.\nThe iOS version of DJI Mimo is compatible with iOS v12.0 and later. The Android version\nof DJI Mimo is compatible with Android v8.0 and later.\nDJI Mimo App\nhttps://s.dji.com/guide38\n\n\n\n4 \t© 2026 DJI All Rights Reserved.\nContents\nUsing this Manual \t3\nLegend \t3\nBefore Use \t3\nDownloading the DJI Mimo App \t3\nIntroduction \t5\nOverview \t5\nGetting Started \t6\nCharging \t6\nAttaching the Phone \t6\nUsing Osmo Mobile 6 \t9\nOn-board Features \t9\nOperating Mode \t12\nDJI Mimo App \t13\nConnecting to the DJI Mimo App \t14\nCamera View \t14\nRemote Control with Watch \t18\nFirmware Update \t20\nHow to Update \t20\nStorage \t20\nSpecifications \t21\n\n\n\n© 2026 DJI All Rights Reserved. \t5\nIntroduction\nBoasting 3-axis stabilization and a built-in extension rod, the lightweight Osmo Mobile 6\nunlocks the full potential of your mobile phone. The foldable magnetic design makes\nsetup easier than ever, transportation and storage more convenient, and it can power\non automatically once unfolded. Osmo Mobile 6 can be operated in both portrait and\nlandscape, while the upright, underslung, side grip, and low position modes help capture\nthe perfect shot. Take content to the next level through DJI Mimo with ActiveTrackTM 6.0,\nDynamicZoom, and Pano. The Story mode, Timelapse, and ShotGuides provide step-by-step\ntutorials according to the scenario and help generate a video that can be shared on social\nmedia.\nOverview\n1. Magnetic Phone Clamp 3\n2. Magnetic Alignment\n3. Pan Motor\n4. Status Panel\n5. Side Wheel\n6. Joystick\n7. 1/4\"-20 UNC Port\n8. Switch Button\n9. Shutter/Record Button\n10. Power/M Button\n11. Tilt Motor\n12. Roll Motor\n13. M3×0.5 Screw Hole\n14. Charging Port (USB-C)\n15. Trigger\nOsmo Mobile 6 is compatible with DJI OM Fill Light Phone Clamp and DJI Mic, which can\nbe purchased in the DJI Store.\n1\n2\n3\n4\n5\n8\n9\n10\n11\n12\n13\n14\n15\t6\n7\n\n\n\n6 \t© 2026 DJI All Rights Reserved.\nGetting Started\nCharging\nTo charge Osmo Mobile 6, connect a USB adapter (not included) to the charging port\nusing the power cable. The battery is fully charged when the battery level indicator turns\noff on the status panel.\nCharging time: approx. 1 hour 24 minutes (tested in the environment temperature of 25° C\nwhen using a 10 W charger)\nMax runtime: approx. 6 hours and 24 minutes (tested with the gimbal balanced and held\nsteadily. This value should be taken as a reference only)\nAttaching the Phone\n1. Unfold the gimbal as shown. Osmo Mobile 6 will power on automatically once unfolded.\n1 2\n\n\n\nOsmo Mobile 6 User Manual\n© 2026 DJI All Rights Reserved. \t7\n2. Attach the magnetic phone clamp in the center of the phone. The magnetic phone\nclamp can be stretched to adapt to the mobile phone width. The camera mark should\npoint towards the camera of the phone.\n3. Align the marks on the phone clamp and the phone clamp mounting plate. Attach the\nmobile phone to Osmo Mobile 6. Osmo Mobile 6 will stabilize once the gimbal mode\nindicator lights up on the status panel.\nThe status indicator on the status panel will pulse red if the magnets are not aligned.\nAdjust the position of the magnetic clamp in that case.\nThe anti-slip pads help to secure the mobile phone and the magnetic phone clamp. Attach\nthe anti-slip pad to the magnetic phone clamp as shown in the figure below and press\ndown firmly.\nMagnetic Phone Clamp Tips\nMake sure the direction of the magnet phone clamp is the same as shown in the figure above.\nFor optimal performance, make sure the magnetic phone clamp is in the middle of the mobile\nphone, and the distance between the clamp arms is the same.\n\n\n\nOsmo Mobile 6 User Manual\n8 \t© 2026 DJI All Rights Reserved.\n1\n2\n4. The built-in extension rod can be extended to up to 215 mm and the angle can be\nadjusted from 0 to 90°.\n\n\n\n© 2026 DJI All Rights Reserved. \t9\nM Button\nWhen powered off\nWith the gimbal folded, press once or press and hold: check the\nbattery level\nWith the gimbal unfolded, press once: power on\nWhen powered on\nPress once: switch between gimbal modes\nPress three times: enter standby mode (press any button to exit)\nPress and hold: power off. Press and hold for 20 seconds to force\npower off\nUsing Osmo Mobile 6\nOn-board Features\nStatus Panel\nDisplays the System Status Indicator, Battery Level Indicator, and Gimbal Mode.\nSystem Status Indicator Descriptions\nBlinking Pattern \tDescriptions\nPulses red \tMagnetic is not aligned\nSolid yellow \tBluetooth disconnected\nSolid green \tBluetooth connected\nPulses yellow or green \tStandby mode\nBlinks red and green alternately Firmware updating/firmware update failed\nSolid red \tAbnormal status detected\nBattery Level Indicator Descriptions\nBlinking Pattern \tBattery Level\nBlinks red quickly \t≤5%\nSolid red \t6%-19%\nSolid yellow \t20%-60%\nSolid green \t>60%\nGimbal Mode\nFollow: pan and tilt axes follow, where both the pan and tilt axes follow the movement\nof the grip. Suitable for scenarios when moving up and down or on a slant.\nTilt Locked: only the pan axis follows, where only the pan axis follows the movement\nof the grip. Suitable for scenarios such as arc shots or moving from left to right.\nFPV: pan, tilt, and roll axes follow, where all three axes follow the movement of the\ngrip. Suitable for shooting the first-person view.\nSpinShot: pan, tilt, and roll axes follow. The joystick can be used to control the roll axis\nrotation. SpinShot enables footage to be shot while rotating the camera 360°. This is\nsuitable for shooting push, pull, and down.\n\n\n\nOsmo Mobile 6 User Manual\n10 \t© 2026 DJI All Rights Reserved.\nSide Wheel\nPress once: switch between focus and zoom\nRotate: control focus or zoom\nJoystick\nMove vertically and horizontally to tilt and pan the mobile phone.\nThe joystick control direction can be set in DJI Mimo.\nShutter/Record Button\nPress once: take a photo or start or stop recording.\nPress and hold: for burst shooting when in photo mode.\nSwitch Button\nPress once: switch between front and rear cameras.\nPress twice: switch between landscape and portrait mode.\nPress three times: switch between photo and record mode.\nTrigger\nPress once to start or stop ActiveTrack 5.0 (requires used with\nMimo).\nPress twice to recenter the gimbal. When using ActiveTrack 5.0,\nthe gimbal will recenter to the center of the camera view.\nPress once, and then press and hold to adjust the follow speed\nto fast mode, release to exit.\nPress and hold to enter lock mode. In lock mode, the gimbal will\nnot follow the handle movements. Release to exit lock mode.\nCharging Port (USB-C)\nCharge Osmo Mobile 6 by connecting a USB adapter to this port.\n1/4\"-20 UNC Port\nThe 1/4\"-20 UNC port can be used to attach a tripod.\n\n\n\nOsmo Mobile 6 User Manual\n© 2026 DJI All Rights Reserved. \t11\nM3×0.5 Screw Hole\nUsed to mount counterweights. Counterweights should be used\nif a camera lens or microphone is mounted on the mobile phone.\nMake sure the total weight of these accessories is less than 290 g.\nCombination Operation\nPress the switch button, shutter/record button, and trigger simultaneously for more than\none second to reset the Bluetooth name and connection and reconnect.\nOsmo Mobile 6 will be powered off automatically if there is no operation for three\nminutes in standby mode.\n\n\n\nOsmo Mobile 6 User Manual\n12 \t© 2026 DJI All Rights Reserved.\nUpright Mode\nUpright mode can be used without any\nfurther user input. In this mode, press the\ntrigger twice quickly to center the mobile\nphone.\nUnderslung Mode\nHold Osmo Mobile 6 upside down to enter\nUnderslung mode, in which the mobile\nphone can easily capture images from a\nlower position. Press the trigger twice to\ncenter the mobile phone.\nSide Grip Mode\nRotate Osmo Mobile 6 to the right or left\nby 90° to go from Upright to Side Grip\nmode. Press the trigger twice to center\nthe mobile phone.\nLow Position Mode\nExtend the built-in extension rod and\nadjust the angle to Low Position mode.\nUse Low Position mode to shoot from a\nlow angle.\nOperating Mode\nOperation modes apply when used in portrait and landscape mode.\n\n\n\n© 2026 DJI All Rights Reserved. \t13\nDJI Mimo App\nWatch a live HD video feed on your mobile phone screen through the DJI Mimo app. The\napp also allows you to use ShotGuides, Story mode, Hyperlapse, Timelapse, ActiveTrack 5.0,\nDynamicZoom, and Pano, or configure camera and gimbal settings in just a few taps.\nAcademy: tap to watch tutorials and view manuals.\nHome: tap to return to the home screen.\nAlbum: manage and view footage from the phone or DJI devices.\nDevice: tap to connect to Osmo Mobile 6. Once connected, DJI Mimo enters camera view.\nEditor: tap to edit photos or videos from Osmo Mobile 6 or import and edit from a\nmobile device.\nProfile: tap to view the DJI account, devices and created content, contact Support, or\ngo to DJI Store and DJI Forum.\nThe interface and functions of the app may vary as the software version is updated. The\nactual usage experience is based on the software version used.\n\n\n\nOsmo Mobile 6 User Manual\n14 \t© 2026 DJI All Rights Reserved.\nConnecting to the DJI Mimo App\n1. Power on Osmo Mobile 6.\n2. Enable Bluetooth on the mobile phone and connect to the device with an OM6 prefix\nname in DJI Mimo.\n3. Users are required to allow access to certain information when using DJI Mimo for the\nfirst time. The exact information will be listed in the prompt. An internet connection\nis required. Osmo Mobile 6 will be activated after authorization and the app will enter\nthe camera view.\nWhen connected via Bluetooth, Osmo Mobile 6 is able to control the mobile phone\ncamera without DJI Mimo. Refer to the Mobile Phone Compatibility List for details www.\ndji.com/osmo-mobile-6.\nCamera View\n1. Home\n: Tap to return to the home screen.\n2. ShotGuides\n: ShotGuides provides step-by-step shooting tutorials according to the scenario,\nusers can edit the video using AI Editor.\n3. ActiveTrack Select Box\n: ActiveTrack 6.0 has been optimized for tracking subjects. The subject will remain\nin the center of the camera view by default. The camera view can be adjusted\nmanually. There are three ways to use ActiveTrack 6.0:\n1 \t2\n17\n3 \t4 \t5 \t6 7 \t8 \t9\n12\n11\n10\n13\n15 \t14\t16\n18\n\n\n\nOsmo Mobile 6 User Manual\n© 2026 DJI All Rights Reserved. \t15\na. Drag a box on the screen in the camera view in DJI Mimo. A green box around the\nsubject indicates ActiveTrack 6.0 is successfully enabled. Tap the \ticon on the top\ncorner to stop tracking.\nb. Enable Gesture Control OFF ,select “Follow and Shoot” in DJI Mimo, and perform a\npalm or V gesture for one to two seconds when facing the camera. The gimbal will\nfollow the subject closest to the camera. The detection range between the rear\ncamera and the gesture is 0.5 to 4 m. Note that ActiveTrack 6.0 may consume more\npower and cause the temperature of the mobile phone to increase. Perform a\npalm or V gesture to stop recording.\nc. Press the trigger once to start or stop ActiveTrack 6.0. The gimbal will follow the\nsubject in the center of the screen by default. When using ActiveTrack 6.0 move the\njoystick to adjust the camera view.\n4. Gimbal Battery Level\n: Displays the current battery level of the gimbal.\n5. Mobile Phone Battery Level\n: Displays the current battery level of the mobile phone.\n6. Flash\n: Displays the flash status.\n7. Gimbal Mode\n: Displays the current gimbal mode: Follow, Tilt Locked, FPV, or SpinShot.\n8. Focus/Zoom Mode\n: Indicates the feature of the side wheel when using focus (MF) or zoom (ZM).\n9. Front/Rear camera Switch\n: Tap to switch between the front and rear cameras of your mobile phone. Selfie,\nFollow, and glamour effects are automatically enabled when switching to the front\ncamera. Note: glamour effects are not supported when recording at 4K or 60fps.\n10. Shooting Modes\nScroll to select the shooting mode.\nHyperlapse: enable to shoot a Timelapse photo while moving the mobile phone. Tap\nthe shutter button to begin.\nTimelapse: there are four types of timelapse (Fixed Angle, L to R, R to L, and Custom\nMotion). After selecting the timelapse, tap the settings at the top of the screen. For\n\n\n\nOsmo Mobile 6 User Manual\n16 \t© 2026 DJI All Rights Reserved.\nFixed Angle, L to R, and R to L, set the interval and duration and start to shoot. For\nCustom Motion, select up to four positions and the gimbal will move to each position\nin sequence.\nDynamicZoom: choose from Move Out and Move In mode. After selecting a mode,\ndrag a box to select a subject, and tap the shutter button to start shooting.\nSlow Motion: tap to shoot video at 4x and 8x slow motion. Check the mobile phone\ncompatibility list for more information.\nVideo: tap to shoot a normal video.\nPhotos: tap to take a single shot photo. Press and hold for burst shooting.\nPano: tap to take a 3×3, 240°, or CloneMe panorama photo. The camera will take nine,\nseven, or three photos separately and generate a pano.\nParents & Kids Mode: Place the gimbal on a flat surface and make sure both the\nparent and child are the in the frame. Tap the Shutter/Record button to start shooting.\nThe gimbal will automatically select the child in the frame to capture precious family\nmoments. When shooting is complete, the video can be automatically edited and\ngenerated. Make sure to keep the gimbal stationary during the shooting process.\nOtherwise, the shooting and movement of the gimbal will be affected.\nStory: provides several templates for recording video.\n11. Shutter/Record Button\n: Tap to take a photo or to start or stop recording video.\n12. Gesture Control Switch\nOFF : Tap to access Gesture Control settings.\n13. Playback\n: Tap to preview photos and videos.\n14. Focus Distance\n: Click the side wheel to switch to focus mode and display the current\nfocus distance.\n15. Zoom\n: Displays the current zoom ratio. Place two fingers on the screen and spread to\nzoom in, pinch to zoom out, or slide the bar to control zoom.\n16. Shooting Parameters\n0\t80\t1/100 \t: Displays the shutter speed, ISO, and EV values (Compatible with\nmost mobile phones).\n17. Settings\n: Camera Settings\nThe settings vary depending on the shooting mode. Note that the flash, white balance,\nand grid settings are only available when using the rear camera. For iOS devices, Selfie\nFlip is available when using the front camera in photo and video mode. For Android\ndevices, Selfie Flip is only available in photo mode.\n: Gimbal Settings\nGimbal Mode: choose from Follow, Tilt Locked, FPV, and Spinshot.\nFollow Speed: provides Fast, Medium, and Slow follow speed.\n\n\n\nOsmo Mobile 6 User Manual\n© 2026 DJI All Rights Reserved. \t17\nGimbal Auto Calibration: reduces drift caused by nearby magnetic interference or\nhuman error. Before calibrating, place Osmo Mobile 6 on a flat surface using a tripod.\nDo not touch the gimbal during calibration.\nHorizontal Gimbal Adjustment: make sure the magnetic phone clamp is level before\nadjusting the gimbal.\nDial Mode: assign focus, zoom, or disable features for the side wheel.\nJoystick Speed: tap to set the maximum speed when controlling the joystick. There\nare Fast, Medium, and Slow options.\nJoystick Control Direction: choose from Free and Horiz/Vert. Free enables the gimbal\nto be controlled in horizontal and vertical direction simultaneously. Horiz/Vert enables\nthe gimbal to be controlled in a horizontal or vertical direction.\nInvert Joystick: when enabled, the gimbal movement direction is inverted. Select from\nOff, Horizontal, Vertical, and All. After enabling Horizontal, the pan-axis movement\ndirection is inverted. After enabling Vertical, the tilt-axis movement direction is\ninverted.\nInvert Dial: when enabled, the dial is inverted from the previous settings. Select from\nDisable, Focus Direction, Zoom Direction, and All options.\nExtended Tilt Mode: when enabled, the gimbal tilt angle becomes larger and tilt control\nis supported, which is suitable for capturing static scenes such as a desktop.\nSound: the sound of the gimbal can be turned on/off.\n: General Settings\nIncludes information such as Device Management, Device Name, Version Information,\nand Device Serial Number.\n18. Shooting Parameters Settings\nShooting Parameters can be set according to the shooting mode. Tap the icon to\naccess settings.\n• Gesture Control and ActiveTrack 6.0 are not available when the gimbal mode is set to\nFPV or SpinShot.\n• Selfie and Follow is not available in the following scenarios:\na. Gimbal mode is set to FPV or SpinShot.\nb. Gesture Control is enabled.\n• Shooting parameter settings vary depending on the model of the mobile phone.\nRefer to the Mobile Phone Compatibility List (www.dji.com/osmo-mobile-6) for more\ninformation.\n\n\n\nOsmo Mobile 6 User Manual\n18 \t© 2026 DJI All Rights Reserved.\nRemote Control with Watch\nThe DJI Mimo app can be used with an Apple Watch, allowing you to view the camera feed,\ncontrol the gimbal direction and adjust the composition, and enable ActiveTrack remotely\non the watch for an effortless shooting experience.\nDevice Connection\n1. Enable Bluetooth on both the watch and the phone. Make sure the watch and the\nphone are paired.\n2. After pairing, make sure the latest version of the DJI Mimo app is installed and\nupdated on the watch.\n3. Power on Osmo Mobile 6 and make sure it is fully charged.\n4. Run the DJI Mimo app on the phone, and connect Osmo Mobile 6 with the phone\nfollowing the prompts in the app.\n5. Once connected, you will be directed to the camera view on the phone. Run DJI Mimo\non the watch and enter the camera view to start shooting remotely.\n• During connection, DO NOT close the app. Make sure the distance between the devices\nis within the effective Bluetooth range.\n• Visit https://www.dji.com/osmo-mobile-6/faq for more information on the devices\nsupported by the DJI Mimo app.\nRemote Control\nCamera View\n1. Swipe right to switch between video and photo mode.\n2. Tap the shutter/record button to take photos or start recording. There is a default\n3-second countdown when taking photos on the watch, and the countdown duration\ncan be modified in the DJI Mimo app on your phone.\n\n\n\nOsmo Mobile 6 User Manual\n© 2026 DJI All Rights Reserved. \t19\nGimbal Control\nTap \ton the left side of the camera view to enter the gimbal control view and adjust the\ncomposition on the watch.\n1\n4\n2 \t3\n1. Joystick: drag the joystick on the screen to control the gimbal direction. Drag or tap\nthe joystick to hide other icons.\n2. Portrait/Landscape Switch: tap to switch between Landscape and Portrait modes.\n3. Recenter Button: tap to recenter the gimbal.\n4. Close Button: tap to exit the gimbal control view.\nActiveTrack\nTap \ton the right side of the camera view to enable or disable ActiveTrack on the watch.\nWhen enabled, the gimbal will detect and follow the subject in the center of the screen.\nPreview\nWhen shooting is complete, the photo or the first frame of the video will be displayed at\nthe bottom left of the screen on the watch. You can playback and edit the footage in the\nDJI Mimo app on the phone.\n\n\n\n20 \t© 2026 DJI All Rights Reserved.\nFirmware Update\nUse DJI Mimo to update the Osmo Mobile 6 firmware. It takes approximately three\nminutes to complete an update.\nHow to Update\nBefore starting an update, make sure that the battery level indicator shows green or\nyellow. Connect Osmo Mobile 6 to your mobile device and launch DJI Mimo. You will be\nprompted if a new firmware update is available. To start updating, connect the mobile\ndevice to the internet and follow the on-screen instructions.\nDo not exit DJI Mimo while updating the firmware. Pay attention to on-screen prompts.\nThe system status indicator will blink green and red alternatively and become solid green\nonce the firmware update has completed successfully.\nIf an update is unsuccessful, restart DJI Mimo, reconnect the Bluetooth, and retry.\nStorage\nOsmo Mobile 6 is designed to be folded for easier storage and transportation. Make\nsure to fully retract the built-in extension rod and fold the Osmo Mobile 6 after powering\noff. Rotate the pan and tilt axis as shown and fold the gimbal. The mark on the axis arm\nshould slot into the hole on the handle. Rotate the pan axis as shown to lock in place.\n1\n2\n\n\n\n© 2026 DJI All Rights Reserved. \t21\nSpecifications\nGeneral\nGimbal Dimensions Unfolded: 276×111.5×99 mm (L×W×H)\nFolded: 189×84.5×44 mm (L×W×H)\nWeight Gimbal: Approx. 309 g\nMagnetic Phone Clamp: Approx. 31 g\nMax Length of Built-in Extension Rod \t215 mm\nCompatible Phone Weight \t170-290 g\nCompatible Phone Thickness \t6.9-10 mm\nCompatible Phone Width \t67-84 mm\nBattery\nType \tLi-Po 2S\nChemical System \tLiCoO2\nCapacity \t1000 mAh\nEnergy \t7.74 Wh\nVoltage \t6-8.8 V\nCharging Temperature \t5° to 40° C (41° to 104° F)\nOperating Temperature \t0° to 40° C (32° to 104° F)\nOperating Time\nApprox. 6 hours and 24 minutes (measured\nunder ideal conditions with the gimbal fully\nbalanced)\nCharging Time Approx. 1 hour 24 minutes (measured with a\n10W USB-C charger)\nGimbal Charging Port \tUSB-C\nPower Output Port \tN/A\nBottom Port \t1/4\"-20 Screw Hole\nGimbal\nPower Consumption 1.1 W (Approximate, measured under ideal\nconditions)\nControllable Range\nPan: -95° to 95°\nRoll: -100° to 175°\nTilt: -25° to 40°\nMechanical Range\nPan: -161.64° to 173.79°\nRoll: -120.30° to 211.97°\nTilt: -101.64° to 78.55°\nMax Control Speed \t120°/s\nWireless Mode\nModel \tBluetooth 5.1\nOther\nApp \tDJI Mimo\nGrip Tripod\nDimensions Length: 138 mm\nDiameter: 32 mm\nWeight \tApprox. 72 g\n\n\n\nContact\nDJI SUPPORT\nWE ARE HERE FOR YOU\nhttps://www.dji.com/osmo-mobile-6/downloads\nIf you have any questions about this document, please contact DJI by\nsending a message to DocSupport@dji.com.\nDJI and OSMO are trademarks of DJI.\nCopyright © 2026 DJI All Rights Reserved.\nThis content is subject to change.",
+      "url": "https://dl.djicdn.com/downloads/DJI_Osmo_Mobile_6/UM/20260520/Osmo_Mobile_6_User_Manual_V1.8_en.pdf",
+      "links": [],
+      "reading": {
+        "limitations": [
+          "PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。"
+        ],
+        "figures": []
+      },
+      "official": true,
+      "kind": "user-link",
+      "retrievedAt": "2026-10-31T21:10:16.867Z",
+      "manuals": [],
+      "notice": "已联网取得官方站点、匹配完整型号的资料草稿。确认实物及地区版本后录入；保存时服务器重新核对来源，不把公开资料当作你的实物状态。"
+    }
+  },
+  "newSyntheticIdentity": true,
+  "taskId": "e5adbac3-2570-482e-9f24-5e0bd07b88b4",
+  "saved": {
+    "outcome": {
+      "version": "outcome/1",
+      "outcomeId": "2ed55fa3-7c39-43ab-8bdb-e7464ae65dde",
+      "taskId": "e5adbac3-2570-482e-9f24-5e0bd07b88b4",
+      "runId": "67c27592-4163-45de-95d3-c7886bb6618e",
+      "goalStatus": "not_achieved",
+      "basis": "user_report",
+      "reporterId": "u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33",
+      "notes": "[合成操作经历，未进行硬件验证]用EOS R50站在一个位置手持拍摄短片段，可以完成爸爸做饭的记录；边走边拍的长镜头画面摇晃，我不想再用这个方式。当前手机不能安装DJI Mimo，没有三脚架或其他支撑物；原因未查明。",
+      "itemInstanceIds": [
+        "8515a18b-4b25-4086-853a-cf97fe721bbf",
+        "e1a44bb7-7103-4789-b4a9-edd71e7cd75b"
+      ],
+      "occurredAt": "2026-10-31T21:10:34.546Z",
+      "canReuseForFutureTasks": true,
+      "allowCloud": true,
+      "memoryEpoch": 0,
+      "revision": 1,
+      "status": "active",
+      "privacyStamp": {
+        "*": 0,
+        "item:8515a18b-4b25-4086-853a-cf97fe721bbf": 0,
+        "item:e1a44bb7-7103-4789-b4a9-edd71e7cd75b": 0
+      },
+      "experienceRefs": []
+    }
+  },
+  "nextTaskId": "c4fc0e15-a03c-4c1f-ab3f-6b992b10d645",
+  "upstreamRequests": 2
+}

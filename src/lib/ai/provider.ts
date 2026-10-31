@@ -306,7 +306,7 @@ export function createProvider(
         "当前原生搜索仅适配北京百炼标准域名；未转发密钥",
       );
     // Multimodal families require this endpoint and SSE, even for text search.
-    const multimodal = /^qwen3\.[5-9]/.test(AI_MODEL);
+    const multimodal = /^qwen3\.(?:[5689]|7-(?:plus|flash))/.test(AI_MODEL);
     const response = await request(
       new URL(`/api/v1/services/aigc/${multimodal?'multimodal':'text'}-generation/generation`, base),
       {

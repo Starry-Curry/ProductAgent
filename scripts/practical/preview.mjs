@@ -7,7 +7,7 @@ const child=spawn(process.execPath,['--import',pathToFileURL(path.join(project,'
  PRODUCT_AGENT_DATA_DIR:path.join(project,'.runtime','practical-preview'),WUJIAN_BUILD_DIR:'.next-practical',AUTH_MODE:'authenticated',
  AI_ALLOW_PAID_CALLS:'true',WUJIAN_ALLOW_PAID_CALLS:'true',AI_API_KEY:'fixture-only',AI_BASE_URL:'https://dashscope.aliyuncs.com/compatible-mode/v1',WUJIAN_ALLOW_SEARCH:process.argv.includes('--enable-official-search')?'true':'false',AI_MODEL:gate.model,AI_TASK_MODEL:gate.model,AI_CREATIVE_MODEL:gate.model,
  AI_ENABLE_THINKING:'false',AI_JSON_MODE:'true',AI_REQUEST_TIMEOUT_MS:'45000',WUJIAN_AGENT_RUNTIME:'native',WUJIAN_EXPERIMENTAL_KERNEL_V3:'false',WUJIAN_EXPERIMENTAL_FACT_QA:'false',
- WUJIAN_ALLOW_PUBLIC_FETCH:'true',ALPHA_GATEWAY:gate.url,LANGSMITH_TRACING:'false',LANGCHAIN_TRACING_V2:'false',NEXT_TELEMETRY_DISABLED:'1'}});
+ WUJIAN_ALLOW_PUBLIC_FETCH:'true',WUJIAN_PRACTICAL_CONSTRAINT_ROUND:process.argv.includes('--experimental-constraint-round')?'true':'false',ALPHA_GATEWAY:gate.url,LANGSMITH_TRACING:'false',LANGCHAIN_TRACING_V2:'false',NEXT_TELEMETRY_DISABLED:'1'}});
 let stopping=false;async function stop(){if(stopping)return;stopping=true;child.kill();await gate.close();}
 process.on('SIGINT',()=>stop().then(()=>process.exit(0)));process.on('SIGTERM',()=>stop().then(()=>process.exit(0)));child.on('exit',c=>stop().then(()=>process.exit(c||0)));
 const monitor=setInterval(()=>{if(fs.existsSync('.runtime/stop-practical-preview-3232')){clearInterval(monitor);stop().then(()=>process.exit(0));}},1000);

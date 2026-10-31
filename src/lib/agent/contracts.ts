@@ -73,6 +73,7 @@ export type Citation = {
   section?: string;
 };
 export type AssistantReply = {
+  necessaryConditionChecks?: import('./practical-constraints.ts').NecessaryCheck[];
   knowledgeWarnings?: string[];
   taskFrame?: TaskFrame;
   claimChecks?: ClaimCheck[];

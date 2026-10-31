@@ -3,7 +3,15 @@ import {validationFixture} from '../scripts/life-validation-fixture.ts';
 import {acquireKnowledge} from '../src/lib/life/acquisition.ts';
 import {extractPublicHTML} from '../src/lib/life/sources.ts';
 import {gateway} from '../scripts/real-intelligence/gateway.mjs';
-import {readSearchResponse} from '../src/lib/ai/provider.ts';
+import {readSearchResponse,createProvider} from '../src/lib/ai/provider.ts';
+
+test('Qwen3.8搜索使用多模态SSE，旧文本型号仍用文本协议（HTTP替身，不调用真实模型）',async()=>{
+ for(const model of ['qwen3.8-max-0902','qwen-plus','qwen3.7-max']){
+  const multimodal=model==='qwen3.8-max-0902';let sent=false;
+  const p=createProvider({AI_BASE_URL:'https://dashscope.aliyuncs.com/compatible-mode/v1',AI_API_KEY:'fixture-only',AI_MODEL:model,AI_ALLOW_PAID_CALLS:'true',WUJIAN_ALLOW_PAID_CALLS:'true',WUJIAN_ALLOW_SEARCH:'true'},(async(u,init)=>{sent=true;assert.match(String(u),multimodal?/multimodal-generation/:/text-generation/);const body=JSON.parse(String(init?.body));assert.equal(Array.isArray(body.input.messages[0].content),multimodal);assert.equal(new Headers(init?.headers).get('X-DashScope-SSE'),multimodal?'enable':null);return Response.json({output:{search_info:{search_results:[]}},usage:{input_tokens:1,output_tokens:1}});}) as typeof fetch);
+  await p.search!('陌生型号官方手册');assert.equal(sent,true);
+ }
+});
 
 test('搜索流只采纳实际来源元数据，跨分块按钮与URL均不从生成正文猜测',async()=>{
  const packet='data: '+JSON.stringify({output:{choices:[{message:{content:[{text:'https://fake.example/guessed'}]}}],search_info:{search_results:[{url:'https://helpguide.sony.net/actual',title:'真实命中'}]}},usage:{input_tokens:23,output_tokens:4}})+'\r\n\r\n';const bytes=new TextEncoder().encode(packet);

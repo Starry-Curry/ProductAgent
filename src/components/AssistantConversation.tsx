@@ -486,6 +486,13 @@ export function AssistantConversation({
                 <small>回答的覆盖说明，不代表已在实物上执行。</small>
               </details>
             )}
+            {!!message.reply?.necessaryConditionChecks?.length && (
+              <details className="home-task-parts" open={message.reply.necessaryConditionChecks.some(c=>c.satisfied===false)}>
+                <summary>已核对的必要条件</summary>
+                {message.reply.necessaryConditionChecks.map(c=><div key={c.id}><p>{c.satisfied===false?'不满足':c.satisfied===null?'待核对':'此项满足'} · {c.label}：{c.detail}</p><small>{c.scope}</small><details><summary>数值从哪里来</summary>{c.operands.map((o,n)=><p key={n}>{o.basis==='official'?'官方原文':'用户报告，未独立验证'}：{o.quote}{o.url&&<> · <a href={o.url} target="_blank" rel="noreferrer">查看来源</a></>}</p>)}</details></div>)}
+                <small>必要条件通过不代表完整方案已验证；未操作真实设备。</small>
+              </details>
+            )}
             {!!message.reply?.claimChecks?.some(c=>!c.published || c.conditions.length) && (
               <details className="home-task-parts">
                 <summary>哪些内容还需要核对</summary>
