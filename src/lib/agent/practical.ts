@@ -29,13 +29,13 @@ export function practicalHistory(session:ServiceSession,temporary=false){
 const ids=z.array(z.string().min(1).max(100)).max(8).default([]);
 const schemas={
  get_item_context:z.object({itemIds:ids}).strict(),
- search_product_knowledge:z.object({itemId:z.string().min(1).max(100),query:z.string().min(1).max(500)}).strict(),
+ search_product_knowledge:z.object({itemId:z.string().min(1).max(100),query:z.string().min(1).max(500),refresh:z.boolean().optional(),sourceUrl:z.string().url().optional()}).strict(),
  get_relevant_experiences:z.object({itemIds:ids}).strict(),
  check_constraints:z.discriminatedUnion('kind',[
   z.object({kind:z.literal('range'),actual:z.number().nonnegative(),min:z.number().nonnegative(),max:z.number().nonnegative(),unit:z.string().max(30)}).strict(),
   z.object({kind:z.literal('rectangle'),object:z.tuple([z.number().positive(),z.number().positive()]),space:z.tuple([z.number().positive(),z.number().positive()]),spaceKind:z.enum(['internal','external','unknown'])}).strict()]),
 };
-const descriptions={get_item_context:'读取当前用户获准的物品身份、准确型号、状态和未知项；itemIds为空时当前相关物品。',search_product_knowledge:'检索对应型号官方原文和URL；无缓存时读取已核实的公开来源或官方发现，不猜商品事实。',get_relevant_experiences:'读取对应物品当前获准云端使用的经历与偏好。经历为用户报告，不证明因果。',check_constraints:'必要条件的确定性区间或二维占地计算，不能证明完整兼容/稳定。输入数量的来源必须另行说明。'};
+const descriptions={get_item_context:'读取当前用户获准的物品身份、准确型号、状态和未知项；itemIds为空时当前相关物品。',search_product_knowledge:'检索对应型号官方原文和URL；无缓存时自主官方发现；缓存缺少操作正文时可refresh，或用relatedSections中实际发现的sourceUrl读取章节；不接受臆造链接。',get_relevant_experiences:'读取对应物品当前获准云端使用的经历与偏好。经历为用户报告，不证明因果。',check_constraints:'必要条件的确定性区间或二维占地计算，不能证明完整兼容/稳定。输入数量的来源必须另行说明。'};
 export const practicalTools:ToolDefinition[]=Object.entries(schemas).map(([name,schema])=>({type:'function',function:{name,description:descriptions[name as keyof typeof descriptions],parameters:z.toJSONSchema(schema) as Record<string,unknown>}}));
 
 /** Small read-only native tool loop, inside existing session/run/auth lifecycle. */
@@ -60,32 +60,38 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   if(name==='get_item_context')return {items:c.items,catalogue:c.catalogue};
   if(name==='get_relevant_experiences')return {experiences:c.experiences,preferences:c.preferences,privateFacts:c.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),basis:'approved_user_report_not_proven_cause'};
   const item=read().items.find(i=>i.id===p.itemId)!;const acquisition:any={cached:readKnowledge(db,read(),actor,item.id).length>0,readURLs:[],issues:[]};
-  if(!temporary&&!acquisition.cached&&process.env.WUJIAN_ALLOW_PUBLIC_FETCH!=='false'){
-   // Reuse audited URL metadata, never its hand-written answers or predicates.
-   const seeds=[...new Set([item.supportUrl,...sourceReviews.filter(r=>r.model===item.model).map(r=>r.url)].filter((u):u is string=>!!u))].slice(0,3);
-   for(const url of seeds){guard();try{if(!officialDomain(url,item.brand||''))throw Error('not_official');const page=await fetchPublicDocument(url);guard();if(!modelMentioned(page.title+' '+page.text,item.model))throw Error('model_not_confirmed');storeOfficialDocument(db,actor,item,makeKnowledgeDocument(page,item,[url],item.region||'unspecified'));acquisition.readURLs.push({url:page.url,characters:page.text.length});}catch(e){if(e instanceof AgentError)throw e;acquisition.issues.push((e as Error).message);}}
-   if(!seeds.length){const found=await acquireKnowledge(db,read,actor,item.id,{persist:!temporary});guard();acquisition.readURLs=found.documents.map(d=>({url:d.url,characters:d.text.length}));acquisition.issues.push(...found.issues);}
+  if(!temporary&&process.env.WUJIAN_ALLOW_PUBLIC_FETCH!=='false'){
+   if(p.sourceUrl){
+    const docs=readKnowledge(db,read(),actor,item.id);const linked=docs.some(d=>d.url===p.sourceUrl||d.sections?.some(l=>l.url===p.sourceUrl));
+    if(!linked||!officialDomain(p.sourceUrl,item.brand||''))throw Error('该链接未从当前型号已取得的官方资料中发现');
+    const page=await fetchPublicDocument(p.sourceUrl);guard();if(!modelMentioned(page.title+' '+page.text,item.model))throw Error('新章节未确认完整型号');
+    storeOfficialDocument(db,actor,item,makeKnowledgeDocument(page,item,[...docs.map(d=>d.url),p.sourceUrl],item.region||'unspecified'));acquisition.readURLs.push({url:page.url,characters:page.text.length});
+   }else if(!acquisition.cached||p.refresh){
+    const found=await acquireKnowledge(db,read,actor,item.id,{force:!!p.refresh,persist:true,seedURLs:sourceReviews.filter(r=>r.model===item.model).map(r=>r.url),search:provider.search?async(q,sites)=>{
+     guard();if(calls>=3)throw Error('本轮模型预算需保留最终回答');calls++;const r=await provider.search!(q,sites);guard();if(r.tokens){tokens.input+=r.tokens.input;tokens.output+=r.tokens.output;reservedCny+=(r.tokens.input*12+r.tokens.output*36)/1e6+0.003;}log('practical_search',JSON.stringify({model:r.model,hits:r.hits.length}));return r;
+    }:undefined});guard();Object.assign(acquisition,found.acquisition);acquisition.cached=found.cached;acquisition.issues=found.issues;
+   }
   }
   queries=[p.query];const enriched=context();track(enriched);const sources=enriched.evidence.filter(e=>e.itemId===p.itemId&&e.basis==='official');for(const s of sources)passages.set(s.id,s);
   log('practical_knowledge',JSON.stringify({itemId:p.itemId,...acquisition,sources:sources.map(s=>({id:s.id,url:s.url,model:s.model}))}));
   const fresh=sources.filter(s=>!suppliedPassages.has(s.id));for(const s of fresh)suppliedPassages.add(s.id);
-  return {sources:fresh,existingPassageIds:sources.filter(s=>!fresh.includes(s)).map(s=>s.id),acquisition,unknown:sources.length?'':'没有读到该型号适用正文，不得编造操作。',notice:'existingPassageIds 的原文已在本次上下文提供，避免重复传输；引用不代表完整语义验证。'};
+  return {relatedSections:readKnowledge(db,read(),actor,item.id).flatMap(d=>d.sections||[]).filter((l,n,a)=>a.findIndex(x=>x.url===l.url)===n).slice(0,50),sources:fresh,existingPassageIds:sources.filter(s=>!fresh.includes(s)).map(s=>s.id),acquisition,unknown:sources.length?'':'没有读到该型号适用正文，不得编造操作。',notice:'existingPassageIds 的原文已在本次上下文提供，避免重复传输；引用不代表完整语义验证。'};
  }
  const messages:ModelMessage[]=[{role:'system',content:PRACTICAL_SYSTEM},{role:'user',content:JSON.stringify({question,items:initial.items,catalogue:initial.catalogue,
   officialSources:initial.evidence.filter(e=>e.basis==='official'),experiences:initial.experiences,preferences:initial.preferences,privateFacts:initial.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),
   history:practicalHistory(session,temporary),currentTask:initial.currentTask,tried:initial.tried,permission:initial.permissions})}];
  let answer='',failure:string|undefined;
  try{for(let round=0;round<4;round++){
-  guard();const inputBytes=Buffer.byteLength(JSON.stringify(messages));if(inputBytes>150000)throw Error('context_budget_exceeded');
+  guard();if(calls>=4)throw Error('本轮模型请求已达到上限');const inputBytes=Buffer.byteLength(JSON.stringify(messages));if(inputBytes>150000)throw Error('context_budget_exceeded');
   const reserve=(inputBytes*12+2400*36)/1e6;if(reservedCny+reserve>1.5)throw Error('turn_cost_budget_exceeded');reservedCny+=reserve;calls++;
   const firstItem=initial.items[0];const mustRead=round===0&&firstItem?.model&&!initial.evidence.some(e=>e.itemId===firstItem.id&&e.basis==='official');
   const result=await provider.converse!(messages,practicalTools,{timeoutMs:Math.min(45000,deadline-Date.now()),maxTokens:2400,
-   toolChoice:round===3?'none':mustRead?{type:'function',function:{name:'search_product_knowledge'}}:'auto',onText:text=>{guard();provider.onText?.(text);}});
+   toolChoice:round===3||calls===4?'none':mustRead?{type:'function',function:{name:'search_product_knowledge'}}:'auto',onText:text=>{guard();provider.onText?.(text);}});
   guard();if(result.tokens){tokens.input+=result.tokens.input;tokens.output+=result.tokens.output;reservedCny-=reserve;reservedCny+=(result.tokens.input*12+result.tokens.output*36)/1e6;}
   log('practical_model',JSON.stringify({round,model:result.model,toolCalls:result.toolCalls.map(t=>t.function.name),finish:result.finishReason}));
   if(result.text)answer=result.text;
   if(!result.toolCalls.length)break;
-  if(round===3){failure='工具循环达到上限，未完成最终回答';log('practical_failed',failure);break;}
+  if(round===3||calls===4){failure='工具循环达到上限，未完成最终回答';log('practical_failed',failure);break;}
   messages.push({role:'assistant',content:result.text||null,tool_calls:result.toolCalls});
   for(const t of result.toolCalls){let value:unknown;try{value=await tool(t.function.name,t.function.arguments);log('practical_tool',t.function.name+' completed');}catch(e){if(e instanceof AgentError)throw e;value={error:'工具读取未完成',reason:(e as Error).message};log('practical_tool_failed',t.function.name+': '+(e as Error).message);}messages.push({role:'tool',tool_call_id:t.id,content:JSON.stringify(value)});}
  }}catch(e){if(e instanceof AgentError&&[403,409].includes(e.status))throw e;failure=(e as Error).message;log('practical_failed',failure);}
@@ -94,7 +100,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  else if(failure)answer+='\n\n本次后续查询未完成；以上仅保留已生成的部分，可以继续追问。';
  for(const [id,stamp]of scopes)session.itemScopes={...session.itemScopes,[id]:stamp};
  const current=context();const citations=[...passages.values()].filter((s,n,a)=>a.findIndex(x=>x.url===s.url)===n).map(s=>({id:s.documentId||s.id,title:s.title,url:s.url!,kind:'official' as const,section:s.model+'；'+s.region}));
- const reply:AssistantReply={answer,outcome:failure?'unavailable':'answered',source:passages.size?'model-with-evidence':'model-general',model:provider.model,steps:[],questions:[],evidenceIds:[...passages.keys()],citations,
+ const reply:AssistantReply={knowledgeWarnings:[...new Set([...passages.values()].flatMap(s=>s.reading?.limitations||[]))],answer,outcome:failure?'unavailable':'answered',source:passages.size?'model-with-evidence':'model-general',model:provider.model,steps:[],questions:[],evidenceIds:[...passages.keys()],citations,
   memoryIds:current.evidence.filter(e=>e.basis==='experience'||e.basis==='user_report'&&e.id!=='user:current-turn').map(e=>e.id),usedItems:current.items.map(i=>({id:i.id,name:i.name,model:i.model||'待确认'})),caveat:'依据当前资料与获准报告；建议不等于已执行或实物验证。'};
  log('practical_completion',JSON.stringify({elapsedMs:Date.now()-started,calls,tools,reservedCny,adviceOnly:true}));return {reply,trace,tokens,modelCalls:calls};
 }

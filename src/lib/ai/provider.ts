@@ -305,26 +305,30 @@ export function createProvider(
         "configuration",
         "当前原生搜索仅适配北京百炼标准域名；未转发密钥",
       );
+    // Multimodal families require this endpoint and SSE, even for text search.
+    const multimodal = /^qwen3\.[5-9]/.test(AI_MODEL);
     const response = await request(
-      new URL("/api/v1/services/aigc/text-generation/generation", base),
+      new URL(`/api/v1/services/aigc/${multimodal?'multimodal':'text'}-generation/generation`, base),
       {
         method: "POST",
         redirect: "error",
         headers: {
           Authorization: `Bearer ${AI_API_KEY}`,
           "Content-Type": "application/json",
+          ...(multimodal ? {"X-DashScope-SSE":"enable"} : {}),
         },
         signal: AbortSignal.timeout(25000),
         body: JSON.stringify({
           model: AI_MODEL,
           input: {
-            messages: [{ role: "user", content: query.slice(0, 1000) }],
+            messages: [{ role: "user", content: multimodal ? [{text:query.slice(0,1000)}] : query.slice(0, 1000) }],
           },
           parameters: {
             enable_search: true,
             enable_thinking: false,
             result_format: "message",
             max_tokens: 180,
+            ...(multimodal ? {incremental_output:true} : {}),
             search_options: {
               search_strategy: "turbo",
               forced_search: true,
@@ -343,7 +347,7 @@ export function createProvider(
         "search_failed",
         `搜索请求失败（${response.status}），不自动重试`,
       );
-    const result = await response.json().catch(() => null);
+    const result = await readSearchResponse(response);
     if (result?.code || !result?.output)
       throw new ProviderError(
         "search_failed",
@@ -375,6 +379,16 @@ export function createProvider(
     };
   };
   return provider;
+}
+
+/** Only structured search metadata is discoverable; never parse generated URLs. */
+export async function readSearchResponse(response:Response) {
+  if(!/text\/event-stream/i.test(response.headers.get('content-type')||''))return response.json().catch(()=>null);
+  const reader=response.body?.getReader();if(!reader)return null;
+  const decoder=new TextDecoder();let pending='',bytes=0;const result:any={output:{search_info:{search_results:[]}}};
+  const consume=(line:string)=>{if(!line.startsWith('data:'))return;const raw=line.slice(5).trim();if(!raw||raw==='[DONE]')return;const event=JSON.parse(raw);if(event.code)throw new ProviderError('search_failed','搜索流返回服务错误');result.output.search_info.search_results.push(...(event.output?.search_info?.search_results||[]));if(event.usage)result.usage=event.usage;};
+  try{while(true){const part=await reader.read();bytes+=part.value?.length||0;if(bytes>1_000_000)throw new ProviderError('search_failed','搜索响应过大');pending+=decoder.decode(part.value,{stream:!part.done});const lines=pending.split(/\r?\n/);pending=lines.pop()||'';for(const line of lines)consume(line);if(part.done){consume(pending);break;}}}finally{await reader.cancel().catch(()=>{});}
+  return result;
 }
 
 /** Handles UTF-8 / SSE boundary splits; never forwards reasoning content. */

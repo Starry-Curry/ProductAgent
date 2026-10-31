@@ -73,6 +73,7 @@ export type Citation = {
   section?: string;
 };
 export type AssistantReply = {
+  knowledgeWarnings?: string[];
   taskFrame?: TaskFrame;
   claimChecks?: ClaimCheck[];
   usedItems?: { id: string; name: string; model: string }[];

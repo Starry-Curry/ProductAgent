@@ -87,16 +87,19 @@ export async function gateway(configPath,options) {
         if (Buffer.byteLength(raw) > 180000) throw Error("input_too_large");
       }
       const body = JSON.parse(raw);
+      const nativeSearch=/\/(text|multimodal)-generation\/generation$/.test(req.url);
+      const multimodalSearch=req.url.endsWith('/multimodal-generation/generation');
+      if(nativeSearch&&(!body.parameters?.enable_search||body.parameters?.search_options?.search_strategy!=='turbo'))throw Error('bounded_search_only');
       if (body.model !== config.AI_MODEL || body.enable_thinking === true) throw Error("pinned_non_thinking_model_only");
-      const maxTokens = Math.min(body.max_tokens || 4000, 4000);
+      const maxTokens = Math.min(body.max_tokens || body.parameters?.max_tokens || 4000, 4000);
       // UTF-8 byte count bounds input tokens; highest published Plus tier is
       // reserved until actual usage arrives. An unknown failed charge stays reserved.
       const reserve =
         (Buffer.byteLength(raw) * Math.max(8, options?.prices?.input || 0) +
           (maxTokens + (body.enable_thinking ? 2048 : 0)) * Math.max(64, options?.prices?.output || 0)) /
-        1e6;
+        1e6 + (nativeSearch?5:0);
       assertBudget(ledger,reserve,limits);
-      const user = body.messages?.find((m) => m.role === "user");
+      const user = (body.messages||body.input?.messages)?.find((m) => m.role === "user");
       let question = "";
       try {
         question =
@@ -109,6 +112,7 @@ export async function gateway(configPath,options) {
       attempt = {
         number: ledger.attempts.length + 1, evaluation: options?.recordContent === false ? 'private-preview' : String(req.headers["x-wujian-evaluation"] || "unlabeled"),
         stage,
+        kind:nativeSearch?'official_search':'inference',
         reservedCny: reserve,
         priceSource: "https://help.aliyun.com/zh/model-studio/model-pricing",
         startedAt: new Date().toISOString(),
@@ -119,7 +123,7 @@ export async function gateway(configPath,options) {
         contentRecorded: options?.recordContent !== false,
         inputSha256: options?.recordContent === false ? undefined : createHash("sha256").update(raw).digest("hex"),
         inputBytes: Buffer.byteLength(raw),
-        input: options?.recordContent === false ? undefined : clean(body.messages),
+        input: options?.recordContent === false ? undefined : clean(body.messages||body.input?.messages),
         tools: (body.tools || []).map((t) => t.function.name),
       };
       ledger.attempts.push(attempt);
@@ -129,15 +133,16 @@ export async function gateway(configPath,options) {
         if (!res.writableEnded) controller.abort();
       });
       const response = await fetch(
-        config.AI_BASE_URL.replace(/\/$/, "") + "/chat/completions",
+        nativeSearch?new URL('/api/v1/services/aigc/'+(multimodalSearch?'multimodal':'text')+'-generation/generation',config.AI_BASE_URL):config.AI_BASE_URL.replace(/\/$/, "") + "/chat/completions",
         {
           method: "POST",
           redirect: "error",
           headers: {
             Authorization: "Bearer " + config.AI_API_KEY,
             "Content-Type": "application/json",
+            ...(multimodalSearch?{'X-DashScope-SSE':'enable'}:{}),
           },
-          body: JSON.stringify({
+          body: JSON.stringify(nativeSearch?{...body,parameters:{...body.parameters,max_tokens:maxTokens,enable_thinking:false}}:{
             ...body,
             max_tokens: maxTokens,
             enable_thinking: body.enable_thinking === true,
@@ -157,7 +162,11 @@ export async function gateway(configPath,options) {
       );
       attempt.httpStatus = response.status;
       let result;
-      if (
+      if (nativeSearch && /text\/event-stream/.test(response.headers.get('content-type')||'') && response.ok) {
+        let pending='',size=0;const decoder=new TextDecoder();result={output:{search_info:{search_results:[]}}};
+        const consume=line=>{if(!line.startsWith('data:'))return;const raw=line.slice(5).trim();if(!raw||raw==='[DONE]')return;const event=JSON.parse(raw);if(event.code)throw Error('provider_code_'+event.code);if(event.usage)result.usage=event.usage;result.output.search_info.search_results.push(...(event.output?.search_info?.search_results||[]));if(event.output?.choices)result.output.choices=event.output.choices;};
+        for await(const chunk of response.body){size+=chunk.length;if(size>1000000)throw Error('search_response_too_large');pending+=decoder.decode(chunk,{stream:true});const lines=pending.split(/\r?\n/);pending=lines.pop()||'';for(const line of lines)consume(line);}pending+=decoder.decode();consume(pending);
+      } else if (
         (body.enable_thinking === true || body.stream === true) &&
         response.ok
       ) {
@@ -205,16 +214,19 @@ export async function gateway(configPath,options) {
           model: upstreamModel || body.model,
         };
       } else result = await response.json();
-      if (!response.ok) throw Error("provider_http_" + response.status);
+      if (!response.ok) {attempt.providerError={code:result.code||result.error?.code,message:options?.recordContent===false?undefined:clean(String(result.message||result.error?.message||'').slice(0,300))};throw Error("provider_http_" + response.status);}
+      if(result.code)throw Error('provider_code_'+result.code);
       attempt.status = "returned";
-      attempt.tokens = result.usage;
+      const usage=result.usage;const billedUsage=usage&&{...usage,prompt_tokens:usage.prompt_tokens??usage.input_tokens,completion_tokens:usage.completion_tokens??usage.output_tokens};
+      attempt.tokens = billedUsage;
+      if(nativeSearch)attempt.searchSources=options?.recordContent===false?undefined:result.output?.search_info;
       attempt.returnedModel = result.model;
       if (
-        Number.isFinite(result.usage?.prompt_tokens) &&
-        Number.isFinite(result.usage?.completion_tokens)
+        Number.isFinite(billedUsage?.prompt_tokens) &&
+        Number.isFinite(billedUsage?.completion_tokens)
       ) {
-        const input = result.usage.prompt_tokens,
-          output = result.usage.completion_tokens;
+        const input = billedUsage.prompt_tokens,
+          output = billedUsage.completion_tokens;
         const [inputRate, outputRate] = options?.prices ? [options.prices.input,options.prices.output] :
           body.model === "qwen3.7-plus"
             ? [2, 8]
@@ -225,10 +237,10 @@ export async function gateway(configPath,options) {
                 : input <= 256000
                   ? [2.4, 20]
                   : [4.8, 48];
-        attempt.estimatedCny = (input * inputRate + output * outputRate) / 1e6;
+        attempt.estimatedCny = (input * inputRate + output * outputRate) / 1e6+(nativeSearch?0.003:0);
       }
-      attempt.finishReason = result.choices?.[0]?.finish_reason;
-      if (options?.recordContent !== false) attempt.output = clean(result.choices?.[0]?.message || {});
+      attempt.finishReason = (result.choices||result.output?.choices)?.[0]?.finish_reason;
+      if (options?.recordContent !== false) attempt.output = clean((result.choices||result.output?.choices)?.[0]?.message || {});
       attempt.elapsedMs = Date.now() - Date.parse(attempt.startedAt);
       save();
       if (body.stream === true) {

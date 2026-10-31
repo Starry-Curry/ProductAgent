@@ -56,6 +56,7 @@ export async function fetchPublicDocument(
   url: string;
   links: { title: string; url: string }[];
   extracted?: { name?: string; brand?: string; model?: string };
+  reading?:{limitations:string[];figures:{url:string;caption:string}[]};
 }> {
   const url = sourceURL(value);
   reservePublicFetch(url.hostname);
@@ -171,6 +172,7 @@ export async function fetchPublicDocument(
       text: d.text,
       url: url.href,
       links: [],
+      reading: {limitations:['PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。'],figures:[] as {url:string;caption:string}[]},
     };
   }
   if (/application\/json/.test(result.type))
@@ -220,15 +222,12 @@ export async function extractPublicHTML(raw: string, address: string) {
   $("a[href]").each((_n, el) => {
     const title = $(el).text().trim().slice(0, 150),
       href = $(el).attr("href");
-    if (
-      !href ||
-      !/manual|support|faq|\.pdf|说明|指南|手册|帮助|常见|组装/i.test(
-        title + " " + href,
-      )
-    )
-      return;
+    if (!href) return;
     try {
       const u = sourceURL(new URL(href, url).href);
+      const parent=url.pathname.slice(0,url.pathname.lastIndexOf('/')+1);
+      const sibling=parent.split('/').filter(Boolean).length>=4&&u.hostname===url.hostname&&u.pathname.startsWith(parent)&&!!title;
+      if(!sibling&&!/manual|support|faq|\.pdf|说明|指南|手册|帮助|常见|组装/i.test(title+' '+href))return;
       if (!links.some((l) => l.url === u.href))
         links.push({ title: title || "相关资料", url: u.href });
     } catch {
@@ -269,6 +268,14 @@ export async function extractPublicHTML(raw: string, address: string) {
       } catch {}
   });
   $("script,style,noscript,nav,footer,header,iframe,form").remove();
+  const figures:{url:string;caption:string}[]=[];let uncaptioned=0;
+  $('img').each((_n,el)=>{
+    const img=$(el);if(img.attr('aria-hidden')==='true'||img.attr('role')==='presentation')return;
+    const caption=(img.attr('alt')||img.attr('aria-label')||'').trim().slice(0,300);
+    if(!caption)uncaptioned++;
+    try{const src=sourceURL(new URL(img.attr('src')||'',url).href).href;if(figures.length<20)figures.push({url:src,caption:caption||'图示没有替代文字，内容未读取'});}catch{/* Never render data/javascript/local image URLs. */}
+    img.replaceWith($('<span>').text(caption?'〔图示文字：'+caption+'〕':'〔此处图示未读取〕'));
+  });
   // Product specs often use adjacent div/span cells. Without separators, an
   // exact model becomes e.g. MJTD01SYLColor and fails safe boundary matching.
   // Preserve DOM text boundaries instead of weakening model matching.
@@ -300,6 +307,7 @@ export async function extractPublicHTML(raw: string, address: string) {
       ...links.filter((l) => !/\.pdf(?:$|[?#])/i.test(l.url)).slice(0, 60),
     ],
     extracted,
+    reading:{limitations:uncaptioned?[`有${uncaptioned}处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。`]:[],figures},
   };
 }
 export const fetchPublicText = fetchPublicDocument;

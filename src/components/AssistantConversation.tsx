@@ -576,6 +576,7 @@ export function AssistantConversation({
             {!!message.reply?.citations.length && !elder && (
               <details>
                 <summary>查看依据</summary>
+                {message.reply.knowledgeWarnings?.map(w=><p key={w}>资料缺口：{w}</p>)}
                 {message.reply.citations.map((c) => (
                   <p key={c.id}>
                     <a href={c.url} target="_blank" rel="noreferrer">

@@ -50,6 +50,8 @@ export type AcquiredDocument = {
   chain: string[];
   fetchedAt: string;
   chunks: KnowledgeChunk[];
+  reading?: { limitations: string[]; figures: { url: string; caption: string }[] };
+  sections?: {title:string;url:string}[];
 };
 const digest = (s: string) => createHash("sha256").update(s).digest("hex");
 export const knowledgeIdentity = (item: Item) =>
@@ -152,6 +154,8 @@ export function makeKnowledgeDocument(
     chain,
     fetchedAt: new Date().toISOString(),
     chunks,
+    reading: 'reading' in d ? d.reading : undefined,
+    sections: d.links.filter(l=>officialDomain(l.url,item.brand||'')).slice(0,60),
   };
 }
 function tableExists(db: DatabaseSync) {
@@ -389,6 +393,7 @@ export async function acquireKnowledge(
     persist?: boolean;
     fetchDocument?: typeof fetchPublicDocument;
     search?: Provider["search"];
+    seedURLs?: string[];
   } = {},
 ) {
   const foundItem = read().items.find(
@@ -443,18 +448,21 @@ export async function acquireKnowledge(
     issues: string[] = [],
     documents: AcquiredDocument[] = [];
   const acquisition = {
+    seedURLs: options.seedURLs || [],
     searchAttempted: false,
     searchCompleted: false,
     searchURLs: [] as string[],
     readURLs: [] as string[],
     verifiedURLs: [] as string[],
+    attemptedURLs: [] as string[],
   };
+  const attempted=new Map<string,Promise<PublicDocument>>();
   let requests = 0;
   const get = async (url: string) => {
+    if(attempted.has(url))return attempted.get(url)!;
     if (++requests > 6) throw new AgentError("本轮官方资料读取达到6份上限");
-    const page = await fetcher(url);
-    acquisition.readURLs.push(page.url);
-    return page;
+    acquisition.attemptedURLs.push(url);
+    const pending=fetcher(url).then(page=>{acquisition.readURLs.push(page.url);return page;});attempted.set(url,pending);return pending;
   };
   const packs = productPacks.filter(
     (p) =>
@@ -473,11 +481,12 @@ export async function acquireKnowledge(
     .filter((x) => x.length > 8);
   async function accept(url: string, chain: string[], sourceRegion: string) {
     const d = await get(url);
+    if(!officialDomain(d.url,brand)){issues.push('最终站点未通过厂家范围核对，未采用');return;}
     if (!modelMentioned(d.title + " " + d.text, item.model)) {
       issues.push("官方文档未包含完整型号，未采用：" + new URL(url).hostname);
       return;
     }
-    if (item.region && sourceRegion !== item.region) {
+    if (item.region && item.region !== 'unspecified' && sourceRegion !== item.region) {
       issues.push("资料地区与档案不一致，未采用");
       return;
     }
@@ -485,20 +494,17 @@ export async function acquireKnowledge(
       makeKnowledgeDocument(d, { ...item, brand }, chain, sourceRegion),
     );
   }
+  for(const url of [...new Set([item.supportUrl,...(options.seedURLs||[])].filter((u):u is string=>!!u))].slice(0,3)){
+    try{if(!officialDomain(url,brand))continue;await accept(url,[url],regionOf(url));}catch{issues.push('种子资料未取得可用正文；继续官方发现，不把种子存在当获取成功');}
+  }
   try {
-    if (item.supportUrl && officialDomain(item.supportUrl, brand)) {
-      await accept(
-        item.supportUrl,
-        [item.supportUrl],
-        regionOf(item.supportUrl),
-      );
-    } else if (
+    if (!documents.length &&
       entry?.domains[0] === "sony.com" &&
       /^[a-z0-9-]+$/i.test(item.model)
     ) {
       const support = `https://www.sony.com/electronics/support/product/${item.model.toLowerCase()}/manuals`;
       const d = await get(support);
-      if (modelMentioned(d.title + " " + d.text, item.model) && !item.region) {
+      if (modelMentioned(d.title + " " + d.text, item.model) && (!item.region || item.region==='unspecified')) {
         documents.push(
           makeKnowledgeDocument(d, item, [support], "unspecified"),
         );
@@ -511,7 +517,7 @@ export async function acquireKnowledge(
         issues.push(
           "官方页面未确认完整型号或地区版本；可提供匹配版本的官方链接。",
         );
-    } else if (entry?.domains[0] === "mi.com") {
+    } else if (!documents.length && entry?.domains[0] === "mi.com") {
       const catalogURL = `https://www.mi.com/${region}/support/user-guide/`,
         catalog = await get(catalogURL);
       const matches = catalog.links.filter(
@@ -537,12 +543,12 @@ export async function acquireKnowledge(
         issues.push(
           "官方说明书目录未匹配产品全称；型号已知但缺少可定位的产品名称/资料链接。",
         );
-    } else {
+    } else if (!documents.length) {
       const found = await findOfficial({ brand, model: item.model }, get);
       issues.push(...found.issues);
       for (const d of found.documents) {
         const sourceRegion = regionOf(d.url);
-        if (item.region && sourceRegion !== item.region) {
+        if (item.region && item.region !== 'unspecified' && sourceRegion !== item.region) {
           issues.push("官方来源地区不一致，未采用");
           continue;
         }
@@ -598,7 +604,7 @@ export async function acquireKnowledge(
             issues.push("搜索命中未通过最终域名/完整型号核对，未采用");
             continue;
           }
-          if (item.region && item.region !== sourceRegion) {
+          if (item.region && item.region !== 'unspecified' && item.region !== sourceRegion) {
             issues.push("搜索来源地区不一致或未明，未采用");
             continue;
           }

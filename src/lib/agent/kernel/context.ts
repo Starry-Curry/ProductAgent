@@ -36,7 +36,7 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
   const mentioned=(s:string)=>s.length>1&&question.toLowerCase().includes(s.toLowerCase());
   const selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||mentioned(i.model)||mentioned(i.name)||
     // Entity matching only. It never chooses an intent or provides a product fact.
-    [...new Intl.Segmenter('zh',{granularity:'word'}).segment(i.name)].some(s=>s.segment.length>=2&&mentioned(s.segment)));
+    !evidenceByteBudget&&[...new Intl.Segmenter('zh',{granularity:'word'}).segment(i.name)].some(s=>s.segment.length>=2&&mentioned(s.segment)));
   const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,
     taskMemoryOnly:true,includeItemRelationships:session.known.useItemMemories==='yes',companion:!!session.known.companionItemId,useExperiences:session.known.memoryPolicy!=='off'}));
   const memoryOn=session.known.memoryPolicy!=='off'&&!temporary;
@@ -61,7 +61,7 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
     const allocation=evidenceByteBudget ? Math.floor(evidenceByteBudget*docs.reduce((n,d)=>n+d.chunks.reduce((s,c)=>s+Buffer.byteLength(c.text),0),0)/Math.max(1,documentBytes)) : Infinity;
     let bytes=0;
     return candidates.filter(c=>{if(bytes+Buffer.byteLength(c.text)>allocation)return false;bytes+=Buffer.byteLength(c.text);return true;})
-      .map(c=>({id:c.id,itemId:i.id,model:c.model,region:docs.find(d=>d.id===c.documentId)?.region||c.region,title:c.title,text:c.text,url:c.url,documentId:c.documentId,fetchedAt:docs.find(d=>d.id===c.documentId)?.fetchedAt,scopeBasis:documents.find(d=>d.document.id===c.documentId)?.scopeBasis,basis:'official' as const}));
+      .map(c=>({id:c.id,itemId:i.id,model:c.model,region:docs.find(d=>d.id===c.documentId)?.region||c.region,title:c.title,text:c.text,url:c.url,documentId:c.documentId,fetchedAt:docs.find(d=>d.id===c.documentId)?.fetchedAt,scopeBasis:documents.find(d=>d.document.id===c.documentId)?.scopeBasis,reading:{limitations:docs.find(d=>d.id===c.documentId)?.reading?.limitations||[],figures:[]},basis:'official' as const}));
   });
   // The current user statement is authorized for THIS reply, not automatically
   // confirmed long-term memory, manufacturer evidence or a device observation.

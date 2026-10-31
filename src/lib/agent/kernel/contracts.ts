@@ -75,6 +75,7 @@ export type EvidencePassage = {
   url?:string; documentId?:string; fetchedAt?:string; firmware?:string;
   basis:"official"|"user_report"|"experience";
   scopeBasis?:string;
+  reading?:{limitations:string[];figures:{url:string;caption:string}[]};
 };
 export type ClaimCheck = {
   id:string; partId:string; text:string;
