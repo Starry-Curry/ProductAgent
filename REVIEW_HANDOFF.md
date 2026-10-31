@@ -1,3 +1,8 @@
+## 2026-10-31｜真实智能评测与定向修复
+
+独立分支codex/wujian-real-intelligence-eval-v1，基线c31a535。新授权轮次137次真实上游请求；保留历史账本。修复错误索尼来源、未知值协议、跨语章节检索、色温步骤误拒、经验呈现、部分完成状态和general标签绕过。409项离线与类型/生产构建通过；真实创意仍存在错误物理机制，自由事实问答默认关闭。见[本轮交付](docs/engineering/real-intelligence-2026-10-31/README.md)及[阶段依据](docs/engineering/real-intelligence-2026-10-31/STAGE_FIXES.md)。不以回归通过宣称产品可靠。
+
+---
 ## 2026-10-31｜长期经验与跨模块闭环（真实模型未验收）
 
 基线 unified-foundation-v2 7d682465，新分支 codex/wujian-experience-lifecycle-v1。先复现并修复：新增台灯反馈令旧耳机经验丢失；拆开运行epoch与长期隐私scope，保留有效旧经验，支持纠正、停止复用、忘记与已知派生失效。单物品指导/开放创造接收获准经验，家庭报告同事务更新原任务。保留原有故事、赠礼、分身与REA软件实验；未改Instructions、main或私人库。

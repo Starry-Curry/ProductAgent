@@ -116,7 +116,7 @@ export async function exploreOpen(
       temperature: 0.85,
       json: false,
       maxTokens: 4000,
-      timeoutMs: 60000,
+      timeoutMs: 90000,
       purpose: "creative",
     },
   );

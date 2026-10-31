@@ -177,6 +177,9 @@ export function quoteInSource(source: string, quote: string) {
       .normalize("NFKC")
       .replace(/^\s*\d{1,2}[.)、]\s+/gm, "")
       .replace(/\s+/g, " ")
+      // Inline HTML spans insert whitespace just inside punctuation (e.g. [ WH-CH520 ]).
+      // Keep every word, digit and negation; only normalize this typography.
+      .replace(/\s*([()[\]“”])\s*/g, "$1")
       .trim();
   const original = normalize(source),
     quoted = normalize(quote);
@@ -352,7 +355,7 @@ export function groundedReply(
       )
         throw new AgentError("步骤包含来源未提供的数字或危险/未执行动作");
       for (const [claim, proof] of [
-        [/长按|按住/, /hold|长按|按住/i],
+        [/长按|按住/, /hold|press\s+(?:and|&)\s+turn|长按|按住/i],
         [/蓝牙/, /bluetooth|蓝牙/i],
         [/洗碗机/, /dishwasher|洗碗机/i],
         [/浸泡|浸入/, /immerse|soak|浸泡|浸入/i],
@@ -562,7 +565,7 @@ export function groundedReply(
       `已隐藏${rejected.length}条未通过证据检查的步骤，未据此宣称完整完成任务。`,
     );
   return {
-    outcome: steps.length ? "answered" : "needs_info",
+    outcome: steps.length && !missing.length && !(p.gaps?.length) ? "answered" : "needs_info",
     answer: steps.length
       ? rejected.length
         ? "以下保留了可核对的步骤；缺失环节见说明，不将部分指导当作完整任务。"

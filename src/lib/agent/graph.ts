@@ -479,6 +479,15 @@ export function validateModelPacket(
       },
     ];
   }
+  // The general label is not an escape hatch for unsupported item-specific facts.
+  // Only the scoped product-help path is closed here; ordinary companion/chat,
+  // local guidance and source-checked replies retain their existing behavior.
+  if (packet.kind === "general" && mode === "service" && ctx.productConversation &&
+      ctx.item && ctx.externalKnowledge.length) {
+    return {...blank("这份答复没有可核对的型号依据，因此没有作为商品事实展示。资料未提及不等于支持或不支持；可查看现有来源，或补充适用型号与地区的官方资料。","needs_info"),
+      citations:[...new Map(ctx.externalKnowledge.map(d=>[d.url,{id:d.documentId,title:d.title,url:d.url,kind:"official" as const}])).values()],
+      caveat:"型号帮助的自由事实综合仍未通过质量门禁；不会用general标签绕过核对。"};
+  }
   const actionable = packet.answer.replace(
     /(?:不要|不能|禁止|切勿|请勿|避免|不建议)[^，,。；！？\n]{0,120}/g,
     "",

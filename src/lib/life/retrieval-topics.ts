@@ -16,7 +16,9 @@ const topics = [
 export function multilingualAnchors(question:string,chunks:KnowledgeChunk[]) {
   const q=question.toLowerCase();
   return topics.filter(group=>group.some(t=>q.includes(t))).flatMap(group=>{
-    const ranked=chunks.map(c=>({c,score:group.reduce((n,t)=>n+Number(c.text.toLowerCase().includes(t)),0)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
+    // A dedicated chapter outranks a contents page that merely lists the same terms.
+    // This selects passages; it does not certify any claim made from them.
+    const ranked=chunks.map(c=>({c,score:group.reduce((n,t)=>n+Number(c.text.toLowerCase().includes(t))+3*Number(c.title.toLowerCase().includes(t)),0)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
     return ranked.slice(0,2).map(x=>x.c);
   }).filter((c,i,all)=>all.findIndex(x=>x.id===c.id)===i);
 }

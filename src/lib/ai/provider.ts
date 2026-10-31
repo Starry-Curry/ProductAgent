@@ -28,6 +28,9 @@ export function modelTimeout(
   const configured = Number(env.AI_REQUEST_TIMEOUT_MS) || 60000;
   return Math.max(1, Math.min(90000, configured, requested ?? configured));
 }
+export function generationTimeout(env:Record<string,string|undefined>,purpose?:"creative"|"task",requested?:number) {
+  return modelTimeout(purpose==='creative'?{...env,AI_REQUEST_TIMEOUT_MS:env.AI_CREATIVE_TIMEOUT_MS||env.AI_REQUEST_TIMEOUT_MS}:env,requested);
+}
 async function upstreamFailure(response: Response) {
   const data = await response.json().catch(() => null);
   const raw = data?.error?.code || data?.code;
@@ -170,7 +173,7 @@ export function createProvider(
             Authorization: `Bearer ${AI_API_KEY}`,
             "Content-Type": "application/json",
           },
-          signal: AbortSignal.timeout(modelTimeout(env, options?.timeoutMs)),
+          signal: AbortSignal.timeout(generationTimeout(env, options?.purpose, options?.timeoutMs)),
           body: JSON.stringify({
             model,
             ...(options?.temperature !== undefined
