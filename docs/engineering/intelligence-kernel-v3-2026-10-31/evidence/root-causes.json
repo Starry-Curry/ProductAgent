@@ -1,0 +1,581 @@
+{
+  "baseline": "4d210bcd1c820a4dec8b230693f1c95b2247743b",
+  "historicalLedgerSha256": "0aa8dc39b2f376dcabed06e237ac5db91923fd99254af4566f6da0704730d43f",
+  "historicalRequests": 137,
+  "review": "源码与原始输入输出工程诊断；不是新模型评测或独立盲评",
+  "rows": [
+    {
+      "category": "A",
+      "stage": "remaining-26-v1",
+      "caseId": "QA-17",
+      "diagnosis": "官方支持页正文未取得；后续4次模型请求不能弥补缺失。",
+      "resultRef": "docs/engineering/real-intelligence-2026-10-31/evidence/remaining-26-v1.json",
+      "requestRefs": [
+        {
+          "number": 45,
+          "label": "remaining-26-v1/QA-17/wujian",
+          "inputSha256": "8ace7b79d815ad94a7e48106d0b65e250dc0960c3b8984c87276961fdc777f13",
+          "output": {
+            "content": "",
+            "role": "assistant",
+            "tool_calls": [
+              {
+                "function": {
+                  "arguments": "{\"query\": \"PHILIPS HD9252/90 official manual\"}",
+                  "name": "fetch_official_knowledge"
+                },
+                "id": "call_2648a9f7dfc0493f9fe71c",
+                "index": 0,
+                "type": "function"
+              }
+            ]
+          },
+          "elapsedMs": 1261
+        },
+        {
+          "number": 47,
+          "label": "remaining-26-v1/QA-17/wujian",
+          "inputSha256": "530b1772514f0f82c749de0e491180fe71e745f84f9df46ea5ea7f98c130b407",
+          "output": {
+            "content": "",
+            "role": "assistant",
+            "tool_calls": [
+              {
+                "function": {
+                  "arguments": "{\"query\": \"PHILIPS HD9252/90 first use cleaning\"}",
+                  "name": "search_product_knowledge"
+                },
+                "id": "call_84deb260ec10415d989325",
+                "index": 0,
+                "type": "function"
+              }
+            ]
+          },
+          "elapsedMs": 1060
+        },
+        {
+          "number": 48,
+          "label": "remaining-26-v1/QA-17/wujian",
+          "inputSha256": "65b607bf40ae3986a0fbe4ec1149e2ee9129f2d043d2560a45ed1bd9f606745a",
+          "output": {
+            "content": "",
+            "role": "assistant",
+            "tool_calls": [
+              {
+                "function": {
+                  "arguments": "{\"limit\": 20, \"offset\": 0}",
+                  "name": "list_accessible_items"
+                },
+                "id": "call_8d070a3dc19848aab4ed2f",
+                "index": 0,
+                "type": "function"
+              }
+            ]
+          },
+          "elapsedMs": 1093
+        },
+        {
+          "number": 49,
+          "label": "remaining-26-v1/QA-17/wujian",
+          "inputSha256": "6e521b24e0fdf660c884a9e41dd4f5cabd252d44dabf04026133a42871263230",
+          "output": {
+            "content": "{\"kind\":\"needs_info\",\"answer\":\"目前尚未获取到飞利浦 HD9252/90 官方说明书或首次清洁的明确指引。为帮您安全完成首次使用前的清洗，我需要以下任一信息：\\n\\n• 您是否已持有该空气炸锅的纸质说明书或电子版 PDF？可提供链接或截图（如第一页/清洁章节）；\\n• 或您是否方便确认：炸篮、烤盘、炸锅内腔等可拆卸部件是否标有「 dishwasher safe 」（洗碗机适用）字样？\\n\\n有了这些，我就能为您归纳出准确、符合官方要求的清洗步骤。\",\"factIds\":[],\"procedureId\":null,\"questions\":[\"您是否已有说明书（纸质/电子版）？如有，能否提供来源或相关页面？\",\"炸篮等可拆部件上是否有‘dishwasher safe’标识？\"]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 4918
+        },
+        {
+          "number": 50,
+          "label": "remaining-26-v1/QA-17/direct",
+          "inputSha256": "ecff63c8519c168d629f225a2356d47129f23c9e492aeb4052c62c67248ba776",
+          "output": {
+            "content": "根据当前资料，**飞利浦 HD9252/90 空气炸锅的首次清洗方法未在提供的官方文档、用户报告或知识快照中具体说明**。资料中明确标注：\n\n- `officialFacts: []`（无官方事实条目）  \n- `evidence.procedures: []`（无可验证的操作流程）  \n- `unknowns` 中包含“材质”“清洁方式”“食品接触适用性”等关键信息缺失  \n- `care` 属性为 `null`，且无来源资料问答、产品理解或官方文档支持该型号的清洗细节  \n\n因此，**无法提供该型号首次使用的具体清洗步骤**。\n\n不过，依据空气炸锅通用安全规范及飞利浦同类产品（如 HD92xx 系列）的常规操作惯例（非本型号专属确认，仅作参考提示），首次使用前通常建议：\n\n✅ **断电并确保设备完全冷却**（不可带电/高温清洗）  \n✅ **仅清洗可拆卸部件**：炸篮（含底部托盘）、烤架（如有）、滑轨（若可取下）  \n✅ **用温水 + 中性洗洁精 + 软布或海绵轻柔清洗**；避免钢丝球、强腐蚀性清洁剂  \n✅ **不可浸泡机身主体**（含控制面板、加热腔体），仅可用微湿软布擦拭外部表面  \n✅ **彻底晾干所有部件**（尤其炸篮缝隙与滑轨槽）后再组装使用  \n\n⚠️ 注意：以上为行业通用做法，**不构成对 HD9252/90 的官方认可操作**。因本型号资料中未提供清洗指引，强烈建议您：\n\n1. 查阅随箱附带的《快速入门指南》或《用户手册》（通常含“首次使用前清洁”章节）  \n2. 访问飞利浦中国官网（[www.philips.com.cn](https://www.philips.com.cn)）→ 输入型号 HD9252/90 搜索对应电子说明书  \n3. 若手册中提及“出厂已清洁”或“无需首次清洗”，则按说明执行  \n\n如您后续能提供说明书截图或官方清洗说明原文，我可为您逐条解析。",
+            "role": "assistant"
+          },
+          "elapsedMs": 11168
+        }
+      ],
+      "recordShape": [
+        "roundId",
+        "stage",
+        "model",
+        "experimentalFactQA",
+        "syntheticOwners",
+        "physicalTests",
+        "independentHumanBlindReview",
+        "rows"
+      ]
+    },
+    {
+      "category": "B",
+      "stage": "journeys-v1",
+      "caseId": null,
+      "diagnosis": "中文调光/色温提问中英文操作的排序、引文截断及字形处理；必须区分检索与验证。",
+      "resultRef": "docs/engineering/real-intelligence-2026-10-31/evidence/journeys-v1.json",
+      "requestRefs": [
+        {
+          "number": 79,
+          "label": "journeys-v1/A-first",
+          "inputSha256": "ea5ed9349098f3fe5930ecd3a1f7ae7ed25b7fa4de12f6e8a3a408abcc00ffd4",
+          "output": {
+            "content": "{\"kind\":\"grounded\",\"answer\":\"请先确保耳机已开机并进入配对模式。\",\"steps\":[{\"text\":\"按住电源按钮约2秒或更久，直到蓝色指示灯闪烁。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"Press and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes.\",\"phase\":\"operate\"},{\"text\":\"耳机在首次开机后会自动进入配对模式。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\",\"phase\":\"operate\"},{\"text\":\"按说明使用“Sony | Headphones Connect”应用完成配对。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"Follow the downloaded “Sony | Headphones Connect” app instructions.\",\"phase\":\"configure\"}],\"questions\":[],\"gaps\":[]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 5791
+        },
+        {
+          "number": 80,
+          "label": "journeys-v1/B-other-item",
+          "inputSha256": "e0f36d6e6134b1a37768130d28ad99cd747a0a6f6bf235ba905a2329dec47547",
+          "output": {
+            "content": "{\"kind\":\"grounded\",\"answer\":\"使用内置旋钮调节亮度和色温：旋转调节亮度，按住再旋转调节色温。\",\"steps\":[{\"text\":\"旋转旋钮调节亮度\",\"sourceIds\":[\"d3c0375626816099eaac4e00:1998\"],\"sourceQuote\":\"Turn\\n\\nAdjusts brightness\",\"phase\":\"operate\"},{\"text\":\"按住并旋转旋钮调节色温度\",\"sourceIds\":[\"d3c0375626816099eaac4e00:1998\"],\"sourceQuote\":\"Press and turn\\n\\nAdjusts color temperature\",\"phase\":\"operate\"}],\"questions\":[],\"gaps\":[]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 3915
+        },
+        {
+          "number": 81,
+          "label": "journeys-v1/C-reuse",
+          "inputSha256": "90e1ef5c664f57d6eceae55d6d9795eb29bd203116aeaff5285dc003095bf52c",
+          "output": {
+            "content": "{\"kind\":\"grounded\",\"answer\":\"请先确保耳机已开机并进入配对模式，再在新手机上启用蓝牙搜索。\",\"steps\":[{\"text\":\"按住电源按钮约2秒或更久，直到蓝色指示灯闪烁。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"Press and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes.\",\"phase\":\"operate\"},{\"text\":\"耳机首次通电后会自动进入配对模式；若非首次，则需手动触发配对（原文未说明手动触发方式，仅确认首次自动进入）。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\",\"phase\":\"configure\"},{\"text\":\"按下载并使用“Sony | Headphones Connect”应用的指引完成连接。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"Follow the downloaded “Sony | Headphones Connect” app instructions.\",\"phase\":\"operate\"}],\"questions\":[],\"gaps\":[\"非首次开机时如何手动进入配对模式，原文未说明；仅明确首次自动进入\"]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 7036
+        },
+        {
+          "number": 82,
+          "label": "journeys-v1/C-direct",
+          "inputSha256": "892be7fb90750423a3dbeca25a0e3df88348469188640f76818471d46e1eda02",
+          "output": {
+            "content": "根据你**上次成功配对的经验**（报告 ID: `ddf620f4-ff2c-48bd-bed9-82dab7736a4a`）和 WH-CH520 官方《Help Guide》资料，本次配对新手机可**跳过无效尝试**（如仅“将耳机靠近手机”），直接执行经验证有效的关键步骤：\n\n---\n\n### ✅ 本次配对操作指南（已排除你上次失败的尝试）\n\n#### 🔧 【准备阶段】  \n- ✅ **关闭旧手机的蓝牙**（你已确认：这是必要前提，否则新手机无法稳定连接）  \n- ✅ 确保新手机蓝牙已开启，且未处于飞行模式  \n- ⚠️ 不需重置耳机（WH-CH520 无物理复位键；首次开机即自动进配对模式，后续开机默认连接最后设备，无需强制“恢复出厂”）\n\n#### ▶️ 【启动配对模式】  \n- 按住耳机右侧的 **（电源）按钮约 2 秒以上**，直到 **蓝色指示灯开始闪烁**（非常亮）  \n  → 这表示耳机已进入**蓝牙配对模式**（官方明确：“The headset enters pairing mode automatically when you turn on the headset for the first time after purchase”，但**手动长按电源键是可靠触发方式，适用于任何后续配对**）\n\n#### 📱 【在新手机上完成配对】  \n- 打开新手机「设置 → 蓝牙」，确保扫描中  \n- 在设备列表中找到 **“WH-CH520”**（注意：不是“Sony WH-CH520”或其他变体）  \n- 点击连接 → 若提示输入配对码，输入 **`0000`**（WH-CH520 默认配对码，官方文档虽未明写，但该型号固件统一使用此码，属行业标准且经用户广泛验证）  \n- ✅ 成功标志：耳机发出语音提示“Connected”，或蓝灯由快闪变为慢闪/熄灭（依固件版本略有差异）\n\n#### 📲 【推荐增强步骤（非必须但提升体验）】  \n- 下载并安装官方 App：**Sony | Headphones Connect**（iOS / Android）  \n- 打开 App → 允许蓝牙与位置权限 → 按引导完成设备识别与固件更新（可优化连接稳定性，尤其多设备切换场景）\n\n---\n\n### ❌ 明确跳过的无效操作（基于你上次报告）  \n- × 仅把耳机放在新手机旁等待自动连接（你已验证无效）  \n- × 在旧手机仍开启蓝牙时尝试配对（你确认必须先关闭）  \n- × 长按音量键、播放键等其他按钮试图进入配对模式（官方文档未支持，WH-CH520 仅电源键可触发配对）\n\n---\n\n### 💡 小贴士  \n- 若新手机搜索不到 WH-CH520，请再按一次电源键（确保蓝灯持续快闪），并检查手机蓝牙扫描是否被系统后台限制（部分安卓机型需开启“位置信息”才能扫描蓝牙设备）  \n- 首次连接后，耳机将**自动记忆该手机**，下次开机会自动回连（除非你手动在手机端“忘记此设备”）\n\n需要我帮你生成对应手机系统（Android/iOS）的详细截图级指引，或检查当前固件是否需更新，可随时告诉我。",
+            "role": "assistant"
+          },
+          "elapsedMs": 17580
+        },
+        {
+          "number": 83,
+          "label": "journeys-v1/C-corrected",
+          "inputSha256": "86bc2b127565a9d9891bcd28499d4ef7e8c67fab16fa5e3f1257a629c83e61e9",
+          "output": {
+            "content": "{\"kind\":\"grounded\",\"answer\":\"请先关闭当前已连接手机的蓝牙，再按步骤进入配对模式。\",\"steps\":[{\"text\":\"按住电源按钮约2秒或更长时间，直到蓝色指示灯闪烁。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"Press and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes.\",\"phase\":\"operate\"},{\"text\":\"耳机在首次开机后自动进入配对模式；若非首次，则需确保已从新手机的蓝牙设备列表中删除旧配对记录。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\",\"cc270f155b572a8ad5cc92b5:1000\"],\"sourceQuote\":\"The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\",\"phase\":\"configure\"},{\"text\":\"按照下载的“Sony | Headphones Connect”应用说明完成连接。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"Follow the downloaded “Sony | Headphones Connect” app instructions.\",\"phase\":\"operate\"}],\"questions\":[],\"gaps\":[]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 7076
+        },
+        {
+          "number": 84,
+          "label": "journeys-v1/C-forgotten",
+          "inputSha256": "0f1f78ed249a8cf29d1584ce3d516b819f3b781be3498b7ce18721e292070284",
+          "output": {
+            "content": "{\"kind\":\"grounded\",\"answer\":\"请先确保耳机已关机，再长按电源键约2秒以上直至蓝色指示灯闪烁，进入配对模式；随后在新手机的蓝牙设置中搜索并选择“WH-CH520”完成连接。\",\"steps\":[{\"text\":\"按住电源按钮约2秒或更长时间，直到蓝色指示灯闪烁。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"Press and hold the (power) button for about 2 seconds or more until the indicator (blue) flashes.\",\"phase\":\"operate\"},{\"text\":\"耳机首次开机后自动进入配对模式。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"The headset enters pairing mode automatically when you turn on the headset for the first time after purchase.\",\"phase\":\"configure\"},{\"text\":\"按照下载的“Sony | Headphones Connect”应用程序说明建立蓝牙连接。\",\"sourceIds\":[\"cc270f155b572a8ad5cc92b5:0\"],\"sourceQuote\":\"Follow the downloaded “Sony | Headphones Connect” app instructions.\",\"phase\":\"configure\"}],\"questions\":[],\"gaps\":[]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 6595
+        },
+        {
+          "number": 85,
+          "label": "journeys-v1/creative-first",
+          "inputSha256": "78c7e88948e83e24f1b5fc42a276500b2d4f6db26dbc7828394183c48db262c7",
+          "elapsedMs": 60075
+        },
+        {
+          "number": 86,
+          "label": "journeys-v1/creative-direct",
+          "inputSha256": "722a8f371549442867feb7e2c87cf4217369d0dba2c81097ac47d4dae82d8c79",
+          "output": {
+            "content": "基于你拥有的三件物品（小米米家台灯 MJTD01SYL、IKEA SAMLA 透明盒 494.408.37、Canon EOS R50 相机），以及你明确提出的约束条件——**不买、不剪、不粘、不依赖三脚架/额外支架/背景纸，且偏好安静摄影与几何构图**——我们聚焦于**物理布置的创造性重组**与**光-物-像关系的精准控制**，提出以下**具体、可立即执行、有明确成像作用的新布置方案**：\n\n---\n\n### ✅ 新布置方案：**「悬浮开箱」侧光透射构图法**\n\n#### 🔷 核心思路  \n利用 SAMLA 盒的**刚性结构 + 透明材质 + 可开合 lid**，结合米家台灯的**高显色性（Ra 90）、无频闪、Fresnel 均匀光斑**特性，将静物“置于盒内但视觉上脱离支撑”，通过**单侧低角度透射光 + 盒体边缘几何框线**，营造静物“正在被打开、尚未落地”的安静悬停感。无需任何胶带、剪裁或固定，全靠重力自稳与光学错觉。\n\n---\n\n### 📐 具体布置步骤（仅用已有物品，一步到位）\n\n| 步骤 | 操作 | 关键物理依据 | 成像作用 |\n|------|------|----------------|------------|\n| **① 盒体倒置为底座** | 将 SAMLA 盒（39×28×14 cm）**翻转，使原盒底朝上、原盒口朝下**，lid **取下不用**。将盒平稳置于拍摄平面（如桌面/地板）。此时盒体呈一个**浅而宽的透明凹槽平台**（深度14 cm，开口朝下）。 | ✔️ SAMLA 材质为聚丙烯（PP），已确认**坚固、堆叠安全、仅限室内使用**；倒置后四角承重稳定，无倾覆风险（高度仅14 cm，远低于建议堆叠限高90 cm）。<br>✔️ 盒体无底盖，倒置后自然形成开放凹槽，**无需粘贴或改造**。 | 创造天然“下沉式舞台”：静物置于盒内凹槽中，四周被透明垂直壁包围，形成干净几何边框；盒壁不遮挡视线，却定义了画面边界与纵深层次。 |\n| **② 台灯侧置透射布光** | 将米家台灯**完全展开臂杆，调至最低高度**（确保灯头可贴近盒体一侧外壁）；**关闭所有环境光**；将台灯**紧贴 SAMLA 盒长边（39 cm 边）外侧放置，灯头正对盒壁，光轴平行于盒底平面，从侧下方约15–20°角斜射入盒内**（即光从盒壁透入，掠过静物底部）。<br>✅ 调整至：**亮度旋钮约60%–70%，色温旋钮调至5000K–5500K（接近日光白）**。 | ✔️ 米家台灯具备**Fresnel 纹理透镜 + Ra 90 显色 + 无频闪恒流调光**，此角度下光线经透明PP盒壁**发生柔和折射与内部散射**，在盒内形成均匀渐变的侧向光带，而非硬阴影。<br>✔️ 低角度透射光能清晰勾勒静物底部轮廓，同时让盒内顶部（静物上方）保持自然暗调，强化“未完全开启”的静谧感。 | ▪️ 静物底部受光发亮，顶部微暗 → 强化体积感与“正在开启”的动势<br>▪️ 盒壁因透光呈现极淡灰调，与背景自然融合，**消除杂乱投影**<br>▪️ Ra 90 光源真实还原静物本色，避免偏色（尤其对包装纹理、金属/纸材反光至关重要） |\n| **③ 相机俯角居中拍摄** | 手持 EOS R50（无需三脚架），**站位高于盒体，镜头垂直向下俯拍，构图中心对准盒内静物，确保 SAMLA 四边等距框住画面**（即盒体四壁成为天然画框）。<br>✅ 推荐设置：<br>‐ 对焦模式：**单次自动对焦（One Shot）+ 人脸/物体识别开启**（R50 可精准锁定静物主体）<br>‐ 曝光模式：**光圈优先（Av）f/5.6–f/8**（保证盒壁清晰+静物景深适中）<br>‐ ISO：**自动 ISO（上限设为ISO 3200）**（台灯亮度足够，R50 高感纯净）<br>‐ 白平衡：**预设“日光”或“自动”**（匹配5000K台灯光） | ✔️ EOS R50 机身仅重375g（含电池卡），手持俯拍稳定；APS-C 传感器 + RF-S18-45mm 镜头（默认套机）视角天然适合框取39×28 cm盒面。<br>✔️ 全像素双核AF X 可快速锁定盒内静物，即使无三脚架也保障锐度。 | ▪️ 盒壁作为几何画框，实现你偏好的“安静、秩序感”构图<br>▪️ 俯视角消除地面干扰，背景由台灯光自然压暗，**无需背景纸**<br>▪️ f/5.6–f/8 下，盒壁清晰、静物主体实焦、盒内底部光带过渡柔美 |\n\n---\n\n### ⚠️ 关键成功条件（缺一不可）\n\n| 条件 | 说明 | 为什么必须 |\n|------|------|-------------|\n| **环境全暗** | 拍摄时关闭所有其他光源（包括窗外天光），仅保留米家台灯一盏。 | 否则环境光会冲淡侧透光效，导致盒壁反光、静物立体感消失，破坏“安静开箱”的纯粹性。 |\n| **静物置于盒内中央偏下1/3处** | 不靠盒底，也不顶盒壁；留出底部光路空间（约2–3 cm间隙）。 | 确保侧向透射光能从下方“托起”静物，形成底部亮、顶部微暗的悬浮错觉；若贴底，光被遮挡；若过高，失去支撑感。 |\n| **SAMLA 盒表面洁净无指纹/水渍** | 拍摄前用干软布轻拭盒内外壁（PP材质可用清水+中性洗涤剂，但**拍摄前务必彻底擦干**）。 | 指纹或水痕会严重干扰透射光路径，造成局部眩光或雾化，破坏透明质感与几何清晰度。 |\n| **台灯灯头紧贴盒壁，无空气间隙** | 灯头外壳需与SAMLA盒外壁**物理接触或≤1 mm间隙**。 | Fresnel透镜设计依赖紧贴介质才能实现最优光扩散；间隙会导致光束发散、边缘变硬，削弱柔和透射效果。 |\n\n---\n\n### 🌟 为什么这个方案满足你全部要求？\n\n- ✅ **不买不剪不粘**：仅用物品原始形态（倒置盒、侧放灯、手持相机）；  \n- ✅ **不依赖三脚架/支架/背景纸**：手持俯拍 + 盒体自成画框 + 全暗环境+台灯控光替代背景布；  \n- ✅ **安静 & 几何感**：单光源、低对比、盒体直角框线、俯视对称",
+            "role": "assistant"
+          },
+          "elapsedMs": 40936
+        }
+      ],
+      "recordShape": [
+        "roundId",
+        "stage",
+        "model",
+        "synthetic",
+        "physicalTests",
+        "rows",
+        "transitions"
+      ]
+    },
+    {
+      "category": "C",
+      "stage": "remaining-26-v1",
+      "caseId": "QA-20",
+      "diagnosis": "直接模型称手册未列宽厚，但同一输入已有67–84mm及6.9–10mm。",
+      "resultRef": "docs/engineering/real-intelligence-2026-10-31/evidence/remaining-26-v1.json",
+      "requestRefs": [
+        {
+          "number": 52,
+          "label": "remaining-26-v1/QA-20/wujian",
+          "inputSha256": "823ad6c4d086bbf84f08fe1bb8a857f9fce08bb9df490ecae5df24538d4eaea5",
+          "output": {
+            "content": "{\"claims\":[{\"predicate\":\"phone_weight_g\",\"value\":[170,290]}]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 1611
+        },
+        {
+          "number": 53,
+          "label": "remaining-26-v1/QA-20/direct",
+          "inputSha256": "675a48808c4d322263a959dccc1cedfa638f130d250766bee1fa364f7ee89331",
+          "output": {
+            "content": "根据 DJI 官方《Osmo Mobile 6 用户手册（V1.8 英文版）》的明确说明，该云台支持的**手机重量范围为 170 克至 290 克**。\n\n需注意以下几点（均源自说明书及已验证事实）：\n- 此重量范围是**官方标注的兼容区间**，但并非唯一决定因素；\n- 手机还需满足**宽度、厚度等物理尺寸限制**（手册中虽未直接列出具体数值，但在“Attaching the Phone”章节强调磁吸夹需居中安装、可拉伸适配宽度，且要求对齐标记、防滑垫到位）；\n- **软件兼容性**（如 DJI Mimo App 版本、系统要求 iOS 12.0+/Android 8.0+）和**磁吸夹正确安装方式**也影响实际使用效果；\n- 超出此重量范围（如低于 170g 或高于 290g）可能导致云台电机负载异常、稳定性下降或无法正常校准，手册未声明对此类情况的支持。\n\n因此，Osmo Mobile 6 **设计适配的手机重量为 170–290 克**，建议在此范围内选择设备，并结合实际尺寸与安装规范使用。",
+            "role": "assistant"
+          },
+          "elapsedMs": 6895
+        }
+      ],
+      "recordShape": [
+        "roundId",
+        "stage",
+        "model",
+        "experimentalFactQA",
+        "syntheticOwners",
+        "physicalTests",
+        "independentHumanBlindReview",
+        "rows"
+      ]
+    },
+    {
+      "category": "D",
+      "stage": "remaining-26-v1",
+      "caseId": "CONSTRAINT-03",
+      "diagnosis": "只给SAMLA的单物品投影，未调度KALLAX净格/组合条件。",
+      "resultRef": "docs/engineering/real-intelligence-2026-10-31/evidence/remaining-26-v1.json",
+      "requestRefs": [
+        {
+          "number": 59,
+          "label": "remaining-26-v1/CONSTRAINT-03/wujian",
+          "inputSha256": "76a825f45f2737322ae58288aa2dd4524f23a1a150773aec05b00235d1a19425",
+          "output": {
+            "content": "{\"claims\":[{\"predicate\":\"width\",\"value\":39},{\"predicate\":\"depth\",\"value\":28},{\"predicate\":\"height\",\"value\":14},{\"predicate\":\"volume\",\"value\":11}]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 1585
+        },
+        {
+          "number": 62,
+          "label": "remaining-26-v1/CONSTRAINT-03/direct",
+          "inputSha256": "4bc02d39cc57b8988799cd914de72092bb1ea1362b49cc0283507ef184615b3e",
+          "output": {
+            "content": "根据提供的资料，**SAMLA 11升盒子（型号 494.408.37）的尺寸为：宽 39 cm × 深 28 cm × 高 14 cm**。\n\n而 IKEA 的 **KALLAX 四格柜（即 2×2 格布局的 KALLAX 单元，常见型号如 902.508.06）**，其标准内部单格尺寸（日本官网及通用规格）为：\n\n- **单格内宽 ≈ 39.5 cm**  \n- **单格内深 ≈ 28.5 cm**  \n- **单格内高 ≈ 39.5 cm**（整层高度，四格柜总高约 79 cm，每层高约 39.5 cm）\n\n✅ 对比可知：\n- SAMLA 11L 盒子宽 39 cm ＜ KALLAX 单格内宽 39.5 cm  \n- 深 28 cm ＜ KALLAX 单格内深 28.5 cm  \n- 高 14 cm ＜ 单格内高 39.5 cm（有充足余量，甚至可叠放两层）\n\n⚠️ 注意事项：\n- SAMLA 官方说明中明确提到：“**SAMLA series fit shelving units, as IVAR, OMAR and BROR**”（适用于 IVAR、OMAR、BROR 等置物架），但**未提及 KALLAX**。不过，这是因 KALLAX 属于模块化搁板系统，而 SAMLA 的设计尺寸（尤其是 39×28 cm）**恰好与 KALLAX 2×2 单元的格子内径高度匹配**，属行业公认兼容组合。\n- 日本官网虽未直接写“适配 KALLAX”，但用户广泛实践证实该尺寸可轻松放入——且留有约 0.5 cm 余量，便于抽拉和通风。\n- 盒子带盖、透明、带卡扣，竖放或横放（盖朝上）均可稳定放置于 KALLAX 格内。\n\n✅ 结论：  \n**可以塞进 KALLAX 四格柜（2×2 单元）的任意一格中，且非常贴合、稳固、易取用。**\n\n（注：不适用于 KALLAX 1×1 小格或带门/抽屉配件的变体，此处默认指标准开放式 2×2 KALLAX 柜体。）",
+            "role": "assistant"
+          },
+          "elapsedMs": 13047
+        }
+      ],
+      "recordShape": [
+        "roundId",
+        "stage",
+        "model",
+        "experimentalFactQA",
+        "syntheticOwners",
+        "physicalTests",
+        "independentHumanBlindReview",
+        "rows"
+      ]
+    },
+    {
+      "category": "E",
+      "stage": "remaining-26-v1",
+      "caseId": "QA-03",
+      "diagnosis": "模型正确抽出短按/长按作用，但属性名不在人工索引中，全部变未知。",
+      "resultRef": "docs/engineering/real-intelligence-2026-10-31/evidence/remaining-26-v1.json",
+      "requestRefs": [
+        {
+          "number": 26,
+          "label": "remaining-26-v1/QA-03/wujian",
+          "inputSha256": "6511da8c5f1a1d537571fc4b347f8e2c18057e415a0b2fc3d2dec98aeeeb6ca6",
+          "output": {
+            "content": "{\"claims\":[{\"predicate\":\"volume_decrease_short_press\",\"value\":\"减小音量\"},{\"predicate\":\"track_skip_to_previous_start_long_press\",\"value\":\"跳至上一首歌曲（或正在播放中的曲目）的开头\"}]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 1822
+        },
+        {
+          "number": 27,
+          "label": "remaining-26-v1/QA-03/direct",
+          "inputSha256": "c2f56a92e52b8847ecbfb1adfd03543423c07458f80b960e70023cfb21b7c035",
+          "output": {
+            "content": "根据提供的《WH-CH520 快速入门指南》内容：\n\n- **短按减号（–）按钮**：**减小音量**。  \n- **长按减号（–）按钮**（即“按住直到听见通知声”）：**跳至上一首歌曲，或跳至当前正在播放曲目的开头**。\n\n⚠️ 注意：该操作仅在蓝牙连接状态下控制音频设备（如手机、播放器）时生效；指南中未提及长按减号用于其他功能（如初始化或配对模式），初始化需同时按住**电源键 + 音量减键约10秒**，属于完全不同的操作组合。\n\n总结：  \n✅ 短按“–” → 音量减小  \n✅ 长按“–”（至提示音）→ 上一首 / 返回当前曲目开头  \n❌ 长按单个“–”键 ≠ 进入配对或重置（需电源键+音量减键组合）",
+            "role": "assistant"
+          },
+          "elapsedMs": 5317
+        }
+      ],
+      "recordShape": [
+        "roundId",
+        "stage",
+        "model",
+        "experimentalFactQA",
+        "syntheticOwners",
+        "physicalTests",
+        "independentHumanBlindReview",
+        "rows"
+      ]
+    },
+    {
+      "category": "F",
+      "stage": "default-eight-v1",
+      "caseId": "QA-05",
+      "diagnosis": "general标签发布无据ANC否定；修复后广泛拦截仍须改进。",
+      "resultRef": "docs/engineering/real-intelligence-2026-10-31/evidence/default-eight-v1.json",
+      "requestRefs": [
+        {
+          "number": 106,
+          "label": "default-eight-v1/QA-05/wujian",
+          "inputSha256": "b2fb7af1662c908c4179ff54b1eebabe83502501826211d640c100d9624293c4",
+          "output": {
+            "content": "",
+            "role": "assistant",
+            "tool_calls": [
+              {
+                "function": {
+                  "arguments": "{\"query\": \"WH-CH520 active noise cancellation support\"}",
+                  "name": "search_product_knowledge"
+                },
+                "id": "call_ee7dd87214b14e9b946fc6",
+                "index": 0,
+                "type": "function"
+              }
+            ]
+          },
+          "elapsedMs": 1933
+        },
+        {
+          "number": 107,
+          "label": "default-eight-v1/QA-05/wujian",
+          "inputSha256": "f79a9d92dff767e673a323a7aefb127b6ef61137390e36525e61736abe3dc8e5",
+          "output": {
+            "content": "{\"kind\":\"general\",\"answer\":\"不是。帮助指南未提及 ANC（主动降噪），不等于设备不支持——但根据当前全部官方文档（含快速入门指南、操作说明、规格与故障排除章节），**未出现任何关于 ANC 功能的描述、开关方式、设置路径或性能说明**。同时，文档中明确列出的功能包括：蓝牙音频播放、免提通话、DSEE 音质增强、语音引导、电池管理等，但 ANC 不在其中。\\n\\nSony 官方产品页面和规格表也证实：WH-CH520 **不支持主动降噪（ANC）**，它是一款入门级无线耳机，主打轻便与长续航（最长40小时），降噪依赖物理隔音（耳垫被动隔绝）。若您需要 ANC，可考虑 WH-1000XM5 或 WH-CH720 等型号。\\n\\n如需进一步确认，我可帮您查 Sony 官网当前地区的产品参数页。\",\"factIds\":[],\"procedureId\":null,\"questions\":[]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 6702
+        },
+        {
+          "number": 108,
+          "label": "default-eight-v1/QA-05/direct",
+          "inputSha256": "86b235aac6080bda751fa6d6a2e654d1c453b3e268c8be6b7d044d19df075fd4",
+          "output": {
+            "content": "不是。这份帮助指南没写 ANC（主动降噪），**不能证明 WH-CH520 不支持 ANC**，但结合官方公开资料和产品定位，**可以确认它确实不支持 ANC**——不过这个结论的依据不是“指南未提及”，而是**来自索尼官方明确的产品规格说明**。\n\n以下是关键事实梳理：\n\n✅ **WH-CH520 官方规格明确不含 ANC**  \n根据索尼全球官网及权威评测（如 Sony 官方产品页、GSMArena、CNET 等），WH-CH520 是一款入门级无线头戴耳机，其核心卖点是轻便、长续航（约 40 小时）和基础蓝牙功能，**官方规格表中从未列出“Active Noise Cancellation”或“ANC”作为功能项**。相反，同系列中支持 ANC 的型号（如 WH-CH720、WH-1000XM5）均在名称、宣传页和规格中显著标注。\n\n✅ **帮助指南未提 ANC 是合理的，而非疏漏**  \n您查阅的《帮助指南》内容聚焦于：开机/配对/音量/播放控制/充电/语音提示/故障排查等已具备的功能。它不包含未实现的功能说明——这符合技术文档惯例。指南中也未提及 DSEE（该型号实际支持）、多点连接、佩戴检测等部分功能，但这些功能在官方规格中存在；而 ANC 在所有可查的 WH-CH520 官方规格中**均未出现**。\n\n✅ **辅助佐证：无对应物理/软件入口**  \n- 指南中描述的按键操作（电源、播放、音量±）均无 ANC 开关或切换逻辑；  \n- “Sony | Headphones Connect”应用虽被提及，但针对 WH-CH520 的 App 界面**不提供 ANC 设置选项**（实测及用户反馈一致）；  \n- 无麦克风阵列设计说明（ANC 需额外拾音麦克风），拆解资料也证实其仅配备通话用单麦克风。\n\n⚠️ 注意：  \n“资料未提及 ≠ 不支持”是一般性原则（例如指南未写“支持 AAC 编码”，但实际支持）；但当某功能属于**高辨识度、需硬件支持、且同品牌同价位产品有明显分档**（如 CH520 vs CH720 vs XM 系列）时，**缺失即为确定性证据**。ANC 正属于此类功能。\n\n✅ 结论：  \n**WH-CH520 不支持 ANC**，这不是从“帮助指南没写”反推出来的，而是由索尼官方产品定义、硬件配置和全渠道规格信息共同确认的事实。帮助指南的沉默，只是与这一事实保持一致。\n\n如需 ANC 功能，建议考虑 WH-CH720（入门级 ANC）或 WH-1000XM6（旗舰级 ANC）。",
+            "role": "assistant"
+          },
+          "elapsedMs": 14811
+        }
+      ],
+      "recordShape": [
+        "roundId",
+        "stage",
+        "model",
+        "experimentalFactQA",
+        "syntheticOwners",
+        "physicalTests",
+        "independentHumanBlindReview",
+        "rows"
+      ]
+    },
+    {
+      "category": "G",
+      "stage": "journeys-v2",
+      "caseId": null,
+      "diagnosis": "创意以金属铰链推稳定、升温推凝结；用户报告不是力学/光学证明。",
+      "resultRef": "docs/engineering/real-intelligence-2026-10-31/evidence/journeys-v2.json",
+      "requestRefs": [
+        {
+          "number": 87,
+          "label": "journeys-v2/A-first",
+          "inputSha256": "926ab9534190c5d62093775e0d1213f93921f893680695e4840ad59dfbc56b06",
+          "output": {
+            "content": "{\"kind\":\"grounded\",\"answer\":\"请按以下步骤配对另一台手机\",\"steps\":[{\"text\":\"确保新手机在耳机1米范围内，且耳机已充足充电\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:0\"],\"sourceQuote\":\"Before starting the operation, make sure of the following:\\n\\nThe Bluetooth device is placed within 1 m (3.2 ft) of the headset.\\n\\nThe headset is charged sufficiently.\",\"phase\":\"prepare\"},{\"text\":\"按住蓝牙按钮约5秒或更久，直至蓝色指示灯成对闪烁两次，并听到语音提示“Pairing”\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:0\"],\"sourceQuote\":\"When you pair a second or subsequent device (the headset already has pairing information for other devices), press and hold the\\n\\n(Bluetooth) button for about 5 seconds or more to enter pairing mode manually.\\n\\nThe indicator (blue) repeatedly flashes twice in a row. You will hear the voice guidance say,\\n“Pairing”\",\"phase\":\"operate\"},{\"text\":\"在手机蓝牙设置中搜索设备，从列表中选择“[WH-CH520]”\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:0\",\"d6cf3f096000b9bcc84fb01b:1000\"],\"sourceQuote\":\"Perform the pairing procedure on the Bluetooth device to search for this headset.\\n\\n[WH-CH520] will be displayed on the list of detected devices on the screen of the Bluetooth device.\\n\\nSelect [WH-CH520] displayed on the screen of the Bluetooth device for pairing.\",\"phase\":\"operate\"},{\"text\":\"如需输入配对码，请输入“0000”\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:1000\"],\"sourceQuote\":\"If Passkey* input is required, input “0000”.\\n\\n*A Passkey may be called “Passcode”, “PIN code”, “PIN number”, or “Password”.\",\"phase\":\"operate\"},{\"text\":\"等待连接建立，听到提示音即表示成功\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:1000\"],\"sourceQuote\":\"You will hear a notification sound indicating that the connection is established.\",\"phase\":\"finish\"}],\"questions\":[],\"gaps\":[],\"experienceIds\":[]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 12766
+        },
+        {
+          "number": 88,
+          "label": "journeys-v2/B-other-item",
+          "inputSha256": "14edbd50fce4f3ffdceb8edfe0423f69ed61cc52123881264fe32c7cd6ee273e",
+          "output": {
+            "content": "{\"kind\":\"grounded\",\"answer\":\"通过旋钮调节亮度和色温：旋转调节亮度，按住再旋转调节色温。\",\"steps\":[{\"text\":\"旋转旋钮调节亮度\",\"sourceIds\":[\"d3c0375626816099eaac4e00:1998\"],\"sourceQuote\":\"Turn\\n\\nAdjusts brightness\",\"phase\":\"operate\"},{\"text\":\"按住旋钮并旋转调节色温度\",\"sourceIds\":[\"d3c0375626816099eaac4e00:1998\"],\"sourceQuote\":\"Press and turn\\n\\nAdjusts color temperature\",\"phase\":\"operate\"}],\"questions\":[],\"gaps\":[],\"experienceIds\":[]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 3903
+        },
+        {
+          "number": 89,
+          "label": "journeys-v2/C-reuse",
+          "inputSha256": "7995ef0459b9967a4d21d875eb9ce52d70bd28b2b7203f06cbcce53e75a2e006",
+          "output": {
+            "content": "{\"kind\":\"grounded\",\"answer\":\"请先确认耳机已开机，再长按蓝牙按钮5秒以上进入配对模式；随后在新手机蓝牙列表中选择WH-CH520并输入0000（如需）。上次报告提示：关闭旧手机蓝牙有助于新机连接成功。\",\"steps\":[{\"text\":\"确保耳机已开机（若刚买或初始化过，开机即自动进入配对模式）\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:0\"],\"sourceQuote\":\"Turn on the headset when you pair the headset with a device for the first time after you bought it or after you initialized the headset (the headset has no pairing information). The headset enters pairing mode automatically.\",\"phase\":\"start\"},{\"text\":\"若耳机已有其他设备配对记录，长按蓝牙按钮约5秒或更久，直至蓝灯双闪且语音提示“Pairing”\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:0\"],\"sourceQuote\":\"When you pair a second or subsequent device (the headset already has pairing information for other devices), press and hold the\\n(\\nBluetooth\\n) button for about 5 seconds or more to enter pairing mode manually.\\n\\nThe indicator (blue) repeatedly flashes twice in a row. You will hear the voice guidance say,\\n“Pairing”\",\"phase\":\"operate\"},{\"text\":\"在新手机蓝牙设置中搜索设备，从列表中选择[WH-CH520]；如提示输入密钥，输入“0000”\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:1000\"],\"sourceQuote\":\"Select [WH-CH520] displayed on the screen of the Bluetooth device for pairing.\\n\\nIf Passkey* input is required, input “0000”.\",\"phase\":\"operate\"}],\"questions\":[],\"gaps\":[],\"experienceIds\":[\"482a06e8-49d3-4a2b-bbac-6b935b5f740d\"]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 10597
+        },
+        {
+          "number": 90,
+          "label": "journeys-v2/C-direct",
+          "inputSha256": "f24b436c1b07138bc4cddffc5e33d773fd85b89a13b1affcf1be7655bd70edee",
+          "output": {
+            "content": "根据你**上次成功配对的经验**（报告 ID: `482a06e8-49d3-4a2b-bbac-6b935b5f740d`）和 **WH-CH520 官方操作指南**，本次配对新手机可**跳过无效尝试**（如仅移近手机），直接执行已验证有效的关键步骤。以下是为你精简、定制的操作流程：\n\n---\n\n### ✅ 本次配对新手机 —— 避免重复失败的精准步骤  \n（结合你上次「关闭旧手机蓝牙后新机才连上」的关键发现）\n\n#### 🔹 准备（prepare）  \n- ✅ 确保耳机**有电**（电量不足可能导致配对中断）。  \n- ✅ 将**新手机**与耳机置于**1 米内**（物理距离必须满足，但仅靠近 ≠ 成功——你已验证这点）。  \n- ⚠️ **关键前置动作（来自你上次经验！）：**  \n  → **关闭旧手机的蓝牙**（或至少确保其不主动连接/搜索 WH-CH520）；  \n  → 若旧手机仍在连接中，WH-CH520 可能拒绝新配对或自动回连旧设备。\n\n#### 🔹 进入配对模式（start + configure）  \n- 耳机开机状态下（指示灯亮起），**长按 `Bluetooth` 按钮约 5 秒以上**（无需重启或初始化，因耳机已有配对记录）。  \n- ✅ 看到：**蓝色指示灯「两次连闪」**（●● □□ ●● …）；  \n- ✅ 听到语音提示：**“Pairing”**（非“Power on”或“Connected”）。  \n> 📌 注：你上次未提重置耳机，说明当前仍保留旧配对信息 → 必须用「手动长按」进入多设备配对模式，而非依赖开机自动配对。\n\n#### 🔹 手机端操作（operate）  \n- 在**新手机**的蓝牙设置中：  \n  → 打开蓝牙；  \n  → 点击「搜索设备」或「刷新」；  \n  → 在设备列表中找到并点击 **`WH-CH520`**（注意名称完全匹配，无空格/大小写差异）；  \n- ⚠️ 如提示输入 **Passkey / PIN / 密码** → 输入 **`0000`**（官方明确指定，非随机码）。\n\n#### 🔹 完成与确认（finish）  \n- 配对成功后，手机显示「已配对」或「已连接」；  \n- ✅ 耳机发出**确认音效**（非提示音），且指示灯由快闪变为**慢闪或常亮**（依固件略有差异）；  \n- 播放音频测试：声音应从新手机正常输出至耳机。  \n\n> ✅ 你上次已验证：此流程在「旧蓝牙关闭」前提下可稳定成功，无需反复开关机或重置耳机。\n\n---\n\n### ❌ 明确跳过的无效尝试（基于你历史报告）  \n| 你试过但无效的动作 | 本次跳过理由 |  \n|------------------|-------------|  \n| 仅把新手机靠近耳机 | 你已确认「移近没有用」→ 必须先清空旧连接干扰 |  \n| 重启耳机或长按电源键 | WH-CH520 首次配对才需开机自动进配对；你已有配对记录，只需长按 `Bluetooth` 键 |  \n| 在旧手机上「忘记设备」再操作 | 你未做此步也成功了，说明非必要；重点是**让旧机不占用蓝牙链路**（关蓝牙即可） |  \n\n---\n\n### 💡 后续建议（care）  \n- WH-CH520 最多可记忆 **8 个设备**，但**同时只连 1 台**；切换时无需重新配对，直接在手机蓝牙列表点 `WH-CH520` 即可。  \n- 若未来新手机仍无法发现：检查手机蓝牙是否开启「可被发现」模式（部分安卓需手动启用），或重启手机蓝牙模块（非关机）。\n\n需要我帮你生成一份可截图保存的极简步骤卡片，或针对某品牌手机（如 iPhone / 小米 / 华为）补充界面操作提示吗？",
+            "role": "assistant"
+          },
+          "elapsedMs": 22295
+        },
+        {
+          "number": 91,
+          "label": "journeys-v2/C-corrected",
+          "inputSha256": "f6bd1e21361fb5ba8d4b29ccfcd7a1089741f2a94a849658fc4893adc69da899",
+          "output": {
+            "content": "{\"kind\":\"grounded\",\"answer\":\"请按以下步骤配对另一台手机。因您已成功配过一台手机（即耳机已有配对信息），需手动进入配对模式。\",\"steps\":[{\"text\":\"确保新手机蓝牙已开启，且与耳机距离在1米内；耳机电量充足。\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:0\"],\"sourceQuote\":\"Before starting the operation, make sure of the following:\\n\\nThe\\nBluetooth\\ndevice is placed within 1 m (3.2 ft) of the headset.\\n\\nThe headset is charged sufficiently.\\n\\nThe operating instructions of the\\nBluetooth\\ndevice is in hand.\",\"phase\":\"prepare\"},{\"text\":\"按住耳机上的（Bluetooth）按钮约5秒或更久，直至蓝色指示灯成对闪烁，同时听到语音提示“Pairing”。\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:0\"],\"sourceQuote\":\"When you pair a second or subsequent device (the headset already has pairing information for other devices), press and hold the\\n\\n(\\nBluetooth\\n) button for about 5 seconds or more to enter pairing mode manually.\\n\\nThe indicator (blue) repeatedly flashes twice in a row. You will hear the voice guidance say,\\n“Pairing”\",\"phase\":\"operate\"},{\"text\":\"在新手机的蓝牙设备列表中搜索并选择“WH-CH520”进行配对；如提示输入密钥，输入“0000”。\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:1000\"],\"sourceQuote\":\"Select [\\nWH-CH520\\n] displayed on the screen of the\\nBluetooth\\ndevice for pairing.\\n\\nIf Passkey* input is required, input “0000”.\",\"phase\":\"operate\"},{\"text\":\"配对完成后，部分手机会自动连接；若未连接，请在手机蓝牙设置中点击“WH-CH520”手动连接。\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:1000\"],\"sourceQuote\":\"Some devices automatically connect with the headset when pairing is complete.\\n\\nYou will hear a notification sound indicating that the connection is established.\\n\\nIf they are not connected, see “Connecting to a paired\\nBluetooth\\ndevice”.\",\"phase\":\"finish\"}],\"questions\":[],\"gaps\":[],\"experienceIds\":[\"482a06e8-49d3-4a2b-bbac-6b935b5f740d\"]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 13167
+        },
+        {
+          "number": 92,
+          "label": "journeys-v2/C-forgotten",
+          "inputSha256": "0c3b7291c78039c1ab52348f6e36a27bbe97d343199ca5f1ec5bb6170df8ac69",
+          "output": {
+            "content": "{\"kind\":\"grounded\",\"answer\":\"请按以下步骤配对另一台手机。我无您的历史操作经验，因未登记任何用户报告。\",\"steps\":[{\"text\":\"确保手机蓝牙设备在耳机1米范围内，且耳机已充足充电。\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:0\"],\"sourceQuote\":\"Before starting the operation, make sure of the following:\\n\\nThe Bluetooth device is placed within 1 m (3.2 ft) of the headset.\\n\\nThe headset is charged sufficiently.\\n\\nThe operating instructions of the Bluetooth device is in hand.\",\"phase\":\"prepare\"},{\"text\":\"按住耳机上的（Bluetooth）按钮约5秒或更久，手动进入配对模式；指示灯（蓝色）将连续闪烁两次，同时语音提示“Pairing”。\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:0\"],\"sourceQuote\":\"When you pair a second or subsequent device (the headset already has pairing information for other devices), press and hold the\\n\\n(Bluetooth) button for about 5 seconds or more to enter pairing mode manually.\\n\\nThe indicator (blue) repeatedly flashes twice in a row. You will hear the voice guidance say,\\n“Pairing”\",\"phase\":\"operate\"},{\"text\":\"在手机蓝牙设置中搜索设备，从列表中选择“[WH-CH520]”进行配对；如需输入配对码，请输入“0000”。\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:1000\"],\"sourceQuote\":\"Select [WH-CH520] displayed on the screen of the Bluetooth device for pairing.\\n\\nIf Passkey* input is required, input “0000”.\\n\\n*A Passkey may be called “Passcode”, “PIN code”, “PIN number”, or “Password”.\",\"phase\":\"operate\"},{\"text\":\"完成配对后，部分手机会自动连接；若未连接，需手动从手机蓝牙列表中选择WH-CH520建立连接，并听到提示音表示已连接。\",\"sourceIds\":[\"d6cf3f096000b9bcc84fb01b:1000\"],\"sourceQuote\":\"Make the Bluetooth connection from the Bluetooth device.\\n\\nSome devices automatically connect with the headset when pairing is complete.\\n\\nYou will hear a notification sound indicating that the connection is established.\\n\\nIf they are not connected, see “Connecting to a paired Bluetooth device”.\",\"phase\":\"finish\"}],\"questions\":[],\"gaps\":[],\"experienceIds\":[]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 13011
+        },
+        {
+          "number": 93,
+          "label": "journeys-v2/creative-first",
+          "inputSha256": "89910fada299f5a0c79ea156b82073d8d60384c4a5d9f5a1e7607a8bc105927b",
+          "output": {
+            "content": "我们来一起安静地、几何地、不添新物地，用你手边三样东西——**小米米家台灯（Mi LED Desk Lamp 1S）**、**IKEA SAMLA 透明盒（39×28×14 cm）** 和 **Canon EOS R50 相机**——创造一组有呼吸感的「静物开箱」创意照片。\n\n核心约束你已明确：  \n✅ 不买、不剪、不粘  \n✅ 不预设三脚架/背景纸/额外支架  \n✅ 不强求三者全用，但每项布置必须**真正起作用**（非装饰性摆放）  \n✅ 偏好：安静感、几何构图、低操作复杂度  \n\n下面提出 **4个差异显著、物理可实现、无需改装** 的布置方向。每个方向都标明：  \n🔹 **做什么**（具体动作与结构）  \n🔹 **借用了什么真实特性**（来自你提供的资料，非猜测）  \n🔹 **为什么能达成“安静的静物开箱”效果**（视觉/心理/拍摄逻辑层面）  \n\n---\n\n### 🌒 1. 「光盒悬停」——用台灯本体作悬浮式柔光罩 + SAMLA 盒作承托平台  \n**做什么**：  \n将 SAMLA 透明盒（39×28×14 cm）平放于桌面，**盒内不放任何物品**；把米家台灯倒置（灯头朝下），**仅靠灯臂铰链自然垂落，让灯头轻触盒盖中央**（非按压，不固定），灯身其余部分悬空；EOS R50 水平置于盒前约30–40 cm处，镜头略俯角对准盒盖与灯头接触点。  \n\n**借用的真实特性**：  \n- 米家台灯有**金属铰链结构**（官方说明：“Metal hinge”，且通过耐久测试）→ 可稳定保持倒置姿态，无滑动风险；  \n- SAMLA 材质为**聚丙烯塑料**（IKEA 官方确认），表面光滑、高透、刚性足 → 灯头接触点形成微小但清晰的圆形压痕+柔光扩散区，成为天然“开箱焦点”；  \n- 台灯配备**Fresnel 镜片** → 光线经盒盖折射后，在盒内底部投出均匀渐变光斑，模拟“被打开的暗箱内部正在苏醒”的静谧感。  \n\n**安静 & 几何价值**：  \n- 构图极简：画面仅含一个矩形盒、一个圆形光斑、一条垂直灯臂阴影；  \n- “开箱”意象不靠实物拆封，而靠**光从封闭盒盖上‘渗出’的错觉**——灯头是“开启者”，盒盖是“待启封界面”，光斑是“内容初现”；  \n- 全程无声：无开合动作、无手入镜、无调整焦距外的干预，快门一响即完成。  \n\n✅ 关键条件：桌面平整；灯臂铰链未松动（你已试过旋钮，说明机构正常）；拍摄时关闭环境杂光，仅用台灯照明。\n\n---\n\n### 🪞 2. 「自反射开箱」——SAMLA 盒作双面镜 + 台灯作定向侧光源  \n**做什么**：  \n取 SAMLA 盒，**掀开盒盖，立起靠在盒体长边（39 cm 边）上，呈约75°夹角**（类似打开的书本）；将台灯置于盒体**正左侧**，灯头调至**最低亮度 + 最暖色温（约2700K）**，光束中心对准盒盖内侧中线；EOS R50 正对盒体正面，镜头与盒体短边（28 cm）平行，构图框住盒体+半张盒盖+盖内反射出的台灯光源虚像。  \n\n**借用的真实特性**：  \n- SAMLA 是**透明聚丙烯**（非玻璃，但具备足够表面反射率+透光率）→ 盒盖立起后，其内表面在暖光斜射下，会同时呈现：① 盒体本体实像（透）、② 台灯光源虚像（反）、③ 虚实交界处一道细锐高光线（折射）；  \n- 米家台灯 Ra90 高显色 + **无频闪** → 反射光色彩纯净、边缘稳定，避免虚像抖动或色偏；  \n- EOS R50 的**全像素双核 AF 支持全屏追踪** → 可自动锁定虚像中的光斑中心，确保“反射出来的光源”始终清晰，强化“被观看的观看行为”这一安静哲思。  \n\n**安静 & 几何价值**：  \n- 开箱不再指向“内容物”，而指向**观看动作本身**：盒盖是“镜头遮光罩”，反射光是“被摄物”，相机拍下的正是“自己如何被照亮”；  \n- 几何干净：三条主导线——盒体底边（横）、盒盖斜边（斜）、反射光虚像轴线（纵），构成稳定三角构图；  \n- 无任何开合音、位移音、调节音——只有你转动台灯旋钮的轻微机械声（你已熟悉，且属“安静”范畴）。  \n\n✅ 关键条件：需一面素色浅色墙面/地面作基础反射承接面（不必铺纸，利用现有地板或墙）；台灯色温务必调暖，冷光会削弱反射的温柔感。\n\n---\n\n### 📦 3. 「负空间开箱」——SAMLA 盒作“空容器”符号，台灯作几何投影仪  \n**做什么**：  \nSAMLA 盒**空置、盖紧、平放**；将米家台灯移至盒体**正前方约20 cm处，灯头垂直向下，亮度调至中档，色温设为中性（4000K）**；调整灯头高度，使 Fresnel 镜片投下的**方形光斑恰好完整覆盖盒体顶面（39×28 cm）**；EOS R50 架在盒体正前方，镜头与盒顶平行，构图严格居中，只拍盒顶+光斑边界，**不摄入灯体、不摄入盒侧面**。  \n\n**借用的真实特性**：  \n- 米家台灯标称**中央照度1250 lux，光束均匀**（官方数据），配合 Fresnel 镜片 → 可在盒顶形成边缘锐利、亮度过渡平缓的矩形光域；  \n- SAMLA 盒顶是**平整硬质平面**（聚丙烯注塑成型，尺寸公差严）→ 光斑与盒顶轮廓完全重合时，产生“光即容器、容器即光”的知觉混淆；  \n- EOS R50 的**APS-C 传感器 + RF-S18-45mm 套机镜头**（你极可能在用）→ 在约40 cm 工作距离下，可轻松实现 1:1.5 左右的盒顶填满构图，细节锐利，无畸变。  \n\n**安静 & 几何价值**：  \n- “开箱”转化为**光对容器的瞬时认领**：没有手、没有盖、没有物，只有光按时抵达，完成一次静默交接；  \n- 极致几何：纯矩形套叠（光斑矩形 ⊂ 盒顶矩形），比例精确（39:28 ≈ 1.39，接近黄金分割衍生比），安静如尺规作图；  \n- 拍摄即完成：布光定型后，你只需按快门，无后续动作。  \n\n✅ 关键条件：台灯必须可前后微调（依赖其底座滑轨或桌面移动）；需短暂测试光斑尺寸（可用手机测距App辅助），但无需工具——肉眼判断“是否刚好盖住”即可。\n\n---\n\n### 🌫️ 4. 「雾界开箱」——用台灯热辐射 + SAMLA 盒冷表面制造可控凝结层  \n**做什么**：  \nSAMLA 盒**空置、盖紧、平放**；将米家台灯**开启最高亮度、最高色温（6500K）**，灯头**悬停于盒盖正上方约5–8 cm处，持续照射60秒**；关灯，**立即用 EOS R50 以 f/8、1/125s、ISO 400 拍摄盒盖表面**——此时盒盖因受热不均与空气湿度，会在局部形成细微水汽凝结纹路，形如“即将裂开的薄冰”或“待揭封的雾面”。  \n\n**借用的真实特性**：  \n- 米家台灯有**热控技术**（官方说明：“Heat-control technology guarantees long service life”）→ 表明其LED模组存在可测量的热辐射输出，虽不烫手，但足以使薄塑料表面升温；  \n- SAMLA 是**聚丙烯（PP）**，导热慢、表面能低 → 受热后遇室温空气，易在微观凹陷处凝结水汽，形成随机但细腻的雾状纹理；  \n- EOS R50 的**高感光度纯净度（ISO 32000可用）** → 即使现场光弱（关灯后），仍可用安全快门手持拍摄，捕捉转瞬即逝的雾界。  \n\n**安静 & 几何价值**：  \n- “开箱”成为一场**等待与显影**：你只是启动热源，然后退场，让物理规律在盒盖上写一行静默的序言；  \n- 纹理天然几何：凝结纹沿盒盖注塑纹理延展，形成细密平行线/同心弧，与盒体直角边缘构成刚柔对比；  \n- 全程零操作音：只有灯亮/灭的继电器轻响，和快门声——符合“安静摄影”本质。  \n\n⚠️ 注意：此法依赖环境湿度（40–60% RH 最佳），若空调房太干，可提前用湿布轻擦盒盖背面再擦干，利用残余蒸发冷却增强凝结。**不接触盒内，不违反“不粘”规则。**\n\n---\n\n### ✅ 下一步建议（供你安静选择）  \n你偏好“安静”与“几何”，以上四者中：  \n- 若想**最省力、最可控** → 选 **#3 负空间开箱**（布光一次，连拍即可）  \n- 若想**最有哲思感、最契合“开箱”隐喻** → 选 **#2 自反射开箱**（拍的是“观看”本身）  \n- 若想**尝试微妙物理现象、享受等待的仪式感** → 选 **#4 雾界开箱**（60秒加热，1秒快门）  \n- 若想**突出材质对话与光影雕塑感** → 选 **#1 光盒悬停**（灯与盒的力学/光学共舞）  \n\n不需要马上决定。你可以先试其中一种——比如花3分钟摆好 #3，看一眼取景器里的光与盒是否呼吸同频。静物从不催促，它只等你按下快门那一刻的安静确认。\n\n需要我帮你细化某一个方向的拍摄参数（如光圈/快门组合、白平衡预设值）、或分析你现有桌面材质对反射的影响，随时告诉我。",
+            "role": "assistant"
+          },
+          "elapsedMs": 61305
+        },
+        {
+          "number": 94,
+          "label": "journeys-v2/creative-direct",
+          "inputSha256": "c026b45536ab53fc85b459be204b1bdacbfeed067bff80c437b735b7b3d42ede",
+          "output": {
+            "content": "基于你拥有的三件物品（小米米家台灯 MJTD01SYL、IKEA SAMLA 透明盒 494.408.37、Canon EOS R50 相机），以及你明确的约束条件——**不买、不剪、不粘、不依赖三脚架/额外支架/背景纸，且偏好安静摄影与几何构图**——我们可构建一个**极简、自支撑、光学协同、一次到位**的静物开箱创意拍摄布置。\n\n以下方案完全基于已知可靠信息（官方资料+用户实测反馈），**不假设未证实能力**（如台灯承重、盒体耐热、相机自动对焦在透明介质前的可靠性等），仅利用已确认物理属性与光学特性，提出**具体、可执行、有明确作用的新布置方式及关键控制条件**：\n\n---\n\n### ✅ 新布置：**「悬浮开箱」双层透光平台**\n> *用SAMLA盒作结构基座 + 米家台灯作唯一光源 + EOS R50直持俯拍 —— 无支架、无背景、无修饰，靠几何关系与光控实现“开箱即静帧”效果。*\n\n#### 🔧 具体操作步骤（全部自然放置，无需固定）：\n1. **铺展台灯底座**：将米家台灯（MJTD01SYL）**完全展开至最大高度与水平延伸状态**（依据其金属铰链结构与官方“高稳定性设计”，此姿态可稳定自立）；  \n2. **倒置SAMLA盒为托盘**：取 **SAMLA 39×28×14 cm 透明盒（聚丙烯材质，已确认坚固、非食品级、仅限室内）**，**掀开盒盖，将盒体倒扣（底部朝上）放在台灯底座正前方约15–20 cm处**——此时盒底平整面成为天然、洁净、高反射率的**哑光白底平台**（聚丙烯本体呈半透明微乳白，无印刷、无纹理，反光柔和）；  \n3. **开箱静置**：将待开箱物品（如未拆封小盒装新品）**置于倒扣SAMLA盒底中央**，**保持原包装完整、未撕膜、未开盖**；  \n4. **台灯精准打光**：  \n　- 开启台灯 → 切换至 **「Reading Mode」**（官方确认：此模式提供高照度+高显色Ra 90+无频闪，适合静物色彩还原）；  \n　- **旋转拨钮调至亮度≈70%–80%**（避免过曝压暗盒体边缘细节）；  \n　- **按住拨钮+旋转，将色温调至≈4500K（中性白光）**（官方支持连续调节，4500K最接近自然日光，减少透明盒折射色偏）；  \n　- **微调灯臂角度：使光线以约30°–40°侧前方向投射到SAMLA盒底+开箱物，主光轴略高于被摄体顶部**（利用 Fresnel 镜头特性实现均匀漫射，避免硬阴影）；  \n5. **相机手持俯拍**：  \n　- EOS R50 装 RF-S18-45mm 镜头（默认套机配置）；  \n　- **设为「场景智能自动（SCN）→ 静物模式」或「Av档（光圈优先）」**；  \n　- **光圈 f/5.6–f/8**（保证开箱物全貌清晰+适度虚化SAMLA盒边缘，突出几何框感）；  \n　- **ISO 自动（上限设为 ISO 1600）**（台灯照度足够，R50 在 ISO 1600 内噪点可控）；  \n　- **对焦模式：单次自动对焦（One Shot）+ 人脸/物体识别开启**（R50 可可靠识别包装盒轮廓与文字，确保焦点落在开箱物主体）；  \n　- **持机高度：约离SAMLA盒底45–60 cm，垂直向下俯角≈85°（近乎正拍）**；  \n　- 构图：让SAMLA盒底四边自然形成「画中画」边框，开箱物居中，保留顶部1/5空隙模拟“未完全开启”的静谧感。\n\n---\n\n### ⚙️ 关键成功条件（缺一不可，均来自已知事实）：\n| 条件 | 依据 | 作用 |\n|------|------|------|\n| **SAMLA盒必须倒扣使用（非正放）** | 官方尺寸确认底面平整（39×28 cm），聚丙烯材质刚性足；正放时盒壁会遮挡视线、引入多余反射线；倒扣后底面成纯净平台，且盒体自身高度（14 cm）恰好抬升被摄体至台灯理想照明高度 | 消除支架需求；提供零成本、零痕迹、几何精准的承托平面与天然边框 |\n| **台灯必须启用 Reading Mode + 4500K + 75%亮度** | 官方明确 Reading Mode 为高照度+高显色+护眼模式；Fresnel 镜头在此模式下均匀性最优；4500K 是Ra 90显色最中性区间；75%亮度平衡照度与SAMLA盒内反射控制 | 确保开箱物色彩真实、无色偏；抑制透明盒因强光产生的眩光与内部杂散反射；使盒底呈现柔和灰白基底而非刺眼亮斑 |\n| **相机必须启用「人脸/物体识别」+「单次AF」+ 垂直俯角≥85°** | R50 官方确认支持包装盒、文字、规则几何体识别；单次AF避免追焦漂移；高俯角使SAMLA盒底四边严格平行于画面边缘，强化几何秩序感 | 实现免手动对焦的精准合焦；杜绝因透明盒折射导致的对焦失误；天然生成「开箱即定格」的静谧叙事 |\n\n---\n\n### 🌟 为什么这个布置“安静”且“有创意”？\n- **安静**：无电机声（台灯无风扇）、无快门声（R50 电子快门可静音）、无调整动作（所有参数一步到位）；构图由盒体物理边界与灯光角度自然定义，非人为堆砌。  \n- **创意**：  \n  - “倒扣盒底”将收纳容器转化为摄影平台，赋予日常物品新语义；  \n  - 利用SAMLA盒**透明侧壁在俯拍视角下几乎不可见**（因视角垂直+光线侧入），只留下清晰底边框，达成“无形之框”效果；  \n  - 开箱物未拆封却呈现“即将开启”的张力——静物摄影中少有的时间性暗示。  \n\n---\n\n### ❌ 明确排除的常见误区（基于你提供的限制）：\n- 不建议将SAMLA盒正放并放入台灯底座（未知承重/耐热性，且官方注明“仅限室内使用”，未验证灯具散热影响）；  \n- 不建议用台灯灯臂悬挂相机（无证据表明其结构支持挂载，且违反“不粘不剪不额外支架”原则）；  \n- 不建议铺白纸/布作背景（你明确不要背景纸，且SAMLA盒底已提供更洁净、更具材质感的替代基底）；  \n- 不建议尝试台灯RGB模式或Focus Mode（官方未说明其光照均匀性，且Focus Mode含呼吸节奏，破坏“安静”前提）。\n\n---\n\n如需进一步精简（例如仅用最小号SAMLA 28×20×14 cm），或适配不同开箱物尺寸（如细高型 vs 扁平型），我可基于同一逻辑快速推导出对应参数微调。是否需要？",
+            "role": "assistant"
+          },
+          "elapsedMs": 40688
+        }
+      ],
+      "recordShape": [
+        "roundId",
+        "stage",
+        "model",
+        "synthetic",
+        "physicalTests",
+        "rows",
+        "transitions"
+      ]
+    },
+    {
+      "category": "H",
+      "stage": "remaining-26-v1",
+      "caseId": "QA-17",
+      "diagnosis": "缺资料后4轮读取及修补，8.7秒仍无有效回答；HTTP与首字不算完成。",
+      "resultRef": "docs/engineering/real-intelligence-2026-10-31/evidence/remaining-26-v1.json",
+      "requestRefs": [
+        {
+          "number": 45,
+          "label": "remaining-26-v1/QA-17/wujian",
+          "inputSha256": "8ace7b79d815ad94a7e48106d0b65e250dc0960c3b8984c87276961fdc777f13",
+          "output": {
+            "content": "",
+            "role": "assistant",
+            "tool_calls": [
+              {
+                "function": {
+                  "arguments": "{\"query\": \"PHILIPS HD9252/90 official manual\"}",
+                  "name": "fetch_official_knowledge"
+                },
+                "id": "call_2648a9f7dfc0493f9fe71c",
+                "index": 0,
+                "type": "function"
+              }
+            ]
+          },
+          "elapsedMs": 1261
+        },
+        {
+          "number": 47,
+          "label": "remaining-26-v1/QA-17/wujian",
+          "inputSha256": "530b1772514f0f82c749de0e491180fe71e745f84f9df46ea5ea7f98c130b407",
+          "output": {
+            "content": "",
+            "role": "assistant",
+            "tool_calls": [
+              {
+                "function": {
+                  "arguments": "{\"query\": \"PHILIPS HD9252/90 first use cleaning\"}",
+                  "name": "search_product_knowledge"
+                },
+                "id": "call_84deb260ec10415d989325",
+                "index": 0,
+                "type": "function"
+              }
+            ]
+          },
+          "elapsedMs": 1060
+        },
+        {
+          "number": 48,
+          "label": "remaining-26-v1/QA-17/wujian",
+          "inputSha256": "65b607bf40ae3986a0fbe4ec1149e2ee9129f2d043d2560a45ed1bd9f606745a",
+          "output": {
+            "content": "",
+            "role": "assistant",
+            "tool_calls": [
+              {
+                "function": {
+                  "arguments": "{\"limit\": 20, \"offset\": 0}",
+                  "name": "list_accessible_items"
+                },
+                "id": "call_8d070a3dc19848aab4ed2f",
+                "index": 0,
+                "type": "function"
+              }
+            ]
+          },
+          "elapsedMs": 1093
+        },
+        {
+          "number": 49,
+          "label": "remaining-26-v1/QA-17/wujian",
+          "inputSha256": "6e521b24e0fdf660c884a9e41dd4f5cabd252d44dabf04026133a42871263230",
+          "output": {
+            "content": "{\"kind\":\"needs_info\",\"answer\":\"目前尚未获取到飞利浦 HD9252/90 官方说明书或首次清洁的明确指引。为帮您安全完成首次使用前的清洗，我需要以下任一信息：\\n\\n• 您是否已持有该空气炸锅的纸质说明书或电子版 PDF？可提供链接或截图（如第一页/清洁章节）；\\n• 或您是否方便确认：炸篮、烤盘、炸锅内腔等可拆卸部件是否标有「 dishwasher safe 」（洗碗机适用）字样？\\n\\n有了这些，我就能为您归纳出准确、符合官方要求的清洗步骤。\",\"factIds\":[],\"procedureId\":null,\"questions\":[\"您是否已有说明书（纸质/电子版）？如有，能否提供来源或相关页面？\",\"炸篮等可拆部件上是否有‘dishwasher safe’标识？\"]}",
+            "role": "assistant"
+          },
+          "elapsedMs": 4918
+        },
+        {
+          "number": 50,
+          "label": "remaining-26-v1/QA-17/direct",
+          "inputSha256": "ecff63c8519c168d629f225a2356d47129f23c9e492aeb4052c62c67248ba776",
+          "output": {
+            "content": "根据当前资料，**飞利浦 HD9252/90 空气炸锅的首次清洗方法未在提供的官方文档、用户报告或知识快照中具体说明**。资料中明确标注：\n\n- `officialFacts: []`（无官方事实条目）  \n- `evidence.procedures: []`（无可验证的操作流程）  \n- `unknowns` 中包含“材质”“清洁方式”“食品接触适用性”等关键信息缺失  \n- `care` 属性为 `null`，且无来源资料问答、产品理解或官方文档支持该型号的清洗细节  \n\n因此，**无法提供该型号首次使用的具体清洗步骤**。\n\n不过，依据空气炸锅通用安全规范及飞利浦同类产品（如 HD92xx 系列）的常规操作惯例（非本型号专属确认，仅作参考提示），首次使用前通常建议：\n\n✅ **断电并确保设备完全冷却**（不可带电/高温清洗）  \n✅ **仅清洗可拆卸部件**：炸篮（含底部托盘）、烤架（如有）、滑轨（若可取下）  \n✅ **用温水 + 中性洗洁精 + 软布或海绵轻柔清洗**；避免钢丝球、强腐蚀性清洁剂  \n✅ **不可浸泡机身主体**（含控制面板、加热腔体），仅可用微湿软布擦拭外部表面  \n✅ **彻底晾干所有部件**（尤其炸篮缝隙与滑轨槽）后再组装使用  \n\n⚠️ 注意：以上为行业通用做法，**不构成对 HD9252/90 的官方认可操作**。因本型号资料中未提供清洗指引，强烈建议您：\n\n1. 查阅随箱附带的《快速入门指南》或《用户手册》（通常含“首次使用前清洁”章节）  \n2. 访问飞利浦中国官网（[www.philips.com.cn](https://www.philips.com.cn)）→ 输入型号 HD9252/90 搜索对应电子说明书  \n3. 若手册中提及“出厂已清洁”或“无需首次清洗”，则按说明执行  \n\n如您后续能提供说明书截图或官方清洗说明原文，我可为您逐条解析。",
+            "role": "assistant"
+          },
+          "elapsedMs": 11168
+        }
+      ],
+      "recordShape": [
+        "roundId",
+        "stage",
+        "model",
+        "experimentalFactQA",
+        "syntheticOwners",
+        "physicalTests",
+        "independentHumanBlindReview",
+        "rows"
+      ]
+    }
+  ]
+}
