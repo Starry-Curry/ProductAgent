@@ -84,7 +84,7 @@ for(const [stage,judgments]of [['historical-final-v3',historical],['holdout-froz
   const correct=hist?j[arm==='v3'?0:1]:j[arm==='v3'?1:2],unverified=!!j[hist?(arm==='v3'?2:3):(arm==='v3'?4:5)];
   const unavailable=!!r.error||r.result?.reply?.outcome==='unavailable';
   const complete=correct===total&&!unverified&&!unavailable&&!(hist&&id==='QA-07');
-  rows.push({id,arm,stage,reviewer:'engineering_source_and_output_review_not_external_blind',correctCoreUnits:correct,totalCoreUnits:total,
+  rows.push({id,arm,stage,reviewer:'Codex_AI_source_output_review_not_independent_human',correctCoreUnits:correct,totalCoreUnits:total,
    officialAnswerableUnits:hist?null:j[3],observedUnsupportedExpansion:unverified,taskStatus:complete?'pass':unavailable?'unavailable':correct?'partial':'fail',
    note:j.at(-1),outputRef:stage+'.json#'+id+'/'+arm,question:r.question,sourceStatus:r.sourceStatus,fullReturnedAnswerMs:r.elapsedMs,fullEffectiveAnswerMs:complete?r.elapsedMs:null,upstreamRequests:r.upstreamRequests,
    inputTokens:r.inputTokens,outputTokens:r.outputTokens,estimatedCny:r.estimatedCny,commit:raw.commit,kernelSourceHash:raw.kernelSourceHash});
