@@ -72,7 +72,9 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
     const docs=readKnowledge(db,read(),actor,item.id);const linked=docs.some(d=>d.url===p.sourceUrl||d.sections?.some(l=>l.url===p.sourceUrl));
     if(!linked||!officialDomain(p.sourceUrl,item.brand||''))throw Error('该链接未从当前型号已取得的官方资料中发现');
     const page=await fetchPublicDocument(p.sourceUrl);guard();if(!modelMentioned(page.title+' '+page.text,item.model))throw Error('新章节未确认完整型号');
-    storeOfficialDocument(db,actor,item,makeKnowledgeDocument(page,item,[...docs.map(d=>d.url),p.sourceUrl],item.region||'unspecified'));acquisition.readURLs.push({url:page.url,characters:page.text.length});
+    const document=makeKnowledgeDocument(page,item,[...docs.map(d=>d.url),p.sourceUrl]);
+    if(item.region&&item.region!=='unspecified'&&document.region!=='unspecified'&&item.region!==document.region)throw Error('新章节地区与登记版本不一致');
+    storeOfficialDocument(db,actor,item,document);acquisition.readURLs.push({url:page.url,characters:page.text.length});
    }else if(!acquisition.cached||p.refresh){
     const found=await acquireKnowledge(db,read,actor,item.id,{force:!!p.refresh,persist:true,seedURLs:sourceReviews.filter(r=>r.model===item.model).map(r=>r.url),search:provider.search?async(q,sites)=>{
      guard();if(calls>=3)throw Error('本轮模型预算需保留最终回答');calls++;const r=await provider.search!(q,sites);guard();if(r.tokens){tokens.input+=r.tokens.input;tokens.output+=r.tokens.output;reservedCny+=(r.tokens.input*12+r.tokens.output*36)/1e6+0.003;}log('practical_search',JSON.stringify({model:r.model,hits:r.hits.length}));return r;

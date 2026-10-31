@@ -17,4 +17,6 @@ for(const name of names){const full=path.resolve(root,name);if(!full.startsWith(
 // intermediate data can otherwise leak through an ordinary branch push.
 for(const line of git(['rev-list','--objects',base+'..HEAD']).split('\n')){const [oid,...parts]=line.trim().split(' '),name=parts.join(' ');if(!name)continue;if(forbidden(name)){report.issues.push({path:name,reason:'forbidden_history_path'});continue;}if(binary(name)||git(['cat-file','-t',oid]).trim()!=='blob')continue;report.historyBlobs++;inspect(name,git(['cat-file','blob',oid]),true);}
 report.largest.sort((a,b)=>b.bytes-a.bytes);report.largest=report.largest.slice(0,12);
-fs.writeFileSync('docs/engineering/practical-agent-2026-10-31/evidence/secret-scan.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({files:report.files,historyBlobs:report.historyBlobs,issues:report.issues,largePublicEvidence:report.largePublicEvidence}));if(report.issues.length)process.exitCode=1;
+const output=process.argv.find(a=>a.startsWith('--output='))?.slice(9)||'docs/engineering/practical-agent-2026-10-31/evidence/secret-scan.json';
+if(!output.startsWith('docs/engineering/')||!output.endsWith('.json')||!path.resolve(root,output).startsWith(root+path.sep))throw Error('invalid_scan_output');
+fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({files:report.files,historyBlobs:report.historyBlobs,issues:report.issues,largePublicEvidence:report.largePublicEvidence}));if(report.issues.length)process.exitCode=1;

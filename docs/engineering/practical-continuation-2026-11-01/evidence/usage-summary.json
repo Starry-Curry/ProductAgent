@@ -1,0 +1,58 @@
+{
+  "roundId": "practical-agent-20261031-r1",
+  "authorized": {
+    "requests": 60,
+    "cny": 15
+  },
+  "previousRequests": 49,
+  "requests": 11,
+  "roundRequests": 60,
+  "remainingRequests": 0,
+  "previousAttemptsUnchanged": true,
+  "returned": 10,
+  "failed": 1,
+  "estimatedAdditionalCny": 7.506788,
+  "estimatedRoundCny": 12.2246,
+  "unknownFailedCharges": [
+    {
+      "number": 51,
+      "reservedCny": 5.01632,
+      "error": "provider_http_400"
+    }
+  ],
+  "inputTokens": 195527,
+  "outputTokens": 4004,
+  "upstreamReturnedLatencyMs": {
+    "p50": 1903,
+    "p95": 16545
+  },
+  "completeTextDisplayed": [
+    {
+      "sample": "cross-loop-v2",
+      "ms": 15741,
+      "requests": 1,
+      "quality": "not_fully_acceptable_see_quality_review"
+    },
+    {
+      "sample": "cross-loop-v2",
+      "ms": 8005,
+      "requests": 1,
+      "quality": "not_fully_acceptable_see_quality_review"
+    },
+    {
+      "sample": "cross-plan-v4",
+      "ms": 18767,
+      "requests": 2,
+      "quality": "not_fully_acceptable_see_quality_review"
+    }
+  ],
+  "completeTextLatencyMs": {
+    "p50": 15741,
+    "p95": 18767,
+    "notice": "仅完整文字显示时间，不是可靠任务完成耗时；全部仍有语义问题。"
+  },
+  "model": "qwen3.8-max-0902",
+  "physicalTests": 0,
+  "newProtocolLiveRetest": "blocked_request_cap",
+  "newPaidCallsAllowed": false
+}

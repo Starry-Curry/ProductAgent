@@ -29,6 +29,8 @@ export function TaskContinuity({
   const [reuse, setReuse] = useState(false);
   const [allowCloud,setAllowCloud]=useState(false);
   const [editing,setEditing]=useState<any>(null),[correction,setCorrection]=useState("");
+  function resetConsent(){setReuse(false);setAllowCloud(false);}
+  function chooseReuse(value:boolean){setReuse(value);if(!value)setAllowCloud(false);}
   async function request(action?: string, input?: unknown, id?: string) {
     const r = await fetch(
       "/api/foundation" + (id ? "?taskId=" + encodeURIComponent(id) : ""),
@@ -85,6 +87,7 @@ export function TaskContinuity({
   }, [actor]);
   async function open(t: TaskSpec, resume = true, fresh = false) {
     const d = await request(undefined, undefined, t.taskId);
+    if(current?.task.taskId!==t.taskId||fresh){resetConsent();setNotes("");setEditing(null);setCorrection("");}
     setCurrent({ task: d.task, runs: d.runs, outcomes: d.outcomes,familyProgress:d.familyProgress,previousOutcomes:d.previousOutcomes });
     localStorage.setItem("wujian-task:" + actor, t.taskId);
     if (resume) {
@@ -139,6 +142,7 @@ export function TaskContinuity({
       });
       await open(current.task, false);
       setNotes("");
+      resetConsent();
     } catch (e) {
       setError(e instanceof Error ? e.message : "反馈失败");
     } finally {
@@ -150,7 +154,7 @@ export function TaskContinuity({
     setBusy(true);setError("");
     try {
       await request("amend_outcome",{outcomeId:o.outcomeId,requestId:crypto.randomUUID(),expectedRevision:o.revision||1,operation,confirmed:true,...(operation==="correct"?{notes:correction,reuse,allowCloud}:{})});
-      setEditing(null);setCorrection("");await open(current.task,false);
+      setEditing(null);setCorrection("");resetConsent();await open(current.task,false);
     }catch(e){setError(e instanceof Error?e.message:"经验更新失败");}finally{setBusy(false);}
   }
   return (
@@ -202,7 +206,7 @@ export function TaskContinuity({
                 <input
                   type="checkbox"
                   checked={reuse}
-                  onChange={(e) => setReuse(e.target.checked)}
+                  onChange={(e) => chooseReuse(e.target.checked)}
                 />
                 允许以后同一物品的任务参考这条结果（仍仅自己可见）
               </label>
@@ -232,10 +236,10 @@ export function TaskContinuity({
                 <button disabled={busy} onClick={()=>{if(window.confirm("忘记这条经验？之后不再用于回答，正文将从当前记录删除。"))void amend(o,"forget");}}>忘记这条经验</button>
                 {editing?.outcomeId===o.outcomeId&&<div>
                   <label>纠正后的实际经历<input value={correction} onChange={e=>setCorrection(e.target.value)} maxLength={1200}/></label>
-                  <label><input type="checkbox" checked={reuse} onChange={e=>setReuse(e.target.checked)}/>允许以后参考这条更正</label>
+                  <label><input type="checkbox" checked={reuse} onChange={e=>chooseReuse(e.target.checked)}/>允许以后参考这条更正</label>
                   {reuse&&<label><input type="checkbox" checked={allowCloud} onChange={e=>setAllowCloud(e.target.checked)}/>允许云端 AI 使用这条更正</label>}
                   <button disabled={busy||!correction.trim()} onClick={()=>amend(o,"correct")}>确认更正经验</button>
-                  <button onClick={()=>setEditing(null)}>取消更正</button>
+                  <button onClick={()=>{setEditing(null);resetConsent();}}>取消更正</button>
                 </div>}
               </>}
             </div>
