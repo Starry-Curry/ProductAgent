@@ -92,8 +92,8 @@ export async function gateway(configPath,options) {
       // UTF-8 byte count bounds input tokens; highest published Plus tier is
       // reserved until actual usage arrives. An unknown failed charge stays reserved.
       const reserve =
-        (Buffer.byteLength(raw) * 8 +
-          (maxTokens + (body.enable_thinking ? 2048 : 0)) * 64) /
+        (Buffer.byteLength(raw) * Math.max(8, options?.prices?.input || 0) +
+          (maxTokens + (body.enable_thinking ? 2048 : 0)) * Math.max(64, options?.prices?.output || 0)) /
         1e6;
       assertBudget(ledger,reserve,limits);
       const user = body.messages?.find((m) => m.role === "user");
@@ -164,7 +164,7 @@ export async function gateway(configPath,options) {
         let text = "",
           usage,
           finishReason,
-          buffer = "";
+          buffer = "", upstreamModel;
         const decoder = new TextDecoder();
         for await (const chunk of response.body) {
           buffer += decoder.decode(chunk, { stream: true });
@@ -174,6 +174,7 @@ export async function gateway(configPath,options) {
             buffer = buffer.slice(end + 1);
             if (!line.startsWith("data: ") || line === "data: [DONE]") continue;
             const event = JSON.parse(line.slice(6));
+            if (event.model) upstreamModel = event.model;
             if (event.usage) usage = event.usage;
             const delta = event.choices?.[0]?.delta?.content || "";
             for(const part of event.choices?.[0]?.delta?.tool_calls||[]){const t=toolCalls[part.index]||{id:'',type:'function',function:{name:'',arguments:''}};if(part.id)t.id=part.id;if(part.function?.name)t.function.name+=part.function.name;if(part.function?.arguments)t.function.arguments+=part.function.arguments;toolCalls[part.index]=t;}
@@ -200,7 +201,7 @@ export async function gateway(configPath,options) {
             },
           ],
           usage,
-          model: body.model,
+          model: upstreamModel || body.model,
         };
       } else result = await response.json();
       if (!response.ok) throw Error("provider_http_" + response.status);

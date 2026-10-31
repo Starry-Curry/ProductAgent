@@ -12,7 +12,7 @@ export const turnInputSchema = z
       .enum(["service", "ideas", "companion", "story", "auto"])
       .default("service"),
     temporary: z.boolean().default(false),
-    memoryPolicy: z.enum(["legacy", "candidates", "off"]).optional(),
+    memoryPolicy: z.enum(["legacy", "read", "candidates", "off"]).optional(),
     uiContext: z
       .object({
         homeId: z.literal("young-apartment-v1").optional(),
@@ -109,7 +109,7 @@ export type AssistantReply = {
   };
 };
 export type SessionMessage = {
-  memoryPolicy?: "legacy" | "candidates" | "off";
+  memoryPolicy?: "legacy" | "read" | "candidates" | "off";
   capture?: boolean;
   itemId?: string;
   id: string;

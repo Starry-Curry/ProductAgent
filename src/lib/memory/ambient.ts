@@ -291,7 +291,7 @@ export function captureTurn(
   question: string,
   proposals?: Candidate[],
 ) {
-  if (/^记住[：:，,\s]/u.test(question) || session.known.memoryPolicy === "off")
+  if (/^记住[：:，,\s]/u.test(question) || ["off", "read"].includes(session.known.memoryPolicy || ""))
     return [];
   return captureEvent(db, state, actor, {
     id: requestId,
@@ -339,7 +339,7 @@ export function captureFeedback(
     "本次最后一轮建议；我反馈有效（用户报告，非设备检测）：\n" +
     steps.map((s) => s.text).join("\n");
   if (
-    session.known.memoryPolicy !== "off" &&
+    !["off", "read"].includes(session.known.memoryPolicy || "") &&
     outcome === "completed" &&
     steps.length
   )
@@ -380,7 +380,7 @@ export function captureFeedback(
       }
     }
   }
-  if (session.known.memoryPolicy !== "off" && reason.trim())
+  if (!["off", "read"].includes(session.known.memoryPolicy || "") && reason.trim())
     captureEvent(db, state, actor, {
       id: session.id + ":" + session.revision,
       kind: "feedback",

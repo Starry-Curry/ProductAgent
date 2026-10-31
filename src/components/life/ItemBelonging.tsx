@@ -491,7 +491,7 @@ export function ItemBelonging({
                         setSessionKey((k) => k + 1);
                       }}
                     />
-                    结合这件物品已获准的关系记忆
+                    使用这件物品已获准的故事与经验
                   </label>
                   <label className="belong-check">
                     <input
@@ -530,7 +530,7 @@ export function ItemBelonging({
                 companion: voice && savedEnabled,
                 useItemMemories: own && useStories,
               }}
-              memoryPolicy={capture ? "candidates" : "off"}
+              memoryPolicy={capture ? "candidates" : useStories ? "read" : "off"}
               onActivity={() => refresh().catch(() => {})}
             />
             {onContinueMission ? (

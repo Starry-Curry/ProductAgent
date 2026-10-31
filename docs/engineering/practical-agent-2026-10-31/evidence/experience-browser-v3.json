@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-31T13:30:36.067Z",
+  "basis": "synthetic_user_report_not_hardware_verification",
+  "responses": [],
+  "checks": [],
+  "errors": [
+    "expect(page).toHaveURL(expected) failed\n\nExpected: \"http://127.0.0.1:3232/#item/94dd5f7c-c6ac-497c-b104-e6429d3ff207\"\nReceived: \"http://127.0.0.1:3232/#assistant\"\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveURL\" with timeout 5000ms\n    13 × locator resolved to <html lang=\"zh-CN\">…</html>\n       - unexpected value \"http://127.0.0.1:3232/#assistant\"\n"
+  ],
+  "taskId": "b8a215bc-53a5-4f62-ab66-eface15ea814",
+  "saved": {
+    "outcome": {
+      "version": "outcome/1",
+      "outcomeId": "559174c6-1830-437b-b143-2b4352d1ac0a",
+      "taskId": "b8a215bc-53a5-4f62-ab66-eface15ea814",
+      "runId": "7eeb0aa9-cc54-4798-91ea-0d7b3c590bb6",
+      "goalStatus": "not_achieved",
+      "basis": "user_report",
+      "reporterId": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+      "notes": "[合成经历，非硬件验证]同一台原手机上，正确进入5秒配对模式后反复移近和重开蓝牙仍未解决；换另一台手机能够连接。成功原因没有查明。",
+      "itemInstanceIds": [
+        "94dd5f7c-c6ac-497c-b104-e6429d3ff207"
+      ],
+      "occurredAt": "2026-10-31T13:28:46.464Z",
+      "canReuseForFutureTasks": true,
+      "allowCloud": true,
+      "memoryEpoch": 0,
+      "revision": 1,
+      "status": "active",
+      "privacyStamp": {
+        "*": 0,
+        "item:94dd5f7c-c6ac-497c-b104-e6429d3ff207": 0
+      },
+      "experienceRefs": []
+    }
+  },
+  "upstreamRequests": 0
+}

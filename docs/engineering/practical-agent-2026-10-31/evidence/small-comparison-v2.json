@@ -1,0 +1,797 @@
+{
+  "at": "2026-10-31T13:39:57.482Z",
+  "model": "qwen3.8-max-0902",
+  "syntheticOwnership": true,
+  "physicalTests": 0,
+  "sameMaterials": "三个分支使用同一隔离物品和真实获取的完整文档；直接模型使用新执行器首回合同一输入、同一系统提示和同一温度/输出预算，禁用工具。旧默认路径按原有检索与格式执行；差异记录在请求台账。",
+  "sources": [
+    {
+      "caseId": "sony-pair",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+      "characters": 3293,
+      "success": true
+    },
+    {
+      "caseId": "sony-pair",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+      "characters": 774,
+      "success": true
+    },
+    {
+      "caseId": "canon-paper",
+      "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+      "characters": 2161,
+      "success": true
+    }
+  ],
+  "rows": [
+    {
+      "id": "sony-pair",
+      "arm": "new-native",
+      "result": {
+        "session": {
+          "id": "112116f4-b181-45a6-a141-0c54980b0196",
+          "owner": "lin",
+          "itemId": "1479f71f-9098-4180-bd64-0ee343522a78",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "d8a3e2a5-2d2b-4b7b-b63d-4ef5a1515189",
+              "role": "user",
+              "text": "这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。",
+              "at": "2026-10-31T13:40:07.010Z",
+              "itemId": "1479f71f-9098-4180-bd64-0ee343522a78",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "ac64b51c-c63c-4481-a591-8d2dcbafbd20",
+              "role": "assistant",
+              "text": "你的 WH-CH520 已经连过其他设备，现在要配对新手机，按以下官方步骤操作即可：\n\n### 1. 让耳机进入配对模式\n因为耳机里已有旧设备的配对信息，**不能只按电源键开机**（那样只会自动回连旧设备）。请这样做：\n\n1.  确保耳机已开机。\n2.  **长按耳机上的 Bluetooth 按钮约 5 秒或更久**。\n3.  直到看到蓝色指示灯**连续快速闪烁两次**，并听到语音提示 “Pairing”，才表示已进入配对模式。\n    *   注意：如果 5 分钟内没有配对成功，耳机会自动退出配对模式并关机，需重新执行此步。\n\n### 2. 在新手机上完成配对\n1.  打开手机蓝牙设置，搜索新设备。\n2.  在列表中选择 **[WH-CH520]**。\n3.  如果手机要求输入密码（Passkey/PIN），请输入 **0000**。\n4.  连接成功后会听到提示音。部分手机在配对完成后会自动连接；若未自动连接，请在蓝牙列表中手动点击该设备连接。\n\n### 💡 补充说明\n*   **多点连接限制：** WH-CH520 最多可记忆 8 台设备。如果你之前已配满 8 台，新配对的设备会覆盖最早那台的记录。它支持多设备记忆，但**同一时间只能播放一台设备的音频**。\n*   **何时需要初始化：** 只有当上述手动配对方法无效、或耳机出现异常时，才需要恢复出厂设置（同时按住电源键和音量减键 10 秒以上，蓝灯闪 4 次）。这会清除所有配对记录，之后需将所有设备重新配对。正常换手机无需此操作。\n\n> 来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+              "reply": {
+                "answer": "你的 WH-CH520 已经连过其他设备，现在要配对新手机，按以下官方步骤操作即可：\n\n### 1. 让耳机进入配对模式\n因为耳机里已有旧设备的配对信息，**不能只按电源键开机**（那样只会自动回连旧设备）。请这样做：\n\n1.  确保耳机已开机。\n2.  **长按耳机上的 Bluetooth 按钮约 5 秒或更久**。\n3.  直到看到蓝色指示灯**连续快速闪烁两次**，并听到语音提示 “Pairing”，才表示已进入配对模式。\n    *   注意：如果 5 分钟内没有配对成功，耳机会自动退出配对模式并关机，需重新执行此步。\n\n### 2. 在新手机上完成配对\n1.  打开手机蓝牙设置，搜索新设备。\n2.  在列表中选择 **[WH-CH520]**。\n3.  如果手机要求输入密码（Passkey/PIN），请输入 **0000**。\n4.  连接成功后会听到提示音。部分手机在配对完成后会自动连接；若未自动连接，请在蓝牙列表中手动点击该设备连接。\n\n### 💡 补充说明\n*   **多点连接限制：** WH-CH520 最多可记忆 8 台设备。如果你之前已配满 8 台，新配对的设备会覆盖最早那台的记录。它支持多设备记忆，但**同一时间只能播放一台设备的音频**。\n*   **何时需要初始化：** 只有当上述手动配对方法无效、或耳机出现异常时，才需要恢复出厂设置（同时按住电源键和音量减键 10 秒以上，蓝灯闪 4 次）。这会清除所有配对记录，之后需将所有设备重新配对。正常换手机无需此操作。\n\n> 来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "1479f71f-9098-4180-bd64-0ee343522a78",
+                    "name": "[合成持有]WH-CH520",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:40:07.010Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "2a79644e-b61e-4a88-916d-79ea5fd578a9"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:39:58.880Z",
+          "updatedAt": "2026-10-31T13:40:07.011Z",
+          "expiresAt": "2026-11-07T13:39:58.881Z",
+          "itemScopes": {
+            "1479f71f-9098-4180-bd64-0ee343522a78": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "你的 WH-CH520 已经连过其他设备，现在要配对新手机，按以下官方步骤操作即可：\n\n### 1. 让耳机进入配对模式\n因为耳机里已有旧设备的配对信息，**不能只按电源键开机**（那样只会自动回连旧设备）。请这样做：\n\n1.  确保耳机已开机。\n2.  **长按耳机上的 Bluetooth 按钮约 5 秒或更久**。\n3.  直到看到蓝色指示灯**连续快速闪烁两次**，并听到语音提示 “Pairing”，才表示已进入配对模式。\n    *   注意：如果 5 分钟内没有配对成功，耳机会自动退出配对模式并关机，需重新执行此步。\n\n### 2. 在新手机上完成配对\n1.  打开手机蓝牙设置，搜索新设备。\n2.  在列表中选择 **[WH-CH520]**。\n3.  如果手机要求输入密码（Passkey/PIN），请输入 **0000**。\n4.  连接成功后会听到提示音。部分手机在配对完成后会自动连接；若未自动连接，请在蓝牙列表中手动点击该设备连接。\n\n### 💡 补充说明\n*   **多点连接限制：** WH-CH520 最多可记忆 8 台设备。如果你之前已配满 8 台，新配对的设备会覆盖最早那台的记录。它支持多设备记忆，但**同一时间只能播放一台设备的音频**。\n*   **何时需要初始化：** 只有当上述手动配对方法无效、或耳机出现异常时，才需要恢复出厂设置（同时按住电源键和音量减键 10 秒以上，蓝灯闪 4 次）。这会清除所有配对记录，之后需将所有设备重新配对。正常换手机无需此操作。\n\n> 来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0",
+            "d6cf3f096000b9bcc84fb01b:0",
+            "d6cf3f096000b9bcc84fb01b:1000",
+            "d6cf3f096000b9bcc84fb01b:1998",
+            "d6cf3f096000b9bcc84fb01b:2999"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "d6cf3f096000b9bcc84fb01b",
+              "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "1479f71f-9098-4180-bd64-0ee343522a78",
+              "name": "[合成持有]WH-CH520",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:40:00.482Z"
+          },
+          {
+            "stage": "practical_knowledge",
+            "detail": "{\"itemId\":\"1479f71f-9098-4180-bd64-0ee343522a78\",\"cached\":true,\"readURLs\":[],\"issues\":[],\"sources\":[{\"id\":\"5d286afe62be538821d82c46:0\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:0\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:1000\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:1998\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:2999\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"}]}",
+            "at": "2026-10-31T13:40:00.495Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "search_product_knowledge completed",
+            "at": "2026-10-31T13:40:00.495Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:40:07.001Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":8119,\"calls\":2,\"tools\":1,\"reservedCny\":0.11873999999999998,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:40:07.006Z"
+          }
+        ],
+        "tokens": {
+          "input": 8212,
+          "output": 561
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "5445cb65-c723-459f-a422-54eac63bd75f",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 8156,
+      "requests": 2,
+      "attempts": [
+        30,
+        31
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 74,
+          "prompt_tokens": 3972,
+          "prompt_tokens_details": {
+            "cached_tokens": 1152,
+            "text_tokens": 3972
+          },
+          "total_tokens": 4046
+        },
+        {
+          "completion_tokens": 487,
+          "prompt_tokens": 4240,
+          "prompt_tokens_details": {
+            "cached_tokens": 3456,
+            "text_tokens": 4240
+          },
+          "total_tokens": 4727
+        }
+      ],
+      "estimatedCny": 0.11874
+    },
+    {
+      "id": "sony-pair",
+      "arm": "direct-same-material",
+      "result": {
+        "text": "你的 WH-CH520 已经连过另一台手机，说明耳机里存有配对信息。要配对新手机，不需要恢复出厂设置，只需手动让耳机进入配对模式即可。以下是根据索尼官方帮助指南整理的完整步骤：\n\n### 准备工作\n1. 确保新手机的蓝牙已打开，并且手机放在距离耳机 **1米以内**。\n2. 确保耳机电量充足。\n\n### 配对步骤\n\n**第一步：让耳机进入配对模式**\n因为耳机已经有其他设备的配对记录，你需要手动触发配对模式：\n* 长按耳机上的 **(Bluetooth) 按钮** 约 **5秒钟或更长时间**。\n* 当你看到指示灯（蓝色）**连续闪烁两次**，并听到语音提示说出 **“Pairing”**（配对中）时，松开按钮。\n\n**第二步：在新手机上搜索并连接**\n1. 打开新手机的蓝牙设置界面，搜索可用设备。\n2. 在检测到的设备列表中，找到并点击 **[WH-CH520]**。\n   * *如果列表中没有显示，请从第一步重新开始操作。*\n3. 如果手机屏幕要求输入配对密钥（Passkey/PIN码），请输入 **“0000”**。\n4. 选择后，部分手机会自动完成连接；如果没有自动连接，请在手机蓝牙列表中点击 [WH-CH520] 进行连接。\n5. 当你听到提示音表示连接已建立时，配对就完成了。\n\n---\n\n### 需要注意的几点：\n* **超时机制**：如果在进入配对模式后的 **5分钟内** 没有成功配对，耳机会自动取消配对模式并关机。此时需要从第一步重新操作。\n* **多设备限制**：这副耳机最多可以同时记住 **8台** 设备的配对信息。如果你之前已经配对过8台设备，现在再配对新手机，系统会自动覆盖掉连接日期最久远的那台设备的记录。\n* **关于旧手机**：正常情况下你不需要在旧手机上删除记录就能配对新手机。但如果你希望彻底清除所有历史配对记录重新开始，可以在关机且拔掉 USB-C 线的状态下，同时长按电源键和音量减（–）键约10秒以上来初始化耳机（指示灯蓝闪4次即完成）。不过对于单纯增加一台新手机，直接用上面的手动配对步骤最简单。\n\n来源：\n* [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)\n* [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+        "model": "qwen3.8-max-0902",
+        "tokens": {
+          "input": 2973,
+          "output": 582
+        },
+        "toolCalls": [],
+        "finishReason": "stop"
+      },
+      "elapsedMs": 13272,
+      "requests": 1,
+      "attempts": [
+        32
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 582,
+          "prompt_tokens": 2973,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "text_tokens": 2973
+          },
+          "total_tokens": 3555
+        }
+      ],
+      "estimatedCny": 0.056628
+    },
+    {
+      "id": "sony-pair",
+      "arm": "original-default",
+      "result": {
+        "session": {
+          "id": "177723d3-8c03-4165-99c6-2e7187962ce0",
+          "owner": "lin",
+          "itemId": "1479f71f-9098-4180-bd64-0ee343522a78",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "459bf013-3cb2-468b-a703-c450811fd537",
+              "role": "user",
+              "text": "这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。",
+              "at": "2026-10-31T13:40:20.453Z",
+              "itemId": "1479f71f-9098-4180-bd64-0ee343522a78",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "4719f4d2-c218-4745-8f8f-3e7a9a9a814d",
+              "role": "assistant",
+              "text": "这里是你与“[合成持有]WH-CH520”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这里是你与“[合成持有]WH-CH520”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "route": {
+                  "itemId": "1479f71f-9098-4180-bd64-0ee343522a78",
+                  "itemName": "[合成持有]WH-CH520",
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "围绕当前物品的真实经历与记忆"
+                }
+              },
+              "at": "2026-10-31T13:40:20.453Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "dfd6edea-6683-4863-8f2b-3ea2278ee670",
+            "turnScope": "1479f71f-9098-4180-bd64-0ee343522a78",
+            "lastIntent": "story",
+            "activeItemId": "1479f71f-9098-4180-bd64-0ee343522a78"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:40:20.334Z",
+          "updatedAt": "2026-10-31T13:40:20.453Z",
+          "expiresAt": "2026-11-07T13:40:20.334Z",
+          "itemScopes": {
+            "1479f71f-9098-4180-bd64-0ee343522a78": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这里是你与“[合成持有]WH-CH520”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "route": {
+            "itemId": "1479f71f-9098-4180-bd64-0ee343522a78",
+            "itemName": "[合成持有]WH-CH520",
+            "intent": "story",
+            "mode": "story",
+            "reason": "围绕当前物品的真实经历与记忆"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=1479f71f-9098-4180-bd64-0ee343522a78; router=home-router-v1",
+            "at": "2026-10-31T13:40:20.395Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0",
+            "at": "2026-10-31T13:40:20.419Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-31T13:40:20.419Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-31T13:40:20.421Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0,
+        "foundation": {
+          "runId": "25f3f098-f4aa-4e5f-989f-c0a994d6a447",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 165,
+      "requests": 0,
+      "attempts": [],
+      "tokens": [],
+      "estimatedCny": 0
+    },
+    {
+      "id": "canon-paper",
+      "arm": "new-native",
+      "result": {
+        "session": {
+          "id": "ddb831a7-8b6f-4d0d-a6f2-a39e26ece7bd",
+          "owner": "lin",
+          "itemId": "6f24af28-1da7-4a89-9a1f-70cf9cb44f56",
+          "identity": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "a054d669-3ba5-4ab8-ba8c-5c091d5ec47a",
+              "role": "user",
+              "text": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。",
+              "at": "2026-10-31T13:40:27.681Z",
+              "itemId": "6f24af28-1da7-4a89-9a1f-70cf9cb44f56",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "b0bba6a3-222a-45d2-81a8-89f2227653cb",
+              "role": "assistant",
+              "text": "根据 Canon SELPHY CP1500 官方手册，装相纸的完整操作如下：\n\n1.  **光面朝向**\n    相纸必须**光面朝上**（glossy side up）放入纸盒。切勿将光面和背面放反，也不要触摸光面打印区域，以免留下指纹或污渍影响打印质量甚至损坏打印机。\n\n2.  **最多放多少张**\n    纸盒内最多装入 **18 张**相纸。请一次性将整包相纸全部放入；装入 19 张或以上可能导致打印机损坏或故障。\n\n3.  **内盖与外盖的处理**\n    *   **打开时：** 先打开外盖，再打开内盖。\n    *   **装纸后：** 将内盖用力按下直至听到“咔哒”声扣紧；**外盖在打印时必须保持打开状态**。\n    *   **插入纸盒时：** 确认外盖处于打开状态，再将纸盒完全推入仓内（约滑入 2 cm）。\n\n此外，若使用明信片尺寸相纸且装有 L 尺寸适配器，需先将其取下；如打印带邮票区的明信片，请按图示方向放置纸张。补充相纸时无需关机，直接取出纸盒添加后重新插入即可。\n\n来源：[Canon SELPHY CP1500 Manual - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+              "reply": {
+                "answer": "根据 Canon SELPHY CP1500 官方手册，装相纸的完整操作如下：\n\n1.  **光面朝向**\n    相纸必须**光面朝上**（glossy side up）放入纸盒。切勿将光面和背面放反，也不要触摸光面打印区域，以免留下指纹或污渍影响打印质量甚至损坏打印机。\n\n2.  **最多放多少张**\n    纸盒内最多装入 **18 张**相纸。请一次性将整包相纸全部放入；装入 19 张或以上可能导致打印机损坏或故障。\n\n3.  **内盖与外盖的处理**\n    *   **打开时：** 先打开外盖，再打开内盖。\n    *   **装纸后：** 将内盖用力按下直至听到“咔哒”声扣紧；**外盖在打印时必须保持打开状态**。\n    *   **插入纸盒时：** 确认外盖处于打开状态，再将纸盒完全推入仓内（约滑入 2 cm）。\n\n此外，若使用明信片尺寸相纸且装有 L 尺寸适配器，需先将其取下；如打印带邮票区的明信片，请按图示方向放置纸张。补充相纸时无需关机，直接取出纸盒添加后重新插入即可。\n\n来源：[Canon SELPHY CP1500 Manual - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0",
+                  "f0b09e65ef8cba87965e4dc9:997",
+                  "f0b09e65ef8cba87965e4dc9:1997"
+                ],
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "kind": "official",
+                    "section": "SELPHY CP1500；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "6f24af28-1da7-4a89-9a1f-70cf9cb44f56",
+                    "name": "[合成持有]SELPHY CP1500",
+                    "model": "SELPHY CP1500"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:40:27.681Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "a422f57d-ec5d-4f89-9342-fcdaa5054831"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:40:21.173Z",
+          "updatedAt": "2026-10-31T13:40:27.681Z",
+          "expiresAt": "2026-11-07T13:40:21.173Z",
+          "itemScopes": {
+            "6f24af28-1da7-4a89-9a1f-70cf9cb44f56": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "根据 Canon SELPHY CP1500 官方手册，装相纸的完整操作如下：\n\n1.  **光面朝向**\n    相纸必须**光面朝上**（glossy side up）放入纸盒。切勿将光面和背面放反，也不要触摸光面打印区域，以免留下指纹或污渍影响打印质量甚至损坏打印机。\n\n2.  **最多放多少张**\n    纸盒内最多装入 **18 张**相纸。请一次性将整包相纸全部放入；装入 19 张或以上可能导致打印机损坏或故障。\n\n3.  **内盖与外盖的处理**\n    *   **打开时：** 先打开外盖，再打开内盖。\n    *   **装纸后：** 将内盖用力按下直至听到“咔哒”声扣紧；**外盖在打印时必须保持打开状态**。\n    *   **插入纸盒时：** 确认外盖处于打开状态，再将纸盒完全推入仓内（约滑入 2 cm）。\n\n此外，若使用明信片尺寸相纸且装有 L 尺寸适配器，需先将其取下；如打印带邮票区的明信片，请按图示方向放置纸张。补充相纸时无需关机，直接取出纸盒添加后重新插入即可。\n\n来源：[Canon SELPHY CP1500 Manual - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "f0b09e65ef8cba87965e4dc9:0",
+            "f0b09e65ef8cba87965e4dc9:997",
+            "f0b09e65ef8cba87965e4dc9:1997"
+          ],
+          "citations": [
+            {
+              "id": "f0b09e65ef8cba87965e4dc9",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "kind": "official",
+              "section": "SELPHY CP1500；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "6f24af28-1da7-4a89-9a1f-70cf9cb44f56",
+              "name": "[合成持有]SELPHY CP1500",
+              "model": "SELPHY CP1500"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:40:22.767Z"
+          },
+          {
+            "stage": "practical_knowledge",
+            "detail": "{\"itemId\":\"6f24af28-1da7-4a89-9a1f-70cf9cb44f56\",\"cached\":true,\"readURLs\":[],\"issues\":[],\"sources\":[{\"id\":\"f0b09e65ef8cba87965e4dc9:0\",\"url\":\"https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html\",\"model\":\"SELPHY CP1500\"},{\"id\":\"f0b09e65ef8cba87965e4dc9:997\",\"url\":\"https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html\",\"model\":\"SELPHY CP1500\"},{\"id\":\"f0b09e65ef8cba87965e4dc9:1997\",\"url\":\"https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html\",\"model\":\"SELPHY CP1500\"}]}",
+            "at": "2026-10-31T13:40:22.782Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "search_product_knowledge completed",
+            "at": "2026-10-31T13:40:22.782Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:40:27.673Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":6500,\"calls\":2,\"tools\":1,\"reservedCny\":0.08804400000000001,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:40:27.677Z"
+          }
+        ],
+        "tokens": {
+          "input": 6098,
+          "output": 413
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "691a04b7-908a-420e-ad2b-4f0be8e155d2",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 6532,
+      "requests": 2,
+      "attempts": [
+        33,
+        34
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 85,
+          "prompt_tokens": 2935,
+          "prompt_tokens_details": {
+            "cached_tokens": 1152,
+            "text_tokens": 2935
+          },
+          "total_tokens": 3020
+        },
+        {
+          "completion_tokens": 328,
+          "prompt_tokens": 3163,
+          "prompt_tokens_details": {
+            "cached_tokens": 2304,
+            "text_tokens": 3163
+          },
+          "total_tokens": 3491
+        }
+      ],
+      "estimatedCny": 0.08804400000000001
+    },
+    {
+      "id": "canon-paper",
+      "arm": "direct-same-material",
+      "result": {
+        "text": "根据 Canon SELPHY CP1500 官方手册，装相纸的完整操作如下：\n\n**1. 光面朝哪边**\n- 将相纸放入纸盒时，**光面（打印面）朝上**。\n- 拿取时不要触摸光面，避免留下指纹或污渍影响打印质量。\n- 切勿将相纸正反面放反（光面和背面颠倒），否则可能损坏打印机或导致故障。\n\n**2. 最多放多少张**\n- 一次最多放入 **18 张**相纸（即整包相纸的数量）。\n- 放入 19 张或以上可能会损坏打印机或导致故障。\n\n**3. 内盖和外盖的处理**\n纸盒仓有两层盖子，处理顺序和状态不同：\n- **打开时**：先打开外盖（①），再打开内盖（②）。\n- **装入相纸后**：将内盖用力合上，直到听到“咔哒”一声卡入到位。\n- **打印时**：**外盖必须保持打开状态**。在确认外盖处于打开的情况下，再将纸盒完全推入仓内（约滑入 2 厘米）。\n\n**补充注意事项**\n- 装纸前，先从包装袋中取出相纸并撕掉保护纸。\n- 如果打印明信片尺寸相纸且纸盒上装有 L 尺寸适配器，需先取下适配器。\n- 不要用手触摸纸盒上的弹簧，以免意外弯折导致进纸不畅。\n- 不要用湿手拿相纸，并保持相纸无灰尘。\n\n来源：[Canon SELPHY CP1500 官方手册 - Loading the Paper Cassette](https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html)",
+        "model": "qwen3.8-max-0902",
+        "tokens": {
+          "input": 1936,
+          "output": 393
+        },
+        "toolCalls": [],
+        "finishReason": "stop"
+      },
+      "elapsedMs": 8383,
+      "requests": 1,
+      "attempts": [
+        35
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 393,
+          "prompt_tokens": 1936,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "text_tokens": 1936
+          },
+          "total_tokens": 2329
+        }
+      ],
+      "estimatedCny": 0.03738
+    },
+    {
+      "id": "canon-paper",
+      "arm": "original-default",
+      "result": {
+        "session": {
+          "id": "0b56f972-f3bf-4274-a11a-18b36de7b1de",
+          "owner": "lin",
+          "itemId": "6f24af28-1da7-4a89-9a1f-70cf9cb44f56",
+          "identity": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "b7bd82b0-0a93-428e-97df-18ba06a539fe",
+              "role": "user",
+              "text": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。",
+              "at": "2026-10-31T13:40:42.999Z",
+              "itemId": "6f24af28-1da7-4a89-9a1f-70cf9cb44f56",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "0b3d7373-1b58-4d9e-9cb6-a49e113a6310",
+              "role": "assistant",
+              "text": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+                "steps": [
+                  {
+                    "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:打开纸盒盖：先打开外层盖子（outercover",
+                    "text": "处理步骤：打开纸盒盖：先打开外层盖子（outer cover），再打开内层盖子（inner cover）。",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:装入相纸：取出相纸并移除保护页，将全部18张纸放",
+                    "text": "处理步骤：装入相纸：取出相纸并移除保护页，将全部18张纸放入纸盒；切勿装入19张或更多，以免损坏打印机或导致故障。",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:确认纸张朝向：持纸时将光面（glossyside",
+                    "text": "处理步骤：确认纸张朝向：持纸时将光面（glossy side）朝上放入，不要触碰光面的打印表面。",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:关闭内盖：将内盖用力关上，直到听到咔嗒声卡入到位",
+                    "text": "处理步骤：关闭内盖：将内盖用力关上，直到听到咔嗒声卡入到位。",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:外盖处理与安装纸盒：打印时请保持外盖开启；确认外",
+                    "text": "处理步骤：外盖处理与安装纸盒：打印时请保持外盖开启；确认外盖处于打开状态后，将纸盒完全推入仓内（约滑入2 cm）。",
+                    "phase": "operate"
+                  }
+                ],
+                "questions": [],
+                "source": "model-with-evidence",
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9:0",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "section": "原文位置 0–1347；SELPHY CP1500 / unspecified",
+                    "kind": "official"
+                  },
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9:997",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "section": "原文位置 997–2161；SELPHY CP1500 / unspecified",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0",
+                  "f0b09e65ef8cba87965e4dc9:997"
+                ],
+                "memoryIds": [],
+                "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
+                "model": "qwen3.8-max-0902",
+                "route": {
+                  "itemId": "6f24af28-1da7-4a89-9a1f-70cf9cb44f56",
+                  "itemName": "[合成持有]SELPHY CP1500",
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对适用资料与使用条件"
+                }
+              },
+              "at": "2026-10-31T13:40:42.999Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "9691bb0b-2f53-4646-80af-23c4580eab58",
+            "turnScope": "6f24af28-1da7-4a89-9a1f-70cf9cb44f56",
+            "lastIntent": "help",
+            "activeItemId": "6f24af28-1da7-4a89-9a1f-70cf9cb44f56",
+            "goal": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:40:36.086Z",
+          "updatedAt": "2026-10-31T13:40:42.999Z",
+          "expiresAt": "2026-11-07T13:40:36.086Z",
+          "itemScopes": {
+            "6f24af28-1da7-4a89-9a1f-70cf9cb44f56": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+          "steps": [
+            {
+              "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:打开纸盒盖：先打开外层盖子（outercover",
+              "text": "处理步骤：打开纸盒盖：先打开外层盖子（outer cover），再打开内层盖子（inner cover）。",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:装入相纸：取出相纸并移除保护页，将全部18张纸放",
+              "text": "处理步骤：装入相纸：取出相纸并移除保护页，将全部18张纸放入纸盒；切勿装入19张或更多，以免损坏打印机或导致故障。",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:确认纸张朝向：持纸时将光面（glossyside",
+              "text": "处理步骤：确认纸张朝向：持纸时将光面（glossy side）朝上放入，不要触碰光面的打印表面。",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:关闭内盖：将内盖用力关上，直到听到咔嗒声卡入到位",
+              "text": "处理步骤：关闭内盖：将内盖用力关上，直到听到咔嗒声卡入到位。",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:外盖处理与安装纸盒：打印时请保持外盖开启；确认外",
+              "text": "处理步骤：外盖处理与安装纸盒：打印时请保持外盖开启；确认外盖处于打开状态后，将纸盒完全推入仓内（约滑入2 cm）。",
+              "phase": "operate"
+            }
+          ],
+          "questions": [],
+          "source": "model-with-evidence",
+          "citations": [
+            {
+              "id": "f0b09e65ef8cba87965e4dc9:0",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "section": "原文位置 0–1347；SELPHY CP1500 / unspecified",
+              "kind": "official"
+            },
+            {
+              "id": "f0b09e65ef8cba87965e4dc9:997",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "section": "原文位置 997–2161；SELPHY CP1500 / unspecified",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "f0b09e65ef8cba87965e4dc9:0",
+            "f0b09e65ef8cba87965e4dc9:997"
+          ],
+          "memoryIds": [],
+          "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
+          "model": "qwen3.8-max-0902",
+          "route": {
+            "itemId": "6f24af28-1da7-4a89-9a1f-70cf9cb44f56",
+            "itemName": "[合成持有]SELPHY CP1500",
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对适用资料与使用条件"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=6f24af28-1da7-4a89-9a1f-70cf9cb44f56; router=home-router-v1",
+            "at": "2026-10-31T13:40:36.121Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-31T13:40:36.146Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-31T13:40:36.146Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-31T13:40:36.169Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-31T13:40:42.937Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-31T13:40:42.972Z"
+          }
+        ],
+        "tokens": {
+          "input": 3961,
+          "output": 569
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "985bc2a5-817f-4d8a-9ce2-6cd740d41d8e",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 6934,
+      "requests": 1,
+      "attempts": [
+        36
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 569,
+          "prompt_tokens": 3961,
+          "prompt_tokens_details": {
+            "cached_tokens": 2048,
+            "text_tokens": 3961
+          },
+          "total_tokens": 4530
+        }
+      ],
+      "estimatedCny": 0.068016
+    }
+  ]
+}

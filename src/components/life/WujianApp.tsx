@@ -92,7 +92,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     [notice, setNotice] = useState(""),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [policy, setPolicy] = useState<"off" | "candidates">("off");
+    [policy, setPolicy] = useState<"off" | "read" | "candidates">("off");
   useEffect(() => {
     try {
       setElder(
@@ -294,6 +294,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     setHomeChoice(null);
     setMission(null);
     setSelected("");
+    const [initialRoute, initialId] = window.location.hash.slice(1).split("/");
     const initial = [
       "home",
       "items",
@@ -302,14 +303,21 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
       "assistant",
       "family",
       "social",
-    ].includes(window.location.hash.slice(1))
-      ? (window.location.hash.slice(1) as View)
+      "add",
+      "item",
+    ].includes(initialRoute)
+      ? (initialRoute as View)
       : "home";
+    let initialSelected = "";
+    if (initial === "item" && initialId) {
+      try { initialSelected = decodeURIComponent(initialId); } catch { /* Invalid URL stays unselected. */ }
+    }
+    setSelected(initialSelected);
     setView(initial);
     window.history.replaceState(
-      { wujian: true, actor, view: initial, selected: "", tab: "帮助" },
+      { wujian: true, actor, view: initial, selected: initialSelected, tab: "帮助" },
       "",
-      `#${initial}`,
+      `#${initial}${initialSelected ? "/" + encodeURIComponent(initialSelected) : ""}`,
     );
     load().catch((e) => setError(e.message));
     return () => {
@@ -965,11 +973,16 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                   </div>
                 </div>
                 <label className="life-card life-check">
+                  <input type="checkbox" checked={policy !== "off"} onChange={e => setPolicy(e.target.checked ? "read" : "off")} />
+                  使用已获准的个人记忆与经历（仅使用允许云端读取的内容，不自动保存新记忆）
+                </label>
+                <label className="life-card life-check">
                   <input
                     type="checkbox"
                     checked={policy === "candidates"}
+                    disabled={policy === "off"}
                     onChange={(e) =>
-                      setPolicy(e.target.checked ? "candidates" : "off")
+                      setPolicy(e.target.checked ? "candidates" : "read")
                     }
                   />
                   允许从这段对话建议记忆（模型可用时分析当前原话；先确认再用于长期个性化，历史私密记忆默认不上云）

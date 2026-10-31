@@ -44,13 +44,14 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  let calls=0,tools=0,reservedCny=0,tokens={input:0,output:0};
  let extraIds:string[]=[],queries:string[]=[];
  const log=(stage:string,detail:string)=>trace.push({stage,detail,at:new Date().toISOString()});
- const context=()=>kernelContext(db,read(),actor,session,question,temporary,queries,extraIds);
+ const context=()=>kernelContext(db,read(),actor,session,question,temporary,queries,extraIds,85000);
  const guard=(checkTime=true)=>{if(checkTime&&Date.now()>=deadline)throw new AgentError('本次任务等待过久，请保留问题后继续',504);
   if(epoch(db,actor)!==version||!sessionAccess(session,read(),actor))throw new AgentError('物品或记忆授权已变化，请重新提问',409);
   for(const [id,stamp]of scopes){const i=read().items.find(i=>i.id===id);if(!i||itemStamp(i)!==stamp||!authorize(db,read(),actor,id).allowed)throw new AgentError('物品授权或身份已变化',409);}};
  const track=(ctx:ReturnType<typeof context>)=>{for(const i of ctx.items){const item=read().items.find(x=>x.id===i.id)!;scopes.set(i.id,itemStamp(item));}};
  const initial=context();track(initial);
  const passages=new Map(initial.evidence.filter(e=>e.basis==='official').map(e=>[e.id,e]));
+ const suppliedPassages=new Set(passages.keys());
  const select=(requested:string[])=>{const allowed=context().catalogue;for(const id of requested)if(!allowed.some(i=>i.id===id))throw new AgentError('物品未获授权',403);extraIds=[...new Set([...extraIds,...requested])];const c=context();track(c);return c;};
  async function tool(name:string,args:string){guard();if(++tools>8)throw Error('tool_budget_exceeded');
   const schema=schemas[name as keyof typeof schemas];if(!schema)throw Error('unknown_tool');const p:any=schema.parse(JSON.parse(args));
@@ -67,7 +68,8 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   }
   queries=[p.query];const enriched=context();track(enriched);const sources=enriched.evidence.filter(e=>e.itemId===p.itemId&&e.basis==='official');for(const s of sources)passages.set(s.id,s);
   log('practical_knowledge',JSON.stringify({itemId:p.itemId,...acquisition,sources:sources.map(s=>({id:s.id,url:s.url,model:s.model}))}));
-  return {sources,acquisition,unknown:sources.length?'':'没有读到该型号适用正文，不得编造操作。'};
+  const fresh=sources.filter(s=>!suppliedPassages.has(s.id));for(const s of fresh)suppliedPassages.add(s.id);
+  return {sources:fresh,existingPassageIds:sources.filter(s=>!fresh.includes(s)).map(s=>s.id),acquisition,unknown:sources.length?'':'没有读到该型号适用正文，不得编造操作。',notice:'existingPassageIds 的原文已在本次上下文提供，避免重复传输；引用不代表完整语义验证。'};
  }
  const messages:ModelMessage[]=[{role:'system',content:PRACTICAL_SYSTEM},{role:'user',content:JSON.stringify({question,items:initial.items,catalogue:initial.catalogue,
   officialSources:initial.evidence.filter(e=>e.basis==='official'),experiences:initial.experiences,preferences:initial.preferences,privateFacts:initial.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),
@@ -79,10 +81,11 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   const firstItem=initial.items[0];const mustRead=round===0&&firstItem?.model&&!session.messages.length;
   const result=await provider.converse!(messages,practicalTools,{timeoutMs:Math.min(45000,deadline-Date.now()),maxTokens:2400,
    toolChoice:round===3?'none':mustRead?{type:'function',function:{name:'search_product_knowledge'}}:'auto',onText:text=>{guard();provider.onText?.(text);}});
-  guard();if(result.tokens){tokens.input+=result.tokens.input;tokens.output+=result.tokens.output;}
+  guard();if(result.tokens){tokens.input+=result.tokens.input;tokens.output+=result.tokens.output;reservedCny-=reserve;reservedCny+=(result.tokens.input*12+result.tokens.output*36)/1e6;}
   log('practical_model',JSON.stringify({round,model:result.model,toolCalls:result.toolCalls.map(t=>t.function.name),finish:result.finishReason}));
   if(result.text)answer=result.text;
   if(!result.toolCalls.length)break;
+  if(round===3){failure='工具循环达到上限，未完成最终回答';log('practical_failed',failure);break;}
   messages.push({role:'assistant',content:result.text||null,tool_calls:result.toolCalls});
   for(const t of result.toolCalls){let value:unknown;try{value=await tool(t.function.name,t.function.arguments);log('practical_tool',t.function.name+' completed');}catch(e){if(e instanceof AgentError)throw e;value={error:'工具读取未完成',reason:(e as Error).message};log('practical_tool_failed',t.function.name+': '+(e as Error).message);}messages.push({role:'tool',tool_call_id:t.id,content:JSON.stringify(value)});}
  }}catch(e){if(e instanceof AgentError&&[403,409].includes(e.status))throw e;failure=(e as Error).message;log('practical_failed',failure);}

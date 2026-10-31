@@ -401,7 +401,7 @@ async function respondLegacy(
         itemId: execution.reply.route?.itemId || session.itemId,
         memoryPolicy: input.memoryPolicy,
         capture:
-          session.known.memoryPolicy !== "off" &&
+          session.known.memoryPolicy !== "off" && session.known.memoryPolicy !== "read" &&
           (session.known.memoryPolicy === "candidates" ||
             input.mode !== "auto" ||
             (!!execution.reply.route &&

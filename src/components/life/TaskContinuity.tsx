@@ -118,11 +118,19 @@ export function TaskContinuity({
     setBusy(true);
     setError("");
     try {
+      // A finished model run advances the task revision before the polling UI
+      // necessarily observes it. Refresh that same goal, never silently rebase
+      // a report onto a changed goal or a different set of items.
+      const latest = await request(undefined, undefined, current.task.taskId);
+      if (latest.task.goal !== current.task.goal || JSON.stringify(latest.task.itemInstanceIds) !== JSON.stringify(current.task.itemInstanceIds))
+        throw Error("任务目标或相关物品已改变，请重新打开任务后核对结果");
+      if (!latest.runs.some((r: TaskRun) => r.runId === run.runId && r.status !== "running"))
+        throw Error("这次回答尚未完成，请稍后再记录实际结果");
       await request("outcome", {
         taskId: current.task.taskId,
         runId: run.runId,
         requestId: crypto.randomUUID(),
-        expectedRevision: current.task.revision,
+        expectedRevision: latest.task.revision,
         goalStatus: status,
         notes,
         confirmed: true,

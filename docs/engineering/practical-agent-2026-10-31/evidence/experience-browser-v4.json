@@ -1,0 +1,637 @@
+{
+  "at": "2026-10-31T13:31:00.407Z",
+  "basis": "synthetic_user_report_not_hardware_verification",
+  "responses": [
+    {
+      "question": "同一台原手机又连不上WH-CH520。我不想重复已经失败的办法，也不做初始化，下一步怎么排查？请参考我允许保存的这件耳机的经历。",
+      "result": {
+        "session": {
+          "id": "c913e79f-95d4-4dc4-999c-fca1a7614c2a",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "1ff397dc-df1f-4734-b9b1-c48575367aa4",
+              "role": "user",
+              "text": "同一台原手机又连不上WH-CH520。我不想重复已经失败的办法，也不做初始化，下一步怎么排查？请参考我允许保存的这件耳机的经历。",
+              "at": "2026-10-31T13:31:12.724Z",
+              "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "memoryPolicy": "read",
+              "capture": false
+            },
+            {
+              "id": "04892ea4-8d90-4dc1-9cc8-0cc3426fab3c",
+              "role": "assistant",
+              "text": "根据你保存的经历，上次在同一台原手机上“正确进入5秒配对模式后反复移近和重开蓝牙”已经失败，但换另一台手机能连。这说明耳机本体和配对流程大概率正常，问题更可能出在**这台原手机当前的连接状态或占用**上。既然不做初始化，下一步请只排查手机端这一侧：\n\n1.  **确认耳机未被他机占用**\n    WH-CH520 虽可记忆8台设备，但同一时间只能与1台播放音频。若它正连着你的另一台手机、平板或电脑，原手机将无法建立有效连接。请先在那台“能连的手机”或其他已配对设备上，手动断开与 WH-CH520 的连接（或直接关闭那些设备的蓝牙），再回到原手机尝试连接。\n\n2.  **在原手机上执行“忽略/取消配对”而非仅开关蓝牙**\n    你之前试过“重开蓝牙”无效，这次请在原手机的蓝牙设置列表中找到 WH-CH520，选择“忽略此设备”、“取消配对”或“删除”，然后重启手机。重启后重新进入耳机配对模式（按住蓝牙键约5秒至蓝灯双闪并听到“Pairing”），在手机列表中点击 WH-CH520 重新配对。这比单纯开关蓝牙更能清除手机端残留的错误链路密钥。\n\n3.  **检查原手机的蓝牙音频编解码器或绝对音量设置**\n    部分安卓手机在系统更新或缓存异常后，会出现能搜索到设备但无法完成握手的情况。请在原手机的“开发者选项”中（若无则跳过此步），暂时将“蓝牙音频编解码器”切换为 SBC/AAC，或关闭/开启“蓝牙绝对音量”后再试。这不是耳机故障，而是手机端协议栈与耳机当前状态的兼容性问题。\n\n**关键未知与边界：**\n*   以上步骤基于“耳机在其他设备正常”这一经历推断，不保证原手机一定存在上述问题。\n*   官方文档指出，若配对信息被删除或达到9台设备上限，需重新配对；但未提及手机端单侧异常的处理。若上述3步均无效，且你仍拒绝初始化耳机，则剩余可能性指向原手机蓝牙模块硬件/固件层面的故障，需进一步用手机端诊断工具或送修手机验证，而非继续调整耳机。\n*   请勿在未断开其他设备的情况下反复让耳机进入配对模式，这可能触发耳机的多点连接逻辑混乱，反而增加排查难度。",
+              "reply": {
+                "answer": "根据你保存的经历，上次在同一台原手机上“正确进入5秒配对模式后反复移近和重开蓝牙”已经失败，但换另一台手机能连。这说明耳机本体和配对流程大概率正常，问题更可能出在**这台原手机当前的连接状态或占用**上。既然不做初始化，下一步请只排查手机端这一侧：\n\n1.  **确认耳机未被他机占用**\n    WH-CH520 虽可记忆8台设备，但同一时间只能与1台播放音频。若它正连着你的另一台手机、平板或电脑，原手机将无法建立有效连接。请先在那台“能连的手机”或其他已配对设备上，手动断开与 WH-CH520 的连接（或直接关闭那些设备的蓝牙），再回到原手机尝试连接。\n\n2.  **在原手机上执行“忽略/取消配对”而非仅开关蓝牙**\n    你之前试过“重开蓝牙”无效，这次请在原手机的蓝牙设置列表中找到 WH-CH520，选择“忽略此设备”、“取消配对”或“删除”，然后重启手机。重启后重新进入耳机配对模式（按住蓝牙键约5秒至蓝灯双闪并听到“Pairing”），在手机列表中点击 WH-CH520 重新配对。这比单纯开关蓝牙更能清除手机端残留的错误链路密钥。\n\n3.  **检查原手机的蓝牙音频编解码器或绝对音量设置**\n    部分安卓手机在系统更新或缓存异常后，会出现能搜索到设备但无法完成握手的情况。请在原手机的“开发者选项”中（若无则跳过此步），暂时将“蓝牙音频编解码器”切换为 SBC/AAC，或关闭/开启“蓝牙绝对音量”后再试。这不是耳机故障，而是手机端协议栈与耳机当前状态的兼容性问题。\n\n**关键未知与边界：**\n*   以上步骤基于“耳机在其他设备正常”这一经历推断，不保证原手机一定存在上述问题。\n*   官方文档指出，若配对信息被删除或达到9台设备上限，需重新配对；但未提及手机端单侧异常的处理。若上述3步均无效，且你仍拒绝初始化耳机，则剩余可能性指向原手机蓝牙模块硬件/固件层面的故障，需进一步用手机端诊断工具或送修手机验证，而非继续调整耳机。\n*   请勿在未断开其他设备的情况下反复让耳机进入配对模式，这可能触发耳机的多点连接逻辑混乱，反而增加排查难度。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [
+                  "559174c6-1830-437b-b143-2b4352d1ac0a"
+                ],
+                "usedItems": [
+                  {
+                    "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+                    "name": "[模拟持有]我的Sony耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:31:12.724Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "read",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "yes",
+            "turnRequestId": "cfa6f7db-458f-4263-ab7b-f3a670ad0a2b"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:31:02.153Z",
+          "updatedAt": "2026-10-31T13:31:12.724Z",
+          "expiresAt": "2026-11-07T13:31:02.153Z",
+          "itemScopes": {
+            "94dd5f7c-c6ac-497c-b104-e6429d3ff207": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "根据你保存的经历，上次在同一台原手机上“正确进入5秒配对模式后反复移近和重开蓝牙”已经失败，但换另一台手机能连。这说明耳机本体和配对流程大概率正常，问题更可能出在**这台原手机当前的连接状态或占用**上。既然不做初始化，下一步请只排查手机端这一侧：\n\n1.  **确认耳机未被他机占用**\n    WH-CH520 虽可记忆8台设备，但同一时间只能与1台播放音频。若它正连着你的另一台手机、平板或电脑，原手机将无法建立有效连接。请先在那台“能连的手机”或其他已配对设备上，手动断开与 WH-CH520 的连接（或直接关闭那些设备的蓝牙），再回到原手机尝试连接。\n\n2.  **在原手机上执行“忽略/取消配对”而非仅开关蓝牙**\n    你之前试过“重开蓝牙”无效，这次请在原手机的蓝牙设置列表中找到 WH-CH520，选择“忽略此设备”、“取消配对”或“删除”，然后重启手机。重启后重新进入耳机配对模式（按住蓝牙键约5秒至蓝灯双闪并听到“Pairing”），在手机列表中点击 WH-CH520 重新配对。这比单纯开关蓝牙更能清除手机端残留的错误链路密钥。\n\n3.  **检查原手机的蓝牙音频编解码器或绝对音量设置**\n    部分安卓手机在系统更新或缓存异常后，会出现能搜索到设备但无法完成握手的情况。请在原手机的“开发者选项”中（若无则跳过此步），暂时将“蓝牙音频编解码器”切换为 SBC/AAC，或关闭/开启“蓝牙绝对音量”后再试。这不是耳机故障，而是手机端协议栈与耳机当前状态的兼容性问题。\n\n**关键未知与边界：**\n*   以上步骤基于“耳机在其他设备正常”这一经历推断，不保证原手机一定存在上述问题。\n*   官方文档指出，若配对信息被删除或达到9台设备上限，需重新配对；但未提及手机端单侧异常的处理。若上述3步均无效，且你仍拒绝初始化耳机，则剩余可能性指向原手机蓝牙模块硬件/固件层面的故障，需进一步用手机端诊断工具或送修手机验证，而非继续调整耳机。\n*   请勿在未断开其他设备的情况下反复让耳机进入配对模式，这可能触发耳机的多点连接逻辑混乱，反而增加排查难度。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0",
+            "d6cf3f096000b9bcc84fb01b:0",
+            "d6cf3f096000b9bcc84fb01b:1000",
+            "d6cf3f096000b9bcc84fb01b:1998",
+            "d6cf3f096000b9bcc84fb01b:2999"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "d6cf3f096000b9bcc84fb01b",
+              "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [
+            "559174c6-1830-437b-b143-2b4352d1ac0a"
+          ],
+          "usedItems": [
+            {
+              "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "name": "[模拟持有]我的Sony耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-10-31T13:31:03.828Z"
+          },
+          {
+            "stage": "practical_knowledge",
+            "detail": "{\"itemId\":\"94dd5f7c-c6ac-497c-b104-e6429d3ff207\",\"cached\":true,\"readURLs\":[],\"issues\":[],\"sources\":[{\"id\":\"5d286afe62be538821d82c46:0\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:1000\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:1998\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:0\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:2999\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"}]}",
+            "at": "2026-10-31T13:31:03.836Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "search_product_knowledge completed",
+            "at": "2026-10-31T13:31:03.836Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:31:12.719Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":10567,\"calls\":2,\"tools\":1,\"reservedCny\":0.5557559999999999,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:31:12.721Z"
+          }
+        ],
+        "tokens": {
+          "input": 10698,
+          "output": 596
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "292c8a17-bdea-404a-a04c-29acdf59a679",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 10666,
+      "streamTextEvents": 171
+    },
+    {
+      "question": "同一台原手机又连不上WH-CH520。我不想重复已经失败的办法，也不做初始化，下一步怎么排查？请参考我允许保存的这件耳机的经历。",
+      "result": {
+        "session": {
+          "id": "8e55188a-76ca-48ae-9bda-a07387c568bf",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "1494f04b-9fca-4a37-8deb-7f4765aef97e",
+              "role": "user",
+              "text": "同一台原手机又连不上WH-CH520。我不想重复已经失败的办法，也不做初始化，下一步怎么排查？请参考我允许保存的这件耳机的经历。",
+              "at": "2026-10-31T13:31:24.030Z",
+              "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "memoryPolicy": "read",
+              "capture": false
+            },
+            {
+              "id": "54bfa2af-6e25-4bb9-a0fb-c601653e7a58",
+              "role": "assistant",
+              "text": "根据你保存的经历，移近、重开蓝牙和反复配对已经试过且未解决，同时“换手机能连”已被更正为无效信息。在不初始化、不重复已失败方法的前提下，下一步建议按以下顺序排查：\n\n1.  **执行“重置（Reset）”而非“初始化”**\n    官方文档明确区分了这两个操作。“重置”是比初始化更轻量的故障排除步骤，不会删除配对信息或恢复出厂设置。虽然具体按键组合需查阅“Resetting the headset”章节（当前摘要未显示完整步骤），但这属于官方推荐的、在初始化之前应尝试的标准排障流程，与你“不做初始化”的要求不冲突。\n\n2.  **检查耳机是否处于“多点连接”占用状态**\n    WH-CH520支持同时连接两台设备，但只能从一台播放音频。如果耳机当前正连着另一台设备（哪怕只是后台保活），原手机可能无法主动抢回连接。请确认耳机此刻没有与其他任何设备保持活动连接；若有，请先在那台设备上断开蓝牙或关闭其蓝牙功能，再让原手机尝试连接。\n\n3.  **在原手机上“忽略/取消配对”后重新搜索**\n    既然反复配对无效，问题可能出在手机端缓存的旧密钥或协议协商记录上。请在原手机的蓝牙设置中找到WH-CH520，选择“忽略此设备”或“取消配对”，然后彻底关闭手机蓝牙再重新打开，让耳机进入配对模式（长按蓝牙键约5秒至蓝灯双闪并听到“Pairing”提示音），作为全新设备重新搜索连接。这不同于简单的“反复配对”，而是清除手机端残留的握手数据。\n\n4.  **确认电量与充电状态**\n    官方配对前提要求“电量充足”。若耳机电量极低或正处于充电中，蓝牙行为可能异常。请确保耳机已充分充电且未在充电状态下尝试连接。\n\n以上四步均未涉及初始化，也避开了你已报告无效的“移近、重开蓝牙、反复配对”。若完成上述步骤仍无法连接，则可能是耳机硬件或固件层面的问题，届时才需要考虑初始化或联系售后。\n\n参考来源：\n-   [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)\n-   [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+              "reply": {
+                "answer": "根据你保存的经历，移近、重开蓝牙和反复配对已经试过且未解决，同时“换手机能连”已被更正为无效信息。在不初始化、不重复已失败方法的前提下，下一步建议按以下顺序排查：\n\n1.  **执行“重置（Reset）”而非“初始化”**\n    官方文档明确区分了这两个操作。“重置”是比初始化更轻量的故障排除步骤，不会删除配对信息或恢复出厂设置。虽然具体按键组合需查阅“Resetting the headset”章节（当前摘要未显示完整步骤），但这属于官方推荐的、在初始化之前应尝试的标准排障流程，与你“不做初始化”的要求不冲突。\n\n2.  **检查耳机是否处于“多点连接”占用状态**\n    WH-CH520支持同时连接两台设备，但只能从一台播放音频。如果耳机当前正连着另一台设备（哪怕只是后台保活），原手机可能无法主动抢回连接。请确认耳机此刻没有与其他任何设备保持活动连接；若有，请先在那台设备上断开蓝牙或关闭其蓝牙功能，再让原手机尝试连接。\n\n3.  **在原手机上“忽略/取消配对”后重新搜索**\n    既然反复配对无效，问题可能出在手机端缓存的旧密钥或协议协商记录上。请在原手机的蓝牙设置中找到WH-CH520，选择“忽略此设备”或“取消配对”，然后彻底关闭手机蓝牙再重新打开，让耳机进入配对模式（长按蓝牙键约5秒至蓝灯双闪并听到“Pairing”提示音），作为全新设备重新搜索连接。这不同于简单的“反复配对”，而是清除手机端残留的握手数据。\n\n4.  **确认电量与充电状态**\n    官方配对前提要求“电量充足”。若耳机电量极低或正处于充电中，蓝牙行为可能异常。请确保耳机已充分充电且未在充电状态下尝试连接。\n\n以上四步均未涉及初始化，也避开了你已报告无效的“移近、重开蓝牙、反复配对”。若完成上述步骤仍无法连接，则可能是耳机硬件或固件层面的问题，届时才需要考虑初始化或联系售后。\n\n参考来源：\n-   [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)\n-   [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [
+                  "559174c6-1830-437b-b143-2b4352d1ac0a"
+                ],
+                "usedItems": [
+                  {
+                    "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+                    "name": "[模拟持有]我的Sony耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:31:24.030Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "read",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "yes",
+            "turnRequestId": "8a3a693b-8f3f-422a-b0b5-7e24d598051e"
+          },
+          "tried": [],
+          "memoryEpoch": 1,
+          "createdAt": "2026-10-31T13:31:13.301Z",
+          "updatedAt": "2026-10-31T13:31:24.030Z",
+          "expiresAt": "2026-11-07T13:31:13.301Z",
+          "itemScopes": {
+            "94dd5f7c-c6ac-497c-b104-e6429d3ff207": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "根据你保存的经历，移近、重开蓝牙和反复配对已经试过且未解决，同时“换手机能连”已被更正为无效信息。在不初始化、不重复已失败方法的前提下，下一步建议按以下顺序排查：\n\n1.  **执行“重置（Reset）”而非“初始化”**\n    官方文档明确区分了这两个操作。“重置”是比初始化更轻量的故障排除步骤，不会删除配对信息或恢复出厂设置。虽然具体按键组合需查阅“Resetting the headset”章节（当前摘要未显示完整步骤），但这属于官方推荐的、在初始化之前应尝试的标准排障流程，与你“不做初始化”的要求不冲突。\n\n2.  **检查耳机是否处于“多点连接”占用状态**\n    WH-CH520支持同时连接两台设备，但只能从一台播放音频。如果耳机当前正连着另一台设备（哪怕只是后台保活），原手机可能无法主动抢回连接。请确认耳机此刻没有与其他任何设备保持活动连接；若有，请先在那台设备上断开蓝牙或关闭其蓝牙功能，再让原手机尝试连接。\n\n3.  **在原手机上“忽略/取消配对”后重新搜索**\n    既然反复配对无效，问题可能出在手机端缓存的旧密钥或协议协商记录上。请在原手机的蓝牙设置中找到WH-CH520，选择“忽略此设备”或“取消配对”，然后彻底关闭手机蓝牙再重新打开，让耳机进入配对模式（长按蓝牙键约5秒至蓝灯双闪并听到“Pairing”提示音），作为全新设备重新搜索连接。这不同于简单的“反复配对”，而是清除手机端残留的握手数据。\n\n4.  **确认电量与充电状态**\n    官方配对前提要求“电量充足”。若耳机电量极低或正处于充电中，蓝牙行为可能异常。请确保耳机已充分充电且未在充电状态下尝试连接。\n\n以上四步均未涉及初始化，也避开了你已报告无效的“移近、重开蓝牙、反复配对”。若完成上述步骤仍无法连接，则可能是耳机硬件或固件层面的问题，届时才需要考虑初始化或联系售后。\n\n参考来源：\n-   [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)\n-   [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0",
+            "d6cf3f096000b9bcc84fb01b:0",
+            "d6cf3f096000b9bcc84fb01b:1000",
+            "d6cf3f096000b9bcc84fb01b:1998",
+            "d6cf3f096000b9bcc84fb01b:2999"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "d6cf3f096000b9bcc84fb01b",
+              "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [
+            "559174c6-1830-437b-b143-2b4352d1ac0a"
+          ],
+          "usedItems": [
+            {
+              "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "name": "[模拟持有]我的Sony耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:31:14.590Z"
+          },
+          {
+            "stage": "practical_knowledge",
+            "detail": "{\"itemId\":\"94dd5f7c-c6ac-497c-b104-e6429d3ff207\",\"cached\":true,\"readURLs\":[],\"issues\":[],\"sources\":[{\"id\":\"5d286afe62be538821d82c46:0\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:0\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:1000\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:1998\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:2999\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"}]}",
+            "at": "2026-10-31T13:31:14.596Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "search_product_knowledge completed",
+            "at": "2026-10-31T13:31:14.596Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:31:24.026Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":10726,\"calls\":2,\"tools\":1,\"reservedCny\":0.555552,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:31:24.028Z"
+          }
+        ],
+        "tokens": {
+          "input": 10699,
+          "output": 623
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "e0756041-eca5-4920-9fbf-ddf18e83eb02",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 10820,
+      "streamTextEvents": 174
+    },
+    {
+      "question": "WH-CH520连不上，请先说明你现在能参考哪些我此前的尝试记录；没有记录就说明没有，不要猜。",
+      "result": {
+        "session": {
+          "id": "eb897209-94d9-46a9-bb1e-24e4d18de248",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "f18df6a7-85bc-40d7-96e6-0817e0594896",
+              "role": "user",
+              "text": "WH-CH520连不上，请先说明你现在能参考哪些我此前的尝试记录；没有记录就说明没有，不要猜。",
+              "at": "2026-10-31T13:31:32.270Z",
+              "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "memoryPolicy": "read",
+              "capture": false
+            },
+            {
+              "id": "aa880112-db51-451a-acf5-dd05ffd5f80e",
+              "role": "assistant",
+              "text": "关于你的 Sony WH-CH520 耳机，我目前**没有**你此前的任何尝试记录。系统显示相关的经历、偏好和历史记录均为空，因此我无法参考你之前做过哪些排查或操作。\n\n基于官方帮助指南，针对“连不上”的情况，建议按以下顺序进行可验证的排查：\n\n1.  **确认配对模式状态**\n    *   若是首次连接或已初始化：开机后耳机会自动进入配对模式。\n    *   若已有其他设备配对记录：需长按 Bluetooth 按钮约 5 秒以上手动进入配对模式。确认指示灯呈蓝色连续闪烁两次，并听到“Pairing”语音提示。若未出现此状态，手机端无法搜索到耳机。\n    *   注意：配对模式开启后 5 分钟内未建立连接，耳机会自动关机，需重新操作。\n\n2.  **检查基础连接条件**\n    *   确保蓝牙设备与耳机距离在 1 米以内。\n    *   确认耳机电量充足。\n    *   若手机要求输入密码，请输入“0000”。\n\n3.  **执行初始化（恢复出厂设置）**\n    如果上述步骤无效，或耳机行为异常，请执行初始化以清除所有配对信息和错误状态：\n    *   关闭耳机电源。\n    *   拔掉 USB Type-C 充电线。\n    *   同时按住电源按钮和音量减（–）按钮约 10 秒以上。\n    *   观察指示灯：蓝色闪烁 4 次表示初始化完成。\n    *   **关键后续动作**：初始化后，必须在手机/电脑的蓝牙列表中删除旧的“WH-CH520”配对记录，然后重新从头配对。\n\n若初始化并重新配对后仍无法连接，官方文档建议联系最近的 Sony 经销商进行检修。\n\n如果你此前已经尝试过上述某些步骤但未成功，请告知具体在哪一步卡住（例如：指示灯状态、是否听到提示音、手机是否能搜到设备等），以便我根据确切差异提供下一步建议。\n\n**参考来源：**\n*   [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)\n*   [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+              "reply": {
+                "answer": "关于你的 Sony WH-CH520 耳机，我目前**没有**你此前的任何尝试记录。系统显示相关的经历、偏好和历史记录均为空，因此我无法参考你之前做过哪些排查或操作。\n\n基于官方帮助指南，针对“连不上”的情况，建议按以下顺序进行可验证的排查：\n\n1.  **确认配对模式状态**\n    *   若是首次连接或已初始化：开机后耳机会自动进入配对模式。\n    *   若已有其他设备配对记录：需长按 Bluetooth 按钮约 5 秒以上手动进入配对模式。确认指示灯呈蓝色连续闪烁两次，并听到“Pairing”语音提示。若未出现此状态，手机端无法搜索到耳机。\n    *   注意：配对模式开启后 5 分钟内未建立连接，耳机会自动关机，需重新操作。\n\n2.  **检查基础连接条件**\n    *   确保蓝牙设备与耳机距离在 1 米以内。\n    *   确认耳机电量充足。\n    *   若手机要求输入密码，请输入“0000”。\n\n3.  **执行初始化（恢复出厂设置）**\n    如果上述步骤无效，或耳机行为异常，请执行初始化以清除所有配对信息和错误状态：\n    *   关闭耳机电源。\n    *   拔掉 USB Type-C 充电线。\n    *   同时按住电源按钮和音量减（–）按钮约 10 秒以上。\n    *   观察指示灯：蓝色闪烁 4 次表示初始化完成。\n    *   **关键后续动作**：初始化后，必须在手机/电脑的蓝牙列表中删除旧的“WH-CH520”配对记录，然后重新从头配对。\n\n若初始化并重新配对后仍无法连接，官方文档建议联系最近的 Sony 经销商进行检修。\n\n如果你此前已经尝试过上述某些步骤但未成功，请告知具体在哪一步卡住（例如：指示灯状态、是否听到提示音、手机是否能搜到设备等），以便我根据确切差异提供下一步建议。\n\n**参考来源：**\n*   [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)\n*   [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+                    "name": "[模拟持有]我的Sony耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:31:32.270Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "read",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "yes",
+            "turnRequestId": "0c9288bc-d3d0-4222-ab32-1f38a5d2de36"
+          },
+          "tried": [],
+          "memoryEpoch": 2,
+          "createdAt": "2026-10-31T13:31:24.333Z",
+          "updatedAt": "2026-10-31T13:31:32.271Z",
+          "expiresAt": "2026-11-07T13:31:24.333Z",
+          "itemScopes": {
+            "94dd5f7c-c6ac-497c-b104-e6429d3ff207": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "关于你的 Sony WH-CH520 耳机，我目前**没有**你此前的任何尝试记录。系统显示相关的经历、偏好和历史记录均为空，因此我无法参考你之前做过哪些排查或操作。\n\n基于官方帮助指南，针对“连不上”的情况，建议按以下顺序进行可验证的排查：\n\n1.  **确认配对模式状态**\n    *   若是首次连接或已初始化：开机后耳机会自动进入配对模式。\n    *   若已有其他设备配对记录：需长按 Bluetooth 按钮约 5 秒以上手动进入配对模式。确认指示灯呈蓝色连续闪烁两次，并听到“Pairing”语音提示。若未出现此状态，手机端无法搜索到耳机。\n    *   注意：配对模式开启后 5 分钟内未建立连接，耳机会自动关机，需重新操作。\n\n2.  **检查基础连接条件**\n    *   确保蓝牙设备与耳机距离在 1 米以内。\n    *   确认耳机电量充足。\n    *   若手机要求输入密码，请输入“0000”。\n\n3.  **执行初始化（恢复出厂设置）**\n    如果上述步骤无效，或耳机行为异常，请执行初始化以清除所有配对信息和错误状态：\n    *   关闭耳机电源。\n    *   拔掉 USB Type-C 充电线。\n    *   同时按住电源按钮和音量减（–）按钮约 10 秒以上。\n    *   观察指示灯：蓝色闪烁 4 次表示初始化完成。\n    *   **关键后续动作**：初始化后，必须在手机/电脑的蓝牙列表中删除旧的“WH-CH520”配对记录，然后重新从头配对。\n\n若初始化并重新配对后仍无法连接，官方文档建议联系最近的 Sony 经销商进行检修。\n\n如果你此前已经尝试过上述某些步骤但未成功，请告知具体在哪一步卡住（例如：指示灯状态、是否听到提示音、手机是否能搜到设备等），以便我根据确切差异提供下一步建议。\n\n**参考来源：**\n*   [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)\n*   [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0",
+            "d6cf3f096000b9bcc84fb01b:0",
+            "d6cf3f096000b9bcc84fb01b:1000",
+            "d6cf3f096000b9bcc84fb01b:1998",
+            "d6cf3f096000b9bcc84fb01b:2999"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "d6cf3f096000b9bcc84fb01b",
+              "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "name": "[模拟持有]我的Sony耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-10-31T13:31:25.924Z"
+          },
+          {
+            "stage": "practical_knowledge",
+            "detail": "{\"itemId\":\"94dd5f7c-c6ac-497c-b104-e6429d3ff207\",\"cached\":true,\"readURLs\":[],\"issues\":[],\"sources\":[{\"id\":\"5d286afe62be538821d82c46:0\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:0\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:1000\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:1998\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:2999\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"}]}",
+            "at": "2026-10-31T13:31:25.931Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "search_product_knowledge completed",
+            "at": "2026-10-31T13:31:25.931Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:31:32.263Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":7934,\"calls\":2,\"tools\":1,\"reservedCny\":0.5440200000000001,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:31:32.268Z"
+          }
+        ],
+        "tokens": {
+          "input": 10355,
+          "output": 612
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "72425d0d-a897-4d91-8357-56ff05373a3b",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 8031,
+      "streamTextEvents": 160
+    }
+  ],
+  "checks": [
+    {
+      "name": "跨会话实际使用已获准经验",
+      "passed": true,
+      "needsHumanReview": "是否避开无效步骤、是否不编造因果"
+    },
+    {
+      "name": "纠正后新会话仍取到有效经验",
+      "passed": true,
+      "needsHumanReview": "不再把换手机可连接当事实"
+    },
+    {
+      "name": "撤销复用后新会话不携带这条经验",
+      "passed": true
+    }
+  ],
+  "errors": [
+    "apiRequestContext.get: Invalid URL"
+  ],
+  "taskId": "b8a215bc-53a5-4f62-ab66-eface15ea814",
+  "saved": {
+    "outcome": {
+      "version": "outcome/1",
+      "outcomeId": "559174c6-1830-437b-b143-2b4352d1ac0a",
+      "taskId": "b8a215bc-53a5-4f62-ab66-eface15ea814",
+      "runId": "7eeb0aa9-cc54-4798-91ea-0d7b3c590bb6",
+      "goalStatus": "not_achieved",
+      "basis": "user_report",
+      "reporterId": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+      "notes": "[合成经历，非硬件验证]同一台原手机上，正确进入5秒配对模式后反复移近和重开蓝牙仍未解决；换另一台手机能够连接。成功原因没有查明。",
+      "itemInstanceIds": [
+        "94dd5f7c-c6ac-497c-b104-e6429d3ff207"
+      ],
+      "occurredAt": "2026-10-31T13:28:46.464Z",
+      "canReuseForFutureTasks": true,
+      "allowCloud": true,
+      "memoryEpoch": 0,
+      "revision": 1,
+      "status": "active",
+      "privacyStamp": {
+        "*": 0,
+        "item:94dd5f7c-c6ac-497c-b104-e6429d3ff207": 0
+      },
+      "experienceRefs": []
+    }
+  },
+  "corrected": {
+    "outcome": {
+      "version": "outcome/1",
+      "outcomeId": "559174c6-1830-437b-b143-2b4352d1ac0a",
+      "taskId": "b8a215bc-53a5-4f62-ab66-eface15ea814",
+      "runId": "7eeb0aa9-cc54-4798-91ea-0d7b3c590bb6",
+      "goalStatus": "not_achieved",
+      "basis": "user_report",
+      "reporterId": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+      "notes": "[合成更正，非硬件验证]另一台手机其实也没连上；原记录的“换手机能够连接”不正确。移近、重开蓝牙和反复配对仍未解决，原因未知。",
+      "itemInstanceIds": [
+        "94dd5f7c-c6ac-497c-b104-e6429d3ff207"
+      ],
+      "occurredAt": "2026-10-31T13:28:46.464Z",
+      "canReuseForFutureTasks": true,
+      "allowCloud": true,
+      "memoryEpoch": 1,
+      "revision": 2,
+      "status": "active",
+      "privacyStamp": {
+        "*": 0,
+        "item:94dd5f7c-c6ac-497c-b104-e6429d3ff207": 0
+      },
+      "experienceRefs": [],
+      "updatedAt": "2026-10-31T13:31:13.109Z"
+    }
+  },
+  "revoked": {
+    "outcome": {
+      "version": "outcome/1",
+      "outcomeId": "559174c6-1830-437b-b143-2b4352d1ac0a",
+      "taskId": "b8a215bc-53a5-4f62-ab66-eface15ea814",
+      "runId": "7eeb0aa9-cc54-4798-91ea-0d7b3c590bb6",
+      "goalStatus": "not_achieved",
+      "basis": "user_report",
+      "reporterId": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+      "notes": "[合成更正，非硬件验证]另一台手机其实也没连上；原记录的“换手机能够连接”不正确。移近、重开蓝牙和反复配对仍未解决，原因未知。",
+      "itemInstanceIds": [
+        "94dd5f7c-c6ac-497c-b104-e6429d3ff207"
+      ],
+      "occurredAt": "2026-10-31T13:28:46.464Z",
+      "canReuseForFutureTasks": false,
+      "allowCloud": false,
+      "memoryEpoch": 2,
+      "revision": 3,
+      "status": "active",
+      "privacyStamp": {
+        "*": 0,
+        "item:94dd5f7c-c6ac-497c-b104-e6429d3ff207": 0
+      },
+      "experienceRefs": [],
+      "updatedAt": "2026-10-31T13:31:24.149Z"
+    }
+  },
+  "forgotten": {
+    "outcome": {
+      "version": "outcome/1",
+      "outcomeId": "559174c6-1830-437b-b143-2b4352d1ac0a",
+      "taskId": "b8a215bc-53a5-4f62-ab66-eface15ea814",
+      "runId": "7eeb0aa9-cc54-4798-91ea-0d7b3c590bb6",
+      "goalStatus": "not_achieved",
+      "basis": "user_report",
+      "reporterId": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+      "notes": "",
+      "itemInstanceIds": [
+        "94dd5f7c-c6ac-497c-b104-e6429d3ff207"
+      ],
+      "occurredAt": "2026-10-31T13:28:46.464Z",
+      "canReuseForFutureTasks": false,
+      "allowCloud": false,
+      "memoryEpoch": 3,
+      "revision": 4,
+      "status": "forgotten",
+      "privacyStamp": {
+        "*": 0,
+        "item:94dd5f7c-c6ac-497c-b104-e6429d3ff207": 0
+      },
+      "experienceRefs": [],
+      "updatedAt": "2026-10-31T13:31:32.625Z"
+    }
+  },
+  "upstreamRequests": 6
+}

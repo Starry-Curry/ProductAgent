@@ -1,0 +1,671 @@
+{
+  "at": "2026-10-31T13:39:11.301Z",
+  "model": "qwen3.8-max-0902",
+  "syntheticOwnership": true,
+  "physicalTests": 0,
+  "sameMaterials": "三个分支使用同一隔离物品和真实获取的完整文档；直接模型使用新执行器首回合同一输入、同一系统提示和同一温度/输出预算，禁用工具。旧默认路径按原有检索与格式执行；差异记录在请求台账。",
+  "sources": [
+    {
+      "caseId": "sony-pair",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+      "characters": 3293,
+      "success": true
+    },
+    {
+      "caseId": "sony-pair",
+      "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+      "characters": 774,
+      "success": true
+    },
+    {
+      "caseId": "canon-paper",
+      "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+      "characters": 2161,
+      "success": true
+    }
+  ],
+  "rows": [
+    {
+      "id": "sony-pair",
+      "arm": "new-native",
+      "result": {
+        "session": {
+          "id": "671c142c-e58c-4e9d-bbac-8bbd1585be75",
+          "owner": "lin",
+          "itemId": "ddd234bd-c8de-40e1-b257-eb139d1a0ef3",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "9e6404b8-6848-45e5-a24c-680851c4c951",
+              "role": "user",
+              "text": "这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。",
+              "at": "2026-10-31T13:39:14.049Z",
+              "itemId": "ddd234bd-c8de-40e1-b257-eb139d1a0ef3",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "51027841-4c9e-47f2-b212-ab24f16cff7e",
+              "role": "assistant",
+              "text": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+              "reply": {
+                "answer": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+                "outcome": "unavailable",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "ddd234bd-c8de-40e1-b257-eb139d1a0ef3",
+                    "name": "[合成持有]WH-CH520",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:39:14.049Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "eceabbb2-a953-45c4-9807-1eb67fc737bf"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:39:13.996Z",
+          "updatedAt": "2026-10-31T13:39:14.050Z",
+          "expiresAt": "2026-11-07T13:39:13.996Z",
+          "itemScopes": {
+            "ddd234bd-c8de-40e1-b257-eb139d1a0ef3": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+          "outcome": "unavailable",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0",
+            "d6cf3f096000b9bcc84fb01b:0",
+            "d6cf3f096000b9bcc84fb01b:1000",
+            "d6cf3f096000b9bcc84fb01b:1998",
+            "d6cf3f096000b9bcc84fb01b:2999"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "d6cf3f096000b9bcc84fb01b",
+              "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "ddd234bd-c8de-40e1-b257-eb139d1a0ef3",
+              "name": "[合成持有]WH-CH520",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_failed",
+            "detail": "模型连接或生成未完成；本次不自动重试",
+            "at": "2026-10-31T13:39:14.041Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":43,\"calls\":1,\"tools\":0,\"reservedCny\":0.21894,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:39:14.045Z"
+          }
+        ],
+        "tokens": {
+          "input": 0,
+          "output": 0
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "29e91d23-96bf-4d03-ab11-6bcca9a100b5",
+          "status": "partial",
+          "basis": "not_verified"
+        }
+      },
+      "elapsedMs": 80,
+      "requests": 0,
+      "attempts": [],
+      "tokens": [],
+      "estimatedCny": 0
+    },
+    {
+      "id": "sony-pair",
+      "arm": "direct-same-material",
+      "error": "模型连接或生成未完成；本次不自动重试",
+      "elapsedMs": 6,
+      "requests": 0,
+      "attempts": [],
+      "tokens": [],
+      "estimatedCny": 0
+    },
+    {
+      "id": "sony-pair",
+      "arm": "original-default",
+      "result": {
+        "session": {
+          "id": "beec46e4-e812-4717-a0a9-be54da7760ce",
+          "owner": "lin",
+          "itemId": "ddd234bd-c8de-40e1-b257-eb139d1a0ef3",
+          "identity": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "8cec4fe1-377d-4825-815e-c0a42932d11d",
+              "role": "user",
+              "text": "这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。",
+              "at": "2026-10-31T13:39:14.169Z",
+              "itemId": "ddd234bd-c8de-40e1-b257-eb139d1a0ef3",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "cd58a08d-c757-468b-b829-e4c96fd3ef9c",
+              "role": "assistant",
+              "text": "这里是你与“[合成持有]WH-CH520”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "这里是你与“[合成持有]WH-CH520”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "route": {
+                  "itemId": "ddd234bd-c8de-40e1-b257-eb139d1a0ef3",
+                  "itemName": "[合成持有]WH-CH520",
+                  "intent": "story",
+                  "mode": "story",
+                  "reason": "围绕当前物品的真实经历与记忆"
+                }
+              },
+              "at": "2026-10-31T13:39:14.169Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "3c220f5f-2b11-4435-8996-815b834dcca2",
+            "turnScope": "ddd234bd-c8de-40e1-b257-eb139d1a0ef3",
+            "lastIntent": "story",
+            "activeItemId": "ddd234bd-c8de-40e1-b257-eb139d1a0ef3"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:39:14.073Z",
+          "updatedAt": "2026-10-31T13:39:14.170Z",
+          "expiresAt": "2026-11-07T13:39:14.073Z",
+          "itemScopes": {
+            "ddd234bd-c8de-40e1-b257-eb139d1a0ef3": "[\"lin\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "这里是你与“[合成持有]WH-CH520”讲述故事的窗口。你可以像平时一样说一段经历；叙述会留在这件物品的私人故事中。已开启自动整理时，相关线索会作为后续理解你的依据。",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "route": {
+            "itemId": "ddd234bd-c8de-40e1-b257-eb139d1a0ef3",
+            "itemName": "[合成持有]WH-CH520",
+            "intent": "story",
+            "mode": "story",
+            "reason": "围绕当前物品的真实经历与记忆"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "story; target=ddd234bd-c8de-40e1-b257-eb139d1a0ef3; router=home-router-v1",
+            "at": "2026-10-31T13:39:14.119Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "以人与物讲述故事的窗口逐步理解用户和关系; version=1.1.0",
+            "at": "2026-10-31T13:39:14.138Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-31T13:39:14.138Z"
+          },
+          {
+            "stage": "curated_answer",
+            "detail": "answered",
+            "at": "2026-10-31T13:39:14.139Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0,
+        "foundation": {
+          "runId": "6c1287b9-1306-49ff-8039-811695fe8dee",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 110,
+      "requests": 0,
+      "attempts": [],
+      "tokens": [],
+      "estimatedCny": 0
+    },
+    {
+      "id": "canon-paper",
+      "arm": "new-native",
+      "result": {
+        "session": {
+          "id": "2b7128a0-284d-4e77-b6d1-43fcd29eb2ff",
+          "owner": "lin",
+          "itemId": "7d916375-720e-4306-bdbd-73c2f83f615f",
+          "identity": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "5c0ac730-d80e-4d6e-b602-f5171fceb3b7",
+              "role": "user",
+              "text": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。",
+              "at": "2026-10-31T13:39:15.455Z",
+              "itemId": "7d916375-720e-4306-bdbd-73c2f83f615f",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "2adad1e7-0a0b-4214-a8e2-23cf283296cb",
+              "role": "assistant",
+              "text": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+              "reply": {
+                "answer": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+                "outcome": "unavailable",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0",
+                  "f0b09e65ef8cba87965e4dc9:997",
+                  "f0b09e65ef8cba87965e4dc9:1997"
+                ],
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "kind": "official",
+                    "section": "SELPHY CP1500；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "7d916375-720e-4306-bdbd-73c2f83f615f",
+                    "name": "[合成持有]SELPHY CP1500",
+                    "model": "SELPHY CP1500"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:39:15.455Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "562b9773-b17d-4836-852a-a6a38d9e106a"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:39:15.428Z",
+          "updatedAt": "2026-10-31T13:39:15.455Z",
+          "expiresAt": "2026-11-07T13:39:15.428Z",
+          "itemScopes": {
+            "7d916375-720e-4306-bdbd-73c2f83f615f": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+          "outcome": "unavailable",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "f0b09e65ef8cba87965e4dc9:0",
+            "f0b09e65ef8cba87965e4dc9:997",
+            "f0b09e65ef8cba87965e4dc9:1997"
+          ],
+          "citations": [
+            {
+              "id": "f0b09e65ef8cba87965e4dc9",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "kind": "official",
+              "section": "SELPHY CP1500；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "7d916375-720e-4306-bdbd-73c2f83f615f",
+              "name": "[合成持有]SELPHY CP1500",
+              "model": "SELPHY CP1500"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_failed",
+            "detail": "模型连接或生成未完成；本次不自动重试",
+            "at": "2026-10-31T13:39:15.450Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":19,\"calls\":1,\"tools\":0,\"reservedCny\":0.175176,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:39:15.452Z"
+          }
+        ],
+        "tokens": {
+          "input": 0,
+          "output": 0
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "afafa9ff-5a26-44fd-b90a-00645cc0e1af",
+          "status": "partial",
+          "basis": "not_verified"
+        }
+      },
+      "elapsedMs": 49,
+      "requests": 0,
+      "attempts": [],
+      "tokens": [],
+      "estimatedCny": 0
+    },
+    {
+      "id": "canon-paper",
+      "arm": "direct-same-material",
+      "error": "模型连接或生成未完成；本次不自动重试",
+      "elapsedMs": 4,
+      "requests": 0,
+      "attempts": [],
+      "tokens": [],
+      "estimatedCny": 0
+    },
+    {
+      "id": "canon-paper",
+      "arm": "original-default",
+      "result": {
+        "session": {
+          "id": "9ec3df85-b521-4fd4-8302-1473086c698e",
+          "owner": "lin",
+          "itemId": "7d916375-720e-4306-bdbd-73c2f83f615f",
+          "identity": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "34ab4170-d100-4f9b-9fd7-c2fe97a26909",
+              "role": "user",
+              "text": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。",
+              "at": "2026-10-31T13:39:22.087Z",
+              "itemId": "7d916375-720e-4306-bdbd-73c2f83f615f",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "f1a37ea8-9936-47aa-a551-cf50e68a66c0",
+              "role": "assistant",
+              "text": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+                "steps": [
+                  {
+                    "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:打开纸盒的两层盖子：先打开外盖，再打开内盖。",
+                    "text": "处理步骤：打开纸盒的两层盖子：先打开外盖，再打开内盖。",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:取出相纸并移除保护页，将全部18张相纸放入纸盒。",
+                    "text": "处理步骤：取出相纸并移除保护页，将全部18张相纸放入纸盒。切勿装入19张或更多，以免损坏打印机或导致故障。",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:手持相纸装入纸盒时，确保光面（打印面）朝上。请勿",
+                    "text": "处理步骤：手持相纸装入纸盒时，确保光面（打印面）朝上。请勿触摸光面的打印区域。",
+                    "phase": "operate"
+                  },
+                  {
+                    "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:用力关闭内盖直到听到咔嗒声锁定到位。打印时请保持",
+                    "text": "处理步骤：用力关闭内盖直到听到咔嗒声锁定到位。打印时请保持外盖处于打开状态。",
+                    "phase": "operate"
+                  }
+                ],
+                "questions": [],
+                "source": "model-with-evidence",
+                "citations": [
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9:0",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "section": "原文位置 0–1347；SELPHY CP1500 / unspecified",
+                    "kind": "official"
+                  },
+                  {
+                    "id": "f0b09e65ef8cba87965e4dc9:997",
+                    "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+                    "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+                    "section": "原文位置 997–2161；SELPHY CP1500 / unspecified",
+                    "kind": "official"
+                  }
+                ],
+                "evidenceIds": [
+                  "f0b09e65ef8cba87965e4dc9:0",
+                  "f0b09e65ef8cba87965e4dc9:997"
+                ],
+                "memoryIds": [],
+                "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
+                "model": "qwen3.8-max-0902",
+                "route": {
+                  "itemId": "7d916375-720e-4306-bdbd-73c2f83f615f",
+                  "itemName": "[合成持有]SELPHY CP1500",
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对适用资料与使用条件"
+                }
+              },
+              "at": "2026-10-31T13:39:22.087Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "turnRequestId": "8c1fea4b-83d4-4549-9d37-75fe2fbb737a",
+            "turnScope": "7d916375-720e-4306-bdbd-73c2f83f615f",
+            "lastIntent": "help",
+            "activeItemId": "7d916375-720e-4306-bdbd-73c2f83f615f",
+            "goal": "SELPHY CP1500装相纸时，光面朝哪边、最多放多少张、纸盒内盖和外盖各怎么处理？请完整回答。"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:39:15.477Z",
+          "updatedAt": "2026-10-31T13:39:22.087Z",
+          "expiresAt": "2026-11-07T13:39:15.477Z",
+          "itemScopes": {
+            "7d916375-720e-4306-bdbd-73c2f83f615f": "[\"lin\",\"[\\\"SELPHY CP1500\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "下面按当前资料继续；步骤中的限制和缺口请一并核对。",
+          "steps": [
+            {
+              "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:打开纸盒的两层盖子：先打开外盖，再打开内盖。",
+              "text": "处理步骤：打开纸盒的两层盖子：先打开外盖，再打开内盖。",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:取出相纸并移除保护页，将全部18张相纸放入纸盒。",
+              "text": "处理步骤：取出相纸并移除保护页，将全部18张相纸放入纸盒。切勿装入19张或更多，以免损坏打印机或导致故障。",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:手持相纸装入纸盒时，确保光面（打印面）朝上。请勿",
+              "text": "处理步骤：手持相纸装入纸盒时，确保光面（打印面）朝上。请勿触摸光面的打印区域。",
+              "phase": "operate"
+            },
+            {
+              "id": "docstep:f0b09e65ef8cba87965e4dc9:0:phase=operate:用力关闭内盖直到听到咔嗒声锁定到位。打印时请保持",
+              "text": "处理步骤：用力关闭内盖直到听到咔嗒声锁定到位。打印时请保持外盖处于打开状态。",
+              "phase": "operate"
+            }
+          ],
+          "questions": [],
+          "source": "model-with-evidence",
+          "citations": [
+            {
+              "id": "f0b09e65ef8cba87965e4dc9:0",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "section": "原文位置 0–1347；SELPHY CP1500 / unspecified",
+              "kind": "official"
+            },
+            {
+              "id": "f0b09e65ef8cba87965e4dc9:997",
+              "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+              "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+              "section": "原文位置 997–2161；SELPHY CP1500 / unspecified",
+              "kind": "official"
+            }
+          ],
+          "evidenceIds": [
+            "f0b09e65ef8cba87965e4dc9:0",
+            "f0b09e65ef8cba87965e4dc9:997"
+          ],
+          "memoryIds": [],
+          "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。",
+          "model": "qwen3.8-max-0902",
+          "route": {
+            "itemId": "7d916375-720e-4306-bdbd-73c2f83f615f",
+            "itemName": "[合成持有]SELPHY CP1500",
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对适用资料与使用条件"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=7d916375-720e-4306-bdbd-73c2f83f615f; router=home-router-v1",
+            "at": "2026-10-31T13:39:15.506Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "从当前型号/地区官方文档提出可执行下一步，结合已尝试反馈继续; version=1.0.0",
+            "at": "2026-10-31T13:39:15.523Z"
+          },
+          {
+            "stage": "context_ready",
+            "detail": "purpose=auto; memoryRefs=; prompt=human-item-agent-v2.0-item-context",
+            "at": "2026-10-31T13:39:15.523Z"
+          },
+          {
+            "stage": "model_started",
+            "detail": "attempt=1; round=1/4",
+            "at": "2026-10-31T13:39:15.542Z"
+          },
+          {
+            "stage": "model_returned",
+            "detail": "tools=0",
+            "at": "2026-10-31T13:39:22.007Z"
+          },
+          {
+            "stage": "validated",
+            "detail": "answered",
+            "at": "2026-10-31T13:39:22.051Z"
+          }
+        ],
+        "tokens": {
+          "input": 3968,
+          "output": 511
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "3114db33-b7d1-4871-9e57-88a603ba50e0",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "elapsedMs": 6631,
+      "requests": 1,
+      "attempts": [
+        29
+      ],
+      "tokens": [
+        {
+          "completion_tokens": 511,
+          "prompt_tokens": 3968,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "text_tokens": 3968
+          },
+          "total_tokens": 4479
+        }
+      ],
+      "estimatedCny": 0.066012
+    }
+  ]
+}
