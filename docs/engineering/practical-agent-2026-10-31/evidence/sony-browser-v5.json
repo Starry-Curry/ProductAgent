@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-31T12:58:43.602Z",
+  "syntheticOwnership": true,
+  "physicalDeviceTests": 0,
+  "errors": [
+    "response.text: Protocol error (Network.getResponseBody): No data found for resource with given identifier\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation."
+  ],
+  "responses": [],
+  "checks": [],
+  "item": {
+    "id": "e7830813-c3fd-4fa1-aa42-1c2aa2e8fb0f",
+    "name": "[模拟持有]我的Sony耳机",
+    "model": "WH-CH520",
+    "synthetic": true
+  },
+  "upstreamRequests": 2
+}

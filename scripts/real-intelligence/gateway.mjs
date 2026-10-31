@@ -64,7 +64,7 @@ export async function gateway(configPath,options) {
   // This authorized round has one fixed ledger across all experiment stages.
   // The historical product-foundation ledger is never opened by this gateway.
   const stage = limits.roundId;
-  config.AI_MODEL = "qwen-plus-2025-12-01"; if (!available.includes(config.AI_MODEL)) throw Error("pinned_model_not_available");
+  config.AI_MODEL = options?.model || "qwen-plus-2025-12-01"; if (!available.includes(config.AI_MODEL)) throw Error("pinned_model_not_available");
   const clean = (value) =>
     JSON.parse(
       JSON.stringify(value).replaceAll(config.AI_API_KEY, "[removed]"),
@@ -160,6 +160,7 @@ export async function gateway(configPath,options) {
         (body.enable_thinking === true || body.stream === true) &&
         response.ok
       ) {
+        const toolCalls=[];
         let text = "",
           usage,
           finishReason,
@@ -175,6 +176,7 @@ export async function gateway(configPath,options) {
             const event = JSON.parse(line.slice(6));
             if (event.usage) usage = event.usage;
             const delta = event.choices?.[0]?.delta?.content || "";
+            for(const part of event.choices?.[0]?.delta?.tool_calls||[]){const t=toolCalls[part.index]||{id:'',type:'function',function:{name:'',arguments:''}};if(part.id)t.id=part.id;if(part.function?.name)t.function.name+=part.function.name;if(part.function?.arguments)t.function.arguments+=part.function.arguments;toolCalls[part.index]=t;}
             if (delta && attempt.firstTokenMs === undefined)
               attempt.firstTokenMs = Date.now() - Date.parse(attempt.startedAt);
             text += delta;
@@ -183,7 +185,7 @@ export async function gateway(configPath,options) {
                 res.writeHead(200, { "content-type": "text/event-stream" });
               // Never relay reasoning, credentials or provider internals.
               res.write(
-                `data: ${JSON.stringify({ choices: [{ delta: { content: delta }, finish_reason: event.choices?.[0]?.finish_reason || null }], ...(event.usage ? { usage: event.usage } : {}) })}\n\n`,
+                `data: ${JSON.stringify({id:event.id||'evaluation',object:'chat.completion.chunk',model:body.model,created:event.created||0,choices:[{index:0,delta:{...(delta?{content:delta}:{}),...(event.choices?.[0]?.delta?.role?{role:'assistant'}:{}),...(event.choices?.[0]?.delta?.tool_calls?{tool_calls:event.choices[0].delta.tool_calls}:{})},finish_reason:event.choices?.[0]?.finish_reason||null}],...(event.usage?{usage:event.usage}:{})})}\n\n`,
               );
             }
             if (event.choices?.[0]?.finish_reason)
@@ -193,7 +195,7 @@ export async function gateway(configPath,options) {
         result = {
           choices: [
             {
-              message: { role: "assistant", content: text },
+              message: { role: "assistant", content: text, ...(toolCalls.length?{tool_calls:toolCalls}: {}) },
               finish_reason: finishReason,
             },
           ],
@@ -211,7 +213,7 @@ export async function gateway(configPath,options) {
       ) {
         const input = result.usage.prompt_tokens,
           output = result.usage.completion_tokens;
-        const [inputRate, outputRate] =
+        const [inputRate, outputRate] = options?.prices ? [options.prices.input,options.prices.output] :
           body.model === "qwen3.7-plus"
             ? [2, 8]
             : body.model === "qwen-max"
@@ -231,7 +233,7 @@ export async function gateway(configPath,options) {
         if (!res.headersSent)
           res.writeHead(200, { "content-type": "text/event-stream" });
         res.end(
-          `data: ${JSON.stringify({ choices: [{ delta: {}, finish_reason: attempt.finishReason }], usage: result.usage })}\n\ndata: [DONE]\n\n`,
+          `data: ${JSON.stringify({id:'evaluation-final',object:'chat.completion.chunk',model:body.model,created:0,choices:[{index:0,delta:{},finish_reason:attempt.finishReason}],usage:result.usage})}\n\ndata: [DONE]\n\n`,
         );
       } else {
         res.writeHead(200, { "content-type": "application/json" });

@@ -1,5 +1,6 @@
 import { executeHomeTask } from "./home-task.ts";
 import { executeKernel } from "./kernel/execute.ts";
+import { executePractical } from "./practical.ts";
 import { answerKnownItem } from "./grounded-answer.ts";
 import { analyzeOwnedLamp } from "../devices/software-lab.ts";
 import { hazardousActions } from "./safety-language.ts";
@@ -598,6 +599,10 @@ export async function executeGraph(
 ) {
   // Explicit experiment only until real coverage/safety gates pass. Existing domain
   // writes and hazardous requests retain their original deterministic paths.
+  if(process.env.WUJIAN_AGENT_RUNTIME === 'native' && provider.ready && provider.converse && ['service','auto'].includes(session.mode) && !unsafe.test(withoutProhibitedActions(question))){
+    const householdAllowed=session.known.homeId!=='young-apartment-v1'||read().virtualHomes?.[actor]?.allowCloud===true;
+    if(householdAllowed)return executePractical(db,read,actor,session,question,provider,temporary);
+  }
   if(process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3 === "true" && provider.ready &&
      ["service","auto"].includes(session.mode) &&
      !unsafe.test(withoutProhibitedActions(question))) {

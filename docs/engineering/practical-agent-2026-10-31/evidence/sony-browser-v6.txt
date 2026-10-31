@@ -1,0 +1,1 @@
+{"checks":[{"name":"真实UI录入→真实千问Function Calling→官方获取→完整重新配对回答","passed":true},{"name":"同一物品/会话追问：10秒初始化及删除信息，390px实际显示","passed":true}],"errors":[],"upstreamRequests":3}

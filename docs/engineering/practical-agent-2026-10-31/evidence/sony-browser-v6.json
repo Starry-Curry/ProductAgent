@@ -1,0 +1,393 @@
+{
+  "at": "2026-10-31T13:00:39.044Z",
+  "syntheticOwnership": true,
+  "physicalDeviceTests": 0,
+  "errors": [],
+  "responses": [
+    {
+      "question": "这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。",
+      "result": {
+        "session": {
+          "id": "ca8e7d9a-741b-4515-94f9-416328abdfda",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "638b0d0f-0cec-4952-80f3-5d4a48ecdf78",
+              "role": "user",
+              "text": "这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。",
+              "at": "2026-10-31T13:00:51.910Z",
+              "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "507d1938-1e5a-4421-bad7-8612d6a0e2e7",
+              "role": "assistant",
+              "text": "根据Sony WH-CH520官方帮助指南，由于耳机已存有旧手机的配对信息，需手动进入配对模式才能被新手机发现。完整步骤如下：\n\n1.  **确保电量与距离**：确认耳机电量充足，并将新手机放在耳机1米范围内。\n2.  **手动进入配对模式**：在耳机开机状态下，长按 **(Bluetooth)** 按钮约 **5秒或更久**。\n    *   确认标志：指示灯（蓝色）开始**连续双闪**，并听到语音提示“Pairing”。\n    *   *注意：仅短按电源键开机不会自动进入配对模式（除非是首次使用或刚恢复出厂设置）。*\n3.  **在新手机上搜索**：打开手机蓝牙设置，搜索新设备，在列表中选择 **[WH-CH520]**。\n4.  **完成连接**：点击配对后，若手机要求输入密码（Passkey/PIN），请输入 **“0000”**。连接成功时耳机会发出提示音。\n\n**关键提示与未知说明：**\n*   **超时机制**：配对模式仅维持5分钟，超时未连上会自动关机，需从第2步重新开始。\n*   **多点连接限制**：WH-CH520最多存储8台设备记录；虽然可配对新手机，但同一时间只能播放1台设备的音频。\n*   **若上述步骤无效**：可尝试“初始化”清除所有旧配对信息（关机且拔掉USB-C线后，同时长按电源键和音量减键10秒以上，蓝灯闪4次即完成），之后重新按首次配对流程操作。此操作会清空所有已存设备记录，旧手机也需删除耳机配对信息才能再次使用。\n*   **未确认项**：当前资料未提供该耳机是否支持Sony Headphones Connect App内的“多点连接”切换功能；如需两台设备无缝切换，建议配对成功后在App中核实具体支持情况。\n\n来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+              "reply": {
+                "answer": "根据Sony WH-CH520官方帮助指南，由于耳机已存有旧手机的配对信息，需手动进入配对模式才能被新手机发现。完整步骤如下：\n\n1.  **确保电量与距离**：确认耳机电量充足，并将新手机放在耳机1米范围内。\n2.  **手动进入配对模式**：在耳机开机状态下，长按 **(Bluetooth)** 按钮约 **5秒或更久**。\n    *   确认标志：指示灯（蓝色）开始**连续双闪**，并听到语音提示“Pairing”。\n    *   *注意：仅短按电源键开机不会自动进入配对模式（除非是首次使用或刚恢复出厂设置）。*\n3.  **在新手机上搜索**：打开手机蓝牙设置，搜索新设备，在列表中选择 **[WH-CH520]**。\n4.  **完成连接**：点击配对后，若手机要求输入密码（Passkey/PIN），请输入 **“0000”**。连接成功时耳机会发出提示音。\n\n**关键提示与未知说明：**\n*   **超时机制**：配对模式仅维持5分钟，超时未连上会自动关机，需从第2步重新开始。\n*   **多点连接限制**：WH-CH520最多存储8台设备记录；虽然可配对新手机，但同一时间只能播放1台设备的音频。\n*   **若上述步骤无效**：可尝试“初始化”清除所有旧配对信息（关机且拔掉USB-C线后，同时长按电源键和音量减键10秒以上，蓝灯闪4次即完成），之后重新按首次配对流程操作。此操作会清空所有已存设备记录，旧手机也需删除耳机配对信息才能再次使用。\n*   **未确认项**：当前资料未提供该耳机是否支持Sony Headphones Connect App内的“多点连接”切换功能；如需两台设备无缝切换，建议配对成功后在App中核实具体支持情况。\n\n来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+                    "name": "[模拟持有]我的Sony耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:00:51.910Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "a23a43c5-0ea3-4dce-8f40-15142a36eaa8"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:00:40.109Z",
+          "updatedAt": "2026-10-31T13:00:51.910Z",
+          "expiresAt": "2026-11-07T13:00:40.109Z",
+          "itemScopes": {
+            "94dd5f7c-c6ac-497c-b104-e6429d3ff207": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "根据Sony WH-CH520官方帮助指南，由于耳机已存有旧手机的配对信息，需手动进入配对模式才能被新手机发现。完整步骤如下：\n\n1.  **确保电量与距离**：确认耳机电量充足，并将新手机放在耳机1米范围内。\n2.  **手动进入配对模式**：在耳机开机状态下，长按 **(Bluetooth)** 按钮约 **5秒或更久**。\n    *   确认标志：指示灯（蓝色）开始**连续双闪**，并听到语音提示“Pairing”。\n    *   *注意：仅短按电源键开机不会自动进入配对模式（除非是首次使用或刚恢复出厂设置）。*\n3.  **在新手机上搜索**：打开手机蓝牙设置，搜索新设备，在列表中选择 **[WH-CH520]**。\n4.  **完成连接**：点击配对后，若手机要求输入密码（Passkey/PIN），请输入 **“0000”**。连接成功时耳机会发出提示音。\n\n**关键提示与未知说明：**\n*   **超时机制**：配对模式仅维持5分钟，超时未连上会自动关机，需从第2步重新开始。\n*   **多点连接限制**：WH-CH520最多存储8台设备记录；虽然可配对新手机，但同一时间只能播放1台设备的音频。\n*   **若上述步骤无效**：可尝试“初始化”清除所有旧配对信息（关机且拔掉USB-C线后，同时长按电源键和音量减键10秒以上，蓝灯闪4次即完成），之后重新按首次配对流程操作。此操作会清空所有已存设备记录，旧手机也需删除耳机配对信息才能再次使用。\n*   **未确认项**：当前资料未提供该耳机是否支持Sony Headphones Connect App内的“多点连接”切换功能；如需两台设备无缝切换，建议配对成功后在App中核实具体支持情况。\n\n来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0",
+            "d6cf3f096000b9bcc84fb01b:0",
+            "d6cf3f096000b9bcc84fb01b:1000",
+            "d6cf3f096000b9bcc84fb01b:1998",
+            "d6cf3f096000b9bcc84fb01b:2999"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "d6cf3f096000b9bcc84fb01b",
+              "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "name": "[模拟持有]我的Sony耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:00:41.763Z"
+          },
+          {
+            "stage": "practical_knowledge",
+            "detail": "{\"itemId\":\"94dd5f7c-c6ac-497c-b104-e6429d3ff207\",\"cached\":false,\"readURLs\":[{\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"characters\":3293},{\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html\",\"characters\":774}],\"issues\":[],\"sources\":[{\"id\":\"5d286afe62be538821d82c46:0\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:0\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:1000\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:1998\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"},{\"id\":\"d6cf3f096000b9bcc84fb01b:2999\",\"url\":\"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html\",\"model\":\"WH-CH520\"}]}",
+            "at": "2026-10-31T13:00:43.146Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "search_product_knowledge completed",
+            "at": "2026-10-31T13:00:43.146Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:00:51.906Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":11796,\"calls\":2,\"tools\":1,\"reservedCny\":0.350664,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:00:51.908Z"
+          }
+        ],
+        "tokens": {
+          "input": 5827,
+          "output": 587
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "11119cbe-a256-45e7-b913-98955b29642b",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 11942
+    },
+    {
+      "question": "那恢复出厂初始化和重新配对是一回事吗？初始化按多久，原配对信息会怎样？",
+      "result": {
+        "session": {
+          "id": "ca8e7d9a-741b-4515-94f9-416328abdfda",
+          "owner": "u_f5fc0990-4718-4c26-b9ab-30852733a704",
+          "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+          "identity": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 2,
+          "status": "active",
+          "messages": [
+            {
+              "id": "638b0d0f-0cec-4952-80f3-5d4a48ecdf78",
+              "role": "user",
+              "text": "这副WH-CH520以前连过另一台手机，现在怎样重新配对新手机？请给完整步骤。",
+              "at": "2026-10-31T13:00:51.910Z",
+              "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "507d1938-1e5a-4421-bad7-8612d6a0e2e7",
+              "role": "assistant",
+              "text": "根据Sony WH-CH520官方帮助指南，由于耳机已存有旧手机的配对信息，需手动进入配对模式才能被新手机发现。完整步骤如下：\n\n1.  **确保电量与距离**：确认耳机电量充足，并将新手机放在耳机1米范围内。\n2.  **手动进入配对模式**：在耳机开机状态下，长按 **(Bluetooth)** 按钮约 **5秒或更久**。\n    *   确认标志：指示灯（蓝色）开始**连续双闪**，并听到语音提示“Pairing”。\n    *   *注意：仅短按电源键开机不会自动进入配对模式（除非是首次使用或刚恢复出厂设置）。*\n3.  **在新手机上搜索**：打开手机蓝牙设置，搜索新设备，在列表中选择 **[WH-CH520]**。\n4.  **完成连接**：点击配对后，若手机要求输入密码（Passkey/PIN），请输入 **“0000”**。连接成功时耳机会发出提示音。\n\n**关键提示与未知说明：**\n*   **超时机制**：配对模式仅维持5分钟，超时未连上会自动关机，需从第2步重新开始。\n*   **多点连接限制**：WH-CH520最多存储8台设备记录；虽然可配对新手机，但同一时间只能播放1台设备的音频。\n*   **若上述步骤无效**：可尝试“初始化”清除所有旧配对信息（关机且拔掉USB-C线后，同时长按电源键和音量减键10秒以上，蓝灯闪4次即完成），之后重新按首次配对流程操作。此操作会清空所有已存设备记录，旧手机也需删除耳机配对信息才能再次使用。\n*   **未确认项**：当前资料未提供该耳机是否支持Sony Headphones Connect App内的“多点连接”切换功能；如需两台设备无缝切换，建议配对成功后在App中核实具体支持情况。\n\n来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+              "reply": {
+                "answer": "根据Sony WH-CH520官方帮助指南，由于耳机已存有旧手机的配对信息，需手动进入配对模式才能被新手机发现。完整步骤如下：\n\n1.  **确保电量与距离**：确认耳机电量充足，并将新手机放在耳机1米范围内。\n2.  **手动进入配对模式**：在耳机开机状态下，长按 **(Bluetooth)** 按钮约 **5秒或更久**。\n    *   确认标志：指示灯（蓝色）开始**连续双闪**，并听到语音提示“Pairing”。\n    *   *注意：仅短按电源键开机不会自动进入配对模式（除非是首次使用或刚恢复出厂设置）。*\n3.  **在新手机上搜索**：打开手机蓝牙设置，搜索新设备，在列表中选择 **[WH-CH520]**。\n4.  **完成连接**：点击配对后，若手机要求输入密码（Passkey/PIN），请输入 **“0000”**。连接成功时耳机会发出提示音。\n\n**关键提示与未知说明：**\n*   **超时机制**：配对模式仅维持5分钟，超时未连上会自动关机，需从第2步重新开始。\n*   **多点连接限制**：WH-CH520最多存储8台设备记录；虽然可配对新手机，但同一时间只能播放1台设备的音频。\n*   **若上述步骤无效**：可尝试“初始化”清除所有旧配对信息（关机且拔掉USB-C线后，同时长按电源键和音量减键10秒以上，蓝灯闪4次即完成），之后重新按首次配对流程操作。此操作会清空所有已存设备记录，旧手机也需删除耳机配对信息才能再次使用。\n*   **未确认项**：当前资料未提供该耳机是否支持Sony Headphones Connect App内的“多点连接”切换功能；如需两台设备无缝切换，建议配对成功后在App中核实具体支持情况。\n\n来源：[Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html) | [Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+                    "name": "[模拟持有]我的Sony耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:00:51.910Z"
+            },
+            {
+              "id": "69ae2be4-3115-4321-ab24-b1eef1f44d60",
+              "role": "user",
+              "text": "那恢复出厂初始化和重新配对是一回事吗？初始化按多久，原配对信息会怎样？",
+              "at": "2026-10-31T13:00:56.542Z",
+              "itemId": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "e910660e-8a97-45c1-8e4c-477225f84c3b",
+              "role": "assistant",
+              "text": "不是一回事。对Sony WH-CH520来说，“恢复出厂初始化”是清除耳机内所有设置和配对记录的操作；“重新配对”只是在耳机已有或清空配对信息后，与新设备建立连接的过程。初始化之后通常需要重新配对，但重新配对并不等于初始化。\n\n根据官方帮助指南：\n\n-   **初始化按键时长**：在关机且拔掉USB-C线的状态下，同时长按电源键和音量减（–）键约**10秒或更久**。\n-   **完成标志**：蓝色指示灯闪烁4次（- - - -），表示初始化完成。\n-   **原配对信息处理**：初始化会**删除耳机内存储的所有蓝牙配对信息**，并将音量等设置恢复为出厂默认值。此时，你还需要在手机/电脑等原连接设备的蓝牙设置中手动删除该耳机的配对记录，然后才能像新机一样重新进行配对。\n\n若只是想连接新手机而保留旧设备的配对记录，无需初始化，只需在开机状态下长按Bluetooth键约5秒手动进入配对模式即可。\n\n来源：[Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html) | [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+              "reply": {
+                "answer": "不是一回事。对Sony WH-CH520来说，“恢复出厂初始化”是清除耳机内所有设置和配对记录的操作；“重新配对”只是在耳机已有或清空配对信息后，与新设备建立连接的过程。初始化之后通常需要重新配对，但重新配对并不等于初始化。\n\n根据官方帮助指南：\n\n-   **初始化按键时长**：在关机且拔掉USB-C线的状态下，同时长按电源键和音量减（–）键约**10秒或更久**。\n-   **完成标志**：蓝色指示灯闪烁4次（- - - -），表示初始化完成。\n-   **原配对信息处理**：初始化会**删除耳机内存储的所有蓝牙配对信息**，并将音量等设置恢复为出厂默认值。此时，你还需要在手机/电脑等原连接设备的蓝牙设置中手动删除该耳机的配对记录，然后才能像新机一样重新进行配对。\n\n若只是想连接新手机而保留旧设备的配对记录，无需初始化，只需在开机状态下长按Bluetooth键约5秒手动进入配对模式即可。\n\n来源：[Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html) | [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "5d286afe62be538821d82c46:0",
+                  "d6cf3f096000b9bcc84fb01b:0",
+                  "d6cf3f096000b9bcc84fb01b:1000",
+                  "d6cf3f096000b9bcc84fb01b:1998",
+                  "d6cf3f096000b9bcc84fb01b:2999"
+                ],
+                "citations": [
+                  {
+                    "id": "5d286afe62be538821d82c46",
+                    "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  },
+                  {
+                    "id": "d6cf3f096000b9bcc84fb01b",
+                    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+                    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+                    "kind": "official",
+                    "section": "WH-CH520；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+                    "name": "[模拟持有]我的Sony耳机",
+                    "model": "WH-CH520"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-10-31T13:00:56.542Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "c7c2dea9-4ecb-4759-9576-8dadc7d30a71"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-10-31T13:00:40.109Z",
+          "updatedAt": "2026-10-31T13:00:56.542Z",
+          "expiresAt": "2026-11-07T13:00:40.109Z",
+          "itemScopes": {
+            "94dd5f7c-c6ac-497c-b104-e6429d3ff207": "[\"u_f5fc0990-4718-4c26-b9ab-30852733a704\",\"[\\\"WH-CH520\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "answer": "不是一回事。对Sony WH-CH520来说，“恢复出厂初始化”是清除耳机内所有设置和配对记录的操作；“重新配对”只是在耳机已有或清空配对信息后，与新设备建立连接的过程。初始化之后通常需要重新配对，但重新配对并不等于初始化。\n\n根据官方帮助指南：\n\n-   **初始化按键时长**：在关机且拔掉USB-C线的状态下，同时长按电源键和音量减（–）键约**10秒或更久**。\n-   **完成标志**：蓝色指示灯闪烁4次（- - - -），表示初始化完成。\n-   **原配对信息处理**：初始化会**删除耳机内存储的所有蓝牙配对信息**，并将音量等设置恢复为出厂默认值。此时，你还需要在手机/电脑等原连接设备的蓝牙设置中手动删除该耳机的配对记录，然后才能像新机一样重新进行配对。\n\n若只是想连接新手机而保留旧设备的配对记录，无需初始化，只需在开机状态下长按Bluetooth键约5秒手动进入配对模式即可。\n\n来源：[Initializing the headset to restore factory settings](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html) | [Pairing and connecting with a Bluetooth device](https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html)",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "5d286afe62be538821d82c46:0",
+            "d6cf3f096000b9bcc84fb01b:0",
+            "d6cf3f096000b9bcc84fb01b:1000",
+            "d6cf3f096000b9bcc84fb01b:1998",
+            "d6cf3f096000b9bcc84fb01b:2999"
+          ],
+          "citations": [
+            {
+              "id": "5d286afe62be538821d82c46",
+              "title": "WH-CH520 | Help Guide | Initializing the headset to restore factory settings",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000783325.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            },
+            {
+              "id": "d6cf3f096000b9bcc84fb01b",
+              "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+              "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+              "kind": "official",
+              "section": "WH-CH520；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+              "name": "[模拟持有]我的Sony耳机",
+              "model": "WH-CH520"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-10-31T13:00:56.534Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":4167,\"calls\":1,\"tools\":0,\"reservedCny\":0.245712,\"adviceOnly\":true}",
+            "at": "2026-10-31T13:00:56.538Z"
+          }
+        ],
+        "tokens": {
+          "input": 4483,
+          "output": 313
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "f45dd8a1-d353-431a-af31-c87a2d15e03e",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 4480
+    }
+  ],
+  "checks": [
+    {
+      "name": "真实UI录入→真实千问Function Calling→官方获取→完整重新配对回答",
+      "passed": true
+    },
+    {
+      "name": "同一物品/会话追问：10秒初始化及删除信息，390px实际显示",
+      "passed": true
+    }
+  ],
+  "item": {
+    "id": "94dd5f7c-c6ac-497c-b104-e6429d3ff207",
+    "name": "[模拟持有]我的Sony耳机",
+    "model": "WH-CH520",
+    "synthetic": true
+  },
+  "upstreamRequests": 3
+}

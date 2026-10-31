@@ -1,3 +1,9 @@
+## 2026-10-31｜自然工具Agent纵向交付中
+
+基线0432ace33，独立codex/wujian-practical-agent-v1。Sony真实浏览器录入→原生工具→官方来源→回答→追问已走通；首次11.9秒2次上游，追问4.5秒1次。仍有短按开机/5分钟关机等错误扩写，不能判可靠完成。保留失败，先修此断点再扩Canon/经验/跨物品。新增独立60次/15元授权，历史不重置。详见[本轮记录](docs/engineering/practical-agent-2026-10-31/README.md)。
+
+---
+
 ## 2026-10-31｜智能内核 V3（工程交付，真实质量未过门禁）
 
 从4d210bcd隔离升级，codex/wujian-intelligence-kernel-v3。TaskFrame、动态来源/主张核对、必要条件计算与逐子问呈现已接入App实验开关；两项事实实验均默认false，保留原事务和默认业务。最终442项离线、类型、生产构建和桌面/390px真实浏览器通过；真实质量没有通过：历史关键项27/71，留出26/63，低于直接同模型45/71与40/63；同模型语义复核误拒/漏放、经验错误归因及创意超时仍在。新授权轮次247/250次，239返回8失败，估算含未知usage预留7.5945元以内；旧轮次另追加9次至146，前137次不改。仅8题新鲜三臂，历史34+留出30本轮双臂，不能冒称全量三方验收。保留原始失败、匿名样本、官方来源、四条旅程和恢复命令。见 [本轮交付](docs/engineering/intelligence-kernel-v3-2026-10-31/README.md)、[真实结果](docs/engineering/intelligence-kernel-v3-2026-10-31/MODEL_RESULTS.md)、[测试与运行](docs/engineering/intelligence-kernel-v3-2026-10-31/TEST_REPORT.md)。未合并main、未迁移私人库、未操作硬件。

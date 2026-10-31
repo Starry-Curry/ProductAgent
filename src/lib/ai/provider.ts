@@ -5,6 +5,7 @@ import {
   cloudBudgetState,
   isTimeoutLike,
 } from "../cloud/runtime.ts";
+import OpenAI from "openai";
 export class ProviderError extends Error {
   code: string;
   upstreamStatus?: number;
@@ -93,6 +94,8 @@ export type ToolDefinition = {
   };
 };
 export type Provider = {
+  /** Natural text + native function calling. No JSON answer packet or reviewer. */
+  converse?: (messages: ModelMessage[],tools:ToolDefinition[],options:{timeoutMs:number;maxTokens:number;toolChoice?:"auto"|"none"|{type:"function";function:{name:string}};onText?:(text:string)=>void})=>Promise<ModelResponse>;
   onText?: (text: string) => void;
   ready?: boolean;
   complete?: (
@@ -244,6 +247,24 @@ export function createProvider(
   };
   provider.complete = (messages, tools, options) =>
     completeModel(env, request, messages, tools, options);
+  provider.converse = async (messages,tools,options) => {
+    if(!provider.ready)throw new ProviderError('payment_not_authorized','模型配置或本次费用授权未就绪');
+    const base=new URL(AI_BASE_URL!);
+    if(base.protocol!=='https:'||base.username||base.password)throw new ProviderError('configuration','模型地址必须是无账号信息的HTTPS地址');
+    const client=new OpenAI({apiKey:AI_API_KEY,baseURL:AI_BASE_URL,maxRetries:0,fetch:request,timeout:options.timeoutMs});
+    let callbackError:unknown;
+    const stream=client.chat.completions.stream({model:AI_MODEL!,messages:messages as any,tools:tools.length?tools as any:undefined,
+      tool_choice:options.toolChoice||'auto',max_tokens:options.maxTokens,temperature:0.35,stream_options:{include_usage:true},enable_thinking:false} as any);
+    stream.on('content.delta',({delta})=>{try{options.onText?.(delta);}catch(e){callbackError=e;stream.abort();}});
+    try{
+      const response=await stream.finalChatCompletion();if(callbackError)throw callbackError;
+      const choice=response.choices[0];
+      if(!choice||!['stop','tool_calls'].includes(choice.finish_reason))throw new ProviderError('incomplete','本次回答未完整生成，请重试');
+      return {text:choice.message.content||'',model:response.model,tokens:response.usage?{input:response.usage.prompt_tokens,output:response.usage.completion_tokens}:null,
+        toolCalls:(choice.message.tool_calls||[]) as ToolCall[],finishReason:choice.finish_reason};
+    }catch(e){if(callbackError)throw callbackError;if(e instanceof ProviderError)throw e;
+      throw new ProviderError('native_model_failed','模型连接或生成未完成；本次不自动重试');}
+  };
   // Same HTTPS/auth/error protocol; vision changes only the configured model and user content.
   provider.recognize = (system, image) =>
     completeModel(
