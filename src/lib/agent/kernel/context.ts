@@ -10,6 +10,7 @@ import { virtualHomeItems } from "../../life/virtual-home.ts";
 import { authorize } from "../../foundation/policy.ts";
 import { retrieveTaskPassages } from "./retrieval.ts";
 import type { EvidencePassage } from "./contracts.ts";
+import {rectangleCondition} from './physical.ts';
 
 // Correlate product + spec pages only by the exact manufacturer's product path.
 // A general support page, brand name or similar model is never such a relation.
@@ -31,7 +32,7 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
   const focus=session.itemId||session.known.activeItemId;
   const home=session.known.homeId==='young-apartment-v1';
   const homeIds=new Set(home?virtualHomeItems(state,actor).map(i=>i.id):[]);
-  const allowed=state.items.filter(i=>canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo)&&(!task||task.itemInstanceIds.includes(i.id)));
+  const allowed=state.items.filter(i=>canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id)))&&(!task||task.itemInstanceIds.includes(i.id)));
   const mentioned=(s:string)=>s.length>1&&question.toLowerCase().includes(s.toLowerCase());
   const selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||mentioned(i.model)||mentioned(i.name)||
     // Entity matching only. It never chooses an intent or provides a product fact.
@@ -66,6 +67,15 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
     // No owners, locations, notes, photos or private stories in the catalogue.
     catalogue:allowed.slice(0,80).map(i=>({id:i.id,name:i.name,model:i.model,category:i.category})),
     evidence,experiences,
+    // Only explicitly recorded dimensions take part in arithmetic. These are still
+    // user reports, not manufacturer facts or observed stability measurements.
+    necessaryConditionChecks:selected.flatMap(object=>selected.filter(space=>space.id!==object.id).flatMap(space=>{
+      const outer=object.attributes?.physicalFacts?.find(f=>f.key==='outer_mm'&&Array.isArray(f.value));
+      const inner=space.attributes?.physicalFacts?.find(f=>f.key==='inner_mm'&&Array.isArray(f.value));
+      if(!outer||!inner)return [];
+      const a=outer.value as [number,number,number],b=inner.value as [number,number,number];
+      return [{itemIds:[object.id,space.id],operandIds:[outer.id,inner.id],basis:'registered_user_report_parameters_not_device_readback',result:rectangleCondition([a[0],a[1]],[b[0],b[1]],'internal'),heightNotChecked:true}];
+    })),
     preferences:memoryOn?contexts.flatMap(c=>c.cloudPreferences).filter((p,n,a)=>a.findIndex(r=>r.key===p.key&&r.value===p.value)===n):[],
     tried:session.tried,
     history:session.messages.slice(-6).map(m=>({role:m.role,text:m.text.slice(0,1800)})),

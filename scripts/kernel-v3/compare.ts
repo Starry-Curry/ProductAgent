@@ -13,6 +13,7 @@ if(!stage||!/^[a-z0-9-]+$/.test(stage)||!process.argv.includes('--authorized-v3-
 const file=V3_ROOT+'/'+stage+'.json';if(fs.existsSync(file))throw Error('stage_exists_preserve_evidence');
 const requested=process.argv.find(s=>s.startsWith('--cases='))?.slice(8).split(',');
 const arms=process.argv.find(s=>s.startsWith('--arms='))?.slice(7).split(',')||['v3','direct','previous'];
+const concurrency=Math.min(3,Math.max(1,Number(process.argv.find(s=>s.startsWith('--concurrency='))?.slice(14))||2));
 if(arms.some(a=>!['v3','direct','previous'].includes(a)))throw Error('invalid_arm');
 const plan=set==='holdout'?JSON.parse(fs.readFileSync(V3_ROOT+'/holdout.json','utf8')).rows.map((c:any)=>({id:c.id,prompt:c.question,product_ids:c.productIds,expected:c.rubric})):
  set==='development'?JSON.parse(fs.readFileSync(V3_ROOT+'/development-cases.json','utf8')).rows.map((c:any)=>({id:c.id,prompt:c.question,product_ids:c.productIds,expected:c.rubric})):
@@ -48,7 +49,7 @@ async function execute(c:any){const f=kernelFixture(stage+'-'+c.id.toLowerCase()
   });
  }
 }finally{f.db.close();}}
-try{for(let n=0;n<cases.length;n+=2){
+try{for(let n=0;n<cases.length;n+=concurrency){
  if(ledger().attempts.length>=246){rows.push(...cases.slice(n).flatMap((c:any)=>arms.map(arm=>({id:c.id,arm,status:'not_run',reason:'remaining_requests_reserved_for_inflight_or_final_checks'}))));save();break;}
- await Promise.all(cases.slice(n,n+2).map(execute));
+ await Promise.all(cases.slice(n,n+concurrency).map(execute));
 }}finally{delete process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3;save();await gate.close();}

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { chromium, expect } from "@playwright/test";
+import {assistantResponse} from './helpers/assistant-response.mjs';
 const base = process.env.TEST_BASE_URL;
 if (!base)
   throw Error("Use verify-local.mjs with an isolated synthetic database");
@@ -10,7 +11,7 @@ async function api(route, body, method = body ? "POST" : "GET", actor = "lin") {
     headers: { "Content-Type": "application/json", "x-demo-actor": actor },
     ...(body ? { body: JSON.stringify(body) } : {}),
   });
-  const data = await r.json();
+  const data = await assistantResponse(r);
   assert.equal(r.status, 200, JSON.stringify(data));
   return data;
 }

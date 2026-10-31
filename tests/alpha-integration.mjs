@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { chromium, expect } from "@playwright/test";
+import {assistantResponse} from './helpers/assistant-response.mjs';
 const base = process.env.TEST_BASE_URL;
 if (!base) throw Error("Isolated test URL required");
 const live = process.env.ALPHA_LIVE === "true",
@@ -92,7 +93,7 @@ async function send(text) {
   await page.getByRole("button", { name: "发送", exact: true }).click();
   const r = await pending;
   assert.equal(r.status(), 200);
-  const d = await r.json();
+  const d = await assistantResponse(r);
   records.push({ input: text, result: d });
   await expect(
     page.getByRole("button", { name: "发送", exact: true }),
