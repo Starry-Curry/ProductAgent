@@ -6,6 +6,41 @@ import type { KernelContext } from "./context.ts";
 import type { z } from "zod";
 import {rangeCondition} from './physical.ts';
 
+/** One fabricated/reformatted extra quotation must not erase independently valid
+ * evidence. Exclude the bad citation explicitly; still require semantic review of
+ * the complete claim against the surviving originals. No fuzzy ID matching. */
+export function anchorCandidate(c:Candidate,context:KernelContext){
+  const excluded:{id:string;quote:string;reason:string}[]=[];
+  const sources=c.sources.flatMap(r=>{
+    const s=context.evidence.find(s=>s.id===r.id);
+    const applicable=!!s&&(s.basis!=='official'||c.itemIds.includes(s.itemId)&&context.items.some(i=>i.id===s.itemId&&i.model===s.model));
+    if(!applicable){excluded.push({...r,reason:'来源不存在或不适用当前物品，未用于核对'});return [];}
+    if(!quoteInSource(s!.text,r.quote)){
+      excluded.push({...r,reason:'候选引文不精确，已撤下；核对器另读服务器保存的完整原始段落，不将候选引文视为证据'});
+      return [{id:r.id,quote:s!.text}];
+    }
+    return [r];
+  });return {candidate:{...c,sources},excluded};
+}
+
+/** Recognize generic range comparisons without a brand/property registry. Operands
+ * must already appear with units in this question and the cited adjacent range. */
+export function attachRangeDerivation(c:Candidate,frame:TaskFrame){
+  if(c.calculation||!['fact','advice'].includes(c.kind))return c;
+  for(const ref of c.sources){
+    const ranges=[...normalized(ref.quote).matchAll(/(\d+(?:\.\d+)?)\s*[-–—~至到]\s*(\d+(?:\.\d+)?)\s*(kg\b|g\b|mm\b|cm\b|公斤|千克|克|毫米|厘米)/g)];
+    for(const range of ranges){
+      const lower=quantities(range[1]+' '+range[3])[0],upper=quantities(range[2]+' '+range[3])[0];
+      const supplied=quantities(frame.originalQuestion).filter(q=>q.unit===lower?.unit);
+      const values=quantities(c.text);
+      const actual=supplied.find(q=>values.some(v=>v.unit===q.unit&&v.value===q.value));
+      if(!actual||!lower||!upper)continue;
+      const calculation={kind:'range' as const,actual:actual.value,min:lower.value,max:upper.value,unit:actual.unit,sourceId:ref.id,quote:ref.quote,inputQuote:frame.originalQuestion,assertion:(actual.value>=lower.value&&actual.value<=upper.value?'within':'outside') as 'within'|'outside'};
+      return {...c,kind:'advice' as const,calculation};
+    }
+  }return c;
+}
+
 export function verifyCalculation(candidate:Candidate,frame:TaskFrame,context:KernelContext){
   const c=candidate.calculation;if(!c)return undefined;
   const source=context.evidence.find(s=>s.id===c.sourceId&&s.basis==='official'&&candidate.itemIds.includes(s.itemId));
@@ -14,6 +49,10 @@ export function verifyCalculation(candidate:Candidate,frame:TaskFrame,context:Ke
   const qty=(n:number)=>quantities(n+' '+c.unit)[0];
   const lo=qty(c.min),hi=qty(c.max),value=qty(c.actual);
   if(!lo||!hi||!value||!bounds.some(q=>q.unit===lo.unit&&q.value===lo.value)||!bounds.some(q=>q.unit===hi.unit&&q.value===hi.value)||!actual.some(q=>q.unit===value.unit&&q.value===value.value))throw Error('计算数值或单位与原文不一致');
+  // Bound values appearing somewhere in a page are not a range. Keep the actual
+  // adjacent interval and its unit as the source of this deterministic rule.
+  const intervals=[...normalized(c.quote).matchAll(/(\d+(?:\.\d+)?)\s*[-–—~至到]\s*(\d+(?:\.\d+)?)\s*([a-z]+|公斤|千克|克|毫米|厘米|米|秒|分钟|小时|度)/g)];
+  if(!intervals.some(m=>{const a=quantities(m[1]+' '+m[3])[0],b=quantities(m[2]+' '+m[3])[0];return a?.unit===lo.unit&&a.value===lo.value&&b?.unit===hi.unit&&b.value===hi.value;}))throw Error('原文没有所声明的相邻范围及单位');
   const result=rangeCondition(value.value,lo.value,hi.value);
   if(result.satisfied!==(c.assertion==='within'))throw Error('范围推导与确定性计算相反');
   return result;
@@ -40,7 +79,8 @@ export function precheck(candidate:Candidate,frame:TaskFrame,context:KernelConte
   const part=frame.parts.find(p=>p.id===candidate.partId);
   if(!part)reasons.push('候选不属于当前子问题');
   if(candidate.itemIds.some(id=>!context.items.some(i=>i.id===id)))reasons.push('引用了未读取或未获准的物品');
-  if(candidate.kind==='fact'||candidate.kind==='operation'){
+  const requiresOfficial=candidate.kind==='fact'||candidate.kind==='operation'||!!part&&['fact','procedure'].includes(part.kind)&&candidate.kind==='advice'&&!candidate.calculation;
+  if(requiresOfficial){
     if(!candidate.sources.length)reasons.push('型号事实或操作缺少原文');
     if(!candidate.itemIds.length)reasons.push('型号事实缺少明确物品主体');
   }
@@ -48,11 +88,11 @@ export function precheck(candidate:Candidate,frame:TaskFrame,context:KernelConte
     const s=context.evidence.find(s=>s.id===ref.id);
     if(!s||!quoteInSource(s.text,ref.quote)){reasons.push('原文引用不存在或已改变：'+ref.id);continue;}
     if(s.basis==='official'&&(!candidate.itemIds.includes(s.itemId)||!context.items.some(i=>i.id===s.itemId&&i.model===s.model)))reasons.push('来源主体或型号不适用');
-    if((candidate.kind==='fact'||candidate.kind==='operation')&&s.basis!=='official')reasons.push('用户报告不能认证厂家性能或操作');
+    if(requiresOfficial&&s.basis!=='official')reasons.push('用户报告不能认证厂家性能或操作');
   }
   const official=candidate.sources.map(r=>context.evidence.find(s=>s.id===r.id)).filter(s=>s?.basis==='official');
   if(candidate.kind==='user_report'&&!candidate.sources.some(r=>context.evidence.some(s=>s.id===r.id&&s.basis!=='official')))reasons.push('个人经历缺少本轮获准报告');
-  if(candidate.kind==='fact'||candidate.kind==='operation'){
+  if(requiresOfficial){
     let text=candidate.text;
     for(const i of context.items)if(i.model)text=text.replaceAll(i.model,'');
     const supplied=quantities(candidate.sources.filter(r=>official.some(s=>s?.id===r.id)).map(r=>r.quote).join('\n'));
@@ -73,7 +113,7 @@ export function adjudicateCandidates(frame:TaskFrame,candidates:Candidate[],cont
     if(check&&check.evidenceIds.some(id=>!c.sources.some(s=>s.id===id)))reasons.push('核对器引用了候选之外的来源');
     if(check?.verdict==='entailed'&&(c.kind==='fact'||c.kind==='operation'||c.kind==='user_report')&&!check.evidenceIds.length)reasons.push('核对器未指定支持原文');
     if(check&&check.verdict!=='entailed')reasons.push(check.reason);
-    if(check?.repeatsFailedAction&&!c.changedConditions?.trim())reasons.push('重复已报告失败的动作，未说明当前条件有什么不同');
+    if(check?.repeatsFailedAction&&(!c.changedConditions?.trim()||!c.changedConditionEvidence?.inputQuote||!frame.originalQuestion.includes(c.changedConditionEvidence.inputQuote)))reasons.push('重复已报告失败的动作，缺少本轮条件变化的明确报告');
     const conditions=[...new Set([...c.conditions,...(check?.missingConditions||[])])];
     const conditional=c.kind==='hypothesis'||conditions.length>0;
     // A missing prerequisite cannot silently turn a proven instruction into an immediate step.

@@ -5,12 +5,14 @@ import {makeKnowledgeDocument,storeOfficialDocument} from '../src/lib/life/acqui
 import {migrateUnified} from '../src/lib/foundation/schema.ts';
 import {respond} from '../src/lib/agent/service.ts';
 import {answerKnownItem} from '../src/lib/agent/grounded-answer.ts';
-import {kernelContext} from '../src/lib/agent/kernel/context.ts';
-import {precheck,adjudicateCandidates,quantities,verifyCalculation} from '../src/lib/agent/kernel/verify.ts';
+import {kernelContext,officialProductPath} from '../src/lib/agent/kernel/context.ts';
+import {precheck,adjudicateCandidates,quantities,verifyCalculation,anchorCandidate,attachRangeDerivation} from '../src/lib/agent/kernel/verify.ts';
 import {rangeCondition,rectangleCondition,physicalPrerequisites} from '../src/lib/agent/kernel/physical.ts';
 import {saveMemory,forgetMemory} from '../src/lib/memory/store.ts';
 import {retrieveTaskPassages} from '../src/lib/agent/kernel/retrieval.ts';
-import type {Candidate,TaskFrame} from '../src/lib/agent/kernel/contracts.ts';
+import {parseDraft,type Candidate,type TaskFrame} from '../src/lib/agent/kernel/contracts.ts';
+import {createTask} from '../src/lib/foundation/tasks.ts';
+import {mirrorItemGrant} from '../src/lib/foundation/policy.ts';
 
 const frame:TaskFrame={version:'task-frame/3',originalQuestion:'这件东西用310g可以吗？',goal:'了解使用',itemIds:['i'],parts:[{id:'p',question:'如何使用',kind:'fact',itemIds:['i'],risk:'ordinary',needed:[],expectedResult:'回答'}],constraints:[],tried:[],evidenceIds:['s'],permission:'read_only',progress:'proposed'};
 const candidate:Candidate={id:'c',partId:'p',itemIds:['i'],kind:'fact',text:'按住按钮5秒。',sources:[{id:'s',quote:'Hold the button for 5 seconds. Weight 170–290 g.'}],conditions:[],experienceIds:[]};
@@ -74,18 +76,43 @@ test('字形单位匹配仍不认证完整语义，原文留在审计中',()=>{
  const r=adjudicateCandidates(frame,[candidate],context,review)[0];
  assert.equal(r.sources?.[0].quote,candidate.sources[0].quote);assert.equal(r.verification,'scope_quote_quantity_and_limited_semantic_review');
 });
+test('不精确候选引文撤下后另读服务器原文，不能冒充引文已匹配',()=>{
+ const c={...candidate,sources:[{id:'s',quote:'Hold 7 seconds'}]};
+ const anchored=anchorCandidate(c,context);
+ assert.equal(anchored.excluded.length,1);assert.equal(anchored.candidate.sources[0].quote,context.evidence[0].text);
+ const bad=adjudicateCandidates(frame,[{...anchored.candidate,text:'按住7秒。'}],context,review)[0];
+ assert.equal(bad.published,false);
+});
+test('无需品牌规则便可附加范围推导，前提仍逐字来自问题和资料',()=>{
+ const c=attachRangeDerivation({...candidate,text:'310克超出170–290克范围。'},frame);
+ assert.equal(c.kind,'advice');assert.equal(verifyCalculation(c,frame,context)?.excess,20);
+ const falseRange={...candidate,calculation:{kind:'range' as const,actual:310,min:170,max:290,unit:'g',sourceId:'s',quote:'Weight 170 g. Another 290 g.',inputQuote:'310g',assertion:'outside' as const}};
+ assert.throws(()=>verifyCalculation(falseRange,frame,{...context,evidence:[{...context.evidence[0],text:falseRange.calculation.quote}]}),/相邻范围/);
+});
+test('把厂家操作标成advice不能绕过原文校验',()=>{
+ assert.match(precheck({...candidate,kind:'advice',sources:[]},frame,context).join(),/缺少原文/);
+});
+test('候选协议错误局部降级，不让正确兄弟项消失',()=>{
+ const result=parseDraft({frame,candidates:[candidate,{id:'bad',partId:'p',kind:'unexpected'}],gaps:[]});
+ assert.equal(result.candidates.length,1);assert.match(result.gaps[0].reason,/不完整/);
+});
+test('官方相同产品路径可关联规格和说明，不用相似型号猜测',()=>{
+ assert.equal(officialProductPath('https://www.mi.com/sg/product/example-1/specs/'),officialProductPath('https://www.mi.com/ae-en/product/example-1/'));
+ assert.notEqual(officialProductPath('https://www.mi.com/sg/product/example-1/'),officialProductPath('https://www.mi.com/sg/product/example-1-pro/'));
+ assert.equal(officialProductPath('https://www.mi.com/support/'),undefined);
+});
 
 function fixture(){const f=validationFixture('.runtime/kernel-tests-'+crypto.randomUUID());migrateUnified(f.db);const id=f.add('合成测试耳机','耳机','Sony','WH-CH520');const i=f.read().items.find(i=>i.id===id)!;
  const d=makeKnowledgeDocument({url:'https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html',title:'WH-CH520 synthetic contract text',text:'WH-CH520. Press once briefly: Decrease the volume. Hold the button for 5 seconds.',links:[]},i,[]);
  storeOfficialDocument(f.db,'lin',i,d);return {...f,id,d};}
 function providerFor(id:string,sourceId:string,extra?:()=>void){let calls=0;return {ready:true,model:'offline-contract',generate:async()=>{
- calls++;if(calls===2){extra?.();return {text:JSON.stringify({checks:[{id:'c',verdict:'entailed',reason:'短按降低音量与原文直接对应',evidenceIds:[sourceId]}],omittedQuestions:[]}),model:'offline-contract',tokens:{input:10,output:10}};}
+ calls++;if(calls===2){extra?.();return {text:JSON.stringify({checks:[{id:'C1',verdict:'entailed',reason:'短按降低音量与原文直接对应',evidenceIds:[sourceId]}],omittedQuestions:[]}),model:'offline-contract',tokens:{input:10,output:10}};}
  return {text:JSON.stringify({frame:{goal:'完整回答',itemIds:[id],parts:[{id:'a',question:'短按减号',kind:'fact',risk:'ordinary',itemIds:[id],expectedResult:'了解音量变化'},{id:'b',question:'保修费用',kind:'fact',risk:'ordinary',itemIds:[id],expectedResult:'了解费用'}]},candidates:[{id:'c',partId:'a',itemIds:[id],kind:'fact',text:'短按减号降低音量。',sources:[{id:sourceId,quote:'Press once briefly: Decrease the volume.'}]}],gaps:[{partId:'b',reason:'资料没有维修收费政策'}]}),model:'offline-contract',tokens:{input:10,output:10}};
  }} as any;}
 test('真实LangGraph入口：两问部分保留且不创建持久TaskSpec',async()=>{
  const f=fixture();process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3='true';
  try{const r=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:f.id,mode:'service',question:'短按减号怎样，保修费用多少？',uiContext:{page:'item'},memoryPolicy:'off'},providerFor(f.id,f.d.chunks[0].id));
- assert.equal(r.modelCalls,2);assert.match(r.reply.answer,/降低音量/);assert.match(r.reply.answer,/没有维修收费/);assert.equal(r.reply.outcome,'needs_info');assert.equal(r.reply.task?.parts.length,2);assert.equal(r.reply.claimChecks?.[0].published,true);
+ assert.equal(r.modelCalls,2);assert.match(r.reply.answer,/降低音量/);assert.match(r.reply.answer,/缺适用资料/);assert.equal(r.reply.outcome,'needs_info');assert.equal(r.reply.task?.parts.length,2);assert.equal(r.reply.claimChecks?.[0].published,true);
  assert.equal((f.db.prepare('SELECT COUNT(*) AS n FROM foundation_tasks').get() as any).n,0);
  }finally{delete process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3;f.db.close();}
 });
@@ -106,4 +133,20 @@ test('通用检索允许翻译查询找到英文陌生属性；不改写原文',
  const docs:any=[{id:'d',chunks:Array.from({length:40},(_,n)=>({id:'c'+n,documentId:'d',start:n*1000,text:n===35?'Cobalt sample: rotating ring unlocks the compartment.':'Overview technical text '+n,title:'Guide'}))}];
  const found=retrieveTaskPassages(docs,['旋转怎么开启','rotating ring compartment'],[],200);
  assert.ok(found.some(c=>c.id==='c35'));assert.match(found.find(c=>c.id==='c35')!.text,/rotating ring/);
+});
+test('隐私失效后的旧Task目标不能绕resolveTaskContext复活',()=>{
+ const f=fixture();try{
+ const t=createTask(f.db,f.read,'lin',{requestId:crypto.randomUUID(),goal:'只属于我的秘密赠送者小星',intent:'guide',itemInstanceIds:[f.id]});
+ const m=saveMemory(f.db,f.read,'lin',{kind:'relationship',text:'秘密赠送者小星',itemId:f.id,allowCloud:true});forgetMemory(f.db,'lin',m.id);
+ const ctx=kernelContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off',foundationTaskId:t.taskId},messages:[],tried:[]} as any,'怎样操作？');
+ assert.ok(!JSON.stringify(ctx).includes('秘密赠送者小星'));assert.match(ctx.currentTask!.goal,/语境已经变更/);
+ }finally{f.db.close();}
+});
+test('显式撤权优先于遗留shared字段，不能进目录和模型',()=>{
+ const f=fixture();try{
+ const s=f.read(),i=s.items.find(i=>i.id===f.id)!;i.owner='dad';i.shared=true;i.sharedWith=['lin'];f.write(s);
+ mirrorItemGrant(f.db,f.read(),'dad','lin',f.id,false);
+ const ctx=kernelContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off'},messages:[],tried:[]} as any,'怎样操作？');
+ assert.ok(!ctx.catalogue.some(i=>i.id===f.id));assert.equal(ctx.items.length,0);assert.equal(ctx.evidence.length,0);
+ }finally{f.db.close();}
 });

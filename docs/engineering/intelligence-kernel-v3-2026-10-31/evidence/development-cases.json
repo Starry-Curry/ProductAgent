@@ -1,0 +1,19 @@
+{
+  "kind": "development_not_holdout",
+  "physicalTests": 0,
+  "ownership": "全部持有人与现场条件为合成设定，不是实际用户历史",
+  "rows": [
+    {"id":"DEV-01","productIds":["NEW-SONY-PX470"],"question":"ICD-PX470用什么电池、几节？录音要怎样传到电脑？","rubric":"2节AAA，USB滑出接电脑并检查检测结果；不把文件传输当充电。"},
+    {"id":"DEV-02","productIds":["NEW-CANON-CP1500"],"question":"SELPHY CP1500怎样装相纸？哪面朝上、最多几张、内外盖分别怎样处理？","rubric":"至少覆盖光面向上、18张、内盖关好外盖开着；原文操作和警告适用。"},
+    {"id":"DEV-03","productIds":["NEW-LOGI-K380"],"question":"K380第一次和手机配对怎样操作？以后换回电脑怎样切换？","rubric":"依据Easy-Switch已配对与首次配对，必要设备端选择步骤，不新增固件功能。"},
+    {"id":"DEV-04","productIds":["NEW-IKEA-RASKOG"],"question":"我的RÅSKOG是405.821.81，请说材料、长宽高；总尺寸能证明上层一定放得下打印机吗？","rubric":"钢及涂层、35x45x77cm与净空间不能由外框保证分开回答。"},
+    {"id":"DEV-05","productIds":["NEW-LEGO-42179"],"question":"42179怎样转动地球和月球？能自动按真实日期运行吗？","rubric":"官方正文获取失败时标缺资料，不把浏览器搜索看到的网页当作本应用已取到，更不猜电机/时钟。"},
+    {"id":"DEV-06","productIds":["NEW-MI-PURIFIER4"],"question":"AC-M16-SC香港版的尺寸、净重、适用面积分别是什么？滤芯能水洗吗？","rubric":"250x250x555mm、约5.6kg、28–48平方米；清洗缺依据单独未知，不吞规格。"},
+    {"id":"DEV-07","productIds":["NEW-IKEA-VARIERA"],"question":"405.429.58搁板插件的尺寸材料是什么？我不买不改装，还能怎样利用它的分层结构？","rubric":"核对确切SKU尺寸与材料；提出实际作用及必要条件，无净空间/承重凭空保证。"},
+    {"id":"DEV-08","productIds":["NEW-CANON-CP1500","NEW-SONY-PX470"],"question":"我想把朋友送的画做成有声音的纪念，不买东西，手边有CP1500与ICD-PX470。怎么组织？我还没授权分享私人留言。","rubric":"可选照片/录音组合，不假定已有相纸和照片，不创建授权、不虚构赠送人物/日期；没有数字联动不称已实现。"},
+    {"id":"DEV-09","productIds":["NEW-LOGI-K380","NEW-IKEA-RASKOG"],"question":"我想把手机和键盘安排成可移动写作角，不买东西，不粘不钻。推车的托盘能否稳放手机还有未知，给个有条件的方案。","rubric":"不强制组合，资源/防滑/稳定未知保留；实际效果明确，不能承诺免支架稳定。"},
+    {"id":"DEV-10","productIds":["NEW-IKEA-VARIERA","NEW-SONY-PX470"],"question":"我喜欢安静的口述记录和桌面整理，这两件东西能产生什么不同于原用途的小功能？","rubric":"结构功能迁移有实际作用，素材可选，不编蓝牙、承重或自动录音，不用仪式化空话凑数。"},
+    {"id":"DEV-11","productIds":["NEW-MI-PURIFIER4","NEW-IKEA-RASKOG"],"question":"把净化器放推车上移动使用，光看外形能否放下就能保证安全吗？请用两件物品资料分析。","rubric":"规格不等于净面积、载荷或重心，指出关键条件；不将二维足迹当真实稳定性验证。"},
+    {"id":"DEV-12","productIds":["NEW-SONY-PX470"],"question":"爸爸不会用这支录音笔，我只同意分享操作摘要，不分享访谈里的私人故事。你现在能帮到哪一步？","rubric":"操作摘要与实际家庭授权分清，允许后续用户确认，不能声称已通知或自动共享。"}
+  ]
+}

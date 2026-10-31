@@ -4,7 +4,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { assertBudget } from './budget.mjs';
-export async function gateway(configPath) {
+export async function gateway(configPath,options) {
+  const limits=options?.limits||{roundId:'real-intelligence-20261031-r1',requests:150,cny:50};
   if (!configPath || path.basename(configPath) !== ".env.local")
     throw Error("existing_local_configuration_required");
   const config = {};
@@ -35,7 +36,7 @@ export async function gateway(configPath) {
   const available = (modelData.data || [])
     .map((m) => m.id)
     .filter((id) => typeof id === "string");
-  const root = path.resolve("docs/engineering/real-intelligence-2026-10-31/evidence");
+  const root = path.resolve(options?.root||"docs/engineering/real-intelligence-2026-10-31/evidence");
   fs.mkdirSync(root, { recursive: true });
   fs.writeFileSync(
     path.join(root, "model-availability.json"),
@@ -51,7 +52,7 @@ export async function gateway(configPath) {
   );
   fs.mkdirSync('.runtime',{recursive:true});
   const file = path.join(root, "model-calls.json"),
-    lockFile = path.resolve('.runtime/real-intelligence-round.lock'),
+    lockFile = path.resolve(options?.lockFile||'.runtime/real-intelligence-round.lock'),
     lock = fs.openSync(lockFile, "wx");
   fs.writeFileSync(
     lock,
@@ -59,10 +60,10 @@ export async function gateway(configPath) {
   );
   const ledger = fs.existsSync(file)
     ? JSON.parse(fs.readFileSync(file, "utf8"))
-    : { task: "real-intelligence-20261031-r1", attempts: [] };
+    : { task: limits.roundId, authorizedLimits:limits, attempts: [] };
   // This authorized round has one fixed ledger across all experiment stages.
   // The historical product-foundation ledger is never opened by this gateway.
-  const stage = "real-intelligence-20261031-r1";
+  const stage = limits.roundId;
   config.AI_MODEL = "qwen-plus-2025-12-01"; if (!available.includes(config.AI_MODEL)) throw Error("pinned_model_not_available");
   const clean = (value) =>
     JSON.parse(
@@ -94,7 +95,7 @@ export async function gateway(configPath) {
         (Buffer.byteLength(raw) * 8 +
           (maxTokens + (body.enable_thinking ? 2048 : 0)) * 64) /
         1e6;
-      assertBudget(ledger,reserve);
+      assertBudget(ledger,reserve,limits);
       const user = body.messages?.find((m) => m.role === "user");
       let question = "";
       try {

@@ -1,0 +1,10 @@
+{
+  "roundId": "intelligence-kernel-v3-20261031-r1",
+  "approved": true,
+  "maxRequests": 250,
+  "maxEstimatedCny": 50,
+  "authorizationSource": "本轮用户对异步额度问题的明确回复：批准新轮次：250次 / 50元",
+  "historyPolicy": "保留real-intelligence-20261031-r1及更早账目；新账不是删除、覆盖或重置旧账。失败、超时与重试均计入。",
+  "previousRoundRequestsAtNewApproval": 146,
+  "previousRoundNewTaskScreeningRequests": 9
+}

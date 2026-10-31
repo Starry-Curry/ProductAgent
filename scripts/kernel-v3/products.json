@@ -1,8 +1,84 @@
 [
- {"id":"NEW-SONY-PX470","brand":"Sony","model":"ICD-PX470","name":"Sony ICD-PX470 录音笔","category":"录音笔","region":"unspecified","urls":["https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155309.html","https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html","https://www.sony.com/electronics/support/digital-voice-recorders-icd-series/icd-px470/specifications"]},
- {"id":"NEW-CANON-CP1500","brand":"Canon","model":"SELPHY CP1500","name":"Canon SELPHY CP1500 照片打印机","category":"打印机","region":"unspecified","urls":["https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html","https://www.usa.canon.com/support/p/selphy-cp1500"]},
- {"id":"NEW-LOGI-K380","brand":"Logitech","model":"K380","name":"Logitech K380 键盘","category":"键盘","region":"hk","urls":["https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard","https://support.logi.com/hc/en-hk/articles/360023464473-K380-Technical-Specifications"]},
- {"id":"NEW-IKEA-RASKOG","brand":"IKEA","model":"405.821.81","name":"IKEA RÅSKOG 黑色推车","category":"推车","region":"gb","urls":["https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/"]},
- {"id":"NEW-LEGO-42179","brand":"LEGO","model":"42179","name":"LEGO Technic 地球和月球轨道模型","category":"拼搭模型","region":"us","urls":["https://www.lego.com/en-us/product/planet-earth-and-moon-in-orbit-42179","https://www.lego.com/static/product/planet-earth-and-moon-in-orbit-42179"]},
- {"id":"NEW-MI-PURIFIER4","brand":"Xiaomi","model":"AC-M16-SC","name":"Xiaomi Smart Air Purifier 4 空气净化器","category":"空气净化器","region":"hk","urls":["https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/"]}
+  {
+    "id": "NEW-SONY-PX470",
+    "brand": "Sony",
+    "model": "ICD-PX470",
+    "name": "Sony ICD-PX470 录音笔",
+    "category": "录音笔",
+    "region": "unspecified",
+    "urls": [
+      "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155309.html",
+      "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html",
+      "https://www.sony.com/electronics/support/digital-voice-recorders-icd-series/icd-px470/specifications"
+    ]
+  },
+  {
+    "id": "NEW-CANON-CP1500",
+    "brand": "Canon",
+    "model": "SELPHY CP1500",
+    "name": "Canon SELPHY CP1500 照片打印机",
+    "category": "打印机",
+    "region": "unspecified",
+    "urls": [
+      "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+      "https://www.usa.canon.com/support/p/selphy-cp1500"
+    ]
+  },
+  {
+    "id": "NEW-LOGI-K380",
+    "brand": "Logitech",
+    "model": "K380",
+    "name": "Logitech K380 键盘",
+    "category": "键盘",
+    "region": "hk",
+    "urls": [
+      "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+      "https://support.logi.com/hc/en-hk/articles/360023464473-K380-Technical-Specifications"
+    ]
+  },
+  {
+    "id": "NEW-IKEA-RASKOG",
+    "brand": "IKEA",
+    "model": "405.821.81",
+    "name": "IKEA RÅSKOG 黑色推车",
+    "category": "推车",
+    "region": "gb",
+    "urls": [
+      "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/"
+    ]
+  },
+  {
+    "id": "NEW-LEGO-42179",
+    "brand": "LEGO",
+    "model": "42179",
+    "name": "LEGO Technic 地球和月球轨道模型",
+    "category": "拼搭模型",
+    "region": "us",
+    "urls": [
+      "https://www.lego.com/en-us/product/planet-earth-and-moon-in-orbit-42179",
+      "https://www.lego.com/static/product/planet-earth-and-moon-in-orbit-42179"
+    ]
+  },
+  {
+    "id": "NEW-MI-PURIFIER4",
+    "brand": "Xiaomi",
+    "model": "AC-M16-SC",
+    "name": "Xiaomi Smart Air Purifier 4 空气净化器",
+    "category": "空气净化器",
+    "region": "hk",
+    "urls": [
+      "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/"
+    ]
+  },
+  {
+    "id": "NEW-IKEA-VARIERA",
+    "brand": "IKEA",
+    "model": "405.429.58",
+    "name": "IKEA VARIERA 白色搁板插件",
+    "category": "搁板插件",
+    "region": "gb",
+    "urls": [
+      "https://www.ikea.com/gb/en/p/variera-shelf-insert-white-40542958/"
+    ]
+  }
 ]
