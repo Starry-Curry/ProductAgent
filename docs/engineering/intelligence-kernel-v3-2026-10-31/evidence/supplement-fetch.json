@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-31T08:12:28.977Z",
+  "paidCalls": 0,
+  "rows": [
+    {
+      "productId": "NEW-LEGO-42179",
+      "url": "https://www.lego.com/cdn/cs/set/assets/blt40a94cbfd3d42e57/LEGO_CAEN_SpringCatalog2024_Cropped.pdf",
+      "role": "product_catalogue_not_manual",
+      "ok": false,
+      "error": "公开资料网络读取失败，可手动打开官网或上传说明书",
+      "ms": 12033
+    }
+  ]
+}

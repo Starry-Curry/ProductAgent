@@ -483,6 +483,18 @@ export function AssistantConversation({
                 <small>回答的覆盖说明，不代表已在实物上执行。</small>
               </details>
             )}
+            {!!message.reply?.claimChecks?.some(c=>!c.published || c.conditions.length) && (
+              <details className="home-task-parts">
+                <summary>哪些内容还需要核对</summary>
+                {message.reply.claimChecks.filter(c=>!c.published || c.conditions.length).map(c=>(
+                  <div key={c.id}>
+                    <p>{c.published ? "有条件的想法" : "未采用的候选"} · {c.text}</p>
+                    <small>{[...c.reasons,...c.conditions].join("；")}</small>
+                  </div>
+                ))}
+                <small>未采用的候选不是操作指导；请勿据此直接实施。</small>
+              </details>
+            )}
             {!!message.reply?.route?.candidates?.length && onSelectItem && (
               <div className="home-candidate-items">
                 {message.reply.route.candidates.map((i) => (

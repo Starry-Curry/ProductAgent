@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { HomeRoute, ActionCard } from "../home/contracts.ts";
+import type { TaskFrame,ClaimCheck } from "./kernel/contracts.ts";
 export const turnInputSchema = z
   .object({
     sessionId: z.string().uuid().optional(),
@@ -72,6 +73,8 @@ export type Citation = {
   section?: string;
 };
 export type AssistantReply = {
+  taskFrame?: TaskFrame;
+  claimChecks?: ClaimCheck[];
   usedItems?: { id: string; name: string; model: string }[];
   task?: {
     goal: string;

@@ -1,0 +1,140 @@
+{
+  "at": "2026-10-31T08:10:17.311Z",
+  "paidCalls": 0,
+  "ownership": "no real ownership asserted; synthetic test holders only",
+  "rows": [
+    {
+      "id": "NEW-SONY-PX470",
+      "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155309.html",
+      "actualUrl": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155309.html",
+      "ok": true,
+      "sourceOfficial": true,
+      "modelMentioned": true,
+      "model": "ICD-PX470",
+      "region": "unspecified",
+      "title": "ICD-PX470 | Help Guide | Technical specifications",
+      "characters": 2487,
+      "textHash": "e1b75811004ed48d0682ba8700283d0dd8b34024dae0d0987125a7087e4c0e71",
+      "elapsedMs": 1743,
+      "fetchedAt": "2026-10-31T08:10:07.737Z"
+    },
+    {
+      "id": "NEW-SONY-PX470",
+      "url": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html",
+      "actualUrl": "https://helpguide.sony.net/icd/p47/v1/en2/contents/TP0001155225.html",
+      "ok": true,
+      "sourceOfficial": true,
+      "modelMentioned": true,
+      "model": "ICD-PX470",
+      "region": "unspecified",
+      "title": "ICD-PX470 | Help Guide | Connecting the IC recorder to a computer",
+      "characters": 927,
+      "textHash": "fd22cb989ac920ea46a788b5f09b60f6addd0202c6c68e3677fe6cdac00ec223",
+      "elapsedMs": 2172,
+      "fetchedAt": "2026-10-31T08:10:08.172Z"
+    },
+    {
+      "id": "NEW-SONY-PX470",
+      "url": "https://www.sony.com/electronics/support/digital-voice-recorders-icd-series/icd-px470/specifications",
+      "ok": false,
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+      "elapsedMs": 2194
+    },
+    {
+      "id": "NEW-CANON-CP1500",
+      "url": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+      "actualUrl": "https://cam.start.canon/en/P001/manual/html/UG-01_Preparations_0030.html",
+      "ok": true,
+      "sourceOfficial": true,
+      "modelMentioned": true,
+      "model": "SELPHY CP1500",
+      "region": "unspecified",
+      "title": "Canon : Product Manual : SELPHY CP1500 : Loading the Paper Cassette",
+      "characters": 2161,
+      "textHash": "89dfebb6003730ea83d66a14a844279db4758c78b8b4a78af9470b9aee06a6cf",
+      "elapsedMs": 1106,
+      "fetchedAt": "2026-10-31T08:10:09.301Z"
+    },
+    {
+      "id": "NEW-CANON-CP1500",
+      "url": "https://www.usa.canon.com/support/p/selphy-cp1500",
+      "ok": false,
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+      "elapsedMs": 325
+    },
+    {
+      "id": "NEW-LOGI-K380",
+      "url": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+      "actualUrl": "https://support.logi.com/hc/en-hk/articles/360024158554-Getting-started-K380-Multi-Device-Bluetooth-Keyboard",
+      "ok": true,
+      "sourceOfficial": true,
+      "modelMentioned": true,
+      "model": "K380",
+      "region": "hk",
+      "title": "Getting started - K380 Multi-Device Bluetooth Keyboard – Logitech Support + DownloadSustainability Navigation",
+      "characters": 12477,
+      "textHash": "1c1177fce089824187ff4225e13e1ff42c77b58e44a2df647c0b7ae0ad864c9b",
+      "elapsedMs": 3520,
+      "fetchedAt": "2026-10-31T08:10:11.715Z"
+    },
+    {
+      "id": "NEW-LOGI-K380",
+      "url": "https://support.logi.com/hc/en-hk/articles/360023464473-K380-Technical-Specifications",
+      "actualUrl": "https://support.logi.com/hc/en-hk/articles/360023464473-K380-Technical-Specifications",
+      "ok": true,
+      "sourceOfficial": true,
+      "modelMentioned": true,
+      "model": "K380",
+      "region": "hk",
+      "title": "K380 Technical Specifications – Logitech Support + DownloadSustainability Navigation",
+      "characters": 4925,
+      "textHash": "f7df7691aaaf7c9453598829e999b12719ccde4aa58fd185a26403d3c7bb1d61",
+      "elapsedMs": 1195,
+      "fetchedAt": "2026-10-31T08:10:12.910Z"
+    },
+    {
+      "id": "NEW-IKEA-RASKOG",
+      "url": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+      "actualUrl": "https://www.ikea.com/gb/en/p/raskog-trolley-black-40582181/",
+      "ok": true,
+      "sourceOfficial": true,
+      "modelMentioned": true,
+      "model": "405.821.81",
+      "region": "gb",
+      "title": "RÅSKOG trolley, black, 35x45x77 cm  - IKEA UK",
+      "characters": 10192,
+      "textHash": "2f6514536980933243c3fd466ae5d296dce56bfe7c543cace98a9b207cd0a1b2",
+      "elapsedMs": 3700,
+      "fetchedAt": "2026-10-31T08:10:15.415Z"
+    },
+    {
+      "id": "NEW-LEGO-42179",
+      "url": "https://www.lego.com/en-us/product/planet-earth-and-moon-in-orbit-42179",
+      "ok": false,
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+      "elapsedMs": 1490
+    },
+    {
+      "id": "NEW-LEGO-42179",
+      "url": "https://www.lego.com/static/product/planet-earth-and-moon-in-orbit-42179",
+      "ok": false,
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+      "elapsedMs": 1895
+    },
+    {
+      "id": "NEW-MI-PURIFIER4",
+      "url": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+      "actualUrl": "https://www.mi.com/hk/product/xiaomi-smart-air-purifier-4/specs/",
+      "ok": true,
+      "sourceOfficial": true,
+      "modelMentioned": true,
+      "model": "AC-M16-SC",
+      "region": "hk",
+      "title": "小米空氣淨化器4 規格與功能 | Xiaomi 香港",
+      "characters": 187,
+      "textHash": "b38f82691d164a8808b5c089e17f76e9e01a51be77fe7f3110f1cccceef38fd6",
+      "elapsedMs": 998,
+      "fetchedAt": "2026-10-31T08:10:16.414Z"
+    }
+  ]
+}
