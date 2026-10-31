@@ -1,3 +1,9 @@
+## 2026-10-31｜智能内核 V3（开发与真实验收中）
+
+从4d210bcd隔离升级，codex/wujian-intelligence-kernel-v3。新TaskFrame、动态来源/主张核对与逐子问呈现已接入实验开关；保留原事务和隐私机制，默认未发布。旧轮次追加9次至146，前137次不变；新轮次独立授权250次/50元。首轮失败及后续复测分开保留，不能以离线回归代替真实任务验收。见 docs/engineering/intelligence-kernel-v3-2026-10-31/ 。
+
+---
+
 ## 2026-10-31｜真实智能评测与定向修复
 
 独立分支codex/wujian-real-intelligence-eval-v1，基线c31a535。新授权轮次137次真实上游请求；保留历史账本。修复错误索尼来源、未知值协议、跨语章节检索、色温步骤误拒、经验呈现、部分完成状态和general标签绕过。409项离线与类型/生产构建通过；真实创意仍存在错误物理机制，自由事实问答默认关闭。见[本轮交付](docs/engineering/real-intelligence-2026-10-31/README.md)及[阶段依据](docs/engineering/real-intelligence-2026-10-31/STAGE_FIXES.md)。不以回归通过宣称产品可靠。
