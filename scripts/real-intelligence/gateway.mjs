@@ -102,18 +102,21 @@ export async function gateway(configPath,options) {
       const responses=req.url.endsWith('/responses');
       if (body.model !== config.AI_MODEL&&!allowedSearch || body.enable_thinking === true&&!options?.allowThinking) throw Error("pinned_model_or_thinking_not_authorized");
       if(responses&&!options?.allowResponses)throw Error('responses_not_authorized');
-      if(responses&&(body.stream||!Number.isInteger(body.max_tool_calls)||body.max_tool_calls>4||body.max_tool_calls<1))throw Error('bounded_responses_required');
+      if(responses&&((body.stream&&!options?.allowResponsesStream)||!Number.isInteger(body.max_tool_calls)||body.max_tool_calls>4||body.max_tool_calls<1))throw Error('bounded_responses_required');
+      if(responses&&options?.allowResponsesStream&&body.store!==false)throw Error('responses_store_false_required');
       const requestedMax=body.max_completion_tokens||body.max_output_tokens||body.max_tokens||body.parameters?.max_tokens||4000;
       const outputCap=options?.allowThinking?8192:4000;
       if(!Number.isInteger(requestedMax)||requestedMax<1||requestedMax>outputCap)throw Error('output_cap_exceeded');
-      if(body.enable_thinking&&!responses&&(!Number.isInteger(body.thinking_budget)||body.thinking_budget>2048||body.thinking_budget<1))throw Error('thinking_budget_required');
+      if(body.enable_thinking&&!responses&&(!Number.isInteger(body.thinking_budget)||body.thinking_budget>(options?.maxThinkingBudget||2048)||body.thinking_budget<1))throw Error('thinking_budget_required');
       const maxTokens=requestedMax;
+      const fileInput=(body.messages||[]).some(m=>Array.isArray(m.content)&&m.content.some(c=>c.type==='file'));
+      const externalInput=options?.reserveExternalInputs&&(responses||nativeSearch||fileInput);
       // UTF-8 byte count bounds input tokens; highest published Plus tier is
       // reserved until actual usage arrives. An unknown failed charge stays reserved.
       const reserve =
-        (Buffer.byteLength(raw) * Math.max(8, options?.prices?.input || 0) +
+        ((externalInput?Math.max(Buffer.byteLength(raw),1_000_000):Buffer.byteLength(raw)) * Math.max(8, options?.prices?.input || 0) +
           (maxTokens + (body.enable_thinking ? 2048 : 0)) * Math.max(64, options?.prices?.output || 0)) /
-        1e6 + (nativeSearch||responses?5:0);
+        1e6 + (fileInput?5.12:0)+(nativeSearch||responses?(externalInput?1:5):0);
       assertBudget(ledger,reserve,limits);
       const user = (body.messages||body.input?.messages)?.find((m) => m.role === "user");
       let question = "";
@@ -166,19 +169,31 @@ export async function gateway(configPath,options) {
               ? {
                   stream: true,
                   stream_options: { include_usage: true },
-                  thinking_budget: Math.min(body.thinking_budget,2048),
+                  thinking_budget: Math.min(body.thinking_budget,options?.maxThinkingBudget||2048),
                 }
               : {}),
           }),
           signal: AbortSignal.any([
-            AbortSignal.timeout(95000),
+            AbortSignal.timeout(Math.min(180000,options?.requestTimeoutMs||95000)),
             controller.signal,
           ]),
         },
       );
       attempt.httpStatus = response.status;
+      attempt.connectedMs = Date.now()-Date.parse(attempt.startedAt);
       let result;
-      if (nativeSearch && /text\/event-stream/.test(response.headers.get('content-type')||'') && response.ok) {
+      if(responses&&body.stream&&response.ok&&/text\/event-stream/.test(response.headers.get('content-type')||'')){
+        let pending='',bytes=0;const decoder=new TextDecoder();attempt.events=[];
+        const consume=line=>{if(!line.startsWith('data:'))return;const data=line.slice(5).trim();if(!data||data==='[DONE]')return;const event=JSON.parse(data);
+          attempt.events.push({type:event.type,elapsedMs:Date.now()-Date.parse(attempt.startedAt),itemType:event.item?.type,status:event.response?.status});
+          if(event.type==='response.completed'||event.type==='response.incomplete')result=event.response;
+          if(event.type==='response.failed'||event.type==='error')throw Error('responses_stream_'+(event.error?.code||event.response?.error?.code||'failed'));
+          if(!res.headersSent)res.writeHead(200,{'content-type':'text/event-stream'});
+          res.write('event: '+event.type+'\ndata: '+JSON.stringify(event)+'\n\n');
+        };
+        for await(const chunk of response.body){bytes+=chunk.length;if(bytes>4_000_000)throw Error('responses_stream_too_large');pending+=decoder.decode(chunk,{stream:true});const lines=pending.split(/\r?\n/);pending=lines.pop()||'';for(const line of lines)consume(line);}pending+=decoder.decode();consume(pending);
+        if(!result)throw Error('responses_terminal_event_missing');
+      } else if (nativeSearch && /text\/event-stream/.test(response.headers.get('content-type')||'') && response.ok) {
         let pending='',size=0;const decoder=new TextDecoder();result={output:{search_info:{search_results:[]}}};
         const consume=line=>{if(!line.startsWith('data:'))return;const raw=line.slice(5).trim();if(!raw||raw==='[DONE]')return;const event=JSON.parse(raw);if(options?.recordContent!==false){attempt.nativeEvents=attempt.nativeEvents||[];if(attempt.nativeEvents.length<1000)attempt.nativeEvents.push(clean(event));}if(event.code)throw Error('provider_code_'+event.code);if(event.usage)result.usage=event.usage;result.output.search_info.search_results.push(...(event.output?.search_info?.search_results||event.search_info?.search_results||[]));if(event.output?.choices)result.output.choices=event.output.choices;};
         for await(const chunk of response.body){size+=chunk.length;if(size>1000000)throw Error('search_response_too_large');pending+=decoder.decode(chunk,{stream:true});const lines=pending.split(/\r?\n/);pending=lines.pop()||'';for(const line of lines)consume(line);}pending+=decoder.decode();consume(pending);
@@ -254,13 +269,17 @@ export async function gateway(configPath,options) {
                 : input <= 256000
                   ? [2.4, 20]
                   : [4.8, 48];
-        attempt.estimatedCny = (input * inputRate + output * outputRate) / 1e6+(nativeSearch?0.003:0)+(responses?0.01*(billedUsage.x_tools?.web_search?.count||0)+0.01*(billedUsage.x_tools?.web_extractor?.count||0):0);
+        const pdfPages=billedUsage.x_tools?.pdf_page_parser?.count;
+        // File parsing has its own charge. Missing page usage never silently
+        // turns into a zero-fee PDF request; retain the conservative reservation.
+        if(!fileInput||Number.isFinite(pdfPages))attempt.estimatedCny = (input * inputRate + output * outputRate) / 1e6+(nativeSearch?0.003:0)+(responses?0.01*(billedUsage.x_tools?.web_search?.count||0)+0.01*(billedUsage.x_tools?.web_extractor?.count||0):0)+(fileInput?pdfPages*0.02:0);
       }
       attempt.finishReason = (result.choices||result.output?.choices)?.[0]?.finish_reason;
-      if (options?.recordContent !== false) attempt.output = clean(responses?result.output:(result.choices||result.output?.choices)?.[0]?.message || {});
+      if (options?.recordContent !== false) attempt.output = clean(responses?result.output?.filter(i=>i.type!=='reasoning'):(result.choices||result.output?.choices)?.[0]?.message || {});
       attempt.elapsedMs = Date.now() - Date.parse(attempt.startedAt);
       save();
       if (body.stream === true) {
+        if(responses){res.end();return;}
         if (!res.headersSent)
           res.writeHead(200, { "content-type": "text/event-stream" });
         res.end(

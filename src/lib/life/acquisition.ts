@@ -389,6 +389,7 @@ export async function acquireKnowledge(
   actor: Person,
   itemId: string,
   options: {
+    query?: string;
     force?: boolean;
     persist?: boolean;
     fetchDocument?: typeof fetchPublicDocument;
@@ -483,7 +484,7 @@ export async function acquireKnowledge(
   async function accept(url: string, chain: string[], sourceRegion: string) {
     const d = await get(url);
     if(!officialDomain(d.url,brand)){issues.push('最终站点未通过厂家范围核对，未采用');return;}
-    if (!modelMentioned(d.title + " " + d.text, item.model)) {
+    if ((d.extracted?.model&&!modelMentioned(d.extracted.model,item.model))||!modelMentioned(d.title + " " + d.text, item.model)) {
       issues.push("官方文档未包含完整型号，未采用：" + new URL(url).hostname);
       return;
     }
@@ -494,6 +495,51 @@ export async function acquireKnowledge(
     documents.push(
       makeKnowledgeDocument(d, { ...item, brand }, chain, sourceRegion),
     );
+  }
+  if (!documents.length && options.search && entry) {
+    try {
+      acquisition.searchAttempted = true;
+      const result = await options.search(
+        `${brand} ${item.model} official user manual operating instructions ${item.region || ""} ${options.query?.slice(0,500)||""}`,
+        [...entry.domains],
+      );
+      acquisition.searchCompleted = true;
+      acquisition.searchURLs = result.hits.slice(0, 4).map((h) => h.url);
+      for (const hit of result.hits.slice(0, 4)) {
+        if (requests >= 6) break;
+        if (!officialDomain(hit.url, brand)) continue;
+        try {
+          const d = await get(hit.url),
+            sourceRegion = regionOf(d.url);
+          if (
+            !officialDomain(d.url, brand) ||
+            (d.extracted?.model&&!modelMentioned(d.extracted.model,item.model))||!modelMentioned(d.title + " " + d.text, item.model)
+          ) {
+            issues.push("搜索命中未通过最终域名/完整型号核对，未采用");
+            continue;
+          }
+          if (item.region && item.region !== 'unspecified' && item.region !== sourceRegion) {
+            issues.push("搜索来源地区不一致或未明，未采用");
+            continue;
+          }
+          if (!documents.some((s) => s.url === d.url))
+            documents.push(
+              makeKnowledgeDocument(
+                d,
+                { ...item, brand },
+                ["bailian-responses:structured-search", d.url],
+                sourceRegion,
+              ),
+            );
+        } catch {
+          issues.push("搜索命中公开页面无法读取，未采用模型摘要替代原文");
+        }
+      }
+      if (!result.hits.length)
+        issues.push("搜索未返回结构化来源，不使用模型正文引用。");
+    } catch {
+      issues.push("联网搜索未完成或未获授权，本轮不重试。");
+    }
   }
   if(options.preferManual&&entry?.domains[0]==='canon.com.cn'){
     const found=await findOfficial({brand,model:item.model},get);issues.push(...found.issues);
@@ -587,49 +633,12 @@ export async function acquireKnowledge(
         : "官方资料网络读取失败；可稍后刷新或上传对应说明书",
     );
   }
-  if (!documents.length && options.search && entry) {
-    try {
-      acquisition.searchAttempted = true;
-      const result = await options.search(
-        `${brand} ${item.model} 官方 说明书 使用方法 ${item.region || ""}`,
-        [...entry.domains],
-      );
-      acquisition.searchCompleted = true;
-      acquisition.searchURLs = result.hits.slice(0, 4).map((h) => h.url);
-      for (const hit of result.hits.slice(0, 4)) {
-        if (requests >= 6) break;
-        if (!officialDomain(hit.url, brand)) continue;
-        try {
-          const d = await get(hit.url),
-            sourceRegion = regionOf(d.url);
-          if (
-            !officialDomain(d.url, brand) ||
-            !modelMentioned(d.title + " " + d.text, item.model)
-          ) {
-            issues.push("搜索命中未通过最终域名/完整型号核对，未采用");
-            continue;
-          }
-          if (item.region && item.region !== 'unspecified' && item.region !== sourceRegion) {
-            issues.push("搜索来源地区不一致或未明，未采用");
-            continue;
-          }
-          if (!documents.some((s) => s.url === d.url))
-            documents.push(
-              makeKnowledgeDocument(
-                d,
-                { ...item, brand },
-                ["bailian-search:turbo", d.url],
-                sourceRegion,
-              ),
-            );
-        } catch {
-          issues.push("搜索命中公开页面无法读取，未采用模型摘要替代原文");
-        }
-      }
-      if (!result.hits.length)
-        issues.push("搜索未返回结构化来源，不使用模型正文引用。");
-    } catch {
-      issues.push("联网搜索未完成或未获授权，本轮不重试。");
+  // Follow only actual manual links on already exact-model official pages.
+  for(const parent of [...documents]){
+    for(const link of (parent.sections||[]).filter(l=>isProductManual(l)).slice(0,2)){
+      if(requests>=6)break;
+      if(!officialDomain(link.url,brand)||documents.some(d=>d.url===link.url))continue;
+      try{await accept(link.url,[...parent.chain,link.url],regionOf(link.url));}catch{issues.push('已发现的说明书正文未取得；保留真实来源与失败，不采用模型摘要替代原文');}
     }
   }
   const current = read().items.find(

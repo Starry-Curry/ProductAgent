@@ -1,4 +1,15 @@
-# 当前工程状态（2026-11-01）
+# 当前研发：Qwen-first 产品结果闭环（2026-11-02）
+
+独立分支 `codex/wujian-outcome-qwen-v3`，基线 f0e3114。**NOT_ACCEPTED，当前仍在实施与独立验收；下方为上一轮历史，不代表本轮发布。**
+
+- [冻结结果契约](outcome-qwen-2026-11-02/OUTCOME_CONTRACT.md)
+- [技术取舍与实际失败](outcome-qwen-2026-11-02/DECISIONS.md)
+- [可恢复清理](outcome-qwen-2026-11-02/CLEANUP.md)
+- 本轮费用授权：新轮次250次/100元；历史台账不变，逐请求原始记录在该目录evidence/model-calls.json。模拟持有人、用户报告与实体测试严格区分。
+
+---
+
+# 上一轮历史状态（2026-11-01）
 
 产品权威：[产品共识 V1](../product/PRODUCT_FINAL_V1.md)。工程规则：[AGENTS.md](../../AGENTS.md)。
 

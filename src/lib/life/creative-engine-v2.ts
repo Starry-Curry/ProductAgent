@@ -11,39 +11,8 @@ import {
 } from "./affordances.ts";
 import { violatesGoal, noPurchase } from "./planning-constraints.ts";
 
-export const actionKinds = [
-  "select",
-  "group",
-  "sequence",
-  "assign_role",
-  "contain",
-  "side_by_side",
-  "support",
-  "stack",
-  "clamp",
-  "occlude",
-  "reflect",
-  "illuminate",
-  "elastic_release",
-  "magnetic_hold",
-  "friction_select",
-  "heat",
-  "food_contact",
-  "device_operation",
-  "adhere",
-  "cut",
-  "purchase",
-  "other",
-] as const;
-const actionSchema = z
-  .object({
-    kind: z.enum(actionKinds),
-    items: z.array(z.string()).min(1).max(4),
-    target: z.string().optional(),
-    component: z.string().default("本体"),
-    operationRef: z.string().optional(),
-  })
-  .strict();
+import {actionKinds,actionSchema} from './action-contract.ts';
+export {actionKinds} from './action-contract.ts';
 export const mechanismSchema = z
   .object({
     ideas: z
@@ -290,7 +259,7 @@ export function assessMechanism(
         "还需核对开口、间隙、朝向与实际状态；仅计算外包络",
       );
     } else if (a.kind === "side_by_side") {
-      if (a.items.length !== 2 || !target || a.items.includes(target)) {
+      if (a.items.length !== 2 || (target && a.items.includes(target))) {
         add(
           "action-shape",
           "contradiction",
@@ -298,6 +267,7 @@ export function assessMechanism(
         );
         continue;
       }
+      if(!target){add('support-surface','unknown','尚未指定实际承载平面；核对可用平面后才可实施，并非尺寸已通过');continue;}
       const x = arr(main, "outer_mm"),
         y = arr(a.items[1], "outer_mm"),
         free = arr(target, "free_surface_mm"),

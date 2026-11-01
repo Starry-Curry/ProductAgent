@@ -19,7 +19,7 @@ const fixture = () =>
   validationFixture(
     mkdtempSync(path.join(process.cwd(), ".runtime", "task-search-test-")),
   );
-test("搜索独立授权、固定turbo且只信结构化来源，不把生成链接当网页", async () => {
+test("原生搜索独立授权且只信结构化来源，不把生成链接当网页", async () => {
   let calls = 0;
   const env = {
     AI_BASE_URL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
@@ -33,27 +33,16 @@ test("搜索独立授权、固定turbo且只信结构化来源，不把生成链
     calls++;
     assert.equal(new URL(String(url)).hostname, "dashscope.aliyuncs.com");
     const b = JSON.parse(String(init?.body));
-    assert.equal(b.parameters.search_options.search_strategy, "turbo");
-    assert.equal(b.parameters.search_options.enable_source, true);
-    return Response.json({
-      output: {
-        choices: [
-          {
-            message: { content: "fabricated https://invented.invalid/manual" },
-          },
-        ],
-        search_info: {
-          search_results: [
-            { title: "hit", url: "https://www.lego.com/product/31136" },
-          ],
-        },
-      },
-      usage: { input_tokens: 10, output_tokens: 2 },
-    });
+    assert.equal(b.store, false);
+    assert.deepEqual(b.tools, [{type:'web_search'}]);
+    return new Response('event: response.completed\ndata: '+JSON.stringify({type:'response.completed',response:{status:'completed',output:[
+      {type:'web_search_call',action:{sources:[{title:'hit',url:'https://www.lego.com/product/31136'}]}},
+      {type:'message',content:[{type:'output_text',text:'fabricated https://invented.invalid/manual'}]}
+    ],usage:{input_tokens:10,output_tokens:2}}})+'\n\n',{headers:{'content-type':'text/event-stream'}});
   };
   await assert.rejects(
     createProvider(env, request).search!("test"),
-    /未单独启用/,
+    /not_authorized/,
   );
   assert.equal(calls, 0);
   const p = createProvider({ ...env, WUJIAN_ALLOW_SEARCH: "true" }, request);
@@ -61,11 +50,7 @@ test("搜索独立授权、固定turbo且只信结构化来源，不把生成链
   const noSources = createProvider(
     { ...env, WUJIAN_ALLOW_SEARCH: "true" },
     async () =>
-      Response.json({
-        output: {
-          choices: [{ message: { content: "https://www.lego.com/fake" } }],
-        },
-      }),
+      new Response('event: response.completed\ndata: '+JSON.stringify({type:'response.completed',response:{status:'completed',output:[{type:'message',content:[{type:'output_text',text:'https://www.lego.com/fake'}]}]}})+'\n\n',{headers:{'content-type':'text/event-stream'}}),
   );
   assert.deepEqual((await noSources.search!("test")).hits, []);
 });

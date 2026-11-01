@@ -116,6 +116,8 @@ export type Care = {
   recipient: Person;
 };
 export type Plan = {
+  dependencies?:{step:number;resourceIds:string[];status:string}[];
+  resourceRevisions?:Record<string,string>;
   conditions?: string[];
   sources?: {id:string;url:string}[];
   preparation?: Preparation;
@@ -516,7 +518,7 @@ export function mutate(
         at: now(),
         checklist: Array.isArray(p.checklist)
           ? p.checklist.slice(0, 30).map((r: any) => ({
-              label: str(r?.label, 120),
+              label: str(r?.label, 240),
               status: str(r?.status, 80),
             }))
           : undefined,

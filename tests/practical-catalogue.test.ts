@@ -2,7 +2,6 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { extractPublicHTML } from "../src/lib/life/sources.ts";
 import { findOfficial } from "../src/lib/life/knowledge.ts";
-import { readSearchResponse } from "../src/lib/ai/provider.ts";
 import { validationFixture } from "../scripts/life-validation-fixture.ts";
 import { acquireKnowledge } from "../src/lib/life/acquisition.ts";
 import { respond } from "../src/lib/agent/service.ts";
@@ -81,27 +80,8 @@ test("目录ID候选若返回别的型号，拒绝采用；动态目录不是来
   );
   assert.equal(result.documents.length, 0);
 });
-test("结构化搜索来源可在顶层流字段返回，生成正文的URL仍不采纳", async () => {
-  const r = await readSearchResponse(
-    new Response(
-      "data: " +
-        JSON.stringify({
-          search_info: {
-            search_results: [
-              { title: "Actual hit", url: "https://canon.com/actual" },
-            ],
-          },
-          output: {
-            choices: [{ message: { content: "https://fake.example/guess" } }],
-          },
-        }) +
-        "\n\n",
-      { headers: { "content-type": "text/event-stream" } },
-    ),
-  );
-  assert.equal(r.output.search_info.search_results.length, 1);
-  assert.doesNotMatch(JSON.stringify(r), /fake.example/);
-});
+// Structured-source and fragmented UTF-8 properties now use the actual Responses protocol in qwen-native.test.ts.
+
 test("需要操作手册时不被已有产品介绍种子截断；仍是本轮服务端官方发现", async () => {
   const f = validationFixture(
     ".runtime/catalogue-preference-" + crypto.randomUUID(),

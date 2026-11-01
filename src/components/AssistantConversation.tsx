@@ -77,6 +77,7 @@ export function AssistantConversation({
   const headers = { "Content-Type": "application/json", "x-demo-actor": actor };
   const [waitSeconds, setWaitSeconds] = useState(0);
   const [draft, setDraft] = useState("");
+  const [progress, setProgress] = useState('');
   const [recipients, setRecipients] = useState<{ id: string; name: string }[]>([]), [recipient, setRecipient] = useState("");
   useEffect(() => {
     if (!actor.startsWith("u_")) return;
@@ -129,6 +130,7 @@ export function AssistantConversation({
           const data = JSON.parse(frame.match(/^data: (.+)$/m)?.[1] || "{}");
           if (event === "failure") { setDraft(""); throw Error(data.error); }
           if (event === "text" && alive.current) setDraft(value => value + data.text);
+          if (event === 'status' && alive.current) setProgress(data.message);
           if (event === "result") result = data;
         }
         if (part.done) break;
@@ -143,6 +145,7 @@ export function AssistantConversation({
   async function send(text: string, base = current.current, resend = false) {
     if (!text.trim()) return;
     setBusy(true);
+    setProgress('正在理解你的目标与可用物品');
     setDraft("");
     setError("");
     const input =
@@ -611,7 +614,7 @@ export function AssistantConversation({
       {busy && draft && <article className="assistant-message" aria-label="正在生成的回答"><small>正在生成，回答尚未完整</small><p style={{ whiteSpace: "pre-wrap" }}>{draft}</p></article>}
       {busy && (
         <p role="status">
-          {waitSeconds < 8
+          {progress ? `${progress} · ${waitSeconds}秒` : waitSeconds < 8
             ? "已提交，正在处理本次问题…"
             : `已等待 ${waitSeconds} 秒，服务器仍在完成资料核对与回答。不会自动重复发送请求。`}
         </p>

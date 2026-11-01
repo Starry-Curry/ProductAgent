@@ -32,12 +32,14 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
   const focus=session.itemId||session.known.activeItemId;
   const home=session.known.homeId==='young-apartment-v1';
   const homeIds=new Set(home?virtualHomeItems(state,actor).map(i=>i.id):[]);
-  const allowed=state.items.filter(i=>canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id)))&&(!task||task.itemInstanceIds.includes(i.id)));
+  // Task membership limits the initial detailed load, not discovery of the
+  // actor's other authorized resources. No stories/locations/notes in catalogue.
+  const allowed=state.items.filter(i=>canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id))));
   const mentioned=(s:string)=>s.length>1&&question.toLowerCase().includes(s.toLowerCase());
   const focused=allowed.find(i=>i.id===focus);
-  const selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||mentioned(i.name)||(!focused||i.model!==focused.model)&&mentioned(i.model)||
+  const selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||!task&&(mentioned(i.name)||(!focused||i.model!==focused.model)&&mentioned(i.model))||
     // Entity matching only. It never chooses an intent or provides a product fact.
-    !evidenceByteBudget&&[...new Intl.Segmenter('zh',{granularity:'word'}).segment(i.name)].some(s=>s.segment.length>=2&&mentioned(s.segment)));
+    !task&&!evidenceByteBudget&&[...new Intl.Segmenter('zh',{granularity:'word'}).segment(i.name)].some(s=>s.segment.length>=2&&mentioned(s.segment)));
   const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,
     taskMemoryOnly:true,includeItemRelationships:session.known.useItemMemories==='yes',companion:!!session.known.companionItemId,useExperiences:session.known.memoryPolicy!=='off'}));
   const memoryOn=session.known.memoryPolicy!=='off'&&!temporary;

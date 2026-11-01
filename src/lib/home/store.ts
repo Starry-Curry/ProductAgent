@@ -18,6 +18,8 @@ import {recordSpecialist} from '../foundation/specialists.ts';
 import {epoch} from '../memory/store.ts';
 import {readKnowledge} from '../life/acquisition.ts';
 import {getTask} from '../foundation/tasks.ts';
+import {fingerprint} from '../foundation/legacy.ts';
+import {changedPlanResources} from '../life/plan-resources.ts';
 import {
   rooms,
   roomFromLocation,
@@ -265,6 +267,7 @@ export function decideAction(
       throw new AgentError("行动建议尚未完成，请重新提问", 409);
     let targetId: string | undefined;
     if (decision === "confirm") {
+      if(action.kind==='plan'&&action.resourceRevisions){const review=changedPlanResources(action,action.itemIds.map(id=>accessible(state,actor,id)));if(review.changed.length)throw new AgentError('方案使用的物品条件已变化；'+(review.affected.length?'请重新核对第'+review.affected.map(n=>n+1).join('、')+'步':'请核对使用这些物品的步骤')+'后再准备确认。没有保存或执行。',409);}
       if(action.kind==='plan'&&action.sourceRefs?.some(ref=>!action.itemIds.some(itemId=>readKnowledge(db,state,actor,itemId).some(d=>d.url===ref.url&&d.chunks.some(c=>c.id===ref.id)))))throw new AgentError('计划关联资料已经更新，请重新核对后保存',409);
       if(action.kind==='story'){
         const fragment=saveFragment(db,read,actor,{text:action.text,itemIds:[action.itemId],allowRecall:false,allowCloud:false,origin:'user-record'},session.known.foundationTaskId);
@@ -314,6 +317,8 @@ export function decideAction(
           targetId = state.plans!.at(-1)!.id;
           state.plans!.at(-1)!.conditions=action.conditions;
           state.plans!.at(-1)!.sources=action.sourceRefs;
+          state.plans!.at(-1)!.dependencies=action.dependencies;
+          state.plans!.at(-1)!.resourceRevisions=action.resourceRevisions;
           recordSpecialist(db,state,actor,{kind:'plan',refId:targetId!,revision:1,itemIds:action.itemIds,intent:'plan',goal:action.goal,basis:'not_verified',taskId:session.known.foundationTaskId});
           message = "计划已保存，可以在活动准备中继续核对和执行。";
         } else {

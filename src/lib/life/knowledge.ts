@@ -4,6 +4,12 @@ import { productPacks } from "../products.ts";
 import { fetchPublicDocument, sourceURL } from "./sources.ts";
 
 const brands = [
+  // Publisher identity roots only: no SKU URLs, operation answers or product facts.
+  {names:['brother','兄弟'],domains:['brother.com','brother-usa.com','brother.eu'],home:'https://support.brother.com/'},
+  {names:['epson','爱普生'],domains:['epson.com','epson.eu','epson.net','epson.co.uk','epson.com.cn'],home:'https://epson.com/Support'},
+  {names:['braun','博朗'],domains:['braunhousehold.com','braun.com'],home:'https://www.braunhousehold.com/'},
+  {names:['tp-link','tapo','普联'],domains:['tp-link.com','tapo.com'],home:'https://www.tp-link.com/support/'},
+  {names:['casio','卡西欧'],domains:['casio.com','casio.jp','casio-intl.com'],home:'https://www.casio.com/support/'},
   {
     names: ["canon", "佳能"],
     domains: [

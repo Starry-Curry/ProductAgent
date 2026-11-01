@@ -135,6 +135,7 @@ async function POSTHandler(r: Request) {
               throw new AgentError("资料或权限已变化，请重新提问", 409);
             emit("text", { text });
           };
+          provider.onStatus=message=>emit('status',{message});
           void respond(db, read, a, p, provider).then(result => {
             emit("result", result);
           }).catch(error => {
