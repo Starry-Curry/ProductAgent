@@ -11,7 +11,7 @@ import {itemStamp} from '../home/store.ts';
 import {readKnowledge,storeOfficialDocument,makeKnowledgeDocument,acquireKnowledge} from '../life/acquisition.ts';
 import {fetchPublicDocument} from '../life/sources.ts';
 import {sourceReviews} from '../foundation/reviewed-facts.ts';
-import {modelMentioned,officialDomain} from '../life/knowledge.ts';
+import {modelMentioned,officialDomain,brandEntry} from '../life/knowledge.ts';
 import {rangeCondition,rectangleCondition} from './kernel/physical.ts';
 import {practicalConstraints,readKnownConstraints} from './practical-constraints.ts';
 
@@ -75,8 +75,9 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
     const document=makeKnowledgeDocument(page,item,[...docs.map(d=>d.url),p.sourceUrl]);
     if(item.region&&item.region!=='unspecified'&&document.region!=='unspecified'&&item.region!==document.region)throw Error('新章节地区与登记版本不一致');
     storeOfficialDocument(db,actor,item,document);acquisition.readURLs.push({url:page.url,characters:page.text.length});
-   }else if(!acquisition.cached||p.refresh){
-    const found=await acquireKnowledge(db,read,actor,item.id,{force:!!p.refresh,persist:true,seedURLs:sourceReviews.filter(r=>r.model===item.model).map(r=>r.url),search:provider.search?async(q,sites)=>{
+   }else if(!acquisition.cached||p.refresh||brandEntry(item.brand||'')?.domains[0]==='canon.com.cn'&&!readKnowledge(db,read(),actor,item.id).some(d=>/\/manual\//.test(new URL(d.url).pathname))){
+    const needsManual=brandEntry(item.brand||'')?.domains[0]==='canon.com.cn'&&!readKnowledge(db,read(),actor,item.id).some(d=>/\/manual\//.test(new URL(d.url).pathname));
+    const found=await acquireKnowledge(db,read,actor,item.id,{force:!!p.refresh||needsManual,preferManual:needsManual,persist:true,seedURLs:sourceReviews.filter(r=>r.model===item.model).map(r=>r.url),search:provider.search?async(q,sites)=>{
      guard();if(calls>=3)throw Error('本轮模型预算需保留最终回答');calls++;const r=await provider.search!(q,sites);guard();if(r.tokens){tokens.input+=r.tokens.input;tokens.output+=r.tokens.output;reservedCny+=(r.tokens.input*12+r.tokens.output*36)/1e6+0.003;}log('practical_search',JSON.stringify({model:r.model,hits:r.hits.length}));return r;
     }:undefined});guard();Object.assign(acquisition,found.acquisition);acquisition.cached=found.cached;acquisition.issues=found.issues;
    }
@@ -85,11 +86,14 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   if(sources.length)missingKnowledge.delete(p.itemId);else missingKnowledge.add(p.itemId);
   log('practical_knowledge',JSON.stringify({itemId:p.itemId,...acquisition,sources:sources.map(s=>({id:s.id,url:s.url,model:s.model}))}));
   const fresh=sources.filter(s=>!suppliedPassages.has(s.id));for(const s of fresh)suppliedPassages.add(s.id);
-  return {necessaryConditionChecks:practicalConstraints(enriched),relatedSections:readKnowledge(db,read(),actor,item.id).flatMap(d=>d.sections||[]).filter((l,n,a)=>a.findIndex(x=>x.url===l.url)===n).slice(0,50),sources:fresh,existingPassageIds:sources.filter(s=>!fresh.includes(s)).map(s=>s.id),acquisition,unknown:sources.length?'':'没有读到该型号适用正文，不得编造操作。',notice:'existingPassageIds 的原文已在本次上下文提供，避免重复传输；引用不代表完整语义验证。'};
+  return {necessaryConditionChecks:practicalConstraints(enriched),relatedSections:readKnowledge(db,read(),actor,item.id).flatMap(d=>d.sections||[]).filter((l,n,a)=>a.findIndex(x=>x.url===l.url)===n).slice(0,300),sources:fresh,existingPassageIds:sources.filter(s=>!fresh.includes(s)).map(s=>s.id),acquisition,unknown:sources.length?'':'没有读到该型号适用正文，不得编造操作。',notice:'existingPassageIds 的原文已在本次上下文提供，避免重复传输；引用不代表完整语义验证。'};
  }
  const messages:ModelMessage[]=[{role:'system',content:PRACTICAL_SYSTEM},{role:'user',content:JSON.stringify({question,items:initial.items,catalogue:initial.catalogue,
-  officialSources:initial.evidence.filter(e=>e.basis==='official'),experiences:initial.experiences,preferences:initial.preferences,privateFacts:initial.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),
+  officialSources:initial.evidence.filter(e=>e.basis==='official'),documentation:initial.items.map(i=>({itemId:i.id,sources:readKnowledge(db,read(),actor,i.id).map(d=>({url:d.url,scope:/\/manual\//.test(new URL(d.url).pathname)?/index\.html$/.test(d.url)?'manual_contents_only':'manual_chapter':'official_overview_not_button_instructions'}))})),experiences:initial.experiences,preferences:initial.preferences,privateFacts:initial.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),
   necessaryConditionChecks:practicalConstraints(initial),history:practicalHistory(session,temporary),currentTask:initial.currentTask,tried:initial.tried,permission:initial.permissions})}];
+ // Candidate: keep the user's actual request as a natural user turn after the
+ // data packet, rather than leaving it buried inside a long evidence JSON.
+ if(process.env.WUJIAN_PRACTICAL_NATURAL_TURN==='true')messages.push({role:'user',content:question});
  let answer='',failure:string|undefined;
  try{for(let round=0;round<4;round++){
   guard();if(calls>=4)throw Error('本轮模型请求已达到上限');const inputBytes=Buffer.byteLength(JSON.stringify(messages));if(inputBytes>150000)throw Error('context_budget_exceeded');

@@ -306,7 +306,8 @@ export function createProvider(
         "当前原生搜索仅适配北京百炼标准域名；未转发密钥",
       );
     // Multimodal families require this endpoint and SSE, even for text search.
-    const multimodal = /^qwen3\.(?:[5689]|7-(?:plus|flash))/.test(AI_MODEL);
+    const searchModel=env.AI_SEARCH_MODEL||AI_MODEL;
+    const multimodal = /^qwen3\.(?:[5689]|7-(?:plus|flash))/.test(searchModel);
     const response = await request(
       new URL(`/api/v1/services/aigc/${multimodal?'multimodal':'text'}-generation/generation`, base),
       {
@@ -319,7 +320,7 @@ export function createProvider(
         },
         signal: AbortSignal.timeout(25000),
         body: JSON.stringify({
-          model: AI_MODEL,
+          model: searchModel,
           input: {
             messages: [{ role: "user", content: multimodal ? [{text:query.slice(0,1000)}] : query.slice(0, 1000) }],
           },
@@ -333,10 +334,8 @@ export function createProvider(
               search_strategy: "turbo",
               forced_search: true,
               enable_source: true,
-              enable_citation: false,
-              ...(sites.length
-                ? { assigned_site_list: sites.slice(0, 25) }
-                : {}),
+              enable_citation: true,
+              prepend_search_result: true,
             },
           },
         }),
@@ -361,6 +360,7 @@ export function createProvider(
       .filter(
         (h: any) => typeof h?.url === "string" && typeof h?.title === "string",
       )
+      .filter((h:any)=>{try{const u=new URL(h.url);return u.protocol==='https:'&&(!sites.length||sites.some(site=>u.hostname===site||u.hostname.endsWith('.'+site)));}catch{return false;}})
       .slice(0, 8)
       .map((h: any) => ({
         title: h.title.slice(0, 200),
@@ -368,7 +368,7 @@ export function createProvider(
       }));
     return {
       hits,
-      model: AI_MODEL,
+      model: searchModel,
       tokens: result.usage
         ? {
             input: result.usage.input_tokens || 0,
@@ -386,7 +386,7 @@ export async function readSearchResponse(response:Response) {
   if(!/text\/event-stream/i.test(response.headers.get('content-type')||''))return response.json().catch(()=>null);
   const reader=response.body?.getReader();if(!reader)return null;
   const decoder=new TextDecoder();let pending='',bytes=0;const result:any={output:{search_info:{search_results:[]}}};
-  const consume=(line:string)=>{if(!line.startsWith('data:'))return;const raw=line.slice(5).trim();if(!raw||raw==='[DONE]')return;const event=JSON.parse(raw);if(event.code)throw new ProviderError('search_failed','搜索流返回服务错误');result.output.search_info.search_results.push(...(event.output?.search_info?.search_results||[]));if(event.usage)result.usage=event.usage;};
+  const consume=(line:string)=>{if(!line.startsWith('data:'))return;const raw=line.slice(5).trim();if(!raw||raw==='[DONE]')return;const event=JSON.parse(raw);if(event.code)throw new ProviderError('search_failed','搜索流返回服务错误');result.output.search_info.search_results.push(...(event.output?.search_info?.search_results||event.search_info?.search_results||[]));if(event.usage)result.usage=event.usage;};
   try{while(true){const part=await reader.read();bytes+=part.value?.length||0;if(bytes>1_000_000)throw new ProviderError('search_failed','搜索响应过大');pending+=decoder.decode(part.value,{stream:!part.done});const lines=pending.split(/\r?\n/);pending=lines.pop()||'';for(const line of lines)consume(line);if(part.done){consume(pending);break;}}}finally{await reader.cancel().catch(()=>{});}
   return result;
 }

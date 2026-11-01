@@ -2,7 +2,8 @@ import { chromium, expect } from "@playwright/test";
 import fs from "node:fs";
 import { randomBytes } from "node:crypto";
 import { observeAssistant, createUIItem } from "./browser-helpers.mjs";
-const dir = "docs/engineering/practical-continuation-2026-11-01/evidence",
+const additional=process.argv.includes("--additional-round");
+const dir = "docs/engineering/practical-continuation-2026-11-01/evidence"+(additional?"/additional-r1":""),
   stage =
     process.argv.find((s) => s.startsWith("--stage="))?.slice(8) ||
     "cross-loop-v1";
@@ -11,7 +12,7 @@ if (!/^[a-z0-9-]+$/.test(stage) || fs.existsSync(dir + "/" + stage + ".json"))
 const ledger = () =>
     JSON.parse(
       fs.readFileSync(
-        "docs/engineering/practical-agent-2026-10-31/evidence/model-calls.json",
+        additional?dir+"/model-calls.json":"docs/engineering/practical-agent-2026-10-31/evidence/model-calls.json",
       ),
     ).attempts,
   before = ledger().length;

@@ -119,6 +119,34 @@ export async function findOfficial(
     );
   const documents: PublicDocument[] = [],
     issues: string[] = [];
+  const discoveryChains:Record<string,string[]>={};
+  // The manufacturer's live catalogue supplies the opaque product ID. No SKU
+  // URL or answer table: the common manual layout is only a candidate until
+  // the fetched official page confirms the exact model.
+  if(b?.domains[0]==='canon.com.cn'&&!candidates.length){
+    const catalogueURL='https://cam.start.canon/en/';
+    try{
+      const catalogue=await fetchDocument(catalogueURL);
+      const normalize=(s:string)=>s.normalize('NFKC').toLowerCase().replace(/[^a-z0-9]/g,'');
+      const matches=(catalogue.navigationItems||[]).filter(n=>normalize(n.label)===normalize(model)&&/^item_[A-Z]\d{3}$/.test(n.id));
+      for(const match of matches.slice(0,1)){
+        const url=new URL(match.id.slice(5)+'/manual/html/index.html',catalogueURL).href;
+        const doc=await fetchDocument(url);
+        if(officialDomain(doc.url,brand)&&modelMentioned(doc.title+' '+doc.text,model)){
+          // This publisher's manual navigation is a public JSON TOC, not HTML
+          // hrefs. Read its actual chapter links; never guess chapter filenames.
+          const tocURL=new URL('js/contents.json',doc.url).href;
+          try{const toc=await fetchDocument(tocURL),rows=JSON.parse(toc.text),links:{title:string;url:string}[]=[];
+            const visit=(node:any,depth=0)=>{if(depth>12||!node)return;if(Array.isArray(node)){for(const n of node.slice(0,500))visit(n,depth+1);return;}if(typeof node!=='object')return;
+              if(typeof node.title==='string'&&typeof node.link==='string'){const url=new URL(node.link,doc.url);if(url.origin===new URL(doc.url).origin&&url.pathname.startsWith(new URL('.',doc.url).pathname)&&/\.html$/.test(url.pathname))links.push({title:node.title.replace(/<[^>]*>/g,'').slice(0,180),url:url.href});}
+              for(const n of Object.values(node))if(typeof n==='object')visit(n,depth+1);};visit(rows);doc.links=links.slice(0,300);
+          }catch{issues.push('官方手册目录未读取，不伪造章节链接');}
+          documents.push(doc);discoveryChains[doc.url]=[catalogueURL,'manufacturer_catalogue_id:'+match.id,'manufacturer_common_manual_layout_candidate',doc.url,tocURL];
+        }
+        else issues.push('目录推导的手册候选未通过官方站点与完整型号核对，未采用');
+      }
+    }catch{issues.push('厂家公开目录或目录推导的手册候选未能读取；未绕过限制');}
+  }
   for (const url of [...new Set(candidates)].slice(0, 2)) {
     try {
       const d = await fetchDocument(url);
@@ -140,6 +168,7 @@ export async function findOfficial(
   }
   return {
     documents,
+    discoveryChains,
     issues,
     officialHome: b?.home,
     searchURL: `https://www.bing.com/search?q=${encodeURIComponent(`${b ? "site:" + b.domains[0] + " " : ""}${brand} ${model} 官方 说明书 FAQ`)}`,

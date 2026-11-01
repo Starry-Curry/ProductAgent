@@ -1,0 +1,14 @@
+{
+  "roundId": "practical-continuation-20261101-r1",
+  "approved": true,
+  "maxRequests": 20,
+  "maxEstimatedCny": 10,
+  "authorization": "用户2026-11-01明确回复：批准追加20次／10元。所有失败、重试计入；先到即止。",
+  "authorizedAt": "2026-11-01T04:56:57.428Z",
+  "previousRound": {
+    "roundId": "practical-agent-20261031-r1",
+    "requests": 60,
+    "sha256": "aec731fd5c8ca966d823437bbf1709386c497f8860cc4c1b35e7ee8c4d1d4c76"
+  },
+  "base": "d9b7e25418b10045449f204ee8473de1ee563847"
+}

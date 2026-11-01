@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-01T05:01:40.954Z",
+  "kind": "real_provider_search_not_document_verification",
+  "result": {
+    "hits": [],
+    "model": "qwen-plus-2025-12-01",
+    "tokens": {
+      "input": 113,
+      "output": 180
+    },
+    "usage": {
+      "input_tokens": 113,
+      "output_tokens": 180,
+      "plugins": {
+        "search": {
+          "count": 1,
+          "strategy": "turbo"
+        }
+      },
+      "total_tokens": 293
+    }
+  }
+}

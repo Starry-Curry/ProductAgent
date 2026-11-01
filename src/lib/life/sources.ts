@@ -56,6 +56,7 @@ export async function fetchPublicDocument(
   url: string;
   links: { title: string; url: string }[];
   extracted?: { name?: string; brand?: string; model?: string };
+  navigationItems?: {id:string;label:string}[];
   reading?:{limitations:string[];figures:{url:string;caption:string}[]};
 }> {
   const url = sourceURL(value);
@@ -219,6 +220,9 @@ export async function extractPublicHTML(raw: string, address: string) {
     }
   });
   const links: { title: string; url: string }[] = [];
+  // Retain named catalogue controls separately from actual hrefs. An ID is not
+  // falsely labelled as a discovered URL; manufacturer adapters must verify it.
+  const navigationItems=$('a[id]:not([href])').toArray().slice(0,150).map(el=>({id:$(el).attr('id')||'',label:$(el).text().trim().slice(0,150)})).filter(n=>n.id&&n.label);
   $("a[href]").each((_n, el) => {
     const title = $(el).text().trim().slice(0, 150),
       href = $(el).attr("href");
@@ -307,6 +311,7 @@ export async function extractPublicHTML(raw: string, address: string) {
       ...links.filter((l) => !/\.pdf(?:$|[?#])/i.test(l.url)).slice(0, 60),
     ],
     extracted,
+    navigationItems,
     reading:{limitations:uncaptioned?[`有${uncaptioned}处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。`]:[],figures},
   };
 }

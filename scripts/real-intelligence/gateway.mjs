@@ -90,7 +90,8 @@ export async function gateway(configPath,options) {
       const nativeSearch=/\/(text|multimodal)-generation\/generation$/.test(req.url);
       const multimodalSearch=req.url.endsWith('/multimodal-generation/generation');
       if(nativeSearch&&(!body.parameters?.enable_search||body.parameters?.search_options?.search_strategy!=='turbo'))throw Error('bounded_search_only');
-      if (body.model !== config.AI_MODEL || body.enable_thinking === true) throw Error("pinned_non_thinking_model_only");
+      const allowedSearch=nativeSearch&&options?.searchModel&&body.model===options.searchModel&&available.includes(body.model);
+      if (body.model !== config.AI_MODEL&&!allowedSearch || body.enable_thinking === true) throw Error("pinned_non_thinking_model_only");
       const maxTokens = Math.min(body.max_tokens || body.parameters?.max_tokens || 4000, 4000);
       // UTF-8 byte count bounds input tokens; highest published Plus tier is
       // reserved until actual usage arrives. An unknown failed charge stays reserved.
@@ -164,7 +165,7 @@ export async function gateway(configPath,options) {
       let result;
       if (nativeSearch && /text\/event-stream/.test(response.headers.get('content-type')||'') && response.ok) {
         let pending='',size=0;const decoder=new TextDecoder();result={output:{search_info:{search_results:[]}}};
-        const consume=line=>{if(!line.startsWith('data:'))return;const raw=line.slice(5).trim();if(!raw||raw==='[DONE]')return;const event=JSON.parse(raw);if(event.code)throw Error('provider_code_'+event.code);if(event.usage)result.usage=event.usage;result.output.search_info.search_results.push(...(event.output?.search_info?.search_results||[]));if(event.output?.choices)result.output.choices=event.output.choices;};
+        const consume=line=>{if(!line.startsWith('data:'))return;const raw=line.slice(5).trim();if(!raw||raw==='[DONE]')return;const event=JSON.parse(raw);if(options?.recordContent!==false){attempt.nativeEvents=attempt.nativeEvents||[];if(attempt.nativeEvents.length<1000)attempt.nativeEvents.push(clean(event));}if(event.code)throw Error('provider_code_'+event.code);if(event.usage)result.usage=event.usage;result.output.search_info.search_results.push(...(event.output?.search_info?.search_results||event.search_info?.search_results||[]));if(event.output?.choices)result.output.choices=event.output.choices;};
         for await(const chunk of response.body){size+=chunk.length;if(size>1000000)throw Error('search_response_too_large');pending+=decoder.decode(chunk,{stream:true});const lines=pending.split(/\r?\n/);pending=lines.pop()||'';for(const line of lines)consume(line);}pending+=decoder.decode();consume(pending);
       } else if (
         (body.enable_thinking === true || body.stream === true) &&

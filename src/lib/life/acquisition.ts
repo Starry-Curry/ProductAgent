@@ -155,7 +155,7 @@ export function makeKnowledgeDocument(
     fetchedAt: new Date().toISOString(),
     chunks,
     reading: 'reading' in d ? d.reading : undefined,
-    sections: d.links.filter(l=>officialDomain(l.url,item.brand||'')).slice(0,60),
+    sections: d.links.filter(l=>officialDomain(l.url,item.brand||'')).slice(0,300),
   };
 }
 function tableExists(db: DatabaseSync) {
@@ -394,6 +394,7 @@ export async function acquireKnowledge(
     fetchDocument?: typeof fetchPublicDocument;
     search?: Provider["search"];
     seedURLs?: string[];
+    preferManual?: boolean;
   } = {},
 ) {
   const foundItem = read().items.find(
@@ -494,7 +495,11 @@ export async function acquireKnowledge(
       makeKnowledgeDocument(d, { ...item, brand }, chain, sourceRegion),
     );
   }
-  for(const url of [...new Set([item.supportUrl,...(options.seedURLs||[])].filter((u):u is string=>!!u))].slice(0,3)){
+  if(options.preferManual&&entry?.domains[0]==='canon.com.cn'){
+    const found=await findOfficial({brand,model:item.model},get);issues.push(...found.issues);
+    for(const d of found.documents)if((!item.region||item.region==='unspecified'||regionOf(d.url)===item.region||regionOf(d.url)==='unspecified')&&/\/manual\//.test(new URL(d.url).pathname))documents.push(makeKnowledgeDocument(d,{...item,brand},found.discoveryChains[d.url]||[d.url],regionOf(d.url)));
+  }
+  for(const url of (documents.length?[]:[...new Set([item.supportUrl,...(options.seedURLs||[])].filter((u):u is string=>!!u))].slice(0,3))){
     try{if(!officialDomain(url,brand))continue;await accept(url,[url],regionOf(url));}catch{issues.push('种子资料未取得可用正文；继续官方发现，不把种子存在当获取成功');}
   }
   try {
@@ -553,7 +558,7 @@ export async function acquireKnowledge(
           continue;
         }
         documents.push(
-          makeKnowledgeDocument(d, { ...item, brand }, [d.url], sourceRegion),
+          makeKnowledgeDocument(d, { ...item, brand }, found.discoveryChains?.[d.url]||[d.url], sourceRegion),
         );
         for (const link of d.links
           .filter((l) => /\.pdf(?:$|[?#])/i.test(l.url) && isProductManual(l))
