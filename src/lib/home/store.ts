@@ -17,6 +17,7 @@ import {collaborate,householdMembers} from '../collaboration.ts';
 import {recordSpecialist} from '../foundation/specialists.ts';
 import {epoch} from '../memory/store.ts';
 import {readKnowledge} from '../life/acquisition.ts';
+import {getTask} from '../foundation/tasks.ts';
 import {
   rooms,
   roomFromLocation,
@@ -192,7 +193,7 @@ export function proposeAction(
     status: "pending",
     expiresAt,
     confirmLabel:
-      action.kind==='story'?'确认保存私人故事':action.kind==='gift'?'确认创建空白赠礼草稿':action.kind==='family'?'确认交给这位家人':action.kind === "move"
+      action.kind==='story'?'确认保存私人故事':action.kind==='gift'?'确认创建不含故事的赠礼':action.kind==='family'?'确认交给这位家人':action.kind === "move"
         ? "确认调整位置"
         : action.kind === "plan" || action.kind === "taskPlan"
           ? action.kind === "taskPlan" && action.planId
@@ -269,7 +270,7 @@ export function decideAction(
         const fragment=saveFragment(db,read,actor,{text:action.text,itemIds:[action.itemId],allowRecall:false,allowCloud:false,origin:'user-record'},session.known.foundationTaskId);
         targetId=fragment.id;session.memoryEpoch=epoch(db,actor);message='私人故事已保存并关联当前任务；未授权检索、未分享，也不自动供云端使用。';
       }else if(action.kind==='gift'){
-        const gift=createLifeGift(db,read,actor,{itemId:action.itemId,message:action.message,fragmentIds:[]},session.known.foundationTaskId);targetId=gift.id;message='赠礼草稿已创建，未附带任何私人故事或对话；请到赠礼入口选择内容并交付。';
+        const gift=createLifeGift(db,read,actor,{itemId:action.itemId,message:action.message,fragmentIds:[]},session.known.foundationTaskId);targetId=gift.id;message='赠礼已创建，未附带私人故事或对话；可到赠礼入口查看预览链接，尚未交付或认领。';
       }else if(action.kind==='family'){
         const result=collaborate(db,read,actor,{requestId:id,action:'task',itemId:action.itemId,memberId:action.memberId,title:action.summary.slice(0,120),summary:action.summary,confirmed:true,sourceTaskId:session.known.foundationTaskId});targetId=result.taskId;message='已创建经你确认摘要的家庭事项；对方尚未接手或报告完成。';
       }else if (action.kind === "move") {
@@ -289,6 +290,7 @@ export function decideAction(
             originSessionId: session.id,
           });
           targetId = action.planId || id;
+          recordSpecialist(db,state,actor,{kind:'plan',refId:targetId,revision:1,itemIds:action.itemIds,intent:'plan',goal:action.goal,basis:'not_verified',taskId:session.known.foundationTaskId});
           session.known.taskPlanId = targetId;
           message =
             "准备清单已保存，可逐项确认完成；实际物品状态仍由本人核对。";
@@ -330,8 +332,23 @@ export function decideAction(
         captureWorkspace(db, state, actor);
       }
     }
+    if(decision==='confirm'&&targetId&&action.kind!=='move'){
+      const kind=action.kind==='taskPlan'?'plan':action.kind;
+      const linked=db.prepare('SELECT task_id FROM foundation_links WHERE kind=? AND ref_id=?').get(kind,targetId) as {task_id:string}|undefined;
+      if(linked){
+        const oldLink=db.prepare("SELECT task_id FROM foundation_links WHERE kind='session' AND ref_id=?").get(session.id) as {task_id:string}|undefined;
+        if(oldLink&&oldLink.task_id!==linked.task_id)throw new AgentError('会话属于另一任务，请开始新对话后继续',409);
+        const task=getTask(db,read(),actor,linked.task_id);
+        session.known.foundationTaskId=task.taskId;session.known.foundationTaskIntent=task.intent;session.known.foundationHasItems=String(task.itemInstanceIds.length>0);session.known.foundationComplexTask=String(['plan','explore'].includes(task.intent));
+        db.prepare("INSERT OR IGNORE INTO foundation_links VALUES('session',?,?)").run(session.id,task.taskId);
+        if(!oldLink){
+          const last=db.prepare("SELECT id,body FROM foundation_runs WHERE actor=? AND task_id IS NULL AND json_extract(body,'$.sessionId')=? ORDER BY rowid DESC LIMIT 1").get(actor,session.id) as {id:string;body:string}|undefined;
+          if(last){const body=JSON.parse(last.body);body.taskId=task.taskId;body.taskRevision=task.revision;db.prepare('UPDATE foundation_runs SET task_id=?,body=? WHERE id=?').run(task.taskId,JSON.stringify(body),last.id);}
+        }
+      }
+    }
     const status = decision === "confirm" ? "applied" : "cancelled";
-    const result = { id, status, message, targetId };
+    const result = { id, status, message, targetId,taskId:session.known.foundationTaskId };
     const card = { ...JSON.parse(row.card), status };
     db.prepare(
       "UPDATE home_proposals SET status=?,card=?,result=? WHERE id=?",

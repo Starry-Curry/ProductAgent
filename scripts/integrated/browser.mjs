@@ -21,8 +21,8 @@ try{
   await ask(page,'这台SRS-XB100已经连过别人的手机，现在怎样与我的手机配对？请依该型号官方指南回答，按键是短按还是长按、几秒不能猜。',report);
   if(stage.includes('fallback'))await ask(page,'怎么判断已经进入配对模式？请只用刚才的型号指南。',report);
  }else if(stage.startsWith('new-combination')){
-  const lamp=await createUIItem(page,{name:'[模拟持有]画作补光台灯',brand:'Xiaomi',model:'MJTD01SYL',url:'https://www.mi.com/mjsmartlamp-1s/specs'},report);
-  const painting=await createUIItem(page,{name:'[模拟持有]想送给爸爸的画',brand:'无品牌',model:'原创手绘画'},report);
+  let lamp;try{lamp=await createUIItem(page,{name:'[模拟持有]画作补光台灯'+stage,brand:'Xiaomi',model:'MJTD01SYL',url:'https://www.mi.com/mjsmartlamp-1s/specs'},report);}catch(e){report.lampOfficialFetchFailed=e.message;lamp=await createUIItem(page,{name:'[模拟持有]画作补光台灯'+stage,brand:'Xiaomi',model:'MJTD01SYL'},report);}
+  const painting=await createUIItem(page,{name:'[模拟持有]想送给爸爸的画'+stage,brand:'无品牌',model:'原创手绘画'},report);
   await page.goto(base+'/#assistant');const w=page.getByTestId('task-continuity');await w.locator('summary').first().click();
   const goal='想把我准备送给爸爸的手绘画录成十秒短片，安静、保留原色，不做夸张特效。我现有EOS R8、米家台灯1S和这幅画。画是40×30厘米的合成用户报告，平放在现有桌面上，台灯已由我打开。只用这些物品，不另找反光板、架子或夹子，不让画框自己站立。不需要教我调光或联网，不控制设备。镜头和固件未知。请给画面与侧光安排、录像开始停止及必要的检查，并准备可保存的简短候选计划。';
   await w.getByLabel('新任务目标',{exact:true}).fill(goal);await w.getByText('选择这次相关的物品（可不选）',{exact:true}).click();await w.getByLabel('[模拟持有]陌生EOS R8',{exact:false}).last().check();await w.getByLabel(lamp.name,{exact:false}).check();await w.getByLabel(painting.name,{exact:false}).check();await w.getByRole('button',{name:'开始并保留进度',exact:true}).click();

@@ -28,6 +28,7 @@ export function TaskContinuity({
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   const [reuse, setReuse] = useState(false);
+  const [showOlder, setShowOlder] = useState(false);
   const [allowCloud,setAllowCloud]=useState(false);
   const [editing,setEditing]=useState<any>(null),[correction,setCorrection]=useState("");
   function resetConsent(){setReuse(false);setAllowCloud(false);}
@@ -66,6 +67,7 @@ export function TaskContinuity({
                 outcomes: detail.outcomes,
                 familyProgress:detail.familyProgress,
                 previousOutcomes:detail.previousOutcomes,
+                plans:detail.plans,
               });
           }
         }
@@ -249,7 +251,7 @@ export function TaskContinuity({
         </section>
       )}
       <div className="life-task-list">
-        {tasks.slice(0, 8).map((t) => (
+        {tasks.slice(0, showOlder ? tasks.length : 8).map((t) => (
           <button
             key={t.taskId}
             data-task-id={t.taskId}
@@ -258,6 +260,7 @@ export function TaskContinuity({
             {t.goal}
           </button>
         ))}
+        {tasks.length > 8 && <button onClick={() => setShowOlder(!showOlder)}>{showOlder ? '收起较早的事' : '查看较早的事'}</button>}
       </div>
       <label>
         留下一件要继续做的事

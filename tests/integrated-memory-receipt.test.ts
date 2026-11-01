@@ -1,0 +1,21 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {validationFixture} from '../scripts/life-validation-fixture.ts';
+import {createTask,getTask,recordOutcome,recallOutcomes,amendOutcome} from '../src/lib/foundation/tasks.ts';
+import {respond} from '../src/lib/agent/service.ts';
+import {saveFragment} from '../src/lib/life/stories.ts';
+import type {Provider} from '../src/lib/ai/provider.ts';
+test('同一Task的私人故事保存收据不覆盖获准操作经验；新的拒绝复用/遗忘仍阻止旧报告复活',async t=>{
+ const f=validationFixture('.runtime/receipt-memory-'+crypto.randomUUID());t.after(()=>f.db.close());const id=f.add('[合成]陌生物品','其他','Canon','TEST-EXPERIENCE');
+ const task=createTask(f.db,f.read,'lin',{requestId:crypto.randomUUID(),goal:'[合成]完成操作A',intent:'guide',itemInstanceIds:[id]});
+ const old=process.env.WUJIAN_AGENT_RUNTIME;process.env.WUJIAN_AGENT_RUNTIME='native';t.after(()=>{if(old===undefined)delete process.env.WUJIAN_AGENT_RUNTIME;else process.env.WUJIAN_AGENT_RUNTIME=old;});
+ const provider:Provider={ready:true,model:'offline-substitute',generate:async()=>{throw Error('no_extra_generation');},converse:async()=>({model:'offline-substitute',text:'离线替身建议，未执行。',tokens:null,finishReason:'stop',toolCalls:[]})};
+ const r=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),taskId:task.taskId,itemId:id,question:'请帮助操作',mode:'service',memoryPolicy:'off'},provider);
+ const report=(reuse:boolean)=>recordOutcome(f.db,f.read,'lin',{taskId:task.taskId,runId:r.foundation!.runId,expectedRevision:getTask(f.db,f.read(),'lin',task.taskId).revision,requestId:crypto.randomUUID(),goalStatus:'not_achieved',notes:'[合成]方法A失败，原因未知',reuse,allowCloud:reuse,confirmed:true});
+ const original=report(true);assert.equal(recallOutcomes(f.db,f.read(),'lin',[id])[0].outcomeId,original.outcomeId);
+ saveFragment(f.db,f.read,'lin',{text:'[合成]围绕这次操作保存一段私人故事',itemIds:[id],allowRecall:false,allowCloud:false},task.taskId);
+ assert.equal(recallOutcomes(f.db,f.read(),'lin',[id])[0]?.outcomeId,original.outcomeId);
+ const corrected=amendOutcome(f.db,f.read,'lin',{outcomeId:original.outcomeId,requestId:crypto.randomUUID(),expectedRevision:1,operation:'correct',notes:'[合成更正]方法B已成功，原因未知',reuse:true,allowCloud:true,confirmed:true});
+ assert.equal(recallOutcomes(f.db,f.read(),'lin',[id])[0].notes,corrected.notes);
+ const denied=report(false);assert.equal(recallOutcomes(f.db,f.read(),'lin',[id]).length,0);
+ amendOutcome(f.db,f.read,'lin',{outcomeId:denied.outcomeId,requestId:crypto.randomUUID(),expectedRevision:1,operation:'forget',confirmed:true});assert.equal(recallOutcomes(f.db,f.read(),'lin',[id]).length,0);
+});

@@ -1,0 +1,424 @@
+{
+  "stage": "new-combination-final",
+  "at": "2026-11-01T13:38:18.695Z",
+  "basis": "real_browser_real_qwen_synthetic_ownership_no_hardware",
+  "responses": [
+    {
+      "question": "想把我准备送给爸爸的手绘画录成十秒短片，安静、保留原色，不做夸张特效。我现有EOS R8、米家台灯1S和这幅画。画是40×30厘米的合成用户报告，平放在现有桌面上，台灯已由我打开。只用这些物品，不另找反光板、架子或夹子，不让画框自己站立。不需要教我调光或联网，不控制设备。镜头和固件未知。请给画面与侧光安排、录像开始停止及必要的检查，并准备可保存的简短候选计划。",
+      "result": {
+        "session": {
+          "id": "780aa8a4-6380-49be-b558-32b124c3b8b2",
+          "owner": "u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33",
+          "itemId": "ebd9d6be-bc44-4f85-a6eb-4d28292a39a4",
+          "identity": "[\"u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33\",\"[\\\"EOS R8\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "662c3bd0-00ab-4131-881c-810f2a3758fd",
+              "role": "user",
+              "text": "想把我准备送给爸爸的手绘画录成十秒短片，安静、保留原色，不做夸张特效。我现有EOS R8、米家台灯1S和这幅画。画是40×30厘米的合成用户报告，平放在现有桌面上，台灯已由我打开。只用这些物品，不另找反光板、架子或夹子，不让画框自己站立。不需要教我调光或联网，不控制设备。镜头和固件未知。请给画面与侧光安排、录像开始停止及必要的检查，并准备可保存的简短候选计划。",
+              "at": "2026-11-01T13:39:34.984Z",
+              "itemId": "ebd9d6be-bc44-4f85-a6eb-4d28292a39a4",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "ea757cec-d383-40f4-944e-c11b76810825",
+              "role": "assistant",
+              "text": "候选计划卡已备好（需你点击确认才保存）。下面是三部分的具体做法，全部只用你现有的三件物品。\n\n## 画面安排（画平放、不立框）\n\n- 相机手持、镜头朝下俯拍。镜头焦距未知，所以拍摄距离没有固定值：前后移动相机，直到画的40厘米长边刚好占满横幅画面即可。\n- 画是4:3，而EOS R8的短片记录为16:9（官方规格，来源：[Specifications](https://cam.start.canon/en/C013/manual/html/UG-10_Reference_0100.html#Reference_0100_2)）。按长边占满构图后，画的上下两端会被裁掉一部分，或画面上下留一些桌面——两种取舍选一个，建议让画的长边贴满画面上下沿，两侧留出桌面，这样10秒内画面更完整。\n- 让画的四边与屏幕边平行，身体前倾、双臂尽量贴靠桌面边缘借力，能明显减少10秒内的晃动。\n\n## 侧光安排（台灯已亮，不再动设置）\n\n- 台灯放在画的左侧或右侧（不是正上方、不是相机这一侧），灯头压低，让光斜着扫过画面——侧向低角度光能带出手绘的笔触和纸纹，这正是\"安静、不夸张\"的质感来源。\n- 你和相机站在灯的对侧，这样人和服务器的影子不会落在画上。\n- 米家台灯1S官方参数：色温2600K–5000K、亮度1%–100%、显色指数Ra90（来源：[小米商城产品参数](https://www.mi.com/mjsmartlamp-1s/specs)）。Ra90对\"保留原色\"是有利条件，但当前档位未知，画面会偏暖或偏冷——试录一段和原作并排比对一次颜色就能确认，不需要再调灯。\n\n## 录像开始与停止\n\n1. 模式转盘切到短片拍摄（手动曝光短片模式可手动设定快门、光圈、ISO；来源：[Movie Recording](https://cam.start.canon/en/C013/manual/html/UG-04_Shooting-2_0030.html)）。\n2. 对准、构图完成后，按机身录像按钮开始；想多录一两秒再停，方便掐头去尾。\n3. 再按同一按钮停止。另外，官方手册说明：若把[完全按下快门按钮]设为[开始/停止短片记录]，快门按钮完全按下也能开始/停止录像（来源：[Shutter Button Function for Movies](https://cam.start.canon/en/C013/manual/html/UG-04_Shooting-2_0140.html)）。固件版本未知——这份高级用户指南以ver.1.5.0+为准，菜单位置可能略有差异，找不到时以机身实际菜单为准。\n\n## 开拍前必要检查（约一分钟）\n\n- **SD卡与电量**：10秒短片占用很小，但先确认卡已插入、有余量。\n- **画面内杂物**：灯头、线缆、你自己的影子都不入画。\n- **试录比对**：先录3–5秒，回放时和原作并排看颜色是否接近；偏差大就换灯的另一侧或稍抬灯头角度再试。\n- **稳定**：回放时看画面有没有明显漂移；晃得厉害就缩短单次时长、多录几条挑一条。\n\n**两个已知未知项**：镜头焦距未知（距离靠现场移动试定）、固件未知（菜单可能略有出入）。计划的保存卡里已把这两项列为待核对条件，确认前不会写入任何记录。",
+              "reply": {
+                "continuations": [],
+                "actionCards": [
+                  {
+                    "id": "333d8deb-d62c-4da1-89b1-9fb48410622f",
+                    "kind": "plan",
+                    "title": "待核对的候选计划：用EOS R8和米家台灯1S为40×30cm手绘画录制约10秒安静短片，保留原色、无特效",
+                    "detail": [
+                      "画平放桌面，台灯放画的左侧或右侧、灯头压低斜照画面，人与相机在灯的对侧避免投影",
+                      "手持相机镜头朝下，前后移动直到40cm长边占满横幅画面，画与屏幕边平行",
+                      "确认画面内无灯头、无线缆、无自己的影子；试录几秒看颜色是否接近原作",
+                      "按录像按钮开始，稳定持机约10秒（多数1–2秒），再按同一按钮停止",
+                      "回放检查：画面是否稳定、颜色是否满意、有无阴影，不满意可重录",
+                      "待核对：镜头焦距未知：实际拍摄距离需移动相机试定",
+                      "待核对：固件版本未知：手册以ver.1.5.0+为准，菜单位置可能略有差异",
+                      "待核对：画40×30cm为用户报告，未经实测；桌面净空间是否容得下灯与画的摆位需现场确认",
+                      "待核对：台灯色温2600K–5000K可调但当前档位未知，会影响画面冷暖倾向",
+                      "数值与资源核对不证明物理可行或每句话有据"
+                    ],
+                    "status": "pending",
+                    "expiresAt": "2026-11-01T13:54:04.194Z",
+                    "confirmLabel": "保存这份计划"
+                  }
+                ],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [
+                  "有3处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。",
+                  "有25处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+                ],
+                "answer": "候选计划卡已备好（需你点击确认才保存）。下面是三部分的具体做法，全部只用你现有的三件物品。\n\n## 画面安排（画平放、不立框）\n\n- 相机手持、镜头朝下俯拍。镜头焦距未知，所以拍摄距离没有固定值：前后移动相机，直到画的40厘米长边刚好占满横幅画面即可。\n- 画是4:3，而EOS R8的短片记录为16:9（官方规格，来源：[Specifications](https://cam.start.canon/en/C013/manual/html/UG-10_Reference_0100.html#Reference_0100_2)）。按长边占满构图后，画的上下两端会被裁掉一部分，或画面上下留一些桌面——两种取舍选一个，建议让画的长边贴满画面上下沿，两侧留出桌面，这样10秒内画面更完整。\n- 让画的四边与屏幕边平行，身体前倾、双臂尽量贴靠桌面边缘借力，能明显减少10秒内的晃动。\n\n## 侧光安排（台灯已亮，不再动设置）\n\n- 台灯放在画的左侧或右侧（不是正上方、不是相机这一侧），灯头压低，让光斜着扫过画面——侧向低角度光能带出手绘的笔触和纸纹，这正是\"安静、不夸张\"的质感来源。\n- 你和相机站在灯的对侧，这样人和服务器的影子不会落在画上。\n- 米家台灯1S官方参数：色温2600K–5000K、亮度1%–100%、显色指数Ra90（来源：[小米商城产品参数](https://www.mi.com/mjsmartlamp-1s/specs)）。Ra90对\"保留原色\"是有利条件，但当前档位未知，画面会偏暖或偏冷——试录一段和原作并排比对一次颜色就能确认，不需要再调灯。\n\n## 录像开始与停止\n\n1. 模式转盘切到短片拍摄（手动曝光短片模式可手动设定快门、光圈、ISO；来源：[Movie Recording](https://cam.start.canon/en/C013/manual/html/UG-04_Shooting-2_0030.html)）。\n2. 对准、构图完成后，按机身录像按钮开始；想多录一两秒再停，方便掐头去尾。\n3. 再按同一按钮停止。另外，官方手册说明：若把[完全按下快门按钮]设为[开始/停止短片记录]，快门按钮完全按下也能开始/停止录像（来源：[Shutter Button Function for Movies](https://cam.start.canon/en/C013/manual/html/UG-04_Shooting-2_0140.html)）。固件版本未知——这份高级用户指南以ver.1.5.0+为准，菜单位置可能略有差异，找不到时以机身实际菜单为准。\n\n## 开拍前必要检查（约一分钟）\n\n- **SD卡与电量**：10秒短片占用很小，但先确认卡已插入、有余量。\n- **画面内杂物**：灯头、线缆、你自己的影子都不入画。\n- **试录比对**：先录3–5秒，回放时和原作并排看颜色是否接近；偏差大就换灯的另一侧或稍抬灯头角度再试。\n- **稳定**：回放时看画面有没有明显漂移；晃得厉害就缩短单次时长、多录几条挑一条。\n\n**两个已知未知项**：镜头焦距未知（距离靠现场移动试定）、固件未知（菜单可能略有出入）。计划的保存卡里已把这两项列为待核对条件，确认前不会写入任何记录。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [
+                  "1c37feea33f152e435ece2f4:0",
+                  "1c37feea33f152e435ece2f4:2993",
+                  "17ed221aaad01bb9adeaf42e:0",
+                  "8f8b7b94d1f54035004f9f63:5992",
+                  "890db3dedbc0fdf0290835a0:0",
+                  "1c37feea33f152e435ece2f4:25945",
+                  "838bbd9d814a39cc69448f1e:1998",
+                  "838bbd9d814a39cc69448f1e:1000"
+                ],
+                "citations": [
+                  {
+                    "id": "1c37feea33f152e435ece2f4",
+                    "title": "Canon : Product Manual : EOS R8 : Specifications",
+                    "url": "https://cam.start.canon/en/C013/manual/html/UG-10_Reference_0100.html#Reference_0100_2",
+                    "kind": "official",
+                    "section": "EOS R8；unspecified"
+                  },
+                  {
+                    "id": "17ed221aaad01bb9adeaf42e",
+                    "title": "Canon : Product Manual : EOS R8 : Shutter Button Function for Movies",
+                    "url": "https://cam.start.canon/en/C013/manual/html/UG-04_Shooting-2_0140.html",
+                    "kind": "official",
+                    "section": "EOS R8；unspecified"
+                  },
+                  {
+                    "id": "8f8b7b94d1f54035004f9f63",
+                    "title": "Canon : Product Manual : EOS R8 : Movie Recording",
+                    "url": "https://cam.start.canon/en/C013/manual/html/UG-04_Shooting-2_0030.html",
+                    "kind": "official",
+                    "section": "EOS R8；unspecified"
+                  },
+                  {
+                    "id": "890db3dedbc0fdf0290835a0",
+                    "title": "Canon : Product Manual : EOS R8",
+                    "url": "https://cam.start.canon/en/C013/manual/html/index.html",
+                    "kind": "official",
+                    "section": "EOS R8；unspecified"
+                  },
+                  {
+                    "id": "838bbd9d814a39cc69448f1e",
+                    "title": "米家台灯1S-小米商城",
+                    "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+                    "kind": "official",
+                    "section": "MJTD01SYL；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "ebd9d6be-bc44-4f85-a6eb-4d28292a39a4",
+                    "name": "[模拟持有]陌生EOS R8",
+                    "model": "EOS R8"
+                  },
+                  {
+                    "id": "5c1dda21-c56d-4f0a-bc5f-2b7c88147150",
+                    "name": "[模拟持有]画作补光台灯new-combination-final",
+                    "model": "MJTD01SYL"
+                  },
+                  {
+                    "id": "f0d58dae-7ba8-4482-9cdd-9d03f9a33c75",
+                    "name": "[模拟持有]想送给爸爸的画new-combination-final",
+                    "model": "原创手绘画"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-11-01T13:39:34.984Z"
+            }
+          ],
+          "known": {
+            "foundationTaskId": "8c7ba273-5317-46de-9a4e-210080eb2861",
+            "foundationTaskIntent": "plan",
+            "foundationHasItems": "true",
+            "foundationComplexTask": "true",
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "f9b55d79-b914-49d2-95a2-ad54b240c4c8"
+          },
+          "tried": [],
+          "memoryEpoch": 15,
+          "createdAt": "2026-11-01T13:38:23.107Z",
+          "updatedAt": "2026-11-01T13:39:34.985Z",
+          "expiresAt": "2026-11-08T13:38:23.107Z",
+          "itemScopes": {
+            "ebd9d6be-bc44-4f85-a6eb-4d28292a39a4": "[\"u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33\",\"[\\\"EOS R8\\\",null,null,null]\"]",
+            "5c1dda21-c56d-4f0a-bc5f-2b7c88147150": "[\"u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33\",\"[\\\"MJTD01SYL\\\",null,null,null]\"]",
+            "f0d58dae-7ba8-4482-9cdd-9d03f9a33c75": "[\"u_5a4e2fe1-e790-4759-8f4d-ae62f5e79b33\",\"[\\\"原创手绘画\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "continuations": [],
+          "actionCards": [
+            {
+              "id": "333d8deb-d62c-4da1-89b1-9fb48410622f",
+              "kind": "plan",
+              "title": "待核对的候选计划：用EOS R8和米家台灯1S为40×30cm手绘画录制约10秒安静短片，保留原色、无特效",
+              "detail": [
+                "画平放桌面，台灯放画的左侧或右侧、灯头压低斜照画面，人与相机在灯的对侧避免投影",
+                "手持相机镜头朝下，前后移动直到40cm长边占满横幅画面，画与屏幕边平行",
+                "确认画面内无灯头、无线缆、无自己的影子；试录几秒看颜色是否接近原作",
+                "按录像按钮开始，稳定持机约10秒（多数1–2秒），再按同一按钮停止",
+                "回放检查：画面是否稳定、颜色是否满意、有无阴影，不满意可重录",
+                "待核对：镜头焦距未知：实际拍摄距离需移动相机试定",
+                "待核对：固件版本未知：手册以ver.1.5.0+为准，菜单位置可能略有差异",
+                "待核对：画40×30cm为用户报告，未经实测；桌面净空间是否容得下灯与画的摆位需现场确认",
+                "待核对：台灯色温2600K–5000K可调但当前档位未知，会影响画面冷暖倾向",
+                "数值与资源核对不证明物理可行或每句话有据"
+              ],
+              "status": "pending",
+              "expiresAt": "2026-11-01T13:54:04.194Z",
+              "confirmLabel": "保存这份计划"
+            }
+          ],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [
+            "有3处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。",
+            "有25处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "answer": "候选计划卡已备好（需你点击确认才保存）。下面是三部分的具体做法，全部只用你现有的三件物品。\n\n## 画面安排（画平放、不立框）\n\n- 相机手持、镜头朝下俯拍。镜头焦距未知，所以拍摄距离没有固定值：前后移动相机，直到画的40厘米长边刚好占满横幅画面即可。\n- 画是4:3，而EOS R8的短片记录为16:9（官方规格，来源：[Specifications](https://cam.start.canon/en/C013/manual/html/UG-10_Reference_0100.html#Reference_0100_2)）。按长边占满构图后，画的上下两端会被裁掉一部分，或画面上下留一些桌面——两种取舍选一个，建议让画的长边贴满画面上下沿，两侧留出桌面，这样10秒内画面更完整。\n- 让画的四边与屏幕边平行，身体前倾、双臂尽量贴靠桌面边缘借力，能明显减少10秒内的晃动。\n\n## 侧光安排（台灯已亮，不再动设置）\n\n- 台灯放在画的左侧或右侧（不是正上方、不是相机这一侧），灯头压低，让光斜着扫过画面——侧向低角度光能带出手绘的笔触和纸纹，这正是\"安静、不夸张\"的质感来源。\n- 你和相机站在灯的对侧，这样人和服务器的影子不会落在画上。\n- 米家台灯1S官方参数：色温2600K–5000K、亮度1%–100%、显色指数Ra90（来源：[小米商城产品参数](https://www.mi.com/mjsmartlamp-1s/specs)）。Ra90对\"保留原色\"是有利条件，但当前档位未知，画面会偏暖或偏冷——试录一段和原作并排比对一次颜色就能确认，不需要再调灯。\n\n## 录像开始与停止\n\n1. 模式转盘切到短片拍摄（手动曝光短片模式可手动设定快门、光圈、ISO；来源：[Movie Recording](https://cam.start.canon/en/C013/manual/html/UG-04_Shooting-2_0030.html)）。\n2. 对准、构图完成后，按机身录像按钮开始；想多录一两秒再停，方便掐头去尾。\n3. 再按同一按钮停止。另外，官方手册说明：若把[完全按下快门按钮]设为[开始/停止短片记录]，快门按钮完全按下也能开始/停止录像（来源：[Shutter Button Function for Movies](https://cam.start.canon/en/C013/manual/html/UG-04_Shooting-2_0140.html)）。固件版本未知——这份高级用户指南以ver.1.5.0+为准，菜单位置可能略有差异，找不到时以机身实际菜单为准。\n\n## 开拍前必要检查（约一分钟）\n\n- **SD卡与电量**：10秒短片占用很小，但先确认卡已插入、有余量。\n- **画面内杂物**：灯头、线缆、你自己的影子都不入画。\n- **试录比对**：先录3–5秒，回放时和原作并排看颜色是否接近；偏差大就换灯的另一侧或稍抬灯头角度再试。\n- **稳定**：回放时看画面有没有明显漂移；晃得厉害就缩短单次时长、多录几条挑一条。\n\n**两个已知未知项**：镜头焦距未知（距离靠现场移动试定）、固件未知（菜单可能略有出入）。计划的保存卡里已把这两项列为待核对条件，确认前不会写入任何记录。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [
+            "1c37feea33f152e435ece2f4:0",
+            "1c37feea33f152e435ece2f4:2993",
+            "17ed221aaad01bb9adeaf42e:0",
+            "8f8b7b94d1f54035004f9f63:5992",
+            "890db3dedbc0fdf0290835a0:0",
+            "1c37feea33f152e435ece2f4:25945",
+            "838bbd9d814a39cc69448f1e:1998",
+            "838bbd9d814a39cc69448f1e:1000"
+          ],
+          "citations": [
+            {
+              "id": "1c37feea33f152e435ece2f4",
+              "title": "Canon : Product Manual : EOS R8 : Specifications",
+              "url": "https://cam.start.canon/en/C013/manual/html/UG-10_Reference_0100.html#Reference_0100_2",
+              "kind": "official",
+              "section": "EOS R8；unspecified"
+            },
+            {
+              "id": "17ed221aaad01bb9adeaf42e",
+              "title": "Canon : Product Manual : EOS R8 : Shutter Button Function for Movies",
+              "url": "https://cam.start.canon/en/C013/manual/html/UG-04_Shooting-2_0140.html",
+              "kind": "official",
+              "section": "EOS R8；unspecified"
+            },
+            {
+              "id": "8f8b7b94d1f54035004f9f63",
+              "title": "Canon : Product Manual : EOS R8 : Movie Recording",
+              "url": "https://cam.start.canon/en/C013/manual/html/UG-04_Shooting-2_0030.html",
+              "kind": "official",
+              "section": "EOS R8；unspecified"
+            },
+            {
+              "id": "890db3dedbc0fdf0290835a0",
+              "title": "Canon : Product Manual : EOS R8",
+              "url": "https://cam.start.canon/en/C013/manual/html/index.html",
+              "kind": "official",
+              "section": "EOS R8；unspecified"
+            },
+            {
+              "id": "838bbd9d814a39cc69448f1e",
+              "title": "米家台灯1S-小米商城",
+              "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+              "kind": "official",
+              "section": "MJTD01SYL；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "ebd9d6be-bc44-4f85-a6eb-4d28292a39a4",
+              "name": "[模拟持有]陌生EOS R8",
+              "model": "EOS R8"
+            },
+            {
+              "id": "5c1dda21-c56d-4f0a-bc5f-2b7c88147150",
+              "name": "[模拟持有]画作补光台灯new-combination-final",
+              "model": "MJTD01SYL"
+            },
+            {
+              "id": "f0d58dae-7ba8-4482-9cdd-9d03f9a33c75",
+              "name": "[模拟持有]想送给爸爸的画new-combination-final",
+              "model": "原创手绘画"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"check_constraints\",\"prepare_action\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-01T13:39:04.012Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "check_constraints completed",
+            "at": "2026-11-01T13:39:04.043Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "prepare_action completed",
+            "at": "2026-11-01T13:39:04.196Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+            "at": "2026-11-01T13:39:34.938Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":71857,\"calls\":2,\"tools\":2,\"reservedCny\":0.328836,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-01T13:39:34.966Z"
+          }
+        ],
+        "tokens": {
+          "input": 20656,
+          "output": 2249
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "taskId": "8c7ba273-5317-46de-9a4e-210080eb2861",
+          "runId": "8ddf5194-12c0-4c9a-9845-be555bc530a2",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      }
+    }
+  ],
+  "checks": [],
+  "errors": [],
+  "acquisition": {
+    "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+    "title": "米家台灯1S-小米商城",
+    "official": true,
+    "textCharacters": 3705,
+    "result": {
+      "title": "米家台灯1S-小米商城",
+      "text": "小米商城\n|\nMIUI\n|\nIoT\n|\n云服务\n|\n天星数科\n|\n有品\n|\n小爱开放平台\n|\n企业团购\n|\n资质证照\n|\n协议规则\n|\n下载App\n|\n智能生活\n\n购物车\n\n登录\n|\n注册\n\n小米官网\n\n全部商品分类\n\nXiaomi手机\n\n〔图示文字：Xiaomi Civi 2〕\n\nXiaomi Civi 2\n\n2399元起\n\n〔图示文字：Xiaomi MIX Fold 2〕\n\nXiaomi MIX Fold 2\n\n8999元起\n\n〔图示文字：Xiaomi 12S Ultra〕\n\nXiaomi 12S Ultra\n\n5999元起\n\n〔图示文字：Xiaomi 12S Pro〕\n\nXiaomi 12S Pro\n\n4699元起\n\n〔图示文字：Xiaomi 12S〕\n\nXiaomi 12S\n\n3999元起\n\n〔图示文字：Xiaomi 12 Pro 天玑版〕\n\nXiaomi 12 Pro 天玑版\n\n3999元起\n\nRedmi手机\n\n〔图示文字：Redmi Note 12 5G〕\n\nRedmi Note 12 5G\n\n1199元起\n\n〔图示文字：Redmi Note 12 Pro〕\n\nRedmi Note 12 Pro\n\n1699元起\n\n〔图示文字：Redmi Note 12 Pro+〕\n\nRedmi Note 12 Pro+\n\n2199元起\n\n〔图示文字：Redmi K50 至尊版〕\n\nRedmi K50 至尊版\n\n2999元起\n\n〔图示文字：Redmi Note 11T Pro+〕\n\nRedmi Note 11T Pro+\n\n2099元起\n\n〔图示文字：Redmi Note 11T Pro〕\n\nRedmi Note 11T Pro\n\n1799元起\n\n电视\n\n〔图示文字：Redmi智能电视X55 2022〕\n\nRedmi智能电视X55 2022\n\n2999元\n\n〔图示文字：Redmi智能电视X65 2022〕\n\nRedmi智能电视X65 2022\n\n3999元\n\n〔图示文字：小米电视6 65” OLED〕\n\n小米电视6 65” OLED\n\n6999元\n\n〔图示文字：小米电视 大师 77” OLED〕\n\n小米电视 大师 77” OLED\n\n19999元\n\n〔图示文字：小米透明电视〕\n\n小米透明电视\n\n49999元\n\n〔图示文字：小米电视 大师 65英寸OLED〕\n\n小米电视 大师 65英寸OLED\n\n9999元\n\n笔记本\n\n〔图示文字：Xiaomi Book Air 13〕\n\nXiaomi Book Air 13\n\n5999元起\n\n〔图示文字：Redmi G 游戏本 锐龙版 R5〕\n\nRedmi G 游戏本 锐龙版 R5\n\n7299元\n\n〔图示文字：Redmi G Pro 游戏本 2022〕\n\nRedmi G Pro 游戏本 2022\n\n8999元起\n\n〔图示文字：Redmi G Pro 游戏本 锐龙版 R7〕\n\nRedmi G Pro 游戏本 锐龙版 R7\n\n8799元\n\n〔图示文字：Xiaomi Book Pro 14 锐龙版〕\n\nXiaomi Book Pro 14 锐龙版\n\n6399元起\n\n〔图示文字：Redmi G 游戏本 2022〕\n\nRedmi G 游戏本 2022\n\n7499元起\n\n平板\n\n〔图示文字：Redmi Pad〕\n\nRedmi Pad\n\n1299元起\n\n〔图示文字：小米平板5 Pro 12.4〕\n\n小米平板5 Pro 12.4\n\n2999元起\n\n〔图示文字：小米平板5〕\n\n小米平板5\n\n1999元起\n\n〔图示文字：小米平板5 Pro 5G〕\n\n小米平板5 Pro 5G\n\n3349元\n\n〔图示文字：小米平板5 Pro〕\n\n小米平板5 Pro\n\n2499元起\n\n家电\n\n〔图示文字：小米空调 1.5匹新1级能效〕\n\n小米空调 1.5匹新1级能效\n\n2499元\n\n〔图示文字：新风空调 立式3匹〕\n\n新风空调 立式3匹\n\n7299元\n\n〔图示文字：米家扫拖机器人1T〕\n\n米家扫拖机器人1T\n\n1999元\n\n路由器\n\n〔图示文字：Redmi 电竞路由器 AX5400〕\n\nRedmi 电竞路由器 AX5400\n\n599元\n\n〔图示文字：小米路由器AX6000〕\n\n小米路由器AX6000\n\n549元\n\n〔图示文字：小米路由器AX9000〕\n\n小米路由器AX9000\n\n1299元\n\n〔图示文字：Xiaomi HomeWiFi 三频 Mesh 路由器〕\n\nXiaomi HomeWiFi 三频 Mesh 路由器\n\n1499元\n\n〔图示文字：小米路由器4A 千兆版〕\n\n小米路由器4A 千兆版\n\n129元\n\n〔图示文字：查看全部<br>小米路由器〕\n\n查看全部\n\n小米路由器\n\n服务中心\n\n社区\n\n米家台灯1S\n\n外观\n\n产品参数\n\n产品型号\nMJTD01SYL\n\n产品颜色\n白色\n\n亮度范围\n1%-100%\n\n色温范围\n2600K-5000K\n\n光通量\n520lm\n\n显色指数\nRa90\n\n台灯输入\n12V 1.0A\n\n额定输入\n100-240V～50/60Hz 0.1A\n\n额定功率\n9W（42 x 0.5W/LED 模块）\n\n使用寿命\n约25000小时\n\n支持系统\nAndroid4.4或iOS9.0及以上版本\n\n无线连接\nWi-Fi IEEE 802.11 b/g/n 2.4GHz\n\n执行标准\nGB 7000.1, GB 7000.204, GB/T 17743\n\n包装清单\n\n米家台灯1S x1\n\n适配器 x1\n\n使用说明书 x1\n\n\n预约维修服务\n\n\n7天无理由退货\n\n\n15天免费换货\n\n\n满99元包邮\n\n\n520余家售后网点\n\n帮助中心\n\n账户管理\n\n购物指南\n\n订单操作\n\n服务支持\n\n售后政策\n\n自助服务\n\n相关下载\n\n线下门店\n\n小米之家\n\n服务网点\n\n授权体验店\n\n关于小米\n\n了解小米\n\n加入小米\n\n投资者关系\n\n廉洁举报\n\n关注我们\n\n新浪微博\n\n官方微信\n\n联系我们\n\n特色服务\n\nF 码通道\n\n礼物码\n\n防伪 查询\n\n400-100-5678\n\n9:00-18:00（仅收市话费）\n\n人工客服\n\n关注小米：\n\n〔此处图示未读取〕\n\n小米官网\n\n小米商城\n|\nMIUI\n|\n米家\n|\n米聊\n|\n多看\n|\n游戏\n|\n路由器\n|\n米粉卡\n|\n政企服务\n|\n小米天猫店\n|\n小米集团隐私政策\n|\n小米商城隐私政策\n|\n小米商城用户协议\n|\n问题反馈\n\n©\nmi.com 京ICP证110507号\n京ICP备10046444号\n京公网安备11010802020134号\n京网文[2020]0276-042号\n\n（京）网械平台备字（2018）第00005号\n\n互联网药品信息服务资格证 (京) -非经营性-2014-0090\n\n营业执照\n医疗器械公告\n\n增值电信业务许可证 \n网络食品经营备案 京食药网食备202010048  \n食品经营许可证\n\n违法和不良信息举报电话：171-5104-4404 知识产权侵权投诉 本网站所列数据，除特殊说明，所有数据均出自我司实验室测试\n\n〔图示文字：TRUSTe Privacy Certification〕\n\n〔图示文字：诚信网站〕\n\n〔图示文字：可信网站〕\n\n〔图示文字：网上交易保障中心〕\n\n〔图示文字：诚信经营 放心消费〕\n\n探索黑科技，小米为发烧而生\n\n\n\n小米手机官方微信二维码\n\n〔此处图示未读取〕\n\n退出排队\n\n正在排队，请稍候喔！\n\n当前人数较多，请您耐心等待，排队期间请不要关闭页面。\n\n时常来官网看看，最新产品和活动信息都会在这里发布。\n\n下载小米商城 App 玩玩吧！产品开售信息抢先知道。\n\n发现了让你眼前一亮的小米产品，别忘了分享给朋友！\n\n产品开售前会有预售信息，关注官网首页就不会错过。\n\n\n\n抱歉，网络拥堵无法连接服务器\n\n由于访问人数太多导致服务器压力山大，请您稍后再重试。\n\n重试\n\n\n\n为防黄牛，请您输入下面的验证码\n\n在防黄牛的路上，我们一直在努力，也知道做的还不够。\n\n所以，这次劳烦您多输一次验证码，我们一起防黄牛。\n\n〔此处图示未读取〕\n\n网络错误，点击重新获取验证码！\n\n确认\n\n\n\nSelect Region\n\nWelcome to Mi.com\n\nPlease select your country or region\n\nHong Kong\nTaiwan\nSingapore\nMalaysia\nPhilippines\nIndia\nIndonesia\nGlobal Home\nMENA\nPoland\nUkraine\nRussia\nVietnam\nMexico\nKorea\nEgypt\nThailand\nSpain\nUnited States\nItaly\nFrance\nBangladesh\nUnited Kingdom\nChile\nNepal\nSri Lanka\nTurkey\nNetherlands\nBrazil",
+      "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+      "links": [
+        {
+          "title": "购物指南",
+          "url": "https://www.mi.com/service/buy/SalesTime/"
+        }
+      ],
+      "navigationItems": [
+        {
+          "id": "J_bigtapRetry",
+          "label": "重试"
+        },
+        {
+          "id": "J_bigtapModeSubmit",
+          "label": "确认"
+        }
+      ],
+      "reading": {
+        "limitations": [
+          "有3处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+        ],
+        "figures": [
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Xiaomi Civi 2"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Xiaomi MIX Fold 2"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Xiaomi 12S Ultra"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Xiaomi 12S Pro"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Xiaomi 12S"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Xiaomi 12 Pro 天玑版"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Redmi Note 12 5G"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Redmi Note 12 Pro"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Redmi Note 12 Pro+"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Redmi K50 至尊版"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Redmi Note 11T Pro+"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Redmi Note 11T Pro"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Redmi智能电视X55 2022"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Redmi智能电视X65 2022"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "小米电视6 65”  OLED"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "小米电视 大师  77”  OLED"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "小米透明电视"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "小米电视 大师 65英寸OLED"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Xiaomi Book Air 13"
+          },
+          {
+            "url": "https://i1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png",
+            "caption": "Redmi G 游戏本 锐龙版 R5"
+          }
+        ]
+      },
+      "official": true,
+      "kind": "user-link",
+      "retrievedAt": "2026-11-01T13:38:22.093Z",
+      "manuals": [],
+      "notice": "已联网取得官方站点、匹配完整型号的资料草稿。确认实物及地区版本后录入；保存时服务器重新核对来源，不把公开资料当作你的实物状态。"
+    }
+  },
+  "mobileOverflow": false,
+  "modelRequests": 2
+}

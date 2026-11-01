@@ -37,7 +37,9 @@ export function AssistantConversation({
   allHistory = false,
   taskId,
   onOpenCapability,
+  onTaskLinked,
 }: {
+  onTaskLinked?:(taskId:string)=>void;
   onOpenCapability?: (itemId:string,capability:NonNullable<import('@/lib/agent/contracts').AssistantReply['continuations']>[number]['capability'])=>void;
   initialSessionId?: string;
   startFresh?: boolean;
@@ -316,6 +318,7 @@ export function AssistantConversation({
       if (!r.ok) throw Error(d.error);
       if (!alive.current) return;
       if (d.session) update(d.session);
+      if(d.taskId&&!taskId)onTaskLinked?.(d.taskId);
       setError("");
       onActivity?.();
       window.dispatchEvent(new Event("workspace-updated"));
@@ -548,7 +551,7 @@ export function AssistantConversation({
                 ) : (
                   <p role="status">
                     {card.status === "applied"
-                      ? card.kind==='story'?'私人故事已保存，未授权检索或分享':card.kind==='gift'?'赠礼草稿已创建，尚未交付':card.kind==='family'?'已创建家庭事项，等待对方处理':card.kind === "handoff"
+                      ? card.kind==='story'?'私人故事已保存，未授权检索或分享':card.kind==='gift'?'赠礼已创建，尚未交付':card.kind==='family'?'已创建家庭事项，等待对方处理':card.kind === "handoff"
                         ? "已创建家庭事项，等待处理"
                         : card.kind === "plan" || card.kind === "taskPlan"
                           ? "计划已保存，待你执行"
@@ -557,6 +560,7 @@ export function AssistantConversation({
                   </p>
                 )}
                 <small>确认后才执行；建议保留 15 分钟。</small>
+                {card.kind==='gift'&&card.status==='applied'&&<a href="#social" className="text-button">查看赠礼与预览链接</a>}
               </div>
             ))}
             {!!message.reply?.continuations?.length&&onOpenCapability&&<div className="home-candidate-items">{message.reply.continuations.map((c,n)=><button key={n} className="button secondary" onClick={()=>onOpenCapability(c.itemId,c.capability)}>{c.title}</button>)}</div>}

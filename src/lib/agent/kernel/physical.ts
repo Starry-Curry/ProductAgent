@@ -12,3 +12,11 @@ export function physicalPrerequisites(mode:'support'|'heat'|'optics'|'electrical
   const required={support:['质量','重心','支撑区域','连接或摩擦条件'],heat:['温度范围','材料耐热','热源条件'],optics:['光路几何','表面光学性质'],electrical:['电气额定值','连接兼容','授权'],combine:['尺寸或连接条件','资源持有状态']}[mode];
   return {missing:required.filter(r=>!known.includes(r)),status:required.every(r=>known.includes(r))?'necessary_conditions_listed':'needs_verification',physicallyVerified:false};
 }
+/** A flat rectangle parallel to an ideal image plane. No lens/distance/stability inference. */
+export function frameCondition(object:[number,number],aspect:[number,number]){
+ if([...object,...aspect].some(n=>!Number.isFinite(n)||n<=0||n>1e6))throw Error('invalid_framing_dimensions');
+ const ratio=aspect[0]/aspect[1],width=Math.max(object[0],object[1]*ratio),height=width/ratio;
+ const fillWidth=Math.min(object[0],object[1]*ratio),fillHeight=fillWidth/ratio;
+ if(![width,height,fillWidth,fillHeight].every(Number.isFinite))throw Error('invalid_framing_dimensions');
+ return {contain:{fieldWidth:width,fieldHeight:height,objectWidthFraction:object[0]/width,objectHeightFraction:object[1]/height,paddingWidth:width-object[0],paddingHeight:height-object[1]},fill:{fieldWidth:fillWidth,fieldHeight:fillHeight,croppedWidth:object[0]-fillWidth,croppedHeight:object[1]-fillHeight},notice:'仅为物体平行于画面时的二维比例；不确定镜头、实际距离、透视、照明、稳定或设备设置。'};
+}

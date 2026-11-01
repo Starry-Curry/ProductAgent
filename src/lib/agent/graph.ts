@@ -1,6 +1,7 @@
 import { executeHomeTask } from "./home-task.ts";
 import { executeKernel } from "./kernel/execute.ts";
 import { executePractical } from "./practical.ts";
+import { isPreparationChange } from "../life/task-planning.ts";
 import { answerKnownItem } from "./grounded-answer.ts";
 import { analyzeOwnedLamp } from "../devices/software-lab.ts";
 import { hazardousActions } from "./safety-language.ts";
@@ -597,13 +598,17 @@ export async function executeGraph(
   provider: Provider,
   temporary = false,
 ) {
+  // A confirmed preparation checklist keeps its existing deterministic update
+  // command even after it is linked to the shared Task. Other turns stay free
+  // to use the native assistant.
+  const continuingPreparation = session.mode === 'auto' && !!session.known.taskPlanId && isPreparationChange(question);
   // Explicit experiment only until real coverage/safety gates pass. Existing domain
   // writes and hazardous requests retain their original deterministic paths.
-  if(process.env.WUJIAN_AGENT_RUNTIME === 'native' && provider.ready && provider.converse && ['service','auto'].includes(session.mode) && !unsafe.test(withoutProhibitedActions(question))){
+  if(!continuingPreparation && process.env.WUJIAN_AGENT_RUNTIME === 'native' && provider.ready && provider.converse && ['service','auto'].includes(session.mode) && !unsafe.test(withoutProhibitedActions(question))){
     const householdAllowed=session.known.homeId!=='young-apartment-v1'||read().virtualHomes?.[actor]?.allowCloud===true;
     if(householdAllowed)return executePractical(db,read,actor,session,question,provider,temporary);
   }
-  if(process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3 === "true" && provider.ready &&
+  if(!continuingPreparation && process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3 === "true" && provider.ready &&
      ["service","auto"].includes(session.mode) &&
      !unsafe.test(withoutProhibitedActions(question))) {
     const proposedRoute=session.mode==="auto"?routeHome(question,read(),actor,session):undefined;
@@ -611,7 +616,7 @@ export async function executeGraph(
     if(householdAllowed&&(!proposedRoute||["help","plan","companion","clarify"].includes(proposedRoute.intent)))
       return executeKernel(db,read,actor,session,question,provider,temporary);
   }
-  if (session.known.homeId === "young-apartment-v1" || session.known.foundationTaskId && session.known.foundationHasItems === "true" && session.known.foundationComplexTask === "true" && session.known.uiPage)
+  if (!continuingPreparation && (session.known.homeId === "young-apartment-v1" || session.known.foundationTaskId && session.known.foundationHasItems === "true" && session.known.foundationComplexTask === "true" && session.known.uiPage))
     return executeHomeTask(
       db,
       read,

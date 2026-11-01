@@ -1,0 +1,39 @@
+✖ 画面完整容纳与铺满裁切分别计算，不把物理尺寸与纵横比混成同单位 (2.6005ms)
+✔ 目录按新问题跨语言选择实际章节，不把录像总章当作所有快门设置的答案 (0.9525ms)
+✔ 行动资源：未持有、未满足条件、来源跨物品、未确认前提均不能保存为可执行计划 (3.7517ms)
+✔ 统一Agent故事：真实领域确认后才写入，默认私密且无云端同意，确认幂等 (184.9802ms)
+✔ 确认计划进入同一Task且保留未知条件，纠正/遗忘后不借计划恢复旧个人Context (184.1373ms)
+✔ 明确的多物品计划：已知不满足的资源被服务器拒绝，不向前端流出错误的自由指导 (222.4654ms)
+✔ 同一Task的私人故事保存收据不覆盖获准操作经验；新的拒绝复用/遗忘仍阻止旧报告复活 (211.8108ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1652.5409
+
+✖ failing tests:
+
+test at tests\frame-condition.test.ts:3:1
+✖ 画面完整容纳与铺满裁切分别计算，不把物理尺寸与纵横比混成同单位 (2.6005ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 0.7500000000000001
+  - 0.75
+        ^
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/practical-agent-v1/tests/frame-condition.test.ts:4:140)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.7500000000000001,
+    expected: 0.75,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -15,7 +15,7 @@ import {readKnowledge,storeOfficialDocument,makeKnowledgeDocument,acquireKnowled
 import {fetchPublicDocument} from '../life/sources.ts';
 import {sourceReviews} from '../foundation/reviewed-facts.ts';
 import {modelMentioned,officialDomain,brandEntry} from '../life/knowledge.ts';
-import {rangeCondition,rectangleCondition} from './kernel/physical.ts';
+import {rangeCondition,rectangleCondition,frameCondition} from './kernel/physical.ts';
 import {practicalConstraints,readKnownConstraints} from './practical-constraints.ts';
 import {relevantManualLinks} from '../life/retrieval-topics.ts';
 
@@ -39,11 +39,12 @@ const schemas={
  search_product_knowledge:z.object({itemId:z.string().min(1).max(100),query:z.string().min(1).max(500),refresh:z.boolean().optional(),sourceUrl:z.string().url().optional()}).strict(),
  get_relevant_experiences:z.object({itemIds:ids}).strict(),
  check_constraints:z.discriminatedUnion('kind',[
+  z.object({kind:z.literal('frame'),object:z.tuple([z.number().positive().max(1e6),z.number().positive().max(1e6)]),aspect:z.tuple([z.number().positive().max(1e6),z.number().positive().max(1e6)])}).strict(),
   z.object({kind:z.literal('known'),checkIds:z.array(z.string().max(100)).max(30).default([])}).strict(),
   z.object({kind:z.literal('range'),actual:z.number().nonnegative(),min:z.number().nonnegative(),max:z.number().nonnegative(),unit:z.string().max(30)}).strict(),
   z.object({kind:z.literal('rectangle'),object:z.tuple([z.number().positive(),z.number().positive()]),space:z.tuple([z.number().positive(),z.number().positive()]),spaceKind:z.enum(['internal','external','unknown'])}).strict()]),
 };
-const descriptions={open_item_capability:'当用户希望进一步创意、分身、故事、养护、家庭、赠礼或软件探索时，返回同一物品现有界面的继续入口；不执行任何操作，不授予权限。',prepare_action:'只在用户希望保存计划、记录故事、准备赠礼或交家人时准备预览卡。没有确认不会执行；不能自行授予记忆/分享权限。计划逐步关联真实资源，型号操作必须引用已读取原文ID；条件未齐先讨论探索方案。故事仅保存私人原文，默认不允许检索或上云；赠礼草稿不附私人故事。',get_item_context:'读取当前用户获准的物品身份、准确型号、状态和未知项；itemIds为空时当前相关物品。',search_product_knowledge:'检索对应型号官方原文和URL；无缓存时自主官方发现；缓存缺少操作正文时可refresh，或用relatedSections中实际发现的sourceUrl读取章节；不接受臆造链接。',get_relevant_experiences:'读取对应物品当前获准云端使用的经历与偏好。经历为用户报告，不证明因果。',check_constraints:'必要条件的确定性区间或二维占地计算，不能证明完整兼容/稳定。known读取本次已绑定来源的条件ID；range/rectangle仅计算模型假设的数字，不能作为设备兼容认证或覆盖已知条件。'};
+const descriptions={open_item_capability:'当用户希望进一步创意、分身、故事、养护、家庭、赠礼或软件探索时，返回同一物品现有界面的继续入口；不执行任何操作，不授予权限。',prepare_action:'只在用户希望保存计划、记录故事、准备赠礼或交家人时准备预览卡。没有确认不会执行；不能自行授予记忆/分享权限。计划逐步关联真实资源，型号操作必须引用已读取原文ID；条件未齐先讨论探索方案。故事仅保存私人原文，默认不允许检索或上云；赠礼草稿不附私人故事。',get_item_context:'读取当前用户获准的物品身份、准确型号、状态和未知项；itemIds为空时当前相关物品。',search_product_knowledge:'检索对应型号官方原文和URL；无缓存时自主官方发现；缓存缺少操作正文时可refresh，或用relatedSections中实际发现的sourceUrl读取章节；不接受臆造链接。',get_relevant_experiences:'读取对应物品当前获准云端使用的经历与偏好。经历为用户报告，不证明因果。',check_constraints:'确定性计算：区间、二维占地、平面物体与画幅比例（frame）。画幅支持完整容纳或铺满裁切两种计算，不混淆二者。不能证明完整兼容/稳定。known读取本次已绑定来源的条件ID；range/rectangle仅计算模型假设的数字，不能作为设备兼容认证或覆盖已知条件。'};
 export const practicalTools:ToolDefinition[]=Object.entries(schemas).map(([name,schema])=>({type:'function',function:{name,description:descriptions[name as keyof typeof descriptions],parameters:z.toJSONSchema(schema) as Record<string,unknown>}}));
 
 /** Small read-only native tool loop, inside existing session/run/auth lifecycle. */
@@ -83,6 +84,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   const schema=schemas[name as keyof typeof schemas];if(!schema)throw Error('unknown_tool');const p:any=schema.parse(JSON.parse(args));
   if(name==='check_constraints'){
    const known=practicalConstraints(context());
+   if(p.kind==='frame')return {...frameCondition(p.object,p.aspect),inputVerification:'unverified_model_operands_hypothetical_only',operands:{object:p.object,aspect:p.aspect},notice:'仅按传入宽高与画幅比例计算，须核对用户尺寸和实际记录模式；不认证相机视场或物理条件'};
    if(p.kind==='known')return {necessaryConditionChecks:readKnownConstraints(known,p.checkIds),inputVerification:'server_bound_sources'};
    const hypothetical=p.kind==='range'?{...rangeCondition(p.actual,p.min,p.max),unit:p.unit}:rectangleCondition(p.object,p.space,p.spaceKind);
    return {...hypothetical,inputVerification:'unverified_model_operands_hypothetical_only',necessaryConditionChecks:known,notice:hypothetical.notice+'；输入是模型填写的假设数字，不能覆盖带来源的必要条件'};
@@ -98,7 +100,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    const chosen=proposal.kind==='plan'?checkPlanResources(proposal,allowed,practicalConstraints(context()),[...passages.values()]):proposal;
    const itemIds=chosen.kind==='plan'?chosen.itemIds:[chosen.itemId];select(itemIds);
    const action=chosen.kind==='plan'?{kind:'plan' as const,goal:chosen.goal,itemIds:chosen.itemIds,conditions:chosen.unresolved,sourceRefs:chosen.sourceIds.map(id=>({id,url:passages.get(id)!.url!})),checklist:chosen.steps.map(s=>({label:s,status:chosen.readiness==='conditional'?'实施前先核对条件':'待执行（不是实物验证）'}))}:chosen;
-   const title=chosen.kind==='plan'?(chosen.readiness==='conditional'?'待核对的候选计划：':'资源已核对的计划：')+chosen.goal:chosen.kind==='story'?'保存这段物品故事':chosen.kind==='gift'?'准备赠礼草稿':'交给家人继续处理';
+   const title=chosen.kind==='plan'?(chosen.readiness==='conditional'?'待核对的候选计划：':'资源已核对的计划：')+chosen.goal:chosen.kind==='story'?'保存这段物品故事':chosen.kind==='gift'?'准备不含故事的赠礼':'交给家人继续处理';
    const detail=chosen.kind==='plan'?[...chosen.steps,...chosen.unresolved.map(c=>'待核对：'+c),'数值与资源核对不证明物理可行或每句话有据']:chosen.kind==='story'?[chosen.text,'不自动授权记忆检索、云端或家庭共享']:chosen.kind==='gift'?[chosen.message,'不附私人故事或对话；创建不等于交付']:[chosen.summary,'只共享你确认的摘要，对方尚未接手'];
    const card=proposeAction(db,read(),actor,session,crypto.randomUUID(),action,title,detail);cards.push(card);return {card,basis:'pending_explicit_user_confirmation_no_domain_write',notice:'仅准备草稿，必须用户点击确认；不是现实任务完成或设备执行'};
   }

@@ -73,7 +73,9 @@ async function openOriginal() {
   return w;
 }
 try {
+  const auth=page.waitForResponse(r=>r.url().endsWith('/api/account')&&r.request().method()==='GET');
   await page.goto('http://127.0.0.1:3233/');
+  if(!(await(await auth).json()).account){const login=JSON.parse(fs.readFileSync('.runtime/continuation-fixture-login.json'));await page.getByLabel('用户名',{exact:true}).fill(login.name);await page.getByLabel('口令',{exact:true}).fill(login.password);await page.getByRole('button',{name:'进入我的物间',exact:true}).click();}
   await page.getByRole('button',{name:'生活首页',exact:true}).waitFor();
   const a=await(await page.request.get('http://127.0.0.1:3233/api/account')).json();
   const prior=await page.evaluate(id=>localStorage.getItem('wujian-task:'+id),a.account.id);

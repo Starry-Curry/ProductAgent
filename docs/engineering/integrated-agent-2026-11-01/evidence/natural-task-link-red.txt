@@ -1,0 +1,29 @@
+✔ 目录按新问题跨语言选择实际章节，不把录像总章当作所有快门设置的答案 (0.7772ms)
+✔ 行动资源：未持有、未满足条件、来源跨物品、未确认前提均不能保存为可执行计划 (2.8263ms)
+✖ 统一Agent故事：真实领域确认后才写入，默认私密且无云端同意，确认幂等 (187.9184ms)
+✔ 确认计划进入同一Task且保留未知条件，纠正/遗忘后不借计划恢复旧个人Context (183.0657ms)
+✔ 明确的多物品计划：已知不满足的资源被服务器拒绝，不向前端流出错误的自由指导 (200.0889ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1651.5791
+
+✖ failing tests:
+
+test at tests\integrated-actions.test.ts:27:1
+✖ 统一Agent故事：真实领域确认后才写入，默认私密且无云端同意，确认幂等 (187.9184ms)
+  AssertionError [ERR_ASSERTION]: 确认业务写入后，会话应连接领域服务已经创建的同一Task
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/practical-agent-v1/tests/integrated-actions.test.ts:35:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

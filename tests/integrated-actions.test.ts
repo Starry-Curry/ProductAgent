@@ -6,7 +6,7 @@ import {listFragments} from '../src/lib/life/stories.ts';
 import {checkPlanResources} from '../src/lib/agent/practical-actions.ts';
 import type {Provider} from '../src/lib/ai/provider.ts';
 import {relevantManualLinks} from '../src/lib/life/retrieval-topics.ts';
-import {createTask,resolveTaskContext} from '../src/lib/foundation/tasks.ts';
+import {createTask,resolveTaskContext,taskRuns} from '../src/lib/foundation/tasks.ts';
 import {clearOwnerContext} from '../src/lib/memory/store.ts';
 import {makeKnowledgeDocument,storeOfficialDocument} from '../src/lib/life/acquisition.ts';
 const plan=(ids=['camera'])=>({kind:'plan',goal:'拍摄',itemIds:ids,steps:['手持记录'],sourceIds:[] as string[],conditions:[] as string[]});
@@ -31,7 +31,9 @@ test('统一Agent故事：真实领域确认后才写入，默认私密且无云
  const r=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:id,question:'请保存刚才这段物品经历为故事',memoryPolicy:'off',mode:'auto'},provider);
  assert.equal(listFragments(f.db,f.read(),'lin',id).length,0);const card=r.reply.actionCards![0];assert.equal(card.status,'pending');
  assert.throws(()=>decideAction(f.db,f.read,'dad',card.id,'confirm'),/未获授权/);
- decideAction(f.db,f.read,'lin',card.id,'confirm');decideAction(f.db,f.read,'lin',card.id,'confirm');
+ const confirmation=decideAction(f.db,f.read,'lin',card.id,'confirm');decideAction(f.db,f.read,'lin',card.id,'confirm');
+ assert.ok(confirmation.session.known.foundationTaskId,'确认业务写入后，会话应连接领域服务已经创建的同一Task');
+ assert.ok(taskRuns(f.db,f.read(),'lin',confirmation.session.known.foundationTaskId).some(run=>run.sessionId===r.session.id),'原对话可从该Task恢复，不重建平行会话');
  const fragments=listFragments(f.db,f.read(),'lin',id);assert.equal(fragments.length,1);assert.equal(fragments[0].allowRecall,false);assert.equal(fragments[0].allowCloud,false);assert.equal(listFragments(f.db,f.read(),'dad').length,0);
 });
 test('确认计划进入同一Task且保留未知条件，纠正/遗忘后不借计划恢复旧个人Context',async t=>{

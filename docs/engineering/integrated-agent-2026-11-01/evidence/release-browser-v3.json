@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-01T14:28:43.972Z",
+  "basis": "final_production_build_existing_synthetic_task_resume_no_new_model",
+  "checks": [
+    {
+      "name": "最终生产构建可展开并打开较早的同一Task",
+      "passed": true
+    },
+    {
+      "name": "未失效的故事Task可恢复原真实模型对话",
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "mobileOverflow": false,
+  "newModelRequests": 0
+}

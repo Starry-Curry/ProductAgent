@@ -1,0 +1,174 @@
+{
+  "at": "2026-11-01T14:22:57.285Z",
+  "roundId": "integrated-agent-20261101-r1",
+  "limits": {
+    "roundId": "integrated-agent-20261101-r1",
+    "requests": 150,
+    "cny": 50
+  },
+  "requests": 58,
+  "statusCounts": {
+    "returned": 56,
+    "failed": 2
+  },
+  "modelVersions": [
+    "qwen3.8-max-0902"
+  ],
+  "observedTokens": {
+    "input": 812179,
+    "output": 43640,
+    "missingUsageRequests": [
+      3,
+      25
+    ]
+  },
+  "estimatedCny": {
+    "knownUsage": 11.317188,
+    "unknownUsageReserved": 6.839088,
+    "totalIncludingReservations": 18.156276000000005,
+    "remaining": 31.843723999999995,
+    "notice": "Conservative local estimate, not provider invoice; unavailable usage remains fully reserved."
+  },
+  "remainingRequests": 92,
+  "historicalLedgers": [
+    {
+      "path": "docs/engineering/practical-agent-2026-10-31/evidence/model-calls.json",
+      "sha256": "aec731fd5c8ca966d823437bbf1709386c497f8860cc4c1b35e7ee8c4d1d4c76",
+      "actualSha256": "aec731fd5c8ca966d823437bbf1709386c497f8860cc4c1b35e7ee8c4d1d4c76"
+    },
+    {
+      "path": "docs/engineering/practical-continuation-2026-11-01/evidence/additional-r1/model-calls.json",
+      "sha256": "5edad01f88a97895302c6eb923d85220aea4f77b7317fd3f65aa6c7a19dc8fb0",
+      "actualSha256": "5edad01f88a97895302c6eb923d85220aea4f77b7317fd3f65aa6c7a19dc8fb0"
+    }
+  ],
+  "selectedRealBrowserTurns": {
+    "count": 14,
+    "p50Ms": 9429,
+    "p95Ms": 71857,
+    "notice": "Small mixed QA/experience/failed-combination sample, includes tool-loop time; not an SLA or success-rate metric.",
+    "turns": [
+      {
+        "file": "canon-r8-final.json",
+        "question": "这台EOS R8怎样开始和停止录视频？请读取该型号官方手册，只给当前必要操作；固件与镜头未知。",
+        "fullAnswerMs": 13369,
+        "modelCalls": 2,
+        "uiTextEvents": 64,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "canon-r8-final.json",
+        "question": "还是这台相机，照片快门直接能当录像键吗？按钮图示不能识别就明确说未知，不要猜位置。",
+        "fullAnswerMs": 8991,
+        "modelCalls": 1,
+        "uiTextEvents": 68,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "sony-fallback.json",
+        "question": "这台SRS-XB100已经连过别人的手机，现在怎样与我的手机配对？请依该型号官方指南回答，按键是短按还是长按、几秒不能猜。",
+        "fullAnswerMs": 4641,
+        "modelCalls": 1,
+        "uiTextEvents": 104,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "sony-fallback.json",
+        "question": "怎么判断已经进入配对模式？请只用刚才的型号指南。",
+        "fullAnswerMs": 4163,
+        "modelCalls": 1,
+        "uiTextEvents": 79,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "cross-bound-final.json",
+        "question": "只用我登记的EOS R50相机、Osmo Mobile 6云台给爸爸拍做饭视频，不买东西，没有已知三脚架、支撑物或配件，镜头和固件未知。相机能装这台云台吗？我的手机实测310克、宽75毫米、厚8毫米。先核对必要条件，然后给我和爸爸可以照做的分工与三个视频镜头；照片功能不能当视频功能。",
+        "fullAnswerMs": 50762,
+        "modelCalls": 1,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "r10-experience-fixed.json",
+        "question": "想用EOS R10手持给爸爸录十秒做饭片段，没有三脚架，镜头与固件未知。只给开始、停止的下一步操作，不改菜单设置，也不添任何物品。",
+        "fullAnswerMs": 13105,
+        "modelCalls": 3,
+        "transportOutcome": "needs_info",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "r10-experience-fixed.json",
+        "question": "把刚才这条合成操作报告保存为该相机的私人故事，保持原因未知，不供长期检索、不允许云端以后使用。请先给确认卡。",
+        "fullAnswerMs": 14830,
+        "modelCalls": 3,
+        "uiTextEvents": 51,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "r10-experience-fixed.json",
+        "question": "我又想用这台EOS R10给爸爸录十秒做饭片段，请参考我获准保存的尝试调整下一步，别重复上次失败的方法，也不改菜单、不添物品。只说明下一步怎样开始和停止；不知道原因的部分别替我下结论。",
+        "fullAnswerMs": 4287,
+        "modelCalls": 1,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "r10-experience-fixed.json",
+        "question": "这台EOS R10的尝试记录已经更正。请按我获准保存的最新结果决定下一步：如果已经拍到了，先查该型号官方回放章节，指导我检查画面和声音；不要继续排查旧的不能录像问题，也不要假设已经确认固件版本。",
+        "fullAnswerMs": 12797,
+        "modelCalls": 1,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "r10-experience-fixed.json",
+        "question": "现在有哪些我允许保存和复用的EOS R10尝试经历？没有就说明没有，不要从商品资料猜个人经历。",
+        "fullAnswerMs": 2161,
+        "modelCalls": 1,
+        "uiTextEvents": 29,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "new-combination-final.json",
+        "question": "想把我准备送给爸爸的手绘画录成十秒短片，安静、保留原色，不做夸张特效。我现有EOS R8、米家台灯1S和这幅画。画是40×30厘米的合成用户报告，平放在现有桌面上，台灯已由我打开。只用这些物品，不另找反光板、架子或夹子，不让画框自己站立。不需要教我调光或联网，不控制设备。镜头和固件未知。请给画面与侧光安排、录像开始停止及必要的检查，并准备可保存的简短候选计划。",
+        "fullAnswerMs": 71857,
+        "modelCalls": 2,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "geometry-followup.json",
+        "question": "请重新核对刚才方案：40×30厘米平面画完整放入16:9横幅时应该怎样留边？请调用比例计算工具分别算完整容纳与铺满裁切，别把二者混说。并重新读取EOS R8官方录像章节核对照片/录像开关和模式转盘的作用，不套用别的型号。不要给固定拍摄距离，也不新增任何物品。",
+        "fullAnswerMs": 59315,
+        "modelCalls": 2,
+        "uiTextEvents": 300,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "natural-story-final.json",
+        "question": "请保存这台相机的一段私人故事：[合成测试]今天想为爸爸录下一次做饭经历，只保存这个想法，没有实际拍摄。不要说已经拍成，也不允许长期检索或分享。先给我确认。",
+        "fullAnswerMs": 4706,
+        "modelCalls": 2,
+        "uiTextEvents": 39,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      },
+      {
+        "file": "natural-story-final.json",
+        "question": "刚才保存的只是一个合成想法，并未实际拍摄。请说明现在可以怎样继续这件事，不要当成已经实现的设备结果。",
+        "fullAnswerMs": 9429,
+        "modelCalls": 1,
+        "uiTextEvents": 197,
+        "transportOutcome": "answered",
+        "qualityStatus": "see_independent_case_review_not_inferred_from_transport"
+      }
+    ]
+  }
+}

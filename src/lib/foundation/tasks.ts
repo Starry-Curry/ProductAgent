@@ -295,6 +295,11 @@ export function recallOutcomes(db:DatabaseSync,s:State,a:Person,itemIds:string[]
       .all(a,JSON.stringify(itemIds)) as { body: string }[]
   )
     .map((r) => JSON.parse(r.body))
+    // Saving a story produces a receipt that the record exists, not a newer
+    // attempt/result. It must not shadow a separately approved action report.
+    // Keep latest-first BEFORE reuse/status filtering for actual outcomes so
+    // revocation or a forgotten latest report cannot resurrect an older one.
+    .filter(o=>o.basis!=='saved_personal_experience')
     .filter(o=>{if(seen.has(o.taskId))return false;seen.add(o.taskId);return true;})
     .filter(
       (o) =>
