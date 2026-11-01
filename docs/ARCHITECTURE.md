@@ -1,3 +1,5 @@
+> **历史文档（非现行权威）**：产品以 [PRODUCT_FINAL_V1.md](product/PRODUCT_FINAL_V1.md) 为准；工程实现与限制看 [当前状态](engineering/CURRENT.md)。以下原文保留作溯源。
+
 # 技术架构
 
 ## 设计目标

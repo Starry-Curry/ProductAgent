@@ -1,3 +1,5 @@
+> **历史交接归档**：本文件正文保留，最新状态统一维护于 [docs/engineering/CURRENT.md](docs/engineering/CURRENT.md)。不将旧实验认作当前生产能力。
+
 ## 2026-11-01 Practical追加轮次交付
 
 新20次/10元额度已执行20次，估算3.631992元，原60次台账哈希未变。新增EOS R10无SKU预置链接的实时厂家目录→手册→操作章节→问答/追问；R50已取得真实录像章节，修正核心启停指导。合成经历跨Task复用、更正后转回放、遗忘后真实模型不再收到经历已通过。自由跨物品仍编造资源，消息布局候选无改善，均未宣称可靠、实验默认关闭。全量离线469通过/1跳过；修复限流测试跨分钟偶发失败，未改生产限额。构建、类型、benchmark通过。详见 [追加交付](docs/engineering/practical-continuation-2026-11-01/ADDITIONAL.md)及[质量复核](docs/engineering/practical-continuation-2026-11-01/ADDITIONAL_REVIEW.md)。

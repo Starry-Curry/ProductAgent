@@ -1,3 +1,5 @@
+> **从这里开始：[当前工程状态](engineering/CURRENT.md) · [产品权威](product/PRODUCT_FINAL_V1.md)。下方为保留的历史索引，旧“当前”称谓以其日期为准。**
+
 当前交付：[2026-10-31 真实智能与长期经验闭环实测](engineering/real-intelligence-2026-10-31/README.md)。137次真实请求；经验呈现和事实门禁修复，整体模型/创意质量未达标。
 
 当前交接：[2026-10-31 长期经验与跨模块闭环](engineering/experience-lifecycle-2026-10-31/README.md)，含失败复现、四旅程、模型未测及恢复点。
