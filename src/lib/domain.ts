@@ -116,6 +116,8 @@ export type Care = {
   recipient: Person;
 };
 export type Plan = {
+  conditions?: string[];
+  sources?: {id:string;url:string}[];
   preparation?: Preparation;
   id: string;
   actor: Person;

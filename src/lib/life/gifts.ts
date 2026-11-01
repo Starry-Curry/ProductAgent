@@ -20,7 +20,7 @@ export function createLifeGift(
     })
     .parse(input);
   migrateUnified(db);
-  db.exec("BEGIN IMMEDIATE");
+  db.exec("SAVEPOINT gift_write");
   try {
     const state = read();
     if (!state.items.some((i) => i.id === v.itemId && i.owner === actor))
@@ -57,10 +57,10 @@ export function createLifeGift(
     db.prepare("UPDATE workspace SET body=? WHERE id=1").run(
       JSON.stringify(state),
     );
-    db.exec("COMMIT");
+    db.exec("RELEASE gift_write");
     return state.gifts.at(-1)!;
   } catch (e) {
-    db.exec("ROLLBACK");
+    db.exec("ROLLBACK TO gift_write; RELEASE gift_write");
     throw e;
   }
 }

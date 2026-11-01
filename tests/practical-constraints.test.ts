@@ -39,6 +39,16 @@ test("陌生型号官方区间与用户报告绑定；310g真实比较失败且�
   assert.match(checks[0].scope, /不得据此确认相机/);
   assert.equal(checks[0].physicallyVerified, false);
 });
+test('同任务追问仍核对已批准目标中的测量，新用户测量优先，不从无关任务继承',()=>{
+ const c=fixture('先把方案保存，仍然不要买东西。');c.currentTask={goal:'我的手机实测310克、宽75毫米、厚8毫米。'};
+ assert.equal(practicalConstraints(c)[0].satisfied,false);assert.equal(practicalConstraints(c)[0].operands[0].sourceId,'user:approved-task-goal');
+ c.question='现在换了手机，手机实测280克。';assert.equal(practicalConstraints(c)[0].satisfied,true);
+ delete c.currentTask;c.question='保存这份新任务方案';assert.equal(practicalConstraints(c).length,0);
+});
+test('数值约束不受模型检索窗口截断，整份获准官方文档仍是计算来源',()=>{
+ const c=fixture();c.constraintEvidence=c.evidence;c.evidence=[];
+ assert.equal(practicalConstraints(c)[0].satisfied,false);
+});
 test("单位换算、矛盾资料不静默选一条、用户数字不够则不伪造", () => {
   const c = fixture("我的手机重量0.310kg，宽7.5cm，厚0.8cm。");
   const a = practicalConstraints(c);
@@ -275,7 +285,10 @@ test("长手册工具往返按实报前缀加增量预留，不被重复全字�
     converse: async (m) => {
       calls++;
       if (calls === 1) {
-        assert.ok(Buffer.byteLength(JSON.stringify(m)) > 80000);
+        // The current executor limits snippets rather than stuffing the entire
+        // long manual. Usage-based prefix accounting still must permit turn 2.
+        assert.ok(Buffer.byteLength(JSON.stringify(m)) < 60000);
+        assert.ok(Buffer.byteLength(JSON.stringify(m)) > 4000);
         return {
           text: "",
           model: "offline-substitute",

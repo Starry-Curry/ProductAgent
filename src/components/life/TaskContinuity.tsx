@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import type { Item, Person } from "@/lib/domain";
+import type { Item, Person, Plan } from "@/lib/domain";
 import type { TaskSpec, TaskRun } from "@/lib/foundation/tasks";
 export function TaskContinuity({
   actor,
@@ -20,6 +20,7 @@ export function TaskContinuity({
       outcomes: any[];
       familyProgress?:any[];
       previousOutcomes?:any[];
+      plans?:Pick<Plan,'id'|'goal'|'checklist'|'conditions'|'sources'>[];
     } | null>(null),
     [goal, setGoal] = useState(""),
     [chosen, setChosen] = useState<string[]>([]),
@@ -88,7 +89,7 @@ export function TaskContinuity({
   async function open(t: TaskSpec, resume = true, fresh = false) {
     const d = await request(undefined, undefined, t.taskId);
     if(current?.task.taskId!==t.taskId||fresh){resetConsent();setNotes("");setEditing(null);setCorrection("");}
-    setCurrent({ task: d.task, runs: d.runs, outcomes: d.outcomes,familyProgress:d.familyProgress,previousOutcomes:d.previousOutcomes });
+    setCurrent({ task: d.task, runs: d.runs, outcomes: d.outcomes,familyProgress:d.familyProgress,previousOutcomes:d.previousOutcomes,plans:d.plans });
     localStorage.setItem("wujian-task:" + actor, t.taskId);
     if (resume) {
       const session = d.runs.find((r: TaskRun) => r.sessionId)?.sessionId;
@@ -177,6 +178,7 @@ export function TaskContinuity({
           </p>
           {current.familyProgress?.map(f=><p key={f.familyTaskId}>家庭协作：{f.reportedAt?"家人已报告处理完成，仍需你核对结果":f.status==="未解决"?"家人报告尚未解决":f.acceptedAt?"家人已接手":f.seenAt?"家人已查看":"等待家人查看"}。{f.basis==="user_report"?"这是家人的报告，不是设备验证。":""}</p>)}
           {!!current.previousOutcomes?.length&&<details><summary>本次可参考的经验</summary>{current.previousOutcomes.map(o=><p key={o.outcomeId}>你的报告：{o.notes} <small>{o.allowCloud?"已允许云端使用":"仅本机查看，不传云端"}；仍须核对本次条件。</small></p>)}</details>}
+          {!!current.plans?.length&&<details><summary>这件事已保存的方案</summary>{current.plans.map(p=><section key={p.id}><strong>{p.goal}</strong><ol>{p.checklist?.map((s,n)=><li key={n}>{s.label} · {s.status}</li>)}</ol>{p.conditions?.map((c,n)=><p key={n}>实施前待核对：{c}</p>)}{p.sources?.map((s,n)=><p key={n}><a href={s.url} target="_blank" rel="noreferrer">查看方案资料 {n+1}</a></p>)}<small>保存的是候选方案，不代表实际尝试成功。</small></section>)}</details>}
           <button
             onClick={() => open(current.task).catch((e) => setError(e.message))}
           >
@@ -250,6 +252,7 @@ export function TaskContinuity({
         {tasks.slice(0, 8).map((t) => (
           <button
             key={t.taskId}
+            data-task-id={t.taskId}
             onClick={() => open(t).catch((e) => setError(e.message))}
           >
             {t.goal}

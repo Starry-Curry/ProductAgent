@@ -51,6 +51,12 @@ export async function gateway(configPath,options) {
     ),
   );
   fs.mkdirSync('.runtime',{recursive:true});
+  const intendedLock=path.resolve(options?.lockFile||'.runtime/real-intelligence-round.lock');
+  if(options?.recoverStaleLock&&fs.existsSync(intendedLock)){
+    const old=JSON.parse(fs.readFileSync(intendedLock,'utf8'));
+    if(!Number.isInteger(old.pid)||old.pid<=0)throw Error('invalid_gateway_lock');
+    try{process.kill(old.pid,0);}catch(e){if(e.code==='ESRCH')fs.unlinkSync(intendedLock);else throw e;}
+  }
   const file = path.join(root, "model-calls.json"),
     lockFile = path.resolve(options?.lockFile||'.runtime/real-intelligence-round.lock'),
     lock = fs.openSync(lockFile, "wx");
@@ -61,13 +67,15 @@ export async function gateway(configPath,options) {
   const ledger = fs.existsSync(file)
     ? JSON.parse(fs.readFileSync(file, "utf8"))
     : { task: limits.roundId, authorizedLimits:limits, attempts: [] };
+  // An interrupted process never makes its reserved upstream charge disappear.
+  if(options?.reconcileInterrupted)for(const a of ledger.attempts)if(a.status==='started'){a.status='failed';a.error='previous_process_interrupted_usage_unknown_reserved';}
   // This authorized round has one fixed ledger across all experiment stages.
   // The historical product-foundation ledger is never opened by this gateway.
   const stage = limits.roundId;
   config.AI_MODEL = options?.model || "qwen-plus-2025-12-01"; if (!available.includes(config.AI_MODEL)) throw Error("pinned_model_not_available");
   const clean = (value) =>
     JSON.parse(
-      JSON.stringify(value).replaceAll(config.AI_API_KEY, "[removed]"),
+      JSON.stringify(value,(key,value)=>key==='reasoning_content'?undefined:value).replaceAll(config.AI_API_KEY, "[removed]"),
     );
   const save = () =>
     fs.writeFileSync(file, JSON.stringify(clean(ledger), null, 2) + "\n");
@@ -91,14 +99,21 @@ export async function gateway(configPath,options) {
       const multimodalSearch=req.url.endsWith('/multimodal-generation/generation');
       if(nativeSearch&&(!body.parameters?.enable_search||body.parameters?.search_options?.search_strategy!=='turbo'))throw Error('bounded_search_only');
       const allowedSearch=nativeSearch&&options?.searchModel&&body.model===options.searchModel&&available.includes(body.model);
-      if (body.model !== config.AI_MODEL&&!allowedSearch || body.enable_thinking === true) throw Error("pinned_non_thinking_model_only");
-      const maxTokens = Math.min(body.max_tokens || body.parameters?.max_tokens || 4000, 4000);
+      const responses=req.url.endsWith('/responses');
+      if (body.model !== config.AI_MODEL&&!allowedSearch || body.enable_thinking === true&&!options?.allowThinking) throw Error("pinned_model_or_thinking_not_authorized");
+      if(responses&&!options?.allowResponses)throw Error('responses_not_authorized');
+      if(responses&&(body.stream||!Number.isInteger(body.max_tool_calls)||body.max_tool_calls>4||body.max_tool_calls<1))throw Error('bounded_responses_required');
+      const requestedMax=body.max_completion_tokens||body.max_output_tokens||body.max_tokens||body.parameters?.max_tokens||4000;
+      const outputCap=options?.allowThinking?8192:4000;
+      if(!Number.isInteger(requestedMax)||requestedMax<1||requestedMax>outputCap)throw Error('output_cap_exceeded');
+      if(body.enable_thinking&&!responses&&(!Number.isInteger(body.thinking_budget)||body.thinking_budget>2048||body.thinking_budget<1))throw Error('thinking_budget_required');
+      const maxTokens=requestedMax;
       // UTF-8 byte count bounds input tokens; highest published Plus tier is
       // reserved until actual usage arrives. An unknown failed charge stays reserved.
       const reserve =
         (Buffer.byteLength(raw) * Math.max(8, options?.prices?.input || 0) +
           (maxTokens + (body.enable_thinking ? 2048 : 0)) * Math.max(64, options?.prices?.output || 0)) /
-        1e6 + (nativeSearch?5:0);
+        1e6 + (nativeSearch||responses?5:0);
       assertBudget(ledger,reserve,limits);
       const user = (body.messages||body.input?.messages)?.find((m) => m.role === "user");
       let question = "";
@@ -113,7 +128,7 @@ export async function gateway(configPath,options) {
       attempt = {
         number: ledger.attempts.length + 1, evaluation: options?.recordContent === false ? 'private-preview' : String(req.headers["x-wujian-evaluation"] || "unlabeled"),
         stage,
-        kind:nativeSearch?'official_search':'inference',
+        kind:responses?'responses_search':nativeSearch?'official_search':'inference',
         reservedCny: reserve,
         priceSource: "https://help.aliyun.com/zh/model-studio/model-pricing",
         startedAt: new Date().toISOString(),
@@ -124,8 +139,8 @@ export async function gateway(configPath,options) {
         contentRecorded: options?.recordContent !== false,
         inputSha256: options?.recordContent === false ? undefined : createHash("sha256").update(raw).digest("hex"),
         inputBytes: Buffer.byteLength(raw),
-        input: options?.recordContent === false ? undefined : clean(body.messages||body.input?.messages),
-        tools: (body.tools || []).map((t) => t.function.name),
+        input: options?.recordContent === false ? undefined : clean(body.messages||body.input?.messages||body.input),
+        tools: (body.tools || []).map((t) => t.function?.name||t.type),
       };
       ledger.attempts.push(attempt);
       save();
@@ -134,7 +149,7 @@ export async function gateway(configPath,options) {
         if (!res.writableEnded) controller.abort();
       });
       const response = await fetch(
-        nativeSearch?new URL('/api/v1/services/aigc/'+(multimodalSearch?'multimodal':'text')+'-generation/generation',config.AI_BASE_URL):config.AI_BASE_URL.replace(/\/$/, "") + "/chat/completions",
+        nativeSearch?new URL('/api/v1/services/aigc/'+(multimodalSearch?'multimodal':'text')+'-generation/generation',config.AI_BASE_URL):config.AI_BASE_URL.replace(/\/$/, "") + (responses?'/responses':"/chat/completions"),
         {
           method: "POST",
           redirect: "error",
@@ -143,7 +158,7 @@ export async function gateway(configPath,options) {
             "Content-Type": "application/json",
             ...(multimodalSearch?{'X-DashScope-SSE':'enable'}:{}),
           },
-          body: JSON.stringify(nativeSearch?{...body,parameters:{...body.parameters,max_tokens:maxTokens,enable_thinking:false}}:{
+          body: JSON.stringify(responses?body:nativeSearch?{...body,parameters:{...body.parameters,max_tokens:maxTokens,enable_thinking:false}}:{
             ...body,
             max_tokens: maxTokens,
             enable_thinking: body.enable_thinking === true,
@@ -151,7 +166,7 @@ export async function gateway(configPath,options) {
               ? {
                   stream: true,
                   stream_options: { include_usage: true },
-                  thinking_budget: 2048,
+                  thinking_budget: Math.min(body.thinking_budget,2048),
                 }
               : {}),
           }),
@@ -167,12 +182,12 @@ export async function gateway(configPath,options) {
         let pending='',size=0;const decoder=new TextDecoder();result={output:{search_info:{search_results:[]}}};
         const consume=line=>{if(!line.startsWith('data:'))return;const raw=line.slice(5).trim();if(!raw||raw==='[DONE]')return;const event=JSON.parse(raw);if(options?.recordContent!==false){attempt.nativeEvents=attempt.nativeEvents||[];if(attempt.nativeEvents.length<1000)attempt.nativeEvents.push(clean(event));}if(event.code)throw Error('provider_code_'+event.code);if(event.usage)result.usage=event.usage;result.output.search_info.search_results.push(...(event.output?.search_info?.search_results||event.search_info?.search_results||[]));if(event.output?.choices)result.output.choices=event.output.choices;};
         for await(const chunk of response.body){size+=chunk.length;if(size>1000000)throw Error('search_response_too_large');pending+=decoder.decode(chunk,{stream:true});const lines=pending.split(/\r?\n/);pending=lines.pop()||'';for(const line of lines)consume(line);}pending+=decoder.decode();consume(pending);
-      } else if (
+      } else if (!responses && (
         (body.enable_thinking === true || body.stream === true) &&
         response.ok
-      ) {
+      )) {
         const toolCalls=[];
-        let text = "",
+        let text = "", reasoning = "",
           usage,
           finishReason,
           buffer = "", upstreamModel;
@@ -188,6 +203,7 @@ export async function gateway(configPath,options) {
             if (event.model) upstreamModel = event.model;
             if (event.usage) usage = event.usage;
             const delta = event.choices?.[0]?.delta?.content || "";
+            const thinking=event.choices?.[0]?.delta?.reasoning_content||'';reasoning+=thinking;
             for(const part of event.choices?.[0]?.delta?.tool_calls||[]){const t=toolCalls[part.index]||{id:'',type:'function',function:{name:'',arguments:''}};if(part.id)t.id=part.id;if(part.function?.name)t.function.name+=part.function.name;if(part.function?.arguments)t.function.arguments+=part.function.arguments;toolCalls[part.index]=t;}
             if (delta && attempt.firstTokenMs === undefined)
               attempt.firstTokenMs = Date.now() - Date.parse(attempt.startedAt);
@@ -197,7 +213,7 @@ export async function gateway(configPath,options) {
                 res.writeHead(200, { "content-type": "text/event-stream" });
               // Never relay reasoning, credentials or provider internals.
               res.write(
-                `data: ${JSON.stringify({id:event.id||'evaluation',object:'chat.completion.chunk',model:body.model,created:event.created||0,choices:[{index:0,delta:{...(delta?{content:delta}:{}),...(event.choices?.[0]?.delta?.role?{role:'assistant'}:{}),...(event.choices?.[0]?.delta?.tool_calls?{tool_calls:event.choices[0].delta.tool_calls}:{})},finish_reason:event.choices?.[0]?.finish_reason||null}],...(event.usage?{usage:event.usage}:{})})}\n\n`,
+                `data: ${JSON.stringify({id:event.id||'evaluation',object:'chat.completion.chunk',model:body.model,created:event.created||0,choices:[{index:0,delta:{...(delta?{content:delta}:{}),...(thinking?{reasoning_content:thinking}:{}),...(event.choices?.[0]?.delta?.role?{role:'assistant'}:{}),...(event.choices?.[0]?.delta?.tool_calls?{tool_calls:event.choices[0].delta.tool_calls}:{})},finish_reason:event.choices?.[0]?.finish_reason||null}],...(event.usage?{usage:event.usage}:{})})}\n\n`,
               );
             }
             if (event.choices?.[0]?.finish_reason)
@@ -207,7 +223,7 @@ export async function gateway(configPath,options) {
         result = {
           choices: [
             {
-              message: { role: "assistant", content: text, ...(toolCalls.length?{tool_calls:toolCalls}: {}) },
+              message: { role: "assistant", content: text, ...(reasoning?{reasoning_content:reasoning}:{}), ...(toolCalls.length?{tool_calls:toolCalls}: {}) },
               finish_reason: finishReason,
             },
           ],
@@ -238,10 +254,10 @@ export async function gateway(configPath,options) {
                 : input <= 256000
                   ? [2.4, 20]
                   : [4.8, 48];
-        attempt.estimatedCny = (input * inputRate + output * outputRate) / 1e6+(nativeSearch?0.003:0);
+        attempt.estimatedCny = (input * inputRate + output * outputRate) / 1e6+(nativeSearch?0.003:0)+(responses?0.01*(billedUsage.x_tools?.web_search?.count||0)+0.01*(billedUsage.x_tools?.web_extractor?.count||0):0);
       }
       attempt.finishReason = (result.choices||result.output?.choices)?.[0]?.finish_reason;
-      if (options?.recordContent !== false) attempt.output = clean((result.choices||result.output?.choices)?.[0]?.message || {});
+      if (options?.recordContent !== false) attempt.output = clean(responses?result.output:(result.choices||result.output?.choices)?.[0]?.message || {});
       attempt.elapsedMs = Date.now() - Date.parse(attempt.startedAt);
       save();
       if (body.stream === true) {
@@ -284,6 +300,7 @@ export async function gateway(configPath,options) {
     close: () =>
       new Promise((ok) =>
         server.close(() => {
+          for(const a of ledger.attempts)if(a.status==='started'){a.status='failed';a.error='gateway_closed_usage_unknown_reserved';}save();
           fs.closeSync(lock);
           fs.unlinkSync(lockFile);
           ok();

@@ -226,6 +226,7 @@ export async function findOfficial(
         continue;
       }
       documents.push(d);
+
     } catch {
       issues.push(
         "官方候选未公开返回可读取资料；没有绕过限制，可人工打开官网或上传说明书。",

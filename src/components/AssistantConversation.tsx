@@ -36,7 +36,9 @@ export function AssistantConversation({
   startFresh = false,
   allHistory = false,
   taskId,
+  onOpenCapability,
 }: {
+  onOpenCapability?: (itemId:string,capability:NonNullable<import('@/lib/agent/contracts').AssistantReply['continuations']>[number]['capability'])=>void;
   initialSessionId?: string;
   startFresh?: boolean;
   allHistory?: boolean;
@@ -546,7 +548,7 @@ export function AssistantConversation({
                 ) : (
                   <p role="status">
                     {card.status === "applied"
-                      ? card.kind === "handoff"
+                      ? card.kind==='story'?'私人故事已保存，未授权检索或分享':card.kind==='gift'?'赠礼草稿已创建，尚未交付':card.kind==='family'?'已创建家庭事项，等待对方处理':card.kind === "handoff"
                         ? "已创建家庭事项，等待处理"
                         : card.kind === "plan" || card.kind === "taskPlan"
                           ? "计划已保存，待你执行"
@@ -557,6 +559,10 @@ export function AssistantConversation({
                 <small>确认后才执行；建议保留 15 分钟。</small>
               </div>
             ))}
+            {!!message.reply?.continuations?.length&&onOpenCapability&&<div className="home-candidate-items">{message.reply.continuations.map((c,n)=><button key={n} className="button secondary" onClick={()=>onOpenCapability(c.itemId,c.capability)}>{c.title}</button>)}</div>}
+            {message.id===last?.id&&!temporary&&session.known.foundationComplexTask==='true'&&message.reply?.outcome==='answered'&&!message.reply.actionCards?.length&&(
+              <button className="button secondary" disabled={busy} onClick={()=>send('请基于当前目标准备一张行动计划预览卡。只关联我已有且可用的资源，型号操作关联已取得资料，未知条件明确保留。先给我确认，不要自动保存或执行。',session)}>整理可保存的行动计划</button>
+            )}
             {!!message.reply?.steps.length && (
               <ol>
                 {message.reply.steps.map((step) => (

@@ -405,6 +405,10 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     setTab(nextTab);
     go("item", id, nextTab);
   }
+  function openCapability(id:string,capability:NonNullable<import('@/lib/agent/contracts').AssistantReply['continuations']>[number]['capability']){
+    if(capability==='family'){go('family');return;}
+    open(id,capability==='creative'?'新玩法':capability==='story'?'故事':capability==='persona'?'帮助':'资料与管理');
+  }
   const allItems = data?.workspace.items.filter((i) => !i.demo) || [];
   const items = homeActive
     ? allItems.filter((i) => data?.virtualHome.itemIds.includes(i.id))
@@ -1040,6 +1044,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                   }
                 />
                 <AssistantConversation
+                  onOpenCapability={openCapability}
                   taskId={activeTaskId}
                   key={
                     actor +
@@ -1233,7 +1238,9 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                 </div>
                 {tab === "帮助" && (
                   <ItemBelonging
+                    onOpenCapability={openCapability}
                     key={actor + item.id}
+                    taskId={activeTaskId}
                     actor={actor}
                     item={item}
                     items={items}

@@ -73,6 +73,7 @@ export type Citation = {
   section?: string;
 };
 export type AssistantReply = {
+  continuations?: {itemId:string;capability:'creative'|'persona'|'story'|'maintenance'|'family'|'gift'|'software';title:string}[];
   necessaryConditionChecks?: import('./practical-constraints.ts').NecessaryCheck[];
   knowledgeWarnings?: string[];
   taskFrame?: TaskFrame;

@@ -34,7 +34,8 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
   const homeIds=new Set(home?virtualHomeItems(state,actor).map(i=>i.id):[]);
   const allowed=state.items.filter(i=>canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id)))&&(!task||task.itemInstanceIds.includes(i.id)));
   const mentioned=(s:string)=>s.length>1&&question.toLowerCase().includes(s.toLowerCase());
-  const selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||mentioned(i.model)||mentioned(i.name)||
+  const focused=allowed.find(i=>i.id===focus);
+  const selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||mentioned(i.name)||(!focused||i.model!==focused.model)&&mentioned(i.model)||
     // Entity matching only. It never chooses an intent or provides a product fact.
     !evidenceByteBudget&&[...new Intl.Segmenter('zh',{granularity:'word'}).segment(i.name)].some(s=>s.segment.length>=2&&mentioned(s.segment)));
   const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,
@@ -50,15 +51,14 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
         (exact.some(e=>e.id===d.id)||!!path&&exact.some(e=>officialProductPath(e.url)===path));
     }).map(d=>({itemId:i.id,scopeBasis:exact.some(e=>e.id===d.id)?'exact_model_in_official_document':'same_official_product_path_as_exact_model_spec',document:{...d,region:sourceRegion(d.url,d.region)}}));
   });
-  const documentBytes=documents.reduce((sum,d)=>sum+d.document.chunks.reduce((n,c)=>n+Buffer.byteLength(c.text),0),0);
   const evidence:EvidencePassage[]=selected.flatMap(i=>{
     const docs=documents.filter(d=>d.itemId===i.id).map(d=>d.document);
     const seed=retrieveKnowledge(db,state,actor,i.id,question);
     const candidates=retrieveTaskPassages(docs,[question,...queries],seed,evidenceByteBudget?Number.MAX_SAFE_INTEGER:Math.floor(36000/Math.max(1,selected.length)));
-    // Native conversational path: short manuals fit in full. Allocate the shared
-    // byte budget by actual source size, not equally by the number of items;
-    // otherwise late specification chapters disappear behind short product pages.
-    const allocation=evidenceByteBudget ? Math.floor(evidenceByteBudget*docs.reduce((n,d)=>n+d.chunks.reduce((s,c)=>s+Buffer.byteLength(c.text),0),0)/Math.max(1,documentBytes)) : Infinity;
+    // Select relevant windows within a per-item byte budget; numerical checks
+    // use the full authorized corpus separately below. Query expansion keeps
+    // late compatibility/specification sections eligible instead of by position.
+    const allocation=evidenceByteBudget ? Math.floor(evidenceByteBudget/Math.max(1,selected.length)) : Infinity;
     let bytes=0;
     return candidates.filter(c=>{if(bytes+Buffer.byteLength(c.text)>allocation)return false;bytes+=Buffer.byteLength(c.text);return true;})
       .map(c=>({id:c.id,itemId:i.id,model:c.model,region:docs.find(d=>d.id===c.documentId)?.region||c.region,title:c.title,text:c.text,url:c.url,documentId:c.documentId,fetchedAt:docs.find(d=>d.id===c.documentId)?.fetchedAt,scopeBasis:documents.find(d=>d.document.id===c.documentId)?.scopeBasis,reading:{limitations:docs.find(d=>d.id===c.documentId)?.reading?.limitations||[],figures:[]},basis:'official' as const}));
@@ -77,6 +77,9 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
     // No owners, locations, notes, photos or private stories in the catalogue.
     catalogue:allowed.slice(0,80).map(i=>({id:i.id,name:i.name,model:i.model,category:i.category})),
     evidence,experiences,
+    // Deterministic constraints inspect the scoped official corpus, independent
+    // of which query snippets fit in the language model's token window.
+    constraintEvidence:documents.flatMap(d=>d.document.chunks.map(c=>({id:c.id,itemId:d.itemId,text:c.text,url:c.url,model:c.model,region:d.document.region,title:c.title,basis:'official' as const}))),
     // Only explicitly recorded dimensions take part in arithmetic. These are still
     // user reports, not manufacturer facts or observed stability measurements.
     necessaryConditionChecks:selected.flatMap(object=>selected.filter(space=>space.id!==object.id).flatMap(space=>{
@@ -89,7 +92,7 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
     preferences:memoryOn?contexts.flatMap(c=>c.cloudPreferences).filter((p,n,a)=>a.findIndex(r=>r.key===p.key&&r.value===p.value)===n):[],
     tried:session.tried,
     history:session.messages.slice(-6).map(m=>({role:m.role,text:m.text.slice(0,1800)})),
-    currentTask:task?{goal:taskContext!.modelGoal,itemIds:task.itemInstanceIds}:undefined,
+    currentTask:task?{goal:taskContext!.modelGoal,itemIds:task.itemInstanceIds,plans:taskContext!.plans,collaborationProgress:taskContext!.familyProgress}:undefined,
     permissions:{readOnly:true,hardwareExecuted:false,memoryPolicy:session.known.memoryPolicy||'legacy'},
     retrieval:{documents:documents.map(d=>({itemId:d.itemId,id:d.document.id,hash:d.document.hash,url:d.document.url,model:d.document.model,region:d.document.region})),missingItemIds:selected.filter(i=>!documents.some(d=>d.itemId===i.id)).map(i=>i.id)},
     // Explicitly a synthetic household, never a real ownership assertion.

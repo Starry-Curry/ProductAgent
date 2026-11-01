@@ -1,0 +1,18 @@
+{
+  "roundId": "integrated-agent-20261101-r1",
+  "approved": true,
+  "maxRequests": 150,
+  "maxEstimatedCny": 50,
+  "quote": "批准本任务150次／50元",
+  "scope": "This integration task; no new paid search service, no hardware",
+  "historicalLedgers": [
+    {
+      "path": "docs/engineering/practical-agent-2026-10-31/evidence/model-calls.json",
+      "sha256": "aec731fd5c8ca966d823437bbf1709386c497f8860cc4c1b35e7ee8c4d1d4c76"
+    },
+    {
+      "path": "docs/engineering/practical-continuation-2026-11-01/evidence/additional-r1/model-calls.json",
+      "sha256": "5edad01f88a97895302c6eb923d85220aea4f77b7317fd3f65aa6c7a19dc8fb0"
+    }
+  ]
+}

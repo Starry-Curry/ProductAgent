@@ -65,6 +65,9 @@ export type HomeRoute = {
   reason: string;
 };
 export const homeActionSchema = z.discriminatedUnion("kind", [
+  z.object({kind:z.literal('story'),itemId:z.string().min(1).max(100),text:z.string().trim().min(1).max(10000)}).strict(),
+  z.object({kind:z.literal('gift'),itemId:z.string().min(1).max(100),message:z.string().trim().min(1).max(1000)}).strict(),
+  z.object({kind:z.literal('family'),itemId:z.string().min(1).max(100),memberId:z.string().min(1).max(100),summary:z.string().trim().min(1).max(1200)}).strict(),
   preparationRequest.extend({
     kind: z.literal("taskPlan"),
     digest: z.string().min(1).max(64000),
@@ -82,6 +85,8 @@ export const homeActionSchema = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("plan"),
+      conditions:z.array(z.string().max(240)).max(10).optional(),
+      sourceRefs:z.array(z.object({id:z.string().max(200),url:z.string().url()})).max(8).optional(),
       goal: z.string().min(1).max(150),
       itemIds: z.array(z.string()).max(30),
       checklist: z

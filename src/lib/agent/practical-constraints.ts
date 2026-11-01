@@ -41,12 +41,13 @@ export function practicalConstraints(c: KernelContext): NecessaryCheck[] {
     scope: "二维矩形占地；不证明稳定、承重、连接或设备兼容",
     physicallyVerified: false,
   }));
-  const phone = [
-    ...c.question.matchAll(/(?:手机|phone)[^。！？?;；\n]{0,160}/gi),
+  const phoneText=(text:string)=>[
+    ...text.matchAll(/(?:手机|phone)[^。！？?;；\n]{0,160}/gi),
   ]
     .map((m) => m[0].split(/相机|camera/i)[0])
     .join("\n");
-  if (!phone) return checks;
+  const phone=phoneText(c.question),taskPhone=phoneText(c.currentTask?.goal||'');
+  if (!phone&&!taskPhone) return checks;
   const specs = [
     {
       key: "weight",
@@ -76,7 +77,8 @@ export function practicalConstraints(c: KernelContext): NecessaryCheck[] {
   const scale = (v: number, u: string) =>
     v * (/kg|公斤|千克/.test(u) ? 1000 : /cm|厘米/.test(u) ? 10 : 1);
   for (const spec of specs) {
-    const actuals = [...phone.matchAll(spec.actual)].map((m) => ({
+    const current=[...phone.matchAll(spec.actual)],fromTask=current.length===0;
+    const actuals = (fromTask?[...taskPhone.matchAll(spec.actual)]:current).map((m) => ({
       value: scale(+m[1], m[2]),
       quote: m[0],
     }));
@@ -95,7 +97,7 @@ export function practicalConstraints(c: KernelContext): NecessaryCheck[] {
         max: number;
       }[]
     >();
-    for (const s of c.evidence.filter((s) => s.basis === "official"))
+    for (const s of (c.constraintEvidence||c.evidence).filter((s) => s.basis === "official"))
       for (const m of s.text.matchAll(pattern)) {
         if (
           (spec.unit === "g" && !/^(kg|g|公斤|千克|克)$/.test(m[3])) ||
@@ -123,7 +125,7 @@ export function practicalConstraints(c: KernelContext): NecessaryCheck[] {
         result = rangeCondition(a.value, r.min, r.max);
       const operands = [
         ...actuals.map((a) => ({
-          sourceId: "user:current-turn",
+          sourceId: fromTask?"user:approved-task-goal":"user:current-turn",
           quote: a.quote,
           value: a.value,
           basis: "user_report",

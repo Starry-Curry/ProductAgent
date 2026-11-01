@@ -11,6 +11,12 @@ import { AgentError, type ServiceSession } from "../agent/contracts.ts";
 import { identity } from "../ai/harness.ts";
 import { captureWorkspace } from "../memory/ambient.ts";
 import { readSession } from "../repositories/sessions.ts";
+import {saveFragment} from '../life/stories.ts';
+import {createLifeGift} from '../life/gifts.ts';
+import {collaborate,householdMembers} from '../collaboration.ts';
+import {recordSpecialist} from '../foundation/specialists.ts';
+import {epoch} from '../memory/store.ts';
+import {readKnowledge} from '../life/acquisition.ts';
 import {
   rooms,
   roomFromLocation,
@@ -164,6 +170,8 @@ export function proposeAction(
   const identities = Object.fromEntries(
     ids.map((id) => [id, itemStamp(accessible(state, actor, id))]),
   );
+  if(action.kind==='gift'&&accessible(state,actor,action.itemId).owner!==actor)throw new AgentError('仅物品所有者可准备赠礼',403);
+  if(action.kind==='family'&&!householdMembers(db,actor).some(m=>m.id===action.memberId))throw new AgentError('接手人未在授权家庭中',403);
   session.itemScopes = { ...session.itemScopes, ...identities };
   const existing = db
     .prepare(
@@ -184,7 +192,7 @@ export function proposeAction(
     status: "pending",
     expiresAt,
     confirmLabel:
-      action.kind === "move"
+      action.kind==='story'?'确认保存私人故事':action.kind==='gift'?'确认创建空白赠礼草稿':action.kind==='family'?'确认交给这位家人':action.kind === "move"
         ? "确认调整位置"
         : action.kind === "plan" || action.kind === "taskPlan"
           ? action.kind === "taskPlan" && action.planId
@@ -256,7 +264,15 @@ export function decideAction(
       throw new AgentError("行动建议尚未完成，请重新提问", 409);
     let targetId: string | undefined;
     if (decision === "confirm") {
-      if (action.kind === "move") {
+      if(action.kind==='plan'&&action.sourceRefs?.some(ref=>!action.itemIds.some(itemId=>readKnowledge(db,state,actor,itemId).some(d=>d.url===ref.url&&d.chunks.some(c=>c.id===ref.id)))))throw new AgentError('计划关联资料已经更新，请重新核对后保存',409);
+      if(action.kind==='story'){
+        const fragment=saveFragment(db,read,actor,{text:action.text,itemIds:[action.itemId],allowRecall:false,allowCloud:false,origin:'user-record'},session.known.foundationTaskId);
+        targetId=fragment.id;session.memoryEpoch=epoch(db,actor);message='私人故事已保存并关联当前任务；未授权检索、未分享，也不自动供云端使用。';
+      }else if(action.kind==='gift'){
+        const gift=createLifeGift(db,read,actor,{itemId:action.itemId,message:action.message,fragmentIds:[]},session.known.foundationTaskId);targetId=gift.id;message='赠礼草稿已创建，未附带任何私人故事或对话；请到赠礼入口选择内容并交付。';
+      }else if(action.kind==='family'){
+        const result=collaborate(db,read,actor,{requestId:id,action:'task',itemId:action.itemId,memberId:action.memberId,title:action.summary.slice(0,120),summary:action.summary,confirmed:true,sourceTaskId:session.known.foundationTaskId});targetId=result.taskId;message='已创建经你确认摘要的家庭事项；对方尚未接手或报告完成。';
+      }else if (action.kind === "move") {
         placeInTransaction(db, state, actor, {
           ...action,
           requestId: id,
@@ -294,6 +310,9 @@ export function decideAction(
             throw new AgentError("演示物品不能保存为真实活动资源", 409);
           mutate(state, actor, "savePlan", action);
           targetId = state.plans!.at(-1)!.id;
+          state.plans!.at(-1)!.conditions=action.conditions;
+          state.plans!.at(-1)!.sources=action.sourceRefs;
+          recordSpecialist(db,state,actor,{kind:'plan',refId:targetId!,revision:1,itemIds:action.itemIds,intent:'plan',goal:action.goal,basis:'not_verified',taskId:session.known.foundationTaskId});
           message = "计划已保存，可以在活动准备中继续核对和执行。";
         } else {
           mutate(state, actor, "createTask", {

@@ -107,7 +107,7 @@ export function saveFragment(
 ) {
   const value = fragmentInput.parse(input);
   migrateUnified(db);
-  db.exec("BEGIN IMMEDIATE");
+  db.exec("SAVEPOINT story_write");
   try {
     const old = value.id
       ? (db
@@ -157,7 +157,7 @@ export function saveFragment(
             JSON.stringify([...ids].sort()),
       );
       if (duplicate) {
-        db.exec("COMMIT");
+        db.exec("RELEASE story_write");
         return duplicate;
       }
     }
@@ -197,10 +197,10 @@ export function saveFragment(
     for (const previousPhoto of previousDetails?.mediaIds || [])
       if (!photos.includes(previousPhoto))
         removeUnusedMedia(db, state, actor, previousPhoto);
-    db.exec("COMMIT");
+    db.exec("RELEASE story_write");
     return listFragments(db, state, actor).find((f) => f.id === id)!;
   } catch (e) {
-    db.exec("ROLLBACK");
+    db.exec("ROLLBACK TO story_write; RELEASE story_write");
     throw e;
   }
 }

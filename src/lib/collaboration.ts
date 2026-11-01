@@ -66,7 +66,7 @@ export function collaborate(
     })
     .strict()
     .parse(raw);
-  db.exec("BEGIN IMMEDIATE");
+  db.exec("SAVEPOINT collaboration_write");
   try {
     const payload = JSON.stringify(v),
       prior = db
@@ -78,7 +78,7 @@ export function collaborate(
     if (prior) {
       if (prior.payload !== payload)
         throw new AgentError("重复请求的内容已变化", 409);
-      db.exec("COMMIT");
+      db.exec("RELEASE collaboration_write");
       return JSON.parse(prior.result);
     }
     let state = read(),
@@ -215,10 +215,10 @@ export function collaborate(
       payload,
       JSON.stringify(result),
     );
-    db.exec("COMMIT");
+    db.exec("RELEASE collaboration_write");
     return result;
   } catch (e) {
-    db.exec("ROLLBACK");
+    db.exec("ROLLBACK TO collaboration_write; RELEASE collaboration_write");
     throw e;
   }
 }

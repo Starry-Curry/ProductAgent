@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-01T13:21:19.597Z",
+  "basis": "synthetic_confirmed_user_report_not_hardware_verification",
+  "responses": [],
+  "checks": [],
+  "errors": [
+    "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '生活首页', exact: true }) to be visible\u001b[22m\n"
+  ],
+  "upstreamRequests": 0
+}

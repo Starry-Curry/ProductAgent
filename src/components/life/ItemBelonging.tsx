@@ -48,7 +48,11 @@ export function ItemBelonging({
   homeId,
   onContinueMission,
   hasKnowledge,
+  taskId,
+  onOpenCapability,
 }: {
+  onOpenCapability?: (itemId:string,capability:NonNullable<import('@/lib/agent/contracts').AssistantReply['continuations']>[number]['capability'])=>void;
+  taskId?: string;
   homeId?: "young-apartment-v1";
   hasKnowledge?: boolean;
   onContinueMission?: (voiceItemId?: string) => void;
@@ -520,7 +524,9 @@ export function ItemBelonging({
               )}
             </div>
             <AssistantConversation
-              key={`${actor}:${item.id}:${sessionKey}`}
+              key={`${actor}:${item.id}:${taskId||'no-task'}:${sessionKey}`}
+              taskId={taskId}
+              onOpenCapability={onOpenCapability}
               actor={actor}
               item={item}
               mode="auto"
