@@ -40,8 +40,19 @@ test("公开会话不可伪造；并发请求上下文隔离、来源验证、�
   });
   try {
     assert.equal(publicDemo(), true);
-    for (let i = 0; i < 30; i++) reserveEntryAttempt();
-    assert.throws(() => reserveEntryAttempt(), /额度/);
+    // SQLite calls can straddle a real minute boundary under parallel CI load.
+    // Pin only this synchronous quota check; production time buckets are intact.
+    const realNow = Date.now,
+      minute = Math.floor(realNow() / 60000) * 60000;
+    try {
+      Date.now = () => minute + 1000;
+      for (let i = 0; i < 30; i++) reserveEntryAttempt();
+      assert.throws(() => reserveEntryAttempt(), /额度/);
+      Date.now = () => minute + 61000;
+      assert.doesNotThrow(() => reserveEntryAttempt());
+    } finally {
+      Date.now = realNow;
+    }
     const a = issueVisitor(),
       b = issueVisitor();
     const req = (token: string, headers: Record<string, string> = {}) =>

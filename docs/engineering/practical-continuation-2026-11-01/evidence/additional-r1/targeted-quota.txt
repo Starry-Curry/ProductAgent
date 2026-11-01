@@ -1,0 +1,22 @@
+{"event":"api_request","requestId":"2a8d1cac-9595-4b81-a285-099265109c64","path":"/api/life","method":"GET","status":200,"elapsedMs":54}
+{"event":"api_request","requestId":"48de9e8d-bc68-46a9-b7dc-c7e16833e1cf","path":"/api/life","method":"GET","status":200,"elapsedMs":50}
+{"event":"api_request","requestId":"25263f5d-9ce9-47eb-bae0-7fa937992a70","path":"/api/life","method":"GET","status":403,"elapsedMs":1}
+{"event":"model_request","request":"efa031e65384faef1a52a23a7a357d68","status":"400","elapsedMs":10,"reservedTokens":2127}
+{"event":"model_request","request":"8dc62a61038d29b2b8f8627a7003ef9b","status":"200","elapsedMs":15,"reservedTokens":2127}
+{"event":"api_request","requestId":"2f6381f0-871f-496f-87ad-9a089f92e81f","path":"/api/life","method":"GET","status":401,"elapsedMs":6}
+✔ 公开会话不可伪造；并发请求上下文隔离、来源验证、过期拒绝与响应脱敏 (588.2815ms)
+✔ JSON模式显式JSON约束，普通问答可关闭；400错误安全分类，超时可配置，SSRF特殊地址拒绝 (3.292ms)
+✔ 无href的公开型号控件保留为ID，不虚构成真实链接 (154.6698ms)
+✔ 陌生目录型号经实时ID映射、实际手册及JSON章节核对，无预置SKU答案 (2.7835ms)
+✔ 目录ID候选若返回别的型号，拒绝采用；动态目录不是来源事实认证 (0.2916ms)
+✔ 结构化搜索来源可在顶层流字段返回，生成正文的URL仍不采纳 (1.9654ms)
+✔ 需要操作手册时不被已有产品介绍种子截断；仍是本轮服务端官方发现 (148.5709ms)
+✔ 自然用户消息候选保留资料包与权限，不把用户问题只埋在JSON；候选不默认启用 (159.7908ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1452.2043

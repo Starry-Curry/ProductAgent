@@ -306,7 +306,7 @@ export function createProvider(
         "当前原生搜索仅适配北京百炼标准域名；未转发密钥",
       );
     // Multimodal families require this endpoint and SSE, even for text search.
-    const searchModel=env.AI_SEARCH_MODEL||AI_MODEL;
+    const searchModel=AI_MODEL;
     const multimodal = /^qwen3\.(?:[5689]|7-(?:plus|flash))/.test(searchModel);
     const response = await request(
       new URL(`/api/v1/services/aigc/${multimodal?'multimodal':'text'}-generation/generation`, base),
@@ -334,8 +334,8 @@ export function createProvider(
               search_strategy: "turbo",
               forced_search: true,
               enable_source: true,
-              enable_citation: true,
-              prepend_search_result: true,
+              enable_citation: false,
+              ...(sites.length?{assigned_site_list:sites.slice(0,25)}:{}),
             },
           },
         }),
