@@ -1,0 +1,22 @@
+{
+  "roundId": "outcome-qwen-20261102-r1",
+  "approved": true,
+  "quote": "批准本轮250次／100元",
+  "maxRequests": 250,
+  "maxEstimatedCny": 100,
+  "scope": "this task Qwen inference and native search/extraction/vision/PDF tools, no third-party paid services",
+  "historicalLedgers": [
+    {
+      "path": "docs/engineering/practical-agent-2026-10-31/evidence/model-calls.json",
+      "sha256": "aec731fd5c8ca966d823437bbf1709386c497f8860cc4c1b35e7ee8c4d1d4c76"
+    },
+    {
+      "path": "docs/engineering/practical-continuation-2026-11-01/evidence/additional-r1/model-calls.json",
+      "sha256": "5edad01f88a97895302c6eb923d85220aea4f77b7317fd3f65aa6c7a19dc8fb0"
+    },
+    {
+      "path": "docs/engineering/integrated-agent-2026-11-01/evidence/model-calls.json",
+      "sha256": "73184383743efc3d66bd9952df87f553dfb4e7887d357f3e8da3bf401bc7384e"
+    }
+  ]
+}

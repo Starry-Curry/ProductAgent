@@ -1,0 +1,12 @@
+import fs from 'node:fs';import path from 'node:path';import {execFileSync} from 'node:child_process';import {createHash} from 'node:crypto';
+const root=process.cwd(),dir='docs/engineering/outcome-qwen-2026-11-02/evidence';
+const git=(...a)=>execFileSync('git',a,{encoding:'utf8',windowsHide:true});
+const base=git('rev-parse','HEAD').trim(),files=git('ls-files','-z').split('\0').filter(Boolean);
+const texts=files.filter(f=>/\.(?:md|json|ya?ml|[cm]?js|tsx?|ps1|sh|txt)$/.test(f)&&!/(?:evidence|artifacts)\//.test(f)&&fs.statSync(f).size<2e6).map(f=>({file:f,text:fs.readFileSync(f,'utf8')}));
+const rows=files.map(file=>{const bytes=fs.readFileSync(file),refs=texts.filter(t=>t.file!==file&&t.text.includes(file)),historical=/(?:evidence|artifacts|\/package)\//.test(file);
+const category=/^(src|public|tests|scripts|\.github)\//.test(file)?'active/runtime-dependent':historical?'historical/required-evidence':'active/runtime-dependent';
+return {path:file,size:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),category,runtime_refs:refs.filter(t=>!/^(tests|docs)\//.test(t.file)).map(t=>t.file),test_refs:refs.filter(t=>t.file.startsWith('tests/')).map(t=>t.file),docs_refs:refs.filter(t=>t.file.endsWith('.md')).map(t=>t.file),evidence_value:/model-calls|ledger|authorization|failure|review|decision/i.test(file)?'preserve_original':historical?'historical_review_required':'active',action:'retain',recovery_commit:base,unverified:!refs.length};});
+const groups=Map.groupBy(rows,r=>r.sha256),duplicates=[...groups.values()].filter(g=>g.length>1).map(g=>g.map(r=>({path:r.path,size:r.size})));
+const zero=rows.filter(r=>r.size===0).map(r=>({path:r.path,runtime_refs:r.runtime_refs,test_refs:r.test_refs,docs_refs:r.docs_refs}));
+fs.writeFileSync(dir+'/CLEANUP_MANIFEST.json',JSON.stringify({at:new Date().toISOString(),baseline:base,scope:'tracked files; textual full-path refs plus subsequent targeted import/link/runtime checks required, no deletion based solely on zero refs',before:{files:rows.length,bytes:rows.reduce((s,r)=>s+r.size,0)},files:rows,zero,duplicates},null,2));
+console.log(JSON.stringify({before:{files:rows.length,bytes:rows.reduce((s,r)=>s+r.size,0)},zero,duplicateGroups:duplicates.length,artifacts:rows.filter(r=>r.path.startsWith('artifacts/')).length},null,2));

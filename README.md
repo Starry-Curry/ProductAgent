@@ -1,9 +1,5 @@
 > **当前生效入口：[工程状态](docs/engineering/CURRENT.md) · [产品共识定稿](docs/product/PRODUCT_FINAL_V1.md)。以下旧轮次说明与端口为历史记录，不代表本轮已验收。**
 
-> 本轮最新：[真实智能实测、经验闭环与门禁修复](docs/engineering/real-intelligence-2026-10-31/README.md)。137次真实请求，保留失败样本；整体质量门禁未通过。离线独立预览3226。
-
-> 最新实验分支：[长期经验与跨模块闭环交付](docs/engineering/experience-lifecycle-2026-10-31/README.md)。经验缺陷已复现修复，34项真实模型验收仍阻塞；本机预览3224，旧3222保留。
-
 <div align="center">
   <img src="docs/assets/wunori.png" alt="物间 Wujian：让身边的物品成为 AI 与生活的入口" width="100%" />
 
@@ -29,8 +25,6 @@
     <a href="docs/DEPLOYMENT.md">部署</a>
   </p>
 </div>
-
-> 当前独立交付：统一智能基座V2实验分支，未合main、未通过G5。可保存/恢复同一生活任务、按批准摘要交家人、记录分级反馈及核对真实来源；模型预算未授权，事实综合仍关闭。见[交付、运行、85案和未达标项](docs/engineering/unified-foundation-v2-2026-10-30/README.md)。
 
 > **一句话 Pitch：** 通用助手知道很多事，却不知道“你手边有什么、你正在完成什么、哪些经历可以记住”。物间把这些信息变成可授权的 Agent 上下文，让一件旧相机、一张野餐垫或一台空气炸锅，都能成为今天可执行的下一步。
 
