@@ -1,0 +1,170 @@
+{
+  "at": "2026-11-01T17:14:37.676Z",
+  "basis": "same_qwen_same_goal_same_readonly_business_contract_synthetic_not_hardware",
+  "results": [
+    {
+      "runtime": "existing-openai-sdk-7.47",
+      "elapsedMs": 2991,
+      "calls": 2,
+      "text": "根据实有资源核查结果：\n\n**能否立即做：** 不能。\n**缺什么：**\n1.  **耗材缺失：** 现有色带已用完，且无备用色带。在不购买材料的前提下，无法打印任何标签。\n2.  **信息缺失：** 设备型号未知，且缺少对应说明书，无法确认操作方式或是否有替代方案。\n\n当前仅能执行“开机自检报告”，无法进行实质标记工作。"
+    },
+    {
+      "runtime": "agentscope-ts-0.0.15",
+      "elapsedMs": 3864,
+      "toolCalls": 1,
+      "events": [
+        {
+          "type": "REPLY_START"
+        },
+        {
+          "type": "MODEL_CALL_START"
+        },
+        {
+          "type": "TOOL_CALL_START"
+        },
+        {
+          "type": "TOOL_CALL_DELTA"
+        },
+        {
+          "type": "TOOL_CALL_DELTA"
+        },
+        {
+          "type": "TOOL_CALL_DELTA"
+        },
+        {
+          "type": "TOOL_CALL_DELTA"
+        },
+        {
+          "type": "TOOL_CALL_END"
+        },
+        {
+          "type": "MODEL_CALL_END"
+        },
+        {
+          "type": "TOOL_RESULT_START"
+        },
+        {
+          "type": "TOOL_RESULT_TEXT_DELTA"
+        },
+        {
+          "type": "TOOL_RESULT_END"
+        },
+        {
+          "type": "MODEL_CALL_START"
+        },
+        {
+          "type": "TEXT_BLOCK_START"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_DELTA"
+        },
+        {
+          "type": "TEXT_BLOCK_END"
+        },
+        {
+          "type": "MODEL_CALL_END"
+        },
+        {
+          "type": "REPLY_END"
+        }
+      ],
+      "text": "根据实有资源核查结果：\n\n**能否立即做：** 不能。\n**缺什么：**\n1.  **耗材缺失：** 现有色带已用完，且无备用色带。在不购买材料的前提下，无法打印任何标签。\n2.  **信息缺失：** 设备型号未知，且缺少对应说明书，无法确认具体操作方式或是否有无需色带的替代标记功能。\n\n当前仅能执行“开机”动作以获取状态报告，无法进行实质性的分组标记工作。"
+    }
+  ]
+}

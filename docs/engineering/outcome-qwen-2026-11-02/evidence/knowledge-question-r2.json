@@ -1,0 +1,527 @@
+{
+  "at": "2026-11-01T17:48:22.140Z",
+  "basis": "real_browser_real_qwen_new_sku_synthetic_owners_no_supplied_url_no_hardware",
+  "cases": [
+    {
+      "id": "K04",
+      "question": "搅拌棒的速度和Turbo怎样操作，装卸搅拌轴前需要做什么？未知地区电压不推断。",
+      "responses": [
+        {
+          "question": "搅拌棒的速度和Turbo怎样操作，装卸搅拌轴前需要做什么？未知地区电压不推断。",
+          "result": {
+            "session": {
+              "id": "1082c3cb-a8a9-4e7b-b6b1-5641b57d15ba",
+              "owner": "u_fa440b31-e9e3-424d-ab05-ee40af05a384",
+              "itemId": "b152b675-d62a-405c-a64d-2f64c9d2f46f",
+              "identity": "[\"u_fa440b31-e9e3-424d-ab05-ee40af05a384\",\"[\\\"MQ 5235 WH\\\",null,null,null]\"]",
+              "mode": "auto",
+              "revision": 1,
+              "status": "active",
+              "messages": [
+                {
+                  "id": "50333b82-aaf0-4147-b179-e53d94d0c73b",
+                  "role": "user",
+                  "text": "搅拌棒的速度和Turbo怎样操作，装卸搅拌轴前需要做什么？未知地区电压不推断。",
+                  "at": "2026-11-01T17:49:34.518Z",
+                  "itemId": "b152b675-d62a-405c-a64d-2f64c9d2f46f",
+                  "memoryPolicy": "off",
+                  "capture": false
+                },
+                {
+                  "id": "8f1ae33d-7ea0-4054-8014-1aaa9a507b88",
+                  "role": "assistant",
+                  "text": "关于 Braun MQ 5235 WH 搅拌棒的速度、Turbo 操作及装卸搅拌轴前的准备，目前官方支持页面仅提供了说明书下载入口，未直接列出具体操作步骤原文；且该页面当前无法读取详细内容。因此以下信息基于该型号所属 MultiQuick 5 Vario 系列的通用设计逻辑给出，**需以你手中实物或下载的《Instructions for use》PDF 原文为准**。\n\n### 1. 速度调节与 Turbo 操作（待核对）\n*   **速度调节：** MQ 5235 WH 属于 \"Vario\" 系列，通常配备变速拨轮/滑块。一般操作是：先按住电源键启动电机，再滚动/滑动速度选择器来实时调整转速；松开电源键即停。**未知点：** 你的机器是否必须先按电源键才能调档，还是可以先预设档位再按键启动，请以说明书“Speed control”章节图示为准。\n*   **Turbo 模式：** 通常为独立按钮或速度滑块的顶端档位。一般在机器运转时按下/推至 Turbo 获得瞬时最高速，松开即恢复原设定或停机。**未知点：** Turbo 是否允许空载使用、是否有最长连续运行时间限制，资料未提及，请勿长时间空转测试。\n\n### 2. 装卸搅拌轴前必须做的事\n无论安装还是拆卸搅拌棒（Blending shaft），**必须先拔掉电源插头或确保设备完全断电**。这是防止误触启动导致刀片伤人的必要前提。\n*   **拆卸：** 断电后，按住释放按钮（如有）或将连接处对准解锁标记旋转，垂直向下拉出搅拌轴。\n*   **安装：** 断电状态下，将搅拌轴对准主机接口插入到底，听到咔嗒声或对齐锁定标记即表示到位。\n\n### 3. 电压说明\n你提到“未知地区电压不推断”，已遵守。MQ 5235 WH 在不同国家/地区的额定电压可能不同（如 220-240V 或 110-120V），请务必查看机身铭牌上的 \"Input/Voltage\" 标识确认适用电压，切勿假设通用。\n\n### 下一步建议\n请从官方支持页下载对应语言版本的说明书 PDF：\n[https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH](https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH)  \n打开后搜索 “speed”、“turbo”、“assembly/disassembly” 关键词，即可获取针对你这台机器的确切图文指引。若你能提供说明书中的相关段落或照片，我可以帮你逐条解读并制定安全操作流程。",
+                  "reply": {
+                    "continuations": [],
+                    "actionCards": [],
+                    "necessaryConditionChecks": [],
+                    "knowledgeWarnings": [
+                      "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+                    ],
+                    "answer": "关于 Braun MQ 5235 WH 搅拌棒的速度、Turbo 操作及装卸搅拌轴前的准备，目前官方支持页面仅提供了说明书下载入口，未直接列出具体操作步骤原文；且该页面当前无法读取详细内容。因此以下信息基于该型号所属 MultiQuick 5 Vario 系列的通用设计逻辑给出，**需以你手中实物或下载的《Instructions for use》PDF 原文为准**。\n\n### 1. 速度调节与 Turbo 操作（待核对）\n*   **速度调节：** MQ 5235 WH 属于 \"Vario\" 系列，通常配备变速拨轮/滑块。一般操作是：先按住电源键启动电机，再滚动/滑动速度选择器来实时调整转速；松开电源键即停。**未知点：** 你的机器是否必须先按电源键才能调档，还是可以先预设档位再按键启动，请以说明书“Speed control”章节图示为准。\n*   **Turbo 模式：** 通常为独立按钮或速度滑块的顶端档位。一般在机器运转时按下/推至 Turbo 获得瞬时最高速，松开即恢复原设定或停机。**未知点：** Turbo 是否允许空载使用、是否有最长连续运行时间限制，资料未提及，请勿长时间空转测试。\n\n### 2. 装卸搅拌轴前必须做的事\n无论安装还是拆卸搅拌棒（Blending shaft），**必须先拔掉电源插头或确保设备完全断电**。这是防止误触启动导致刀片伤人的必要前提。\n*   **拆卸：** 断电后，按住释放按钮（如有）或将连接处对准解锁标记旋转，垂直向下拉出搅拌轴。\n*   **安装：** 断电状态下，将搅拌轴对准主机接口插入到底，听到咔嗒声或对齐锁定标记即表示到位。\n\n### 3. 电压说明\n你提到“未知地区电压不推断”，已遵守。MQ 5235 WH 在不同国家/地区的额定电压可能不同（如 220-240V 或 110-120V），请务必查看机身铭牌上的 \"Input/Voltage\" 标识确认适用电压，切勿假设通用。\n\n### 下一步建议\n请从官方支持页下载对应语言版本的说明书 PDF：\n[https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH](https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH)  \n打开后搜索 “speed”、“turbo”、“assembly/disassembly” 关键词，即可获取针对你这台机器的确切图文指引。若你能提供说明书中的相关段落或照片，我可以帮你逐条解读并制定安全操作流程。",
+                    "outcome": "answered",
+                    "source": "model-with-evidence",
+                    "model": "qwen3.8-max-0902",
+                    "steps": [],
+                    "questions": [],
+                    "evidenceIds": [
+                      "5ccd288c26adfbca1babcf29:0",
+                      "4b7dbee406daf42384a2b9d5:0",
+                      "78fdc72d6f6c16754344e1ab:0"
+                    ],
+                    "citations": [
+                      {
+                        "id": "5ccd288c26adfbca1babcf29",
+                        "title": "Braun",
+                        "url": "https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH",
+                        "kind": "official",
+                        "section": "MQ 5235 WH；unspecified"
+                      },
+                      {
+                        "id": "4b7dbee406daf42384a2b9d5",
+                        "title": "Braun",
+                        "url": "https://www.braunhousehold.com/en-sg/s/4191-MQ5235WH",
+                        "kind": "official",
+                        "section": "MQ 5235 WH；unspecified"
+                      },
+                      {
+                        "id": "78fdc72d6f6c16754344e1ab",
+                        "title": "Braun",
+                        "url": "https://www.braunhousehold.com/en-us/s/4191-MQ5235WH",
+                        "kind": "official",
+                        "section": "MQ 5235 WH；unspecified"
+                      }
+                    ],
+                    "memoryIds": [],
+                    "usedItems": [
+                      {
+                        "id": "b152b675-d62a-405c-a64d-2f64c9d2f46f",
+                        "name": "[模拟持有]Braun MQ 5235 WH",
+                        "model": "MQ 5235 WH"
+                      }
+                    ],
+                    "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+                  },
+                  "at": "2026-11-01T17:49:34.518Z"
+                }
+              ],
+              "known": {
+                "memoryPolicy": "off",
+                "interfaceMode": "standard",
+                "uiPage": "item",
+                "useItemMemories": "no",
+                "turnRequestId": "4242d362-7ae9-4737-a398-ef86f39cc90c"
+              },
+              "tried": [],
+              "memoryEpoch": 0,
+              "createdAt": "2026-11-01T17:48:25.133Z",
+              "updatedAt": "2026-11-01T17:49:34.518Z",
+              "expiresAt": "2026-11-08T17:48:25.133Z",
+              "itemScopes": {
+                "b152b675-d62a-405c-a64d-2f64c9d2f46f": "[\"u_fa440b31-e9e3-424d-ab05-ee40af05a384\",\"[\\\"MQ 5235 WH\\\",null,null,null]\"]"
+              }
+            },
+            "reply": {
+              "continuations": [],
+              "actionCards": [],
+              "necessaryConditionChecks": [],
+              "knowledgeWarnings": [
+                "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+              ],
+              "answer": "关于 Braun MQ 5235 WH 搅拌棒的速度、Turbo 操作及装卸搅拌轴前的准备，目前官方支持页面仅提供了说明书下载入口，未直接列出具体操作步骤原文；且该页面当前无法读取详细内容。因此以下信息基于该型号所属 MultiQuick 5 Vario 系列的通用设计逻辑给出，**需以你手中实物或下载的《Instructions for use》PDF 原文为准**。\n\n### 1. 速度调节与 Turbo 操作（待核对）\n*   **速度调节：** MQ 5235 WH 属于 \"Vario\" 系列，通常配备变速拨轮/滑块。一般操作是：先按住电源键启动电机，再滚动/滑动速度选择器来实时调整转速；松开电源键即停。**未知点：** 你的机器是否必须先按电源键才能调档，还是可以先预设档位再按键启动，请以说明书“Speed control”章节图示为准。\n*   **Turbo 模式：** 通常为独立按钮或速度滑块的顶端档位。一般在机器运转时按下/推至 Turbo 获得瞬时最高速，松开即恢复原设定或停机。**未知点：** Turbo 是否允许空载使用、是否有最长连续运行时间限制，资料未提及，请勿长时间空转测试。\n\n### 2. 装卸搅拌轴前必须做的事\n无论安装还是拆卸搅拌棒（Blending shaft），**必须先拔掉电源插头或确保设备完全断电**。这是防止误触启动导致刀片伤人的必要前提。\n*   **拆卸：** 断电后，按住释放按钮（如有）或将连接处对准解锁标记旋转，垂直向下拉出搅拌轴。\n*   **安装：** 断电状态下，将搅拌轴对准主机接口插入到底，听到咔嗒声或对齐锁定标记即表示到位。\n\n### 3. 电压说明\n你提到“未知地区电压不推断”，已遵守。MQ 5235 WH 在不同国家/地区的额定电压可能不同（如 220-240V 或 110-120V），请务必查看机身铭牌上的 \"Input/Voltage\" 标识确认适用电压，切勿假设通用。\n\n### 下一步建议\n请从官方支持页下载对应语言版本的说明书 PDF：\n[https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH](https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH)  \n打开后搜索 “speed”、“turbo”、“assembly/disassembly” 关键词，即可获取针对你这台机器的确切图文指引。若你能提供说明书中的相关段落或照片，我可以帮你逐条解读并制定安全操作流程。",
+              "outcome": "answered",
+              "source": "model-with-evidence",
+              "model": "qwen3.8-max-0902",
+              "steps": [],
+              "questions": [],
+              "evidenceIds": [
+                "5ccd288c26adfbca1babcf29:0",
+                "4b7dbee406daf42384a2b9d5:0",
+                "78fdc72d6f6c16754344e1ab:0"
+              ],
+              "citations": [
+                {
+                  "id": "5ccd288c26adfbca1babcf29",
+                  "title": "Braun",
+                  "url": "https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH",
+                  "kind": "official",
+                  "section": "MQ 5235 WH；unspecified"
+                },
+                {
+                  "id": "4b7dbee406daf42384a2b9d5",
+                  "title": "Braun",
+                  "url": "https://www.braunhousehold.com/en-sg/s/4191-MQ5235WH",
+                  "kind": "official",
+                  "section": "MQ 5235 WH；unspecified"
+                },
+                {
+                  "id": "78fdc72d6f6c16754344e1ab",
+                  "title": "Braun",
+                  "url": "https://www.braunhousehold.com/en-us/s/4191-MQ5235WH",
+                  "kind": "official",
+                  "section": "MQ 5235 WH；unspecified"
+                }
+              ],
+              "memoryIds": [],
+              "usedItems": [
+                {
+                  "id": "b152b675-d62a-405c-a64d-2f64c9d2f46f",
+                  "name": "[模拟持有]Braun MQ 5235 WH",
+                  "model": "MQ 5235 WH"
+                }
+              ],
+              "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+            },
+            "trace": [
+              {
+                "stage": "practical_model",
+                "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+                "at": "2026-11-01T17:48:26.756Z"
+              },
+              {
+                "stage": "practical_search",
+                "detail": "{\"model\":\"qwen3.8-max-0902\",\"hits\":10,\"events\":[{\"type\":\"response.created\",\"elapsedMs\":884,\"status\":\"queued\"},{\"type\":\"response.in_progress\",\"elapsedMs\":884,\"status\":\"in_progress\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":3765,\"itemType\":\"web_search_call\"},{\"type\":\"response.web_search_call.in_progress\",\"elapsedMs\":3765},{\"type\":\"response.web_search_call.searching\",\"elapsedMs\":3766},{\"type\":\"response.web_search_call.completed\",\"elapsedMs\":3766},{\"type\":\"response.output_item.done\",\"elapsedMs\":3766,\"itemType\":\"web_search_call\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":4259,\"itemType\":\"message\"},{\"type\":\"response.content_part.added\",\"elapsedMs\":4259},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4259},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4288},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4351},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4351},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4413},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4413},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4620},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4620},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4620},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4620},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4677},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4677},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4793},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4793},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4794},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4794},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4853},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4912},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4912},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4913},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4975},{\"type\":\"response.output_text.delta\",\"elapsedMs\":4975},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5095},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5155},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5155},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5155},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5212},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5212},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5340},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5341},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5342},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5342},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5399},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5462},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5462},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5463},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5520},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5522},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5586},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5638},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5638},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5638},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5696},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5754},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5754},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5756},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5812},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5812},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5929},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5930},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5930},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5931},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6053},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6054},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6054},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6054},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6176},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6176},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6176},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6176},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6233},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6234},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6346},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6346},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6346},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6346},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6399},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6399},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6461},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6510},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6510},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6511},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6570},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6570},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6680},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6680},{\"type\":\"response.output_text.done\",\"elapsedMs\":6680},{\"type\":\"response.content_part.done\",\"elapsedMs\":6680},{\"type\":\"response.output_item.done\",\"elapsedMs\":6681,\"itemType\":\"message\"},{\"type\":\"response.completed\",\"elapsedMs\":6685,\"status\":\"completed\"}]}",
+                "at": "2026-11-01T17:48:33.474Z"
+              },
+              {
+                "stage": "practical_knowledge",
+                "detail": "{\"itemId\":\"b152b675-d62a-405c-a64d-2f64c9d2f46f\",\"cached\":false,\"readURLs\":[\"https://www.braunhousehold.com/en-us/s/4191-MQ5235WH\",\"https://www.braunhousehold.com/en/manuals\",\"https://www.braunhousehold.com/en-sg/s/4191-MQ5235WH\",\"https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH\"],\"issues\":[\"搜索命中未通过最终域名/完整型号核对，未采用\"],\"seedURLs\":[],\"searchAttempted\":true,\"searchCompleted\":true,\"searchURLs\":[\"https://www.braunhousehold.com/en-us/s/4191-MQ5235WH\",\"https://www.braunhousehold.com/en/manuals\",\"https://www.braunhousehold.com/en-sg/s/4191-MQ5235WH\",\"https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH\"],\"verifiedURLs\":[\"https://www.braunhousehold.com/en-us/s/4191-MQ5235WH\",\"https://www.braunhousehold.com/en-sg/s/4191-MQ5235WH\",\"https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH\"],\"attemptedURLs\":[\"https://www.braunhousehold.com/en-us/s/4191-MQ5235WH\",\"https://www.braunhousehold.com/en/manuals\",\"https://www.braunhousehold.com/en-sg/s/4191-MQ5235WH\",\"https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH\"],\"sources\":[{\"id\":\"5ccd288c26adfbca1babcf29:0\",\"url\":\"https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH\",\"model\":\"MQ 5235 WH\"},{\"id\":\"4b7dbee406daf42384a2b9d5:0\",\"url\":\"https://www.braunhousehold.com/en-sg/s/4191-MQ5235WH\",\"model\":\"MQ 5235 WH\"},{\"id\":\"78fdc72d6f6c16754344e1ab:0\",\"url\":\"https://www.braunhousehold.com/en-us/s/4191-MQ5235WH\",\"model\":\"MQ 5235 WH\"}]}",
+                "at": "2026-11-01T17:48:42.462Z"
+              },
+              {
+                "stage": "practical_tool",
+                "detail": "search_product_knowledge completed",
+                "at": "2026-11-01T17:48:42.463Z"
+              },
+              {
+                "stage": "practical_model",
+                "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"read_official_page\"],\"finish\":\"tool_calls\"}",
+                "at": "2026-11-01T17:48:44.419Z"
+              },
+              {
+                "stage": "native_extraction",
+                "detail": "{\"url\":\"https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH\",\"events\":[{\"type\":\"response.created\",\"elapsedMs\":1361,\"status\":\"queued\"},{\"type\":\"response.in_progress\",\"elapsedMs\":1361,\"status\":\"in_progress\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":1361,\"itemType\":\"reasoning\"},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":1361},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":1426},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":1511},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":1588},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":1735},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":2046},{\"type\":\"response.reasoning_text.done\",\"elapsedMs\":2046},{\"type\":\"response.output_item.done\",\"elapsedMs\":2046,\"itemType\":\"reasoning\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":14019,\"itemType\":\"web_extractor_call\"},{\"type\":\"response.output_item.done\",\"elapsedMs\":14021,\"itemType\":\"web_extractor_call\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":15585,\"itemType\":\"reasoning\"},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":15585},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":15667},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":15741},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":15819},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":15914},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":16138},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":16138},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":16278},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":16357},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":16445},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":16671},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":16671},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":16747},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":16901},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":16901},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17136},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17136},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17212},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17288},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17365},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17441},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17594},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17594},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17767},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17767},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17821},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17972},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":17972},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":18126},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":18127},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":18207},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":18363},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":18508},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":18733},{\"type\":\"response.reasoning_text.done\",\"elapsedMs\":18734},{\"type\":\"response.output_item.done\",\"elapsedMs\":18735,\"itemType\":\"reasoning\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":31021,\"itemType\":\"web_extractor_call\"},{\"type\":\"response.output_item.done\",\"elapsedMs\":31022,\"itemType\":\"web_extractor_call\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":33678,\"itemType\":\"reasoning\"},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":33678},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":33857},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":33857},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":33985},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":34190},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":34252},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":34865},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":34865},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":34955},{\"type\":\"response.reasoning_text.delta\",\"elapsedMs\":35214},{\"type\":\"response.reasoning_text.done\",\"elapsedMs\":35214},{\"type\":\"response.output_item.done\",\"elapsedMs\":35214,\"itemType\":\"reasoning\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":35214,\"itemType\":\"message\"},{\"type\":\"response.content_part.added\",\"elapsedMs\":35214},{\"type\":\"response.output_text.delta\",\"elapsedMs\":35214},{\"type\":\"response.output_text.delta\",\"elapsedMs\":35317},{\"type\":\"response.output_text.delta\",\"elapsedMs\":35323},{\"type\":\"response.output_text.delta\",\"elapsedMs\":35522},{\"type\":\"response.output_text.delta\",\"elapsedMs\":35522},{\"type\":\"response.output_text.delta\",\"elapsedMs\":35623},{\"type\":\"response.output_text.delta\",\"elapsedMs\":35626},{\"type\":\"response.output_text.delta\",\"elapsedMs\":35727},{\"type\":\"response.output_text.delta\",\"elapsedMs\":35932},{\"type\":\"response.output_text.delta\",\"elapsedMs\":35932},{\"type\":\"response.output_text.delta\",\"elapsedMs\":36341},{\"type\":\"response.output_text.delta\",\"elapsedMs\":36341},{\"type\":\"response.output_text.delta\",\"elapsedMs\":36443},{\"type\":\"response.output_text.delta\",\"elapsedMs\":36443},{\"type\":\"response.output_text.delta\",\"elapsedMs\":36750},{\"type\":\"response.output_text.delta\",\"elapsedMs\":36750},{\"type\":\"response.output_text.delta\",\"elapsedMs\":36853},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37263},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37263},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37263},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37263},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37468},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37569},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37569},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37775},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37775},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37784},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37876},{\"type\":\"response.output_text.delta\",\"elapsedMs\":37948},{\"type\":\"response.output_text.delta\",\"elapsedMs\":38184},{\"type\":\"response.output_text.delta\",\"elapsedMs\":38184},{\"type\":\"response.output_text.delta\",\"elapsedMs\":38404},{\"type\":\"response.output_text.delta\",\"elapsedMs\":38593},{\"type\":\"response.output_text.delta\",\"elapsedMs\":38593},{\"type\":\"response.output_text.delta\",\"elapsedMs\":38779},{\"type\":\"response.output_text.delta\",\"elapsedMs\":38779},{\"type\":\"response.output_text.delta\",\"elapsedMs\":39014},{\"type\":\"response.output_text.delta\",\"elapsedMs\":39014},{\"type\":\"response.output_text.delta\",\"elapsedMs\":39015},{\"type\":\"response.output_text.delta\",\"elapsedMs\":39086},{\"type\":\"response.output_text.delta\",\"elapsedMs\":39148},{\"type\":\"response.output_text.done\",\"elapsedMs\":39148},{\"type\":\"response.content_part.done\",\"elapsedMs\":39148},{\"type\":\"response.output_item.done\",\"elapsedMs\":39148,\"itemType\":\"message\"},{\"type\":\"response.completed\",\"elapsedMs\":39164,\"status\":\"completed\"}],\"usage\":{\"input_tokens_details\":{\"cache_write_tokens\":0,\"cached_tokens\":0},\"x_details\":[{\"plugins\":{\"web_extractor\":{\"count\":2}},\"prompt_tokens_details\":{\"cached_tokens\":0},\"total_tokens\":3032,\"x_billing_type\":\"response_api\",\"output_tokens\":486,\"input_tokens\":2546,\"output_tokens_details\":{\"reasoning_tokens\":148}}],\"total_tokens\":3032,\"output_tokens\":486,\"x_tools\":{\"web_extractor\":{\"count\":2}},\"input_tokens\":2546,\"output_tokens_details\":{\"reasoning_tokens\":148}}}",
+                "at": "2026-11-01T17:49:23.609Z"
+              },
+              {
+                "stage": "practical_tool",
+                "detail": "read_official_page completed",
+                "at": "2026-11-01T17:49:23.610Z"
+              },
+              {
+                "stage": "practical_model",
+                "detail": "{\"round\":2,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+                "at": "2026-11-01T17:49:25.037Z"
+              },
+              {
+                "stage": "practical_knowledge",
+                "detail": "{\"itemId\":\"b152b675-d62a-405c-a64d-2f64c9d2f46f\",\"cached\":true,\"readURLs\":[],\"issues\":[],\"sources\":[{\"id\":\"5ccd288c26adfbca1babcf29:0\",\"url\":\"https://www.braunhousehold.com/en-nz/s/4191-MQ5235WH\",\"model\":\"MQ 5235 WH\"},{\"id\":\"4b7dbee406daf42384a2b9d5:0\",\"url\":\"https://www.braunhousehold.com/en-sg/s/4191-MQ5235WH\",\"model\":\"MQ 5235 WH\"},{\"id\":\"78fdc72d6f6c16754344e1ab:0\",\"url\":\"https://www.braunhousehold.com/en-us/s/4191-MQ5235WH\",\"model\":\"MQ 5235 WH\"}]}",
+                "at": "2026-11-01T17:49:25.044Z"
+              },
+              {
+                "stage": "practical_tool",
+                "detail": "search_product_knowledge completed",
+                "at": "2026-11-01T17:49:25.044Z"
+              },
+              {
+                "stage": "practical_model",
+                "detail": "{\"round\":3,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+                "at": "2026-11-01T17:49:34.511Z"
+              },
+              {
+                "stage": "practical_completion",
+                "detail": "{\"elapsedMs\":69381,\"calls\":6,\"tools\":3,\"reservedCny\":0.46422399999999997,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+                "at": "2026-11-01T17:49:34.516Z"
+              }
+            ],
+            "tokens": {
+              "input": 32809,
+              "output": 1681
+            },
+            "modelCalls": 6,
+            "foundation": {
+              "runId": "3fbc59f6-b9ce-4429-96bb-02b8dea746f7",
+              "status": "waiting_user",
+              "basis": "advice_only"
+            }
+          },
+          "fullAnswerMs": 69611,
+          "streamTextEvents": 1
+        }
+      ],
+      "errors": [],
+      "item": {
+        "id": "b152b675-d62a-405c-a64d-2f64c9d2f46f",
+        "name": "[模拟持有]Braun MQ 5235 WH",
+        "category": "其他",
+        "model": "MQ 5235 WH",
+        "location": "未设置",
+        "owner": "u_fa440b31-e9e3-424d-ab05-ee40af05a384",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "",
+        "source": "合成持有测试；非真实用户物品",
+        "brand": "Braun",
+        "lifecycle": "长期耐用",
+        "availability": "available",
+        "availabilityAt": "2026-11-01T17:48:24.893Z",
+        "attributes": {
+          "material": "",
+          "dimensions": "",
+          "power": "",
+          "care": "",
+          "quantityUnit": "件",
+          "capabilities": []
+        },
+        "synthetic": true
+      },
+      "mobileOverflow": false
+    },
+    {
+      "id": "K05",
+      "question": "第一次加入网络怎样操作，支持什么Wi-Fi频段？不要称已接入或远程开关成功。",
+      "responses": [
+        {
+          "question": "第一次加入网络怎样操作，支持什么Wi-Fi频段？不要称已接入或远程开关成功。",
+          "result": {
+            "session": {
+              "id": "6702c5a7-8a48-461e-af1c-33b98908ab42",
+              "owner": "u_fa440b31-e9e3-424d-ab05-ee40af05a384",
+              "itemId": "30f2d1d6-2748-4657-86f9-d8edcc745497",
+              "identity": "[\"u_fa440b31-e9e3-424d-ab05-ee40af05a384\",\"[\\\"Tapo P110\\\",null,null,null]\"]",
+              "mode": "auto",
+              "revision": 1,
+              "status": "active",
+              "messages": [
+                {
+                  "id": "ab7ce8f7-5cf1-4c35-b53b-dc9f07e44fc0",
+                  "role": "user",
+                  "text": "第一次加入网络怎样操作，支持什么Wi-Fi频段？不要称已接入或远程开关成功。",
+                  "at": "2026-11-01T17:49:58.013Z",
+                  "itemId": "30f2d1d6-2748-4657-86f9-d8edcc745497",
+                  "memoryPolicy": "off",
+                  "capture": false
+                },
+                {
+                  "id": "0e308a80-b187-4482-a317-f2c202d4e511",
+                  "role": "assistant",
+                  "text": "根据 TP-Link 官方资料，Tapo P110 的 Wi-Fi 频段与首次配网要点如下：\n\n**支持的 Wi-Fi 频段**\n*   **仅支持 2.4 GHz**（协议 IEEE 802.11b/g/n）。\n*   **不支持 5 GHz**。如果路由器是双频合一或仅有 5 GHz 信号，设备将无法发现或连接网络。需确保路由器开启了独立的 2.4 GHz 频段。\n\n**首次加入网络的操作步骤**\n1.  **准备环境**：将 Tapo P110 插在靠近路由器的插座上，确保 2.4 GHz 信号良好。手机连接到同一个 2.4 GHz Wi-Fi，并开启蓝牙和定位权限（部分系统配网需要）。\n2.  **重置设备**：长按设备上的电源按钮约 5–10 秒，直到指示灯开始交替闪烁（通常为橙色/绿色快闪），表示进入配网模式。若灯光状态异常，请先恢复出厂设置再试。\n3.  **App 添加**：打开 Tapo App，点击“+”号添加设备，选择 Tapo P110 型号，按照界面提示操作。\n4.  **输入凭证**：在 App 中选择你的 2.4 GHz Wi-Fi 名称并输入正确密码。若列表中没有目标网络，可点击右上角“Rescan”刷新，或选择“Other Network”手动输入 SSID 和密码。\n5.  **等待完成**：保持手机、设备与路由器距离较近，等待 App 提示配置流程走完。\n\n**若配网受阻的检查项**\n*   确认 Wi-Fi 密码无误（建议在手机上“忘记网络”后重连验证一次）。\n*   检查路由器 2.4 GHz 设置：信道建议设为 1、6 或 11；频宽设为 20 MHz；加密方式推荐 WPA2。\n*   确认路由器未达设备连接上限，且固件为最新版本。\n*   如仍失败，可尝试用另一台手机/平板重新配置，或将设备连接至手机热点测试；若热点能成功，说明设备正常，问题出在家庭网络环境，更新设备固件后再重置重试。\n\n以上信息来自 TP-Link 官方产品页与配网故障排查文档：\n*   [Tapo P110 Specifications (SG)](https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/)\n*   [What if I fail to configure the Tapo Smart Plug? (US/NL)](https://www.tp-link.com/us/support/faq/2615/)",
+                  "reply": {
+                    "continuations": [],
+                    "actionCards": [],
+                    "necessaryConditionChecks": [],
+                    "knowledgeWarnings": [
+                      "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+                    ],
+                    "answer": "根据 TP-Link 官方资料，Tapo P110 的 Wi-Fi 频段与首次配网要点如下：\n\n**支持的 Wi-Fi 频段**\n*   **仅支持 2.4 GHz**（协议 IEEE 802.11b/g/n）。\n*   **不支持 5 GHz**。如果路由器是双频合一或仅有 5 GHz 信号，设备将无法发现或连接网络。需确保路由器开启了独立的 2.4 GHz 频段。\n\n**首次加入网络的操作步骤**\n1.  **准备环境**：将 Tapo P110 插在靠近路由器的插座上，确保 2.4 GHz 信号良好。手机连接到同一个 2.4 GHz Wi-Fi，并开启蓝牙和定位权限（部分系统配网需要）。\n2.  **重置设备**：长按设备上的电源按钮约 5–10 秒，直到指示灯开始交替闪烁（通常为橙色/绿色快闪），表示进入配网模式。若灯光状态异常，请先恢复出厂设置再试。\n3.  **App 添加**：打开 Tapo App，点击“+”号添加设备，选择 Tapo P110 型号，按照界面提示操作。\n4.  **输入凭证**：在 App 中选择你的 2.4 GHz Wi-Fi 名称并输入正确密码。若列表中没有目标网络，可点击右上角“Rescan”刷新，或选择“Other Network”手动输入 SSID 和密码。\n5.  **等待完成**：保持手机、设备与路由器距离较近，等待 App 提示配置流程走完。\n\n**若配网受阻的检查项**\n*   确认 Wi-Fi 密码无误（建议在手机上“忘记网络”后重连验证一次）。\n*   检查路由器 2.4 GHz 设置：信道建议设为 1、6 或 11；频宽设为 20 MHz；加密方式推荐 WPA2。\n*   确认路由器未达设备连接上限，且固件为最新版本。\n*   如仍失败，可尝试用另一台手机/平板重新配置，或将设备连接至手机热点测试；若热点能成功，说明设备正常，问题出在家庭网络环境，更新设备固件后再重置重试。\n\n以上信息来自 TP-Link 官方产品页与配网故障排查文档：\n*   [Tapo P110 Specifications (SG)](https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/)\n*   [What if I fail to configure the Tapo Smart Plug? (US/NL)](https://www.tp-link.com/us/support/faq/2615/)",
+                    "outcome": "answered",
+                    "source": "model-with-evidence",
+                    "model": "qwen3.8-max-0902",
+                    "steps": [],
+                    "questions": [],
+                    "evidenceIds": [
+                      "0ee34661180f9973fb83548d:996",
+                      "0ee34661180f9973fb83548d:1997",
+                      "6d0ff674bcbfbf519a596a2d:997",
+                      "6d0ff674bcbfbf519a596a2d:0",
+                      "a1d4863cd1f7f2cd7338551d:7979",
+                      "a1d4863cd1f7f2cd7338551d:5984",
+                      "c548c88fdc52c3ce7e748bff:996",
+                      "c548c88fdc52c3ce7e748bff:1997",
+                      "6d0ff674bcbfbf519a596a2d:1993",
+                      "6d0ff674bcbfbf519a596a2d:4988",
+                      "6d0ff674bcbfbf519a596a2d:3992",
+                      "6d0ff674bcbfbf519a596a2d:2993",
+                      "6d0ff674bcbfbf519a596a2d:5987",
+                      "a1d4863cd1f7f2cd7338551d:8984",
+                      "0ee34661180f9973fb83548d:4992"
+                    ],
+                    "citations": [
+                      {
+                        "id": "0ee34661180f9973fb83548d",
+                        "title": "What if I fail to configure the Tapo Smart Plug? | TP-Link Nederland",
+                        "url": "https://www.tp-link.com/nl/support/faq/2615/",
+                        "kind": "official",
+                        "section": "Tapo P110；unspecified"
+                      },
+                      {
+                        "id": "6d0ff674bcbfbf519a596a2d",
+                        "title": "Tapo P110 | Mini Smart Wi-Fi Socket, Energy Monitoring | TP-Link Singapore",
+                        "url": "https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/",
+                        "kind": "official",
+                        "section": "Tapo P110；sg"
+                      },
+                      {
+                        "id": "a1d4863cd1f7f2cd7338551d",
+                        "title": "Tapo Smart Plug: Frequently Asked Questions Answered | TP-Link United Kingdom",
+                        "url": "https://www.tp-link.com/uk/support/faq/3417/",
+                        "kind": "official",
+                        "section": "Tapo P110；uk"
+                      },
+                      {
+                        "id": "c548c88fdc52c3ce7e748bff",
+                        "title": "What if I fail to configure the Tapo Smart Plug? | TP-Link",
+                        "url": "https://www.tp-link.com/us/support/faq/2615/",
+                        "kind": "official",
+                        "section": "Tapo P110；us"
+                      }
+                    ],
+                    "memoryIds": [],
+                    "usedItems": [
+                      {
+                        "id": "30f2d1d6-2748-4657-86f9-d8edcc745497",
+                        "name": "[模拟持有]TP-Link Tapo P110",
+                        "model": "Tapo P110"
+                      }
+                    ],
+                    "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+                  },
+                  "at": "2026-11-01T17:49:58.013Z"
+                }
+              ],
+              "known": {
+                "memoryPolicy": "off",
+                "interfaceMode": "standard",
+                "uiPage": "item",
+                "useItemMemories": "no",
+                "turnRequestId": "5d45e34a-800a-4d83-bf04-2526c38cd793"
+              },
+              "tried": [],
+              "memoryEpoch": 0,
+              "createdAt": "2026-11-01T17:49:35.380Z",
+              "updatedAt": "2026-11-01T17:49:58.013Z",
+              "expiresAt": "2026-11-08T17:49:35.380Z",
+              "itemScopes": {
+                "30f2d1d6-2748-4657-86f9-d8edcc745497": "[\"u_fa440b31-e9e3-424d-ab05-ee40af05a384\",\"[\\\"Tapo P110\\\",null,null,null]\"]"
+              }
+            },
+            "reply": {
+              "continuations": [],
+              "actionCards": [],
+              "necessaryConditionChecks": [],
+              "knowledgeWarnings": [
+                "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+              ],
+              "answer": "根据 TP-Link 官方资料，Tapo P110 的 Wi-Fi 频段与首次配网要点如下：\n\n**支持的 Wi-Fi 频段**\n*   **仅支持 2.4 GHz**（协议 IEEE 802.11b/g/n）。\n*   **不支持 5 GHz**。如果路由器是双频合一或仅有 5 GHz 信号，设备将无法发现或连接网络。需确保路由器开启了独立的 2.4 GHz 频段。\n\n**首次加入网络的操作步骤**\n1.  **准备环境**：将 Tapo P110 插在靠近路由器的插座上，确保 2.4 GHz 信号良好。手机连接到同一个 2.4 GHz Wi-Fi，并开启蓝牙和定位权限（部分系统配网需要）。\n2.  **重置设备**：长按设备上的电源按钮约 5–10 秒，直到指示灯开始交替闪烁（通常为橙色/绿色快闪），表示进入配网模式。若灯光状态异常，请先恢复出厂设置再试。\n3.  **App 添加**：打开 Tapo App，点击“+”号添加设备，选择 Tapo P110 型号，按照界面提示操作。\n4.  **输入凭证**：在 App 中选择你的 2.4 GHz Wi-Fi 名称并输入正确密码。若列表中没有目标网络，可点击右上角“Rescan”刷新，或选择“Other Network”手动输入 SSID 和密码。\n5.  **等待完成**：保持手机、设备与路由器距离较近，等待 App 提示配置流程走完。\n\n**若配网受阻的检查项**\n*   确认 Wi-Fi 密码无误（建议在手机上“忘记网络”后重连验证一次）。\n*   检查路由器 2.4 GHz 设置：信道建议设为 1、6 或 11；频宽设为 20 MHz；加密方式推荐 WPA2。\n*   确认路由器未达设备连接上限，且固件为最新版本。\n*   如仍失败，可尝试用另一台手机/平板重新配置，或将设备连接至手机热点测试；若热点能成功，说明设备正常，问题出在家庭网络环境，更新设备固件后再重置重试。\n\n以上信息来自 TP-Link 官方产品页与配网故障排查文档：\n*   [Tapo P110 Specifications (SG)](https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/)\n*   [What if I fail to configure the Tapo Smart Plug? (US/NL)](https://www.tp-link.com/us/support/faq/2615/)",
+              "outcome": "answered",
+              "source": "model-with-evidence",
+              "model": "qwen3.8-max-0902",
+              "steps": [],
+              "questions": [],
+              "evidenceIds": [
+                "0ee34661180f9973fb83548d:996",
+                "0ee34661180f9973fb83548d:1997",
+                "6d0ff674bcbfbf519a596a2d:997",
+                "6d0ff674bcbfbf519a596a2d:0",
+                "a1d4863cd1f7f2cd7338551d:7979",
+                "a1d4863cd1f7f2cd7338551d:5984",
+                "c548c88fdc52c3ce7e748bff:996",
+                "c548c88fdc52c3ce7e748bff:1997",
+                "6d0ff674bcbfbf519a596a2d:1993",
+                "6d0ff674bcbfbf519a596a2d:4988",
+                "6d0ff674bcbfbf519a596a2d:3992",
+                "6d0ff674bcbfbf519a596a2d:2993",
+                "6d0ff674bcbfbf519a596a2d:5987",
+                "a1d4863cd1f7f2cd7338551d:8984",
+                "0ee34661180f9973fb83548d:4992"
+              ],
+              "citations": [
+                {
+                  "id": "0ee34661180f9973fb83548d",
+                  "title": "What if I fail to configure the Tapo Smart Plug? | TP-Link Nederland",
+                  "url": "https://www.tp-link.com/nl/support/faq/2615/",
+                  "kind": "official",
+                  "section": "Tapo P110；unspecified"
+                },
+                {
+                  "id": "6d0ff674bcbfbf519a596a2d",
+                  "title": "Tapo P110 | Mini Smart Wi-Fi Socket, Energy Monitoring | TP-Link Singapore",
+                  "url": "https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/",
+                  "kind": "official",
+                  "section": "Tapo P110；sg"
+                },
+                {
+                  "id": "a1d4863cd1f7f2cd7338551d",
+                  "title": "Tapo Smart Plug: Frequently Asked Questions Answered | TP-Link United Kingdom",
+                  "url": "https://www.tp-link.com/uk/support/faq/3417/",
+                  "kind": "official",
+                  "section": "Tapo P110；uk"
+                },
+                {
+                  "id": "c548c88fdc52c3ce7e748bff",
+                  "title": "What if I fail to configure the Tapo Smart Plug? | TP-Link",
+                  "url": "https://www.tp-link.com/us/support/faq/2615/",
+                  "kind": "official",
+                  "section": "Tapo P110；us"
+                }
+              ],
+              "memoryIds": [],
+              "usedItems": [
+                {
+                  "id": "30f2d1d6-2748-4657-86f9-d8edcc745497",
+                  "name": "[模拟持有]TP-Link Tapo P110",
+                  "model": "Tapo P110"
+                }
+              ],
+              "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+            },
+            "trace": [
+              {
+                "stage": "practical_model",
+                "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+                "at": "2026-11-01T17:49:36.845Z"
+              },
+              {
+                "stage": "practical_search",
+                "detail": "{\"model\":\"qwen3.8-max-0902\",\"hits\":12,\"events\":[{\"type\":\"response.created\",\"elapsedMs\":846,\"status\":\"queued\"},{\"type\":\"response.in_progress\",\"elapsedMs\":846,\"status\":\"in_progress\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":5059,\"itemType\":\"web_search_call\"},{\"type\":\"response.web_search_call.in_progress\",\"elapsedMs\":5059},{\"type\":\"response.web_search_call.searching\",\"elapsedMs\":5059},{\"type\":\"response.web_search_call.completed\",\"elapsedMs\":5060},{\"type\":\"response.output_item.done\",\"elapsedMs\":5060,\"itemType\":\"web_search_call\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":5511,\"itemType\":\"message\"},{\"type\":\"response.content_part.added\",\"elapsedMs\":5512},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5513},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5539},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5567},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5626},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5626},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5681},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5681},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5792},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5792},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5792},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5792},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5847},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5899},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5900},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5901},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5953},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5954},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6033},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6033},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6086},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6144},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6144},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6144},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6201},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6257},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6258},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6258},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6315},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6372},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6372},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6372},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6479},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6479},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6479},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6479},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6586},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6586},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6589},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6589},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6722},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6728},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6728},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6728},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6777},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6778},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6892},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6893},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6893},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6893},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6948},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6949},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7063},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7066},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7066},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7066},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7121},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7123},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7179},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7180},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7299},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7299},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7299},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7358},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7359},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7359},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7475},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7475},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7475},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7589},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7647},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7647},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7647},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7714},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7714},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7775},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7830},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7831},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7832},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7946},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7946},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7946},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8007},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8007},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8007},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8062},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8062},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8117},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8117},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8314},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8315},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8315},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8316},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8372},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8372},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8490},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8491},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8491},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8491},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8549},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8549},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8664},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8664},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8665},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8725},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8727},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8727},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8845},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8845},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8845},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8846},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8963},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8963},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8964},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9023},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9023},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9023},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9082},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9140},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9140},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9140},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9198},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9199},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9432},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9432},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9432},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9432},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9432},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9490},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9490},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9491},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9577},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9578},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9690},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9690},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9690},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9691},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9775},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9775},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9833},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9833},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9946},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9947},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9947},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10006},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10067},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10067},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10067},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10068},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10194},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10194},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10194},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10237},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10238},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10298},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10299},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10299},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10413},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10413},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10413},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10472},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10472},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10531},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10531},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10534},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10591},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10592},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10649},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10706},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10706},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10706},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10826},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10826},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10881},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10881},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10996},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10996},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10996},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10996},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11084},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11085},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11248},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11248},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11249},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11249},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11303},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11303},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11361},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11414},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11414},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11414},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11472},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11473},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11529},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11529},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11584},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11665},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11665},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11665},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11723},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11755},{\"type\":\"response.output_text.done\",\"elapsedMs\":11759},{\"type\":\"response.content_part.done\",\"elapsedMs\":11761},{\"type\":\"response.output_item.done\",\"elapsedMs\":11763,\"itemType\":\"message\"},{\"type\":\"response.completed\",\"elapsedMs\":11768,\"status\":\"completed\"}]}",
+                "at": "2026-11-01T17:49:48.639Z"
+              },
+              {
+                "stage": "practical_knowledge",
+                "detail": "{\"itemId\":\"30f2d1d6-2748-4657-86f9-d8edcc745497\",\"cached\":false,\"readURLs\":[\"https://www.tp-link.com/us/support/faq/2615/\",\"https://www.tp-link.com/uk/support/faq/3417/\",\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"https://www.tp-link.com/nl/support/faq/2615/\"],\"issues\":[],\"seedURLs\":[],\"searchAttempted\":true,\"searchCompleted\":true,\"searchURLs\":[\"https://www.tp-link.com/us/support/faq/2615/\",\"https://www.tp-link.com/uk/support/faq/3417/\",\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"https://www.tp-link.com/nl/support/faq/2615/\"],\"verifiedURLs\":[\"https://www.tp-link.com/us/support/faq/2615/\",\"https://www.tp-link.com/uk/support/faq/3417/\",\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"https://www.tp-link.com/nl/support/faq/2615/\"],\"attemptedURLs\":[\"https://www.tp-link.com/us/support/faq/2615/\",\"https://www.tp-link.com/uk/support/faq/3417/\",\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"https://www.tp-link.com/nl/support/faq/2615/\"],\"sources\":[{\"id\":\"0ee34661180f9973fb83548d:996\",\"url\":\"https://www.tp-link.com/nl/support/faq/2615/\",\"model\":\"Tapo P110\"},{\"id\":\"0ee34661180f9973fb83548d:1997\",\"url\":\"https://www.tp-link.com/nl/support/faq/2615/\",\"model\":\"Tapo P110\"},{\"id\":\"6d0ff674bcbfbf519a596a2d:997\",\"url\":\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"model\":\"Tapo P110\"},{\"id\":\"6d0ff674bcbfbf519a596a2d:0\",\"url\":\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"model\":\"Tapo P110\"},{\"id\":\"a1d4863cd1f7f2cd7338551d:7979\",\"url\":\"https://www.tp-link.com/uk/support/faq/3417/\",\"model\":\"Tapo P110\"},{\"id\":\"a1d4863cd1f7f2cd7338551d:5984\",\"url\":\"https://www.tp-link.com/uk/support/faq/3417/\",\"model\":\"Tapo P110\"},{\"id\":\"c548c88fdc52c3ce7e748bff:996\",\"url\":\"https://www.tp-link.com/us/support/faq/2615/\",\"model\":\"Tapo P110\"},{\"id\":\"c548c88fdc52c3ce7e748bff:1997\",\"url\":\"https://www.tp-link.com/us/support/faq/2615/\",\"model\":\"Tapo P110\"},{\"id\":\"6d0ff674bcbfbf519a596a2d:1993\",\"url\":\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"model\":\"Tapo P110\"},{\"id\":\"6d0ff674bcbfbf519a596a2d:4988\",\"url\":\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"model\":\"Tapo P110\"},{\"id\":\"6d0ff674bcbfbf519a596a2d:3992\",\"url\":\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"model\":\"Tapo P110\"},{\"id\":\"6d0ff674bcbfbf519a596a2d:2993\",\"url\":\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"model\":\"Tapo P110\"},{\"id\":\"6d0ff674bcbfbf519a596a2d:5987\",\"url\":\"https://www.tp-link.com/sg/home-networking/smart-plug/tapo-p110/\",\"model\":\"Tapo P110\"},{\"id\":\"a1d4863cd1f7f2cd7338551d:8984\",\"url\":\"https://www.tp-link.com/uk/support/faq/3417/\",\"model\":\"Tapo P110\"},{\"id\":\"0ee34661180f9973fb83548d:4992\",\"url\":\"https://www.tp-link.com/nl/support/faq/2615/\",\"model\":\"Tapo P110\"}]}",
+                "at": "2026-11-01T17:49:50.990Z"
+              },
+              {
+                "stage": "practical_tool",
+                "detail": "search_product_knowledge completed",
+                "at": "2026-11-01T17:49:50.991Z"
+              },
+              {
+                "stage": "practical_model",
+                "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[],\"finish\":\"stop\"}",
+                "at": "2026-11-01T17:49:58.001Z"
+              },
+              {
+                "stage": "practical_completion",
+                "detail": "{\"elapsedMs\":22627,\"calls\":3,\"tools\":1,\"reservedCny\":0.30325599999999997,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+                "at": "2026-11-01T17:49:58.008Z"
+              }
+            ],
+            "tokens": {
+              "input": 20151,
+              "output": 1429
+            },
+            "modelCalls": 3,
+            "foundation": {
+              "runId": "5236a1b0-bc86-4547-b024-1127e434e16c",
+              "status": "waiting_user",
+              "basis": "advice_only"
+            }
+          },
+          "fullAnswerMs": 22758,
+          "streamTextEvents": 1
+        }
+      ],
+      "errors": [],
+      "item": {
+        "id": "30f2d1d6-2748-4657-86f9-d8edcc745497",
+        "name": "[模拟持有]TP-Link Tapo P110",
+        "category": "其他",
+        "model": "Tapo P110",
+        "location": "未设置",
+        "owner": "u_fa440b31-e9e3-424d-ab05-ee40af05a384",
+        "shared": false,
+        "state": "在用",
+        "icon": "box",
+        "note": "",
+        "source": "合成持有测试；非真实用户物品",
+        "brand": "TP-Link",
+        "lifecycle": "长期耐用",
+        "availability": "available",
+        "availabilityAt": "2026-11-01T17:49:35.275Z",
+        "attributes": {
+          "material": "",
+          "dimensions": "",
+          "power": "",
+          "care": "",
+          "quantityUnit": "件",
+          "capabilities": []
+        },
+        "synthetic": true
+      },
+      "mobileOverflow": false
+    }
+  ],
+  "pageErrors": []
+}

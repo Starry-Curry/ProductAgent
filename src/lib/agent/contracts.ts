@@ -73,6 +73,8 @@ export type Citation = {
   section?: string;
 };
 export type AssistantReply = {
+  /** Provider-visible answer before any local-only memory section. Never derived from model input. */
+  modelHistoryText?: string;
   continuations?: {itemId:string;capability:'creative'|'persona'|'story'|'maintenance'|'family'|'gift'|'software';title:string}[];
   necessaryConditionChecks?: import('./practical-constraints.ts').NecessaryCheck[];
   knowledgeWarnings?: string[];

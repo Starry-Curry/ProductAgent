@@ -1,4 +1,4 @@
-import { isProductManual } from "./manuals.ts";
+import { isProductManual,unrelatedDocument } from "./manuals.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { createHash } from "node:crypto";
 import { canRead, type Item, type Person, type State } from "../domain.ts";
@@ -53,6 +53,11 @@ export type AcquiredDocument = {
   reading?: { limitations: string[]; figures: { url: string; caption: string }[] };
   sections?: {title:string;url:string}[];
 };
+/** Exact URL grant from a manufacturer's exact-model page, never a blanket CDN allowlist. */
+export function trustedOfficialDocument(doc:AcquiredDocument,item:Item,documents:AcquiredDocument[]){
+ if(officialDomain(doc.url,item.brand||doc.brand||''))return true;
+ return doc.applicability==='manufacturer_linked_manual'&&documents.some(parent=>officialDomain(parent.url,item.brand||'')&&modelMentioned(parent.title,item.model)&&doc.chain.includes(parent.url)&&parent.sections?.some(l=>l.url===doc.url&&isProductManual(l)));
+}
 const digest = (s: string) => createHash("sha256").update(s).digest("hex");
 export const knowledgeIdentity = (item: Item) =>
   JSON.stringify([
@@ -155,7 +160,7 @@ export function makeKnowledgeDocument(
     fetchedAt: new Date().toISOString(),
     chunks,
     reading: 'reading' in d ? d.reading : undefined,
-    sections: d.links.filter(l=>officialDomain(l.url,item.brand||'')).slice(0,300),
+    sections: d.links.filter(l=>officialDomain(l.url,item.brand||'')||isProductManual(l)).slice(0,300),
   };
 }
 function tableExists(db: DatabaseSync) {
@@ -462,7 +467,7 @@ export async function acquireKnowledge(
   let requests = 0;
   const get = async (url: string) => {
     if(attempted.has(url))return attempted.get(url)!;
-    if (++requests > 6) throw new AgentError("本轮官方资料读取达到6份上限");
+    if (++requests > 8) throw new AgentError("本轮官方资料读取达到8份上限");
     acquisition.attemptedURLs.push(url);
     const pending=fetcher(url).then(page=>{acquisition.readURLs.push(page.url);return page;});attempted.set(url,pending);return pending;
   };
@@ -481,10 +486,11 @@ export async function acquireKnowledge(
   const titles = [item.name, ...packs.map((p) => p.product)]
     .map(label)
     .filter((x) => x.length > 8);
-  async function accept(url: string, chain: string[], sourceRegion: string) {
+  async function accept(url: string, chain: string[], sourceRegion: string,parent?:AcquiredDocument) {
     const d = await get(url);
-    if(!officialDomain(d.url,brand)){issues.push('最终站点未通过厂家范围核对，未采用');return;}
-    if ((d.extracted?.model&&!modelMentioned(d.extracted.model,item.model))||!modelMentioned(d.title + " " + d.text, item.model)) {
+    const inherited=!!parent&&officialDomain(parent.url,brand)&&modelMentioned(parent.title,item.model)&&parent.sections?.some(l=>l.url===url&&isProductManual(l))&&d.url===url;
+    if(!officialDomain(d.url,brand)&&!inherited){issues.push('最终站点未通过厂家范围核对，未采用');return;}
+    if ((d.extracted?.model&&!modelMentioned(d.extracted.model,item.model))||(!modelMentioned(d.title + " " + d.text, item.model)&&!inherited)) {
       issues.push("官方文档未包含完整型号，未采用：" + new URL(url).hostname);
       return;
     }
@@ -492,9 +498,7 @@ export async function acquireKnowledge(
       issues.push("资料地区与档案不一致，未采用");
       return;
     }
-    documents.push(
-      makeKnowledgeDocument(d, { ...item, brand }, chain, sourceRegion),
-    );
+    const document=makeKnowledgeDocument(d, { ...item, brand }, chain, sourceRegion);if(inherited)document.applicability='manufacturer_linked_manual';documents.push(document);
   }
   if (!documents.length && options.search && entry) {
     try {
@@ -504,9 +508,12 @@ export async function acquireKnowledge(
         [...entry.domains],
       );
       acquisition.searchCompleted = true;
-      acquisition.searchURLs = result.hits.slice(0, 4).map((h) => h.url);
-      for (const hit of result.hits.slice(0, 4)) {
-        if (requests >= 6) break;
+      // A model may return many valid sources. Prefer actual manuals over an
+      // overview/download index; skip unrelated PDF kinds before spending fetches.
+      const rankedHits=result.hits.filter(h=>!unrelatedDocument(h)).map((h,n)=>({h,n,score:Number(isProductManual(h))*2+Number(modelMentioned(h.title+' '+decodeURI(h.url),item.model))*4})).sort((a,b)=>b.score-a.score||a.n-b.n).map(x=>x.h);
+      acquisition.searchURLs = rankedHits.slice(0, 4).map((h) => h.url);
+      for (const hit of rankedHits.slice(0, 4)) {
+        if (requests >= 8) break;
         if (!officialDomain(hit.url, brand)) continue;
         try {
           const d = await get(hit.url),
@@ -633,12 +640,25 @@ export async function acquireKnowledge(
         : "官方资料网络读取失败；可稍后刷新或上传对应说明书",
     );
   }
+  // A search may land on a category listing. Follow only actual exact-model
+  // product/support links, at most two navigation levels, never guess a URL.
+  let frontier=[...documents];
+  for(let depth=0;depth<2&&requests<8;depth++){
+    const discovered:AcquiredDocument[]=[];
+    for(const parent of frontier)for(const link of (parent.sections||[]).filter(l=>{
+      try{const u=new URL(l.url);return !u.hash&&!/\.pdf(?:[?#]|$)/i.test(l.url)&&officialDomain(l.url,brand)&&modelMentioned(l.title+' '+decodeURI(l.url),item.model);}catch{return false;}
+    }).slice(0,2)){
+      if(requests>=8||attempted.has(link.url))continue;
+      const before=documents.length;try{await accept(link.url,[...parent.chain,link.url],regionOf(link.url));discovered.push(...documents.slice(before));}catch{issues.push('型号相关的真实导航链接未取得正文，未猜测替代地址');}
+    }
+    frontier=discovered;
+  }
   // Follow only actual manual links on already exact-model official pages.
   for(const parent of [...documents]){
     for(const link of (parent.sections||[]).filter(l=>isProductManual(l)).slice(0,2)){
-      if(requests>=6)break;
-      if(!officialDomain(link.url,brand)||documents.some(d=>d.url===link.url))continue;
-      try{await accept(link.url,[...parent.chain,link.url],regionOf(link.url));}catch{issues.push('已发现的说明书正文未取得；保留真实来源与失败，不采用模型摘要替代原文');}
+      if(requests>=8)break;
+      if(documents.some(d=>d.url===link.url))continue;
+      try{await accept(link.url,[...parent.chain,link.url],regionOf(link.url),parent);}catch{issues.push('已发现的说明书正文未取得；保留真实来源与失败，不采用模型摘要替代原文');}
     }
   }
   const current = read().items.find(

@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-01T18:00:00.917Z",
+  "synthetic": true,
+  "paidModelCalls": 2,
+  "pageErrors": [],
+  "checks": [
+    {
+      "name": "两独立浏览器实际注册登录，没有角色下拉模拟",
+      "passed": true
+    },
+    {
+      "name": "本次复用家庭、赠礼、分身及软件REA；陌生型号见本轮知识浏览器记录",
+      "passed": true
+    }
+  ],
+  "failure": "The expression evaluated to a falsy value:\n\n  assert.ok(JSON.stringify(firstRecall.reply).includes(\"小周\"))\n"
+}

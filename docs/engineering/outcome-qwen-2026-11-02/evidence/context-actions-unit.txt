@@ -1,0 +1,44 @@
+✔ 任务目录可发现外部获准资源，未选择前不加载其私密详情；跨账号不可见 (168.7582ms)
+✖ 动作依赖不仅检查计划ID：缺失支撑/隐含资源、伪装作用和禁止动作被拒；未知只作条件 (5.0702ms)
+✔ 未完成的自由操作草稿不流出；计划确认前物品条件更改应拒绝旧快照 (161.5535ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1413.1539
+
+✖ failing tests:
+
+test at tests\outcome-context-actions.test.ts:10:1
+✖ 动作依赖不仅检查计划ID：缺失支撑/隐含资源、伪装作用和禁止动作被拒；未知只作条件 (5.0702ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /限制/. Input:
+  
+  'Error: 动作引用未提供的资源或未说明作用的物品'
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/tests/outcome-context-actions.test.ts:14:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: 动作引用未提供的资源或未说明作用的物品
+        at file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/src/lib/agent/practical-actions.ts:36:101
+        at Array.map (<anonymous>)
+        at checkPlanResources (file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/src/lib/agent/practical-actions.ts:24:27)
+        at file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/tests/outcome-context-actions.test.ts:14:20
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/tests/outcome-context-actions.test.ts:14:9)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    expected: /限制/,
+    operator: 'throws',
+    diff: 'simple'
+  }

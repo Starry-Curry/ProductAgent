@@ -1,0 +1,1066 @@
+{
+  "stage": "responses-search",
+  "startedAt": "2026-11-01T16:43:32.149Z",
+  "events": [
+    {
+      "type": "response.created",
+      "elapsedMs": 987
+    },
+    {
+      "type": "response.in_progress",
+      "elapsedMs": 987
+    },
+    {
+      "type": "response.output_item.added",
+      "elapsedMs": 5284,
+      "itemType": "web_search_call"
+    },
+    {
+      "type": "response.web_search_call.in_progress",
+      "elapsedMs": 5284
+    },
+    {
+      "type": "response.web_search_call.searching",
+      "elapsedMs": 5284
+    },
+    {
+      "type": "response.web_search_call.completed",
+      "elapsedMs": 5284
+    },
+    {
+      "type": "response.output_item.done",
+      "elapsedMs": 5298,
+      "itemType": "web_search_call"
+    },
+    {
+      "type": "response.output_item.added",
+      "elapsedMs": 9507,
+      "itemType": "web_search_call"
+    },
+    {
+      "type": "response.web_search_call.in_progress",
+      "elapsedMs": 9507
+    },
+    {
+      "type": "response.web_search_call.searching",
+      "elapsedMs": 9507
+    },
+    {
+      "type": "response.web_search_call.completed",
+      "elapsedMs": 9507
+    },
+    {
+      "type": "response.output_item.done",
+      "elapsedMs": 9515,
+      "itemType": "web_search_call"
+    },
+    {
+      "type": "response.output_item.added",
+      "elapsedMs": 10201,
+      "itemType": "message"
+    },
+    {
+      "type": "response.content_part.added",
+      "elapsedMs": 10201
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10201
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10234
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10307
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10308
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10373
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10373
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10546
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10546
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10546
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10546
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10607
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10685
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10685
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10685
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10792
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10792
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10936
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10936
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10936
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 10936
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11085
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11085
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11229
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11230
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11231
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11231
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11303
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11304
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11527
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11527
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11527
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11527
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11527
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11527
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11735
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11735
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11735
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11735
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11837
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11838
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11994
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11994
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11994
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 11994
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12050
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12121
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12121
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12121
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12221
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12221
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12297
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12297
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12457
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12457
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12457
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12457
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12652
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12652
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12652
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12652
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12697
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12699
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12771
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12845
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12846
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12847
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12963
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 12963
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13037
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13063
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13064
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13066
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13170
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13170
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13476
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13477
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13477
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13477
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13477
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13541
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13542
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13543
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13611
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13611
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13812
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13812
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13813
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13813
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13989
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13989
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13989
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 13989
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14108
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14109
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14109
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14202
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14202
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14202
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14295
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14346
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14346
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14346
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14502
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14502
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14604
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14604
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14604
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14621
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14621
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14621
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14706
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14706
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14808
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14822
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14823
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14824
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14911
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14960
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14960
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 14961
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15031
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15033
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15180
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15180
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15180
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15256
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15257
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15257
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15347
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15413
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15413
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15414
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15483
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15483
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15559
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15635
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15635
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15635
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15772
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15782
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15784
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15784
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15838
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15839
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15910
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15950
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 15981
+    },
+    {
+      "type": "response.output_text.done",
+      "elapsedMs": 15981
+    },
+    {
+      "type": "response.content_part.done",
+      "elapsedMs": 15983
+    },
+    {
+      "type": "response.output_item.done",
+      "elapsedMs": 15983,
+      "itemType": "message"
+    },
+    {
+      "type": "response.completed",
+      "elapsedMs": 15995
+    }
+  ],
+  "sources": [
+    {
+      "type": "url",
+      "url": "https://www.bhphotovideo.com/lit_files/654209.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100401/pt-p710bt_eng_qsg_d01929001a_03.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://help.brother-usa.com/app/answers/detail/a_id/144087/~/download-and-setup-the-p-touch-design%26print-app-on-an-android-mobile-device"
+    },
+    {
+      "type": "url",
+      "url": "https://www.youtube.com/watch?v=m-lxpSKFZvU"
+    },
+    {
+      "type": "url",
+      "url": "https://www.brother-usa.com/product-support/PTP710BT?srsltid=AYCX9vKca4qpHyq5J4dzhZdGOOjZEPZaqaFr6nHrKTON9Ydots-uFhQC"
+    },
+    {
+      "type": "url",
+      "url": "https://eu.manuals.plus/asin/B07HB8LNSY"
+    },
+    {
+      "type": "url",
+      "url": "https://www.youtube.com/watch?v=sawR7G5YjKg"
+    },
+    {
+      "type": "url",
+      "url": "https://device.report/manual/16588852"
+    },
+    {
+      "type": "url",
+      "url": "https://www.youtube.com/watch?v=L57lcU0Y3gM"
+    },
+    {
+      "type": "url",
+      "url": "https://www.justanswer.com/car-electronics/rd594-connect-ptp710bt-iphone-connect-ptpt719bt-iophone.html"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_tch_ug_04.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://play.google.com/store/apps/details?id=com.brother.ptouch.designandprint2&hl=zh_TW"
+    },
+    {
+      "type": "url",
+      "url": "https://www.youtube.com/watch?v=YxsECBsoaaQ"
+    },
+    {
+      "type": "url",
+      "url": "https://help.brother-usa.com/app/answers/detail/a_id/144087/~/download-and-setup-the-p-touch-design%26print-app-on-an-android-mobile-device"
+    },
+    {
+      "type": "url",
+      "url": "https://www.brother-usa.com/apps/printing-scanning/brother-mobile-connect?srsltid=AYCX9vIntr42Ui5HyQvOEcIF-UNWgj1Pxx_jBHDt2zLTAfBxi7JzkRwn"
+    },
+    {
+      "type": "url",
+      "url": "https://www.youtube.com/watch?v=7v9bKADZNFQ"
+    },
+    {
+      "type": "url",
+      "url": "https://www.facebook.com/brotherinternationaltaiwan/videos/pt-p710bt%E8%B6%85%E7%B0%A1%E6%98%93qr-code%E8%A3%BD%E4%BD%9C/554791758325587/"
+    },
+    {
+      "type": "url",
+      "url": "https://apps.apple.com/mo/app/brother-p-touch-design-print-2/id1468451451"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_eng_ug_03.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_eng_ug_03.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://manuals.plus/brother/brother-pt-p710bt-p-touch-cube-plus-label-maker-user-guide"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100401/pt-p710bt_eng_qsg_d01929001a_03.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://www.youtube.com/watch?v=m-lxpSKFZvU"
+    },
+    {
+      "type": "url",
+      "url": "https://www.manualslib.com/manual/1399217/Brother-Pt-P710bt.html"
+    },
+    {
+      "type": "url",
+      "url": "https://www.notice-facile.com/en/manual/1354887/brother+p-touch-cube-plus-pt-p710bt"
+    },
+    {
+      "type": "url",
+      "url": "https://apps.apple.com/us/app/brother-p-touch-editor/id1453365242"
+    },
+    {
+      "type": "url",
+      "url": "https://catalog.all-typevacuum.com/p/ESDBRTPTP710BT/Brother-P-Touch-PT-P710BT-CUBE-Wireless-Label-Maker-20-mm-s-Print-Speed-5-x-26-x-5-/?bvstate=pg:5/ct:r"
+    },
+    {
+      "type": "url",
+      "url": "https://www.galaxus.at/en/s1/questionandanswer/is-it-normal-for-the-p-touch-cube-to-eject-a-blank-unprinted-label-before-printing-a-labeli-find-thi-729078"
+    },
+    {
+      "type": "url",
+      "url": "https://www.bestbuy.com/product/brother-p-touch-p750w-label-maker-black/J7CJ38WKRJ/sku/11956912"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_eng_ug_03.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100401/pt-p710bt_eng_qsg_d01929001a_03.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_dan_ug_02.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_spa_ug_02.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_fre_ug_02.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_canfre_ug_02.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_cro_ug_02.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100401/pt-p710bt_caf_qsg_d0192b001a_03.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_tha_ug_02.pdf"
+    },
+    {
+      "type": "url",
+      "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_dut_ug_02.pdf"
+    }
+  ],
+  "status": "completed",
+  "usage": {
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 1152
+    },
+    "x_details": [
+      {
+        "total_tokens": 7082,
+        "x_billing_type": "response_api",
+        "output_tokens": 629,
+        "input_tokens": 6453,
+        "plugins": {
+          "web_search": {
+            "count": 2
+          }
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 1152
+        }
+      }
+    ],
+    "total_tokens": 7082,
+    "output_tokens": 629,
+    "x_tools": {
+      "web_search": {
+        "count": 2
+      }
+    },
+    "input_tokens": 6453,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "output": [
+    {
+      "action": {
+        "sources": [
+          {
+            "type": "url",
+            "url": "https://www.bhphotovideo.com/lit_files/654209.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100401/pt-p710bt_eng_qsg_d01929001a_03.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://help.brother-usa.com/app/answers/detail/a_id/144087/~/download-and-setup-the-p-touch-design%26print-app-on-an-android-mobile-device"
+          },
+          {
+            "type": "url",
+            "url": "https://www.youtube.com/watch?v=m-lxpSKFZvU"
+          },
+          {
+            "type": "url",
+            "url": "https://www.brother-usa.com/product-support/PTP710BT?srsltid=AYCX9vKca4qpHyq5J4dzhZdGOOjZEPZaqaFr6nHrKTON9Ydots-uFhQC"
+          },
+          {
+            "type": "url",
+            "url": "https://eu.manuals.plus/asin/B07HB8LNSY"
+          },
+          {
+            "type": "url",
+            "url": "https://www.youtube.com/watch?v=sawR7G5YjKg"
+          },
+          {
+            "type": "url",
+            "url": "https://device.report/manual/16588852"
+          },
+          {
+            "type": "url",
+            "url": "https://www.youtube.com/watch?v=L57lcU0Y3gM"
+          },
+          {
+            "type": "url",
+            "url": "https://www.justanswer.com/car-electronics/rd594-connect-ptp710bt-iphone-connect-ptpt719bt-iophone.html"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_tch_ug_04.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://play.google.com/store/apps/details?id=com.brother.ptouch.designandprint2&hl=zh_TW"
+          },
+          {
+            "type": "url",
+            "url": "https://www.youtube.com/watch?v=YxsECBsoaaQ"
+          },
+          {
+            "type": "url",
+            "url": "https://help.brother-usa.com/app/answers/detail/a_id/144087/~/download-and-setup-the-p-touch-design%26print-app-on-an-android-mobile-device"
+          },
+          {
+            "type": "url",
+            "url": "https://www.brother-usa.com/apps/printing-scanning/brother-mobile-connect?srsltid=AYCX9vIntr42Ui5HyQvOEcIF-UNWgj1Pxx_jBHDt2zLTAfBxi7JzkRwn"
+          },
+          {
+            "type": "url",
+            "url": "https://www.youtube.com/watch?v=7v9bKADZNFQ"
+          },
+          {
+            "type": "url",
+            "url": "https://www.facebook.com/brotherinternationaltaiwan/videos/pt-p710bt%E8%B6%85%E7%B0%A1%E6%98%93qr-code%E8%A3%BD%E4%BD%9C/554791758325587/"
+          },
+          {
+            "type": "url",
+            "url": "https://apps.apple.com/mo/app/brother-p-touch-design-print-2/id1468451451"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_eng_ug_03.pdf"
+          }
+        ],
+        "type": "search",
+        "queries": [
+          "Brother PT-P710BT official user guide mobile app first connection",
+          "Brother PT-P710BT 用户指南 手机连接 App"
+        ],
+        "query": "Brother PT-P710BT official user guide mobile app first connection"
+      },
+      "id": "msg_08f3ea55-bec1-40e0-8e50-55d7ae47eae3",
+      "type": "web_search_call",
+      "status": "completed"
+    },
+    {
+      "action": {
+        "sources": [
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_eng_ug_03.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://manuals.plus/brother/brother-pt-p710bt-p-touch-cube-plus-label-maker-user-guide"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100401/pt-p710bt_eng_qsg_d01929001a_03.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.youtube.com/watch?v=m-lxpSKFZvU"
+          },
+          {
+            "type": "url",
+            "url": "https://www.manualslib.com/manual/1399217/Brother-Pt-P710bt.html"
+          },
+          {
+            "type": "url",
+            "url": "https://www.notice-facile.com/en/manual/1354887/brother+p-touch-cube-plus-pt-p710bt"
+          },
+          {
+            "type": "url",
+            "url": "https://apps.apple.com/us/app/brother-p-touch-editor/id1453365242"
+          },
+          {
+            "type": "url",
+            "url": "https://catalog.all-typevacuum.com/p/ESDBRTPTP710BT/Brother-P-Touch-PT-P710BT-CUBE-Wireless-Label-Maker-20-mm-s-Print-Speed-5-x-26-x-5-/?bvstate=pg:5/ct:r"
+          },
+          {
+            "type": "url",
+            "url": "https://www.galaxus.at/en/s1/questionandanswer/is-it-normal-for-the-p-touch-cube-to-eject-a-blank-unprinted-label-before-printing-a-labeli-find-thi-729078"
+          },
+          {
+            "type": "url",
+            "url": "https://www.bestbuy.com/product/brother-p-touch-p750w-label-maker-black/J7CJ38WKRJ/sku/11956912"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_eng_ug_03.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100401/pt-p710bt_eng_qsg_d01929001a_03.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_dan_ug_02.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_spa_ug_02.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_fre_ug_02.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_canfre_ug_02.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_cro_ug_02.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100401/pt-p710bt_caf_qsg_d0192b001a_03.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_tha_ug_02.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://download.brother.com/welcome/docp100362/pt-p710bt_dut_ug_02.pdf"
+          }
+        ],
+        "type": "search",
+        "queries": [
+          "Brother PT-P710BT user guide \"P-touch Design&Print\" first connection setup",
+          "site:download.brother.com PT-P710BT user guide mobile app"
+        ],
+        "query": "Brother PT-P710BT user guide \"P-touch Design&Print\" first connection setup"
+      },
+      "id": "msg_ee029673-09fb-4ac0-a612-2a49589beeea",
+      "type": "web_search_call",
+      "status": "completed"
+    },
+    {
+      "id": "msg_801084c5-077f-466b-94c6-c0e9f26fa487",
+      "role": "assistant",
+      "type": "message",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "text": "根据Brother官方用户指南（文档编号 `pt-p710bt_eng_ug_03.pdf`，托管于 `download.brother.com`），Brother PT-P710BT 与手机首次连接时使用的App是：\n\n**P-touch Design&Print 2**\n（部分地区/旧版可能显示为 **P-touch Design&Print**）\n\n### 官方指南中的关键确认信息：\n1.  **首选移动端App**：用户指南在“从移动设备打印”章节中明确将 **P-touch Design&Print 2** 列为设计和创建标签的主要手机应用，并指示用户从 App Store 或 Google Play 下载该App。\n2.  **连接流程**：指南指出，首次使用时需在手机设置中开启蓝牙，然后在 **P-touch Design&Print 2** App 内搜索并选择“PT-P710BT”进行配对连接（而非在手机系统蓝牙设置中直接配对）。\n3.  **其他兼容App**：虽然指南也提到了 *Brother iPrint&Label*（用于商务标签）和 *P-touch Editor*（主要用于电脑端），但针对手机端首次连接和个人/创意标签制作，官方指定的核心操作入口是 **P-touch Design&Print 2**。\n\n> ⚠️ **注意**：请勿使用通用的 \"Brother Mobile Connect\" App，该App主要面向Brother打印机/扫描仪，不支持PT-P710BT标签机。务必认准 **P-touch Design&Print 2**。\n\n**来源引用：**\n*   Brother PT-P710BT English User's Guide (PDF): [https://download.brother.com/welcome/docp100362/pt-p710bt_eng_ug_03.pdf](https://download.brother.com/welcome/docp100362/pt-p710bt_eng_ug_03.pdf)\n*   Brother PT-P710BT Quick Setup Guide (PDF): [https://download.brother.com/welcome/docp100401/pt-p710bt_eng_qsg_d01929001a_03.pdf](https://download.brother.com/welcome/docp100401/pt-p710bt_eng_qsg_d01929001a_03.pdf)"
+        }
+      ],
+      "status": "completed"
+    }
+  ],
+  "elapsedMs": 16000
+}

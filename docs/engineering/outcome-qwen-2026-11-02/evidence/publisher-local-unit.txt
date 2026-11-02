@@ -1,0 +1,10 @@
+✔ 未授权上云的物品关系仅在最终本机区展示；多问不中断，下一轮不能经历史泄露 (242.9228ms)
+✔ 型号官网实际链接可授权单一CDN联册；不放开CDN全域或接受其他型号/法律PDF (145.7783ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1454.9788

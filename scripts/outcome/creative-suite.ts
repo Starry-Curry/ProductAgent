@@ -7,7 +7,7 @@ const text=fs.readFileSync('docs/engineering/outcome-qwen-2026-11-02/acceptance-
 const cases=JSON.parse(text.toString()).creative,gate=await outcomeGateway({recordContent:true});
 const baseline=process.argv.includes('--baseline');
 const respond=baseline?(await import(pathToFileURL(path.resolve('.runtime/baseline-f0/src/lib/agent/service.ts')).href)).respond:currentRespond;
-Object.assign(process.env,{AI_ALLOW_PAID_CALLS:'true',WUJIAN_ALLOW_PAID_CALLS:'true',WUJIAN_AGENT_RUNTIME:'native',WUJIAN_PRACTICAL_THINKING:'true',WUJIAN_ALLOW_PUBLIC_FETCH:'false',WUJIAN_ALLOW_SEARCH:'false',AUTH_MODE:'authenticated'});
+Object.assign(process.env,{AI_ALLOW_PAID_CALLS:'true',WUJIAN_ALLOW_PAID_CALLS:'true',WUJIAN_AGENT_RUNTIME:'native',WUJIAN_PRACTICAL_THINKING:process.env.OUTCOME_THINKING||'true',WUJIAN_ALLOW_PUBLIC_FETCH:'false',WUJIAN_ALLOW_SEARCH:'false',AUTH_MODE:'authenticated'});
 const result:any={stage,basis:'real_qwen_isolated_domain_service_synthetic_facts_not_browser_or_physical',startedAt:new Date().toISOString(),cases:[]};
 try{for(const c of cases){
  const f=validationFixture('.runtime/acceptance-'+stage+'-'+c.id);let s=f.read();s.items=[];s.plans=[];s.tasks=[];f.write(s);

@@ -3,7 +3,7 @@ import { canRead,type State,type Person } from "../../domain.ts";
 import type { ServiceSession } from "../contracts.ts";
 import { itemContext } from "../../context/items.ts";
 import { buildContext } from "../../context/builder.ts";
-import { readKnowledge, retrieveKnowledge } from "../../life/acquisition.ts";
+import { readKnowledge, retrieveKnowledge,trustedOfficialDocument } from "../../life/acquisition.ts";
 import { modelMentioned,officialDomain } from "../../life/knowledge.ts";
 import { resolveTaskContext } from "../../foundation/tasks.ts";
 import { virtualHomeItems } from "../../life/virtual-home.ts";
@@ -44,14 +44,15 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
     taskMemoryOnly:true,includeItemRelationships:session.known.useItemMemories==='yes',companion:!!session.known.companionItemId,useExperiences:session.known.memoryPolicy!=='off'}));
   const memoryOn=session.known.memoryPolicy!=='off'&&!temporary;
   const documents=selected.flatMap(i=>{
-    const official=readKnowledge(db,state,actor,i.id).filter(d=>d.model===i.model&&officialDomain(d.url,i.brand||d.brand||''));
+    const all=readKnowledge(db,state,actor,i.id),official=all.filter(d=>d.model===i.model&&trustedOfficialDocument(d,i,all));
     const exact=official.filter(d=>modelMentioned(d.title+' '+d.text,i.model));
+    const inherited=official.filter(d=>d.applicability==='manufacturer_linked_manual');
     return official.filter(d=>{
       const region=sourceRegion(d.url,d.region);
       const path=officialProductPath(d.url);
       return (!i.region||i.region==='unspecified'||region===i.region||region==='unspecified')&&
-        (exact.some(e=>e.id===d.id)||!!path&&exact.some(e=>officialProductPath(e.url)===path));
-    }).map(d=>({itemId:i.id,scopeBasis:exact.some(e=>e.id===d.id)?'exact_model_in_official_document':'same_official_product_path_as_exact_model_spec',document:{...d,region:sourceRegion(d.url,d.region)}}));
+        (exact.some(e=>e.id===d.id)||inherited.some(e=>e.id===d.id)||!!path&&exact.some(e=>officialProductPath(e.url)===path));
+    }).map(d=>({itemId:i.id,scopeBasis:exact.some(e=>e.id===d.id)?'exact_model_in_official_document':inherited.some(e=>e.id===d.id)?'manufacturer_link_from_exact_model_page':'same_official_product_path_as_exact_model_spec',document:{...d,region:sourceRegion(d.url,d.region)}}));
   });
   const evidence:EvidencePassage[]=selected.flatMap(i=>{
     const docs=documents.filter(d=>d.itemId===i.id).map(d=>d.document);

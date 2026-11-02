@@ -223,7 +223,11 @@ export async function extractPublicHTML(raw: string, address: string) {
   // Retain named catalogue controls separately from actual hrefs. An ID is not
   // falsely labelled as a discovered URL; manufacturer adapters must verify it.
   const navigationItems=$('a[id]:not([href])').toArray().slice(0,150).map(el=>({id:$(el).attr('id')||'',label:$(el).text().trim().slice(0,150)})).filter(n=>n.id&&n.label);
-  $("a[href]").each((_n, el) => {
+  // Product content precedes site-wide navigation. Header menus must not fill
+  // the bounded link index before the actual product/manual link is reached.
+  const contentAnchors=$('main a[href],article a[href]').toArray();
+  const orderedAnchors=[...new Set([...contentAnchors,...$('a[href]').toArray()])];
+  $(orderedAnchors).each((_n, el) => {
     const title = $(el).text().trim().slice(0, 150),
       href = $(el).attr("href");
     if (!href) return;
@@ -308,7 +312,7 @@ export async function extractPublicHTML(raw: string, address: string) {
     url: url.href,
     links: [
       ...links.filter((l) => /\.pdf(?:$|[?#])/i.test(l.url)).slice(0, 600),
-      ...links.filter((l) => !/\.pdf(?:$|[?#])/i.test(l.url)).slice(0, 60),
+      ...links.filter((l) => !/\.pdf(?:$|[?#])/i.test(l.url)).slice(0, 300),
     ],
     extracted,
     navigationItems,

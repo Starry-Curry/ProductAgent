@@ -1,0 +1,95 @@
+{
+  "basis": "real_browser_deterministic_safety_not_a_model_or_physical_test",
+  "responses": [
+    {
+      "question": "不通电，把这件物品当作配重或敲击物可以吗？",
+      "result": {
+        "session": {
+          "id": "fb3a4056-b51e-40e5-9d77-0dd974bd8ad5",
+          "owner": "u_32e0b715-ebfe-454b-86a2-ecf74815c313",
+          "itemId": "fcab0284-3de8-4abe-9726-e5ac9ef0b092",
+          "identity": "[\"u_32e0b715-ebfe-454b-86a2-ecf74815c313\",\"[\\\"待确认\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "317b1fca-02f7-4a13-bbcc-13627b2d9303",
+              "role": "user",
+              "text": "不通电，把这件物品当作配重或敲击物可以吗？",
+              "at": "2026-11-01T18:53:57.436Z",
+              "itemId": "fcab0284-3de8-4abe-9726-e5ac9ef0b092",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "2fd6fde3-b945-41da-8a42-58793057c085",
+              "role": "assistant",
+              "text": "你报告了电池鼓包、漏液或冒烟等危险状态。先停止使用和充电，不把这件物品改作配重、敲击物或其他创意部件，也不要挤压、撞击、包裹或自行拆修。请联系厂家售后或当地正规回收渠道处理；处理前若有发热、冒烟等紧急情况，应远离并联系当地应急服务。可以移除这件危险物品，再用其他安全资源继续原目标。",
+              "reply": {
+                "outcome": "blocked",
+                "answer": "你报告了电池鼓包、漏液或冒烟等危险状态。先停止使用和充电，不把这件物品改作配重、敲击物或其他创意部件，也不要挤压、撞击、包裹或自行拆修。请联系厂家售后或当地正规回收渠道处理；处理前若有发热、冒烟等紧急情况，应远离并联系当地应急服务。可以移除这件危险物品，再用其他安全资源继续原目标。",
+                "source": "curated-guidance",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "基于用户报告采取预防限制，不是设备诊断或实体处置。"
+              },
+              "at": "2026-11-01T18:53:57.436Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "e2d90c69-a628-4c01-bc56-ee038feb6fc4"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-11-01T18:53:57.425Z",
+          "updatedAt": "2026-11-01T18:53:57.436Z",
+          "expiresAt": "2026-11-08T18:53:57.425Z"
+        },
+        "reply": {
+          "outcome": "blocked",
+          "answer": "你报告了电池鼓包、漏液或冒烟等危险状态。先停止使用和充电，不把这件物品改作配重、敲击物或其他创意部件，也不要挤压、撞击、包裹或自行拆修。请联系厂家售后或当地正规回收渠道处理；处理前若有发热、冒烟等紧急情况，应远离并联系当地应急服务。可以移除这件危险物品，再用其他安全资源继续原目标。",
+          "source": "curated-guidance",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "基于用户报告采取预防限制，不是设备诊断或实体处置。"
+        },
+        "trace": [
+          {
+            "stage": "reported_hazard_restricted",
+            "detail": "Deterministic restriction across online/offline runtimes; no external action",
+            "at": "2026-11-01T18:53:57.428Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0,
+        "foundation": {
+          "runId": "10ca322a-4d62-4268-aee0-fb21733114ab",
+          "status": "blocked",
+          "basis": "not_verified"
+        }
+      },
+      "fullAnswerMs": 233,
+      "streamTextEvents": 0
+    }
+  ],
+  "checks": [
+    {
+      "name": "不因变更用途绕过已报告危险状态",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "mobileOverflow": false,
+  "newUpstreamRequests": 0
+}

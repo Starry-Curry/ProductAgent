@@ -149,3 +149,7 @@ Sony/Canon核心真实浏览器任务可用；只读已获准经验、纠正/撤
 371项离线、类型、生产构建、benchmark和新旧桌面/移动浏览器回归通过。150次真实百炼上游请求，548881输入/30350输出tokens，估算0.4998048元，已停付费。answered不等于正确；问答内容质量、完整响应目标及全产品五旅程未全部达标。用户已要求本轮正式结束，不自动启动下一轮重构。
 
 本机可体验：http://127.0.0.1:3216/ （独立账号，费用关闭）。[交付与截图](docs/engineering/product-foundation-2026-10-30/README.md)、[测试与性能](docs/engineering/product-foundation-2026-10-30/TEST_REPORT.md)、[失败原文](docs/engineering/product-foundation-2026-10-30/MODEL_SAMPLES.md)、[环境](docs/engineering/product-foundation-2026-10-30/ENVIRONMENT.md)、[恢复点](docs/engineering/product-foundation-2026-10-30/HANDOFF.md)。
+
+## 2026-11-02 Qwen-first 产品结果轮次
+
+独立分支 codex/wujian-outcome-qwen-v3：已接入原生检索及局部任务/隐私修复，但产品未验收。250次授权请求已用完，BLOCKED_AUTHORIZATION；最新事实、失败与恢复方式统一见 [CURRENT](docs/engineering/CURRENT.md)。历史正文与账本保留。

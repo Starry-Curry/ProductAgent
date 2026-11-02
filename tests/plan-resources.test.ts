@@ -5,4 +5,5 @@ test('登记条件变更只标出依赖步骤；私密备注/分身修改不要�
  assert.deepEqual(changedPlanResources(plan,[{...a,note:'新私密',persona:{name:'新名字'}},b]).changed,[]);
  const changed=changedPlanResources(plan,[{...a,attributes:{dimensions:'5×8cm'}},b]);assert.deepEqual(changed.changed,['a']);assert.deepEqual(changed.affected,[0,2]);assert.match(changed.notice,/不代表/);
  assert.deepEqual(changedPlanResources({...plan,dependencies:undefined},[a,{...b,state:'损坏'}]).affected,[0,1,2]);
+ const old=changedPlanResources({...plan,resourceRevisions:undefined},[a,b]);assert.deepEqual(old.changed,[]);assert.deepEqual(old.untracked,['a','b']);assert.deepEqual(old.affected,[0,1,2]);assert.match(old.notice,/无法判定/);
 });

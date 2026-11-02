@@ -1,0 +1,302 @@
+{
+  "81a25d8e872c1c": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O01"
+  },
+  "97d03323102c24": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O02"
+  },
+  "f773f292790aaa": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O03"
+  },
+  "a2ef0465163068": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O04"
+  },
+  "847d5632e8f520": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O05"
+  },
+  "ba68e1f48b7fc7": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O06"
+  },
+  "1b3e188c5c40d3": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O07"
+  },
+  "2e1e230bf3ef3d": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O08"
+  },
+  "6578a40a61d5a7": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O09"
+  },
+  "2d03bad1cda30f": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O10"
+  },
+  "0ab079dc55dbeb": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O11"
+  },
+  "1f6227d15cd1da": {
+    "cohort": "baseline-valid",
+    "evidence": "baseline-valid.json",
+    "caseId": "O12"
+  },
+  "7860ce1abc4909": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O01"
+  },
+  "5d43fe713e9bb3": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O02"
+  },
+  "34278c4797a92c": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O03"
+  },
+  "e1b073da6d7997": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O04"
+  },
+  "905583f2fa6cd6": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O05"
+  },
+  "4d9eed990db053": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O06"
+  },
+  "b8e10a5ae621b5": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O07"
+  },
+  "24c3da30c3efb7": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O08"
+  },
+  "36e359ba40c072": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O09"
+  },
+  "20370e5e85ce49": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O10"
+  },
+  "179d3e0c22507d": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O11"
+  },
+  "1278b0db64c570": {
+    "cohort": "direct-valid",
+    "evidence": "direct-valid.json",
+    "caseId": "O12"
+  },
+  "7334fa518db262": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O01"
+  },
+  "93a4188ceb0727": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O02"
+  },
+  "799e7a409d71ab": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O03"
+  },
+  "0066d7ecbd1c06": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O04"
+  },
+  "3feb4e043aac1d": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O05"
+  },
+  "c10d6471dfd247": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O06"
+  },
+  "27bab5b10f2b0d": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O07"
+  },
+  "41066e10303e02": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O08"
+  },
+  "e1a4a8fa83b3fa": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O09"
+  },
+  "5163b66ec8eacb": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O10"
+  },
+  "c2f3ad06212a48": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O11"
+  },
+  "519baa085bfb91": {
+    "cohort": "candidate-valid",
+    "evidence": "candidate-valid.json",
+    "caseId": "O12"
+  },
+  "38b39668dcc91c": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O01"
+  },
+  "1e2bcdba7cad96": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O02"
+  },
+  "6078c305510b2c": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O03"
+  },
+  "0b3c6006c2b99c": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O04"
+  },
+  "daff34e66ffc64": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O05"
+  },
+  "3b259f94bb373e": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O06"
+  },
+  "e46570eeb69794": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O07"
+  },
+  "0c26ad29192bd5": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O08"
+  },
+  "fc7b3252635c0b": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O09"
+  },
+  "216312ab2fa0e9": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O10"
+  },
+  "e80715a0b8312c": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O11"
+  },
+  "d3f64d2c0c5ba8": {
+    "cohort": "candidate-natural-fast-r2",
+    "evidence": "candidate-natural-fast-r2.json",
+    "caseId": "O12"
+  },
+  "2769ae42998da9": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O01"
+  },
+  "ecdde6c2b21fac": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O02"
+  },
+  "85686744cec0aa": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O03"
+  },
+  "f06fd87221e869": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O04"
+  },
+  "9f4dec8ef62a6e": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O05"
+  },
+  "0c7e8e30b5b75d": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O06"
+  },
+  "da3622c0861403": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O07"
+  },
+  "a382e0e8821476": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O08"
+  },
+  "3c2e5fda786853": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O09"
+  },
+  "9f32152755e703": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O10"
+  },
+  "6f70750f2fd161": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O11"
+  },
+  "79af1898deef05": {
+    "cohort": "candidate-resource-r3",
+    "evidence": "candidate-resource-r3.json",
+    "caseId": "O12"
+  }
+}

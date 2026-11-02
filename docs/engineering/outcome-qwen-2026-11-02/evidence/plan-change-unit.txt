@@ -1,0 +1,37 @@
+✔ 任务目录可发现外部获准资源，未选择前不加载其私密详情；跨账号不可见 (182.757ms)
+✔ 动作依赖不仅检查计划ID：缺失支撑/隐含资源、伪装作用和禁止动作被拒；未知只作条件 (4.2649ms)
+✖ 未完成的自由操作草稿不流出；计划确认前物品条件更改应拒绝旧快照 (196.1916ms)
+✔ 登记条件变更只标出依赖步骤；私密备注/分身修改不要求整份方案重做 (2.2678ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1599.909
+
+✖ failing tests:
+
+test at tests\outcome-context-actions.test.ts:17:1
+✖ 未完成的自由操作草稿不流出；计划确认前物品条件更改应拒绝旧快照 (196.1916ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /条件已变化/. Input:
+  
+  "TypeError: Cannot read properties of undefined (reading 'id')"
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/tests/outcome-context-actions.test.ts:21:96)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Cannot read properties of undefined (reading 'id')
+        at file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/tests/outcome-context-actions.test.ts:21:162
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/tests/outcome-context-actions.test.ts:21:96)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /条件已变化/,
+    operator: 'throws',
+    diff: 'simple'
+  }

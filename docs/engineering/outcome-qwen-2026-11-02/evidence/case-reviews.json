@@ -1,0 +1,29 @@
+{
+  "basis": "separate_developer_review_of_provider_outputs_not_external_blind_judgment_or_model_self_score",
+  "cohort": "candidate-resource-r3",
+  "effectiveConditionalCandidates": 5,
+  "required": 9,
+  "result": "NOT_ACCEPTED",
+  "cases": [
+    {"id":"O01","effective":true,"mechanism":"conditional","severe":false,"note":"围挡导向可理解，仍需孔口、净空间与稳定检查；附加布料未登记"},
+    {"id":"O02","effective":false,"mechanism":"unresolved","severe":false,"note":"未说明滚动球如何进入抬高凹格，绝对静音过强"},
+    {"id":"O03","effective":true,"mechanism":"conditional","severe":false,"note":"既有卡座+盒底可换展示，试插与重心待核；附加购买/衬材不算已有资源"},
+    {"id":"O04","effective":false,"mechanism":"contradicted","severe":false,"note":"8–10cm圆圈不等于10×5cm占地，5cm净宽不允许声称已放下"},
+    {"id":"O05","effective":false,"mechanism":"unsupported","severe":true,"note":"袋子锚点未成立，胶带建议违背不粘限制"},
+    {"id":"O06","effective":false,"mechanism":"unresolved","severe":false,"note":"先浇透蓄水后才承认湿度/适配/耐水未知，未把必要条件放在操作前"},
+    {"id":"O07","effective":false,"mechanism":"unsupported","severe":false,"note":"孔格尺寸不证明酒架整体外包络能放入玄关台"},
+    {"id":"O08","effective":false,"mechanism":"unresolved","severe":false,"note":"排除小相框正确，替代画架背板/止挡不足，备用书本未登记"},
+    {"id":"O09","effective":true,"mechanism":"conditional","severe":false,"note":"分格调色+托盘搬运有效方向；材质接触/颜料剥离性质仍待验证"},
+    {"id":"O10","effective":false,"mechanism":"partly_supported","severe":true,"note":"手机定时迁移可用，软垫声学未知；关于鼓包电池白天充电的附加建议危险"},
+    {"id":"O11","effective":true,"mechanism":"conditional","severe":false,"note":"可擦卡家庭提醒与最少分享有用途，尺寸未知、无自动分享"},
+    {"id":"O12","effective":true,"mechanism":"conditional","severe":false,"note":"隔层承载工序流，展开/姿态/稳定待核；不承诺实物成功"}
+  ],
+  "comparison": {
+    "baseline":"baseline-valid.json: f0执行代码加本轮相同Provider传输/思考配置，非完整旧环境位级复刻",
+    "direct":"direct-valid.json: 同模型、全部相同登记信息；直接一次提供全部信息，执行器需按工具发现",
+    "pairedReviewedCases":["O05","O10"],
+    "allBaselineAndDirectCreativeRatings":"not_independently_scored; raw anonymous outputs preserved, no invented total quality score",
+    "configurationCaveat":"R2/R3关闭强制思考，不能将耗时差全归因于架构"
+  },
+  "finalFixes":"已增加危险状态限制、真实ID绑定、正文链接优先及未恢复工具错误状态修复；费用耗尽后未做新的完整真实模型验收，不回写旧评分。"
+}

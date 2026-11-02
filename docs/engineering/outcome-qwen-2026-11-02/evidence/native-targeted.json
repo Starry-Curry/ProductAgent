@@ -1,0 +1,1489 @@
+{
+  "at": "2026-11-01T17:12:40.815Z",
+  "page": "https://help.brother-usa.com/app/answers/detail/a_id/144087/~/download-and-setup-the-p-touch-design%26print-app-on-an-android-mobile-device",
+  "basis": "closed_scope_native_extraction_from_prior_structured_source",
+  "events": [
+    {
+      "type": "response.created",
+      "elapsedMs": 1327,
+      "status": "queued"
+    },
+    {
+      "type": "response.in_progress",
+      "elapsedMs": 1327,
+      "status": "in_progress"
+    },
+    {
+      "type": "response.output_item.added",
+      "elapsedMs": 1327,
+      "itemType": "reasoning"
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 1327
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 1396
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 1473
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 1550
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 1626
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 1703
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 1857
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 2171
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 2184
+    },
+    {
+      "type": "response.reasoning_text.done",
+      "elapsedMs": 2184
+    },
+    {
+      "type": "response.output_item.done",
+      "elapsedMs": 2185,
+      "itemType": "reasoning"
+    },
+    {
+      "type": "response.output_item.added",
+      "elapsedMs": 7257,
+      "itemType": "web_extractor_call"
+    },
+    {
+      "type": "response.output_item.done",
+      "elapsedMs": 7257,
+      "itemType": "web_extractor_call"
+    },
+    {
+      "type": "response.output_item.added",
+      "elapsedMs": 8887,
+      "itemType": "reasoning"
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 8887
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 8989
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 9047
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 9103
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 9296
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 9407
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 9409
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 9648
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 9648
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 9911
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 9911
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10116
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10116
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10217
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10280
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10478
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10478
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10627
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10730
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10730
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10935
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 10935
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 11037
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 11192
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 11192
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 11421
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 11605
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 11754
+    },
+    {
+      "type": "response.reasoning_text.done",
+      "elapsedMs": 11754
+    },
+    {
+      "type": "response.output_item.done",
+      "elapsedMs": 11754,
+      "itemType": "reasoning"
+    },
+    {
+      "type": "response.output_item.added",
+      "elapsedMs": 16241,
+      "itemType": "web_extractor_call"
+    },
+    {
+      "type": "response.output_item.done",
+      "elapsedMs": 16243,
+      "itemType": "web_extractor_call"
+    },
+    {
+      "type": "response.output_item.added",
+      "elapsedMs": 18614,
+      "itemType": "reasoning"
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 18614
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 18717
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 18775
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 18830
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19024
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19024
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19229
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19296
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19331
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19537
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19537
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19638
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19843
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19843
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 19946
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20150
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20150
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20355
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20355
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20457
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20662
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20662
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20663
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20867
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20867
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 20897
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21072
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21132
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21132
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21277
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21283
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21448
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21448
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21590
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21590
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21665
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 21993
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 22301
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 22301
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 22403
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 22465
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 22711
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 22711
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 22711
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 23018
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 23018
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 23018
+    },
+    {
+      "type": "response.reasoning_text.delta",
+      "elapsedMs": 23225
+    },
+    {
+      "type": "response.reasoning_text.done",
+      "elapsedMs": 23225
+    },
+    {
+      "type": "response.output_item.done",
+      "elapsedMs": 23225,
+      "itemType": "reasoning"
+    },
+    {
+      "type": "response.output_item.added",
+      "elapsedMs": 23225,
+      "itemType": "message"
+    },
+    {
+      "type": "response.content_part.added",
+      "elapsedMs": 23225
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 23225
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 23225
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 23428
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 23428
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 23613
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 23613
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 23734
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24042
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24042
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24042
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24246
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24246
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24349
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24554
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24554
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24861
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24861
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24861
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24966
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 24969
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 25168
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 25168
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 25681
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 25681
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 25681
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 25681
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 25782
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 25987
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 25987
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 25987
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 26295
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 26295
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 26499
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 26499
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 26518
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 26808
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 26808
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 26808
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 27218
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 27218
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 27219
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 27626
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 27626
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 27626
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 27933
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 27933
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 27933
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 27933
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 28035
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 28240
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 28314
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 28314
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 28556
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 28556
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 28556
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 28855
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 28855
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 28855
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29059
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29059
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29264
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29264
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29470
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29470
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29471
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29627
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29627
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29878
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29878
+    },
+    {
+      "type": "response.output_text.delta",
+      "elapsedMs": 29897
+    },
+    {
+      "type": "response.output_text.done",
+      "elapsedMs": 29897
+    },
+    {
+      "type": "response.content_part.done",
+      "elapsedMs": 29897
+    },
+    {
+      "type": "response.output_item.done",
+      "elapsedMs": 29897,
+      "itemType": "message"
+    },
+    {
+      "type": "response.completed",
+      "elapsedMs": 29914,
+      "status": "completed"
+    }
+  ],
+  "result": {
+    "hits": [],
+    "text": "我无法读取该页面——两次尝试访问（完整 URL 和简化版 URL）均失败，工具返回“无法访问该网页内容”。按您的要求，我不另行搜索或读取替代页面，因此只能如实报告：\n\n**页面实际内容：未知（无法访问）**\n\n- **页面标题**：未知。仅能说明该 URL 的路径片段（slug）为 `download-and-setup-the-p-touch-design&print-app-on-an-android-mobile-device`，暗示主题可能是“Download and Setup the P-touch Design&Print App on an Android Mobile Device”，但这是 URL 本身的文字，**并非**我实际读取到的页面标题，不能作为已确认的原文。\n- **提到的应用名称**：未知（页面内容未能读取）。URL slug 中出现的字样为 “P-touch Design&Print”，同样仅为 URL 线索，未经页面正文证实。\n- **涉及的型号或日期**：未知（页面上未标明，且页面本身也无法读取）。\n\n如需继续，您可能需要确认该 URL 是否仍然有效，或授权我访问其他来源。",
+    "events": [
+      {
+        "type": "response.created",
+        "elapsedMs": 1327,
+        "status": "queued"
+      },
+      {
+        "type": "response.in_progress",
+        "elapsedMs": 1327,
+        "status": "in_progress"
+      },
+      {
+        "type": "response.output_item.added",
+        "elapsedMs": 1327,
+        "itemType": "reasoning"
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 1327
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 1396
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 1473
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 1550
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 1626
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 1703
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 1857
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 2171
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 2184
+      },
+      {
+        "type": "response.reasoning_text.done",
+        "elapsedMs": 2184
+      },
+      {
+        "type": "response.output_item.done",
+        "elapsedMs": 2185,
+        "itemType": "reasoning"
+      },
+      {
+        "type": "response.output_item.added",
+        "elapsedMs": 7257,
+        "itemType": "web_extractor_call"
+      },
+      {
+        "type": "response.output_item.done",
+        "elapsedMs": 7257,
+        "itemType": "web_extractor_call"
+      },
+      {
+        "type": "response.output_item.added",
+        "elapsedMs": 8887,
+        "itemType": "reasoning"
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 8887
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 8989
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 9047
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 9103
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 9296
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 9407
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 9409
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 9648
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 9648
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 9911
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 9911
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10116
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10116
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10217
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10280
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10478
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10478
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10627
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10730
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10730
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10935
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 10935
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 11037
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 11192
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 11192
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 11421
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 11605
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 11754
+      },
+      {
+        "type": "response.reasoning_text.done",
+        "elapsedMs": 11754
+      },
+      {
+        "type": "response.output_item.done",
+        "elapsedMs": 11754,
+        "itemType": "reasoning"
+      },
+      {
+        "type": "response.output_item.added",
+        "elapsedMs": 16241,
+        "itemType": "web_extractor_call"
+      },
+      {
+        "type": "response.output_item.done",
+        "elapsedMs": 16243,
+        "itemType": "web_extractor_call"
+      },
+      {
+        "type": "response.output_item.added",
+        "elapsedMs": 18614,
+        "itemType": "reasoning"
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 18614
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 18717
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 18775
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 18830
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19024
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19024
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19229
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19296
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19331
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19537
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19537
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19638
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19843
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19843
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 19946
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20150
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20150
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20355
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20355
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20457
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20662
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20662
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20663
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20867
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20867
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 20897
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21072
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21132
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21132
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21277
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21283
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21448
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21448
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21590
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21590
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21665
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 21993
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 22301
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 22301
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 22403
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 22465
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 22711
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 22711
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 22711
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 23018
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 23018
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 23018
+      },
+      {
+        "type": "response.reasoning_text.delta",
+        "elapsedMs": 23225
+      },
+      {
+        "type": "response.reasoning_text.done",
+        "elapsedMs": 23225
+      },
+      {
+        "type": "response.output_item.done",
+        "elapsedMs": 23225,
+        "itemType": "reasoning"
+      },
+      {
+        "type": "response.output_item.added",
+        "elapsedMs": 23225,
+        "itemType": "message"
+      },
+      {
+        "type": "response.content_part.added",
+        "elapsedMs": 23225
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 23225
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 23225
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 23428
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 23428
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 23613
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 23613
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 23734
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24042
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24042
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24042
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24246
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24246
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24349
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24554
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24554
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24861
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24861
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24861
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24966
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 24969
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 25168
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 25168
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 25681
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 25681
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 25681
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 25681
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 25782
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 25987
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 25987
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 25987
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 26295
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 26295
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 26499
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 26499
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 26518
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 26808
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 26808
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 26808
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 27218
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 27218
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 27219
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 27626
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 27626
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 27626
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 27933
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 27933
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 27933
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 27933
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 28035
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 28240
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 28314
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 28314
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 28556
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 28556
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 28556
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 28855
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 28855
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 28855
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29059
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29059
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29264
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29264
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29470
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29470
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29471
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29627
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29627
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29878
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29878
+      },
+      {
+        "type": "response.output_text.delta",
+        "elapsedMs": 29897
+      },
+      {
+        "type": "response.output_text.done",
+        "elapsedMs": 29897
+      },
+      {
+        "type": "response.content_part.done",
+        "elapsedMs": 29897
+      },
+      {
+        "type": "response.output_item.done",
+        "elapsedMs": 29897,
+        "itemType": "message"
+      },
+      {
+        "type": "response.completed",
+        "elapsedMs": 29914,
+        "status": "completed"
+      }
+    ],
+    "usage": {
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "x_details": [
+        {
+          "plugins": {
+            "web_extractor": {
+              "count": 2
+            }
+          },
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 3219,
+          "x_billing_type": "response_api",
+          "output_tokens": 658,
+          "input_tokens": 2561,
+          "output_tokens_details": {
+            "reasoning_tokens": 256
+          }
+        }
+      ],
+      "total_tokens": 3219,
+      "output_tokens": 658,
+      "x_tools": {
+        "web_extractor": {
+          "count": 2
+        }
+      },
+      "input_tokens": 2561,
+      "output_tokens_details": {
+        "reasoning_tokens": 256
+      }
+    },
+    "model": "qwen3.8-max-0902",
+    "status": "completed"
+  }
+}

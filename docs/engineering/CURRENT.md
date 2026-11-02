@@ -1,6 +1,8 @@
 # 当前研发：Qwen-first 产品结果闭环（2026-11-02）
 
-独立分支 `codex/wujian-outcome-qwen-v3`，基线 f0e3114。**NOT_ACCEPTED，当前仍在实施与独立验收；下方为上一轮历史，不代表本轮发布。**
+独立分支 `codex/wujian-outcome-qwen-v3`，基线 f0e3114。**BLOCKED_AUTHORIZATION：250次已用完；产品NOT_ACCEPTED，G1/G2/G3等仍失败。** 下方为上一轮历史，不代表本轮发布。
+
+- [本轮结果与运行方式](outcome-qwen-2026-11-02/DELIVERY.md)、[逐门槛质量复核](outcome-qwen-2026-11-02/QUALITY_REVIEW.md)、[实际测试及失败](outcome-qwen-2026-11-02/TEST_REPORT.md)。本轮不标“产品全面完成”。
 
 - [冻结结果契约](outcome-qwen-2026-11-02/OUTCOME_CONTRACT.md)
 - [技术取舍与实际失败](outcome-qwen-2026-11-02/DECISIONS.md)

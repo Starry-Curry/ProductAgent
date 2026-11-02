@@ -1,5 +1,12 @@
 export const hazardousActions =
   /短接|拆开.{0,8}电池|加热.{0,8}电池|电池.{0,8}加热|带电.{0,8}拆|湿.{0,8}充电/;
+/** Narrow, explicit hazardous-state reports. A model cannot override these by calling a device a weight. */
+export const reportedCriticalHazard= /电池鼓包|鼓包电池|电池漏液|电池冒烟|swollen battery|battery is swollen|battery leakage/i;
+export function hasReportedCriticalHazard(text:string){
+ const statements=text.replace(/(?:没有|未发现|未出现|没有发现|无|未)\s*(?:电池鼓包|鼓包电池|电池漏液|电池冒烟)/g,'').replace(/\b(?:no|not)\s+(?:swollen battery|battery leakage)\b/gi,'');
+ return reportedCriticalHazard.test(statements);
+}
+export const criticalHazardGuidance='你报告了电池鼓包、漏液或冒烟等危险状态。先停止使用和充电，不把这件物品改作配重、敲击物或其他创意部件，也不要挤压、撞击、包裹或自行拆修。请联系厂家售后或当地正规回收渠道处理；处理前若有发热、冒烟等紧急情况，应远离并联系当地应急服务。可以移除这件危险物品，再用其他安全资源继续原目标。';
 
 /** Remove only explicitly forbidden action verbs, never the remainder of a sentence. */
 export function withoutProhibitedActions(text: string) {

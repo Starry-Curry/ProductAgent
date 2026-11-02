@@ -4,7 +4,9 @@ import { executePractical } from "./practical.ts";
 import { isPreparationChange } from "../life/task-planning.ts";
 import { answerKnownItem } from "./grounded-answer.ts";
 import { analyzeOwnedLamp } from "../devices/software-lab.ts";
-import { hazardousActions } from "./safety-language.ts";
+import { hazardousActions,hasReportedCriticalHazard,criticalHazardGuidance } from "./safety-language.ts";
+import {reportedItemHazard} from '../life/availability.ts';
+import {authorize} from '../foundation/policy.ts';
 import { publicDemo } from "../cloud/runtime.ts";
 import {
   itemContext,
@@ -598,6 +600,9 @@ export async function executeGraph(
   provider: Provider,
   temporary = false,
 ) {
+  // Reported hazardous state is enforced even when the model is unavailable.
+  const safetyState=read(),safetyItem=safetyState.items.find(i=>i.id===(session.itemId||session.known.activeItemId)&&canRead(i,actor)&&authorize(db,safetyState,actor,i.id).allowed);
+  if(hasReportedCriticalHazard(question)||safetyItem&&reportedItemHazard(safetyItem))return {reply:{...blank(criticalHazardGuidance,'blocked'),caveat:'基于用户报告采取预防限制，不是设备诊断或实体处置。'},trace:[{stage:'reported_hazard_restricted',detail:'Deterministic restriction across online/offline runtimes; no external action',at:new Date().toISOString()}],tokens:null,modelCalls:0};
   // A confirmed preparation checklist keeps its existing deterministic update
   // command even after it is linked to the shared Task. Other turns stay free
   // to use the native assistant.

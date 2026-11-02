@@ -1,0 +1,45 @@
+{
+  "basis": "real_public_network_using_previously_recorded_native_search_URLs_no_new_model_no_operator_manual_URL_no_hardware",
+  "cachedSearchFrom": "knowledge-navigation-r5.json",
+  "searchURLs": [
+    "https://www.philips.com.cn/c-p/STH3020_18/3000-series-handheld-steamer",
+    "https://www.philips.com.cn/c-m-ho/ironing/garment-steamer/latest",
+    "https://www.philips.com.cn/c-m-ho/ironing/latest",
+    "https://www.philips.com.cn/c-p/S906_06/shaver-700-series-electric-compact-shaver"
+  ],
+  "result": {
+    "documents": [],
+    "issues": [
+      "搜索命中未通过最终域名/完整型号核对，未采用",
+      "官方候选未公开返回可读取资料；没有绕过限制，可人工打开官网或上传说明书。",
+      "未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。"
+    ],
+    "acquisition": {
+      "seedURLs": [],
+      "searchAttempted": true,
+      "searchCompleted": true,
+      "searchURLs": [
+        "https://www.philips.com.cn/c-p/STH3020_18/3000-series-handheld-steamer",
+        "https://www.philips.com.cn/c-m-ho/ironing/garment-steamer/latest",
+        "https://www.philips.com.cn/c-m-ho/ironing/latest",
+        "https://www.philips.com.cn/c-p/S906_06/shaver-700-series-electric-compact-shaver"
+      ],
+      "readURLs": [
+        "https://www.philips.com.cn/c-p/STH3020_18/3000-series-handheld-steamer",
+        "https://www.philips.com.cn/c-m-ho/ironing/garment-steamer/latest",
+        "https://www.philips.com.cn/c-m-ho/ironing/latest",
+        "https://www.philips.com.cn/c-p/S906_06/shaver-700-series-electric-compact-shaver"
+      ],
+      "verifiedURLs": [],
+      "attemptedURLs": [
+        "https://www.philips.com.cn/c-p/STH3020_18/3000-series-handheld-steamer",
+        "https://www.philips.com.cn/c-m-ho/ironing/garment-steamer/latest",
+        "https://www.philips.com.cn/c-m-ho/ironing/latest",
+        "https://www.philips.com.cn/c-p/S906_06/shaver-700-series-electric-compact-shaver",
+        "https://www.philips.com.cn/c-p/STH3020_10/-/support"
+      ]
+    },
+    "cached": false
+  },
+  "elapsedMs": 5435
+}

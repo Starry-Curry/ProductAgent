@@ -1,0 +1,51 @@
+
+> product-agent@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.28
+   - Experiments (use with caution):
+     · cpus: 1
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 7.0s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/8) ...
+   Generating static pages (2/8) 
+   Generating static pages (4/8) 
+   Generating static pages (6/8) 
+ ✓ Generating static pages (8/8)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                    53.8 kB         242 kB
+├ ƒ /_not-found                            987 B         104 kB
+├ ƒ /api/account                           162 B         103 kB
+├ ƒ /api/ai                                162 B         103 kB
+├ ƒ /api/assistant                         162 B         103 kB
+├ ƒ /api/collaboration                     162 B         103 kB
+├ ƒ /api/demo/session                      162 B         103 kB
+├ ƒ /api/device-lab                        162 B         103 kB
+├ ƒ /api/discover                          162 B         103 kB
+├ ƒ /api/foundation                        162 B         103 kB
+├ ƒ /api/gift/[token]                      162 B         103 kB
+├ ƒ /api/health                            162 B         103 kB
+├ ƒ /api/home                              162 B         103 kB
+├ ƒ /api/life                              162 B         103 kB
+├ ƒ /api/life/media/[id]                   162 B         103 kB
+├ ƒ /api/memories                          162 B         103 kB
+├ ƒ /api/products                          162 B         103 kB
+├ ƒ /api/service-runs                      162 B         103 kB
+├ ƒ /api/workspace                         162 B         103 kB
+├ ƒ /gift/[token]                        2.35 kB         139 kB
+├ ƒ /guide                               3.45 kB         106 kB
+└ ƒ /legacy                              23.6 kB         212 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/1293c9a8-494d5407c297c4a0.js  54.2 kB
+  ├ chunks/95-36f92e38ff023428.js        46.3 kB
+  └ other shared chunks (total)          2.04 kB
+
+
+ƒ  (Dynamic)  server-rendered on demand
+

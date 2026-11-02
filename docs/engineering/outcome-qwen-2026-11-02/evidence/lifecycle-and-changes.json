@@ -1,0 +1,36 @@
+{
+  "basis": "real_browser_deterministic_domain_operations_synthetic_data_no_new_model_or_physical_test",
+  "checks": [
+    {
+      "name": "另一Task只召回更正后的报告",
+      "passed": true
+    },
+    {
+      "name": "撤销后另一Task不再召回该经验",
+      "passed": true
+    },
+    {
+      "name": "遗忘后仅留无正文墓碑",
+      "passed": true
+    },
+    {
+      "name": "仅改私人备注不要求重做方案",
+      "passed": true
+    },
+    {
+      "name": "实际条件变更标记受影响步骤，未把旧快照视为可用",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "resourceReview": {
+    "changed": [
+      "37f82ce1-3559-4e98-888f-dcd3d8adc6c6"
+    ],
+    "affected": [
+      0,
+      3
+    ],
+    "notice": "物品条件有变化；标出的步骤需重新核对，未标出也不代表已通过实物验证。"
+  }
+}

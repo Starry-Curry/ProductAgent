@@ -1,0 +1,9 @@
+✔ 连接成功但流持续不终止，也必须在整段生成预算到达时中止且不重试 (75.5967ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 460.5577

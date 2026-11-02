@@ -64,6 +64,7 @@ const brands = [
       "philips.com.tw",
       "documents.philips.com",
       "philips.co.uk",
+      "philips.com.au",
     ],
     home: "https://www.philips.com.cn/c-w/support-home.html",
   },
