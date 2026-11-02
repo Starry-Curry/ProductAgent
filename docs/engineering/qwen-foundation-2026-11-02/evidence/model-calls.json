@@ -1,0 +1,9 @@
+{
+  "task": "qwen-foundation-20261102-r1",
+  "authorizedLimits": {
+    "roundId": "qwen-foundation-20261102-r1",
+    "requests": 150,
+    "cny": 80
+  },
+  "attempts": []
+}

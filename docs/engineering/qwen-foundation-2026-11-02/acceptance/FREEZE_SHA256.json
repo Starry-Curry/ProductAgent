@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-02T02:55:54.514Z",
+  "baselineCommit": "c18b26d758af9281677150c513d9225a19bb4e67",
+  "frozenFiles": {
+    "questions.frozen.json": "7991b81d681bbb3e1a38ca4ade30de002fa61b0921a67f619b8aeaa60373d6f8",
+    "answers.frozen.json": "dfbcc829b62599e4bf1a1f5df96f32be5bd808ff43d21846ec7af533a5c7988a",
+    "journeys.frozen.json": "f399e119015370169712733dcb870ca0005d71c68d143a1b1626f15c306c9a8e"
+  }
+}

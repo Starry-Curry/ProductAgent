@@ -33,11 +33,14 @@ export function authorize(
   const item = state.items.find((i) => i.id === resourceId);
   if (!item) return { allowed: false, reasonCode: "not_found" };
   if (item.owner === actor) return { allowed: true, reasonCode: "owner" };
-  const row = db
+  // Old, not-yet-unified schemas have no explicit grants. Once the table
+  // exists an expired/revoked record must never fall back to legacy sharing.
+  const hasGrants = !!db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='foundation_grants'").get();
+  const row = hasGrants ? db
     .prepare(
       "SELECT body FROM foundation_grants WHERE issuer=? AND subject=? AND resource=?",
     )
-    .get(item.owner, actor, item.id) as { body: string } | undefined;
+    .get(item.owner, actor, item.id) as { body: string } | undefined : undefined;
   if (row) {
     const g = JSON.parse(row.body) as Grant;
     // A recorded grant does not override a revoked legacy share or ownership transfer.

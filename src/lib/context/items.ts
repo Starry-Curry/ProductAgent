@@ -1,4 +1,6 @@
-import { canRead, type Item, type Person, type State } from "../domain.ts";
+import { type Item, type Person, type State } from "../domain.ts";
+import type { DatabaseSync } from "node:sqlite";
+import { authorize } from "../foundation/policy.ts";
 import { boundPack } from "../ai/harness.ts";
 import { usable, syntheticItem } from "../life/availability.ts";
 
@@ -59,14 +61,16 @@ export function itemContext(item: Item) {
 }
 export type ItemContext = ReturnType<typeof itemContext>;
 
-/** Same canRead + demo scope as the existing tool, with no silent expansion of private memory. */
+/** Cross-person reads require the live database policy. Pure projections are
+ * owner-only: a legacy share flag cannot prove an explicit grant is current. */
 export function accessibleItemContexts(
   state: State,
   actor: Person,
   demo = false,
+  db?: DatabaseSync,
 ) {
   return state.items
-    .filter((i) => canRead(i, actor) && (demo ? !!i.demo : !i.demo))
+    .filter((i) => (db ? authorize(db, state, actor, i.id).allowed : i.owner === actor) && (demo ? !!i.demo : !i.demo))
     .map(itemContext);
 }
 export function readItemContext(
@@ -74,8 +78,9 @@ export function readItemContext(
   actor: Person,
   id: string,
   demo = false,
+  db?: DatabaseSync,
 ) {
-  return accessibleItemContexts(state, actor, demo).find((i) => i.id === id);
+  return accessibleItemContexts(state, actor, demo, db).find((i) => i.id === id);
 }
 export function itemContextPage(
   state: State,
@@ -83,8 +88,9 @@ export function itemContextPage(
   demo = false,
   offset = 0,
   limit = 20,
+  db?: DatabaseSync,
 ) {
-  const all = accessibleItemContexts(state, actor, demo);
+  const all = accessibleItemContexts(state, actor, demo, db);
   const items = all.slice(offset, offset + limit);
   return {
     items,

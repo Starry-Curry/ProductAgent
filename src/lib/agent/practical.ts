@@ -149,7 +149,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    const detail=chosen.kind==='plan'?[...chosen.steps,...chosen.unresolved.map(c=>'待核对：'+c),'数值与资源核对不证明物理可行或每句话有据']:chosen.kind==='story'?[chosen.text,'不自动授权记忆检索、云端或家庭共享']:chosen.kind==='gift'?[chosen.message,'不附私人故事或对话；创建不等于交付']:[chosen.summary,'只共享你确认的摘要，对方尚未接手'];
    const card=proposeAction(db,read(),actor,session,crypto.randomUUID(),action,title,detail);cards.push(card);return {card,basis:'pending_explicit_user_confirmation_no_domain_write',notice:'仅准备草稿，必须用户点击确认；不是现实任务完成或设备执行'};
   }
-   const requested=name==='search_product_knowledge'?[p.itemId]:name==='get_item_context'&&!p.itemIds.length?context().catalogue.slice(0,8).map(i=>i.id):p.itemIds;
+   const requested=name==='search_product_knowledge'?[p.itemId]:name==='get_item_context'&&!p.itemIds.length?context().items.map(i=>i.id):p.itemIds;
    const c=select(requested);
   if(name==='get_item_context'){resourcesRead=true;return {items:c.items,catalogue:c.catalogue};}
   if(name==='get_relevant_experiences')return {experiences:c.experiences,preferences:c.preferences,privateFacts:c.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),basis:'approved_user_report_not_proven_cause'};

@@ -1,0 +1,33 @@
+✔ Gate0：默认展开相关物品而非目录前八件；无关私人内容不入工具 (358.07ms)
+✔ Gate0：物品名称不是已证实能力，不把纸灯笼关键词自动变为照明能力 (0.9357ms)
+✔ Gate0 fixture uses exact model/region and nested typed facts; wrong model/region passages are excluded (228.7436ms)
+✔ Gate0 private story relationship remains local unless explicitly cloud-authorized; no-model keeps item identity (220.6257ms)
+✔ Gate0 unavailable resource stays discoverable but cannot enter action-authorized IDs (220.3877ms)
+✔ Gate0 PDF text-layer fixture preserves unread-figure limitation instead of certifying button diagrams (203.7942ms)
+✔ Gate0 physical state revision invalidates dependent steps while private notes do not (213.0093ms)
+✔ Gate0 explicit grant revocation and expiry exclude the resource from current kernel compilation (254.7987ms)
+✔ Gate0 direct projection rejects an expired grant, with and without a DB handle (187.8944ms)
+✔ 过期或撤回明确授权在实例、目录、共享知识和正文读取中一致拒绝 (601.9965ms)
+✔ 有效明确授权保留共享实例与官方正文读取；纯投影不能越过数据库授权 (234.6782ms)
+✔ 无新授权表的正常旧数据库保留旧共享；显式拒绝不回退旧共享 (221.306ms)
+✔ 明确授权不覆盖旧共享撤回或转移所有权 (214.5422ms)
+✔ 异步官方获取期间授权撤回，不能落库或返回旧共享资料 (217.439ms)
+✔ 无焦点创意目录也按当前数据库授权过滤 (180.0639ms)
+✔ 未授权上云的物品关系仅在最终本机区展示；多问不中断，下一轮不能经历史泄露 (399.9334ms)
+✔ 共享资料只包含登记事实、出处与未知，不带私密字段 (186.9652ms)
+✔ 共享读取每次重授权，越权不返回部分物品或隐藏名字 (178.4684ms)
+✔ 快照仅随获准投影变化，不能冒充持久修订或权限 (192.2742ms)
+✔ 共享投影不与原始状态数组共用引用，选择顺序不影响快照 (209.1164ms)
+✔ 聊天与故事使用同一物品资料，关系仅来自显式记忆 (231.1958ms)
+✔ 私密关系不因共享物品资料而进入模型，遗忘后新会话不召回 (234.2188ms)
+✔ 创意实际发送共享物品资料；超时不生成成功方案 (180.5114ms)
+✔ 演示物品不能通过普通资料入口混入个人上下文 (165.3711ms)
+✔ 正式助手入口的新用途目标包含个人偏好时仍进入创意规划 (118.7688ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2781.6542

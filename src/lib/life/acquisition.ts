@@ -1,7 +1,8 @@
 import { isProductManual,unrelatedDocument } from "./manuals.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { createHash } from "node:crypto";
-import { canRead, type Item, type Person, type State } from "../domain.ts";
+import { type Item, type Person, type State } from "../domain.ts";
+import { authorize } from "../foundation/policy.ts";
 import { productPacks } from "../products.ts";
 import { AgentError } from "../agent/contracts.ts";
 import {
@@ -176,7 +177,7 @@ export function readKnowledge(
   actor: Person,
   itemId: string,
 ) {
-  const item = state.items.find((i) => i.id === itemId && canRead(i, actor));
+  const item = state.items.find((i) => i.id === itemId && authorize(db, state, actor, i.id).allowed);
   if (!item || !tableExists(db)) return [];
   return (
     db
@@ -357,7 +358,8 @@ export function indexOfficialSource(
   itemId: string,
   sourceId: string,
 ) {
-  const item = state.items.find((i) => i.id === itemId && canRead(i, actor));
+  const item = state.items.find((i) => i.id === itemId && authorize(db, state, actor, i.id).allowed);
+  if (!item) throw new AgentError("物品不存在或未获授权", 403);
   const source = listSources(db, state, actor, itemId).find(
     (s) => s.id === sourceId && s.kind === "official-public",
   );
@@ -403,8 +405,9 @@ export async function acquireKnowledge(
     preferManual?: boolean;
   } = {},
 ) {
-  const foundItem = read().items.find(
-    (i) => i.id === itemId && canRead(i, actor),
+  const initialState = read();
+  const foundItem = initialState.items.find(
+    (i) => i.id === itemId && authorize(db, initialState, actor, i.id).allowed,
   );
   if (!foundItem) throw new AgentError("物品未获授权", 403);
   const item: Item = foundItem;
@@ -661,8 +664,9 @@ export async function acquireKnowledge(
       try{await accept(link.url,[...parent.chain,link.url],regionOf(link.url),parent);}catch{issues.push('已发现的说明书正文未取得；保留真实来源与失败，不采用模型摘要替代原文');}
     }
   }
-  const current = read().items.find(
-    (i) => i.id === itemId && canRead(i, actor),
+  const currentState = read();
+  const current = currentState.items.find(
+    (i) => i.id === itemId && authorize(db, currentState, actor, i.id).allowed,
   );
   if (!current || knowledgeIdentity(current) !== identity)
     throw new AgentError("读取期间物品权限或型号已变化", 409);

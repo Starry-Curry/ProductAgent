@@ -1,0 +1,66 @@
+✖ Gate0：默认展开相关物品而非目录前八件；无关私人内容不入工具 (512.8363ms)
+✖ Gate0：物品名称不是已证实能力，不把纸灯笼关键词自动变为照明能力 (2.0494ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3904.4377
+
+✖ failing tests:
+
+test at tests\foundation-context.test.ts:9:1
+✖ Gate0：默认展开相关物品而非目录前八件；无关私人内容不入工具 (512.8363ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   '9806780d-53c3-443a-b7b9-aa614d2afff7',
+  +   'a15a72b3-5b48-435e-b0c1-bdf20fca5020',
+  +   'c564de1a-7e20-4fd5-a52d-8da0e78f00ff',
+  +   '9d561edf-ca31-4f52-96e2-f820801f79b3',
+  +   '91742c7e-6493-4055-9737-14c5c6bc8753',
+  +   '36a370b8-c446-4a13-92c0-24fe5225afd7',
+  +   '390c376d-229e-4881-b6d5-504ea259c545',
+  +   'a2e9f0cc-0c04-4f9a-861a-20124f4c115d',
+      'd267b4b6-ee98-41c8-9785-8e1cb3d541ac'
+    ]
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/foundation-context.test.ts:21:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '9806780d-53c3-443a-b7b9-aa614d2afff7', 'a15a72b3-5b48-435e-b0c1-bdf20fca5020', 'c564de1a-7e20-4fd5-a52d-8da0e78f00ff', '9d561edf-ca31-4f52-96e2-f820801f79b3', '91742c7e-6493-4055-9737-14c5c6bc8753', '36a370b8-c446-4a13-92c0-24fe5225afd7', '390c376d-229e-4881-b6d5-504ea259c545', 'a2e9f0cc-0c04-4f9a-861a-20124f4c115d', 'd267b4b6-ee98-41c8-9785-8e1cb3d541ac' ],
+    expected: [ 'd267b4b6-ee98-41c8-9785-8e1cb3d541ac' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\foundation-context.test.ts:25:1
+✖ Gate0：物品名称不是已证实能力，不把纸灯笼关键词自动变为照明能力 (2.0494ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   '照明',
+  +   '观察记录'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/foundation-context.test.ts:28:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '照明', '观察记录' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

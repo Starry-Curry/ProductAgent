@@ -20,6 +20,7 @@ import {
   positiveGoalText,
 } from "./planning-constraints.ts";
 import { itemContext } from "../context/items.ts";
+import { projectReality } from "../context/reality.ts";
 import { capabilityPlans } from "./capability-plans.ts";
 import {
   listCreativeEvidence,
@@ -89,26 +90,8 @@ export function itemAffordances(
   item: State["items"][number],
   documents: AcquiredDocument[] = [],
 ) {
-  const pack = boundPack(item),
-    declared = [
-      item.name,
-      item.category,
-      item.attributes?.material,
-      ...(item.attributes?.capabilities || []),
-      ...(pack?.capabilities || []),
-    ].join(" ");
-  const capabilities: string[] = [];
-  for (const [label, pattern] of [
-    ["照明", /手电|灯|照明|lighting/],
-    ["收纳", /容器|盒|杯|收纳|架|storage/],
-    ["携带", /背包|旅行包|便携|portable|carrying/],
-    ["书写", /笔|书写|writing/],
-    ["观察记录", /相机|摄影|纸|笔|camera/],
-    ["声音", /音箱|音频|audio/],
-    ["衣物搭配", /衣|服装|围巾|布料/],
-    ["养护观察", /植物|绿植/],
-  ] as const)
-    if (pattern.test(declared)) capabilities.push(label);
+  const pack = boundPack(item),reality=projectReality(item);
+  const capabilities = reality.capabilities.filter(c=>c.status==='conditional').map(c=>c.effect);
   return {
     context: itemContext(item),
     id: item.id,
@@ -120,7 +103,8 @@ export function itemAffordances(
     capabilities,
     acquiredCapabilities: documentCapabilities(documents),
     declaredCapabilities: item.attributes?.capabilities || [],
-    inferredCapabilities: capabilities,
+    inferredCapabilities: [],
+    capabilitySemantics: reality.capabilities,
     lifecycle: item.lifecycle,
     state: item.state,
     availability: item.availability,

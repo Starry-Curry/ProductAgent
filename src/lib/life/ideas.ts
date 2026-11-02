@@ -1117,6 +1117,7 @@ async function draftModelIdea(
               state,
               actor,
               items.map((i) => i.id),
+              {db},
             ).items,
             items: items.map((i) => ({
               id: i.id,

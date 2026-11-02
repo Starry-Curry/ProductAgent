@@ -1459,6 +1459,7 @@ export async function executeGraph(
               actor,
               args.itemId!,
               !!ctx.item?.demo,
+              db,
             );
             if (!value) throw new AgentError("物品不存在或未获授权");
           } else if (call.function.name === "fetch_official_knowledge") {
@@ -1508,6 +1509,7 @@ export async function executeGraph(
                       !!ctx.item?.demo,
                       args.offset,
                       args.limit,
+                      db,
                     );
           if (
             ["read_item_context", "list_accessible_items"].includes(
@@ -1582,6 +1584,7 @@ export async function executeGraph(
                   actor,
                   id,
                   !!ctx.item?.demo,
+                  db,
                 );
                 return item ? [item] : [];
               }),

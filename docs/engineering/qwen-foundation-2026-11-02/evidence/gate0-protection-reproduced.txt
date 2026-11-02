@@ -1,0 +1,35 @@
+✔ Gate0 fixture uses exact model/region and nested typed facts; wrong model/region passages are excluded (141.4159ms)
+✔ Gate0 private story relationship remains local unless explicitly cloud-authorized; no-model keeps item identity (149.5697ms)
+✔ Gate0 unavailable resource stays discoverable but cannot enter action-authorized IDs (113.0466ms)
+✔ Gate0 PDF text-layer fixture preserves unread-figure limitation instead of certifying button diagrams (111.8421ms)
+✔ Gate0 physical state revision invalidates dependent steps while private notes do not (109.2429ms)
+✔ Gate0 explicit grant revocation and expiry exclude the resource from current kernel compilation (130.7689ms)
+⚠ Gate0 known legacy gap: direct projection must reject an expired grant (current kernel already excludes it) (117.0524ms) # TODO
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 1
+ℹ duration_ms 1408.9141
+
+✖ failing tests:
+
+test at tests\foundation-gate0.test.ts:118:6
+⚠ Gate0 known legacy gap: direct projection must reject an expired grant (current kernel already excludes it) (117.0524ms) # TODO
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/foundation-gate0.test.ts:126:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /未获授权/,
+    operator: 'throws',
+    diff: 'simple'
+  }

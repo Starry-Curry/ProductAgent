@@ -3,7 +3,9 @@ import { sharedItemKnowledge } from "./knowledge.ts";
 import { retrieveKnowledge, readKnowledge } from "../life/acquisition.ts";
 import { taskEvidence } from "../life/knowledge-task.ts";
 import type { DatabaseSync } from "node:sqlite";
-import { canRead, type State, type Person } from "../domain.ts";
+import { type State, type Person } from "../domain.ts";
+import { authorize } from "../foundation/policy.ts";
+import { AgentError } from "../agent/contracts.ts";
 import { boundPack } from "../ai/harness.ts";
 import { recallMemories, effectivePersona } from "../memory/store.ts";
 import { relevantKnowledge } from "../skills/knowledge.ts";
@@ -30,8 +32,10 @@ export function buildContext(
     useExperiences?: boolean;
   },
 ) {
+  if (input.itemId && !authorize(db, state, actor, input.itemId).allowed)
+    throw new AgentError("物品不存在或未获授权", 403);
   const item = input.itemId
-    ? state.items.find((i) => i.id === input.itemId && canRead(i, actor))
+    ? state.items.find((i) => i.id === input.itemId)
     : undefined;
   const persona = input.temporary
     ? {
@@ -119,7 +123,7 @@ export function buildContext(
     state,
     actor,
     item ? [item.id] : [],
-    { demo: !!item?.demo },
+    { demo: !!item?.demo, db },
   );
   return {
     temporary: !!input.temporary,
@@ -156,14 +160,14 @@ export function buildContext(
             state.items
               .filter(
                 (i) =>
-                  canRead(i, actor) &&
+                  authorize(db, state, actor, i.id).allowed &&
                   (!input.excludeSynthetic ||
                     (!syntheticItem(i) && usable(i))) &&
                   (item?.demo ? !!i.demo : !i.demo) &&
                   ["在用", "闲置", "待确认"].includes(i.state),
               )
               .map((i) => i.id),
-            { demo: !!item?.demo },
+            { demo: !!item?.demo, db },
           ).items
         : [],
   };

@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import type { DatabaseSync } from "node:sqlite";
 import { type State, type Person } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
 import { readItemContext } from "./items.ts";
@@ -11,10 +12,10 @@ export function sharedItemKnowledge(
   state: State,
   actor: Person,
   itemIds: string[],
-  options: { demo?: boolean } = {},
+  options: { demo?: boolean; db?: DatabaseSync } = {},
 ) {
   const items = [...new Set(itemIds)].map((id) => {
-    const item = readItemContext(state, actor, id, options.demo === true);
+    const item = readItemContext(state, actor, id, options.demo === true, options.db);
     if (!item) throw new AgentError("所选物品不存在或未获授权", 403);
     return structuredClone(item);
   });

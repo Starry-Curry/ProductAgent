@@ -1,0 +1,15 @@
+✔ Gate0 fixture uses exact model/region and nested typed facts; wrong model/region passages are excluded (178.0173ms)
+✔ Gate0 private story relationship remains local unless explicitly cloud-authorized; no-model keeps item identity (157.3342ms)
+✔ Gate0 unavailable resource stays discoverable but cannot enter action-authorized IDs (140.3948ms)
+✔ Gate0 PDF text-layer fixture preserves unread-figure limitation instead of certifying button diagrams (109.7656ms)
+✔ Gate0 physical state revision invalidates dependent steps while private notes do not (108.0248ms)
+✔ Gate0 explicit grant revocation and expiry exclude the resource from current kernel compilation (132.0064ms)
+✔ Gate0 known legacy gap: sharedItemKnowledge alone uses canRead and cannot enforce an expired foundation grant; callers must use current authorized compiler (0.2477ms) # TODO
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 1
+ℹ duration_ms 1515.7783
