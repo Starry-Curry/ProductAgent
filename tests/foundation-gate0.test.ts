@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { validationFixture } from '../scripts/life-validation-fixture.ts';
 import { migrateUnified } from '../src/lib/foundation/schema.ts';
-import { kernelContext } from '../src/lib/agent/kernel/context.ts';
+import { compileTaskContext } from '../src/lib/context/compiler.ts';
 import { makeKnowledgeDocument, storeOfficialDocument } from '../src/lib/life/acquisition.ts';
 import { saveMemory } from '../src/lib/memory/store.ts';
 import { mirrorItemGrant } from '../src/lib/foundation/policy.ts';
@@ -23,7 +23,7 @@ function setup(t: { after: (f: () => void) => void }) {
     attributes: { physicalFacts: [{ id: crypto.randomUUID(), component: '本体', key: 'outer_mm', value: [100, 200, 30], basis: 'user_report' }] },
   });
   const context = (actor: Person = 'lin', question = '使用和尺寸', known: Record<string, string> = {}) =>
-    kernelContext(f.db, f.read(), actor, { itemId: id, known: { memoryPolicy: 'off', ...known }, messages: [], tried: [] } as any, question, false, [], [], 18000);
+    compileTaskContext(f.db, f.read(), actor, { itemId: id, known: { memoryPolicy: 'off', ...known }, messages: [], tried: [] } as any, question, false, [], [], 18000);
   const document = (model: string, region: string, text: string, reading?: { limitations: string[]; figures: { url: string; caption: string }[] }) => {
     const item = f.read().items.find(i => i.id === id)!;
     const url = 'https://helpguide.sony.net/' + region + '/' + model + '/' + crypto.randomUUID();

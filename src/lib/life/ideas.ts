@@ -19,7 +19,7 @@ import {
 } from "./creative-reasoning.ts";
 import { exploreCreativeUses } from "./creative-exploration.ts";
 import { storyMemoryRelevant } from "./organization.ts";
-import { readKnowledge, documentCapabilities } from "./acquisition.ts";
+import { readKnowledge, documentEvidence } from "./acquisition.ts";
 import type { CreativeEvidence } from "./creative-evidence.ts";
 import type { ProviderResult } from "../ai/provider.ts";
 import { violatesGoal } from "./planning-constraints.ts";
@@ -1055,7 +1055,7 @@ async function draftModelIdea(
             referenceRules: {
               factIds: items.flatMap((i) => [
                 ...(boundPack(i)?.claims.map((c) => c.id) || []),
-                ...documentCapabilities(
+                ...documentEvidence(
                   readKnowledge(db, state, actor, i.id),
                 ).map((c) => c.id),
               ]),
@@ -1101,7 +1101,7 @@ async function draftModelIdea(
             referenceRules: {
               factIds: items.flatMap((i) => [
                 ...(boundPack(i)?.claims.map((c) => c.id) || []),
-                ...documentCapabilities(
+                ...documentEvidence(
                   readKnowledge(db, state, actor, i.id),
                 ).map((c) => c.id),
               ]),
@@ -1126,7 +1126,7 @@ async function draftModelIdea(
               attributes: i.attributes,
               knowledge: {
                 ...boundPack(i),
-                acquiredFacts: documentCapabilities(
+                acquiredFacts: documentEvidence(
                   readKnowledge(db, state, actor, i.id),
                 ),
               },
@@ -1603,7 +1603,7 @@ async function draftModelIdea(
       ...(p
         ? p.claims.map((c) => ({ id: c.id, text: c.text, url: p.source.url }))
         : []),
-      ...documentCapabilities(readKnowledge(db, state, actor, i.id)).map(
+      ...documentEvidence(readKnowledge(db, state, actor, i.id)).map(
         (c) => ({ id: c.id, text: c.text, url: c.url }),
       ),
     ];

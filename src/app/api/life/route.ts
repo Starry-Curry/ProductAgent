@@ -40,7 +40,8 @@ import { lookupOpenCatalog } from "@/lib/life/open-catalog";
 import { syntheticItem } from "@/lib/life/availability";
 import { z } from "zod";
 import { actor, localOnly, read, database, write } from "@/lib/db";
-import { visible, mutate, canRead, type State } from "@/lib/domain";
+import { mutate, type State } from "@/lib/domain";
+import { authorizedVisible, requireVisibleItem } from "@/lib/foundation/visibility";
 import { AgentError } from "@/lib/agent/contracts";
 import {
   listFragments,
@@ -104,7 +105,8 @@ async function GETHandler(r: Request) {
       return Response.json(
         searchInspiration(z.string().max(500).parse(p.get("inspiration"))),
       );
-    if (p.has("itemId"))
+    if (p.has("itemId")) {
+      requireVisibleItem(db,state,a,p.get("itemId")!);
       return Response.json({
         sources: listSources(db, state, a, p.get("itemId")!).map((s) => ({
           ...s,
@@ -124,6 +126,9 @@ async function GETHandler(r: Request) {
           readKnowledge(db, state, a, p.get("itemId")!),
         ).map((c) => c.message),
       });
+    }
+    const workspace=authorizedVisible(db,state,a),allowedIds=new Set(workspace.items.map(i=>i.id));
+    const fragments=listFragments(db,state,a).map(f=>({...f,itemIds:f.itemIds.filter(id=>allowedIds.has(id))}));
     return Response.json({
       virtualHome: {
         allowCloud: !!state.virtualHomes?.[a]?.allowCloud,
@@ -132,15 +137,15 @@ async function GETHandler(r: Request) {
         knowledge: homeKnowledgeStatus(db, state, a),
       },
       workspace: {
-        ...visible(state, a),
-        items: visible(state, a).items.map((i) => ({
+        ...workspace,
+        items: workspace.items.map((i) => ({
           ...i,
           synthetic: syntheticItem(i),
         })),
       },
-      fragments: listFragments(db, state, a),
+      fragments,
       storyOrganization: storyOrganization(db, state, a),
-      ideas: listLifeIdeas(db, state, a),
+      ideas: listLifeIdeas(db, state, a).filter(i=>i.itemIds.every(id=>allowedIds.has(id))),
       creativeEvidence: listCreativeEvidence(db, a),
       packs: productPacks,
       capabilities: {
@@ -153,32 +158,31 @@ async function GETHandler(r: Request) {
         manual: true,
       },
       stats: {
-        items: state.items.filter((i) => canRead(i, a) && !i.demo).length,
-        syntheticItems: state.items.filter(
+        items: workspace.items.filter((i) => !i.demo).length,
+        syntheticItems: workspace.items.filter(
           (i) =>
-            canRead(i, a) &&
             (i.synthetic || i.source === "示例数据") &&
             !i.demo,
         ).length,
         packs: productPacks.length,
         facts: productPacks.reduce((n, p) => n + p.claims.length, 0),
         procedures: 2,
-        boundInstances: state.items.filter(
-          (i) => canRead(i, a) && !i.demo && i.productBinding,
+        boundInstances: workspace.items.filter(
+          (i) => !i.demo && i.productBinding,
         ).length,
         distinctBoundModels: new Set(
-          state.items
-            .filter((i) => canRead(i, a) && !i.demo && i.productBinding)
+          workspace.items
+            .filter((i) => !i.demo && i.productBinding)
             .map((i) => i.productBinding!.packId),
         ).size,
-        legacyCases: state.items.filter((i) => canRead(i, a) && !!i.demo)
+        legacyCases: workspace.items.filter((i) => !!i.demo)
           .length,
         creativeRecipes: creativeRecipeCount,
-        familyTasks: visible(state, a).tasks.length,
-        gifts: visible(state, a).gifts.length,
-        photoFragments: listFragments(db, state, a).filter((f) => f.mediaId)
+        familyTasks: workspace.tasks.length,
+        gifts: workspace.gifts.length,
+        photoFragments: fragments.filter((f) => f.mediaId)
           .length,
-        fragments: listFragments(db, state, a).length,
+        fragments: fragments.length,
       },
     });
   } catch (e) {
@@ -461,7 +465,7 @@ async function POSTHandler(r: Request) {
         })
         .parse(p.input);
       return Response.json({
-        workspace: visible(write(a, "updateItem", v), a),
+        workspace: authorizedVisible(db,write(a, "updateItem", v),a),
       });
     }
     throw new AgentError("不支持的操作");

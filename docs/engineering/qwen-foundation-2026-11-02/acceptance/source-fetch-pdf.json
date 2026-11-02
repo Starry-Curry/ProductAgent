@@ -28,6 +28,8 @@
       9,
       10
     ],
-    "obtainedAt": "2026-11-02T02:23:57.797Z"
+    "obtainedAt": "2026-11-02T02:23:57.797Z",
+    "measurementValid": false,
+    "measurementError": "PDF worker transferred ArrayBuffer before byteLength/hash recording; use source-fetch-pdf-r2.json as byte evidence"
   }
 ]

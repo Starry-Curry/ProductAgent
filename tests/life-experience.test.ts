@@ -211,6 +211,9 @@ test("能力组合不依赖种子ID，下一轮排除真实资源并保护上一
   try {
     const light = t.add("夜跑手电筒", "电子设备", "塑料"),
       glass = t.add("透明玻璃杯", "厨房用品", "玻璃");
+    // This regression tests reusable plan/feedback/exclusion, not inference
+    // from item names. The usable light function is an explicit synthetic report.
+    const reported=t.read();reported.items.find(i=>i.id===light)!.attributes!.capabilities=['照明'];t.write(reported);
     const first = await planDiscovery(
       t.db,
       t.read(),

@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-02T02:57:13.422Z",
+  "baselineCommit": "fdeb73b99410dd1c9eb65ccd03ee1da59f52fd06",
+  "method": "git grep -n -i -E over every tracked baseline file; ignore new acceptance directory only",
+  "pattern": "(GLM[ -]*50[ -]*C|Forerunner[ -]*165|instax[ -]*mini[ -]*99|TI[ -]*30XS|H1essential|TM[ -]*70T)",
+  "exitCode": 1,
+  "matches": "",
+  "interpretation": "no complete model-name match; no proof of lack of LLM pretraining knowledge",
+  "oldRoundExcluded": true,
+  "paidRequests": 0
+}

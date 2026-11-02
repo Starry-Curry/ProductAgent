@@ -1,31 +1,24 @@
 import type { DatabaseSync } from "node:sqlite";
-import { canRead,type State,type Person } from "../../domain.ts";
-import type { ServiceSession } from "../contracts.ts";
-import { itemContext } from "../../context/items.ts";
-import { buildContext } from "../../context/builder.ts";
-import { readKnowledge, retrieveKnowledge,trustedOfficialDocument } from "../../life/acquisition.ts";
-import { modelMentioned,officialDomain } from "../../life/knowledge.ts";
-import { resolveTaskContext } from "../../foundation/tasks.ts";
-import { virtualHomeItems } from "../../life/virtual-home.ts";
-import { authorize } from "../../foundation/policy.ts";
-import { retrieveTaskPassages } from "./retrieval.ts";
-import type { EvidencePassage } from "./contracts.ts";
-import {rectangleCondition} from './physical.ts';
+import { canRead,type State,type Person } from "../domain.ts";
+import type { ServiceSession } from "../agent/contracts.ts";
+import { itemContext } from "./items.ts";
+import { buildContext } from "./builder.ts";
+import { readKnowledge, retrieveKnowledge } from "../life/acquisition.ts";
+import {scopedProductKnowledge} from "./evidence-scope.ts";
+export {officialProductPath} from "./evidence-scope.ts";
+import { resolveTaskContext } from "../foundation/tasks.ts";
+import { virtualHomeItems } from "../life/virtual-home.ts";
+import { authorize } from "../foundation/policy.ts";
+import { retrieveTaskPassages } from "../agent/kernel/retrieval.ts";
+import type { EvidencePassage } from "../agent/kernel/contracts.ts";
+import {projectReality} from './reality.ts';
+import {resourceCatalogue} from './relevance.ts';
+import {fingerprint} from '../foundation/legacy.ts';
+import {epoch} from '../memory/store.ts';
+import {rectangleCondition} from '../agent/kernel/physical.ts';
 
-// Correlate product + spec pages only by the exact manufacturer's product path.
-// A general support page, brand name or similar model is never such a relation.
-export function officialProductPath(url:string){
-  const u=new URL(url),parts=u.pathname.split('/').filter(Boolean);
-  const marker=parts.findIndex(p=>p==='product'||p==='p');
-  return marker>=0&&parts[marker+1]?u.hostname.replace(/^www\./,'')+'/'+parts[marker+1]:undefined;
-}
-function sourceRegion(url:string,fallback:string){
-  if(fallback&&fallback!=='unspecified')return fallback;
-  const first=new URL(url).pathname.split('/').filter(Boolean)[0];
-  return ['cn','sg','hk','tw','gb','jp','us','in','ae-en','nz','au','global','my'].includes(first)?first:fallback||'unspecified';
-}
 
-export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number){
+export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number){
   const taskId=session.known.foundationTaskId;
   const taskContext=taskId?resolveTaskContext(db,state,actor,taskId):undefined;
   const task=taskContext?.task;
@@ -40,19 +33,13 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
   const selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||!task&&(mentioned(i.name)||(!focused||i.model!==focused.model)&&mentioned(i.model))||
     // Entity matching only. It never chooses an intent or provides a product fact.
     !task&&!evidenceByteBudget&&[...new Intl.Segmenter('zh',{granularity:'word'}).segment(i.name)].some(s=>s.segment.length>=2&&mentioned(s.segment)));
+  const selection=resourceCatalogue(allowed,question,selected.map(i=>i.id));
+  const semanticItems=selected.map(projectReality);
   const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,
     taskMemoryOnly:true,includeItemRelationships:session.known.useItemMemories==='yes',companion:!!session.known.companionItemId,useExperiences:session.known.memoryPolicy!=='off'}));
   const memoryOn=session.known.memoryPolicy!=='off'&&!temporary;
   const documents=selected.flatMap(i=>{
-    const all=readKnowledge(db,state,actor,i.id),official=all.filter(d=>d.model===i.model&&trustedOfficialDocument(d,i,all));
-    const exact=official.filter(d=>modelMentioned(d.title+' '+d.text,i.model));
-    const inherited=official.filter(d=>d.applicability==='manufacturer_linked_manual');
-    return official.filter(d=>{
-      const region=sourceRegion(d.url,d.region);
-      const path=officialProductPath(d.url);
-      return (!i.region||i.region==='unspecified'||region===i.region||region==='unspecified')&&
-        (exact.some(e=>e.id===d.id)||inherited.some(e=>e.id===d.id)||!!path&&exact.some(e=>officialProductPath(e.url)===path));
-    }).map(d=>({itemId:i.id,scopeBasis:exact.some(e=>e.id===d.id)?'exact_model_in_official_document':inherited.some(e=>e.id===d.id)?'manufacturer_link_from_exact_model_page':'same_official_product_path_as_exact_model_spec',document:{...d,region:sourceRegion(d.url,d.region)}}));
+    return scopedProductKnowledge(i,readKnowledge(db,state,actor,i.id)).map(d=>({...d,itemId:i.id}));
   });
   const evidence:EvidencePassage[]=selected.flatMap(i=>{
     const docs=documents.filter(d=>d.itemId===i.id).map(d=>d.document);
@@ -64,7 +51,7 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
     const allocation=evidenceByteBudget ? Math.floor(evidenceByteBudget/Math.max(1,selected.length)) : Infinity;
     let bytes=0;
     return candidates.filter(c=>{if(bytes+Buffer.byteLength(c.text)>allocation)return false;bytes+=Buffer.byteLength(c.text);return true;})
-      .map(c=>({id:c.id,itemId:i.id,model:c.model,region:docs.find(d=>d.id===c.documentId)?.region||c.region,title:c.title,text:c.text,url:c.url,documentId:c.documentId,fetchedAt:docs.find(d=>d.id===c.documentId)?.fetchedAt,scopeBasis:documents.find(d=>d.document.id===c.documentId)?.scopeBasis,reading:{limitations:docs.find(d=>d.id===c.documentId)?.reading?.limitations||[],figures:[]},basis:'official' as const}));
+      .map(c=>({id:c.id,itemId:i.id,model:c.model,region:docs.find(d=>d.id===c.documentId)?.region||c.region,title:c.title,text:c.text,url:c.url,documentId:c.documentId,fetchedAt:docs.find(d=>d.id===c.documentId)?.fetchedAt,scopeBasis:documents.find(d=>d.document.id===c.documentId)?.scopeBasis,reading:{mode:docs.find(d=>d.id===c.documentId)?.reading?.mode||'unknown',limitations:docs.find(d=>d.id===c.documentId)?.reading?.limitations||[],figures:[]},basis:'official' as const}));
   });
   // The current user statement is authorized for THIS reply, not automatically
   // confirmed long-term memory, manufacturer evidence or a device observation.
@@ -78,7 +65,13 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
   return {
     question,items:selected.map(itemContext),
     // No owners, locations, notes, photos or private stories in the catalogue.
-    catalogue:allowed.slice(0,80).map(i=>({id:i.id,name:i.name,model:i.model,category:i.category})),
+    catalogue:selection.items,
+    discovery:{total:selection.total,matched:selection.matched,truncated:selection.truncated,unmatched:selection.unmatched},
+    // Server-only access set: never serialize it into a model packet. Selection
+    // is relevance, not permission; an authorized ID outside top results is valid.
+    authorizedItemIds:allowed.map(i=>i.id),
+    semanticItems,
+    revision:fingerprint({actor,items:semanticItems.map(i=>[i.itemId,i.revision]),sources:documents.map(d=>[d.document.id,d.document.hash]),permissions:allowed.map(i=>[i.id,i.owner,i.sharedWith]),personal:evidence.filter(e=>e.basis!=='official'&&e.id!=='user:current-turn').map(e=>[e.id,e.text]),memoryEpoch:epoch(db,actor)}),
     evidence,experiences,
     // Deterministic constraints inspect the scoped official corpus, independent
     // of which query snippets fit in the language model's token window.
@@ -102,4 +95,4 @@ export function kernelContext(db:DatabaseSync,state:State,actor:Person,session:S
     household:home?'virtual_young_apartment':'user_registered_items_not_physically_verified',
   };
 }
-export type KernelContext=ReturnType<typeof kernelContext>;
+export type TaskContext=ReturnType<typeof compileTaskContext>;

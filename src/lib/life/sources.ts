@@ -7,6 +7,7 @@ import { canRead, type State, type Person } from "../domain.ts";
 import { AgentError, type AssistantReply } from "../agent/contracts.ts";
 import { searchProducts } from "../products.ts";
 import { modelMentioned } from "./knowledge.ts";
+export type SourceReading={mode?:'html_text'|'pdf_text_layer'|'unknown';limitations:string[];figures:{url:string;caption:string}[]};
 
 export function publicAddress(address: string) {
   if (address.includes(":"))
@@ -173,7 +174,7 @@ export async function fetchPublicDocument(
       text: d.text,
       url: url.href,
       links: [],
-      reading: {limitations:['PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。'],figures:[] as {url:string;caption:string}[]},
+      reading: {mode:'pdf_text_layer',limitations:['PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。'],figures:[]} as SourceReading,
     };
   }
   if (/application\/json/.test(result.type))
@@ -316,7 +317,7 @@ export async function extractPublicHTML(raw: string, address: string) {
     ],
     extracted,
     navigationItems,
-    reading:{limitations:uncaptioned?[`有${uncaptioned}处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。`]:[],figures},
+    reading:{mode:'html_text',limitations:uncaptioned?[`有${uncaptioned}处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。`]:[],figures} as SourceReading,
   };
 }
 export const fetchPublicText = fetchPublicDocument;

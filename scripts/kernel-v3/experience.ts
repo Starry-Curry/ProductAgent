@@ -4,7 +4,7 @@ import {v3Gateway,V3_ROOT,V3_ROUND} from './gateway.mjs';
 import {kernelFixture} from './fixtures.ts';
 import {createProvider} from '../../src/lib/ai/provider.ts';
 import {respond} from '../../src/lib/agent/service.ts';
-import {kernelContext} from '../../src/lib/agent/kernel/context.ts';
+import {compileTaskContext} from '../../src/lib/context/compiler.ts';
 import {createTask,beginRun,finishRun,getTask,recordOutcome,amendOutcome} from '../../src/lib/foundation/tasks.ts';
 import {saveMemory} from '../../src/lib/memory/store.ts';
 if(!process.argv.includes('--authorized-v3-250-cny50'))throw Error('authorized_round_required');
@@ -22,7 +22,7 @@ const save=()=>fs.writeFileSync(file,JSON.stringify({roundId:V3_ROUND,stage,synt
 const task=(ids:string[],goal:string)=>createTask(f.db,f.read,'lin',{requestId:crypto.randomUUID(),goal,intent:'guide',itemInstanceIds:ids});
 function report(ids:string[],notes:string,allowCloud=true){const t=task(ids,'合成用户已尝试的结果');const run=beginRun(f.db,f.read,'lin',{requestId:crypto.randomUUID(),taskId:t.taskId,itemIds:ids,entryPoint:'test',executor:'synthetic_user_report_not_model_or_hardware',input:{}});finishRun(f.db,f.read,run,'waiting_user');return recordOutcome(f.db,f.read,'lin',{taskId:t.taskId,runId:run.runId,requestId:crypto.randomUUID(),expectedRevision:getTask(f.db,f.read(),'lin',t.taskId).revision,goalStatus:'partial',notes,confirmed:true,reuse:true,allowCloud});}
 async function run(id:string,q:string,itemId:string,memoryPolicy:'legacy'|'off',direct=false){label=stage+'/'+id;const started=performance.now(),before=captures.length;
- const context=kernelContext(f.db,f.read(),'lin',{itemId,known:{memoryPolicy},messages:[],tried:[]} as any,q);
+ const context=compileTaskContext(f.db,f.read(),'lin',{itemId,known:{memoryPolicy},messages:[],tried:[]} as any,q);
  try{const result=direct?await provider.generate('根据相同物品、官方原文、用户报告和实际限制，完整自然回答。不编造，不重复无效动作；创意可以有未知但要说明。',context,{temperature:0.2,maxTokens:4000,timeoutMs:60000}):await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId,question:q,mode:'service',memoryPolicy,uiContext:{page:'item'}},provider);
  const calls=ledger().filter((a:any)=>a.evaluation===label);rows.push({id,question:q,result,elapsedMs:Math.round(performance.now()-started),attempts:calls.map((a:any)=>a.number),contextHash:createHash('sha256').update(JSON.stringify(context)).digest('hex'),experienceIds:context.experiences.map(r=>r.outcomeId),inputCaptures:captures.slice(before)});
  }catch(e){rows.push({id,question:q,error:(e as Error).message,elapsedMs:Math.round(performance.now()-started)});}save();console.log(id,rows.at(-1).result?.reply?.outcome||rows.at(-1).error||'returned');}

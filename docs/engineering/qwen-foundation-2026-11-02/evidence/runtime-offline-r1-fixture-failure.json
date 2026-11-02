@@ -1,0 +1,171 @@
+{
+  "at": "2026-11-02T03:12:22.572Z",
+  "basis": "offline_scripted_model_transport_tool_lifecycle_not_qwen_not_product_quality",
+  "model": "offline-scripted-model",
+  "externalPaidRequests": 0,
+  "semanticCard": {
+    "itemId": "synthetic-owned-labeler",
+    "name": "合成标签机",
+    "model": "UNSEEN-LABEL-42",
+    "basis": "synthetic_registered_user_report",
+    "properties": {
+      "material": null,
+      "battery": "用户报告可开机",
+      "supplies": "用户报告色带已用完"
+    },
+    "capabilities": [
+      {
+        "name": "标签打印",
+        "status": "conditional",
+        "requires": [
+          "适用耗材",
+          "对应型号操作资料"
+        ]
+      }
+    ],
+    "unknowns": [
+      "外壳材质",
+      "当前打印能力"
+    ],
+    "source": {
+      "id": "synthetic-manual:1",
+      "url": "https://example.invalid/synthetic/UNSEEN-LABEL-42",
+      "applicability": "synthetic_exact_model_not_real_official_source"
+    }
+  },
+  "semanticCardSha256": "11e5297f975369ec3b41330f0b9b694f92a798c9c731c3ffa902037ce679c7a7",
+  "question": "只用我登记的标签机整理旅行纪念卡：现在能直接打印吗，外壳是什么材质？不要购买，不要编造未知属性。",
+  "results": [
+    {
+      "runtime": "sdk",
+      "scenario": "known-and-unknown",
+      "requests": [
+        {
+          "messages": [
+            {
+              "role": "system",
+              "content": "只读取当前用户获准物品，区分用户报告、未知与操作条件。工具错误应保留原因，不读取其他用户物品，不进行写入。"
+            },
+            {
+              "role": "user",
+              "content": "{\"question\":\"只用我登记的标签机整理旅行纪念卡：现在能直接打印吗，外壳是什么材质？不要购买，不要编造未知属性。\",\"item\":{\"itemId\":\"synthetic-owned-labeler\",\"name\":\"合成标签机\",\"model\":\"UNSEEN-LABEL-42\",\"basis\":\"synthetic_registered_user_report\",\"properties\":{\"material\":null,\"battery\":\"用户报告可开机\",\"supplies\":\"用户报告色带已用完\"},\"capabilities\":[{\"name\":\"标签打印\",\"status\":\"conditional\",\"requires\":[\"适用耗材\",\"对应型号操作资料\"]}],\"unknowns\":[\"外壳材质\",\"当前打印能力\"],\"source\":{\"id\":\"synthetic-manual:1\",\"url\":\"https://example.invalid/synthetic/UNSEEN-LABEL-42\",\"applicability\":\"synthetic_exact_model_not_real_official_source\"}}}"
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "read_knowledge",
+                "description": "取得当前用户获准的物品语义卡和资料；本工具执行实时权限检查。",
+                "parameters": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "itemId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "itemId"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "messages": [
+            {
+              "role": "system",
+              "content": "只读取当前用户获准物品，区分用户报告、未知与操作条件。工具错误应保留原因，不读取其他用户物品，不进行写入。"
+            },
+            {
+              "role": "user",
+              "content": "{\"question\":\"只用我登记的标签机整理旅行纪念卡：现在能直接打印吗，外壳是什么材质？不要购买，不要编造未知属性。\",\"item\":{\"itemId\":\"synthetic-owned-labeler\",\"name\":\"合成标签机\",\"model\":\"UNSEEN-LABEL-42\",\"basis\":\"synthetic_registered_user_report\",\"properties\":{\"material\":null,\"battery\":\"用户报告可开机\",\"supplies\":\"用户报告色带已用完\"},\"capabilities\":[{\"name\":\"标签打印\",\"status\":\"conditional\",\"requires\":[\"适用耗材\",\"对应型号操作资料\"]}],\"unknowns\":[\"外壳材质\",\"当前打印能力\"],\"source\":{\"id\":\"synthetic-manual:1\",\"url\":\"https://example.invalid/synthetic/UNSEEN-LABEL-42\",\"applicability\":\"synthetic_exact_model_not_real_official_source\"}}}"
+            },
+            {
+              "role": "assistant",
+              "content": null,
+              "tool_calls": [
+                {
+                  "id": "call-1",
+                  "type": "function",
+                  "function": {
+                    "name": "read_knowledge",
+                    "arguments": "{\"itemId\":\"synthetic-owned-labeler\"}"
+                  }
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call-1",
+              "content": "{\"state\":\"success\",\"output\":\"{\\\"itemId\\\":\\\"synthetic-owned-labeler\\\",\\\"name\\\":\\\"合成标签机\\\",\\\"model\\\":\\\"UNSEEN-LABEL-42\\\",\\\"basis\\\":\\\"synthetic_registered_user_report\\\",\\\"properties\\\":{\\\"material\\\":null,\\\"battery\\\":\\\"用户报告可开机\\\",\\\"supplies\\\":\\\"用户报告色带已用完\\\"},\\\"capabilities\\\":[{\\\"name\\\":\\\"标签打印\\\",\\\"status\\\":\\\"conditional\\\",\\\"requires\\\":[\\\"适用耗材\\\",\\\"对应型号操作资料\\\"]}],\\\"unknowns\\\":[\\\"外壳材质\\\",\\\"当前打印能力\\\"],\\\"source\\\":{\\\"id\\\":\\\"synthetic-manual:1\\\",\\\"url\\\":\\\"https://example.invalid/synthetic/UNSEEN-LABEL-42\\\",\\\"applicability\\\":\\\"synthetic_exact_model_not_real_official_source\\\"}}\"}"
+            }
+          ],
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "read_knowledge",
+                "description": "取得当前用户获准的物品语义卡和资料；本工具执行实时权限检查。",
+                "parameters": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "itemId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "itemId"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "toolAttempts": [
+        {
+          "itemId": "synthetic-owned-labeler"
+        }
+      ],
+      "knowledgeReads": 1,
+      "successfulReads": 1,
+      "unauthorizedReads": 0,
+      "events": [
+        {
+          "type": "MODEL_CALL_START"
+        },
+        {
+          "type": "MODEL_CALL_END"
+        },
+        {
+          "type": "TOOL_RESULT_START"
+        },
+        {
+          "type": "TOOL_RESULT_END",
+          "state": "success"
+        },
+        {
+          "type": "MODEL_CALL_START"
+        },
+        {
+          "type": "MODEL_CALL_END"
+        }
+      ],
+      "text": "登记报告显示色带已用完，所以当前不能直接打印。外壳材质未知；不能凭名称补全。没有购买或执行任何操作。",
+      "finishedReason": "completed",
+      "elapsedMs": 45,
+      "assertions": "passed_for_scripted_transport_and_tool_lifecycle_only"
+    }
+  ],
+  "error": {
+    "name": "TypeError",
+    "message": "Cannot read properties of undefined (reading 'toString')",
+    "stack": "TypeError: Cannot read properties of undefined (reading 'toString')\n    at file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/.runtime/agentscope/node_modules/@agentscope-ai/agentscope/dist/model/index.mjs:1847:42\n    at Array.forEach (<anonymous>)\n    at OpenAIChatModel._parseOpenAIStreamedResponse (file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/.runtime/agentscope/node_modules/@agentscope-ai/agentscope/dist/model/index.mjs:1846:35)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Agent._reasoning (file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/.runtime/agentscope/node_modules/@agentscope-ai/agentscope/dist/agent/index.mjs:1079:33)\n    at async Agent._reply (file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/.runtime/agentscope/node_modules/@agentscope-ai/agentscope/dist/agent/index.mjs:966:35)\n    at async Agent.replyStream (file:///D:/ProductAgent-LifeContext/.runtime/outcome-qwen-v3/.runtime/agentscope/node_modules/@agentscope-ai/agentscope/dist/agent/index.mjs:738:14)\n    at async scopeProbe (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/scripts/foundation/runtime-offline-probe.mjs:82:25)\n    at async file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/scripts/foundation/runtime-offline-probe.mjs:92:40"
+  }
+}

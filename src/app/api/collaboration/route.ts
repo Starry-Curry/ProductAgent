@@ -1,7 +1,7 @@
 import { withDemoRequest } from "@/lib/cloud/request";
 import { actor, database, read, localOnly } from "@/lib/db";
 import { householdMembers, collaborate } from "@/lib/collaboration";
-import { visible } from "@/lib/domain";
+import { authorizedVisible } from "@/lib/foundation/visibility";
 import { AgentError } from "@/lib/agent/contracts";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,7 +11,7 @@ export const GET = withDemoRequest(async (r: Request) => {
     const a = actor(r);
     return Response.json({
       members: householdMembers(database(), a),
-      workspace: visible(read(), a),
+      workspace: authorizedVisible(database(), read(), a),
     });
   } catch (e) {
     return Response.json(

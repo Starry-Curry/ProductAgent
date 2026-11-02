@@ -5,7 +5,7 @@ import {makeKnowledgeDocument,storeOfficialDocument} from '../src/lib/life/acqui
 import {migrateUnified} from '../src/lib/foundation/schema.ts';
 import {respond} from '../src/lib/agent/service.ts';
 import {answerKnownItem} from '../src/lib/agent/grounded-answer.ts';
-import {kernelContext,officialProductPath} from '../src/lib/agent/kernel/context.ts';
+import {compileTaskContext,officialProductPath} from '../src/lib/context/compiler.ts';
 import {precheck,adjudicateCandidates,quantities,verifyCalculation,anchorCandidate,attachRangeDerivation} from '../src/lib/agent/kernel/verify.ts';
 import {rangeCondition,rectangleCondition,physicalPrerequisites} from '../src/lib/agent/kernel/physical.ts';
 import {saveMemory,forgetMemory} from '../src/lib/memory/store.ts';
@@ -140,7 +140,7 @@ test('模型在途遗忘：旧结果不可提交',async()=>{
 test('权限与memory off：私人物品不在目录，云端报告不暗中加入',()=>{
  const f=fixture();try{const hidden=f.add('私有别人的物品','工具','Sony','OTHER');const s=f.read();s.items.find(i=>i.id===hidden)!.owner='dad';f.write(s);
  saveMemory(f.db,f.read,'lin',{kind:'relationship',text:'朋友赠送的秘密故事',itemId:f.id,allowCloud:true});
- const ctx=kernelContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off'},messages:[],tried:[]} as any,'这件耳机怎样？');
+ const ctx=compileTaskContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off'},messages:[],tried:[]} as any,'这件耳机怎样？');
  assert.ok(!ctx.catalogue.some(i=>i.id===hidden));assert.equal(ctx.experiences.length,0);assert.ok(!JSON.stringify(ctx).includes('秘密故事'));
  }finally{f.db.close();}
 });
@@ -153,7 +153,7 @@ test('隐私失效后的旧Task目标不能绕resolveTaskContext复活',()=>{
  const f=fixture();try{
  const t=createTask(f.db,f.read,'lin',{requestId:crypto.randomUUID(),goal:'只属于我的秘密赠送者小星',intent:'guide',itemInstanceIds:[f.id]});
  const m=saveMemory(f.db,f.read,'lin',{kind:'relationship',text:'秘密赠送者小星',itemId:f.id,allowCloud:true});forgetMemory(f.db,'lin',m.id);
- const ctx=kernelContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off',foundationTaskId:t.taskId},messages:[],tried:[]} as any,'怎样操作？');
+ const ctx=compileTaskContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off',foundationTaskId:t.taskId},messages:[],tried:[]} as any,'怎样操作？');
  assert.ok(!JSON.stringify(ctx).includes('秘密赠送者小星'));assert.match(ctx.currentTask!.goal,/语境已经变更/);
  }finally{f.db.close();}
 });
@@ -161,14 +161,14 @@ test('显式撤权优先于遗留shared字段，不能进目录和模型',()=>{
  const f=fixture();try{
  const s=f.read(),i=s.items.find(i=>i.id===f.id)!;i.owner='dad';i.shared=true;i.sharedWith=['lin'];f.write(s);
  mirrorItemGrant(f.db,f.read(),'dad','lin',f.id,false);
- const ctx=kernelContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off'},messages:[],tried:[]} as any,'怎样操作？');
+ const ctx=compileTaskContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off'},messages:[],tried:[]} as any,'怎样操作？');
  assert.ok(!ctx.catalogue.some(i=>i.id===f.id));assert.equal(ctx.items.length,0);assert.ok(ctx.evidence.every(e=>e.id==='user:current-turn'));
  }finally{f.db.close();}
 });
 test('本轮明确陈述可用于本轮关系理解，不自动变成长期记忆或厂家证据',()=>{
  const f=fixture();try{
  const q='这副耳机是小星送我的，帮我安排一次使用。';
- const ctx=kernelContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off'},messages:[],tried:[]} as any,q);
+ const ctx=compileTaskContext(f.db,f.read(),'lin',{itemId:f.id,known:{memoryPolicy:'off'},messages:[],tried:[]} as any,q);
  assert.equal(ctx.evidence.find(e=>e.id==='user:current-turn')?.basis,'user_report');
  assert.equal(ctx.evidence.find(e=>e.id==='user:current-turn')?.text,q);
  assert.equal(ctx.experiences.length,0);

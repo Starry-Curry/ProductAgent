@@ -12,7 +12,7 @@ import {
   findOfficial,
   type PublicDocument,
 } from "./knowledge.ts";
-import { fetchPublicDocument, sourceURL, listSources } from "./sources.ts";
+import { fetchPublicDocument, sourceURL, listSources,type SourceReading } from "./sources.ts";
 import type { Provider } from "../ai/provider.ts";
 import { selectTaskEvidence } from "./knowledge-task.ts";
 import { multilingualAnchors } from "./retrieval-topics.ts";
@@ -51,7 +51,7 @@ export type AcquiredDocument = {
   chain: string[];
   fetchedAt: string;
   chunks: KnowledgeChunk[];
-  reading?: { limitations: string[]; figures: { url: string; caption: string }[] };
+  reading?: SourceReading;
   sections?: {title:string;url:string}[];
 };
 /** Exact URL grant from a manufacturer's exact-model page, never a blanket CDN allowlist. */
@@ -706,30 +706,7 @@ export async function acquireKnowledge(
   };
 }
 
-export function documentCapabilities(documents: AcquiredDocument[]) {
-  const patterns: [string, RegExp][] = [
-    ["收纳", /shelf|storage|搁板|收纳/i],
-    ["照明", /lighting|illumination|照明/i],
-    ["声音播放", /playback|listen to music|播放音乐/i],
-    ["图像记录", /take photos|拍摄|摄影/i],
-    ["常温容纳", /cup|容器|杯子/i],
-    ["烹饪", /cooking|烹煮|烹饪/i],
-  ];
-  return patterns.flatMap(([label, pattern]) => {
-    for (const d of documents) {
-      const c = d.chunks.find((c) => pattern.test(c.text));
-      if (c)
-        return [
-          {
-            id: `${c.id}:cap:${label}`,
-            label,
-            text: c.text.slice(0, 1000),
-            url: d.url,
-            model: d.model,
-            basis: "官方文档词项支持的能力候选；未实测组合适用性",
-          },
-        ];
-    }
-    return [];
-  });
+export function documentEvidence(documents: AcquiredDocument[]) {
+  return documents.flatMap(d=>(d.observations||[]).flatMap((o,index)=>
+    o.quote&&d.text.includes(o.quote)?[{id:d.id+'/observation/'+index,label:o.topic,text:o.quote,url:d.url,model:d.model,basis:'quoted_source_candidate_not_capability',candidateInterpretation:o.value}]:[]));
 }

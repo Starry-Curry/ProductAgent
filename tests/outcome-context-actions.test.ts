@@ -1,11 +1,11 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {validationFixture} from '../scripts/life-validation-fixture.ts';import {createTask} from '../src/lib/foundation/tasks.ts';import {kernelContext} from '../src/lib/agent/kernel/context.ts';import {checkPlanResources} from '../src/lib/agent/practical-actions.ts';import {respond} from '../src/lib/agent/service.ts';import type {Provider} from '../src/lib/ai/provider.ts';import {decideAction} from '../src/lib/home/store.ts';
+import {validationFixture} from '../scripts/life-validation-fixture.ts';import {createTask} from '../src/lib/foundation/tasks.ts';import {compileTaskContext} from '../src/lib/context/compiler.ts';import {checkPlanResources} from '../src/lib/agent/practical-actions.ts';import {respond} from '../src/lib/agent/service.ts';import type {Provider} from '../src/lib/ai/provider.ts';import {decideAction} from '../src/lib/home/store.ts';
 test('任务目录可发现外部获准资源，未选择前不加载其私密详情；跨账号不可见',t=>{
  const f=validationFixture('.runtime/outcome-scope-'+crypto.randomUUID());t.after(()=>f.db.close());const a=f.add('合成旧篮','其他','','待确认'),b=f.add('合成毛线','其他','','待确认');const s=f.read();s.items.find(i=>i.id===b)!.note='不该自动发送的私人备注';f.write(s);
  const task=createTask(f.db,f.read,'lin',{requestId:crypto.randomUUID(),goal:'从旧篮出发帮助编织',intent:'explore',itemInstanceIds:[a]});const session:any={itemId:a,known:{foundationTaskId:task.taskId,memoryPolicy:'off'},messages:[],tried:[]};
- const c=kernelContext(f.db,f.read(),'lin',session,task.goal,false,[],[],18000);assert.ok(c.catalogue.some(i=>i.id===b));assert.ok(!c.items.some(i=>i.id===b));assert.ok(!JSON.stringify(c).includes('不该自动发送'));
- const selected=kernelContext(f.db,f.read(),'lin',session,task.goal,false,[],[b],18000);assert.ok(selected.items.some(i=>i.id===b));assert.ok(!JSON.stringify(selected).includes('不该自动发送'));
- const denied=kernelContext(f.db,f.read(),'dad',{known:{memoryPolicy:'off'},messages:[],tried:[]} as any,'编织',false,[],[],18000);assert.ok(!denied.catalogue.some(i=>i.id===b));
+ const c=compileTaskContext(f.db,f.read(),'lin',session,task.goal,false,[],[],18000);assert.ok(c.authorizedItemIds.includes(b));assert.ok(!c.items.some(i=>i.id===b));assert.ok(!JSON.stringify(c).includes('不该自动发送'));
+ const selected=compileTaskContext(f.db,f.read(),'lin',session,task.goal,false,[],[b],18000);assert.ok(selected.items.some(i=>i.id===b));assert.ok(!JSON.stringify(selected).includes('不该自动发送'));
+ const denied=compileTaskContext(f.db,f.read(),'dad',{known:{memoryPolicy:'off'},messages:[],tried:[]} as any,'编织',false,[],[],18000);assert.ok(!denied.catalogue.some(i=>i.id===b));
 });
 test('动作依赖不仅检查计划ID：缺失支撑/隐含资源、伪装作用和禁止动作被拒；未知只作条件',()=>{
  const plan={kind:'plan',goal:'不购买、不粘贴，用已有物品整理桌面',itemIds:['a'],sourceIds:[],conditions:[],steps:[{kind:'support',items:['a'],target:'ghost',text:'用不存在的支架承托'}]};

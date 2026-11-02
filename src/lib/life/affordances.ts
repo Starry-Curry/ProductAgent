@@ -1,7 +1,5 @@
 import type { Item } from "../domain.ts";
-import { itemContext } from "../context/items.ts";
-import { boundPack } from "../ai/harness.ts";
-import { physicalFactSchema } from "./physical-facts.ts";
+import { projectReality, type RealityCapability, type RealityFact } from "../context/reality.ts";
 
 export type EvidenceFact = {
   ref: string;
@@ -13,6 +11,9 @@ export type EvidenceFact = {
   text: string;
   sourceRef: string;
   url?: string;
+  semanticId?: string;
+  status?: RealityFact["status"];
+  verification?: RealityFact["verification"];
 };
 export type EvidenceInventory = {
   items: {
@@ -22,6 +23,8 @@ export type EvidenceInventory = {
     quantity: number | null;
     facts: EvidenceFact[];
     unknowns: string[];
+    realityRevision?: string;
+    capabilities?: RealityCapability[];
     operations: {
       ref: string;
       title: string;
@@ -42,164 +45,53 @@ export function dimensionsMm(
   const scale = /mm|毫米/.test(m[4]) ? 1 : 10;
   return [+m[1] * scale, +m[2] * scale, +m[3] * scale];
 }
+/** Legacy evidence handles adapt the authoritative projection; no item/pack
+ * extraction is repeated here. Capability assertions remain conditional and
+ * hypotheses never enter positive boolean facts. */
 export function evidenceInventory(items: Item[]): EvidenceInventory {
   let counter = 0;
   return {
     items: items.map((item, index) => {
-      const ref = `i${index + 1}`,
-        card = itemContext(item),
-        pack = boundPack(item),
-        facts: EvidenceFact[] = [];
-      const add = (
-        key: string,
-        value: unknown,
-        text: string,
-        basis: EvidenceFact["basis"],
-        sourceRef: string,
-        component = "本体",
-        url?: string,
-      ) =>
-        facts.push({
-          ref: `f${++counter}`,
-          item: ref,
-          component,
-          key,
-          value,
-          text,
-          basis,
-          sourceRef,
-          url,
+      const ref = `i${index + 1}`, card = projectReality(item), facts: EvidenceFact[] = [];
+      const add = (key: string, value: unknown, text: string, sourceRef: string, f?: RealityFact) =>
+        facts.push({ ref: `f${++counter}`, item: ref, component: f?.component || "本体", key, value, text,
+          basis: f?.basis === "official_source" ? "official_source" : "user_report", sourceRef,
+          ...(f?.source.url ? { url: f.source.url } : {}),
+          ...(f ? { semanticId: f.id, status: f.status, verification: f.verification } : {}),
         });
-      add(
-        "identity",
-        item.name,
-        item.name,
-        "user_report",
-        item.id + "/identity",
-      );
-      if (card.properties.material)
-        add(
-          "material",
-          card.properties.material,
-          card.properties.material,
-          "user_report",
-          item.id + "/material",
-        );
-      if (card.properties.dimensions) {
-        const dims = dimensionsMm(card.properties.dimensions);
-        add(
-          dims ? "outer_mm" : "dimension_statement",
-          dims || card.properties.dimensions,
-          card.properties.dimensions,
-          "user_report",
-          item.id + "/dimensions",
-        );
-      }
-      const capabilities: Record<string, string> = {
-        "indoor-storage": "open_container",
-        storage: "open_container",
-        容纳: "open_container",
-        容纳非食品轻小物: "open_container",
-        透明可视: "transparent",
-        提拿: "portable",
-        "audio-playback": "sound",
-        lighting: "light",
-        clamp: "clamp",
-        夹持: "clamp",
-        照明: "light",
-        便携: "portable",
-        发声: "sound",
-      };
-      for (const cap of card.properties.capabilities) {
-        const key = capabilities[cap];
-        add(
-          key || "capability_statement",
-          key ? true : cap,
-          cap,
-          "user_report",
-          item.id + "/capabilities",
-        );
-      }
-      for (const cap of pack?.capabilities || []) {
-        const key = capabilities[cap];
-        if (key)
-          add(
-            key,
-            true,
-            cap,
-            "official_source",
-            `${pack!.id}/capability/${cap}`,
-            "本体",
-            pack!.source.url,
-          );
-      }
-      for (const claim of card.officialFacts) {
-        add(
-          "statement",
-          claim.text,
-          claim.text,
-          "official_source",
-          claim.id,
-          "本体",
-          pack?.source.url,
-        );
-        const dims = dimensionsMm(claim.text);
-        if (
-          dims &&
-          !/内(?:部)?(?:净)?尺寸/.test(
-            claim.text.replace(
-              /(?:不是|不代表|并非|非)内(?:部)?(?:净)?尺寸/g,
-              "",
-            ),
-          )
-        )
-          add(
-            "outer_mm",
-            dims,
-            claim.text,
-            "official_source",
-            claim.id,
-            "本体",
-            pack?.source.url,
-          );
-      }
-      if (pack?.constraints?.maxLoadKg !== undefined)
-        add(
-          "max_load_kg",
-          pack.constraints.maxLoadKg,
-          "来源资料中的承重上限；不证明任意姿态稳定",
-          "official_source",
-          pack.id + "/maxLoadKg",
-          "本体",
-          pack.source.url,
-        );
-      for (const raw of item.attributes?.physicalFacts || []) {
-        const parsed = physicalFactSchema.safeParse(raw);
-        if (parsed.success) {
-          const f = parsed.data;
-          add(
-            f.key,
-            f.value,
-            `${f.component}：${f.key}=${JSON.stringify(f.value)}（本人报告）`,
-            "user_report",
-            `${item.id}/physical/${f.id}`,
-            f.component,
-          );
+      add("identity", card.name, card.name, card.id + "/identity");
+      for (const f of card.facts) {
+        // Conflicting facts remain in the semantic card/unknowns, not positive
+        // inputs to old deterministic evaluators that cannot represent conflict.
+        if (f.status !== "asserted" || f.basis === "inferred_unverified") continue;
+        const sourceRef = f.source.ref.startsWith("attributes/")
+          ? card.id + "/" + (f.predicate === "capability" ? "capabilities" : f.predicate)
+          : f.source.ref.startsWith("physical/") ? card.id + "/" + f.source.ref : f.source.ref;
+        if (f.predicate === "capability") {
+          const capability = card.capabilities.find(c => c.evidenceIds.includes(f.id) && c.status !== "hypothesis");
+          if (!capability) continue;
+          if (capability.canonicalKey)
+            add(capability.canonicalKey, capability.status !== "unavailable", capability.effect, sourceRef, f);
+          else add("capability_statement", capability.effect, capability.effect, sourceRef, f);
+          continue;
+        }
+        const text = typeof f.value === "string" ? f.value : `${f.component}：${f.predicate}=${JSON.stringify(f.value)}`;
+        if (f.predicate === "dimensions") {
+          const dims = typeof f.value === "string" ? dimensionsMm(f.value) : undefined;
+          add(dims ? "outer_mm" : "dimension_statement", dims || f.value, text, sourceRef, f);
+        } else {
+          add(f.predicate, f.value, text, sourceRef, f);
+          if (f.predicate === "statement") {
+            const dims = dimensionsMm(text);
+            if (dims && !/内(?:部)?(?:净)?尺寸/.test(text.replace(/(?:不是|不代表|并非|非)内(?:部)?(?:净)?尺寸/g, "")))
+              add("outer_mm", dims, text, sourceRef, f);
+          }
         }
       }
-      return {
-        ref,
-        id: item.id,
-        name: item.name,
-        quantity: item.attributes?.quantity ?? null,
-        facts,
-        unknowns: card.unknowns,
-        operations: (pack?.procedures || []).map((p, i) => ({
-          ref: `op${index + 1}_${i + 1}`,
-          title: p.title,
-          steps: p.steps.map((s) => s.text),
-          conditions: [...p.preconditions, ...p.fieldChecks, ...p.limits],
-        })),
+      return { ref, id: card.id, name: card.name, quantity: card.instance.quantity, facts, realityRevision: card.revision,
+        unknowns: card.unknowns, capabilities: card.capabilities,
+        operations: card.operations.map((p, i) => ({ ref: `op${index + 1}_${i + 1}`, title: p.title,
+          steps: p.steps.map(s => s.text), conditions: p.conditions })),
       };
     }),
   };

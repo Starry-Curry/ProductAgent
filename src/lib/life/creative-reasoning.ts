@@ -1,52 +1,25 @@
 import { z } from "zod";
 import type { Item } from "../domain.ts";
-import { itemContext } from "../context/items.ts";
+import { projectReality } from "../context/reality.ts";
 import { AgentError } from "../agent/contracts.ts";
 /** Evidence inventory precedes generation. Missing values never become usable properties. */
 export function creativeFacts(items: Item[]) {
   return items.map((item) => {
-    const card = itemContext(item);
-    return {
-      itemId: item.id,
-      name: item.name,
-      quantity: card.properties.quantity,
-      unit: card.properties.unit,
-      facts: [
-        {
-          ref: item.id + "/identity",
-          text: item.name + "；类别：" + item.category,
-          basis: "user_report" as const,
-        },
-        ...Object.entries(card.properties)
-          .filter(
-            ([key, v]) =>
-              key !== "quantity" &&
-              key !== "unit" &&
-              v !== null &&
-              v !== "" &&
-              (!Array.isArray(v) || v.length),
-          )
-          .map(([key, v]) => ({
-            ref: item.id + "/" + key,
-            text: Array.isArray(v) ? v.join("；") : String(v),
-            basis: "user_report" as const,
-          })),
-        ...card.officialFacts.map((f) => ({
-          ref: item.id + "/" + f.id,
-          text: f.text,
-          basis: "official_source" as const,
-        })),
-      ],
-      unknowns: [
-        ...new Set([
-          ...card.unknowns,
-          ...(card.productUnderstanding?.unknowns || []),
-        ]),
-      ],
-      limits: card.limits,
-    };
+    const card = projectReality(item);
+    const facts: {ref:string;text:string;basis:"user_report"|"official_source"}[] = [{ ref: card.id + "/identity", text: card.name + "；类别：" + item.category, basis: "user_report" as const }];
+    const declared = card.facts.filter(f => f.predicate === "capability" && f.basis === "user_report" && f.status === "asserted");
+    for (const f of card.facts) {
+      if (f.status !== "asserted" || f.basis === "inferred_unverified" || declared.includes(f)) continue;
+      // Preserve public legacy references used by saved candidates and validators.
+      const suffix = f.source.ref.startsWith("attributes/") ? f.predicate : f.source.ref;
+      facts.push({ ref: card.id + "/" + suffix, text: typeof f.value === "string" ? f.value : JSON.stringify(f.value), basis: f.basis });
+    }
+    if (declared.length) facts.push({ ref: card.id + "/capabilities", text: declared.map(f => String(f.value)).join("；"), basis: "user_report" });
+    return { itemId: card.id, name: card.name, quantity: card.instance.quantity, unit: card.instance.unit, realityRevision: card.revision,
+      facts, capabilities: card.capabilities, unknowns: card.unknowns, limits: card.limits };
   });
 }
+
 export const creativeReasoningSchema = z
   .object({
     outcome: z.string().min(4).max(240),

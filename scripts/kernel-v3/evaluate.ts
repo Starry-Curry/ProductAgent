@@ -5,7 +5,7 @@ import {gateway} from '../real-intelligence/gateway.mjs';
 import {kernelFixture,reportRoot} from './fixtures.ts';
 import {createProvider} from '../../src/lib/ai/provider.ts';
 import {respond} from '../../src/lib/agent/service.ts';
-import {kernelContext} from '../../src/lib/agent/kernel/context.ts';
+import {compileTaskContext} from '../../src/lib/context/compiler.ts';
 import {saveMemory} from '../../src/lib/memory/store.ts';
 import {createTask,beginRun,finishRun,recordOutcome,getTask} from '../../src/lib/foundation/tasks.ts';
 // This command does NOT authorize a new round. It appends the canonical existing
@@ -37,7 +37,7 @@ try{
   try{
    const itemId=f.ids[c.product_ids[0]],q=c.prompt;
    const session:any={itemId,known:{memoryPolicy:'legacy',useItemMemories:'no'},messages:[],tried:[]};
-   const context=kernelContext(f.db,f.read(),'lin',session,q);
+   const context=compileTaskContext(f.db,f.read(),'lin',session,q);
    for(const arm of ['v3','direct']){
     label='kernel-v3/'+stage+'/'+id+'/'+arm;const started=performance.now(),before=inputs.length;
     process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3=arm==='v3'?'true':'false';

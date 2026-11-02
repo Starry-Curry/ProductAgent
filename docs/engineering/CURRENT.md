@@ -1,4 +1,13 @@
-# 当前研发：Qwen-first 产品结果闭环（2026-11-02）
+# 当前研发：Qwen-first 统一智能底座（2026-11-02）
+
+独立分支 `codex/wujian-qwen-foundation-v1`，基线c18b26d。Gate0/1离线检查通过，Gate2–4尚未验收；新授权150次/80元，先12次/8元路线证伪，独立新台账，不能将上一轮预算复用。
+
+- [当前实施、调用链、恢复与限制](qwen-foundation-2026-11-02/STATUS.md)
+- [冻结独立验收说明](qwen-foundation-2026-11-02/acceptance/README.md)
+
+---
+
+# 上一轮历史：Qwen-first 产品结果闭环（2026-11-02）
 
 独立分支 `codex/wujian-outcome-qwen-v3`，基线 f0e3114。**BLOCKED_AUTHORIZATION：250次已用完；产品NOT_ACCEPTED，G1/G2/G3等仍失败。** 下方为上一轮历史，不代表本轮发布。
 

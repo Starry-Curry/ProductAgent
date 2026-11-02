@@ -177,3 +177,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ## 2026-11-02 Qwen-first 产品结果轮次
 
 独立分支 codex/wujian-outcome-qwen-v3：已接入原生检索及局部任务/隐私修复，但产品未验收。250次授权请求已用完，BLOCKED_AUTHORIZATION；最新事实、失败与恢复方式统一见 [CURRENT](docs/engineering/CURRENT.md)。历史正文与账本保留。
+
+
+## 2026-11-02｜Qwen-first统一底座（进行中）
+
+Gate0/1源码与离线保护检查点已建立；真实模型及产品验收尚未执行，不称发布成功。当前状态与证据见 [工程入口](docs/engineering/CURRENT.md)。

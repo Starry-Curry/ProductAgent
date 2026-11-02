@@ -2,7 +2,7 @@ import { epoch } from "../memory/store.ts";
 import {
   readKnowledge,
   retrieveKnowledge,
-  documentCapabilities,
+  documentEvidence,
   type AcquiredDocument,
 } from "./acquisition.ts";
 import type { DatabaseSync } from "node:sqlite";
@@ -101,14 +101,14 @@ export function itemAffordances(
     quantity: item.attributes?.quantity ?? "待确认",
     quantityUnit: item.attributes?.quantityUnit || "未登记单位",
     capabilities,
-    acquiredCapabilities: documentCapabilities(documents),
+    acquiredEvidence: documentEvidence(documents),
     declaredCapabilities: item.attributes?.capabilities || [],
     inferredCapabilities: [],
     capabilitySemantics: reality.capabilities,
     lifecycle: item.lifecycle,
     state: item.state,
     availability: item.availability,
-    capabilityBasis: "登记能力与类别推断分列；类别推断不是实物检测或型号事实",
+    capabilityBasis: "同一事实投影中的登记或官方条件化能力；名称与类别不证实功能",
     officialFacts: pack?.claims || [],
     officialSource: pack?.source,
     limits: pack?.limits || [],
@@ -530,11 +530,11 @@ export async function planDiscovery(
           : [],
       });
       // Compositional operator uses capabilities/materials, independent of seed IDs or a fixed product pair.
-      const light = profiles.find((p) => p.capabilities.includes("照明")),
+      const light = profiles.find((p) => p.capabilitySemantics.some(c=>c.canonicalKey==='light'&&c.status==='conditional')),
         subject = profiles.find(
           (p) =>
             p.id !== light?.id &&
-            /玻璃|纸|木|布/.test(p.material + " " + p.category + " " + p.name),
+            /玻璃|纸|木|布/.test(p.material),
         );
       if (
         light &&
@@ -580,9 +580,9 @@ export async function planDiscovery(
       const shadowSource = selectedEvidence.find((e) =>
         /shadow|影子/i.test(e.excerpt),
       );
-      const shadowLight = profiles.find((p) => p.capabilities.includes("照明"));
+      const shadowLight = profiles.find((p) => p.capabilitySemantics.some(c=>c.canonicalKey==='light'&&c.status==='conditional'));
       const note = profiles.find(
-        (p) => p.capabilities.includes("书写") || /纸笔/.test(p.name),
+        (p) => p.capabilities.includes("书写"),
       );
       if (
         shadowSource &&

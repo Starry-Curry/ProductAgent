@@ -1,6 +1,6 @@
 import type { Item } from "../domain.ts";
 import type { Provider } from "../ai/provider.ts";
-import { itemContext } from "../context/items.ts";
+import { projectReality,modelReality } from "../context/reality.ts";
 import { searchInspiration, type InspirationCase } from "./inspiration.ts";
 export type OpenStrategy = "free" | "retrieval" | "hybrid";
 export type ExplorationRecord = {
@@ -28,35 +28,19 @@ export async function exploreOpen(
   guard: () => void,
 ) {
   guard();
+  const facts = items.map(i=>modelReality(projectReality(i)));
   const found =
     options.strategy === "free"
       ? undefined
       : searchInspiration(
           [
             goal,
-            ...items.map((i) =>
-              [
-                i.name,
-                i.attributes?.material,
-                ...(i.attributes?.capabilities || []),
-              ].join(" "),
-            ),
+            ...facts.map(c => [c.name,
+              ...c.facts.filter(f => f.status === "asserted" && f.key === "material").map(f => String(f.value)),
+              ...c.capabilities.filter(cap => cap.status === "conditional").map(cap => cap.effect),
+            ].join(" ")),
           ].join(" "),
         );
-  const facts = items.map((i) => {
-    const c = itemContext(i);
-    return {
-      name: c.name,
-      brand: c.brand,
-      model: c.model,
-      properties: c.properties,
-      userReportedPhysical: c.physicalFacts,
-      manufacturerFacts: c.officialFacts.map((f) => f.text),
-      knownLimits: c.limits,
-      unknowns: c.unknowns,
-      source: c.sources.official?.url,
-    };
-  });
   const planning =
     options.feedback && typeof options.feedback === "object"
       ? (options.feedback as Record<string, unknown>)

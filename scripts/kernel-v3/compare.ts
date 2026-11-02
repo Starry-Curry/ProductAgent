@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {v3Gateway,V3_ROOT,V3_ROUND} from './gateway.mjs';
 import {kernelFixture} from './fixtures.ts';
-import {kernelContext} from '../../src/lib/agent/kernel/context.ts';
+import {compileTaskContext} from '../../src/lib/context/compiler.ts';
 import {createProvider} from '../../src/lib/ai/provider.ts';
 import {respond} from '../../src/lib/agent/service.ts';
 const stage=process.argv.find(s=>s.startsWith('--stage='))?.slice(8);
@@ -35,7 +35,7 @@ const commit=execFileSync('git',['-c','safe.directory='+process.cwd().replaceAll
 const save=()=>fs.writeFileSync(file,JSON.stringify({roundId:V3_ROUND,stage,set,model:gate.model,commit,kernelSourceHash:sourceHash,arms,syntheticOwners:true,physicalTests:0,independentHumanBlindReview:false,method:'All arms access same authorized product corpus and question. Direct receives exact V3 initial context. Previous runs baseline default routes, retrieval differences are treatment and explicitly logged; not identical per-model payload. Historical outcomes never substituted for fresh arms.',rows},null,2)+'\n');
 async function execute(c:any){const f=kernelFixture(stage+'-'+c.id.toLowerCase());try{
  const itemId=f.ids[c.product_ids[0]];if(!itemId)throw Error('fixture_item_missing');
- const context=kernelContext(f.db,f.read(),'lin',{itemId,known:{memoryPolicy:'legacy',useItemMemories:'no'},messages:[],tried:[]} as any,c.prompt);
+ const context=compileTaskContext(f.db,f.read(),'lin',{itemId,known:{memoryPolicy:'legacy',useItemMemories:'no'},messages:[],tried:[]} as any,c.prompt);
  for(const arm of arms){
   const label=stage+'/'+c.id+'/'+arm,current={label,captures:[] as any[]};
   await storage.run(current,async()=>{const start=performance.now();

@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import type { KernelContext } from "./kernel/context.ts";
+import type { TaskContext } from "../context/compiler.ts";
 import { rangeCondition } from "./kernel/physical.ts";
 export type NecessaryCheck = {
   id: string;
@@ -23,7 +23,7 @@ const id = (s: unknown) =>
 
 /** Typed measurements, never an intent router or product answer table. Operands
  * come from this turn or authorized exact-model documents, not model arguments. */
-export function practicalConstraints(c: KernelContext): NecessaryCheck[] {
+export function practicalConstraints(c: TaskContext): NecessaryCheck[] {
   const checks: NecessaryCheck[] = c.necessaryConditionChecks.map((n) => ({
     id: id(n),
     label: "已登记尺寸的二维占地",
@@ -91,7 +91,7 @@ export function practicalConstraints(c: KernelContext): NecessaryCheck[] {
     const groups = new Map<
       string,
       {
-        source: KernelContext["evidence"][number];
+        source: TaskContext["evidence"][number];
         quote: string;
         min: number;
         max: number;

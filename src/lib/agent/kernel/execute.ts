@@ -7,7 +7,7 @@ import {epoch} from '../../memory/store.ts';
 import {sessionAccess} from '../../repositories/sessions.ts';
 import {itemStamp} from '../../home/store.ts';
 import {acquireKnowledge} from '../../life/acquisition.ts';
-import {kernelContext} from './context.ts';
+import {compileTaskContext} from '../../context/compiler.ts';
 import {parseDraft,reviewSchema,type TaskFrame,type ClaimCheck} from './contracts.ts';
 import {precheck,adjudicateCandidates,anchorCandidate,attachRangeDerivation} from './verify.ts';
 
@@ -37,7 +37,7 @@ export async function executeKernel(db:DatabaseSync,read:()=>State,actor:Person,
   const version=epoch(db,actor),revision=session.revision;
   const deadline=Date.now()+120000;
   let extraIds:string[]=[],queries:string[]=[];
-  let context=kernelContext(db,read(),actor,session,question,temporary);
+  let context=compileTaskContext(db,read(),actor,session,question,temporary);
   const hash=(x:unknown)=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
   let snapshot=hash(context);
   const guardBase=()=>{
@@ -45,7 +45,7 @@ export async function executeKernel(db:DatabaseSync,read:()=>State,actor:Person,
     if(!temporary){const row=db.prepare('SELECT revision,body FROM agent_sessions WHERE id=?').get(session.id) as {revision:number;body:string}|undefined;
       if(!row||row.revision!==revision||JSON.parse(row.body).status==='closed')throw new AgentError('会话已更新，请重新打开',409);}
   };
-  const guard=()=>{guardBase();if(hash(kernelContext(db,read(),actor,session,question,temporary,queries,extraIds))!==snapshot)throw new AgentError('物品、资料或获准经验已改变，请重新核对',409);};
+  const guard=()=>{guardBase();if(hash(compileTaskContext(db,read(),actor,session,question,temporary,queries,extraIds))!==snapshot)throw new AgentError('物品、资料或获准经验已改变，请重新核对',409);};
   const trace:Trace[]=[];
   const add=(stage:string,detail:string)=>trace.push({stage,detail,at:new Date().toISOString()});
   let calls=0,tokens:{input:number;output:number}|null=null;
@@ -63,7 +63,7 @@ export async function executeKernel(db:DatabaseSync,read:()=>State,actor:Person,
       for(const id of context.retrieval.missingItemIds.slice(0,3)){
         guard();const before={...context,evidence:[],retrieval:null};const started=performance.now();
         const acquired=await acquireKnowledge(db,read,actor,id,{persist:true});guardBase();
-        const fresh=kernelContext(db,read(),actor,session,question,temporary,queries,extraIds);
+        const fresh=compileTaskContext(db,read(),actor,session,question,temporary,queries,extraIds);
         if(hash({...fresh,evidence:[],retrieval:null})!==hash(before))throw new AgentError('获取资料期间物品或经验已改变',409);
         context=fresh;snapshot=hash(context);add('kernel_acquisition',JSON.stringify({itemId:id,documents:acquired.documents.length,cached:acquired.cached,issues:acquired.issues,elapsedMs:Math.round(performance.now()-started)}));
       }
@@ -74,7 +74,7 @@ export async function executeKernel(db:DatabaseSync,read:()=>State,actor:Person,
     // item. This is retrieval, not a loop that repeatedly repairs the same answer.
     const unread=draft.frame.itemIds.filter(id=>context.catalogue.some(i=>i.id===id)&&!context.items.some(i=>i.id===id));
     const proposedQueries=draft.queries;
-    const enriched=kernelContext(db,read(),actor,session,question,temporary,proposedQueries,unread);
+    const enriched=compileTaskContext(db,read(),actor,session,question,temporary,proposedQueries,unread);
     const newEvidence=enriched.evidence.some(e=>!context.evidence.some(s=>s.id===e.id));
     if(unread.length||(newEvidence&&draft.gaps.length)){
       guard();extraIds=unread;queries=proposedQueries;context=enriched;snapshot=hash(context);

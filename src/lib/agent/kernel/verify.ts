@@ -2,14 +2,14 @@ import { quoteInSource } from "../../skills/document-help.ts";
 import { hazardousActions,withoutProhibitedActions } from "../safety-language.ts";
 import type { Candidate,ClaimCheck,TaskFrame } from "./contracts.ts";
 import { reviewSchema } from "./contracts.ts";
-import type { KernelContext } from "./context.ts";
+import type { TaskContext } from "../../context/compiler.ts";
 import type { z } from "zod";
 import {rangeCondition} from './physical.ts';
 
 /** One fabricated/reformatted extra quotation must not erase independently valid
  * evidence. Exclude the bad citation explicitly; still require semantic review of
  * the complete claim against the surviving originals. No fuzzy ID matching. */
-export function anchorCandidate(c:Candidate,context:KernelContext){
+export function anchorCandidate(c:Candidate,context:TaskContext){
   const excluded:{id:string;quote:string;reason:string}[]=[];
   const sources=c.sources.flatMap(r=>{
     const s=context.evidence.find(s=>s.id===r.id);
@@ -41,7 +41,7 @@ export function attachRangeDerivation(c:Candidate,frame:TaskFrame){
   }return c;
 }
 
-export function verifyCalculation(candidate:Candidate,frame:TaskFrame,context:KernelContext){
+export function verifyCalculation(candidate:Candidate,frame:TaskFrame,context:TaskContext){
   const c=candidate.calculation;if(!c)return undefined;
   const source=context.evidence.find(s=>s.id===c.sourceId&&s.basis==='official'&&candidate.itemIds.includes(s.itemId));
   if(!source||!quoteInSource(source.text,c.quote)||!frame.originalQuestion.includes(c.inputQuote))throw Error('计算操作数缺少本轮原文或用户报告');
@@ -73,7 +73,7 @@ export function quantities(s:string){
     return [m[1],...(m[2]?[m[2]]:[])].map(n=>({value:Number(n)*Number(factor),unit:String(unit)}));
   });
 }
-export function precheck(candidate:Candidate,frame:TaskFrame,context:KernelContext):string[]{
+export function precheck(candidate:Candidate,frame:TaskFrame,context:TaskContext):string[]{
   const reasons:string[]=[];
   try{verifyCalculation(candidate,frame,context);}catch(e){reasons.push((e as Error).message);}
   const part=frame.parts.find(p=>p.id===candidate.partId);
@@ -120,7 +120,7 @@ export function precheck(candidate:Candidate,frame:TaskFrame,context:KernelConte
   if(hazardousActions.test(withoutProhibitedActions(candidate.text))||/我(?:已经|已)(?:帮你|为你)?(?:修复|控制|执行|检测|配对|开启|关闭)/.test(withoutProhibitedActions(candidate.text)))reasons.push('只读回答不能执行危险操作或宣称已控制实物');
   return [...new Set(reasons)];
 }
-export function adjudicateCandidates(frame:TaskFrame,candidates:Candidate[],context:KernelContext,review:z.infer<typeof reviewSchema>):ClaimCheck[]{
+export function adjudicateCandidates(frame:TaskFrame,candidates:Candidate[],context:TaskContext,review:z.infer<typeof reviewSchema>):ClaimCheck[]{
   return candidates.map(c=>{
     const reasons=precheck(c,frame,context);
     const checks=review.checks.filter(r=>r.id===c.id);

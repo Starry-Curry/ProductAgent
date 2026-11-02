@@ -100,6 +100,7 @@ export async function gateway(configPath,options) {
       if(nativeSearch&&(!body.parameters?.enable_search||body.parameters?.search_options?.search_strategy!=='turbo'))throw Error('bounded_search_only');
       const allowedSearch=nativeSearch&&options?.searchModel&&body.model===options.searchModel&&available.includes(body.model);
       const responses=req.url.endsWith('/responses');
+      options?.validateRequest?.(body,{nativeSearch,responses});
       if (body.model !== config.AI_MODEL&&!allowedSearch || body.enable_thinking === true&&!options?.allowThinking) throw Error("pinned_model_or_thinking_not_authorized");
       if(responses&&!options?.allowResponses)throw Error('responses_not_authorized');
       if(responses&&((body.stream&&!options?.allowResponsesStream)||!Number.isInteger(body.max_tool_calls)||body.max_tool_calls>4||body.max_tool_calls<1))throw Error('bounded_responses_required');
