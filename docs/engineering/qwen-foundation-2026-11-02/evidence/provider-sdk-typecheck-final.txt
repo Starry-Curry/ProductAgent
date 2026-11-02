@@ -1,0 +1,6 @@
+
+> product-agent@0.1.0 typecheck
+> tsc --noEmit
+
+src/lib/ai/provider.ts(157,9): error TS2352: Conversion of type 'Record<string, unknown>' to type 'ChatCompletionCreateParamsNonStreaming' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'Record<string, unknown>' is missing the following properties from type 'ChatCompletionCreateParamsNonStreaming': messages, model

@@ -1,9 +1,11 @@
 // A bounded, explicitly authorized preview; no real account database is opened.
 import {spawn} from 'node:child_process';
 import fs from 'node:fs';
+import {assertHistoricalKernelRuntime} from './retired-runtime.mjs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {v3Gateway} from './gateway.mjs';
+assertHistoricalKernelRuntime();
 if(!process.argv.includes('--authorized-v3-250-cny50'))throw Error('current_round_authorization_required');
 const port=3230, project=process.cwd(), gate=await v3Gateway();
 const child=spawn(process.execPath,['--import',pathToFileURL(path.join(project,'scripts/alpha/network-hook.mjs')).href,'node_modules/next/dist/bin/next','start','--hostname','127.0.0.1','--port',String(port)],{

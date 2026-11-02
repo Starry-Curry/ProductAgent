@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-02T08:15:40.604Z",
+  "paidRequests": 0,
+  "accountChanges": 0,
+  "credentialValuesReported": false,
+  "modelEndpointKind": "standard_dashscope",
+  "workspaceConfigured": false,
+  "knowledgeBaseConfigured": false,
+  "decision": "No guessed workspace host or empty vector store. If no verified workspace configuration exists, keep KB/Rerank/Embedding unconfigured; current exact-model short-document path remains explicitly separate."
+}

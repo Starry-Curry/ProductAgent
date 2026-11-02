@@ -6,7 +6,7 @@ import {
   isTimeoutLike,
 } from "../cloud/runtime.ts";
 import OpenAI from "openai";
-import {qwenResearch,type NativeToolEvent} from './qwen-native.ts';
+import { qwenResearch, type NativeToolEvent } from "./qwen-native.ts";
 export class ProviderError extends Error {
   code: string;
   upstreamStatus?: number;
@@ -30,34 +30,158 @@ export function modelTimeout(
   const configured = Number(env.AI_REQUEST_TIMEOUT_MS) || 60000;
   return Math.max(1, Math.min(90000, configured, requested ?? configured));
 }
-export function generationTimeout(env:Record<string,string|undefined>,purpose?:"creative"|"task",requested?:number) {
-  return modelTimeout(purpose==='creative'?{...env,AI_REQUEST_TIMEOUT_MS:env.AI_CREATIVE_TIMEOUT_MS||env.AI_REQUEST_TIMEOUT_MS}:env,requested);
+export function generationTimeout(
+  env: Record<string, string | undefined>,
+  purpose?: "creative" | "task",
+  requested?: number,
+) {
+  return modelTimeout(
+    purpose === "creative"
+      ? {
+          ...env,
+          AI_REQUEST_TIMEOUT_MS:
+            env.AI_CREATIVE_TIMEOUT_MS || env.AI_REQUEST_TIMEOUT_MS,
+        }
+      : env,
+    requested,
+  );
 }
-async function upstreamFailure(response: Response) {
-  const data = await response.json().catch(() => null);
-  const raw = data?.error?.code || data?.code;
+function upstreamFailure(status: number, raw: unknown) {
   const upstreamCode =
     typeof raw === "string" && /^[a-z0-9._-]{1,80}$/i.test(raw)
       ? raw
       : undefined;
   const code =
-    response.status === 400
+    status === 400
       ? "invalid_request"
-      : response.status === 401
+      : status === 401
         ? "authentication"
-        : response.status === 403
+        : status === 403
           ? "permission"
-          : response.status === 429
+          : status === 429
             ? "rate_limited"
-            : [408, 504].includes(response.status)
+            : [408, 504].includes(status)
               ? "upstream_timeout"
               : "upstream";
   return new ProviderError(
     code,
-    `模型服务请求未完成（${response.status}${upstreamCode ? " / " + upstreamCode : ""}），请稍后重试或联系维护者。`,
-    response.status,
+    `模型服务请求未完成（${status}${upstreamCode ? " / " + upstreamCode : ""}），请稍后重试或联系维护者。`,
+    status,
     upstreamCode,
   );
+}
+function configuredClient(
+  env: Record<string, string | undefined>,
+  request: typeof fetch,
+  timeoutMs: number,
+) {
+  if (!env.AI_BASE_URL || !env.AI_API_KEY?.trim() || !env.AI_MODEL)
+    throw new ProviderError(
+      "not_configured",
+      "千问尚未配置。当前精选指导可用，但不是模型回答。",
+    );
+  if (env.AI_ALLOW_PAID_CALLS !== "true")
+    throw new ProviderError(
+      "payment_not_authorized",
+      "真实模型调用尚未获费用授权，本次没有发送请求。",
+    );
+  let base: URL;
+  try {
+    base = new URL(env.AI_BASE_URL);
+  } catch {
+    throw new ProviderError("configuration", "模型地址配置无效。");
+  }
+  if (base.protocol !== "https:" || base.username || base.password)
+    throw new ProviderError(
+      "configuration",
+      "模型地址必须使用 HTTPS，且不能包含账号信息。",
+    );
+  return new OpenAI({
+    apiKey: env.AI_API_KEY,
+    baseURL: env.AI_BASE_URL,
+    maxRetries: 0,
+    timeout: timeoutMs,
+    fetch: request,
+    fetchOptions: { redirect: "error" },
+  });
+}
+/** SDK owns HTTP/JSON/SSE parsing; this boundary only preserves domain-safe errors. */
+function safeProviderError(error: unknown, timedOut = false): ProviderError {
+  let cause: unknown = error;
+  for (let depth = 0; depth < 6 && cause; depth++) {
+    if (cause instanceof ProviderError) return cause;
+    if (cause instanceof CloudError)
+      return new ProviderError(cause.code, cause.message);
+    if (cause instanceof OpenAI.APIError && typeof cause.status === "number")
+      return upstreamFailure(cause.status, cause.code);
+    cause =
+      typeof cause === "object"
+        ? (cause as { cause?: unknown }).cause
+        : undefined;
+  }
+  if (
+    timedOut ||
+    isTimeoutLike(error) ||
+    error instanceof OpenAI.APIConnectionTimeoutError
+  )
+    return new ProviderError(
+      "timeout",
+      "模型请求超过配置时限，尚未得到完整回答。",
+    );
+  if (error instanceof SyntaxError)
+    return new ProviderError("invalid_response", "模型服务返回了无效 JSON。");
+  if (
+    error instanceof OpenAI.OpenAIError &&
+    !(error instanceof OpenAI.APIError)
+  )
+    return new ProviderError(
+      "invalid_response",
+      "模型未返回完整有效回答，请重试。",
+    );
+  return new ProviderError("network", "模型连接或响应失败，请稍后重试。");
+}
+async function sdkCompletion(
+  env: Record<string, string | undefined>,
+  request: typeof fetch,
+  body: Record<string, unknown>,
+  timeoutMs: number,
+  onText?: (text: string) => void,
+) {
+  const client = configuredClient(env, request, timeoutMs),
+    controller = new AbortController();
+  // SDK connection timeouts alone do not bound a body that stalls after headers.
+  const deadline = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    if (!onText)
+      return await client.chat.completions.create(
+        body as unknown as OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming,
+        { signal: controller.signal },
+      );
+    let callbackError: unknown;
+    const stream = client.chat.completions.stream(
+      { ...body, stream_options: { include_usage: true } } as any,
+      { signal: controller.signal },
+    );
+    stream.on("content.delta", ({ delta }) => {
+      try {
+        onText(delta);
+      } catch (e) {
+        callbackError = e;
+        stream.abort();
+      }
+    });
+    try {
+      const result = await stream.finalChatCompletion();
+      if (callbackError) throw callbackError;
+      return result;
+    } catch (error) {
+      throw callbackError || error;
+    }
+  } catch (error) {
+    throw safeProviderError(error, controller.signal.aborted);
+  } finally {
+    clearTimeout(deadline);
+  }
 }
 export type ProviderResult = {
   text: string;
@@ -70,7 +194,7 @@ export type SearchResponse = {
   tokens: ProviderResult["tokens"];
   model: string;
   usage: unknown;
-  events?:NativeToolEvent[];
+  events?: NativeToolEvent[];
 };
 export type ModelMessage = {
   role: "system" | "user" | "assistant" | "tool";
@@ -99,12 +223,34 @@ export type ToolDefinition = {
   };
 };
 export type Provider = {
+  /** Verified/configured output capability, not inferred from an arbitrary model name. */
+  structuredOutput?: 'json_schema';
   /** Natural text + native function calling. No JSON answer packet or reviewer. */
-  converse?: (messages: ModelMessage[],tools:ToolDefinition[],options:{timeoutMs:number;maxTokens:number;thinking?:boolean;thinkingBudget?:number;toolChoice?:"auto"|"none"|{type:"function";function:{name:string}};onText?:(text:string)=>void})=>Promise<ModelResponse>;
+  converse?: (
+    messages: ModelMessage[],
+    tools: ToolDefinition[],
+    options: {
+      timeoutMs: number;
+      maxTokens: number;
+      thinking?: boolean;
+      thinkingBudget?: number;
+      toolChoice?:
+        "auto" | "none" | "required" | { type: "function"; function: { name: string } };
+      onText?: (text: string) => void;
+    },
+  ) => Promise<ModelResponse>;
   onText?: (text: string) => void;
-  onStatus?: (message:string) => void;
-  extractPage?: (url:string,query:string,sites:string[]) => Promise<SearchResponse & {text:string}>;
-  inspectDocument?: (url:string,question:string,kind:'image'|'pdf') => Promise<ProviderResult & {usage:unknown}>;
+  onStatus?: (message: string) => void;
+  extractPage?: (
+    url: string,
+    query: string,
+    sites: string[],
+  ) => Promise<SearchResponse & { text: string }>;
+  inspectDocument?: (
+    url: string,
+    question: string,
+    kind: "image" | "pdf",
+  ) => Promise<ProviderResult & { usage: unknown }>;
   ready?: boolean;
   complete?: (
     messages: ModelMessage[],
@@ -124,6 +270,8 @@ export type Provider = {
       timeoutMs?: number;
       temperature?: number;
       json?: boolean;
+      /** Opt in only for a configured model/interface that supports JSON Schema. */
+      jsonSchema?: { name: string; schema: Record<string, unknown> };
       purpose?: "creative" | "task";
       /** Text deltas are provisional until the final provider result is validated. */
       onText?: (text: string) => void;
@@ -140,6 +288,7 @@ export function createProvider(
   request = governedModelFetch(request, env);
   const { AI_BASE_URL, AI_API_KEY, AI_MODEL } = env;
   const provider: Provider = {
+    structuredOutput:env.AI_STRUCTURED_OUTPUT==='json_schema'?'json_schema':undefined,
     ready:
       !!AI_BASE_URL &&
       !!AI_API_KEY?.trim() &&
@@ -155,102 +304,68 @@ export function createProvider(
           : options?.purpose === "task"
             ? env.AI_TASK_MODEL || AI_MODEL
             : AI_MODEL;
-      if (!AI_BASE_URL || !AI_API_KEY || !AI_MODEL)
-        throw new ProviderError(
-          "not_configured",
-          "千问尚未配置。当前精选指导可用，但不是模型回答。",
-        );
-      if (env.AI_ALLOW_PAID_CALLS !== "true")
-        throw new ProviderError(
-          "payment_not_authorized",
-          "真实模型调用尚未获费用授权，本次没有发送请求。",
-        );
-      let url: URL;
-      try {
-        url = new URL(AI_BASE_URL.replace(/\/$/, "") + "/chat/completions");
-      } catch {
-        throw new ProviderError("configuration", "模型地址配置无效。");
-      }
-      if (url.protocol !== "https:" || url.username || url.password)
-        throw new ProviderError(
-          "configuration",
-          "模型地址必须使用 HTTPS，且不能包含账号信息。",
-        );
-      try {
-        const response = await request(url, {
-          method: "POST",
-          redirect: "error",
-          headers: {
-            Authorization: `Bearer ${AI_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          signal: AbortSignal.timeout(generationTimeout(env, options?.purpose, options?.timeoutMs)),
-          body: JSON.stringify({
-            model,
-            ...(options?.temperature !== undefined
-              ? { temperature: Math.min(1.2, Math.max(0, options.temperature)) }
+      const result = await sdkCompletion(
+        env,
+        request,
+        {
+          model,
+          ...(options?.temperature !== undefined
+            ? { temperature: Math.min(1.2, Math.max(0, options.temperature)) }
+            : {}),
+          messages: [
+            {
+              role: "system",
+              content:
+                system +
+                (json || options?.jsonSchema
+                  ? "\n仅输出一个合法JSON对象。"
+                  : ""),
+            },
+            { role: "user", content: JSON.stringify(input) },
+          ],
+          max_tokens: Math.min(4000, Math.max(300, options?.maxTokens || 1500)),
+          ...(env.AI_ENABLE_THINKING !== "true"
+            ? { enable_thinking: false }
+            : {}),
+          ...(options?.jsonSchema
+            ? {
+                response_format: {
+                  type: "json_schema",
+                  json_schema: {
+                    name: options.jsonSchema.name,
+                    schema: options.jsonSchema.schema,
+                    strict: true,
+                  },
+                },
+              }
+            : json
+              ? { response_format: { type: "json_object" } }
               : {}),
-            messages: [
-              {
-                role: "system",
-                content: system + (json ? "\n仅输出一个合法JSON对象。" : ""),
-              },
-              { role: "user", content: JSON.stringify(input) },
-            ],
-            max_tokens: Math.min(
-              4000,
-              Math.max(300, options?.maxTokens || 1500),
-            ),
-            ...(options?.onText ? { stream: true, stream_options: { include_usage: true } } : {}),
-            ...(env.AI_ENABLE_THINKING !== "true"
-              ? { enable_thinking: false }
-              : {}),
-            // Opt in only after checking this account/model's capabilities.
-            ...(json ? { response_format: { type: "json_object" } } : {}),
-          }),
-        });
-        if (!response.ok) throw await upstreamFailure(response);
-        const result = options?.onText
-          ? await readCompletionStream(response, options.onText)
-          : await response.json().catch(() => {
-          throw new ProviderError(
-            "invalid_response",
-            "请求失败：模型服务返回了无效 JSON。",
-          );
-        });
-        const choice = result?.choices?.[0];
-        if (
-          choice?.finish_reason !== "stop" ||
-          typeof choice?.message?.content !== "string" ||
-          !choice.message.content.trim() ||
-          choice.message.content.length > 12000
-        )
-          throw new ProviderError(
-            "invalid_response",
-            "模型未返回完整有效回答，请重试。",
-          );
-        const u = result.usage;
-        const tokens =
-          u &&
-          Number.isSafeInteger(u.prompt_tokens) &&
-          u.prompt_tokens >= 0 &&
-          Number.isSafeInteger(u.completion_tokens) &&
-          u.completion_tokens >= 0
-            ? { input: u.prompt_tokens, output: u.completion_tokens }
-            : null;
-        return { text: choice.message.content, model: model!, tokens };
-      } catch (error) {
-        if (error instanceof ProviderError) throw error;
-        if (error instanceof CloudError)
-          throw new ProviderError(error.code, error.message);
-        const timeout = isTimeoutLike(error);
+        },
+        generationTimeout(env, options?.purpose, options?.timeoutMs),
+        options?.onText,
+      );
+      const choice = result?.choices?.[0];
+      if (
+        choice?.finish_reason !== "stop" ||
+        typeof choice?.message?.content !== "string" ||
+        !choice.message.content.trim() ||
+        choice.message.content.length > 12000
+      )
         throw new ProviderError(
-          timeout ? "timeout" : "network",
-          timeout
-            ? "模型请求超时，请稍后重试。"
-            : "模型连接或响应失败，请稍后重试。",
+          "invalid_response",
+          "模型未返回完整有效回答，请重试。",
         );
-      }
+      const u = result.usage;
+      const tokens =
+        u &&
+        Number.isSafeInteger(u.prompt_tokens) &&
+        u.prompt_tokens >= 0 &&
+        Number.isSafeInteger(u.completion_tokens) &&
+        u.completion_tokens >= 0
+          ? { input: u.prompt_tokens, output: u.completion_tokens }
+          : null;
+      return { text: choice.message.content, model: model!, tokens };
     },
   };
   provider.complete = (messages, tools, options) =>
@@ -312,7 +427,7 @@ export function createProvider(
   return provider;
 }
 
-/** Handles UTF-8 / SSE boundary splits; never forwards reasoning content. */
+/** Historical test compatibility only. Production transports use the OpenAI SDK. */
 export async function readCompletionStream(response: Response, onText: (text: string) => void) {
   if (!response.body) throw new ProviderError("invalid_response", "模型没有返回内容");
   const reader = response.body.getReader(), decoder = new TextDecoder();
@@ -365,120 +480,75 @@ async function completeModel(
     toolChoice?: { type: "function"; function: { name: string } };
   },
 ): Promise<ModelResponse> {
-  if (!env.AI_BASE_URL || !env.AI_API_KEY || !env.AI_MODEL)
-    throw new ProviderError(
-      "not_configured",
-      "云端 AI 尚未配置，可以先核对资料或记录尝试。",
-    );
-  if (env.AI_ALLOW_PAID_CALLS !== "true")
-    throw new ProviderError(
-      "payment_not_authorized",
-      "云端模型调用未开启；本次没有发送请求。",
-    );
-  let url: URL;
-  try {
-    url = new URL(env.AI_BASE_URL.replace(/\/$/, "") + "/chat/completions");
-  } catch {
-    throw new ProviderError("configuration", "模型地址配置无效。");
-  }
-  if (url.protocol !== "https:" || url.username || url.password)
-    throw new ProviderError(
-      "configuration",
-      "模型地址须为不含账号信息的 HTTPS 地址。",
-    );
-  try {
-    const response = await request(url, {
-      method: "POST",
-      redirect: "error",
-      headers: {
-        Authorization: "Bearer " + env.AI_API_KEY,
-        "Content-Type": "application/json",
-      },
-      signal: AbortSignal.timeout(modelTimeout(env, options?.timeoutMs)),
-      body: JSON.stringify({
-        model: env.AI_MODEL,
-        messages:
-          env.AI_JSON_MODE === "true" && !tools.length
-            ? [{ role: "system", content: "仅输出合法JSON对象。" }, ...messages]
-            : messages,
-        ...(tools.length
-          ? { tools, tool_choice: options?.toolChoice || "auto" }
-          : {}),
-        max_tokens: Math.min(4000, Math.max(300, options?.maxTokens || 1500)),
-        enable_thinking: options?.toolChoice
-          ? false
-          : env.AI_ENABLE_THINKING === "true",
-        // DashScope tool selection must use its native protocol.
-        // The graph still validates the final JSON packet server-side.
-        ...(env.AI_JSON_MODE === "true" && !tools.length
-          ? { response_format: { type: "json_object" } }
-          : {}),
-      }),
-    });
-    if (!response.ok) throw await upstreamFailure(response);
-    const data = await response.json().catch(() => {
-      throw new ProviderError(
-        "invalid_response",
-        "请求失败：模型服务返回了无效 JSON。",
-      );
-    });
-    const choice = data?.choices?.[0];
-    const calls = choice?.message?.tool_calls ?? [];
-    if (
-      !choice?.message ||
-      !["stop", "tool_calls"].includes(choice.finish_reason)
-    )
-      throw new ProviderError(
-        "invalid_response",
-        "模型输出不完整，本次没有展示操作建议。",
-      );
-    if (
-      calls !== undefined &&
-      (!Array.isArray(calls) ||
-        calls.length > 6 ||
-        !calls.every(
-          (c: ToolCall) =>
-            c?.type === "function" &&
-            typeof c.id === "string" &&
-            c.id.length <= 100 &&
-            typeof c.function?.name === "string" &&
-            typeof c.function.arguments === "string" &&
-            c.function.arguments.length <= 4000,
-        ))
-    )
-      throw new ProviderError("invalid_response", "模型工具请求格式无效。");
-    const text = choice.message.content ?? "";
-    if (
-      typeof text !== "string" ||
-      text.length > 12000 ||
-      (!text.trim() && !calls?.length)
-    )
-      throw new ProviderError("invalid_response", "模型没有返回可用内容。");
-    const u = data.usage;
-    const tokens =
-      u &&
-      Number.isSafeInteger(u.prompt_tokens) &&
-      u.prompt_tokens >= 0 &&
-      Number.isSafeInteger(u.completion_tokens) &&
-      u.completion_tokens >= 0
-        ? { input: u.prompt_tokens, output: u.completion_tokens }
-        : null;
-    return {
-      text,
+  const data = await sdkCompletion(
+    env,
+    request,
+    {
       model: env.AI_MODEL,
-      tokens,
-      toolCalls: calls || [],
-      finishReason: choice.finish_reason,
-    };
-  } catch (error) {
-    if (error instanceof ProviderError) throw error;
-    if (error instanceof CloudError)
-      throw new ProviderError(error.code, error.message);
+      messages:
+        env.AI_JSON_MODE === "true" && !tools.length
+          ? [{ role: "system", content: "仅输出合法JSON对象。" }, ...messages]
+          : messages,
+      ...(tools.length
+        ? { tools, tool_choice: options?.toolChoice || "auto" }
+        : {}),
+      max_tokens: Math.min(4000, Math.max(300, options?.maxTokens || 1500)),
+      enable_thinking: options?.toolChoice
+        ? false
+        : env.AI_ENABLE_THINKING === "true",
+      ...(env.AI_JSON_MODE === "true" && !tools.length
+        ? { response_format: { type: "json_object" } }
+        : {}),
+    },
+    modelTimeout(env, options?.timeoutMs),
+  );
+  const choice = data?.choices?.[0];
+  const calls: unknown = choice?.message?.tool_calls ?? [];
+  if (
+    !choice?.message ||
+    !["stop", "tool_calls"].includes(choice.finish_reason)
+  )
     throw new ProviderError(
-      isTimeoutLike(error) ? "timeout" : "network",
-      isTimeoutLike(error)
-        ? "模型请求超过配置时限，尚未得到完整回答。"
-        : "模型网络连接中断，尚未得到完整回答。",
+      "invalid_response",
+      "模型输出不完整，本次没有展示操作建议。",
     );
-  }
+  if (
+    calls !== undefined &&
+    (!Array.isArray(calls) ||
+      calls.length > 6 ||
+      !calls.every(
+        (c: ToolCall) =>
+          c?.type === "function" &&
+          typeof c.id === "string" &&
+          c.id.length <= 100 &&
+          typeof c.function?.name === "string" &&
+          typeof c.function.arguments === "string" &&
+          c.function.arguments.length <= 4000,
+      ))
+  )
+    throw new ProviderError("invalid_response", "模型工具请求格式无效。");
+  const validatedCalls = calls as ToolCall[];
+  const text = choice.message.content ?? "";
+  if (
+    typeof text !== "string" ||
+    text.length > 12000 ||
+    (!text.trim() && !validatedCalls.length)
+  )
+    throw new ProviderError("invalid_response", "模型没有返回可用内容。");
+  const u = data.usage;
+  const tokens =
+    u &&
+    Number.isSafeInteger(u.prompt_tokens) &&
+    u.prompt_tokens >= 0 &&
+    Number.isSafeInteger(u.completion_tokens) &&
+    u.completion_tokens >= 0
+      ? { input: u.prompt_tokens, output: u.completion_tokens }
+      : null;
+  return {
+    text,
+    model: env.AI_MODEL!,
+    tokens,
+    toolCalls: validatedCalls,
+    finishReason: choice.finish_reason,
+  };
 }

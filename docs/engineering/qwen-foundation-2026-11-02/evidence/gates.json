@@ -1,7 +1,7 @@
 {
   "gate0": "passed_offline",
   "gate1": "passed_offline",
-  "gate2": "not_run",
+  "gate2": "in_progress_not_accepted",
   "gate3": "not_run",
   "gate4": "not_run",
   "basis": ["gate0-final.txt", "read-permission-after.txt", "gate1-semantics.txt", "gate1-regression-final.txt", "gate1-typecheck.txt", "visible-typecheck.txt"],

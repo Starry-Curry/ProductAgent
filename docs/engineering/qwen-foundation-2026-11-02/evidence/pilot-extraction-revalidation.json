@@ -1,0 +1,244 @@
+{
+  "at": "2026-11-02T07:53:58.592Z",
+  "basis": "offline_revalidation_of_unchanged_recorded_qwen_outputs_no_new_calls",
+  "model": "qwen3.8-max-0902",
+  "source": {
+    "file": "D:\\ProductAgent-LifeContext\\.runtime\\qwen-foundation-v1\\.runtime\\pilot-sources\\sony-pairing.json",
+    "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",
+    "title": "WH-CH520 | Help Guide | Pairing and connecting with a Bluetooth device",
+    "scope": {
+      "model": "WH-CH520",
+      "region": "unspecified",
+      "documentVersion": "v1/en",
+      "sourceType": "public_official_help_guide_not_device_verification"
+    },
+    "reading": {
+      "mode": "html_text",
+      "limitations": [
+        "有2处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+      ],
+      "figures": [
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/common/img/icon_utility_menu.png",
+          "caption": "menu"
+        },
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/common/img/icon_utility_search.png",
+          "caption": "Search"
+        },
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/image/s0270.png",
+          "caption": "2"
+        },
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/image/s0460.png",
+          "caption": "图示没有替代文字，内容未读取"
+        },
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/image/i0130_whch520.png",
+          "caption": "图示没有替代文字，内容未读取"
+        },
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/image/s0260.png",
+          "caption": "1"
+        },
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/contents/image/s0260.png",
+          "caption": "1"
+        },
+        {
+          "url": "https://helpguide.sony.net/mdr/2958/v1/en/common/img/arrow_return_pagetop_s.png",
+          "caption": "Go to Page Top"
+        }
+      ]
+    },
+    "characters": 3345,
+    "sha256": "f514ccbec87c1c8a722551ed4613f1ac1bc70cf375ac958444a2ca45a101d314"
+  },
+  "protocolReference": "https://help.aliyun.com/en/model-studio/qwen-structured-output",
+  "questions": [
+    "WH-CH520 已配对过其他设备，现在怎样进入重新配对并完成连接？",
+    "WH-CH520 的保修期限与收费维修政策是什么？"
+  ],
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "claims": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "question": {
+              "type": "string",
+              "enum": [
+                "WH-CH520 已配对过其他设备，现在怎样进入重新配对并完成连接？",
+                "WH-CH520 的保修期限与收费维修政策是什么？"
+              ]
+            },
+            "sourceId": {
+              "type": "string",
+              "enum": [
+                "sony-wh-ch520-pairing-development-source"
+              ]
+            },
+            "exactQuote": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "conditions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "unknown": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "question",
+            "sourceId",
+            "exactQuote",
+            "conditions",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "required": [
+      "claims"
+    ]
+  },
+  "results": [
+    {
+      "format": "json_object",
+      "rawOutputSha256": "1b923d703389da1d26421ed0cd3f27673bc449379f819d29a420c8a804c5efa1",
+      "originalParseError": {
+        "name": "TypeError",
+        "message": "c?.unknown?.trim is not a function"
+      },
+      "alreadyChargedInOriginal": true,
+      "validation": {
+        "structuralErrors": [],
+        "claims": [
+          {
+            "index": 0,
+            "question": "WH-CH520 已配对过其他设备，现在怎样进入重新配对并完成连接？",
+            "exactQuote": "When you pair a second or subsequent device (the headset already has pairing information for other devices), press and hold the\n\n〔此处图示未读取〕\n\n(\nBluetooth\n) button for about 5 seconds or more to enter pairing mode manually.\n\n〔此处图示未读取〕\n\nThe indicator (blue) repeatedly flashes twice in a row. You will hear the voice guidance say,\n“Pairing”\n.\n\nPerform the pairing procedure on the\nBluetooth\ndevice to search for this headset.\n\n[\nWH-CH520\n] will be displayed on the list of detected devices on the screen of the\nBluetooth\ndevice.\n\nIf it is not displayed, repeat from step\n\n〔图示文字：1〕\n\n.\n\nSelect [\nWH-CH520\n] displayed on the screen of the\nBluetooth\ndevice for pairing.\n\nIf Passkey* input is required, input “0000”.\n\n*A Passkey may be called “Passcode”, “PIN code”, “PIN number”, or “Password”.\n\nMake the\nBluetooth\nconnection from the\nBluetooth\ndevice.\n\nSome devices automatically connect with the headset when pairing is complete.\n\nYou will hear a notification sound indicating that the connection is established.\n\nIf they are not connected, see “Connecting to a paired\nBluetooth\ndevice”.",
+            "unknown": [
+              "用于手动进入配对模式的按钮外观与位置因图示未读取而未知"
+            ],
+            "sourceId": "sony-wh-ch520-pairing-development-source",
+            "scopeChecked": {
+              "model": "WH-CH520",
+              "region": "unspecified",
+              "documentVersion": "v1/en",
+              "sourceType": "public_official_help_guide_not_device_verification"
+            },
+            "quoteOffset": 739,
+            "requiresUnreadFigureCaution": true,
+            "passed": false,
+            "errors": [
+              "invalid_unknown"
+            ],
+            "semanticEntailment": "not_certified_by_quote_presence"
+          },
+          {
+            "index": 1,
+            "question": "WH-CH520 的保修期限与收费维修政策是什么？",
+            "exactQuote": null,
+            "unknown": [
+              "所附资料未提供保修期限与收费维修政策的相关信息"
+            ],
+            "sourceId": "sony-wh-ch520-pairing-development-source",
+            "scopeChecked": {
+              "model": "WH-CH520",
+              "region": "unspecified",
+              "documentVersion": "v1/en",
+              "sourceType": "public_official_help_guide_not_device_verification"
+            },
+            "quoteOffset": null,
+            "requiresUnreadFigureCaution": false,
+            "passed": false,
+            "errors": [
+              "invalid_unknown",
+              "missing_quote_requires_explicit_unknown",
+              "warranty_not_in_source_must_remain_unknown"
+            ],
+            "semanticEntailment": "not_certified_by_quote_presence"
+          }
+        ],
+        "missingQuestions": [],
+        "passed": false,
+        "scopeBasis": "Exact help-guide title/path and declared model; not inferred from a random quotation",
+        "caveat": "Exact text membership and JSON schema validate provenance/shape, not every paraphrase, procedure, policy or real-world outcome."
+      }
+    },
+    {
+      "format": "json_schema",
+      "rawOutputSha256": "eaa441eb87126dbde7fb6e61a8781a1fa0e61266c0059cc9aae56fd110e155cd",
+      "alreadyChargedInOriginal": true,
+      "validation": {
+        "structuralErrors": [],
+        "claims": [
+          {
+            "index": 0,
+            "question": "WH-CH520 已配对过其他设备，现在怎样进入重新配对并完成连接？",
+            "exactQuote": "When you pair a second or subsequent device (the headset already has pairing information for other devices), press and hold the\n\n〔此处图示未读取〕\n\n(\nBluetooth\n) button for about 5 seconds or more to enter pairing mode manually.\n\n〔此处图示未读取〕\n\nThe indicator (blue) repeatedly flashes twice in a row. You will hear the voice guidance say,\n“Pairing”\n.\n\nPerform the pairing procedure on the\nBluetooth\ndevice to search for this headset.\n\n[\nWH-CH520\n] will be displayed on the list of detected devices on the screen of the\nBluetooth\ndevice.\n\nIf it is not displayed, repeat from step\n\n〔图示文字：1〕\n\n.\n\nSelect [\nWH-CH520\n] displayed on the screen of the\nBluetooth\ndevice for pairing.\n\nIf Passkey* input is required, input “0000”.\n\n*A Passkey may be called “Passcode”, “PIN code”, “PIN number”, or “Password”.\n\nMake the\nBluetooth\nconnection from the\nBluetooth\ndevice.\n\nSome devices automatically connect with the headset when pairing is complete.\n\nYou will hear a notification sound indicating that the connection is established.\n\nIf they are not connected, see “Connecting to a paired\nBluetooth\ndevice”.",
+            "unknown": "进入配对模式需长按的按钮具体名称与位置因对应图示未读取而未知。",
+            "sourceId": "sony-wh-ch520-pairing-development-source",
+            "scopeChecked": {
+              "model": "WH-CH520",
+              "region": "unspecified",
+              "documentVersion": "v1/en",
+              "sourceType": "public_official_help_guide_not_device_verification"
+            },
+            "quoteOffset": 739,
+            "requiresUnreadFigureCaution": true,
+            "passed": true,
+            "errors": [],
+            "semanticEntailment": "not_certified_by_quote_presence"
+          },
+          {
+            "index": 1,
+            "question": "WH-CH520 的保修期限与收费维修政策是什么？",
+            "exactQuote": null,
+            "unknown": "所附资料仅包含配对与连接说明，未提供保修期限与收费维修政策的相关信息。",
+            "sourceId": "sony-wh-ch520-pairing-development-source",
+            "scopeChecked": {
+              "model": "WH-CH520",
+              "region": "unspecified",
+              "documentVersion": "v1/en",
+              "sourceType": "public_official_help_guide_not_device_verification"
+            },
+            "quoteOffset": null,
+            "requiresUnreadFigureCaution": false,
+            "passed": true,
+            "errors": [],
+            "semanticEntailment": "not_certified_by_quote_presence"
+          }
+        ],
+        "missingQuestions": [],
+        "passed": true,
+        "scopeBasis": "Exact help-guide title/path and declared model; not inferred from a random quotation",
+        "caveat": "Exact text membership and JSON schema validate provenance/shape, not every paraphrase, procedure, policy or real-world outcome."
+      }
+    }
+  ],
+  "gatewayHttpRequests": 0,
+  "upstreamRequests": 0,
+  "status": "revalidated_existing_outputs_no_new_requests",
+  "originalEvidence": {
+    "path": "D:\\ProductAgent-LifeContext\\.runtime\\qwen-foundation-v1\\docs\\engineering\\qwen-foundation-2026-11-02\\evidence\\pilot-extraction.json",
+    "sha256": "e6fbe2ac8318550f85213a1ac7f9de8138f3f46f0c78f889ba51d42623263188",
+    "note": "Original output and initial validator failure are preserved unchanged. This run does not call the gateway."
+  },
+  "finishedAt": "2026-11-02T07:53:58.594Z"
+}

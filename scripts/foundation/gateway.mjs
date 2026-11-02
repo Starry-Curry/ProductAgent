@@ -23,6 +23,6 @@ export async function foundationGateway({phase='pilot',recordContent=true}={}){
  const pilot=phase==='pilot',limits={roundId:ROUND,requests:pilot?12:150,cny:pilot?8:80};
  return gateway('D:/ProductAgent-LifeContext/.env.local',{root:ROOT,lockFile:'.runtime/qwen-foundation-round.lock',model:'qwen3.8-max-0902',allowThinking:true,allowResponses:!pilot,allowResponsesStream:!pilot,reserveExternalInputs:true,maxThinkingBudget:2048,requestTimeoutMs:90000,reconcileInterrupted:true,recoverStaleLock:true,recordContent,prices:{input:12,output:36},limits,
   validateRequest(body,{nativeSearch,responses}){
-   if(pilot&&(nativeSearch||responses||(body.messages||[]).some(m=>Array.isArray(m.content))))throw Error('pilot_text_only_use_integration_after_review');
+   if(pilot&&(nativeSearch||responses||(body.messages||[]).some(m=>Array.isArray(m.content)&&m.content.some(c=>c.type!=='text'))))throw Error('pilot_text_only_use_integration_after_review');
   }});
 }

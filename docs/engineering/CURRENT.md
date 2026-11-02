@@ -1,3 +1,4 @@
+<!-- Gate2工具与原文语义恢复点：不是最终验收；最新证据见qwen-foundation-2026-11-02/STATUS.md。 -->
 # 当前研发：Qwen-first 统一智能底座（2026-11-02）
 
 独立分支 `codex/wujian-qwen-foundation-v1`，基线c18b26d。Gate0/1离线检查通过，Gate2–4尚未验收；新授权150次/80元，先12次/8元路线证伪，独立新台账，不能将上一轮预算复用。

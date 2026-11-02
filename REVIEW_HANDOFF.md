@@ -149,3 +149,6 @@ Sony/Canon核心真实浏览器任务可用；只读已获准经验、纠正/撤
 ## 2026-11-02｜Qwen-first统一底座（进行中）
 
 Gate0/1源码与离线保护检查点已建立；真实模型及产品验收尚未执行，不称发布成功。当前状态与证据见 [工程入口](docs/engineering/CURRENT.md)。
+
+
+2026-11-02 Gate2恢复点：AgentScope工具循环、SDK传输、共享原文语义选择与最终呈现合同已接线；Sony开发样本真实浏览器复验见 [本轮状态](docs/engineering/qwen-foundation-2026-11-02/STATUS.md)。尚未通过Gate2–4，不是最终产品发布；旧循环收敛、四条旅程和冻结盲测继续进行。

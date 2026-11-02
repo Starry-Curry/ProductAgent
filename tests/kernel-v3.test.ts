@@ -120,22 +120,19 @@ test('官方相同产品路径可关联规格和说明，不用相似型号猜�
 function fixture(){const f=validationFixture('.runtime/kernel-tests-'+crypto.randomUUID());migrateUnified(f.db);const id=f.add('合成测试耳机','耳机','Sony','WH-CH520');const i=f.read().items.find(i=>i.id===id)!;
  const d=makeKnowledgeDocument({url:'https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html',title:'WH-CH520 synthetic contract text',text:'WH-CH520. Press once briefly: Decrease the volume. Hold the button for 5 seconds.',links:[]},i,[]);
  storeOfficialDocument(f.db,'lin',i,d);return {...f,id,d};}
-function providerFor(id:string,sourceId:string,extra?:()=>void){let calls=0;return {ready:true,model:'offline-contract',generate:async()=>{
- calls++;if(calls===2){extra?.();return {text:JSON.stringify({checks:[{id:'C1',verdict:'entailed',reason:'短按降低音量与原文直接对应',evidenceIds:[sourceId]}],omittedQuestions:[]}),model:'offline-contract',tokens:{input:10,output:10}};}
- return {text:JSON.stringify({frame:{goal:'完整回答',itemIds:[id],parts:[{id:'a',question:'短按减号',kind:'fact',risk:'ordinary',itemIds:[id],expectedResult:'了解音量变化'},{id:'b',question:'保修费用',kind:'fact',risk:'ordinary',itemIds:[id],expectedResult:'了解费用'}]},candidates:[{id:'c',partId:'a',itemIds:[id],kind:'fact',text:'短按减号降低音量。',sources:[{id:sourceId,quote:'Press once briefly: Decrease the volume.'}]}],gaps:[{partId:'b',reason:'资料没有维修收费政策'}]}),model:'offline-contract',tokens:{input:10,output:10}};
- }} as any;}
-test('真实LangGraph入口：两问部分保留且不创建持久TaskSpec',async()=>{
- const f=fixture();process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3='true';
- try{const r=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:f.id,mode:'service',question:'短按减号怎样，保修费用多少？',uiContext:{page:'item'},memoryPolicy:'off'},providerFor(f.id,f.d.chunks[0].id));
- assert.equal(r.modelCalls,2);assert.match(r.reply.answer,/降低音量/);assert.match(r.reply.answer,/缺适用资料/);assert.equal(r.reply.outcome,'needs_info');assert.equal(r.reply.task?.parts.length,2);assert.equal(r.reply.claimChecks?.[0].published,true);
+test('已退役Kernel开关不能重新启用旧草稿与二审生产路径',async()=>{
+ const f=fixture(),previous=process.env.WUJIAN_AGENT_RUNTIME;process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3='true';process.env.WUJIAN_AGENT_RUNTIME='disabled';
+ let retiredRequests=0;
+ try{const r=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:f.id,mode:'service',question:'你好，想聊聊这件物品。',uiContext:{page:'item'},memoryPolicy:'off'},{ready:true,model:'offline-retirement-negative',generate:async(system:string)=>{if(system.includes('在frame列出')||system.includes('有限证据核对器'))retiredRequests++;return {text:JSON.stringify({kind:'general',answer:'本轮普通聊天模型替身，不是V3验收。',factIds:[],questions:[],procedureId:null}),model:'offline-retirement-negative',tokens:null};}});
+ assert.equal(retiredRequests,0);assert(r.trace.every(t=>!t.stage.startsWith('kernel_')));assert.equal(r.reply.taskFrame,undefined);assert.equal(r.reply.claimChecks,undefined);
  assert.equal((f.db.prepare('SELECT COUNT(*) AS n FROM foundation_tasks').get() as any).n,0);
- }finally{delete process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3;f.db.close();}
+ }finally{delete process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3;if(previous===undefined)delete process.env.WUJIAN_AGENT_RUNTIME;else process.env.WUJIAN_AGENT_RUNTIME=previous;f.db.close();}
 });
-test('模型在途遗忘：旧结果不可提交',async()=>{
- const f=fixture();process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3='true';
+test('旧Kernel开关不能绕过当前执行器在途遗忘保护',async()=>{
+ const f=fixture(),previous=process.env.WUJIAN_AGENT_RUNTIME;process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3='true';process.env.WUJIAN_AGENT_RUNTIME='native';
  try{const m=saveMemory(f.db,f.read,'lin',{kind:'experience',text:'曾报告连接失败',itemId:f.id,allowCloud:true});
- await assert.rejects(()=>respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:f.id,mode:'service',question:'短按减号怎样？',uiContext:{page:'item'},memoryPolicy:'legacy'},providerFor(f.id,f.d.chunks[0].id,()=>forgetMemory(f.db,'lin',m.id))),/授权已改变|会话|上下文/);
- }finally{delete process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3;f.db.close();}
+ await assert.rejects(()=>respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:f.id,mode:'service',question:'短按减号怎样？',uiContext:{page:'item'},memoryPolicy:'legacy'},{ready:true,model:'offline-retirement-negative',generate:async()=>{throw Error('已退役V3不应生成草稿');},converse:async()=>{forgetMemory(f.db,'lin',m.id);return {text:'迟到的模型替身文本',model:'offline-retirement-negative',toolCalls:[],finishReason:'stop',tokens:null};}}),/授权已变化|授权已改变|会话|上下文/);
+ }finally{delete process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3;if(previous===undefined)delete process.env.WUJIAN_AGENT_RUNTIME;else process.env.WUJIAN_AGENT_RUNTIME=previous;f.db.close();}
 });
 test('权限与memory off：私人物品不在目录，云端报告不暗中加入',()=>{
  const f=fixture();try{const hidden=f.add('私有别人的物品','工具','Sony','OTHER');const s=f.read();s.items.find(i=>i.id===hidden)!.owner='dad';f.write(s);

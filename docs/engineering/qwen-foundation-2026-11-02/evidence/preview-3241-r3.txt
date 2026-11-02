@@ -1,0 +1,87 @@
+   ▲ Next.js 15.5.28
+   - Local:        http://127.0.0.1:3241
+   - Network:      http://127.0.0.1:3241
+   - Experiments (use with caution):
+     · cpus: 1
+
+ ✓ Starting...
+ ✓ Ready in 2.9s
+ ○ Compiling / ...
+ ✓ Compiled / in 4.1s (1736 modules)
+ GET / 200 in 4918ms
+ ○ Compiling /api/account ...
+ ✓ Compiled /api/account in 1173ms (1845 modules)
+ GET /api/account 200 in 1440ms
+ ○ Compiling /api/life ...
+ ✓ Compiled /api/life in 2.9s (2417 modules)
+ GET /api/life 200 in 3432ms
+ GET /api/life 200 in 3436ms
+ ○ Compiling /api/memories ...
+ ✓ Compiled /api/memories in 3.9s (3150 modules)
+ GET /api/collaboration 200 in 4483ms
+ GET /api/collaboration 200 in 4472ms
+ GET /api/assistant?mode=auto&itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 5419ms
+ GET /api/assistant?mode=auto&itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 5414ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 5910ms
+ GET /api/foundation 200 in 5958ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 294ms
+ GET /api/foundation 200 in 304ms
+ GET /api/life 200 in 360ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 56ms
+ GET /api/foundation 200 in 72ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 44ms
+ GET /api/foundation 200 in 24ms
+ GET /api/foundation 200 in 29ms
+ GET /api/life 200 in 32ms
+ GET /api/foundation 200 in 28ms
+ GET /api/foundation 200 in 36ms
+ GET /api/life 200 in 23ms
+ GET /api/foundation 200 in 25ms
+ ✓ Compiled in 1692ms (3150 modules)
+ GET /api/foundation 200 in 333ms
+ GET /api/life 200 in 96ms
+ GET /api/foundation 200 in 15ms
+ GET /api/foundation 200 in 30ms
+ GET /api/life 200 in 39ms
+ GET /api/foundation 200 in 17ms
+ GET /api/foundation 200 in 19ms
+ GET /api/life 200 in 23ms
+ GET /api/foundation 200 in 17ms
+ POST /api/assistant 200 in 55161ms
+ GET /api/life 200 in 27ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 57ms
+ ✓ Compiled in 269ms (924 modules)
+ GET / 200 in 563ms
+ ✓ Compiled /api/account in 352ms (1032 modules)
+ GET /api/account 200 in 515ms
+ ✓ Compiled /api/life in 309ms (1604 modules)
+ GET /api/life 200 in 570ms
+ GET /api/life 200 in 574ms
+ ✓ Compiled /api/memories in 281ms (1611 modules)
+ ✓ Compiled (2337 modules)
+ GET /api/collaboration 200 in 2643ms
+ GET /api/collaboration 200 in 2630ms
+ GET /api/assistant?mode=auto&itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 3022ms
+ GET /api/assistant?mode=auto&itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 3010ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 3041ms
+ GET /api/foundation 200 in 3067ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 101ms
+ GET /api/foundation 200 in 108ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 121ms
+ GET / 200 in 233ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 17ms
+ GET /api/foundation 200 in 20ms
+ GET /api/life 200 in 97ms
+ GET /api/foundation 200 in 16ms
+ GET /api/foundation 200 in 12ms
+ GET /api/life 200 in 16ms
+ GET /api/foundation 200 in 9ms
+ GET /api/foundation 200 in 11ms
+ GET /api/life 200 in 18ms
+ GET /api/foundation 200 in 11ms
+ GET /api/foundation 200 in 17ms
+ GET /api/life 200 in 17ms
+ GET /api/foundation 200 in 13ms
+ POST /api/assistant 200 in 40930ms
+ GET /api/life 200 in 16ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 14ms

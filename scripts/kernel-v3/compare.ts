@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {assertHistoricalKernelRuntime} from './retired-runtime.mjs';
 import {AsyncLocalStorage} from 'node:async_hooks';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
@@ -7,6 +8,7 @@ import {kernelFixture} from './fixtures.ts';
 import {compileTaskContext} from '../../src/lib/context/compiler.ts';
 import {createProvider} from '../../src/lib/ai/provider.ts';
 import {respond} from '../../src/lib/agent/service.ts';
+assertHistoricalKernelRuntime();
 const stage=process.argv.find(s=>s.startsWith('--stage='))?.slice(8);
 const set=process.argv.find(s=>s.startsWith('--set='))?.slice(6)||'historical';
 if(!stage||!/^[a-z0-9-]+$/.test(stage)||!process.argv.includes('--authorized-v3-250-cny50'))throw Error('authorized_named_stage_required');

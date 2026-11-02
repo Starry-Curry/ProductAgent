@@ -1,0 +1,26 @@
+{
+  "basis": "offline_actual_historical_script_imports_after_production_retirement",
+  "networkRequests": 0,
+  "rows": [
+    {
+      "script": "compare.ts",
+      "status": "blocked_before_gateway",
+      "message": "Kernel V3已退出当前生产执行链；本历史脚本不会启动费用网关。请在独立历史工作区检出 0432ace33cc333bbbbe4bd9db59d3ec20760c7c7 复现原结果，保留原始台账并重新核实授权，不能在当前代码下冒充V3对照。"
+    },
+    {
+      "script": "evaluate.ts",
+      "status": "blocked_before_gateway",
+      "message": "Kernel V3已退出当前生产执行链；本历史脚本不会启动费用网关。请在独立历史工作区检出 0432ace33cc333bbbbe4bd9db59d3ec20760c7c7 复现原结果，保留原始台账并重新核实授权，不能在当前代码下冒充V3对照。"
+    },
+    {
+      "script": "experience.ts",
+      "status": "blocked_before_gateway",
+      "message": "Kernel V3已退出当前生产执行链；本历史脚本不会启动费用网关。请在独立历史工作区检出 0432ace33cc333bbbbe4bd9db59d3ec20760c7c7 复现原结果，保留原始台账并重新核实授权，不能在当前代码下冒充V3对照。"
+    },
+    {
+      "script": "preview.mjs",
+      "status": "blocked_before_gateway",
+      "message": "Kernel V3已退出当前生产执行链；本历史脚本不会启动费用网关。请在独立历史工作区检出 0432ace33cc333bbbbe4bd9db59d3ec20760c7c7 复现原结果，保留原始台账并重新核实授权，不能在当前代码下冒充V3对照。"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+✔ 展示前也拒绝未登记资源、未满足条件及伪来源，无需先写计划 (7.0077ms)
+✔ 模型缩写目标不能移除用户禁止购买条件，未知不升级为实测 (0.7802ms)
+✔ 正式工具注册都有服务端效果与范围；模型不获得直接外部执行权限 (0.7297ms)
+✔ 同一真实respond入口展示行动后立即停止，不再自由总结增加资源，也不暗写Task (189.8021ms)
+✔ 行动工具拒绝后不能绕回自由文本发布同一操作；拒绝理由保留 (168.528ms)
+✔ 正式语义配置：单次严格抽取的实际操作条目进入同一动作核对，原文保留且无第二审稿 (163.0136ms)
+✔ 最终Schema只含message与显式nullable guidance，不接受原始自由草稿 (7.2624ms)
+✔ 纯解释可自然表达未知，但不自动成为事实认证或已完成操作 (0.8134ms)
+✔ 领域要求行动时不能通过guidance=null的自由说明逃逸 (8.9969ms)
+✔ 有操作依据的最终行动复用同一presentGuidance检查，仍不认证实物成功 (0.9898ms)
+✔ 设备operationRef必须属于实际操作主体并列入sourceIds (1.5674ms)
+✔ 模型的fact/operation分类不是权限：有范围且有原文的候选不因组织标签被错误拦截 (0.8053ms)
+✔ 当前资源权限、源ID、禁止条件任一失败时整份最终响应不发布 (1.8411ms)
+✔ 未知物理条件保留为条件方案，不因最终Function Calling变成实物验证 (1.2785ms)
+✔ 边界反例：Schema不识别说明文字真假，不能冒称语义校验器 (0.3673ms)
+✔ source semantics invokes one JSONSchema extraction and retains quote, source scope, conditions and unread-figure limits (13.0902ms)
+✔ bad source, item, model, region and noncontinuous quotes are locally rejected without swallowing the valid observation (2.101ms)
+✔ absence remains insufficient evidence; explicit negative source text survives, unquoted negative claims do not (1.692ms)
+✔ self-declared supported/visual proof and wrong unknown types are schema failures, never fact certification (3.2198ms)
+✔ cache is opt-in, charges zero generate calls on hit, and keys change with question/scope/source/model/reading (2.1212ms)
+✔ empty or ambiguous inputs do not trigger a provider; provider/JSON failures invoke no repair loop (1.9585ms)
+✔ compact source semantics retains every observation, original range and scoped provenance; only repeated metadata is deduplicated (3.1915ms)
+ℹ {"basis":"offline_utf8_bytes_synthetic_eight_observations_one_source_not_tokens_or_quality","legacySemanticBytes":8755,"compactSemanticBytes":3737,"savedBytes":5018,"excludedFromBothComparison":"rawOutput, usage, cacheKey and cost metadata"}
+✔ compact view keeps unknown/rejected/orphan visual warnings and does not invent missing source metadata (11.1429ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1808.4847

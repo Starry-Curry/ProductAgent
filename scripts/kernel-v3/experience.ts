@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {assertHistoricalKernelRuntime} from './retired-runtime.mjs';
 import {createHash} from 'node:crypto';
 import {v3Gateway,V3_ROOT,V3_ROUND} from './gateway.mjs';
 import {kernelFixture} from './fixtures.ts';
@@ -7,6 +8,7 @@ import {respond} from '../../src/lib/agent/service.ts';
 import {compileTaskContext} from '../../src/lib/context/compiler.ts';
 import {createTask,beginRun,finishRun,getTask,recordOutcome,amendOutcome} from '../../src/lib/foundation/tasks.ts';
 import {saveMemory} from '../../src/lib/memory/store.ts';
+assertHistoricalKernelRuntime();
 if(!process.argv.includes('--authorized-v3-250-cny50'))throw Error('authorized_round_required');
 const stage=process.argv.find(s=>s.startsWith('--stage='))?.slice(8)||'experience-v1';
 if(!/^[a-z0-9-]+$/.test(stage))throw Error('bad_stage');

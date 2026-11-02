@@ -1,0 +1,24 @@
+{
+  "proceed": true,
+  "decision": "Proceed to controlled integration, not product acceptance or default release",
+  "upstreamRequestsAtReview": 6,
+  "estimatedCnyAtReview": 0.142464,
+  "evidence": ["pilot-runtime.json", "pilot-runtime-r2.json", "pilot-extraction.json", "pilot-extraction-revalidation.json", "runtime-offline-review.md", "runtime-integration-tests-r2.txt"],
+  "runtime": {
+    "choice": "AgentScope TypeScript 0.0.15 over the existing governed OpenAI SDK Provider",
+    "reason": "Actual same-business Function Calling compatibility, tool errors/events managed by maintained Toolkit, turn-local memory only. Domain checks and hard budgets remain server-owned. Replace the Practical handwritten loop, not add a parallel production runtime.",
+    "comparison": "SDK 2 requests / 8290ms vs AgentScope 2 requests / 10098ms; same model and synthetic facts. No demonstrated answer-quality advantage. Framework default maxIters permits an extra summary, so a pre-request hard limit is necessary.",
+    "businessFailure": "Both answers correctly retained unknown material and exhausted consumables, but then introduced unregistered paper/pen/electronic devices/containers. AgentScope also asked to reconfirm an explicit user report. Preserve both failures; fix the presentation/action boundary before product acceptance."
+  },
+  "extraction": {
+    "choice": "Native strict JSON Schema for scoped semantic extraction, not a second answer reviewer",
+    "result": "One real official-development source: JSON object returned wrong unknown field type; strict schema met shape, exact quote and scope checks. Both lacked semantic certification; strict output over-cautiously treated a button name as unknown despite text naming Bluetooth button.",
+    "limit": "Quote membership is provenance validation, not entailment, complete instructions or real-device verification. Retain source and unread-figure limitations."
+  },
+  "instrumentationFailures": [
+    "AgentScope plain-text content arrays incorrectly rejected locally by pilot guard, corrected and rerun once. Original local failure is not a Qwen request.",
+    "Extraction fixture used the wrong local placeholder credential; rejected before upstream. Local protocol stub now checks authentication, route and schemas. No real secret was printed or copied.",
+    "JSON-object field validator crashed on an array; fixed defensively and revalidated unchanged original output offline, without extra paid calls."
+  ],
+  "releaseStatus": "NOT_ACCEPTED: Gate2 integration, four App journeys and independent Gate4 quality remain unverified. This review only releases the approved integration budget; it does not waive any gate."
+}

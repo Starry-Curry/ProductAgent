@@ -1,0 +1,85 @@
+✖ 展示前也拒绝未登记资源、未满足条件及伪来源，无需先写计划 (13.106ms)
+✖ 模型缩写目标不能移除用户禁止购买条件，未知不升级为实测 (0.8338ms)
+✔ 正式工具注册都有服务端效果与范围；模型不获得直接外部执行权限 (1.5156ms)
+✔ 同一真实respond入口展示行动后立即停止，不再自由总结增加资源，也不暗写Task (280.697ms)
+✔ 真实AgentScope循环将工具结果交给下一模型回合并保留未知项 (35.4278ms)
+✔ 普通工具失败交框架error_result，下一次读取可恢复 (6.1428ms)
+✔ Provider硬请求预算不能被AS额外总结吞掉或标为成功 (5.9925ms)
+✔ 工具403/409是fatal，不能被Toolkit包装后继续模型请求或执行其他工具 (2.1783ms)
+✔ 每个模型与工具之后重查权限，迟到结果不进入下一回合 (1.4943ms)
+✔ 成功工具形成确认卡后停止，不追加总结或第二项写入 (1.4476ms)
+✔ Qwen思考内容只在相应工具回合历史中保留，不进入返回或事件正文 (2.672ms)
+✔ 工具Schema拒绝非法ID且一般错误可以返回，不执行领域读取 (1.448ms)
+✔ 工具输入缺省字段沿用Zod默认语义，不被output JSON Schema提前拒绝 (3.7384ms)
+✔ 每次调用只有本轮内存，不保存私人历史；禁止注入第二个system消息 (1.6662ms)
+✔ 同一工具调用ID不可在新模型回合重用导致业务重复执行 (1.378ms)
+✔ 目录按新问题跨语言选择实际章节，不把录像总章当作所有快门设置的答案 (1.3982ms)
+✔ 行动资源：未持有、未满足条件、来源跨物品、未确认前提均不能保存为可执行计划 (7.331ms)
+✔ 统一Agent故事：真实领域确认后才写入，默认私密且无云端同意，确认幂等 (304.1829ms)
+✔ 确认计划进入同一Task且保留未知条件，纠正/遗忘后不借计划恢复旧个人Context (276.9136ms)
+✔ 明确的多物品计划：已知不满足的资源被服务器拒绝，不向前端流出错误的自由指导 (302.4496ms)
+✔ 任务目录可发现外部获准资源，未选择前不加载其私密详情；跨账号不可见 (227.5797ms)
+✔ 动作依赖不仅检查计划ID：缺失支撑/隐含资源、伪装作用和禁止动作被拒；未知只作条件 (7.3618ms)
+✔ 未完成的自由操作草稿不流出；计划确认前物品条件更改应拒绝旧快照 (243.2014ms)
+✔ 自然执行器：原生工具结果确实进入下一回合，无TaskFrame和二次审稿 (286.2393ms)
+✔ 工具的私人物品ID越权在服务端中断，不把拒绝伪装成工具数据交给模型 (220.1652ms)
+✔ 可恢复工具错误进入下一回合，已知结果不被全局JSON校验吞掉 (203.887ms)
+✔ 区间工具重算310g超限，结果仅声明必要条件 (175.1726ms)
+✔ 关闭长期记忆仍保留当前关闭记忆会话的必要追问，不带旧获准记忆回复 (0.9924ms)
+✔ 供应商违反最后一轮禁止工具约定时停止，不把未完成标成回答成功 (201.7826ms)
+✔ 读取获准记忆不暗中提取或保存新的聊天记忆 (145.7775ms)
+✔ 两件物品的短官方手册末尾规格不再被平均截断，缓存工具不重复传整份原文 (206.4771ms)
+✔ 新任务不能静默继承另一件事的会话，拒绝发生在模型调用前 (177.1309ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 30
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3878.1574
+
+✖ failing tests:
+
+test at tests\foundation-guidance.test.ts:9:1
+✖ 展示前也拒绝未登记资源、未满足条件及伪来源，无需先写计划 (13.106ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /不属于/. Input:
+  
+  'Error: 动作引用未提供的资源或未说明作用的物品'
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/foundation-guidance.test.ts:13:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: 动作引用未提供的资源或未说明作用的物品
+        at file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/practical-actions.ts:34:101
+        at Array.map (<anonymous>)
+        at checkPlanResources (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/practical-actions.ts:24:27)
+        at presentGuidance (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/guidance.ts:18:13)
+        at file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/foundation-guidance.test.ts:13:20
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/foundation-guidance.test.ts:13:9)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25),
+    expected: /不属于/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests\foundation-guidance.test.ts:15:1
+✖ 模型缩写目标不能移除用户禁止购买条件，未知不升级为实测 (0.8338ms)
+  Error: 动作引用未提供的资源或未说明作用的物品
+      at file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/practical-actions.ts:34:101
+      at Array.map (<anonymous>)
+      at checkPlanResources (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/practical-actions.ts:24:27)
+      at presentGuidance (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/guidance.ts:18:13)
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/foundation-guidance.test.ts:17:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)

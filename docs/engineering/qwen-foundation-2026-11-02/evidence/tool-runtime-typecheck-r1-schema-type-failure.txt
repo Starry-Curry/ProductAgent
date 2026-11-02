@@ -1,0 +1,3 @@
+src/lib/agent/tool-runtime.ts(83,53): error TS2322: Type 'ZodStandardJSONSchemaPayload<ZodType<unknown, unknown, $ZodTypeInternals<unknown, unknown>>>' is not assignable to type 'ZodObject<$ZodLooseShape, $strip> | ToolInputSchema'.
+  Type 'ZodStandardJSONSchemaPayload<ZodType<unknown, unknown, $ZodTypeInternals<unknown, unknown>>>' is missing the following properties from type 'ZodObject<$ZodLooseShape, $strip>': shape, keyof, catchall, passthrough, and 56 more.
+tsc --noEmit exitCode=2

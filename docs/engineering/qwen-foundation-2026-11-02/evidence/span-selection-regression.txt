@@ -1,0 +1,62 @@
+file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/context/source-semantics.ts:70
+export function modelSourceSemantics(result                      )                     {
+       ^
+
+SyntaxError: Identifier 'modelSourceSemantics' has already been declared
+    at compileSourceTextModule (node:internal/modules/esm/utils:319:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:89:18)
+    at ModuleLoader.<anonymous> (node:internal/modules/esm/translators:681:10)
+    at #translate (node:internal/modules/esm/loader:438:20)
+    at afterLoad (node:internal/modules/esm/loader:506:29)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:511:12)
+    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)
+    at afterResolve (node:internal/modules/esm/loader:611:52)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:276:33)
+
+Node.js v24.22.2
+✖ tests\foundation-guidance.test.ts (777.4261ms)
+✔ 最终Schema只含message与显式nullable guidance，不接受原始自由草稿 (6.6633ms)
+✔ 纯解释可自然表达未知，但不自动成为事实认证或已完成操作 (0.4459ms)
+✔ 领域要求行动时不能通过guidance=null的自由说明逃逸 (7.7973ms)
+✔ 有操作依据的最终行动复用同一presentGuidance检查，仍不认证实物成功 (0.6188ms)
+✔ 设备operationRef必须属于实际操作主体并列入sourceIds (0.8762ms)
+✔ 当前资源权限、源ID、禁止条件任一失败时整份最终响应不发布 (1.0412ms)
+✔ 未知物理条件保留为条件方案，不因最终Function Calling变成实物验证 (0.3999ms)
+✔ 边界反例：Schema不识别说明文字真假，不能冒称语义校验器 (0.2139ms)
+file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/context/source-semantics.ts:70
+export function modelSourceSemantics(result                      )                     {
+       ^
+
+SyntaxError: Identifier 'modelSourceSemantics' has already been declared
+    at compileSourceTextModule (node:internal/modules/esm/utils:319:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:89:18)
+    at ModuleLoader.<anonymous> (node:internal/modules/esm/translators:681:10)
+    at #translate (node:internal/modules/esm/loader:438:20)
+    at afterLoad (node:internal/modules/esm/loader:506:29)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:511:12)
+    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)
+    at afterResolve (node:internal/modules/esm/loader:611:52)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:276:33)
+
+Node.js v24.22.2
+✖ tests\foundation-source-semantics.test.ts (162.9137ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 8
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 793.5188
+
+✖ failing tests:
+
+test at tests\foundation-guidance.test.ts:1:1
+✖ tests\foundation-guidance.test.ts (777.4261ms)
+  'test failed'
+
+test at tests\foundation-source-semantics.test.ts:1:1
+✖ tests\foundation-source-semantics.test.ts (162.9137ms)
+  'test failed'

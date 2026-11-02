@@ -13,7 +13,11 @@ import {projectReality,modelReality} from '../../src/lib/context/reality.ts';
 import {foundationGateway,ROOT} from './gateway.mjs';
 
 if(!process.argv.includes('--execute-paid-pilot'))throw Error('explicit_paid_pilot_execution_flag_required');
-const target=path.resolve(ROOT,'pilot-runtime.json');
+const evidenceName=process.argv.find(a=>a.startsWith('--evidence='))?.slice(11)||'pilot-runtime.json';
+if(!/^pilot-runtime(?:-r[2-9])?\.json$/.test(evidenceName))throw Error('invalid_evidence_filename');
+const onlyRuntime=process.argv.find(a=>a.startsWith('--runtime='))?.slice(10);
+if(onlyRuntime&&!['openai-sdk','agentscope-ts'].includes(onlyRuntime))throw Error('invalid_runtime');
+const target=path.resolve(ROOT,evidenceName);
 if(fs.existsSync(target))throw Error('preserve_existing_pilot_runtime_evidence');
 const packageRoot=path.resolve('.runtime/agentscope-offline/node_modules/@agentscope-ai/agentscope');
 const load=name=>import(pathToFileURL(path.join(packageRoot,'dist',name,'index.mjs')).href);
@@ -35,6 +39,14 @@ const description='读取当前用户获准的指定物品事实、能力条件�
 const tools=[{type:'function',function:{name:'get_item_context',description,parameters:schema.toJSONSchema({target:'openapi-3.0'})}}];
 const parameters={enable_thinking:false,temperature:0.4,max_tokens:1800,stream_options:{include_usage:true}};
 const canonical=v=>JSON.stringify(v,(_key,value)=>value&&typeof value==='object'&&!Array.isArray(value)?Object.fromEntries(Object.keys(value).sort().map(key=>[key,value[key]])):value);
+const makeToolkit=read=>{
+ const toolkit=new Toolkit({builtInSkillTool:false});
+ toolkit.registerToolFunction({name:'get_item_context',description,inputSchema:schema,call:raw=>read(raw)});
+ assert.equal(canonical(toolkit.getJSONSchemas()),canonical(tools),'framework schema must match direct SDK schema before any paid request');
+ return toolkit;
+};
+// Fail an incompatible tool adapter before even the first SDK comparison call.
+makeToolkit(()=>{throw Error('offline_schema_preflight_must_not_execute_tool');});
 const report={at:new Date().toISOString(),status:'running',basis:'real_qwen_runtime_comparison_same_synthetic_business_no_device_validation',model:fixedModel,
  declaredInputs:{system,user,toolSchema:tools,semanticCard:card,generation:parameters},semanticCardSha256:createHash('sha256').update(JSON.stringify(card)).digest('hex'),
  bounds:{perRuntimeUpstreamRequests:requestCap,totalMaximumUpstreamRequests:requestCap*2,perRequestTimeoutMs:timeoutMs,automaticRetries:0,gate:'foundationGateway default pilot; authoritative global 150 requests/80 CNY and pilot 12 requests/8 CNY'},
@@ -61,7 +73,7 @@ function usageSummary(run){
 function controlledClient(run){
  const base=new URL(gate.url);assert.equal(base.hostname,'127.0.0.1');assert.equal(base.protocol,'http:');
  const prefix=base.href.replace(/\/$/,'');
- return new OpenAI({apiKey:'fixture-only-not-a-provider-key',baseURL:prefix+'/v1',maxRetries:0,timeout:timeoutMs,
+ return new OpenAI({apiKey:'fixture-only',baseURL:prefix+'/v1',maxRetries:0,timeout:timeoutMs,
   fetch:async(input,init)=>{
    const url=new URL(typeof input==='string'?input:input.url||String(input));
    if(url.origin!==base.origin||url.pathname!=='/v1/chat/completions')throw Error('pilot_gateway_route_denied');
@@ -110,10 +122,8 @@ async function sdk(run){
  if(!run.completed)run.failure='request_limit_or_incomplete_answer';
 }
 async function agentscope(run){
- const read=reader(run),toolkit=new Toolkit({builtInSkillTool:false});
- toolkit.registerToolFunction({name:'get_item_context',description,inputSchema:schema,call:raw=>read(raw)});
- assert.equal(canonical(toolkit.getJSONSchemas()),canonical(tools),'framework schema must match direct SDK schema before any paid request');
- const model=new OpenAIChatModel({modelName:fixedModel,apiKey:'fixture-only-not-a-provider-key',baseURL:gate.url+'/v1',maxRetries:0,presetGenParams:parameters});
+ const toolkit=makeToolkit(reader(run));
+ const model=new OpenAIChatModel({modelName:fixedModel,apiKey:'fixture-only',baseURL:gate.url+'/v1',maxRetries:0,presetGenParams:parameters});
  model.client=controlledClient(run);
  const agent=new Agent({name:'物间',sysPrompt:system,model,toolkit,maxIters:requestCap,compressionConfig:{enabled:false,triggerThreshold:100000}});
  const iterator=agent.replyStream({msgs:UserMsg({name:'合成用户',content:user})});let response;
@@ -127,6 +137,7 @@ try{
  gate=await foundationGateway({recordContent:true});
  if(gate.model!==fixedModel)throw Error('foundation_gateway_model_mismatch');
  for(const [name,execute]of [['openai-sdk',sdk],['agentscope-ts',agentscope]]){
+  if(onlyRuntime&&name!==onlyRuntime)continue;
   const run=createRun(name);report.results.push(run);const started=performance.now();
   try{await execute(run);}catch(error){run.error={name:error.name,message:error.message};run.completed=false;}
   finally{run.elapsedMs=Math.round(performance.now()-started);run.usage=usageSummary(run);run.toolReadCount=run.toolReads.filter(t=>t.allowed).length;

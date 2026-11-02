@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {assertHistoricalKernelRuntime} from './retired-runtime.mjs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {gateway} from '../real-intelligence/gateway.mjs';
@@ -8,6 +9,7 @@ import {respond} from '../../src/lib/agent/service.ts';
 import {compileTaskContext} from '../../src/lib/context/compiler.ts';
 import {saveMemory} from '../../src/lib/memory/store.ts';
 import {createTask,beginRun,finishRun,recordOutcome,getTask} from '../../src/lib/foundation/tasks.ts';
+assertHistoricalKernelRuntime();
 // This command does NOT authorize a new round. It appends the canonical existing
 // round, under its original exclusive lock, at most the explicitly remaining 13.
 if(!process.argv.includes('--use-authorized-r1-remainder'))throw Error('explicit_remaining_round_required');

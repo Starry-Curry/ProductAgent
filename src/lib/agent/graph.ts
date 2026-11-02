@@ -1,5 +1,4 @@
 import { executeHomeTask } from "./home-task.ts";
-import { executeKernel } from "./kernel/execute.ts";
 import { executePractical } from "./practical.ts";
 import { isPreparationChange } from "../life/task-planning.ts";
 import { answerKnownItem } from "./grounded-answer.ts";
@@ -612,14 +611,6 @@ export async function executeGraph(
   if(!continuingPreparation && process.env.WUJIAN_AGENT_RUNTIME === 'native' && provider.ready && provider.converse && ['service','auto'].includes(session.mode) && !unsafe.test(withoutProhibitedActions(question))){
     const householdAllowed=session.known.homeId!=='young-apartment-v1'||read().virtualHomes?.[actor]?.allowCloud===true;
     if(householdAllowed)return executePractical(db,read,actor,session,question,provider,temporary);
-  }
-  if(!continuingPreparation && process.env.WUJIAN_EXPERIMENTAL_KERNEL_V3 === "true" && provider.ready &&
-     ["service","auto"].includes(session.mode) &&
-     !unsafe.test(withoutProhibitedActions(question))) {
-    const proposedRoute=session.mode==="auto"?routeHome(question,read(),actor,session):undefined;
-    const householdAllowed=session.known.homeId!=="young-apartment-v1"||read().virtualHomes?.[actor]?.allowCloud===true;
-    if(householdAllowed&&(!proposedRoute||["help","plan","companion","clarify"].includes(proposedRoute.intent)))
-      return executeKernel(db,read,actor,session,question,provider,temporary);
   }
   if (!continuingPreparation && (session.known.homeId === "young-apartment-v1" || session.known.foundationTaskId && session.known.foundationHasItems === "true" && session.known.foundationComplexTask === "true" && session.known.uiPage))
     return executeHomeTask(
