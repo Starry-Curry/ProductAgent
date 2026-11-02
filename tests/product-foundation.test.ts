@@ -68,7 +68,7 @@ test("SSE截断不能伪造stop；provider仍能拒绝未完成内容", async ()
   );
   assert.equal(result.choices[0].finish_reason, undefined);
 });
-test("实验事实问答一轮提取主张；未审阅属性不能因引用存在就发布；越权不能读资料", async () => {
+test("陌生事实问答读取适用原文而非人工属性白名单；旧实验开关不能恢复generate执行链，越权零调用", async () => {
   const previous = process.env.WUJIAN_EXPERIMENTAL_FACT_QA;
   process.env.WUJIAN_EXPERIMENTAL_FACT_QA = "true";
   const f = validationFixture(
@@ -96,14 +96,19 @@ test("实验事实问答一轮提取主张；未审阅属性不能因引用存�
     const provider = {
       ready: true,
       model: "test-only",
-      generate: async (_s: string, input: any, options: any) => {
+      generate: async () => {throw Error('retired experimental generate must not run');},
+      converse: async (messages: any[]) => {
         calls++;
-        assert.equal(options.json, true);
+        const input=JSON.parse(messages[1].content);
         assert.equal(input.question, "尺寸、重量、防水等级各是多少？");
+        assert.equal(input.items[0].identity.model,'CLIP 5');
+        assert.match(input.officialSources.map((s:any)=>s.text).join('\n'),/Dimensions 86.3 x 134.5 x 46 mm/);
+        assert.match(input.officialSources.map((s:any)=>s.text).join('\n'),/Net weight 285 g. IP67/);
         return {
-          text: JSON.stringify({claims:[{predicate:"dimensions",value:"86.3×134.5×46毫米"},{predicate:"weight",value:285},{predicate:"waterproof",value:"IP67"}]}),
+          text: '这份合成的CLIP 5资料记录：尺寸86.3×134.5×46毫米，净重285克，防护等级IP67。不是实物测量或浸水验证。',
           model: "test-only",
           tokens: { input: 10, output: 20 },
+          toolCalls: [], finishReason:'stop',
         };
       },
     };
@@ -122,10 +127,11 @@ test("实验事实问答一轮提取主张；未审阅属性不能因引用存�
     );
     assert.equal(calls, 1);
     assert.equal(result.modelCalls, 1);
-    assert.equal(result.reply.citations.length, 0);
-    assert.equal(result.reply.outcome,"needs_info");
-    assert.doesNotMatch(result.reply.answer, /285|IP67/);
-    assert.ok(result.trace.some((t) => t.stage === "grounded_answer"));
+    assert.equal(result.reply.citations.length, 1);
+    assert.equal(result.reply.outcome,"answered");
+    assert.match(result.reply.answer, /285/);assert.match(result.reply.answer,/IP67/);
+    assert.ok(result.trace.some((t) => t.stage === "practical_completion"));
+    assert.ok(!result.trace.some(t=>t.stage==='grounded_answer'));
     await assert.rejects(() =>
       respond(
         f.db,

@@ -21,6 +21,22 @@ function fixture() {
   );
   return { ...validationFixture(directory), directory };
 }
+
+test('陌生商品搜索：不因下载入口含型号丢掉后排opaque-ID操作章节，正文仍核对型号',async()=>{
+ const t=fixture();try{
+  const id=t.add('合成未预置设备','电子设备','Brother','SYNTH-UNSEEN-73');
+  const fetched:string[]=[];
+  const search=async()=>({model:'offline',text:'not evidence',tokens:null,events:[],usage:{},status:'completed',hits:[
+   ...Array.from({length:13},(_,n)=>({title:'SYNTH-UNSEEN-73 manuals',url:`https://support.brother.com/SYNTH-UNSEEN-73/downloads?${n}`})),
+   {title:'',url:'https://support.brother.com/manual/opaque/contents/part.html'},
+   {title:'SYNTH-UNSEEN-73 community',url:'https://community.brother.com/s/question/posted'},
+  ]});
+  const result=await acquireKnowledge(t.db,t.read,'lin',id,{search,fetchDocument:async url=>{fetched.push(url);if(!url.includes('/contents/'))throw Error('landing unavailable');return {url,title:'SYNTH-UNSEEN-73 official guide',text:'SYNTH-UNSEEN-73. Synthetic manufacturer instruction only.',links:[]};}});
+  assert.match(fetched[0],/\/contents\//);assert.equal(result.documents.length,1);
+  assert.equal(fetched.some(url=>url.includes('community.')),false);
+  assert.match(result.documents[0].text,/SYNTH-UNSEEN-73/);
+ }finally{t.db.close();}
+});
 test("普通新型号经官方目录定位PDF，按型号/地区缓存与原文定位，更新留旧版本和迁移备份", async () => {
   const t = fixture();
   try {
@@ -319,21 +335,25 @@ test("有规格仍可使用新型号官方操作原文； grounded翻译可读�
       {
         ready: true,
         model: "offline-test",
-        generate: async (_s, input) => {
-          modelInput = JSON.stringify(input);
+        generate: async () => {throw Error('retired generic generation route must not run');},
+        converse: async (messages) => {
+          modelInput = JSON.stringify(messages);
           return {
-            text: JSON.stringify(value),
+            text: '先放在稳定的表面；不要用磨蚀清洁剂。当前仅依据合成手册，未操作实物。',
             model: "offline-test",
             tokens: null,
+            toolCalls: [], finishReason: 'stop',
           };
         },
       },
     );
     assert.equal(result.reply.outcome, "answered");
-    assert.match(modelInput, /officialDocuments/);
-    assert.equal(result.reply.steps.length, 1);
+    assert.match(modelInput, /officialSources/);
+    assert.match(modelInput, /Do not use abrasive cleaners/);
+    assert.match(result.reply.answer, /稳定的表面/);
+    assert.ok(result.reply.citations.length);
     const previous = process.env.WUJIAN_ALLOW_PUBLIC_FETCH;
-    process.env.WUJIAN_ALLOW_PUBLIC_FETCH = "true";
+    process.env.WUJIAN_ALLOW_PUBLIC_FETCH = "false";
     try {
       const unknown = t.add("未知设备", "电子设备", "无适配品牌", "UNKNOWN-73");
       let mockedCalls = 0;
@@ -352,23 +372,20 @@ test("有规格仍可使用新型号官方操作原文； grounded翻译可读�
         {
           ready: true,
           model: "offline-test",
-          complete: async (messages, tools) => {
+          converse: async (messages, tools) => {
             mockedCalls++;
             const input = JSON.parse(messages[1].content!);
-            assert.equal(input.item.model, "UNKNOWN-73");
-            assert.equal(input.officialLookup.documents, 0);
+            assert.equal(input.items[0].identity.model, "UNKNOWN-73");
+            assert.equal(input.officialSources.length, 0);
             assert.ok(
               !tools.some(
                 (t) => t.function.name === "fetch_official_knowledge",
               ),
             );
+            if(mockedCalls===1)return {text:'',model:'offline-test',tokens:null,finishReason:'tool_calls',toolCalls:[{id:'acquire-unknown',type:'function',function:{name:'search_product_knowledge',arguments:JSON.stringify({itemId:unknown,query:'首次操作'})}}]};
+            assert.equal(messages.at(-1)?.role,'tool');
             return {
-              text: JSON.stringify({
-                kind: "needs_info",
-                answer:
-                  "当前未取得该型号的官方操作资料，无法确认启动按键。可补充对应说明书或官方支持链接；不按相似设备猜测。",
-                questions: [],
-              }),
+              text: "当前未取得该型号的官方操作资料，无法确认启动按键；没有按相似设备猜测。",
               model: "offline-test",
               tokens: null,
               toolCalls: [],
@@ -381,7 +398,8 @@ test("有规格仍可使用新型号官方操作原文； grounded翻译可读�
         },
       );
       assert.equal(gap.reply.outcome, "needs_info");
-      assert.equal(mockedCalls, 0);
+      assert.equal(mockedCalls, 2);
+      assert.match(gap.reply.answer,/未取得该型号/);
       assert.deepEqual(gap.reply.questions, []);
     } finally {
       if (previous === undefined) delete process.env.WUJIAN_ALLOW_PUBLIC_FETCH;

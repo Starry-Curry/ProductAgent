@@ -1,0 +1,159 @@
+{
+  "at": "2026-11-02T13:05:26.985Z",
+  "basis": "real_browser_domain_UI_with_synthetic_identity_possession_photos_and_stories_no_model",
+  "plan": {
+    "base": "http://127.0.0.1:3241",
+    "modelRequestsInThisScript": 0,
+    "paidEndpoints": "blocked before browser network",
+    "journeys": [
+      "UI注册两个独立账号→无品牌/型号纪念画录入和合成照片→UI故事保存→明确确认本机关系记忆→UI纠正→UI遗忘",
+      "UI选择赠礼故事→UI预览并制作→另一个真实注册账号预览和确认模拟取得→独立物品实例→收礼人新增私事→API读取断言双向隐私"
+    ],
+    "limits": [
+      "没有真实实物取得；认领为明确合成测试设定",
+      "不把记忆列表显示称为真实千问跨会话使用成功",
+      "不含真实用户资料、实物照片、模型视觉或设备操作"
+    ],
+    "modelFollowupPlan": {
+      "uiQuestions": [
+        "谁送的这幅画？不要补充日期。",
+        "纠正赠送者后，这幅画是谁送的？",
+        "遗忘后，你还能确认赠送者吗？"
+      ],
+      "expectedUpstreamRequests": "预计6–9次；依正式执行器最多6次/提问，保守上限18次，主线程串行安排后另测。",
+      "status": "not_run"
+    }
+  },
+  "status": "failed",
+  "pageErrors": [],
+  "networkErrors": [
+    {
+      "path": "/api/assistant",
+      "error": "net::ERR_BLOCKED_BY_CLIENT.Inspector"
+    },
+    {
+      "path": "/api/assistant",
+      "error": "net::ERR_BLOCKED_BY_CLIENT.Inspector"
+    },
+    {
+      "path": "/api/assistant",
+      "error": "net::ERR_BLOCKED_BY_CLIENT.Inspector"
+    },
+    {
+      "path": "/api/assistant",
+      "error": "net::ERR_BLOCKED_BY_CLIENT.Inspector"
+    },
+    {
+      "path": "/api/assistant",
+      "error": "net::ERR_BLOCKED_BY_CLIENT.Inspector"
+    }
+  ],
+  "blockedModelRequests": [
+    {
+      "kind": "unexpected_or_model_action_blocked",
+      "path": "/api/assistant"
+    },
+    {
+      "kind": "unexpected_or_model_action_blocked",
+      "path": "/api/assistant"
+    },
+    {
+      "kind": "unexpected_or_model_action_blocked",
+      "path": "/api/assistant"
+    },
+    {
+      "kind": "unexpected_or_model_action_blocked",
+      "path": "/api/assistant"
+    },
+    {
+      "kind": "unexpected_or_model_action_blocked",
+      "path": "/api/assistant"
+    }
+  ],
+  "checks": [
+    {
+      "name": "两个真实注册账号和独立浏览器上下文；没有切换演示角色",
+      "passed": true
+    },
+    {
+      "name": "UI录入无品牌/型号纪念物、上传合成照片、确认模拟持有；未绑定商品知识",
+      "passed": true
+    },
+    {
+      "name": "UI明确确认后，新页面可查看本机关系记忆；没有云端授权或模型请求",
+      "passed": true,
+      "memoryId": "0b6059e5-dda7-4341-9a84-6c8226537784"
+    }
+  ],
+  "uiWrites": [
+    {
+      "method": "POST",
+      "path": "/api/account",
+      "action": "register"
+    },
+    {
+      "method": "POST",
+      "path": "/api/account",
+      "action": "register"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "createItem"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "fragment"
+    },
+    {
+      "method": "POST",
+      "path": "/api/memories",
+      "action": "rememberItemStory"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "relationship-desktop",
+      "path": "docs\\engineering\\qwen-foundation-2026-11-02\\evidence\\gate3-relations-gift-r1-relationship-desktop.png"
+    },
+    {
+      "name": "failure-desktop",
+      "path": "docs\\engineering\\qwen-foundation-2026-11-02\\evidence\\gate3-relations-gift-r1-failure-desktop.png"
+    },
+    {
+      "name": "failure-mobile",
+      "path": "docs\\engineering\\qwen-foundation-2026-11-02\\evidence\\gate3-relations-gift-r1-failure-mobile.png"
+    }
+  ],
+  "modelChecks": {
+    "status": "not_run",
+    "reason": "No model or assistant request is authorized by this zero-model runner."
+  },
+  "accounts": {
+    "ownerId": "u_4c61539c-d9b4-4f71-b42a-90955120391e",
+    "receiverId": "u_3cf5f331-8974-4c1b-bcfa-ff47e9bea973"
+  },
+  "item": {
+    "id": "49012e57-6991-4164-a9c8-549e7ff9dee0",
+    "name": "[合成]朋友送的无型号纪念画 gate3-relations-gift-r1",
+    "model": "待确认",
+    "synthetic": true,
+    "photoStored": true
+  },
+  "failure": {
+    "name": "TimeoutError",
+    "message": "locator.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.memory-center').first().getByLabel('纠正内容', { exact: true })\u001b[22m\n"
+  },
+  "finishedAt": "2026-11-02T13:06:26.507Z",
+  "ledgerWindowDelta": 0,
+  "ledgerWindowCaveat": "Global ledger window; any concurrent unrelated call must be investigated, not attributed to this runner."
+}

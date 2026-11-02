@@ -18,3 +18,10 @@ test('未授权、不可信供应商地址及流无终态都不算成功，不�
  await assert.rejects(qwenResearch({...env,AI_BASE_URL:'https://fake.example/v1'},request,'x'),/not_verified/);assert.equal(calls,0);
  await assert.rejects(qwenResearch(env,request,'x'),/terminal_missing/);assert.equal(calls,1);
 });
+
+test('来源候选不在通用SDK层提前截为12条，后排真实说明书仍交给领域排序核对',async()=>{
+ const sources=Array.from({length:20},(_,n)=>({url:`https://support.brother.com/${n<19?'landing':'manual/chapter'}/${n}.html`}));
+ const request:typeof fetch=async()=>new Response('event: response.completed\ndata: '+JSON.stringify({type:'response.completed',response:{status:'completed',output:[{type:'web_search_call',action:{sources}}]}})+'\n\n',{headers:{'content-type':'text/event-stream'}});
+ const result=await qwenResearch(env,request,'synthetic',['brother.com']);
+ assert.equal(result.hits.length,20);assert.match(result.hits.at(-1)!.url,/manual\/chapter/);
+});

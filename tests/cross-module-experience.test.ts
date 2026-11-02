@@ -22,16 +22,16 @@ test("旅程A｜耳机操作→用户经验→跨会话实际送到执行器；�
    const quote="press and hold the (Bluetooth) button for about 5 seconds or more";
    storeOfficialDocument(f.db,"lin",item,makeKnowledgeDocument({url:"https://helpguide.sony.net/mdr/2958/v1/en/contents/TP1000776852.html",title:"WH-CH520 Pairing",text:"WH-CH520. Offline source extraction fixture. To pair a second device, "+quote+".",links:[]},item,[],"unspecified"));
    let received:any[]=[];
-   const provider:any={ready:true,model:"offline-contract-only",generate:async(_system:string,input:any)=>{received.push(input);return {text:JSON.stringify({kind:"grounded",answer:"配对说明",steps:[{text:"按住蓝牙按钮约5秒，进入配对模式。",sourceIds:[input.officialDocuments[0].id],sourceQuote:quote}],questions:[],gaps:[]}),model:"offline-contract-only",tokens:null};}};
+   const provider:any={ready:true,model:"offline-contract-only",generate:async()=>{throw Error('retired generator must not run');},converse:async(messages:any[])=>{const input=JSON.parse(messages[1].content);received.push(input);assert.match(input.officialSources.map((s:any)=>s.text).join('\n'),/press and hold/);return {text:'按当前合成资料，按住蓝牙按钮约5秒进入配对模式。以本次条件核对；未执行实物操作。',model:"offline-contract-only",tokens:null,toolCalls:[],finishReason:'stop'};}};
    const task=createTask(f.db,f.read,"lin",{requestId:crypto.randomUUID(),goal:"连接第二部手机",intent:"guide",itemInstanceIds:[id]});
    const a=await respond(f.db,f.read,"lin",{requestId:crypto.randomUUID(),taskId:task.taskId,itemId:id,question:"如何配对第二部手机？"},provider);
    assert.equal(a.reply.source,"model-with-evidence");assert.equal(a.modelCalls,1);
    const o=report(f,task.taskId,a.foundation!.runId,"[合成用户报告]移近手机后可以连接；不证明每次都适用",true);
    const b=await respond(f.db,f.read,"lin",{requestId:crypto.randomUUID(),itemId:id,question:"如何配对另一部手机？"},provider);
-   assert.notEqual(a.session.id,b.session.id);assert.equal(received.at(-1).previousUserReports[0].outcomeId,o.outcomeId);
+   assert.notEqual(a.session.id,b.session.id);assert.equal(received.at(-1).experiences[0].outcomeId,o.outcomeId);
    amendOutcome(f.db,f.read,"lin",{outcomeId:o.outcomeId,expectedRevision:1,operation:"revoke_reuse",requestId:crypto.randomUUID(),confirmed:true});
    await respond(f.db,f.read,"lin",{requestId:crypto.randomUUID(),itemId:id,question:"如何配对另一部手机？"},provider);
-   assert.equal(received.at(-1).previousUserReports.length,0);
+   assert.equal(received.at(-1).experiences.length,0);
  }finally{f.db.close();}
 });
 test("旅程B｜开放创造沿同一任务记录→用户反馈→后续探索复用；物理可行性未实测",async()=>{

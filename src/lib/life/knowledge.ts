@@ -87,6 +87,9 @@ export function brandEntry(brand: string) {
 export function officialDomain(url: string, brand: string) {
   const host = sourceURL(url).hostname,
     b = brandEntry(brand);
+  // Manufacturer-owned community hosting is not manufacturer-authored product
+  // evidence. This does not block ordinary access; it denies official status.
+  if (/(^|[.-])(community|communities|forum|forums|discussions)([.-]|$)/i.test(host) || /\/(?:community|forums|discussions|s\/question)(?:\/|$)/i.test(new URL(url).pathname)) return false;
   return !!b?.domains.some((d) => host === d || host.endsWith("." + d));
 }
 export function modelMentioned(text: string, model: string) {

@@ -1,0 +1,1 @@
+{"checks":[{"name":"UI model entry → unseeded official discovery → model final response","passed":true,"semanticQuality":"requires_original_source_review"},{"name":"same item and conversation follow-up retains identity","passed":true,"semanticQuality":"requires_original_source_review"}],"errors":[],"upstreamRequests":6}

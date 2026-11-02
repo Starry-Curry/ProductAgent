@@ -96,16 +96,16 @@ function model(
   observe?: (messages: ModelMessage[]) => void,
 ): Provider {
   return {
-    model: "offline-fixture",
+    ready: true, model: "offline-fixture",
     generate: async () => ({
-      text: answer,
+      text: JSON.parse(answer).answer,
       model: "offline-fixture",
       tokens: null,
     }),
-    complete: async (messages) => {
+    converse: async (messages) => {
       observe?.(messages);
       return {
-        text: answer,
+        text: JSON.parse(answer).answer,
         model: "offline-fixture",
         tokens: { input: 10, output: 5 },
         toolCalls: [],
@@ -115,7 +115,7 @@ function model(
   };
 }
 
-test("真实 LangGraph interrupt 写 SQLite，重开数据库后复用系统信息并跳过已试步骤", async () => {
+test("领域会话写 SQLite，重开数据库后复用系统信息并跳过已试步骤", async () => {
   const t = setup();
   try {
     const first = await respond(
@@ -134,7 +134,8 @@ test("真实 LangGraph interrupt 写 SQLite，重开数据库后复用系统信�
             n: number;
           }
         ).n,
-      ) > 0,
+      ) === 0,
+      '已退役通用图不再写检查点；会话仍由领域数据库恢复',
     );
     const id = first.session.id;
     t.reopen();
@@ -192,7 +193,7 @@ test("同一请求只追加一次，旧 revision 和并发请求不得覆盖会�
     const ready = new Promise<void>((r) => (entered = r));
     const gate = new Promise<void>((r) => (release = r));
     const p = model(packet("general", "可以先描述你现在想完成的小事。"));
-    p.complete = async () => {
+    p.converse = async () => {
       entered();
       await gate;
       return {
@@ -359,7 +360,7 @@ test("网络等待中撤销物品共享或删除记忆，返回值和迟到的 c
       const ready = new Promise<void>((r) => (entered = r)),
         gate = new Promise<void>((r) => (release = r));
       const p = model(packet("general", "一起先整理当前目标。"));
-      p.complete = async () => {
+      p.converse = async () => {
         entered();
         await gate;
         return {
@@ -582,7 +583,7 @@ test("原装接收器已插入会接续其他步骤，否定答复不被当成�
   }
 });
 
-test("校验重试保持原始服务问题，不把内部反馈当成用户经历", async () => {
+test("旧complete重试链不可再启用；原始服务问题与关怀提醒仍保留", async () => {
   const t = setup();
   let calls = 0;
   const provider: Provider = {
@@ -632,8 +633,8 @@ test("校验重试保持原始服务问题，不把内部反馈当成用户经�
       }),
       provider,
     );
-    assert.equal(calls, 2);
-    assert.equal(r.reply.outcome, "needs_info");
+    assert.equal(calls, 0);
+    assert.equal(r.reply.outcome, "unavailable");
     const reminder = await respond(
       t.db,
       t.read,
@@ -733,7 +734,7 @@ test("工具循环只执行白名单读取，错误工具与坏 JSON 在限定�
     try {
       let count = 0;
       const p = model("bad");
-      p.complete = async () => {
+      p.converse = async () => {
         count++;
         return {
           text: variant === "json" ? "invalid json" : "",
@@ -752,16 +753,16 @@ test("工具循环只执行白名单读取，错误工具与坏 JSON 在限定�
           finishReason: variant === "tool" ? "tool_calls" : "stop",
         };
       };
+      p.structuredOutput='json_schema';
       const a = await respond(t.db, t.read, "lin", turn("想讨论一个新目标"), p);
-      assert.equal(count, variant === "tool" ? 4 : 2);
+      assert.equal(count, variant === "tool" ? 6 : 1);
       assert.ok(
         ["unavailable", "referred", "needs_info"].includes(a.reply.outcome),
       );
       assert.ok(
         a.trace.some(
           (e) =>
-            e.stage ===
-            (variant === "tool" ? "tool_denied" : "validation_failed"),
+            e.stage === 'practical_failed',
         ),
       );
       assert.ok(!a.reply.steps.length);
@@ -1085,17 +1086,14 @@ test("真实协议回归：工具协商不混用 JSON mode，stop 附带 tool_ca
         });
       },
     );
-    const r = await respond(
-      t.db,
-      t.read,
-      "lin",
-      turn("如何依据资料确认电池规格", { itemId: "lamp" }),
-      provider,
-    );
-    assert.equal(requests, 2);
-    assert.equal(r.reply.outcome, "answered");
-    assert.ok(r.trace.some((e) => e.stage === "tool_completed"));
-    assert.deepEqual(r.reply.evidenceIds, ["M-R0061:battery"]);
+    const messages:ModelMessage[]=[{role:'user',content:'如何依据资料确认电池规格'}];
+    const definitions=[{type:'function' as const,function:{name:'search_product_knowledge',description:'合成资料工具',parameters:{type:'object',properties:{query:{type:'string'}},required:['query']}}}];
+    const first=await provider.converse!(messages,definitions,{timeoutMs:1000,maxTokens:500});
+    assert.equal(first.toolCalls.length,1,'stop附带tool_calls不能丢弃');
+    messages.push({role:'assistant',content:first.text,tool_calls:first.toolCalls},{role:'tool',tool_call_id:first.toolCalls[0].id,content:'一节 AA 电池'});
+    const second=await provider.converse!(messages,definitions,{timeoutMs:1000,maxTokens:500});
+    assert.equal(requests,2);assert.match(second.text,/一节 AA/);
+
   } finally {
     t.close();
   }

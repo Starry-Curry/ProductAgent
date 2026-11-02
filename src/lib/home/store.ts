@@ -17,6 +17,9 @@ import {collaborate,householdMembers} from '../collaboration.ts';
 import {recordSpecialist} from '../foundation/specialists.ts';
 import {epoch} from '../memory/store.ts';
 import {readKnowledge} from '../life/acquisition.ts';
+import {scopedProductKnowledge} from '../context/evidence-scope.ts';
+import {hasCurrentKnowledgeReference} from '../context/source-reference.ts';
+import {authorize} from '../foundation/policy.ts';
 import {getTask} from '../foundation/tasks.ts';
 import {fingerprint} from '../foundation/legacy.ts';
 import {changedPlanResources} from '../life/plan-resources.ts';
@@ -170,6 +173,7 @@ export function proposeAction(
     action.kind === "plan" || action.kind === "taskPlan"
       ? action.itemIds
       : [action.itemId];
+  for(const id of ids)if(!authorize(db,state,actor,id).allowed)throw new AgentError('物品未获当前授权，不能准备建议',403);
   const identities = Object.fromEntries(
     ids.map((id) => [id, itemStamp(accessible(state, actor, id))]),
   );
@@ -247,9 +251,11 @@ export function decideAction(
     if (lease.lease_until > Date.now())
       throw new AgentError("对话正在处理，请稍候再确认", 409);
     const action = homeActionSchema.parse(JSON.parse(row.action));
-    for (const [itemId, stamp] of Object.entries(JSON.parse(row.identities)))
+    for (const [itemId, stamp] of Object.entries(JSON.parse(row.identities))) {
+      if(!authorize(db,state,actor,itemId).allowed)throw new AgentError('物品授权已变化，不能确认旧建议',403);
       if (itemStamp(accessible(state, actor, itemId)) !== stamp)
         throw new AgentError("物品身份已改变，请重新提出需求", 409);
+    }
     if (Date.parse(row.expires_at) <= Date.now())
       throw new AgentError("行动建议已过期，请重新提出需求", 409);
     if (row.status !== "pending") {
@@ -268,7 +274,7 @@ export function decideAction(
     let targetId: string | undefined;
     if (decision === "confirm") {
       if(action.kind==='plan'&&action.resourceRevisions){const review=changedPlanResources(action,action.itemIds.map(id=>accessible(state,actor,id)));if(review.changed.length)throw new AgentError('方案使用的物品条件已变化；'+(review.affected.length?'请重新核对第'+review.affected.map(n=>n+1).join('、')+'步':'请核对使用这些物品的步骤')+'后再准备确认。没有保存或执行。',409);}
-      if(action.kind==='plan'&&action.sourceRefs?.some(ref=>!action.itemIds.some(itemId=>readKnowledge(db,state,actor,itemId).some(d=>d.url===ref.url&&d.chunks.some(c=>c.id===ref.id)))))throw new AgentError('计划关联资料已经更新，请重新核对后保存',409);
+      if(action.kind==='plan'&&action.sourceRefs?.some(ref=>!action.itemIds.some(itemId=>hasCurrentKnowledgeReference(scopedProductKnowledge(accessible(state,actor,itemId),readKnowledge(db,state,actor,itemId)).map(d=>d.document),ref))))throw new AgentError('计划关联资料已经更新，请重新核对后保存',409);
       if(action.kind==='story'){
         const fragment=saveFragment(db,read,actor,{text:action.text,itemIds:[action.itemId],allowRecall:false,allowCloud:false,origin:'user-record'},session.known.foundationTaskId);
         targetId=fragment.id;session.memoryEpoch=epoch(db,actor);message='私人故事已保存并关联当前任务；未授权检索、未分享，也不自动供云端使用。';

@@ -1,0 +1,577 @@
+   ▲ Next.js 15.5.28
+   - Local:        http://127.0.0.1:3241
+   - Network:      http://127.0.0.1:3241
+   - Experiments (use with caution):
+     · cpus: 1
+
+ ✓ Starting...
+ ✓ Ready in 5.2s
+ ○ Compiling / ...
+ ✓ Compiled / in 6.2s (1736 modules)
+ GET / 200 in 7733ms
+ ○ Compiling /api/account ...
+ ✓ Compiled /api/account in 1593ms (1845 modules)
+ GET /api/account 200 in 1995ms
+ ○ Compiling /api/life ...
+ ✓ Compiled /api/life in 3.7s (2417 modules)
+ GET /api/life 200 in 4532ms
+ GET /api/life 200 in 4243ms
+ GET /api/life 200 in 4543ms
+ ○ Compiling /api/foundation ...
+ ✓ Compiled /api/foundation in 1986ms (2424 modules)
+ GET /api/foundation 200 in 2387ms
+ POST /api/life 200 in 1613ms
+ GET /api/foundation 200 in 40ms
+ GET /api/life 200 in 54ms
+ GET /api/life 200 in 39ms
+ ○ Compiling /api/memories ...
+ ✓ Compiled /api/memories in 2.9s (2685 modules)
+ GET /api/assistant?mode=auto&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 3319ms
+ GET /api/assistant?mode=auto&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 3332ms
+ GET /api/collaboration 200 in 3719ms
+ GET /api/collaboration 200 in 3580ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 3675ms
+ GET /api/foundation 200 in 93ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 128ms
+ GET /api/life 200 in 179ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 47ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 50ms
+ GET /api/foundation 200 in 30ms
+ GET /api/foundation 200 in 23ms
+ GET /api/life 200 in 30ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation 200 in 28ms
+ GET /api/life 200 in 38ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation 200 in 34ms
+ GET /api/life 200 in 29ms
+ GET /api/foundation 200 in 34ms
+ GET /api/foundation 200 in 33ms
+ GET /api/life 200 in 32ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation 200 in 31ms
+ GET /api/life 200 in 32ms
+ GET /api/foundation 200 in 31ms
+ GET /api/foundation 200 in 33ms
+ GET /api/life 200 in 32ms
+ GET /api/foundation 200 in 35ms
+ POST /api/assistant 200 in 70855ms
+ GET /api/life 200 in 29ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 33ms
+ GET /api/foundation 200 in 29ms
+ GET /api/life 200 in 27ms
+ GET /api/foundation 200 in 28ms
+ GET /api/foundation 200 in 28ms
+ GET /api/life 200 in 29ms
+ GET /api/foundation 200 in 25ms
+ POST /api/assistant 200 in 17012ms
+ GET /api/life 200 in 32ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 36ms
+ GET / 200 in 749ms
+ GET /api/account 200 in 56ms
+ GET /api/life 200 in 34ms
+ GET /api/life 200 in 64ms
+ GET /api/foundation 200 in 76ms
+ GET /api/collaboration 200 in 120ms
+ GET /api/assistant?mode=auto&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 147ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 183ms
+ GET /api/collaboration 200 in 205ms
+ GET /api/assistant?mode=auto&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 230ms
+ GET /api/foundation 200 in 207ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 198ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 42ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 45ms
+ GET /api/life 200 in 55ms
+ POST /api/foundation 200 in 33ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 32ms
+ GET /api/life 200 in 27ms
+ GET /api/memories 200 in 38ms
+ GET /api/collaboration 200 in 68ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 62ms
+ GET /api/memories? 200 in 98ms
+ GET /api/memories 200 in 97ms
+ GET /api/collaboration 200 in 112ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 126ms
+ GET /api/memories? 200 in 40ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 27ms
+ GET /api/life 200 in 28ms
+ GET /api/foundation 200 in 26ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 27ms
+ GET /api/foundation 200 in 25ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 29ms
+ GET /api/life 200 in 30ms
+ GET /api/foundation 200 in 24ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 27ms
+ GET /api/foundation 200 in 31ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 27ms
+ GET /api/life 200 in 28ms
+ GET /api/foundation 200 in 26ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 25ms
+ GET /api/foundation 200 in 21ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 22ms
+ GET /api/life 200 in 32ms
+ GET /api/foundation 200 in 26ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 30ms
+ GET /api/foundation 200 in 24ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 28ms
+ GET /api/life 200 in 26ms
+ GET /api/foundation 200 in 28ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 22ms
+ POST /api/assistant 200 in 50389ms
+ GET /api/life 200 in 46ms
+ GET /api/memories? 200 in 39ms
+ GET /api/foundation 200 in 34ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 27ms
+ GET /api/life 200 in 31ms
+ GET /api/foundation 200 in 26ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 28ms
+ GET /api/foundation 200 in 25ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 34ms
+ GET /api/life 200 in 27ms
+ GET /api/foundation 200 in 25ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 28ms
+ GET /api/foundation 200 in 24ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 28ms
+ GET /api/life 200 in 27ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 27ms
+ GET /api/foundation 200 in 26ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 29ms
+ GET /api/life 200 in 27ms
+ GET /api/foundation 200 in 19ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 22ms
+ GET /api/foundation 200 in 25ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 26ms
+ POST /api/assistant 200 in 45150ms
+ GET /api/life 200 in 31ms
+ GET /api/memories? 200 in 33ms
+ ○ Compiling /api/home ...
+ ✓ Compiled /api/home in 2.1s (2683 modules)
+ POST /api/home 409 in 2691ms
+ GET /api/life 200 in 108ms
+ GET /api/foundation 200 in 157ms
+ GET /api/foundation?taskId=56f6679e-7afe-4936-b2ba-3fe1af3b8e9a 200 in 42ms
+ ✓ Compiled in 697ms (924 modules)
+ GET / 200 in 831ms
+ ○ Compiling /api/account ...
+ ✓ Compiled /api/account in 691ms (1032 modules)
+ GET /api/account 200 in 1007ms
+ ○ Compiling /api/life ...
+ ✓ Compiled /api/life in 566ms (1604 modules)
+ GET /api/life 200 in 1064ms
+ GET /api/life 200 in 1080ms
+ ○ Compiling /api/collaboration ...
+ ✓ Compiled /api/collaboration in 567ms (1611 modules)
+ ✓ Compiled in 1ms (1873 modules)
+ ✓ Compiled in 1ms (1873 modules)
+ ✓ Compiled in 1ms (1873 modules)
+ GET /api/foundation 200 in 6147ms
+ ✓ Compiled in 1ms (1873 modules)
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 7600ms
+ GET /api/collaboration 200 in 7610ms
+ GET /api/collaboration 200 in 7591ms
+ GET /api/assistant?mode=auto&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 7607ms
+ GET /api/assistant?mode=auto&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 7596ms
+ GET /api/life 200 in 6882ms
+ ✓ Compiled in 1ms (1873 modules)
+ ✓ Compiled in 0ms (1873 modules)
+ ✓ Compiled in 1ms (1873 modules)
+ GET / 200 in 3656ms
+ ✓ Compiled in 1ms (1873 modules)
+ GET /api/foundation 200 in 3069ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 3069ms
+ POST /api/foundation 200 in 2843ms
+ ✓ Compiled in 1ms (1873 modules)
+ GET /api/life 200 in 2779ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 1841ms
+ GET /api/foundation 200 in 1847ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 1935ms
+ GET /api/foundation 200 in 44ms
+ GET /api/life 200 in 163ms
+ GET /api/memories 200 in 187ms
+ GET /api/memories?itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 186ms
+ GET /api/collaboration 200 in 218ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 416ms
+ GET /api/memories? 200 in 451ms
+ GET /api/memories 200 in 273ms
+ GET /api/collaboration 200 in 286ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 298ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 310ms
+ GET /api/memories? 200 in 40ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 283ms
+ GET /api/foundation 200 in 61ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 27ms
+ GET /api/life 200 in 35ms
+ GET /api/foundation 200 in 29ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 28ms
+ GET /api/foundation 200 in 39ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 32ms
+ GET /api/life 200 in 42ms
+ GET /api/foundation 200 in 31ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 31ms
+ GET /api/foundation 200 in 34ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 30ms
+ GET /api/life 200 in 35ms
+ GET /api/foundation 200 in 29ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 30ms
+ GET /api/foundation 200 in 31ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 28ms
+ GET /api/life 200 in 28ms
+ GET /api/foundation 200 in 35ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 26ms
+ GET /api/foundation 200 in 21ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 22ms
+ GET /api/life 200 in 26ms
+ GET /api/foundation 200 in 22ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 31ms
+ POST /api/assistant 200 in 49756ms
+ GET /api/life 200 in 33ms
+ GET /api/memories? 200 in 35ms
+ GET /api/foundation 200 in 24ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 24ms
+ GET /api/life 200 in 25ms
+ GET /api/foundation 200 in 29ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 26ms
+ GET /api/foundation 200 in 37ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 24ms
+ GET /api/life 200 in 24ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 30ms
+ GET /api/foundation 200 in 30ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 36ms
+ GET /api/life 200 in 33ms
+ GET /api/foundation 200 in 25ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 33ms
+ GET /api/foundation 200 in 21ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 24ms
+ GET /api/life 200 in 25ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 24ms
+ POST /api/assistant 200 in 41291ms
+ GET /api/life 200 in 27ms
+ GET /api/memories? 200 in 38ms
+ GET /api/foundation 200 in 50ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 31ms
+ ○ Compiling /api/home ...
+ ✓ Compiled /api/home in 1892ms (1871 modules)
+ POST /api/home 200 in 2460ms
+ GET /api/life 200 in 359ms
+ GET /api/life 200 in 378ms
+ GET / 200 in 910ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 63ms
+ GET /api/life 200 in 29ms
+ POST /api/foundation 200 in 61ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 26ms
+ GET /api/life 200 in 30ms
+ GET /api/life 200 in 45ms
+ GET /api/foundation 200 in 29ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 25ms
+ GET /api/foundation 200 in 24ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 25ms
+ GET /api/life 200 in 25ms
+ GET /api/foundation 200 in 28ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 28ms
+ GET /api/foundation 200 in 28ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 31ms
+ GET /api/life 200 in 32ms
+ GET /api/foundation 200 in 29ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 46ms
+ GET /api/foundation 200 in 24ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 32ms
+ GET /api/life 200 in 30ms
+ GET / 200 in 665ms
+ ○ Compiling /api/account ...
+ ✓ Compiled /api/account in 681ms (1032 modules)
+ GET /api/account 200 in 801ms
+ ○ Compiling /api/life ...
+ ✓ Compiled /api/life in 549ms (1604 modules)
+ GET /api/life 200 in 922ms
+ GET /api/life 200 in 923ms
+ ○ Compiling /api/foundation ...
+ ✓ Compiled /api/foundation in 569ms (1611 modules)
+ GET /api/foundation 200 in 785ms
+ GET /api/foundation 200 in 20ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 30ms
+ GET /api/life 200 in 124ms
+ ○ Compiling /api/collaboration ...
+ ✓ Compiled /api/collaboration in 537ms (1616 modules)
+ ✓ Compiled (1873 modules)
+ GET /api/memories? 200 in 4463ms
+ GET /api/memories 200 in 4491ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 4913ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 4910ms
+ GET /api/collaboration 200 in 4986ms
+ GET /api/collaboration 200 in 4958ms
+ GET /api/collaboration 200 in 29ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 283ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 283ms
+ GET /api/collaboration 200 in 293ms
+ GET /api/foundation 200 in 328ms
+ GET /api/memories? 200 in 356ms
+ GET /api/memories 200 in 84ms
+ GET /api/assistant?sessionId=3c85ef58-7945-49d4-a4fb-c7fcad228a6b 200 in 92ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 104ms
+ GET /api/life 200 in 109ms
+ GET /api/foundation 200 in 20ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 25ms
+ GET /api/foundation 200 in 25ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 33ms
+ GET /api/life 200 in 35ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 27ms
+ GET /api/foundation 200 in 26ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 32ms
+ GET /api/life 200 in 23ms
+ GET /api/foundation 200 in 23ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 42ms
+ GET /api/foundation 200 in 24ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 37ms
+ GET /api/life 200 in 60ms
+ GET /api/foundation 200 in 25ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 27ms
+ GET /api/foundation 200 in 25ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 29ms
+ GET /api/life 200 in 34ms
+ GET /api/foundation 200 in 28ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 24ms
+ POST /api/assistant 200 in 45794ms
+ GET /api/life 200 in 28ms
+ GET /api/memories? 200 in 31ms
+ POST /api/foundation 200 in 49ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 29ms
+ GET /api/foundation 200 in 22ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 23ms
+ GET /api/life 200 in 34ms
+ GET /api/foundation 200 in 30ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 22ms
+ GET /api/foundation 200 in 25ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 26ms
+ GET /api/life 200 in 29ms
+ GET /api/foundation 200 in 25ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 26ms
+ GET /api/foundation 200 in 29ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 25ms
+ GET /api/life 200 in 25ms
+ GET /api/foundation 200 in 26ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 24ms
+ GET /api/foundation 200 in 28ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 26ms
+ GET /api/life 200 in 32ms
+ GET /api/foundation 200 in 21ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 23ms
+ GET /api/foundation 200 in 21ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 26ms
+ GET /api/life 200 in 32ms
+ GET /api/foundation 200 in 24ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 29ms
+ GET /api/foundation 200 in 28ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 23ms
+ GET /api/life 200 in 22ms
+ GET /api/foundation 200 in 26ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 31ms
+ GET /api/foundation 200 in 22ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 24ms
+ GET /api/life 200 in 28ms
+ POST /api/assistant 200 in 66281ms
+ GET /api/life 200 in 30ms
+ GET /api/memories? 200 in 33ms
+ POST /api/foundation 200 in 44ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 28ms
+ GET /api/foundation 200 in 32ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 25ms
+ GET /api/foundation 200 in 29ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 27ms
+ GET /api/life 200 in 31ms
+ GET /api/foundation 200 in 33ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 26ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 31ms
+ GET /api/life 200 in 28ms
+ GET /api/foundation 200 in 31ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 24ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 24ms
+ GET /api/life 200 in 28ms
+ GET /api/foundation 200 in 22ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 23ms
+ POST /api/assistant 200 in 32478ms
+ GET /api/life 200 in 32ms
+ GET /api/memories? 200 in 26ms
+ ✓ Compiled in 777ms (924 modules)
+ GET / 200 in 337ms
+ ✓ Compiled /api/account in 256ms (1032 modules)
+ GET /api/account 200 in 395ms
+ ✓ Compiled /api/life in 226ms (1604 modules)
+ GET /api/life 200 in 427ms
+ GET /api/life 200 in 431ms
+ GET / 200 in 313ms
+ ✓ Compiled /api/foundation in 209ms (1611 modules)
+ GET /api/foundation 200 in 314ms
+ GET /api/foundation 200 in 11ms
+ GET / 200 in 171ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 11ms
+ GET /api/life 200 in 42ms
+ ○ Compiling /api/collaboration ...
+ ✓ Compiled /api/collaboration in 1208ms (1616 modules)
+ ✓ Compiled (1873 modules)
+ GET /api/memories? 200 in 1975ms
+ GET /api/memories 200 in 1976ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 2134ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 2132ms
+ GET /api/collaboration 200 in 2155ms
+ GET /api/collaboration 200 in 2153ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 33ms
+ GET /api/memories? 200 in 44ms
+ GET /api/memories 200 in 43ms
+ GET /api/assistant?sessionId=414416c9-c04c-476d-9779-f4fcdb6d569c 200 in 49ms
+ POST /api/foundation 200 in 89ms
+ GET / 200 in 128ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 11ms
+ GET /api/collaboration 200 in 17ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 25ms
+ GET /api/assistant?mode=auto&scope=all&itemId=622794c4-14db-4050-b966-da940606d4c2 200 in 24ms
+ GET /api/collaboration 200 in 30ms
+ GET /api/assistant?sessionId=414416c9-c04c-476d-9779-f4fcdb6d569c 200 in 10ms
+ GET /api/foundation 200 in 10ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 8ms
+ GET /api/life 200 in 32ms
+ GET /api/foundation 200 in 7ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 10ms
+ POST /api/assistant 200 in 11674ms
+ GET /api/life 200 in 14ms
+ GET /api/memories? 200 in 17ms
+ GET /api/foundation 200 in 10ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 9ms
+ POST /api/foundation 200 in 16ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 10ms
+ GET /api/life 200 in 8ms
+ GET /api/foundation 200 in 8ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 9ms
+ GET /api/foundation 200 in 8ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 9ms
+ GET /api/life 200 in 11ms
+ GET /api/foundation 200 in 21ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 9ms
+ GET /api/foundation 200 in 12ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 12ms
+ GET /api/life 200 in 11ms
+ GET /api/foundation 200 in 8ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 10ms
+ GET /api/foundation 200 in 11ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 12ms
+ GET /api/life 200 in 9ms
+ GET /api/foundation 200 in 13ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 16ms
+ GET /api/foundation 200 in 13ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 8ms
+ POST /api/assistant 200 in 42557ms
+ GET /api/life 200 in 10ms
+ GET /api/memories? 200 in 14ms
+ POST /api/foundation 200 in 17ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 14ms
+ GET /api/life 200 in 10ms
+ GET /api/foundation 200 in 18ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 10ms
+ GET /api/foundation 200 in 11ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 9ms
+ GET /api/life 200 in 9ms
+ GET /api/foundation 200 in 8ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 8ms
+ GET /api/foundation 200 in 7ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 8ms
+ GET /api/life 200 in 33ms
+ POST /api/assistant 200 in 21166ms
+ GET /api/life 200 in 10ms
+ GET /api/memories? 200 in 11ms
+ GET /api/foundation 200 in 10ms
+ GET /api/foundation?taskId=5da55e5b-bd10-42ff-b988-ec07c61d4bcc 200 in 11ms
+ ✓ Compiled in 778ms (924 modules)
+ GET / 200 in 804ms
+ ○ Compiling /api/account ...
+ ✓ Compiled /api/account in 555ms (1032 modules)
+ GET /api/account 200 in 919ms
+ POST /api/account 200 in 229ms
+ ○ Compiling /api/life ...
+ ✓ Compiled /api/life in 1226ms (1604 modules)
+ GET /api/account 200 in 1795ms
+ GET /api/life 200 in 2232ms
+ GET /api/life 200 in 2211ms
+ GET / 200 in 641ms
+ ○ Compiling /api/foundation ...
+ ✓ Compiled /api/foundation in 3.3s (1611 modules)
+ GET /api/foundation 200 in 4078ms
+ GET /api/foundation 200 in 4076ms
+ GET /api/account 200 in 2102ms
+ POST /api/account 200 in 249ms
+ GET /api/foundation 200 in 32ms
+ GET /api/life 200 in 122ms
+ GET /api/life 200 in 140ms
+ GET /api/account 200 in 40ms
+ GET /api/life 200 in 30ms
+ GET /api/life 200 in 30ms
+ GET /api/foundation 200 in 38ms
+ GET /api/foundation 200 in 53ms
+ POST /api/life 200 in 102ms
+ ○ Compiling /api/life/media/[id] ...
+ ✓ Compiled /api/life/media/[id] in 1294ms (2426 modules)
+ GET /api/life 200 in 124ms
+ GET /api/life/media/7db0129d-78f5-453b-8b84-c0fb2a898089?actor=u_4c61539c-d9b4-4f71-b42a-90955120391e 200 in 3569ms
+ GET /api/foundation 200 in 65ms
+ GET /api/foundation 200 in 21ms
+ POST /api/life 200 in 34ms
+ GET /api/life 200 in 27ms
+ GET /api/life 200 in 26ms
+ GET /api/life/media/7db0129d-78f5-453b-8b84-c0fb2a898089?actor=u_4c61539c-d9b4-4f71-b42a-90955120391e 200 in 95ms
+ ○ Compiling /api/memories ...
+ ✓ Compiled /api/memories in 1096ms (1616 modules)
+ ✓ Compiled (1621 modules)
+ GET /api/collaboration 200 in 2328ms
+ GET /api/collaboration 200 in 2342ms
+ GET /api/memories?itemId=49012e57-6991-4164-a9c8-549e7ff9dee0 200 in 2394ms
+ GET /api/memories?itemId=49012e57-6991-4164-a9c8-549e7ff9dee0 200 in 2393ms
+ GET /api/memories?itemId=49012e57-6991-4164-a9c8-549e7ff9dee0 200 in 2392ms
+ GET /api/memories?itemId=49012e57-6991-4164-a9c8-549e7ff9dee0 200 in 2308ms
+ POST /api/life 200 in 121ms
+ GET /api/life/media/221b989a-1673-4064-8ee5-7ec3f1453651?actor=u_4c61539c-d9b4-4f71-b42a-90955120391e 200 in 74ms
+ POST /api/life 200 in 80ms
+ GET /api/life 200 in 44ms
+ GET /api/memories?itemId=49012e57-6991-4164-a9c8-549e7ff9dee0 200 in 44ms
+ GET /api/life/media/221b989a-1673-4064-8ee5-7ec3f1453651?actor=u_4c61539c-d9b4-4f71-b42a-90955120391e 200 in 92ms
+ POST /api/memories 200 in 53ms
+ GET /api/life 200 in 29ms
+ GET /api/memories?itemId=49012e57-6991-4164-a9c8-549e7ff9dee0 200 in 41ms
+ GET /api/life 200 in 124ms
+ GET / 200 in 927ms
+ GET /api/foundation 200 in 226ms
+ GET /api/account 200 in 42ms
+ GET /api/life 200 in 35ms
+ GET /api/life 200 in 46ms
+ GET /api/life/media/7db0129d-78f5-453b-8b84-c0fb2a898089?actor=u_4c61539c-d9b4-4f71-b42a-90955120391e 200 in 144ms
+ GET /api/life/media/221b989a-1673-4064-8ee5-7ec3f1453651?actor=u_4c61539c-d9b4-4f71-b42a-90955120391e 200 in 168ms
+ GET /api/collaboration 200 in 69ms
+ GET /api/foundation 200 in 105ms
+ GET /api/foundation 200 in 105ms
+ GET /api/memories?itemId=49012e57-6991-4164-a9c8-549e7ff9dee0 200 in 137ms
+ GET /api/memories?itemId=49012e57-6991-4164-a9c8-549e7ff9dee0 200 in 137ms
+ GET /api/collaboration 200 in 136ms
+ GET /api/memories?itemId=49012e57-6991-4164-a9c8-549e7ff9dee0 200 in 119ms
+ GET /api/memories?itemId=49012e57-6991-4164-a9c8-549e7ff9dee0 200 in 83ms
+ GET /api/foundation 200 in 28ms
+ GET /api/foundation 200 in 21ms
+ GET /api/life 200 in 31ms
+ GET /api/foundation 200 in 31ms
+ GET /api/life 200 in 36ms
+ GET /api/foundation 200 in 28ms
+ GET /api/foundation 200 in 27ms
+ GET /api/foundation 200 in 28ms
+ GET /api/life 200 in 43ms
+ GET /api/foundation 200 in 31ms
+ GET /api/life 200 in 29ms
+ GET /api/foundation 200 in 39ms
+ GET /api/foundation 200 in 40ms
+ GET /api/foundation 200 in 27ms
+ GET /api/life 200 in 29ms
+ GET /api/foundation 200 in 31ms
+ GET /api/life 200 in 31ms
+ GET /api/foundation 200 in 35ms

@@ -513,7 +513,17 @@ export async function acquireKnowledge(
       acquisition.searchCompleted = true;
       // A model may return many valid sources. Prefer actual manuals over an
       // overview/download index; skip unrelated PDF kinds before spending fetches.
-      const rankedHits=result.hits.filter(h=>!unrelatedDocument(h)).map((h,n)=>({h,n,score:Number(isProductManual(h))*2+Number(modelMentioned(h.title+' '+decodeURI(h.url),item.model))*4})).sort((a,b)=>b.score-a.score||a.n-b.n).map(x=>x.h);
+      // Keep the provider's source candidates until AFTER ranking. A download
+      // index often contains the model in its URL while the actual manual uses
+      // opaque document IDs. Prefer readable chapters over such landing pages;
+      // exact subject/model/region must still be checked on the fetched body.
+      const rankedHits=result.hits.filter(h=>officialDomain(h.url,brand)&&!unrelatedDocument(h)).map((h,n)=>{
+        let decoded=h.url;try{decoded=decodeURI(decoded);}catch{}
+        const path=new URL(h.url).pathname;
+        const chapter=/\/(?:contents?|chapters?|manual|guides?)\/.+\.(?:html?|pdf)$|\/(?:helpguide|user[-_]?manual)\//i.test(decoded);
+        const index=/\/(?:manuals|downloads|support|faqs)\/?$|\/(?:index|default)\.html?$/i.test(path);
+        return {h,n,score:Number(chapter)*12+Number(isProductManual(h))*6+Number(/\.pdf$/i.test(path))*3+Number(modelMentioned(h.title+' '+decoded,item.model))*4-Number(index)*3};
+      }).sort((a,b)=>b.score-a.score||a.n-b.n).map(x=>x.h);
       acquisition.searchURLs = rankedHits.slice(0, 4).map((h) => h.url);
       for (const hit of rankedHits.slice(0, 4)) {
         if (requests >= 8) break;

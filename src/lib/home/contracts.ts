@@ -86,7 +86,7 @@ export const homeActionSchema = z.discriminatedUnion("kind", [
     .object({
       kind: z.literal("plan"),
       conditions:z.array(z.string().max(240)).max(10).optional(),
-      sourceRefs:z.array(z.object({id:z.string().max(200),url:z.string().url()})).max(8).optional(),
+      sourceRefs:z.array(z.object({id:z.string().max(200),url:z.string().url(),sourceId:z.string().max(200).optional(),documentHash:z.string().regex(/^[a-f0-9]{64}$/).optional(),quoteRange:z.object({start:z.number().int().nonnegative(),end:z.number().int().positive()}).strict().optional(),quoteHash:z.string().regex(/^[a-f0-9]{64}$/).optional()}).strict()).max(8).optional(),
       dependencies:z.array(z.object({step:z.number().int().min(0).max(29),resourceIds:z.array(z.string().max(100)).max(8),status:z.string().max(80)})).max(30).optional(),
       resourceRevisions:z.record(z.string().max(100),z.string().max(80)).optional(),
       goal: z.string().min(1).max(150),

@@ -25,6 +25,12 @@ import { recognizeOwnedPhoto } from "../src/lib/life/vision.ts";
 import { createProvider, ProviderError } from "../src/lib/ai/provider.ts";
 import { respond } from "../src/lib/agent/service.ts";
 
+test('厂家域名内用户社区不能被认证为厂家产品事实来源',()=>{
+ assert.equal(officialDomain('https://us.community.sony.com/s/question/user-answer','Sony'),false);
+ assert.equal(officialDomain('https://www.sony.com/community/user-post','Sony'),false);
+ assert.equal(officialDomain('https://helpguide.sony.net/speaker/manual/contents/chapter.html','Sony'),true);
+});
+
 function fixture() {
   const filename = path.join(
       mkdtempSync(path.join(tmpdir(), "wujian-knowledge-")),

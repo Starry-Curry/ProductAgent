@@ -85,3 +85,110 @@
  POST /api/assistant 200 in 40930ms
  GET /api/life 200 in 16ms
  GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 14ms
+ GET / 200 in 312ms
+ GET /api/account 200 in 19ms
+ GET /api/life 200 in 31ms
+ GET /api/life 200 in 39ms
+ GET /api/foundation 200 in 65ms
+ GET /api/assistant?mode=auto&itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 79ms
+ GET /api/collaboration 200 in 100ms
+ GET /api/collaboration 200 in 89ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 101ms
+ GET /api/assistant?mode=auto&itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 108ms
+ GET /api/foundation 200 in 65ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 46ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 19ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 24ms
+ GET /api/foundation 200 in 14ms
+ GET /api/life 200 in 13ms
+ GET /api/foundation 200 in 11ms
+ GET /api/foundation 200 in 10ms
+ GET /api/life 200 in 11ms
+ GET /api/foundation 200 in 15ms
+ GET /api/foundation 200 in 10ms
+ GET /api/life 200 in 17ms
+ GET /api/foundation 200 in 13ms
+ GET /api/foundation 200 in 14ms
+ POST /api/assistant 200 in 35044ms
+ GET /api/life 200 in 12ms
+ GET /api/memories?itemId=d085be51-7feb-43aa-a062-bfef50609f81 200 in 14ms
+ ✓ Compiled in 337ms (924 modules)
+ GET / 200 in 441ms
+ ✓ Compiled /api/account in 404ms (1032 modules)
+ GET /api/account 200 in 548ms
+ ✓ Compiled /api/life in 317ms (1604 modules)
+ GET /api/life 200 in 550ms
+ GET /api/life 200 in 254ms
+ GET /api/life 200 in 553ms
+ ✓ Compiled /api/foundation in 308ms (1611 modules)
+ GET /api/foundation 200 in 432ms
+ POST /api/life 200 in 81ms
+ GET /api/foundation 200 in 89ms
+ GET /api/life 200 in 20ms
+ GET /api/life 200 in 18ms
+ ○ Compiling /api/memories ...
+ ✓ Compiled /api/memories in 1768ms (1614 modules)
+ ✓ Compiled (2335 modules)
+ GET /api/collaboration 200 in 3051ms
+ GET /api/collaboration 200 in 3115ms
+ GET /api/assistant?mode=auto&itemId=0a9d3a5a-16cc-41ed-a184-8fa43e5a7fa5 200 in 3464ms
+ GET /api/assistant?mode=auto&itemId=0a9d3a5a-16cc-41ed-a184-8fa43e5a7fa5 200 in 3451ms
+ GET /api/memories?itemId=0a9d3a5a-16cc-41ed-a184-8fa43e5a7fa5 200 in 3568ms
+ GET /api/memories?itemId=0a9d3a5a-16cc-41ed-a184-8fa43e5a7fa5 200 in 24ms
+ GET / 200 in 141ms
+ GET /api/memories?itemId=0a9d3a5a-16cc-41ed-a184-8fa43e5a7fa5 200 in 19ms
+ GET /api/memories?itemId=0a9d3a5a-16cc-41ed-a184-8fa43e5a7fa5 200 in 20ms
+ GET /api/foundation 200 in 33ms
+ GET /api/life 200 in 37ms
+ GET /api/foundation 200 in 11ms
+ GET /api/foundation 200 in 10ms
+ GET /api/life 200 in 17ms
+ GET /api/foundation 200 in 10ms
+ GET /api/foundation 200 in 12ms
+ GET /api/life 200 in 15ms
+ GET /api/foundation 200 in 12ms
+ GET /api/foundation 200 in 14ms
+ GET /api/life 200 in 18ms
+ GET /api/foundation 200 in 10ms
+ GET /api/foundation 200 in 16ms
+ GET /api/life 200 in 15ms
+ GET /api/foundation 200 in 13ms
+ POST /api/assistant 200 in 50001ms
+ GET /api/life 200 in 10ms
+ GET /api/memories?itemId=0a9d3a5a-16cc-41ed-a184-8fa43e5a7fa5 200 in 21ms
+ ✓ Compiled in 571ms (1614 modules)
+ ✓ Compiled in 313ms (924 modules)
+ GET / 200 in 915ms
+ ○ Compiling /api/account ...
+ ✓ Compiled /api/account in 639ms (1032 modules)
+ GET /api/account 200 in 968ms
+ ○ Compiling /api/life ...
+ ✓ Compiled /api/life in 2.3s (1604 modules)
+ GET /api/life 200 in 2772ms
+ GET /api/life 200 in 2446ms
+ GET /api/life 200 in 2784ms
+ GET / 200 in 695ms
+ ○ Compiling /api/foundation ...
+ ✓ Compiled /api/foundation in 513ms (1611 modules)
+ GET /api/foundation 200 in 753ms
+ POST /api/life 200 in 261ms
+ GET /api/foundation 200 in 271ms
+ GET / 200 in 503ms
+ GET /api/life 200 in 24ms
+ GET /api/life 200 in 26ms
+ ○ Compiling /api/memories ...
+ ✓ Compiled /api/memories in 831ms (1614 modules)
+ ✓ Compiled (1872 modules)
+ GET /api/collaboration 200 in 2399ms
+ GET /api/collaboration 200 in 2484ms
+ GET /api/assistant?mode=auto&itemId=56681b76-6b59-485f-bc97-c408f8bf856e 200 in 2777ms
+ GET /api/assistant?mode=auto&itemId=56681b76-6b59-485f-bc97-c408f8bf856e 200 in 2749ms
+ POST /api/assistant 200 in 2403ms
+ GET /api/memories?itemId=56681b76-6b59-485f-bc97-c408f8bf856e 200 in 2886ms
+ GET /api/life 200 in 74ms
+ GET /api/memories?itemId=56681b76-6b59-485f-bc97-c408f8bf856e 200 in 93ms
+ GET / 200 in 213ms
+ GET /api/memories?itemId=56681b76-6b59-485f-bc97-c408f8bf856e 200 in 28ms
+ GET /api/memories?itemId=56681b76-6b59-485f-bc97-c408f8bf856e 200 in 29ms
+ GET / 200 in 94ms
+ ✓ Compiled in 9.1s (924 modules)

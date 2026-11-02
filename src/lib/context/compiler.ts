@@ -14,15 +14,18 @@ import type { EvidencePassage } from "../agent/kernel/contracts.ts";
 import {projectReality} from './reality.ts';
 import {resourceCatalogue} from './relevance.ts';
 import {fingerprint} from '../foundation/legacy.ts';
-import {epoch} from '../memory/store.ts';
+import {epoch,listMemories,effectivePersona} from '../memory/store.ts';
 import {rectangleCondition} from '../agent/kernel/physical.ts';
+import {storyMemoryRelevant} from '../life/organization.ts';
+import {isMemoryRecallRequest} from '../skills/memory-storytelling.ts';
+import {listLifeIdeas} from '../life/ideas.ts';
 
 
 export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number){
   const taskId=session.known.foundationTaskId;
   const taskContext=taskId?resolveTaskContext(db,state,actor,taskId):undefined;
   const task=taskContext?.task;
-  const focus=session.itemId||session.known.activeItemId;
+  const focus=session.itemId||session.known.activeItemId||session.known.homeVoiceItemId;
   const home=session.known.homeId==='young-apartment-v1';
   const homeIds=new Set(home?virtualHomeItems(state,actor).map(i=>i.id):[]);
   // Task membership limits the initial detailed load, not discovery of the
@@ -37,6 +40,9 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   const semanticItems=selected.map(projectReality);
   const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,
     taskMemoryOnly:true,includeItemRelationships:session.known.useItemMemories==='yes',companion:!!session.known.companionItemId,useExperiences:session.known.memoryPolicy!=='off'}));
+  // An unbound conversation can still use relevant, explicitly cloud-authorized
+  // global preferences. Do not load unrelated item stories to fill an empty set.
+  if(!home&&!selected.length)contexts.push(buildContext(db,state,actor,{question,mode:'service',temporary,sessionId:session.id,taskMemoryOnly:true,useExperiences:false}));
   const memoryOn=session.known.memoryPolicy!=='off'&&!temporary;
   const documents=selected.flatMap(i=>{
     return scopedProductKnowledge(i,readKnowledge(db,state,actor,i.id)).map(d=>({...d,itemId:i.id}));
@@ -56,12 +62,28 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   // The current user statement is authorized for THIS reply, not automatically
   // confirmed long-term memory, manufacturer evidence or a device observation.
   evidence.push({id:'user:current-turn',itemId:focus||'',model:'',region:'',title:'本轮用户陈述（未独立验证）',text:question,basis:'user_report'});
-  const experiences=memoryOn?contexts.flatMap(c=>c.cloudExperiences).filter((e,n,a)=>a.findIndex(r=>r.outcomeId===e.outcomeId)===n):[];
-  const memories=memoryOn?contexts.flatMap(c=>c.cloudMemories).filter((e,n,a)=>a.findIndex(r=>r.id===e.id)===n):[];
+  // Household preferences can belong to a different home item without loading
+  // that item's relationship story. Global real-world preferences stay outside.
+  const selectedIds=new Set(selected.map(i=>i.id));
+  const homeMemories=home&&memoryOn&&session.known.useItemMemories==='yes'?listMemories(db,state,actor).filter(m=>{
+    if(m.status!=='active'||m.archived||!m.allowCloud||m.demo||m.kind==='fiction'||!m.itemId||!homeIds.has(m.itemId)||!authorize(db,state,actor,m.itemId).allowed)return false;
+    if(!selectedIds.has(m.itemId)&&!['preference','interest','requirement'].includes(m.kind))return false;
+    const persona=effectivePersona(db,actor,m.itemId);
+    return persona.memoryUse!=='off'&&(persona.memoryUse!=='explicit'||isMemoryRecallRequest(question))&&storyMemoryRelevant(db,actor,m,question);
+  }):[];
+  const experiences=memoryOn?contexts.flatMap(c=>c.cloudExperiences).filter((e,n,a)=>(!home||e.itemInstanceIds.every((id:string)=>homeIds.has(id)))&&a.findIndex(r=>r.outcomeId===e.outcomeId)===n):[];
+  const memories=memoryOn?(home?homeMemories:contexts.flatMap(c=>c.cloudMemories)).filter((e,n,a)=>a.findIndex(r=>r.id===e.id)===n):[];
   const stories=memoryOn?contexts.flatMap(c=>c.cloudFragments).filter((e,n,a)=>a.findIndex(r=>r.id===e.id)===n):[];
   for(const r of experiences)evidence.push({id:r.outcomeId,itemId:r.itemInstanceIds[0],model:'',region:'',title:'获准的用户尝试报告',text:r.notes,basis:'experience'});
   for(const r of memories)evidence.push({id:r.id,itemId:r.itemId||'',model:'',region:'',title:'获准个人记忆',text:r.text,basis:'user_report'});
   for(const r of stories)evidence.push({id:r.id,itemId:focus||'',model:'',region:'',title:'获准物品故事',text:r.text,basis:'user_report'});
+  const allowedPersonalIds=new Set(memories.map(m=>m.id));
+  const readIds=(value?:string):string[]=>{try{const parsed:unknown=JSON.parse(value||'[]');return Array.isArray(parsed)?parsed.filter((s):s is string=>typeof s==='string'):[];}catch{return [];}};
+  const requestedPlans=temporary?[]:readIds(session.known.lifeIdeaIds),feedbackIds=new Set(readIds(session.known.lifeFeedbackIds));
+  const selectedPlans=requestedPlans.length?listLifeIdeas(db,state,actor).filter(p=>requestedPlans.includes(p.id)&&(p.memoryEpoch===undefined||p.memoryEpoch===epoch(db,actor))&&p.itemIds.every(id=>allowed.some(i=>i.id===id))&&(p.reasoning?.preferenceIds||[]).every((id:string)=>allowedPersonalIds.has(id))).map(p=>({
+    id:p.id,title:p.title,itemIds:p.itemIds,goal:p.goal,steps:p.steps,conditions:p.assessment?.checks||p.reasoning?.checks||[],exploration:p.exploration,assessmentLevel:p.assessment?.level,mechanismHypothesis:p.assessment?.hypothesis,expectedEffect:p.expectedEffect,outcome:p.outcome,
+    ...(feedbackIds.has(p.id)?{note:p.note}:{}),verification:'model-hypothesis-not-physical-verification' as const,
+  })):[];
   return {
     question,items:selected.map(itemContext),
     // No owners, locations, notes, photos or private stories in the catalogue.
@@ -85,10 +107,11 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
       const a=outer.value as [number,number,number],b=inner.value as [number,number,number];
       return [{itemIds:[object.id,space.id],operandIds:[outer.id,inner.id],basis:'registered_user_report_parameters_not_device_readback',result:rectangleCondition([a[0],a[1]],[b[0],b[1]],'internal'),heightNotChecked:true}];
     })),
-    preferences:memoryOn?contexts.flatMap(c=>c.cloudPreferences).filter((p,n,a)=>a.findIndex(r=>r.key===p.key&&r.value===p.value)===n):[],
+    preferences:memoryOn?(home?homeMemories.filter(m=>['preference','interest','requirement'].includes(m.kind)).map(m=>({key:m.kind,value:m.text})):contexts.flatMap(c=>c.cloudPreferences)).filter((p,n,a)=>a.findIndex(r=>r.key===p.key&&r.value===p.value)===n):[],
+    selectedPlans,
     tried:session.tried,
     history:session.messages.slice(-6).map(m=>({role:m.role,text:m.text.slice(0,1800)})),
-    currentTask:task?{goal:taskContext!.modelGoal,itemIds:task.itemInstanceIds,plans:taskContext!.plans,collaborationProgress:taskContext!.familyProgress}:undefined,
+    currentTask:task?{goal:taskContext!.modelGoal,itemIds:task.itemInstanceIds,plans:taskContext!.plans,collaborationProgress:taskContext!.familyProgress}:!temporary&&home&&session.known.homeTaskGoal?{goal:session.known.homeTaskGoal,basis:'previous_conversation_goal_not_verified_result' as const}:undefined,
     permissions:{readOnly:true,hardwareExecuted:false,memoryPolicy:session.known.memoryPolicy||'legacy'},
     retrieval:{documents:documents.map(d=>({itemId:d.itemId,id:d.document.id,hash:d.document.hash,url:d.document.url,model:d.document.model,region:d.document.region})),missingItemIds:selected.filter(i=>!documents.some(d=>d.itemId===i.id)).map(i=>i.id)},
     // Explicitly a synthetic household, never a real ownership assertion.

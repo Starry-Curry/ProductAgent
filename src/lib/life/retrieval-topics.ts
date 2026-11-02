@@ -18,13 +18,13 @@ const topics = [
   ["兼容","规格","compatible","specifications"],
 ] as const;
 /** Navigation ranking only. Fetching a chapter still requires exact model checks. */
-export function relevantManualLinks(question:string,links:{title:string;url:string}[]){
+export function relevantManualLinks(question:string,links:{title:string;url:string}[],primaryOnly=false){
  const q=question.toLowerCase(),groups=topics.filter(g=>g.some(t=>q.includes(t)));
  const score=(title:string,g:readonly string[])=>g.reduce((n,t)=>n+(title.toLowerCase()===t?30:title.toLowerCase().includes(t)?t.length:0),0);
  const ordered=[...groups].sort((a,b)=>Math.min(...a.filter(t=>q.includes(t)).map(t=>q.indexOf(t)))-Math.min(...b.filter(t=>q.includes(t)).map(t=>q.indexOf(t))));
  const first=ordered.flatMap(g=>links.map(l=>({l,score:score(l.title,g)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,1).map(x=>x.l));
  const rest=links.map(l=>({l,score:groups.reduce((n,g)=>n+score(l.title,g),0)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).map(x=>x.l);
- return [...first,...rest].filter((l,n,a)=>a.findIndex(x=>x.url===l.url)===n);
+ return [...first,...(primaryOnly?[]:rest)].filter((l,n,a)=>a.findIndex(x=>x.url===l.url)===n);
 }
 export function multilingualAnchors(question:string,chunks:KnowledgeChunk[]) {
   const q=question.toLowerCase();

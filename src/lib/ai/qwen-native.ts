@@ -21,7 +21,7 @@ export async function qwenResearch(env:Record<string,string|undefined>,request:t
  const output=final?.output||items;
  const hits=output.filter((i:any)=>i.type==='web_search_call').flatMap((i:any)=>i.action?.sources||[]).filter((s:any)=>{
   try{const u=new URL(s.url);return u.protocol==='https:'&&!u.username&&!u.password&&(!sites.length||sites.some(d=>u.hostname===d||u.hostname.endsWith('.'+d)));}catch{return false;}
- }).map((s:any)=>({title:String(s.title||s.name||s.url).slice(0,200),url:s.url})).filter((s:any,n:number,a:any[])=>a.findIndex(t=>t.url===s.url)===n).slice(0,12);
+ }).map((s:any)=>({title:String(s.title||s.name||s.url).slice(0,200),url:s.url})).filter((s:any,n:number,a:any[])=>a.findIndex(t=>t.url===s.url)===n).slice(0,48);
  if(!final)throw Error('native_terminal_missing');
  return {hits,text:output.filter((i:any)=>i.type==='message').flatMap((i:any)=>i.content||[]).filter((c:any)=>c.type==='output_text').map((c:any)=>c.text).join('\n'),events,usage:final.usage,model:final.model||env.AI_MODEL!,status:final.status};
 }

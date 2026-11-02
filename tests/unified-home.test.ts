@@ -15,7 +15,8 @@ import {
 } from "../src/lib/catalog/virtual-apartment.ts";
 import { isProductManual } from "../src/lib/life/manuals.ts";
 import { readKnowledge } from "../src/lib/life/acquisition.ts";
-import { buildHomeTaskContext } from "../src/lib/context/home-task.ts";
+import { compileTaskContext } from "../src/lib/context/compiler.ts";
+import { AgentError, type ServiceSession } from "../src/lib/agent/contracts.ts";
 import {
   listMemories,
   forgetMemory,
@@ -32,113 +33,37 @@ const input = (extra: Record<string, unknown> = {}) => ({
   requestId: crypto.randomUUID(),
   question: "这幅画是谁送的？和新书桌怎么一起安排？",
   mode: "auto",
-  memoryPolicy: "off",
+  memoryPolicy: "read",
   uiContext: { page: "assistant", homeId: "young-apartment-v1" },
   ...extra,
 });
-function model(
-  options: {
-    beforeAnswer?: () => void;
-    foreign?: boolean;
-    inspect?: (messages: ModelMessage[]) => void;
-  } = {},
-): Provider {
+/** Offline provider substitute: verifies the shared production protocol, not Qwen quality. */
+function model(options: {
+  beforeAnswer?: () => void;
+  foreign?: boolean;
+  inspect?: (messages: ModelMessage[]) => void;
+} = {}): Provider {
   return {
-    ready: true,
-    model: "offline-scripted",
-    generate: async (_system, input) => {
-      if (_system.startsWith("SOURCE_REVIEW")) {
-        const v = input as any;
-        return {
-          text: JSON.stringify({
-            keepSentenceIds: v.sentences.map((s: any) => s.id),
-            keepStepIds: v.steps.map((s: any) => s.id),
-            issues: [],
-          }),
-          model: "offline-scripted",
-          tokens: null,
-        };
-      }
-      const value = input as {
-        question: string;
-        taskDraft: { goal: string; parts: unknown[] };
-        readResults: any[];
-      };
-      const c = value.readResults.find((c) => c.items) || {};
-      return {
-        text: JSON.stringify({
-          answer: "仅使用当前资料回应完整目标，支撑结构未知。",
-          goal: "布置画与书桌",
-          tasks: [
-            { title: "赠送关系", status: "addressed" },
-            { title: "布局条件", status: "needs_info" },
-          ],
-          usedItemIds: c.items?.map((i: any) => i.id) || [
-            homeItemId("dad", "painting"),
-          ],
-          memoryIds: c.memories?.map((m: any) => m.id) || [],
-          sourceIds: [],
-          questions: ["是否有原配支架？"],
-          steps: [],
-        }),
-        model: "offline-scripted",
-        tokens: { input: 10, output: 10 },
-      };
-    },
-    complete: async (messages) => {
+    ready: true, model: "offline-home-substitute",
+    generate: async () => { throw Error("retired_home_generate_must_not_run"); },
+    complete: async () => { throw Error("retired_home_complete_must_not_run"); },
+    converse: async (messages) => {
       options.inspect?.(messages);
-      const tool = messages.findLast((m) => m.role === "tool");
-      if (!tool)
-        return {
-          text: "",
-          model: "offline-scripted",
-          tokens: { input: 10, output: 10 },
-          finishReason: "tool_calls",
-          toolCalls: [
-            {
-              id: "read-1",
-              type: "function",
-              function: {
-                name: "read_home_items",
-                arguments: JSON.stringify({
-                  itemIds: options.foreign
-                    ? [homeItemId("dad", "painting")]
-                    : [
-                        homeItemId("lin", "painting"),
-                        homeItemId("lin", "desk"),
-                      ],
-                  query: "赠送者、尺寸与布置",
-                }),
-              },
-            },
-          ],
-        };
-      const c = JSON.parse(tool.content as string);
+      const tools=messages.filter(m=>m.role==='tool');
+      const itemIds=options.foreign?[homeItemId("dad","painting")]:[homeItemId("lin","painting"),homeItemId("lin","desk")];
+      if(tools.length<2)return {text:'',model:'offline-home-substitute',tokens:{input:10,output:10},finishReason:'tool_calls',toolCalls:[{id:'read-'+tools.length,type:'function',function:{name:tools.length?'get_relevant_experiences':'get_item_context',arguments:JSON.stringify({itemIds})}}]};
       options.beforeAnswer?.();
-      return {
-        text: JSON.stringify({
-          answer:
-            "赠送者来自当前获准关系记忆；布置时先按已知尺寸预留空间，支撑方式未知。",
-          goal: "布置画与书桌",
-          tasks: [
-            { title: "赠送关系", status: "addressed" },
-            { title: "布置与支撑条件", status: "needs_info" },
-          ],
-          usedItemIds: c.items?.map((i: any) => i.id) || [
-            homeItemId("dad", "painting"),
-          ],
-          memoryIds: c.memories?.map((m: any) => m.id) || [],
-          sourceIds: [],
-          steps: ["先确认现有支架，再决定竖放；否则临时平放。"],
-          questions: ["现有画框是否有支架？"],
-        }),
-        model: "offline-scripted",
-        tokens: { input: 20, output: 30 },
-        finishReason: "stop",
-        toolCalls: [],
-      };
+      return {text:'赠送者来自获准关系记忆；完整目标仍需核对支撑结构。',model:'offline-home-substitute',tokens:{input:20,output:20},finishReason:'stop',toolCalls:[]};
     },
   };
+}
+function homeContext(t: ReturnType<typeof fixture>, question: string, itemIds: string[], options: {
+  temporary?: boolean; memoryPolicy?: string; useItemMemories?: boolean; query?: string;
+  known?: Record<string,string>; actor?: 'lin'|'dad';
+} = {}) {
+  const now=new Date().toISOString();
+  const session: ServiceSession={id:'offline-context',owner:options.actor||'lin',mode:'auto',revision:0,status:'active',messages:[],tried:[],memoryEpoch:0,createdAt:now,updatedAt:now,expiresAt:new Date(Date.now()+60000).toISOString(),known:{homeId:'young-apartment-v1',memoryPolicy:options.memoryPolicy||'read',useItemMemories:options.useItemMemories===false?'no':'yes',...options.known}};
+  return compileTaskContext(t.db,t.read(),options.actor||'lin',session,question,options.temporary,options.query?[options.query]:[],itemIds,18000);
 }
 test("固定家庭八件物品保持精确SKU，单次显式许可且重复加载不复活遗忘记忆", () => {
   const t = fixture();
@@ -269,46 +194,20 @@ test("联网期间物品所有权变化后不写入官方缓存", async () => {
   }
 });
 test("授权、临时模式、另一个用户及显式分身记忆策略不能被工具query绕过", () => {
-  const t = fixture();
-  try {
-    installVirtualHome(t.db, t.read, "lin", true);
-    const ids = [homeItemId("lin", "painting")];
-    assert.ok(
-      buildHomeTaskContext(t.db, t.read(), "lin", "布局", ids).memories.length,
-    );
-    assert.equal(
-      buildHomeTaskContext(t.db, t.read(), "lin", "布局", ids, {
-        temporary: true,
-      }).memories.length,
-      0,
-    );
-    assert.equal(
-      buildHomeTaskContext(t.db, t.read(), "lin", "布局", ids, {
-        includeMemories: false,
-      }).memories.length,
-      0,
-    );
-    assert.throws(
-      () => buildHomeTaskContext(t.db, t.read(), "dad", "回忆", ids),
-      /本人/,
-    );
-    savePersona(t.db, t.read(), "lin", {
-      enabled: true,
-      nickname: "山山",
-      style: "warm",
-      memoryUse: "explicit",
-      itemId: ids[0],
-    });
-    assert.equal(
-      buildHomeTaskContext(t.db, t.read(), "lin", "回忆谁送的", ids, {
-        memoryQuestion: "如何布置",
-      }).memories.filter((m) => m.kind === "relationship").length,
-      0,
-    );
-  } finally {
-    t.db.close();
-  }
+  const t=fixture();try{
+    installVirtualHome(t.db,t.read,'lin',true);
+    const ids=[homeItemId('lin','painting')];
+    const privateFacts=(c:ReturnType<typeof homeContext>)=>c.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn');
+    assert(privateFacts(homeContext(t,'布局',ids)).some(m=>m.text.includes('小夏')));
+    assert.equal(privateFacts(homeContext(t,'布局',ids,{temporary:true})).length,0);
+    assert.equal(privateFacts(homeContext(t,'布局',ids,{memoryPolicy:'off'})).length,0);
+    assert.equal(privateFacts(homeContext(t,'布局',ids,{useItemMemories:false})).length,0);
+    assert.equal(homeContext(t,'回忆',ids,{actor:'dad'}).items.length,0);
+    savePersona(t.db,t.read(),'lin',{enabled:true,nickname:'山山',style:'warm',memoryUse:'explicit',itemId:ids[0]});
+    assert(!privateFacts(homeContext(t,'如何布置',ids,{query:'回忆谁送的'})).some(m=>m.text.includes('小夏')));
+  }finally{t.db.close();}
 });
+
 test("没有模拟家庭云端许可时绝不调用模型；许可开关不会扩大单条记忆许可", async () => {
   const t = fixture();
   try {
@@ -325,63 +224,33 @@ test("没有模拟家庭云端许可时绝不调用模型；许可开关不会�
     t.db.close();
   }
 });
-test("统一任务实际执行模型→物品与关系工具→模型，并持久化完整子任务及后续目标", async () => {
-  const t = fixture();
-  try {
-    installVirtualHome(t.db, t.read, "lin", true);
-    let tools = 0;
-    const provider = model({
-      inspect: (messages) => {
-        const tool = messages.find((m) => m.role === "tool");
-        if (tool) {
-          tools++;
-          const c = JSON.parse(tool.content as string);
-          assert.ok(c.memories.some((m: any) => m.text.includes("小夏")));
-          assert.ok(
-            c.items.some((i: any) =>
-              i.properties.dimensions?.includes("40×30"),
-            ),
-          );
-        }
-      },
-    });
-    const r = await respond(t.db, t.read, "lin", input(), provider);
-    assert.equal(r.modelCalls, 3);
-    assert.equal(tools, 1);
-    assert.equal(r.reply.task?.parts.length, 2);
-    assert.ok(r.trace.some((t) => t.stage === "task_read"));
-    assert.equal(r.session.known.homeTaskGoal, "布置画与书桌");
-    assert.ok(t.db.prepare("SELECT 1 FROM graph_checkpoints").get());
-    let currentTask: any;
-    await respond(
-      t.db,
-      t.read,
-      "lin",
-      input({ sessionId: r.session.id, question: "那我想改成平放" }),
-      model({
-        inspect: (messages) => {
-          currentTask = JSON.parse(messages[1].content as string).currentTask;
-        },
-      }),
-    );
-    assert.equal(currentTask.goal, "布置画与书桌");
-  } finally {
-    t.db.close();
-  }
+test("家庭薄桥实际使用共享converse与语义工具，保存会话目标但不伪造子任务完成", async () => {
+  const t=fixture();try{
+    installVirtualHome(t.db,t.read,'lin',true);let sawItems=false,sawRelationship=false;
+    const r=await respond(t.db,t.read,'lin',input(),model({inspect:messages=>{
+      for(const m of messages.filter(m=>m.role==='tool')){const c=JSON.parse(m.content||'{}');
+        if(c.items){sawItems=true;assert(c.items.some((i:any)=>JSON.stringify(i.facts).includes('40×30')));}
+        if(c.privateFacts){sawRelationship=true;assert(c.privateFacts.some((m:any)=>m.text.includes('小夏')));}
+      }
+    }}));
+    assert.equal(r.modelCalls,3);assert(sawItems&&sawRelationship);
+    assert(r.trace.some(t=>t.stage==='practical_model'));assert.equal(r.reply.task,undefined);
+    assert.equal(r.session.known.homeTaskGoal,input().question);
+    assert.equal(t.db.prepare('SELECT count(*) AS n FROM graph_checkpoints').get()!.n,0);
+    let packet:any;
+    await respond(t.db,t.read,'lin',input({sessionId:r.session.id,question:'那我想改成平放'}),model({inspect:messages=>{packet=JSON.parse(messages.find(m=>m.role==='user')!.content!);}}));
+    assert.equal(packet.currentTask.goal,input().question);
+    assert.equal(packet.currentTask.basis,'previous_conversation_goal_not_verified_result');
+  }finally{t.db.close();}
 });
-test("工具不能读其他用户家庭，最终回答不能引用未读物品", async () => {
-  const t = fixture();
-  try {
-    installVirtualHome(t.db, t.read, "lin", true);
-    installVirtualHome(t.db, t.read, "dad", true);
-    await assert.rejects(
-      respond(t.db, t.read, "lin", input(), model({ foreign: true })),
-      /未读取或未授权/,
-    );
-  } finally {
-    t.db.close();
-  }
+
+test("共享工具不能读其他用户家庭，未读取的伪造物品引用不扩大权限", async () => {
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);installVirtualHome(t.db,t.read,'dad',true);
+  await assert.rejects(respond(t.db,t.read,'lin',input(),model({foreign:true})),/未获授权/);
+ }finally{t.db.close();}
 });
+
 test("多轮推理期间遗忘记忆，丢弃在途草稿而不提交旧关系", async () => {
   const t = fixture();
   try {
@@ -397,93 +266,51 @@ test("多轮推理期间遗忘记忆，丢弃在途草稿而不提交旧关系",
         input(),
         model({ beforeAnswer: () => forgetMemory(t.db, "lin", m.id) }),
       ),
-      /记忆或授权|会话/,
+      (e: unknown) => e instanceof AgentError && e.status === 409,
     );
   } finally {
     t.db.close();
   }
 });
-test("纠正/遗忘后上下文仅保留新关系；旧私人片段不作为第二来源", () => {
-  const t = fixture();
-  try {
-    installVirtualHome(t.db, t.read, "lin", true);
-    const m = listMemories(t.db, t.read(), "lin").find(
-      (m) => m.kind === "relationship",
-    )!;
-    saveMemory(
-      t.db,
-      t.read,
-      "lin",
-      {
-        kind: "relationship",
-        itemId: m.itemId,
-        text: "模拟纠正：朋友小雨赠送的画",
-        allowCloud: true,
-      },
-      m.id,
-    );
-    let c = buildHomeTaskContext(t.db, t.read(), "lin", "画的来历和布置", [
-      m.itemId!,
-    ]);
-    assert.ok(JSON.stringify(c.memories).includes("小雨"));
-    assert.ok(!JSON.stringify(c.memories).includes("小夏"));
-    forgetMemory(t.db, "lin", m.id);
-    c = buildHomeTaskContext(t.db, t.read(), "lin", "画的来历", [m.itemId!]);
-    assert.equal(c.memories.filter((m) => m.kind === "relationship").length, 0);
-  } finally {
-    t.db.close();
-  }
+test("纠正/遗忘后共享上下文仅保留新关系；旧私人片段不作为第二来源", () => {
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);
+  const m=listMemories(t.db,t.read(),'lin').find(m=>m.kind==='relationship')!;
+  forgetMemory(t.db,'lin',m.id);
+  saveMemory(t.db,t.read,'lin',{kind:'relationship',text:'这幅画是小林送的',itemId:m.itemId,allowCloud:true});
+  let c=homeContext(t,'画的来历和布置',[m.itemId!]);
+  assert(JSON.stringify(c.evidence).includes('小林'));assert(!JSON.stringify(c.evidence).includes('小夏'));
+  const corrected=listMemories(t.db,t.read(),'lin').find(m=>m.status==='active'&&m.text.includes('小林'))!;
+  forgetMemory(t.db,'lin',corrected.id);c=homeContext(t,'画的来历',[m.itemId!]);
+  assert(!JSON.stringify(c.evidence).includes('小林'));assert(!JSON.stringify(c.evidence).includes('小夏'));
+ }finally{t.db.close();}
 });
 
-test("家庭资源摘要只包含八件模拟物品；真实物品偏好与未请求物品的关系记忆不会混入", () => {
-  const t = fixture();
-  try {
-    installVirtualHome(t.db, t.read, "lin", true);
-    const real = t.add("私人杯子", "杯子", "私人", "未知");
-    saveMemory(t.db, t.read, "lin", {
-      kind: "preference",
-      text: "私人旅行偏好，不属于模拟家庭",
-      itemId: real,
-      allowCloud: true,
-    });
-    const c = buildHomeTaskContext(t.db, t.read(), "lin", "如何调灯", [
-      homeItemId("lin", "lamp"),
-    ]);
-    assert.equal(c.items.length, 8);
-    assert.ok(c.items.every((i) => i.id.startsWith("virtual-home:lin:")));
-    assert.ok(
-      !c.memories.some((m) => m.itemId === real || m.kind === "relationship"),
-    );
-    assert.ok(
-      c.memories.some(
-        (m) =>
-          m.kind === "preference" && m.itemId === homeItemId("lin", "desk"),
-      ),
-    );
-  } finally {
-    t.db.close();
-  }
+test("家庭共享目录只含八件模拟物品；获准家庭偏好可用，真实偏好及未选关系不混入", () => {
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);
+  const real=t.add('私人杯子','杯子','私人','未知');
+  saveMemory(t.db,t.read,'lin',{kind:'preference',text:'GLOBAL_MEMORY_PRIVATE',itemId:real,allowCloud:true});
+  const s=t.read();(s.contexts||=[]).push({id:'private-pref',owner:'lin',key:'PRIVATE_CONTEXT',value:'GLOBAL_CONTEXT_PRIVATE',status:'explicit',allowCloud:true} as any);t.write(s);
+  const c=homeContext(t,'如何调灯',[homeItemId('lin','lamp')]);
+  assert.equal(c.authorizedItemIds.length,8);assert(c.authorizedItemIds.every(id=>id.startsWith('virtual-home:lin:')));
+  assert(c.preferences.some(p=>String(p.value).includes('安静')));
+  const packet=JSON.stringify({...c,authorizedItemIds:undefined});
+  assert(!packet.includes('GLOBAL_'));assert(!packet.includes('小夏'));assert(!packet.includes('模拟私人赠画故事'));
+ }finally{t.db.close();}
 });
-test("家庭工具首轮强制命名函数，后续恢复模型选择；核对回合不获得额外权限", async () => {
-  const t = fixture();
-  try {
-    installVirtualHome(t.db, t.read, "lin", true);
-    const provider = model();
-    const complete = provider.complete!;
-    const choices: unknown[] = [];
-    provider.complete = (m, tools, options) => {
-      choices.push(options?.toolChoice);
-      return complete(m, tools, options);
-    };
-    await respond(t.db, t.read, "lin", input(), provider);
-    assert.deepEqual(choices, [
-      { type: "function", function: { name: "read_home_items" } },
-      undefined,
-    ]);
-  } finally {
-    t.db.close();
-  }
+
+test("家庭共享循环不恢复旧complete/read_home_items协议，所有回合权限范围一致", async () => {
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);let calls=0;
+  const p=model({inspect:messages=>{calls++;assert(!JSON.stringify(messages).includes('read_home_items'));}});
+  await respond(t.db,t.read,'lin',input(),p);assert.equal(calls,3);
+  const legacyOnly={...p,converse:undefined};
+  const r=await respond(t.db,t.read,'lin',input(),legacyOnly);
+  assert.equal(r.reply.outcome,'unavailable');assert.equal(r.modelCalls,0);
+ }finally{t.db.close();}
 });
+
 test("云端授权在推理期间撤回，拒绝在途回答；提供者不可用时不冒充模型回答", async () => {
   const t = fixture();
   try {
@@ -507,7 +334,7 @@ test("云端授权在推理期间撤回，拒绝在途回答；提供者不可�
           beforeAnswer: () => setVirtualHomeCloud(t.db, t.read, "lin", false),
         }),
       ),
-      /授权已撤回|记忆或授权/,
+      (e: unknown) => e instanceof AgentError && e.status === 409,
     );
   } finally {
     t.db.close();
@@ -546,22 +373,15 @@ test("多主题原文交错选取，后一个问题不会被前一个问题挤�
   );
 });
 
-test("未请求的家庭资源不附带无关说明书原文", () => {
-  const t = fixture();
-  try {
-    installVirtualHome(t.db, t.read, "lin", true);
-    const c = buildHomeTaskContext(t.db, t.read(), "lin", "台灯调光", [
-      homeItemId("lin", "lamp"),
-    ]);
-    assert.equal(c.items.length, 8);
-    assert.ok(
-      c.items
-        .filter((i) => i.contextRole !== "requested-item")
-        .every((i) => i.passages.length === 0),
-    );
-  } finally {
-    t.db.close();
-  }
+test("未请求的家庭资源仅可发现，不附带无关说明书、关系与私人状态", () => {
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);
+  const c=homeContext(t,'台灯调光',[homeItemId('lin','lamp')]);
+  assert.equal(c.items.length,1);assert.equal(c.items[0].id,homeItemId('lin','lamp'));
+  assert(c.evidence.filter(e=>e.basis==='official').every(e=>e.itemId===homeItemId('lin','lamp')));
+  assert(c.catalogue.every(i=>!('note' in i)&&!('location' in i)&&!('owner' in i)));
+  assert(!JSON.stringify(c.evidence).includes('小夏'));
+ }finally{t.db.close();}
 });
 
 test("家庭再创造要求既有显式许可，不能扩大到原有真实空间", async () => {
@@ -664,40 +484,18 @@ test("再创造途中撤回家庭云端许可，停止后续模型与方案保�
   }
 });
 
-test("旧助手建议不作为新目标的资料，用户限制保留", async () => {
-  const t = fixture();
-  try {
-    installVirtualHome(t.db, t.read, "lin", true);
-    const first = await respond(
-      t.db,
-      t.read,
-      "lin",
-      input({ question: "先写手账，不购买" }),
-      model(),
-    );
-    const base = model();
-    let checked = false;
-    const p = {
-      ...base,
-      generate: async (system: any, value: any, opts: any) => {
-        checked = true;
-        assert.ok(value.history.some((m: any) => m.text.includes("不购买")));
-        assert.ok(value.history.every((m: any) => m.role !== "assistant"));
-        assert.equal(value.question, "改成收拾桌面，不用画");
-        return base.generate(system, value, opts);
-      },
-    };
-    await respond(
-      t.db,
-      t.read,
-      "lin",
-      input({ sessionId: first.session.id, question: "改成收拾桌面，不用画" }),
-      p,
-    );
-    assert.ok(checked);
-  } finally {
-    t.db.close();
-  }
+test("旧助手建议不成为当前事实，用户限制保留且本轮新目标优先", async () => {
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);
+  const first=await respond(t.db,t.read,'lin',input({question:'先写手账，不购买'}),model());
+  let checked=false;
+  await respond(t.db,t.read,'lin',input({sessionId:first.session.id,question:'改成收拾桌面，不用画'}),model({inspect:messages=>{
+   const packet=JSON.parse(messages.find(m=>m.role==='user')!.content!);checked=true;
+   assert(packet.history.some((m:any)=>m.role==='user'&&m.text.includes('不购买')));
+   assert.equal(packet.question,'改成收拾桌面，不用画');
+   assert(!JSON.stringify(packet.privateFacts).includes('完整目标仍需核对支撑结构'));
+  }}));assert(checked);
+ }finally{t.db.close();}
 });
 
 test("选中创意及反馈可回到原家庭任务，不把草稿当成已验证结果", async () => {
@@ -731,14 +529,12 @@ test("选中创意及反馈可回到原家庭任务，不把草稿当成已验�
     let seen = false;
     const p = {
       ...base,
-      generate: async (system: any, value: any, opts: any) => {
+      converse: async (...args: Parameters<NonNullable<Provider['converse']>>) => {
+        const value=JSON.parse(args[0].find(m=>m.role==='user')!.content!);
         seen = true;
         assert.equal(value.selectedPlans[0].note, "不要占桌面，请换一种作用");
-        assert.equal(
-          value.selectedPlans[0].verification,
-          "model-hypothesis-not-physical-verification",
-        );
-        return base.generate(system, value, opts);
+        assert.equal(value.selectedPlans[0].verification, "model-hypothesis-not-physical-verification");
+        return base.converse!(...args);
       },
     };
     const next = await respond(
@@ -763,59 +559,16 @@ test("选中创意及反馈可回到原家庭任务，不把草稿当成已验�
   }
 });
 
-test("临时短引用准确还原授权物品；相似拼写不做模糊匹配", async () => {
-  const t = fixture();
-  try {
-    installVirtualHome(t.db, t.read, "lin", true);
-    const base = model();
-    const p = {
-      ...base,
-      complete: async (
-        ...args: Parameters<NonNullable<Provider["complete"]>>
-      ) => {
-        const result = await base.complete!(...args);
-        for (const call of result.toolCalls) {
-          const data = JSON.parse(call.function.arguments);
-          data.itemIds = ["item8", "item2"];
-          call.function.arguments = JSON.stringify(data);
-        }
-        return result;
-      },
-      generate: async (system: any, value: any, opts: any) => {
-        if (!system.startsWith("SOURCE_REVIEW"))
-          assert.ok(
-            value.readResults[0].items.every((i: any) =>
-              /^item[1-8]$/.test(i.id),
-            ),
-          );
-        return base.generate(system, value, opts);
-      },
-    };
-    const r = await respond(t.db, t.read, "lin", input(), p);
-    assert.ok(
-      r.reply.usedItems!.every((i) => i.id.startsWith("virtual-home:lin:")),
-    );
-    const bad = {
-      ...base,
-      complete: async (
-        ...args: Parameters<NonNullable<Provider["complete"]>>
-      ) => {
-        const result = await base.complete!(...args);
-        for (const call of result.toolCalls)
-          call.function.arguments = JSON.stringify({
-            itemIds: ["item8x"],
-            query: "story",
-          });
-        return result;
-      },
-    };
-    await assert.rejects(
-      () => respond(t.db, t.read, "lin", input(), bad),
-      /未读取|未授权/,
-    );
-  } finally {
-    t.db.close();
+test("共享语义使用真实规范物品ID，旧短句柄及相似拼写不能模糊解析", async () => {
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);
+  const r=await respond(t.db,t.read,'lin',input(),model());
+  assert(r.reply.usedItems!.every(i=>i.id.startsWith('virtual-home:lin:')));
+  for(const forged of ['item8','item8x',homeItemId('lin','painting')+'x']){
+   const p=model();p.converse=async()=>({text:'',model:'offline',tokens:null,finishReason:'tool_calls',toolCalls:[{id:'bad',type:'function',function:{name:'get_item_context',arguments:JSON.stringify({itemIds:[forged]})}}]});
+   await assert.rejects(respond(t.db,t.read,'lin',input(),p),/未获授权/);
   }
+ }finally{t.db.close();}
 });
 
 test("单件再创造可使用获准家庭偏好，但不读取全局私人偏好", async () => {
@@ -865,4 +618,76 @@ test("单件再创造可使用获准家庭偏好，但不读取全局私人偏�
   } finally {
     t.db.close();
   }
+});
+
+
+test("共享家庭运行在memoryPolicy off及临时模式下不把私人记忆或偏好发给云端", async () => {
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);
+  for(const temporary of [false,true]){
+   let inspected=0;
+   await respond(t.db,t.read,'lin',input({memoryPolicy:'off',temporary}),model({inspect:messages=>{
+    inspected++;const serialized=JSON.stringify(messages);
+    assert(!serialized.includes('小夏'));assert(!serialized.includes('喜欢安静'));
+    const packet=JSON.parse(messages.find(m=>m.role==='user')!.content!);
+    assert.deepEqual(packet.privateFacts,[]);assert.deepEqual(packet.preferences,[]);
+   }}));assert(inspected>0);
+  }
+ }finally{t.db.close();}
+});
+
+test("即使另一个账号主动共享了模拟物品，家庭工具也不能越过本家庭隔离", async () => {
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);installVirtualHome(t.db,t.read,'dad',true);
+  const s=t.read();s.items.find(i=>i.id===homeItemId('dad','painting'))!.sharedWith=['lin'];t.write(s);
+  const c=homeContext(t,'这幅画是谁送的',[homeItemId('dad','painting')]);
+  assert(!c.authorizedItemIds.includes(homeItemId('dad','painting')));
+  assert(!c.semanticItems.some(i=>i.id===homeItemId('dad','painting')));
+  await assert.rejects(respond(t.db,t.read,'lin',input(),model({foreign:true})),(e:unknown)=>e instanceof AgentError&&e.status===403);
+ }finally{t.db.close();}
+});
+
+test("家庭分身仅显式选中当前物品，不把分身名当用户或加载邻近关系", () => {
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);
+  const c=homeContext(t,'你好',[],{known:{homeVoiceItemId:homeItemId('lin','lamp')}});
+  assert.deepEqual(c.items.map(i=>i.id),[homeItemId('lin','lamp')]);
+  assert(!JSON.stringify(c.evidence).includes('小夏'));
+ }finally{t.db.close();}
+});
+
+test("关闭会话及并发版本变化后，在途家庭模型回答不发布", async () => {
+ for(const revisionOnly of [false,true]){
+  const t=fixture();try{
+   installVirtualHome(t.db,t.read,'lin',true);let published='';
+   const p=model({beforeAnswer:()=>{
+    const row=t.db.prepare('SELECT id,revision,body FROM agent_sessions LIMIT 1').get() as {id:string;revision:number;body:string};
+    const body=JSON.parse(row.body);if(revisionOnly)body.revision++;else body.status='closed';
+    t.db.prepare('UPDATE agent_sessions SET revision=?,body=? WHERE id=?').run(body.revision,JSON.stringify(body),row.id);
+   }});p.onText=text=>{published+=text;};
+   await assert.rejects(respond(t.db,t.read,'lin',input(),p),(e:unknown)=>e instanceof AgentError&&e.status===409);
+   assert.equal(published,'');
+  }finally{t.db.close();}
+ }
+});
+
+
+test("家庭只传显式选中创意与反馈，过期epoch或跨范围创意不进模型", async () => {
+ const {storeLifeIdea,feedbackIdea}=await import('../src/lib/life/ideas.ts');
+ const {epoch}=await import('../src/lib/memory/store.ts');
+ const t=fixture();try{
+  installVirtualHome(t.db,t.read,'lin',true);installVirtualHome(t.db,t.read,'dad',true);
+  const itemId=homeItemId('lin','samla'),id=crypto.randomUUID(),foreignId=crypto.randomUUID(),staleId=crypto.randomUUID();
+  const idea={title:'合成候选',itemIds:[itemId],minutes:10,steps:['先确认条件'],limits:[],source:'model-creative' as const,evidence:[],tested:false as const,goal:'合成任务'};
+  storeLifeIdea(t.db,'lin',{...idea,id});feedbackIdea(t.db,t.read(),'lin',{id,saved:true,outcome:'未成功',note:'PRIVATE_EXPLICIT_FEEDBACK'});
+  storeLifeIdea(t.db,'lin',{...idea,id:foreignId,itemIds:[homeItemId('dad','painting')]});
+  storeLifeIdea(t.db,'lin',{...idea,id:staleId,memoryEpoch:epoch(t.db,'lin')-1});
+  assert.deepEqual(homeContext(t,'继续',[itemId]).selectedPlans,[]);
+  const c=homeContext(t,'继续',[itemId],{known:{lifeIdeaIds:JSON.stringify([id,foreignId,staleId])}});
+  assert.deepEqual(c.selectedPlans.map(p=>p.id),[id]);assert(!JSON.stringify(c.selectedPlans).includes('PRIVATE_EXPLICIT_FEEDBACK'));
+  const feedback=homeContext(t,'继续',[itemId],{known:{lifeIdeaIds:JSON.stringify([id]),lifeFeedbackIds:JSON.stringify([id])}});
+  assert.equal(feedback.selectedPlans[0].note,'PRIVATE_EXPLICIT_FEEDBACK');
+  assert.equal(feedback.selectedPlans[0].verification,'model-hypothesis-not-physical-verification');
+  assert.deepEqual(homeContext(t,'继续',[itemId],{temporary:true,known:{lifeIdeaIds:JSON.stringify([id]),lifeFeedbackIds:JSON.stringify([id])}}).selectedPlans,[]);
+ }finally{t.db.close();}
 });
