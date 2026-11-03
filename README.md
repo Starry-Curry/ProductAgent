@@ -9,11 +9,9 @@
 
 ## 本地运行
 
-使用 **Node.js 24** 与现有 package-lock.json，无需独立数据库服务。
+使用 **Node.js 24** 与现有 package-lock.json，无需独立数据库服务。首次开发先按 [贡献指南](CONTRIBUTING.md#github-协作) 选择分支：通常从最新 develop 开始；PR #1 合并前临时使用 codex/wujian-team-integration-v1。以下命令在所选分支运行。
 
 ```bash
-git clone https://github.com/Starry-Curry/ProductAgent.git
-cd ProductAgent
 npm ci
 npm run dev
 ```
@@ -43,7 +41,7 @@ npm start
 | src/lib/life、src/lib/foundation | 物品、关系、任务/结果与领域业务 |
 | tests、scripts | 回归测试、启动和隔离验收 |
 
-修改公共契约或权限事务前先协调底座负责人，按 [贡献流程](CONTRIBUTING.md) 使用独立功能分支与 PR。main 保持稳定；develop 的实际状态看 CURRENT，未建立前不要假定能从其开发。
+GitHub 分工：main 为稳定演示、develop 为团队集成；feature/*、fix/*、docs/*、codex/* 为独立开发分支。通过 PR 合入 develop，需 CI 通过及一名组员审查；main 由负责人批准更新。分支命令与提交流程见 [CONTRIBUTING](CONTRIBUTING.md#github-协作)，底座调用与 Mock 直接见 [TEAM_INTEGRATION](docs/engineering/TEAM_INTEGRATION.md)，不在这里复制。
 
 ## 验证
 

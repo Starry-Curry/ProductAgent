@@ -17,17 +17,22 @@ npm run dev
 
 ## GitHub 协作
 
-- main：稳定演示；develop：团队集成，是否已建立见 CURRENT，未建立时继续当前独立研发分支，不自行假定存在。
-- develop 必须由通过 typecheck、离线测试和构建的可运行基线建立。研发基线不等于产品验收通过。
-- develop 建立后，从最新 origin/develop 创建 feat/*、fix/*、docs/* 或 codex/*；Codex 默认 codex/*。提交小范围完整变化，PR 到 develop，经 CI + 一名组员审查后集成。
-- 合入 main、分支保护与仓库权限由负责人批准；不强推、不改已发布标签/共享历史、不改全局 Git。使用隔离工作区保护未提交内容与原项目。
-
-仅在 develop 已存在时使用：
+- main：稳定演示，由负责人批准更新。
+- develop：团队集成，研发基线不等于产品质量验收通过。
+- feature/*、fix/*、docs/*、codex/*：独立开发；新组员通常从最新 origin/develop 开始。
+- [PR #1](https://github.com/Starry-Curry/ProductAgent/pull/1) 合入前，所需统一底座临时基线为 origin/codex/wujian-team-integration-v1；功能 PR 应说明对 #1 的依赖。实际状态只看 CURRENT，不把旧 main 当成最新底座。
+- 个人分支通过 PR 合入 develop，需 CI 通过及一名组员独立审查；不以作者自审替代。不得强推、改写共享历史或自行合并 main。仅在当前仓库配置已核实的提交者，不修改 global Git。
 
 ```bash
+git clone https://github.com/Starry-Curry/ProductAgent.git
+cd ProductAgent
 git fetch origin
-git switch -c codex/your-change origin/develop
+# PR #1 合并前使用临时底座基线：
+git switch -c codex/your-change origin/codex/wujian-team-integration-v1
+# PR #1 合并后，新建功能分支时改用 origin/develop 作为基线。
 ```
+
+底座服务、类型、Mock 和专业工具接入直接见 [TEAM_INTEGRATION](docs/engineering/TEAM_INTEGRATION.md)，不在本页重复。
 
 ## 检查与证据
 
