@@ -22,6 +22,15 @@ function fixture() {
   return { ...validationFixture(directory), directory };
 }
 
+test('未登记厂家仍发起真实接口搜索；候选域名不因模型返回就获得官方身份',async()=>{
+ const t=fixture();try{
+  const id=t.add('合成陌生厂商商品','电子设备','UNLISTED-MAKER-929','UNSEEN-929');let searched=0,fetched=0;
+  const r=await acquireKnowledge(t.db,t.read,'lin',id,{publisherDependencies:{fetchDocument:async url=>({url,title:'offline directory',text:'{"docs":[]}',links:[]})},search:async(_q,sites)=>{searched++;assert.deepEqual(sites,[]);return {model:'offline-protocol',text:'not evidence',tokens:null,events:[],usage:{},status:'completed',hits:[{title:'UNSEEN-929 claims official',url:'https://unverified.example/manual.pdf'}]};},fetchDocument:async()=>{fetched++;throw Error('unverified publisher must not be fetched as official');}});
+  assert.equal(searched,1);assert.equal(fetched,0);assert.equal(r.acquisition?.searchAttempted,true);assert.equal(r.documents.length,0);
+  assert.ok(r.acquisition?.searchURLs.includes('https://unverified.example/manual.pdf'));assert.ok(r.issues.some(s=>s.includes('厂家身份')));
+ }finally{t.db.close();}
+});
+
 test('陌生商品搜索：不因下载入口含型号丢掉后排opaque-ID操作章节，正文仍核对型号',async()=>{
  const t=fixture();try{
   const id=t.add('合成未预置设备','电子设备','Brother','SYNTH-UNSEEN-73');

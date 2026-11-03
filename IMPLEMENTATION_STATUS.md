@@ -1,3 +1,5 @@
+> 2026-11-03 Core Foundation 增量恢复点：未知品牌发现/来源链、共享原文与任务经验接续已修，真实输出仍有无依据细节，尚未Core验收通过。当前范围与证据只看 [CURRENT](docs/engineering/CURRENT.md)。下方历史保留。
+
 ## 2026-11-03 统一底座收敛（候选，未正式验收）
 
 共享Reality/Context、公开原文定位积累、缓存问答短路径、按页PDF视觉；旧通用Graph/HomeTask循环退役并迁移必要业务。现阶段回归与浏览器证据、费用和未达标项只以[CURRENT](docs/engineering/CURRENT.md)为准；不以离线通过宣称Foundation Accepted。历史正文保留。

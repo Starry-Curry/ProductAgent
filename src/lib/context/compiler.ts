@@ -34,9 +34,13 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   const allowed=state.items.filter(i=>canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id))));
   const mentioned=(s:string)=>s.length>1&&question.toLowerCase().includes(s.toLowerCase());
   const focused=allowed.find(i=>i.id===focus);
-  const selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||!task&&(mentioned(i.name)||(!focused||i.model!==focused.model)&&mentioned(i.model))||
+  let selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||!task&&(mentioned(i.name)||(!focused||i.model!==focused.model)&&mentioned(i.model))||
     // Entity matching only. It never chooses an intent or provides a product fact.
     !task&&!evidenceByteBudget&&[...new Intl.Segmenter('zh',{granularity:'word'}).segment(i.name)].some(s=>s.segment.length>=2&&mentioned(s.segment)));
+  // A goal without a named SKU may still have clear recorded capability/name
+  // matches. Prefill a few ranked candidates rather than requiring a tool round
+  // for already available facts. Others remain discoverable through the tool.
+  if(!selected.length){const candidates=resourceCatalogue(allowed,question,[],3).items;selected=candidates.map(r=>allowed.find(i=>i.id===r.id)!);}
   const selection=resourceCatalogue(allowed,question,selected.map(i=>i.id));
   const semanticItems=selected.map(i=>readReality(db,state,actor,i.id));
   const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,

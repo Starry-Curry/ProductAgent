@@ -1,0 +1,14 @@
+{
+  "caseId": "N03-2",
+  "productId": "N03",
+  "question": "已经装好相纸，想按快门后走进画面，自拍定时怎么开？指示灯怎么变化，多久才拍？",
+  "arm": "direct",
+  "at": "2026-11-03T02:20:40.928Z",
+  "status": "blocked_budget",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "error": "acceptance_or_global_budget_exhausted",
+  "fullAnswerMs": 66,
+  "upstreamNumbers": [],
+  "transport": []
+}

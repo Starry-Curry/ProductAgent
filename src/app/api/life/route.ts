@@ -70,6 +70,7 @@ import { installLifeDemo } from "@/lib/life/demo";
 import { createLifeGift } from "@/lib/life/gifts";
 import { discoverInTask } from "@/lib/foundation/creative";
 import { readReality } from "@/lib/context/reality-service";
+import { discoverCapabilities } from "@/lib/context/discovery";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 function fail(e: unknown) {
@@ -102,6 +103,11 @@ async function GETHandler(r: Request) {
       db = database(),
       state = read(),
       p = new URL(r.url).searchParams;
+    if(p.has('capabilities')){
+      const goal=z.string().max(2000).parse(p.get('capabilities')||'');
+      const cursor=z.coerce.number().int().nonnegative().max(10000).parse(p.get('cursor')||0);
+      return Response.json(discoverCapabilities(db,state,a,{goal:goal||undefined,cursor}));
+    }
     if (p.has("inspiration"))
       return Response.json(
         searchInspiration(z.string().max(500).parse(p.get("inspiration"))),

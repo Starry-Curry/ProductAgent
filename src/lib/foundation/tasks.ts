@@ -398,6 +398,12 @@ export function assertRunCurrent(db: DatabaseSync, s: State, run: TaskRun) {
   )
     throw new AgentError("物品、记忆或权限已经变化，请重新确认任务", 409);
 }
+/** Bind resources actually read by the existing executor, not model-supplied
+ * permissions. Called synchronously after its live scope/epoch checks. */
+export function bindRunReadResources(db:DatabaseSync,s:State,run:TaskRun,itemIds:string[]){
+ const ids=[...new Set(itemIds)];assertItems(db,s,run.actorId,ids);
+ for(const id of ids)if(!run.itemRevisions[id])run.itemRevisions[id]=itemInstance(s.items.find(i=>i.id===id)!).revision;
+}
 export function finishRun(
   db: DatabaseSync,
   read: () => State,
@@ -428,9 +434,17 @@ export function finishRun(
         .prepare("SELECT body FROM foundation_tasks WHERE id=?")
         .get(r.taskId) as { body: string };
       const t = JSON.parse(row.body) as TaskSpec;
-      if (t.createdBy === run.actorId)
+      if (t.createdBy === run.actorId){
+        // A private, user-created goal may discover resources after it starts.
+        // Keep those read references with its feedback. Never widen an already
+        // shared task or grant access; revocation still makes its context invalid.
+        const extra=status==='waiting_user'&&!t.participantIds.length?Object.keys(run.itemRevisions).filter(id=>!t.itemInstanceIds.includes(id)):[];
+        const stamp=privacyStamp(db,run.actorId,extra);
         put(db, {
           ...t,
+          itemInstanceIds:[...t.itemInstanceIds,...extra],
+          contextRefs:[...t.contextRefs,...extra.map(id=>({kind:'item' as const,id,revision:run.itemRevisions[id],whyNeeded:'本次已获准且实际读取的目标资源；不授予操作或分享权限'}))],
+          privacyStamp:t.privacyStamp?{...t.privacyStamp,...Object.fromEntries(Object.entries(stamp).filter(([key])=>key!=='*'&&!(key in t.privacyStamp!)))}:undefined,
           revision: t.revision + 1,
           currentStage:
             status === "failed" || status === "blocked"
@@ -438,6 +452,7 @@ export function finishRun(
               : "waiting_user",
           updatedAt: now(),
         });
+      }
     }
     db.exec("COMMIT");
     return r;

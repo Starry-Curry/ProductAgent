@@ -1,0 +1,7 @@
+{
+  "runId": "foundation-independent-r1",
+  "sourceCommit": "f449067ce939d7fe82a3e48bab15df046d6eb2bc",
+  "questionsSha256": "7991b81d681bbb3e1a38ca4ade30de002fa61b0921a67f619b8aeaa60373d6f8",
+  "startedAt": "2026-11-03T02:17:20.907Z",
+  "notice": "Authoritative first cohort; later runs cannot replace or relabel these first answers."
+}

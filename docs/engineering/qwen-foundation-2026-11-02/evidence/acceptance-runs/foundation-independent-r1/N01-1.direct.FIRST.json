@@ -1,0 +1,14 @@
+{
+  "caseId": "N01-1",
+  "productId": "N01",
+  "question": "我想先开机看屏幕，不要立刻出激光，接着再量墙到墙的距离，怎么按？",
+  "arm": "direct",
+  "at": "2026-11-03T02:20:39.576Z",
+  "status": "blocked_budget",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "error": "acceptance_or_global_budget_exhausted",
+  "fullAnswerMs": 81,
+  "upstreamNumbers": [],
+  "transport": []
+}

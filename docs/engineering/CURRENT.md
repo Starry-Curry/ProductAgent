@@ -2,7 +2,11 @@
 
 唯一当前研发分支：`codex/wujian-qwen-foundation-v1`。工作区：`D:\ProductAgent-LifeContext\.runtime\qwen-foundation-v1`。旧任务已安全暂停，遗留成果保护点：`543a933571489a518e9dd4bb069e674155138d3a`（已推送）。本轮从此增量收敛，原项目与私人数据库未改。
 
-**状态：NOT_ACCEPTED。** 冻结18题与四条完整旅程尚未全部通过；579项离线回归不是产品验收。实际用量以[原始台账](qwen-foundation-2026-11-02/evidence/model-calls.json)为准，轮次仍为 `qwen-foundation-20261102-r1`、150次/¥80，历史不重置。
+**当前交付范围：Core Foundation Accepted；仍在验证，尚未宣布通过。** 用户暂停赠礼、社交、家庭协作、复杂故事的主动开发，已有功能与安全回归保留。原完整质量验收的冻结首答为 **0/18**，保持历史结果，四条完整旅程留待后续 Full Foundation Quality Accepted。
+
+旧轮次 `qwen-foundation-20261102-r1` 已封存142次/估算¥19.633624；新增获批轮次 `qwen-foundation-20261103-r2` **40次/¥20**，硬门禁与历史哈希独立保留。追加轮次已封存27次，连同超时未知用量预留约¥15.193184；用户另批独立 `qwen-foundation-20261103-r3` **12次/¥15**，当前用于J01必要复验，旧台账不变。当前用量查[追加台账](qwen-foundation-2026-11-02/evidence/rounds/qwen-foundation-20261103-r2/model-calls.json)。不再批量补跑18题直接对照。
+
+最近真实结果：未知品牌ZOOM H1essential实际启动原生搜索，通用厂家身份链核对后取得HTML/PDF；原文定位与条件化能力进入Reality。J01的Task、获准失败反馈、新会话调整建议、纠正和遗忘已经过真实Qwen验证，但逐句复核发现未经支持的档位/屏幕细节，**流程通过不等于回答完全正确**。开放目标及团队接入仍在验收，不声明Core通过。
 
 ## 当前实现
 
@@ -25,9 +29,10 @@ Node24、`npm ci`；普通运行看README。受控模型验证：
 
 ```powershell
 $env:WUJIAN_EVAL_CONFIG='你的安全配置文件绝对路径'
+$env:WUJIAN_MODEL_ROUND='qwen-foundation-20261103-r3'
 node scripts/foundation/preview.mjs --dev --port=3241 --record-synthetic-evidence
 ```
 
 使用当前获批网关与合成数据；配置值、Cookies和.runtime不提交。Ctrl+C停止，不能删台账绕过限制；`--offline`关闭模型费用。开发构建用.next-foundation，生产验证用.next-foundation-release，避免覆盖其他服务。
 
-develop须由对应源码typecheck/test/build通过的可运行版本建立；目前尚未建立。不合并main、不改账号权限或分支保护。
+develop已从基础检查通过的 f449067 建立并推送；它是团队开发基线，并非正式验收通过。当前增量仍在独立codex分支，不合并main、不改账号权限或分支保护。

@@ -1,0 +1,30 @@
+{
+  "caseId": "N01-1",
+  "arm": "direct",
+  "controlCohort": "additional_authorized_round_same_information",
+  "roundId": "qwen-foundation-20261103-r2",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "at": "2026-11-03T02:24:11.388Z",
+  "sameInformation": {
+    "productRequestNumber": 91,
+    "materialSha256": "d93ed1ca5587bdef0b4d1756aa3a37c7f91131237c1b3698c4b2cc329e1cce7d",
+    "method": "exact user/tool content of product final tool-loop request; excludes system and assistant drafts"
+  },
+  "text": "# 关于 Bosch GLM 50 C Professional 的按键操作\n\n**证据不足说明：**\n当前系统未检索到该型号（Bosch GLM 50 C Professional）的官方说明书原文或可核对的操作步骤。根据规则，我不能为您编造具体的按键名称、组合键或操作流程。\n\n---\n\n## 我能提供的通用参考信息\n\n对于大多数博世（Bosch）GLM 系列激光测距仪，通常的设计逻辑如下（**仅作一般性参考，不代表本机确切操作**）：\n\n1. **开机但不发射激光**：许多型号在短按电源/测量键时，会先点亮屏幕进入待机状态，此时激光并未开启。\n2. **启动激光并测量**：通常需要再按一次测量键（或专门的激光键），才会发射激光；对准目标后再按一次完成测距。\n3. **量墙到墙的距离**：需要确认仪器的\"基准点\"设置——是从仪器尾部（靠墙端）算起，还是从前端算起。多数型号可通过按键切换测量基准。\n\n---\n\n## 建议您如何获取准确操作\n\n由于缺乏本机的官方文档支持，为避免误操作，建议您通过以下方式确认：\n\n1. **查阅随机说明书**：找到\"开机\"、\"测量\"、\"基准点切换\"相关章节。\n2. **官网下载手册**：访问 Bosch Professional 官网，搜索\"GLM 50 C\"下载 PDF 说明书。\n3. **上传说明书给我**：如果您有电子版或能拍照上传相关页面，我可以帮您从中提取准确的按键步骤。\n\n---\n\n**总结：** 您的设备已登记为可用状态，但我目前没有权限执行硬件操作，也没有该型号的官方操作正文作为依据。请提供说明书内容后，我再为您精确解答\"怎么按\"的问题。",
+  "usage": {
+    "completion_tokens": 384,
+    "prompt_tokens": 1154,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 1154
+    },
+    "total_tokens": 1538
+  },
+  "model": "qwen3.8-max-0902",
+  "finishReason": "stop",
+  "fullAnswerMs": 8968,
+  "upstreamNumbers": [
+    1
+  ]
+}

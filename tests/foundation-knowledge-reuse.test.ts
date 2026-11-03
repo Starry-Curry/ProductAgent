@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {validationFixture} from '../scripts/life-validation-fixture.ts';
 import {makeKnowledgeDocument,storeOfficialDocument,readKnowledge} from '../src/lib/life/acquisition.ts';
 import {extractSourceSemantics} from '../src/lib/context/source-semantics.ts';
-import {saveSourceSelections,readSourceSelections} from '../src/lib/context/source-reference.ts';
+import {saveSourceSelections,readSourceSelections,saveGuidanceSources} from '../src/lib/context/source-reference.ts';
 import {readReality} from '../src/lib/context/reality-service.ts';
 import {respond} from '../src/lib/agent/service.ts';
 import {migrateUnified} from '../src/lib/foundation/schema.ts';
@@ -59,4 +59,11 @@ test('有适用缓存的普通问答只调用一次主模型；不强制抽取�
  }};
  const r=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:f.id,question:'这个设备如何按键操作，保修多久？',mode:'service',memoryPolicy:'off'},provider);
  assert.equal(calls,1);assert.equal(r.reply.outcome,'answered');assert.match(r.reply.answer,/按标示键一次/);assert.match(r.reply.answer,/不能推定/);assert.ok(r.reply.citations.some(c=>c.url===f.page.url));
+});
+
+test('最终指导只积累选中的现有原文；不保存模型改写，重复与错物品引用不新增事实',t=>{
+ const f=setup(t);saveGuidanceSources(f.db,f.read(),'lin',f.id,[f.doc.id,'invented-id'],'offline-answer');
+ saveGuidanceSources(f.db,f.read(),'lin',f.id,[f.doc.id],'offline-answer');
+ const reality=readReality(f.db,f.read(),'lin',f.id);assert.equal(reality.facts.filter(x=>x.basis==='official_source').length,1);assert.equal(reality.facts[0].value,f.doc.text);assert.equal(reality.capabilities[0].executable,false);
+ const other=f.add('合成不同型号','其他','Sony','SYNTH-OTHER-92');saveGuidanceSources(f.db,f.read(),'lin',other,[f.doc.id],'offline-answer');assert.equal(readReality(f.db,f.read(),'lin',other).facts.filter(x=>x.basis==='official_source').length,0);
 });

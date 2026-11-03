@@ -1,0 +1,44 @@
+{
+  "at": "2026-11-03T02:17:20.906Z",
+  "actualItemIds": {
+    "N01": {
+      "id": "a22046ad-bef8-4951-950d-5963e7960a8b",
+      "model": "GLM 50 C Professional",
+      "synthetic": true,
+      "ownerVerified": true
+    },
+    "N02": {
+      "id": "15eac6c1-323f-4d41-8b1e-112064e30803",
+      "model": "Forerunner 165",
+      "synthetic": true,
+      "ownerVerified": true
+    },
+    "N03": {
+      "id": "c3e15da0-0876-426d-860d-a5b4a98d9572",
+      "model": "instax mini 99",
+      "synthetic": true,
+      "ownerVerified": true
+    },
+    "N04": {
+      "id": "a48e493f-7477-41f8-8f19-8f7f6bd9142b",
+      "model": "TI-30XS MultiView",
+      "synthetic": true,
+      "ownerVerified": true
+    },
+    "N05": {
+      "id": "be104edf-4a5c-493d-8ebd-decdc3662177",
+      "model": "H1essential",
+      "synthetic": true,
+      "ownerVerified": true
+    },
+    "N06": {
+      "id": "82e99f83-8525-458c-a699-2c850da3618e",
+      "model": "TM-70T",
+      "synthetic": true,
+      "ownerVerified": true
+    }
+  },
+  "inputURLSeeds": 0,
+  "manualAnswersInjected": false,
+  "sourceRegion": "unspecified_at_intake_manual_region_requires_runtime_scope_check"
+}

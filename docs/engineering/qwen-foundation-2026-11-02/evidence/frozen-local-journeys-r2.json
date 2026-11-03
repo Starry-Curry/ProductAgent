@@ -1,0 +1,534 @@
+{
+  "at": "2026-11-03T02:37:30.071Z",
+  "basis": "real_browser_domain_UI_with_synthetic_identity_possession_photos_and_stories_no_model",
+  "plan": {
+    "base": "http://127.0.0.1:3246",
+    "modelRequestsInThisScript": 0,
+    "paidEndpoints": "blocked before browser network",
+    "journeys": [
+      "UI注册两个独立账号→无品牌/型号纪念画录入和合成照片→UI故事保存→明确确认本机关系记忆→UI纠正→UI遗忘",
+      "UI选择赠礼故事→UI预览并制作→另一个真实注册账号预览和确认模拟取得→独立物品实例→收礼人新增私事→API读取断言双向隐私"
+    ],
+    "limits": [
+      "没有真实实物取得；认领为明确合成测试设定",
+      "不把记忆列表显示称为真实千问跨会话使用成功",
+      "不含真实用户资料、实物照片、模型视觉或设备操作"
+    ],
+    "modelFollowupPlan": {
+      "uiQuestions": [
+        "谁送的这件挂坠？不要补充日期。",
+        "纠正赠送者后，这件挂坠是谁送的？",
+        "遗忘后，你还能确认赠送者吗？"
+      ],
+      "expectedUpstreamRequests": "预计6–9次；依正式执行器最多6次/提问，保守上限18次，主线程串行安排后另测。",
+      "status": "not_run"
+    }
+  },
+  "status": "failed",
+  "pageErrors": [],
+  "networkErrors": [],
+  "blockedModelRequests": [],
+  "checks": [
+    {
+      "name": "两个真实注册账号和独立浏览器上下文；没有切换演示角色",
+      "passed": true
+    },
+    {
+      "name": "UI录入无品牌/型号纪念物、上传合成照片、确认模拟持有；未绑定商品知识",
+      "passed": true
+    },
+    {
+      "name": "J02新会话确实通过本地授权路径回答赠送事实，不是只查看记忆列表",
+      "passed": true,
+      "sessionId": "51177ff9-ca63-48a1-acd3-bae01ac0e82c",
+      "source": "local-memory"
+    },
+    {
+      "name": "UI明确确认后，新页面可查看本机关系记忆；没有云端授权或模型请求",
+      "passed": true,
+      "memoryId": "97049848-299d-4a9c-90fb-93f2f9e7712f"
+    },
+    {
+      "name": "J02更正后新会话使用新关系，而不是旧会话历史",
+      "passed": true,
+      "source": "local-memory"
+    },
+    {
+      "name": "J02遗忘后新会话不再召回旧赠送者",
+      "passed": true,
+      "source": "local-memory"
+    },
+    {
+      "name": "UI纠正和遗忘确实写入原记忆版本；不是只改前端显示",
+      "passed": true,
+      "newVersion": 2
+    },
+    {
+      "name": "独立账号在分享前不能读原物品/照片，也不能用演示身份头冒充物主",
+      "passed": true
+    }
+  ],
+  "uiWrites": [
+    {
+      "method": "POST",
+      "path": "/api/account",
+      "action": "register"
+    },
+    {
+      "method": "POST",
+      "path": "/api/account",
+      "action": "register"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "createItem"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "fragment"
+    },
+    {
+      "method": "POST",
+      "path": "/api/memories",
+      "action": "rememberItemStory"
+    },
+    {
+      "method": "POST",
+      "path": "/api/assistant"
+    },
+    {
+      "method": "POST",
+      "path": "/api/memories"
+    },
+    {
+      "method": "POST",
+      "path": "/api/assistant"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/memories"
+    },
+    {
+      "method": "POST",
+      "path": "/api/assistant"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "fragment"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "fragment"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "gift"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "relationship-desktop",
+      "path": "docs\\engineering\\qwen-foundation-2026-11-02\\evidence\\frozen-local-journeys-r2-relationship-desktop.png"
+    },
+    {
+      "name": "failure-desktop",
+      "path": "docs\\engineering\\qwen-foundation-2026-11-02\\evidence\\frozen-local-journeys-r2-failure-desktop.png"
+    },
+    {
+      "name": "failure-mobile",
+      "path": "docs\\engineering\\qwen-foundation-2026-11-02\\evidence\\frozen-local-journeys-r2-failure-mobile.png"
+    }
+  ],
+  "modelChecks": {
+    "status": "not_run",
+    "reason": "No model or assistant request is authorized by this zero-model runner."
+  },
+  "responses": [
+    {
+      "question": "这件挂坠是谁送给我的？请按已保存的关系记录回答，没有日期就不要补充。",
+      "result": {
+        "session": {
+          "id": "51177ff9-ca63-48a1-acd3-bae01ac0e82c",
+          "owner": "u_91c3d598-ba04-4d16-acf2-0c2350646051",
+          "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+          "identity": "[\"u_91c3d598-ba04-4d16-acf2-0c2350646051\",\"[\\\"待确认\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "c396c1d3-23e8-4b50-8510-7d2232830f1d",
+              "role": "user",
+              "text": "这件挂坠是谁送给我的？请按已保存的关系记录回答，没有日期就不要补充。",
+              "at": "2026-11-03T02:37:49.142Z",
+              "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "d0af8566-c687-468a-a276-3579299ddc48",
+              "role": "assistant",
+              "text": "记得，你曾提到，[合成经历]朋友小岚送了这件挂坠，没有记录赠送日期。GATE3-OWNER-RELATION。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "记得，你曾提到，[合成经历]朋友小岚送了这件挂坠，没有记录赠送日期。GATE3-OWNER-RELATION。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "97049848-299d-4a9c-90fb-93f2f9e7712f"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "按当前授权回忆本人记录",
+                  "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+                  "itemName": "[合成]朋友送的自制陶土叶片挂坠 frozen-local-journeys-r2"
+                }
+              },
+              "at": "2026-11-03T02:37:49.142Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "baf264a8-74aa-4d9d-ac7c-1e614f0c61e0",
+            "turnScope": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+            "lastIntent": "help",
+            "activeItemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3"
+          },
+          "tried": [],
+          "memoryEpoch": 2,
+          "createdAt": "2026-11-03T02:37:49.091Z",
+          "updatedAt": "2026-11-03T02:37:49.144Z",
+          "expiresAt": "2026-11-10T02:37:49.091Z",
+          "itemScopes": {
+            "72b3c233-eb80-4dc3-b154-07ef99f40cd3": "[\"u_91c3d598-ba04-4d16-acf2-0c2350646051\",\"[\\\"待确认\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "记得，你曾提到，[合成经历]朋友小岚送了这件挂坠，没有记录赠送日期。GATE3-OWNER-RELATION。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "97049848-299d-4a9c-90fb-93f2f9e7712f"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "按当前授权回忆本人记录",
+            "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+            "itemName": "[合成]朋友送的自制陶土叶片挂坠 frozen-local-journeys-r2"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=72b3c233-eb80-4dc3-b154-07ef99f40cd3; domain metadata, not a model answer",
+            "at": "2026-11-03T02:37:49.106Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "组织自然故事; memory-storytelling-v1.0",
+            "at": "2026-11-03T02:37:49.127Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-provider-unavailable",
+            "at": "2026-11-03T02:37:49.127Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0,
+        "foundation": {
+          "runId": "cfebe24e-8fa7-4229-86f6-808bed9d8349",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 374,
+      "streamTextEvents": 0
+    },
+    {
+      "question": "这件挂坠更正后的赠送者是谁？",
+      "result": {
+        "session": {
+          "id": "67467ca5-9f72-477c-83d9-a25daeb416dc",
+          "owner": "u_91c3d598-ba04-4d16-acf2-0c2350646051",
+          "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+          "identity": "[\"u_91c3d598-ba04-4d16-acf2-0c2350646051\",\"[\\\"待确认\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "b30bb311-51b3-49e9-9a0b-6a4ac149c082",
+              "role": "user",
+              "text": "这件挂坠更正后的赠送者是谁？",
+              "at": "2026-11-03T02:37:53.461Z",
+              "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "9048b198-9b0b-4f67-8185-22b635901052",
+              "role": "assistant",
+              "text": "记得，你曾提到，[合成纠正]这件挂坠是同事小叶送的，不是小岚；日期仍未知。GATE3-CORRECTED。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+              "reply": {
+                "outcome": "answered",
+                "answer": "记得，你曾提到，[合成纠正]这件挂坠是同事小叶送的，不是小岚；日期仍未知。GATE3-CORRECTED。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [
+                  "97049848-299d-4a9c-90fb-93f2f9e7712f"
+                ],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "按当前授权回忆本人记录",
+                  "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+                  "itemName": "[合成]朋友送的自制陶土叶片挂坠 frozen-local-journeys-r2"
+                }
+              },
+              "at": "2026-11-03T02:37:53.461Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "93e67d56-3740-4a2d-b1c7-240c449cbe59",
+            "turnScope": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+            "lastIntent": "help",
+            "activeItemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3"
+          },
+          "tried": [],
+          "memoryEpoch": 3,
+          "createdAt": "2026-11-03T02:37:53.434Z",
+          "updatedAt": "2026-11-03T02:37:53.462Z",
+          "expiresAt": "2026-11-10T02:37:53.434Z",
+          "itemScopes": {
+            "72b3c233-eb80-4dc3-b154-07ef99f40cd3": "[\"u_91c3d598-ba04-4d16-acf2-0c2350646051\",\"[\\\"待确认\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "记得，你曾提到，[合成纠正]这件挂坠是同事小叶送的，不是小岚；日期仍未知。GATE3-CORRECTED。\n\n原来一件物品，也能串起这些生活片段。现在再看见它，你最先想起的是哪个瞬间？",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [
+            "97049848-299d-4a9c-90fb-93f2f9e7712f"
+          ],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "按当前授权回忆本人记录",
+            "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+            "itemName": "[合成]朋友送的自制陶土叶片挂坠 frozen-local-journeys-r2"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=72b3c233-eb80-4dc3-b154-07ef99f40cd3; domain metadata, not a model answer",
+            "at": "2026-11-03T02:37:53.440Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "组织自然故事; memory-storytelling-v1.0",
+            "at": "2026-11-03T02:37:53.449Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-provider-unavailable",
+            "at": "2026-11-03T02:37:53.449Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0,
+        "foundation": {
+          "runId": "002f17fc-a998-44b3-a281-4ff60d79cc13",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 449,
+      "streamTextEvents": 0
+    },
+    {
+      "question": "这件挂坠是谁送的？如果关系已遗忘，请不要从旧故事补回。",
+      "result": {
+        "session": {
+          "id": "d8f8d683-a5e5-40f6-a517-3b103e730e3c",
+          "owner": "u_91c3d598-ba04-4d16-acf2-0c2350646051",
+          "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+          "identity": "[\"u_91c3d598-ba04-4d16-acf2-0c2350646051\",\"[\\\"待确认\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "2b878a27-af22-453b-871a-250482d23c8c",
+              "role": "user",
+              "text": "这件挂坠是谁送的？如果关系已遗忘，请不要从旧故事补回。",
+              "at": "2026-11-03T02:37:54.056Z",
+              "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "791dd915-1816-4001-943d-26f7d437b06a",
+              "role": "assistant",
+              "text": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+              "reply": {
+                "outcome": "answered",
+                "answer": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+                "source": "local-memory",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "按当前授权回忆本人记录",
+                  "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+                  "itemName": "[合成]朋友送的自制陶土叶片挂坠 frozen-local-journeys-r2"
+                }
+              },
+              "at": "2026-11-03T02:37:54.056Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "6ca67186-8a79-41a3-8332-ed504ec2ce8b",
+            "turnScope": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+            "lastIntent": "help",
+            "activeItemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3"
+          },
+          "tried": [],
+          "memoryEpoch": 4,
+          "createdAt": "2026-11-03T02:37:54.038Z",
+          "updatedAt": "2026-11-03T02:37:54.056Z",
+          "expiresAt": "2026-11-10T02:37:54.038Z",
+          "itemScopes": {
+            "72b3c233-eb80-4dc3-b154-07ef99f40cd3": "[\"u_91c3d598-ba04-4d16-acf2-0c2350646051\",\"[\\\"待确认\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "outcome": "answered",
+          "answer": "我还没找到可以接着讲的旧故事。你愿意的话，可以从它怎么来到你身边说起；一两句话也很好。",
+          "source": "local-memory",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "caveat": "根据你留下的片段整理，可在记忆中纠正或忘记。",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "按当前授权回忆本人记录",
+            "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+            "itemName": "[合成]朋友送的自制陶土叶片挂坠 frozen-local-journeys-r2"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=72b3c233-eb80-4dc3-b154-07ef99f40cd3; domain metadata, not a model answer",
+            "at": "2026-11-03T02:37:54.043Z"
+          },
+          {
+            "stage": "skill_selected",
+            "detail": "组织自然故事; memory-storytelling-v1.0",
+            "at": "2026-11-03T02:37:54.048Z"
+          },
+          {
+            "stage": "memory_story_composition",
+            "detail": "local-private-or-provider-unavailable",
+            "at": "2026-11-03T02:37:54.048Z"
+          }
+        ],
+        "tokens": null,
+        "modelCalls": 0,
+        "foundation": {
+          "runId": "8acd330b-8f96-4c9a-a8c3-804a31f09444",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 270,
+      "streamTextEvents": 0
+    }
+  ],
+  "accounts": {
+    "ownerId": "u_91c3d598-ba04-4d16-acf2-0c2350646051",
+    "receiverId": "u_680a7724-b093-4cfa-b45d-3d351aa334e9"
+  },
+  "item": {
+    "id": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+    "name": "[合成]朋友送的自制陶土叶片挂坠 frozen-local-journeys-r2",
+    "model": "待确认",
+    "synthetic": true,
+    "photoStored": true
+  },
+  "mediaIsolationCheck": {
+    "status": 403,
+    "method": "unauthorized read assertion; media id from registered photo URL"
+  },
+  "gift": {
+    "id": "ee2fd85e-08ff-4e2f-9151-8ce691c85c7a",
+    "selectedStoryId": "26a1fbd4-e276-4458-a9a0-0f34062a6bb8",
+    "shareToken": "[not published]"
+  },
+  "failure": {
+    "name": "Error",
+    "message": "expect(locator).toContainText(expected) failed\n\nLocator: locator('body')\nExpected substring: \"[合成可分享]这件挂坠曾陪我搬家，现在愿把这一页传给你。\"\nReceived string:    \"独立临时演示空间 · 有效期内刷新保留 · 请勿上传私人资料 退出空间 返回物间SOMETHING SPECIAL, FOR YOU有一份心意，想交到你手里。由Gate3乙3673458452的独立账号接收\"\nTimeout: 5000ms\n\nCall log:\n  - Expect \"toContainText\" locator('body') with timeout 5000ms\n  - waiting for locator('body')\n    3 × locator resolved to <body>…</body>\n      - unexpected value \"独立临时演示空间 · 有效期内刷新保留 · 请勿上传私人资料 退出空间 返回物间SOMETHING SPECIAL, FOR YOU有一份心意，想交到你手里。本地接收预览；独立账号服务需要先登录\"\n    10 × locator resolved to <body>…</body>\n       - unexpected value \"独立临时演示空间 · 有效期内刷新保留 · 请勿上传私人资料 退出空间 返回物间SOMETHING SPECIAL, FOR YOU有一份心意，想交到你手里。由Gate3乙3673458452的独立账号接收\"\n"
+  },
+  "recovery": {
+    "privateIgnoredBrowserStates": "Saved only under .runtime, never in Git or public evidence",
+    "itemId": "72b3c233-eb80-4dc3-b154-07ef99f40cd3",
+    "modelFollowup": "not_run; needs serial scheduling by the main task"
+  },
+  "finishedAt": "2026-11-03T02:38:11.466Z",
+  "ledgerWindowDelta": 0,
+  "ledgerWindowCaveat": "Global ledger window; any concurrent unrelated call must be investigated, not attributed to this runner."
+}

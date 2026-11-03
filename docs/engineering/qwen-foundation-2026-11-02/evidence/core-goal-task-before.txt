@@ -1,0 +1,25 @@
+✖ 独立专业功能使用同一服务、授权、Task和Outcome，无第二套Runtime或事实库 (759.7253ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3180.8057
+
+✖ failing tests:
+
+test at tests\foundation-team-example.test.ts:7:1
+✖ 独立专业功能使用同一服务、授权、Task和Outcome，无第二套Runtime或事实库 (759.7253ms)
+  AssertionError [ERR_ASSERTION]: goal-discovered item must follow the same Task
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/foundation-team-example.test.ts:13:237)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

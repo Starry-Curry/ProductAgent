@@ -51,8 +51,10 @@ async function fetchPublicSource(
   value: string,
   redirects = 0,
   maxPdfBytes = 12_000_000,
+  publisherChain?: string[],
 ): Promise<{bytes:Buffer;type:string;url:string}> {
   const url = sourceURL(value);
+  publisherChain?.push(url.href);
   reservePublicFetch(url.hostname);
   const addresses = await Promise.race([
     lookup(url.hostname, { all: true }),
@@ -145,14 +147,22 @@ async function fetchPublicSource(
     const next = sourceURL(new URL(result.location, url).href);
     if (
       redirects >= 2 ||
-      next.hostname.replace(/^www\./, "") !== url.hostname.replace(/^www\./, "")
+      (!publisherChain && next.hostname.replace(/^www\./, "") !== url.hostname.replace(/^www\./, ""))
     )
       throw new AgentError(
         "来源跳转到其他站点或跳转过多；请核对最终链接后主动读取",
       );
-    return fetchPublicSource(next.href, redirects + 1,maxPdfBytes);
+    return fetchPublicSource(next.href, redirects + 1,maxPdfBytes,publisherChain);
   }
   return {...result,url:url.href};
+}
+/** Only the publisher resolver calls this with a public directory's homepage.
+ * Cross-host TLS redirects establish a migration chain, never a model URL grant.
+ * Every hop retains public-only pinned DNS, HTTPS, byte/time and redirect limits. */
+export async function resolvePublicPublisherHomepage(homepage:string){
+ const chain:string[]=[];
+ const page=await fetchPublicSource(homepage,0,1_500_000,chain);
+ return {url:page.url,chain};
 }
 /** Same pinned public fetch and redirect limits; never a provider-side arbitrary URL. */
 export async function fetchPublicPdfBytes(value:string){
@@ -227,6 +237,13 @@ export async function extractPublicHTML(raw: string, address: string) {
     }
   });
   const links: { title: string; url: string }[] = [];
+  // Single-page manuals expose real section IDs rather than separate chapter
+  // files. Preserve this navigation before truncating text; never invent IDs.
+  $('h1,h2,h3,h4,h5,h6').each((_n,el)=>{
+   const heading=$(el),container=heading.closest('article[id],section[id]');
+   const id=container.attr('id')||heading.attr('id'),title=heading.text().trim().slice(0,150);
+   if(id&&title){const target=new URL(url);target.hash=id;links.push({title,url:target.href});}
+  });
   // Retain named catalogue controls separately from actual hrefs. An ID is not
   // falsely labelled as a discovered URL; manufacturer adapters must verify it.
   const navigationItems=$('a[id]:not([href])').toArray().slice(0,150).map(el=>({id:$(el).attr('id')||'',label:$(el).text().trim().slice(0,150)})).filter(n=>n.id&&n.label);
@@ -283,6 +300,14 @@ export async function extractPublicHTML(raw: string, address: string) {
       } catch {}
   });
   $("script,style,noscript,nav,footer,header,iframe,form").remove();
+  const rawTitle=$("title").text().trim().slice(0,150)||$("h1").first().text().trim().slice(0,150)||url.hostname;
+  let focused=false;
+  if(url.hash){
+   let id='';try{id=decodeURIComponent(url.hash.slice(1));}catch{}
+   const target=$('[id]').filter((_n,el)=>$(el).attr('id')===id).first();
+   const section=target.is('article,section')?target:target.closest('article,section');
+   if(section.length){const content=section.clone();$('body').empty().append($('<p>').text(rawTitle)).append(content);focused=true;}
+  }
   const figures:{url:string;caption:string}[]=[];let uncaptioned=0;
   $('img').each((_n,el)=>{
     const img=$(el);if(img.attr('aria-hidden')==='true'||img.attr('role')==='presentation')return;
@@ -295,12 +320,9 @@ export async function extractPublicHTML(raw: string, address: string) {
   // exact model becomes e.g. MJTD01SYLColor and fails safe boundary matching.
   // Preserve DOM text boundaries instead of weakening model matching.
   $("p,li,h1,h2,h3,h4,br,tr,dt,dd,div,section,span").prepend("\n").append("\n");
-  const title =
-    $("title").text().trim().slice(0, 150) ||
-    $("h1").first().text().trim().slice(0, 150) ||
-    url.hostname;
+  const title =rawTitle;
   const text = (
-    $("main,article").first().text() ||
+    (focused?$("body").text():$("main,article").first().text()) ||
     $("body").text() ||
     $.root().text()
   )

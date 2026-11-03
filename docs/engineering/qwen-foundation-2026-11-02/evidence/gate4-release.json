@@ -1,0 +1,23 @@
+{
+  "released": true,
+  "releasedAt": "2026-11-03T02:17:13.750Z",
+  "roundId": "qwen-foundation-20261102-r1",
+  "purpose": "independent_core_candidate_acceptance",
+  "candidateCommit": "f449067ce939d7fe82a3e48bab15df046d6eb2bc",
+  "model": "qwen3.8-max-0902",
+  "maxRequests": 54,
+  "questionsSha256": "7991b81d681bbb3e1a38ca4ade30de002fa61b0921a67f619b8aeaa60373d6f8",
+  "candidateEvidence": [
+    "foundation-final-typecheck-r3.txt",
+    "foundation-final-tests-r3.txt",
+    "foundation-final-build-r3.txt",
+    "runtime-convergence-review.md",
+    "pdf-product-path-r4.json"
+  ],
+  "priorGatesStatus": {
+    "offline": "passed",
+    "candidateRuntime": "real_browser_development_verified_not_acceptance",
+    "fourFrozenJourneys": "not_run_or_partial",
+    "overall": "not_accepted_pending_independent_quality"
+  }
+}

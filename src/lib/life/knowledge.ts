@@ -80,8 +80,9 @@ const brands = [
   },
 ] as const;
 export function brandEntry(brand: string) {
+  const identity=brand.normalize('NFKC').trim().toLowerCase();
   return brands.find((b) =>
-    b.names.some((n) => brand.toLowerCase().includes(n)),
+    b.names.some((n) => identity===n.normalize('NFKC').toLowerCase()),
   );
 }
 export function officialDomain(url: string, brand: string) {

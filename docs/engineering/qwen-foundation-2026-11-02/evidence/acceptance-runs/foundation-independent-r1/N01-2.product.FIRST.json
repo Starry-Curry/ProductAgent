@@ -1,0 +1,350 @@
+{
+  "caseId": "N01-2",
+  "productId": "N01",
+  "question": "同一台机器从墙边和桌面前沿开始量，起点怎么换？开机默认从哪一边算？",
+  "arm": "product",
+  "at": "2026-11-03T02:17:32.452Z",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "httpStatus": 200,
+  "result": {
+    "session": {
+      "id": "f4fea148-b2a7-4385-9ac5-ef7fd4c6aff5",
+      "owner": "u_4e824597-2c47-4ccc-9668-45dfa459bc10",
+      "itemId": "a22046ad-bef8-4951-950d-5963e7960a8b",
+      "identity": "[\"u_4e824597-2c47-4ccc-9668-45dfa459bc10\",\"[\\\"GLM 50 C Professional\\\",null,null,null]\"]",
+      "mode": "service",
+      "revision": 1,
+      "status": "waiting_user",
+      "messages": [
+        {
+          "id": "5b965021-db02-4fb7-9d4d-464e7d987e59",
+          "role": "user",
+          "text": "同一台机器从墙边和桌面前沿开始量，起点怎么换？开机默认从哪一边算？",
+          "at": "2026-11-03T02:17:44.473Z",
+          "itemId": "a22046ad-bef8-4951-950d-5963e7960a8b",
+          "memoryPolicy": "off",
+          "capture": false
+        },
+        {
+          "id": "ff94f8bf-ddd7-419d-b1df-a89cc1ba1ddd",
+          "role": "assistant",
+          "text": "关于 Bosch GLM 50 C Professional 的测量基准点切换与默认设置，当前未能检索到该型号的官方说明书原文或可核对的网页章节，因此无法提供经厂家确认的具体按键名称、菜单路径或开机默认基准。为避免误导，不凭通用经验编造操作步骤。\n\n若您手边有说明书 PDF 或官网页面链接，请提供给我，我可以据此读取并给出带原文引用的准确步骤；也可以上传说明书图片，我会按图示核对基准点切换方式。\n\n在未获得原文前，建议您先以实物验证：开机后观察屏幕上的基准点图标（通常显示为从前端、后端或三脚架螺纹口出发的示意），再尝试短按标有“Ref”或带基准图标的按键，确认图标是否在前/后之间切换，从而判断默认起点和切换方式。此验证仅用于确认您这台机器的实际行为，不替代厂家说明。",
+          "reply": {
+            "modelHistoryText": "关于 Bosch GLM 50 C Professional 的测量基准点切换与默认设置，当前未能检索到该型号的官方说明书原文或可核对的网页章节，因此无法提供经厂家确认的具体按键名称、菜单路径或开机默认基准。为避免误导，不凭通用经验编造操作步骤。\n\n若您手边有说明书 PDF 或官网页面链接，请提供给我，我可以据此读取并给出带原文引用的准确步骤；也可以上传说明书图片，我会按图示核对基准点切换方式。\n\n在未获得原文前，建议您先以实物验证：开机后观察屏幕上的基准点图标（通常显示为从前端、后端或三脚架螺纹口出发的示意），再尝试短按标有“Ref”或带基准图标的按键，确认图标是否在前/后之间切换，从而判断默认起点和切换方式。此验证仅用于确认您这台机器的实际行为，不替代厂家说明。",
+            "continuations": [],
+            "actionCards": [],
+            "necessaryConditionChecks": [],
+            "knowledgeWarnings": [],
+            "answer": "关于 Bosch GLM 50 C Professional 的测量基准点切换与默认设置，当前未能检索到该型号的官方说明书原文或可核对的网页章节，因此无法提供经厂家确认的具体按键名称、菜单路径或开机默认基准。为避免误导，不凭通用经验编造操作步骤。\n\n若您手边有说明书 PDF 或官网页面链接，请提供给我，我可以据此读取并给出带原文引用的准确步骤；也可以上传说明书图片，我会按图示核对基准点切换方式。\n\n在未获得原文前，建议您先以实物验证：开机后观察屏幕上的基准点图标（通常显示为从前端、后端或三脚架螺纹口出发的示意），再尝试短按标有“Ref”或带基准图标的按键，确认图标是否在前/后之间切换，从而判断默认起点和切换方式。此验证仅用于确认您这台机器的实际行为，不替代厂家说明。",
+            "outcome": "needs_info",
+            "source": "model-general",
+            "model": "qwen3.8-max-0902",
+            "steps": [],
+            "questions": [],
+            "evidenceIds": [],
+            "citations": [],
+            "memoryIds": [],
+            "usedItems": [
+              {
+                "id": "a22046ad-bef8-4951-950d-5963e7960a8b",
+                "name": "[模拟持有] Bosch GLM 50 C Professional",
+                "model": "GLM 50 C Professional"
+              }
+            ],
+            "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+          },
+          "at": "2026-11-03T02:17:44.473Z"
+        }
+      ],
+      "known": {
+        "memoryPolicy": "off",
+        "interfaceMode": "standard",
+        "uiPage": "item",
+        "useItemMemories": "no",
+        "turnRequestId": "1df3e5ab-a9f0-450f-bb30-a159bc489482"
+      },
+      "tried": [],
+      "memoryEpoch": 0,
+      "createdAt": "2026-11-03T02:17:32.553Z",
+      "updatedAt": "2026-11-03T02:17:44.474Z",
+      "expiresAt": "2026-11-10T02:17:32.553Z",
+      "itemScopes": {
+        "a22046ad-bef8-4951-950d-5963e7960a8b": "[\"u_4e824597-2c47-4ccc-9668-45dfa459bc10\",\"[\\\"GLM 50 C Professional\\\",null,null,null]\"]"
+      }
+    },
+    "reply": {
+      "modelHistoryText": "关于 Bosch GLM 50 C Professional 的测量基准点切换与默认设置，当前未能检索到该型号的官方说明书原文或可核对的网页章节，因此无法提供经厂家确认的具体按键名称、菜单路径或开机默认基准。为避免误导，不凭通用经验编造操作步骤。\n\n若您手边有说明书 PDF 或官网页面链接，请提供给我，我可以据此读取并给出带原文引用的准确步骤；也可以上传说明书图片，我会按图示核对基准点切换方式。\n\n在未获得原文前，建议您先以实物验证：开机后观察屏幕上的基准点图标（通常显示为从前端、后端或三脚架螺纹口出发的示意），再尝试短按标有“Ref”或带基准图标的按键，确认图标是否在前/后之间切换，从而判断默认起点和切换方式。此验证仅用于确认您这台机器的实际行为，不替代厂家说明。",
+      "continuations": [],
+      "actionCards": [],
+      "necessaryConditionChecks": [],
+      "knowledgeWarnings": [],
+      "answer": "关于 Bosch GLM 50 C Professional 的测量基准点切换与默认设置，当前未能检索到该型号的官方说明书原文或可核对的网页章节，因此无法提供经厂家确认的具体按键名称、菜单路径或开机默认基准。为避免误导，不凭通用经验编造操作步骤。\n\n若您手边有说明书 PDF 或官网页面链接，请提供给我，我可以据此读取并给出带原文引用的准确步骤；也可以上传说明书图片，我会按图示核对基准点切换方式。\n\n在未获得原文前，建议您先以实物验证：开机后观察屏幕上的基准点图标（通常显示为从前端、后端或三脚架螺纹口出发的示意），再尝试短按标有“Ref”或带基准图标的按键，确认图标是否在前/后之间切换，从而判断默认起点和切换方式。此验证仅用于确认您这台机器的实际行为，不替代厂家说明。",
+      "outcome": "needs_info",
+      "source": "model-general",
+      "model": "qwen3.8-max-0902",
+      "steps": [],
+      "questions": [],
+      "evidenceIds": [],
+      "citations": [],
+      "memoryIds": [],
+      "usedItems": [
+        {
+          "id": "a22046ad-bef8-4951-950d-5963e7960a8b",
+          "name": "[模拟持有] Bosch GLM 50 C Professional",
+          "model": "GLM 50 C Professional"
+        }
+      ],
+      "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+    },
+    "trace": [
+      {
+        "stage": "tool_runtime_REPLY_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:17:32.585Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:17:32.585Z"
+      },
+      {
+        "stage": "practical_model",
+        "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+        "at": "2026-11-03T02:17:34.556Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_START",
+        "detail": "{\"callId\":\"call_3b5d464a2e2a45cc8291c0ab\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:34.559Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_DELTA",
+        "detail": "{\"callId\":\"call_3b5d464a2e2a45cc8291c0ab\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:34.559Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_END",
+        "detail": "{\"callId\":\"call_3b5d464a2e2a45cc8291c0ab\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:34.559Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_END",
+        "detail": "{\"inputTokens\":5415,\"outputTokens\":79}",
+        "at": "2026-11-03T02:17:34.559Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_START",
+        "detail": "{\"callId\":\"call_3b5d464a2e2a45cc8291c0ab\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:34.561Z"
+      },
+      {
+        "stage": "tool_policy",
+        "detail": "{\"name\":\"search_product_knowledge\",\"effect\":\"local_write\",\"scope\":\"live_item_grant_public_sources_only\",\"result\":\"sourced_knowledge_cache\",\"idempotency\":\"document_digest\"}",
+        "at": "2026-11-03T02:17:34.565Z"
+      },
+      {
+        "stage": "practical_knowledge",
+        "detail": "{\"itemId\":\"a22046ad-bef8-4951-950d-5963e7960a8b\",\"cached\":true,\"readURLs\":[],\"issues\":[\"未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。\"],\"seedURLs\":[],\"searchAttempted\":false,\"searchCompleted\":false,\"searchURLs\":[],\"verifiedURLs\":[],\"attemptedURLs\":[],\"sources\":[]}",
+        "at": "2026-11-03T02:17:34.593Z"
+      },
+      {
+        "stage": "source_semantics",
+        "detail": "{\"status\":\"no_sources\",\"modelCalls\":0,\"cacheHit\":false,\"rejected\":[],\"sourceIds\":[],\"observations\":[]}",
+        "at": "2026-11-03T02:17:34.600Z"
+      },
+      {
+        "stage": "practical_tool",
+        "detail": "search_product_knowledge completed",
+        "at": "2026-11-03T02:17:34.600Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+        "detail": "{\"callId\":\"call_3b5d464a2e2a45cc8291c0ab\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:34.602Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_END",
+        "detail": "{\"callId\":\"call_3b5d464a2e2a45cc8291c0ab\",\"tool\":\"search_product_knowledge\",\"state\":\"success\"}",
+        "at": "2026-11-03T02:17:34.603Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:17:34.603Z"
+      },
+      {
+        "stage": "practical_model",
+        "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+        "at": "2026-11-03T02:17:37.936Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_START",
+        "detail": "{\"callId\":\"call_d889ec7593684dfc89b7700e\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:37.937Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_DELTA",
+        "detail": "{\"callId\":\"call_d889ec7593684dfc89b7700e\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:37.937Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_END",
+        "detail": "{\"callId\":\"call_d889ec7593684dfc89b7700e\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:37.937Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_END",
+        "detail": "{\"inputTokens\":5757,\"outputTokens\":94}",
+        "at": "2026-11-03T02:17:37.937Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_START",
+        "detail": "{\"callId\":\"call_d889ec7593684dfc89b7700e\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:37.939Z"
+      },
+      {
+        "stage": "tool_policy",
+        "detail": "{\"name\":\"search_product_knowledge\",\"effect\":\"local_write\",\"scope\":\"live_item_grant_public_sources_only\",\"result\":\"sourced_knowledge_cache\",\"idempotency\":\"document_digest\"}",
+        "at": "2026-11-03T02:17:37.942Z"
+      },
+      {
+        "stage": "practical_knowledge",
+        "detail": "{\"itemId\":\"a22046ad-bef8-4951-950d-5963e7960a8b\",\"cached\":false,\"readURLs\":[],\"issues\":[\"未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。\"],\"seedURLs\":[],\"searchAttempted\":false,\"searchCompleted\":false,\"searchURLs\":[],\"verifiedURLs\":[],\"attemptedURLs\":[],\"sources\":[]}",
+        "at": "2026-11-03T02:17:37.979Z"
+      },
+      {
+        "stage": "source_semantics",
+        "detail": "{\"status\":\"no_sources\",\"modelCalls\":0,\"cacheHit\":false,\"rejected\":[],\"sourceIds\":[],\"observations\":[]}",
+        "at": "2026-11-03T02:17:37.988Z"
+      },
+      {
+        "stage": "practical_tool",
+        "detail": "search_product_knowledge completed",
+        "at": "2026-11-03T02:17:37.988Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+        "detail": "{\"callId\":\"call_d889ec7593684dfc89b7700e\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:37.990Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_END",
+        "detail": "{\"callId\":\"call_d889ec7593684dfc89b7700e\",\"tool\":\"search_product_knowledge\",\"state\":\"success\"}",
+        "at": "2026-11-03T02:17:37.991Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:17:37.991Z"
+      },
+      {
+        "stage": "practical_model",
+        "detail": "{\"round\":2,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+        "at": "2026-11-03T02:17:44.424Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_START",
+        "detail": "{\"callId\":\"call_049b62e9b704409487cf9899\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:17:44.425Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_DELTA",
+        "detail": "{\"callId\":\"call_049b62e9b704409487cf9899\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:17:44.425Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_END",
+        "detail": "{\"callId\":\"call_049b62e9b704409487cf9899\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:17:44.425Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_END",
+        "detail": "{\"inputTokens\":6114,\"outputTokens\":227}",
+        "at": "2026-11-03T02:17:44.425Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_START",
+        "detail": "{\"callId\":\"call_049b62e9b704409487cf9899\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:17:44.426Z"
+      },
+      {
+        "stage": "tool_policy",
+        "detail": "{\"name\":\"complete_answer\",\"effect\":\"propose\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_no_domain_write\"}",
+        "at": "2026-11-03T02:17:44.431Z"
+      },
+      {
+        "stage": "practical_tool",
+        "detail": "complete_answer completed",
+        "at": "2026-11-03T02:17:44.452Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+        "detail": "{\"callId\":\"call_049b62e9b704409487cf9899\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:17:44.453Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_END",
+        "detail": "{\"callId\":\"call_049b62e9b704409487cf9899\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+        "at": "2026-11-03T02:17:44.454Z"
+      },
+      {
+        "stage": "practical_completion",
+        "detail": "{\"elapsedMs\":11905,\"calls\":3,\"tools\":3,\"reservedCny\":0.22183200000000003,\"missingKnowledgeIds\":[\"a22046ad-bef8-4951-950d-5963e7960a8b\"],\"adviceOnly\":true}",
+        "at": "2026-11-03T02:17:44.465Z"
+      }
+    ],
+    "tokens": {
+      "input": 17286,
+      "output": 400
+    },
+    "modelCalls": 3,
+    "foundation": {
+      "runId": "1fbee374-79f7-4fee-bf85-2a79d824ed6b",
+      "status": "waiting_user",
+      "basis": "advice_only"
+    }
+  },
+  "fullAnswerMs": 12099,
+  "upstreamNumbers": [
+    92,
+    93,
+    94
+  ],
+  "transport": [
+    {
+      "number": 4,
+      "caseId": "N01-2",
+      "arm": "product",
+      "at": "2026-11-03T02:17:32.674Z",
+      "inputSha256": "fce0cd20fd9c6e783ffe0791b2e9963f86ab3bdebb0e24b84a75b6fce04ed34d",
+      "inputBytes": 17705,
+      "path": "/browser/v1/chat/completions",
+      "status": "returned",
+      "httpStatus": 200
+    },
+    {
+      "number": 5,
+      "caseId": "N01-2",
+      "arm": "product",
+      "at": "2026-11-03T02:17:34.740Z",
+      "inputSha256": "3d4ebcc610a97fd87723aa8c841510fd025b8e89247e9f9e2f9603a118d05b41",
+      "inputBytes": 19277,
+      "path": "/browser/v1/chat/completions",
+      "status": "returned",
+      "httpStatus": 200
+    },
+    {
+      "number": 6,
+      "caseId": "N01-2",
+      "arm": "product",
+      "at": "2026-11-03T02:17:38.092Z",
+      "inputSha256": "8d5a9ee0b65631404810828943ef488c5d6df8e540b5aa4aefb8dd19d7440aa5",
+      "inputBytes": 20916,
+      "path": "/browser/v1/chat/completions",
+      "status": "returned",
+      "httpStatus": 200
+    }
+  ]
+}

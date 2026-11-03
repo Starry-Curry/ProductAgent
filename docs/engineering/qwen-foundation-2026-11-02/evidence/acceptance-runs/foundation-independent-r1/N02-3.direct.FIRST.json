@@ -1,0 +1,14 @@
+{
+  "caseId": "N02-3",
+  "productId": "N02",
+  "question": "明早想让手表七点叫我起床，怎样在手表上新增这个闹钟？",
+  "arm": "direct",
+  "at": "2026-11-03T02:20:40.551Z",
+  "status": "blocked_budget",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "error": "acceptance_or_global_budget_exhausted",
+  "fullAnswerMs": 76,
+  "upstreamNumbers": [],
+  "transport": []
+}

@@ -1,0 +1,14 @@
+{
+  "caseId": "N03-1",
+  "productId": "N03",
+  "question": "要拍离相机大约40厘米的小摆件，该把镜头拨到哪里？不要拿别的mini机型步骤代替。",
+  "arm": "direct",
+  "at": "2026-11-03T02:20:40.746Z",
+  "status": "blocked_budget",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "error": "acceptance_or_global_budget_exhausted",
+  "fullAnswerMs": 70,
+  "upstreamNumbers": [],
+  "transport": []
+}

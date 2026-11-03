@@ -5,8 +5,9 @@ import type {Provider,ModelMessage,ToolDefinition} from '../ai/provider.ts';
 import {AgentError,type ServiceSession,type AssistantReply,type Trace} from './contracts.ts';
 import {compileTaskContext} from '../context/compiler.ts';
 import {resourceCatalogue} from '../context/relevance.ts';
+import {discoverCapabilities} from '../context/discovery.ts';
 import {scopedProductKnowledge} from '../context/evidence-scope.ts';
-import {bindSemanticReference,saveSourceSelections,readSourceSelections} from '../context/source-reference.ts';
+import {saveGuidanceSources,readSourceSelections} from '../context/source-reference.ts';
 import {modelReality,projectReality} from '../context/reality.ts';
 import {runToolAgent} from './tool-runtime.ts';
 import {toolPolicy} from './tool-policy.ts';
@@ -17,12 +18,12 @@ import {authorize} from '../foundation/policy.ts';
 import {itemStamp,proposeAction} from '../home/store.ts';
 import type {ActionCard} from '../home/contracts.ts';
 import {actionProposal,checkPlanResources,type ActionSource} from './practical-actions.ts';
-import {extractSourceSemantics,modelSourceSemantics,type SourceSemanticObservation,type SourceSemanticsResult} from '../context/source-semantics.ts';
 import {householdMembers} from '../collaboration.ts';
 import {readKnowledge,storeOfficialDocument,makeKnowledgeDocument,acquireKnowledge,trustedOfficialDocument} from '../life/acquisition.ts';
 import {fetchPublicDocument} from '../life/sources.ts';
 import {sourceReviews} from '../foundation/reviewed-facts.ts';
 import {modelMentioned,officialDomain,brandEntry} from '../life/knowledge.ts';
+import {publisherOwns} from '../life/publisher.ts';
 import {rangeCondition,rectangleCondition,frameCondition} from './kernel/physical.ts';
 import {practicalConstraints,readKnownConstraints} from './practical-constraints.ts';
 import {relevantManualLinks} from '../life/retrieval-topics.ts';
@@ -54,7 +55,7 @@ const schemas={
  explore_owned_software:z.object({itemId:z.string().min(1).max(100)}).strict(),
  open_item_capability:z.object({itemId:z.string().min(1).max(100),capability:z.enum(['creative','persona','story','maintenance','family','gift','software'])}).strict(),
  prepare_action:actionProposal,
- get_item_context:z.object({itemIds:ids,query:z.string().trim().min(1).max(500).optional()}).strict(),
+ get_item_context:z.object({itemIds:ids,query:z.string().trim().min(1).max(500).optional(),cursor:z.number().int().min(0).max(10000).optional()}).strict(),
  search_product_knowledge:z.object({itemId:z.string().min(1).max(100),query:z.string().min(1).max(500),refresh:z.boolean().optional(),sourceUrl:z.string().url().optional()}).strict(),
  inspect_manual_visual:z.object({itemId:z.string().min(1).max(100),sourceId:z.string().min(1).max(200),question:z.string().min(1).max(800),figureUrl:z.string().url().optional(),pageNumbers:z.array(z.number().int().min(1).max(80)).max(3).optional()}).strict(),
  read_official_page:z.object({itemId:z.string().min(1).max(100),sourceId:z.string().min(1).max(200),question:z.string().min(1).max(800)}).strict(),
@@ -65,7 +66,7 @@ const schemas={
   z.object({kind:z.literal('range'),actual:z.number().nonnegative(),min:z.number().nonnegative(),max:z.number().nonnegative(),unit:z.string().max(30)}).strict(),
   z.object({kind:z.literal('rectangle'),object:z.tuple([z.number().positive(),z.number().positive()]),space:z.tuple([z.number().positive(),z.number().positive()]),spaceKind:z.enum(['internal','external','unknown'])}).strict()]),
 };
-const descriptions={explore_owned_software:'仅对当前自有 WUJIAN-SOFTWARE-LAMP-1 合成软件测试灯运行既有REA静态分析与本机模拟器只读验证；不授予控制、不接触真实硬件。',complete_answer:'最终回复唯一呈现工具：message用于自然解释与明确缺口；型号操作用guidance.kind=procedure（itemId、带sourceId的steps及conditions），不把指导当控制或强行编造手机库存ID。跨物品物理行动才用带itemIds的动作方案。纯解释写message、guidance=null；message不重复步骤。device_operation items[0]是被操作设备，operationRef是当前semantic带连续原文的条目id（分类标签不是语义认证），且列入sourceIds；不能把图示模型观察当认证事实。不写任务，不执行外部操作。',inspect_manual_visual:'按需读取已取得的准确型号官方PDF或实际发现的图示。sourceId用文档或原文ID；figureUrl仅允许已发现图片；不能猜按钮/页图。',read_official_page:'调用百炼原生web_extractor读取已经取得并核对的指定官方网页，只按当前问题读取，不开展反复搜索；PDF图示请用inspect_manual_visual。',open_item_capability:'当用户希望进一步创意、分身、故事、养护、家庭、赠礼或软件探索时，返回同一物品现有界面的继续入口；不执行任何操作，不授予权限。',prepare_action:'只在用户希望保存计划、记录故事、准备赠礼或交家人时准备预览卡。没有确认不会执行；不能自行授予记忆/分享权限。计划逐步关联真实资源，型号操作必须引用已读取原文ID；条件未齐先讨论探索方案。故事仅保存私人原文，默认不允许检索或上云；赠礼草稿不附私人故事。',get_item_context:'读取当前用户获准的物品身份、准确型号、状态和未知项；itemIds为空时当前相关物品。',search_product_knowledge:'检索对应型号官方原文和URL；无缓存时自主官方发现；缓存缺少操作正文时可refresh，或用relatedSections中实际发现的sourceUrl读取章节；不接受臆造链接。',get_relevant_experiences:'读取对应物品当前获准云端使用的经历与偏好。经历为用户报告，不证明因果。',check_constraints:'确定性计算：区间、二维占地、平面物体与画幅比例（frame）。画幅支持完整容纳或铺满裁切两种计算，不混淆二者。不能证明完整兼容/稳定。known读取本次已绑定来源的条件ID；range/rectangle仅计算模型假设的数字，不能作为设备兼容认证或覆盖已知条件。'};
+const descriptions={explore_owned_software:'仅对当前自有 WUJIAN-SOFTWARE-LAMP-1 合成软件测试灯运行既有REA静态分析与本机模拟器只读验证；不授予控制、不接触真实硬件。',complete_answer:'最终回复唯一呈现工具：message用于自然解释与明确缺口；型号操作用guidance.kind=procedure（itemId、带sourceId的steps及conditions），不把指导当控制或强行编造手机库存ID。跨物品物理行动才用带itemIds的动作方案。纯解释写message、guidance=null；message不重复步骤。device_operation items[0]是被操作设备，operationRef是已读取的当前型号原文id（分类标签不是语义认证），且列入sourceIds；不能把图示模型观察当认证事实。不写任务，不执行外部操作。',inspect_manual_visual:'按需读取已取得的准确型号官方PDF或实际发现的图示。sourceId用文档或原文ID；figureUrl仅允许已发现图片；不能猜按钮/页图。',read_official_page:'读取已核对官方网页。单页说明书先返回真实章节目录，用search_product_knowledge的sourceUrl读取所需章节；必要时使用百炼原生web_extractor。PDF图示请用inspect_manual_visual。',open_item_capability:'当用户希望进一步创意、分身、故事、养护、家庭、赠礼或软件探索时，返回同一物品现有界面的继续入口；不执行任何操作，不授予权限。',prepare_action:'只在用户希望保存计划、记录故事、准备赠礼或交家人时准备预览卡。没有确认不会执行；不能自行授予记忆/分享权限。计划逐步关联真实资源，型号操作必须引用已读取原文ID；条件未齐先讨论探索方案。故事仅保存私人原文，默认不允许检索或上云；赠礼草稿不附私人故事。',get_item_context:'读取当前用户获准的物品身份、准确型号、状态和未知项；itemIds为空时当前相关物品。',search_product_knowledge:'检索对应型号官方原文和URL；无缓存时自主官方发现；缓存缺少操作正文时可refresh，或用relatedSections中实际发现的sourceUrl读取章节；不接受臆造链接。',get_relevant_experiences:'读取对应物品当前获准云端使用的经历与偏好。经历为用户报告，不证明因果。',check_constraints:'确定性计算：区间、二维占地、平面物体与画幅比例（frame）。画幅支持完整容纳或铺满裁切两种计算，不混淆二者。不能证明完整兼容/稳定。known读取本次已绑定来源的条件ID；range/rectangle仅计算模型假设的数字，不能作为设备兼容认证或覆盖已知条件。'};
 export const practicalTools:ToolDefinition[]=Object.entries(schemas).map(([name,schema])=>({type:'function',function:{name,description:descriptions[name as keyof typeof descriptions],parameters:z.toJSONSchema(schema,{io:'input'}) as Record<string,unknown>}}));
 /** Give the provider real callable IDs, not an invitation to invent references. Server checks remain authoritative. */
 export function practicalToolSet(sourceIds:string[],resourceIds:string[]){
@@ -85,7 +86,6 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  let extraIds:string[]=[],queries:string[]=[];const missingKnowledge=new Set<string>();
  let resourcesRead=false;
  const unresolvedTools=new Set<string>();
- const semanticCache=new Map<string,SourceSemanticsResult>(),semanticObservations=new Map<string,SourceSemanticObservation>();
  const pdfVersions=new Map<string,string>();
  const log=(stage:string,detail:string)=>trace.push({stage,detail,at:new Date().toISOString()});
  provider.onStatus?.('正在核对本次可用的物品与授权');
@@ -105,8 +105,9 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   const docs=readKnowledge(db,read(),actor,itemId),seen=new Set(docs.map(d=>d.url));
   const links=relevantManualLinks(query,docs.flatMap(d=>d.sections||[])).filter((l,n,a)=>a.findIndex(x=>x.url===l.url)===n).slice(0,2);
   for(const link of links){if(seen.has(link.url)||Date.now()+12000>deadline)continue;
-   try{const page=await fetchPublicDocument(link.url);guard();if(!officialDomain(page.url,item.brand||'')||!modelMentioned(page.title+' '+page.text,item.model))continue;
+   try{const page=await fetchPublicDocument(link.url);guard();const publisher=docs.find(d=>publisherOwns(page.url,item.brand||'',d.publisherProof))?.publisherProof;if((!officialDomain(page.url,item.brand||'')&&!publisher)||!modelMentioned(page.title+' '+page.text,item.model))continue;
     const doc=makeKnowledgeDocument(page,item,[...docs.map(d=>d.url),page.url]);
+    doc.publisherProof=publisher;
     if(item.region&&item.region!=='unspecified'&&doc.region!=='unspecified'&&item.region!==doc.region)continue;
     storeOfficialDocument(db,actor,item,doc);seen.add(link.url);log('practical_chapter',JSON.stringify({itemId,url:page.url,query}));
    }catch(e){if(e instanceof AgentError)throw e;log('practical_chapter_failed',JSON.stringify({itemId,url:link.url}));}
@@ -122,34 +123,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  const boundPlanning=session.known.foundationTaskIntent==='plan'&&initial.items.length>1&&initial.currentTask?.goal===question&&practicalConstraints(initial).some(c=>c.satisfied===false);
  const passages=new Map(initial.evidence.filter(e=>e.basis==='official').map(e=>[e.id,e]));
  const suppliedPassages=new Set(passages.keys());
- const actionSources=():ActionSource[]=>[...[...passages.values()].map(s=>({...s,kind:'source_assertion' as const})),...context().retrieval.documents.map(d=>({id:d.id,itemId:d.itemId})),...[...semanticObservations.values()].filter(s=>s.kind!=='unknown'&&s.exactQuote).map(s=>({id:s.id,itemId:s.subject.itemId,text:s.exactQuote!,kind:'source_assertion' as const,conditions:s.conditions}))];
- async function semanticView(c:ReturnType<typeof context>,itemId?:string){
-  guard();
-  if(provider.structuredOutput!=='json_schema')return {status:'structured_extraction_not_configured',originalSources:c.evidence.filter(e=>e.basis==='official'&&(!itemId||e.itemId===itemId)),notice:'兼容路径保留原文，未宣称使用严格结构化抽取。'};
-  // Give a short document once, rather than overlapping chunks that invite a
-  // correct procedure to be spliced across quote IDs. Large manuals still use
-  // the question-selected windows; no whole inventory/private corpus is sent.
-  const originals=c.items.filter(i=>!itemId||i.id===itemId).flatMap(i=>scopedProductKnowledge(read().items.find(x=>x.id===i.id)!,readKnowledge(db,read(),actor,i.id)).map(({document:d})=>({itemId:i.id,...d})));
-  // Select one best existing chapter per requested topic before asking the
-  // extractor. Other originals remain readable by tools; repeating every
-  // cached chapter caused wrong-span selection and unnecessary input cost.
-  const related=relevantManualLinks(question,originals.map(d=>({title:d.title,url:d.url})),true);
-  const selectedOriginals=related.length?originals.filter(d=>related.some(l=>l.url===d.url)):originals;
-  const sources=selectedOriginals.flatMap(d=>Buffer.byteLength(d.text)<=24000
-   ?[{id:d.id,itemId:d.itemId,model:d.model,region:d.region||'unspecified',text:d.text,url:d.url,hash:d.hash,reading:d.reading}]
-   :c.evidence.filter(e=>e.basis==='official'&&e.documentId===d.id&&e.url).map(e=>({id:e.id,itemId:e.itemId,model:e.model,region:e.region||'unspecified',text:e.text,url:e.url!,hash:d.hash,reading:d.reading}))).slice(0,8);
-  const p:Provider={...provider,generate:async(...args)=>{
-   guard();if(calls>=5)throw Error('资料提取需保留最终答复预算');calls++;
-   const estimate=(Buffer.byteLength(JSON.stringify(args))*12+2600*36)/1e6;
-   if(reservedCny+estimate>3)throw Error('turn_cost_budget_exceeded');reservedCny+=estimate;
-   const r=await provider.generate(...args);guard();if(r.tokens){tokens.input+=r.tokens.input;tokens.output+=r.tokens.output;reservedCny-=estimate;reservedCny+=(r.tokens.input*12+r.tokens.output*36)/1e6;}return r;
-  }};
-  const result=await extractSourceSemantics(p,question,sources,{cache:semanticCache,maxTokens:2600,timeoutMs:Math.max(1,Math.min(45000,deadline-Date.now()))});guard();
-  for(const o of result.observations)semanticObservations.set(o.id,o);
-  if(!temporary)for(const i of c.items.filter(i=>!itemId||i.id===itemId))saveSourceSelections(db,read(),actor,i.id,result);
-  log('source_semantics',JSON.stringify({status:result.status,modelCalls:result.modelCalls,cacheHit:result.cacheHit,rejected:result.rejected,sourceIds:sources.map(s=>s.id),observations:result.observations.map(o=>({id:o.id,kind:o.kind,sourceId:o.sourceId}))}));
-  return {...modelSourceSemantics(result),notice:'原始文档完整保留；这些是当前问题相关的连续原文候选，出处核对不认证译文、推理或私人实物。需要更多原文可继续检索章节/读图。'};
- }
+ const actionSources=():ActionSource[]=>[...[...passages.values()].map(s=>({...s,kind:'source_assertion' as const})),...context().retrieval.documents.map(d=>({id:d.id,itemId:d.itemId}))];
  const select=(requested:string[])=>{const allowed=context().authorizedItemIds;for(const id of requested)if(!allowed.includes(id))throw new AgentError('物品未获授权',403);extraIds=[...new Set([...extraIds,...requested])];const c=context();track(c);return c;};
  async function tool(name:string,args:string){guard();if(++tools>8)throw Error('tool_budget_exceeded');
   const schema=schemas[name as keyof typeof schemas];if(!schema)throw Error('unknown_tool');const p:any=schema.parse(JSON.parse(args));
@@ -169,6 +143,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    // and forgetting questions must not require inventing another physical plan.
    // Any supplied guidance still undergoes the same resource/source checks.
    finalized=finalizeResponse(p,actionGoal(),allowed,practicalConstraints(c),actionSources(),read().items.filter(i=>allowed.includes(i.id)));
+   if(!temporary&&p.guidance?.kind==='procedure'){guard();saveGuidanceSources(db,read(),actor,p.guidance.itemId,p.guidance.steps.map((s:any)=>s.sourceId),provider.model);}
    return {basis:finalized.basis,status:'complete_candidate_not_executed',limitations:finalized.limitations};
   }
   if(name==='inspect_manual_visual'||name==='read_official_page'){
@@ -181,18 +156,23 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
     pdfVersions.set(doc.id,index.sourceHash);
     return {source:{id:doc.id,url:doc.url,model:doc.model},...index,notice:'已在本机取得真实PDF页码索引，尚未调用视觉。请按当前问题选择pageNumbers（最多3页）读取；不要猜页码或把整本上传。'};
    }
+   if(name==='read_official_page'&&doc.sections?.some(l=>new URL(l.url).hash)){
+    return {source:{id:doc.id,url:doc.url,model:doc.model},sections:doc.sections.filter(l=>new URL(l.url).hash).slice(0,100),reading:doc.text.length<12000?doc.text:undefined,basis:'actual_HTML_section_index_not_model_summary',next:'用search_product_knowledge的sourceUrl读取上述真实章节；图示用inspect_manual_visual，不猜档位或方向。'};
+   }
    if(calls>=5)throw Error('本次需保留最终回答回合');
    let r;
    if(name==='read_official_page'){
     if(doc.reading?.mode==='pdf_text_layer'||/\.pdf(?:[?#]|$)/i.test(doc.url))throw Error('PDF图文必须使用inspect_manual_visual及Chat文件接口，不能用Responses网页抽取冒充读图');
     if(!provider.extractPage)throw Error('当前模型未配置原生网页抽取');
     provider.onStatus?.('正在读取已核对型号的官方网页');
-    calls++;r=await provider.extractPage(doc.url,p.question,[...(brandEntry(item.brand||'')?.domains||[])]);
+    // The document already passed live publisher/model scope above. Carry that
+    // exact verified host into the native extractor; brand tables are optional.
+    calls++;r=await provider.extractPage(doc.url,p.question,[...new Set([...(brandEntry(item.brand||'')?.domains||[]),new URL(doc.url).hostname])]);
     log('native_extraction',JSON.stringify({url:doc.url,events:r.events,usage:r.usage}));
    }else{
     const pdf=isPdf,image=doc.reading?.figures.find(f=>f.url===p.figureUrl);
     if(!pdf&&!image)throw Error('尚未取得这张图示；先读取包含图示的官方章节，不猜图片URL');
-    if(image&&!officialDomain(image.url,item.brand||''))throw Error('图示未通过厂家来源范围核对');
+    if(image&&!officialDomain(image.url,item.brand||'')&&!publisherOwns(image.url,item.brand||'',doc.publisherProof))throw Error('图示未通过厂家来源范围核对');
     if(!provider.inspectDocument)throw Error('当前模型未配置图文读取');
     provider.onStatus?.('正在读取说明书图示与符号');
     const rendered=pdf?await renderRelevantPdf(doc.url,p.question,(doc.chunks.find(c=>c.id===p.sourceId)?.text||question),p.pageNumbers,item.model):undefined;guard();
@@ -220,7 +200,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    const proposal=actionProposal.parse(p);const allowed=context().authorizedItemIds.filter(id=>proposal.kind!=='plan'||usable(read().items.find(x=>x.id===id)!));
    const chosen=proposal.kind==='plan'?checkPlanResources(proposal,allowed,practicalConstraints(context()),actionSources(),read().items.filter(i=>allowed.includes(i.id)),actionGoal()):proposal;
    const itemIds=chosen.kind==='plan'?chosen.itemIds:[chosen.itemId];select(itemIds);
-    const action=chosen.kind==='plan'?{kind:'plan' as const,goal:chosen.goal,itemIds:chosen.itemIds,conditions:chosen.unresolved,dependencies:chosen.dependencies.map(d=>({step:d.index,resourceIds:d.resources,status:d.status})),resourceRevisions:Object.fromEntries(chosen.itemIds.map(id=>[id,planResourceStamp(read().items.find(i=>i.id===id)!)])),sourceRefs:chosen.sourceIds.map(id=>{const semantic=semanticObservations.get(id);return semantic?bindSemanticReference(semantic):{id,url:(passages.get(id)?.url||context().retrieval.documents.find(d=>d.id===id)?.url)!};}),checklist:chosen.steps.map(s=>({label:s,status:chosen.readiness==='conditional'?'实施前先核对条件':'待执行（不是实物验证）'}))}:chosen;
+    const action=chosen.kind==='plan'?{kind:'plan' as const,goal:chosen.goal,itemIds:chosen.itemIds,conditions:chosen.unresolved,dependencies:chosen.dependencies.map(d=>({step:d.index,resourceIds:d.resources,status:d.status})),resourceRevisions:Object.fromEntries(chosen.itemIds.map(id=>[id,planResourceStamp(read().items.find(i=>i.id===id)!)])),sourceRefs:chosen.sourceIds.map(id=>{const stored=chosen.itemIds.flatMap(itemId=>readSourceSelections(read().items.find(i=>i.id===itemId)!,readKnowledge(db,read(),actor,itemId))).find(s=>s.id===id);return stored?.reference||{id,url:(passages.get(id)?.url||context().retrieval.documents.find(d=>d.id===id)?.url)!};}),checklist:chosen.steps.map(s=>({label:s,status:chosen.readiness==='conditional'?'实施前先核对条件':'待执行（不是实物验证）'}))}:chosen;
    const title=chosen.kind==='plan'?(chosen.readiness==='conditional'?'待核对的候选计划：':'资源已核对的计划：')+chosen.goal:chosen.kind==='story'?'保存这段物品故事':chosen.kind==='gift'?'准备不含故事的赠礼':'交给家人继续处理';
    const detail=chosen.kind==='plan'?[...chosen.steps,...chosen.unresolved.map(c=>'待核对：'+c),'数值与资源核对不证明物理可行或每句话有据']:chosen.kind==='story'?[chosen.text,'不自动授权记忆检索、云端或家庭共享']:chosen.kind==='gift'?[chosen.message,'不附私人故事或对话；创建不等于交付']:[chosen.summary,'只共享你确认的摘要，对方尚未接手'];
    const card=proposeAction(db,read(),actor,session,crypto.randomUUID(),action,title,detail);cards.push(card);return {card,basis:'pending_explicit_user_confirmation_no_domain_write',notice:'仅准备草稿，必须用户点击确认；不是现实任务完成或设备执行'};
@@ -228,15 +208,17 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    const current=context();
    const requested=name==='search_product_knowledge'?[p.itemId]:name==='get_item_context'&&!p.itemIds.length?(p.query?resourceCatalogue(read().items.filter(i=>current.authorizedItemIds.includes(i.id)),p.query).items.map(i=>i.id):current.items.map(i=>i.id)):p.itemIds;
    const c=select(requested);
-  if(name==='get_item_context'){resourcesRead=true;return {items:c.semanticItems.map(modelReality),catalogue:c.catalogue,discovery:c.discovery,notice:'没有相关结果时可用query按名称、型号或已记录能力继续检索；不会自动取目录前八件。'};}
+  if(name==='get_item_context'){resourcesRead=true;const page=!p.itemIds.length?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor}):undefined;return {items:c.semanticItems.map(modelReality),catalogue:c.catalogue,discovery:c.discovery,...(page?{capabilityPage:page}:{}),notice:'query按名称、型号或已记录能力检索；无匹配可省略query，用cursor分页浏览获准目录，不假定前几件相关。'};}
   if(name==='get_relevant_experiences')return {experiences:c.experiences,preferences:c.preferences,privateFacts:c.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),basis:'approved_user_report_not_proven_cause'};
   const item=read().items.find(i=>i.id===p.itemId)!;const acquisition:any={cached:readKnowledge(db,read(),actor,item.id).length>0,readURLs:[],issues:[]};
   if(!temporary&&process.env.WUJIAN_ALLOW_PUBLIC_FETCH!=='false'){
    if(p.sourceUrl){
     const docs=readKnowledge(db,read(),actor,item.id);const linked=docs.some(d=>d.url===p.sourceUrl||d.sections?.some(l=>l.url===p.sourceUrl));
-    if(!linked||!officialDomain(p.sourceUrl,item.brand||''))throw Error('该链接未从当前型号已取得的官方资料中发现');
+    const publisher=docs.find(d=>publisherOwns(p.sourceUrl,item.brand||'',d.publisherProof))?.publisherProof;
+    if(!linked||(!officialDomain(p.sourceUrl,item.brand||'')&&!publisher))throw Error('该链接未从当前型号已取得的官方资料中发现');
     const page=await fetchPublicDocument(p.sourceUrl);guard();if(!modelMentioned(page.title+' '+page.text,item.model))throw Error('新章节未确认完整型号');
     const document=makeKnowledgeDocument(page,item,[...docs.map(d=>d.url),p.sourceUrl]);
+    document.publisherProof=publisher;
     if(item.region&&item.region!=='unspecified'&&document.region!=='unspecified'&&item.region!==document.region)throw Error('新章节地区与登记版本不一致');
     storeOfficialDocument(db,actor,item,document);acquisition.readURLs.push({url:page.url,characters:page.text.length});
    }else if(!acquisition.cached||p.refresh||brandEntry(item.brand||'')?.domains[0]==='canon.com.cn'&&!readKnowledge(db,read(),actor,item.id).some(d=>/\/manual\//.test(new URL(d.url).pathname))){
@@ -252,7 +234,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   log('practical_knowledge',JSON.stringify({itemId:p.itemId,...acquisition,sources:sources.map(s=>({id:s.id,url:s.url,model:s.model}))}));
   const fresh=sources.filter(s=>!suppliedPassages.has(s.id));for(const s of fresh)suppliedPassages.add(s.id);
   const scoped=scopedProductKnowledge(item,readKnowledge(db,read(),actor,item.id)).map(d=>d.document);
-  return {necessaryConditionChecks:practicalConstraints(enriched),visualDocuments:scoped.map(d=>({sourceId:d.id,url:d.url,kind:d.reading?.mode==='pdf_text_layer'||/\.pdf(?:[?#]|$)/i.test(d.url)?'pdf':'html',readingMode:d.reading?.mode||'unknown',figures:d.reading?.figures.slice(0,10)||[]})),relatedSections:relevantManualLinks(question+' '+p.query,scoped.flatMap(d=>d.sections||[])).filter((l,n,a)=>a.findIndex(x=>x.url===l.url)===n).slice(0,16),...(provider.structuredOutput==='json_schema'?{semantic:await semanticView(enriched,p.itemId)}:{sources:fresh}),sourcePointers:fresh.map(s=>({id:s.id,url:s.url,model:s.model,region:s.region})),existingPassageIds:sources.filter(s=>!fresh.includes(s)).map(s=>s.id),acquisition,unknown:sources.length?'':'没有读到该型号适用正文，不得编造操作。',notice:'existingPassageIds 的原文已在本次上下文提供，避免重复传输；引用不代表完整语义验证。'};
+  return {necessaryConditionChecks:practicalConstraints(enriched),visualDocuments:scoped.map(d=>({sourceId:d.id,url:d.url,kind:d.reading?.mode==='pdf_text_layer'||/\.pdf(?:[?#]|$)/i.test(d.url)?'pdf':'html',readingMode:d.reading?.mode||'unknown',figures:d.reading?.figures.slice(0,10)||[]})),relatedSections:[...relevantManualLinks(question+' '+p.query,scoped.flatMap(d=>d.sections||[])),...scoped.flatMap(d=>d.sections||[])].filter((l,n,a)=>a.findIndex(x=>x.url===l.url)===n).slice(0,64),sources:fresh,sourcePointers:fresh.map(s=>({id:s.id,url:s.url,model:s.model,region:s.region})),existingPassageIds:sources.filter(s=>!fresh.includes(s)).map(s=>s.id),acquisition,unknown:sources.length?'':'没有读到该型号适用正文，不得编造操作。',notice:'existingPassageIds 的原文已在本次上下文提供，避免重复传输；引用不代表完整语义验证。'};
  }
  const voiceId=!temporary&&(session.known.homeVoiceItemId||session.known.companionItemId);
  const voice=voiceId&&initial.items.some(i=>i.id===voiceId)?getPersona(db,actor,voiceId):undefined;
@@ -266,7 +248,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   notice:'厂家原文及定位不是独立语义认证；按当前问题解释，不把资料未提及当明确不支持。',
  };
  const messages:ModelMessage[]=[{role:'system',content:PRACTICAL_SYSTEM},{role:'user',content:JSON.stringify({question,items:initial.semanticItems.map(modelReality),catalogue:initial.catalogue,discovery:initial.discovery,contextRevision:initial.revision,voice:voice?.enabled?{itemId:voiceId,nickname:voice.nickname,style:voice.style,notice:'这是获准的物品交流身份，不是用户姓名；风格不得覆盖事实，不虚构经历'}:undefined,
-  ...(provider.structuredOutput==='json_schema'?{officialSemantics:initialSemantics}:{officialSources:initial.evidence.filter(e=>e.basis==='official')}),documentation:initial.items.map(i=>({itemId:i.id,sources:scopedProductKnowledge(read().items.find(x=>x.id===i.id)!,readKnowledge(db,read(),actor,i.id)).map(({document:d})=>({url:d.url,scope:/\/manual\//.test(new URL(d.url).pathname)?/index\.html$/.test(d.url)?'manual_contents_only':'manual_chapter':'official_overview_not_button_instructions'}))})),experiences:initial.experiences,preferences:initial.preferences,privateFacts:initial.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),
+  ...(provider.structuredOutput==='json_schema'?{officialSemantics:initialSemantics}:{officialSources:initial.evidence.filter(e=>e.basis==='official')}),documentation:initial.items.map(i=>({itemId:i.id,sources:scopedProductKnowledge(read().items.find(x=>x.id===i.id)!,readKnowledge(db,read(),actor,i.id)).map(({document:d})=>({sourceId:d.id,url:d.url,model:d.model,readingMode:d.reading?.mode||'unknown',scope:'scoped_official_original_content_not_classified_by_URL'}))})),experiences:initial.experiences,preferences:initial.preferences,privateFacts:initial.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),
   selectedPlans:initial.selectedPlans,priorPlanningContext:initial.priorPlanningContext,necessaryConditionChecks:practicalConstraints(initial),history:practicalHistory(session,temporary),currentTask:initial.currentTask,tried:initial.tried,permission:initial.permissions,availableActions:temporary?[]:['plan','story','gift','family'],household:session.known.uiPage==='family'&&actor.startsWith('u_')?householdMembers(db,actor).map(m=>({id:m.id,name:m.name})):[]})}];
  // Candidate: keep the user's actual request as a natural user turn after the
  // data packet, rather than leaving it buried inside a long evidence JSON.
@@ -276,7 +258,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  try{
   let round=0;
   const finalContract=provider.structuredOutput==='json_schema';
-  const result=await runToolAgent({system:PRACTICAL_SYSTEM+(finalContract?'\n本路径最终答复必须调用complete_answer；message只作简短解释，不重复后续步骤。型号操作用guidance.kind=procedure，steps引用本轮带原文候选的id；不要为手机侧的人类操作伪造库存ID或声称已控制。物理组合用带itemIds的guidance。device_operation的items[0]是被操作设备，operationRef使用本轮semantic带连续原文且非unknown的条目id，并列入sourceIds。未知不能写成支持/不支持；只按当前问题回答，不主动扩展会删数据的操作。不要以普通completion、message或看图猜测绕过动作核对。':''),messages:messages.filter(m=>m.role==='user'),guard,
+  const result=await runToolAgent({system:PRACTICAL_SYSTEM+(finalContract?'\n本路径最终答复必须调用complete_answer；message只作简短解释，不重复后续步骤。型号操作用guidance.kind=procedure，steps引用本轮带原文候选的id；不要为手机侧的人类操作伪造库存ID或声称已控制。物理组合用带itemIds的guidance。device_operation的items[0]是被操作设备，operationRef使用本轮已读取的适用型号原文id，并列入sourceIds。未知不能写成支持/不支持；只按当前问题回答，不主动扩展会删数据的操作。不要以普通completion、message或看图猜测绕过动作核对。':''),messages:messages.filter(m=>m.role==='user'),guard,
    tools:Object.entries(schemas).map(([name,schema])=>({name,schema,description:descriptions[name as keyof typeof descriptions],execute:async input=>{
     try{const value=await tool(name,JSON.stringify(input));unresolvedTools.delete(name);log('practical_tool',name+' completed');return value;}
     catch(e){if(e instanceof AgentError&&[403,409].includes(e.status))throw e;unresolvedTools.add(name);log('practical_tool_failed',name+': '+(e as Error).message);throw e;}

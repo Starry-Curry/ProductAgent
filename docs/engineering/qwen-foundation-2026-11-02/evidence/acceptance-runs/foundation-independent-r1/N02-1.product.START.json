@@ -1,0 +1,11 @@
+{
+  "caseId": "N02-1",
+  "productId": "N02",
+  "question": "我这只是普通165，不是Music；首次开机跳过了手机连接，现在该从手表哪里重新开始？手机蓝牙设置直接连行吗？",
+  "arm": "product",
+  "at": "2026-11-03T02:17:57.323Z",
+  "status": "not_run",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "requestStart": 97
+}

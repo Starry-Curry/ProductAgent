@@ -1,3 +1,4 @@
+import {discoverPublishers,publisherOwns,type PublisherProof} from './publisher.ts';
 import { isProductManual,unrelatedDocument } from "./manuals.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { createHash } from "node:crypto";
@@ -32,6 +33,7 @@ export type KnowledgeChunk = {
   warnings?: string[];
 };
 export type AcquiredDocument = {
+  publisherProof?:PublisherProof;
   sourceSelections?: {version:1;entries:{reference:KnowledgeReference;kind:'fact'|'operation'|'condition';selectedBy:string}[]};
   role?: "product" | "manual";
   applicability?: string;
@@ -58,8 +60,8 @@ export type AcquiredDocument = {
 };
 /** Exact URL grant from a manufacturer's exact-model page, never a blanket CDN allowlist. */
 export function trustedOfficialDocument(doc:AcquiredDocument,item:Item,documents:AcquiredDocument[]){
- if(officialDomain(doc.url,item.brand||doc.brand||''))return true;
- return doc.applicability==='manufacturer_linked_manual'&&documents.some(parent=>officialDomain(parent.url,item.brand||'')&&modelMentioned(parent.title,item.model)&&doc.chain.includes(parent.url)&&parent.sections?.some(l=>l.url===doc.url&&isProductManual(l)));
+ if(officialDomain(doc.url,item.brand||doc.brand||'')||publisherOwns(doc.url,item.brand||doc.brand||'',doc.publisherProof))return true;
+ return doc.applicability==='manufacturer_linked_manual'&&documents.some(parent=>(officialDomain(parent.url,item.brand||'')||publisherOwns(parent.url,item.brand||'',parent.publisherProof))&&modelMentioned(parent.title,item.model)&&doc.chain.includes(parent.url)&&parent.sections?.some(l=>l.url===doc.url&&isProductManual(l)));
 }
 const digest = (s: string) => createHash("sha256").update(s).digest("hex");
 export const knowledgeIdentity = (item: Item) =>
@@ -77,8 +79,7 @@ function regionOf(url: string) {
   const u = new URL(url);
   if (/ikea\.cn$/.test(u.hostname)) return "cn";
   if (u.hostname === "helpguide.sony.net") return "unspecified";
-  const first = u.pathname.split("/")[1];
-  return [
+  const regions = [
     "cn",
     "uk",
     "us",
@@ -90,9 +91,13 @@ function regionOf(url: string) {
     "hk",
     "de",
     "fr",
-  ].includes(first)
-    ? first
-    : "unspecified";
+  ];
+  // A language prefix is not a region. Match only explicit country segments.
+  for(const part of u.pathname.split('/').filter(Boolean).slice(0,2)){
+    const token=part.toLowerCase().replace(/^([a-z]{2})-/, '');
+    if(token==='gb')return 'uk';if(regions.includes(token))return token;
+  }
+  return "unspecified";
 }
 
 function label(s: string) {
@@ -405,6 +410,7 @@ export async function acquireKnowledge(
     search?: Provider["search"];
     seedURLs?: string[];
     preferManual?: boolean;
+    publisherDependencies?:Parameters<typeof discoverPublishers>[2];
   } = {},
 ) {
   const initialState = read();
@@ -459,6 +465,13 @@ export async function acquireKnowledge(
     entry = brandEntry(brand),
     issues: string[] = [],
     documents: AcquiredDocument[] = [];
+  let publisherProofs:PublisherProof[]=[];
+  const isOfficial=(url:string,_brand=brand)=>officialDomain(url,_brand)||publisherProofs.some(p=>publisherOwns(url,_brand,p));
+  function documentFor(d:PublicDocument,chain:string[],sourceRegion:string){
+   const doc=makeKnowledgeDocument(d,{...item,brand},chain,sourceRegion);
+   doc.publisherProof=publisherProofs.find(p=>publisherOwns(d.url,brand,p));
+   doc.sections=d.links.filter(l=>isOfficial(l.url)||isProductManual(l)).slice(0,300);return doc;
+  }
   const acquisition = {
     seedURLs: options.seedURLs || [],
     searchAttempted: false,
@@ -467,6 +480,7 @@ export async function acquireKnowledge(
     readURLs: [] as string[],
     verifiedURLs: [] as string[],
     attemptedURLs: [] as string[],
+    searchFailure: undefined as {type:string;code?:string;detail?:string}|undefined,
   };
   const attempted=new Map<string,Promise<PublicDocument>>();
   let requests = 0;
@@ -479,7 +493,7 @@ export async function acquireKnowledge(
   const packs = productPacks.filter(
     (p) =>
       modelMentioned(p.model, item.model) &&
-      officialDomain(p.source.url, brand),
+      isOfficial(p.source.url, brand),
   );
   const region =
     item.region ||
@@ -493,8 +507,8 @@ export async function acquireKnowledge(
     .filter((x) => x.length > 8);
   async function accept(url: string, chain: string[], sourceRegion: string,parent?:AcquiredDocument) {
     const d = await get(url);
-    const inherited=!!parent&&officialDomain(parent.url,brand)&&modelMentioned(parent.title,item.model)&&parent.sections?.some(l=>l.url===url&&isProductManual(l))&&d.url===url;
-    if(!officialDomain(d.url,brand)&&!inherited){issues.push('最终站点未通过厂家范围核对，未采用');return;}
+    const inherited=!!parent&&isOfficial(parent.url,brand)&&modelMentioned(parent.title,item.model)&&parent.sections?.some(l=>l.url===url&&isProductManual(l))&&d.url===url;
+    if(!isOfficial(d.url,brand)&&!inherited){issues.push('最终站点未通过厂家范围核对，未采用');return;}
     if ((d.extracted?.model&&!modelMentioned(d.extracted.model,item.model))||(!modelMentioned(d.title + " " + d.text, item.model)&&!inherited)) {
       issues.push("官方文档未包含完整型号，未采用：" + new URL(url).hostname);
       return;
@@ -503,38 +517,39 @@ export async function acquireKnowledge(
       issues.push("资料地区与档案不一致，未采用");
       return;
     }
-    const document=makeKnowledgeDocument(d, { ...item, brand }, chain, sourceRegion);if(inherited)document.applicability='manufacturer_linked_manual';documents.push(document);
+    const document=documentFor(d,chain,sourceRegion);if(inherited)document.applicability='manufacturer_linked_manual';documents.push(document);
   }
-  if (!documents.length && options.search && entry) {
+  if (!documents.length && options.search) {
     try {
       acquisition.searchAttempted = true;
       const result = await options.search(
         `${brand} ${item.model} official user manual operating instructions ${item.region || ""} ${options.query?.slice(0,500)||""}`,
-        [...entry.domains],
+        entry?[...entry.domains]:[],
       );
       acquisition.searchCompleted = true;
+      if(!entry){const identity=await discoverPublishers(brand,result.hits.map(h=>h.url),options.publisherDependencies);publisherProofs=identity.proofs;issues.push(...identity.issues);}
       // A model may return many valid sources. Prefer actual manuals over an
       // overview/download index; skip unrelated PDF kinds before spending fetches.
       // Keep the provider's source candidates until AFTER ranking. A download
       // index often contains the model in its URL while the actual manual uses
       // opaque document IDs. Prefer readable chapters over such landing pages;
       // exact subject/model/region must still be checked on the fetched body.
-      const rankedHits=result.hits.filter(h=>officialDomain(h.url,brand)&&!unrelatedDocument(h)).map((h,n)=>{
+      const rankedHits=result.hits.filter(h=>isOfficial(h.url,brand)&&!unrelatedDocument(h)).map((h,n)=>{
         let decoded=h.url;try{decoded=decodeURI(decoded);}catch{}
         const path=new URL(h.url).pathname;
         const chapter=/\/(?:contents?|chapters?|manual|guides?)\/.+\.(?:html?|pdf)$|\/(?:helpguide|user[-_]?manual)\//i.test(decoded);
         const index=/\/(?:manuals|downloads|support|faqs)\/?$|\/(?:index|default)\.html?$/i.test(path);
         return {h,n,score:Number(chapter)*12+Number(isProductManual(h))*6+Number(/\.pdf$/i.test(path))*3+Number(modelMentioned(h.title+' '+decoded,item.model))*4-Number(index)*3};
       }).sort((a,b)=>b.score-a.score||a.n-b.n).map(x=>x.h);
-      acquisition.searchURLs = rankedHits.slice(0, 4).map((h) => h.url);
+      acquisition.searchURLs = result.hits.slice(0,48).map(h=>h.url);
       for (const hit of rankedHits.slice(0, 4)) {
         if (requests >= 8) break;
-        if (!officialDomain(hit.url, brand)) continue;
+        if (!isOfficial(hit.url, brand)) continue;
         try {
           const d = await get(hit.url),
             sourceRegion = regionOf(d.url);
           if (
-            !officialDomain(d.url, brand) ||
+            !isOfficial(d.url, brand) ||
             (d.extracted?.model&&!modelMentioned(d.extracted.model,item.model))||!modelMentioned(d.title + " " + d.text, item.model)
           ) {
             issues.push("搜索命中未通过最终域名/完整型号核对，未采用");
@@ -546,12 +561,7 @@ export async function acquireKnowledge(
           }
           if (!documents.some((s) => s.url === d.url))
             documents.push(
-              makeKnowledgeDocument(
-                d,
-                { ...item, brand },
-                ["bailian-responses:structured-search", d.url],
-                sourceRegion,
-              ),
+              documentFor(d,["bailian-responses:structured-search",d.url],sourceRegion),
             );
         } catch {
           issues.push("搜索命中公开页面无法读取，未采用模型摘要替代原文");
@@ -559,7 +569,9 @@ export async function acquireKnowledge(
       }
       if (!result.hits.length)
         issues.push("搜索未返回结构化来源，不使用模型正文引用。");
-    } catch {
+    } catch (error) {
+      const e=error as {name?:string;code?:string;message?:string};
+      acquisition.searchFailure={type:e.name||'Error',code:typeof e.code==='string'&&/^[a-z0-9_-]{1,80}$/i.test(e.code)?e.code:undefined,detail:typeof e.message==='string'&&/^[a-z0-9_ .:;-]{1,160}$/i.test(e.message)?e.message:undefined};
       issues.push("联网搜索未完成或未获授权，本轮不重试。");
     }
   }
@@ -568,7 +580,7 @@ export async function acquireKnowledge(
     for(const d of found.documents)if((!item.region||item.region==='unspecified'||regionOf(d.url)===item.region||regionOf(d.url)==='unspecified')&&/\/manual\//.test(new URL(d.url).pathname))documents.push(makeKnowledgeDocument(d,{...item,brand},found.discoveryChains[d.url]||[d.url],regionOf(d.url)));
   }
   for(const url of (documents.length?[]:[...new Set([item.supportUrl,...(options.seedURLs||[])].filter((u):u is string=>!!u))].slice(0,3))){
-    try{if(!officialDomain(url,brand))continue;await accept(url,[url],regionOf(url));}catch{issues.push('种子资料未取得可用正文；继续官方发现，不把种子存在当获取成功');}
+    try{if(!isOfficial(url,brand))continue;await accept(url,[url],regionOf(url));}catch{issues.push('种子资料未取得可用正文；继续官方发现，不把种子存在当获取成功');}
   }
   try {
     if (!documents.length &&
@@ -633,7 +645,7 @@ export async function acquireKnowledge(
           .slice(0, 1)) {
           const h = new URL(link.url).hostname;
           if (
-            officialDomain(link.url, brand) ||
+            isOfficial(link.url, brand) ||
             (entry?.domains[0] === "ikea.cn" &&
               /^(resources|www)\.ikea\.cn$/.test(h))
           ) {
@@ -661,7 +673,7 @@ export async function acquireKnowledge(
   for(let depth=0;depth<2&&requests<8;depth++){
     const discovered:AcquiredDocument[]=[];
     for(const parent of frontier)for(const link of (parent.sections||[]).filter(l=>{
-      try{const u=new URL(l.url);return !u.hash&&!/\.pdf(?:[?#]|$)/i.test(l.url)&&officialDomain(l.url,brand)&&modelMentioned(l.title+' '+decodeURI(l.url),item.model);}catch{return false;}
+      try{const u=new URL(l.url);return !u.hash&&!/\.pdf(?:[?#]|$)/i.test(l.url)&&isOfficial(l.url,brand)&&modelMentioned(l.title+' '+decodeURI(l.url),item.model);}catch{return false;}
     }).slice(0,2)){
       if(requests>=8||attempted.has(link.url))continue;
       const before=documents.length;try{await accept(link.url,[...parent.chain,link.url],regionOf(link.url));discovered.push(...documents.slice(before));}catch{issues.push('型号相关的真实导航链接未取得正文，未猜测替代地址');}
