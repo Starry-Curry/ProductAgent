@@ -1,6 +1,8 @@
 # 当前工程状态（2026-11-03）
 
-唯一当前研发分支：`codex/wujian-qwen-foundation-v1`。工作区：`D:\ProductAgent-LifeContext\.runtime\qwen-foundation-v1`。旧任务已安全暂停，遗留成果保护点：`543a933571489a518e9dd4bb069e674155138d3a`（已推送）。本轮从此增量收敛，原项目与私人数据库未改。
+唯一当前研发分支：`codex/wujian-team-integration-v1`，基于底座分支 `codex/wujian-qwen-foundation-v1@5b8573d`。复用原干净隔离工作区：`D:\ProductAgent-LifeContext\.runtime\qwen-foundation-v1`，未重复复制项目。原项目与私人数据库未改；历史保护点 `543a933`、`f449067`、`b64280d`、`5b8573d` 保留。
+
+**本轮最小通路与团队集成交付**：四个认知方向在同一组合成物品中通过零网络测试，599项离线、类型、生产构建通过。公共入口增加既有纠正/遗忘服务及调用输入/错误类型，没有重做执行器、数据或Context。见 [团队直接接入](TEAM_INTEGRATION.md) 和 [本轮测试/集成记录](team-integration-2026-11-03/DELIVERY.md)。目标为PR到develop，须CI＋一名组员审查，未满足前不直接推进develop。
 
 **本次收口：Core Foundation V1 = NOT_ACCEPTED。** 共享服务与工程收敛已交付，但自主发现后的首次操作指导仍有错误细节；后续复测改善不替换首答，也不足以证明陌生商品可靠性。见 [核心验收与未达标项](qwen-foundation-2026-11-02/CORE_REVIEW.md)。用户暂停赠礼、社交、家庭协作、复杂故事的主动开发，已有功能与安全回归保留。原完整质量验收的冻结首答 **0/18** 不变，四条完整旅程留待后续 Full Foundation Quality Accepted；不混称完整Foundation通过。
 

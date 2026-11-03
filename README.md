@@ -4,6 +4,7 @@
 
 - [当前工程状态与恢复点](docs/engineering/CURRENT.md)：哪些实际可用、哪些未通过验收。
 - [产品共识定稿](docs/product/PRODUCT_FINAL_V1.md)：产品理念与完整范围。
+- [团队接入指南](docs/engineering/TEAM_INTEGRATION.md)：分支起点、公共服务、离线Mock、专业工具与兼容边界。
 - [贡献指南](CONTRIBUTING.md) · [工程规则](AGENTS.md) · [文档索引](docs/README.md)。
 
 ## 本地运行

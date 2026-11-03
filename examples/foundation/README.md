@@ -1,5 +1,7 @@
 # 团队独立接入示例
 
+分支、公共类型、错误和工具扩展规则见[团队接入指南](../../docs/engineering/TEAM_INTEGRATION.md)。该示例只导入公共服务，不导入内部模型运行器。
+
 Node.js 24，安装仓库锁定依赖后，在仓库根运行：
 
 ```powershell

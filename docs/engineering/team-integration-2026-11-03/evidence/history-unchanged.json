@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-03T05:43:39.676Z",
+  "newPaidRequests": 0,
+  "ledgers": [
+    {
+      "round": "qwen-foundation-20261102-r1",
+      "requests": 142,
+      "sha256": "a6092d978ad64d74e53dadb21bb063a40dab9fc2c74da1317fa088f1637c5271",
+      "unchanged": true
+    },
+    {
+      "round": "qwen-foundation-20261103-r2",
+      "requests": 40,
+      "sha256": "72c81e5b360b9a512598b4eb9cd7beda3cd221c273a26a0ca12075a836d54c6b",
+      "unchanged": true
+    },
+    {
+      "round": "qwen-foundation-20261103-r3",
+      "requests": 12,
+      "sha256": "c0c860b043ff9e31bba9fd90300e626ed39dc233f0d16d7bc3ecacd51fa00bc2",
+      "unchanged": true
+    }
+  ]
+}

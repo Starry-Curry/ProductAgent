@@ -65,6 +65,8 @@ export const turnInputSchema = z
   })
   .strict();
 export type TurnInput = z.infer<typeof turnInputSchema>;
+/** Caller input before schema defaults. TurnInput is the parsed internal form. */
+export type TurnRequest = z.input<typeof turnInputSchema>;
 export type Citation = {
   id: string;
   title: string;

@@ -629,6 +629,7 @@ const amendSchema = z.object({
   operation:z.enum(["correct","forget","revoke_reuse"]), confirmed:z.literal(true),
   notes:z.string().trim().min(1).max(1200).optional(), reuse:z.boolean().default(false), allowCloud:z.boolean().default(false),
 }).strict();
+export type AmendOutcomeInput=z.input<typeof amendSchema>;
 /** The author can erase their own record even after losing access to its item. No permission is restored. */
 export function amendOutcome(db:DatabaseSync, read:()=>State, a:Person, raw:unknown) {
   const v=amendSchema.parse(raw), hash=fingerprint(v);

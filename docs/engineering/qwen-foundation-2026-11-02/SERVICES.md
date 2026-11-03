@@ -4,6 +4,8 @@
 
 稳定服务端导出入口：`src/lib/foundation/services.ts`。类型包括 `RealityCard / RealityFact / RealityCapability / CapabilityDiscovery / SharedTaskContext / Provider / TaskSpec / TaskRun / CreateTaskInput / OutcomeInput / KnowledgeReference / PublicVisualReading`。通过此入口依赖共享服务，上层不直接依赖所选模型SDK。
 
+团队集成增量：同一入口现导出 `FOUNDATION_API_VERSION`、`amendOutcome / AmendOutcomeInput`、`TurnRequest / TurnInput / TurnResult / ServiceSession`、`AgentError / ProviderError` 及模型协议类型。没有新增Runtime；完整调用和兼容边界见[团队接入指南](../TEAM_INTEGRATION.md)。
+
 | 需要什么 | 公共接口 | 权限与边界 |
 | --- | --- | --- |
 | 物品及已认识知识 | `context/reality-service.ts: readReality(db,state,actor,itemId)` → `RealityCard` | 每次重新授权；厂家原文、本人报告、推测分别标记；能力不是设备授权 |

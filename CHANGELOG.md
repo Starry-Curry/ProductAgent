@@ -1,3 +1,5 @@
+> 2026-11-03 团队集成候选：四认知最小通路、公共接口/纠正遗忘导出与独立示例已验证；599项离线、类型、生产构建通过，新付费请求0。Core质量仍NOT_ACCEPTED；develop需CI与组员审查。见 [CURRENT](docs/engineering/CURRENT.md) 与 [团队指南](docs/engineering/TEAM_INTEGRATION.md)。
+
 > 2026-11-03 零费用收口：团队共享服务、独立接入示例、状态/撤权检查与594项回归、类型、生产构建通过；真实陌生指导首答仍有错误，Core Foundation V1 = NOT_ACCEPTED。未覆盖首答、未新增模型请求、未合并main。详见 [当前状态](docs/engineering/CURRENT.md) 和 [核心复核](docs/engineering/qwen-foundation-2026-11-02/CORE_REVIEW.md)。
 
 > 2026-11-03 Core Foundation 增量恢复点：未知品牌发现/来源链、共享原文与任务经验接续已修，真实输出仍有无依据细节，尚未Core验收通过。当前范围与证据只看 [CURRENT](docs/engineering/CURRENT.md)。下方历史保留。

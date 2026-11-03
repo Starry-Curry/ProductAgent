@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-03T05:42:00.754Z",
+  "method": "public_read_only_API_no_credentials_no_settings_changed",
+  "rows": [
+    {
+      "path": "rules/branches/develop",
+      "status": 200,
+      "body": []
+    },
+    {
+      "path": "branches/develop/protection",
+      "status": 401,
+      "body": {
+        "message": "Requires authentication",
+        "documentation_url": "https://docs.github.com/rest",
+        "status": "401"
+      }
+    }
+  ]
+}
