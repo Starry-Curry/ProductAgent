@@ -1,0 +1,7 @@
+{
+  "at": "2026-11-03T05:46:47.046Z",
+  "action": "create_pull_request",
+  "status": 403,
+  "error": "Resource not accessible by integration",
+  "fallback": "Existing local GitHub authentication, subject to verified identity and existing permissions; no permission change."
+}

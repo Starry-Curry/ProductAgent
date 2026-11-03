@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-03T05:47:14.042Z",
+  "authentication": "existing_local_GitHub_login_verified_no_permissions_modified",
+  "login": "wukevin041020",
+  "number": 1,
+  "url": "https://github.com/Starry-Curry/ProductAgent/pull/1",
+  "state": "open",
+  "base": "develop",
+  "baseSha": "f449067ce939d7fe82a3e48bab15df046d6eb2bc",
+  "head": "codex/wujian-team-integration-v1",
+  "headSha": "8302e6cebb013bdd34c067077672509d702cef42",
+  "draft": false,
+  "merged": false
+}

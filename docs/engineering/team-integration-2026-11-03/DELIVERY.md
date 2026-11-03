@@ -45,6 +45,10 @@ node --experimental-strip-types examples/foundation/run-mock.ts
 
 公开规则接口返回应用到develop的ruleset为空；经典分支保护读取需认证，未据此假定无保护或更改设置，详见[实际读取结果](evidence/github-rules-read.json)。无论远端是否强制，仓库约定的CI＋一名组员审查仍必须完成。当前连接身份仅有push/triage而无admin；不修改仓库权限。
 
-PR目标仅develop，待CI与组员审查。未满足时保持可审查PR，不自动合并；也不擅自推进main。可先从候选分支建立依赖功能分支，合并后正常从origin/develop开始。[指南](../TEAM_INTEGRATION.md)给出完整命令。
+实际已创建 [PR #1](https://github.com/Starry-Curry/ProductAgent/pull/1)，目标仅develop，未合并。插件创建返回403后，使用本机既有GitHub登录核实 `wukevin041020` 身份，成功创建同一PR，没有更改权限；见[实际PR记录](evidence/pull-request.json)及[插件失败记录](evidence/github-plugin-pr-error.json)。首个候选提交 `8302e6c` 触发了GitHub Validate工作流；最新CI状态以PR Checks为准。组员审查尚需完成，不能以作者自审替代。
+
+源码提交 `8302e6c` 的 [GitHub Validate #4](https://github.com/Starry-Curry/ProductAgent/actions/runs/41585938599) 已实际完成并成功，包含干净Ubuntu/Node24环境的npm ci、类型、离线测试、生产构建。随后仅补充PR链接、CI快照和交接文档；最新文档提交仍按工作流重验，最终状态直接见PR Checks。
+
+未满足CI与组员审查时保持可审查PR，不自动合并；也不擅自推进main。组员可先从候选分支建立依赖功能分支，合并后正常从origin/develop开始。[指南](../TEAM_INTEGRATION.md)给出完整命令。
 
 恢复方式：保留 `5b8573d` 及本轮提交，从任一已发布提交创建新恢复分支；不reset用户工作或回滚私人数据库。公共接口本轮为增量导出，无存储升级；以后不兼容修改必须列迁移方案和消费者回归，不把底层实现永久冻结。

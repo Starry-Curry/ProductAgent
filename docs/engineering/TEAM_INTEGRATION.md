@@ -4,7 +4,7 @@
 
 ## 从哪里开始
 
-最新候选分支：`codex/wujian-team-integration-v1`，基于 `codex/wujian-qwen-foundation-v1@5b8573d`。目标 PR 为 `develop`；在 CI + 一名组员审查完成前，不宣称已经进入 develop。
+最新候选分支：`codex/wujian-team-integration-v1`，基于 `codex/wujian-qwen-foundation-v1@5b8573d`。集成 [PR #1](https://github.com/Starry-Curry/ProductAgent/pull/1) 目标为 `develop`；在 CI + 一名组员审查完成前，不宣称已经进入 develop。
 
 合并前需立即开发时，可以从该明确候选创建自己的功能分支，但 PR 先标明依赖底座集成 PR；合并后从更新的 `origin/develop` 开分支。不要从较旧的 main 重新造底座，不直接向 develop/main 推送功能。
 
