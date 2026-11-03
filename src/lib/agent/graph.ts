@@ -14,7 +14,7 @@ import type { Provider } from "../ai/provider.ts";
 import { AgentError,type AssistantReply,type ServiceSession,type Trace } from "./contracts.ts";
 import { buildContext } from "../context/builder.ts";
 import { windowsMouse,mouseSetup,procedureReply,relevantKnowledge,topics } from "../skills/knowledge.ts";
-import { planMemoryStory,localMemoryStory,canComposeInCloud,STORYTELLING_VERSION } from "../skills/memory-storytelling.ts";
+import { planMemoryStory,localMemoryStory,canComposeInCloud,isMemoryRecallRequest,STORYTELLING_VERSION } from "../skills/memory-storytelling.ts";
 import { isStoryNarration } from "../memory/ambient.ts";
 import { epoch } from "../memory/store.ts";
 import { sessionAccess } from "../repositories/sessions.ts";
@@ -570,7 +570,7 @@ export async function executeGraph(
  }
  const ctx=buildContext(db,read(),actor,{question,mode:effectiveSession.mode,itemId:effectiveSession.itemId,sessionId:session.id,temporary,excludeSynthetic:session.known.memoryPolicy!==undefined,
   taskMemoryOnly:!!session.known.uiPage,includeItemRelationships:session.known.useItemMemories==='yes',companion:session.known.uiPage?!!session.known.companionItemId:undefined});
- const storyPlan=planMemoryStory(ctx,storyHint&&!isStoryNarration(question)?{...effectiveSession,mode:'story'}:effectiveSession);
+ const storyPlan=planMemoryStory(ctx,(storyHint||isMemoryRecallRequest(question))&&!isStoryNarration(question)?{...effectiveSession,mode:'story'}:effectiveSession);
  if(storyPlan&&(!provider.ready||!provider.converse||session.mode==='story'&&!canComposeInCloud(storyPlan))){
   add('skill_selected','组织自然故事; '+STORYTELLING_VERSION);add('memory_story_composition','local-private-or-provider-unavailable');
   return result(localMemoryStory(storyPlan));

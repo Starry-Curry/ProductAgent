@@ -20,22 +20,29 @@ const roundId='qwen-foundation-20261102-r1';
 const ledger=()=>read(ROOT+'/model-calls.json');
 const usedCny=book=>book.attempts.reduce((n,a)=>n+(a.estimatedCny??a.reservedCny),0);
 const before=ledger();
-const requested=Number(arg('max-requests','70'));
-if(!Number.isInteger(requested)||requested<1||requested>90)throw Error('batch_request_limit_must_be_1_to_90');
+const requested=Number(arg('max-requests','64'));
+if(!Number.isInteger(requested)||requested<1||requested>64)throw Error('batch_request_limit_must_be_1_to_64');
 const remaining=Math.max(0,150-before.attempts.length);
 const cap=Math.min(requested,remaining);
 if(!process.argv.includes('--execute')){
- console.log(JSON.stringify({mode:'verify_only_no_paid_requests',frozenHashes:manifest.frozenFiles,questions:18,plannedFirstAnswers:18,plannedDirectControls:18,maxForwardedAttempts:cap,globalUsed:before.attempts.length,globalLimit:150,globalEstimatedCny:usedCny(before),globalCnyLimit:80,order:'all_product_first_answers_then_direct_if_budget',actualPaidRequests:0,requires:'gate4-release.json plus --execute after Gate2/3'}));
+ console.log(JSON.stringify({mode:'verify_only_no_paid_requests',frozenHashes:manifest.frozenFiles,questions:18,plannedFirstAnswers:18,plannedDirectControls:18,maxForwardedAttempts:cap,globalUsed:before.attempts.length,globalLimit:150,globalEstimatedCny:usedCny(before),globalCnyLimit:80,order:'all_product_first_answers_then_direct_if_budget',actualPaidRequests:0,requires:'gate4-release.json explicitly releases frozen candidate evaluation under the 2026-11-03 task; journey gates remain not_run until separately executed'}));
  process.exit(0);
 }
 const release=read(ROOT+'/gate4-release.json');
-if(release.released!==true||release.roundId!==roundId||release.questionsSha256!==manifest.frozenFiles['questions.frozen.json']||!release.gate2Evidence?.length||!release.gate3Evidence?.length)throw Error('gate2_3_not_released');
-for(const file of [...release.gate2Evidence,...release.gate3Evidence])if(!fs.existsSync(path.resolve(ROOT,file)))throw Error('missing_preceding_gate_evidence');
+if(release.released!==true||release.roundId!==roundId||release.purpose!=='independent_core_candidate_acceptance'||release.questionsSha256!==manifest.frozenFiles['questions.frozen.json']||!release.candidateEvidence?.length||!Number.isInteger(release.maxRequests)||release.maxRequests>64||release.maxRequests<requested||typeof release.model!=='string'||!release.model.trim())throw Error('candidate_acceptance_not_released');
+for(const file of release.candidateEvidence){const full=path.resolve(ROOT,file);if(!full.startsWith(path.resolve(ROOT)+path.sep)||!fs.existsSync(full))throw Error('missing_candidate_readiness_evidence');}
+const candidateCommit=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
+if(release.candidateCommit!==candidateCommit||execFileSync('git',['status','--porcelain','--','src'],{encoding:'utf8'}).trim())throw Error('candidate_source_not_frozen_at_released_commit');
 if(before.task!==roundId||before.authorizedLimits?.requests!==150||before.authorizedLimits?.cny!==80||usedCny(before)>=80||cap===0)throw Error('global_authorization_exhausted_or_mismatched');
 const runId=arg('run-id','');if(!/^[a-z0-9-]{6,80}$/.test(runId))throw Error('explicit_new_run_id_required');
+const cohort=arg('cohort','first');if(!['first','retest'].includes(cohort))throw Error('invalid_cohort');
+const firstRunFile=ROOT+'/acceptance-runs/FIRST_RUN.json';
+if(cohort==='first'&&fs.existsSync(firstRunFile))throw Error('first_run_already_frozen_use_retest_without_relabelling');
+if(cohort==='retest'&&!fs.existsSync(firstRunFile))throw Error('no_original_first_run_for_retest');
+const resultTag=cohort==='first'?'FIRST':'RETEST';
 const output=path.join(ROOT,'acceptance-runs',runId),runtime=path.resolve('.runtime','foundation-acceptance',runId);
 fs.mkdirSync(path.dirname(output),{recursive:true});fs.mkdirSync(output);fs.mkdirSync(runtime,{recursive:true});
-const state={runId,roundId,startedAt:new Date().toISOString(),sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),frozenHashes:manifest.frozenFiles,mode:'real_authenticated_App_HTTP_not_browser_UI',syntheticOwnership:true,hardwareActions:0,maxForwardedAttempts:cap,globalStartRequests:before.attempts.length,globalStartCny:usedCny(before),cases:[],errors:[],status:'started_not_accepted'};
+const state={runId,roundId,cohort,originalFirstRun:cohort==='first'?runId:read(firstRunFile).runId,startedAt:new Date().toISOString(),sourceCommit:candidateCommit,frozenHashes:manifest.frozenFiles,mode:'real_authenticated_App_HTTP_not_browser_UI',syntheticOwnership:true,hardwareActions:0,maxForwardedAttempts:cap,globalStartRequests:before.attempts.length,globalStartCny:usedCny(before),browserJourneys:'not_run',priorGatesStatus:release.priorGatesStatus||'not_claimed_by_this_runner',cases:[],errors:[],status:'started_not_accepted'};
 writeNew(output+'/RUN_START.json',state);
 let active,forwarded=0,gate,proxy,child;
 const transport=[];
@@ -54,7 +61,7 @@ try{
   try{
    if(!active||req.method!=='POST'||req.headers.authorization!=='Bearer fixture-only'||req.headers.origin)throw Error('isolated_case_scope_required');
    if(!/\/(chat\/completions|responses|(?:text|multimodal)-generation\/generation)$/.test(req.url||''))throw Error('unsupported_model_route');
-   bounded();let raw='';for await(const part of req){raw+=part;if(Buffer.byteLength(raw)>180000)throw Error('bounded_model_input_exceeded');}
+   bounded();let raw='';for await(const part of req){raw+=part;if(Buffer.byteLength(raw)>700000)throw Error('bounded_model_input_exceeded');}
    const body=JSON.parse(raw);if(body.model!==gate.model)throw Error('same_pinned_model_required');
    bounded();forwarded++;
    record={number:forwarded,caseId:active.caseId,arm:active.arm,at:new Date().toISOString(),inputSha256:digest(raw),inputBytes:Buffer.byteLength(raw),path:req.url,status:'forwarded'};transport.push(record);
@@ -77,6 +84,7 @@ try{
  const owned=new Map();
  for(const p of questions.products){const response=await api('/api/life',{action:'createItem',input:{requestId:randomUUID(),name:'[模拟持有] '+p.brand+' '+p.model,brand:p.brand,model:p.model,category:p.category,region:'unspecified',lifecycle:'长期耐用',availability:'available',ownsConfirmed:true,synthetic:true}});const data=await response.json();if(!response.ok||data.item?.model!==p.model||data.item?.synthetic!==true||data.item?.owner!==account.account.id)throw Error('fixture_identity_scope_failed');owned.set(p.id,data.item);}
  writeNew(output+'/FIXTURE_CHECK.json',{at:new Date().toISOString(),actualItemIds:Object.fromEntries([...owned].map(([id,item])=>[id,{id:item.id,model:item.model,synthetic:item.synthetic,ownerVerified:true}])),inputURLSeeds:0,manualAnswersInjected:false,sourceRegion:'unspecified_at_intake_manual_region_requires_runtime_scope_check'});
+ if(cohort==='first')writeNew(firstRunFile,{runId,sourceCommit:candidateCommit,questionsSha256:manifest.frozenFiles['questions.frozen.json'],startedAt:new Date().toISOString(),notice:'Authoritative first cohort; later runs cannot replace or relabel these first answers.'});
  // Complete all first answers before spending the remaining budget on direct controls.
  for(const c of questions.cases){
   const record={caseId:c.id,productId:c.productId,question:c.prompt,arm:'product',at:new Date().toISOString(),status:'not_run',quality:'not_scored',browserVerified:false};
@@ -85,8 +93,8 @@ try{
    bounded();active={caseId:c.id,arm:'product'};writeNew(output+'/'+c.id+'.product.START.json',{...record,requestStart:firstBefore});
    const response=await api('/api/assistant',{requestId:randomUUID(),itemId:owned.get(c.productId).id,question:c.prompt,mode:'service',memoryPolicy:'off',uiContext:{page:'item',useItemMemories:false}});
    record.httpStatus=response.status;record.result=await assistantResponse(response);record.status='returned_not_scored';
-  }catch(e){record.error=safeError(e);record.status=forwarded>=cap?'blocked_budget':'failed';}
-  finally{record.fullAnswerMs=Math.round(performance.now()-start);record.upstreamNumbers=ledger().attempts.slice(firstBefore).map(a=>a.number);record.transport=transport.filter(t=>t.caseId===c.id&&t.arm==='product');active=undefined;writeNew(output+'/'+c.id+'.product.FIRST.json',record);state.cases.push({caseId:c.id,arm:'product',status:record.status});flush();}
+  }catch(e){record.error=safeError(e);record.status=forwarded>=cap||ledger().attempts.length>=150||/budget_exhausted/.test(record.error)?'blocked_budget':'failed';}
+  finally{record.fullAnswerMs=Math.round(performance.now()-start);record.upstreamNumbers=ledger().attempts.slice(firstBefore).map(a=>a.number);record.transport=transport.filter(t=>t.caseId===c.id&&t.arm==='product');active=undefined;writeNew(output+'/'+c.id+'.product.'+resultTag+'.json',record);state.cases.push({caseId:c.id,arm:'product',status:record.status});flush();}
  }
  const {default:OpenAI}=await import('openai');
  const direct=new OpenAI({apiKey:'fixture-only',baseURL:proxyUrl+'/direct/v1',maxRetries:0,timeout:90000});
@@ -104,7 +112,7 @@ try{
    const r=await direct.chat.completions.create({model:gate.model,messages:[{role:'system',content:'请根据提供的同等物品与官方资料回答用户当前问题。完整而自然，明确证据不足/适用条件；不要编造型号操作，不宣称实际执行。'},...material,{role:'user',content:c.prompt}],max_tokens:2400,temperature:0.35,enable_thinking:false});
    record.text=r.choices?.[0]?.message?.content||'';record.finishReason=r.choices?.[0]?.finish_reason;record.usage=r.usage;record.model=r.model;record.status='returned_not_scored';
   }catch(e){record.error=safeError(e);record.status=forwarded>=cap||ledger().attempts.length>=150?'blocked_budget':'failed';}
-  finally{record.fullAnswerMs=Math.round(performance.now()-start);record.upstreamNumbers=ledger().attempts.slice(directBefore).map(a=>a.number);record.transport=transport.filter(t=>t.caseId===c.id&&t.arm==='direct');active=undefined;writeNew(output+'/'+c.id+'.direct.FIRST.json',record);state.cases.push({caseId:c.id,arm:'direct',status:record.status});flush();}
+  finally{record.fullAnswerMs=Math.round(performance.now()-start);record.upstreamNumbers=ledger().attempts.slice(directBefore).map(a=>a.number);record.transport=transport.filter(t=>t.caseId===c.id&&t.arm==='direct');active=undefined;writeNew(output+'/'+c.id+'.direct.'+resultTag+'.json',record);state.cases.push({caseId:c.id,arm:'direct',status:record.status});flush();}
  }
  state.status='execution_recorded_quality_and_browser_not_scored';
 }catch(e){state.errors.push(safeError(e));state.status='blocked_or_failed_not_accepted';process.exitCode=1;}

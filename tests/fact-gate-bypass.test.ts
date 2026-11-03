@@ -11,6 +11,7 @@ test('事实实验关闭时，物品帮助不能借general标签发布未核实�
  const packet=JSON.stringify({kind:'general',answer:'索尼官方已证实WH-CH520不支持主动降噪。',factIds:[],procedureId:null,questions:[]});
  const p:any={ready:true,model:'offline-contract',generate:async()=>({text:packet,model:'offline-contract',tokens:null}),complete:async()=>({text:packet,model:'offline-contract',tokens:null,toolCalls:[],finishReason:'stop'})};
  const r=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:id,question:'这份指南没提ANC，就证明不支持吗？',mode:'service',memoryPolicy:'off',uiContext:{page:'item'}},p);
- assert.ok(!r.reply.answer.includes('官方已证实'));assert.equal(r.reply.outcome,'needs_info');
+ assert.ok(!r.reply.answer.includes('官方已证实'));assert.equal(r.reply.outcome,'unavailable');
+ assert.equal(r.modelCalls,0,'旧generate/complete标签不能重新启动已退役事实链');
  }finally{f.db.close();if(old===undefined)delete process.env.WUJIAN_EXPERIMENTAL_FACT_QA;else process.env.WUJIAN_EXPERIMENTAL_FACT_QA=old;}
 });

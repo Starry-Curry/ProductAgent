@@ -1,0 +1,116 @@
+✔ v6 增量迁移保留旧正文和升级前备份，重复迁移不重置数据 (94.1057ms)
+✔ 路由区分具体帮助、真实故事、假设创作、陪伴和家庭安排 (94.3428ms)
+✔ 只在可访问物品中匹配；同名澄清；选中物品不被文本切换 (86.9639ms)
+✔ 位置保存同步档案，拒绝共享成员修改、越界、重复内容变化和并发覆盖 (76.8866ms)
+✔ 位置建议先预览后执行，重复确认不重复写，旧档案修改使建议失效 (154.2314ms)
+✔ 家庭交接只创建预览摘要，确认幂等；撤权、过期和取消均阻止执行 (218.2353ms)
+✔ 活动准备接回原计划实体；演示物品排除；临时对话不留下行动建议 (130.8929ms)
+✔ 显式故事保存原话，再回统一对话回忆与帮助，假设不写真实经历 (201.8752ms)
+✔ 统一陪伴实际调用 Provider，未授权私人故事与另一物品记忆不进入云端 (134.5961ms)
+✔ 演示角色对话保持案例记忆隔离，全屋不载入案例故事 (162.7368ms)
+✖ 全屋切换目标时清除尝试与设备条件，另一件物品的私人反馈不上云 (158.2652ms)
+✔ 统一对话继续原生工具循环，模型期间撤销物品授权会阻断返回 (174.3641ms)
+✔ 档案和实物状态不被型号知识淹没：无线鼠标的登记型号和品牌是什么？ (244.6727ms)
+✔ 档案和实物状态不被型号知识淹没：无线鼠标的官方资料能证明我的这只目前工作正常吗？ (165.2808ms)
+✔ 候选资源检查失败返回明确本地降级，不当成模型成功或用户没登记 (142.99ms)
+✔ 库存指代进入模型路径：只用我登记的物品 (148.2724ms)
+✔ 库存指代进入模型路径：只用我已登记的物品 (122.0606ms)
+✔ 库存指代进入模型路径：只使用我登记过的物品 (126.1187ms)
+✔ 库存指代进入模型路径：利用现有物品 (111.5514ms)
+✔ 库存指代进入模型路径：用已有的东西 (121.0505ms)
+✔ 库存指代进入模型路径：用我录入的物品 (134.3763ms)
+✔ 库存指代进入模型路径：仅用家里已有的物品 (130.0433ms)
+✔ 库存指代进入模型路径：只有我登记的物品 (133.1046ms)
+✔ 库存指代进入模型路径：利用我拥有的物品 (115.2098ms)
+✔ 库存指代进入模型路径：使用手边已有物品 (92.1526ms)
+✔ 库存指代进入模型路径：只用当前登记的全部物品 (105.9826ms)
+✔ 库存指代进入模型路径：利用我已经录入的这些物品 (98.3617ms)
+✔ 否定活动不成为目标：不要拍照，想玩一个纸笔游戏 (0.1622ms)
+✔ 否定活动不成为目标：不加热，观察纸的影子 (0.0844ms)
+✔ 否定活动不成为目标：不想摄影，试着写故事 (0.053ms)
+✔ 实际步骤遵守否定限制：不要拍照 (0.1287ms)
+✔ 实际步骤遵守否定限制：不用水 (0.3058ms)
+✔ 实际步骤遵守否定限制：不加热 (0.5829ms)
+✔ 实际步骤遵守否定限制：不买东西 (0.1304ms)
+✔ 物品契约保留ID/登记/未知与来源，不泄露隐私字段或越权物品 (110.2452ms)
+✔ 缺证据的性质或行动被拒：这只杯子可安心使用。 (99.3864ms)
+✔ 缺证据的性质或行动被拒：先用无盖不锈钢水杯喝点温水。 (93.0336ms)
+✔ 缺证据的性质或行动被拒：它是304食品级不锈钢。 (117.1349ms)
+✔ 缺证据的性质或行动被拒：用它的镜面观察倒影。 (100.8261ms)
+✔ 缺证据的性质或行动被拒：杯底弧面可以放大文字。 (94.2735ms)
+✔ 缺证据的性质或行动被拒：可以盛装热水。 (94.4645ms)
+✔ 缺证据的性质或行动被拒：这只杯子的承重足够。 (105.8485ms)
+✔ 缺证据的性质或行动被拒：先加热水杯，最后再确认耐热。 (103.4336ms)
+✔ 缺证据的性质或行动被拒：利用表面的凹槽夹住纸。 (90.6639ms)
+✔ 缺证据的性质或行动被拒：杯子透明，能直接看到里面。 (110.7529ms)
+✔ 拒绝或明确前置条件不误判：尚未确认食品接触条件，先不要用它喝水。 (90.8077ms)
+✔ 拒绝或明确前置条件不误判：没有证据说明它是304或食品级，不能承诺可安心使用。 (110.0932ms)
+✔ 拒绝或明确前置条件不误判：如果确认食品接触适用，才用该杯喝水，否则选择其他已确认的容器。 (98.5022ms)
+✔ 拒绝或明确前置条件不误判：先用纸笔做接龙，不依赖杯子的耐热、镜面或承重。 (97.926ms)
+✔ local-demo 完成真实Graph tool→result→answer，带属性与稳定ID (207.9662ms)
+✔ public-demo 完成真实Graph tool→result→answer，带属性与稳定ID (141.568ms)
+✔ 详情工具拒绝越权ID且不透露隐藏名称 (144.7051ms)
+✔ 模型循环耗尽明确报回合预算，不伪装成用户缺资料 (193.2787ms)
+✔ 创意修正超时保留准确错误，未通过草稿不落库，不自动重试网络 (139.5555ms)
+✔ 物品分页有总数和下一页，不把前40件伪装成全部 (133.9011ms)
+✔ 模型等待期间properties改变时中止旧上下文回答 (145.117ms)
+✔ 模型等待期间permission改变时中止旧上下文回答 (144.2413ms)
+✔ 真实路由回归：用未知材质盒和纸笔构思一个新用途，材质未知，不承重、不用水、不加热。 (106.1052ms)
+✔ 真实路由回归：只用我已有的物品做个小游戏，不使用损坏小台灯，不拍照、不用水。 (146.0789ms)
+✔ 交流风格保留聊天历史；关闭/主动回忆/按任务的记忆政策独立于伙伴开关 (333.5545ms)
+✔ 统一历史保留物品会话和普通聊天；所有作用域仍检查本人/物品权限 (216.1499ms)
+✖ 发现转入问物间继承本人方案的时间与排除；拒绝任意注入的规划上下文 (294.0938ms)
+✔ 开放创意拒绝无依据的安全保证，允许明确否定保证；关闭记忆同样作用于规划 (151.4609ms)
+✖ 自有软件灯：真实REA→静态候选→授权→执行回读；坏参数、重放、撤权 (3617.4558ms)
+ℹ tests 64
+ℹ suites 0
+ℹ pass 61
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5986.117
+
+✖ failing tests:
+
+test at tests\home-companions.test.ts:455:1
+✖ 全屋切换目标时清除尝试与设备条件，另一件物品的私人反馈不上云 (158.2652ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(!JSON.stringify(sent).includes("私人原因甲乙丙"))
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/home-companions.test.ts:496:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\life-unified-persona.test.ts:222:1
+✖ 发现转入问物间继承本人方案的时间与排除；拒绝任意注入的规划上下文 (294.0938ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'itemIds')
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/life-unified-persona.test.ts:273:44)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\software-lab.test.ts:15:1
+✖ 自有软件灯：真实REA→静态候选→授权→执行回读；坏参数、重放、撤权 (3617.4558ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/software-lab.test.ts:106:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

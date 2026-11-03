@@ -259,70 +259,12 @@ test("G3 陌生实物共用任务检索，不依赖八件模拟家庭；替身�
       itemInstanceIds: [f.id],
     });
     let toolsRead = 0;
-    const p: Provider = {
-      ready: true,
-      model: "offline-contract-fixture",
-      complete: async (messages) => {
-        assert.ok(!JSON.stringify(messages).includes("PRIVATE-OUTCOME-NO-CLOUD"));
-        if (!messages.some((m) => m.role === "tool"))
-          return {
-            text: "",
-            model: "fixture",
-            tokens: null,
-            finishReason: "tool_calls",
-            toolCalls: [
-              {
-                id: "read",
-                type: "function",
-                function: {
-                  name: "read_home_items",
-                  arguments: JSON.stringify({
-                    itemIds: ["item1"],
-                    query: "当前状态",
-                    topics: ["型号"],
-                  }),
-                },
-              },
-            ],
-          };
-        toolsRead++;
-        return {
-          text: '{"ready":true}',
-          model: "fixture",
-          tokens: null,
-          finishReason: "stop",
-          toolCalls: [],
-        };
-      },
-      generate: async (system, input) => {
-        const v = input as any;
-        if (system.startsWith("SOURCE_REVIEW"))
-          return {
-            text: JSON.stringify({
-              keepSentenceIds: v.sentences.map((s: any) => s.id),
-              keepStepIds: v.steps.map((s: any) => s.id),
-              issues: [],
-            }),
-            model: "fixture",
-            tokens: null,
-          };
-        assert.equal(v.readResults[0].items[0].model, "WH-CH520");
-        return {
-          text: JSON.stringify({
-            answer: "型号已登记，实际连接状态仍未知；请先核对目前的状态。",
-            goal: t.goal,
-            tasks: [{ title: "了解状态", status: "needs_info" }],
-            usedItemIds: ["item1"],
-            memoryIds: [],
-            sourceIds: [],
-            questions: ["目前是否已开机？"],
-            steps: [],
-          }),
-          model: "fixture",
-          tokens: null,
-        };
-      },
-    };
+    const p:Provider={ready:true,model:'offline-contract-fixture',generate:async()=>{throw Error('retired_generate');},converse:async messages=>{
+      assert(!JSON.stringify(messages).includes('PRIVATE-OUTCOME-NO-CLOUD'));
+      if(!messages.some(m=>m.role==='tool'))return {text:'',model:'fixture',tokens:null,finishReason:'tool_calls',toolCalls:[{id:'read',type:'function',function:{name:'get_item_context',arguments:JSON.stringify({itemIds:[f.id]})}}]};
+      toolsRead++;const value=JSON.parse(messages.find(m=>m.role==='tool')!.content!);assert.equal(value.items[0].identity.model,'WH-CH520');
+      return {text:'型号已登记，实际连接状态仍未知；需要先核对目前状态。',model:'fixture',tokens:null,finishReason:'stop',toolCalls:[]};
+    }};
     const r = await respond(
       f.db,
       f.read,

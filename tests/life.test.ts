@@ -816,8 +816,10 @@ test("新版聊天候选不自动召回，普通消息保留连续性且不自�
   try {
     const inputs: unknown[] = [];
     const provider = {
-      model: "offline-protocol-fixture",
-      async generate(_s: string, i: unknown) {
+      ready:true, model: "offline-protocol-fixture",
+      generate:async()=>{throw Error('retired_generate');},
+      async converse(messages:any[]) {
+        const i=JSON.parse(messages.find(m=>m.role==='user')!.content);
         inputs.push(i);
         return {
           text: JSON.stringify({
@@ -828,7 +830,7 @@ test("新版聊天候选不自动召回，普通消息保留连续性且不自�
             questions: [],
           }),
           model: this.model,
-          tokens: null,
+          tokens: null, toolCalls:[], finishReason:'stop',
         };
       },
     };

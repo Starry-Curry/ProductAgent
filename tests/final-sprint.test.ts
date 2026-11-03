@@ -169,7 +169,8 @@ test("无专属资料的已知型号续接不转为凭空猜指示灯/按钮，�
     );
     assert.equal(calls, 0);
     assert.equal(b.reply.steps.length, 0);
-    assert.match(b.reply.answer, /未取得可靠/);
+    assert.equal(b.reply.outcome, "unavailable");
+    assert.match(b.reply.answer, /模型工具接口尚未可用/);
   } finally {
     t.db.close();
     if (before === undefined) delete process.env.WUJIAN_ALLOW_PUBLIC_FETCH;

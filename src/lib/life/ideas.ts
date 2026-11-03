@@ -20,6 +20,7 @@ import {
 import { exploreCreativeUses } from "./creative-exploration.ts";
 import { storyMemoryRelevant } from "./organization.ts";
 import { readKnowledge, documentEvidence } from "./acquisition.ts";
+import {readReality} from '../context/reality-service.ts';
 import type { CreativeEvidence } from "./creative-evidence.ts";
 import type { ProviderResult } from "../ai/provider.ts";
 import { violatesGoal } from "./planning-constraints.ts";
@@ -869,6 +870,7 @@ async function draftModelIdea(
         preferences: authorizedPreferences,
         feedback: constraints.planning || {},
         requiredItemId: constraints.itemId,
+        realities:items.map(i=>readReality(db,readCurrent?.()||state,actor,i.id)),
         context: { experiences: constraints.experiences || [], previousUserReports:memoryPolicy!=="off"&&(memoryPolicy!=="explicit"||isMemoryRecallRequest(goal))?recallOutcomes(db,readCurrent?.()||state,actor,items.map(i=>i.id)).filter(o=>o.allowCloud&&items.every(i=>{const policy=effectivePersona(db,actor,i.id).memoryUse;return policy!=="off"&&(policy!=="explicit"||isMemoryRecallRequest(goal));})):[] },
       },
       creativityGuard,

@@ -1,3 +1,6 @@
+## 2026-11-03 统一底座收敛（候选，未正式验收）
+
+共享Reality/Context、公开原文定位积累、缓存问答短路径、按页PDF视觉；旧通用Graph/HomeTask循环退役并迁移必要业务。现阶段回归与浏览器证据、费用和未达标项只以[CURRENT](docs/engineering/CURRENT.md)为准；不以离线通过宣称Foundation Accepted。历史正文保留。
 > **历史交接归档**：本文件正文保留，最新状态统一维护于 [docs/engineering/CURRENT.md](docs/engineering/CURRENT.md)。不将旧实验认作当前生产能力。
 
 ## 2026-11-01 Practical追加轮次交付

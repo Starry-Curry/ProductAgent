@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import type { Item, Person } from "@/lib/domain";
 import type { ProductPack } from "@/lib/products";
 import type { Fragment } from "./Stories";
+import type { RealityCard } from "@/lib/context/reality";
 export function ItemInformation({
   item,
   actor,
@@ -39,6 +40,7 @@ export function ItemInformation({
   const [ocr, setOCR] = useState(false),
     [officialDraft, setOfficialDraft] = useState<any>(null);
   const [knowledge, setKnowledge] = useState<any[]>([]);
+  const [reality, setReality] = useState<RealityCard>();
   useEffect(() => {
     fetch(`/api/life?itemId=${encodeURIComponent(item.id)}`, {
       headers: { "x-demo-actor": actor },
@@ -47,6 +49,7 @@ export function ItemInformation({
       .then((d) => {
         setSources(d.sources || []);
         setKnowledge(d.knowledge || []);
+        setReality(d.reality);
       })
       .catch((e) => setNotice(e.message));
   }, [item.id, actor]);
@@ -250,6 +253,13 @@ export function ItemInformation({
         )}
         <div className="life-official-cache">
           <h3>按需取得的官方资料</h3>
+          {reality?.facts.some(f=>f.basis==='official_source'&&f.source.ref.startsWith('sem:'))&&<details>
+            <summary>已认识的型号知识</summary>
+            <p className="life-muted">来自官方原文，供对话和探索共同使用；不代表你的这件物品已经实测。</p>
+            {reality.facts.filter(f=>f.basis==='official_source'&&f.source.ref.startsWith('sem:')).map(f=><blockquote key={f.id}>
+              <p>{String(f.value)}</p><a href={f.source.url} target="_blank" rel="noreferrer">核对来源 · {f.source.model}</a>
+            </blockquote>)}
+          </details>}
           <p className="life-muted">
             用于型号问答和能力候选；保留来源、原文位置与版本。自动定位覆盖有限品牌，找不到时可粘贴对应官方链接或上传说明书。地区未确认时需核对来源版本。
           </p>

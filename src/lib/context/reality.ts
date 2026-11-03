@@ -3,6 +3,7 @@ import type {Item} from '../domain.ts';
 import {boundPack} from '../ai/harness.ts';
 import {physicalFactSchema} from '../life/physical-facts.ts';
 import {usable,syntheticItem} from '../life/availability.ts';
+import type {PublicSourceAssertion} from './source-reference.ts';
 
 export type RealityBasis='official_source'|'user_report'|'inferred_unverified';
 export type RealityFact={
@@ -20,7 +21,7 @@ const digest=(v:unknown)=>createHash('sha256').update(JSON.stringify(v)).digest(
 export function canonicalCapabilityKey(effect:string){return ({'indoor-storage':'open_container',storage:'open_container',容纳:'open_container',容纳非食品轻小物:'open_container',透明可视:'transparent',提拿:'portable','audio-playback':'sound',lighting:'light',clamp:'clamp',夹持:'clamp',照明:'light',便携:'portable',发声:'sound'} as Record<string,string>)[effect]||(['open_container','portable','light','sound','flat_surface','reflective','transparent','elastic','magnetic'].includes(effect)?effect:undefined);}
 /** Projection, never a second item store. It neither infers functions from names
  * nor converts source claims/user reports into real-world verification. */
-export function projectReality(item:Item){
+export function projectReality(item:Item,officialAssertions:PublicSourceAssertion[]=[]){
  const pack=boundPack(item),facts:RealityFact[]=[],capabilities:RealityCapability[]=[];
  const add=(predicate:string,value:unknown,basis:RealityBasis,ref:string,component='本体',url?:string)=>{
   const id=item.id+':'+ref;
@@ -33,6 +34,14 @@ export function projectReality(item:Item){
  const functional=new Set(['open_container','portable','clamp','light','sound','flat_surface','reflective','transparent','elastic','magnetic']);
  for(const raw of item.attributes?.physicalFacts||[]){const parsed=physicalFactSchema.safeParse(raw);if(!parsed.success)continue;const f=parsed.data;const ref=add(f.key,f.value,'user_report','physical/'+f.id,f.component);if(functional.has(f.key)&&typeof f.value==='boolean')capabilities.push({id:ref,effect:f.key,basis:'user_report',evidenceIds:[ref],requires:['本人报告未证明当前任务的承重、连接或实际状态'],status:f.value?'conditional':'unavailable',executable:false,verifiedForThisInstance:false});}
  for(const f of pack?.claims||[])add('statement',f.text,'official_source',f.id,'本体',pack!.source.url);
+ for(const assertion of officialAssertions){
+  if(assertion.model!==item.model||item.region&&item.region!=='unspecified'&&assertion.region!=='unspecified'&&assertion.region!==item.region)continue;
+  const id=item.id+':'+assertion.id;
+  facts.push({id,subject:item.id,scope:'product',component:'本体',predicate:assertion.kind==='condition'?'source_condition':'statement',value:assertion.text,basis:'official_source',status:'asserted',source:{ref:assertion.id,url:assertion.url,model:assertion.model,version:assertion.reference.documentHash},verification:'source_assertion_not_instance_verification'});
+  // A quoted manufacturer procedure supports conditional human guidance. It
+  // does not create a hardware-control grant or prove the present unit works.
+  if(assertion.kind==='operation')capabilities.push({id:id+':guidance',effect:assertion.text,basis:'official_source',evidenceIds:[id],requires:['遵循对应原文的完整前提；本件物品状态与配套条件仍需核对'],status:'conditional',executable:false,verifiedForThisInstance:false});
+ }
  if(pack?.constraints?.maxLoadKg!==undefined)add('max_load_kg',pack.constraints.maxLoadKg,'official_source',pack.id+'/maxLoadKg','本体',pack.source.url);
  if(pack?.constraints?.foodContact!==undefined)add('food_contact',pack.constraints.foodContact,'official_source',pack.id+'/foodContact','本体',pack.source.url);
  for(const p of pack?.understanding?.properties||[]){const refs=p.factIds.filter(id=>pack!.claims.some(c=>c.id===id));if(refs.length)add(p.key,p.value,'official_source','property/'+p.key,'本体',pack!.source.url);}

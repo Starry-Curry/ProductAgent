@@ -151,8 +151,10 @@ test("连续自由交流传入页面和本轮历史；不绑定物品也不强�
     });
     const requests: any[] = [];
     const provider: Provider = {
-      model: "offline-protocol-fixture",
-      async generate(_s, input) {
+      ready:true,model: "offline-protocol-fixture",
+      generate:async()=>{throw Error('retired_generate');},
+      async converse(messages) {
+        const input=JSON.parse(messages.find(m=>m.role==='user')!.content!);
         requests.push(input);
         return {
           text: JSON.stringify({
@@ -163,7 +165,7 @@ test("连续自由交流传入页面和本轮历史；不绑定物品也不强�
             procedureId: null,
           }),
           model: this.model,
-          tokens: null,
+          tokens: null,toolCalls:[],finishReason:'stop',
         };
       },
     };
@@ -200,7 +202,7 @@ test("连续自由交流传入页面和本轮历史；不绑定物品也不强�
     assert.equal(second.reply.questions.length, 0);
     const payload = JSON.stringify(requests.at(-1));
     assert.match(payload, /今天工作压力很大/);
-    assert.match(payload, /pageContext/);
+    assert.equal(requests.at(-1).permission.memoryPolicy,"off");
     assert.ok(!payload.includes("合成隐私旅行"));
   } finally {
     t.db.close();
@@ -339,12 +341,16 @@ test("开放规划使用真实资源/历史反馈与预算，生成新方案并�
         memoryPolicy: "off",
         uiContext: { page: "assistant" },
       },
-      provider,
+      {...provider,ready:true,converse:async messages=>{
+        const prior=messages.find(m=>m.role==='tool');
+        return {model:'offline-agent',tokens:null,text:'',finishReason:'tool_calls',toolCalls:[{id:prior?'prepare':'read',type:'function',function:{name:prior?'prepare_action':'get_item_context',arguments:JSON.stringify(prior?{kind:'plan',goal:'布包原有物品整理',itemIds:[id],steps:['把包内已有物品按本人选择的使用顺序整理；不假设还有其他小物。'],sourceIds:[],conditions:['需确认布包及包内物品状态；此草稿仅供探索。']}:{itemIds:[id]})}}]};
+      }},
     );
     assert.equal(reply.reply.route!.intent, "plan");
-    assert.equal(reply.modelCalls, 1);
+    assert.equal(reply.modelCalls, 2);
     assert.equal(reply.reply.steps.length, 0);
-    assert.match(reply.reply.answer, /新可能/);
+    assert.match(reply.reply.answer, /候选/);
+    assert.equal(reply.reply.actionCards?.[0].kind,"plan");
     const m = saveMemory(t.db, t.read, "lin", {
       kind: "interest",
       text: "合成测试：喜欢观察",

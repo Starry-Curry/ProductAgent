@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-02T16:59:38.421Z",
+  "url": "https://helpguide.sony.net/speaker/7856/v1/en/print.pdf",
+  "sourceHash": "41390dfe7d34b67e4fd6b5e2c5188b24b85899ac3a338fbb89dee80a54be76f4",
+  "totalPages": 76,
+  "selectedPages": [
+    {
+      "page": 4,
+      "imageBytes": 89659
+    },
+    {
+      "page": 8,
+      "imageBytes": 233679
+    },
+    {
+      "page": 9,
+      "imageBytes": 271123
+    }
+  ],
+  "paidRequests": 0,
+  "source": "real_public_PDF_locally_rendered_not_model_read"
+}

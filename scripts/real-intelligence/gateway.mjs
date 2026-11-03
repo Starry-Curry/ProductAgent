@@ -92,7 +92,7 @@ export async function gateway(configPath,options) {
       let raw = "";
       for await (const c of req) {
         raw += c;
-        if (Buffer.byteLength(raw) > 180000) throw Error("input_too_large");
+        if (Buffer.byteLength(raw) > (options?.allowBoundedPageImages?700000:180000)) throw Error("input_too_large");
       }
       const body = JSON.parse(raw);
       const nativeSearch=/\/(text|multimodal)-generation\/generation$/.test(req.url);

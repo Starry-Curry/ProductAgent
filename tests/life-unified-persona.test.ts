@@ -113,8 +113,9 @@ test("交流风格保留聊天历史；关闭/主动回忆/按任务的记忆政
       {
         ready: true,
         model: "offline-test",
-        generate: async (_s, input) => {
-          received = input;
+        generate:async()=>{throw Error('retired_generate');},
+        converse: async messages => {
+          received = JSON.parse(messages.find(m=>m.role==='user')!.content!);
           return {
             text: JSON.stringify({
               kind: "general",
@@ -122,13 +123,13 @@ test("交流风格保留聊天历史；关闭/主动回忆/按任务的记忆政
               questions: [],
             }),
             model: "offline-test",
-            tokens: null,
+            tokens: null,toolCalls:[],finishReason:'stop',
           };
         },
       },
     );
     assert.equal(partner.reply.route?.itemId, id);
-    assert.equal(received.persona.nickname, "本本");
+    assert.equal(received.voice.nickname, "本本");
     assert.throws(
       () =>
         savePersona(t.db, t.read(), "dad", {
@@ -221,7 +222,7 @@ test("统一历史保留物品会话和普通聊天；所有作用域仍检查�
 test("发现转入问物间继承本人方案的时间与排除；拒绝任意注入的规划上下文", async () => {
   const t = fixture();
   try {
-    t.add("普通手电筒", "电子设备", "测试", "LIGHT-1", {
+    const lamp=t.add("普通手电筒", "电子设备", "测试", "LIGHT-1", {
       attributes: { quantity: 1, capabilities: ["照明"] },
     });
     const cup = t.add("透明玻璃杯", "厨房用品", "测试", "CUP-1", {
@@ -258,11 +259,19 @@ test("发现转入问物间继承本人方案的时间与排除；拒绝任意�
           },
         },
       },
-      offline,
+      {ready:true,model:'offline-converse-planning',generate:async()=>{throw Error('retired');},converse:async messages=>{
+        const input=JSON.parse(messages.find(m=>m.role==='user')!.content!);
+        assert.equal(input.priorPlanningContext.minutes,30);assert(input.priorPlanningContext.restrictions.includes('不买东西'));
+        assert.match(input.question,/不用玻璃杯.*10分钟/);
+        const read=messages.some(m=>m.role==='tool');
+        return {text:'',model:'offline-converse-planning',tokens:null,finishReason:'tool_calls',toolCalls:[{id:read?'plan':'read',type:'function',function:{name:read?'prepare_action':'get_item_context',arguments:JSON.stringify(read?{kind:'plan',goal:'10分钟的新方向',itemIds:[lamp],steps:['仅作为10分钟的探索草稿，不使用杯子，不假定其他资源。'],sourceIds:[],conditions:['需确认手电筒当前状态；没有执行动作。']}:{itemIds:[lamp]})}}]};
+      }},
     );
     const context = JSON.parse(r.session.known.lifePlanContext);
-    assert.equal(context.minutes, 10);
-    assert.ok(context.excludedItemIds.includes(cup));
+    assert.equal(context.minutes,30,'历史输入保持原值，当前10分钟方案在明确确认前只是候选');
+    assert(r.reply.actionCards?.[0].detail.some(text=>text.includes('10分钟')));
+    const stored=t.db.prepare('SELECT action FROM home_proposals WHERE id=?').get(r.reply.actionCards![0].id) as {action:string};
+    assert(!JSON.parse(stored.action).itemIds.includes(cup));
     assert.equal(r.reply.route?.intent, "plan");
     assert.equal(
       turnInputSchema.safeParse({

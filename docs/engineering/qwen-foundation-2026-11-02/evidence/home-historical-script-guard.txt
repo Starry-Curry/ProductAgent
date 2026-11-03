@@ -1,0 +1,12 @@
+file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/scripts/unified-home/continuous-compare.ts:23
+  throw Error('historical_home_runtime_retired: restore this historical comparison and runtime from checkpoint 9eb80fe in an isolated checkout; no gateway/model call was started');
+        ^
+
+Error: historical_home_runtime_retired: restore this historical comparison and runtime from checkpoint 9eb80fe in an isolated checkout; no gateway/model call was started
+    at file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/scripts/unified-home/continuous-compare.ts:23:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.22.2
+EXIT=1

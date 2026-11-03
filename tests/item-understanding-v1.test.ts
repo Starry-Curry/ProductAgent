@@ -137,6 +137,7 @@ const packet = (answer: string, kind = "general") =>
   });
 const question = "今天很累，先核对登记，再说一件适合休息的物品。";
 function result(text: string, toolCalls: any[] = []) {
+  if(text.startsWith('{')){try{text=JSON.parse(text).answer||text;}catch{}}
   return {
     text,
     toolCalls,
@@ -297,22 +298,22 @@ for (const mode of ["local-demo", "public-demo"]) {
       generate: async () => {
         throw Error("unexpected");
       },
-      complete: async (messages) => {
+      converse: async (messages) => {
         calls++;
         if (calls === 1)
           return result("", [
             {
               id: "list",
               type: "function",
-              function: { name: "list_accessible_items", arguments: "{}" },
+              function: { name: "get_item_context", arguments: JSON.stringify({itemIds:[t.cup]}) },
             },
           ]);
         const value = JSON.parse(
           messages.find((m) => m.role === "tool")!.content!,
         );
         const cup = value.items.find((i: any) => i.id === t.cup);
-        assert.match(cup.properties.care, /食品接触/);
-        assert.equal(cup.sources.registration.verified, false);
+        assert(cup.facts.some((f:any)=>f.key==='care'&&/食品接触/.test(f.value)));
+        assert(cup.facts.every((f:any)=>f.basis==='user_report'));
         return result(
           packet(
             "登记包含这只水杯，食品接触适用性还未确认，先核对再决定用途。",
@@ -336,7 +337,7 @@ for (const mode of ["local-demo", "public-demo"]) {
       );
       assert.equal(calls, 2);
       assert.equal(r.reply.outcome, "answered");
-      assert.ok(r.trace.some((s) => s.stage === "tool_completed"));
+      assert.ok(r.trace.some((s) => s.stage === "practical_tool"));
     } finally {
       t.db.close();
       if (previous === undefined) delete process.env.AUTH_MODE;
@@ -360,7 +361,7 @@ test("详情工具拒绝越权ID且不透露隐藏名称", async () => {
     generate: async () => {
       throw Error("unexpected");
     },
-    complete: async (messages) => {
+    converse: async (messages) => {
       calls++;
       if (calls === 1)
         return result("", [
@@ -368,8 +369,8 @@ test("详情工具拒绝越权ID且不透露隐藏名称", async () => {
             id: "read",
             type: "function",
             function: {
-              name: "read_item_context",
-              arguments: JSON.stringify({ itemId: t.cup }),
+              name: "get_item_context",
+              arguments: JSON.stringify({ itemIds: [t.cup] }),
             },
           },
         ]);
@@ -380,20 +381,10 @@ test("详情工具拒绝越权ID且不透露隐藏名称", async () => {
     },
   };
   try {
-    const r = await respond(
-      t.db,
-      t.read,
-      "lin",
-      {
-        requestId: crypto.randomUUID(),
-        mode: "auto",
-        memoryPolicy: "off",
-        question,
-        uiContext: { page: "assistant" },
-      },
-      p,
-    );
-    assert.ok(r.trace.some((s) => s.stage === "tool_denied"));
+    let published='';p.onText=text=>{published+=text;};
+    await assert.rejects(respond(t.db,t.read,'lin',{requestId:crypto.randomUUID(),mode:'auto',memoryPolicy:'off',question,uiContext:{page:'assistant'}},p),/未获授权/);
+    assert.equal(calls,1);assert.equal(published,'');
+
   } finally {
     t.db.close();
   }
@@ -408,13 +399,13 @@ test("模型循环耗尽明确报回合预算，不伪装成用户缺资料", as
     generate: async () => {
       throw Error("unexpected");
     },
-    complete: async () => {
+    converse: async () => {
       calls++;
       return result("", [
         {
           id: `list${calls}`,
           type: "function",
-          function: { name: "list_accessible_items", arguments: "{}" },
+          function: { name: "get_item_context", arguments: JSON.stringify({itemIds:[t.cup]}) },
         },
       ]);
     },
@@ -433,9 +424,9 @@ test("模型循环耗尽明确报回合预算，不伪装成用户缺资料", as
       },
       p,
     );
-    assert.equal(calls, 4);
+    assert.equal(calls, 6);
     assert.equal(r.reply.outcome, "unavailable");
-    assert.equal(r.reply.errorCode, "turn_budget_exhausted");
+    assert(r.trace.some(t=>t.stage==='practical_failed'&&/上限|预算|budget/.test(t.detail)));
   } finally {
     t.db.close();
   }
@@ -516,7 +507,7 @@ for (const kind of ["properties", "permission"]) {
       generate: async () => {
         throw Error("unexpected");
       },
-      complete: async () => {
+      converse: async () => {
         calls++;
         if (calls === 1)
           return result("", [
@@ -524,8 +515,8 @@ for (const kind of ["properties", "permission"]) {
               id: "read",
               type: "function",
               function: {
-                name: "read_item_context",
-                arguments: JSON.stringify({ itemId: t.cup }),
+                name: "get_item_context",
+                arguments: JSON.stringify({ itemIds: [t.cup] }),
               },
             },
           ]);

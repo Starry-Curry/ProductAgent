@@ -359,6 +359,10 @@ test("真实JBL失败响应离线重放：拒绝长按猜测后保留官方事�
       confirmedAt: new Date().toISOString(),
     };
     t.write(state);
+    // Historical flawed provider output is still rejected by the retained pure
+    // validator. It is not a current production self-review/fallback pipeline.
+    const ctx=buildContext(t.db,t.read(),'lin',{question:'连接方式、防水等级和立体声条件是什么？',mode:'service',itemId:id});
+    assert.throws(()=>validateModelPacket(JSON.stringify(jblRejected.packet),ctx,'service'));
     let calls = 0;
     const r = await respond(
       t.db,
@@ -386,14 +390,13 @@ test("真实JBL失败响应离线重放：拒绝长按猜测后保留官方事�
         },
       },
     );
-    assert.equal(calls, 2);
+    assert.equal(calls, 0);
     assert.equal(r.reply.source, "curated-guidance");
-    assert.equal(r.reply.errorCode, "validation_failed_partial");
+    assert.equal(r.reply.errorCode, undefined);
     assert.match(r.reply.answer, /5.3/);
     assert.match(r.reply.answer, /IP67/);
-    assert.match(r.reply.answer, /尚未确认/);
     assert.doesNotMatch(r.reply.answer, /长按/);
-    assert(r.trace.some((t) => t.stage === "verified_facts_fallback"));
+    assert(r.trace.some((t) => t.stage === "curated_answer"));
   } finally {
     t.db.close();
   }

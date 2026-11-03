@@ -11,6 +11,8 @@ import type { TurnResult } from "../src/lib/agent/contracts.ts";
 import { saveMemory, forgetMemory } from "../src/lib/memory/store.ts";
 import { ProviderError, type Provider } from "../src/lib/ai/provider.ts";
 import { installHouseholdCases } from "../src/lib/demo/install.ts";
+import { buildContext } from "../src/lib/context/builder.ts";
+import { planMemoryStory,validateStorytelling } from "../src/lib/skills/memory-storytelling.ts";
 import { isStoryNarration } from "../src/lib/memory/ambient.ts";
 
 function fixture() {
@@ -130,7 +132,7 @@ test("连续追问还有呢保留故事路由，耗尽后坦诚，不循环复�
     for (let i = 0; i < 5; i++) f.save("第" + i + "次搬家留下的片段");
     const first = await f.turn("聊聊以前的故事");
     const next = await f.turn("还有呢", f.offline, first);
-    assert.equal(next.reply.route?.intent, "story");
+    assert.notEqual(next.reply.route?.intent, "story", "统一回忆不授予原故事自动写入权限");
     assert.equal(next.reply.memoryIds.length, 2);
     assert.ok(
       next.reply.memoryIds.every((id) => !first.reply.memoryIds.includes(id)),
@@ -147,72 +149,23 @@ test("连续追问还有呢保留故事路由，耗尽后坦诚，不循环复�
   }
 });
 
-test("所有选中片段授权上云后实际进入表达 Skill，模型仅报告使用过的来源", async () => {
-  const f = fixture();
-  try {
-    const m = f.save("我和弟弟在桌边一起读书。", true);
-    let system = "",
-      input = "";
-    const provider: Provider = {
-      model: "offline-narrative-double",
-      async generate(s, payload) {
-        system = s;
-        input = JSON.stringify(payload);
-        return {
-          text: JSON.stringify({
-            answer:
-              "记得，你提过和弟弟一起在桌边读书。那张小桌，也就多了你们相处的故事。你们读的是什么？",
-            memoryIds: [m.id],
-          }),
-          model: "offline-narrative-double",
-          tokens: { input: 50, output: 30 },
-        };
-      },
-    };
-    const r = await f.turn("你还记得有什么故事吗", provider);
-    assert.equal(r.modelCalls, 1);
-    assert.equal(r.reply.source, "model-general");
-    assert.deepEqual(r.reply.memoryIds, [m.id]);
-    assert.match(system, /不要编号、逐条罗列/);
-    assert.match(system, /历史记录里的提醒/);
-    assert.match(input, /亲切、松弛/);
-    assert.match(r.reply.answer, /你们相处的故事/);
-  } finally {
-    f.db.close();
-  }
+test("获准故事通过共享Agent Context进入模型，引用由服务端记录而非模型自报", async () => {
+ const f=fixture();try{
+  const m=f.save('我和弟弟在桌边一起读书。',true);let input='';
+  const provider:Provider={ready:true,model:'offline-converse-story',generate:async()=>{throw Error('retired');},converse:async messages=>{
+   input=JSON.stringify(messages);return {text:'你提过和弟弟在桌边读书，这是你们相处的故事。',model:'offline-converse-story',tokens:{input:50,output:30},toolCalls:[],finishReason:'stop'};
+  }};
+  const r=await f.turn('你还记得有什么故事吗',provider);assert.equal(r.modelCalls,1);assert.equal(r.reply.source,'model-general');
+  assert(r.reply.memoryIds.includes(m.id));assert.match(input,/我和弟弟在桌边/);assert.match(r.reply.answer,/你们相处的故事/);
+ }finally{f.db.close();}
 });
 
-test("原生 complete 路径传入表达 Prompt 且不开放任何工具", async () => {
-  const f = fixture();
-  try {
-    const m = f.save("搬家时我留下了这张小桌。", true);
-    const provider: Provider = {
-      model: "offline-native-double",
-      async generate() {
-        throw Error("must use complete");
-      },
-      async complete(messages, tools) {
-        assert.equal(tools.length, 0);
-        assert.match(messages[0].content!, /把检索到的记忆讲成自然的对话/);
-        return {
-          text: JSON.stringify({
-            answer: "你说过，搬家时留下了这张小桌。这是你与它的一段故事。",
-            memoryIds: [m.id],
-          }),
-          model: "offline-native-double",
-          tokens: null,
-          toolCalls: [],
-          finishReason: "stop",
-        };
-      },
-    };
-    assert.equal(
-      (await f.turn("聊聊以前的故事", provider)).reply.source,
-      "model-general",
-    );
-  } finally {
-    f.db.close();
-  }
+test("仅有旧complete接口不能重新启用故事模型支路，保留真实本地来源", async () => {
+ const f=fixture();try{
+  const m=f.save('搬家时我留下了这张小桌。',true);let calls=0;
+  const provider:Provider={ready:true,model:'retired-complete',generate:async()=>{calls++;throw Error('must not call');},complete:async()=>{calls++;throw Error('must not call');}};
+  const r=await f.turn('聊聊以前的故事',provider);assert.equal(calls,0);assert.equal(r.modelCalls,0);assert.equal(r.reply.source,'local-memory');assert(r.reply.memoryIds.includes(m.id));
+ }finally{f.db.close();}
 });
 
 test("混合授权记忆整体留在本地，另一物品/他人/临时模式均不泄露", async () => {
@@ -288,68 +241,32 @@ test("合成案例也使用流畅的本地表达，保留案例标记，不把�
   }
 });
 
-test("模型不可用只尝试一次，保留有来源的自然本地回复", async () => {
+test("模型未配置不尝试旧付费支路，保留有来源的自然本地回复", async () => {
   const f = fixture();
   try {
     f.save("毕业那天妈妈送我小桌。", true);
     const r = await f.turn("聊聊以前的故事");
-    assert.equal(r.modelCalls, 1);
+    assert.equal(r.modelCalls, 0);
     assert.equal(r.reply.source, "local-memory");
     assert.match(r.reply.answer, /毕业那天妈妈/);
-    assert.equal(r.reply.errorCode, "payment_not_authorized");
-    assert.ok(r.trace.some((t) => t.stage === "memory_story_fallback"));
+    assert.equal(r.reply.errorCode, undefined);
+    assert.ok(r.trace.some((t) => t.stage === "memory_story_composition"));
   } finally {
     f.db.close();
   }
 });
 
-test("非法引用、罗列、伪造提醒与异常工具调用均回退，不产生领域写入", async () => {
-  for (const issue of ["foreign-id", "list", "action", "tools"]) {
-    const f = fixture();
-    try {
-      const m = f.save("我和弟弟在桌边读书。", true);
-      const before = f.read().tasks.length;
-      const provider: Provider = {
-        model: "offline-invalid-double",
-        async generate() {
-          throw Error("complete only");
-        },
-        async complete() {
-          return {
-            text: JSON.stringify({
-              answer:
-                issue === "list"
-                  ? "- 我和弟弟在桌边读书。"
-                  : issue === "action"
-                    ? "我会在明天提醒弟弟学习，已经安排好了。"
-                    : "你提过和弟弟读书，这是小桌旁的一段故事。",
-              memoryIds: [issue === "foreign-id" ? "someone-else" : m.id],
-            }),
-            model: "offline-invalid-double",
-            tokens: null,
-            toolCalls:
-              issue === "tools"
-                ? [
-                    {
-                      id: "bad",
-                      type: "function",
-                      function: { name: "create_task", arguments: "{}" },
-                    },
-                  ]
-                : [],
-            finishReason: "stop",
-          };
-        },
-      };
-      const r = await f.turn("聊聊以前的故事", provider);
-      assert.equal(r.modelCalls, 1, issue);
-      assert.equal(r.reply.source, "local-memory", issue);
-      assert.match(r.reply.answer, /弟弟/);
-      assert.equal(f.read().tasks.length, before);
-    } finally {
-      f.db.close();
-    }
-  }
+test("历史故事格式校验反例保留为纯函数；旧异常工具不再执行或产生领域写入", async () => {
+ for(const issue of ['foreign-id','list','action','tools']){
+  const f=fixture();try{
+   const m=f.save('我和弟弟在桌边读书。',true),before=f.read().tasks.length;
+   const plan=planMemoryStory(buildContext(f.db,f.read(),'lin',{question:'聊聊以前的故事',mode:'story',itemId:f.item.id}),{mode:'story',messages:[],known:{}} as any)!;
+   const bad={answer:issue==='list'?'- 我和弟弟读书。':issue==='action'?'我会在明天提醒弟弟学习，已经安排好了。':'你提过和弟弟读书，这是小桌旁的一段故事。',memoryIds:[issue==='foreign-id'?'someone-else':m.id]};
+   if(issue!=='tools')assert.throws(()=>validateStorytelling(JSON.stringify(bad),plan));
+   let calls=0;const provider:Provider={ready:true,model:'retired-invalid',generate:async()=>{calls++;throw Error('old route');},complete:async()=>{calls++;throw Error('old route');}};
+   const r=await f.turn('聊聊以前的故事',provider);assert.equal(calls,0);assert.equal(r.modelCalls,0);assert.equal(r.reply.source,'local-memory');assert.match(r.reply.answer,/弟弟/);assert.equal(f.read().tasks.length,before);
+  }finally{f.db.close();}
+ }
 });
 
 test("忘记后旧片段不再进入表达或复述", async () => {

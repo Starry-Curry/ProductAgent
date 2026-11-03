@@ -59,7 +59,7 @@ test("自有软件灯：真实REA→静态候选→授权→执行回读；坏�
         generate: async () => {
           throw Error("unexpected generate");
         },
-        complete: async (messages, tools) => {
+        converse: async (messages, tools) => {
           rounds++;
           if (rounds === 1) {
             assert.ok(
@@ -107,7 +107,7 @@ test("自有软件灯：真实REA→静态候选→授权→执行回读；坏�
     assert.ok(
       task.trace.some(
         (t) =>
-          t.stage === "tool_completed" && t.detail === "explore_owned_software",
+          t.stage === "practical_tool" && t.detail === "explore_owned_software completed",
       ),
     );
     const input = {

@@ -1,0 +1,178 @@
+{
+  "complete": true,
+  "naturalWidth": 160,
+  "currentSrc": "http://127.0.0.1:3241/api/life/media/83fcd252-021f-4155-9367-f53cead8833d?actor=u_32bddfec-0bd4-4fe0-a911-5343e681f3a6",
+  "rect": {
+    "x": 65,
+    "y": 989.03125,
+    "width": 452.9375,
+    "height": 283.078125,
+    "top": 989.03125,
+    "right": 517.9375,
+    "bottom": 1272.109375,
+    "left": 65
+  },
+  "ancestors": [
+    {
+      "tag": "IMG",
+      "cls": "life-upload-preview",
+      "display": "inline",
+      "visibility": "visible",
+      "rect": {
+        "x": 65,
+        "y": 989.03125,
+        "width": 452.9375,
+        "height": 283.078125,
+        "top": 989.03125,
+        "right": 517.9375,
+        "bottom": 1272.109375,
+        "left": 65
+      }
+    },
+    {
+      "tag": "SECTION",
+      "cls": "life-card",
+      "display": "block",
+      "visibility": "visible",
+      "rect": {
+        "x": 42,
+        "y": 915.03125,
+        "width": 498.9375,
+        "height": 731.4375,
+        "top": 915.03125,
+        "right": 540.9375,
+        "bottom": 1646.46875,
+        "left": 42
+      }
+    },
+    {
+      "tag": "DIV",
+      "cls": "life-intake-grid",
+      "display": "grid",
+      "visibility": "visible",
+      "rect": {
+        "x": 42,
+        "y": 915.03125,
+        "width": 1196,
+        "height": 1030.765625,
+        "top": 915.03125,
+        "right": 1238,
+        "bottom": 1945.796875,
+        "left": 42
+      }
+    },
+    {
+      "tag": "DIV",
+      "cls": "life-intake",
+      "display": "block",
+      "visibility": "visible",
+      "rect": {
+        "x": 42,
+        "y": 796.390625,
+        "width": 1196,
+        "height": 1199.203125,
+        "top": 796.390625,
+        "right": 1238,
+        "bottom": 1995.59375,
+        "left": 42
+      }
+    },
+    {
+      "tag": "DETAILS",
+      "cls": "belong-manual",
+      "open": true,
+      "display": "block",
+      "visibility": "visible",
+      "rect": {
+        "x": 42,
+        "y": 521.40625,
+        "width": 1196,
+        "height": 1474.1875,
+        "top": 521.40625,
+        "right": 1238,
+        "bottom": 1995.59375,
+        "left": 42
+      }
+    },
+    {
+      "tag": "SECTION",
+      "cls": "belong-arrival",
+      "display": "block",
+      "visibility": "visible",
+      "rect": {
+        "x": 42,
+        "y": 20.953125,
+        "width": 1196,
+        "height": 1974.640625,
+        "top": 20.953125,
+        "right": 1238,
+        "bottom": 1995.59375,
+        "left": 42
+      }
+    },
+    {
+      "tag": "MAIN",
+      "cls": "life-main",
+      "display": "block",
+      "visibility": "visible",
+      "rect": {
+        "x": 10,
+        "y": -177.0625,
+        "width": 1260,
+        "height": 2240.65625,
+        "top": -177.0625,
+        "right": 1270,
+        "bottom": 2063.59375,
+        "left": 10
+      }
+    },
+    {
+      "tag": "DIV",
+      "cls": "life-shell",
+      "display": "block",
+      "visibility": "visible",
+      "rect": {
+        "x": 0,
+        "y": -315.859375,
+        "width": 1280,
+        "height": 2456.953125,
+        "top": -315.859375,
+        "right": 1280,
+        "bottom": 2141.09375,
+        "left": 0
+      }
+    },
+    {
+      "tag": "BODY",
+      "cls": "",
+      "display": "block",
+      "visibility": "visible",
+      "rect": {
+        "x": 0,
+        "y": -384,
+        "width": 1280,
+        "height": 2525.09375,
+        "top": -384,
+        "right": 1280,
+        "bottom": 2141.09375,
+        "left": 0
+      }
+    },
+    {
+      "tag": "HTML",
+      "cls": "",
+      "display": "block",
+      "visibility": "visible",
+      "rect": {
+        "x": 0,
+        "y": -384,
+        "width": 1280,
+        "height": 2525.09375,
+        "top": -384,
+        "right": 1280,
+        "bottom": 2141.09375,
+        "left": 0
+      }
+    }
+  ]
+}

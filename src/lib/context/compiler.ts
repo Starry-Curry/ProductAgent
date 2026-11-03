@@ -11,7 +11,7 @@ import { virtualHomeItems } from "../life/virtual-home.ts";
 import { authorize } from "../foundation/policy.ts";
 import { retrieveTaskPassages } from "../agent/kernel/retrieval.ts";
 import type { EvidencePassage } from "../agent/kernel/contracts.ts";
-import {projectReality} from './reality.ts';
+import {readReality} from './reality-service.ts';
 import {resourceCatalogue} from './relevance.ts';
 import {fingerprint} from '../foundation/legacy.ts';
 import {epoch,listMemories,effectivePersona} from '../memory/store.ts';
@@ -19,6 +19,7 @@ import {rectangleCondition} from '../agent/kernel/physical.ts';
 import {storyMemoryRelevant} from '../life/organization.ts';
 import {isMemoryRecallRequest} from '../skills/memory-storytelling.ts';
 import {listLifeIdeas} from '../life/ideas.ts';
+import {discoveryInput} from '../life/planning.ts';
 
 
 export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number){
@@ -37,7 +38,7 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
     // Entity matching only. It never chooses an intent or provides a product fact.
     !task&&!evidenceByteBudget&&[...new Intl.Segmenter('zh',{granularity:'word'}).segment(i.name)].some(s=>s.segment.length>=2&&mentioned(s.segment)));
   const selection=resourceCatalogue(allowed,question,selected.map(i=>i.id));
-  const semanticItems=selected.map(projectReality);
+  const semanticItems=selected.map(i=>readReality(db,state,actor,i.id));
   const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,
     taskMemoryOnly:true,includeItemRelationships:session.known.useItemMemories==='yes',companion:!!session.known.companionItemId,useExperiences:session.known.memoryPolicy!=='off'}));
   // An unbound conversation can still use relevant, explicitly cloud-authorized
@@ -84,6 +85,11 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
     id:p.id,title:p.title,itemIds:p.itemIds,goal:p.goal,steps:p.steps,conditions:p.assessment?.checks||p.reasoning?.checks||[],exploration:p.exploration,assessmentLevel:p.assessment?.level,mechanismHypothesis:p.assessment?.hypothesis,expectedEffect:p.expectedEffect,outcome:p.outcome,
     ...(feedbackIds.has(p.id)?{note:p.note}:{}),verification:'model-hypothesis-not-physical-verification' as const,
   })):[];
+  const continuation=(()=>{if(temporary||!session.known.lifePlanContext)return;try{return discoveryInput.shape.continuation.safeParse(JSON.parse(session.known.lifePlanContext));}catch{return;}})();
+  const priorPlanningContext=continuation?.success&&continuation.data?{...continuation.data,
+    itemIds:continuation.data.itemIds.filter(id=>allowed.some(i=>i.id===id)),excludedItemIds:continuation.data.excludedItemIds.filter(id=>allowed.some(i=>i.id===id)),
+    basis:'user_provided_previous_plan_constraints_not_verified' as const,priority:'current_question_overrides_previous_goal' as const,
+  }:undefined;
   return {
     question,items:selected.map(itemContext),
     // No owners, locations, notes, photos or private stories in the catalogue.
@@ -109,6 +115,7 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
     })),
     preferences:memoryOn?(home?homeMemories.filter(m=>['preference','interest','requirement'].includes(m.kind)).map(m=>({key:m.kind,value:m.text})):contexts.flatMap(c=>c.cloudPreferences)).filter((p,n,a)=>a.findIndex(r=>r.key===p.key&&r.value===p.value)===n):[],
     selectedPlans,
+    priorPlanningContext,
     tried:session.tried,
     history:session.messages.slice(-6).map(m=>({role:m.role,text:m.text.slice(0,1800)})),
     currentTask:task?{goal:taskContext!.modelGoal,itemIds:task.itemInstanceIds,plans:taskContext!.plans,collaborationProgress:taskContext!.familyProgress}:!temporary&&home&&session.known.homeTaskGoal?{goal:session.known.homeTaskGoal,basis:'previous_conversation_goal_not_verified_result' as const}:undefined,

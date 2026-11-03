@@ -16,6 +16,7 @@ import { fetchPublicDocument, sourceURL, listSources,type SourceReading } from "
 import type { Provider } from "../ai/provider.ts";
 import { selectTaskEvidence } from "./knowledge-task.ts";
 import { multilingualAnchors } from "./retrieval-topics.ts";
+import type {KnowledgeReference} from '../context/source-reference.ts';
 
 export type KnowledgeChunk = {
   id: string;
@@ -31,6 +32,7 @@ export type KnowledgeChunk = {
   warnings?: string[];
 };
 export type AcquiredDocument = {
+  sourceSelections?: {version:1;entries:{reference:KnowledgeReference;kind:'fact'|'operation'|'condition';selectedBy:string}[]};
   role?: "product" | "manual";
   applicability?: string;
   observations?: {

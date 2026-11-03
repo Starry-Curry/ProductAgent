@@ -17,6 +17,10 @@ import {
   releaseTurn,
 } from "../../src/lib/repositories/sessions.ts";
 import { turnInputSchema } from "../../src/lib/agent/contracts.ts";
+// This historical comparison assumes the retired read_home_items + final
+// generate loop. Never spend current budget comparing a missing protocol.
+if (!fs.readFileSync(path.resolve('src/lib/agent/home-task.ts'),'utf8').includes('new StateGraph'))
+  throw Error('historical_home_runtime_retired: restore this historical comparison and runtime from checkpoint 9eb80fe in an isolated checkout; no gateway/model call was started');
 if (!process.argv.includes("--cloud"))
   throw Error("explicit_cloud_flag_required");
 const config = process.argv.find((a) => a.startsWith("--config="))?.slice(9);

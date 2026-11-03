@@ -1,40 +1,37 @@
 # 贡献指南
 
-感谢你愿意改进物间。这个项目同时涉及 Agent、隐私、家庭权限和现实世界行动，因此“看起来能回答”不等于实现正确。
+产品以 [产品定稿](docs/product/PRODUCT_FINAL_V1.md) 为准，进度以 [CURRENT](docs/engineering/CURRENT.md) 为准；工程边界见 [AGENTS](AGENTS.md)，实施方法见 [工程方法](docs/engineering/WUJIAN_ENGINEERING_METHOD_V1.md)。
 
-## 开发环境
+## 运行与分工
 
-- Node.js 24.x
-- npm 10+
-- Microsoft Edge 仅用于部分浏览器验收，不是运行应用的必需项
-- 默认不配置真实模型 Key
+使用 Node.js 24 和现有 package-lock.json：
 
 ```bash
-git clone https://github.com/Starry-Curry/ProductAgent.git
-cd ProductAgent
 npm ci
 npm run dev
 ```
 
-## 分支与提交
+打开 http://127.0.0.1:3200。默认不需要模型 Key，不产生模型费用。真实模型必须具备当前任务明确授权及有效预算，不能只打开开关绕过费用网关。
 
-- `main` 保持可构建、可测试；
-- 功能分支使用 `feat/...`、`fix/...`、`docs/...` 或 `chore/...`；
-- 提交信息建议使用 `feat:`、`fix:`、`test:`、`docs:`、`refactor:`；
-- 一个提交尽量表达一个完整变化；
-- 不移动已经发布的版本标签，不擅自重写共享历史。
+同学优先维护负责页面与专业业务；共享 Item/Reality、Context、工具契约、权限事务、模型网关由底座负责人协调。Route Handler 负责解析和映射，权限与写入保留在领域服务。外部文字视为数据，网络 I/O 后复核权限和版本。
 
-## 修改前
+## GitHub 协作
 
-1. 先确认当前行为在代码和测试中的真实状态。
-2. 区分产品目标、历史记录和已实现能力。
-3. 涉及权限、记忆、分享或模型费用时，说明威胁模型和回滚方式。
-4. 不要从旧版工作区读取或合并数据库。
-5. 不要读取、打印或提交任何 Key、Token、私人照片和真实家庭数据。
+- main：稳定演示；develop：团队集成，是否已建立见 CURRENT，未建立时继续当前独立研发分支，不自行假定存在。
+- develop 必须由通过 typecheck、离线测试和构建的可运行基线建立。研发基线不等于产品验收通过。
+- develop 建立后，从最新 origin/develop 创建 feat/*、fix/*、docs/* 或 codex/*；Codex 默认 codex/*。提交小范围完整变化，PR 到 develop，经 CI + 一名组员审查后集成。
+- 合入 main、分支保护与仓库权限由负责人批准；不强推、不改已发布标签/共享历史、不改全局 Git。使用隔离工作区保护未提交内容与原项目。
 
-## 验证
+仅在 develop 已存在时使用：
 
-提交前至少运行：
+```bash
+git fetch origin
+git switch -c codex/your-change origin/develop
+```
+
+## 检查与证据
+
+开发阶段运行相关定向测试；集成提交前运行：
 
 ```bash
 npm run typecheck
@@ -42,57 +39,19 @@ npm test
 npm run build
 ```
 
-涉及 Agent 协议、资料引用或 UI 主路径时，还应运行相应集成验收：
+按影响补充 test:life、test:task-planning、test:care、test:benchmark 和实际桌面/移动端浏览器验收；不要每次小改重跑全部。CI 保持离线，两个付费开关关闭。
 
-```bash
-npm run test:life
-npm run test:task-planning
-npm run test:care
-```
+- Bug 先留失败复现；覆盖成功、拒绝、权限变化、工具异常与恢复。SQLite 迁移检查备份、重复执行和失败回滚，使用独立数据目录。
+- 冻结验收与开发集隔离，首答和重试分开。HTTP 成功、JSON 合法、引用 ID、模型自评分不能证明任务成功。
+- 真实模型报告输入资料适用范围、实际输出、请求/失败/耗时与费用；没有执行的真实模型或浏览器检查明确写 not_run。
+- PR 说明用户收益、影响范围、被替换路径、实际检查、失败/未测项及恢复方法；UI 变化附真实截图。使用 [.github 模板](.github/PULL_REQUEST_TEMPLATE.md)。模板自动出现需进入默认分支，不能为此擅自合并 main。
 
-浏览器验收依赖已构建应用、Microsoft Edge 和隔离数据目录。
+## 数据与依赖
 
-真实模型调用必须由当前任务明确授权。CI 与默认测试必须使用模型替身，不能依赖公开网络。
+不读取/打印用户 api.txt，不提交 Key、令牌、Cookie、私人数据库/媒体、依赖或缓存；应用鉴权通过既有安全配置。合成物品和经历明确标注，用户报告不等于实物验证。正常合成测试证据可以公开，不能因公开性删除失败记录。
 
-## 测试要求
+图片保留来源、许可和用途；AI 图片不能冒充型号实拍。新增依赖更新 lockfile 与 THIRD_PARTY_NOTICES.md。历史费用台账、许可证和恢复点不擅自移动，清理先查引用和回归。
 
-- 新规则需要覆盖成功、拒绝和授权变化路径；
-- 修复 bug 时优先增加能复现问题的回归测试；
-- 模型输出测试要区分 provider 原始结果、结构修复和最终业务校验；
-- 不得把 HTTP 200、合法 JSON 或引用 ID 当作语义正确的充分条件；
-- 涉及 SQLite 迁移时验证重复执行、备份和失败回滚；
-- 涉及公开访客时验证跨访客隔离、配额和费用关闭。
+安全问题按 [SECURITY](SECURITY.md) 报告，不在公开 Issue 中披露未修复漏洞或私人数据。
 
-## 数据与素材
-
-- 合成内容必须显式标记；
-- 演示图片需要记录来源、许可和用途；
-- 新增 AI 生成图片时保留生成说明，并明确它不是型号实拍或资料证据；
-- 私人数据、数据库、上传媒体、运行日志、构建缓存和依赖目录不得提交；
-- 新增第三方依赖时更新 `THIRD_PARTY_NOTICES.md`，保持 lockfile 可复现。
-
-## 代码风格
-
-- TypeScript 保持严格模式；
-- 优先在领域服务中执行业务规则，不把权限判断散落在 UI；
-- Route Handler 只负责解析、调用和响应映射；
-- 外部文本一律视为数据，不作为系统指令执行；
-- 网络 I/O 后重新检查授权和版本，避免状态漂移；
-- 错误信息向用户说明下一步，同时在内部保留可诊断错误码。
-
-## Pull Request
-
-PR 描述应包含：
-
-- 用户问题与改动范围；
-- 主要实现和设计取舍；
-- 实际运行的检查；
-- 未运行的检查与原因；
-- 对数据迁移、隐私、权限、费用或部署的影响；
-- 截图或演示步骤（涉及 UI 时）。
-
-提交即表示你确认没有在变更中引入真实密钥、私人数据或无权分发的素材。
-
-## 安全问题
-
-不要在公开 Issue 或 PR 中披露未修复漏洞。请按 [SECURITY.md](SECURITY.md) 的方式报告。
+[原贡献说明快照](https://github.com/Starry-Curry/ProductAgent/blob/543a933571489a518e9dd4bb069e674155138d3a/CONTRIBUTING.md)。

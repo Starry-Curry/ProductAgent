@@ -47,19 +47,11 @@ export function sourceURL(value: string) {
   return url;
 }
 /** Explicit public document read. Re-check and pin DNS on every same-host canonical redirect. */
-export async function fetchPublicDocument(
+async function fetchPublicSource(
   value: string,
   redirects = 0,
   maxPdfBytes = 12_000_000,
-): Promise<{
-  title: string;
-  text: string;
-  url: string;
-  links: { title: string; url: string }[];
-  extracted?: { name?: string; brand?: string; model?: string };
-  navigationItems?: {id:string;label:string}[];
-  reading?:{limitations:string[];figures:{url:string;caption:string}[]};
-}> {
+): Promise<{bytes:Buffer;type:string;url:string}> {
   const url = sourceURL(value);
   reservePublicFetch(url.hostname);
   const addresses = await Promise.race([
@@ -158,8 +150,22 @@ export async function fetchPublicDocument(
       throw new AgentError(
         "来源跳转到其他站点或跳转过多；请核对最终链接后主动读取",
       );
-    return fetchPublicDocument(next.href, redirects + 1,maxPdfBytes);
+    return fetchPublicSource(next.href, redirects + 1,maxPdfBytes);
   }
+  return {...result,url:url.href};
+}
+/** Same pinned public fetch and redirect limits; never a provider-side arbitrary URL. */
+export async function fetchPublicPdfBytes(value:string){
+ const result=await fetchPublicSource(value);
+ if(!/pdf/i.test(result.type)||result.bytes.subarray(0,5).toString()!=='%PDF-')throw new AgentError('来源没有返回有效PDF');
+ return result;
+}
+export async function fetchPublicDocument(value:string,redirects=0,maxPdfBytes=12_000_000):Promise<{
+ title:string;text:string;url:string;links:{title:string;url:string}[];
+ extracted?:{name?:string;brand?:string;model?:string};navigationItems?:{id:string;label:string}[];
+ reading?:SourceReading;
+}>{
+ const result=await fetchPublicSource(value,redirects,maxPdfBytes),url=new URL(result.url);
   if (/pdf/i.test(result.type)) {
     const { extractManual } = await import("./documents.ts");
     const d = await extractManual(

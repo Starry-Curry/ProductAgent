@@ -1,6 +1,6 @@
 import type { Item } from "../domain.ts";
 import type { Provider } from "../ai/provider.ts";
-import { projectReality,modelReality } from "../context/reality.ts";
+import { projectReality,modelReality,type RealityCard } from "../context/reality.ts";
 import { searchInspiration, type InspirationCase } from "./inspiration.ts";
 export type OpenStrategy = "free" | "retrieval" | "hybrid";
 export type ExplorationRecord = {
@@ -24,11 +24,12 @@ export async function exploreOpen(
     feedback: unknown;
     requiredItemId?: string;
     context?: unknown;
+    realities?: RealityCard[];
   },
   guard: () => void,
 ) {
   guard();
-  const facts = items.map(i=>modelReality(projectReality(i)));
+  const facts = items.map(i=>modelReality(options.realities?.find(r=>r.itemId===i.id)||projectReality(i)));
   const found =
     options.strategy === "free"
       ? undefined

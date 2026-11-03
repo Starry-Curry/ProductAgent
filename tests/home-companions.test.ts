@@ -56,6 +56,7 @@ function fixture() {
     actor: Person = "lin",
     provider = offline,
     temporary = false,
+    mode: 'auto'|'story' = 'auto',
   ) =>
     respond(
       db,
@@ -64,7 +65,7 @@ function fixture() {
       {
         requestId: crypto.randomUUID(),
         question,
-        mode: "auto",
+        mode,
         itemId,
         sessionId: previous?.session.id,
         expectedRevision: previous?.session.revision,
@@ -346,24 +347,25 @@ test("活动准备接回原计划实体；演示物品排除；临时对话不�
     f.db.close();
   }
 });
-test("同一物品对话可从故事到回忆再到帮助，故事与兴趣有来源，假设不写真实经历", async () => {
+test("显式故事保存原话，再回统一对话回忆与帮助，假设不写真实经历", async () => {
   const f = fixture();
   try {
     const q = "毕业那天妈妈送我这件物品，我喜欢阅读";
-    const first = await f.turn(q, undefined, f.item.id);
-    assert.equal(first.reply.route!.intent, "story");
+    const first = await f.turn(q, undefined, f.item.id, "lin", undefined, false, "story");
+    assert.equal(first.session.mode, "story");
     assert.equal(first.reply.source, "local-memory");
     assert.ok(
       f.read().memories.some((m) => m.itemId === f.item.id && m.text === q),
     );
-    const recalled = await f.turn("聊聊以前的故事", first, f.item.id);
+    const recalled = await f.turn("聊聊以前的故事", undefined, f.item.id);
     assert.match(recalled.reply.answer, /毕业那天妈妈/);
     const storyCount = f.read().memories.length;
     const requested = await f.turn("我想听以前的故事", recalled, f.item.id);
     assert.equal(f.read().memories.length, storyCount);
     assert.match(requested.reply.answer, /毕业那天妈妈/);
     const help = await f.turn("书架怎么固定", requested, f.item.id);
-    assert.equal(help.session.id, first.session.id);
+    assert.equal(help.session.id, recalled.session.id);
+    assert.notEqual(recalled.session.id, first.session.id, "显式故事窗口与统一对话保留独立模式边界");
     assert.equal(help.reply.route!.intent, "help");
     const before = f.read().memories.length;
     await f.turn("假设我和书架去过月球，编一个故事", undefined, f.item.id);
@@ -389,8 +391,10 @@ test("统一陪伴实际调用 Provider，未授权私人故事与另一物品�
     });
     let payload = "";
     const provider: Provider = {
-      model: "offline-protocol-double",
-      async generate(_, input) {
+      ready:true, model: "offline-protocol-double",
+      generate:async()=>{throw Error('old_generate_retired');},
+      async converse(messages) {
+        const input=JSON.parse(messages.find(m=>m.role==='user')!.content!);
         payload = JSON.stringify(input);
         return {
           text: JSON.stringify({
@@ -398,7 +402,7 @@ test("统一陪伴实际调用 Provider，未授权私人故事与另一物品�
             answer: "我们慢慢聊。今天有什么想说的？",
           }),
           model: "offline-protocol-double",
-          tokens: { input: 20, output: 15 },
+          tokens: { input: 20, output: 15 },toolCalls:[],finishReason:'stop',
         };
       },
     };
@@ -429,14 +433,14 @@ test("演示角色对话保持案例记忆隔离，全屋不载入案例故事",
     const r = await f.turn(
       "毕业时妈妈送我这件物品，我喜欢阅读",
       undefined,
-      demo.id,
+      demo.id, 'lin', undefined, false, 'story',
     );
     const records = listMemories(f.db, f.read(), "lin").filter(
       (m) => m.itemId === demo.id && m.text.includes("毕业时"),
     );
     assert.ok(records.length);
     assert.ok(records.every((m) => m.demo && !m.allowCloud));
-    assert.equal(r.reply.route!.intent, "story");
+    assert.equal(r.session.mode, "story");
     await f.turn(demo.name + "毕业时妈妈送我的，我喜欢园艺");
     reconcileMemories(f.db, f.read(), "lin");
     assert.ok(
@@ -464,8 +468,10 @@ test("全屋切换目标时清除尝试与设备条件，另一件物品的私�
     });
     let sent: any;
     const provider: Provider = {
-      model: "offline-protocol-double",
-      async generate(_, input) {
+      ready:true, model: "offline-protocol-double",
+      generate:async()=>{throw Error('old_generate_retired');},
+      async converse(messages) {
+        const input=JSON.parse(messages.find(m=>m.role==='user')!.content!);
         sent = input;
         return {
           text: JSON.stringify({
@@ -473,7 +479,7 @@ test("全屋切换目标时清除尝试与设备条件，另一件物品的私�
             answer: "你好，今天想聊些什么？",
           }),
           model: "offline-protocol-double",
-          tokens: null,
+          tokens: null,toolCalls:[],finishReason:'stop',
         };
       },
     };
@@ -498,14 +504,12 @@ test("统一对话继续原生工具循环，模型期间撤销物品授权会�
   try {
     let calls = 0;
     const protocol: Provider = {
-      model: "offline-protocol-double",
-      async generate() {
-        throw Error("Use native tools");
-      },
-      async complete(messages, tools) {
+      ready:true, model: "offline-protocol-double",
+      async generate() {throw Error("old_generate_retired");},
+      async converse(messages, tools) {
         calls++;
         assert.ok(
-          tools.some((t) => t.function.name === "list_accessible_items"),
+          tools.some((t) => t.function.name === "get_item_context"),
         );
         return calls === 1
           ? {
@@ -517,7 +521,7 @@ test("统一对话继续原生工具循环，模型期间撤销物品授权会�
                 {
                   id: "lookup",
                   type: "function",
-                  function: { name: "list_accessible_items", arguments: "{}" },
+                  function: { name: "get_item_context", arguments: JSON.stringify({itemIds:[f.item.id]}) },
                 },
               ],
             }
@@ -541,10 +545,11 @@ test("统一对话继续原生工具循环，模型期间撤销物品授权会�
       protocol,
     );
     assert.equal(companion.modelCalls, 2);
-    assert.ok(companion.trace.some((t) => t.stage === "tool_completed"));
+    assert.ok(companion.trace.some((t) => t.stage === "practical_tool"));
     const revoke: Provider = {
-      model: "offline-protocol-double",
-      async generate() {
+      ready:true, model: "offline-protocol-double",
+      generate:async()=>{throw Error('old_generate_retired');},
+      async converse() {
         f.write(
           mutate(f.read(), "lin", "updateItem", {
             itemId: f.item.id,
@@ -552,9 +557,8 @@ test("统一对话继续原生工具循环，模型期间撤销物品授权会�
           }),
         );
         return {
-          text: JSON.stringify({ kind: "general", answer: "你好" }),
-          model: "offline-protocol-double",
-          tokens: null,
+          text: "你好", model: "offline-protocol-double",
+          tokens: null,toolCalls:[],finishReason:'stop',
         };
       },
     };

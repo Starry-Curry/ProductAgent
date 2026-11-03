@@ -69,6 +69,7 @@ import { productPacks, searchProducts } from "@/lib/products";
 import { installLifeDemo } from "@/lib/life/demo";
 import { createLifeGift } from "@/lib/life/gifts";
 import { discoverInTask } from "@/lib/foundation/creative";
+import { readReality } from "@/lib/context/reality-service";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 function fail(e: unknown) {
@@ -108,6 +109,7 @@ async function GETHandler(r: Request) {
     if (p.has("itemId")) {
       requireVisibleItem(db,state,a,p.get("itemId")!);
       return Response.json({
+        reality: readReality(db, state, a, p.get("itemId")!),
         sources: listSources(db, state, a, p.get("itemId")!).map((s) => ({
           ...s,
           knowledge: organizeKnowledge(

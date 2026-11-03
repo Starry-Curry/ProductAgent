@@ -10,7 +10,10 @@ import {chromium,expect} from '@playwright/test';
 import sharp from 'sharp';
 
 const ROOT='docs/engineering/qwen-foundation-2026-11-02/evidence';
-const base='http://127.0.0.1:3241';
+const requestedBase=process.argv.find(a=>a.startsWith('--base='))?.slice(7)||'http://127.0.0.1:3241';
+const baseURL=new URL(requestedBase);
+assert.ok(baseURL.protocol==='http:'&&baseURL.hostname==='127.0.0.1'&&baseURL.port&&baseURL.pathname==='/'&&!baseURL.search&&!baseURL.hash,'synthetic_loopback_preview_required');
+const base=baseURL.origin;
 const stage=process.argv.find(a=>a.startsWith('--stage='))?.slice(8)||'gate3-relations-gift-r1';
 if(!/^[a-z0-9-]+$/.test(stage))throw Error('invalid_evidence_stage');
 const target=path.resolve(ROOT,stage+'.json');
@@ -21,7 +24,7 @@ const plan={base,modelRequestsInThisScript:0,paidEndpoints:'blocked before brows
  modelFollowupPlan:{uiQuestions:['谁送的这幅画？不要补充日期。','纠正赠送者后，这幅画是谁送的？','遗忘后，你还能确认赠送者吗？'],expectedUpstreamRequests:'预计6–9次；依正式执行器最多6次/提问，保守上限18次，主线程串行安排后另测。',status:'not_run'}};
 if(!process.argv.includes('--execute-browser')){console.log(JSON.stringify(plan,null,2));process.exit(0);}
 if(fs.existsSync(target))throw Error('preserve_existing_browser_evidence');
-const previewFile=path.resolve('.runtime/foundation-preview-3241.json');
+const previewFile=path.resolve('.runtime/foundation-preview-'+baseURL.port+'.json');
 const preview=JSON.parse(fs.readFileSync(previewFile,'utf8'));
 assert.equal(preview.syntheticDataOnly,true);assert.equal(preview.url,base);
 fs.mkdirSync(ROOT,{recursive:true});
@@ -48,8 +51,9 @@ for(const page of pages){
   const lifeWrite=url.pathname==='/api/life'&&request.method()==='POST';
   const localPhotoUpload=lifeWrite&&/^multipart\/form-data/i.test(request.headers()['content-type']||'');
   const allowedLife=new Set(['createItem','updateItem','fragment','gift','deleteFragment']);
-  if(url.pathname.startsWith('/api/assistant')||url.pathname.startsWith('/api/ai/')||lifeWrite&&!localPhotoUpload&&!allowedLife.has(action)){
-   report.blockedModelRequests.push({kind:'unexpected_or_model_action_blocked',path:url.pathname,action});save();await route.abort('blockedbyclient');return;
+  // GET /api/assistant only refreshes/list sessions; generation is a POST.
+  if(url.pathname.startsWith('/api/assistant')&&request.method()!=='GET'||url.pathname.startsWith('/api/ai/')||lifeWrite&&!localPhotoUpload&&!allowedLife.has(action)){
+   report.blockedModelRequests.push({kind:'unexpected_or_model_action_blocked',method:request.method(),path:url.pathname,action});save();await route.abort('blockedbyclient');return;
   }
   await route.continue();
  });
@@ -83,17 +87,24 @@ async function addStory(page,text,{photo=false,localRecall=false}={}){
  await page.getByLabel('我和它的故事',{exact:true}).fill(text);
  const local=page.getByLabel('允许在我主动回忆时引用',{exact:true});await local.setChecked(localRecall);
  await page.getByLabel('允许云端模型使用这段故事',{exact:true}).uncheck();
- if(photo){await page.getByLabel('加一张照片',{exact:true}).setInputFiles(syntheticPhoto);await expect(page.getByAltText('待保存的故事照片')).toBeVisible();}
+ if(photo){await page.getByLabel('加一张照片',{exact:true}).setInputFiles(syntheticPhoto);await expect(page.getByAltText('待保存的故事照片')).toBeVisible({timeout:20000});}
  const saved=await lifeResponse(page,'fragment',()=>page.getByRole('button',{name:'留下这一段',exact:true}).click());
  assert.equal(saved.fragment.allowCloud,false);assert.equal(saved.fragment.allowRecall,localRecall);return saved.fragment;
 }
 async function openMemoryCenter(page){const center=page.locator('.memory-center').first();if(await center.getAttribute('open')===null)await center.locator('summary').first().click();await center.getByText('记忆会影响后续相关帮助',{exact:false}).waitFor();return center;}
+async function savePrivateRecovery(){
+ const prefix=path.resolve('.runtime/foundation-gate3-'+stage);
+ await contexts[0].storageState({path:prefix+'-a.json'});await contexts[1].storageState({path:prefix+'-b.json'});
+ fs.writeFileSync(prefix+'-items.json',JSON.stringify({base,stage,at:new Date().toISOString(),accounts:report.accounts,item:report.item,gift:report.gift,memoryIds:report.checks.flatMap(c=>c.memoryId?[c.memoryId]:[]),modelFollowup:'not_run; main task must schedule serially'},null,2));
+ report.recovery={privateIgnoredBrowserStates:'Saved only under .runtime, never in Git or public evidence',itemId:report.item?.id,receivedItemId:report.gift?.receivedItemId,modelFollowup:'not_run; needs serial scheduling by the main task'};
+}
 
 try{
  const owner=await register(a,'甲'),receiver=await register(b,'乙');assert.notEqual(owner.id,receiver.id);report.accounts={ownerId:owner.id,receiverId:receiver.id};
  record('两个真实注册账号和独立浏览器上下文；没有切换演示角色');
  await a.goto(base+'/#add');await a.getByText('录入其他真实商品、说明书或自己的纪念物',{exact:true}).click();
- await a.getByLabel('上传物品照片',{exact:true}).setInputFiles(syntheticPhoto);await expect(a.getByAltText('待录入物品',{exact:true})).toBeVisible();
+ await a.getByLabel('上传物品照片',{exact:true}).setInputFiles(syntheticPhoto);await expect(a.getByAltText('待录入物品',{exact:true})).toBeVisible({timeout:20000});
+ await expect.poll(()=>a.getByAltText('待录入物品',{exact:true}).evaluate(img=>img.complete&&img.naturalWidth>0),{timeout:20000}).toBe(true);
  const name='[合成]朋友送的无型号纪念画 '+stage;
  await a.getByLabel('物品名称',{exact:true}).fill(name);await a.getByLabel('品牌',{exact:true}).fill('');await a.getByLabel('具体型号',{exact:true}).fill('');
  const form=a.locator('form').filter({has:a.getByRole('heading',{name:'确认它的信息',exact:true})});
@@ -115,7 +126,10 @@ try{
  record('UI明确确认后，新页面可查看本机关系记忆；没有云端授权或模型请求',{memoryId:memory.id});
  await capture(a,'relationship-desktop');
  await card.getByRole('button',{name:'纠正 / 调整授权',exact:true}).click();
- await center.getByLabel('纠正内容',{exact:true}).fill('[合成纠正]这幅画是同事小叶送的，不是小夏；日期仍未知。GATE3-CORRECTED');
+ // An implicit label includes its textarea's current text, so exact accessible
+ // label matching is unstable here. The real field's form name is explicit.
+ const correction=center.locator('textarea[name="text"]');await expect(correction).toHaveValue(storyText);
+ await correction.fill('[合成纠正]这幅画是同事小叶送的，不是小夏；日期仍未知。GATE3-CORRECTED');
  await center.getByLabel('允许在相关提问时把此条记忆提供给已配置的模型',{exact:true}).uncheck();
  await memoryResponse(a,()=>center.getByRole('button',{name:'保存纠正',exact:true}).click());
  const corrected=(await readJSON(a,'/api/memories?itemId='+item.id)).memories.find(m=>m.id===memory.id);
@@ -138,8 +152,8 @@ try{
  const spoof=await b.request.get(base+'/api/life',{headers:{'x-demo-actor':owner.id}});const spoofed=await spoof.json();assert.ok(!spoofed.workspace.items.some(i=>i.id===item.id));
  record('独立账号在分享前不能读原物品/照片，也不能用演示身份头冒充物主');
  await a.getByRole('button',{name:'资料与管理',exact:true}).click();
- const giftForm=a.locator('form').filter({has:a.getByLabel('给收礼人的话',{exact:true})});
- await giftForm.getByLabel('给收礼人的话',{exact:true}).fill('[合成赠礼]愿它陪你开启新的一页；未选私事不传递。');
+ const giftForm=a.locator('form').filter({has:a.getByLabel(/^给收礼人的话/)});
+ await giftForm.getByLabel(/^给收礼人的话/).fill('[合成赠礼]愿它陪你开启新的一页；未选私事不传递。');
  await giftForm.getByLabel(selectedText,{exact:true}).check();
  await expect(giftForm.getByLabel(privateText,{exact:true})).not.toBeChecked();
  await giftForm.getByRole('button',{name:'预览礼物与所选故事',exact:true}).click();
@@ -164,11 +178,9 @@ try{
  const receiverLife=await readJSON(b,'/api/life');assert.ok(!JSON.stringify(receiverLife).includes('PRIVATE-NOT-FOR-GIFT'));
  record('UI选择性赠礼、独立账号预览/模拟认领、独立物品实例及后续双向私人故事隔离');
  await capture(b,'recipient-story-mobile');
- const privateStateA=path.resolve('.runtime/foundation-gate3-'+stage+'-a.json'),privateStateB=path.resolve('.runtime/foundation-gate3-'+stage+'-b.json');
- await contexts[0].storageState({path:privateStateA});await contexts[1].storageState({path:privateStateB});
- report.recovery={privateIgnoredBrowserStates:'Saved only under .runtime, never in Git or public evidence',itemId:item.id,receivedItemId:received.id,modelFollowup:'not_run; needs serial scheduling by the main task'};
+ await savePrivateRecovery();
  assert.equal(report.blockedModelRequests.length,0,'unexpected AI/external request attempted; do not claim a clean zero-model journey');
  assert.equal(report.pageErrors.length,0);
  report.status='domain_ui_journeys_passed_model_recall_not_run';
 }catch(error){report.status='failed';report.failure={name:error.name,message:error.message.replace(/\/gift\/[^\s/]+/g,'/gift/[redacted]')};process.exitCode=1;await capture(a,'failure-desktop').catch(()=>{});await capture(b,'failure-mobile').catch(()=>{});}
-finally{report.finishedAt=new Date().toISOString();report.ledgerWindowDelta=JSON.parse(fs.readFileSync(ledgerFile,'utf8')).attempts.length-before;report.ledgerWindowCaveat='Global ledger window; any concurrent unrelated call must be investigated, not attributed to this runner.';save();fs.closeSync(fd);await browser.close();console.log(JSON.stringify({status:report.status,target,checks:report.checks,blockedModelRequests:report.blockedModelRequests,ledgerWindowDelta:report.ledgerWindowDelta,modelChecks:report.modelChecks,failure:report.failure},null,2));}
+finally{await savePrivateRecovery().catch(error=>{report.recoveryError=error.message;});report.finishedAt=new Date().toISOString();report.ledgerWindowDelta=JSON.parse(fs.readFileSync(ledgerFile,'utf8')).attempts.length-before;report.ledgerWindowCaveat='Global ledger window; any concurrent unrelated call must be investigated, not attributed to this runner.';save();fs.closeSync(fd);await browser.close();console.log(JSON.stringify({status:report.status,target,checks:report.checks,blockedModelRequests:report.blockedModelRequests,ledgerWindowDelta:report.ledgerWindowDelta,modelChecks:report.modelChecks,failure:report.failure},null,2));}

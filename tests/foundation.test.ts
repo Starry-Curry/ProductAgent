@@ -1028,6 +1028,7 @@ test("真实协议回归：工具协商不混用 JSON mode，stop 附带 tool_ca
       confirmed: true,
     });
     let requests = 0;
+    const responseStream=(body:any)=>new Response('data: '+JSON.stringify({id:'chatcmpl-offline',object:'chat.completion.chunk',created:0,model:'qwen-plus',choices:body.choices.map((c:any,index:number)=>({index,finish_reason:c.finish_reason,delta:{role:'assistant',content:c.message.content,tool_calls:c.message.tool_calls?.map((t:any,index:number)=>({...t,index}))}})),usage:body.usage})+'\n\ndata: [DONE]\n\n',{headers:{'content-type':'text/event-stream'}});
     const provider = createProvider(
       {
         AI_BASE_URL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
@@ -1043,7 +1044,7 @@ test("真实协议回归：工具协商不混用 JSON mode，stop 附带 tool_ca
         assert.equal(body.response_format, undefined);
         assert.ok(body.tools.length);
         if (requests === 1)
-          return Response.json({
+          return responseStream({
             choices: [
               {
                 finish_reason: "stop",
@@ -1070,7 +1071,7 @@ test("真实协议回归：工具协商不混用 JSON mode，stop 附带 tool_ca
               m.role === "tool" && m.tool_call_id === "native-call-1",
           ),
         );
-        return Response.json({
+        return responseStream({
           choices: [
             {
               finish_reason: "stop",

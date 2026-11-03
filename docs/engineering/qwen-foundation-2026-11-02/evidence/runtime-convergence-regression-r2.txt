@@ -1,0 +1,74 @@
+✔ 领域会话写 SQLite，重开数据库后复用系统信息并跳过已试步骤 (214.1906ms)
+✔ 同一请求只追加一次，旧 revision 和并发请求不得覆盖会话 (168.1502ms)
+✔ 明确兴趣影响候选，而当下不想做手工时不硬套旧喜好 (149.0339ms)
+✔ 记忆默认不上云；候选、虚构、其他用户、其他物品与过期内容不召回 (157.1172ms)
+✔ 纠正和忘记擦除旧对话、请求缓存、checkpoint；恢复不再复述 (156.684ms)
+✔ 网络等待中撤销物品共享或删除记忆，返回值和迟到的 checkpoint 都被阻止 (226.6654ms)
+✔ 临时提问不保存正文，不使用私人记忆，也不能通过记住指令落盘 (86.3721ms)
+✔ 有依据的概括选 ID 后输出来源事实，错误话题引用与无依据设备步骤被拒绝 (76.0102ms)
+✔ 文件选择手势不误判为设备长按，定时重置与附加危险动作仍拒绝 (78.5412ms)
+✔ 原装接收器已插入会接续其他步骤，否定答复不被当成拥有 (225.1637ms)
+✔ 旧complete重试链不可再启用；原始服务问题与关怀提醒仍保留 (142.9368ms)
+✔ 家庭交接仅共享预览摘要、幂等创建，私人会话不向家人开放 (94.2497ms)
+✔ 记住指令及显式保存可安全重试，删除后不复活；过期会话清理 (166.882ms)
+✔ 工具循环只执行白名单读取，错误工具与坏 JSON 在限定模型回合内结束 (206.2917ms)
+✔ 不同物品的记忆不混入当前主题，原配接收器确认才能进入手册操作 (89.3288ms)
+✔ 百炼工具传输接受 tool_calls=null，正确传递预算与关闭思考，鉴权错误有独立代码 (16.0843ms)
+✔ 候选保存重试幂等；角色更改保留聊天并撤销旧检查点，本人纠正仍清除旧内容 (99.2169ms)
+✔ 未建档问题关联物品后保留澄清与尝试，不能悄悄切换其他物品 (119.9465ms)
+✔ 自然的澄清和停止建议不因提及风险误拒，通用回答不能绕过电池事实校验 (74.8545ms)
+✔ 真实协议回归：工具协商不混用 JSON mode，stop 附带 tool_calls 也能完成往返 (95.972ms)
+✔ 用户要求调整普通建议的语气可自然回答，仍禁止借改写编造设备操作 (63.6073ms)
+✔ v6 增量迁移保留旧正文和升级前备份，重复迁移不重置数据 (106.5843ms)
+✔ 路由区分具体帮助、真实故事、假设创作、陪伴和家庭安排 (89.8424ms)
+✔ 只在可访问物品中匹配；同名澄清；选中物品不被文本切换 (79.3914ms)
+✔ 位置保存同步档案，拒绝共享成员修改、越界、重复内容变化和并发覆盖 (77.0101ms)
+✔ 位置建议先预览后执行，重复确认不重复写，旧档案修改使建议失效 (166.0124ms)
+✔ 家庭交接只创建预览摘要，确认幂等；撤权、过期和取消均阻止执行 (265.3296ms)
+✔ 活动准备接回原计划实体；演示物品排除；临时对话不留下行动建议 (133.3ms)
+✖ 同一物品对话可从故事到回忆再到帮助，故事与兴趣有来源，假设不写真实经历 (98.9102ms)
+✔ 统一陪伴实际调用 Provider，未授权私人故事与另一物品记忆不进入云端 (135.1266ms)
+✔ 演示角色对话保持案例记忆隔离，全屋不载入案例故事 (176.8198ms)
+✖ 全屋切换目标时清除尝试与设备条件，另一件物品的私人反馈不上云 (172.388ms)
+✔ 统一对话继续原生工具循环，模型期间撤销物品授权会阻断返回 (179.3278ms)
+✔ 未授权上云的物品关系仅在最终本机区展示；多问不中断，下一轮不能经历史泄露 (304.4312ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 32
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3531.5281
+
+✖ failing tests:
+
+test at tests\home-companions.test.ts:350:1
+✖ 同一物品对话可从故事到回忆再到帮助，故事与兴趣有来源，假设不写真实经历 (98.9102ms)
+  Error: 会话类型或物品不一致
+      at beginTurn (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/repositories/sessions.ts:120:15)
+      at respondLegacy (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/service.ts:153:31)
+      at respond (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/service.ts:75:24)
+      at Object.turn (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/home-companions.test.ts:61:5)
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/home-companions.test.ts:360:30)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 409
+  }
+
+test at tests\home-companions.test.ts:454:1
+✖ 全屋切换目标时清除尝试与设备条件，另一件物品的私人反馈不上云 (172.388ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(!JSON.stringify(sent).includes("私人原因甲乙丙"))
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/home-companions.test.ts:495:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

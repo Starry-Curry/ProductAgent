@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-11-02T16:45:30.468Z",
+  "checkedFiles": [
+    "AGENTS.md",
+    "CONTRIBUTING.md",
+    "README.md",
+    "docs/README.md",
+    "docs/HISTORY.md",
+    "docs/engineering/WUJIAN_ENGINEERING_METHOD_V1.md",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    ".github/workflows/ci.yml"
+  ],
+  "localLinksChecked": 35,
+  "fixedHistoricalLinksChecked": 16,
+  "failedLinks": [],
+  "ciPreserved": {
+    "pullRequest": true,
+    "node24": true,
+    "offlineTypeTestBuild": true,
+    "paidCallsDisabled": true,
+    "permissionsReadOnly": true
+  },
+  "changedPushFilter": [
+    "main",
+    "develop"
+  ],
+  "currentStateEdited": false,
+  "developCreated": false,
+  "branchProtectionConfigured": false,
+  "modelRequests": 0,
+  "historicalEvidenceMovedOrDeleted": false,
+  "fullBuildAndTests": "not_run_for_documentation_slice; integration owner runs final regression"
+}

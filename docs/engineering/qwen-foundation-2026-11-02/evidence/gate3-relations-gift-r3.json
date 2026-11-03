@@ -1,0 +1,153 @@
+{
+  "at": "2026-11-02T16:49:56.530Z",
+  "basis": "real_browser_domain_UI_with_synthetic_identity_possession_photos_and_stories_no_model",
+  "plan": {
+    "base": "http://127.0.0.1:3241",
+    "modelRequestsInThisScript": 0,
+    "paidEndpoints": "blocked before browser network",
+    "journeys": [
+      "UI注册两个独立账号→无品牌/型号纪念画录入和合成照片→UI故事保存→明确确认本机关系记忆→UI纠正→UI遗忘",
+      "UI选择赠礼故事→UI预览并制作→另一个真实注册账号预览和确认模拟取得→独立物品实例→收礼人新增私事→API读取断言双向隐私"
+    ],
+    "limits": [
+      "没有真实实物取得；认领为明确合成测试设定",
+      "不把记忆列表显示称为真实千问跨会话使用成功",
+      "不含真实用户资料、实物照片、模型视觉或设备操作"
+    ],
+    "modelFollowupPlan": {
+      "uiQuestions": [
+        "谁送的这幅画？不要补充日期。",
+        "纠正赠送者后，这幅画是谁送的？",
+        "遗忘后，你还能确认赠送者吗？"
+      ],
+      "expectedUpstreamRequests": "预计6–9次；依正式执行器最多6次/提问，保守上限18次，主线程串行安排后另测。",
+      "status": "not_run"
+    }
+  },
+  "status": "failed",
+  "pageErrors": [],
+  "networkErrors": [],
+  "blockedModelRequests": [],
+  "checks": [
+    {
+      "name": "两个真实注册账号和独立浏览器上下文；没有切换演示角色",
+      "passed": true
+    },
+    {
+      "name": "UI录入无品牌/型号纪念物、上传合成照片、确认模拟持有；未绑定商品知识",
+      "passed": true
+    },
+    {
+      "name": "UI明确确认后，新页面可查看本机关系记忆；没有云端授权或模型请求",
+      "passed": true,
+      "memoryId": "1140c566-719e-4697-84ba-6959f236f0ae"
+    },
+    {
+      "name": "UI纠正和遗忘确实写入原记忆版本；不是只改前端显示",
+      "passed": true,
+      "newVersion": 2
+    },
+    {
+      "name": "独立账号在分享前不能读原物品/照片，也不能用演示身份头冒充物主",
+      "passed": true
+    }
+  ],
+  "uiWrites": [
+    {
+      "method": "POST",
+      "path": "/api/account",
+      "action": "register"
+    },
+    {
+      "method": "POST",
+      "path": "/api/account",
+      "action": "register"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "createItem"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "fragment"
+    },
+    {
+      "method": "POST",
+      "path": "/api/memories",
+      "action": "rememberItemStory"
+    },
+    {
+      "method": "POST",
+      "path": "/api/memories"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/memories"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "fragment"
+    },
+    {
+      "method": "POST",
+      "path": "/api/life",
+      "action": "fragment"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "relationship-desktop",
+      "path": "docs\\engineering\\qwen-foundation-2026-11-02\\evidence\\gate3-relations-gift-r3-relationship-desktop.png"
+    },
+    {
+      "name": "failure-desktop",
+      "path": "docs\\engineering\\qwen-foundation-2026-11-02\\evidence\\gate3-relations-gift-r3-failure-desktop.png"
+    },
+    {
+      "name": "failure-mobile",
+      "path": "docs\\engineering\\qwen-foundation-2026-11-02\\evidence\\gate3-relations-gift-r3-failure-mobile.png"
+    }
+  ],
+  "modelChecks": {
+    "status": "not_run",
+    "reason": "No model or assistant request is authorized by this zero-model runner."
+  },
+  "accounts": {
+    "ownerId": "u_42ab15c9-5055-4494-b8fb-1d7df7e4e101",
+    "receiverId": "u_02b66d7b-dc7b-430e-b79c-8b5f15779aa0"
+  },
+  "item": {
+    "id": "387b483b-cba9-4c08-948a-dbd129d85ecb",
+    "name": "[合成]朋友送的无型号纪念画 gate3-relations-gift-r3",
+    "model": "待确认",
+    "synthetic": true,
+    "photoStored": true
+  },
+  "mediaIsolationCheck": {
+    "status": 403,
+    "method": "unauthorized read assertion; media id from registered photo URL"
+  },
+  "failure": {
+    "name": "TimeoutError",
+    "message": "locator.check: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('form').filter({ has: getByLabel('给收礼人的话', { exact: true }) }).getByLabel('[合成可分享]这幅画曾陪我搬家，现在愿把这一页传给你。', { exact: true })\u001b[22m\n"
+  },
+  "recovery": {
+    "privateIgnoredBrowserStates": "Saved only under .runtime, never in Git or public evidence",
+    "itemId": "387b483b-cba9-4c08-948a-dbd129d85ecb",
+    "modelFollowup": "not_run; needs serial scheduling by the main task"
+  },
+  "finishedAt": "2026-11-02T16:50:55.424Z",
+  "ledgerWindowDelta": 2,
+  "ledgerWindowCaveat": "Global ledger window; any concurrent unrelated call must be investigated, not attributed to this runner."
+}

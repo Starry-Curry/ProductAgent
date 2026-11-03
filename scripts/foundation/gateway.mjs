@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {gateway} from '../real-intelligence/gateway.mjs';
 import {assertBudget} from '../real-intelligence/budget.mjs';
@@ -21,7 +22,7 @@ export async function foundationGateway({phase='pilot',recordContent=true}={}){
   if(review.proceed!==true||!review.evidence?.length)throw Error('pilot_not_reviewed');
  }
  const pilot=phase==='pilot',limits={roundId:ROUND,requests:pilot?12:150,cny:pilot?8:80};
- return gateway('D:/ProductAgent-LifeContext/.env.local',{root:ROOT,lockFile:'.runtime/qwen-foundation-round.lock',model:'qwen3.8-max-0902',allowThinking:true,allowResponses:!pilot,allowResponsesStream:!pilot,reserveExternalInputs:true,maxThinkingBudget:2048,requestTimeoutMs:90000,reconcileInterrupted:true,recoverStaleLock:true,recordContent,prices:{input:12,output:36},limits,
+ return gateway(process.env.WUJIAN_EVAL_CONFIG||path.resolve('.env.local'),{root:ROOT,lockFile:'.runtime/qwen-foundation-round.lock',model:'qwen3.8-max-0902',allowThinking:true,allowBoundedPageImages:true,allowResponses:!pilot,allowResponsesStream:!pilot,reserveExternalInputs:true,maxThinkingBudget:2048,requestTimeoutMs:90000,reconcileInterrupted:true,recoverStaleLock:true,recordContent,prices:{input:12,output:36},limits,
   validateRequest(body,{nativeSearch,responses}){
    if(pilot&&(nativeSearch||responses||(body.messages||[]).some(m=>Array.isArray(m.content)&&m.content.some(c=>c.type!=='text'))))throw Error('pilot_text_only_use_integration_after_review');
   }});

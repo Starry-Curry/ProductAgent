@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-02T16:38:03.063Z",
+  "basis": "offline_DOM_selector_reproduction_only; no product journey or model success",
+  "exactLabelMatches": 0,
+  "namedTextareaMatches": 1,
+  "labelText": "纠正内容[合成经历]朋友小夏送的画。",
+  "source": "src/components/MemoryCenter.tsx:262",
+  "paidRequests": 0,
+  "networkRequests": 0,
+  "assistantGET": {
+    "source": "src/app/api/assistant/route.ts:48",
+    "behavior": "list/read sessions only; old runner mistakenly blocked this GET",
+    "generationMethod": "POST; remains blocked"
+  },
+  "resolution": "Use named textarea with old-value assertion, permit only read-only assistant GET, preserve original failed r1 evidence."
+}

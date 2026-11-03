@@ -15,7 +15,9 @@ async function prepared(t:any){
  let chosen='';const p:Provider={ready:true,model:'offline-binding-test',structuredOutput:'json_schema',generate:async(_s,input:any)=>{
   const source=input.sources[0];return {model:'offline-binding-test',tokens:null,text:JSON.stringify({observations:[{kind:'operation',subject:source.subject,sourceId:source.id,quoteSpans:[source.spans.find((s:any)=>s.text.startsWith('Press')).id],conditions:['尚未操作设备'],unknown:null}]})};
  },converse:async messages=>{
-  const input=JSON.parse(messages[1].content!);chosen=input.officialSemantics.observations[0].id;
+  const tool=messages.findLast(m=>m.role==='tool');
+  if(!tool)return {model:'offline-binding-test',tokens:null,text:'',finishReason:'tool_calls',toolCalls:[{id:'read',type:'function',function:{name:'search_product_knowledge',arguments:JSON.stringify({itemId,query:'按键原文'})}}]};
+  const input=JSON.parse(tool.content!);chosen=input.semantic.observations[0].id;
   return {model:'offline-binding-test',tokens:null,text:'',finishReason:'tool_calls',toolCalls:[{id:'preview',type:'function',function:{name:'prepare_action',arguments:JSON.stringify({kind:'plan',goal:'按当前合成资料准备操作',itemIds:[itemId],steps:[{kind:'device_operation',items:[itemId],text:'核对原文后按标示键一次',operationRef:chosen,conditions:['实物标示待核对']}],sourceIds:[chosen],conditions:['仅为候选，尚未操作']})}}]};
  }};
  const result=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId,mode:'service',question:'请准备待我确认的步骤，不要执行',memoryPolicy:'off'},p);

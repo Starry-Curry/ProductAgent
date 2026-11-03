@@ -195,23 +195,12 @@ test("搜索命中还须实际读取和型号核对；完成第一步后保持�
     assert.equal(result.documents.length, 1);
     assert.equal(result.documents[0].url, "https://www.lego.com/right");
     const e = retrieveKnowledge(t.db, t.read(), "lin", id, "第一次怎么用");
-    const provider = {
-      ready: true,
-      model: "offline-test",
-      generate: async () => ({
-        model: "offline-test",
-        tokens: null,
-        text: JSON.stringify({
-          kind: "grounded",
-          answer: "按对应资料继续。",
-          steps: [
-            { phase: "prepare", text: "核对零件。", sourceIds: [e[0].id] },
-            { phase: "operate", text: "依次组装零件。", sourceIds: [e[0].id] },
-          ],
-          questions: [],
-        }),
-      }),
-    };
+    let calls=0;
+    const provider={ready:true,model:'offline-converse',generate:async()=>{throw Error('retired');},converse:async(messages:any[])=>{
+      calls++;const input=JSON.parse(messages.find(m=>m.role==='user')!.content);assert(input.officialSources.some((s:any)=>s.text.includes('Assemble pieces')));
+      if(calls===2){assert(input.history.some((m:any)=>m.text.includes('核对零件')));assert(messages.some(m=>m.role==='user'&&m.content.includes('已经做过第一步')));}
+      return {text:calls===1?'先核对零件，再依次组装零件。':'你报告已经核对零件，接着依次组装零件。仍须核对实物稳定性。',toolCalls:[],finishReason:'stop',model:'offline-converse',tokens:null};
+    }};
     const a = await respond(
       t.db,
       t.read,
@@ -242,8 +231,8 @@ test("搜索命中还须实际读取和型号核对；完成第一步后保持�
       provider,
     );
     assert.equal(b.reply.route?.intent, "help");
-    assert.equal(b.reply.steps.length, 1);
-    assert.match(b.reply.steps[0].text, /组装/);
+    assert.equal(calls,2);assert.match(b.reply.answer,/组装/);assert.match(b.reply.answer,/已经核对零件/);
+    assert(b.reply.citations.every(c=>!c.url.includes('wrong')));
   } finally {
     t.db.close();
   }
