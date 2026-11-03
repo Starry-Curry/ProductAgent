@@ -1,3 +1,5 @@
+> 2026-11-03 零费用收口：团队共享服务、独立接入示例、状态/撤权检查与594项回归、类型、生产构建通过；真实陌生指导首答仍有错误，Core Foundation V1 = NOT_ACCEPTED。未覆盖首答、未新增模型请求、未合并main。详见 [当前状态](docs/engineering/CURRENT.md) 和 [核心复核](docs/engineering/qwen-foundation-2026-11-02/CORE_REVIEW.md)。
+
 > 2026-11-03 Core Foundation 增量恢复点：未知品牌发现/来源链、共享原文与任务经验接续已修，真实输出仍有无依据细节，尚未Core验收通过。当前范围与证据只看 [CURRENT](docs/engineering/CURRENT.md)。下方历史保留。
 
 ## 2026-11-03 统一底座收敛（候选，未正式验收）

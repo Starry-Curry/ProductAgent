@@ -24,3 +24,8 @@ test('single-page manual keeps actual section index and reads selected article, 
  const full=await extractPublicHTML(raw,'https://new-maker.example/manual/');assert.ok(full.links.some(l=>l.url.endsWith('#actual-section')));
  const focused=await extractPublicHTML(raw,'https://new-maker.example/manual/#actual-section');assert.match(focused.text,/Release the lever/);assert.ok(!focused.text.includes('unrelated text'));assert.equal(focused.reading.figures.length,1);
 });
+
+import {officialDomain} from '../src/lib/life/knowledge.ts';
+test('旧目录也按完整品牌身份匹配，不能用嵌入Sony字符串伪造厂家',()=>{
+ assert.equal(officialDomain('https://www.sony.com/manual','Sony'),true);assert.equal(officialDomain('https://www.sony.com/manual','FAKE-SONY-FORGED'),false);
+});

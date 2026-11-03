@@ -2,37 +2,40 @@
 
 唯一当前研发分支：`codex/wujian-qwen-foundation-v1`。工作区：`D:\ProductAgent-LifeContext\.runtime\qwen-foundation-v1`。旧任务已安全暂停，遗留成果保护点：`543a933571489a518e9dd4bb069e674155138d3a`（已推送）。本轮从此增量收敛，原项目与私人数据库未改。
 
-**当前交付范围：Core Foundation Accepted；仍在验证，尚未宣布通过。** 用户暂停赠礼、社交、家庭协作、复杂故事的主动开发，已有功能与安全回归保留。原完整质量验收的冻结首答为 **0/18**，保持历史结果，四条完整旅程留待后续 Full Foundation Quality Accepted。
+**本次收口：Core Foundation V1 = NOT_ACCEPTED。** 共享服务与工程收敛已交付，但自主发现后的首次操作指导仍有错误细节；后续复测改善不替换首答，也不足以证明陌生商品可靠性。见 [核心验收与未达标项](qwen-foundation-2026-11-02/CORE_REVIEW.md)。用户暂停赠礼、社交、家庭协作、复杂故事的主动开发，已有功能与安全回归保留。原完整质量验收的冻结首答 **0/18** 不变，四条完整旅程留待后续 Full Foundation Quality Accepted；不混称完整Foundation通过。
 
-旧轮次 `qwen-foundation-20261102-r1` 已封存142次/估算¥19.633624；新增获批轮次 `qwen-foundation-20261103-r2` **40次/¥20**，硬门禁与历史哈希独立保留。追加轮次已封存27次，连同超时未知用量预留约¥15.193184；用户另批独立 `qwen-foundation-20261103-r3` **12次/¥15**，当前用于J01必要复验，旧台账不变。当前用量查[追加台账](qwen-foundation-2026-11-02/evidence/rounds/qwen-foundation-20261103-r2/model-calls.json)。不再批量补跑18题直接对照。
+费用封存：R1 **142/150**，估算¥19.633624，8次余量不再使用；R2 **40/40**，已知估算¥4.575668＋超时未知用量预留¥13.131072＝¥17.706740；R3 **12/12**，估算¥2.608660。R2从27次在原40次/¥20授权内追加至40次，原27条字节快照、R3授权及超时预留保留，可校验旧前缀。没有合并额度或覆盖历史。最后零费用收尾新增请求 **0**，不再启动付费测试。详见[账目及逐任务用量](qwen-foundation-2026-11-02/evidence/core-closeout-summary-r2.json)。不补跑全部18题直接对照。
 
-最近真实结果：未知品牌ZOOM H1essential实际启动原生搜索，通用厂家身份链核对后取得HTML/PDF；原文定位与条件化能力进入Reality。J01的Task、获准失败反馈、新会话调整建议、纠正和遗忘已经过真实Qwen验证，但逐句复核发现未经支持的档位/屏幕细节，**流程通过不等于回答完全正确**。开放目标及团队接入仍在验收，不声明Core通过。
+实际结果：未知品牌ZOOM H1essential经真实Qwen原生搜索、通用厂家身份链取得HTML/PDF，原文及条件化能力进入Reality。J01 Task→获准合成反馈→新会话→纠正→遗忘实际运行；初始回答混淆左右、关机条件及指示细节。读取真实PDF原图后新会话已答对左侧开关、中间解除、录音中不能关机，仍有不受原文支持的扩写。开放目标曾漏掉已登记托盘；分离完整精简目录与相关资料后，真实复测发现托盘并根据获准失败经历改走承托路线，仍是待验证设想。所有失败和复测分别保留。
 
 ## 当前实现
 
 - Qwen / OpenAI SDK 提供模型和原生工具，AgentScope 做有界工具往返。普通缓存问答取消强制前置抽取及第二模型审核。
 - Graph/HomeTask重复模型循环退役；原文故事、本地回忆、安全限制、任务/确认/授权事务保留。家庭用同一执行器。
 - Reality / Context共享实例、准确型号、官方原文、获准关系/经历和Task。公开原文定位积累在既有知识记录中，资料页/对话/开放创意复用；模型推测不成为产品事实。
+- `foundation/services.ts` 是团队公共入口；独立目标功能示例可运行，Provider可注入升级，不建第二套Runtime。目录支持分页/用途收窄；PDF识读候选保留来源与页码，但为未验证模型观测。
 - 已修在途物品变化、跨物品反馈隔离、规划续接、语义引用确认及官方章节提前截断。REA仅为既有自有合成软件实验，无实体操作。
 
 ## 证据与团队接入
 
 - [执行、失败与恢复](qwen-foundation-2026-11-02/STATUS.md)
 - [公共接口、示例与Mock](qwen-foundation-2026-11-02/SERVICES.md)
+- [本次核心验收、浏览器和恢复步骤](qwen-foundation-2026-11-02/CORE_REVIEW.md)：594/594离线回归、类型、生产构建、benchmark通过；实际账号撤权/型号/状态检查通过，均无新增模型请求。
 - [离线收敛与实际修复](qwen-foundation-2026-11-02/evidence/runtime-convergence-review.md)
 - [冻结独立验收规则](qwen-foundation-2026-11-02/acceptance/README.md)
 - [固定历史索引](../HISTORY.md)：保留原文、费用、失败与恢复引用。
 
 ## 隔离运行
 
-Node24、`npm ci`；普通运行看README。受控模型验证：
+Node24、`npm ci`；普通运行看README。当前安全体验入口仅离线，不产生新费用：
 
 ```powershell
-$env:WUJIAN_EVAL_CONFIG='你的安全配置文件绝对路径'
 $env:WUJIAN_MODEL_ROUND='qwen-foundation-20261103-r3'
-node scripts/foundation/preview.mjs --dev --port=3241 --record-synthetic-evidence
+node scripts/foundation/preview.mjs --offline --dev --port=3241
+# http://127.0.0.1:3241；新克隆需自行创建合成账号与物品
+node --experimental-strip-types examples/foundation/run-mock.ts
 ```
 
-使用当前获批网关与合成数据；配置值、Cookies和.runtime不提交。Ctrl+C停止，不能删台账绕过限制；`--offline`关闭模型费用。开发构建用.next-foundation，生产验证用.next-foundation-release，避免覆盖其他服务。
+离线入口可查看本地合成资料与任务、操作已授权的本地业务；**不能重现真实Qwen回答**，实际模型回答和截图见证据。收费网关已达到本次追加请求上限，不应再启动。配置值、Cookies和.runtime不提交。Ctrl+C停止，不能删台账绕过限制。开发构建用.next-foundation，生产验证用.next-foundation-release，避免覆盖其他服务。
 
 develop已从基础检查通过的 f449067 建立并推送；它是团队开发基线，并非正式验收通过。当前增量仍在独立codex分支，不合并main、不改账号权限或分支保护。

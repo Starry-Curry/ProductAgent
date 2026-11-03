@@ -1,0 +1,575 @@
+{
+  "at": "2026-11-03T03:56:33.926Z",
+  "basis": "public_original_HTML_and_root_visual_inspection_of_actual_PDF_no_Qwen_no_hardware",
+  "powerOff": {
+    "title": "H1essentialOperation Manual",
+    "text": "H1essentialOperation Manual\n\nTurning the power off\n\nSlide\n〔此处图示未读取〕\ntoward\n〔此处图示未读取〕\nuntil “Please wait. Saving data…” appears on the display.\n\nThe display will darken and the power will turn off.\n\nNOTE\n\nWhile “Please wait. Saving data…” is shown, the current settings of the H1essential are being saved. While “Please wait. Saving data…” is shown, do not disconnect the AC adapter or remove the batteries.\n\nThe power cannot be turned off while recording. Turn the power off after recording stops.",
+    "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_53",
+    "links": [
+      {
+        "title": "Notices",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_1"
+      },
+      {
+        "title": "Notes about this Operation Manual",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_2"
+      },
+      {
+        "title": "H1essential overview",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_3"
+      },
+      {
+        "title": "Achieving high audio quality throughout recording and editing",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_4"
+      },
+      {
+        "title": "32-bit float WAV file overview",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_5"
+      },
+      {
+        "title": "Resolution advantage",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_5__section_05faaa5b2b7a44ffbb91b4d5ee519a96"
+      },
+      {
+        "title": "Clipping advantage",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_5__section_657971af08204de09ee15c4fb43c5660"
+      },
+      {
+        "title": "Functions of parts",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_6"
+      },
+      {
+        "title": "Top and bottom",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_7"
+      },
+      {
+        "title": "Operation button overview",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_9"
+      },
+      {
+        "title": "Left and right sides",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_16"
+      },
+      {
+        "title": "Overview of screens that appear",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_17"
+      },
+      {
+        "title": "Home Screen",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_8"
+      },
+      {
+        "title": "Playback Screen",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_10"
+      },
+      {
+        "title": "Playback Options Screen",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_15"
+      },
+      {
+        "title": "Menu Screen",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_14"
+      },
+      {
+        "title": "Recording process",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_30"
+      },
+      {
+        "title": "Making preparations",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_37"
+      },
+      {
+        "title": "Inserting microSD cards",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_31"
+      },
+      {
+        "title": "Supplying power",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_40"
+      },
+      {
+        "title": "Installing batteries",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_13"
+      },
+      {
+        "title": "Connecting an AC adapter",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_19"
+      },
+      {
+        "title": "Using other power sources",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_20"
+      },
+      {
+        "title": "Connecting input devices",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_42"
+      },
+      {
+        "title": "Using the built-in XY microphone",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_43"
+      },
+      {
+        "title": "Connect a lavalier mic, for example, to the MIC/LINE IN jack",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_44"
+      },
+      {
+        "title": "H1essential placement",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_45"
+      },
+      {
+        "title": "Turning the power on/off",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_46"
+      },
+      {
+        "title": "Turning the power on",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_32"
+      },
+      {
+        "title": "Turning the power off",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_53"
+      },
+      {
+        "title": "Setting the guide sound (first time starting up)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_47"
+      },
+      {
+        "title": "Setting the language shown (first time starting up)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_48"
+      },
+      {
+        "title": "Setting the date format (first time starting up)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_49"
+      },
+      {
+        "title": "Setting the date and time (first time starting up)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_50"
+      },
+      {
+        "title": "Setting the type of batteries used (first time starting up)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_51"
+      },
+      {
+        "title": "Preventing misoperation (HOLD function)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_60"
+      },
+      {
+        "title": "Making input settings",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_33"
+      },
+      {
+        "title": "Switching between stereo and mono",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_21"
+      },
+      {
+        "title": "Reducing noise (Lo Cut)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_18"
+      },
+      {
+        "title": "Making output settings",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_62"
+      },
+      {
+        "title": "Changing how the output level is adjusted",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_63"
+      },
+      {
+        "title": "Adjusting the fixed level",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_64"
+      },
+      {
+        "title": "Recording",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_65"
+      },
+      {
+        "title": "Monitoring input sounds",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_66"
+      },
+      {
+        "title": "Making recording settings",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_34"
+      },
+      {
+        "title": "Setting the sample rate",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_67"
+      },
+      {
+        "title": "Capturing audio before recording starts (pre-recording)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_68"
+      },
+      {
+        "title": "Recording automatically (Auto Rec)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_70"
+      },
+      {
+        "title": "Enabling the recording start tone",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_71"
+      },
+      {
+        "title": "Setting the self-timer",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_69"
+      },
+      {
+        "title": "Setting the recording delay timer",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_72"
+      },
+      {
+        "title": "Setting the recording file name format",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_73"
+      },
+      {
+        "title": "Setting the recording time display",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_74"
+      },
+      {
+        "title": "Writing metadata (iXML chunks) to recording files",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_75"
+      },
+      {
+        "title": "Checking the current date/time and the name of the next recorded file",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_77"
+      },
+      {
+        "title": "Recording",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_35"
+      },
+      {
+        "title": "Adding marks during recording",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_22"
+      },
+      {
+        "title": "Moving the file being recorded to the Trash folder",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_80"
+      },
+      {
+        "title": "Playing recordings",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_36"
+      },
+      {
+        "title": "Playing recordings",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_83"
+      },
+      {
+        "title": "Selecting files for playback (File List Screen)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_11"
+      },
+      {
+        "title": "Automatically adjusting the volume during playback (normalizing)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_24"
+      },
+      {
+        "title": "Changing the file format and exporting files",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_25"
+      },
+      {
+        "title": "Adding/deleting marks in recorded files",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_23"
+      },
+      {
+        "title": "Adding marks",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_84"
+      },
+      {
+        "title": "Deleting marks",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_79"
+      },
+      {
+        "title": "Repeating playback of a set interval (A-B repeat)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_26"
+      },
+      {
+        "title": "Changing the playback speed",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_27"
+      },
+      {
+        "title": "Checking file information",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_28"
+      },
+      {
+        "title": "Moving the file being played to the Trash folder",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_29"
+      },
+      {
+        "title": "Making settings for repeat playback (Repeat Setting)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_85"
+      },
+      {
+        "title": "Managing files",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_86"
+      },
+      {
+        "title": "H1essential folder and file structure",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_61"
+      },
+      {
+        "title": "Folder and file structure",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_87"
+      },
+      {
+        "title": "Recording file names",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_78"
+      },
+      {
+        "title": "Using as a USB mic",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_88"
+      },
+      {
+        "title": "Connecting to computers, smartphones and tablets",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_89"
+      },
+      {
+        "title": "Muting the USB mic",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_12"
+      },
+      {
+        "title": "Disconnecting from computers, smartphones and tablets",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_90"
+      },
+      {
+        "title": "Making USB mic settings",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_91"
+      },
+      {
+        "title": "Switching between stereo and mono",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_92"
+      },
+      {
+        "title": "Reducing noise (Lo Cut)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_93"
+      },
+      {
+        "title": "Enabling direct monitoring",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_94"
+      },
+      {
+        "title": "Adjusting the USB send volume",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_95"
+      },
+      {
+        "title": "Adjusting volume received by USB",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_96"
+      },
+      {
+        "title": "Transferring files to computers and other devices",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_81"
+      },
+      {
+        "title": "Connecting to computers, smartphones and tablets",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_97"
+      },
+      {
+        "title": "Disconnecting from computers, smartphones and tablets",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_98"
+      },
+      {
+        "title": "Overdubbing",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_99"
+      },
+      {
+        "title": "Managing microSD cards",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_100"
+      },
+      {
+        "title": "Formatting microSD cards",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_38"
+      },
+      {
+        "title": "Testing microSD cards",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_39"
+      },
+      {
+        "title": "Conducting a quick test",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_101"
+      },
+      {
+        "title": "Conducting a full test",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_102"
+      },
+      {
+        "title": "Deleting files in the Trash folder",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_82"
+      },
+      {
+        "title": "Making various settings",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_103"
+      },
+      {
+        "title": "Setting the language shown",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_57"
+      },
+      {
+        "title": "Setting the date and time",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_59"
+      },
+      {
+        "title": "Setting the date format",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_58"
+      },
+      {
+        "title": "Setting the display brightness",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_104"
+      },
+      {
+        "title": "Setting display power saving",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_105"
+      },
+      {
+        "title": "Dimming the display while recording",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_106"
+      },
+      {
+        "title": "Setting the type of batteries used",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_41"
+      },
+      {
+        "title": "Setting the time until the power turns off automatically",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_52"
+      },
+      {
+        "title": "Using the guide sound accessibility feature",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_107"
+      },
+      {
+        "title": "Setting the guide sound (Accessibility)",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_56"
+      },
+      {
+        "title": "Setting the guide sound volume",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_55"
+      },
+      {
+        "title": "Checking guide sound information",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_108"
+      },
+      {
+        "title": "Installing guide sounds",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_54"
+      },
+      {
+        "title": "Restoring the factory default state",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_109"
+      },
+      {
+        "title": "Managing the firmware",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_110"
+      },
+      {
+        "title": "Checking the firmware versions",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_111"
+      },
+      {
+        "title": "Updating the firmware",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_112"
+      },
+      {
+        "title": "Checking the latest information for the H1essential",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_113"
+      },
+      {
+        "title": "Appendix",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_114"
+      },
+      {
+        "title": "Troubleshooting",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_115"
+      },
+      {
+        "title": "Recording/playback trouble",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_116"
+      },
+      {
+        "title": "There is no sound or it is very quiet",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_116__section_c7b9c74013e240bc80959c883cf6cd8d"
+      },
+      {
+        "title": "Cannot hear sound from connected equipment/input or the volume is very low",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_116__section_475aeb3bb38845399614a047b484928a"
+      },
+      {
+        "title": "Monitored sound is distorted",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_116__section_b1566f143c234b06b74e8d87f8a06952"
+      },
+      {
+        "title": "Recording is not possible",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_116__section_72faffc35133419baf6e3bcefb9f287e"
+      },
+      {
+        "title": "“MIC INPUT OVERLOAD!” appears",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_116__section_4324d6c601604149bad12ce0de467b07"
+      },
+      {
+        "title": "Output volume cannot be adjusted",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_116__section_9c06438d3c404f0fa2afeebc792090f0"
+      },
+      {
+        "title": "Other trouble",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_117"
+      },
+      {
+        "title": "The recorder is not recognized by a computer, smartphone or tablet even though it is connected through the USB port",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_117__section_1c653cbf1bbd4fd3a13d950d2a64d3f7"
+      },
+      {
+        "title": "Battery operation time is short",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_117__section_7db5ee3fe2ac4c99b6cdb084eb01a084"
+      },
+      {
+        "title": "An accessibility update is recommended",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_117__section_8eb0cbe90a944601aa138d0ead4da56a"
+      },
+      {
+        "title": "H1essential metadata list",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_118"
+      },
+      {
+        "title": "Metadata contained in BEXT chunks in WAV files",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_119"
+      },
+      {
+        "title": "Metadata contained in iXML chunks in WAV files",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_76"
+      },
+      {
+        "title": "Specifications",
+        "url": "https://zoomcorp.com/manuals/h1essential-en/#unique_120"
+      }
+    ],
+    "navigationItems": [],
+    "reading": {
+      "mode": "html_text",
+      "limitations": [
+        "有2处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+      ],
+      "figures": [
+        {
+          "url": "https://zoomcorp.com/manuals/h1essential-en/image/Button-POWER.svg",
+          "caption": "图示没有替代文字，内容未读取"
+        },
+        {
+          "url": "https://zoomcorp.com/manuals/h1essential-en/image/Icon-power.svg",
+          "caption": "图示没有替代文字，内容未读取"
+        }
+      ]
+    }
+  },
+  "visual": {
+    "url": "https://zoomcorp.com/media/documents/E_H1essential_rev2.pdf",
+    "byteHash": "31a89c1e380a39ecea12467eb36bc8b17caddbe032cf48052e68c23c3c48a884",
+    "inspectedPages": [
+      10,
+      22,
+      29
+    ],
+    "findings": [
+      "Page10: POWER/HOLD switch is on the LEFT side; generated RIGHT-side instruction is wrong.",
+      "Official power-off section explicitly says power cannot be turned off while recording."
+    ]
+  },
+  "modelFailures": [
+    {
+      "file": "core-j01-discovery-r5.json",
+      "finding": "Power-off comparison introduces unsupported interruption claim."
+    },
+    {
+      "file": "core-j01-continuity-r1.json",
+      "finding": "Wrong RIGHT side and unsupported screen/HOLD indicator; mechanics and memory assertions passing do not erase answer errors."
+    }
+  ]
+}

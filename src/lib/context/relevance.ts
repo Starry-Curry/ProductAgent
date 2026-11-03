@@ -4,10 +4,10 @@ const normalize=(s:string)=>s.normalize('NFKC').toLowerCase();
 export function relevanceTerms(query:string){return [...new Set([...new Intl.Segmenter('zh',{granularity:'word'}).segment(normalize(query))].map(s=>s.segment.trim()).filter(s=>s.length>1))];}
 /** Exact/lexical selection only; zero score means unknown relevance, not an
  * excuse to send the first inventory entries. Semantic rerank may refine it. */
-export function resourceCatalogue(items:Item[],query:string,requiredIds:string[]=[],limit=12){
+export function resourceCatalogue(items:Item[],query:string,requiredIds:string[]=[],limit=12,knownEffects:Record<string,string[]>={}){
  const terms=relevanceTerms(query),q=normalize(query);
  const rows=items.map(i=>{
-  const effects=projectReality(i).capabilities.filter(c=>c.status==='conditional').map(c=>c.effect);
+  const effects=knownEffects[i.id]||projectReality(i).capabilities.filter(c=>c.status==='conditional').map(c=>c.effect);
   const text=normalize([i.name,i.brand,i.model,i.category,...effects].join(' '));
   const score=(requiredIds.includes(i.id)?1000:0)+(i.model&&i.model.length>2&&q.includes(normalize(i.model))?200:0)+(q.includes(normalize(i.name))?100:0)+terms.reduce((n,t)=>n+(text.includes(t)?t.length:0),0);
   return {item:i,score,effects};

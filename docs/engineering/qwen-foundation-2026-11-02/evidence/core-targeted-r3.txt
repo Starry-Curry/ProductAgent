@@ -1,0 +1,37 @@
+✔ 展示前也拒绝未登记资源、未满足条件及伪来源，无需先写计划 (25.6946ms)
+✔ 模型缩写目标不能移除用户禁止购买条件，未知不升级为实测 (3.5271ms)
+✔ 正式工具注册都有服务端效果与范围；模型不获得直接外部执行权限 (3.3725ms)
+✔ 同一真实respond入口展示行动后立即停止，不再自由总结增加资源，也不暗写Task (522.0995ms)
+✔ 行动工具拒绝后不能绕回自由文本发布同一操作；拒绝理由保留 (459.196ms)
+✖ 按需检索直接返回原文：没有强制第二抽取，操作仍进入动作核对 (429.0692ms)
+✔ 真实执行契约：原文ID在服务端绑定连续引文后进入同一计划，确认时回到原文hash/范围而非强求旧chunk ID (805.0089ms)
+✔ 相同URL正文变化/伪造范围/假语义ID不能通过确认，原始资料仍保留版本 (500.3272ms)
+✔ 持久Task为plan不等于每轮都要新动作；无型号纪念物的状态/未知问答不强制商业手册搜索 (418.2228ms)
+✔ 独立专业功能使用同一服务、授权、Task和Outcome，无第二套Runtime或事实库 (905.4358ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4420.1949
+
+✖ failing tests:
+
+test at tests\foundation-guidance.test.ts:44:1
+✖ 按需检索直接返回原文：没有强制第二抽取，操作仍进入动作核对 (429.0692ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /合成操作说明/. Input:
+  
+  '这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。'
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/foundation-guidance.test.ts:52:87)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。',
+    expected: /合成操作说明/,
+    operator: 'match',
+    diff: 'simple'
+  }

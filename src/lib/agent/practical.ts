@@ -7,7 +7,7 @@ import {compileTaskContext} from '../context/compiler.ts';
 import {resourceCatalogue} from '../context/relevance.ts';
 import {discoverCapabilities} from '../context/discovery.ts';
 import {scopedProductKnowledge} from '../context/evidence-scope.ts';
-import {saveGuidanceSources,readSourceSelections} from '../context/source-reference.ts';
+import {bindOriginalReference,saveGuidanceSources,readSourceSelections} from '../context/source-reference.ts';
 import {modelReality,projectReality} from '../context/reality.ts';
 import {runToolAgent} from './tool-runtime.ts';
 import {toolPolicy} from './tool-policy.ts';
@@ -177,7 +177,18 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
     provider.onStatus?.('正在读取说明书图示与符号');
     const rendered=pdf?await renderRelevantPdf(doc.url,p.question,(doc.chunks.find(c=>c.id===p.sourceId)?.text||question),p.pageNumbers,item.model):undefined;guard();
     if(rendered&&pdfVersions.has(doc.id)&&pdfVersions.get(doc.id)!==rendered.sourceHash){pdfVersions.delete(doc.id);throw Error('PDF在索引后发生变化，请不带pageNumbers重新读取实际页码索引；未发送旧页码图示。');}
-    calls++;r=await provider.inspectDocument(pdf?doc.url:image!.url,p.question,pdf?'pdf':'image',rendered?{pages:rendered.pages}:undefined);
+    // Public-only source reading can be reused; never send the personal goal
+    // into a reading that will enter product knowledge. Page selection stays
+    // task-specific and local; interpretation stays explicitly unverified.
+    const sourceQuestion='只识读所附官方页面：列出实际可见的按键、图标、左右或上下视图对应关系、操作与限制。保留原文标签及页码；不提供用户建议，不猜未显示的内容。适用型号：'+item.model;
+    calls++;r=await provider.inspectDocument(pdf?doc.url:image!.url,sourceQuestion,pdf?'pdf':'image',rendered?{pages:rendered.pages}:undefined);
+    guard();
+    if(rendered&&r.text.trim()&&!temporary){
+     const current=readKnowledge(db,read(),actor,item.id).find(d=>d.id===doc.id&&d.hash===doc.hash);if(!current)throw Error('source_changed_during_visual_read');
+     const observation={basis:'provider_visual_reading_not_verified_fact' as const,model:r.model,text:r.text.slice(0,6000),pages:rendered.pages.map(p=>p.page),sourceHash:rendered.sourceHash,documentHash:doc.hash,at:new Date().toISOString()};
+     const old=(current.reading?.visualReadings||[]).filter(v=>v.documentHash===doc.hash&&v.sourceHash===rendered.sourceHash&&JSON.stringify(v.pages)!==JSON.stringify(observation.pages));
+     storeOfficialDocument(db,actor,item,{...current,reading:{mode:current.reading?.mode||'pdf_text_layer',limitations:current.reading?.limitations||[],figures:current.reading?.figures||[],visualReadings:[observation,...old].slice(0,3)}});
+    }
     log('manual_visual',JSON.stringify({url:pdf?doc.url:image!.url,sourceId:doc.id,kind:pdf?'pdf':'image',reading:rendered?{mode:'rendered_selected_pdf_pages',pages:rendered.pages.map(p=>p.page),pageCount:rendered.pageCount,sourceHash:rendered.sourceHash}:undefined,usage:r.usage}));
    }
    guard();if(r.tokens){tokens.input+=r.tokens.input;tokens.output+=r.tokens.output;reservedCny+=(r.tokens.input*12+r.tokens.output*36)/1e6;}
@@ -200,15 +211,15 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    const proposal=actionProposal.parse(p);const allowed=context().authorizedItemIds.filter(id=>proposal.kind!=='plan'||usable(read().items.find(x=>x.id===id)!));
    const chosen=proposal.kind==='plan'?checkPlanResources(proposal,allowed,practicalConstraints(context()),actionSources(),read().items.filter(i=>allowed.includes(i.id)),actionGoal()):proposal;
    const itemIds=chosen.kind==='plan'?chosen.itemIds:[chosen.itemId];select(itemIds);
-    const action=chosen.kind==='plan'?{kind:'plan' as const,goal:chosen.goal,itemIds:chosen.itemIds,conditions:chosen.unresolved,dependencies:chosen.dependencies.map(d=>({step:d.index,resourceIds:d.resources,status:d.status})),resourceRevisions:Object.fromEntries(chosen.itemIds.map(id=>[id,planResourceStamp(read().items.find(i=>i.id===id)!)])),sourceRefs:chosen.sourceIds.map(id=>{const stored=chosen.itemIds.flatMap(itemId=>readSourceSelections(read().items.find(i=>i.id===itemId)!,readKnowledge(db,read(),actor,itemId))).find(s=>s.id===id);return stored?.reference||{id,url:(passages.get(id)?.url||context().retrieval.documents.find(d=>d.id===id)?.url)!};}),checklist:chosen.steps.map(s=>({label:s,status:chosen.readiness==='conditional'?'实施前先核对条件':'待执行（不是实物验证）'}))}:chosen;
+    const action=chosen.kind==='plan'?{kind:'plan' as const,goal:chosen.goal,itemIds:chosen.itemIds,conditions:chosen.unresolved,dependencies:chosen.dependencies.map(d=>({step:d.index,resourceIds:d.resources,status:d.status})),resourceRevisions:Object.fromEntries(chosen.itemIds.map(id=>[id,planResourceStamp(read().items.find(i=>i.id===id)!)])),sourceRefs:chosen.sourceIds.map(id=>{const stored=chosen.itemIds.flatMap(itemId=>readSourceSelections(read().items.find(i=>i.id===itemId)!,readKnowledge(db,read(),actor,itemId))).find(s=>s.id===id);if(stored)return stored.reference;const doc=chosen.itemIds.flatMap(itemId=>scopedProductKnowledge(read().items.find(i=>i.id===itemId)!,readKnowledge(db,read(),actor,itemId)).map(d=>d.document)).find(d=>d.id===id||d.chunks.some(c=>c.id===id));if(!doc)throw Error('source_no_longer_current');return bindOriginalReference(doc,id);}),checklist:chosen.steps.map(s=>({label:s,status:chosen.readiness==='conditional'?'实施前先核对条件':'待执行（不是实物验证）'}))}:chosen;
    const title=chosen.kind==='plan'?(chosen.readiness==='conditional'?'待核对的候选计划：':'资源已核对的计划：')+chosen.goal:chosen.kind==='story'?'保存这段物品故事':chosen.kind==='gift'?'准备不含故事的赠礼':'交给家人继续处理';
    const detail=chosen.kind==='plan'?[...chosen.steps,...chosen.unresolved.map(c=>'待核对：'+c),'数值与资源核对不证明物理可行或每句话有据']:chosen.kind==='story'?[chosen.text,'不自动授权记忆检索、云端或家庭共享']:chosen.kind==='gift'?[chosen.message,'不附私人故事或对话；创建不等于交付']:[chosen.summary,'只共享你确认的摘要，对方尚未接手'];
    const card=proposeAction(db,read(),actor,session,crypto.randomUUID(),action,title,detail);cards.push(card);return {card,basis:'pending_explicit_user_confirmation_no_domain_write',notice:'仅准备草稿，必须用户点击确认；不是现实任务完成或设备执行'};
   }
    const current=context();
-   const requested=name==='search_product_knowledge'?[p.itemId]:name==='get_item_context'&&!p.itemIds.length?(p.query?resourceCatalogue(read().items.filter(i=>current.authorizedItemIds.includes(i.id)),p.query).items.map(i=>i.id):current.items.map(i=>i.id)):p.itemIds;
+   const requested=name==='search_product_knowledge'?[p.itemId]:name==='get_item_context'&&!p.itemIds.length?(p.query?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor,scopeItemIds:current.authorizedItemIds}).resources.map(i=>i.id):current.items.map(i=>i.id)):p.itemIds;
    const c=select(requested);
-  if(name==='get_item_context'){resourcesRead=true;const page=!p.itemIds.length?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor}):undefined;return {items:c.semanticItems.map(modelReality),catalogue:c.catalogue,discovery:c.discovery,...(page?{capabilityPage:page}:{}),notice:'query按名称、型号或已记录能力检索；无匹配可省略query，用cursor分页浏览获准目录，不假定前几件相关。'};}
+  if(name==='get_item_context'){resourcesRead=true;const page=!p.itemIds.length?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor,scopeItemIds:current.authorizedItemIds}):undefined;return {items:c.semanticItems.map(modelReality),catalogue:c.catalogue,discovery:c.discovery,...(page?{capabilityPage:page}:{}),notice:'query按名称、型号或已记录能力检索；无匹配可省略query，用cursor分页浏览获准目录，不假定前几件相关。'};}
   if(name==='get_relevant_experiences')return {experiences:c.experiences,preferences:c.preferences,privateFacts:c.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),basis:'approved_user_report_not_proven_cause'};
   const item=read().items.find(i=>i.id===p.itemId)!;const acquisition:any={cached:readKnowledge(db,read(),actor,item.id).length>0,readURLs:[],issues:[]};
   if(!temporary&&process.env.WUJIAN_ALLOW_PUBLIC_FETCH!=='false'){

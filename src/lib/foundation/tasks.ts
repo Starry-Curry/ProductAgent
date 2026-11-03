@@ -24,6 +24,7 @@ export type TaskSpec = {
   version: "task-spec/1";
   taskId: string;
   revision: number;
+  creationFingerprint?:string;
   createdBy: Person;
   goal: string;
   intent: z.infer<typeof taskIntent>;
@@ -84,6 +85,7 @@ const createSchema = z
     itemInstanceIds: z.array(z.string().min(1).max(100)).max(30).default([]),
   })
   .strict();
+export type CreateTaskInput=z.input<typeof createSchema>;
 function put(db: DatabaseSync, t: TaskSpec) {
   db.prepare(
     "INSERT INTO foundation_tasks VALUES(?,?,?,?) ON CONFLICT(id) DO UPDATE SET revision=excluded.revision,body=excluded.body",
@@ -122,6 +124,7 @@ export function getTask(
     contextRefs: t.contextRefs.filter((r) => allowed.includes(r.id)),
     participantIds: [a],
     participantSummaries: undefined,
+    creationFingerprint:undefined,
     experienceRefs:undefined,
     privacyStamp: t.privacyStamp ? Object.fromEntries(Object.entries(t.privacyStamp).filter(([key])=>key==="*"||allowed.some(id=>key==="item:"+id))) : undefined,
   };
@@ -236,6 +239,15 @@ export function createTask(
   const v = createSchema.parse(raw);
   db.exec("BEGIN IMMEDIATE");
   try {
+    const creationFingerprint=fingerprint({goal:v.goal,intent:v.intent,itemIds:[...new Set(v.itemInstanceIds)]});
+    const prior=db.prepare('SELECT task_id FROM foundation_links WHERE kind=? AND ref_id=?').get('request:'+a,v.requestId) as {task_id:string}|undefined;
+    if(prior){
+      const t=getTask(db,read(),a,prior.task_id);
+      const legacyKnown=t.contextRefs.every(r=>['用户选择或确认的业务对象','本次已获准且实际读取的目标资源；不授予操作或分享权限'].includes(r.whyNeeded));
+      const original=t.creationFingerprint||(legacyKnown?fingerprint({goal:t.goal,intent:t.intent,itemIds:t.contextRefs.filter(r=>r.whyNeeded==='用户选择或确认的业务对象').map(r=>r.id)}):undefined);
+      if(original!==creationFingerprint)throw new AgentError('幂等请求内容不同',409);
+      db.exec('COMMIT');return t;
+    }
     const t = linkTask(db, read(), a, {
       kind: "request:" + a,
       refId: v.requestId,
@@ -250,6 +262,7 @@ export function createTask(
         fingerprint([...new Set(v.itemInstanceIds)])
     )
       throw new AgentError("幂等请求内容不同", 409);
+    t.creationFingerprint=creationFingerprint;put(db,t);
     db.exec("COMMIT");
     return t;
   } catch (e) {
@@ -413,6 +426,12 @@ export function finishRun(
 ) {
   db.exec("BEGIN IMMEDIATE");
   try {
+    const stored=db.prepare('SELECT body FROM foundation_runs WHERE id=?').get(run.runId) as {body:string}|undefined;
+    const prior=stored?JSON.parse(stored.body) as TaskRun:undefined;
+    if(prior&&prior.status!=='running'&&prior.status===status&&prior.sessionId===sessionId){
+      if(status!=='blocked'&&status!=='failed')assertRunCurrent(db,read(),prior);
+      db.exec('COMMIT');return prior;
+    }
     if (status !== "blocked" && status !== "failed")
       assertRunCurrent(db, read(), run);
     const r = {
@@ -500,6 +519,7 @@ const outcomeSchema = z
     allowCloud: z.boolean().default(false),
   })
   .strict();
+export type OutcomeInput=z.input<typeof outcomeSchema>;
 export function recordOutcome(
   db: DatabaseSync,
   read: () => State,

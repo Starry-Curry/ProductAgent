@@ -7,7 +7,8 @@ import { canRead, type State, type Person } from "../domain.ts";
 import { AgentError, type AssistantReply } from "../agent/contracts.ts";
 import { searchProducts } from "../products.ts";
 import { modelMentioned } from "./knowledge.ts";
-export type SourceReading={mode?:'html_text'|'pdf_text_layer'|'unknown';limitations:string[];figures:{url:string;caption:string}[]};
+export type PublicVisualReading={basis:'provider_visual_reading_not_verified_fact';model:string;text:string;pages:number[];sourceHash:string;documentHash:string;at:string};
+export type SourceReading={mode?:'html_text'|'pdf_text_layer'|'unknown';limitations:string[];figures:{url:string;caption:string}[];visualReadings?:PublicVisualReading[]};
 
 export function publicAddress(address: string) {
   if (address.includes(":"))

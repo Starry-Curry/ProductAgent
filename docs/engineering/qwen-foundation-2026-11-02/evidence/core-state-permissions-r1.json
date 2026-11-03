@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-03T05:08:08.683Z",
+  "basis": "real_browser_and_authenticated_domain_HTTP_synthetic_accounts_no_model_no_hardware",
+  "checks": [
+    {
+      "name": "真实独立账号未获授权时无法读取物品",
+      "passed": true
+    },
+    {
+      "name": "明确授权只共享物品与核实的公开来源，不授予所有者私人任务或故事",
+      "passed": true
+    },
+    {
+      "name": "撤权后知识与可发现目录均不可读，伪造演示身份无效",
+      "passed": true
+    },
+    {
+      "name": "物品不可用立即影响共享Reality，公开资料仍保留",
+      "passed": true
+    },
+    {
+      "name": "型号纠正使原型号事实和图示识读失效，未错绑到新型号",
+      "passed": true
+    },
+    {
+      "name": "恢复型号后原始资料仍可复用，未覆盖已变更的实例状态",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "modelRequests": 0,
+  "itemId": "78c7d5fe-e9c3-4ed2-a23d-9ce619509bad",
+  "original": {
+    "model": "H1essential",
+    "revision": "fcb7ad1fa98d201dc964e05b97569309abb5ce0a1082a0c75f2e9e7c25457d29",
+    "officialFacts": 5
+  },
+  "ledgersUnchanged": true
+}

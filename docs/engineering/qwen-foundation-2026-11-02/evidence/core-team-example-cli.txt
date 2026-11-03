@@ -1,0 +1,11 @@
+{
+  "basis": "offline_mock_not_Qwen_or_physical_validation",
+  "realUpstreamRequests": 0,
+  "itemId": "7d8ecca4-c3c3-4ec4-a54c-b8c96b3a675e",
+  "taskId": "f902318c-f717-4dfe-8abd-33a9b7f8476d",
+  "runId": "680d0990-78cc-4839-ba95-e04b6a58d7bc",
+  "usedItems": 1,
+  "outcomeId": "cb71703a-1569-40df-a7f5-726306f4426d",
+  "idempotent": true,
+  "allowCloud": false
+}

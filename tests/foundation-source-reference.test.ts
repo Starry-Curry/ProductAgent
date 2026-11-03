@@ -17,17 +17,17 @@ async function prepared(t:any){
  },converse:async messages=>{
   const tool=messages.findLast(m=>m.role==='tool');
   if(!tool)return {model:'offline-binding-test',tokens:null,text:'',finishReason:'tool_calls',toolCalls:[{id:'read',type:'function',function:{name:'search_product_knowledge',arguments:JSON.stringify({itemId,query:'按键原文'})}}]};
-  const input=JSON.parse(tool.content!);chosen=input.semantic.observations[0].id;
+  const input=JSON.parse(tool.content!);chosen=(input.sources[0]||{id:doc.chunks[0].id}).id;
   return {model:'offline-binding-test',tokens:null,text:'',finishReason:'tool_calls',toolCalls:[{id:'preview',type:'function',function:{name:'prepare_action',arguments:JSON.stringify({kind:'plan',goal:'按当前合成资料准备操作',itemIds:[itemId],steps:[{kind:'device_operation',items:[itemId],text:'核对原文后按标示键一次',operationRef:chosen,conditions:['实物标示待核对']}],sourceIds:[chosen],conditions:['仅为候选，尚未操作']})}}]};
  }};
  const result=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId,mode:'service',question:'请准备待我确认的步骤，不要执行',memoryPolicy:'off'},p);
  assert.equal(result.reply.actionCards?.length,1,JSON.stringify(result.trace));
  const card=result.reply.actionCards![0],row=f.db.prepare('SELECT action FROM home_proposals WHERE id=?').get(card.id) as {action:string};
- const reference=JSON.parse(row.action).sourceRefs[0];assert.equal(reference.id,chosen);assert.equal(reference.sourceId,doc.id);assert.equal(reference.documentHash,doc.hash);
+ const reference=JSON.parse(row.action).sourceRefs[0];assert.ok(reference.id.startsWith('sem:'));assert.equal(reference.sourceId,chosen);assert.equal(reference.documentHash,doc.hash);
  return {...f,itemId,item,page,doc,result,card,reference};
 }
 
-test('真实执行契约：动态连续引文ID进入同一计划，确认时回到原文hash/范围而非强求旧chunk ID',async t=>{
+test('真实执行契约：原文ID在服务端绑定连续引文后进入同一计划，确认时回到原文hash/范围而非强求旧chunk ID',async t=>{
  const f=await prepared(t);assert.ok(hasCurrentKnowledgeReference(readKnowledge(f.db,f.read(),'lin',f.itemId),f.reference));
  const confirmed=decideAction(f.db,f.read,'lin',f.card.id,'confirm');assert.equal(confirmed.status,'applied');
  assert.equal(f.read().plans!.length,1);assert.equal(f.read().plans![0].sources![0].id,f.reference.id);

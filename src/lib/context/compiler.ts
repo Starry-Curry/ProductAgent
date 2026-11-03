@@ -32,6 +32,8 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   // Task membership limits the initial detailed load, not discovery of the
   // actor's other authorized resources. No stories/locations/notes in catalogue.
   const allowed=state.items.filter(i=>canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id))));
+  const realities=new Map(allowed.map(i=>[i.id,readReality(db,state,actor,i.id)]));
+  const knownEffects=Object.fromEntries([...realities].map(([id,r])=>[id,r.capabilities.filter(c=>c.status==='conditional').map(c=>c.effect)]));
   const mentioned=(s:string)=>s.length>1&&question.toLowerCase().includes(s.toLowerCase());
   const focused=allowed.find(i=>i.id===focus);
   let selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||!task&&(mentioned(i.name)||(!focused||i.model!==focused.model)&&mentioned(i.model))||
@@ -40,9 +42,14 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   // A goal without a named SKU may still have clear recorded capability/name
   // matches. Prefill a few ranked candidates rather than requiring a tool round
   // for already available facts. Others remain discoverable through the tool.
-  if(!selected.length){const candidates=resourceCatalogue(allowed,question,[],3).items;selected=candidates.map(r=>allowed.find(i=>i.id===r.id)!);}
-  const selection=resourceCatalogue(allowed,question,selected.map(i=>i.id));
-  const semanticItems=selected.map(i=>readReality(db,state,actor,i.id));
+  if(!selected.length){const candidates=resourceCatalogue(allowed,question,[],12,knownEffects).items;selected=candidates.map(r=>allowed.find(i=>i.id===r.id)!);}
+  const selection=resourceCatalogue(allowed,question,selected.map(i=>i.id),12,knownEffects);
+  // A failed lexical match is NOT evidence that an owned resource is absent.
+  // Keep discovery separate from the small, detailed task context. Public item
+  // labels/capability excerpts only; no locations, notes, stories or owners.
+  const browse=allowed.toSorted((a,b)=>a.id.localeCompare(b.id)).slice(0,30).map(i=>({id:i.id,name:i.name,model:i.model,category:i.category,effects:(knownEffects[i.id]||[]).slice(0,3).map(effect=>effect.length>160?effect.slice(0,160)+'…':effect)}));
+  const catalogue=[...selection.items,...browse].filter((i,n,a)=>a.findIndex(x=>x.id===i.id)===n);
+  const semanticItems=selected.map(i=>realities.get(i.id)!);
   const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,
     taskMemoryOnly:true,includeItemRelationships:session.known.useItemMemories==='yes',companion:!!session.known.companionItemId,useExperiences:session.known.memoryPolicy!=='off'}));
   // An unbound conversation can still use relevant, explicitly cloud-authorized
@@ -97,8 +104,8 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   return {
     question,items:selected.map(itemContext),
     // No owners, locations, notes, photos or private stories in the catalogue.
-    catalogue:selection.items,
-    discovery:{total:selection.total,matched:selection.matched,truncated:selection.truncated,unmatched:selection.unmatched},
+    catalogue,
+    discovery:{total:selection.total,matched:selection.matched,truncated:selection.truncated,unmatched:selection.unmatched,catalogueComplete:browse.length===allowed.length,nextBrowseCursor:browse.length<allowed.length?browse.length:null,notice:'匹配项用于选择资料，不代表全部库存。其余精简目录供模型发现资源；未读完目录不能推定物品不存在。更多目录用get_item_context省略query并指定cursor。'},
     // Server-only access set: never serialize it into a model packet. Selection
     // is relevance, not permission; an authorized ID outside top results is valid.
     authorizedItemIds:allowed.map(i=>i.id),
