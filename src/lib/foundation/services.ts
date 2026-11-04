@@ -3,6 +3,7 @@
 export const FOUNDATION_API_VERSION='foundation-services/1' as const;
 export type {State,Person,Item} from '../domain.ts';
 export {readReality} from '../context/reality-service.ts';
+export {registeredCapabilities} from './capabilities.ts';
 export {discoverCapabilities,type CapabilityDiscovery} from '../context/discovery.ts';
 export {compileTaskContext} from '../context/compiler.ts';
 export type {RealityCard,RealityFact,RealityCapability} from '../context/reality.ts';

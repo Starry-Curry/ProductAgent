@@ -18,7 +18,7 @@ import {sessionAccess} from '../repositories/sessions.ts';
 import {authorize} from '../foundation/policy.ts';
 import {itemStamp,proposeAction} from '../home/store.ts';
 import type {ActionCard} from '../home/contracts.ts';
-import {actionProposal,checkPlanResources,type ActionSource} from './practical-actions.ts';
+import {currentActionProposal,checkPlanResources,type ActionSource} from './practical-actions.ts';
 import {householdMembers} from '../collaboration.ts';
 import {readKnowledge,storeOfficialDocument,makeKnowledgeDocument,acquireKnowledge,trustedOfficialDocument} from '../life/acquisition.ts';
 import {fetchPublicDocument} from '../life/sources.ts';
@@ -32,8 +32,9 @@ import {planResourceStamp} from '../life/plan-resources.ts';
 import {buildContext} from '../context/builder.ts';
 import {reportedItemHazard,usable} from '../life/availability.ts';
 import {hasReportedCriticalHazard,criticalHazardGuidance} from './safety-language.ts';
-import {virtualHomeItems} from '../life/virtual-home.ts';
-import {analyzeOwnedLamp} from '../devices/software-lab.ts';
+import {virtualHomeItems,assertVirtualHomeCloud} from '../life/virtual-home.ts';
+import {analyzeOwnedLamp,readSoftware,adapterState,ownedSoftwareTarget} from '../devices/software-lab.ts';
+import {registeredCapabilities} from '../foundation/capabilities.ts';
 import {renderRelevantPdf,readPdfPageIndex} from '../life/pdf-pages.ts';
 const taskReality=(card:Parameters<typeof modelReality>[0])=>modelReality(card,{sourceAssertions:'references'});
 
@@ -55,8 +56,9 @@ const ids=z.array(z.string().min(1).max(100)).max(8).default([]);
 const schemas={
  complete_answer:finalResponseSchema,
  explore_owned_software:z.object({itemId:z.string().min(1).max(100)}).strict(),
+ read_owned_software:z.object({itemId:z.string().min(1).max(100)}).strict(),
  open_item_capability:z.object({itemId:z.string().min(1).max(100),capability:z.enum(['creative','persona','story','maintenance','family','gift','software'])}).strict(),
- prepare_action:actionProposal,
+ prepare_action:currentActionProposal,
  get_item_context:z.object({itemIds:ids,query:z.string().trim().min(1).max(500).optional(),cursor:z.number().int().min(0).max(10000).optional()}).strict(),
  search_product_knowledge:z.object({itemId:z.string().min(1).max(100),query:z.string().min(1).max(500),refresh:z.boolean().optional(),sourceUrl:z.string().url().optional()}).strict(),
  inspect_manual_visual:z.object({itemId:z.string().min(1).max(100),sourceId:z.string().min(1).max(200),question:z.string().min(1).max(800),figureUrl:z.string().url().optional(),pageNumbers:z.array(z.number().int().min(1).max(80)).max(3).optional()}).strict(),
@@ -68,20 +70,37 @@ const schemas={
   z.object({kind:z.literal('range'),actual:z.number().nonnegative(),min:z.number().nonnegative(),max:z.number().nonnegative(),unit:z.string().max(30)}).strict(),
   z.object({kind:z.literal('rectangle'),object:z.tuple([z.number().positive(),z.number().positive()]),space:z.tuple([z.number().positive(),z.number().positive()]),spaceKind:z.enum(['internal','external','unknown'])}).strict()]),
 };
-const descriptions={explore_owned_software:'仅对当前自有 WUJIAN-SOFTWARE-LAMP-1 合成软件测试灯运行既有REA静态分析与本机模拟器只读验证；不授予控制、不接触真实硬件。',complete_answer:'最终回复唯一呈现工具：message用于自然解释与明确缺口；型号操作用guidance.kind=procedure（itemId、带sourceId的steps及conditions），不把指导当控制或强行编造手机库存ID。跨物品物理行动才用带itemIds的动作方案。纯解释写message、guidance=null；message不重复步骤。device_operation items[0]是被操作设备，operationRef是已读取的当前型号原文id（分类标签不是语义认证），且列入sourceIds；不能把图示模型观察当认证事实。不写任务，不执行外部操作。',inspect_manual_visual:'按需读取已取得的准确型号官方PDF或实际发现的图示。sourceId用文档或原文ID；figureUrl仅允许已发现图片；不能猜按钮/页图。',read_official_page:'读取已核对官方网页。单页说明书先返回真实章节目录，用search_product_knowledge的sourceUrl读取所需章节；必要时使用百炼原生web_extractor。PDF图示请用inspect_manual_visual。',open_item_capability:'当用户希望进一步创意、分身、故事、养护、家庭、赠礼或软件探索时，返回同一物品现有界面的继续入口；不执行任何操作，不授予权限。',prepare_action:'只在用户希望保存计划、记录故事、准备赠礼或交家人时准备预览卡。没有确认不会执行；不能自行授予记忆/分享权限。计划逐步关联真实资源，型号操作必须引用已读取原文ID；条件未齐先讨论探索方案。故事仅保存私人原文，默认不允许检索或上云；赠礼草稿不附私人故事。',get_item_context:'读取当前用户获准的物品身份、准确型号、状态和未知项；itemIds为空时当前相关物品。',search_product_knowledge:'检索对应型号官方原文和URL；无缓存时自主官方发现；缓存缺少操作正文时可refresh，或用relatedSections中实际发现的sourceUrl读取章节；不接受臆造链接。',get_relevant_experiences:'读取对应物品当前获准云端使用的经历与偏好。经历为用户报告，不证明因果。',check_constraints:'确定性计算：区间、二维占地、平面物体与画幅比例（frame）。画幅支持完整容纳或铺满裁切两种计算，不混淆二者。不能证明完整兼容/稳定。known读取本次已绑定来源的条件ID；range/rectangle仅计算模型假设的数字，不能作为设备兼容认证或覆盖已知条件。'};
+const descriptions={read_owned_software:"仅读取当前焦点、自有软件模拟器的实际亮度与状态；必须有尚未撤回的软件回读授权。不会调光、不连接真实设备，不用静态接口或用户目标冒充已执行结果。",explore_owned_software:'仅对当前自有 WUJIAN-SOFTWARE-LAMP-1 合成软件测试灯运行既有REA静态分析与本机模拟器只读验证；不授予控制、不接触真实硬件。',complete_answer:'最终回复唯一呈现工具：message用于自然解释与明确缺口；型号操作用guidance.kind=procedure（itemId、带sourceId的steps及conditions），不把指导当控制或强行编造手机库存ID。跨物品物理行动才用带itemIds的动作方案。纯解释写message、guidance=null；message不重复步骤。device_operation items[0]是被操作设备，operationRef是已读取的当前型号原文id（分类标签不是语义认证），且列入sourceIds；不能把图示模型观察当认证事实。不写任务，不执行外部操作。',inspect_manual_visual:'按需读取已取得的准确型号官方PDF或实际发现的图示。sourceId用文档或原文ID；figureUrl仅允许已发现图片；不能猜按钮/页图。',read_official_page:'读取已核对官方网页。单页说明书先返回真实章节目录，用search_product_knowledge的sourceUrl读取所需章节；必要时使用百炼原生web_extractor。PDF图示请用inspect_manual_visual。',open_item_capability:'当用户希望进一步创意、分身、故事、养护、家庭、赠礼或软件探索时，返回同一物品现有界面的继续入口；不执行任何操作，不授予权限。',prepare_action:'只在用户希望保存计划、记录故事、准备赠礼或交家人时准备预览卡。没有确认不会执行；不能自行授予记忆/分享权限。计划逐步关联真实资源，型号操作必须引用已读取原文ID；条件未齐先讨论探索方案。故事仅保存私人原文，默认不允许检索或上云；赠礼草稿不附私人故事。',get_item_context:'读取当前用户获准的物品身份、准确型号、状态和未知项；itemIds为空时当前相关物品。',search_product_knowledge:'检索对应型号官方原文和URL；无缓存时自主官方发现；缓存缺少操作正文时可refresh，或用relatedSections中实际发现的sourceUrl读取章节；不接受臆造链接。',get_relevant_experiences:'读取对应物品当前获准云端使用的经历与偏好。经历为用户报告，不证明因果。',check_constraints:'确定性计算：区间、二维占地、平面物体与画幅比例（frame）。画幅支持完整容纳或铺满裁切两种计算，不混淆二者。不能证明完整兼容/稳定。known读取本次已绑定来源的条件ID；range/rectangle仅计算模型假设的数字，不能作为设备兼容认证或覆盖已知条件。'};
 export const practicalTools:ToolDefinition[]=Object.entries(schemas).map(([name,schema])=>({type:'function',function:{name,description:descriptions[name as keyof typeof descriptions],parameters:z.toJSONSchema(schema,{io:'input'}) as Record<string,unknown>}}));
 /** Give the provider real callable IDs, not an invitation to invent references. Server checks remain authoritative. */
 export function practicalToolSet(sourceIds:string[],resourceIds:string[]){
  const tools=structuredClone(practicalTools),schema=tools.find(t=>t.function.name==='prepare_action')!.function.parameters as any;
+ const originals=[...new Set(sourceIds)];
+ // The same source contract applies to BOTH preview cards and final guidance.
+ // User dimensions and private-memory IDs are not official operation locators.
+ // Before any original has been read, don't advertise a source-backed device
+ // procedure that the server would necessarily reject and repeatedly repair.
+ const narrow=(node:any)=>{
+  if(!node||typeof node!=='object')return;
+  if(Array.isArray(node)){for(const child of node)narrow(child);return;}
+  for(const key of ['anyOf','oneOf'])if(Array.isArray(node[key])&&!originals.length)node[key]=node[key].filter((s:any)=>s.properties?.kind?.const!=='procedure');
+  const p=node.properties;
+  if(p?.sourceIds){p.sourceIds.description='仅本轮已读取的官方原文定位ID；用户尺寸和私人故事通过物品/记忆关联，不填入此字段。没有官方资料时为空，不影响提出条件化设想。';if(originals.length)p.sourceIds.items.enum=originals;else p.sourceIds.maxItems=0;}
+  if(p?.sourceId&&originals.length)p.sourceId.enum=originals;
+  if(p?.operationRef){if(originals.length)p.operationRef.enum=originals;else{delete p.operationRef;if(p.kind?.enum)p.kind.enum=p.kind.enum.filter((k:string)=>k!=='device_operation');}}
+  for(const value of Object.values(node))narrow(value);
+ };
+ narrow(schema);narrow(tools.find(t=>t.function.name==='complete_answer')!.function.parameters);
  const plan=schema.oneOf.find((s:any)=>s.properties?.kind?.const==='plan');
  if(sourceIds.length)plan.properties.sourceIds.items.enum=sourceIds;else {plan.properties.sourceIds.maxItems=0;plan.properties.sourceIds.description='本次尚无已读取的型号操作原文ID，必须为空；用户报告不是厂家操作证据。';}
- if(resourceIds.length){plan.properties.itemIds.items.enum=resourceIds;const step=plan.properties.steps.items.anyOf[0];step.properties.items.items.enum=resourceIds;step.properties.target.enum=resourceIds;}
+ if(resourceIds.length){plan.properties.itemIds.items.enum=resourceIds;const step=plan.properties.steps.items;step.properties.items.items.enum=resourceIds;step.properties.target.enum=resourceIds;}
  return tools;
 }
 
 /** Shared semantic Context and domain tools; AgentScope advances the bounded turn. */
 export async function executePractical(db:DatabaseSync,read:()=>State,actor:Person,session:ServiceSession,question:string,provider:Provider,temporary=false){
  const started=Date.now(),deadline=started+150000,version=epoch(db,actor),trace:Trace[]=[],scopes=new Map<string,{identity:string;reality:string}>();
+ const softwareScopes=new Map<string,{grantEpoch:number;targetHash:string}>();
  const cards:ActionCard[]=[],continuations:NonNullable<AssistantReply['continuations']>=[];
  let finalized:ReturnType<typeof finalizeResponse>|undefined;
  let calls=0,tools=0,reservedCny=0,tokens={input:0,output:0},previousInput:{tokens:number;bytes:number}|undefined;
@@ -97,7 +116,9 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   if(epoch(db,actor)!==version||!sessionAccess(session,read(),actor))throw new AgentError('物品或记忆授权已变化，请重新提问',409);
   if(session.known.homeId==='young-apartment-v1'&&(read().virtualHomes?.[actor]?.allowCloud!==true||virtualHomeItems(read(),actor).length!==8))throw new AgentError('模拟家庭范围或云端授权已变化',409);
   if(!temporary){const row=db.prepare('SELECT revision,body FROM agent_sessions WHERE id=?').get(session.id) as {revision:number;body:string}|undefined;if(!row||row.revision!==session.revision||JSON.parse(row.body).status==='closed')throw new AgentError('会话已关闭或被另一请求更新',409);}
-  for(const [id,stamp]of scopes){const i=read().items.find(i=>i.id===id);if(!i||itemStamp(i)!==stamp.identity||projectReality(i).revision!==stamp.reality||!authorize(db,read(),actor,id).allowed)throw new AgentError('物品授权、状态或登记条件已变化',409);}};
+  for(const [id,stamp]of scopes){const i=read().items.find(i=>i.id===id);if(!i||itemStamp(i)!==stamp.identity||projectReality(i).revision!==stamp.reality||!authorize(db,read(),actor,id).allowed)throw new AgentError('物品授权、状态或登记条件已变化',409);}
+  for(const [id,stamp]of softwareScopes){const a=adapterState(db,actor,id);if(!a?.granted||a.grantEpoch!==stamp.grantEpoch||a.targetHash!==stamp.targetHash)throw new AgentError('软件回读授权或版本已变化，未发布旧状态',409);}
+ };
  const track=(ctx:ReturnType<typeof context>)=>{for(const i of ctx.items){const item=read().items.find(x=>x.id===i.id)!;scopes.set(i.id,{identity:itemStamp(item),reality:projectReality(item).revision});}};
  // A matching product overview is not the answer to a new operation question.
  // Read actual question-relevant TOC links before answering, without another model.
@@ -115,7 +136,9 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    }catch(e){if(e instanceof AgentError)throw e;log('practical_chapter_failed',JSON.stringify({itemId,url:link.url}));}
   }
  }
- const seed=context();track(seed);
+ const seed=context();
+ assertVirtualHomeCloud(read(),actor,[session.itemId,session.known.activeItemId,...(seed.currentTask?.itemIds||[])].filter((id):id is string=>!!id));
+ track(seed);
  if(hasReportedCriticalHazard(question)||seed.items.some(i=>reportedItemHazard(read().items.find(x=>x.id===i.id)!))){
   const answer=criticalHazardGuidance;
   guard(false);provider.onText?.(answer);return {reply:{answer,modelHistoryText:answer,outcome:'blocked' as const,source:'curated-guidance' as const,steps:[],questions:[],citations:[],evidenceIds:[],memoryIds:[],caveat:'基于用户报告采取预防限制，不是远程设备诊断或实体处置。'},trace:[{stage:'reported_hazard_restricted',detail:'No provider request, control or domain write',at:new Date().toISOString()}],tokens:null,modelCalls:0};
@@ -137,6 +160,13 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  async function tool(name:string,args:string){guard();if(++tools>8)throw Error('tool_budget_exceeded');
   const schema=schemas[name as keyof typeof schemas];if(!schema)throw Error('unknown_tool');const p:any=schema.parse(JSON.parse(args));
   log('tool_policy',JSON.stringify({name,...toolPolicy[name as keyof typeof toolPolicy]}));
+  if(name==='read_owned_software'){
+   const focused=session.itemId||session.known.activeItemId;
+   if(temporary||p.itemId!==focused)throw new AgentError('仅允许当前自有软件测试物品的获准状态回读',403);
+   select([p.itemId]);const before=adapterState(db,actor,p.itemId),result=await readSoftware(db,read,actor,p.itemId);
+   softwareScopes.set(p.itemId,{grantEpoch:before.grantEpoch,targetHash:before.targetHash});guard();
+   return {...result,observedAt:new Date().toISOString(),notice:'这是当前本机软件模拟器的实际回读，不是实体设备状态；没有调光或改设置，不证明照度与使用舒适。'};
+  }
   if(name==='explore_owned_software'){
    const focused=session.itemId||session.known.activeItemId;
    if(temporary||p.itemId!==focused)throw new AgentError('仅允许当前自有测试软件物品的明确探索',403);
@@ -229,7 +259,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   }
   if(name==='prepare_action'){
    if(temporary)throw Error('临时聊天不保留行动草稿');
-   const proposal=actionProposal.parse(p);const allowed=context().authorizedItemIds.filter(id=>proposal.kind!=='plan'||usable(read().items.find(x=>x.id===id)!));
+   const proposal=currentActionProposal.parse(p);const allowed=context().authorizedItemIds.filter(id=>proposal.kind!=='plan'||usable(read().items.find(x=>x.id===id)!));
    const chosen=proposal.kind==='plan'?checkPlanResources(proposal,allowed,practicalConstraints(context()),actionSources(),read().items.filter(i=>allowed.includes(i.id)),actionGoal()):proposal;
    const itemIds=chosen.kind==='plan'?chosen.itemIds:[chosen.itemId];select(itemIds);
     const action=chosen.kind==='plan'?{kind:'plan' as const,goal:chosen.goal,itemIds:chosen.itemIds,conditions:chosen.unresolved,dependencies:chosen.dependencies.map(d=>({step:d.index,resourceIds:d.resources,status:d.status})),resourceRevisions:Object.fromEntries(chosen.itemIds.map(id=>[id,planResourceStamp(read().items.find(i=>i.id===id)!)])),sourceRefs:chosen.sourceIds.map(id=>{const stored=chosen.itemIds.flatMap(itemId=>readSourceSelections(read().items.find(i=>i.id===itemId)!,readKnowledge(db,read(),actor,itemId))).find(s=>s.id===id);if(stored)return stored.reference;const doc=chosen.itemIds.flatMap(itemId=>scopedProductKnowledge(read().items.find(i=>i.id===itemId)!,readKnowledge(db,read(),actor,itemId)).map(d=>d.document)).find(d=>d.id===id||d.chunks.some(c=>c.id===id));if(!doc)throw Error('source_no_longer_current');return bindOriginalReference(doc,id);}),checklist:chosen.steps.map(s=>({label:s,status:chosen.readiness==='conditional'?'实施前先核对条件':'待执行（不是实物验证）'}))}:chosen;
@@ -240,7 +270,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    const current=context();
    const requested=name==='search_product_knowledge'?[p.itemId]:name==='get_item_context'&&!p.itemIds.length?(p.query?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor,scopeItemIds:current.authorizedItemIds}).resources.map(i=>i.id):current.items.map(i=>i.id)):p.itemIds;
    const c=select(requested);
-  if(name==='get_item_context'){resourcesRead=true;const page=!p.itemIds.length?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor,scopeItemIds:current.authorizedItemIds}):undefined;return {items:c.semanticItems.map(taskReality),catalogue:c.catalogue,discovery:c.discovery,...(page?{capabilityPage:{...page,resources:page.resources.map(r=>({id:r.id,name:r.name,identity:r.identity,instance:r.instance,unknowns:r.unknowns,revision:r.revision}))}}:{}),notice:'query按名称、型号或已记录能力检索；无匹配可省略query，用cursor分页浏览获准目录，不假定前几件相关。原文按当前问题通过search_product_knowledge读取，不把所有历史引文复制进物品能力。'};}
+  if(name==='get_item_context'){resourcesRead=true;const page=!p.itemIds.length?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor,scopeItemIds:current.authorizedItemIds}):undefined;return {items:c.semanticItems.map(taskReality),softwareCapabilities:c.items.flatMap(i=>registeredCapabilities(db,read(),actor,i.id)),catalogue:c.catalogue,discovery:c.discovery,...(page?{capabilityPage:{...page,resources:page.resources.map(r=>({id:r.id,name:r.name,identity:r.identity,instance:r.instance,unknowns:r.unknowns,revision:r.revision}))}}:{}),notice:'query按名称、型号或已记录能力检索；无匹配可省略query，用cursor分页浏览获准目录，不假定前几件相关。原文按当前问题通过search_product_knowledge读取，不把所有历史引文复制进物品能力。'};}
   if(name==='get_relevant_experiences')return {experiences:c.experiences,preferences:c.preferences,privateFacts:c.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),basis:'approved_user_report_not_proven_cause'};
   const item=read().items.find(i=>i.id===p.itemId)!;const acquisition:any={cached:readKnowledge(db,read(),actor,item.id).length>0,readURLs:[],issues:[]};
   if(!temporary&&process.env.WUJIAN_ALLOW_PUBLIC_FETCH!=='false'){
@@ -279,9 +309,11 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   priorSelections:initial.items.flatMap(i=>readSourceSelections(read().items.find(x=>x.id===i.id)!,readKnowledge(db,read(),actor,i.id))).filter(s=>initial.evidence.some(e=>e.id===s.reference.sourceId)).map(({id,model,region,reference})=>({id,model,region,originalSourceId:reference.sourceId,documentHash:reference.documentHash,quoteRange:reference.quoteRange,notice:'原文在originalSources中；定位不是额外语义认证'})),
   notice:'厂家原文及定位不是独立语义认证；按当前问题解释，不把资料未提及当明确不支持。',
  };
+ const softwareCapabilities=initial.items.flatMap(i=>registeredCapabilities(db,read(),actor,i.id));
+ const localSoftwareTargets=initial.items.flatMap(i=>{const target=ownedSoftwareTarget(read(),actor,i.id);return target?[target]:[];});
  const messages:ModelMessage[]=[{role:'system',content:PRACTICAL_SYSTEM},{role:'user',content:JSON.stringify({question,items:initial.semanticItems.map(taskReality),catalogue:initial.catalogue,discovery:initial.discovery,contextRevision:initial.revision,voice:voice?.enabled?{itemId:voiceId,nickname:voice.nickname,style:voice.style,notice:'这是获准的物品交流身份，不是用户姓名；风格不得覆盖事实，不虚构经历'}:undefined,
   ...(provider.structuredOutput==='json_schema'?{officialSemantics:initialSemantics}:{officialSources:initial.evidence.filter(e=>e.basis==='official')}),documentation:initial.items.map(i=>({itemId:i.id,sources:scopedProductKnowledge(read().items.find(x=>x.id===i.id)!,readKnowledge(db,read(),actor,i.id)).map(({document:d})=>({sourceId:d.id,url:d.url,model:d.model,readingMode:d.reading?.mode||'unknown',scope:'scoped_official_original_content_not_classified_by_URL'}))})),experiences:initial.experiences,preferences:initial.preferences,privateFacts:initial.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),
-  selectedPlans:initial.selectedPlans,priorPlanningContext:initial.priorPlanningContext,necessaryConditionChecks:practicalConstraints(initial),history:practicalHistory(session,temporary),currentTask:initial.currentTask,tried:initial.tried,permission:initial.permissions,availableActions:temporary?[]:['plan','story','gift','family'],household:session.known.uiPage==='family'&&actor.startsWith('u_')?householdMembers(db,actor).map(m=>({id:m.id,name:m.name})):[]})}];
+  localSoftwareTargets,softwareCapabilities,selectedPlans:initial.selectedPlans,priorPlanningContext:initial.priorPlanningContext,necessaryConditionChecks:practicalConstraints(initial),history:practicalHistory(session,temporary),currentTask:initial.currentTask,tried:initial.tried,permission:initial.permissions,availableActions:temporary?[]:['plan','story','gift','family'],household:session.known.uiPage==='family'&&actor.startsWith('u_')?householdMembers(db,actor).map(m=>({id:m.id,name:m.name})):[]})}];
  // Candidate: keep the user's actual request as a natural user turn after the
  // data packet, rather than leaving it buried inside a long evidence JSON.
  if(process.env.WUJIAN_PRACTICAL_NATURAL_TURN!=='false')messages.push({role:'user',content:question});
@@ -296,13 +328,13 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
     catch(e){if(e instanceof AgentError&&[403,409].includes(e.status))throw e;unresolvedTools.add(name);log('practical_tool_failed',name+': '+(e as Error).message);throw e;}
    }})),onEvent:(type,detail)=>{log('tool_runtime_'+type,detail);if(type==='TOOL_RESULT_END'){const event=JSON.parse(detail);if(event.tool&&event.state==='error')unresolvedTools.add(event.tool);}},stopAfterTool:()=>!!finalized||cards.some(c=>c.kind==='plan'),
    generate:async modelMessages=>{
-  guard();if(calls>=6)throw Error('本轮模型请求已达到上限');const turnTools=practicalToolSet(actionSources().map(s=>s.id),context().items.filter(i=>i.usable).map(i=>i.id));const inputBytes=Buffer.byteLength(JSON.stringify({messages:modelMessages,tools:turnTools}));if(inputBytes>150000)throw Error('context_budget_exceeded');
+  guard();if(calls>=6)throw Error('本轮模型请求已达到上限');const turnTools=practicalToolSet(actionSources().filter(s=>s.text?.trim()&&['operation','source_assertion'].includes(s.kind||'')).map(s=>s.id),context().items.filter(i=>i.usable).map(i=>i.id));const inputBytes=Buffer.byteLength(JSON.stringify({messages:modelMessages,tools:turnTools}));if(inputBytes>150000)throw Error('context_budget_exceeded');
   // Once the provider reports usage for this exact prefix, only appended bytes
   // need the conservative byte/token bound. Re-reserving the full UTF-8 byte
   // size incorrectly aborted long-manual tool→answer turns despite low usage.
   const inputBound=previousInput?previousInput.tokens+Math.max(0,inputBytes-previousInput.bytes)+128:inputBytes;
   const reserve=(inputBound*12+(thinking?6000:2400)*36)/1e6;if(reservedCny+reserve>3)throw Error('turn_cost_budget_exceeded');reservedCny+=reserve;calls++;
-  const firstItem=initial.items[0];const mustRead=round===0&&initial.semanticItems[0]?.identity.kind==='commercial'&&!initial.evidence.some(e=>e.itemId===firstItem.id&&e.basis==='official');
+  const firstItem=initial.items[0];const mustRead=round===0&&initial.semanticItems[0]?.identity.kind==='commercial'&&!localSoftwareTargets.some(c=>c.itemId===firstItem.id)&&!initial.evidence.some(e=>e.itemId===firstItem.id&&e.basis==='official');
   const mustReadResources=!resourcesRead&&initial.discovery.total>initial.items.length&&(session.known.foundationTaskIntent==='explore'||!initial.items.length);
   // Failed, sourced numerical conditions need an actual calculator round before
   // planning. This is the same bounded tool loop, not a second-model reviewer.

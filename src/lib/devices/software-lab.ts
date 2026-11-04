@@ -37,6 +37,12 @@ function owned(state: State, actor: Person, itemId: string) {
   if(["gifted","loaned","lost","consumed"].includes(item.availability||"")||state.gifts.some(g=>g.itemId===item.id&&g.claimedBy))
     throw new AgentError("物品已流转或不再持有，旧软件授权不可继续执行",403);
 }
+/** Server-owned target type, not an inferred consumer-product capability.
+ * Declaring the fixed fixture does not assert successful analysis or a grant. */
+export function ownedSoftwareTarget(state:State,actor:Person,itemId:string){
+  try{owned(state,actor,itemId);return {itemId,basis:'fixed_owned_software_fixture_not_physical_product' as const,analysis:'requires_actual_REA_evidence',control:'requires_live_grant_and_per_action_confirmation'};}
+  catch(e){if(e instanceof AgentError)return undefined;throw e;}
+}
 async function lamp(db:DatabaseSync,actor:Person,itemId:string) {
   let scope=simulators.get(db);if(!scope){scope=new Map();simulators.set(db,scope);}
   const key=JSON.stringify([actor,itemId]);let simulator=scope.get(key);

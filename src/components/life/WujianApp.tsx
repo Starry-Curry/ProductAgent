@@ -35,6 +35,7 @@ import type { ServiceSession, TurnInput } from "@/lib/agent/contracts";
 import { ItemInformation } from "./ItemInformation";
 import { syntheticItem } from "@/lib/life/availability";
 import { itemPhoto } from "@/lib/life/item-photos";
+import {receivedGiftStories} from '@/lib/memory/gift-story';
 type View =
   | "home"
   | "items"
@@ -560,7 +561,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
         </div>
       </header>
       <main className="life-main">
-        {data && <TaskContinuity actor={actor} items={data.workspace.items} onExit={()=>setActiveTaskId(undefined)} onResume={(taskId,itemId,sessionId,newGoal)=>{ask(newGoal||"",itemId,undefined,sessionId,false,undefined,taskId);}}/>}
+        {data && <TaskContinuity actor={actor} items={data.workspace.items} onRestore={setActiveTaskId} onExit={()=>setActiveTaskId(undefined)} onResume={(taskId,itemId,sessionId,newGoal)=>{ask(newGoal||"",itemId,undefined,sessionId,false,undefined,taskId);}}/>}
         {!elder && (
           <div className="life-topline">
             <span>把日常用好，把生活留住。</span>
@@ -938,12 +939,13 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
             )}
             {view === "discover" && (
               <Discovery
-                key={actor}
+                key={actor+(homeActive?':home':':personal')}
                 items={items}
                 ideas={data.ideas}
                 request={request}
                 refresh={load}
                 modelAvailable={data.capabilities.model}
+                homeId={homeActive ? "young-apartment-v1" : undefined}
                 onAsk={(context) =>
                   ask("继续这个目标，帮我进一步完善方案", undefined, context)
                 }
@@ -1239,6 +1241,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                 </div>
                 {tab === "帮助" && (
                   <ItemBelonging
+                    receivedStories={receivedGiftStories(data.workspace,actor,item.id)}
                     onOpenCapability={openCapability}
                     onTaskLinked={linkConfirmedTask}
                     key={actor + item.id}

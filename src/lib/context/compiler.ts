@@ -29,10 +29,12 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   const task=taskContext?.task;
   const focus=session.itemId||session.known.activeItemId||session.known.homeVoiceItemId;
   const home=session.known.homeId==='young-apartment-v1';
-  const homeIds=new Set(home?virtualHomeItems(state,actor).map(i=>i.id):[]);
+  const installedHome=virtualHomeItems(state,actor);
+  const unconsentedHomeIds=new Set(!state.virtualHomes?.[actor]?.allowCloud||installedHome.length!==8?installedHome.map(i=>i.id):[]);
+  const homeIds=new Set(home?installedHome.map(i=>i.id):[]);
   // Task membership limits the initial detailed load, not discovery of the
   // actor's other authorized resources. No stories/locations/notes in catalogue.
-  const allowed=state.items.filter(i=>canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id))));
+  const allowed=state.items.filter(i=>!unconsentedHomeIds.has(i.id)&&canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id))));
   const realities=new Map(allowed.map(i=>[i.id,readReality(db,state,actor,i.id)]));
   const knownEffects=Object.fromEntries([...realities].map(([id,r])=>[id,discoverableEffects(r)]));
   const searchableKnowledge=Object.fromEntries([...realities].map(([id,r])=>[id,knowledgeSearchText(r)]));
@@ -135,7 +137,7 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
     priorPlanningContext,
     tried:session.tried,
     history:session.messages.slice(-6).map(m=>({role:m.role,text:m.text.slice(0,1800)})),
-    currentTask:task?{goal:taskContext!.modelGoal,itemIds:task.itemInstanceIds,plans:taskContext!.plans,collaborationProgress:taskContext!.familyProgress}:!temporary&&home&&session.known.homeTaskGoal?{goal:session.known.homeTaskGoal,basis:'previous_conversation_goal_not_verified_result' as const}:undefined,
+    currentTask:task?{goal:taskContext!.modelGoal,itemIds:task.itemInstanceIds,retention:'already_saved_by_user_not_actual_completion',plans:taskContext!.plans,collaborationProgress:taskContext!.familyProgress}:!temporary&&home&&session.known.homeTaskGoal?{goal:session.known.homeTaskGoal,basis:'previous_conversation_goal_not_verified_result' as const}:undefined,
     permissions:{readOnly:true,hardwareExecuted:false,memoryPolicy:session.known.memoryPolicy||'legacy',itemRead:'listed_items_already_authorized_read_details_as_needed',privateMemory:'only_explicitly_allowed_and_relevant_records',domainWrites:'explicit_confirmation_required'},
     retrieval:{documents:documents.map(d=>({itemId:d.itemId,id:d.document.id,hash:d.document.hash,url:d.document.url,model:d.document.model,region:d.document.region})),missingItemIds:selected.filter(i=>!documents.some(d=>d.itemId===i.id)).map(i=>i.id)},
     // Explicitly a synthetic household, never a real ownership assertion.

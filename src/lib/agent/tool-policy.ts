@@ -1,5 +1,6 @@
 /** Tool effects are server-owned metadata, never a model permission grant. */
 export const toolPolicy={
+ read_owned_software:{effect:'read_only',scope:'current_owned_synthetic_software_with_live_grant',result:'current_software_simulator_readback_not_hardware',revocation:'recheck_before_final_answer'},
  explore_owned_software:{effect:'local_write',scope:'current_owned_synthetic_software_lab_only',result:'static_adapter_candidate_and_read_probe_not_control',idempotency:'fixed_target_artifact_digest'},
  complete_answer:{effect:'local_write',scope:'live_item_grants_and_final_response_contract',result:'final_candidate_and_public_original_quote_locators_no_business_write',idempotency:'original_document_and_quote_digest'},
  get_item_context:{effect:'read_only',scope:'live_item_grant',result:'reality_cards'},

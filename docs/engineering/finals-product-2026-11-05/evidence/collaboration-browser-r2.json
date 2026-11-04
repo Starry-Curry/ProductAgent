@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-04T18:59:20.527Z",
+  "round": "finals-product-20261105-r1",
+  "basis": "two_authenticated_synthetic_accounts_real_UI_share_handoff_real_Qwen_and_revocation_no_external_notice_or_hardware",
+  "itemId": "6a8658a1-1c91-4fe1-98c3-e06689c32fce",
+  "responses": [],
+  "checks": [
+    {
+      "name": "explicit_item_grant_shares_actual_public_knowledge_not_owner_story",
+      "passed": true
+    }
+  ],
+  "errors": [
+    "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('一起使用的物品', { exact: true })\u001b[22m\n"
+  ],
+  "pageErrors": [],
+  "guestId": "u_c26e2e3e-fce6-4fdc-9f4c-8c529cb2baa5",
+  "taskId": "7a51ed58-4f5b-4673-ac5f-7f094d069cd8",
+  "status": "failed",
+  "upstreamRequests": 0
+}

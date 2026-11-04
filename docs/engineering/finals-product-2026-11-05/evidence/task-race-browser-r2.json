@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-04T19:04:33.103Z",
+  "basis": "real_authenticated_synthetic_Task_APIs_and_browser_with_delayed_original_HTTP_response_no_Qwen_no_fabricated_reply",
+  "checks": [
+    {
+      "name": "late_old_Task_response_does_not_replace_explicit_new_goal",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "tasks": {
+    "a": "64087645-fc2d-464d-9bd7-3df78725f89a",
+    "b": "c5437ffc-81ef-4006-8ac6-843d6a01ec8d"
+  },
+  "status": "passed_deterministic_UI_race"
+}

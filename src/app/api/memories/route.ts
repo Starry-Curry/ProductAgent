@@ -21,6 +21,7 @@ import {
 } from "@/lib/memory/store";
 import { readSession } from "@/lib/repositories/sessions";
 import { pruneExpired } from "@/lib/repositories/retention";
+import {giftStoryMemoryText} from '@/lib/memory/gift-story';
 export const runtime = "nodejs";
 function fail(e: unknown) {
   return Response.json(
@@ -139,6 +140,10 @@ async function POSTHandler(r: Request) {
           { id: v.fragmentId, revision: v.revision },
         ),
       });
+    }
+    if(p.action==='rememberGiftStory'){
+      const v=z.object({storyId:z.string().max(100),itemId:z.string().max(100),expectedText:z.string().min(1).max(10000),allowCloud:z.boolean(),requestId:z.string().uuid()}).strict().parse(p.input);
+      return Response.json({memory:saveMemory(database(),read,a,{kind:'story',itemId:v.itemId,text:giftStoryMemoryText(v.expectedText),allowCloud:v.allowCloud,status:'active'},undefined,v.requestId,{kind:'gift_snapshot',id:v.storyId,expectedText:v.expectedText})});
     }
     if (p.action === "saveMethod") {
       const sessionId = z.string().uuid().parse(p.sessionId),

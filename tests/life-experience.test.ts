@@ -343,7 +343,7 @@ test("开放规划使用真实资源/历史反馈与预算，生成新方案并�
       },
       {...provider,ready:true,converse:async messages=>{
         const prior=messages.find(m=>m.role==='tool');
-        return {model:'offline-agent',tokens:null,text:'',finishReason:'tool_calls',toolCalls:[{id:prior?'prepare':'read',type:'function',function:{name:prior?'prepare_action':'get_item_context',arguments:JSON.stringify(prior?{kind:'plan',goal:'布包原有物品整理',itemIds:[id],steps:['把包内已有物品按本人选择的使用顺序整理；不假设还有其他小物。'],sourceIds:[],conditions:['需确认布包及包内物品状态；此草稿仅供探索。']}:{itemIds:[id]})}}]};
+        return {model:'offline-agent',tokens:null,text:'',finishReason:'tool_calls',toolCalls:[{id:prior?'prepare':'read',type:'function',function:{name:prior?'prepare_action':'get_item_context',arguments:JSON.stringify(prior?{kind:'plan',goal:'布包原有物品整理',itemIds:[id],steps:[{kind:'group',items:[id],text:'把包内已有物品按本人选择的使用顺序整理；不假设还有其他小物。',conditions:['待本人核对包内实际内容']}],sourceIds:[],conditions:['需确认布包及包内物品状态；此草稿仅供探索。']}:{itemIds:[id]})}}]};
       }},
     );
     assert.equal(reply.reply.route!.intent, "plan");

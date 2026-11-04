@@ -264,7 +264,7 @@ test("发现转入问物间继承本人方案的时间与排除；拒绝任意�
         assert.equal(input.priorPlanningContext.minutes,30);assert(input.priorPlanningContext.restrictions.includes('不买东西'));
         assert.match(input.question,/不用玻璃杯.*10分钟/);
         const read=messages.some(m=>m.role==='tool');
-        return {text:'',model:'offline-converse-planning',tokens:null,finishReason:'tool_calls',toolCalls:[{id:read?'plan':'read',type:'function',function:{name:read?'prepare_action':'get_item_context',arguments:JSON.stringify(read?{kind:'plan',goal:'10分钟的新方向',itemIds:[lamp],steps:['仅作为10分钟的探索草稿，不使用杯子，不假定其他资源。'],sourceIds:[],conditions:['需确认手电筒当前状态；没有执行动作。']}:{itemIds:[lamp]})}}]};
+        return {text:'',model:'offline-converse-planning',tokens:null,finishReason:'tool_calls',toolCalls:[{id:read?'plan':'read',type:'function',function:{name:read?'prepare_action':'get_item_context',arguments:JSON.stringify(read?{kind:'plan',goal:'10分钟的新方向',itemIds:[lamp],steps:[{kind:'assign_role',items:[lamp],text:'仅作为10分钟的探索草稿，不使用杯子，不假定其他资源。',conditions:['不是已验证的行动']}],sourceIds:[],conditions:['需确认手电筒当前状态；没有执行动作。']}:{itemIds:[lamp]})}}]};
       }},
     );
     const context = JSON.parse(r.session.known.lifePlanContext);

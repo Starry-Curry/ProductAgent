@@ -31,6 +31,13 @@ export function virtualHomeItems(state: State, actor: Person) {
       ),
   );
 }
+/** Cloud scope is derived from canonical item membership, never a caller's
+ * optional page/home hint. Local display/read APIs keep the original records. */
+export function assertVirtualHomeCloud(state:State,actor:Person,itemIds:string[]){
+  const home=virtualHomeItems(state,actor);
+  if(home.some(i=>itemIds.includes(i.id))&&(!state.virtualHomes?.[actor]?.allowCloud||home.length!==8))
+    throw new AgentError('请先在首页明确授权这套模拟家庭使用云端模型',403);
+}
 export function installVirtualHome(
   db: DatabaseSync,
   read: () => State,

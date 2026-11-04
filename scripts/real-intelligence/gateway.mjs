@@ -116,7 +116,7 @@ export async function gateway(configPath,options) {
       // reserved until actual usage arrives. An unknown failed charge stays reserved.
       const reserve =
         ((externalInput?Math.max(Buffer.byteLength(raw),1_000_000):Buffer.byteLength(raw)) * Math.max(8, options?.prices?.input || 0) +
-          (maxTokens + (body.enable_thinking ? 2048 : 0)) * Math.max(64, options?.prices?.output || 0)) /
+          (maxTokens + (body.enable_thinking ? body.thinking_budget : 0)) * Math.max(64, options?.prices?.output || 0)) /
         1e6 + (fileInput?5.12:0)+(nativeSearch||responses?(externalInput?1:5):0);
       assertBudget(ledger,reserve,limits);
       const user = (body.messages||body.input?.messages)?.find((m) => m.role === "user");

@@ -13,6 +13,12 @@ export const actionProposal=z.discriminatedUnion('kind',[
  z.object({kind:z.literal('gift'),itemId:item,message:z.string().trim().min(1).max(1000)}).strict(),
  z.object({kind:z.literal('family'),itemId:item,memberId:item,summary:z.string().trim().min(1).max(1200)}).strict(),
 ]);
+/** New generation uses the same domain fields, without the retired legacy text
+ * alternative. Old saved plans remain readable through actionProposal. */
+export const currentActionProposal=z.discriminatedUnion('kind',[
+ actionProposal.options[0].extend({steps:z.array(dependentStep).min(1).max(12)}),
+ actionProposal.options[1],actionProposal.options[2],actionProposal.options[3],
+]);
 /** Structural and numerical gates, not semantic proof or a physics simulator. */
 export type ActionSource={id:string;itemId:string;text?:string;kind?:'operation'|'source_assertion';conditions?:string[]};
 export function checkPlanResources(raw:unknown,allowed:string[],checks:NecessaryCheck[],sources:ActionSource[],items:Item[]=[],userGoal?:string){

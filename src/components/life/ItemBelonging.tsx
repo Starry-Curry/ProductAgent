@@ -10,7 +10,8 @@ import {
   Package,
   ImageIcon,
 } from "lucide-react";
-import type { Item, Person } from "@/lib/domain";
+import type { Item, Person,Memory } from "@/lib/domain";
+import {giftStoryMemoryText} from '@/lib/memory/gift-story';
 import type { Persona } from "@/lib/agent/contracts";
 import type { ProductPack } from "@/lib/products";
 import { AssistantConversation } from "../AssistantConversation";
@@ -51,8 +52,10 @@ export function ItemBelonging({
   taskId,
   onOpenCapability,
   onTaskLinked,
+  receivedStories=[],
 }: {
   onTaskLinked?:(taskId:string)=>void;
+  receivedStories?:Memory[];
   onOpenCapability?: (itemId:string,capability:NonNullable<import('@/lib/agent/contracts').AssistantReply['continuations']>[number]['capability'])=>void;
   taskId?: string;
   homeId?: "young-apartment-v1";
@@ -90,6 +93,8 @@ export function ItemBelonging({
     [savedStory, setSavedStory] = useState<Fragment>();
   const memoryRequest = useRef(crypto.randomUUID()),
     storyRequest = useRef<string | undefined>(undefined);
+  const giftRequests=useRef(new Map<string,string>());
+  const [giftCloud,setGiftCloud]=useState<Record<string,boolean>>({}),[rememberedGifts,setRememberedGifts]=useState(new Set<string>());
   const [profileReady, setProfileReady] = useState(false),
     [savedEnabled, setSavedEnabled] = useState(false);
   const own = item.owner === actor;
@@ -124,6 +129,7 @@ export function ItemBelonging({
           setPersona({ ...d.persona, avatar: d.persona.avatar || "object" });
           setSavedEnabled(d.persona.enabled);
           setProfileReady(true);
+          setRememberedGifts(new Set((d.memories||[]).filter((m:any)=>m.provenance?.extractor==='gift-snapshot-consent-v1').map((m:any)=>m.provenance.sourceId)));
         }
       })
       .catch(() => setNotice("分身设置暂时未加载，请稍后重试"));
@@ -203,6 +209,24 @@ export function ItemBelonging({
               </p>
             </div>
           </article>
+          {!!receivedStories.length&&<article className="belong-sheet">
+            <span className="belong-kicker">随它一起到来的故事</span>
+            <h3>这一页，由赠送者选择分享</h3>
+            <p>它不是你的亲历，也不会自动进入个人记忆或发送给云端。你自己的新经历会独立保存。</p>
+            {receivedStories.map(s=><section key={s.id} data-gift-story-id={s.id}>
+              <p>{s.text}</p>
+              {rememberedGifts.has(s.id)?<p>已按你的选择留在记忆中；可在下方纠正、调整授权或忘记。</p>:<>
+                {s.text.length>1400&&<details><summary>本次记忆的节选（完整原文仍在上方）</summary><p>{giftStoryMemoryText(s.text)}</p></details>}
+                <label className="belong-check"><input type="checkbox" disabled={busy} checked={!!giftCloud[s.id]} onChange={e=>setGiftCloud(v=>({...v,[s.id]:e.target.checked}))}/>允许云端模型使用这条赠礼故事</label>
+                <button disabled={busy} onClick={async()=>{
+                  setBusy(true);try{let requestId=giftRequests.current.get(s.id);if(!requestId){requestId=crypto.randomUUID();giftRequests.current.set(s.id,requestId);}
+                    await memoryRequestAPI({action:'rememberGiftStory',input:{storyId:s.id,itemId:item.id,expectedText:s.text,allowCloud:!!giftCloud[s.id],requestId}});
+                    setRememberedGifts(v=>new Set([...v,s.id]));setNotice(giftCloud[s.id]?'已确认用于相关帮助；这是赠送者分享的故事，不是你的亲历。':'已确认保留，仅本机使用；未允许云端读取。');
+                  }catch(e){setNotice((e as Error).message);}finally{setBusy(false);}
+                }}>确认：让物间记住这条分享的故事</button>
+              </>}
+            </section>)}
+          </article>}
           {own && (
             <article className="belong-sheet belong-persona">
               <span className="belong-kicker">03 / 一种可选的陪伴</span>

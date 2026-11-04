@@ -1,0 +1,279 @@
+{
+  "at": "2026-11-04T18:54:23.227Z",
+  "round": "finals-product-20261105-r1",
+  "basis": "synthetic_Task_fixture_via_existing_API_real_UI_restoration_software_execution_and_optional_real_Qwen_readback_not_hardware",
+  "itemId": "7ff42ad8-c403-4433-8845-447a84bc8cfd",
+  "responses": [
+    {
+      "question": "现在这盏本机软件模拟灯的实际亮度是多少？请实时回读，不调光，也不要把上次目标35当作当前结果；说明这不是实物灯具。",
+      "result": {
+        "session": {
+          "id": "904338fc-53ea-4286-8a97-c1b641e4dfac",
+          "owner": "u_0412b31f-1754-432d-b179-8e92df74fe79",
+          "itemId": "7ff42ad8-c403-4433-8845-447a84bc8cfd",
+          "identity": "[\"u_0412b31f-1754-432d-b179-8e92df74fe79\",\"[\\\"WUJIAN-SOFTWARE-LAMP-1\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "b34280ac-2d5b-4661-9377-7ea288490f86",
+              "role": "user",
+              "text": "现在这盏本机软件模拟灯的实际亮度是多少？请实时回读，不调光，也不要把上次目标35当作当前结果；说明这不是实物灯具。",
+              "at": "2026-11-04T18:54:42.789Z",
+              "itemId": "7ff42ad8-c403-4433-8845-447a84bc8cfd",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "16d73cc3-eba5-4301-8c95-d6f9bab3eb8a",
+              "role": "assistant",
+              "text": "已做实时回读（未调光、未改任何设置）：这盏 WUJIAN-SOFTWARE-LAMP-1 软件模拟灯当前 power=on，亮度=35，revision 1，回读时间 2026-11-04 18:54 UTC。需要说明两点：这个 35 是本次从本机模拟器实际读回的数值，恰好与上次目标一致，但不是拿目标当结果；它只是软件模拟器的状态，不是任何实物灯具，也不代表真实照度或阅读舒适度——房间里的实际亮度无法由它证明。",
+              "reply": {
+                "modelHistoryText": "已做实时回读（未调光、未改任何设置）：这盏 WUJIAN-SOFTWARE-LAMP-1 软件模拟灯当前 power=on，亮度=35，revision 1，回读时间 2026-11-04 18:54 UTC。需要说明两点：这个 35 是本次从本机模拟器实际读回的数值，恰好与上次目标一致，但不是拿目标当结果；它只是软件模拟器的状态，不是任何实物灯具，也不代表真实照度或阅读舒适度——房间里的实际亮度无法由它证明。",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [],
+                "answer": "已做实时回读（未调光、未改任何设置）：这盏 WUJIAN-SOFTWARE-LAMP-1 软件模拟灯当前 power=on，亮度=35，revision 1，回读时间 2026-11-04 18:54 UTC。需要说明两点：这个 35 是本次从本机模拟器实际读回的数值，恰好与上次目标一致，但不是拿目标当结果；它只是软件模拟器的状态，不是任何实物灯具，也不代表真实照度或阅读舒适度——房间里的实际亮度无法由它证明。",
+                "outcome": "answered",
+                "source": "model-general",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "stepsInAnswer": false,
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "7ff42ad8-c403-4433-8845-447a84bc8cfd",
+                    "name": "自有虚拟灯（软件实验）",
+                    "model": "WUJIAN-SOFTWARE-LAMP-1"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+              },
+              "at": "2026-11-04T18:54:42.789Z"
+            }
+          ],
+          "known": {
+            "foundationTaskId": "f17f4e1a-ed1f-442c-909a-6dd0d213aa1f",
+            "foundationTaskIntent": "plan",
+            "foundationHasItems": "true",
+            "foundationComplexTask": "true",
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "95ac6037-d740-48b9-bf88-bf6e08e0f39b",
+            "homeTaskGoal": "现在这盏本机软件模拟灯的实际亮度是多少？请实时回读，不调光，也不要把上次目标35当作当前结果；说明这不是实物灯具。"
+          },
+          "tried": [],
+          "memoryEpoch": 5,
+          "createdAt": "2026-11-04T18:54:30.881Z",
+          "updatedAt": "2026-11-04T18:54:42.789Z",
+          "expiresAt": "2026-11-11T18:54:30.881Z",
+          "itemScopes": {
+            "7ff42ad8-c403-4433-8845-447a84bc8cfd": "[\"u_0412b31f-1754-432d-b179-8e92df74fe79\",\"[\\\"WUJIAN-SOFTWARE-LAMP-1\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "modelHistoryText": "已做实时回读（未调光、未改任何设置）：这盏 WUJIAN-SOFTWARE-LAMP-1 软件模拟灯当前 power=on，亮度=35，revision 1，回读时间 2026-11-04 18:54 UTC。需要说明两点：这个 35 是本次从本机模拟器实际读回的数值，恰好与上次目标一致，但不是拿目标当结果；它只是软件模拟器的状态，不是任何实物灯具，也不代表真实照度或阅读舒适度——房间里的实际亮度无法由它证明。",
+          "continuations": [],
+          "actionCards": [],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [],
+          "answer": "已做实时回读（未调光、未改任何设置）：这盏 WUJIAN-SOFTWARE-LAMP-1 软件模拟灯当前 power=on，亮度=35，revision 1，回读时间 2026-11-04 18:54 UTC。需要说明两点：这个 35 是本次从本机模拟器实际读回的数值，恰好与上次目标一致，但不是拿目标当结果；它只是软件模拟器的状态，不是任何实物灯具，也不代表真实照度或阅读舒适度——房间里的实际亮度无法由它证明。",
+          "outcome": "answered",
+          "source": "model-general",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "stepsInAnswer": false,
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "7ff42ad8-c403-4433-8845-447a84bc8cfd",
+              "name": "自有虚拟灯（软件实验）",
+              "model": "WUJIAN-SOFTWARE-LAMP-1"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+        },
+        "trace": [
+          {
+            "stage": "tool_runtime_REPLY_START",
+            "detail": "{}",
+            "at": "2026-11-04T18:54:30.909Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T18:54:30.909Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"read_owned_software\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T18:54:36.091Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_b5c2e05d3cef47fa91c8da5e\",\"tool\":\"read_owned_software\"}",
+            "at": "2026-11-04T18:54:36.092Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_b5c2e05d3cef47fa91c8da5e\",\"tool\":\"read_owned_software\"}",
+            "at": "2026-11-04T18:54:36.092Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_b5c2e05d3cef47fa91c8da5e\",\"tool\":\"read_owned_software\"}",
+            "at": "2026-11-04T18:54:36.092Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":6279,\"outputTokens\":80}",
+            "at": "2026-11-04T18:54:36.092Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_b5c2e05d3cef47fa91c8da5e\",\"tool\":\"read_owned_software\"}",
+            "at": "2026-11-04T18:54:36.093Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"read_owned_software\",\"effect\":\"read_only\",\"scope\":\"current_owned_synthetic_software_with_live_grant\",\"result\":\"current_software_simulator_readback_not_hardware\",\"revocation\":\"recheck_before_final_answer\"}",
+            "at": "2026-11-04T18:54:36.097Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "read_owned_software completed",
+            "at": "2026-11-04T18:54:36.109Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_b5c2e05d3cef47fa91c8da5e\",\"tool\":\"read_owned_software\"}",
+            "at": "2026-11-04T18:54:36.110Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_b5c2e05d3cef47fa91c8da5e\",\"tool\":\"read_owned_software\",\"state\":\"success\"}",
+            "at": "2026-11-04T18:54:36.111Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T18:54:36.112Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T18:54:42.771Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_969d2c67205b42a690dd02ac\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T18:54:42.772Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_969d2c67205b42a690dd02ac\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T18:54:42.772Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_969d2c67205b42a690dd02ac\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T18:54:42.772Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":6474,\"outputTokens\":202}",
+            "at": "2026-11-04T18:54:42.772Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_969d2c67205b42a690dd02ac\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T18:54:42.773Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"complete_answer\",\"effect\":\"local_write\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_and_public_original_quote_locators_no_business_write\",\"idempotency\":\"original_document_and_quote_digest\"}",
+            "at": "2026-11-04T18:54:42.775Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "complete_answer completed",
+            "at": "2026-11-04T18:54:42.783Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_969d2c67205b42a690dd02ac\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T18:54:42.784Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_969d2c67205b42a690dd02ac\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+            "at": "2026-11-04T18:54:42.784Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":11901,\"calls\":2,\"tools\":2,\"reservedCny\":0.163188,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-04T18:54:42.787Z"
+          }
+        ],
+        "tokens": {
+          "input": 12753,
+          "output": 282
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "taskId": "f17f4e1a-ed1f-442c-909a-6dd0d213aa1f",
+          "runId": "239da335-7859-42dd-ab05-31a442df81a1",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 12642,
+      "streamTextEvents": 1
+    }
+  ],
+  "checks": [
+    {
+      "name": "reload_restores_validated_Task_to_professional_module_not_only_header",
+      "passed": true
+    },
+    {
+      "name": "confirmed_software_operation_and_readback_link_original_Task",
+      "passed": true
+    },
+    {
+      "name": "real_Qwen_uses_granted_live_readback_in_same_Task",
+      "passed": true,
+      "semanticReviewRequired": true
+    }
+  ],
+  "errors": [],
+  "pageErrors": [],
+  "taskId": "f17f4e1a-ed1f-442c-909a-6dd0d213aa1f",
+  "execution": {
+    "taskId": "f17f4e1a-ed1f-442c-909a-6dd0d213aa1f",
+    "runId": "ff04be6a-663e-408b-9733-4c7848e7efc6",
+    "adapterTargetHash": "4aa007eb8bb462cdb77eba702a61176989756ff0920506e987e0234233c138e6",
+    "adapterVersion": "software-lamp-v1",
+    "status": "verified",
+    "completionBasis": "software-simulator-readback",
+    "observed": {
+      "power": true,
+      "brightness": 35,
+      "revision": 1,
+      "simulated": true
+    },
+    "simulated": true
+  },
+  "status": "executed_real_Qwen_readback_quality_requires_review",
+  "upstreamRequests": 2
+}

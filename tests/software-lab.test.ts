@@ -147,6 +147,21 @@ test("自有软件灯：真实REA→静态候选→授权→执行回读；坏�
     assert.equal(connected.taskId,livingTask.taskId);assert.equal((f.db.prepare('SELECT count(*) AS n FROM foundation_tasks').get() as {n:number}).n,taskCount,'专业软件动作不能另建平行任务');
     assert.ok(taskOutcomes(f.db,f.read(),'lin',livingTask.taskId).some(o=>o.basis==='software_simulator_readback'));
     assert.ok(!resolveTaskContext(f.db,f.read(),'lin',livingTask.taskId).previousOutcomes.some(o=>o.basis==='software_simulator_readback'),'没有长期复用同意时，当前结果不自动成为云端经历');
+    async function readThroughAgent(revokeDuringFinal=false){
+      let calls=0;
+      return respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:id,taskId:livingTask.taskId,mode:'auto',question:'读取当前自有软件灯的实际亮度，不调光，不操作任何真实设备',memoryPolicy:'off'},{
+        ready:true,structuredOutput:'json_schema',model:'offline-readback-protocol',generate:async()=>{throw Error('no_second_reviewer');},converse:async(messages,tools,options)=>{
+          calls++;
+          if(calls===1){const packet=JSON.parse(messages.find(m=>m.role==='user')!.content!);assert.ok(packet.softwareCapabilities.some((c:any)=>c.targetType==='software_simulator'));assert.notDeepEqual(options?.toolChoice,{type:'function',function:{name:'search_product_knowledge'}},'真实软件适配器不应被迫搜索虚构商品官网');assert.ok(tools.some(t=>t.function.name==='read_owned_software'));
+            return {model:'offline-readback-protocol',text:'',tokens:null,finishReason:'tool_calls',toolCalls:[{id:'read',type:'function',function:{name:'read_owned_software',arguments:JSON.stringify({itemId:id})}}]};}
+          assert.ok(messages.some(m=>m.role==='tool'&&m.content?.includes('"brightness":37')),'主模型确实读到实际本机HTTP回读');
+          if(revokeDuringFinal)grantSoftware(f.db,f.read,'lin',id,false);
+          return {model:'offline-readback-protocol',text:'',tokens:null,finishReason:'tool_calls',toolCalls:[{id:'final',type:'function',function:{name:'complete_answer',arguments:JSON.stringify({message:'当前本机软件灯回读亮度37；不是硬件状态，未调光。',guidance:null})}}]};
+        },
+      });
+    }
+    const agentRead=await readThroughAgent();assert.equal(agentRead.modelCalls,2);assert.match(agentRead.reply.answer,/软件灯回读亮度37/);assert.equal(agentRead.foundation?.taskId,livingTask.taskId);
+    await assert.rejects(()=>readThroughAgent(true),/软件回读授权或版本已变化/);grantSoftware(f.db,f.read,'lin',id,true);
     const unrelated=f.add('[合成]另一个账号的物品','其他','','');const foreignState=f.read();foreignState.items.find(i=>i.id===unrelated)!.owner='dad';f.write(foreignState);
     const foreignTask=createTask(f.db,f.read,'dad',{requestId:crypto.randomUUID(),goal:'不可借用的私人任务',intent:'plan',itemInstanceIds:[unrelated]});
     await assert.rejects(()=>executeSoftware(f.db,f.read,'lin',{...input,requestId:crypto.randomUUID(),brightness:99,taskId:foreignTask.taskId}),/任务不存在或未获授权/);

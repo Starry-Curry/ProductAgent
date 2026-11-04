@@ -1,0 +1,36 @@
+✔ 最终呈现与保存预览使用同一官方原文ID契约，不暗示私人记忆/用户尺寸是操作证据 (1.7448ms)
+✔ 未读原文时保留条件化想法，不广告必被服务器拒绝的型号操作；读取后可恢复 (0.9008ms)
+✖ 新模型保存计划只提交逐步资源依赖，不继续广告旧纯文字步骤旁路 (0.8667ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 649.1047
+
+✖ failing tests:
+
+test at tests\finals-tool-source-schema.test.ts:19:1
+✖ 新模型保存计划只提交逐步资源依赖，不继续广告旧纯文字步骤旁路 (0.8667ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'object'
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-tool-source-schema.test.ts:22:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'object',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
