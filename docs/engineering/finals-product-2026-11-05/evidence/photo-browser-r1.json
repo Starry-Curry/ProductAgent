@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-04T21:35:45.971Z",
+  "basis": "real_Qwen_vision_real_UI_self_authored_SYNTHETIC_images_not_real_SKU_or_ownership_verification",
+  "checks": [],
+  "recognitions": [],
+  "errors": [
+    "Expected values to be strictly equal:\n\n400 !== 403\n"
+  ],
+  "pageErrors": [],
+  "status": "failed",
+  "upstreamRequests": 0
+}

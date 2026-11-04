@@ -6,6 +6,7 @@ import { invalidateStoryUnderstanding } from "./organization.ts";
 import { clearOwnerContext } from "../memory/store.ts";
 import { migrateUnified } from "../foundation/schema.ts";
 import { recordSpecialist } from "../foundation/specialists.ts";
+import { authorize } from "../foundation/policy.ts";
 
 export const fragmentInput = z
   .object({
@@ -261,7 +262,7 @@ export function readMedia(
     !r ||
     (r.owner !== actor &&
       !state.items.some(
-        (i) => i.photo?.includes(`/media/${id}`) && canRead(i, actor),
+        (i) => i.photo?.includes(`/media/${id}`) && authorize(db, state, actor, i.id).allowed,
       ))
   )
     throw new AgentError("照片不存在或未获授权", 403);

@@ -1,0 +1,90 @@
+{
+  "at": "2026-11-04T21:36:28.379Z",
+  "basis": "real_Qwen_vision_real_UI_self_authored_SYNTHETIC_images_not_real_SKU_or_ownership_verification",
+  "checks": [
+    {
+      "name": "label_upload_not_implicit_cloud_consent",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "confirmed_image_candidate_creates_synthetic_instance_not_official_fact",
+      "passed": true
+    },
+    {
+      "name": "label_private_media_requires_authenticated_owner",
+      "passed": true
+    },
+    {
+      "name": "unmarked_upload_not_implicit_cloud_consent",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "unmarked_shape_does_not_certify_brand_or_model",
+      "passed": true
+    },
+    {
+      "name": "unmarked_private_media_requires_authenticated_owner",
+      "passed": true
+    }
+  ],
+  "recognitions": [
+    {
+      "fixture": "label",
+      "ms": 4327,
+      "status": 200,
+      "result": {
+        "candidates": [
+          {
+            "name": "WUJIAN LAB SYNTH-42",
+            "brand": "WUJIAN LAB",
+            "model": "SYNTH-42",
+            "category": "Synthetic Test Label",
+            "basis": "visible-text",
+            "observedText": "WUJIAN LAB\nMODEL: SYNTH-42\nSYNTHETIC TEST LABEL - NOT A REAL SKU\nAppearance and ownership are not verified.",
+            "uncertainties": [
+              "Label explicitly states it is a synthetic test label and not a real SKU",
+              "Actual physical item category is unknown as only a text label is visible"
+            ]
+          }
+        ],
+        "notice": "模型识别候选未经实物验证；可见文字也可能识别错误。请核对后采用，不会自动建档或绑定精确型号。"
+      }
+    },
+    {
+      "fixture": "unmarked",
+      "ms": 3462,
+      "status": 200,
+      "result": {
+        "candidates": [
+          {
+            "name": "马克杯",
+            "category": "餐具/水杯",
+            "basis": "visual-inference",
+            "uncertainties": [
+              "具体材质未知",
+              "无可见品牌或型号铭牌",
+              "实际尺寸未知"
+            ]
+          },
+          {
+            "name": "水杯",
+            "category": "餐具/水杯",
+            "basis": "visual-inference",
+            "uncertainties": [
+              "具体用途未知",
+              "无可见文字信息"
+            ]
+          }
+        ],
+        "notice": "模型识别候选未经实物验证；可见文字也可能识别错误。请核对后采用，不会自动建档或绑定精确型号。"
+      }
+    }
+  ],
+  "errors": [],
+  "pageErrors": [],
+  "itemId": "aa48d2e4-b626-4fb6-8390-e3b51e7c423a",
+  "status": "executed_real_vision_candidates_not_physical_or_identity_verification",
+  "upstreamRequests": 2
+}

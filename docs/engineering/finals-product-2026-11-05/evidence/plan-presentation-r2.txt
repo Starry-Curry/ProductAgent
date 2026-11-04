@@ -1,0 +1,24 @@
+✖ 未验证机制的前提与构想状态在动作之前出现，状态词不声称物理验证成功 (7.1635ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 461.9366
+
+✖ failing tests:
+
+test at tests\finals-plan-presentation.test.ts:2:1
+✖ 未验证机制的前提与构想状态在动作之前出现，状态词不声称物理验证成功 (7.1635ms)
+  Error: 承托/堆叠需要独立承载物
+      at file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/practical-actions.ts:45:101
+      at Array.map (<anonymous>)
+      at checkPlanResources (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/practical-actions.ts:31:27)
+      at presentGuidance (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/guidance.ts:19:13)
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-plan-presentation.test.ts:4:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

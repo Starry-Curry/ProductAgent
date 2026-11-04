@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
 import type { Item, Person } from "@/lib/domain";
 import { additionalQuestions } from "@/lib/agent/presentation";
+import {planStepStatus} from '@/lib/life/plan-presentation';
 import type {
   ServiceSession,
   TurnInput,
@@ -533,6 +534,7 @@ export function AssistantConversation({
                 {card.planPreview?<>
                   <p>这是待确认的方案。以下每一步先核对前提；保存不代表条件已满足或动作已执行。</p>
                   <ol>{card.planPreview.steps.map((step,i)=><li key={i}>
+                    <strong>{planStepStatus(step.status)}</strong>
                     {!!step.conditions.length&&<details className="plan-step-conditions" open={i===0}><summary>第{i+1}步 · 实施前先核对{step.conditions.length}项</summary><ul>{step.conditions.map((c,n)=><li key={n}>{c}</li>)}</ul></details>}
                     <p>{step.text}</p>
                   </li>)}</ol>

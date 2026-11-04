@@ -20,6 +20,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 阶段切片6：资料类型不再一律偏手册；同轮重复发现复用；计划后排必要条件不再截断；自然记忆统一原话收据、避免重复抽取/遗忘后复活；主模型按需读取获准兴趣类别。642项离线、类型与生产构建及实际浏览器记录保留。真实模型能读取纠正后的兴趣，但仍漏具体行动安排；来源地区和创意机制仍失败，质量不改为通过。
 
+阶段切片7：照片逐图授权的真实视觉候选、数量/过期状态和JP编辑兼容、媒体撤权的权威权限、同一行动资源Schema及逐步构想显示。真实自然交流和相机/云台复测仍有事实、隐含资源失败；实验模式默认关闭，未改质量结论。原始记录与逐层F1–F12覆盖保留。
+
 ### GitHub 文档与协作入口整理
 
 三份根历史报告精简为固定提交入口，历史日期与原判断保留；README/CONTRIBUTING 统一 GitHub、main/develop 与 PR 审查流程。新增适配用户指南的 [操作手册](docs/GIT_WORKFLOW.md) 和 [后续规划](docs/engineering/NEXT_STEPS.md)。不迁移 CodeArts、不新建 master、不删除远端分支或历史证据；无业务与费用变化，Core Foundation 仍未通过。

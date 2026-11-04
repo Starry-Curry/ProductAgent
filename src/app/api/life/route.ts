@@ -453,6 +453,7 @@ async function POSTHandler(r: Request) {
               "cn",
               "uk",
               "us",
+              "jp",
               "global",
               "my",
               "au",

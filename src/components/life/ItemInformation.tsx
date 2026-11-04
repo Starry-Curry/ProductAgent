@@ -145,7 +145,7 @@ export function ItemInformation({
                   });
                   await refresh();
                   setNotice(
-                    "已更新管理信息；数量为零或过期的食品不参与创意候选。",
+                    "已更新管理信息；数量为零或已过有效期的物品不参与创意候选。",
                   );
                 });
               }}
@@ -193,6 +193,7 @@ export function ItemInformation({
                     "cn",
                     "uk",
                     "us",
+                    "jp",
                     "global",
                     "my",
                     "au",

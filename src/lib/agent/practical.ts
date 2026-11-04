@@ -92,9 +92,24 @@ export function practicalToolSet(sourceIds:string[],resourceIds:string[],reading
   for(const value of Object.values(node))narrow(value);
  };
  narrow(schema);narrow(tools.find(t=>t.function.name==='complete_answer')!.function.parameters);
+ // Advertise the same current action operands for final guidance and saved
+ // previews. Reading an excluded device's manual remains authorized; a known
+ // failed prerequisite only removes that device from this turn's actions.
+ const resources=[...new Set(resourceIds)];
+ const narrowResources=(node:any)=>{
+  if(!node||typeof node!=='object')return;
+  if(Array.isArray(node)){for(const child of node)narrowResources(child);return;}
+  if(!resources.length)for(const key of ['anyOf','oneOf'])if(Array.isArray(node[key]))node[key]=node[key].filter((s:any)=>!s.properties?.steps);
+  const p=node.properties;
+  if(p?.itemIds)p.itemIds.items.enum=resources;
+  if(p?.kind?.const==='procedure')p.itemId.enum=resources;
+  if(p?.items)p.items.items.enum=resources;
+  if(p?.target)p.target.enum=resources;
+  for(const value of Object.values(node))narrowResources(value);
+ };
+ narrowResources(schema);narrowResources(tools.find(t=>t.function.name==='complete_answer')!.function.parameters);
  const plan=schema.oneOf.find((s:any)=>s.properties?.kind?.const==='plan');
- if(sourceIds.length)plan.properties.sourceIds.items.enum=sourceIds;else {plan.properties.sourceIds.maxItems=0;plan.properties.sourceIds.description='本次尚无已读取的型号操作原文ID，必须为空；用户报告不是厂家操作证据。';}
- if(resourceIds.length){plan.properties.itemIds.items.enum=resourceIds;const step=plan.properties.steps.items;step.properties.items.items.enum=resourceIds;step.properties.target.enum=resourceIds;}
+ if(plan){if(sourceIds.length)plan.properties.sourceIds.items.enum=sourceIds;else {plan.properties.sourceIds.maxItems=0;plan.properties.sourceIds.description='本次尚无已读取的型号操作原文ID，必须为空；用户报告不是厂家操作证据。';}}
  if(reading){
   const references=[...new Set(reading.sourceIds)],urls=[...new Set(reading.sectionURLs)];
   for(const t of tools){const p=(t.function.parameters as any).properties;
@@ -352,9 +367,13 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  if(process.env.WUJIAN_PRACTICAL_NATURAL_TURN!=='false')messages.push({role:'user',content:question});
  const thinking=process.env.WUJIAN_PRACTICAL_THINKING==='always'||process.env.WUJIAN_PRACTICAL_THINKING==='true'&&(initial.items.length>1||session.known.foundationTaskIntent==='explore'||!initial.items.length&&initial.catalogue.length>1);
  let answer='',failure:string|undefined,failureCode:string|undefined;
+ // Narrow experiment: an empty personal space has no authorized physical
+ // resource actions to publish. Natural dialogue can still use the same
+ // approved-profile tool; this does not enable free product QA or new writes.
+ const naturalChat=process.env.WUJIAN_PRACTICAL_NATURAL_CHAT==='true'&&initial.authorizedItemIds.length===0;
  try{
   let round=0;
-  const finalContract=provider.structuredOutput==='json_schema';
+  const finalContract=provider.structuredOutput==='json_schema'&&!naturalChat;
   const result=await runToolAgent({system:PRACTICAL_SYSTEM+(finalContract?'\n本路径最终答复必须调用complete_answer；message只作简短解释，不重复后续步骤。型号操作用guidance.kind=procedure，steps引用本轮带原文候选的id；不要为手机侧的人类操作伪造库存ID或声称已控制。物理组合用带itemIds的guidance。device_operation的items[0]是被操作设备，operationRef使用本轮已读取的适用型号原文id，并列入sourceIds。未知不能写成支持/不支持；只按当前问题回答，不主动扩展会删数据的操作。不要以普通completion、message或看图猜测绕过动作核对。':''),messages:messages.filter(m=>m.role==='user'),guard,
    tools:Object.entries(schemas).map(([name,schema])=>({name,schema,description:descriptions[name as keyof typeof descriptions],execute:async input=>{
     try{const value=await tool(name,JSON.stringify(input));unresolvedTools.delete(name);log('practical_tool',name+' completed');return value;}
@@ -362,7 +381,9 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    }})),onEvent:(type,detail)=>{log('tool_runtime_'+type,detail);if(type==='TOOL_RESULT_END'){const event=JSON.parse(detail);if(event.tool&&event.state==='error')unresolvedTools.add(event.tool);}},stopAfterTool:()=>!!finalized||cards.some(c=>c.kind==='plan'),
    generate:async modelMessages=>{
   guard();if(calls>=6)throw Error('本轮模型请求已达到上限');const currentContext=context();const readable=selectableDocuments(currentContext.items.map(i=>i.id));
-  const turnTools=practicalToolSet(actionSources().filter(s=>s.text?.trim()&&['operation','source_assertion'].includes(s.kind||'')).map(s=>s.id),currentContext.items.filter(i=>i.usable).map(i=>i.id),{sourceIds:[...readable.map(d=>d.id),...currentContext.evidence.filter(e=>e.basis==='official').map(e=>e.id)],sectionURLs:readable.flatMap(d=>(d.sections||[]).map(s=>s.url))});const inputBytes=Buffer.byteLength(JSON.stringify({messages:modelMessages,tools:turnTools}));if(inputBytes>150000)throw Error('context_budget_exceeded');
+  const failedSingleResources=new Set(practicalConstraints(currentContext).filter(c=>c.satisfied===false&&c.itemIds.length===1).flatMap(c=>c.itemIds));
+  const actionResourceIds=currentContext.items.filter(i=>i.usable&&!failedSingleResources.has(i.id)).map(i=>i.id);
+  const availableTools=practicalToolSet(actionSources().filter(s=>s.text?.trim()&&['operation','source_assertion'].includes(s.kind||'')).map(s=>s.id),actionResourceIds,{sourceIds:[...readable.map(d=>d.id),...currentContext.evidence.filter(e=>e.basis==='official').map(e=>e.id)],sectionURLs:readable.flatMap(d=>(d.sections||[]).map(s=>s.url))});const turnTools=naturalChat?availableTools.filter(t=>['get_relevant_experiences','complete_answer'].includes(t.function.name)):availableTools;const inputBytes=Buffer.byteLength(JSON.stringify({messages:modelMessages,tools:turnTools}));if(inputBytes>150000)throw Error('context_budget_exceeded');
   // Once the provider reports usage for this exact prefix, only appended bytes
   // need the conservative byte/token bound. Re-reserving the full UTF-8 byte
   // size incorrectly aborted long-manual tool→answer turns despite low usage.
@@ -374,7 +395,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   // planning. This is the same bounded tool loop, not a second-model reviewer.
   const mustCheck=process.env.WUJIAN_PRACTICAL_CONSTRAINT_ROUND==='true'&&round===0&&practicalConstraints(initial).some(c=>c.satisfied===false);
   const result=await provider.converse!(modelMessages,turnTools,{timeoutMs:Math.min(thinking?90000:45000,deadline-Date.now()),maxTokens:thinking?6000:2400,thinking,
-   toolChoice:round===5||calls===6?finalContract?{type:'function',function:{name:'complete_answer'}}:'none':mustRead?{type:'function',function:{name:'search_product_knowledge'}}:mustReadResources?{type:'function',function:{name:'get_item_context'}}:boundPlanning&&!cards.some(c=>c.kind==='plan')?{type:'function',function:{name:'prepare_action'}}:mustCheck?{type:'function',function:{name:'check_constraints'}}:finalContract?'required':'auto',onText:()=>{guard();provider.onStatus?.('正在整理依据、建议与待核对条件');}});
+   toolChoice:round===5||calls===6?finalContract?{type:'function',function:{name:'complete_answer'}}:'none':mustRead?{type:'function',function:{name:'search_product_knowledge'}}:mustReadResources?{type:'function',function:{name:'get_item_context'}}:boundPlanning&&!cards.some(c=>c.kind==='plan')?{type:'function',function:{name:actionResourceIds.length?'prepare_action':'complete_answer'}}:mustCheck?{type:'function',function:{name:'check_constraints'}}:finalContract?'required':'auto',onText:()=>{guard();provider.onStatus?.('正在整理依据、建议与待核对条件');}});
   guard();if(result.tokens){tokens.input+=result.tokens.input;tokens.output+=result.tokens.output;reservedCny-=reserve;reservedCny+=(result.tokens.input*12+result.tokens.output*36)/1e6;previousInput={tokens:result.tokens.input,bytes:inputBytes};}
   log('practical_model',JSON.stringify({round,model:result.model,toolCalls:result.toolCalls.map(t=>t.function.name),finish:result.finishReason}));
   if(finalContract&&!result.toolCalls.length)throw Error('模型未遵守最终呈现协议，未发布未核对草稿');
@@ -385,7 +406,8 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   answer=finalized?.answer||result.text;
   if(cards.some(c=>c.kind==='plan')){
    const plan=cards.find(c=>c.kind==='plan')!;
-   answer=(boundPlanning?'先排除已知不满足的使用条件：\n\n'+practicalConstraints(context()).map(c=>'- '+c.label+'：'+c.detail+'。'+c.scope).join('\n')+'\n\n':'')+plan.title+'\n\n'+plan.detail.map(s=>'- '+s).join('\n')+'\n\n这是待你确认的候选方案，未执行设备操作；保存后可继续这件事并报告结果。';
+   const concepts=plan.planPreview?.steps.filter(s=>['concept','unstructured_idea'].includes(s.status)).length||0;
+   answer=(boundPlanning?'先排除已知不满足的使用条件：\n\n'+practicalConstraints(context()).map(c=>'- '+c.label+'：'+c.detail+'。'+c.scope).join('\n')+'\n\n':'')+plan.title+'\n\n'+(plan.planPreview?`已整理${plan.planPreview.steps.length}步待核对草稿${concepts?`，其中${concepts}步仅为构想，暂不作为操作`:''}。请在下方候选卡逐步查看前提和原文，不要跳过条件直接照做。`:plan.detail.map(s=>'- '+s).join('\n'))+'\n\n尚未执行设备操作；确认保存后可继续同一件事并报告实际结果。';
    log('practical_bound_plan','发布模型生成并已核对资源依赖的同一候选卡，不再追加模型回合重写步骤；不是完整物理或语义验证');
   }
  }catch(e){if(e instanceof AgentError&&[403,409].includes(e.status))throw e;failure=(e as Error).message;failureCode=e instanceof ProviderError?e.code:undefined;log('practical_failed',failure);}
