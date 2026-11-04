@@ -135,6 +135,7 @@ export function assessMechanism(
     refs.forEach((r) => used.add(r));
   };
   const item = (ref: string) => inventory.items.find((i) => i.ref === ref);
+  const propertyName=(key:string)=>({flat_surface:'接触面是否平整',max_load_kg:'承重上限',mass_kg:'重量',inner_mm:'内部净尺寸',outer_mm:'外尺寸',open_container:'容器开口',reflective:'反光性质',transparent:'透光性质',elastic:'弹性',magnetic:'磁性',food_contact:'食品接触适用性',heat_limit_c:'耐热温度',light:'照明能力',sound:'发声能力',clamp:'夹持结构'} as Record<string,string>)[key]||key;
   const require = (
     ref: string,
     key: string,
@@ -146,13 +147,13 @@ export function assessMechanism(
       add(
         "property:" + key,
         "unknown",
-        ref + " 的 " + component + " / " + key + " 未确认或来源冲突",
+        (item(ref)?.name||'相关物品') + (component==='本体'?'':'的'+component) + '：' + propertyName(key) + "尚未确认或来源冲突",
       );
       if (critical) openPhysics = true;
       return;
     }
     if (f.value === false) {
-      add("property:" + key, "contradiction", ref + " 已报告不具备 " + key, [
+      add("property:" + key, "contradiction", (item(ref)?.name||'相关物品') + " 已报告不具备 " + propertyName(key), [
         f.ref,
       ]);
       return;

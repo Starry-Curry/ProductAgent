@@ -16,6 +16,7 @@ export function ItemInformation({
   act,
   fragments,
   refresh,
+  taskId,
 }: {
   item: Item;
   actor: Person;
@@ -25,6 +26,7 @@ export function ItemInformation({
   act: any;
   fragments: Fragment[];
   refresh: any;
+  taskId?:string;
 }) {
   const [sources, setSources] = useState<any[]>([]),
     [notice, setNotice] = useState(""),
@@ -42,17 +44,21 @@ export function ItemInformation({
   const [knowledge, setKnowledge] = useState<any[]>([]);
   const [reality, setReality] = useState<RealityCard>();
   useEffect(() => {
+    let current=true;
+    setSources([]);setKnowledge([]);setReality(undefined);
     fetch(`/api/life?itemId=${encodeURIComponent(item.id)}`, {
       headers: { "x-demo-actor": actor },
     })
-      .then((r) => r.json())
+      .then(async r=>{const body=await r.json();if(!r.ok)throw Error(body.error||'物品资料暂时无法读取');return body;})
       .then((d) => {
+        if(!current)return;
         setSources(d.sources || []);
         setKnowledge(d.knowledge || []);
         setReality(d.reality);
       })
-      .catch((e) => setNotice(e.message));
-  }, [item.id, actor]);
+      .catch((e) => {if(current)setNotice(e.message);});
+    return ()=>{current=false;};
+  }, [item, actor]);
   const pack = packs.find((p) => p.id === item.productBinding?.packId);
   async function run(fn: () => Promise<void>) {
     setBusy(true);
@@ -67,7 +73,7 @@ export function ItemInformation({
   return (
     <div className="life-home-pair">
       <EvidenceClaims key={item.id} actor={actor} itemId={item.id}/>
-      {item.model === "WUJIAN-SOFTWARE-LAMP-1" && item.owner === actor && <SoftwareCapability item={item} actor={actor} />}
+      {item.model === "WUJIAN-SOFTWARE-LAMP-1" && item.owner === actor && <SoftwareCapability item={item} actor={actor} taskId={taskId}/>}
       <section className="life-card">
         <h2>物品资料与属性</h2>
         <dl>
@@ -132,6 +138,8 @@ export function ItemInformation({
                       quantityUnit: f.get("quantityUnit"),
                       expiresOn: f.get("expiresOn"),
                       material: f.get("material"),
+                      dimensions:f.get('dimensions'),
+                      power:f.get('power'),
                       care: f.get("care"),
                     },
                   });
@@ -236,6 +244,10 @@ export function ItemInformation({
                   defaultValue={item.attributes?.material || ""}
                 />
               </label>
+              <div className="life-form-row">
+                <label>尺寸 / 结构（本人记录）<input name="dimensions" maxLength={100} defaultValue={item.attributes?.dimensions||''}/></label>
+                <label>供电方式（本人记录）<input name="power" maxLength={100} defaultValue={item.attributes?.power||''}/></label>
+              </div>
               <label>
                 {item.category === "植物"
                   ? "已确认的养护要求"
@@ -261,7 +273,7 @@ export function ItemInformation({
             </blockquote>)}
           </details>}
           <p className="life-muted">
-            用于型号问答和能力候选；保留来源、原文位置与版本。自动定位覆盖有限品牌，找不到时可粘贴对应官方链接或上传说明书。地区未确认时需核对来源版本。
+            用于型号问答和能力候选，保留来源、原文位置与版本。物间会尝试发现官网资料；受访问限制或型号无法核实时会保留缺口，也可补充公开资料。地区未确认时需核对来源版本。
           </p>
           <button
             disabled={busy}

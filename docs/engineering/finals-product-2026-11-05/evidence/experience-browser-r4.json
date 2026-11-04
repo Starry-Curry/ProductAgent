@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-04T18:31:28.647Z",
+  "round": "finals-product-20261105-r1",
+  "basis": "real_UI_and_Qwen_synthetic_failed_attempt_not_hardware_verification",
+  "itemId": "c0d7f0d3-65fd-48d9-bec1-86031817a8af",
+  "responses": [],
+  "checks": [],
+  "errors": [
+    "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3232/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3232/\", waiting until \"load\"\u001b[22m\n"
+  ],
+  "pageErrors": [],
+  "quality": "requires_independent_original_output_review",
+  "status": "failed",
+  "upstreamRequests": 0
+}

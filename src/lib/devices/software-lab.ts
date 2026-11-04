@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { createHash } from "node:crypto";
-import { createTask, beginRun, finishRun } from "../foundation/tasks.ts";
+import { createTask, linkTask,beginRun, finishRun,assertRunCurrent } from "../foundation/tasks.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { canRead, type Person, type State } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
@@ -227,6 +227,7 @@ export async function executeSoftware(
     requestId: string;
     brightness: number;
     confirmed: boolean;
+    taskId?:string;
   },
 ) {
   owned(read(), actor, input.itemId);
@@ -257,7 +258,12 @@ export async function executeSoftware(
   owned(read(),actor,input.itemId);
   const latest=adapterState(db,actor,input.itemId);
   if(!latest?.granted||latest.grantEpoch!==a.grantEpoch||latest.targetHash!==a.targetHash)throw new AgentError("授权或软件版本已变化，未发送操作",409);
-  const task=createTask(db,read,actor,{requestId:input.requestId,goal:"明确授权后调整自有软件灯",intent:"control",itemInstanceIds:[input.itemId]});
+  let task;
+  if(input.taskId){
+    db.exec('BEGIN IMMEDIATE');
+    try{task=linkTask(db,read(),actor,{kind:'software_operation',refId:input.requestId,taskId:input.taskId,goal:'明确授权后调整自有软件灯',intent:'control',itemIds:[input.itemId]});db.exec('COMMIT');}
+    catch(e){db.exec('ROLLBACK');throw e;}
+  }else task=createTask(db,read,actor,{requestId:input.requestId,goal:"明确授权后调整自有软件灯",intent:"control",itemInstanceIds:[input.itemId]});
   const taskRun=beginRun(db,read,actor,{requestId:input.requestId,taskId:task.taskId,itemIds:[input.itemId],entryPoint:"software_lab",executor:"fixed-owned-software-lamp/1",input});
   // Durable intent precedes execution. Unfinished records cannot be silently repeated.
   db.prepare("INSERT INTO software_operations VALUES(?,?,?,?)").run(
@@ -267,6 +273,7 @@ export async function executeSoftware(
     JSON.stringify({ status: "pending-verification", simulated: true }),
   );
   try {
+    assertRunCurrent(db,read(),taskRun);
     const response = await fetch(runtime.url + a.writePath, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -286,7 +293,9 @@ export async function executeSoftware(
     owned(read(), actor, input.itemId);
     if (!adapterState(db, actor, input.itemId)?.granted || adapterState(db,actor,input.itemId)?.grantEpoch!==a.grantEpoch)
       throw new AgentError("读取期间授权已撤销，结果未展示", 409);
+    assertRunCurrent(db,read(),taskRun);
     const result = {
+      taskId:task.taskId,runId:taskRun.runId,
       adapterTargetHash:a.targetHash,
       adapterVersion:a.version,
       status:

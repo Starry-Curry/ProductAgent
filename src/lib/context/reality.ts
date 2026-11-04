@@ -15,6 +15,7 @@ export type RealityFact={
 export type RealityCapability={
  id:string;effect:string;canonicalKey?:string;basis:RealityBasis;evidenceIds:string[];requires:string[];
  status:'conditional'|'unavailable'|'hypothesis'|'conflicting';executable:false;verifiedForThisInstance:false;
+ representation?:'source_procedure_reference';
 };
 const known=(s?:string)=>s&&!/^(未知|待确认|未确认|不详|无型号)$/.test(s.trim())?s:null;
 const digest=(v:unknown)=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
@@ -46,7 +47,7 @@ export function projectReality(item:Item,officialAssertions:PublicSourceAssertio
   facts.push({id,subject:item.id,scope:'product',component:'本体',predicate:assertion.kind==='condition'?'source_condition':'statement',value:assertion.text,basis:'official_source',status:'asserted',source:{ref:assertion.id,url:assertion.url,model:assertion.model,version:assertion.reference.documentHash},verification:'source_assertion_not_instance_verification'});
   // A quoted manufacturer procedure supports conditional human guidance. It
   // does not create a hardware-control grant or prove the present unit works.
-  if(assertion.kind==='operation')capabilities.push({id:id+':guidance',effect:assertion.text,basis:'official_source',evidenceIds:[id],requires:['遵循对应原文的完整前提；本件物品状态与配套条件仍需核对'],status:'conditional',executable:false,verifiedForThisInstance:false});
+  if(assertion.kind==='operation')capabilities.push({id:id+':guidance',effect:assertion.text,basis:'official_source',evidenceIds:[id],requires:['遵循对应原文的完整前提；本件物品状态与配套条件仍需核对'],status:'conditional',executable:false,verifiedForThisInstance:false,representation:'source_procedure_reference'});
  }
  if(pack?.constraints?.maxLoadKg!==undefined)add('max_load_kg',pack.constraints.maxLoadKg,'official_source',pack.id+'/maxLoadKg','本体',pack.source.url);
  if(pack?.constraints?.foodContact!==undefined)add('food_contact',pack.constraints.foodContact,'official_source',pack.id+'/foodContact','本体',pack.source.url);
@@ -67,8 +68,16 @@ export type RealityCard=ReturnType<typeof projectReality>;
 /** Compact transport view; full source assertions remain in projectReality and
  * the original item/pack. Dictionary references remove repeated source URLs and
  * boilerplate, not caveats or conflicting measurements. */
-export function modelReality(card:RealityCard){
+export function modelReality(card:RealityCard,options:{sourceAssertions?:'full'|'references'}={}){
  const sources:Record<string,Omit<RealityFact['source'],'ref'>>={},keys=new Map<string,string>();
- const facts=card.facts.map(f=>{const source={url:f.source.url,model:f.source.model,version:f.source.version};const signature=JSON.stringify(source);let sourceId=keys.get(signature);if(!sourceId){sourceId='s'+(keys.size+1);keys.set(signature,sourceId);sources[sourceId]=source;}return {id:f.id,key:f.predicate,value:f.value,basis:f.basis,scope:f.scope,status:f.status,...(f.component!=='本体'?{component:f.component}:{}),sourceId,rawRef:f.source.ref};});
- return {id:card.id,name:card.name,identity:card.identity,instance:card.instance,facts,sources,capabilities:card.capabilities.map(c=>({id:c.id,effect:c.effect,status:c.status,basis:c.basis,evidenceIds:c.evidenceIds,requires:c.requires})),operations:card.operations,limits:card.limits,unknowns:card.unknowns,revision:card.revision,verification:'manufacturer statements and user reports; not device readback or permission to execute'};
+ const selected=card.facts.filter(f=>options.sourceAssertions!=='references'||!f.source.ref.startsWith('sem:'));
+ const facts=selected.map(f=>{const source={url:f.source.url,model:f.source.model,version:f.source.version};const signature=JSON.stringify(source);let sourceId=keys.get(signature);if(!sourceId){sourceId='s'+(keys.size+1);keys.set(signature,sourceId);sources[sourceId]=source;}return {id:f.id,key:f.predicate,value:f.value,basis:f.basis,scope:f.scope,status:f.status,...(f.component!=='本体'?{component:f.component}:{}),sourceId,rawRef:f.source.ref};});
+ return {id:card.id,name:card.name,identity:card.identity,instance:card.instance,facts,sources,capabilities:card.capabilities.filter(c=>options.sourceAssertions!=='references'||c.representation!=='source_procedure_reference').map(c=>({id:c.id,effect:c.effect,status:c.status,basis:c.basis,evidenceIds:c.evidenceIds,requires:c.requires,representation:c.representation})),operations:card.operations,limits:card.limits,unknowns:card.unknowns,revision:card.revision,verification:'manufacturer statements and user reports; not device readback or permission to execute'};
 }
+
+/** An entire previously selected paragraph is a knowledge locator, not a
+ * functional ability to rank every future goal against. Originals stay intact. */
+export function discoverableEffects(card:RealityCard){return card.capabilities.filter(c=>c.status==='conditional'&&c.representation!=='source_procedure_reference').map(c=>c.effect);}
+/** Original knowledge remains searchable even when it is not a capability
+ * label. Used ONLY for ranking; not copied into every catalogue entry. */
+export function knowledgeSearchText(card:RealityCard){return card.facts.filter(f=>f.basis==='official_source'&&f.scope==='product'&&typeof f.value==='string').map(f=>f.value as string);}

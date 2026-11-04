@@ -23,3 +23,11 @@ test('对抗检索：没有词法匹配仍保留有限原文，不把无匹配�
  const result=retrieveTaskPassages(docs,['陌生功能'],[],100);
  assert.equal(result.length,2);assert.ok(result.every(c=>!c.text.includes('不支持')));
 });
+
+test('中英单位检索：问题中的明确数量条件优先于营销规格；不把6毫米当成16毫米',()=>{
+ const docs=[doc('marketing',['Device-Z maximum lines: 2. '.repeat(4)]),doc('manual',['Use two lines only with wider tape. 6 mm media supports one line.']),doc('wrong-size',['16 mm media supports two lines.'])];
+ const original=JSON.stringify(docs),result=retrieveTaskPassages(docs,['Device-Z 6毫米 能怎么排版'],[],120);
+ assert.equal(result[0].documentId,'manual');assert.equal(JSON.stringify(docs),original);
+ const sizes=retrieveTaskPassages([doc('large',['16 mm media.']),doc('small',['6 mm media.'])],['16毫米'],[],20);
+ assert.equal(sizes[0].documentId,'large');
+});

@@ -12,7 +12,8 @@ import { authorize } from "../foundation/policy.ts";
 import { retrieveTaskPassages } from "../agent/kernel/retrieval.ts";
 import type { EvidencePassage } from "../agent/kernel/contracts.ts";
 import {readReality} from './reality-service.ts';
-import {resourceCatalogue} from './relevance.ts';
+import {discoverableEffects,knowledgeSearchText} from './reality.ts';
+import {resourceCatalogue,mentionedResourceIds} from './relevance.ts';
 import {fingerprint} from '../foundation/legacy.ts';
 import {epoch,listMemories,effectivePersona} from '../memory/store.ts';
 import {rectangleCondition} from '../agent/kernel/physical.ts';
@@ -33,22 +34,27 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   // actor's other authorized resources. No stories/locations/notes in catalogue.
   const allowed=state.items.filter(i=>canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id))));
   const realities=new Map(allowed.map(i=>[i.id,readReality(db,state,actor,i.id)]));
-  const knownEffects=Object.fromEntries([...realities].map(([id,r])=>[id,r.capabilities.filter(c=>c.status==='conditional').map(c=>c.effect)]));
+  const knownEffects=Object.fromEntries([...realities].map(([id,r])=>[id,discoverableEffects(r)]));
+  const searchableKnowledge=Object.fromEntries([...realities].map(([id,r])=>[id,knowledgeSearchText(r)]));
   const mentioned=(s:string)=>s.length>1&&question.toLowerCase().includes(s.toLowerCase());
   const focused=allowed.find(i=>i.id===focus);
+  const named=mentionedResourceIds(allowed,question);
   let selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||!task&&(mentioned(i.name)||(!focused||i.model!==focused.model)&&mentioned(i.model))||
     // Entity matching only. It never chooses an intent or provides a product fact.
-    !task&&!evidenceByteBudget&&[...new Intl.Segmenter('zh',{granularity:'word'}).segment(i.name)].some(s=>s.segment.length>=2&&mentioned(s.segment)));
+    named.has(i.id));
   // A goal without a named SKU may still have clear recorded capability/name
   // matches. Prefill a few ranked candidates rather than requiring a tool round
   // for already available facts. Others remain discoverable through the tool.
-  if(!selected.length){const candidates=resourceCatalogue(allowed,question,[],12,knownEffects).items;selected=candidates.map(r=>allowed.find(i=>i.id===r.id)!);}
-  const selection=resourceCatalogue(allowed,question,selected.map(i=>i.id),12,knownEffects);
+  if(!selected.length){const candidates=resourceCatalogue(allowed,question,[],12,knownEffects,searchableKnowledge).items;selected=candidates.map(r=>allowed.find(i=>i.id===r.id)!);}
+  const selection=resourceCatalogue(allowed,question,selected.map(i=>i.id),12,knownEffects,searchableKnowledge);
   // A failed lexical match is NOT evidence that an owned resource is absent.
   // Keep discovery separate from the small, detailed task context. Public item
   // labels/capability excerpts only; no locations, notes, stories or owners.
   const browse=allowed.toSorted((a,b)=>a.id.localeCompare(b.id)).slice(0,30).map(i=>({id:i.id,name:i.name,model:i.model,category:i.category,effects:(knownEffects[i.id]||[]).slice(0,3).map(effect=>effect.length>160?effect.slice(0,160)+'…':effect)}));
-  const catalogue=[...selection.items,...browse].filter((i,n,a)=>a.findIndex(x=>x.id===i.id)===n);
+  const catalogue=[...selection.items,...browse].filter((i,n,a)=>a.findIndex(x=>x.id===i.id)===n).map(i=>({...i,
+    details:selected.some(s=>s.id===i.id)?'loaded':'available_via_get_item_context',
+    itemRead:'already_authorized',privateRecords:'separate_consent_required',
+  }));
   const semanticItems=selected.map(i=>realities.get(i.id)!);
   const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,
     taskMemoryOnly:true,includeItemRelationships:session.known.useItemMemories==='yes',companion:!!session.known.companionItemId,useExperiences:session.known.memoryPolicy!=='off'}));
@@ -105,7 +111,7 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
     question,items:selected.map(itemContext),
     // No owners, locations, notes, photos or private stories in the catalogue.
     catalogue,
-    discovery:{total:selection.total,matched:selection.matched,truncated:selection.truncated,unmatched:selection.unmatched,catalogueComplete:browse.length===allowed.length,nextBrowseCursor:browse.length<allowed.length?browse.length:null,notice:'匹配项用于选择资料，不代表全部库存。其余精简目录供模型发现资源；未读完目录不能推定物品不存在。更多目录用get_item_context省略query并指定cursor。'},
+    discovery:{total:selection.total,matched:selection.matched,truncated:selection.truncated,unmatched:selection.unmatched,catalogueComplete:browse.length===allowed.length,nextBrowseCursor:browse.length<allowed.length?browse.length:null,notice:'匹配项用于选择资料，不代表全部库存。available_via_get_item_context表示详情尚未载入，不是用户未登记；这些物品的基础资料读取已获准，可按需用get_item_context，不需要用户再次授权。私人记忆仍按各条授权。更多目录用get_item_context省略query并指定cursor。'},
     // Server-only access set: never serialize it into a model packet. Selection
     // is relevance, not permission; an authorized ID outside top results is valid.
     authorizedItemIds:allowed.map(i=>i.id),
@@ -130,7 +136,7 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
     tried:session.tried,
     history:session.messages.slice(-6).map(m=>({role:m.role,text:m.text.slice(0,1800)})),
     currentTask:task?{goal:taskContext!.modelGoal,itemIds:task.itemInstanceIds,plans:taskContext!.plans,collaborationProgress:taskContext!.familyProgress}:!temporary&&home&&session.known.homeTaskGoal?{goal:session.known.homeTaskGoal,basis:'previous_conversation_goal_not_verified_result' as const}:undefined,
-    permissions:{readOnly:true,hardwareExecuted:false,memoryPolicy:session.known.memoryPolicy||'legacy'},
+    permissions:{readOnly:true,hardwareExecuted:false,memoryPolicy:session.known.memoryPolicy||'legacy',itemRead:'listed_items_already_authorized_read_details_as_needed',privateMemory:'only_explicitly_allowed_and_relevant_records',domainWrites:'explicit_confirmation_required'},
     retrieval:{documents:documents.map(d=>({itemId:d.itemId,id:d.document.id,hash:d.document.hash,url:d.document.url,model:d.document.model,region:d.document.region})),missingItemIds:selected.filter(i=>!documents.some(d=>d.itemId===i.id)).map(i=>i.id)},
     // Explicitly a synthetic household, never a real ownership assertion.
     household:home?'virtual_young_apartment':'user_registered_items_not_physically_verified',

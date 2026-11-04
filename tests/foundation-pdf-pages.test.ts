@@ -63,6 +63,13 @@ test('PDF页码越界/小数/超过3页及无效PDF明确拒绝，不把缺页�
  await assert.rejects(renderPdfPages(oversized,sourceUrl,'pairing','',[1]),/PDF无效或过大/);
 });
 
+test('对抗PDF身份：URL/调用者型号不能覆盖正文与真实首页；错误型号不得上传页图',async()=>{
+ const bytes=syntheticPdf();
+ const correct=await renderPdfPages(bytes,'https://example.org/MODEL-IMPOSTOR-manual.pdf','pairing','',[2],'TEST-PDF');
+ assert.equal(correct.modelScope.basis,'model_in_pdf_text_layer');
+ await assert.rejects(renderPdfPages(bytes,'https://example.org/MODEL-IMPOSTOR-manual.pdf','pairing','',[2],'MODEL-IMPOSTOR'),/未确认本次型号/);
+});
+
 test('SDK实际传所选页images和页码，不把整本PDF作为file再次发送（离线HTTP替身）',async()=>{
  const rendered=await renderPdfPages(syntheticPdf(),sourceUrl,'pairing','',[2,4]);
  let requests=0;const bodies:any[]=[];

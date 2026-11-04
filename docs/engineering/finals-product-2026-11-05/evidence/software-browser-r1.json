@@ -1,0 +1,67 @@
+{
+  "at": "2026-11-04T18:32:45.523Z",
+  "basis": "real_REA_6_8_0_static_analysis_and_local_software_simulator_no_Qwen_no_physical_hardware",
+  "checks": [
+    {
+      "name": "real_REA_candidates_do_not_implicitly_grant_control",
+      "passed": true
+    },
+    {
+      "name": "authorized_confirmed_UI_write_readback_and_idempotent_replay",
+      "passed": true
+    },
+    {
+      "name": "same_request_id_changed_payload_rejected",
+      "passed": true
+    },
+    {
+      "name": "revocation_blocks_read_and_old_confirmed_replay",
+      "passed": true
+    },
+    {
+      "name": "unauthenticated_actor_cannot_read_adapter",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "pageErrors": [],
+  "itemId": "7ff42ad8-c403-4433-8845-447a84bc8cfd",
+  "analysis": {
+    "grantEpoch": 1,
+    "version": "software-lamp-v1",
+    "targetHash": "4aa007eb8bb462cdb77eba702a61176989756ff0920506e987e0234233c138e6",
+    "reaVersion": "6.8.0",
+    "evidenceId": "ev_87a0bc9b0fb4a91aaf4b633c840849618c8fb8105bf672c73c1014231962e8e5",
+    "artifactHash": "4e86a56b914a7f3e63781d546ef527e49f6ee04eff1d2d00ec361c557d83a507",
+    "candidates": [
+      {
+        "nodeId": "jag_node_237045fc217f22f210f016b15c60f6c72f48fb5f378227873fcd9871fc2c76de",
+        "path": "/api/lamp/brightness"
+      },
+      {
+        "nodeId": "jag_node_e1994c8bb89dbc2acdf6c781f4615dcc1f4be1aa93aaed0977261dc9854b5a85",
+        "path": "/api/lamp/status"
+      }
+    ],
+    "readPath": "/api/lamp/status",
+    "writePath": "/api/lamp/brightness",
+    "discovery": "static-observation-and-read-probe",
+    "control": "candidate-until-authorized-write-and-readback",
+    "simulated": true,
+    "granted": false
+  },
+  "execution": {
+    "adapterTargetHash": "4aa007eb8bb462cdb77eba702a61176989756ff0920506e987e0234233c138e6",
+    "adapterVersion": "software-lamp-v1",
+    "status": "verified",
+    "completionBasis": "software-simulator-readback",
+    "observed": {
+      "power": true,
+      "brightness": 35,
+      "revision": 1,
+      "simulated": true
+    },
+    "simulated": true
+  },
+  "status": "passed_owned_software_only"
+}

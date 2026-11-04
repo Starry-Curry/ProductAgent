@@ -12,6 +12,7 @@ import {
 } from "../src/lib/devices/software-lab.ts";
 import { respond } from "../src/lib/agent/service.ts";
 import { registeredCapabilities } from "../src/lib/foundation/capabilities.ts";
+import {createTask,resolveTaskContext,taskOutcomes} from '../src/lib/foundation/tasks.ts';
 test("自有软件灯：真实REA→静态候选→授权→执行回读；坏参数、重放、撤权", async (t) => {
   if (
     !fs.existsSync(".runtime/rea-tools/node_modules/rea-agents/scripts/rea.mjs")
@@ -140,6 +141,16 @@ test("自有软件灯：真实REA→静态候选→授权→执行回读；坏�
     );
     const observed = await readSoftware(f.db, f.read, "lin", id);
     assert.equal(observed.observed.brightness, 37);
+    const livingTask=createTask(f.db,f.read,'lin',{requestId:crypto.randomUUID(),goal:'合成生活任务：用软件灯选择适合自己的设置',intent:'explore',itemInstanceIds:[id]});
+    const taskCount=(f.db.prepare('SELECT count(*) AS n FROM foundation_tasks').get() as {n:number}).n;
+    const connected=await executeSoftware(f.db,f.read,'lin',{...input,requestId:crypto.randomUUID(),brightness:37,taskId:livingTask.taskId});
+    assert.equal(connected.taskId,livingTask.taskId);assert.equal((f.db.prepare('SELECT count(*) AS n FROM foundation_tasks').get() as {n:number}).n,taskCount,'专业软件动作不能另建平行任务');
+    assert.ok(taskOutcomes(f.db,f.read(),'lin',livingTask.taskId).some(o=>o.basis==='software_simulator_readback'));
+    assert.ok(!resolveTaskContext(f.db,f.read(),'lin',livingTask.taskId).previousOutcomes.some(o=>o.basis==='software_simulator_readback'),'没有长期复用同意时，当前结果不自动成为云端经历');
+    const unrelated=f.add('[合成]另一个账号的物品','其他','','');const foreignState=f.read();foreignState.items.find(i=>i.id===unrelated)!.owner='dad';f.write(foreignState);
+    const foreignTask=createTask(f.db,f.read,'dad',{requestId:crypto.randomUUID(),goal:'不可借用的私人任务',intent:'plan',itemInstanceIds:[unrelated]});
+    await assert.rejects(()=>executeSoftware(f.db,f.read,'lin',{...input,requestId:crypto.randomUUID(),brightness:99,taskId:foreignTask.taskId}),/任务不存在或未获授权/);
+    assert.equal((await readSoftware(f.db,f.read,'lin',id)).observed.brightness,37,'跨账号任务ID不得触发写入');
     const guardedFetch=globalThis.fetch;let dispatched=0;
     try{globalThis.fetch=async(url,init)=>{if(init?.method==="POST")dispatched++;return guardedFetch(url,init);};
       const delayed=executeSoftware(f.db,f.read,"lin",{...input,requestId:crypto.randomUUID(),brightness:39});

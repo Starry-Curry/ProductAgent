@@ -19,7 +19,7 @@ const child=spawn(process.execPath,['--import',pathToFileURL(path.resolve('scrip
  AI_ALLOW_PAID_CALLS:offline?'false':'true',WUJIAN_ALLOW_PAID_CALLS:offline?'false':'true',AI_API_KEY:offline?'':'fixture-only',
  AI_BASE_URL:'https://dashscope.aliyuncs.com/compatible-mode/v1',AI_MODEL:gate.model,AI_TASK_MODEL:gate.model,AI_CREATIVE_MODEL:gate.model,
  AI_REQUEST_TIMEOUT_MS:'75000',AI_STRUCTURED_OUTPUT:'json_schema',WUJIAN_AGENT_RUNTIME:'native',
- WUJIAN_PRACTICAL_THINKING:'false',WUJIAN_ALLOW_SEARCH:offline?'false':'true',WUJIAN_ALLOW_PUBLIC_FETCH:'true',
+ WUJIAN_PRACTICAL_THINKING:process.argv.includes('--thinking-all')?'always':process.argv.includes('--thinking')?'true':'false',WUJIAN_ALLOW_SEARCH:offline?'false':'true',WUJIAN_ALLOW_PUBLIC_FETCH:'true',
  WUJIAN_EXPERIMENTAL_FACT_QA:'false',WUJIAN_EXPERIMENTAL_KERNEL_V3:'false',ALPHA_GATEWAY:gate.url,
  WUJIAN_ENABLE_DEVICE_LAB:'true',LANGSMITH_TRACING:'false',LANGCHAIN_TRACING_V2:'false',NEXT_TELEMETRY_DISABLED:'1',
 }});

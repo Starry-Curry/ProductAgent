@@ -978,14 +978,14 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                   </div>
                 </div>
                 <label className="life-card life-check">
-                  <input type="checkbox" checked={policy !== "off"} onChange={e => setPolicy(e.target.checked ? "read" : "off")} />
+                  <input type="checkbox" disabled={conversationBusy} checked={policy !== "off"} onChange={e => setPolicy(e.target.checked ? "read" : "off")} />
                   使用已获准的个人记忆与经历（仅使用允许云端读取的内容，不自动保存新记忆）
                 </label>
                 <label className="life-card life-check">
                   <input
                     type="checkbox"
                     checked={policy === "candidates"}
-                    disabled={policy === "off"}
+                    disabled={policy === "off" || conversationBusy}
                     onChange={(e) =>
                       setPolicy(e.target.checked ? "candidates" : "read")
                     }
@@ -1050,7 +1050,6 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                   taskId={activeTaskId}
                   key={
                     actor +
-                    policy +
                     askEntry.key +
                     (homeActive ? "home" : "personal")
                   }
@@ -1298,6 +1297,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                 )}
                 {tab === "资料与管理" && (
                   <ItemInformation
+                    taskId={activeTaskId}
                     key={actor + item.id}
                     item={item}
                     actor={actor}

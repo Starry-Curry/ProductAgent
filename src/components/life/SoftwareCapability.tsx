@@ -4,9 +4,11 @@ import type { Item, Person } from "@/lib/domain";
 export function SoftwareCapability({
   item,
   actor,
+  taskId,
 }: {
   item: Item;
   actor: Person;
+  taskId?:string;
 }) {
   const [adapter, setAdapter] = useState<any>(),
     [level, setLevel] = useState(30),
@@ -17,7 +19,7 @@ export function SoftwareCapability({
     const r = await fetch("/api/device-lab", {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-demo-actor": actor },
-      body: JSON.stringify({ action, itemId: item.id, ...input }),
+      body: JSON.stringify({ action, itemId: item.id, ...input,...(action==='execute'&&taskId?{taskId}:{}) }),
     });
     const d = await r.json();
     if (!r.ok) throw Error(d.error);
@@ -48,6 +50,7 @@ export function SoftwareCapability({
       <p>
         只控制本机软件灯，不连接米家台灯或任何真实硬件。先用REA取得接口证据，再由你授权。
       </p>
+      {taskId&&<p>本次确认后的软件结果会接续当前生活任务；不会自动变成长期记忆。</p>}
       <button disabled={busy} onClick={() => run("analyze")}>
         {busy ? "正在处理…" : "让物间分析这个软件的能力"}
       </button>

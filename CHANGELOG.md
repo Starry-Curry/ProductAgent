@@ -12,6 +12,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 开始逐层对抗审查与纵向修复：检索相关性优先、指导步骤身份与反馈续接、跨会话反馈幂等、通用厂家来源链和结构化商品原文读取。新授权800次真实上游请求、不设金额上限，历史额度不重置；真实陌生商品成功与失败分开保存。尚未通过Core/Full质量验收，未称全功能完成；见 [当前状态](docs/engineering/CURRENT.md)。
 
+阶段恢复点2：修正明确资源引用、历史原文传输重复和工具ID不一致；保留共享知识搜索。尺寸/结构可更正并刷新Reality；记忆政策切换不恢复旧会话；软件执行可接续原Task且保留原授权、回读、幂等。616项离线与生产构建通过，真实模型的错误/超时/复测原样保留；详见[对抗审阅](docs/engineering/finals-product-2026-11-05/QUALITY_REVIEW.md)。未达到全产品质量门槛，研发继续。
+
 ### GitHub 文档与协作入口整理
 
 三份根历史报告精简为固定提交入口，历史日期与原判断保留；README/CONTRIBUTING 统一 GitHub、main/develop 与 PR 审查流程。新增适配用户指南的 [操作手册](docs/GIT_WORKFLOW.md) 和 [后续规划](docs/engineering/NEXT_STEPS.md)。不迁移 CodeArts、不新建 master、不删除远端分支或历史证据；无业务与费用变化，Core Foundation 仍未通过。
