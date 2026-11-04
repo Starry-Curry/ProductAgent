@@ -2,6 +2,8 @@
 
 本页供组员直接开始开发，不是新的架构方案。产品权威为 [PRODUCT_FINAL_V1](../product/PRODUCT_FINAL_V1.md)。**共享底座可集成，不代表 Core Foundation 智能质量通过；后者仍 NOT_ACCEPTED。**
 
+2026-11-05 后续研发提示：决赛分支`codex/wujian-finals-product-v1`仍在独立研发，未合入本页团队候选。下面的零费用交付记录是历史轮次，不表示当前新轮次没有授权。最新实际状态见[CURRENT](CURRENT.md)。公共`foundation-services/1`入口不变；Provider增加可选`rerank(query,documents)`，旧Mock可不实现，不需要专业模块另建检索器或直接调用原生模型。
+
 ## 从哪里开始
 
 最新候选分支：`codex/wujian-team-integration-v1`，基于 `codex/wujian-qwen-foundation-v1@5b8573d`。集成 [PR #1](https://github.com/Starry-Curry/ProductAgent/pull/1) 目标为 `develop`；在 CI + 一名组员审查完成前，不宣称已经进入 develop。

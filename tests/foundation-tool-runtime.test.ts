@@ -22,6 +22,19 @@ test('普通工具失败交框架error_result，下一次读取可恢复',async(
  const output=await runToolAgent({...setup(),tools:[{name:'read_knowledge',description:'可恢复的资料读取',schema,execute:async()=>{if(++reads===1)throw Error('temporary_source_unavailable');return {status:'available'};}}],generate:async messages=>{calls++;if(calls===1)return result('','read_knowledge','call-1');if(calls===2){assert(messages.some(m=>m.role==='tool'&&m.content?.includes('temporary_source_unavailable')));return result('','read_knowledge','call-2');}assert(messages.some(m=>m.role==='tool'&&m.content?.includes('available')));return result('读取恢复；保留未知。');}});
  assert.equal(output.finish,'completed');assert.equal(reads,2);assert.equal(calls,3);
 });
+test('嵌套严格Schema的错误保留字段与路径，让模型能修正而不是重复object Object',async()=>{
+ let calls=0,executions=0;const detail=z.object({guidance:z.object({sourceId:z.string()}).strict()}).strict();
+ const output=await runToolAgent({...setup(),tools:[{name:'complete_answer',description:'严格字段协议替身',schema:detail,execute:async()=>{executions++;return {accepted:true};}}],generate:async messages=>{
+  calls++;if(calls===2){const error=messages.find(m=>m.role==='tool')?.content||'';assert.match(error,/sourceIds/,'错误必须告诉主模型哪个额外字段不被接受');assert.ok(!error.includes('[object Object]'));}
+  if(calls<3){const r=result('','complete_answer','schema-'+calls);r.toolCalls[0].function.arguments=JSON.stringify({guidance:{sourceId:'original',...(calls===1?{sourceIds:['extra-not-in-contract']}: {})}});return r;}
+  return result('协议修正后完成；不是智能质量或事实验证。');
+ }});assert.equal(output.finish,'completed');assert.equal(calls,3);assert.equal(executions,1,'无效工具参数不得执行业务');
+});
+test('Union根也用原Schema重建错误说明，不接受额外字段或增加业务写入',async()=>{
+ const union=z.discriminatedUnion('kind',[z.object({kind:z.literal('plan'),itemId:z.literal('owned')}).strict(),z.object({kind:z.literal('story'),text:z.string()}).strict()]);let calls=0,writes=0;
+ await runToolAgent({...setup(),tools:[{name:'prepare_action',description:'联合协议替身',schema:union,execute:async()=>{writes++;return {pending:true};}}],generate:async messages=>{calls++;if(calls===2){const error=messages.find(m=>m.role==='tool')?.content||'';assert.match(error,/unexpectedField/);assert.ok(!error.includes('[object Object]'));}if(calls<3){const r=result('','prepare_action','union-'+calls);r.toolCalls[0].function.arguments=JSON.stringify({kind:'plan',itemId:'owned',...(calls===1?{unexpectedField:'never_executed'}:{})});return r;}return result('参数修正后只准备一次草稿。');}});
+ assert.equal(calls,3);assert.equal(writes,1);
+});
 test('Provider硬请求预算不能被AS额外总结吞掉或标为成功',async()=>{
  let attempts=0,requests=0;
  await assert.rejects(runToolAgent({...setup(),tools:[{name:'read_knowledge',description:'读取',schema,execute:async()=>({ok:true})}],generate:async()=>{attempts++;if(requests===6)throw new AgentError('request_budget_exhausted',429);requests++;return result('','read_knowledge','call-'+requests);}}),/request_budget_exhausted/);

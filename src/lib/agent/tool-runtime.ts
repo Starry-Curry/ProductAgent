@@ -81,10 +81,11 @@ export async function runToolAgent(options: ToolAgentOptions): Promise<{ text: s
   const toolkit = new Toolkit({ builtInSkillTool: false });
   for (const tool of options.tools) toolkit.registerToolFunction({
     name: tool.name, description: tool.description,
-    // ToolInputSchema's published type only describes object roots, while its
-    // validator also supports valid union JSON Schemas. Input mode preserves
-    // omitted defaults; output mode incorrectly marks them as required.
-    inputSchema: z.toJSONSchema(tool.schema, { io: 'input' }) as unknown as Parameters<Toolkit['registerToolFunction']>[0]['inputSchema'],
+    // Use the framework's supported native ZodObject path. Its JSON-schema
+    // validator stringifies nested issues as [object Object], hiding the exact
+    // invalid field from the next model turn. Union roots still use JSON input
+    // schemas; domain execution always parses the same authoritative schema.
+    inputSchema: (tool.schema instanceof z.ZodObject?tool.schema:z.toJSONSchema(tool.schema,{io:'input'})) as unknown as Parameters<Toolkit['registerToolFunction']>[0]['inputSchema'],
     call: async input => {
       guard();
       try {
@@ -101,6 +102,7 @@ export async function runToolAgent(options: ToolAgentOptions): Promise<{ text: s
     },
   });
   const seenCallIds = new Set<string>();
+  const submittedInputs=new Map<string,{name:string;arguments:string}>();
   class ProviderModel extends ChatModelBase {
     constructor() { super({ modelName: 'wujian-qwen-provider', stream: false, maxRetries: 0, formatter: new QwenTurnFormatter() }); }
     _formatToolChoice(choice: unknown) { return choice; }
@@ -110,7 +112,18 @@ export async function runToolAgent(options: ToolAgentOptions): Promise<{ text: s
       guard();
       const started = Date.now();
       let response: ModelResponse;
-      try { response = await options.generate(providerMessages(request.messages)); }
+      try {
+        const messages=providerMessages(request.messages);
+        // Union-root schemas go through the framework's JSON validator. Repair
+        // only its lossy error presentation from the SAME domain schema/input;
+        // never accept, retry or execute invalid arguments here.
+        for(const message of messages){
+          if(message.role!=='tool'||!message.content?.startsWith('InvalidArgumentError:')||!message.content.includes('[object Object]'))continue;
+          const prior=submittedInputs.get(message.tool_call_id||''),definition=prior&&options.tools.find(t=>t.name===prior.name);if(!prior||!definition)continue;
+          try{const validation=definition.schema.safeParse(JSON.parse(prior.arguments));if(!validation.success)message.content='InvalidArgumentError: '+JSON.stringify(validation.error.issues).slice(0,5000);}catch{/* Preserve the original SDK error on invalid JSON. */}
+        }
+        response = await options.generate(messages);
+      }
       finally { guard(); }
       if (!['stop', 'tool_calls'].includes(response.finishReason) || !response.text && !response.toolCalls.length)
         throw new AgentError('模型回答未完整生成，未将其标记为完成', 502);
@@ -120,6 +133,7 @@ export async function runToolAgent(options: ToolAgentOptions): Promise<{ text: s
       for (const call of response.toolCalls) {
         if (!call.id || seenCallIds.has(call.id)) throw new AgentError('模型重复使用工具调用标识，未重复执行', 502);
         seenCallIds.add(call.id);
+        submittedInputs.set(call.id,{name:call.function.name,arguments:call.function.arguments});
         content.push({ type: 'tool_call', id: call.id, name: call.function.name, input: call.function.arguments, state: 'pending', created_at: now });
       }
       return { type: 'chat', id: crypto.randomUUID(), createdAt: now, content,

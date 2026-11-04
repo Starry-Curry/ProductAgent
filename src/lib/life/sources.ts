@@ -111,7 +111,7 @@ async function fetchPublicSource(
           res.resume();
           reject(
             new AgentError(
-              "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+              `公开来源 ${url.hostname} 返回 HTTP ${res.statusCode || 'unknown'}；不绕过登录、限制或验证。`,
             ),
           );
           return;
@@ -139,9 +139,9 @@ async function fetchPublicSource(
     req.setTimeout(8000, () =>
       req.destroy(new AgentError("资料读取超时，请稍后重试或人工补充")),
     );
-    req.on("error", () =>
+    req.on("error", (error) =>
       reject(
-        new AgentError("公开资料网络读取失败，可手动打开官网或上传说明书"),
+        new AgentError(`公开来源 ${url.hostname} 网络读取失败（${'code' in error && typeof error.code === 'string' && /^[A-Z0-9_]{1,40}$/.test(error.code) ? error.code : error.name === 'AbortError' ? 'TIMEOUT' : 'NETWORK_ERROR'}）；未取得正文。`),
       ),
     );
     req.end();

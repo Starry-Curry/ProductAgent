@@ -1,0 +1,16 @@
+{
+  "caseId": "thermos",
+  "attempt": "r1",
+  "at": "2026-11-04T20:25:53.319Z",
+  "basis": "real_Qwen_browser_synthetic_possession_no_official_URL_supplied_no_hardware",
+  "responses": [],
+  "pageErrors": [],
+  "checks": [],
+  "errors": [
+    "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('form').filter({ has: getByRole('heading', { name: '确认它的信息', exact: true }) }).getByLabel('产品地区版本（可选）', { exact: true })\u001b[22m\n"
+  ],
+  "quality": "not_scored",
+  "status": "failed",
+  "upstreamRequests": 0,
+  "finishedAt": "2026-11-04T20:26:26.241Z"
+}

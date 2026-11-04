@@ -15,16 +15,18 @@ type Field={value:string;type?:string;lang?:string};
 type RecordFields=Record<string,Field[]>;
 function subject(record:string,entity:string){try{return JSON.parse(record)[entity] as RecordFields|undefined;}catch{return;}}
 function company(r:RecordFields){return (r['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']||[]).some(x=>/\/(?:Company|Organisation|Organization)$/.test(x.value));}
-function matches(r:RecordFields,brand:string){const b=norm(brand);return !!b&&(r['http://www.w3.org/2000/01/rdf-schema#label']||[]).some(x=>{const n=norm(x.value);return n===b||n.startsWith(b+' ');});}
+function matches(r:RecordFields,brand:string){const b=norm(brand);return !!b&&(r['http://www.w3.org/2000/01/rdf-schema#label']||[]).some(x=>norm(x.value)===b);}
 function homepages(r:RecordFields){return (r['http://xmlns.com/foaf/0.1/homepage']||r['http://dbpedia.org/property/homepage']||[]).filter(x=>x.type==='uri').map(x=>x.value);}
 const directoryHost=(host:string)=>/^(?:[a-z]{2,3}\.)?dbpedia\.org$/.test(host);
 /** Old public records often list HTTP. Never fetch HTTP: require TLS at the
  * SAME hostname, then follow the existing bounded public redirect verifier. */
 function secureHomepage(value:string){const u=new URL(value);if(u.protocol==='http:')u.protocol='https:';return sourceURL(u.href).href;}
 function wikidataFields(record:string,id:string){try{return JSON.parse(record).entities?.[id];}catch{return;}}
-function wikidataMatches(e:any,brand:string){const names=[...Object.values(e.labels||{}),...Object.values(e.aliases||{}).flat()] as {value:string}[];const b=norm(brand);return names.some(x=>norm(x.value)===b||norm(x.value).startsWith(b+' '));}
+function wikidataMatches(e:any,brand:string){const names=[...Object.values(e.labels||{}),...Object.values(e.aliases||{}).flat()] as {value:string}[];const b=norm(brand);return !!b&&names.some(x=>norm(x.value)===b);}
 function wikidataSites(e:any){return (e.claims?.P856||[]).filter((c:any)=>c.rank!=='deprecated'&&c.mainsnak?.snaktype==='value'&&typeof c.mainsnak.datavalue?.value==='string').map((c:any)=>c.mainsnak.datavalue.value as string);}
-function wikidataCompany(e:any){return (e.claims?.P31||[]).some((c:any)=>c.rank!=='deprecated'&&['Q4830453','Q43229','Q783794','Q6881511','Q891723'].includes(c.mainsnak?.datavalue?.value?.id));}
+// Q136675338 is the independently documented manufacturing-company class,
+// not a brand exception. It grants no product applicability or factual truth.
+function wikidataCompany(e:any){return (e.claims?.P31||[]).some((c:any)=>c.rank!=='deprecated'&&['Q4830453','Q43229','Q783794','Q6881511','Q891723','Q136675338'].includes(c.mainsnak?.datavalue?.value?.id));}
 export function publisherOwns(url:string,brand:string,p?:PublisherProof){
  try{
   if(!p||![1,2].includes(p.version)||norm(p.brand)!==norm(brand)||hash(p.record)!==p.recordHash)return false;
@@ -70,9 +72,21 @@ export async function discoverPublishers(brand:string,candidateURLs:string[],dep
    }
   }));
   for(const result of records)if(result.status==='fulfilled'&&result.value)proofs.push(result.value);
+ }catch{issues.push('公开旧机构目录未取得；继续独立目录查询，不认证模型声明。');}
+ if(!proofs.length){
+  // The old directory is not a mandatory gate to the current public registry.
+  // Search is discovery only. Actual entity name/alias, company class, P856,
+  // content hash and pinned TLS migration remain independently checked below.
+  try{
+   const url='https://www.wikidata.org/w/api.php?action=wbsearchentities&search='+encodeURIComponent(brand)+'&language=en&type=item&limit=6&format=json';
+   const data=JSON.parse((await fetcher(url)).text);
+   for(const row of (Array.isArray(data.search)?data.search:[]).filter((r:any)=>{const n=norm(String(r.label||'')),b=norm(brand);return n===b||n.startsWith(b+' ')||norm(String(r.match?.text||''))===b;}).slice(0,3))if(/^Q[1-9]\d*$/.test(row.id))wikidataIds.add(row.id);
+  }catch{issues.push('公开当前机构目录查询未完成；候选网页仍未认证。');}
+ }
+ try{
   // Independent structured official-website properties can recover stale
   // directory homepages. No model-selected URL or per-brand allowlist grants.
-  if(!proofs.length)for(const id of [...wikidataIds].slice(0,2)){
+  if(!proofs.length)for(const id of [...wikidataIds].slice(0,4)){
    try{
     const directoryURL='https://www.wikidata.org/wiki/Special:EntityData/'+id+'.json';
     const page=await fetcher(directoryURL),e=wikidataFields(page.text,id);if(!e||e.id!==id||!wikidataCompany(e)||!wikidataMatches(e,brand))continue;

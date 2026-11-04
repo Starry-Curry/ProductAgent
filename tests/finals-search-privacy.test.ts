@@ -1,0 +1,16 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {validationFixture} from '../scripts/life-validation-fixture.ts';import {acquireKnowledge} from '../src/lib/life/acquisition.ts';
+import {makeKnowledgeDocument,storeOfficialDocument} from '../src/lib/life/acquisition.ts';import {respond} from '../src/lib/agent/service.ts';import type {Provider,ModelResponse} from '../src/lib/ai/provider.ts';
+test('官方资料发现只发送商品身份，不把模型提供的私人故事/目标送进公开搜索',async t=>{
+ const f=validationFixture('.runtime/finals-search-privacy-'+crypto.randomUUID());t.after(()=>f.db.close());const id=f.add('[合成私人昵称]爸爸的礼物','其他','Brother','UNSEEN-TAINT-37');const queries:string[]=[];const privateText='PRIVATE-STORY-DO-NOT-PUBLISH：朋友小雨送我的私事与家庭目标';
+ await acquireKnowledge(f.db,f.read,'lin',id,{query:privateText,search:async query=>{queries.push(query);return {model:'offline-interface-substitute',text:'no evidence',hits:[],tokens:null,events:[],usage:{},status:'completed'};},fetchDocument:async()=>{throw Error('no_public_document_in_fixture');}});
+ assert.ok(queries.length);assert.ok(queries.every(q=>q.includes('Brother')&&q.includes('UNSEEN-TAINT-37')));assert.ok(queries.every(q=>!q.includes(privateText)&&!q.includes('PRIVATE-STORY')&&!q.includes('爸爸的礼物')),'已获云端对话许可的私人Context不自动成为公开检索参数');
+});
+
+test('原生网页抽取必须同时开放供应商搜索时，不携带私人目标，只读已选官方页',async t=>{
+ const f=validationFixture('.runtime/finals-extractor-privacy-'+crypto.randomUUID());t.after(()=>f.db.close());const id=f.add('[合成私人物品昵称]','其他','Brother','UNSEEN-PUBLIC-READ-12'),item=f.read().items.find(i=>i.id===id)!;
+ const page={url:'https://support.brother.com/manual/unseen-public-read-12',title:'UNSEEN-PUBLIC-READ-12 manual',text:'UNSEEN-PUBLIC-READ-12. Synthetic only. Release the lever before moving it.',links:[]};const doc=makeKnowledgeDocument(page,item,[page.url]);storeOfficialDocument(f.db,'lin',item,doc);
+ const old=process.env.WUJIAN_AGENT_RUNTIME,network=process.env.WUJIAN_ALLOW_PUBLIC_FETCH;process.env.WUJIAN_AGENT_RUNTIME='native';process.env.WUJIAN_ALLOW_PUBLIC_FETCH='false';t.after(()=>{if(old===undefined)delete process.env.WUJIAN_AGENT_RUNTIME;else process.env.WUJIAN_AGENT_RUNTIME=old;if(network===undefined)delete process.env.WUJIAN_ALLOW_PUBLIC_FETCH;else process.env.WUJIAN_ALLOW_PUBLIC_FETCH=network;});
+ const privateText='PRIVATE-EXTRACTOR-STORY-92：爸爸的医疗私事';let calls=0,extractions=0;
+ const p:Provider={ready:true,model:'offline-protocol',generate:async()=>{throw Error('no_secondary_model');},converse:async()=>{calls++;return {model:'offline-protocol',tokens:null,finishReason:calls===1?'tool_calls':'stop',text:calls===1?'':'只按现有原文说明，未执行。',toolCalls:calls===1?[{id:'read-1',type:'function',function:{name:'read_official_page',arguments:JSON.stringify({itemId:id,sourceId:doc.id,question:privateText})}}]:[]} as ModelResponse;},extractPage:async(url,query)=>{extractions++;assert.equal(url,page.url);assert.match(query,/UNSEEN-PUBLIC-READ-12/);assert.ok(!query.includes('PRIVATE-EXTRACTOR')&&!query.includes('医疗')&&!query.includes('昵称'));return {text:page.text,hits:[],model:'offline-protocol',tokens:null,usage:null,events:[]};}};
+ await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:id,question:privateText,mode:'service',memoryPolicy:'off'},p);assert.equal(extractions,1);assert.equal(calls,2);
+});

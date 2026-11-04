@@ -2,6 +2,8 @@
 const original = globalThis.fetch;
 globalThis.fetch = (url, init) => {
   const address=String(url);
+  if(process.env.ALPHA_GATEWAY&&address==='https://dashscope.aliyuncs.com/api/v1/services/rerank/text-rerank/text-rerank')
+    return original(process.env.ALPHA_GATEWAY+'/browser/rerank/text-rerank/text-rerank',init);
   if(process.env.ALPHA_GATEWAY&&/^https:\/\/dashscope\.aliyuncs\.com\/api\/v1\/services\/aigc\/(text|multimodal)-generation\/generation$/.test(address))
     return original(process.env.ALPHA_GATEWAY+'/browser/'+address.split('/aigc/')[1],init);
   if(process.env.ALPHA_GATEWAY&&address.startsWith('https://dashscope.aliyuncs.com/compatible-mode/v1/'))

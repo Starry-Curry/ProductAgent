@@ -16,6 +16,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 阶段恢复点3/4：统一软件回读、刷新Task恢复与旧响应竞争保护；收礼故事采用既有快照、显式记忆授权；模拟家庭云端权限改为由实际成员验证，不能省略页面标记绕过。退役新生成计划的旧纯文字步骤选项，保留历史读取。623项离线、类型与构建通过，家庭/赠礼/软件真实浏览器记录保留；创意和陌生商品问答仍有实际质量失败，未宣布Foundation或全产品通过。
 
+阶段恢复点5：可选百炼原生原文重排、SDK严格Schema可读错误、当前有效读页工具范围、完整型号后缀隔离、公开检索最少披露与机构目录回退。实际KORG复测与软件分身回读有改善，新增陌生型号暴露的拒答、来源适用性与检索失败保留；636项离线和类型检查通过，构建结果见本轮证据。整体质量仍未通过，不将阶段提交当最终验收。
+
 ### GitHub 文档与协作入口整理
 
 三份根历史报告精简为固定提交入口，历史日期与原判断保留；README/CONTRIBUTING 统一 GitHub、main/develop 与 PR 审查流程。新增适配用户指南的 [操作手册](docs/GIT_WORKFLOW.md) 和 [后续规划](docs/engineering/NEXT_STEPS.md)。不迁移 CodeArts、不新建 master、不删除远端分支或历史证据；无业务与费用变化，Core Foundation 仍未通过。

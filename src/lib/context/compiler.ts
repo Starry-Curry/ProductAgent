@@ -23,7 +23,7 @@ import {listLifeIdeas} from '../life/ideas.ts';
 import {discoveryInput} from '../life/planning.ts';
 
 
-export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number){
+export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number,ranking?:{originalIds:string[]}){
   const taskId=session.known.foundationTaskId;
   const taskContext=taskId?resolveTaskContext(db,state,actor,taskId):undefined;
   const task=taskContext?.task;
@@ -70,7 +70,9 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   const evidence:EvidencePassage[]=selected.flatMap(i=>{
     const docs=documents.filter(d=>d.itemId===i.id).map(d=>d.document);
     const seed=retrieveKnowledge(db,state,actor,i.id,question);
-    const candidates=retrieveTaskPassages(docs,[question,...queries],seed,evidenceByteBudget?Number.MAX_SAFE_INTEGER:Math.floor(36000/Math.max(1,selected.length)));
+    const currentOriginals=new Map(docs.flatMap(d=>d.chunks.map(c=>[c.id,c] as const)));
+    const priority=(ranking?.originalIds||[]).flatMap(id=>{const c=currentOriginals.get(id);return c?[c]:[];});
+    const candidates=[...priority,...retrieveTaskPassages(docs,[question,...queries],seed,evidenceByteBudget?Number.MAX_SAFE_INTEGER:Math.floor(36000/Math.max(1,selected.length)))].filter((c,n,a)=>a.findIndex(x=>x.id===c.id)===n);
     // Select relevant windows within a per-item byte budget; numerical checks
     // use the full authorized corpus separately below. Query expansion keeps
     // late compatibility/specification sections eligible instead of by position.

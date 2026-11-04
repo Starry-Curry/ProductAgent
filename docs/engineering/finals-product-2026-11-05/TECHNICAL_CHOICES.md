@@ -1,0 +1,11 @@
+# 本轮已落地的有限技术取舍
+
+不另建RFC、数据库或运行器；阶段结果与失败见[对抗审阅](QUALITY_REVIEW.md)。
+
+1. **跨语言原文选择**：在同一KORG原文上比较原生`qwen3.7-text-rerank`与主模型翻译问题后词法选择。前者直接返回原文索引，约1.1秒/¥0.012的小样本成本可接受，已作为可选Provider能力接入；默认无`AI_RERANK_MODEL`时保持旧检索。它只重排已授权、已核对范围的原文，不生成事实，不负责认证、不写库。一次/turn、有输入字节/数量/时间上限、失败回原检索、网络后重新授权。原始对照：[retrieval-probe-r1](evidence/retrieval-probe-r1.json)。[官方接口](https://help.aliyun.com/zh/model-studio/text-rerank-api)、[模型及价格](https://help.aliyun.com/zh/model-studio/qwen3-7-text-rerank)。不能从一个案例宣称普遍胜出。
+2. **工具错误**：不新增模型审稿。AgentScope支持的对象Schema直接给原生Zod；联合Schema仍用SDK支持的JSON Schema接口，在不可读错误时用同一权威Schema恢复错误字段。没有宽松解析、自动修补提交或绕过授权。SDK未来能原样保留联合错误后，可删除这段错误呈现兼容逻辑。
+3. **厂家发现**：旧DBpedia不是当前Wikidata查询的前置门禁。搜索记录只发现实体；名称/别名、公司类别、P856官网、真实TLS链和记录哈希分别核对。新增的是[制造企业这一通用类别](https://www.wikidata.org/wiki/Q136675338)，不是THERMOS品牌条目；[真实实体](https://www.wikidata.org/wiki/Q3523904)只用于验证工程机制，没有写入产品白名单。目录会缺失和出错，不当作绝对权威，更不证明某条操作或地区政策。Fellow/HOTO未通过，不强行认证。
+4. **隐私与成熟原生工具**：[百炼网页抽取要求同时开启搜索](https://help.aliyun.com/zh/model-studio/web-extractor)，因此不能只因为工具名是“读页”就把私人问题送入。主对话保留获准个人Context，公开搜索/抽取只收到登记商业身份与已选公开页面信息；相关性在取得原文后本地选择，图示观察仍标未认证。
+5. **动态工具范围**：无真实文档时不向主模型宣传需要文档ID的读页工具；有资料后只宣传当轮真实指针与章节，服务端继续重新核验。减少必败调用不等于资料问题已解决；Fellow复测依然失败且更慢，原样保留。
+
+保留Next.js/SQLite、现有身份/Task/授权/记忆/业务领域、AgentScope和OpenAI SDK。没有引入Pi/Mastra、多Agent、第二审核模型或通用物理仿真器。新的可选检索能力不改变团队公共服务版本。

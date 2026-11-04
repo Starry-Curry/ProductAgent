@@ -7,6 +7,7 @@ import {
 } from "../cloud/runtime.ts";
 import OpenAI from "openai";
 import { qwenResearch, type NativeToolEvent } from "./qwen-native.ts";
+import {qwenRerank,RERANK_MODEL,type RerankResult} from './qwen-rerank.ts';
 export class ProviderError extends Error {
   code: string;
   upstreamStatus?: number;
@@ -223,6 +224,8 @@ export type ToolDefinition = {
   };
 };
 export type Provider = {
+  /** Optional public-source retrieval only; never a semantic reviewer. */
+  rerank?: (query:string,documents:string[])=>Promise<RerankResult>;
   /** Verified/configured output capability, not inferred from an arbitrary model name. */
   structuredOutput?: 'json_schema';
   /** Natural text + native function calling. No JSON answer packet or reviewer. */
@@ -368,6 +371,10 @@ export function createProvider(
           : null;
       return { text: choice.message.content, model: model!, tokens };
     },
+  };
+  if(env.AI_RERANK_MODEL===RERANK_MODEL&&!publicDemo(env))provider.rerank=async(query,documents)=>{
+    if(!provider.ready)throw new ProviderError('payment_not_authorized','模型配置或本次费用授权未就绪');
+    try{return await qwenRerank(env,request,query,documents);}catch(e){throw safeProviderError(e);}
   };
   provider.complete = (messages, tools, options) =>
     completeModel(env, request, messages, tools, options);

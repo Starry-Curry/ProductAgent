@@ -61,7 +61,7 @@ export type AcquiredDocument = {
   sections?: {title:string;url:string}[];
 };
 /** Exact URL grant from a manufacturer's exact-model page, never a blanket CDN allowlist. */
-export function exactProductSubject(doc:AcquiredDocument,model:string){return modelMentioned(doc.title,model)||!!doc.productModels?.some(m=>modelMentioned(m,model));}
+export function exactProductSubject(doc:AcquiredDocument,model:string){return doc.productModels?.length ? doc.productModels.some(m=>modelMentioned(m,model)) : modelMentioned(doc.title,model);}
 export function trustedOfficialDocument(doc:AcquiredDocument,item:Item,documents:AcquiredDocument[]){
  if(officialDomain(doc.url,item.brand||doc.brand||'')||publisherOwns(doc.url,item.brand||doc.brand||'',doc.publisherProof))return true;
  return doc.applicability==='manufacturer_linked_manual'&&documents.some(parent=>(officialDomain(parent.url,item.brand||'')||publisherOwns(parent.url,item.brand||'',parent.publisherProof))&&exactProductSubject(parent,item.model)&&doc.chain.includes(parent.url)&&parent.sections?.some(l=>l.url===doc.url&&isProductManual(l)));
@@ -92,6 +92,7 @@ function regionOf(url: string) {
     "sg",
     "tw",
     "hk",
+    "jp",
     "de",
     "fr",
   ];
@@ -527,8 +528,14 @@ export async function acquireKnowledge(
   if (!documents.length && options.search) {
     try {
       acquisition.searchAttempted = true;
+      // The model may have seen private stories or may already be guessing an
+      // unverified component number. Neither belongs in public discovery. Find
+      // the registered commercial identity first; question-specific selection
+      // happens over the acquired originals inside the authorized provider.
+      const country=/^(?:[a-z]{2}|global)$/i.test(item.region||'')?item.region:'';
+      const discoveryQuery=`${brand} ${item.model} official product specifications user manual operating instructions ${country||''}`;
       let result = await options.search(
-        `${brand} ${item.model} official user manual operating instructions ${item.region || ""} ${options.query?.slice(0,500)||""}`,
+        discoveryQuery,
         entry?[...entry.domains]:[],
       );
       acquisition.searchCompleted = true;
@@ -539,11 +546,13 @@ export async function acquireKnowledge(
       // unverified first hit or asking the user to supply the official URL.
       if(!entry&&publisherProofs.length&&!result.hits.some(h=>isOfficial(h.url,brand))){
        const sites=[...new Set(publisherProofs.map(p=>new URL(p.redirectChain.at(-1)!).hostname))].slice(0,3);
-       const scoped=await options.search(`${brand} ${item.model} ${options.query?.slice(0,500)||'official specifications instructions'}`,sites);
+       const scoped=await options.search(discoveryQuery,sites);
        result={...scoped,hits:[...scoped.hits,...result.hits].filter((h,n,a)=>a.findIndex(x=>x.url===h.url)===n)};
       }
-      // A model may return many valid sources. Prefer actual manuals over an
-      // overview/download index; skip unrelated PDF kinds before spending fetches.
+      // A model may return many valid sources. Keep an exact-model identity
+      // anchor: module-number PDFs often omit the commercial SKU and need an
+      // actual manufacturer's link before they are applicable. A PDF suffix is
+      // not sufficient reason to spend all bounded reads before that anchor.
       // Keep the provider's source candidates until AFTER ranking. A download
       // index often contains the model in its URL while the actual manual uses
       // opaque document IDs. Prefer readable chapters over such landing pages;
@@ -553,10 +562,11 @@ export async function acquireKnowledge(
         const path=new URL(h.url).pathname;
         const chapter=/\/(?:contents?|chapters?|manual|guides?)\/.+\.(?:html?|pdf)$|\/(?:helpguide|user[-_]?manual)\//i.test(decoded);
         const index=/\/(?:manuals|downloads|support|faqs)\/?$|\/(?:index|default)\.html?$/i.test(path);
-        return {h,n,score:Number(chapter)*12+Number(isProductManual(h))*6+Number(/\.pdf$/i.test(path))*3+Number(modelMentioned(h.title+' '+decoded,item.model))*4-Number(index)*3};
-      }).sort((a,b)=>b.score-a.score||a.n-b.n).map(x=>x.h);
+        return {h,n,identityAnchor:!index&&!/\.pdf$/i.test(path)&&modelMentioned(h.title+' '+decoded,item.model),score:Number(chapter)*12+Number(isProductManual(h))*6+Number(/\.pdf$/i.test(path))*3+Number(modelMentioned(h.title+' '+decoded,item.model))*4-Number(index)*3};
+      }).sort((a,b)=>b.score-a.score||a.n-b.n);
+      const candidates=[...rankedHits.filter(h=>h.identityAnchor).slice(0,2),...rankedHits].filter((x,n,a)=>a.findIndex(y=>y.h.url===x.h.url)===n).slice(0,4);
       acquisition.searchURLs = result.hits.slice(0,48).map(h=>h.url);
-      for (const hit of rankedHits.slice(0, 4)) {
+      for (const {h:hit} of candidates) {
         if (requests >= 8) break;
         if (!isOfficial(hit.url, brand)) continue;
         try {

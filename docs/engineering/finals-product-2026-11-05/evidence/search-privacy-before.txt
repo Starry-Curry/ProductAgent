@@ -1,0 +1,25 @@
+✖ 官方资料发现只发送商品身份，不把模型提供的私人故事/目标送进公开搜索 (139.218ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 381.5632
+
+✖ failing tests:
+
+test at tests\finals-search-privacy.test.ts:2:1
+✖ 官方资料发现只发送商品身份，不把模型提供的私人故事/目标送进公开搜索 (139.218ms)
+  AssertionError [ERR_ASSERTION]: 已获云端对话许可的私人Context不自动成为公开检索参数
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-search-privacy.test.ts:5:117)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

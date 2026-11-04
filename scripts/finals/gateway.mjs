@@ -16,7 +16,7 @@ export function verifyFinalsAuthorization(auth,readFile=fs.readFileSync){
  if(new Set(auth.historicalLedgers.map(a=>a.path)).size!==3)throw Error('duplicate_historical_anchor');
  return {roundId:ROUND,requests:800,cny:null,noCnyCap:true};
 }
-export async function finalsGateway({recordContent=false,model='qwen3.8-max-0902',thinkingBudget=2048}={}){
+export async function finalsGateway({recordContent=false,model='qwen3.8-max-0902',thinkingBudget=2048,rerank=false}={}){
  if(!['qwen3.8-max-0902','qwen3.7-plus-2026-05-26'].includes(model)||!Number.isInteger(thinkingBudget)||thinkingBudget<1||thinkingBudget>8192)throw Error('unsupported_finals_probe_configuration');
  const auth=JSON.parse(fs.readFileSync(ROOT+'/authorization.json','utf8'));
  const limits=verifyFinalsAuthorization(auth);
@@ -27,7 +27,7 @@ export async function finalsGateway({recordContent=false,model='qwen3.8-max-0902
  }
  return gateway(process.env.WUJIAN_EVAL_CONFIG||path.resolve('.env.local'),{
   root:ROOT,lockFile:'.runtime/finals-product-model.lock',model,
-  allowThinking:true,allowBoundedPageImages:true,allowResponses:true,allowResponsesStream:true,
+  allowThinking:true,allowBoundedPageImages:true,allowResponses:true,allowResponsesStream:true,...(rerank?{rerankModel:'qwen3.7-text-rerank'}:{}),
   reserveExternalInputs:true,maxThinkingBudget:thinkingBudget,requestTimeoutMs:90000,
   reconcileInterrupted:true,recoverStaleLock:true,recordContent,prices:model==='qwen3.7-plus-2026-05-26'?{input:2,output:8}:{input:12,output:36},limits,
  });

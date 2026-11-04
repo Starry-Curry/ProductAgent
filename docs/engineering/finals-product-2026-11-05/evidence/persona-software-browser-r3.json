@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-04T20:42:45.085Z",
+  "round": "finals-product-20261105-r1",
+  "basis": "real_Qwen_persona_and_owned_software_readback_synthetic_item_existing_Task_not_hardware",
+  "itemId": "7ff42ad8-c403-4433-8845-447a84bc8cfd",
+  "taskId": "f17f4e1a-ed1f-442c-909a-6dd0d213aa1f",
+  "responses": [],
+  "checks": [],
+  "errors": [
+    "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '帮助', exact: true })\u001b[22m\n"
+  ],
+  "pageErrors": [],
+  "actualBefore": {
+    "observed": {
+      "power": false,
+      "brightness": 40,
+      "revision": 0,
+      "simulated": true
+    },
+    "simulated": true,
+    "completionBasis": "software-simulator-readback"
+  },
+  "status": "failed",
+  "upstreamRequests": 0
+}

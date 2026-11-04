@@ -353,6 +353,7 @@ export function AssistantConversation({
           <label>
             之前的问题
             <select
+              aria-label="之前的问题"
               disabled={busy || temporary}
               value={session?.id || ""}
               onChange={(e) => {

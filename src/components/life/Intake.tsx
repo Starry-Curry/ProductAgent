@@ -496,6 +496,7 @@ export function Intake({
                   "sg",
                   "tw",
                   "hk",
+                  "jp",
                   "de",
                   "fr",
                 ].map((r) => (
