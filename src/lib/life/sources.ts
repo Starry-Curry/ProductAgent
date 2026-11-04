@@ -3,12 +3,14 @@ import type { DatabaseSync } from "node:sqlite";
 import { lookup } from "node:dns/promises";
 import { request } from "node:https";
 import { isIP } from "node:net";
+import {createHash} from 'node:crypto';
 import { canRead, type State, type Person } from "../domain.ts";
 import { AgentError, type AssistantReply } from "../agent/contracts.ts";
 import { searchProducts } from "../products.ts";
 import { modelMentioned } from "./knowledge.ts";
 export type PublicVisualReading={basis:'provider_visual_reading_not_verified_fact';model:string;text:string;pages:number[];sourceHash:string;documentHash:string;at:string};
 export type SourceReading={mode?:'html_text'|'pdf_text_layer'|'unknown';limitations:string[];figures:{url:string;caption:string}[];visualReadings?:PublicVisualReading[]};
+export type OriginalPublicPayload={mediaType:'application/json';sha256:string;text:string};
 
 export function publicAddress(address: string) {
   if (address.includes(":"))
@@ -175,6 +177,8 @@ export async function fetchPublicDocument(value:string,redirects=0,maxPdfBytes=1
  title:string;text:string;url:string;links:{title:string;url:string}[];
  extracted?:{name?:string;brand?:string;model?:string};navigationItems?:{id:string;label:string}[];
  reading?:SourceReading;
+  productModels?:string[];
+  originalPayload?:OriginalPublicPayload;
 }>{
  const result=await fetchPublicSource(value,redirects,maxPdfBytes),url=new URL(result.url);
   if (/pdf/i.test(result.type)) {
@@ -194,14 +198,24 @@ export async function fetchPublicDocument(value:string,redirects=0,maxPdfBytes=1
       reading: {mode:'pdf_text_layer',limitations:['PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。'],figures:[]} as SourceReading,
     };
   }
-  if (/application\/json/.test(result.type))
-    return {
-      url: url.href,
-      title: "公开API响应",
-      text: result.bytes.toString("utf8"),
-      links: [],
-    };
+  if (/application\/json/.test(result.type))return extractPublicJSON(result.bytes.toString('utf8'),url.href);
   return extractPublicHTML(result.bytes.toString("utf8"), url.href);
+}
+/** Public commerce JSON is a source format, not a separate knowledge system.
+ * Preserve the original payload while projecting description, actual links and
+ * variant identities through the existing HTML reader. Never execute scripts. */
+export async function extractPublicJSON(raw:string,address:string):Promise<Awaited<ReturnType<typeof fetchPublicDocument>>>{
+ const url=sourceURL(address),data=JSON.parse(raw),p=data?.product;
+ if(!p||typeof p!=='object'||typeof p.title!=='string'||typeof p.body_html!=='string'||!Array.isArray(p.variants))return {url:url.href,title:'公开API响应',text:raw,links:[] as {title:string;url:string}[]};
+ const {load}=await import('cheerio'),$=load('<html><head></head><body><main></main></body></html>');
+ $('head').append($('<title>').text(p.title));$('main').append($('<h1>').text(p.title));
+ if(typeof p.vendor==='string')$('main').append($('<p>').text('发布者声明：'+p.vendor));
+ $('main').append($('<section>').append(p.body_html));
+ const variants=p.variants.slice(0,100).filter((v:any)=>typeof v?.sku==='string'&&v.sku.trim());
+ const productModels=[...new Set<string>(variants.map((v:any)=>v.sku.trim().slice(0,100)))];
+ if(variants.length){const list=$('<ul>');for(const v of variants)list.append($('<li>').text('商品变体SKU：'+v.sku+'；选项：'+(typeof v.title==='string'?v.title:'未知')));$('main').append(list);}
+ const document=await extractPublicHTML($.html(),url.href);
+ return {...document,productModels,extracted:{name:p.title.slice(0,80),brand:typeof p.vendor==='string'?p.vendor.slice(0,80):undefined,model:productModels.length===1?productModels[0]:undefined},originalPayload:{mediaType:'application/json' as const,sha256:createHash('sha256').update(raw).digest('hex'),text:raw}};
 }
 export async function extractPublicHTML(raw: string, address: string) {
   const url = sourceURL(address),

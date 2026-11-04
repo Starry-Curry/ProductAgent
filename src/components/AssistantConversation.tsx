@@ -572,9 +572,9 @@ export function AssistantConversation({
             )}
             {!!message.reply?.steps.length && (
               <ol>
-                {message.reply.steps.map((step) => (
+                {message.reply.steps.map((step,n) => (
                   <li key={step.id}>
-                    {step.text}
+                    {message.reply?.stepsInAnswer ? `第 ${n+1} 步` : step.text}
                     {message.id === last?.id && !temporary && (
                       <button
                         className="text-button"

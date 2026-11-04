@@ -2,6 +2,7 @@ import {z} from 'zod';
 import type {DatabaseSync} from 'node:sqlite';
 import type {State,Person} from '../domain.ts';
 import type {Provider,ModelMessage,ToolDefinition} from '../ai/provider.ts';
+import {ProviderError} from '../ai/provider.ts';
 import {AgentError,type ServiceSession,type AssistantReply,type Trace} from './contracts.ts';
 import {compileTaskContext} from '../context/compiler.ts';
 import {resourceCatalogue} from '../context/relevance.ts';
@@ -265,7 +266,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  // data packet, rather than leaving it buried inside a long evidence JSON.
  if(process.env.WUJIAN_PRACTICAL_NATURAL_TURN!=='false')messages.push({role:'user',content:question});
  const thinking=process.env.WUJIAN_PRACTICAL_THINKING==='true'&&(initial.items.length>1||session.known.foundationTaskIntent==='explore'||!initial.items.length&&initial.catalogue.length>1);
- let answer='',failure:string|undefined;
+ let answer='',failure:string|undefined,failureCode:string|undefined;
  try{
   let round=0;
   const finalContract=provider.structuredOutput==='json_schema';
@@ -301,7 +302,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    answer=(boundPlanning?'先排除已知不满足的使用条件：\n\n'+practicalConstraints(context()).map(c=>'- '+c.label+'：'+c.detail+'。'+c.scope).join('\n')+'\n\n':'')+plan.title+'\n\n'+plan.detail.map(s=>'- '+s).join('\n')+'\n\n这是待你确认的候选方案，未执行设备操作；保存后可继续这件事并报告结果。';
    log('practical_bound_plan','发布模型生成并已核对资源依赖的同一候选卡，不再追加模型回合重写步骤；不是完整物理或语义验证');
   }
- }catch(e){if(e instanceof AgentError&&[403,409].includes(e.status))throw e;failure=(e as Error).message;log('practical_failed',failure);}
+ }catch(e){if(e instanceof AgentError&&[403,409].includes(e.status))throw e;failure=(e as Error).message;failureCode=e instanceof ProviderError?e.code:undefined;log('practical_failed',failure);}
  guard(false);
  if(boundPlanning&&!cards.some(c=>c.kind==='plan')){
   failure=failure||'未形成满足已知资源条件的计划';
@@ -320,7 +321,8 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  // A transport delta is not reviewed guidance. Release only the finished result;
  // tool progress streams separately, never raw reasoning or rejected drafts.
  provider.onText?.(answer);
- const reply:AssistantReply={modelHistoryText,continuations:failure?[]:continuations,actionCards:failure?[]:cards,necessaryConditionChecks:practicalConstraints(current),knowledgeWarnings:[...new Set([...passages.values()].flatMap(s=>s.reading?.limitations||[]))],answer,outcome:failure?'unavailable':missingKnowledge.size||unresolvedTools.size?'needs_info':'answered',source:passages.size?'model-with-evidence':'model-general',model:provider.model,steps:[],questions:[],evidenceIds:[...passages.keys()],citations,
+ const steps=failure?[]:finalized?.procedure?.steps.map((s,n)=>({id:'procedure-'+session.id+'-'+session.messages.length+'-'+n,text:s.text}))||[];
+ const reply:AssistantReply={modelHistoryText,errorCode:failureCode,continuations:failure?[]:continuations,actionCards:failure?[]:cards,necessaryConditionChecks:practicalConstraints(current),knowledgeWarnings:[...new Set([...passages.values()].flatMap(s=>s.reading?.limitations||[]))],answer,outcome:failure?'unavailable':missingKnowledge.size||unresolvedTools.size?'needs_info':'answered',source:passages.size?'model-with-evidence':'model-general',model:provider.model,steps,stepsInAnswer:steps.length>0,questions:[],evidenceIds:[...passages.keys()],citations,
   memoryIds:[...new Set([...current.evidence.filter(e=>e.basis==='experience'||e.basis==='user_report'&&e.id!=='user:current-turn').map(e=>e.id),...localRecords.map(m=>m.id)])],usedItems:current.items.map(i=>({id:i.id,name:i.name,model:i.model||'待确认'})),caveat:'依据当前资料与获准报告；建议不等于已执行或实物验证。'};
  log('practical_completion',JSON.stringify({elapsedMs:Date.now()-started,calls,tools,reservedCny,missingKnowledgeIds:[...missingKnowledge],adviceOnly:true}));return {reply,trace,tokens,modelCalls:calls};
 }

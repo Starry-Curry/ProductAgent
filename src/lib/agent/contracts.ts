@@ -92,6 +92,8 @@ export type AssistantReply = {
   outcome: "answered" | "needs_info" | "referred" | "unavailable" | "blocked";
   answer: string;
   steps: { id: string; text: string }[];
+  /** Steps already present in answer; show compact feedback controls, not a duplicate list. */
+  stepsInAnswer?: boolean;
   questions: string[];
   evidenceIds: string[];
   citations: Citation[];

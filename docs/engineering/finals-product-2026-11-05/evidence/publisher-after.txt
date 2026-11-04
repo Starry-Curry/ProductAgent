@@ -1,0 +1,19 @@
+✔ generic directory publisher proof binds brand, independent entity, TLS migration and exact host, never lookalikes/community (6.4599ms)
+✔ generic discovery gets structured company record; native search URL and model declaration alone cannot authenticate publisher (0.7238ms)
+✔ single-page manual keeps actual section index and reads selected article, without silently substituting the first truncated page (223.204ms)
+✔ 旧目录也按完整品牌身份匹配，不能用嵌入Sony字符串伪造厂家 (0.2769ms)
+✔ 对抗厂家链：多语言公司目录的旧主页失效时，可用独立Wikidata官方站点，不信任搜索声明 (3.1826ms)
+✔ 过期或撤回明确授权在实例、目录、共享知识和正文读取中一致拒绝 (379.5185ms)
+✔ 有效明确授权保留共享实例与官方正文读取；纯投影不能越过数据库授权 (180.6468ms)
+✔ 无新授权表的正常旧数据库保留旧共享；显式拒绝不回退旧共享 (134.8139ms)
+✔ 明确授权不覆盖旧共享撤回或转移所有权 (142.9256ms)
+✔ 异步官方获取期间授权撤回，不能落库或返回旧共享资料 (157.0748ms)
+✔ 无焦点创意目录也按当前数据库授权过滤 (144.0468ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1619.8023

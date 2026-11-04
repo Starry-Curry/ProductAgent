@@ -1,0 +1,25 @@
+{
+  "roundId": "finals-product-20261105-r1",
+  "approved": true,
+  "authorizationDate": "2026-11-05",
+  "authorizationSource": "User explicitly approved 800 upstream requests without a monetary cap in this conversation.",
+  "maxRequests": 800,
+  "maxEstimatedCny": null,
+  "noCnyCap": true,
+  "services": "qwen_and_bailian_native_only",
+  "recordContent": "synthetic_test_data_only_explicit_flag",
+  "historicalLedgers": [
+    {
+      "path": "docs/engineering/qwen-foundation-2026-11-02/evidence/model-calls.json",
+      "sha256": "a6092d978ad64d74e53dadb21bb063a40dab9fc2c74da1317fa088f1637c5271"
+    },
+    {
+      "path": "docs/engineering/qwen-foundation-2026-11-02/evidence/rounds/qwen-foundation-20261103-r2/model-calls.json",
+      "sha256": "72c81e5b360b9a512598b4eb9cd7beda3cd221c273a26a0ca12075a836d54c6b"
+    },
+    {
+      "path": "docs/engineering/qwen-foundation-2026-11-02/evidence/rounds/qwen-foundation-20261103-r3/model-calls.json",
+      "sha256": "c0c860b043ff9e31bba9fd90300e626ed39dc233f0d16d7bc3ecacd51fa00bc2"
+    }
+  ]
+}

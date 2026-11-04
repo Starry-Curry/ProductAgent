@@ -303,14 +303,15 @@ export function recordSessionFeedback(
     if (lease.lease_until > Date.now())
       throw new AgentError("请等本次回答完成后再记录结果", 409);
     const previous = db
-      .prepare("SELECT body FROM agent_feedback WHERE owner=? AND request_id=?")
-      .get(actor, input.requestId) as { body: string } | undefined;
+      .prepare("SELECT body,session_id FROM agent_feedback WHERE owner=? AND request_id=?")
+      .get(actor, input.requestId) as { body: string;session_id:string } | undefined;
     const body = {
       outcome: input.outcome,
       reason: (input.reason || "").slice(0, 500),
       stepId: input.stepId || null,
     };
     if (previous) {
+      if(previous.session_id!==input.sessionId)throw new AgentError("重复请求属于另一会话，不能重用该反馈编号",409);
       if (previous.body !== JSON.stringify(body))
         throw new AgentError("重复请求内容不一致", 409);
       db.exec("COMMIT");
@@ -349,7 +350,9 @@ export function recordSessionFeedback(
       text:
         input.outcome === "completed"
           ? "我确认解决了问题。"
-          : `我试过了，还需要帮助。${body.reason}`,
+          : input.outcome==='tried'
+            ? `我报告已试过这个步骤；尚未确认整件事是否解决。${body.reason}`
+            : `我试过了，还需要帮助。${body.reason}`,
       at,
     });
     session.messages = session.messages.slice(-30);

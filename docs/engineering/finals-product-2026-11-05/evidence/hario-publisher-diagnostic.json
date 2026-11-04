@@ -1,0 +1,381 @@
+{
+  "at": "2026-11-04T17:20:35.936Z",
+  "events": [
+    {
+      "url": "https://lookup.dbpedia.org/api/search?query=HARIO&format=JSON&maxResults=40",
+      "lookup": [
+        {
+          "label": [
+            "Brewed coffee"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Brewed_coffee"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hari</B> (director)"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Hari_(director)"
+          ]
+        },
+        {
+          "label": [
+            "Heris County"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Heris_County"
+          ]
+        },
+        {
+          "label": [
+            "<B>Harpo</B> Productions"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Harpo_Productions"
+          ]
+        },
+        {
+          "label": [
+            "V. Harikrishna"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/V._Harikrishna"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Silajdžić"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Silajdžić"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Handžić"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Handžić"
+          ]
+        },
+        {
+          "label": [
+            "Mata <B>Hari</B>"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Mata_Hari"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hario</B>"
+          ],
+          "resource": [
+            "http://fr.dbpedia.org/resource/Hario"
+          ]
+        },
+        {
+          "label": [
+            "Moto <B>Hagio</B>"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Moto_Hagio"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Hajradinović"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Hajradinović"
+          ]
+        },
+        {
+          "label": [
+            "George Harrison"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/George_Harrison"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hario</B> Island"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Hario_Island"
+          ]
+        },
+        {
+          "label": [
+            "Herbig–<B>Haro</B> object"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Herbig–Haro_object"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hari</B> (Afghanistan)"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Hari_(Afghanistan)"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Vučkić"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Vučkić"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hari</B> Bansha Acharya"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Hari_Bansha_Acharya"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haruo</B> Satō"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haruo_Satō"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Medunjanin"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Medunjanin"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hari</B> Parbat"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Hari_Parbat"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hariot</B> Hamilton-Temple-Blackwood, Marchioness of Dufferin and Ava"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Hariot_Hamilton-Temple-Blackwood,_Marchioness_of_Dufferin_and_Ava"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hari</B> Singh Nalwa"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Hari_Singh_Nalwa"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hari</B> Singh"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Hari_Singh"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Tabaković"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Tabaković"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Pašović"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Pašović"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Duljević"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Duljević"
+          ]
+        },
+        {
+          "label": [
+            "Japanese fleet oiler <B>Hario</B>"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Japanese_fleet_oiler_Hario"
+          ]
+        },
+        {
+          "label": [
+            "<B>Harim</B> Mountains"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Harim_Mountains"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haribo</B>"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haribo"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Redžepi"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Redžepi"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hari</B> & Sukhmani"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Hari_&_Sukhmani"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Hyseni"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Hyseni"
+          ]
+        },
+        {
+          "label": [
+            "<B>Hari</B> Kondabolu"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Hari_Kondabolu"
+          ]
+        },
+        {
+          "label": [
+            "Guillermo <B>Haro</B>"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Guillermo_Haro"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haro</B> Deportivo"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haro_Deportivo"
+          ]
+        },
+        {
+          "label": [
+            "Seppuku"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Seppuku"
+          ]
+        },
+        {
+          "label": [
+            "<B>Harish</B> Kumar (actor)"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Harish_Kumar_(actor)"
+          ]
+        },
+        {
+          "label": [
+            "Suzan Shown <B>Harjo</B>"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Suzan_Shown_Harjo"
+          ]
+        },
+        {
+          "label": [
+            "<B>Haris</B> Mehmedagić"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Haris_Mehmedagić"
+          ]
+        },
+        {
+          "label": [
+            "Busra al-<B>Harir</B>"
+          ],
+          "resource": [
+            "http://dbpedia.org/resource/Busra_al-Harir"
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://dbpedia.org/data/Hario_Island.json",
+      "records": [
+        {
+          "key": "http://en.wikipedia.org/wiki/Hario_Island"
+        },
+        {
+          "key": "http://dbpedia.org/resource/List_of_islands_of_Japan"
+        },
+        {
+          "key": "http://dbpedia.org/resource/Geography_of_Japan"
+        },
+        {
+          "key": "http://dbpedia.org/resource/List_of_islands_of_Japan_by_area"
+        },
+        {
+          "key": "http://dbpedia.org/resource/List_of_political_and_geographic_subdivisions_by_total_area_from_0.1_to_250_square_kilometers"
+        },
+        {
+          "key": "http://dbpedia.org/resource/Hirado_Domain"
+        },
+        {
+          "key": "http://dbpedia.org/resource/Huis_Ten_Bosch_(theme_park)"
+        },
+        {
+          "key": "http://dbpedia.org/resource/Haenosaki_Station"
+        },
+        {
+          "key": "http://dbpedia.org/resource/Ōmura_Bay"
+        },
+        {
+          "key": "http://dbpedia.org/resource/Hario_Island",
+          "labels": [
+            {
+              "type": "literal",
+              "value": "針尾島",
+              "lang": "ja"
+            },
+            {
+              "type": "literal",
+              "value": "Hario Island",
+              "lang": "en"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "issues": [
+    "公开机构目录与候选站点之间没有可核对的厂家身份链；未认证为官方资料。"
+  ],
+  "proofCount": 0
+}

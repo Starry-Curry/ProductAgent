@@ -3,6 +3,7 @@ import type { DatabaseSync } from "node:sqlite";
 import { canRead, type State, type Person } from "../domain.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 import { invalidatePrivacyScopes } from "./context-lifecycle.ts";
+import {authorize} from '../foundation/policy.ts';
 import {
   AgentError,
   memorySchema,
@@ -145,7 +146,7 @@ export function listMemories(db: DatabaseSync, state: State, actor: Person) {
         archived:
           !!m.itemId &&
           (!item ||
-            !canRead(item, actor) ||
+            !authorize(db,state,actor,item.id).allowed ||
             (!!m.itemOwner && item.owner !== m.itemOwner)),
       };
     })
@@ -249,7 +250,7 @@ export function saveMemory(
       : undefined;
     if (
       value.itemId &&
-      !read().items.some((i) => i.id === value.itemId && canRead(i, actor)) &&
+      !authorize(db,read(),actor,value.itemId).allowed &&
       before?.itemId !== value.itemId
     )
       throw new AgentError("物品不存在或没有访问权限", 403);

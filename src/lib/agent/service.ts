@@ -289,7 +289,7 @@ async function respondLegacy(
       const continued =
         !session.known.homeId &&
         itemId &&
-        completedStepOrdinals(input.question).length
+        (completedStepOrdinals(input.question).length||session.tried.length)
           ? continueVerifiedGuidance(
               session,
               input.question,

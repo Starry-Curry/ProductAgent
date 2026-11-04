@@ -8,6 +8,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## 2026-11-05
 
+### 决赛产品闭环研发（进行中）
+
+开始逐层对抗审查与纵向修复：检索相关性优先、指导步骤身份与反馈续接、跨会话反馈幂等、通用厂家来源链和结构化商品原文读取。新授权800次真实上游请求、不设金额上限，历史额度不重置；真实陌生商品成功与失败分开保存。尚未通过Core/Full质量验收，未称全功能完成；见 [当前状态](docs/engineering/CURRENT.md)。
+
 ### GitHub 文档与协作入口整理
 
 三份根历史报告精简为固定提交入口，历史日期与原判断保留；README/CONTRIBUTING 统一 GitHub、main/develop 与 PR 审查流程。新增适配用户指南的 [操作手册](docs/GIT_WORKFLOW.md) 和 [后续规划](docs/engineering/NEXT_STEPS.md)。不迁移 CodeArts、不新建 master、不删除远端分支或历史证据；无业务与费用变化，Core Foundation 仍未通过。

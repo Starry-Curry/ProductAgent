@@ -1,0 +1,45 @@
+{
+  "at": "2026-11-04T17:41:51.218Z",
+  "basis": "live_official_PDF_local_cover_OCR_no_paid_model_no_device",
+  "elapsedMs": 14890.9652,
+  "pageCount": 8,
+  "pageIndex": [
+    {
+      "page": 1,
+      "text": "ELECTRONIC LABELING SYSTEM Follow these guidelines to avoid the risk of fire, burns, injury, electric shocks, rupture, overheating, abnormal odours or smoke. • Always use the specified voltage and the suggested AC adapter (AD-24ES/AD- 24ESA/AD-24ESAW/AD-24ESA-"
+    },
+    {
+      "page": 2,
+      "text": "NOTE • The LCD shows one row of 15 characters; however, the text that you enter can be up to 80 characters in length. • While selecting the settings, press to go back to the default item. *1 Visit us at http://support.brother.com/ for the latest information ab"
+    },
+    {
+      "page": 3,
+      "text": "BASIC USAGE X Switching Upper Case/Lower Case Upper case ( ON) Lower case ( OFF) X Creating Two-Line Labels Move the cursor to where you want to start the next line and press . Use either 0.35\" (9mm) or 0.47\" (12mm) wide tape for two line printing. NOTE • The "
+    },
+    {
+      "page": 4,
+      "text": "USING TEMPLATES This function allows you to create various labels using the built-in templates. Refer to the Text Label templates table included in this insertion sheet. XExample 1: [Template that includes one repeated graphic] • There are three additional Tex"
+    },
+    {
+      "page": 5,
+      "text": "FORMATTING KEYS 1 Press to change the font settings. 2 Press / to select the settings and press . NOTE • To cancel operations, press . • Refer to the Font samples table included in this insertion sheet. • The actual printed font size depends on the tape width,"
+    },
+    {
+      "page": 6,
+      "text": "X Error message X What to do when... Troubleshooting Message Cause/Remedy Battery Low! The batteries are weak. If using AAA alkaline batteries: Replace them with new ones. If using Ni-MH batteries: Charge them fully. Battery Empty! The installed batteries are "
+    },
+    {
+      "page": 7,
+      "text": ""
+    },
+    {
+      "page": 8,
+      "text": "* Images are for illustrative purposes only. * Frames with highlighted numbers are only available when using 0.47\" (12mm) wide tape cassettes."
+    }
+  ],
+  "sourceHash": "1ecf6aa9e7f27a372316f7cfe8d0b6210c9374b2c245555e286598bf6a2f0b5d",
+  "modelScope": {
+    "basis": "local_cover_ocr_not_semantic_proof",
+    "page": 1
+  }
+}

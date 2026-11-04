@@ -126,7 +126,7 @@ function safeProviderError(error: unknown, timedOut = false): ProviderError {
   )
     return new ProviderError(
       "timeout",
-      "模型请求超过配置时限，尚未得到完整回答。",
+      "模型请求超过配置时限，本次回答尚未完成。",
     );
   if (error instanceof SyntaxError)
     return new ProviderError("invalid_response", "模型服务返回了无效 JSON。");
@@ -382,15 +382,15 @@ export function createProvider(
     stream.on('chunk',chunk=>{reasoning+=(chunk.choices[0]?.delta as any)?.reasoning_content||'';});
     stream.on('content.delta',({delta})=>{try{options.onText?.(delta);}catch(e){callbackError=e;stream.abort();}});
     // SDK request timeout covers establishment; explicitly bound the entire SSE stream.
-    const turnTimer=setTimeout(()=>stream.abort(),options.timeoutMs);turnTimer.unref();
+    let deadlineExceeded=false;
+    const turnTimer=setTimeout(()=>{deadlineExceeded=true;stream.abort();},options.timeoutMs);turnTimer.unref();
     try{
       const response=await stream.finalChatCompletion();if(callbackError)throw callbackError;
       const choice=response.choices[0];
       if(!choice||!['stop','tool_calls'].includes(choice.finish_reason))throw new ProviderError('incomplete','本次回答未完整生成，请重试');
       return {text:choice.message.content||'',reasoning:reasoning||undefined,model:response.model,tokens:response.usage?{input:response.usage.prompt_tokens,output:response.usage.completion_tokens}:null,
         toolCalls:(choice.message.tool_calls||[]) as ToolCall[],finishReason:choice.finish_reason};
-    }catch(e){if(callbackError)throw callbackError;if(e instanceof ProviderError)throw e;
-      throw new ProviderError('native_model_failed','模型连接或生成未完成；本次不自动重试');}finally{clearTimeout(turnTimer);}
+    }catch(e){if(callbackError)throw callbackError;throw safeProviderError(e,deadlineExceeded);}finally{clearTimeout(turnTimer);}
   };
   // Same HTTPS/auth/error protocol; vision changes only the configured model and user content.
   provider.recognize = (system, image) =>

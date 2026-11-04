@@ -13,7 +13,7 @@ import {
   findOfficial,
   type PublicDocument,
 } from "./knowledge.ts";
-import { fetchPublicDocument, sourceURL, listSources,type SourceReading } from "./sources.ts";
+import { fetchPublicDocument, sourceURL, listSources,type SourceReading,type OriginalPublicPayload } from "./sources.ts";
 import type { Provider } from "../ai/provider.ts";
 import { selectTaskEvidence } from "./knowledge-task.ts";
 import { multilingualAnchors } from "./retrieval-topics.ts";
@@ -44,6 +44,8 @@ export type AcquiredDocument = {
     quote: string;
   }[];
   processorVersion?: string;
+  productModels?:string[];
+  originalPayload?:OriginalPublicPayload;
   id: string;
   url: string;
   title: string;
@@ -59,9 +61,10 @@ export type AcquiredDocument = {
   sections?: {title:string;url:string}[];
 };
 /** Exact URL grant from a manufacturer's exact-model page, never a blanket CDN allowlist. */
+export function exactProductSubject(doc:AcquiredDocument,model:string){return modelMentioned(doc.title,model)||!!doc.productModels?.some(m=>modelMentioned(m,model));}
 export function trustedOfficialDocument(doc:AcquiredDocument,item:Item,documents:AcquiredDocument[]){
  if(officialDomain(doc.url,item.brand||doc.brand||'')||publisherOwns(doc.url,item.brand||doc.brand||'',doc.publisherProof))return true;
- return doc.applicability==='manufacturer_linked_manual'&&documents.some(parent=>(officialDomain(parent.url,item.brand||'')||publisherOwns(parent.url,item.brand||'',parent.publisherProof))&&modelMentioned(parent.title,item.model)&&doc.chain.includes(parent.url)&&parent.sections?.some(l=>l.url===doc.url&&isProductManual(l)));
+ return doc.applicability==='manufacturer_linked_manual'&&documents.some(parent=>(officialDomain(parent.url,item.brand||'')||publisherOwns(parent.url,item.brand||'',parent.publisherProof))&&exactProductSubject(parent,item.model)&&doc.chain.includes(parent.url)&&parent.sections?.some(l=>l.url===doc.url&&isProductManual(l)));
 }
 const digest = (s: string) => createHash("sha256").update(s).digest("hex");
 export const knowledgeIdentity = (item: Item) =>
@@ -157,6 +160,8 @@ export function makeKnowledgeDocument(
   return {
     id,
     processorVersion: "extractive-3-overlap",
+    productModels:'productModels' in d?d.productModels:undefined,
+    originalPayload:'originalPayload' in d?d.originalPayload:undefined,
     url: d.url,
     title: d.title,
     text: d.text,
@@ -507,7 +512,7 @@ export async function acquireKnowledge(
     .filter((x) => x.length > 8);
   async function accept(url: string, chain: string[], sourceRegion: string,parent?:AcquiredDocument) {
     const d = await get(url);
-    const inherited=!!parent&&isOfficial(parent.url,brand)&&modelMentioned(parent.title,item.model)&&parent.sections?.some(l=>l.url===url&&isProductManual(l))&&d.url===url;
+    const inherited=!!parent&&isOfficial(parent.url,brand)&&exactProductSubject(parent,item.model)&&parent.sections?.some(l=>l.url===url&&isProductManual(l))&&d.url===url;
     if(!isOfficial(d.url,brand)&&!inherited){issues.push('最终站点未通过厂家范围核对，未采用');return;}
     if ((d.extracted?.model&&!modelMentioned(d.extracted.model,item.model))||(!modelMentioned(d.title + " " + d.text, item.model)&&!inherited)) {
       issues.push("官方文档未包含完整型号，未采用：" + new URL(url).hostname);
@@ -522,12 +527,21 @@ export async function acquireKnowledge(
   if (!documents.length && options.search) {
     try {
       acquisition.searchAttempted = true;
-      const result = await options.search(
+      let result = await options.search(
         `${brand} ${item.model} official user manual operating instructions ${item.region || ""} ${options.query?.slice(0,500)||""}`,
         entry?[...entry.domains]:[],
       );
       acquisition.searchCompleted = true;
       if(!entry){const identity=await discoverPublishers(brand,result.hits.map(h=>h.url),options.publisherDependencies);publisherProofs=identity.proofs;issues.push(...identity.issues);}
+      // Search and publisher identity are separate. An independent company
+      // record can identify a valid regional site missing from the first hit
+      // list. Search that verified scope once, rather than certifying an
+      // unverified first hit or asking the user to supply the official URL.
+      if(!entry&&publisherProofs.length&&!result.hits.some(h=>isOfficial(h.url,brand))){
+       const sites=[...new Set(publisherProofs.map(p=>new URL(p.redirectChain.at(-1)!).hostname))].slice(0,3);
+       const scoped=await options.search(`${brand} ${item.model} ${options.query?.slice(0,500)||'official specifications instructions'}`,sites);
+       result={...scoped,hits:[...scoped.hits,...result.hits].filter((h,n,a)=>a.findIndex(x=>x.url===h.url)===n)};
+      }
       // A model may return many valid sources. Prefer actual manuals over an
       // overview/download index; skip unrelated PDF kinds before spending fetches.
       // Keep the provider's source candidates until AFTER ranking. A download

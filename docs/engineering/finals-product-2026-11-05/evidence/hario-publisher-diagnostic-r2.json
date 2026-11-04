@@ -1,0 +1,84 @@
+{
+  "at": "2026-11-04T17:24:47.743Z",
+  "events": [
+    {
+      "url": "https://lookup.dbpedia.org/api/search?query=HARIO&format=JSON&maxResults=40",
+      "subjects": [
+        {
+          "l": [
+            "<B>Hario</B>"
+          ],
+          "r": [
+            "http://fr.dbpedia.org/resource/Hario"
+          ]
+        },
+        {
+          "l": [
+            "<B>Hario</B> Island"
+          ],
+          "r": [
+            "http://dbpedia.org/resource/Hario_Island"
+          ]
+        },
+        {
+          "l": [
+            "<B>Hariot</B> Hamilton-Temple-Blackwood, Marchioness of Dufferin and Ava"
+          ],
+          "r": [
+            "http://dbpedia.org/resource/Hariot_Hamilton-Temple-Blackwood,_Marchioness_of_Dufferin_and_Ava"
+          ]
+        },
+        {
+          "l": [
+            "Japanese fleet oiler <B>Hario</B>"
+          ],
+          "r": [
+            "http://dbpedia.org/resource/Japanese_fleet_oiler_Hario"
+          ]
+        }
+      ]
+    },
+    {
+      "url": "https://dbpedia.org/data/Hario_Island.json",
+      "subjects": []
+    },
+    {
+      "url": "https://fr.dbpedia.org/data/Hario.json",
+      "subjects": [
+        "http://fr.dbpedia.org/resource/Hario",
+        "http://fr.wikipedia.org/wiki/Hario"
+      ]
+    },
+    {
+      "resolve": "https://www.hario.jp/fr/",
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。"
+    },
+    {
+      "url": "https://www.wikidata.org/wiki/Special:EntityData/Q11222262.json",
+      "subjects": [
+        "Q11222262"
+      ]
+    },
+    {
+      "resolve": "https://www.hario.com/",
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。"
+    },
+    {
+      "resolve": "https://www.hario.jp/",
+      "error": "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。"
+    },
+    {
+      "resolve": "https://www.hario-europe.com/",
+      "result": {
+        "url": "https://www.hario-europe.com/",
+        "chain": [
+          "https://www.hario-europe.com/"
+        ]
+      }
+    }
+  ],
+  "proofs": [],
+  "issues": [
+    "公开机构目录与候选站点之间没有可核对的厂家身份链；未认证为官方资料。"
+  ]
+}
