@@ -6,6 +6,7 @@
 - [产品共识定稿](docs/product/PRODUCT_FINAL_V1.md)：产品理念与完整范围。
 - [团队接入指南](docs/engineering/TEAM_INTEGRATION.md)：分支起点、公共服务、离线Mock、专业工具与兼容边界。
 - [贡献指南](CONTRIBUTING.md) · [工程规则](AGENTS.md) · [文档索引](docs/README.md)。
+- [GitHub 协作操作](docs/GIT_WORKFLOW.md) · [后续研发规划](docs/engineering/NEXT_STEPS.md)。
 
 ## 本地运行
 

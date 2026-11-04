@@ -34,6 +34,8 @@ git switch -c codex/your-change origin/codex/wujian-team-integration-v1
 
 底座服务、类型、Mock 和专业工具接入直接见 [TEAM_INTEGRATION](docs/engineering/TEAM_INTEGRATION.md)，不在本页重复。
 
+日常同步、未提交修改保护、冲突处理和 PR 操作见 [GitHub 协作指南](docs/GIT_WORKFLOW.md)。后续优先级与完成标准见 [研发规划](docs/engineering/NEXT_STEPS.md)。
+
 ## 检查与证据
 
 开发阶段运行相关定向测试；集成提交前运行：

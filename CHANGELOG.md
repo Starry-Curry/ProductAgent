@@ -6,6 +6,12 @@ Notable changes to ProductAgent / 物间 are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions use [Semantic Versioning](https://semver.org/) when the repository begins publishing tagged releases.
 
+## 2026-11-05
+
+### GitHub 文档与协作入口整理
+
+三份根历史报告精简为固定提交入口，历史日期与原判断保留；README/CONTRIBUTING 统一 GitHub、main/develop 与 PR 审查流程。新增适配用户指南的 [操作手册](docs/GIT_WORKFLOW.md) 和 [后续规划](docs/engineering/NEXT_STEPS.md)。不迁移 CodeArts、不新建 master、不删除远端分支或历史证据；无业务与费用变化，Core Foundation 仍未通过。
+
 ## 2026-11-03
 
 ### 团队集成候选
