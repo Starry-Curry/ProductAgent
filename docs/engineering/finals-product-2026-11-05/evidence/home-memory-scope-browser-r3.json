@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-04T22:31:49.850Z",
+  "basis": "real_browser_real_accounts_domain_home_installation_permission_UI_only_official_refresh_intentionally_network_aborted_no_Qwen_no_claim_of_source_acquisition",
+  "checks": [
+    {
+      "name": "home_read_mode_follows_initial_explicit_scope_consent_true",
+      "passed": true
+    },
+    {
+      "name": "home_choice_does_not_change_original_private_read_choice_true",
+      "passed": true
+    },
+    {
+      "name": "entering_existing_home_does_not_override_explicit_off_true",
+      "passed": true
+    },
+    {
+      "name": "home_read_mode_follows_initial_explicit_scope_consent_false",
+      "passed": true
+    },
+    {
+      "name": "home_choice_does_not_change_original_private_read_choice_false",
+      "passed": true
+    },
+    {
+      "name": "entering_existing_home_does_not_override_explicit_off_false",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "status": "passed_scope_consent_UI_only_not_Qwen",
+  "upstreamRequests": 0
+}

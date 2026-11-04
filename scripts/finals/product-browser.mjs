@@ -4,6 +4,7 @@ import {randomBytes} from 'node:crypto';
 import {observeAssistant,ask,createUIItem} from '../practical/browser-helpers.mjs';
 import {ROUND,ROOT} from './gateway.mjs';
 const cases={...JSON.parse(fs.readFileSync(new URL('./knowledge-tasks.json',import.meta.url),'utf8')),
+ pebble:{name:'[模拟持有]日常切换设备的鼠标',brand:'Logitech',model:'Pebble Mouse 2 M350s',question:'请自主核对 Logitech Pebble Mouse 2 M350s 的官方资料，不要拿旧M350的资料代替。我没有Logi Bolt接收器，能直接连Windows 11蓝牙吗？首次怎样配对、最多记住几台设备、电池需要几节什么型号？请完整回答并给原文来源，不要声称已经控制鼠标。',followup:'现在Windows 11能连上了（这是合成测试报告，不是实物验证）。我只想在已配对的iPad和电脑之间切换，不想重新配对，也不买接收器。怎么切换，短按和长按的作用有何区别？'},
  brother:{name:'[模拟持有]我的标签机',brand:'Brother',model:'PT-D210',question:'请自己查找 Brother PT-D210 的官方资料。我装着6毫米TZe标签带，想打印两行文字，可以吗？如果不行，用哪些宽度才可以？这台机器要装几节什么电池？请完整回答，不要教我恢复出厂。',followup:'暂时不买新标签带，也不换机器。我只用现在的6毫米带，想把两行信息都保留下来，有什么可实际操作的替代安排？请不要声称机器已执行。'},
  hario:{name:'[模拟持有]透明手冲细口壶',brand:'HARIO',model:'VKA-35-TB',question:'请自己找到 HARIO VKA-35-TB 的官方资料。我想用它给手冲咖啡倒热水：实用容量多大？是什么材质？能否直接放燃气灶或者微波炉里把水加热？请分别回答，官方没说的不要猜。',followup:'那它能给我已有的小盆栽浇水吗？不要把它放到热源上，也不要要求购买配件。请区分可以借用的结构特性与需要我确认的条件。'},
 };

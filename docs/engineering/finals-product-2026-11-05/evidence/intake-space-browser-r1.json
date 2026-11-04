@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-04T23:01:39.890Z",
+  "basis": "authenticated_browser_SYNTHETIC_manual_intake_from_existing_home_no_Qwen_no_official_product_claim",
+  "checks": [
+    {
+      "name": "new_personal_item_opens_visible_details_from_home_not_hidden_by_scope",
+      "passed": true
+    },
+    {
+      "name": "original_home_retained_eight_items_new_personal_record_not_inserted_into_fixture",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "itemId": "3d1b787a-83ca-40ef-930e-fc174ca88a99",
+  "status": "passed_UI_scope_no_model",
+  "upstreamRequests": 0,
+  "observedLedgerDelta": 0,
+  "note": "Other explicitly authorized home-B Qwen test may run concurrently under different synthetic account; this runner intercepts every assistant POST and never submits one."
+}

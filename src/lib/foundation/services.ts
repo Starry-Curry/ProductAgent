@@ -7,6 +7,7 @@ export {registeredCapabilities} from './capabilities.ts';
 export {discoverCapabilities,type CapabilityDiscovery} from '../context/discovery.ts';
 export {compileTaskContext} from '../context/compiler.ts';
 export type {RealityCard,RealityFact,RealityCapability} from '../context/reality.ts';
+export type {ItemManagementSnapshot} from '../life/intake.ts';
 export {ProviderError} from '../ai/provider.ts';
 export type {Provider,ModelMessage,ModelResponse,ToolDefinition} from '../ai/provider.ts';
 export {AgentError,turnInputSchema} from '../agent/contracts.ts';

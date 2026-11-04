@@ -4,7 +4,8 @@ import { lookup } from "node:dns/promises";
 import { request } from "node:https";
 import { isIP } from "node:net";
 import {createHash} from 'node:crypto';
-import { canRead, type State, type Person } from "../domain.ts";
+import { type State, type Person } from "../domain.ts";
+import {authorize} from '../foundation/policy.ts';
 import { AgentError, type AssistantReply } from "../agent/contracts.ts";
 import { searchProducts } from "../products.ts";
 import { modelMentioned } from "./knowledge.ts";
@@ -454,7 +455,7 @@ export function listSources(
   actor: Person,
   itemId: string,
 ) {
-  if (!state.items.some((i) => i.id === itemId && canRead(i, actor)))
+  if (!authorize(db,state,actor,itemId).allowed)
     throw new AgentError("物品未获授权", 403);
   // Sharing an item never automatically shares privately uploaded manuals/notes.
   return db

@@ -1,7 +1,20 @@
 import { z } from "zod";
 import type { DatabaseSync } from "node:sqlite";
-import { mutate, type State, type Person } from "../domain.ts";
+import { mutate, type State, type Person, type Item } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
+import {fingerprint} from '../foundation/legacy.ts';
+
+/** A write precondition over the existing item, not another item/Reality store. */
+export function itemManagementSnapshot(item:Item){
+ return {version:'item-management/1' as const,itemId:item.id,revision:fingerprint(item),fields:{brand:item.brand||'',model:item.model,region:item.region||'',lifecycle:item.lifecycle,attributes:structuredClone(item.attributes||{})}};
+}
+export type ItemManagementSnapshot=ReturnType<typeof itemManagementSnapshot>;
+/** Call inside the same existing workspace transaction as the mutation. */
+export function assertItemManagementRevision(state:State,actor:Person,itemId:unknown,expected:unknown){
+ const item=state.items.find(i=>i.id===itemId&&i.owner===actor);if(!item)throw new AgentError('物品不存在或未获修改授权',403);
+ if(typeof expected!=='string'||!(/^[a-f0-9]{64}$/).test(expected))throw new AgentError('物品资料版本无效，请重新打开资料',400);
+ if(fingerprint(item)!==expected)throw new AgentError('物品资料已在别处更新；本次修改未保存，请重新打开资料并核对后再提交。',409);
+}
 /** One transaction for the instance and replay receipt; sources can retry separately. */
 export function createLifeItem(
   db: DatabaseSync,

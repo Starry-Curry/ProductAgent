@@ -23,7 +23,7 @@ import {listLifeIdeas} from '../life/ideas.ts';
 import {discoveryInput} from '../life/planning.ts';
 
 
-export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number,ranking?:{originalIds:string[];profileMemoryKinds?:('interest'|'preference')[]}){
+export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number,ranking?:{originalIds:string[];profileMemoryKinds?:('interest'|'preference')[];knowledgeFocusItemId?:string}){
   const taskId=session.known.foundationTaskId;
   const taskContext=taskId?resolveTaskContext(db,state,actor,taskId):undefined;
   const task=taskContext?.task;
@@ -68,20 +68,25 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   const documents=selected.flatMap(i=>{
     return scopedProductKnowledge(i,readKnowledge(db,state,actor,i.id)).map(d=>({...d,itemId:i.id}));
   });
-  const evidence:EvidencePassage[]=selected.flatMap(i=>{
+  const sourceGroups:EvidencePassage[][]=selected.map(i=>{
     const docs=documents.filter(d=>d.itemId===i.id).map(d=>d.document);
     const seed=retrieveKnowledge(db,state,actor,i.id,question);
     const currentOriginals=new Map(docs.flatMap(d=>d.chunks.map(c=>[c.id,c] as const)));
     const priority=(ranking?.originalIds||[]).flatMap(id=>{const c=currentOriginals.get(id);return c?[c]:[];});
     const candidates=[...priority,...retrieveTaskPassages(docs,[question,...queries],seed,evidenceByteBudget?Number.MAX_SAFE_INTEGER:Math.floor(36000/Math.max(1,selected.length)))].filter((c,n,a)=>a.findIndex(x=>x.id===c.id)===n);
-    // Select relevant windows within a per-item byte budget; numerical checks
-    // use the full authorized corpus separately below. Query expansion keeps
-    // late compatibility/specification sections eligible instead of by position.
-    const allocation=evidenceByteBudget ? Math.floor(evidenceByteBudget/Math.max(1,selected.length)) : Infinity;
-    let bytes=0;
-    return candidates.filter(c=>{if(bytes+Buffer.byteLength(c.text)>allocation)return false;bytes+=Buffer.byteLength(c.text);return true;})
-      .map(c=>({id:c.id,itemId:i.id,model:c.model,region:docs.find(d=>d.id===c.documentId)?.region||c.region,title:c.title,text:c.text,url:c.url,documentId:c.documentId,fetchedAt:docs.find(d=>d.id===c.documentId)?.fetchedAt,scopeBasis:documents.find(d=>d.document.id===c.documentId)?.scopeBasis,reading:{mode:docs.find(d=>d.id===c.documentId)?.reading?.mode||'unknown',limitations:docs.find(d=>d.id===c.documentId)?.reading?.limitations||[],figures:[]},basis:'official' as const}));
+    return candidates.map(c=>({id:c.id,itemId:i.id,model:c.model,region:docs.find(d=>d.id===c.documentId)?.region||c.region,title:c.title,text:c.text,url:c.url,documentId:c.documentId,fetchedAt:docs.find(d=>d.id===c.documentId)?.fetchedAt,scopeBasis:documents.find(d=>d.document.id===c.documentId)?.scopeBasis,reading:{mode:docs.find(d=>d.id===c.documentId)?.reading?.mode||'unknown',limitations:docs.find(d=>d.id===c.documentId)?.reading?.limitations||[],figures:[]},basis:'official' as const}));
   });
+  // Round-robin WHOLE originals under one byte bound. An equal byte slice per
+  // item discarded long Chinese relevant paragraphs while keeping short footer
+  // fragments. Explicit knowledge lookup focuses this same budget on one item;
+  // other items and the full numerical corpus remain in the same Context.
+  const knowledgeFocus=ranking?.knowledgeFocusItemId&&selected.some(s=>s.id===ranking.knowledgeFocusItemId)?ranking.knowledgeFocusItemId:undefined;
+  const groups=knowledgeFocus?sourceGroups.filter(group=>group[0]?.itemId===knowledgeFocus):sourceGroups;
+  const evidence:EvidencePassage[]=[];let sourceBytes=0;
+  const limit=evidenceByteBudget??Infinity,startedGroups=new Set<number>();
+  const add=(passage:EvidencePassage|undefined)=>{if(!passage||sourceBytes+Buffer.byteLength(passage.text)>limit)return false;evidence.push(passage);sourceBytes+=Buffer.byteLength(passage.text);return true;};
+  groups.forEach((group,n)=>{if(add(group[0]))startedGroups.add(n);});
+  for(let depth=1;depth<Math.max(0,...groups.map(g=>g.length));depth++)groups.forEach((group,n)=>{if(startedGroups.has(n))add(group[depth]);});
   // The current user statement is authorized for THIS reply, not automatically
   // confirmed long-term memory, manufacturer evidence or a device observation.
   evidence.push({id:'user:current-turn',itemId:focus||'',model:'',region:'',title:'本轮用户陈述（未独立验证）',text:question,basis:'user_report'});

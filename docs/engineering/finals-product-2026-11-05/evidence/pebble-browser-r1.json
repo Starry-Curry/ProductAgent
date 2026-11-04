@@ -1,0 +1,2257 @@
+{
+  "caseId": "pebble",
+  "attempt": "r1",
+  "at": "2026-11-04T23:21:50.708Z",
+  "basis": "real_Qwen_browser_synthetic_possession_no_official_URL_supplied_no_hardware",
+  "responses": [
+    {
+      "question": "请自主核对 Logitech Pebble Mouse 2 M350s 的官方资料，不要拿旧M350的资料代替。我没有Logi Bolt接收器，能直接连Windows 11蓝牙吗？首次怎样配对、最多记住几台设备、电池需要几节什么型号？请完整回答并给原文来源，不要声称已经控制鼠标。",
+      "result": {
+        "session": {
+          "id": "70e17b7c-7a14-4682-b790-03d943162ae6",
+          "owner": "u_f0bccc8f-3422-45bc-a304-cbdcf470bb73",
+          "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+          "identity": "[\"u_f0bccc8f-3422-45bc-a304-cbdcf470bb73\",\"[\\\"Pebble Mouse 2 M350s\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "6a32752d-c0c6-4597-9109-b183f059c62e",
+              "role": "user",
+              "text": "请自主核对 Logitech Pebble Mouse 2 M350s 的官方资料，不要拿旧M350的资料代替。我没有Logi Bolt接收器，能直接连Windows 11蓝牙吗？首次怎样配对、最多记住几台设备、电池需要几节什么型号？请完整回答并给原文来源，不要声称已经控制鼠标。",
+              "at": "2026-11-04T23:22:24.942Z",
+              "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "768cf805-007a-4d2d-8568-a583c570d981",
+              "role": "assistant",
+              "text": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方兼容性列表明确支持“Bluetooth Low Energy”连接“Windows 10, 11 or later”，且 Logi Bolt 接收器为可选配件（仅套装附带或需另购），没有接收器时可直接使用蓝牙低功耗连接。\n2.  **首次配对方法**：\n    *   拉出鼠标底部的绝缘拉条，鼠标会自动开机并进入通道 1 的配对就绪状态。\n    *   在 Windows 11 的蓝牙设置中添加新设备，从列表中选择与鼠标底部刻印型号一致的“Pebble Mouse 2 M350s”即可完成配对。\n    *   若需配对新设备到其它通道：短按 Easy-Switch 按钮选择目标通道，再长按该按钮 3 秒使 LED 快闪进入发现模式，然后在电脑端完成配对。\n3.  **最多记住几台设备**：最多可配对并存储 **3 台**不同设备，通过 Easy-Switch 按钮短按切换。\n4.  **电池规格**：需要 **1 节 AA 碱性电池**（出厂已预装一节）。官方标称续航最长可达 24 个月。\n\n以上信息均基于本次读取的 M350s 官方入门指南与规格页原文，未声称已对鼠标执行任何控制操作。\n\n1. 拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。\n\n2. 在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。\n\n3. 确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标电池仓内已正确安装 1 节 AA 碱性电池\n\n— Logi Bolt 接收器非必需，仅在无蓝牙或需更低延迟时选用",
+              "reply": {
+                "modelHistoryText": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方兼容性列表明确支持“Bluetooth Low Energy”连接“Windows 10, 11 or later”，且 Logi Bolt 接收器为可选配件（仅套装附带或需另购），没有接收器时可直接使用蓝牙低功耗连接。\n2.  **首次配对方法**：\n    *   拉出鼠标底部的绝缘拉条，鼠标会自动开机并进入通道 1 的配对就绪状态。\n    *   在 Windows 11 的蓝牙设置中添加新设备，从列表中选择与鼠标底部刻印型号一致的“Pebble Mouse 2 M350s”即可完成配对。\n    *   若需配对新设备到其它通道：短按 Easy-Switch 按钮选择目标通道，再长按该按钮 3 秒使 LED 快闪进入发现模式，然后在电脑端完成配对。\n3.  **最多记住几台设备**：最多可配对并存储 **3 台**不同设备，通过 Easy-Switch 按钮短按切换。\n4.  **电池规格**：需要 **1 节 AA 碱性电池**（出厂已预装一节）。官方标称续航最长可达 24 个月。\n\n以上信息均基于本次读取的 M350s 官方入门指南与规格页原文，未声称已对鼠标执行任何控制操作。\n\n1. 拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。\n\n2. 在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。\n\n3. 确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标电池仓内已正确安装 1 节 AA 碱性电池\n\n— Logi Bolt 接收器非必需，仅在无蓝牙或需更低延迟时选用",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [
+                  "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。",
+                  "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+                ],
+                "answer": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方兼容性列表明确支持“Bluetooth Low Energy”连接“Windows 10, 11 or later”，且 Logi Bolt 接收器为可选配件（仅套装附带或需另购），没有接收器时可直接使用蓝牙低功耗连接。\n2.  **首次配对方法**：\n    *   拉出鼠标底部的绝缘拉条，鼠标会自动开机并进入通道 1 的配对就绪状态。\n    *   在 Windows 11 的蓝牙设置中添加新设备，从列表中选择与鼠标底部刻印型号一致的“Pebble Mouse 2 M350s”即可完成配对。\n    *   若需配对新设备到其它通道：短按 Easy-Switch 按钮选择目标通道，再长按该按钮 3 秒使 LED 快闪进入发现模式，然后在电脑端完成配对。\n3.  **最多记住几台设备**：最多可配对并存储 **3 台**不同设备，通过 Easy-Switch 按钮短按切换。\n4.  **电池规格**：需要 **1 节 AA 碱性电池**（出厂已预装一节）。官方标称续航最长可达 24 个月。\n\n以上信息均基于本次读取的 M350s 官方入门指南与规格页原文，未声称已对鼠标执行任何控制操作。\n\n1. 拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。\n\n2. 在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。\n\n3. 确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标电池仓内已正确安装 1 节 AA 碱性电池\n\n— Logi Bolt 接收器非必需，仅在无蓝牙或需更低延迟时选用",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [
+                  {
+                    "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-0-0",
+                    "text": "拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。"
+                  },
+                  {
+                    "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-0-1",
+                    "text": "在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。"
+                  },
+                  {
+                    "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-0-2",
+                    "text": "确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。"
+                  }
+                ],
+                "stepsInAnswer": true,
+                "questions": [],
+                "evidenceIds": [
+                  "d817fcd8aa5b44f51fabaebd:999",
+                  "bc8ee0b533b44eb41290a6bd:996",
+                  "d817fcd8aa5b44f51fabaebd:6988",
+                  "b593261dc57ab7dd321e2579:0",
+                  "bc8ee0b533b44eb41290a6bd:6987",
+                  "d817fcd8aa5b44f51fabaebd:1997",
+                  "dca4a92d5262bf8fb12a8268:0",
+                  "e3c68a487e16b0cff5a0690b:0",
+                  "bc8ee0b533b44eb41290a6bd:0",
+                  "b593261dc57ab7dd321e2579:1001",
+                  "dca4a92d5262bf8fb12a8268:6994",
+                  "e3c68a487e16b0cff5a0690b:6994",
+                  "c36172d65f6a92f1c201c9f2:0"
+                ],
+                "citations": [
+                  {
+                    "id": "d817fcd8aa5b44f51fabaebd",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "bc8ee0b533b44eb41290a6bd",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+                    "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "b593261dc57ab7dd321e2579",
+                    "title": "Specification - Pebble Mouse 2 M350s – Logitech Support + overførselSustainability Navigation",
+                    "url": "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "dca4a92d5262bf8fb12a8268",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "e3c68a487e16b0cff5a0690b",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "c36172d65f6a92f1c201c9f2",
+                    "title": "Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+                    "url": "https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "29a85310-1461-4b1a-93df-b13b701faec4",
+                    "name": "[模拟持有]日常切换设备的鼠标",
+                    "model": "Pebble Mouse 2 M350s"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+                "route": {
+                  "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+                  "itemName": "[模拟持有]日常切换设备的鼠标",
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对适用资料与使用条件"
+                }
+              },
+              "at": "2026-11-04T23:22:24.942Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "c1cf00e8-6715-4bd2-b8bc-38c7965b1e06",
+            "turnScope": "29a85310-1461-4b1a-93df-b13b701faec4",
+            "lastIntent": "help",
+            "activeItemId": "29a85310-1461-4b1a-93df-b13b701faec4"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-11-04T23:21:54.747Z",
+          "updatedAt": "2026-11-04T23:22:24.943Z",
+          "expiresAt": "2026-11-11T23:21:54.747Z",
+          "itemScopes": {
+            "29a85310-1461-4b1a-93df-b13b701faec4": "[\"u_f0bccc8f-3422-45bc-a304-cbdcf470bb73\",\"[\\\"Pebble Mouse 2 M350s\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "modelHistoryText": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方兼容性列表明确支持“Bluetooth Low Energy”连接“Windows 10, 11 or later”，且 Logi Bolt 接收器为可选配件（仅套装附带或需另购），没有接收器时可直接使用蓝牙低功耗连接。\n2.  **首次配对方法**：\n    *   拉出鼠标底部的绝缘拉条，鼠标会自动开机并进入通道 1 的配对就绪状态。\n    *   在 Windows 11 的蓝牙设置中添加新设备，从列表中选择与鼠标底部刻印型号一致的“Pebble Mouse 2 M350s”即可完成配对。\n    *   若需配对新设备到其它通道：短按 Easy-Switch 按钮选择目标通道，再长按该按钮 3 秒使 LED 快闪进入发现模式，然后在电脑端完成配对。\n3.  **最多记住几台设备**：最多可配对并存储 **3 台**不同设备，通过 Easy-Switch 按钮短按切换。\n4.  **电池规格**：需要 **1 节 AA 碱性电池**（出厂已预装一节）。官方标称续航最长可达 24 个月。\n\n以上信息均基于本次读取的 M350s 官方入门指南与规格页原文，未声称已对鼠标执行任何控制操作。\n\n1. 拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。\n\n2. 在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。\n\n3. 确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标电池仓内已正确安装 1 节 AA 碱性电池\n\n— Logi Bolt 接收器非必需，仅在无蓝牙或需更低延迟时选用",
+          "continuations": [],
+          "actionCards": [],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [
+            "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。",
+            "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "answer": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方兼容性列表明确支持“Bluetooth Low Energy”连接“Windows 10, 11 or later”，且 Logi Bolt 接收器为可选配件（仅套装附带或需另购），没有接收器时可直接使用蓝牙低功耗连接。\n2.  **首次配对方法**：\n    *   拉出鼠标底部的绝缘拉条，鼠标会自动开机并进入通道 1 的配对就绪状态。\n    *   在 Windows 11 的蓝牙设置中添加新设备，从列表中选择与鼠标底部刻印型号一致的“Pebble Mouse 2 M350s”即可完成配对。\n    *   若需配对新设备到其它通道：短按 Easy-Switch 按钮选择目标通道，再长按该按钮 3 秒使 LED 快闪进入发现模式，然后在电脑端完成配对。\n3.  **最多记住几台设备**：最多可配对并存储 **3 台**不同设备，通过 Easy-Switch 按钮短按切换。\n4.  **电池规格**：需要 **1 节 AA 碱性电池**（出厂已预装一节）。官方标称续航最长可达 24 个月。\n\n以上信息均基于本次读取的 M350s 官方入门指南与规格页原文，未声称已对鼠标执行任何控制操作。\n\n1. 拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。\n\n2. 在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。\n\n3. 确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标电池仓内已正确安装 1 节 AA 碱性电池\n\n— Logi Bolt 接收器非必需，仅在无蓝牙或需更低延迟时选用",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [
+            {
+              "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-0-0",
+              "text": "拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。"
+            },
+            {
+              "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-0-1",
+              "text": "在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。"
+            },
+            {
+              "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-0-2",
+              "text": "确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。"
+            }
+          ],
+          "stepsInAnswer": true,
+          "questions": [],
+          "evidenceIds": [
+            "d817fcd8aa5b44f51fabaebd:999",
+            "bc8ee0b533b44eb41290a6bd:996",
+            "d817fcd8aa5b44f51fabaebd:6988",
+            "b593261dc57ab7dd321e2579:0",
+            "bc8ee0b533b44eb41290a6bd:6987",
+            "d817fcd8aa5b44f51fabaebd:1997",
+            "dca4a92d5262bf8fb12a8268:0",
+            "e3c68a487e16b0cff5a0690b:0",
+            "bc8ee0b533b44eb41290a6bd:0",
+            "b593261dc57ab7dd321e2579:1001",
+            "dca4a92d5262bf8fb12a8268:6994",
+            "e3c68a487e16b0cff5a0690b:6994",
+            "c36172d65f6a92f1c201c9f2:0"
+          ],
+          "citations": [
+            {
+              "id": "d817fcd8aa5b44f51fabaebd",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+              "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "bc8ee0b533b44eb41290a6bd",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+              "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "b593261dc57ab7dd321e2579",
+              "title": "Specification - Pebble Mouse 2 M350s – Logitech Support + overførselSustainability Navigation",
+              "url": "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "dca4a92d5262bf8fb12a8268",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+              "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "e3c68a487e16b0cff5a0690b",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+              "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "c36172d65f6a92f1c201c9f2",
+              "title": "Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+              "url": "https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "29a85310-1461-4b1a-93df-b13b701faec4",
+              "name": "[模拟持有]日常切换设备的鼠标",
+              "model": "Pebble Mouse 2 M350s"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+          "route": {
+            "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+            "itemName": "[模拟持有]日常切换设备的鼠标",
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对适用资料与使用条件"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=29a85310-1461-4b1a-93df-b13b701faec4; domain metadata, not a model answer",
+            "at": "2026-11-04T23:21:54.753Z"
+          },
+          {
+            "stage": "tool_runtime_REPLY_START",
+            "detail": "{}",
+            "at": "2026-11-04T23:21:54.792Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T23:21:54.793Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T23:21:56.979Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_d0a15f59b0d142749f187388\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T23:21:56.981Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_d0a15f59b0d142749f187388\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T23:21:56.981Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_d0a15f59b0d142749f187388\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T23:21:56.981Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":5507,\"outputTokens\":94}",
+            "at": "2026-11-04T23:21:56.981Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_d0a15f59b0d142749f187388\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T23:21:56.983Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"search_product_knowledge\",\"effect\":\"local_write\",\"scope\":\"live_item_grant_public_sources_only\",\"result\":\"sourced_knowledge_cache\",\"idempotency\":\"document_digest\"}",
+            "at": "2026-11-04T23:21:56.987Z"
+          },
+          {
+            "stage": "practical_search",
+            "detail": "{\"model\":\"qwen3.8-max-0902\",\"hits\":19,\"events\":[{\"type\":\"response.created\",\"elapsedMs\":843,\"status\":\"queued\"},{\"type\":\"response.in_progress\",\"elapsedMs\":843,\"status\":\"in_progress\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":5438,\"itemType\":\"web_search_call\"},{\"type\":\"response.web_search_call.in_progress\",\"elapsedMs\":5438},{\"type\":\"response.web_search_call.searching\",\"elapsedMs\":5439},{\"type\":\"response.web_search_call.completed\",\"elapsedMs\":5439},{\"type\":\"response.output_item.done\",\"elapsedMs\":5440,\"itemType\":\"web_search_call\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":5801,\"itemType\":\"message\"},{\"type\":\"response.content_part.added\",\"elapsedMs\":5802},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5802},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5823},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5852},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5903},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5904},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6032},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6032},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6032},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6032},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6083},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6130},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6130},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6130},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6185},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6185},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6232},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6234},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6333},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6334},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6334},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6334},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6433},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6433},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6434},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6483},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6484},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6484},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6534},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6534},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6643},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6644},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6644},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6645},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6698},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6699},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6812},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6813},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6813},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6813},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6868},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6925},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6926},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6926},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6984},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7070},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7070},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7071},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7129},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7129},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7185},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7186},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7240},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7240},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7451},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7451},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7452},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7452},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7531},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7531},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7661},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7661},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7661},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7661},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7715},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7716},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7764},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7765},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7876},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7876},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7876},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7886},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8003},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8003},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8004},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8004},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8098},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8099},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8099},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8100},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8211},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8211},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8211},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8211},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8311},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8311},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8311},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8312},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8370},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8418},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8418},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8418},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8469},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8469},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8600},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8602},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8602},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8610},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8656},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8656},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8709},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8709},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8772},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8885},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8885},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8891},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9001},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9001},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9145},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9146},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9146},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9153},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9258},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9259},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9259},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9259},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9373},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9373},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9373},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9428},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9428},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9428},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9487},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9488},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9539},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9609},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9609},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9609},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9652},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9652},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9959},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9960},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9960},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9960},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9960},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9960},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10164},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10165},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10165},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10165},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10165},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10165},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10165},{\"type\":\"response.output_text.done\",\"elapsedMs\":10167},{\"type\":\"response.content_part.done\",\"elapsedMs\":10167},{\"type\":\"response.output_item.done\",\"elapsedMs\":10174,\"itemType\":\"message\"},{\"type\":\"response.completed\",\"elapsedMs\":10187,\"status\":\"completed\"}]}",
+            "at": "2026-11-04T23:22:07.317Z"
+          },
+          {
+            "stage": "practical_chapter",
+            "detail": "{\"itemId\":\"29a85310-1461-4b1a-93df-b13b701faec4\",\"url\":\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR\",\"query\":\"请自主核对 Logitech Pebble Mouse 2 M350s 的官方资料，不要拿旧M350的资料代替。我没有Logi Bolt接收器，能直接连Windows 11蓝牙吗？首次怎样配对、最多记住几台设备、电池需要几节什么型号？请完整回答并给原文来源，不要声称已经控制鼠标。 Pebble Mouse 2 M350s Bluetooth pairing Windows 11 device memory battery specification\"}",
+            "at": "2026-11-04T23:22:15.812Z"
+          },
+          {
+            "stage": "practical_chapter",
+            "detail": "{\"itemId\":\"29a85310-1461-4b1a-93df-b13b701faec4\",\"url\":\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB\",\"query\":\"请自主核对 Logitech Pebble Mouse 2 M350s 的官方资料，不要拿旧M350的资料代替。我没有Logi Bolt接收器，能直接连Windows 11蓝牙吗？首次怎样配对、最多记住几台设备、电池需要几节什么型号？请完整回答并给原文来源，不要声称已经控制鼠标。 Pebble Mouse 2 M350s Bluetooth pairing Windows 11 device memory battery specification\"}",
+            "at": "2026-11-04T23:22:16.051Z"
+          },
+          {
+            "stage": "practical_rerank",
+            "detail": "{\"model\":\"qwen3.7-text-rerank\",\"candidates\":61,\"selected\":[\"d817fcd8aa5b44f51fabaebd:999\",\"bc8ee0b533b44eb41290a6bd:996\",\"d817fcd8aa5b44f51fabaebd:6988\",\"b593261dc57ab7dd321e2579:0\",\"bc8ee0b533b44eb41290a6bd:6987\",\"d817fcd8aa5b44f51fabaebd:1997\",\"dca4a92d5262bf8fb12a8268:0\",\"e3c68a487e16b0cff5a0690b:0\",\"bc8ee0b533b44eb41290a6bd:0\",\"b593261dc57ab7dd321e2579:1001\",\"dca4a92d5262bf8fb12a8268:6994\",\"e3c68a487e16b0cff5a0690b:6994\"],\"scores\":[0.8943430989775618,0.8588765401726898,0.8275989944890622,0.8216793113199434,0.8068515085968566,0.7916258264505374,0.7600695790549322,0.7600695790549322,0.7380071003244852,0.7295810735562234,0.7227309136808507,0.7227309136808507],\"basis\":\"retrieval_only_not_fact_certification\"}",
+            "at": "2026-11-04T23:22:17.241Z"
+          },
+          {
+            "stage": "practical_knowledge",
+            "detail": "{\"itemId\":\"29a85310-1461-4b1a-93df-b13b701faec4\",\"cached\":false,\"readURLs\":[\"https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\"],\"issues\":[],\"discoveryPurpose\":\"specifications\",\"seedURLs\":[],\"searchAttempted\":true,\"searchCompleted\":true,\"searchURLs\":[\"https://www.logitech.com/en-us/shop/p/pebble-2-m350s-wireless-mouse\",\"https://www.logitech.com/en-za/shop/p/m350-pebble-wireless-mouse\",\"https://www.logitech.com/en-us/shop/p/pebble-2-keyboard-mouse-combo\",\"https://www.logitech.com/en-us/software/flow\",\"https://www.logitech.com/en-us/products/mice/unifying-receiver-usb.910-005235.+html\",\"https://www.logitech.com/en-us/shop/c/mice\",\"https://www.logitech.com/en-us/shop/p/pebble-keys-2\",\"https://www.logitech.com/en-us/discover/adaptive-pebble-3dprintables\",\"https://www.logitech.com/en-eu/software/options.html\",\"https://www.logitech.com/en-us\",\"https://www.logi.com/en-us/shop/p/pebble-2-m350s-wireless-mouse.910-007024\",\"https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\",\"https://www.logi.com/en-us/shop/c/mice\",\"https://support.logi.com/hc/en-001/articles/16171934371095-Getting-Started-Pebble-2-Combo-K390s-M350s\",\"https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s\",\"https://www.logi.com/\",\"https://www.logi.com/en-au/discover/adaptive-pebble-3dprintables\"],\"verifiedURLs\":[\"https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\"],\"attemptedURLs\":[\"https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s\",\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\"],\"sources\":[{\"id\":\"d817fcd8aa5b44f51fabaebd:999\",\"url\":\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"bc8ee0b533b44eb41290a6bd:996\",\"url\":\"https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"d817fcd8aa5b44f51fabaebd:6988\",\"url\":\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"b593261dc57ab7dd321e2579:0\",\"url\":\"https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"bc8ee0b533b44eb41290a6bd:6987\",\"url\":\"https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"d817fcd8aa5b44f51fabaebd:1997\",\"url\":\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"dca4a92d5262bf8fb12a8268:0\",\"url\":\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"e3c68a487e16b0cff5a0690b:0\",\"url\":\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"bc8ee0b533b44eb41290a6bd:0\",\"url\":\"https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"b593261dc57ab7dd321e2579:1001\",\"url\":\"https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"dca4a92d5262bf8fb12a8268:6994\",\"url\":\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"e3c68a487e16b0cff5a0690b:6994\",\"url\":\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR\",\"model\":\"Pebble Mouse 2 M350s\"},{\"id\":\"c36172d65f6a92f1c201c9f2:0\",\"url\":\"https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s\",\"model\":\"Pebble Mouse 2 M350s\"}]}",
+            "at": "2026-11-04T23:22:17.263Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "search_product_knowledge completed",
+            "at": "2026-11-04T23:22:17.266Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_d0a15f59b0d142749f187388\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T23:22:17.271Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_d0a15f59b0d142749f187388\",\"tool\":\"search_product_knowledge\",\"state\":\"success\"}",
+            "at": "2026-11-04T23:22:17.277Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T23:22:17.278Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T23:22:24.734Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_70e3afab5e7a41799356b1ef\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:22:24.740Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_70e3afab5e7a41799356b1ef\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:22:24.740Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_70e3afab5e7a41799356b1ef\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:22:24.740Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":30521,\"outputTokens\":675}",
+            "at": "2026-11-04T23:22:24.740Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_70e3afab5e7a41799356b1ef\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:22:24.745Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"complete_answer\",\"effect\":\"local_write\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_and_public_original_quote_locators_no_business_write\",\"idempotency\":\"original_document_and_quote_digest\"}",
+            "at": "2026-11-04T23:22:24.756Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "complete_answer completed",
+            "at": "2026-11-04T23:22:24.885Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_70e3afab5e7a41799356b1ef\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:22:24.892Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_70e3afab5e7a41799356b1ef\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+            "at": "2026-11-04T23:22:24.897Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":30169,\"calls\":4,\"tools\":2,\"reservedCny\":0.5305350000000001,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-04T23:22:24.927Z"
+          }
+        ],
+        "tokens": {
+          "input": 62445,
+          "output": 1318
+        },
+        "modelCalls": 4,
+        "foundation": {
+          "runId": "1393c121-c160-41c6-905f-cc192193e0d4",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 30405,
+      "streamTextEvents": 1
+    },
+    {
+      "question": "现在Windows 11能连上了（这是合成测试报告，不是实物验证）。我只想在已配对的iPad和电脑之间切换，不想重新配对，也不买接收器。怎么切换，短按和长按的作用有何区别？",
+      "result": {
+        "session": {
+          "id": "70e17b7c-7a14-4682-b790-03d943162ae6",
+          "owner": "u_f0bccc8f-3422-45bc-a304-cbdcf470bb73",
+          "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+          "identity": "[\"u_f0bccc8f-3422-45bc-a304-cbdcf470bb73\",\"[\\\"Pebble Mouse 2 M350s\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 2,
+          "status": "active",
+          "messages": [
+            {
+              "id": "6a32752d-c0c6-4597-9109-b183f059c62e",
+              "role": "user",
+              "text": "请自主核对 Logitech Pebble Mouse 2 M350s 的官方资料，不要拿旧M350的资料代替。我没有Logi Bolt接收器，能直接连Windows 11蓝牙吗？首次怎样配对、最多记住几台设备、电池需要几节什么型号？请完整回答并给原文来源，不要声称已经控制鼠标。",
+              "at": "2026-11-04T23:22:24.942Z",
+              "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "768cf805-007a-4d2d-8568-a583c570d981",
+              "role": "assistant",
+              "text": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方兼容性列表明确支持“Bluetooth Low Energy”连接“Windows 10, 11 or later”，且 Logi Bolt 接收器为可选配件（仅套装附带或需另购），没有接收器时可直接使用蓝牙低功耗连接。\n2.  **首次配对方法**：\n    *   拉出鼠标底部的绝缘拉条，鼠标会自动开机并进入通道 1 的配对就绪状态。\n    *   在 Windows 11 的蓝牙设置中添加新设备，从列表中选择与鼠标底部刻印型号一致的“Pebble Mouse 2 M350s”即可完成配对。\n    *   若需配对新设备到其它通道：短按 Easy-Switch 按钮选择目标通道，再长按该按钮 3 秒使 LED 快闪进入发现模式，然后在电脑端完成配对。\n3.  **最多记住几台设备**：最多可配对并存储 **3 台**不同设备，通过 Easy-Switch 按钮短按切换。\n4.  **电池规格**：需要 **1 节 AA 碱性电池**（出厂已预装一节）。官方标称续航最长可达 24 个月。\n\n以上信息均基于本次读取的 M350s 官方入门指南与规格页原文，未声称已对鼠标执行任何控制操作。\n\n1. 拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。\n\n2. 在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。\n\n3. 确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标电池仓内已正确安装 1 节 AA 碱性电池\n\n— Logi Bolt 接收器非必需，仅在无蓝牙或需更低延迟时选用",
+              "reply": {
+                "modelHistoryText": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方兼容性列表明确支持“Bluetooth Low Energy”连接“Windows 10, 11 or later”，且 Logi Bolt 接收器为可选配件（仅套装附带或需另购），没有接收器时可直接使用蓝牙低功耗连接。\n2.  **首次配对方法**：\n    *   拉出鼠标底部的绝缘拉条，鼠标会自动开机并进入通道 1 的配对就绪状态。\n    *   在 Windows 11 的蓝牙设置中添加新设备，从列表中选择与鼠标底部刻印型号一致的“Pebble Mouse 2 M350s”即可完成配对。\n    *   若需配对新设备到其它通道：短按 Easy-Switch 按钮选择目标通道，再长按该按钮 3 秒使 LED 快闪进入发现模式，然后在电脑端完成配对。\n3.  **最多记住几台设备**：最多可配对并存储 **3 台**不同设备，通过 Easy-Switch 按钮短按切换。\n4.  **电池规格**：需要 **1 节 AA 碱性电池**（出厂已预装一节）。官方标称续航最长可达 24 个月。\n\n以上信息均基于本次读取的 M350s 官方入门指南与规格页原文，未声称已对鼠标执行任何控制操作。\n\n1. 拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。\n\n2. 在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。\n\n3. 确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标电池仓内已正确安装 1 节 AA 碱性电池\n\n— Logi Bolt 接收器非必需，仅在无蓝牙或需更低延迟时选用",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [
+                  "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。",
+                  "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+                ],
+                "answer": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方兼容性列表明确支持“Bluetooth Low Energy”连接“Windows 10, 11 or later”，且 Logi Bolt 接收器为可选配件（仅套装附带或需另购），没有接收器时可直接使用蓝牙低功耗连接。\n2.  **首次配对方法**：\n    *   拉出鼠标底部的绝缘拉条，鼠标会自动开机并进入通道 1 的配对就绪状态。\n    *   在 Windows 11 的蓝牙设置中添加新设备，从列表中选择与鼠标底部刻印型号一致的“Pebble Mouse 2 M350s”即可完成配对。\n    *   若需配对新设备到其它通道：短按 Easy-Switch 按钮选择目标通道，再长按该按钮 3 秒使 LED 快闪进入发现模式，然后在电脑端完成配对。\n3.  **最多记住几台设备**：最多可配对并存储 **3 台**不同设备，通过 Easy-Switch 按钮短按切换。\n4.  **电池规格**：需要 **1 节 AA 碱性电池**（出厂已预装一节）。官方标称续航最长可达 24 个月。\n\n以上信息均基于本次读取的 M350s 官方入门指南与规格页原文，未声称已对鼠标执行任何控制操作。\n\n1. 拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。\n\n2. 在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。\n\n3. 确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标电池仓内已正确安装 1 节 AA 碱性电池\n\n— Logi Bolt 接收器非必需，仅在无蓝牙或需更低延迟时选用",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [
+                  {
+                    "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-0-0",
+                    "text": "拉出鼠标绝缘拉条自动开机；或在关机状态下长按 Easy-Switch 按钮 3 秒使 LED 快闪，进入蓝牙配对模式。"
+                  },
+                  {
+                    "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-0-1",
+                    "text": "在 Windows 11 蓝牙设置中添加设备，选择名称与鼠标底部刻印型号一致的 Pebble Mouse 2 M350s 完成配对。"
+                  },
+                  {
+                    "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-0-2",
+                    "text": "确认使用 1 节 AA 碱性电池供电；如需切换已配对的 3 台设备之一，短按 Easy-Switch 按钮即可。"
+                  }
+                ],
+                "stepsInAnswer": true,
+                "questions": [],
+                "evidenceIds": [
+                  "d817fcd8aa5b44f51fabaebd:999",
+                  "bc8ee0b533b44eb41290a6bd:996",
+                  "d817fcd8aa5b44f51fabaebd:6988",
+                  "b593261dc57ab7dd321e2579:0",
+                  "bc8ee0b533b44eb41290a6bd:6987",
+                  "d817fcd8aa5b44f51fabaebd:1997",
+                  "dca4a92d5262bf8fb12a8268:0",
+                  "e3c68a487e16b0cff5a0690b:0",
+                  "bc8ee0b533b44eb41290a6bd:0",
+                  "b593261dc57ab7dd321e2579:1001",
+                  "dca4a92d5262bf8fb12a8268:6994",
+                  "e3c68a487e16b0cff5a0690b:6994",
+                  "c36172d65f6a92f1c201c9f2:0"
+                ],
+                "citations": [
+                  {
+                    "id": "d817fcd8aa5b44f51fabaebd",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "bc8ee0b533b44eb41290a6bd",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+                    "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "b593261dc57ab7dd321e2579",
+                    "title": "Specification - Pebble Mouse 2 M350s – Logitech Support + overførselSustainability Navigation",
+                    "url": "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "dca4a92d5262bf8fb12a8268",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "e3c68a487e16b0cff5a0690b",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "c36172d65f6a92f1c201c9f2",
+                    "title": "Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+                    "url": "https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "29a85310-1461-4b1a-93df-b13b701faec4",
+                    "name": "[模拟持有]日常切换设备的鼠标",
+                    "model": "Pebble Mouse 2 M350s"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+                "route": {
+                  "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+                  "itemName": "[模拟持有]日常切换设备的鼠标",
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对适用资料与使用条件"
+                }
+              },
+              "at": "2026-11-04T23:22:24.942Z"
+            },
+            {
+              "id": "2e89f456-2f78-4bca-908d-99a336135654",
+              "role": "user",
+              "text": "现在Windows 11能连上了（这是合成测试报告，不是实物验证）。我只想在已配对的iPad和电脑之间切换，不想重新配对，也不买接收器。怎么切换，短按和长按的作用有何区别？",
+              "at": "2026-11-04T23:22:34.147Z",
+              "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "3f8140cf-7365-4241-afc4-984b0809a57a",
+              "role": "assistant",
+              "text": "在已配对 iPad 和 Windows 11 电脑的前提下，无需重新配对或购买接收器，直接通过鼠标底部的 Easy-Switch 按钮即可切换：\n\n-   **短按 Easy-Switch 按钮**：用于在已配对的设备之间切换。每短按一次，鼠标会在通道 1、2、3 之间循环跳转，LED 会短暂亮起指示当前选中的通道。只要两台设备分别占用不同通道且保持蓝牙开启，短按就能完成切换。\n-   **长按 Easy-Switch 按钮（约 3 秒）**：用于进入“新设备配对模式”。此时 LED 会快速闪烁，表示鼠标处于可被新设备发现的广播状态。**如果你只是想切换已有设备，请勿长按**，否则会让当前通道进入配对等待，可能导致暂时无法操作已连接的设备，直到超时或重新连接。\n\n补充说明：Pebble Mouse 2 M350s 最多记忆 3 台设备，切换仅依赖蓝牙通道记忆，不依赖 Logi Bolt 接收器。若短按后某台设备无响应，请确认该设备蓝牙已开启且未被其他外设占用同一通道；只有在该通道需要绑定新设备时，才使用长按 3 秒的操作。\n\n1. 确认 iPad 与 Windows 11 电脑均已成功配对到鼠标的不同 Easy-Switch 通道（如通道1和通道2），且两端蓝牙保持开启。\n\n2. 短按一次 Easy-Switch 按钮切换到目标设备对应通道；观察 LED 短暂亮起确认通道选择，即可在已配对设备间切换，无需长按或重新配对。\n\n3. 仅在需要将新设备绑定到某个通道时才长按 Easy-Switch 按钮约3秒使LED快闪进入发现模式；日常切换请勿长按以免误入配对状态。\n\n操作前提与未确认条件：\n\n— iPad 与 Windows 11 电脑已分别配对到不同通道且蓝牙开启\n\n— 鼠标电池电量充足且电源开关处于 ON\n\n— 不使用 Logi Bolt 接收器进行切换",
+              "reply": {
+                "modelHistoryText": "在已配对 iPad 和 Windows 11 电脑的前提下，无需重新配对或购买接收器，直接通过鼠标底部的 Easy-Switch 按钮即可切换：\n\n-   **短按 Easy-Switch 按钮**：用于在已配对的设备之间切换。每短按一次，鼠标会在通道 1、2、3 之间循环跳转，LED 会短暂亮起指示当前选中的通道。只要两台设备分别占用不同通道且保持蓝牙开启，短按就能完成切换。\n-   **长按 Easy-Switch 按钮（约 3 秒）**：用于进入“新设备配对模式”。此时 LED 会快速闪烁，表示鼠标处于可被新设备发现的广播状态。**如果你只是想切换已有设备，请勿长按**，否则会让当前通道进入配对等待，可能导致暂时无法操作已连接的设备，直到超时或重新连接。\n\n补充说明：Pebble Mouse 2 M350s 最多记忆 3 台设备，切换仅依赖蓝牙通道记忆，不依赖 Logi Bolt 接收器。若短按后某台设备无响应，请确认该设备蓝牙已开启且未被其他外设占用同一通道；只有在该通道需要绑定新设备时，才使用长按 3 秒的操作。\n\n1. 确认 iPad 与 Windows 11 电脑均已成功配对到鼠标的不同 Easy-Switch 通道（如通道1和通道2），且两端蓝牙保持开启。\n\n2. 短按一次 Easy-Switch 按钮切换到目标设备对应通道；观察 LED 短暂亮起确认通道选择，即可在已配对设备间切换，无需长按或重新配对。\n\n3. 仅在需要将新设备绑定到某个通道时才长按 Easy-Switch 按钮约3秒使LED快闪进入发现模式；日常切换请勿长按以免误入配对状态。\n\n操作前提与未确认条件：\n\n— iPad 与 Windows 11 电脑已分别配对到不同通道且蓝牙开启\n\n— 鼠标电池电量充足且电源开关处于 ON\n\n— 不使用 Logi Bolt 接收器进行切换",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [
+                  "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+                ],
+                "answer": "在已配对 iPad 和 Windows 11 电脑的前提下，无需重新配对或购买接收器，直接通过鼠标底部的 Easy-Switch 按钮即可切换：\n\n-   **短按 Easy-Switch 按钮**：用于在已配对的设备之间切换。每短按一次，鼠标会在通道 1、2、3 之间循环跳转，LED 会短暂亮起指示当前选中的通道。只要两台设备分别占用不同通道且保持蓝牙开启，短按就能完成切换。\n-   **长按 Easy-Switch 按钮（约 3 秒）**：用于进入“新设备配对模式”。此时 LED 会快速闪烁，表示鼠标处于可被新设备发现的广播状态。**如果你只是想切换已有设备，请勿长按**，否则会让当前通道进入配对等待，可能导致暂时无法操作已连接的设备，直到超时或重新连接。\n\n补充说明：Pebble Mouse 2 M350s 最多记忆 3 台设备，切换仅依赖蓝牙通道记忆，不依赖 Logi Bolt 接收器。若短按后某台设备无响应，请确认该设备蓝牙已开启且未被其他外设占用同一通道；只有在该通道需要绑定新设备时，才使用长按 3 秒的操作。\n\n1. 确认 iPad 与 Windows 11 电脑均已成功配对到鼠标的不同 Easy-Switch 通道（如通道1和通道2），且两端蓝牙保持开启。\n\n2. 短按一次 Easy-Switch 按钮切换到目标设备对应通道；观察 LED 短暂亮起确认通道选择，即可在已配对设备间切换，无需长按或重新配对。\n\n3. 仅在需要将新设备绑定到某个通道时才长按 Easy-Switch 按钮约3秒使LED快闪进入发现模式；日常切换请勿长按以免误入配对状态。\n\n操作前提与未确认条件：\n\n— iPad 与 Windows 11 电脑已分别配对到不同通道且蓝牙开启\n\n— 鼠标电池电量充足且电源开关处于 ON\n\n— 不使用 Logi Bolt 接收器进行切换",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [
+                  {
+                    "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-2-0",
+                    "text": "确认 iPad 与 Windows 11 电脑均已成功配对到鼠标的不同 Easy-Switch 通道（如通道1和通道2），且两端蓝牙保持开启。"
+                  },
+                  {
+                    "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-2-1",
+                    "text": "短按一次 Easy-Switch 按钮切换到目标设备对应通道；观察 LED 短暂亮起确认通道选择，即可在已配对设备间切换，无需长按或重新配对。"
+                  },
+                  {
+                    "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-2-2",
+                    "text": "仅在需要将新设备绑定到某个通道时才长按 Easy-Switch 按钮约3秒使LED快闪进入发现模式；日常切换请勿长按以免误入配对状态。"
+                  }
+                ],
+                "stepsInAnswer": true,
+                "questions": [],
+                "evidenceIds": [
+                  "d817fcd8aa5b44f51fabaebd:1997",
+                  "4707179e715ad287ac8ee8b8:2002",
+                  "dca4a92d5262bf8fb12a8268:2002",
+                  "e3c68a487e16b0cff5a0690b:2002",
+                  "bc8ee0b533b44eb41290a6bd:1997",
+                  "bc8ee0b533b44eb41290a6bd:996",
+                  "4707179e715ad287ac8ee8b8:1002",
+                  "dca4a92d5262bf8fb12a8268:1002",
+                  "e3c68a487e16b0cff5a0690b:1002",
+                  "d817fcd8aa5b44f51fabaebd:999",
+                  "d817fcd8aa5b44f51fabaebd:6988",
+                  "bc8ee0b533b44eb41290a6bd:5985",
+                  "4707179e715ad287ac8ee8b8:6994"
+                ],
+                "citations": [
+                  {
+                    "id": "d817fcd8aa5b44f51fabaebd",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "4707179e715ad287ac8ee8b8",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4FAB3VSTMKGJRJMGN656T",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "dca4a92d5262bf8fb12a8268",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "e3c68a487e16b0cff5a0690b",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "bc8ee0b533b44eb41290a6bd",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+                    "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "29a85310-1461-4b1a-93df-b13b701faec4",
+                    "name": "[模拟持有]日常切换设备的鼠标",
+                    "model": "Pebble Mouse 2 M350s"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+                "route": {
+                  "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+                  "itemName": "[模拟持有]日常切换设备的鼠标",
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对适用资料与使用条件"
+                }
+              },
+              "at": "2026-11-04T23:22:34.147Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "d7964c37-c235-4721-ba0d-b17a316d2cb4",
+            "turnScope": "29a85310-1461-4b1a-93df-b13b701faec4",
+            "lastIntent": "help",
+            "activeItemId": "29a85310-1461-4b1a-93df-b13b701faec4"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-11-04T23:21:54.747Z",
+          "updatedAt": "2026-11-04T23:22:34.147Z",
+          "expiresAt": "2026-11-11T23:21:54.747Z",
+          "itemScopes": {
+            "29a85310-1461-4b1a-93df-b13b701faec4": "[\"u_f0bccc8f-3422-45bc-a304-cbdcf470bb73\",\"[\\\"Pebble Mouse 2 M350s\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "modelHistoryText": "在已配对 iPad 和 Windows 11 电脑的前提下，无需重新配对或购买接收器，直接通过鼠标底部的 Easy-Switch 按钮即可切换：\n\n-   **短按 Easy-Switch 按钮**：用于在已配对的设备之间切换。每短按一次，鼠标会在通道 1、2、3 之间循环跳转，LED 会短暂亮起指示当前选中的通道。只要两台设备分别占用不同通道且保持蓝牙开启，短按就能完成切换。\n-   **长按 Easy-Switch 按钮（约 3 秒）**：用于进入“新设备配对模式”。此时 LED 会快速闪烁，表示鼠标处于可被新设备发现的广播状态。**如果你只是想切换已有设备，请勿长按**，否则会让当前通道进入配对等待，可能导致暂时无法操作已连接的设备，直到超时或重新连接。\n\n补充说明：Pebble Mouse 2 M350s 最多记忆 3 台设备，切换仅依赖蓝牙通道记忆，不依赖 Logi Bolt 接收器。若短按后某台设备无响应，请确认该设备蓝牙已开启且未被其他外设占用同一通道；只有在该通道需要绑定新设备时，才使用长按 3 秒的操作。\n\n1. 确认 iPad 与 Windows 11 电脑均已成功配对到鼠标的不同 Easy-Switch 通道（如通道1和通道2），且两端蓝牙保持开启。\n\n2. 短按一次 Easy-Switch 按钮切换到目标设备对应通道；观察 LED 短暂亮起确认通道选择，即可在已配对设备间切换，无需长按或重新配对。\n\n3. 仅在需要将新设备绑定到某个通道时才长按 Easy-Switch 按钮约3秒使LED快闪进入发现模式；日常切换请勿长按以免误入配对状态。\n\n操作前提与未确认条件：\n\n— iPad 与 Windows 11 电脑已分别配对到不同通道且蓝牙开启\n\n— 鼠标电池电量充足且电源开关处于 ON\n\n— 不使用 Logi Bolt 接收器进行切换",
+          "continuations": [],
+          "actionCards": [],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [
+            "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "answer": "在已配对 iPad 和 Windows 11 电脑的前提下，无需重新配对或购买接收器，直接通过鼠标底部的 Easy-Switch 按钮即可切换：\n\n-   **短按 Easy-Switch 按钮**：用于在已配对的设备之间切换。每短按一次，鼠标会在通道 1、2、3 之间循环跳转，LED 会短暂亮起指示当前选中的通道。只要两台设备分别占用不同通道且保持蓝牙开启，短按就能完成切换。\n-   **长按 Easy-Switch 按钮（约 3 秒）**：用于进入“新设备配对模式”。此时 LED 会快速闪烁，表示鼠标处于可被新设备发现的广播状态。**如果你只是想切换已有设备，请勿长按**，否则会让当前通道进入配对等待，可能导致暂时无法操作已连接的设备，直到超时或重新连接。\n\n补充说明：Pebble Mouse 2 M350s 最多记忆 3 台设备，切换仅依赖蓝牙通道记忆，不依赖 Logi Bolt 接收器。若短按后某台设备无响应，请确认该设备蓝牙已开启且未被其他外设占用同一通道；只有在该通道需要绑定新设备时，才使用长按 3 秒的操作。\n\n1. 确认 iPad 与 Windows 11 电脑均已成功配对到鼠标的不同 Easy-Switch 通道（如通道1和通道2），且两端蓝牙保持开启。\n\n2. 短按一次 Easy-Switch 按钮切换到目标设备对应通道；观察 LED 短暂亮起确认通道选择，即可在已配对设备间切换，无需长按或重新配对。\n\n3. 仅在需要将新设备绑定到某个通道时才长按 Easy-Switch 按钮约3秒使LED快闪进入发现模式；日常切换请勿长按以免误入配对状态。\n\n操作前提与未确认条件：\n\n— iPad 与 Windows 11 电脑已分别配对到不同通道且蓝牙开启\n\n— 鼠标电池电量充足且电源开关处于 ON\n\n— 不使用 Logi Bolt 接收器进行切换",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [
+            {
+              "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-2-0",
+              "text": "确认 iPad 与 Windows 11 电脑均已成功配对到鼠标的不同 Easy-Switch 通道（如通道1和通道2），且两端蓝牙保持开启。"
+            },
+            {
+              "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-2-1",
+              "text": "短按一次 Easy-Switch 按钮切换到目标设备对应通道；观察 LED 短暂亮起确认通道选择，即可在已配对设备间切换，无需长按或重新配对。"
+            },
+            {
+              "id": "procedure-70e17b7c-7a14-4682-b790-03d943162ae6-2-2",
+              "text": "仅在需要将新设备绑定到某个通道时才长按 Easy-Switch 按钮约3秒使LED快闪进入发现模式；日常切换请勿长按以免误入配对状态。"
+            }
+          ],
+          "stepsInAnswer": true,
+          "questions": [],
+          "evidenceIds": [
+            "d817fcd8aa5b44f51fabaebd:1997",
+            "4707179e715ad287ac8ee8b8:2002",
+            "dca4a92d5262bf8fb12a8268:2002",
+            "e3c68a487e16b0cff5a0690b:2002",
+            "bc8ee0b533b44eb41290a6bd:1997",
+            "bc8ee0b533b44eb41290a6bd:996",
+            "4707179e715ad287ac8ee8b8:1002",
+            "dca4a92d5262bf8fb12a8268:1002",
+            "e3c68a487e16b0cff5a0690b:1002",
+            "d817fcd8aa5b44f51fabaebd:999",
+            "d817fcd8aa5b44f51fabaebd:6988",
+            "bc8ee0b533b44eb41290a6bd:5985",
+            "4707179e715ad287ac8ee8b8:6994"
+          ],
+          "citations": [
+            {
+              "id": "d817fcd8aa5b44f51fabaebd",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+              "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "4707179e715ad287ac8ee8b8",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+              "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4FAB3VSTMKGJRJMGN656T",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "dca4a92d5262bf8fb12a8268",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+              "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "e3c68a487e16b0cff5a0690b",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+              "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "bc8ee0b533b44eb41290a6bd",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+              "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "29a85310-1461-4b1a-93df-b13b701faec4",
+              "name": "[模拟持有]日常切换设备的鼠标",
+              "model": "Pebble Mouse 2 M350s"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+          "route": {
+            "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+            "itemName": "[模拟持有]日常切换设备的鼠标",
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对适用资料与使用条件"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=29a85310-1461-4b1a-93df-b13b701faec4; domain metadata, not a model answer",
+            "at": "2026-11-04T23:22:25.483Z"
+          },
+          {
+            "stage": "practical_chapter",
+            "detail": "{\"itemId\":\"29a85310-1461-4b1a-93df-b13b701faec4\",\"url\":\"https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4FAB3VSTMKGJRJMGN656T\",\"query\":\"现在Windows 11能连上了（这是合成测试报告，不是实物验证）。我只想在已配对的iPad和电脑之间切换，不想重新配对，也不买接收器。怎么切换，短按和长按的作用有何区别？\"}",
+            "at": "2026-11-04T23:22:25.799Z"
+          },
+          {
+            "stage": "practical_rerank",
+            "detail": "{\"model\":\"qwen3.7-text-rerank\",\"candidates\":64,\"selected\":[\"d817fcd8aa5b44f51fabaebd:1997\",\"4707179e715ad287ac8ee8b8:2002\",\"dca4a92d5262bf8fb12a8268:2002\",\"e3c68a487e16b0cff5a0690b:2002\",\"bc8ee0b533b44eb41290a6bd:1997\",\"bc8ee0b533b44eb41290a6bd:996\",\"4707179e715ad287ac8ee8b8:1002\",\"dca4a92d5262bf8fb12a8268:1002\",\"e3c68a487e16b0cff5a0690b:1002\",\"d817fcd8aa5b44f51fabaebd:999\",\"d817fcd8aa5b44f51fabaebd:6988\",\"bc8ee0b533b44eb41290a6bd:5985\"],\"scores\":[0.8577643841592304,0.8449995264804453,0.8449995264804453,0.8449995264804453,0.8254815806441217,0.6499465445976864,0.6448781248033976,0.6448781248033976,0.6448781248033976,0.643815963995692,0.5128800761422386,0.4983538450112815],\"basis\":\"retrieval_only_not_fact_certification\"}",
+            "at": "2026-11-04T23:22:27.199Z"
+          },
+          {
+            "stage": "tool_runtime_REPLY_START",
+            "detail": "{}",
+            "at": "2026-11-04T23:22:27.239Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T23:22:27.241Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T23:22:33.925Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_0adf16c7e82a4739985aa504\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:22:33.930Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_0adf16c7e82a4739985aa504\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:22:33.931Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_0adf16c7e82a4739985aa504\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:22:33.931Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":22829,\"outputTokens\":605}",
+            "at": "2026-11-04T23:22:33.931Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_0adf16c7e82a4739985aa504\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:22:33.936Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"complete_answer\",\"effect\":\"local_write\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_and_public_original_quote_locators_no_business_write\",\"idempotency\":\"original_document_and_quote_digest\"}",
+            "at": "2026-11-04T23:22:33.949Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "complete_answer completed",
+            "at": "2026-11-04T23:22:34.085Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_0adf16c7e82a4739985aa504\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:22:34.093Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_0adf16c7e82a4739985aa504\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+            "at": "2026-11-04T23:22:34.099Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":8637,\"calls\":2,\"tools\":1,\"reservedCny\":0.3074945,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-04T23:22:34.129Z"
+          }
+        ],
+        "tokens": {
+          "input": 46362,
+          "output": 605
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "78669371-7c8d-44cb-b5a9-806d7f11c893",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 9016,
+      "streamTextEvents": 1
+    }
+  ],
+  "pageErrors": [],
+  "checks": [
+    {
+      "name": "final_answer_visible",
+      "passed": true,
+      "quality": "requires_original_source_review"
+    },
+    {
+      "name": "same_session_continuation",
+      "passed": true
+    },
+    {
+      "name": "no_horizontal_overflow",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "quality": "not_scored",
+  "item": {
+    "id": "29a85310-1461-4b1a-93df-b13b701faec4",
+    "model": "Pebble Mouse 2 M350s",
+    "brand": "Logitech",
+    "synthetic": true
+  },
+  "sharedKnowledge": {
+    "reality": {
+      "version": "reality/1",
+      "id": "29a85310-1461-4b1a-93df-b13b701faec4",
+      "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+      "name": "[模拟持有]日常切换设备的鼠标",
+      "identity": {
+        "kind": "commercial",
+        "brand": "Logitech",
+        "model": "Pebble Mouse 2 M350s",
+        "region": null,
+        "firmware": null,
+        "identityBasis": "user_report"
+      },
+      "instance": {
+        "state": "在用",
+        "availability": "available",
+        "usable": true,
+        "quantity": null,
+        "unit": "件",
+        "synthetic": true,
+        "basis": "user_report"
+      },
+      "facts": [
+        {
+          "id": "29a85310-1461-4b1a-93df-b13b701faec4:sem:7b25d577dfd94bdbfc34ce75bde6ec5afade0c15e2b74e071aa271762d3b723f",
+          "subject": "29a85310-1461-4b1a-93df-b13b701faec4",
+          "scope": "product",
+          "component": "本体",
+          "predicate": "statement",
+          "value": "compatible Logitech keyboard, the keyboard will follow the mouse and switch computers at the same time.\n\nIn Logi Options+, select the Pebble Mouse 2 M350s and go to the mouse Flow menu.\n\n〔此处图示未读取〕\n\n \n\nYou will need to install \n\nLogi Options+\n\napp on both computers, and follow\n\nthese instructions\n.\n\nTo download Logi Options+ app and learn more, go\nhere\n.\n\n \n\nPOWER MANAGEMENT\n\nCheck battery status\n\nBattery life and replacement\n\nInstalling a new battery\n\nCheck battery status\n\nYou can install Logi Options+ app to receive battery status notifications, including low-charge warnings.\n\nTo download Logi Options+ app and learn more, go\n\nhere\n\n.\n\nBattery life and replacement\n\nBattery information:\n\nRequires 1 AA alkaline battery\n\nExpected battery life is up to 24 months\n\nInstalling a new battery\n\nLift the top case off the mouse. Take out the old battery and insert the new battery, making sure that it faces the correct direction, and then put back the top case.\n\n〔此处图示未读取〕\n\n \n\nCOMPATIBILITY\n\nBLUETOOTH WIRELESS TECHNOLOGY ENABLED DEVICES:\n\nWindows 10, 11 or later\n\nmacOS 11 or later\n\niPadOS 14 or later\n\niOS 14 or later\n\nAndroid 9.0 or later\n\nChrome OS\n\nLinux\n\nCompatible with Logi Bolt receiver (only included in Pebble 2 Combo Multi-OS).\n\nAviso importante:\nLogitech Options ha llegado al fin de su asistencia y ya no recibe mantenimiento. P",
+          "basis": "official_source",
+          "status": "asserted",
+          "source": {
+            "ref": "sem:7b25d577dfd94bdbfc34ce75bde6ec5afade0c15e2b74e071aa271762d3b723f",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+            "model": "Pebble Mouse 2 M350s",
+            "version": "1805e5669ac07f5104a81032ceaac8de95bb755aff230cb26db58a6266d5d46f"
+          },
+          "verification": "source_assertion_not_instance_verification"
+        },
+        {
+          "id": "29a85310-1461-4b1a-93df-b13b701faec4:sem:a96cafc65be50582da5489b5965ba928cfdb15cd963b8fd9a0915cc1eea44e8c",
+          "subject": "29a85310-1461-4b1a-93df-b13b701faec4",
+          "scope": "product",
+          "component": "本体",
+          "predicate": "statement",
+          "value": "Mouse 2 M350s overview\n\n〔此处图示未读取〕\n\n1 - Scroll Wheel / Customizable middle click\n\n2 - Battery (and receiver) compartment\n\n3 - On/off toggle switch\n\n4 - Connection status LEDs\n\n5 - Easy-switch / Connection button\n\n6 - High precision sensor\n\n \n\nConnect your mouse to your device\n\nYou can pair your mouse to your device using the Bluetooth Low Energy connection.\n\nTo pair through Bluetooth:\n\n〔此处图示未读取〕\n\nRemove the pull tab from the mouse. It will automatically turn on. Channel 1 will be ready to pair.\n\nOpen the Bluetooth preferences on your device. (Click here for more details on how to do this on your computer). Add a new peripheral by selecting the mouse from your list of devices (make sure you select the same model number that is engraved under your mouse) and your mouse will be ready to use.\n\nIf you experience issues with Bluetooth, click here for Bluetooth troubleshooting.\n\nYour mouse can be paired with up to three different devices and you can use the Easy-Switch button to toggle between them.\n\nIf you want to pair additional devices to your mouse:\n\n〔此处图示未读取〕\n\nSelect the channel you want using the Easy-Switch button — press and then hold the same button for three seconds. This will put the mouse in discovery mode so it can be seen by your computer. The LED will start blinking rapidly.\n\nOpen the Bluetooth settings on your computer to",
+          "basis": "official_source",
+          "status": "asserted",
+          "source": {
+            "ref": "sem:a96cafc65be50582da5489b5965ba928cfdb15cd963b8fd9a0915cc1eea44e8c",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+            "model": "Pebble Mouse 2 M350s",
+            "version": "4b223cd9838a4a1ab1fcc4e8ae2186f301a116752a0ff571e2676e65079c340c"
+          },
+          "verification": "source_assertion_not_instance_verification"
+        }
+      ],
+      "capabilities": [
+        {
+          "id": "29a85310-1461-4b1a-93df-b13b701faec4:sem:7b25d577dfd94bdbfc34ce75bde6ec5afade0c15e2b74e071aa271762d3b723f:guidance",
+          "effect": "compatible Logitech keyboard, the keyboard will follow the mouse and switch computers at the same time.\n\nIn Logi Options+, select the Pebble Mouse 2 M350s and go to the mouse Flow menu.\n\n〔此处图示未读取〕\n\n \n\nYou will need to install \n\nLogi Options+\n\napp on both computers, and follow\n\nthese instructions\n.\n\nTo download Logi Options+ app and learn more, go\nhere\n.\n\n \n\nPOWER MANAGEMENT\n\nCheck battery status\n\nBattery life and replacement\n\nInstalling a new battery\n\nCheck battery status\n\nYou can install Logi Options+ app to receive battery status notifications, including low-charge warnings.\n\nTo download Logi Options+ app and learn more, go\n\nhere\n\n.\n\nBattery life and replacement\n\nBattery information:\n\nRequires 1 AA alkaline battery\n\nExpected battery life is up to 24 months\n\nInstalling a new battery\n\nLift the top case off the mouse. Take out the old battery and insert the new battery, making sure that it faces the correct direction, and then put back the top case.\n\n〔此处图示未读取〕\n\n \n\nCOMPATIBILITY\n\nBLUETOOTH WIRELESS TECHNOLOGY ENABLED DEVICES:\n\nWindows 10, 11 or later\n\nmacOS 11 or later\n\niPadOS 14 or later\n\niOS 14 or later\n\nAndroid 9.0 or later\n\nChrome OS\n\nLinux\n\nCompatible with Logi Bolt receiver (only included in Pebble 2 Combo Multi-OS).\n\nAviso importante:\nLogitech Options ha llegado al fin de su asistencia y ya no recibe mantenimiento. P",
+          "basis": "official_source",
+          "evidenceIds": [
+            "29a85310-1461-4b1a-93df-b13b701faec4:sem:7b25d577dfd94bdbfc34ce75bde6ec5afade0c15e2b74e071aa271762d3b723f"
+          ],
+          "requires": [
+            "遵循对应原文的完整前提；本件物品状态与配套条件仍需核对"
+          ],
+          "status": "conditional",
+          "executable": false,
+          "verifiedForThisInstance": false,
+          "representation": "source_procedure_reference"
+        },
+        {
+          "id": "29a85310-1461-4b1a-93df-b13b701faec4:sem:a96cafc65be50582da5489b5965ba928cfdb15cd963b8fd9a0915cc1eea44e8c:guidance",
+          "effect": "Mouse 2 M350s overview\n\n〔此处图示未读取〕\n\n1 - Scroll Wheel / Customizable middle click\n\n2 - Battery (and receiver) compartment\n\n3 - On/off toggle switch\n\n4 - Connection status LEDs\n\n5 - Easy-switch / Connection button\n\n6 - High precision sensor\n\n \n\nConnect your mouse to your device\n\nYou can pair your mouse to your device using the Bluetooth Low Energy connection.\n\nTo pair through Bluetooth:\n\n〔此处图示未读取〕\n\nRemove the pull tab from the mouse. It will automatically turn on. Channel 1 will be ready to pair.\n\nOpen the Bluetooth preferences on your device. (Click here for more details on how to do this on your computer). Add a new peripheral by selecting the mouse from your list of devices (make sure you select the same model number that is engraved under your mouse) and your mouse will be ready to use.\n\nIf you experience issues with Bluetooth, click here for Bluetooth troubleshooting.\n\nYour mouse can be paired with up to three different devices and you can use the Easy-Switch button to toggle between them.\n\nIf you want to pair additional devices to your mouse:\n\n〔此处图示未读取〕\n\nSelect the channel you want using the Easy-Switch button — press and then hold the same button for three seconds. This will put the mouse in discovery mode so it can be seen by your computer. The LED will start blinking rapidly.\n\nOpen the Bluetooth settings on your computer to",
+          "basis": "official_source",
+          "evidenceIds": [
+            "29a85310-1461-4b1a-93df-b13b701faec4:sem:a96cafc65be50582da5489b5965ba928cfdb15cd963b8fd9a0915cc1eea44e8c"
+          ],
+          "requires": [
+            "遵循对应原文的完整前提；本件物品状态与配套条件仍需核对"
+          ],
+          "status": "conditional",
+          "executable": false,
+          "verifiedForThisInstance": false,
+          "representation": "source_procedure_reference"
+        }
+      ],
+      "operations": [],
+      "limits": [],
+      "unknowns": [
+        "材质",
+        "尺寸",
+        "未记录的承重、耐热、稳定性及型号操作不由名称推断"
+      ],
+      "revision": "251eef6c4ee2bce3a97809536b92979e2ad0a82ed957126cb248e7e81967a673"
+    },
+    "knowledge": [
+      {
+        "id": "dca4a92d5262bf8fb12a8268",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB",
+        "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+        "hash": "681061fcc7bca1dc18bfce17057a9bb288b9f923040a845ea8c90896f78abca2",
+        "model": "Pebble Mouse 2 M350s",
+        "brand": "Logitech",
+        "region": "unspecified",
+        "chain": [
+          "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB"
+        ],
+        "fetchedAt": "2026-11-04T23:22:16.044Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [
+            "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "figures": [
+            {
+              "url": "https://www.logitech.com/assets/70056/20/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/21/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/22/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70054/5/image1.png",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70054/6/image1.png",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/23/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/24/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/25/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/26/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/27/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/28/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/29/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/30/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/31/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70054/25/image1.png",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/32/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://theme.zdassets.com/theme_assets/9263449/c684ba0d1b4ce2054fcfeb6a77d2b08135ac6b3c.gif",
+              "caption": "图示没有替代文字，内容未读取"
+            }
+          ]
+        },
+        "sections": [
+          {
+            "title": "Pebble Mouse 2 M350s",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01G4A79XW39EWJ6NZ7NMD2Q2HM"
+          },
+          {
+            "title": "Connecting your mouse",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR"
+          },
+          {
+            "title": "Logi Options+",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H1NMM1Y9K3M19RHZBJ6RCPDW"
+          },
+          {
+            "title": "Pebble Mouse 2 M350s overview",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4DNE23321RMWF02QTYSW5"
+          },
+          {
+            "title": "Connect your mouse to your device",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4FAB3VSTMKGJRJMGN656T"
+          },
+          {
+            "title": "Logi Bolt receiver optional connection method",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NC695SP9S71ZQ0TYYP"
+          },
+          {
+            "title": "Pairing a device again",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NCXE73CKMQYXFJS7DM"
+          },
+          {
+            "title": "INSTALL LOGI OPTIONS+",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NCVYRPQX4ANPC10F0H"
+          },
+          {
+            "title": "FEATURES",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82ND5HC2B57Y8PRQBQS6"
+          },
+          {
+            "title": "App-specific settings",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82ND8803X6XSXR7SWFYX"
+          },
+          {
+            "title": "Assign gestures to the middle button",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NEHY9JJ0S6B7TXAM5Q"
+          },
+          {
+            "title": "Customise the Scroll wheel",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NEHN5MTW3HH74VF3KC"
+          },
+          {
+            "title": "Customise the Pointer Speed",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DY7GCF9RCX0CH0RXC4B286"
+          },
+          {
+            "title": "Flow between two computers",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NF9WFCXDXMPXTKVW0A"
+          },
+          {
+            "title": "POWER MANAGEMENT",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NFQ5DCE72XFP4AVGE7"
+          },
+          {
+            "title": "Check battery status",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB"
+          },
+          {
+            "title": "Battery life and replacement",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NG0PWWA3FFJ8K678Q2"
+          },
+          {
+            "title": "Installing a new battery",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGHHRDY68GD07KSV37"
+          },
+          {
+            "title": "COMPATIBILITY",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGJX5VKGJR9T2GH41E"
+          },
+          {
+            "title": "Select Operating System to show Downloads.",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message_firefox"
+          },
+          {
+            "title": "There are no Downloads for this Version.",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "No hay descargas para esta versión.",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "Features",
+            "url": "https://support.logi.com/hc/articles/16171126528407#01H7DT82ND5HC2B57Y8PRQBQS6"
+          },
+          {
+            "title": "More Logi Options+ FAQs",
+            "url": "https://support.logi.com/hc/articles/1500006416522"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/14458212152343"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/14458212152343#h_01GZYC5QPTJVP2F9DSB718WJPS"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/4418699283607"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/1500010315721"
+          },
+          {
+            "title": "these instructions",
+            "url": "https://support.logi.com/hc/articles/360023359293"
+          },
+          {
+            "title": "Soporte empresarial",
+            "url": "https://prosupport.logi.com/hc/es"
+          },
+          {
+            "title": "Business Support Home",
+            "url": "https://prosupport.logi.com/hc"
+          }
+        ],
+        "chunkCount": 12
+      },
+      {
+        "id": "e3c68a487e16b0cff5a0690b",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR",
+        "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+        "hash": "681061fcc7bca1dc18bfce17057a9bb288b9f923040a845ea8c90896f78abca2",
+        "model": "Pebble Mouse 2 M350s",
+        "brand": "Logitech",
+        "region": "unspecified",
+        "chain": [
+          "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR"
+        ],
+        "fetchedAt": "2026-11-04T23:22:15.809Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [
+            "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "figures": [
+            {
+              "url": "https://www.logitech.com/assets/70056/20/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/21/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/22/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70054/5/image1.png",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70054/6/image1.png",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/23/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/24/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/25/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/26/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/27/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/28/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/29/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/30/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/31/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70054/25/image1.png",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/32/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://theme.zdassets.com/theme_assets/9263449/c684ba0d1b4ce2054fcfeb6a77d2b08135ac6b3c.gif",
+              "caption": "图示没有替代文字，内容未读取"
+            }
+          ]
+        },
+        "sections": [
+          {
+            "title": "Pebble Mouse 2 M350s",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01G4A79XW39EWJ6NZ7NMD2Q2HM"
+          },
+          {
+            "title": "Connecting your mouse",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR"
+          },
+          {
+            "title": "Logi Options+",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H1NMM1Y9K3M19RHZBJ6RCPDW"
+          },
+          {
+            "title": "Pebble Mouse 2 M350s overview",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4DNE23321RMWF02QTYSW5"
+          },
+          {
+            "title": "Connect your mouse to your device",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4FAB3VSTMKGJRJMGN656T"
+          },
+          {
+            "title": "Logi Bolt receiver optional connection method",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NC695SP9S71ZQ0TYYP"
+          },
+          {
+            "title": "Pairing a device again",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NCXE73CKMQYXFJS7DM"
+          },
+          {
+            "title": "INSTALL LOGI OPTIONS+",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NCVYRPQX4ANPC10F0H"
+          },
+          {
+            "title": "FEATURES",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82ND5HC2B57Y8PRQBQS6"
+          },
+          {
+            "title": "App-specific settings",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82ND8803X6XSXR7SWFYX"
+          },
+          {
+            "title": "Assign gestures to the middle button",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NEHY9JJ0S6B7TXAM5Q"
+          },
+          {
+            "title": "Customise the Scroll wheel",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NEHN5MTW3HH74VF3KC"
+          },
+          {
+            "title": "Customise the Pointer Speed",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DY7GCF9RCX0CH0RXC4B286"
+          },
+          {
+            "title": "Flow between two computers",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NF9WFCXDXMPXTKVW0A"
+          },
+          {
+            "title": "POWER MANAGEMENT",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NFQ5DCE72XFP4AVGE7"
+          },
+          {
+            "title": "Check battery status",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB"
+          },
+          {
+            "title": "Battery life and replacement",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NG0PWWA3FFJ8K678Q2"
+          },
+          {
+            "title": "Installing a new battery",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGHHRDY68GD07KSV37"
+          },
+          {
+            "title": "COMPATIBILITY",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGJX5VKGJR9T2GH41E"
+          },
+          {
+            "title": "Select Operating System to show Downloads.",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message_firefox"
+          },
+          {
+            "title": "There are no Downloads for this Version.",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "No hay descargas para esta versión.",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "Features",
+            "url": "https://support.logi.com/hc/articles/16171126528407#01H7DT82ND5HC2B57Y8PRQBQS6"
+          },
+          {
+            "title": "More Logi Options+ FAQs",
+            "url": "https://support.logi.com/hc/articles/1500006416522"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/14458212152343"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/14458212152343#h_01GZYC5QPTJVP2F9DSB718WJPS"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/4418699283607"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/1500010315721"
+          },
+          {
+            "title": "these instructions",
+            "url": "https://support.logi.com/hc/articles/360023359293"
+          },
+          {
+            "title": "Soporte empresarial",
+            "url": "https://prosupport.logi.com/hc/es"
+          },
+          {
+            "title": "Business Support Home",
+            "url": "https://prosupport.logi.com/hc"
+          }
+        ],
+        "chunkCount": 12
+      },
+      {
+        "id": "d817fcd8aa5b44f51fabaebd",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+        "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+        "hash": "1805e5669ac07f5104a81032ceaac8de95bb755aff230cb26db58a6266d5d46f",
+        "model": "Pebble Mouse 2 M350s",
+        "brand": "Logitech",
+        "region": "unspecified",
+        "chain": [
+          "bailian-responses:structured-search",
+          "https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s",
+          "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s"
+        ],
+        "fetchedAt": "2026-11-04T23:22:15.552Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [
+            "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "figures": [
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWB9GAA4G4F2RB8D0KEK6",
+              "caption": "Logitech"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWB9GAA4G4F2RB8D0KEK6",
+              "caption": "Logitech"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWF6K93NW0H3EGBZ0ZZER",
+              "caption": "Gaming"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWE83FX6F6AJ218SDH9VT",
+              "caption": "Gaming"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWG6KNTE8E2G6J4KSGXKW",
+              "caption": "Ultimate Ears"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWGNAT8EVP1NRF6V2BPRV",
+              "caption": "Ultimate Ears"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWFK0N8AEHK3HE4JWKMW1",
+              "caption": "Astro"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWG5YAPX91D381SJ7MMH3",
+              "caption": "Astro"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/20/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/21/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/22/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70054/5/image1.png",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70054/6/image1.png",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/23/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/24/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/25/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/26/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/27/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/28/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/29/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            }
+          ]
+        },
+        "sections": [
+          {
+            "title": "Pebble Mouse 2 M350s",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01G4A79XW39EWJ6NZ7NMD2Q2HM"
+          },
+          {
+            "title": "Connecting your mouse",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR"
+          },
+          {
+            "title": "Logi Options+",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H1NMM1Y9K3M19RHZBJ6RCPDW"
+          },
+          {
+            "title": "Pebble Mouse 2 M350s overview",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4DNE23321RMWF02QTYSW5"
+          },
+          {
+            "title": "Connect your mouse to your device",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4FAB3VSTMKGJRJMGN656T"
+          },
+          {
+            "title": "Logi Bolt receiver optional connection method",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NC695SP9S71ZQ0TYYP"
+          },
+          {
+            "title": "Pairing a device again",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NCXE73CKMQYXFJS7DM"
+          },
+          {
+            "title": "INSTALL LOGI OPTIONS+",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NCVYRPQX4ANPC10F0H"
+          },
+          {
+            "title": "FEATURES",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82ND5HC2B57Y8PRQBQS6"
+          },
+          {
+            "title": "App-specific settings",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82ND8803X6XSXR7SWFYX"
+          },
+          {
+            "title": "Assign gestures to the middle button",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NEHY9JJ0S6B7TXAM5Q"
+          },
+          {
+            "title": "Customise the Scroll wheel",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NEHN5MTW3HH74VF3KC"
+          },
+          {
+            "title": "Customise the Pointer Speed",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DY7GCF9RCX0CH0RXC4B286"
+          },
+          {
+            "title": "Flow between two computers",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NF9WFCXDXMPXTKVW0A"
+          },
+          {
+            "title": "POWER MANAGEMENT",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NFQ5DCE72XFP4AVGE7"
+          },
+          {
+            "title": "Check battery status",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB"
+          },
+          {
+            "title": "Battery life and replacement",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NG0PWWA3FFJ8K678Q2"
+          },
+          {
+            "title": "Installing a new battery",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGHHRDY68GD07KSV37"
+          },
+          {
+            "title": "COMPATIBILITY",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGJX5VKGJR9T2GH41E"
+          },
+          {
+            "title": "Select Operating System to show Downloads.",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message_firefox"
+          },
+          {
+            "title": "There are no Downloads for this Version.",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "No hay descargas para esta versión.",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "Features",
+            "url": "https://support.logi.com/hc/articles/16171126528407#01H7DT82ND5HC2B57Y8PRQBQS6"
+          },
+          {
+            "title": "More Logi Options+ FAQs",
+            "url": "https://support.logi.com/hc/articles/1500006416522"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/14458212152343"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/14458212152343#h_01GZYC5QPTJVP2F9DSB718WJPS"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/4418699283607"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/1500010315721"
+          },
+          {
+            "title": "these instructions",
+            "url": "https://support.logi.com/hc/articles/360023359293"
+          },
+          {
+            "title": "Soporte empresarial",
+            "url": "https://prosupport.logi.com/hc/es"
+          },
+          {
+            "title": "Business Support Home",
+            "url": "https://prosupport.logi.com/hc"
+          }
+        ],
+        "sourceSelections": {
+          "version": 1,
+          "entries": [
+            {
+              "reference": {
+                "id": "sem:7b25d577dfd94bdbfc34ce75bde6ec5afade0c15e2b74e071aa271762d3b723f",
+                "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                "sourceId": "d817fcd8aa5b44f51fabaebd:6988",
+                "documentHash": "1805e5669ac07f5104a81032ceaac8de95bb755aff230cb26db58a6266d5d46f",
+                "quoteRange": {
+                  "start": 0,
+                  "end": 1343
+                },
+                "quoteHash": "160f60f3d88e0fb272e5d3772ccae9998f54f2c14d918629f618b5ef648b06fd"
+              },
+              "kind": "operation",
+              "selectedBy": "qwen3.8-max-0902"
+            }
+          ]
+        },
+        "chunkCount": 13
+      },
+      {
+        "id": "75fbe8716efb4e9584df6949",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s",
+        "title": "Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+        "hash": "a13a7bc1a684ec4d2860d9680587c8414f43e401d914d7bd545c0b609a53d6e1",
+        "model": "Pebble Mouse 2 M350s",
+        "brand": "Logitech",
+        "region": "unspecified",
+        "chain": [
+          "bailian-responses:structured-search",
+          "https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s"
+        ],
+        "fetchedAt": "2026-11-04T23:22:14.534Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [
+            "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "figures": [
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWB9GAA4G4F2RB8D0KEK6",
+              "caption": "Logitech"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWB9GAA4G4F2RB8D0KEK6",
+              "caption": "Logitech"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWF6K93NW0H3EGBZ0ZZER",
+              "caption": "Gaming"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWE83FX6F6AJ218SDH9VT",
+              "caption": "Gaming"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWG6KNTE8E2G6J4KSGXKW",
+              "caption": "Ultimate Ears"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWGNAT8EVP1NRF6V2BPRV",
+              "caption": "Ultimate Ears"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWFK0N8AEHK3HE4JWKMW1",
+              "caption": "Astro"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWG5YAPX91D381SJ7MMH3",
+              "caption": "Astro"
+            },
+            {
+              "url": "https://www.logitech.com/content/dam/logitech/en/products/mice/pebble-mouse-2-m350s/gallery/pebble-2-m350s-tonal-rose-glamour-sm.png",
+              "caption": "loading..."
+            },
+            {
+              "url": "https://theme.zdassets.com/theme_assets/9263449/c684ba0d1b4ce2054fcfeb6a77d2b08135ac6b3c.gif",
+              "caption": "图示没有替代文字，内容未读取"
+            }
+          ]
+        },
+        "sections": [
+          {
+            "title": "Select Operating System to show Downloads.",
+            "url": "https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s#download_stub_message_firefox"
+          },
+          {
+            "title": "There are no Downloads for this Version.",
+            "url": "https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "No hay descargas para esta versión.",
+            "url": "https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "Pebble Mouse 2 M350s\n        \n        M/N: MR0103",
+            "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s"
+          },
+          {
+            "title": "Soporte empresarial",
+            "url": "https://prosupport.logi.com/hc/es"
+          },
+          {
+            "title": "Business Support Home",
+            "url": "https://prosupport.logi.com/hc"
+          }
+        ],
+        "chunkCount": 5
+      },
+      {
+        "id": "c36172d65f6a92f1c201c9f2",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s",
+        "title": "Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+        "hash": "aa955f1deadb5028f8ba65604cd24e8539c250d05108fd8f3a57edb2a0db024e",
+        "model": "Pebble Mouse 2 M350s",
+        "brand": "Logitech",
+        "region": "unspecified",
+        "chain": [
+          "bailian-responses:structured-search",
+          "https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s"
+        ],
+        "fetchedAt": "2026-11-04T23:22:13.549Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [
+            "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "figures": [
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWB9GAA4G4F2RB8D0KEK6",
+              "caption": "Logitech"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWB9GAA4G4F2RB8D0KEK6",
+              "caption": "Logitech"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWF6K93NW0H3EGBZ0ZZER",
+              "caption": "Gaming"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWE83FX6F6AJ218SDH9VT",
+              "caption": "Gaming"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWG6KNTE8E2G6J4KSGXKW",
+              "caption": "Ultimate Ears"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWGNAT8EVP1NRF6V2BPRV",
+              "caption": "Ultimate Ears"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWFK0N8AEHK3HE4JWKMW1",
+              "caption": "Astro"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWG5YAPX91D381SJ7MMH3",
+              "caption": "Astro"
+            },
+            {
+              "url": "https://theme.zdassets.com/theme_assets/9263449/c684ba0d1b4ce2054fcfeb6a77d2b08135ac6b3c.gif",
+              "caption": "图示没有替代文字，内容未读取"
+            }
+          ]
+        },
+        "sections": [
+          {
+            "title": "Select Operating System to show Downloads.",
+            "url": "https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s#download_stub_message_firefox"
+          },
+          {
+            "title": "There are no Downloads for this Version.",
+            "url": "https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "There are no Downloads for this Version.",
+            "url": "https://support.logi.com/hc/en-001/articles/16171176602263-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "supported Logitech devices",
+            "url": "https://www.logitech.com/shop/c/options-plus"
+          },
+          {
+            "title": "Support",
+            "url": "https://www.logitech.com/"
+          },
+          {
+            "title": "Business Support",
+            "url": "https://prosupport.logi.com/hc/en-001"
+          },
+          {
+            "title": "Educational Support",
+            "url": "https://support.logi.com/hc/en-001/requests/new?ticket_form_id=360004097733"
+          },
+          {
+            "title": "Business Support Home",
+            "url": "https://prosupport.logi.com/hc"
+          },
+          {
+            "title": "Support Home",
+            "url": "https://support.logi.com/hc/en-001"
+          }
+        ],
+        "chunkCount": 5
+      },
+      {
+        "id": "bc8ee0b533b44eb41290a6bd",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+        "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+        "hash": "4b223cd9838a4a1ab1fcc4e8ae2186f301a116752a0ff571e2676e65079c340c",
+        "model": "Pebble Mouse 2 M350s",
+        "brand": "Logitech",
+        "region": "unspecified",
+        "chain": [
+          "bailian-responses:structured-search",
+          "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s"
+        ],
+        "fetchedAt": "2026-11-04T23:22:10.572Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [
+            "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "figures": [
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWB9GAA4G4F2RB8D0KEK6",
+              "caption": "Logitech"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWB9GAA4G4F2RB8D0KEK6",
+              "caption": "Logitech"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWF6K93NW0H3EGBZ0ZZER",
+              "caption": "Gaming"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWE83FX6F6AJ218SDH9VT",
+              "caption": "Gaming"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWG6KNTE8E2G6J4KSGXKW",
+              "caption": "Ultimate Ears"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWGNAT8EVP1NRF6V2BPRV",
+              "caption": "Ultimate Ears"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWFK0N8AEHK3HE4JWKMW1",
+              "caption": "Astro"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWG5YAPX91D381SJ7MMH3",
+              "caption": "Astro"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/20/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/21/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/22/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70054/5/image1.png",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70054/6/image1.png",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/23/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/24/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/25/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/26/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/27/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/28/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            },
+            {
+              "url": "https://www.logitech.com/assets/70056/29/connected_devices.jpg",
+              "caption": "图示没有替代文字，内容未读取"
+            }
+          ]
+        },
+        "sections": [
+          {
+            "title": "Pebble Mouse 2 M350s",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01G4A79XW39EWJ6NZ7NMD2Q2HM"
+          },
+          {
+            "title": "Connecting your mouse",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NB4DN0GZC84C1TNEDR"
+          },
+          {
+            "title": "Logi Options+",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H1NMM1Y9K3M19RHZBJ6RCPDW"
+          },
+          {
+            "title": "Pebble Mouse 2 M350s overview",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4DNE23321RMWF02QTYSW5"
+          },
+          {
+            "title": "Connect your mouse to your device",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#h_01H7D4FAB3VSTMKGJRJMGN656T"
+          },
+          {
+            "title": "Logi Bolt receiver optional connection method",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NC695SP9S71ZQ0TYYP"
+          },
+          {
+            "title": "Pairing a device again",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NCXE73CKMQYXFJS7DM"
+          },
+          {
+            "title": "INSTALL LOGI OPTIONS+",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NCVYRPQX4ANPC10F0H"
+          },
+          {
+            "title": "FEATURES",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82ND5HC2B57Y8PRQBQS6"
+          },
+          {
+            "title": "App-specific settings",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82ND8803X6XSXR7SWFYX"
+          },
+          {
+            "title": "Assign gestures to the middle button",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NEHY9JJ0S6B7TXAM5Q"
+          },
+          {
+            "title": "Customise the Scroll wheel",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NEHN5MTW3HH74VF3KC"
+          },
+          {
+            "title": "Customise the Pointer Speed",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DY7GCF9RCX0CH0RXC4B286"
+          },
+          {
+            "title": "Flow between two computers",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NF9WFCXDXMPXTKVW0A"
+          },
+          {
+            "title": "POWER MANAGEMENT",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NFQ5DCE72XFP4AVGE7"
+          },
+          {
+            "title": "Check battery status",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGX5RTQZS78S34SSCB"
+          },
+          {
+            "title": "Battery life and replacement",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NG0PWWA3FFJ8K678Q2"
+          },
+          {
+            "title": "Installing a new battery",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGHHRDY68GD07KSV37"
+          },
+          {
+            "title": "COMPATIBILITY",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#01H7DT82NGJX5VKGJR9T2GH41E"
+          },
+          {
+            "title": "Select Operating System to show Downloads.",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message_firefox"
+          },
+          {
+            "title": "There are no Downloads for this Version.",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "There are no Downloads for this Version.",
+            "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "Features",
+            "url": "https://support.logi.com/hc/articles/16171126528407#01H7DT82ND5HC2B57Y8PRQBQS6"
+          },
+          {
+            "title": "More Logi Options+ FAQs",
+            "url": "https://support.logi.com/hc/articles/1500006416522"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/14458212152343"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/14458212152343#h_01GZYC5QPTJVP2F9DSB718WJPS"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/4418699283607"
+          },
+          {
+            "title": "here",
+            "url": "https://support.logi.com/hc/articles/1500010315721"
+          },
+          {
+            "title": "these instructions",
+            "url": "https://support.logi.com/hc/articles/360023359293"
+          },
+          {
+            "title": "supported Logitech devices",
+            "url": "https://www.logitech.com/shop/c/options-plus"
+          },
+          {
+            "title": "Support",
+            "url": "https://www.logitech.com/"
+          },
+          {
+            "title": "Business Support",
+            "url": "https://prosupport.logi.com/hc/en-001"
+          },
+          {
+            "title": "Educational Support",
+            "url": "https://support.logi.com/hc/en-001/requests/new?ticket_form_id=360004097733"
+          },
+          {
+            "title": "Business Support Home",
+            "url": "https://prosupport.logi.com/hc"
+          },
+          {
+            "title": "Support Home",
+            "url": "https://support.logi.com/hc/en-001"
+          }
+        ],
+        "sourceSelections": {
+          "version": 1,
+          "entries": [
+            {
+              "reference": {
+                "id": "sem:a96cafc65be50582da5489b5965ba928cfdb15cd963b8fd9a0915cc1eea44e8c",
+                "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                "sourceId": "bc8ee0b533b44eb41290a6bd:996",
+                "documentHash": "4b223cd9838a4a1ab1fcc4e8ae2186f301a116752a0ff571e2676e65079c340c",
+                "quoteRange": {
+                  "start": 0,
+                  "end": 1351
+                },
+                "quoteHash": "e134b5b56e9df3b39b2993fc7dcfab70b9f1eed74e5b53e9eb54d8a0c91f6910"
+              },
+              "kind": "operation",
+              "selectedBy": "qwen3.8-max-0902"
+            }
+          ]
+        },
+        "chunkCount": 12
+      },
+      {
+        "id": "b593261dc57ab7dd321e2579",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s",
+        "title": "Specification - Pebble Mouse 2 M350s – Logitech Support + overførselSustainability Navigation",
+        "hash": "eb47b97a5f3ad2913cbf233685740a23dc36e1b944c246fe83bf087c13f045c7",
+        "model": "Pebble Mouse 2 M350s",
+        "brand": "Logitech",
+        "region": "unspecified",
+        "chain": [
+          "bailian-responses:structured-search",
+          "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s"
+        ],
+        "fetchedAt": "2026-11-04T23:22:09.695Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [
+            "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "figures": [
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWB9GAA4G4F2RB8D0KEK6",
+              "caption": "Logitech"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWB9GAA4G4F2RB8D0KEK6",
+              "caption": "Logitech"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWF6K93NW0H3EGBZ0ZZER",
+              "caption": "Gaming"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWE83FX6F6AJ218SDH9VT",
+              "caption": "Gaming"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWG6KNTE8E2G6J4KSGXKW",
+              "caption": "Ultimate Ears"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWGNAT8EVP1NRF6V2BPRV",
+              "caption": "Ultimate Ears"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWFK0N8AEHK3HE4JWKMW1",
+              "caption": "Astro"
+            },
+            {
+              "url": "https://support.logi.com/hc/theming_assets/01K06XWG5YAPX91D381SJ7MMH3",
+              "caption": "Astro"
+            },
+            {
+              "url": "https://theme.zdassets.com/theme_assets/9263449/c684ba0d1b4ce2054fcfeb6a77d2b08135ac6b3c.gif",
+              "caption": "图示没有替代文字，内容未读取"
+            }
+          ]
+        },
+        "sections": [
+          {
+            "title": "Select Operating System to show Downloads.",
+            "url": "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s#download_stub_message_firefox"
+          },
+          {
+            "title": "There are no Downloads for this Version.",
+            "url": "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "Der er ingen Downloads til denne version.",
+            "url": "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s#download_stub_message"
+          },
+          {
+            "title": "Support",
+            "url": "https://www.logitech.com/"
+          },
+          {
+            "title": "Forretningsstøtte",
+            "url": "https://prosupport.logi.com/hc/da"
+          },
+          {
+            "title": "Business Support Home",
+            "url": "https://prosupport.logi.com/hc"
+          },
+          {
+            "title": "Support – Startside",
+            "url": "https://support.logi.com/hc/da"
+          }
+        ],
+        "chunkCount": 7
+      }
+    ]
+  },
+  "status": "executed_quality_requires_review",
+  "upstreamRequests": 6,
+  "finishedAt": "2026-11-04T23:22:34.391Z"
+}

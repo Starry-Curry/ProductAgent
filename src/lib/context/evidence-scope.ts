@@ -1,5 +1,5 @@
 import type {Item} from '../domain.ts';
-import {trustedOfficialDocument,type AcquiredDocument} from '../life/acquisition.ts';
+import {trustedOfficialDocument,regionOf,type AcquiredDocument} from '../life/acquisition.ts';
 import {modelMentioned} from '../life/knowledge.ts';
 // Correlate product + spec pages only by the exact manufacturer's product path.
 // A general support page, brand name or similar model is never such a relation.
@@ -10,8 +10,9 @@ export function officialProductPath(url:string){
 }
 function sourceRegion(url:string,fallback:string){
   if(fallback&&fallback!=='unspecified')return fallback;
+  const region=regionOf(url);if(region!=='unspecified')return region;
   const first=new URL(url).pathname.split('/').filter(Boolean)[0];
-  return ['cn','sg','hk','tw','gb','jp','us','in','ae-en','nz','au','global','my'].includes(first)?first:fallback||'unspecified';
+  return ['in','ae-en','nz'].includes(first)?first:fallback||'unspecified';
 }
 
 export function scopedProductKnowledge(item:Item,all:AcquiredDocument[]){

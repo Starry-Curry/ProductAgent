@@ -1,0 +1,78 @@
+{
+  "at": "2026-11-04T23:23:08.042Z",
+  "basis": "mapping_only_not_quality_scores",
+  "samples": [
+    {
+      "label": "label-layout-A",
+      "config": "plus_low_tools",
+      "model": "qwen3.7-plus-2026-05-26",
+      "thinkingBudget": 2048,
+      "originalRequest": 89,
+      "inputSha256": "79e74d06a5399000b7697bb72a130744748f4d6ca69d29186c84df528875c3e2",
+      "rawOutputSha256": "e04601f42f0300cb925d2600978785134eed4237f4ab54e43cb9014b99ad18f4"
+    },
+    {
+      "label": "label-layout-B",
+      "config": "max_low_direct",
+      "model": "qwen3.8-max-0902",
+      "thinkingBudget": 2048,
+      "originalRequest": 89,
+      "inputSha256": "ebd8d47d019b062548d042e0008122b623e45ae1029a8f3a172e10147f3caa2c",
+      "rawOutputSha256": "8c5a063269837c006021137b9620184dc31f136ea8617b7ec96c782b23c0ada6"
+    },
+    {
+      "label": "label-layout-C",
+      "config": "max_low_tools",
+      "model": "qwen3.8-max-0902",
+      "thinkingBudget": 2048,
+      "originalRequest": 89,
+      "inputSha256": "79e74d06a5399000b7697bb72a130744748f4d6ca69d29186c84df528875c3e2",
+      "rawOutputSha256": "3c803bc129c80c2b58db87b710fd35aa6932b61534b12f6cbad09f571804792b"
+    },
+    {
+      "label": "label-layout-D",
+      "config": "max_medium_tools",
+      "model": "qwen3.8-max-0902",
+      "thinkingBudget": 8192,
+      "originalRequest": 89,
+      "inputSha256": "79e74d06a5399000b7697bb72a130744748f4d6ca69d29186c84df528875c3e2",
+      "rawOutputSha256": "6fe81f088719192e5505dbf08aaf6eff72c00110c805985d53914d9ed30ebdc8"
+    },
+    {
+      "label": "painting-and-desk-A",
+      "config": "plus_low_tools",
+      "model": "qwen3.7-plus-2026-05-26",
+      "thinkingBudget": 2048,
+      "originalRequest": 73,
+      "inputSha256": "518b486a73dacf08d2292cc62fd9c17c485270d5328109282afd8705f997fc1a",
+      "rawOutputSha256": "ee87d38dfa55e035e625383f68923097632df829b25afa3a1457190a25e1b65a"
+    },
+    {
+      "label": "painting-and-desk-B",
+      "config": "max_medium_tools",
+      "model": "qwen3.8-max-0902",
+      "thinkingBudget": 8192,
+      "originalRequest": 73,
+      "inputSha256": "518b486a73dacf08d2292cc62fd9c17c485270d5328109282afd8705f997fc1a",
+      "rawOutputSha256": "027e721a2f2e151a7295ce5421586c4e1c931472410760cfc82adc965f9ae452"
+    },
+    {
+      "label": "painting-and-desk-C",
+      "config": "max_low_direct",
+      "model": "qwen3.8-max-0902",
+      "thinkingBudget": 2048,
+      "originalRequest": 73,
+      "inputSha256": "52a10aa95881965a086dbf8ae76f1bc92b4557925e582ef893d8361934d165d2",
+      "rawOutputSha256": "c6b05c5de5057854265b32add8a6178e71725eb0a4fc9a7e5e170f638bb71bdc"
+    },
+    {
+      "label": "painting-and-desk-D",
+      "config": "max_low_tools",
+      "model": "qwen3.8-max-0902",
+      "thinkingBudget": 2048,
+      "originalRequest": 73,
+      "inputSha256": "518b486a73dacf08d2292cc62fd9c17c485270d5328109282afd8705f997fc1a",
+      "rawOutputSha256": "ffdfd299b26ec1a291d5bc9fe936095c8c48c2577e93b04a984c38e4065867e0"
+    }
+  ]
+}

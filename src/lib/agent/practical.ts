@@ -20,7 +20,7 @@ import {itemStamp,proposeAction} from '../home/store.ts';
 import type {ActionCard} from '../home/contracts.ts';
 import {currentActionProposal,checkPlanResources,type ActionSource} from './practical-actions.ts';
 import {householdMembers} from '../collaboration.ts';
-import {readKnowledge,storeOfficialDocument,makeKnowledgeDocument,acquireKnowledge,trustedOfficialDocument} from '../life/acquisition.ts';
+import {readKnowledge,storeOfficialDocument,makeKnowledgeDocument,acquireKnowledge,trustedOfficialDocument,knowledgeIdentity} from '../life/acquisition.ts';
 import {fetchPublicDocument} from '../life/sources.ts';
 import {sourceReviews} from '../foundation/reviewed-facts.ts';
 import {modelMentioned,officialDomain,brandEntry} from '../life/knowledge.ts';
@@ -71,7 +71,7 @@ const schemas={
   z.object({kind:z.literal('range'),actual:z.number().nonnegative(),min:z.number().nonnegative(),max:z.number().nonnegative(),unit:z.string().max(30)}).strict(),
   z.object({kind:z.literal('rectangle'),object:z.tuple([z.number().positive(),z.number().positive()]),space:z.tuple([z.number().positive(),z.number().positive()]),spaceKind:z.enum(['internal','external','unknown'])}).strict()]),
 };
-const descriptions={read_owned_software:"仅读取当前焦点、自有软件模拟器的实际亮度与状态；必须有尚未撤回的软件回读授权。不会调光、不连接真实设备，不用静态接口或用户目标冒充已执行结果。",explore_owned_software:'仅对当前自有 WUJIAN-SOFTWARE-LAMP-1 合成软件测试灯运行既有REA静态分析与本机模拟器只读验证；不授予控制、不接触真实硬件。',complete_answer:'最终回复唯一呈现工具：message用于自然解释与明确缺口；型号操作用guidance.kind=procedure（itemId、带sourceId的steps及conditions），不把指导当控制或强行编造手机库存ID。跨物品物理行动才用带itemIds的动作方案。纯解释写message、guidance=null；message不重复步骤。device_operation items[0]是被操作设备，operationRef是已读取的当前型号原文id（分类标签不是语义认证），且列入sourceIds；不能把图示模型观察当认证事实。不写任务，不执行外部操作。',inspect_manual_visual:'按需读取已取得的准确型号官方PDF或实际发现的图示。sourceId用文档或原文ID；figureUrl仅允许已发现图片；不能猜按钮/页图。',read_official_page:'读取已核对官方网页。单页说明书先返回真实章节目录，用search_product_knowledge的sourceUrl读取所需章节；必要时使用百炼原生web_extractor。PDF图示请用inspect_manual_visual。',open_item_capability:'当用户希望进一步创意、分身、故事、养护、家庭、赠礼或软件探索时，返回同一物品现有界面的继续入口；不执行任何操作，不授予权限。',prepare_action:'只在用户希望保存计划、记录故事、准备赠礼或交家人时准备预览卡。没有确认不会执行；不能自行授予记忆/分享权限。计划逐步关联真实资源，型号操作必须引用已读取原文ID；条件未齐先讨论探索方案。故事仅保存私人原文，默认不允许检索或上云；赠礼草稿不附私人故事。',get_item_context:'读取当前用户获准的物品身份、准确型号、状态和未知项；itemIds为空时当前相关物品。',search_product_knowledge:'检索对应型号官方原文和URL；无缓存时自主官方发现；缓存缺少操作正文时可refresh，或用relatedSections中实际发现的sourceUrl读取章节；不接受臆造链接。',get_relevant_experiences:'读取对应物品当前获准云端使用的经历与偏好。经历为用户报告，不证明因果。',check_constraints:'确定性计算：区间、二维占地、平面物体与画幅比例（frame）。画幅支持完整容纳或铺满裁切两种计算，不混淆二者。不能证明完整兼容/稳定。known读取本次已绑定来源的条件ID；range/rectangle仅计算模型假设的数字，不能作为设备兼容认证或覆盖已知条件。'};
+const descriptions={read_owned_software:"仅读取当前焦点、自有软件模拟器的实际亮度与状态；必须有尚未撤回的软件回读授权。不会调光、不连接真实设备，不用静态接口或用户目标冒充已执行结果。",explore_owned_software:'仅对当前自有 WUJIAN-SOFTWARE-LAMP-1 合成软件测试灯运行既有REA静态分析与本机模拟器只读验证；不授予控制、不接触真实硬件。',complete_answer:'最终回复唯一呈现工具：message承载最终完整事实回答与明确缺口，不是已查到/已安排的进度通知；型号操作用guidance.kind=procedure（itemId、带sourceId的steps及conditions），不把指导当控制或强行编造手机库存ID。跨物品物理行动才用带itemIds的动作方案。纯解释写message、guidance=null；message不重复步骤。device_operation items[0]是被操作设备，operationRef是已读取的当前型号原文id（分类标签不是语义认证），且列入sourceIds；不能把图示模型观察当认证事实。不写任务，不执行外部操作。',inspect_manual_visual:'按需读取已取得的准确型号官方PDF或实际发现的图示。sourceId用文档或原文ID；figureUrl仅允许已发现图片；不能猜按钮/页图。',read_official_page:'读取已核对官方网页。单页说明书先返回真实章节目录，用search_product_knowledge的sourceUrl读取所需章节；必要时使用百炼原生web_extractor。PDF图示请用inspect_manual_visual。',open_item_capability:'当用户希望进一步创意、分身、故事、养护、家庭、赠礼或软件探索时，返回同一物品现有界面的继续入口；不执行任何操作，不授予权限。',prepare_action:'只在用户希望保存计划、记录故事、准备赠礼或交家人时准备预览卡。没有确认不会执行；不能自行授予记忆/分享权限。计划逐步关联真实资源，型号操作必须引用已读取原文ID；条件未齐先讨论探索方案。故事仅保存私人原文，默认不允许检索或上云；赠礼草稿不附私人故事。',get_item_context:'读取当前用户获准的物品身份、准确型号、状态和未知项；itemIds为空时当前相关物品。',search_product_knowledge:'检索对应型号官方原文和URL；无缓存时自主官方发现；缓存缺少操作正文时可refresh，或用relatedSections中实际发现的sourceUrl读取章节；不接受臆造链接。',get_relevant_experiences:'读取对应物品当前获准云端使用的经历与偏好。经历为用户报告，不证明因果。',check_constraints:'确定性计算：区间、二维占地、平面物体与画幅比例（frame）。画幅支持完整容纳或铺满裁切两种计算，不混淆二者。不能证明完整兼容/稳定。known读取本次已绑定来源的条件ID；range/rectangle仅计算模型假设的数字，不能作为设备兼容认证或覆盖已知条件。'};
 export const practicalTools:ToolDefinition[]=Object.entries(schemas).map(([name,schema])=>({type:'function',function:{name,description:descriptions[name as keyof typeof descriptions],parameters:z.toJSONSchema(schema,{io:'input'}) as Record<string,unknown>}}));
 /** Give the provider real callable IDs, not an invitation to invent references. Server checks remain authoritative. */
 export function practicalToolSet(sourceIds:string[],resourceIds:string[],reading?:{sourceIds:string[];sectionURLs:string[]}){
@@ -125,11 +125,13 @@ export function practicalToolSet(sourceIds:string[],resourceIds:string[],reading
 export async function executePractical(db:DatabaseSync,read:()=>State,actor:Person,session:ServiceSession,question:string,provider:Provider,temporary=false){
  const started=Date.now(),deadline=started+150000,version=epoch(db,actor),trace:Trace[]=[],scopes=new Map<string,{identity:string;reality:string}>();
  const softwareScopes=new Map<string,{grantEpoch:number;targetHash:string}>();
+ const sourceScopes=new Map<string,{itemId:string;url:string;hash:string;identity:string}>();let sourceInputReady=false;
  const cards:ActionCard[]=[],continuations:NonNullable<AssistantReply['continuations']>=[];
  let finalized:ReturnType<typeof finalizeResponse>|undefined;
  let calls=0,tools=0,reservedCny=0,tokens={input:0,output:0},previousInput:{tokens:number;bytes:number}|undefined;
  let extraIds:string[]=[],queries:string[]=[];const missingKnowledge=new Set<string>();
  let resourcesRead=false;
+ let knowledgeFocusItemId:string|undefined;
  const unresolvedTools=new Set<string>();
  const requestedProfileKinds=new Set<'interest'|'preference'>();
  const freshDiscoveries=new Map<string,any>();
@@ -137,7 +139,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  const log=(stage:string,detail:string)=>trace.push({stage,detail,at:new Date().toISOString()});
  provider.onStatus?.('正在核对本次可用的物品与授权');
  let rankedOriginalIds:string[]=[],rankedOnce=false;
- const context=()=>compileTaskContext(db,read(),actor,session,question,temporary,queries,extraIds,18000,{originalIds:rankedOriginalIds,profileMemoryKinds:[...requestedProfileKinds]});
+ const context=()=>compileTaskContext(db,read(),actor,session,question,temporary,queries,extraIds,18000,{originalIds:rankedOriginalIds,profileMemoryKinds:[...requestedProfileKinds],knowledgeFocusItemId});
  const actionGoal=()=>{const prior=context().priorPlanningContext;return [...(prior?.restrictions||[]),...(prior?.excludedItemIds||[]).map(id=>'不用'+(read().items.find(i=>i.id===id)?.name||'')),question].join('；');};
  const guard=(checkTime=true)=>{if(checkTime&&Date.now()>=deadline)throw new AgentError('本次任务等待过久，请保留问题后继续',504);
   if(epoch(db,actor)!==version||!sessionAccess(session,read(),actor))throw new AgentError('物品或记忆授权已变化，请重新提问',409);
@@ -145,8 +147,15 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   if(!temporary){const row=db.prepare('SELECT revision,body FROM agent_sessions WHERE id=?').get(session.id) as {revision:number;body:string}|undefined;if(!row||row.revision!==session.revision||JSON.parse(row.body).status==='closed')throw new AgentError('会话已关闭或被另一请求更新',409);}
   for(const [id,stamp]of scopes){const i=read().items.find(i=>i.id===id);if(!i||itemStamp(i)!==stamp.identity||projectReality(i).revision!==stamp.reality||!authorize(db,read(),actor,id).allowed)throw new AgentError('物品授权、状态或登记条件已变化',409);}
   for(const [id,stamp]of softwareScopes){const a=adapterState(db,actor,id);if(!a?.granted||a.grantEpoch!==stamp.grantEpoch||a.targetHash!==stamp.targetHash)throw new AgentError('软件回读授权或版本已变化，未发布旧状态',409);}
+  for(const stamp of sourceInputReady?sourceScopes.values():[]){
+   const item=read().items.find(i=>i.id===stamp.itemId);
+   // Query the exact active version rather than the eight-document reading
+   // window: adding a ninth chapter does not revoke an unchanged earlier one.
+   const owner=item?.sharedWith?.includes(actor)?item.owner:actor;
+   if(!item||!db.prepare("SELECT 1 FROM life_knowledge_documents WHERE owner IN (?,?) AND item_id=? AND identity=? AND url=? AND hash=? AND status='active'").get(actor,owner,stamp.itemId,stamp.identity,stamp.url,stamp.hash))throw new AgentError('本轮使用的资料原文已换版或失效，未发布旧步骤；请重新提问以使用当前资料。',409);
+  }
  };
- const track=(ctx:ReturnType<typeof context>)=>{for(const i of ctx.items){const item=read().items.find(x=>x.id===i.id)!;scopes.set(i.id,{identity:itemStamp(item),reality:projectReality(item).revision});}};
+ const track=(ctx:ReturnType<typeof context>)=>{for(const i of ctx.items){const item=read().items.find(x=>x.id===i.id)!;scopes.set(i.id,{identity:itemStamp(item),reality:projectReality(item).revision});for(const {document:d}of scopedProductKnowledge(item,readKnowledge(db,read(),actor,i.id)))sourceScopes.set(i.id+':'+d.id,{itemId:i.id,url:d.url,hash:d.hash,identity:knowledgeIdentity(item)});}};
  async function rankOriginals(itemIds:string[]){
   if(!provider.rerank||rankedOnce||question.length>1000||calls>=4||Date.now()+15000>deadline)return;
   guard();
@@ -181,16 +190,22 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  }
  for(const item of seed.items)await readRelevant(item.id,question);
  await rankOriginals(seed.items.map(i=>i.id));
- const initial=context();track(initial);
+ // Discovery/rerank may legitimately refresh a public source before the main
+ // model receives any Context. Freeze that actual input, not an earlier cache
+ // scan. Item, memory and grant guards remain active during preparation.
+ const initial=context();sourceScopes.clear();track(initial);sourceInputReady=true;guard();
  const boundPlanning=session.known.foundationTaskIntent==='plan'&&initial.items.length>1&&initial.currentTask?.goal===question&&practicalConstraints(initial).some(c=>c.satisfied===false);
- const passages=new Map(initial.evidence.filter(e=>e.basis==='official').map(e=>[e.id,e]));
+ // The manufacturer document can be identical for two separately owned units.
+ // Keep the INSTANCE binding internally; public source IDs remain unchanged.
+ const passageKey=(s:{itemId:string;id:string})=>s.itemId+'\0'+s.id;
+ const passages=new Map(initial.evidence.filter(e=>e.basis==='official').map(e=>[passageKey(e),e]));
  const suppliedPassages=new Set(passages.keys());
  const actionSources=():ActionSource[]=>[
   ...[...passages.values()].map(s=>({...s,kind:'source_assertion' as const})),
   // These exact original locators were already supplied in priorSelections.
   // Resolve them against CURRENT model/document hashes before making them
   // callable, just as for newly retrieved passages. They are not semantic proof.
-  ...context().items.flatMap(i=>readSourceSelections(read().items.find(x=>x.id===i.id)!,readKnowledge(db,read(),actor,i.id)).filter(s=>passages.has(s.reference.sourceId||'')).map(s=>({...s,itemId:i.id,kind:'source_assertion' as const}))),
+  ...context().items.flatMap(i=>readSourceSelections(read().items.find(x=>x.id===i.id)!,readKnowledge(db,read(),actor,i.id)).filter(s=>passages.has(passageKey({itemId:i.id,id:s.reference.sourceId||''}))).map(s=>({...s,itemId:i.id,kind:'source_assertion' as const}))),
   ...context().retrieval.documents.map(d=>({id:d.id,itemId:d.itemId})),
  ];
  const select=(requested:string[])=>{const allowed=context().authorizedItemIds;for(const id of requested)if(!allowed.includes(id))throw new AgentError('物品未获授权',403);extraIds=[...new Set([...extraIds,...requested])];const c=context();track(c);return c;};
@@ -313,7 +328,8 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    const current=context();
    const requested=name==='search_product_knowledge'?[p.itemId]:name==='get_item_context'&&!p.itemIds.length?(p.query?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor,scopeItemIds:current.authorizedItemIds}).resources.map(i=>i.id):current.items.map(i=>i.id)):p.itemIds;
    const c=select(requested);
-  if(name==='get_item_context'){resourcesRead=true;const page=!p.itemIds.length?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor,scopeItemIds:current.authorizedItemIds}):undefined;return {items:c.semanticItems.map(taskReality),softwareCapabilities:c.items.flatMap(i=>registeredCapabilities(db,read(),actor,i.id)),catalogue:c.catalogue,discovery:c.discovery,...(page?{capabilityPage:{...page,resources:page.resources.map(r=>({id:r.id,name:r.name,identity:r.identity,instance:r.instance,unknowns:r.unknowns,revision:r.revision}))}}:{}),notice:'query按名称、型号或已记录能力检索；无匹配可省略query，用cursor分页浏览获准目录，不假定前几件相关。原文按当前问题通过search_product_knowledge读取，不把所有历史引文复制进物品能力。'};}
+   if(name==='search_product_knowledge')knowledgeFocusItemId=p.itemId;
+  if(name==='get_item_context'){resourcesRead=true;if(p.query)queries=[p.query];knowledgeFocusItemId=undefined;await rankOriginals(c.items.map(i=>i.id));const enriched=context();track(enriched);const allSources=enriched.evidence.filter(e=>e.basis==='official');for(const s of allSources)passages.set(passageKey(s),s);const freshSources=allSources.filter(s=>!suppliedPassages.has(passageKey(s)));for(const s of freshSources)suppliedPassages.add(passageKey(s));const page=!p.itemIds.length?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor,scopeItemIds:current.authorizedItemIds}):undefined;return {items:enriched.semanticItems.map(taskReality),experiences:enriched.experiences,preferences:enriched.preferences,privateFacts:enriched.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),personalContextBasis:'only_current_task_explicitly_authorized_records_not_proven_cause',sources:freshSources,existingPassageIds:allSources.filter(s=>!freshSources.includes(s)).map(s=>s.id),softwareCapabilities:enriched.items.flatMap(i=>registeredCapabilities(db,read(),actor,i.id)),catalogue:enriched.catalogue,discovery:enriched.discovery,...(page?{capabilityPage:{...page,resources:page.resources.map(r=>({id:r.id,name:r.name,identity:r.identity,instance:r.instance,unknowns:r.unknowns,revision:r.revision}))}}:{}),notice:'query按名称、型号或已记录能力检索；无匹配可省略query，用cursor分页浏览获准目录，不假定前几件相关。原文按当前问题通过search_product_knowledge读取，不把所有历史引文复制进物品能力。'};}
   if(name==='get_relevant_experiences')return {experiences:c.experiences,preferences:c.preferences,privateFacts:c.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),basis:'approved_user_report_not_proven_cause'};
   const item=read().items.find(i=>i.id===p.itemId)!;const acquisition:any={cached:readKnowledge(db,read(),actor,item.id).length>0,readURLs:[],issues:[]};
   if(!temporary&&process.env.WUJIAN_ALLOW_PUBLIC_FETCH!=='false'){
@@ -336,10 +352,10 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    }
   }
   await readRelevant(p.itemId,question+' '+p.query);
-  queries=[p.query];await rankOriginals([p.itemId]);const enriched=context();track(enriched);const sources=enriched.evidence.filter(e=>e.itemId===p.itemId&&e.basis==='official');for(const s of sources)passages.set(s.id,s);
+  queries=[p.query];await rankOriginals([p.itemId]);const enriched=context();track(enriched);const sources=enriched.evidence.filter(e=>e.itemId===p.itemId&&e.basis==='official');for(const s of sources)passages.set(passageKey(s),s);
   if(sources.length)missingKnowledge.delete(p.itemId);else missingKnowledge.add(p.itemId);
   log('practical_knowledge',JSON.stringify({itemId:p.itemId,...acquisition,sources:sources.map(s=>({id:s.id,url:s.url,model:s.model}))}));
-  const fresh=sources.filter(s=>!suppliedPassages.has(s.id));for(const s of fresh)suppliedPassages.add(s.id);
+  const fresh=sources.filter(s=>!suppliedPassages.has(passageKey(s)));for(const s of fresh)suppliedPassages.add(passageKey(s));
   const scoped=scopedProductKnowledge(item,readKnowledge(db,read(),actor,item.id)).map(d=>d.document);
   return {necessaryConditionChecks:practicalConstraints(enriched),visualDocuments:scoped.map(d=>({sourceId:d.id,url:d.url,kind:d.reading?.mode==='pdf_text_layer'||/\.pdf(?:[?#]|$)/i.test(d.url)?'pdf':'html',readingMode:d.reading?.mode||'unknown',figures:d.reading?.figures.slice(0,10)||[]})),relatedSections:[...relevantManualLinks(question+' '+p.query,scoped.flatMap(d=>d.sections||[])),...scoped.flatMap(d=>d.sections||[])].filter((l,n,a)=>a.findIndex(x=>x.url===l.url)===n).slice(0,64),sources:fresh,sourcePointers:fresh.map(s=>({id:s.id,url:s.url,model:s.model,region:s.region})),existingPassageIds:sources.filter(s=>!fresh.includes(s)).map(s=>s.id),acquisition,unknown:sources.length?'':'没有读到该型号适用正文，不得编造操作。',notice:'existingPassageIds 的原文已在本次上下文提供，避免重复传输；引用不代表完整语义验证。'};
  }
@@ -374,7 +390,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  try{
   let round=0;
   const finalContract=provider.structuredOutput==='json_schema'&&!naturalChat;
-  const result=await runToolAgent({system:PRACTICAL_SYSTEM+(finalContract?'\n本路径最终答复必须调用complete_answer；message只作简短解释，不重复后续步骤。型号操作用guidance.kind=procedure，steps引用本轮带原文候选的id；不要为手机侧的人类操作伪造库存ID或声称已控制。物理组合用带itemIds的guidance。device_operation的items[0]是被操作设备，operationRef使用本轮已读取的适用型号原文id，并列入sourceIds。未知不能写成支持/不支持；只按当前问题回答，不主动扩展会删数据的操作。不要以普通completion、message或看图猜测绕过动作核对。':''),messages:messages.filter(m=>m.role==='user'),guard,
+  const result=await runToolAgent({system:PRACTICAL_SYSTEM+(finalContract?'\n本路径最终答复必须调用complete_answer；事实答案完整写在message，操作步骤写guidance，两处不重复。型号操作用guidance.kind=procedure，steps引用本轮带原文候选的id；不要为手机侧的人类操作伪造库存ID或声称已控制。物理组合用带itemIds的guidance。device_operation的items[0]是被操作设备，operationRef使用本轮已读取的适用型号原文id，并列入sourceIds。未知不能写成支持/不支持；只按当前问题回答，不主动扩展会删数据的操作。不要以普通completion、message或看图猜测绕过动作核对。':''),messages:messages.filter(m=>m.role==='user'),guard,
    tools:Object.entries(schemas).map(([name,schema])=>({name,schema,description:descriptions[name as keyof typeof descriptions],execute:async input=>{
     try{const value=await tool(name,JSON.stringify(input));unresolvedTools.delete(name);log('practical_tool',name+' completed');return value;}
     catch(e){if(e instanceof AgentError&&[403,409].includes(e.status))throw e;unresolvedTools.add(name);log('practical_tool_failed',name+': '+(e as Error).message);throw e;}
@@ -395,7 +411,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   // planning. This is the same bounded tool loop, not a second-model reviewer.
   const mustCheck=process.env.WUJIAN_PRACTICAL_CONSTRAINT_ROUND==='true'&&round===0&&practicalConstraints(initial).some(c=>c.satisfied===false);
   const result=await provider.converse!(modelMessages,turnTools,{timeoutMs:Math.min(thinking?90000:45000,deadline-Date.now()),maxTokens:thinking?6000:2400,thinking,
-   toolChoice:round===5||calls===6?finalContract?{type:'function',function:{name:'complete_answer'}}:'none':mustRead?{type:'function',function:{name:'search_product_knowledge'}}:mustReadResources?{type:'function',function:{name:'get_item_context'}}:boundPlanning&&!cards.some(c=>c.kind==='plan')?{type:'function',function:{name:actionResourceIds.length?'prepare_action':'complete_answer'}}:mustCheck?{type:'function',function:{name:'check_constraints'}}:finalContract?'required':'auto',onText:()=>{guard();provider.onStatus?.('正在整理依据、建议与待核对条件');}});
+   toolChoice:round===5||calls===6?finalContract?{type:'function',function:{name:'complete_answer'}}:'none':mustRead?{type:'function',function:{name:'search_product_knowledge'}}:mustReadResources?{type:'function',function:{name:'get_item_context'}}:mustCheck?{type:'function',function:{name:'check_constraints'}}:finalContract?'required':'auto',onText:()=>{guard();provider.onStatus?.('正在整理依据、建议与待核对条件');}});
   guard();if(result.tokens){tokens.input+=result.tokens.input;tokens.output+=result.tokens.output;reservedCny-=reserve;reservedCny+=(result.tokens.input*12+result.tokens.output*36)/1e6;previousInput={tokens:result.tokens.input,bytes:inputBytes};}
   log('practical_model',JSON.stringify({round,model:result.model,toolCalls:result.toolCalls.map(t=>t.function.name),finish:result.finishReason}));
   if(finalContract&&!result.toolCalls.length)throw Error('模型未遵守最终呈现协议，未发布未核对草稿');
@@ -404,6 +420,12 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   round++;return result;
    }});
   answer=finalized?.answer||result.text;
+  if(boundPlanning&&finalized?.guidance&&!cards.some(c=>c.kind==='plan')){
+   // Discussing a checked alternative is not a request to save a plan. Preserve
+   // the deterministic failed conditions and the same dependency-checked steps;
+   // don't release a free explanation in place of the rejected device actions.
+   answer='先排除已知不满足的使用条件：\n\n'+practicalConstraints(context()).map(c=>'- '+c.label+'：'+c.detail+'。'+c.scope).join('\n')+'\n\n'+finalized.guidance.answer+'\n\n这里只讨论候选，没有保存方案或执行设备操作。';
+  }
   if(cards.some(c=>c.kind==='plan')){
    const plan=cards.find(c=>c.kind==='plan')!;
    const concepts=plan.planPreview?.steps.filter(s=>['concept','unstructured_idea'].includes(s.status)).length||0;
@@ -412,7 +434,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   }
  }catch(e){if(e instanceof AgentError&&[403,409].includes(e.status))throw e;failure=(e as Error).message;failureCode=e instanceof ProviderError?e.code:undefined;log('practical_failed',failure);}
  guard(false);
- if(boundPlanning&&!cards.some(c=>c.kind==='plan')){
+ if(boundPlanning&&!cards.some(c=>c.kind==='plan')&&!finalized?.guidance){
   failure=failure||'未形成满足已知资源条件的计划';
   answer='目前还不能把模型草稿作为操作指导。'+practicalConstraints(context()).filter(c=>c.satisfied!==true).map(c=>c.label+'：'+c.detail).join('；')+'。已有物品和资料仍保留，可以缩小目标或补充关键条件后继续；没有执行任何设备操作。';
  }
@@ -430,7 +452,7 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  // tool progress streams separately, never raw reasoning or rejected drafts.
  provider.onText?.(answer);
  const steps=failure?[]:finalized?.procedure?.steps.map((s,n)=>({id:'procedure-'+session.id+'-'+session.messages.length+'-'+n,text:s.text}))||[];
- const reply:AssistantReply={modelHistoryText,errorCode:failureCode,continuations:failure?[]:continuations,actionCards:failure?[]:cards,necessaryConditionChecks:practicalConstraints(current),knowledgeWarnings:[...new Set([...passages.values()].flatMap(s=>s.reading?.limitations||[]))],answer,outcome:failure?'unavailable':missingKnowledge.size||unresolvedTools.size?'needs_info':'answered',source:passages.size?'model-with-evidence':'model-general',model:provider.model,steps,stepsInAnswer:steps.length>0,questions:[],evidenceIds:[...passages.keys()],citations,
+ const reply:AssistantReply={modelHistoryText,errorCode:failureCode,continuations:failure?[]:continuations,actionCards:failure?[]:cards,necessaryConditionChecks:practicalConstraints(current),knowledgeWarnings:[...new Set([...passages.values()].flatMap(s=>s.reading?.limitations||[]))],answer,outcome:failure?'unavailable':missingKnowledge.size||unresolvedTools.size?'needs_info':'answered',source:passages.size?'model-with-evidence':'model-general',model:provider.model,steps,stepsInAnswer:steps.length>0,questions:[],evidenceIds:[...new Set([...passages.values()].map(s=>s.id))],citations,
   memoryIds:[...new Set([...current.evidence.filter(e=>e.basis==='experience'||e.basis==='user_report'&&e.id!=='user:current-turn').map(e=>e.id),...localRecords.map(m=>m.id)])],usedItems:current.items.map(i=>({id:i.id,name:i.name,model:i.model||'待确认'})),caveat:'依据当前资料与获准报告；建议不等于已执行或实物验证。'};
  log('practical_completion',JSON.stringify({elapsedMs:Date.now()-started,calls,tools,reservedCny,missingKnowledgeIds:[...missingKnowledge],adviceOnly:true}));return {reply,trace,tokens,modelCalls:calls};
 }

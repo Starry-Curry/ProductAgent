@@ -9,12 +9,14 @@ export function TaskContinuity({
   onResume,
   onExit,
   onRestore,
+  scopeId,
 }: {
   actor: Person;
   items: Item[];
   onResume: (taskId: string, itemId?: string, sessionId?: string, newGoal?: string) => void;
   onExit: () => void;
   onRestore?:(taskId:string|undefined)=>void;
+  scopeId?:'young-apartment-v1';
 }) {
   const [tasks, setTasks] = useState<TaskSpec[]>([]),
     [current, setCurrent] = useState<{
@@ -35,6 +37,9 @@ export function TaskContinuity({
   const [allowCloud,setAllowCloud]=useState(false);
   const [editing,setEditing]=useState<any>(null),[correction,setCorrection]=useState("");
   const navigation=useRef(0);
+  const selectionKey='wujian-task:'+actor+(scopeId?':'+scopeId:'');
+  const itemScopeKey=items.map(i=>i.id).sort().join('|');
+  const inScope=(task:TaskSpec)=>task.itemInstanceIds.every(id=>items.some(i=>i.id===id));
   function resetConsent(){setReuse(false);setAllowCloud(false);}
   function chooseReuse(value:boolean){setReuse(value);if(!value)setAllowCloud(false);}
   async function request(action?: string, input?: unknown, id?: string) {
@@ -52,21 +57,23 @@ export function TaskContinuity({
   }
   useEffect(() => {
     let live = true;
+    setError('');
     navigation.current++;
     const load = async () => {
       const selection=navigation.current;let requestedTask:string|null=null;
       try {
         const d = await request();
         if (!live||selection!==navigation.current) return;
-        setTasks(d.tasks);
-        const id = localStorage.getItem("wujian-task:" + actor);
+        setTasks(d.tasks.filter(inScope));
+        const id = localStorage.getItem(selectionKey);
         requestedTask=id;
         if (id) {
           // A paginated/list snapshot is not the authority for an existing
           // selection. Read the task itself, then reject a late response if the
           // user has selected another goal in the meantime.
             const detail = await request(undefined, undefined, id);
-            if (live&&selection===navigation.current&&localStorage.getItem("wujian-task:"+actor)===id){
+            if(!inScope(detail.task)){if(live&&selection===navigation.current){setCurrent(null);onRestore?.(undefined);setError('这件事属于另一个物品空间，请切换空间后继续；原记录仍保留。');}return;}
+            if (live&&selection===navigation.current&&localStorage.getItem(selectionKey)===id){
               setCurrent({
                 task: detail.task,
                 runs: detail.runs,
@@ -79,9 +86,9 @@ export function TaskContinuity({
             }
         }else onRestore?.(undefined);
       } catch (e) {
-        if (live&&selection===navigation.current&&(!requestedTask||localStorage.getItem('wujian-task:'+actor)===requestedTask)) {
+        if (live&&selection===navigation.current&&(!requestedTask||localStorage.getItem(selectionKey)===requestedTask)) {
           if([401,403].includes((e as Error&{status?:number}).status||0)){
-            setCurrent(null);setTasks([]);localStorage.removeItem('wujian-task:'+actor);onRestore?.(undefined);
+            setCurrent(null);setTasks([]);localStorage.removeItem(selectionKey);onRestore?.(undefined);
           }
           setError(e instanceof Error ? e.message : "任务读取失败");
         }
@@ -97,14 +104,15 @@ export function TaskContinuity({
       navigation.current++;
       clearInterval(timer);
     };
-  }, [actor,onRestore]);
+  }, [actor,onRestore,selectionKey,itemScopeKey]);
   async function open(t: TaskSpec, resume = true, fresh = false) {
     const selection=++navigation.current;
     const d = await request(undefined, undefined, t.taskId);
     if(selection!==navigation.current)return;
+    if(!inScope(d.task)){setError('这件事属于另一个物品空间，请切换空间后继续；原记录仍保留。');return;}
     if(current?.task.taskId!==t.taskId||fresh){resetConsent();setNotes("");setEditing(null);setCorrection("");}
     setCurrent({ task: d.task, runs: d.runs, outcomes: d.outcomes,familyProgress:d.familyProgress,previousOutcomes:d.previousOutcomes,plans:d.plans });
-    localStorage.setItem("wujian-task:" + actor, t.taskId);
+    localStorage.setItem(selectionKey, t.taskId);
     onRestore?.(d.task.taskId);
     if (resume) {
       const session = d.runs.find((r: TaskRun) => r.sessionId)?.sessionId;
@@ -201,7 +209,7 @@ export function TaskContinuity({
           </button>
           <button
             onClick={() => {
-              localStorage.removeItem("wujian-task:" + actor);
+              localStorage.removeItem(selectionKey);
               setCurrent(null);
               onExit();
             }}

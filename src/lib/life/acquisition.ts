@@ -78,10 +78,8 @@ export const operationQuestion = (q: string) =>
   /怎么用|如何使用|首次|第一次|操作|清洁|清洗|洗护|维护|保养|储存|保存|养护|安装|组装|装配|拼搭|图解|烹饪|充电|配对|故障|不行|失灵|失效|卡住/.test(
     q,
   );
-function regionOf(url: string) {
+export function regionOf(url: string) {
   const u = new URL(url);
-  if (/ikea\.cn$/.test(u.hostname)) return "cn";
-  if (u.hostname === "helpguide.sony.net") return "unspecified";
   const regions = [
     "cn",
     "uk",
@@ -101,6 +99,12 @@ function regionOf(url: string) {
     const token=part.toLowerCase().replace(/^([a-z]{2})-/, '');
     if(token==='gb')return 'uk';if(regions.includes(token))return token;
   }
+  // Source geography, not proof of SKU/firmware applicability. A supported
+  // country-code suffix is stronger than a language-only directory, but never
+  // establishes publisher ownership; that remains a separate mandatory check.
+  const country=u.hostname.split('.').at(-1)||'';
+  if(country==='uk')return 'uk';
+  if(regions.includes(country)&&country!=='global')return country;
   return "unspecified";
 }
 
@@ -173,7 +177,12 @@ export function makeKnowledgeDocument(
     chain,
     fetchedAt: new Date().toISOString(),
     chunks,
-    reading: 'reading' in d ? d.reading : undefined,
+    reading: (()=>{
+      const reading='reading' in d?d.reading:undefined;
+      const country=new URL(d.url).hostname.split('.').at(-1);
+      if(country!==region)return reading;
+      return {mode:reading?.mode||'html_text' as const,figures:reading?.figures||[],...reading,limitations:[...(reading?.limitations||[]),'来源网址含国家地区标识，仅为来源市场线索；不单独证明私人实例、固件版本或跨区操作适用。']};
+    })(),
     sections: d.links.filter(l=>officialDomain(l.url,item.brand||'')||isProductManual(l)).slice(0,300),
   };
 }

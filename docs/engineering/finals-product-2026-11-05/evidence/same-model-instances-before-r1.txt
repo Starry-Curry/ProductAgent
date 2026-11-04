@@ -1,0 +1,28 @@
+✖ 两个相同型号实例共享厂家原文不共享状态，原文ID碰撞不能覆盖前一实例的绑定 (307.0012ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 953.7187
+
+✖ failing tests:
+
+test at tests\finals-same-model-instances.test.ts:2:1
+✖ 两个相同型号实例共享厂家原文不共享状态，原文ID碰撞不能覆盖前一实例的绑定 (307.0012ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FIRST-INSTANCE-ONLY-CANDIDATE/. Input:
+  
+  '绑定检查未通过，没有发布步骤。'
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-same-model-instances.test.ts:5:148)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '绑定检查未通过，没有发布步骤。',
+    expected: /FIRST-INSTANCE-ONLY-CANDIDATE/,
+    operator: 'match',
+    diff: 'simple'
+  }

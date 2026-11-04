@@ -4,3 +4,8 @@ test('未验证机制的前提与构想状态在动作之前出现，状态词�
  const other={...item,id:'y',name:'[合成]独立承载物'};const r=presentGuidance({goal:'探索一个尚未确认的承托想法',itemIds:['x','y'],steps:[{kind:'support',items:['x'],target:'y',text:'ACTION-NOT-YET-ADVICE',conditions:['VERIFY-SUPPORT-FIRST']}],sourceIds:[],conditions:[]},'探索用途，不是立即执行',['x','y'],[],[],[item,other]);assert.equal(r.plan.dependencies[0].status,'concept');assert.ok(r.answer.indexOf('VERIFY-SUPPORT-FIRST')<r.answer.indexOf('ACTION-NOT-YET-ADVICE'));assert.ok(r.answer.indexOf('仅构想 · 暂不作为操作')<r.answer.indexOf('ACTION-NOT-YET-ADVICE'));
  assert.equal(planStepStatus('low_risk'),'低风险候选 · 未实测');assert.equal(planStepStatus(undefined),'旧步骤 · 待重新核对');
 });
+test('步骤前提已经逐步展示时不在结尾重复整份条件，完整结构与独有全局边界仍保留',()=>{
+ const item={id:'x',name:'[合成]未知结构的物品',owner:'lin',model:'',category:'其他',state:'在用',availability:'available',attributes:{}} as any;
+ const r=presentGuidance({goal:'比较呈现而不减少条件',itemIds:['x'],steps:[{kind:'other',items:['x'],text:'只讨论候选',conditions:['UNIQUE-STEP-PRECONDITION']}],sourceIds:[],conditions:['GLOBAL-SCOPE-BOUNDARY']},'只讨论',['x'],[],[],[item]);
+ assert.equal(r.answer.split('UNIQUE-STEP-PRECONDITION').length-1,1);assert.match(r.answer,/GLOBAL-SCOPE-BOUNDARY/);assert.ok(r.plan.unresolved.some(c=>c.includes('UNIQUE-STEP-PRECONDITION')));assert.ok(r.plan.dependencies[0].conditions.includes('UNIQUE-STEP-PRECONDITION'));
+});

@@ -1,0 +1,746 @@
+{
+  "at": "2026-11-04T23:19:13.902Z",
+  "round": "finals-product-20261105-r1",
+  "basis": "real_Qwen_product_retest_same_original_question_new_session_existing_account_not_first_answer_check_acquisition_for_cache_or_discovery",
+  "prior": "thermos-browser-r2.json",
+  "itemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+  "originalQuestionIndex": 0,
+  "responses": [
+    {
+      "question": "请自主找 THERMOS JNL-355 日本版的厂家资料，完整回答容量、约重量和约外尺寸；不能拿JNL-505、JNL-356或JNL-S系列的参数混用。请给来源，不根据型号数字猜容量。",
+      "result": {
+        "session": {
+          "id": "ece98a9d-f6d0-4cc5-bd55-12d90b1b1e0e",
+          "owner": "u_7382e243-e65d-4e48-9173-1cf5a24d6fc8",
+          "itemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+          "identity": "[\"u_7382e243-e65d-4e48-9173-1cf5a24d6fc8\",\"[\\\"JNL-355\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "f77923c5-d92d-4e3c-83f6-ca6bed2a4719",
+              "role": "user",
+              "text": "请自主找 THERMOS JNL-355 日本版的厂家资料，完整回答容量、约重量和约外尺寸；不能拿JNL-505、JNL-356或JNL-S系列的参数混用。请给来源，不根据型号数字猜容量。",
+              "at": "2026-11-04T23:19:23.268Z",
+              "itemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "941339c8-3913-44c3-b976-c0176560f120",
+              "role": "assistant",
+              "text": "根据 THERMOS 日本官方发布的 JNL-355/505/605/755 规格资料，JNL-355 的厂家参数如下：\n\n-   **容量**：0.35 L\n-   **约重量**：0.17 kg\n-   **约外尺寸（宽×深×高）**：6.5 × 7.5 × 17 cm\n\n以上数据均直接取自官方规格表中“JNL-355”对应列，未混用 JNL-505、JNL-356 或 JNL-S 系列参数。\n\n来源：THERMOS 官方新闻稿 PDF《サーモス 真空断熱ケータイマグ（JNL-355/505/605/755）仕様一覧》\nhttps://www.thermos.jp/info/pdf/20210817140249.pdf",
+              "reply": {
+                "modelHistoryText": "根据 THERMOS 日本官方发布的 JNL-355/505/605/755 规格资料，JNL-355 的厂家参数如下：\n\n-   **容量**：0.35 L\n-   **约重量**：0.17 kg\n-   **约外尺寸（宽×深×高）**：6.5 × 7.5 × 17 cm\n\n以上数据均直接取自官方规格表中“JNL-355”对应列，未混用 JNL-505、JNL-356 或 JNL-S 系列参数。\n\n来源：THERMOS 官方新闻稿 PDF《サーモス 真空断熱ケータイマグ（JNL-355/505/605/755）仕様一覧》\nhttps://www.thermos.jp/info/pdf/20210817140249.pdf",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [
+                  "PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。",
+                  "来源网址含国家地区标识，仅为来源市场线索；不单独证明私人实例、固件版本或跨区操作适用。",
+                  "有118处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+                ],
+                "answer": "根据 THERMOS 日本官方发布的 JNL-355/505/605/755 规格资料，JNL-355 的厂家参数如下：\n\n-   **容量**：0.35 L\n-   **约重量**：0.17 kg\n-   **约外尺寸（宽×深×高）**：6.5 × 7.5 × 17 cm\n\n以上数据均直接取自官方规格表中“JNL-355”对应列，未混用 JNL-505、JNL-356 或 JNL-S 系列参数。\n\n来源：THERMOS 官方新闻稿 PDF《サーモス 真空断熱ケータイマグ（JNL-355/505/605/755）仕様一覧》\nhttps://www.thermos.jp/info/pdf/20210817140249.pdf",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "stepsInAnswer": false,
+                "questions": [],
+                "evidenceIds": [
+                  "aa9fe46fdc39cc1ba5376696:980",
+                  "7829428275bf224c6efe4d35:3995",
+                  "aa9fe46fdc39cc1ba5376696:0",
+                  "7829428275bf224c6efe4d35:0",
+                  "7829428275bf224c6efe4d35:2002",
+                  "7829428275bf224c6efe4d35:1002",
+                  "aa9fe46fdc39cc1ba5376696:1977",
+                  "7829428275bf224c6efe4d35:6927"
+                ],
+                "citations": [
+                  {
+                    "id": "aa9fe46fdc39cc1ba5376696",
+                    "title": "20210817140249.pdf",
+                    "url": "https://www.thermos.jp/info/pdf/20210817140249.pdf",
+                    "kind": "official",
+                    "section": "JNL-355；jp"
+                  },
+                  {
+                    "id": "7829428275bf224c6efe4d35",
+                    "title": "マグタイプ | 取扱説明書 | お客様サポート | サーモス",
+                    "url": "https://www.thermos.jp/support/manual/mug.html",
+                    "kind": "official",
+                    "section": "JNL-355；jp"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+                    "name": "[模拟持有]日版随身保温杯",
+                    "model": "JNL-355"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+                  "itemName": "[模拟持有]日版随身保温杯"
+                }
+              },
+              "at": "2026-11-04T23:19:23.268Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "9c044a1c-bd24-4261-bf5a-c7dfa2139d5b",
+            "turnScope": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+            "lastIntent": "help",
+            "activeItemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-11-04T23:19:18.333Z",
+          "updatedAt": "2026-11-04T23:19:23.269Z",
+          "expiresAt": "2026-11-11T23:19:18.333Z",
+          "itemScopes": {
+            "e2095f02-5317-4f95-99e3-1eaa687d5cbe": "[\"u_7382e243-e65d-4e48-9173-1cf5a24d6fc8\",\"[\\\"JNL-355\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "modelHistoryText": "根据 THERMOS 日本官方发布的 JNL-355/505/605/755 规格资料，JNL-355 的厂家参数如下：\n\n-   **容量**：0.35 L\n-   **约重量**：0.17 kg\n-   **约外尺寸（宽×深×高）**：6.5 × 7.5 × 17 cm\n\n以上数据均直接取自官方规格表中“JNL-355”对应列，未混用 JNL-505、JNL-356 或 JNL-S 系列参数。\n\n来源：THERMOS 官方新闻稿 PDF《サーモス 真空断熱ケータイマグ（JNL-355/505/605/755）仕様一覧》\nhttps://www.thermos.jp/info/pdf/20210817140249.pdf",
+          "continuations": [],
+          "actionCards": [],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [
+            "PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。",
+            "来源网址含国家地区标识，仅为来源市场线索；不单独证明私人实例、固件版本或跨区操作适用。",
+            "有118处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "answer": "根据 THERMOS 日本官方发布的 JNL-355/505/605/755 规格资料，JNL-355 的厂家参数如下：\n\n-   **容量**：0.35 L\n-   **约重量**：0.17 kg\n-   **约外尺寸（宽×深×高）**：6.5 × 7.5 × 17 cm\n\n以上数据均直接取自官方规格表中“JNL-355”对应列，未混用 JNL-505、JNL-356 或 JNL-S 系列参数。\n\n来源：THERMOS 官方新闻稿 PDF《サーモス 真空断熱ケータイマグ（JNL-355/505/605/755）仕様一覧》\nhttps://www.thermos.jp/info/pdf/20210817140249.pdf",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "stepsInAnswer": false,
+          "questions": [],
+          "evidenceIds": [
+            "aa9fe46fdc39cc1ba5376696:980",
+            "7829428275bf224c6efe4d35:3995",
+            "aa9fe46fdc39cc1ba5376696:0",
+            "7829428275bf224c6efe4d35:0",
+            "7829428275bf224c6efe4d35:2002",
+            "7829428275bf224c6efe4d35:1002",
+            "aa9fe46fdc39cc1ba5376696:1977",
+            "7829428275bf224c6efe4d35:6927"
+          ],
+          "citations": [
+            {
+              "id": "aa9fe46fdc39cc1ba5376696",
+              "title": "20210817140249.pdf",
+              "url": "https://www.thermos.jp/info/pdf/20210817140249.pdf",
+              "kind": "official",
+              "section": "JNL-355；jp"
+            },
+            {
+              "id": "7829428275bf224c6efe4d35",
+              "title": "マグタイプ | 取扱説明書 | お客様サポート | サーモス",
+              "url": "https://www.thermos.jp/support/manual/mug.html",
+              "kind": "official",
+              "section": "JNL-355；jp"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+              "name": "[模拟持有]日版随身保温杯",
+              "model": "JNL-355"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对已登记的物品性质、限制与未知条件",
+            "itemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+            "itemName": "[模拟持有]日版随身保温杯"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=e2095f02-5317-4f95-99e3-1eaa687d5cbe; domain metadata, not a model answer",
+            "at": "2026-11-04T23:19:18.340Z"
+          },
+          {
+            "stage": "tool_runtime_REPLY_START",
+            "detail": "{}",
+            "at": "2026-11-04T23:19:18.403Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T23:19:18.405Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T23:19:23.191Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_72af91f81c5647739ff3430a\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:19:23.196Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_72af91f81c5647739ff3430a\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:19:23.196Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_72af91f81c5647739ff3430a\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:19:23.196Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":17609,\"outputTokens\":247}",
+            "at": "2026-11-04T23:19:23.196Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_72af91f81c5647739ff3430a\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:19:23.198Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"complete_answer\",\"effect\":\"local_write\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_and_public_original_quote_locators_no_business_write\",\"idempotency\":\"original_document_and_quote_digest\"}",
+            "at": "2026-11-04T23:19:23.205Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "complete_answer completed",
+            "at": "2026-11-04T23:19:23.239Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_72af91f81c5647739ff3430a\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:19:23.243Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_72af91f81c5647739ff3430a\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+            "at": "2026-11-04T23:19:23.246Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":4911,\"calls\":1,\"tools\":1,\"reservedCny\":0.2202,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-04T23:19:23.259Z"
+          }
+        ],
+        "tokens": {
+          "input": 17609,
+          "output": 247
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "800c572f-6fe5-41e2-8d27-c96ca97fdc32",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 5889,
+      "streamTextEvents": 1
+    }
+  ],
+  "checks": [
+    {
+      "name": "same_question_real_new_session_answer_visible",
+      "passed": true,
+      "semanticReviewRequired": true
+    }
+  ],
+  "errors": [],
+  "pageErrors": [],
+  "sharedKnowledge": [
+    {
+      "id": "7829428275bf224c6efe4d35",
+      "processorVersion": "extractive-3-overlap",
+      "url": "https://www.thermos.jp/support/manual/mug.html",
+      "title": "マグタイプ | 取扱説明書 | お客様サポート | サーモス",
+      "hash": "d3f59a74b4904835cea1a9b8c81643c204b471c2de95053ec56cbdd69b6d55f9",
+      "model": "JNL-355",
+      "brand": "THERMOS",
+      "region": "jp",
+      "chain": [
+        "bailian-responses:structured-search",
+        "https://www.thermos.jp/support/manual/mug.html"
+      ],
+      "fetchedAt": "2026-11-04T23:17:37.058Z",
+      "reading": {
+        "mode": "html_text",
+        "figures": [
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-s01.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jpi-00.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jow-00pk.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_joi-01pk.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jox-00.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jpj-00.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_asha.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_fjf-00.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jni-04.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-s00tss.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-06b.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-506ds.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-irbj.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-00tss.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-500tss_aderiaretro.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-500tss_snps.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnr-04g.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnr-03ltd.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_joj-01.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jol-00.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          }
+        ],
+        "limitations": [
+          "有118处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。",
+          "来源网址含国家地区标识，仅为来源市场线索；不单独证明私人实例、固件版本或跨区操作适用。"
+        ]
+      },
+      "sections": [
+        {
+          "title": "（2358902）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnls.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1929947）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnls_en.pdf"
+        },
+        {
+          "title": "使用说明书（1893035）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnls_cn.pdf"
+        },
+        {
+          "title": "（2266054）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpi.pdf"
+        },
+        {
+          "title": "（1880537）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jow-pk.pdf"
+        },
+        {
+          "title": "（2596080）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joi501.pdf"
+        },
+        {
+          "title": "（1893084）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jox.pdf"
+        },
+        {
+          "title": "（2498318）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpj.pdf"
+        },
+        {
+          "title": "取扱説明書（1771192）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/asha.pdf"
+        },
+        {
+          "title": "（2408895）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/fjf.pdf"
+        },
+        {
+          "title": "（2408489）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jni.pdf"
+        },
+        {
+          "title": "取扱説明書（2372196）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnl.pdf"
+        },
+        {
+          "title": "取扱説明書（2464982）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnr_r.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（2176389）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnr_en.pdf"
+        },
+        {
+          "title": "使用说明书（2015738）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnr_cn.pdf"
+        },
+        {
+          "title": "（1877705）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joj.pdf"
+        },
+        {
+          "title": "（1773235）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jol.pdf"
+        },
+        {
+          "title": "（2332258）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jom.pdf"
+        },
+        {
+          "title": "（2523220）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jop.pdf"
+        },
+        {
+          "title": "（1909201）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joq.pdf"
+        },
+        {
+          "title": "（2442577）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jos01.pdf"
+        },
+        {
+          "title": "（2455176）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jou.pdf"
+        },
+        {
+          "title": "取扱説明書（1787315）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jov.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1232899）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jov_en.pdf"
+        },
+        {
+          "title": "使用说明书（1211713）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jov_cn.pdf"
+        },
+        {
+          "title": "取扱説明書（1971118）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jow.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1226571）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jow_en.pdf"
+        },
+        {
+          "title": "使用说明书（1176742）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jow_cn.pdf"
+        },
+        {
+          "title": "取扱説明書（2182952）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joy.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1454052）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joy_en.pdf"
+        },
+        {
+          "title": "使用说明书（1368309）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joy_cn.pdf"
+        },
+        {
+          "title": "取扱説明書（2521107）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpa.pdf"
+        },
+        {
+          "title": "取扱説明書（1775076）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpb.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1066953）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpb_en.pdf"
+        },
+        {
+          "title": "使用说明书（1028250）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpb_cn.pdf"
+        },
+        {
+          "title": "取扱説明書（2264407）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpc.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1711544）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpc_en.pdf"
+        },
+        {
+          "title": "使用说明书（1643774）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpc_cn.pdf"
+        },
+        {
+          "title": "（2774973）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpf.pdf"
+        },
+        {
+          "title": "（1551306）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/npg.pdf"
+        },
+        {
+          "title": "（1973618）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/rob-003.pdf"
+        },
+        {
+          "title": "（2463873）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnt05.pdf"
+        },
+        {
+          "title": "（2478631）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnr.pdf"
+        },
+        {
+          "title": "（2313102）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jok.pdf"
+        },
+        {
+          "title": "（1769074）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jon.pdf"
+        },
+        {
+          "title": "（1892272）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joo.pdf"
+        },
+        {
+          "title": "（1879079）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jor.pdf"
+        },
+        {
+          "title": "取扱説明書（2524378）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jos.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（2055762）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jos_en.pdf"
+        },
+        {
+          "title": "使用说明书（1997538）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jos_cn.pdf"
+        },
+        {
+          "title": "（1969626）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/JNF.pdf"
+        },
+        {
+          "title": "（2100634）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jni02.pdf"
+        },
+        {
+          "title": "（2263409）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnl-ol_pa.pdf"
+        },
+        {
+          "title": "（1989670）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnlpb02.pdf"
+        },
+        {
+          "title": "（2189772）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnm.pdf"
+        },
+        {
+          "title": "（1669554）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jno.pdf"
+        },
+        {
+          "title": "（4484104）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jno-252_352_502.pdf"
+        },
+        {
+          "title": "（2262051）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/JNR.pdf"
+        },
+        {
+          "title": "（2426185）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnr_swltd.pdf"
+        },
+        {
+          "title": "（2094133）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jns.pdf"
+        },
+        {
+          "title": "（2263349）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnt.pdf"
+        },
+        {
+          "title": "（2360113）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnt04.pdf"
+        },
+        {
+          "title": "（4265439）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnw-350_480.pdf"
+        },
+        {
+          "title": "（1729277）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jny.pdf"
+        },
+        {
+          "title": "（2192816）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joa.pdf"
+        },
+        {
+          "title": "（1686990）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jod.pdf"
+        },
+        {
+          "title": "（1753543）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joe.pdf"
+        },
+        {
+          "title": "（2452102）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jof.pdf"
+        },
+        {
+          "title": "（1819173）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jogr1.pdf"
+        },
+        {
+          "title": "（2396205）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joh.pdf"
+        },
+        {
+          "title": "（2422303）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joi.pdf"
+        },
+        {
+          "title": "お願いとご注意",
+          "url": "https://www.thermos.jp/support/manual/mug.html#attention"
+        },
+        {
+          "title": "注意・制限事項",
+          "url": "https://www.thermos.jp/support/manual/mug.html#attention"
+        },
+        {
+          "title": "PDFファイルについて",
+          "url": "https://www.thermos.jp/support/manual/mug.html#attention"
+        },
+        {
+          "title": "お客様サポート",
+          "url": "https://www.thermos.jp/support/"
+        },
+        {
+          "title": "取扱説明書",
+          "url": "https://www.thermos.jp/support/manual/"
+        },
+        {
+          "title": "マグタイプ",
+          "url": "https://www.thermos.jp/support/manual/mug.html"
+        },
+        {
+          "title": "交換用部品の購入方法",
+          "url": "https://www.thermos.jp/support/parts.html"
+        }
+      ],
+      "publisherProof": {
+        "version": 2,
+        "brand": "THERMOS",
+        "directoryURL": "https://www.wikidata.org/wiki/Special:EntityData/Q3523904.json",
+        "entity": "Q3523904",
+        "record": "{\"entities\":{\"Q3523904\":{\"id\":\"Q3523904\",\"labels\":{\"fr\":{\"language\":\"fr\",\"value\":\"Thermos\"},\"nb\":{\"language\":\"nb\",\"value\":\"Thermos\"},\"en\":{\"language\":\"en\",\"value\":\"Thermos L.L.C.\"},\"ja\":{\"language\":\"ja\",\"value\":\"サーモス\"},\"zh\":{\"language\":\"zh\",\"value\":\"膳魔師\"},\"id\":{\"language\":\"id\",\"value\":\"Thermos LLC\"},\"ms\":{\"language\":\"ms\",\"value\":\"Thermos L.L.C\"},\"nl\":{\"language\":\"nl\",\"value\":\"Thermos\"},\"pt\":{\"language\":\"pt\",\"value\":\"Thermos\"},\"mul\":{\"language\":\"mul\",\"value\":\"Thermos\"},\"ast\":{\"language\":\"ast\",\"value\":\"Thermos L.L.C.\"}},\"aliases\":{\"en\":[{\"language\":\"en\",\"value\":\"Thermos\"}],\"ms\":[{\"language\":\"ms\",\"value\":\"Thermos\"}]},\"claims\":{\"P31\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P31\",\"hash\":\"36a727619bec26b91817453972143ef121bc5ab6\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":136675338,\"id\":\"Q136675338\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q3523904$97a19e7c-493d-515f-0684-acb80c1a6cd0\",\"rank\":\"normal\"}],\"P856\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"ec2db9c429393a5150ea8a741be7edac21d180f4\",\"datavalue\":{\"value\":\"http://www.thermos.com/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"id\":\"Q3523904$A9DAC06E-37AD-44BA-95A5-F32CA1A8C7CA\",\"rank\":\"normal\",\"references\":[{\"hash\":\"fa278ebfc458360e5aed63d5058cca83c46134f1\",\"snaks\":{\"P143\":[{\"snaktype\":\"value\",\"property\":\"P143\",\"hash\":\"e4f6d9441d0600513c4533c672b5ab472dc73694\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":328,\"id\":\"Q328\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"}]},\"snaks-order\":[\"P143\"]}]},{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"1f47e294ab4787b9ebe252197317a05dc89a45d2\",\"datavalue\":{\"value\":\"http://www.thermos.jp/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"id\":\"Q3523904$9cb6db4d-4401-cd9e-5853-efc4d4bcaa1c\",\"rank\":\"normal\",\"references\":[{\"hash\":\"a29a646602abf65105ed0f39a44231c962ece9ee\",\"snaks\":{\"P143\":[{\"snaktype\":\"value\",\"property\":\"P143\",\"hash\":\"c6f1777471211df31724ac60175786f3872c83e9\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":177837,\"id\":\"Q177837\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"}]},\"snaks-order\":[\"P143\"]}]}]}}}}",
+        "recordHash": "4bab58da2bad01664c553ed98fbd24612c434d7c74e6fade9632c1ac94b3a6bc",
+        "homepage": "http://www.thermos.jp/",
+        "redirectChain": [
+          "https://www.thermos.jp/"
+        ],
+        "verifiedAt": "2026-11-04T23:17:19.443Z"
+      },
+      "chunkCount": 8
+    },
+    {
+      "id": "aa9fe46fdc39cc1ba5376696",
+      "processorVersion": "extractive-3-overlap",
+      "url": "https://www.thermos.jp/info/pdf/20210817140249.pdf",
+      "title": "20210817140249.pdf",
+      "hash": "fe2237d072a7417bdabfa220e8b3f2237abe3a0cb655913c2d4be2462d74bc53",
+      "model": "JNL-355",
+      "brand": "THERMOS",
+      "region": "jp",
+      "chain": [
+        "bailian-responses:structured-search",
+        "https://www.thermos.jp/info/pdf/20210817140249.pdf"
+      ],
+      "fetchedAt": "2026-11-04T23:17:20.940Z",
+      "reading": {
+        "mode": "pdf_text_layer",
+        "figures": [],
+        "limitations": [
+          "PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。",
+          "来源网址含国家地区标识，仅为来源市场线索；不单独证明私人实例、固件版本或跨区操作适用。"
+        ]
+      },
+      "sections": [],
+      "publisherProof": {
+        "version": 2,
+        "brand": "THERMOS",
+        "directoryURL": "https://www.wikidata.org/wiki/Special:EntityData/Q3523904.json",
+        "entity": "Q3523904",
+        "record": "{\"entities\":{\"Q3523904\":{\"id\":\"Q3523904\",\"labels\":{\"fr\":{\"language\":\"fr\",\"value\":\"Thermos\"},\"nb\":{\"language\":\"nb\",\"value\":\"Thermos\"},\"en\":{\"language\":\"en\",\"value\":\"Thermos L.L.C.\"},\"ja\":{\"language\":\"ja\",\"value\":\"サーモス\"},\"zh\":{\"language\":\"zh\",\"value\":\"膳魔師\"},\"id\":{\"language\":\"id\",\"value\":\"Thermos LLC\"},\"ms\":{\"language\":\"ms\",\"value\":\"Thermos L.L.C\"},\"nl\":{\"language\":\"nl\",\"value\":\"Thermos\"},\"pt\":{\"language\":\"pt\",\"value\":\"Thermos\"},\"mul\":{\"language\":\"mul\",\"value\":\"Thermos\"},\"ast\":{\"language\":\"ast\",\"value\":\"Thermos L.L.C.\"}},\"aliases\":{\"en\":[{\"language\":\"en\",\"value\":\"Thermos\"}],\"ms\":[{\"language\":\"ms\",\"value\":\"Thermos\"}]},\"claims\":{\"P31\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P31\",\"hash\":\"36a727619bec26b91817453972143ef121bc5ab6\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":136675338,\"id\":\"Q136675338\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q3523904$97a19e7c-493d-515f-0684-acb80c1a6cd0\",\"rank\":\"normal\"}],\"P856\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"ec2db9c429393a5150ea8a741be7edac21d180f4\",\"datavalue\":{\"value\":\"http://www.thermos.com/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"id\":\"Q3523904$A9DAC06E-37AD-44BA-95A5-F32CA1A8C7CA\",\"rank\":\"normal\",\"references\":[{\"hash\":\"fa278ebfc458360e5aed63d5058cca83c46134f1\",\"snaks\":{\"P143\":[{\"snaktype\":\"value\",\"property\":\"P143\",\"hash\":\"e4f6d9441d0600513c4533c672b5ab472dc73694\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":328,\"id\":\"Q328\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"}]},\"snaks-order\":[\"P143\"]}]},{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"1f47e294ab4787b9ebe252197317a05dc89a45d2\",\"datavalue\":{\"value\":\"http://www.thermos.jp/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"id\":\"Q3523904$9cb6db4d-4401-cd9e-5853-efc4d4bcaa1c\",\"rank\":\"normal\",\"references\":[{\"hash\":\"a29a646602abf65105ed0f39a44231c962ece9ee\",\"snaks\":{\"P143\":[{\"snaktype\":\"value\",\"property\":\"P143\",\"hash\":\"c6f1777471211df31724ac60175786f3872c83e9\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":177837,\"id\":\"Q177837\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"}]},\"snaks-order\":[\"P143\"]}]}]}}}}",
+        "recordHash": "4bab58da2bad01664c553ed98fbd24612c434d7c74e6fade9632c1ac94b3a6bc",
+        "homepage": "http://www.thermos.jp/",
+        "redirectChain": [
+          "https://www.thermos.jp/"
+        ],
+        "verifiedAt": "2026-11-04T23:17:19.443Z"
+      },
+      "chunkCount": 3
+    }
+  ],
+  "status": "executed_retest_requires_original_source_review",
+  "upstreamRequests": 1
+}

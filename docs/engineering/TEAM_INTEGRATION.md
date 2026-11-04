@@ -46,6 +46,8 @@ Mock 无网络、不代表 Qwen、创意质量或实物效果。原真实模型�
 
 `State / Person / Item / ModelMessage / ModelResponse / ToolDefinition / TurnResult` 也从同一入口取得。`Person`是已认证服务端身份类型，**不是让客户端自由传身份**。Route使用现有 `actor(r)` 等认证边界，不接受正文里的actor作为权限依据。
 
+决赛分支的可选兼容字段：`ItemManagementSnapshot` 从公共入口导出。物主读取 `/api/life?itemId=...` 时才得到 `management: {version:'item-management/1',itemId,revision,fields}`；共享读取者不获得编辑快照。管理表单以同一快照填值，`updateItem.input.expectedManagementRevision` 原样带回。服务端在原SQLite写事务中核对；409保留草稿，重新展示最新资料后由用户决定，不自动重放。旧调用方省略此字段仍兼容，**但只有传入版本的写入得到乐观并发保护**。这不是第二套Reality或新数据库。
+
 本轮补充导出既有 `amendOutcome` 与其输入类型，组员不必为了纠正/遗忘经历去引用内部实现。没有新建Runtime、数据库、Context或记忆系统；私人Outcome不能因物品共享而自动传给别人。
 
 ## 一个直接复用的最小功能

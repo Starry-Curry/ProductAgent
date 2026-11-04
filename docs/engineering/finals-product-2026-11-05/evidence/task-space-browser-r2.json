@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-04T22:37:15.937Z",
+  "basis": "real_authenticated_browser_real_Task_and_synthetic_item_setup_assistant_POST_deliberately_aborted_before_server_no_Qwen",
+  "checks": [],
+  "errors": [
+    "切换后不能把旧私人Task ID自动发给家庭对话\n+ actual - expected\n\n+ 'd1fa6ac5-b37c-4c50-acec-ccfa61aeb322'\n- undefined\n"
+  ],
+  "blockedAssistantInputs": [
+    {
+      "requestId": "943d5aeb-daf0-45a6-8b5f-b0dbfffc2310",
+      "taskId": "d1fa6ac5-b37c-4c50-acec-ccfa61aeb322",
+      "mode": "auto",
+      "question": "只讨论模拟家庭的物品，不接续原私人空间的事项",
+      "temporary": false,
+      "memoryPolicy": "off",
+      "uiContext": {
+        "page": "assistant",
+        "homeId": "young-apartment-v1"
+      }
+    }
+  ],
+  "actor": "u_2cdc5405-6306-4c13-92fb-3850d754ee0c",
+  "taskId": "d1fa6ac5-b37c-4c50-acec-ccfa61aeb322",
+  "submittedTaskId": "d1fa6ac5-b37c-4c50-acec-ccfa61aeb322",
+  "status": "failed",
+  "upstreamRequests": 0
+}

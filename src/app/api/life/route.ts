@@ -6,6 +6,7 @@ import {
   virtualHomeItems,
 } from "@/lib/life/virtual-home";
 import { recognizeProduct } from "@/lib/life/product-arrival";
+import {itemManagementSnapshot} from '@/lib/life/intake';
 import { inspectProduct } from "@/lib/life/product-inspection";
 import { installAlphaSamples } from "@/lib/life/alpha-samples";
 import { publicDemo, CloudError } from "@/lib/cloud/runtime";
@@ -113,8 +114,9 @@ async function GETHandler(r: Request) {
         searchInspiration(z.string().max(500).parse(p.get("inspiration"))),
       );
     if (p.has("itemId")) {
-      requireVisibleItem(db,state,a,p.get("itemId")!);
+      const focused=requireVisibleItem(db,state,a,p.get("itemId")!);
       return Response.json({
+        management:focused.owner===a?itemManagementSnapshot(focused):undefined,
         reality: readReality(db, state, a, p.get("itemId")!),
         sources: listSources(db, state, a, p.get("itemId")!).map((s) => ({
           ...s,
@@ -444,6 +446,7 @@ async function POSTHandler(r: Request) {
       const v = z
         .object({
           itemId: z.string().min(1),
+          expectedManagementRevision:z.string().regex(/^[a-f0-9]{64}$/).optional(),
           name: z.string().optional(),
           brand: z.string().max(80).optional(),
           model: z.string().max(100).optional(),

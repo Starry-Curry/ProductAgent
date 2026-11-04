@@ -7,6 +7,7 @@ import type { Item, Person } from "@/lib/domain";
 import type { ProductPack } from "@/lib/products";
 import type { Fragment } from "./Stories";
 import type { RealityCard } from "@/lib/context/reality";
+import type {ItemManagementSnapshot} from '@/lib/life/intake';
 export function ItemInformation({
   item,
   actor,
@@ -43,9 +44,10 @@ export function ItemInformation({
     [officialDraft, setOfficialDraft] = useState<any>(null);
   const [knowledge, setKnowledge] = useState<any[]>([]);
   const [reality, setReality] = useState<RealityCard>();
+  const [management,setManagement]=useState<ItemManagementSnapshot>();
   useEffect(() => {
     let current=true;
-    setSources([]);setKnowledge([]);setReality(undefined);
+    setSources([]);setKnowledge([]);setReality(undefined);setManagement(undefined);
     fetch(`/api/life?itemId=${encodeURIComponent(item.id)}`, {
       headers: { "x-demo-actor": actor },
     })
@@ -55,11 +57,13 @@ export function ItemInformation({
         setSources(d.sources || []);
         setKnowledge(d.knowledge || []);
         setReality(d.reality);
+        setManagement(d.management);
       })
       .catch((e) => {if(current)setNotice(e.message);});
     return ()=>{current=false;};
   }, [item, actor]);
   const pack = packs.find((p) => p.id === item.productBinding?.packId);
+  const editing=management?.fields||item;
   async function run(fn: () => Promise<void>) {
     setBusy(true);
     try {
@@ -118,19 +122,20 @@ export function ItemInformation({
         {item.owner === actor && (
           <details>
             <summary>更新数量、有效期和养护信息</summary>
-            <form
+            <form key={management?.revision||'loading'}
               onSubmit={(e) => {
                 e.preventDefault();
                 const f = new FormData(e.currentTarget);
                 run(async () => {
+                  if(!management||management.itemId!==item.id)throw Error('请等待当前物品资料加载完成');
                   await request("updateItem", {
                     itemId: item.id,
+                    expectedManagementRevision:management.revision,
                     brand: f.get("brand"),
                     model: f.get("model"),
                     region: f.get("region"),
                     lifecycle: f.get("lifecycle"),
                     attributes: {
-                      ...item.attributes,
                       quantity:
                         f.get("quantity") !== ""
                           ? Number(f.get("quantity"))
@@ -156,7 +161,7 @@ export function ItemInformation({
                   <input
                     name="brand"
                     maxLength={80}
-                    defaultValue={item.brand || ""}
+                    defaultValue={editing.brand || ""}
                   />
                 </label>
                 <label>
@@ -164,7 +169,7 @@ export function ItemInformation({
                   <input
                     name="model"
                     maxLength={100}
-                    defaultValue={item.model || ""}
+                    defaultValue={editing.model || ""}
                   />
                 </label>
               </div>
@@ -172,7 +177,7 @@ export function ItemInformation({
                 生命周期
                 <select
                   name="lifecycle"
-                  defaultValue={item.lifecycle || "长期耐用"}
+                  defaultValue={editing.lifecycle || "长期耐用"}
                 >
                   {[
                     "一次性",
@@ -187,7 +192,7 @@ export function ItemInformation({
               </label>
               <label>
                 产品地区版本
-                <select name="region" defaultValue={item.region || ""}>
+                <select name="region" defaultValue={editing.region || ""}>
                   <option value="">待核对</option>
                   {[
                     "cn",
@@ -216,14 +221,14 @@ export function ItemInformation({
                   type="number"
                   min="0"
                   step="0.1"
-                  defaultValue={item.attributes?.quantity ?? ""}
+                  defaultValue={editing.attributes?.quantity ?? ""}
                 />
               </label>
               <label>
                 数量单位
                 <select
                   name="quantityUnit"
-                  defaultValue={item.attributes?.quantityUnit || "件"}
+                  defaultValue={editing.attributes?.quantityUnit || "件"}
                 >
                   {["件", "份", "克", "毫升", "盆", "米"].map((x) => (
                     <option key={x}>{x}</option>
@@ -235,19 +240,19 @@ export function ItemInformation({
                 <input
                   type="date"
                   name="expiresOn"
-                  defaultValue={item.attributes?.expiresOn || ""}
+                  defaultValue={editing.attributes?.expiresOn || ""}
                 />
               </label>
               <label>
                 材质
                 <input
                   name="material"
-                  defaultValue={item.attributes?.material || ""}
+                  defaultValue={editing.attributes?.material || ""}
                 />
               </label>
               <div className="life-form-row">
-                <label>尺寸 / 结构（本人记录）<input name="dimensions" maxLength={100} defaultValue={item.attributes?.dimensions||''}/></label>
-                <label>供电方式（本人记录）<input name="power" maxLength={100} defaultValue={item.attributes?.power||''}/></label>
+                <label>尺寸 / 结构（本人记录）<input name="dimensions" maxLength={100} defaultValue={editing.attributes?.dimensions||''}/></label>
+                <label>供电方式（本人记录）<input name="power" maxLength={100} defaultValue={editing.attributes?.power||''}/></label>
               </div>
               <label>
                 {item.category === "植物"
@@ -257,10 +262,10 @@ export function ItemInformation({
                     : "维护注意事项"}
                 <textarea
                   name="care"
-                  defaultValue={item.attributes?.care || ""}
+                  defaultValue={editing.attributes?.care || ""}
                 />
               </label>
-              <button>保存管理信息</button>
+              <button disabled={busy||!management}>保存管理信息</button>
             </form>
           </details>
         )}
