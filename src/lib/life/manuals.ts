@@ -1,4 +1,8 @@
 /** A PDF suffix is a transport format, not evidence that a file is a product manual. */
+export function notProductEvidence(link:{title:string;url:string}){
+ let url=link.url;try{url=decodeURI(url);}catch{}
+ return /算法|备案|隐私|法律|营业执照|许可证|algorithm|filing|privacy|legal|license|licence|certificate|conformity/i.test(url+' '+link.title);
+}
 export function unrelatedDocument(link:{title:string;url:string}){
  let url=link.url;try{url=decodeURI(url);}catch{}
  return /算法|备案|隐私|法律|营业执照|许可证|营销|促销|algorithm|filing|privacy|legal|license|licence|certificate|conformity|brochure|catalogue|marketing/i.test(url+' '+link.title);

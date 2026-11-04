@@ -23,7 +23,7 @@ import {listLifeIdeas} from '../life/ideas.ts';
 import {discoveryInput} from '../life/planning.ts';
 
 
-export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number,ranking?:{originalIds:string[]}){
+export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number,ranking?:{originalIds:string[];profileMemoryKinds?:('interest'|'preference')[]}){
   const taskId=session.known.foundationTaskId;
   const taskContext=taskId?resolveTaskContext(db,state,actor,taskId):undefined;
   const task=taskContext?.task;
@@ -58,11 +58,12 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
     itemRead:'already_authorized',privateRecords:'separate_consent_required',
   }));
   const semanticItems=selected.map(i=>realities.get(i.id)!);
-  const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,
+  const profileMemoryKinds=!home&&!temporary&&session.known.memoryPolicy!=='off'?ranking?.profileMemoryKinds:undefined;
+  const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,profileMemoryKinds,
     taskMemoryOnly:true,includeItemRelationships:session.known.useItemMemories==='yes',companion:!!session.known.companionItemId,useExperiences:session.known.memoryPolicy!=='off'}));
   // An unbound conversation can still use relevant, explicitly cloud-authorized
   // global preferences. Do not load unrelated item stories to fill an empty set.
-  if(!home&&!selected.length)contexts.push(buildContext(db,state,actor,{question,mode:'service',temporary,sessionId:session.id,taskMemoryOnly:true,useExperiences:false}));
+  if(!home&&!selected.length)contexts.push(buildContext(db,state,actor,{question,mode:'service',temporary,sessionId:session.id,taskMemoryOnly:true,useExperiences:false,profileMemoryKinds}));
   const memoryOn=session.known.memoryPolicy!=='off'&&!temporary;
   const documents=selected.flatMap(i=>{
     return scopedProductKnowledge(i,readKnowledge(db,state,actor,i.id)).map(d=>({...d,itemId:i.id}));

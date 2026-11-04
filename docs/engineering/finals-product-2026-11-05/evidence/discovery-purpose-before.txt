@@ -1,0 +1,46 @@
+✖ 查规格不强制搜索操作手册：准确型号厂家规格目录可读，不能被无关操作PDF挤掉或冒充手册 (137.32ms)
+✖ 失败缓存按知识目的区分：同目的不重复联网，不同目的可找另一类资料 (111.1521ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 504.041
+
+✖ failing tests:
+
+test at tests\finals-discovery-purpose.test.ts:3:1
+✖ 查规格不强制搜索操作手册：准确型号厂家规格目录可读，不能被无关操作PDF挤掉或冒充手册 (137.32ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /operating instructions|user manual|PRIVATE-TOPIC/. Input:
+  
+  'Brother UNSEEN-FOCUS-63 official product specifications user manual operating instructions '
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-discovery-purpose.test.ts:6:52)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Brother UNSEEN-FOCUS-63 official product specifications user manual operating instructions ',
+    expected: /operating instructions|user manual|PRIVATE-TOPIC/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests\finals-discovery-purpose.test.ts:9:1
+✖ 失败缓存按知识目的区分：同目的不重复联网，不同目的可找另一类资料 (111.1521ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-discovery-purpose.test.ts:14:94)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -192,6 +192,7 @@ export function proposeAction(
   }
   const expiresAt = new Date(Date.now() + 15 * 60000).toISOString();
   const card: ActionCard = {
+    ...(action.kind==='plan'&&action.dependencies?.length?{planPreview:{steps:action.checklist.map((s,n)=>{const d=action.dependencies?.find(d=>d.step===n);return {text:s.label,status:d?.status||'unstructured_idea',conditions:d?.conditions||['旧草稿没有逐步条件记录，需重新核对']};}),conditions:action.conditions||[]}}:{}),
     id: crypto.randomUUID(),
     kind: action.kind,
     title,

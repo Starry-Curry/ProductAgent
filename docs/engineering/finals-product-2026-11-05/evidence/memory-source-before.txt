@@ -1,0 +1,46 @@
+✖ 一次原话只有一套候选：模型引用不被GET再次本地改写；遗忘后不从另一事件ID复活 (194.1762ms)
+✖ 模型明确无候选时不能在读取记忆页时退回另一套抽取；兼容旧requestId收据 (163.2784ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 935.7794
+
+✖ failing tests:
+
+test at tests\finals-memory-source.test.ts:2:1
+✖ 一次原话只有一套候选：模型引用不被GET再次本地改写；遗忘后不从另一事件ID复活 (194.1762ms)
+  AssertionError [ERR_ASSERTION]: 同一原话不能分别按requestId和messageId再次提取
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-memory-source.test.ts:6:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\finals-memory-source.test.ts:9:1
+✖ 模型明确无候选时不能在读取记忆页时退回另一套抽取；兼容旧requestId收据 (163.2784ms)
+  AssertionError [ERR_ASSERTION]: 已有旧收据仍证明这条消息完成过抽取，不再混入本地结果
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-memory-source.test.ts:14:48)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

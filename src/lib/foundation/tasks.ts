@@ -283,7 +283,7 @@ export function resolveTaskContext(
     version: "task-context/1",
     task,
     modelGoal:contextCurrent?task.goal:"旧任务涉及的个人语境已经变更；仅按本轮请求重新核对，不从旧目标补回关系事实",
-    plans:contextCurrent&&task.createdBy===a?(s.plans||[]).filter(p=>p.actor===a&&p.itemIds.every(itemId=>authorize(db,s,a,itemId).allowed)&&(db.prepare("SELECT task_id FROM foundation_links WHERE kind='plan' AND ref_id=?").get(p.id) as {task_id:string}|undefined)?.task_id===id).map(p=>({id:p.id,goal:p.goal,itemIds:p.itemIds,checklist:p.checklist,conditions:p.conditions,sources:p.sources,resourceReview:changedPlanResources(p,s.items),basis:'user_confirmed_plan_not_execution'})):[],
+    plans:contextCurrent&&task.createdBy===a?(s.plans||[]).filter(p=>p.actor===a&&p.itemIds.every(itemId=>authorize(db,s,a,itemId).allowed)&&(db.prepare("SELECT task_id FROM foundation_links WHERE kind='plan' AND ref_id=?").get(p.id) as {task_id:string}|undefined)?.task_id===id).map(p=>({id:p.id,goal:p.goal,itemIds:p.itemIds,checklist:p.checklist,conditions:p.conditions,dependencies:p.dependencies,sources:p.sources,resourceReview:changedPlanResources(p,s.items),basis:'user_confirmed_plan_not_execution'})):[],
     policyRevision: policyRevision(db, s),
     previousOutcomes: previous,
     familyProgress: s.tasks.filter(f=>

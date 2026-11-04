@@ -22,6 +22,7 @@ export type SourceEvent = {
   basis: NonNullable<MemoryRecord["provenance"]>["basis"];
   candidates?: Candidate[];
   pending?: boolean;
+  extractor?: 'ambient-local-v1'|'provider-source-span-v1';
 };
 // This is a narrow local extractor, not unrestricted semantic understanding.
 // Skip quoted, hypothetical, third-party and credential-bearing input entirely.
@@ -240,7 +241,7 @@ export function captureEvent(
         sessionId: event.sessionId,
         basis: event.basis,
         at: event.at,
-        extractor: EXTRACTOR,
+        extractor: event.extractor || EXTRACTOR,
       },
     };
     if (old?.text === memory.text && old.polarity === memory.polarity) continue;
@@ -294,7 +295,9 @@ export function captureTurn(
   if (/^记住[：:，,\s]/u.test(question) || ["off", "read"].includes(session.known.memoryPolicy || ""))
     return [];
   return captureEvent(db, state, actor, {
-    id: requestId,
+    // Reconciliation sees this same immutable user message. A request UUID is
+    // an idempotency key, not another source utterance to extract a second time.
+    id: session.messages.findLast(m=>m.role==='user'&&m.text===question)?.id || requestId,
     kind: "chat",
     at: session.updatedAt,
     text: question,
@@ -302,6 +305,7 @@ export function captureTurn(
     sessionId: session.id,
     basis: "user_statement",
     pending: session.known.memoryPolicy === "candidates",
+    ...(proposals!==undefined?{extractor:'provider-source-span-v1' as const}:{}),
     candidates:
       proposals ??
       (session.mode === "story" &&
@@ -558,9 +562,17 @@ export function reconcileMemories(
           ))
       )
         continue;
-      for (const message of session.messages.filter(
+      const userMessages=session.messages.filter(
         (m) => m.role === "user" && m.capture !== false,
-      ))
+      );
+      if(!userMessages.length)continue;
+      const canonical=new Set((db.prepare(`SELECT source_key FROM memory_source_receipts WHERE owner=? AND source_key IN (${userMessages.map(()=>'?').join(',')})`).all(actor,...userMessages.map(m=>'chat:'+m.id)) as {source_key:string}[]).map(r=>r.source_key.slice(5)));
+      // Old turns used the request UUID as the capture source. The committed
+      // response binds that receipt to its actual user message; honor it without
+      // rewriting history or running a different extractor over the old text.
+      const legacy=userMessages.some(m=>!canonical.has(m.id))?new Set((db.prepare("SELECT json_extract(r.result,'$.session.messages[#-2].id') AS message_id FROM agent_requests r JOIN memory_source_receipts m ON m.owner=r.owner AND m.source_key='chat:'||r.request_id WHERE r.owner=? AND r.session_id=? AND r.result IS NOT NULL").all(actor,session.id) as {message_id:string}[]).map(r=>r.message_id)):new Set<string>();
+      for (const message of userMessages){
+        if(canonical.has(message.id)||legacy.has(message.id))continue;
         captureEvent(db, state, actor, {
           id: message.id,
           kind: "chat",
@@ -574,6 +586,7 @@ export function reconcileMemories(
             (!message.memoryPolicy &&
               session.known.memoryPolicy === "candidates"),
         });
+      }
     }
     db.exec("COMMIT");
   } catch (error) {

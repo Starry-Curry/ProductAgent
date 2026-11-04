@@ -443,6 +443,7 @@ export function recallMemories(
   itemId?: string,
   sessionId?: string,
   includeItemRelationships = false,
+  globalKinds:('interest'|'preference')[] = [],
 ) {
   const q = question.toLowerCase();
   const wantsStory = isMemoryRecallRequest(question);
@@ -480,6 +481,7 @@ export function recallMemories(
     .map((m) => ({
       m,
       score:
+        (!m.itemId && globalKinds.includes(m.kind as 'interest'|'preference') ? 3 : 0) +
         (m.itemId && m.itemId === itemId ? 8 : 0) +
         (m.kind === "preference" ? 2 : 0) +
         (mode === "ideas" && m.kind === "interest" ? 4 : 0) +

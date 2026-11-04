@@ -530,11 +530,18 @@ export function AssistantConversation({
             {message.reply?.actionCards?.map((card) => (
               <div className="home-action-card" key={card.id}>
                 <h3>{card.title}</h3>
-                <ul>
+                {card.planPreview?<>
+                  <p>这是待确认的方案。以下每一步先核对前提；保存不代表条件已满足或动作已执行。</p>
+                  <ol>{card.planPreview.steps.map((step,i)=><li key={i}>
+                    {!!step.conditions.length&&<details className="plan-step-conditions" open={i===0}><summary>第{i+1}步 · 实施前先核对{step.conditions.length}项</summary><ul>{step.conditions.map((c,n)=><li key={n}>{c}</li>)}</ul></details>}
+                    <p>{step.text}</p>
+                  </li>)}</ol>
+                  {!!card.planPreview.conditions.length&&<details><summary>查看完整约束与资料缺口</summary><ul>{card.planPreview.conditions.map((c,i)=><li key={i}>{c}</li>)}</ul></details>}
+                </>:<ul>
                   {card.detail.map((line, i) => (
                     <li key={i}>{line}</li>
                   ))}
-                </ul>
+                </ul>}
                 {card.status === "pending" ? (
                   <div className="inline">
                     <button
@@ -563,7 +570,7 @@ export function AssistantConversation({
                       : "已取消，未执行"}
                   </p>
                 )}
-                <small>确认后才执行；建议保留 15 分钟。</small>
+                <small>{card.kind==='plan'||card.kind==='taskPlan'?'确认只保存候选计划，不执行实物动作；草稿保留15分钟。':'确认后才执行这项记录操作；建议保留15分钟。'}</small>
                 {card.kind==='gift'&&card.status==='applied'&&<a href="#social" className="text-button">查看赠礼与预览链接</a>}
               </div>
             ))}

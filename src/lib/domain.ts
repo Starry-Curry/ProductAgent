@@ -116,7 +116,7 @@ export type Care = {
   recipient: Person;
 };
 export type Plan = {
-  dependencies?:{step:number;resourceIds:string[];status:string}[];
+  dependencies?:{step:number;resourceIds:string[];status:string;conditions?:string[]}[];
   resourceRevisions?:Record<string,string>;
   conditions?: string[];
   sources?: {id:string;url:string}[];

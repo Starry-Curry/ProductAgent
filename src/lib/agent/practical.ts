@@ -61,10 +61,10 @@ const schemas={
  open_item_capability:z.object({itemId:z.string().min(1).max(100),capability:z.enum(['creative','persona','story','maintenance','family','gift','software'])}).strict(),
  prepare_action:currentActionProposal,
  get_item_context:z.object({itemIds:ids,query:z.string().trim().min(1).max(500).optional(),cursor:z.number().int().min(0).max(10000).optional()}).strict(),
- search_product_knowledge:z.object({itemId:z.string().min(1).max(100),query:z.string().min(1).max(500),refresh:z.boolean().optional(),sourceUrl:z.string().url().optional()}).strict(),
+ search_product_knowledge:z.object({itemId:z.string().min(1).max(100),query:z.string().min(1).max(500),purpose:z.enum(['general','specifications','operation','care','policy']).optional().describe('资料类型：参数/尺寸用specifications，按钮步骤用operation，清洗维护用care，保修用policy；这不是品牌规则。query只用于本地选原文，公开搜索仅发送商业身份和此类型。'),refresh:z.boolean().optional(),sourceUrl:z.string().url().optional()}).strict(),
  inspect_manual_visual:z.object({itemId:z.string().min(1).max(100),sourceId:z.string().min(1).max(200),question:z.string().min(1).max(800),figureUrl:z.string().url().optional(),pageNumbers:z.array(z.number().int().min(1).max(80)).max(3).optional()}).strict(),
  read_official_page:z.object({itemId:z.string().min(1).max(100),sourceId:z.string().min(1).max(200),question:z.string().min(1).max(800)}).strict(),
- get_relevant_experiences:z.object({itemIds:ids}).strict(),
+ get_relevant_experiences:z.object({itemIds:ids,globalKinds:z.array(z.enum(['interest','preference'])).max(2).optional().describe('需要个性化或用户问已保存兴趣时，可按类别读取已确认且允许云端使用的全局兴趣/偏好；不用用户先说出具体内容。不会扩大私人故事、其他物品或off/临时模式权限。')}).strict(),
  check_constraints:z.discriminatedUnion('kind',[
   z.object({kind:z.literal('frame'),object:z.tuple([z.number().positive().max(1e6),z.number().positive().max(1e6)]),aspect:z.tuple([z.number().positive().max(1e6),z.number().positive().max(1e6)])}).strict(),
   z.object({kind:z.literal('known'),checkIds:z.array(z.string().max(100)).max(30).default([])}).strict(),
@@ -116,11 +116,13 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
  let extraIds:string[]=[],queries:string[]=[];const missingKnowledge=new Set<string>();
  let resourcesRead=false;
  const unresolvedTools=new Set<string>();
+ const requestedProfileKinds=new Set<'interest'|'preference'>();
+ const freshDiscoveries=new Map<string,any>();
  const pdfVersions=new Map<string,string>();
  const log=(stage:string,detail:string)=>trace.push({stage,detail,at:new Date().toISOString()});
  provider.onStatus?.('正在核对本次可用的物品与授权');
  let rankedOriginalIds:string[]=[],rankedOnce=false;
- const context=()=>compileTaskContext(db,read(),actor,session,question,temporary,queries,extraIds,18000,{originalIds:rankedOriginalIds});
+ const context=()=>compileTaskContext(db,read(),actor,session,question,temporary,queries,extraIds,18000,{originalIds:rankedOriginalIds,profileMemoryKinds:[...requestedProfileKinds]});
  const actionGoal=()=>{const prior=context().priorPlanningContext;return [...(prior?.restrictions||[]),...(prior?.excludedItemIds||[]).map(id=>'不用'+(read().items.find(i=>i.id===id)?.name||'')),question].join('；');};
  const guard=(checkTime=true)=>{if(checkTime&&Date.now()>=deadline)throw new AgentError('本次任务等待过久，请保留问题后继续',504);
   if(epoch(db,actor)!==version||!sessionAccess(session,read(),actor))throw new AgentError('物品或记忆授权已变化，请重新提问',409);
@@ -287,11 +289,12 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
    const proposal=currentActionProposal.parse(p);const allowed=context().authorizedItemIds.filter(id=>proposal.kind!=='plan'||usable(read().items.find(x=>x.id===id)!));
    const chosen=proposal.kind==='plan'?checkPlanResources(proposal,allowed,practicalConstraints(context()),actionSources(),read().items.filter(i=>allowed.includes(i.id)),actionGoal()):proposal;
    const itemIds=chosen.kind==='plan'?chosen.itemIds:[chosen.itemId];select(itemIds);
-    const action=chosen.kind==='plan'?{kind:'plan' as const,goal:chosen.goal,itemIds:chosen.itemIds,conditions:chosen.unresolved,dependencies:chosen.dependencies.map(d=>({step:d.index,resourceIds:d.resources,status:d.status})),resourceRevisions:Object.fromEntries(chosen.itemIds.map(id=>[id,planResourceStamp(read().items.find(i=>i.id===id)!)])),sourceRefs:chosen.sourceIds.map(id=>{const stored=chosen.itemIds.flatMap(itemId=>readSourceSelections(read().items.find(i=>i.id===itemId)!,readKnowledge(db,read(),actor,itemId))).find(s=>s.id===id);if(stored)return stored.reference;const doc=chosen.itemIds.flatMap(itemId=>scopedProductKnowledge(read().items.find(i=>i.id===itemId)!,readKnowledge(db,read(),actor,itemId)).map(d=>d.document)).find(d=>d.id===id||d.chunks.some(c=>c.id===id));if(!doc)throw Error('source_no_longer_current');return bindOriginalReference(doc,id);}),checklist:chosen.steps.map(s=>({label:s,status:chosen.readiness==='conditional'?'实施前先核对条件':'待执行（不是实物验证）'}))}:chosen;
+    const action=chosen.kind==='plan'?{kind:'plan' as const,goal:chosen.goal,itemIds:chosen.itemIds,conditions:chosen.unresolved,dependencies:chosen.dependencies.map(d=>({step:d.index,resourceIds:d.resources,status:d.status,conditions:d.conditions})),resourceRevisions:Object.fromEntries(chosen.itemIds.map(id=>[id,planResourceStamp(read().items.find(i=>i.id===id)!)])),sourceRefs:chosen.sourceIds.map(id=>{const stored=chosen.itemIds.flatMap(itemId=>readSourceSelections(read().items.find(i=>i.id===itemId)!,readKnowledge(db,read(),actor,itemId))).find(s=>s.id===id);if(stored)return stored.reference;const doc=chosen.itemIds.flatMap(itemId=>scopedProductKnowledge(read().items.find(i=>i.id===itemId)!,readKnowledge(db,read(),actor,itemId)).map(d=>d.document)).find(d=>d.id===id||d.chunks.some(c=>c.id===id));if(!doc)throw Error('source_no_longer_current');return bindOriginalReference(doc,id);}),checklist:chosen.steps.map(s=>({label:s,status:chosen.readiness==='conditional'?'实施前先核对条件':'待执行（不是实物验证）'}))}:chosen;
    const title=chosen.kind==='plan'?(chosen.readiness==='conditional'?'待核对的候选计划：':'资源已核对的计划：')+chosen.goal:chosen.kind==='story'?'保存这段物品故事':chosen.kind==='gift'?'准备不含故事的赠礼':'交给家人继续处理';
    const detail=chosen.kind==='plan'?[...chosen.steps,...chosen.unresolved.map(c=>'待核对：'+c),'数值与资源核对不证明物理可行或每句话有据']:chosen.kind==='story'?[chosen.text,'不自动授权记忆检索、云端或家庭共享']:chosen.kind==='gift'?[chosen.message,'不附私人故事或对话；创建不等于交付']:[chosen.summary,'只共享你确认的摘要，对方尚未接手'];
    const card=proposeAction(db,read(),actor,session,crypto.randomUUID(),action,title,detail);cards.push(card);return {card,basis:'pending_explicit_user_confirmation_no_domain_write',notice:'仅准备草稿，必须用户点击确认；不是现实任务完成或设备执行'};
   }
+   if(name==='get_relevant_experiences'&&!temporary&&session.known.memoryPolicy!=='off')for(const kind of p.globalKinds||[])requestedProfileKinds.add(kind);
    const current=context();
    const requested=name==='search_product_knowledge'?[p.itemId]:name==='get_item_context'&&!p.itemIds.length?(p.query?discoverCapabilities(db,read(),actor,{goal:p.query,cursor:p.cursor,scopeItemIds:current.authorizedItemIds}).resources.map(i=>i.id):current.items.map(i=>i.id)):p.itemIds;
    const c=select(requested);
@@ -310,9 +313,11 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
     storeOfficialDocument(db,actor,item,document);acquisition.readURLs.push({url:page.url,characters:page.text.length});
    }else if(!acquisition.cached||p.refresh||brandEntry(item.brand||'')?.domains[0]==='canon.com.cn'&&!readKnowledge(db,read(),actor,item.id).some(d=>/\/manual\//.test(new URL(d.url).pathname))){
     const needsManual=brandEntry(item.brand||'')?.domains[0]==='canon.com.cn'&&!readKnowledge(db,read(),actor,item.id).some(d=>/\/manual\//.test(new URL(d.url).pathname));
-    const found=await acquireKnowledge(db,read,actor,item.id,{query:question+' '+p.query,force:!!p.refresh||needsManual,preferManual:needsManual,persist:true,seedURLs:sourceReviews.filter(r=>r.model===item.model).map(r=>r.url),search:provider.search?async(q,sites)=>{
+    const discoveryKey=item.id+':'+(p.purpose||(needsManual?'operation':'general'));
+    const reused=freshDiscoveries.get(discoveryKey);
+    const found=reused||await acquireKnowledge(db,read,actor,item.id,{query:question+' '+p.query,purpose:p.purpose,force:!!p.refresh||needsManual,preferManual:needsManual,persist:true,seedURLs:sourceReviews.filter(r=>r.model===item.model).map(r=>r.url),search:provider.search?async(q,sites)=>{
      guard();if(calls>=5)throw Error('本轮模型预算需保留最终回答');calls++;const r=await provider.search!(q,sites);guard();if(r.tokens){tokens.input+=r.tokens.input;tokens.output+=r.tokens.output;reservedCny+=(r.tokens.input*12+r.tokens.output*36)/1e6+0.01;}log('practical_search',JSON.stringify({model:r.model,hits:r.hits.length,events:r.events}));return r;
-    }:undefined});guard();Object.assign(acquisition,found.acquisition);acquisition.cached=found.cached;acquisition.issues=found.issues;
+    }:undefined});guard();if(!found.cached)freshDiscoveries.set(discoveryKey,found);Object.assign(acquisition,found.acquisition);acquisition.cached=found.cached;acquisition.issues=found.issues;if(reused)acquisition.reusedWithinTurn=true;
    }
   }
   await readRelevant(p.itemId,question+' '+p.query);
@@ -335,9 +340,12 @@ export async function executePractical(db:DatabaseSync,read:()=>State,actor:Pers
   notice:'厂家原文及定位不是独立语义认证；按当前问题解释，不把资料未提及当明确不支持。',
  };
  const softwareCapabilities=initial.items.flatMap(i=>registeredCapabilities(db,read(),actor,i.id));
+ // Metadata uses the same eligibility service as the actual tool, including
+ // provenance withdrawal/persona settings. No parallel permission filter.
+ const availableProfileKinds=!temporary&&session.known.memoryPolicy!=='off'&&session.known.homeId!=='young-apartment-v1'?(['interest','preference'] as const).filter(kind=>buildContext(db,read(),actor,{question,mode:'service',sessionId:session.id,taskMemoryOnly:true,useExperiences:false,profileMemoryKinds:[kind]}).cloudMemories.some(m=>!m.itemId&&m.kind===kind)):[];
  const localSoftwareTargets=initial.items.flatMap(i=>{const target=ownedSoftwareTarget(read(),actor,i.id);return target?[target]:[];});
  const messages:ModelMessage[]=[{role:'system',content:PRACTICAL_SYSTEM},{role:'user',content:JSON.stringify({question,items:initial.semanticItems.map(taskReality),catalogue:initial.catalogue,discovery:initial.discovery,contextRevision:initial.revision,voice:voice?.enabled?{itemId:voiceId,nickname:voice.nickname,style:voice.style,notice:'这是获准的物品交流身份，不是用户姓名；风格不得覆盖事实，不虚构经历'}:undefined,
-  ...(provider.structuredOutput==='json_schema'?{officialSemantics:initialSemantics}:{officialSources:initial.evidence.filter(e=>e.basis==='official')}),documentation:initial.items.map(i=>({itemId:i.id,sources:scopedProductKnowledge(read().items.find(x=>x.id===i.id)!,readKnowledge(db,read(),actor,i.id)).map(({document:d})=>({sourceId:d.id,url:d.url,model:d.model,readingMode:d.reading?.mode||'unknown',scope:'scoped_official_original_content_not_classified_by_URL'}))})),experiences:initial.experiences,preferences:initial.preferences,privateFacts:initial.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),
+  ...(provider.structuredOutput==='json_schema'?{officialSemantics:initialSemantics}:{officialSources:initial.evidence.filter(e=>e.basis==='official')}),documentation:initial.items.map(i=>({itemId:i.id,sources:scopedProductKnowledge(read().items.find(x=>x.id===i.id)!,readKnowledge(db,read(),actor,i.id)).map(({document:d})=>({sourceId:d.id,url:d.url,model:d.model,readingMode:d.reading?.mode||'unknown',scope:'scoped_official_original_content_not_classified_by_URL'}))})),availableProfileContext:{kinds:availableProfileKinds,notice:'类别存在表示可用已获准的全局记录；内容按需用get_relevant_experiences的globalKinds读取，不是未存储，也不含未获准故事'},experiences:initial.experiences,preferences:initial.preferences,privateFacts:initial.evidence.filter(e=>e.basis==='user_report'&&e.id!=='user:current-turn'),
   localSoftwareTargets,softwareCapabilities,selectedPlans:initial.selectedPlans,priorPlanningContext:initial.priorPlanningContext,necessaryConditionChecks:practicalConstraints(initial),history:practicalHistory(session,temporary),currentTask:initial.currentTask,tried:initial.tried,permission:initial.permissions,availableActions:temporary?[]:['plan','story','gift','family'],household:session.known.uiPage==='family'&&actor.startsWith('u_')?householdMembers(db,actor).map(m=>({id:m.id,name:m.name})):[]})}];
  // Candidate: keep the user's actual request as a natural user turn after the
  // data packet, rather than leaving it buried inside a long evidence JSON.

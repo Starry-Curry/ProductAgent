@@ -1,0 +1,27 @@
+✖ 后排步骤的必要条件不能被前十条截断；每步条件保留在预览、确认后的同一Task和历史兼容中 (126.4398ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 775.498
+
+✖ failing tests:
+
+test at tests\finals-plan-conditions.test.ts:3:1
+✖ 后排步骤的必要条件不能被前十条截断；每步条件保留在预览、确认后的同一Task和历史兼容中 (126.4398ms)
+  AssertionError [ERR_ASSERTION]: 最后一步的前提不能消失
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-plan-conditions.test.ts:6:74)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

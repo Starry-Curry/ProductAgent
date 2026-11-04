@@ -22,7 +22,7 @@ export function TaskContinuity({
       outcomes: any[];
       familyProgress?:any[];
       previousOutcomes?:any[];
-      plans?:(Pick<Plan,'id'|'goal'|'checklist'|'conditions'|'sources'>&{resourceReview?:{changed:string[];untracked?:string[];affected:number[];notice:string}})[];
+      plans?:(Pick<Plan,'id'|'goal'|'checklist'|'conditions'|'dependencies'|'sources'>&{resourceReview?:{changed:string[];untracked?:string[];affected:number[];notice:string}})[];
     } | null>(null),
     [goal, setGoal] = useState(""),
     [chosen, setChosen] = useState<string[]>([]),
@@ -192,7 +192,7 @@ export function TaskContinuity({
           </p>
           {current.familyProgress?.map(f=><p key={f.familyTaskId}>家庭协作：{f.reportedAt?"家人已报告处理完成，仍需你核对结果":f.status==="未解决"?"家人报告尚未解决":f.acceptedAt?"家人已接手":f.seenAt?"家人已查看":"等待家人查看"}。{f.basis==="user_report"?"这是家人的报告，不是设备验证。":""}</p>)}
           {!!current.previousOutcomes?.length&&<details><summary>本次可参考的经验</summary>{current.previousOutcomes.map(o=><p key={o.outcomeId}>你的报告：{o.notes} <small>{o.allowCloud?"已允许云端使用":"仅本机查看，不传云端"}；仍须核对本次条件。</small></p>)}</details>}
-          {!!current.plans?.length&&<details><summary>这件事已保存的方案</summary>{current.plans.map(p=><section key={p.id}><strong>{p.goal}</strong>{!!p.resourceReview?.untracked?.length&&<p role="status">旧方案没有完整的条件快照，需重新核对，不能当作条件未变。</p>}{!!p.resourceReview?.changed.length&&<p role="status">物品条件已变化，需重新核对第{p.resourceReview.affected.map(n=>n+1).join("、")}步。其他步骤未发现登记条件变化，也不代表实物验证。</p>}<ol>{p.checklist?.map((s,n)=><li key={n}>{s.label} · {s.status}</li>)}</ol>{p.conditions?.map((c,n)=><p key={n}>实施前待核对：{c}</p>)}{p.sources?.map((s,n)=><p key={n}><a href={s.url} target="_blank" rel="noreferrer">查看方案资料 {n+1}</a></p>)}<small>保存的是候选方案，不代表实际尝试成功。</small></section>)}</details>}
+          {!!current.plans?.length&&<details><summary>这件事已保存的方案</summary>{current.plans.map(p=><section key={p.id}><strong>{p.goal}</strong>{!!p.resourceReview?.untracked?.length&&<p role="status">旧方案没有完整的条件快照，需重新核对，不能当作条件未变。</p>}{!!p.resourceReview?.changed.length&&<p role="status">物品条件已变化，需重新核对第{p.resourceReview.affected.map(n=>n+1).join("、")}步。其他步骤未发现登记条件变化，也不代表实物验证。</p>}<ol>{p.checklist?.map((s,n)=>{const dependency=p.dependencies?.find(d=>d.step===n);return <li key={n}>{!!dependency?.conditions?.length&&<details className="plan-step-conditions" open={n===0}><summary>第{n+1}步 · 实施前先核对{dependency.conditions.length}项</summary><ul>{dependency.conditions.map((c,j)=><li key={j}>{c}</li>)}</ul></details>}<p>{s.label} · {s.status}</p></li>;})}</ol>{!!p.conditions?.length&&<details><summary>查看完整约束与资料缺口（{p.conditions.length}项）</summary>{p.conditions.map((c,n)=><p key={n}>实施前待核对：{c}</p>)}</details>}{p.sources?.map((s,n)=><p key={n}><a href={s.url} target="_blank" rel="noreferrer">查看方案资料 {n+1}</a></p>)}<small>保存的是候选方案，不代表实际尝试成功。</small></section>)}</details>}
           <button
             onClick={() => open(current.task).catch((e) => setError(e.message))}
           >

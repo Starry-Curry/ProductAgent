@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-04T21:10:33.036Z",
+  "basis": "DETERMINISTIC_MOCK_model_fixture_real_browser_real_domain_confirmation_NOT_Qwen_NOT_physical",
+  "checks": [],
+  "errors": [
+    "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '物间统一对话', exact: true }).locator('.conversation-options').getByLabel('之前的问题', { exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <select aria-label=\"之前的问题\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    59 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m       - did not find some options\u001b[22m\n\u001b[2m     - retrying select option action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+  ],
+  "pageErrors": [],
+  "sessionId": "eafb28b0-4125-4edd-8598-0ec391815fb2",
+  "cardId": "03b7674c-c717-4b0a-9683-09fe79c2dd7a",
+  "status": "failed",
+  "upstreamRequests": 0
+}

@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-04T21:12:28.085Z",
+  "basis": "DETERMINISTIC_MOCK_model_fixture_real_browser_real_domain_confirmation_NOT_Qwen_NOT_physical",
+  "checks": [
+    {
+      "name": "last_step_prerequisites_visible_before_confirmation",
+      "passed": true
+    },
+    {
+      "name": "same_Task_after_confirmation_and_reload_preserves_last_condition",
+      "passed": true
+    },
+    {
+      "name": "mobile_no_horizontal_overflow",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "pageErrors": [],
+  "sessionId": "a2471f60-c315-421e-940c-22bd416f8209",
+  "cardId": "1c01bc7a-9889-49d0-8e05-359ad81e363e",
+  "taskId": "1da31d5d-8e10-456b-a33a-ccf035c48609",
+  "status": "passed_deterministic_UI_data_flow_only",
+  "upstreamRequests": 0
+}

@@ -1,5 +1,5 @@
 import {discoverPublishers,publisherOwns,type PublisherProof} from './publisher.ts';
-import { isProductManual,unrelatedDocument } from "./manuals.ts";
+import { isProductManual,notProductEvidence } from "./manuals.ts";
 import type { DatabaseSync } from "node:sqlite";
 import { createHash } from "node:crypto";
 import { type Item, type Person, type State } from "../domain.ts";
@@ -410,6 +410,7 @@ export async function acquireKnowledge(
   itemId: string,
   options: {
     query?: string;
+    purpose?:'general'|'specifications'|'operation'|'care'|'policy';
     force?: boolean;
     persist?: boolean;
     fetchDocument?: typeof fetchPublicDocument;
@@ -419,6 +420,9 @@ export async function acquireKnowledge(
     publisherDependencies?:Parameters<typeof discoverPublishers>[2];
   } = {},
 ) {
+  const purpose=options.purpose||(options.preferManual?'operation':'general');
+  const publicPurposes={general:'official product information',specifications:'official product specifications dimensions features',operation:'official user manual operating instructions',care:'official care maintenance cleaning instructions',policy:'official warranty service policy'} as const;
+  if(!Object.hasOwn(publicPurposes,purpose))throw new AgentError('资料查找目的无效');
   const initialState = read();
   const foundItem = initialState.items.find(
     (i) => i.id === itemId && authorize(db, initialState, actor, i.id).allowed,
@@ -451,6 +455,7 @@ export async function acquireKnowledge(
   if (
     !options.force &&
     last?.identity === identity &&
+    (previousSucceeded||(previousResult?.acquisition?.discoveryPurpose||'general')===purpose)&&
     Date.now() - Date.parse(last.at) <
       (previousSucceeded ? 7 * 86400000 : 600000)
   )
@@ -479,6 +484,7 @@ export async function acquireKnowledge(
    doc.sections=d.links.filter(l=>isOfficial(l.url)||isProductManual(l)).slice(0,300);return doc;
   }
   const acquisition = {
+    discoveryPurpose:purpose,
     seedURLs: options.seedURLs || [],
     searchAttempted: false,
     searchCompleted: false,
@@ -533,7 +539,7 @@ export async function acquireKnowledge(
       // the registered commercial identity first; question-specific selection
       // happens over the acquired originals inside the authorized provider.
       const country=/^(?:[a-z]{2}|global)$/i.test(item.region||'')?item.region:'';
-      const discoveryQuery=`${brand} ${item.model} official product specifications user manual operating instructions ${country||''}`;
+      const discoveryQuery=`${brand} ${item.model} ${publicPurposes[purpose]} ${country||''}`;
       let result = await options.search(
         discoveryQuery,
         entry?[...entry.domains]:[],
@@ -557,12 +563,14 @@ export async function acquireKnowledge(
       // index often contains the model in its URL while the actual manual uses
       // opaque document IDs. Prefer readable chapters over such landing pages;
       // exact subject/model/region must still be checked on the fetched body.
-      const rankedHits=result.hits.filter(h=>isOfficial(h.url,brand)&&!unrelatedDocument(h)).map((h,n)=>{
+      const rankedHits=result.hits.filter(h=>isOfficial(h.url,brand)&&!notProductEvidence(h)).map((h,n)=>{
         let decoded=h.url;try{decoded=decodeURI(decoded);}catch{}
         const path=new URL(h.url).pathname;
         const chapter=/\/(?:contents?|chapters?|manual|guides?)\/.+\.(?:html?|pdf)$|\/(?:helpguide|user[-_]?manual)\//i.test(decoded);
         const index=/\/(?:manuals|downloads|support|faqs)\/?$|\/(?:index|default)\.html?$/i.test(path);
-        return {h,n,identityAnchor:!index&&!/\.pdf$/i.test(path)&&modelMentioned(h.title+' '+decoded,item.model),score:Number(chapter)*12+Number(isProductManual(h))*6+Number(/\.pdf$/i.test(path))*3+Number(modelMentioned(h.title+' '+decoded,item.model))*4-Number(index)*3};
+        const exact=modelMentioned(h.title+' '+decoded,item.model),spec=/specification|dimension|features|规格|仕様|尺寸/i.test(h.title+' '+decoded);
+        const score=purpose==='specifications'?Number(exact)*16+Number(spec)*4+Number(!isProductManual(h))*2-Number(index)*3:Number(chapter)*12+Number(isProductManual(h))*6+Number(/\.pdf$/i.test(path))*3+Number(exact)*4-Number(index)*3;
+        return {h,n,identityAnchor:!index&&!/\.pdf$/i.test(path)&&exact,score};
       }).sort((a,b)=>b.score-a.score||a.n-b.n);
       const candidates=[...rankedHits.filter(h=>h.identityAnchor).slice(0,2),...rankedHits].filter((x,n,a)=>a.findIndex(y=>y.h.url===x.h.url)===n).slice(0,4);
       acquisition.searchURLs = result.hits.slice(0,48).map(h=>h.url);
