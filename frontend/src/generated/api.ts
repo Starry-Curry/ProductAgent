@@ -1156,6 +1156,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/tasks/{task_id}/grounding": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Grounding */
+        post: operations["grounding_api_tasks__task_id__grounding_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1529,6 +1546,74 @@ export interface components {
             status: string;
             /** Created At */
             created_at: string;
+        };
+        /** GroundingRequest */
+        GroundingRequest: {
+            /** Expected Version */
+            expected_version: number;
+            /** Step Id */
+            step_id: string;
+            /** Frame Id */
+            frame_id: string;
+            /**
+             * Anchor
+             * @default auto
+             * @enum {string}
+             */
+            anchor: "auto" | "bottommost" | "topmost" | "leftmost" | "rightmost" | "center";
+        };
+        /** GroundingView */
+        GroundingView: {
+            /** Visible */
+            visible: boolean;
+            /** Bbox */
+            bbox?: [
+                number,
+                number,
+                number,
+                number
+            ] | null;
+            /** Label */
+            label: string;
+            /** Confidence */
+            confidence: number;
+            /** Explanation */
+            explanation: string;
+            /** Candidates */
+            candidates: [
+                number,
+                number,
+                number,
+                number
+            ][];
+            /** Task Id */
+            task_id: string;
+            /** Step Id */
+            step_id: string;
+            /** Frame Id */
+            frame_id: string;
+            /** Task Version */
+            task_version: number;
+            /** Width */
+            width: number;
+            /** Height */
+            height: number;
+            /** Model */
+            model: string;
+            /** Elapsed Seconds */
+            elapsed_seconds: number;
+            /**
+             * Evidence Kind
+             * @default model_grounding_on_snapshot
+             * @constant
+             */
+            evidence_kind: "model_grounding_on_snapshot";
+            /**
+             * Selection Basis
+             * @default model
+             * @enum {string}
+             */
+            selection_basis: "model" | "user_spatial_hint" | "unresolved";
         };
         /** GuidanceDetails */
         GuidanceDetails: {
@@ -4693,6 +4778,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grounding_api_tasks__task_id__grounding_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GroundingRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroundingView"];
                 };
             };
             /** @description Validation Error */

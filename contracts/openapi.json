@@ -3145,6 +3145,58 @@
           }
         }
       }
+    },
+    "/api/tasks/{task_id}/grounding": {
+      "post": {
+        "tags": [
+          "Camera guidance demo"
+        ],
+        "summary": "Grounding",
+        "operationId": "grounding_api_tasks__task_id__grounding_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroundingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroundingView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -4016,6 +4068,187 @@
           "created_at"
         ],
         "title": "GiftView"
+      },
+      "GroundingRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "step_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Step Id"
+          },
+          "frame_id": {
+            "type": "string",
+            "title": "Frame Id"
+          },
+          "anchor": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "bottommost",
+              "topmost",
+              "leftmost",
+              "rightmost",
+              "center"
+            ],
+            "title": "Anchor",
+            "default": "auto"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "step_id",
+          "frame_id"
+        ],
+        "title": "GroundingRequest"
+      },
+      "GroundingView": {
+        "properties": {
+          "visible": {
+            "type": "boolean",
+            "title": "Visible"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "prefixItems": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ],
+                "type": "array",
+                "maxItems": 4,
+                "minItems": 4
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bbox"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 120,
+            "title": "Label"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence"
+          },
+          "explanation": {
+            "type": "string",
+            "maxLength": 800,
+            "title": "Explanation"
+          },
+          "candidates": {
+            "items": {
+              "prefixItems": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                }
+              ],
+              "type": "array",
+              "maxItems": 4,
+              "minItems": 4
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Candidates"
+          },
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "step_id": {
+            "type": "string",
+            "title": "Step Id"
+          },
+          "frame_id": {
+            "type": "string",
+            "title": "Frame Id"
+          },
+          "task_version": {
+            "type": "integer",
+            "title": "Task Version"
+          },
+          "width": {
+            "type": "integer",
+            "title": "Width"
+          },
+          "height": {
+            "type": "integer",
+            "title": "Height"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model"
+          },
+          "elapsed_seconds": {
+            "type": "number",
+            "title": "Elapsed Seconds"
+          },
+          "evidence_kind": {
+            "type": "string",
+            "const": "model_grounding_on_snapshot",
+            "title": "Evidence Kind",
+            "default": "model_grounding_on_snapshot"
+          },
+          "selection_basis": {
+            "type": "string",
+            "enum": [
+              "model",
+              "user_spatial_hint",
+              "unresolved"
+            ],
+            "title": "Selection Basis",
+            "default": "model"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "visible",
+          "label",
+          "confidence",
+          "explanation",
+          "candidates",
+          "task_id",
+          "step_id",
+          "frame_id",
+          "task_version",
+          "width",
+          "height",
+          "model",
+          "elapsed_seconds"
+        ],
+        "title": "GroundingView"
       },
       "GuidanceDetails": {
         "properties": {
