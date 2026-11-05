@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import argparse
 from contextlib import ExitStack, contextmanager
+import hashlib
+from importlib.metadata import PackageNotFoundError, version
 import json
 import shutil
 import sqlite3
@@ -247,6 +249,32 @@ def materialize_case(client, clients, app, case, checked):
     return items,setup
 
 
+def execution_manifest(config, root):
+    """Record effective probe conditions without serializing Settings/secrets.
+
+    A Git SHA alone misses local edits. Hash only an explicit implementation
+    allowlist, never .env, private data, media, logs or arbitrary root files.
+    These fields describe future runs; old frozen reports are not rewritten.
+    """
+    root = Path(root)
+    paths = [*sorted((root / "wujian").glob("*.py")),
+             *sorted((root / "agent_skills").glob("*/SKILL.md")),
+             *(root / name for name in ("pyproject.toml", "uv.lock", "scripts/real_creative_eval.py"))]
+    hashes = {path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+              for path in paths if path.is_file()}
+    packages = {}
+    for name in ("agentscope", "reme", "openai", "httpx", "httpx2", "SQLAlchemy", "pydantic"):
+        try:
+            packages[name] = version(name)
+        except PackageNotFoundError:
+            packages[name] = None
+    return {"schema": "wujian-probe-conditions/1", "model": config.model,
+            "thinking_enabled": config.thinking_enabled, "thinking_budget": config.thinking_budget,
+            "provider_stream": config.provider_stream, "embedding_model": config.embedding_model,
+            "python_version": sys.version.split()[0], "packages": packages,
+            "implementation_sha256": hashes}
+
+
 def main():
     # Windows redirected stdout otherwise defaults to GBK: one model emoji can
     # stop a multi-turn probe after a paid response. The UTF-8 artifact is saved
@@ -338,7 +366,8 @@ def main():
               "synthetic": ["people", "ownership", "utterances", "physical trial reports"],
               "real": ["domestic product identities subject to source verification", "provider calls", "Agent-fetched sources"],
               "independent_acceptance": args.independent, "model": config.model,
-              "thinking_budget": config.thinking_budget, "turns": []}
+              "thinking_budget": config.thinking_budget, "thinking_enabled": config.thinking_enabled,
+              "conditions": execution_manifest(config, ROOT), "turns": []}
     report["provider_stream"] = config.provider_stream
     if resumed:
         report.update(independent_acceptance=False,parent_development_report=str(args.resume_from),
