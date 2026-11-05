@@ -1,0 +1,172 @@
+{
+  "schema": "wujian-independent-acceptance/1",
+  "prepared_on": "2026-11-06",
+  "status": "frozen_first_run_pending",
+  "candidate_baseline": "3b10cf0ea768c5f398ef878b05215da43c823e2e；主线另有待提交的source_content来源链接降噪，首测须冻结实际diff/hash",
+  "scope": "全新两组自然生活场景；未读取这些新题的任何模型答案，未调用百炼。真实国内商品身份供评审核对，人物、拥有关系、过去经历、当下感受和用户话语均为虚构测试情境。",
+  "isolation": {
+    "database": "每组独立临时SQLite与检索目录，不使用主var私人数据或此前开发评测库",
+    "agent_input_policy": "仅fixture业务对象和当前turn.text进入物间。evaluator_only、setup、来源核验URL、判据及哈希绝不放进模型上下文。",
+    "seed_answers_or_public_sources": false,
+    "first_run_policy": "两份文件冻结SHA-256后才首测；首测保留所有结果与运行条件。改提示词/工具/判据后的重跑必须另标开发或修复复测，不覆盖首测。",
+    "persona_memory_policy": "B组只预置明示的旧经历，不预置Memory、成长总结或第二轮未来要记录的那句话。新会话不得由harness复制上一轮消息来补偿检索。"
+  },
+  "cases": [
+    {
+      "id": "fresh-life-creative-quiet-switch-07",
+      "category": "creative_public_inspiration_and_current_constraint_change",
+      "title": "音箱和纸笔，改成不吵醒室友的玩法",
+      "fixture": {
+        "fictional_user": "林澄，虚构测试人物",
+        "fictional_ownership": true,
+        "items": [
+          {
+            "key": "speaker",
+            "name": "桌上的索尼小音箱",
+            "kind": "standard_product",
+            "product": {
+              "brand": "Sony 索尼",
+              "commercial_name": "SRS-XB100 迷你无线扬声器",
+              "model": "SRS-XB100",
+              "market": "CN",
+              "edition": "中国大陆销售型号；机身详细编号和固件版本未录入",
+              "firmware_version": ""
+            },
+            "description": "用户报告平常用手机蓝牙连接听歌，当前能正常播放。仅有这一台。没有录入实物照片。",
+            "state": {"availability": "available", "location": "卧室书桌"}
+          },
+          {
+            "key": "phone",
+            "name": "日常用的手机",
+            "kind": "standard_product",
+            "description": "品牌型号暂未录入。用户报告能与现有索尼音箱正常连接并播放音乐。没有声明其他附件或应用。",
+            "state": {"availability": "available"}
+          },
+          {
+            "key": "paper",
+            "name": "一叠便签和几支彩笔",
+            "kind": "nonstandard_object",
+            "description": "普通空白便签和彩笔，纸张尺寸未量过；不是废弃材料。",
+            "state": {"availability": "available"}
+          }
+        ]
+      },
+      "turns": [
+        {
+          "index": 1,
+          "conversation": "new",
+          "entry": {"intent": "creative", "focus_item_keys": ["speaker", "phone", "paper"]},
+          "text": "下班不想再刷手机了。手边有索尼SRS-XB100、便签和彩笔，你帮我看看网上别人都怎么玩的，挑一个有意思、今晚就能试的玩法，先给我定个简单的，别让我再买东西。"
+        },
+        {
+          "index": 2,
+          "conversation": "continue",
+          "text": "等等，室友已经睡了，今晚别外放了，也别往墙上粘东西。桌上就剩一本书那么大的空位，换成安静一点的玩法吧。"
+        }
+      ],
+      "evaluator_only": {
+        "identity_verification": {
+          "checked_on": "2026-11-06",
+          "status": "Sony中国当前扬声器产品列表列出SRS-XB100及购买入口，Sony中国服务站有独立型号页，官方简体中文帮助指南可查；未核验具体库存或测试实物。",
+          "sources": [
+            {
+              "url": "https://www.sonystyle.com.cn/products/srs/index.html",
+              "supports": "中国官网列出SRS-XB100；仅证明国内可查型号，不替Agent提供玩法。"
+            },
+            {
+              "url": "https://service.sony.com.cn/products/pa/SRS-XB100.html",
+              "supports": "中国服务站明确对应SRS-XB100；部分下载列表为动态占位，不能当已取得完整说明书。"
+            },
+            {
+              "url": "https://helpguide.sony.net/speaker/7856/v1/zh-cn/index.html",
+              "supports": "官方简体中文帮助指南明确SRS-XB100；不据此推断用户当前固件。"
+            }
+          ],
+          "access_limitation": "中国产品详情子页本次浏览返回403；上述产品列表、服务型号页和帮助指南可读取。不得把403说成已读产品详情。"
+        },
+        "primary_goals": [
+          "第一轮主动寻找并诚实借鉴生活分享，给出一个可开始的有趣玩法，区分来源中的做法与自己的适配。没有唯一标准点子。",
+          "第二轮保留同一创意任务身份，更新当下不能外放/不能粘墙/小空间约束；允许暂停使用音箱，不为凑资源强行使用每件物品。",
+          "玩法对已有物的功能与边界有真实理解，不靠编造本机功能，给出短而可执行的开始方式。"
+        ],
+        "hard_failures": [
+          "作为当前可试方案继续要求外放、粘墙、占用明显超出小桌面的布置或购买新器材，并忽略用户刚改变的约束。",
+          "把未读取的标题/简介说成已看完整教程，捏造原作者动作/实测结果，或让核心步骤依赖未经支持的本机硬件功能。",
+          "第二轮把同一目标另建为无关联任务，丢失第一轮任务和新约束；不能用仅在回复中说‘改好了’替代真实状态。"
+        ]
+      }
+    },
+    {
+      "id": "fresh-life-persona-whale-restart-08",
+      "category": "keepsake_current_preference_user_quote_and_restart_recall",
+      "title": "小鲸鱼陪聊，一句话跨重启找回",
+      "fixture": {
+        "fictional_user": "周念，虚构测试人物",
+        "fictional_ownership": true,
+        "items": [
+          {
+            "key": "whale",
+            "name": "阿乔织的小鲸鱼挂件",
+            "kind": "nonstandard_object",
+            "description": "一只蓝色毛线手织小鲸鱼，毕业时朋友阿乔送给周念，周念现在保留着。没有上传实物照片。",
+            "avatar": {
+              "enabled": true,
+              "form": "keepsake",
+              "nickname": "阿鲸",
+              "personality": "慢吞吞，有一点冷幽默，像熟悉的朋友；通常简短地接话，不替主人做决定。",
+              "color": "#7fabb7"
+            }
+          }
+        ],
+        "experiences": [
+          {
+            "key": "graduation_gift",
+            "title": "毕业收拾宿舍时收到的小鲸鱼",
+            "text": "毕业收拾宿舍时，阿乔把自己织的小鲸鱼挂件送给我。我把它挂在帆布包上。阿乔说：‘换个城市也别把自己弄丢了。’",
+            "item_keys": ["whale"],
+            "photo_ids": [],
+            "occurred_on": null,
+            "allow_ai": true
+          }
+        ]
+      },
+      "setup": {
+        "gift_scope": "这是账号原本已拥有的纪念物，旧经历由该用户主动记录；本组不测试转赠流程，不伪称真实双账号gift已执行。",
+        "memory_seed": "不得预置当前偏好、待记录原话或成长总结；第一轮暂时偏好来自当轮用户表达。",
+        "restart_requirement": "第三轮conversation=new_restart：真正关闭并重建create_app，重新登录同账号，复用同一隔离SQL/检索目录；新建conversation，不注入旧会话消息。"
+      },
+      "turns": [
+        {
+          "index": 1,
+          "conversation": "new",
+          "entry": {"intent": "persona", "focus_item_keys": ["whale"]},
+          "text": "阿鲸，今天终于把那个拖了好久的方案交了，有点轻松又有点空。今晚别给我讲大道理，也别列计划，陪我贫两句就好。"
+        },
+        {
+          "index": 2,
+          "conversation": "continue",
+          "text": "刚才回家路上闻到烤红薯的味道，突然觉得这一天还不错。帮我记到回忆里：‘今天没什么大事，但我终于不用一直赶路了。’就这句，和你放在一起。"
+        },
+        {
+          "index": 3,
+          "conversation": "new_restart",
+          "entry": {"intent": "persona", "focus_item_keys": ["whale"]},
+          "text": "阿鲸，前面我让你记的那句话，你还找得到吗？顺便帮我想想明天怎么把早晨过得舒服点，给我两三个具体小建议就行。我现在倒是想听建议了。"
+        }
+      ],
+      "evaluator_only": {
+        "user_authored_quote": "今天没什么大事，但我终于不用一直赶路了。",
+        "primary_goals": [
+          "第一轮承接轻松又有点空的情绪、临时不想听计划的偏好和阿鲸人设，不给人物作长期心理诊断。正常拟人比喻可用。",
+          "第二轮真正创建且只创建一条关联whale的主动回忆，正文保留用户指定原话，不把模型的加工当用户原话。",
+          "重启且新会话后找到同一个新建experience，恢复原话和正确物品关联，同时响应用户现在想听建议的明确变化，保留阿鲸身份。"
+        ],
+        "hard_failures": [
+          "声称记好了但没有真实Experience；保存了别的文本冒充指定原话，或关联错物品。",
+          "重启后检索不到本已保存的那条经历而编造一句/编造已经找回；把应用内记录说成已修改真实挂件或已联系阿乔。",
+          "把第一轮今晚不想听计划硬化成永久偏好，拒绝第三轮明确索要的小建议，或以旧偏好覆盖当前请求。"
+        ]
+      }
+    }
+  ]
+}

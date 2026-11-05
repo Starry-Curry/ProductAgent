@@ -1,0 +1,47 @@
+sequenceDiagram
+    actor U as 用户
+    participant UI as App.tsx / ChatPanel
+    participant API as server.py
+    participant DB as SQLAlchemy / SQLite
+    participant R as AgentRunner
+    participant A as AgentScope / Qwen
+    participant T as 用户范围内工具
+    participant F as turns.py / learning.py
+    U->>UI: 文字、照片、关注物品
+    opt 有新照片
+        UI->>API: POST /api/assets multipart
+        API->>DB: 写Asset记录；文件另存assets
+        API-->>UI: id、url
+    end
+    UI->>API: POST /api/chat ChatRequest
+    API->>DB: 检查身份、物品与附件；写Conversation、Run、用户消息
+    Note over API,DB: T1提交；同一会话仅允许一个queued/running
+    API->>R: start(run_id) 创建进程内asyncio任务
+    API-->>UI: RunView，包含run_id和conversation_id
+    par 运行订阅
+        UI->>API: GET /api/runs/id/events，EventSource
+        loop 每0.4秒检查；有变化才发送
+            API->>DB: 读取当前Run快照
+            API-->>UI: SSE data为RunView JSON
+        end
+    and 主Agent运行
+        R->>DB: 标running；准备上下文，读取或重建AgentState
+        R->>A: 当前输入、上下文、Toolkit、最终Schema
+        loop 按需工具推理；最多10轮，运行超时240秒
+            A->>T: 工具调用 / Skill读取
+            T->>DB: 读取或写入获准业务数据
+            T-->>A: ToolResponse或错误；外部资料按需读取
+            A-->>R: 工具事件、计时、模型用量
+            R->>DB: persist_progress，节流约0.25秒
+        end
+        A->>F: GenerateStructuredOutput，校验最终Schema
+        F->>DB: 查当前原话、来源、资源、任务版本、可用故事
+        Note over A,F: 校验错误返回同一Agent；额度内修正，不保证必能修正
+        A-->>R: 完成信号与TurnResult
+        R->>F: commit_result
+        F->>DB: T2：认识更新与持续任务统一提交
+        F-->>R: 带作者的故事原文、回答与保存结果
+        R->>DB: 保存最终文本；T3写助手消息、运行状态、AgentState
+    end
+    UI->>API: 终态后GET会话messages，刷新业务列表
+    API-->>UI: 最终消息与更新后的业务数据

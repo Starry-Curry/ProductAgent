@@ -1,0 +1,25 @@
+flowchart TB
+    SQL["SQL当前身份与业务事实"] --> CTX["_execute准备上下文"]
+    CTX --> C1["关注物完整视图；最多100件资源摘要"]
+    CTX --> C2["12条有效理解；5条经历；4项近期任务"]
+    CTX --> C3["日期、当前问题、context_revision"]
+    STATE["Conversation.agent_state或近期历史回放"] --> AG["AgentScope主Agent / Qwen"]
+    PHOTO["用户文字 + TextBlock / 图片DataBlock"] --> AG
+    C1 --> AG
+    C2 --> AG
+    C3 --> AG
+    AG --> METHOD["LocalSkillLoader：按需读SKILL.md"]
+    METHOD --> PG["product-guidance：确认适用条件与原文"]
+    METHOD --> CR["creative-use：资源、案例、条件、尝试反馈"]
+    AG --> READ["对象与接续：find_items、read_item、read_task、list_reminders"]
+    AG --> SEARCH["记忆与世界：recall_memories、search_world"]
+    AG --> SOURCE["证据：search_public_web、fetch_document、read_source、view_source_page、list_sources"]
+    AG --> MUTATE["变更：update_item_identity、update_item_condition、record_experience、evolve_avatar"]
+    AG --> DEVICE["设备：device_connections、explore_device"]
+    READ --> OUT["ToolResponse：JSON文字或明确错误"]
+    SEARCH --> OUT
+    SOURCE --> OUT
+    MUTATE --> OUT
+    DEVICE --> OUT
+    OUT --> AG
+    AG --> FINAL["原生最终输出：回答 + learning + continuation + story_refs"]

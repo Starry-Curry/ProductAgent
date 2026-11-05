@@ -4,6 +4,8 @@
 
 最新交互基础版本采用「物伴／物品／回忆／朋友」四栏，提供家庭用品、私人回忆、共同清单、逐步指导、提醒反馈、好友心愿与选择赠礼，并支持大字版。[交互基础版本与模块接口](docs/2026-11-05_交互基础版本与模块接口.md)说明共用契约、权限、迁移、后续模块接入及尚未验收的能力；[手机版整体产品与交互设计稿](docs/2026-11-05_物间手机版整体产品与交互设计稿.md)是功能参照。
 
+2026-11-06 的创造、REA 指导、回忆、分身与名片开发见[本轮实施记录](docs/2026-11-06_创意回忆分身与名片实施记录.md)，来源读取取舍见[原文与图片证据改进](docs/2026-11-06_来源读取与生活创意证据改进.md)。分身核心接续与实际浏览器旅程已跑通；独立创意和 REA 首测仍有适配与事实错误，底座整体保持 NOT_ACCEPTED。
+
 本轮 [验证记录](docs/2026-11-05_交互基础版本验证.md)包含 50 项工程回归和双账号电脑/手机浏览器使用旅程，并区分界面业务验证与智能/实物验收。
 
 当前仓库主线采用这份 Python/FastAPI + React/Vite 实现。2026-11-05 经产品负责人授权，将本地最新基线同步到 main/develop；原 TypeScript/Next.js 实现保留在归档标签和提交历史中。[主线同步与分支归档](docs/2026-11-05_主线同步与分支归档.md)说明恢复点与团队接入变化。当前仍是工程基线，智能底座未验收通过，不代表已经对外部署。
@@ -41,6 +43,8 @@ npm.cmd --prefix frontend run build
 
 首次使用前，将 `.env.example` 复制为 `.env` 并在本地填写密钥；已有 `.env` 请保留。`uv.lock` 和 `frontend/package-lock.json` 固定依赖。数据与原始资料保存在 `var/`，与源码分开；不要为了重新启动而删除它。关闭体验档案入口可设置 `WUJIAN_DEMO_MODE=false`。当前会话和部署设置用于本地原型，尚未完成公网生产加固。
 
+公开视频抽帧是可选能力：安装 `uv sync --extra video --cache-dir tmp/uv-cache`，并将本地 FFmpeg 可执行文件的绝对路径填入 `.env` 的 `FFMPEG_BINARY`（或把 FFmpeg 加入 PATH）。当前只支持可匿名读取的单条 B 站 BV 来源、低清有界 MP4 和少量抽帧；平台拒绝、组件缺失或格式超限会真实报错。不是全视频理解、字幕生成或教学动画。此电脑已经配置；队友不使用该能力时无需安装额外组件。
+
 ## 开发与验证
 
 ```powershell
@@ -60,7 +64,7 @@ npm.cmd --prefix frontend run build
 | `wujian/api_models.py` | 真实 API 的输入输出契约；生成 OpenAPI 与前端类型 |
 | `wujian/domain.py` | 界面、Agent 共用的物品、经历、私人理解、共享与赠礼操作 |
 | `wujian/database.py` | SQLAlchemy 业务数据；本地默认 SQLite |
-| `migrations/` | Alembic 版本迁移；已有资料保留，当前版本 0006，已有 SQLite 升级前备份 |
+| `migrations/` | Alembic 版本迁移；已有资料保留，当前版本 0008，已有 SQLite 升级前备份；消息记录回执只存摘要与记录ID |
 | `wujian/interactions.py`、`interaction_routes.py` | 四栏工作区、家庭、回忆用途、清单协作、提醒反馈与心愿接口 |
 | `wujian/foundation.py` | 认识依据、纠正/期限、任务版本、反馈与状态的共同业务操作 |
 | `wujian/retrieval.py` | ReMe 混合检索；索引是可重建投影，SQL 是事实来源 |
@@ -68,9 +72,10 @@ npm.cmd --prefix frontend run build
 | `wujian/learning.py` | 主 Agent 的结构化认识更新、当前用户依据与型号适用性核对 |
 | `wujian/continuity.py`、`source_access.py` | 家庭共享和赠礼中的公开商品证据接续；私人理解不混入 |
 | `wujian/agent_runtime.py` | AgentScope 主循环接入、工具、上下文和任务结果 |
-| `agent_skills/` | 按需加载的产品指导与创意探索技能，共用同一组业务对象 |
+| `agent_skills/` | 按需加载的产品指导、创意探索与设备个性化技能，共用同一组业务对象 |
 | `wujian/devices.py` | 项目内 REA MCP 生命周期、连接目标、观察证据与显式操作 |
 | `wujian/knowledge.py` | 百炼真实搜索、原始网页/PDF 获取、引用与页图读取 |
+| `wujian/source_video.py` | 可选 yt-dlp 平台解析与 FFmpeg 本地抽帧；同一来源与资产体系，原始网页和抽帧来源分开 |
 | `wujian/server.py` | 登录、API、流式进度、文件权限与静态界面服务 |
 | `frontend/src/features/` | 按物伴、物品、回忆、朋友、事项和共同表单拆分的响应式界面；`src/generated/api.ts` 自动生成 |
 | `fixtures/development/catalog.json` | 中国大陆型号及非标物开发样本；不预置操作答案 |
