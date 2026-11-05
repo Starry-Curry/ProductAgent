@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-05T04:19:57.209Z",
+  "url": "https://github.com/Starry-Curry/ProductAgent/pull/4",
+  "draft": true,
+  "merged": false,
+  "head": "2116e9583bd9101628e63df3b666abbd88e2be1f",
+  "base": "develop",
+  "reason": "user_requested_audit_before_historical_integration"
+}

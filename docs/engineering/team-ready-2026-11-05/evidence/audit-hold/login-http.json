@@ -1,0 +1,7 @@
+{
+  "url": "http://127.0.0.1:3251/",
+  "status": 200,
+  "loginCopyExplainsLocalAccount": true,
+  "basis": "HTTP_public_login_markup_not_browser_or_model_validation",
+  "paidRequests": 0
+}

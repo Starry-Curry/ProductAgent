@@ -2,6 +2,8 @@
 
 本页供组员直接开始开发，不是新的架构方案。产品权威为 [PRODUCT_FINAL_V1](../product/PRODUCT_FINAL_V1.md)。**共享底座可集成，不代表 Core Foundation 智能质量通过；后者仍 NOT_ACCEPTED。**
 
+**用户最新决策（2026-11-05）：审计前暂停历史集成。** PR #4 改为Draft，不自动合入develop/main；历史材料留存不代表正式功能。组员现在可按公共接口独立开发和提Draft PR，暂不集成。以下原先“CI＋组员审查后合并”的说明须先满足解除本次暂停；简明角色分工、登录/旧版说明和验收见 [TEAM_WORK_PLAN](TEAM_WORK_PLAN.md)。
+
 2026-11-05：负责人已授权将决赛成果 `dbd93cf` 更新到 main。当前团队接入分支 `codex/wujian-team-ready-v2` 在其基础上整理启动、分工和集成；没有另建智能运行器。develop 同步前暂以本分支开发。真实智能质量仍 NOT_ACCEPTED；可独立开发不等于问答和创造力已可靠。公共`foundation-services/1`入口不变，Provider 的可选 `rerank` 不要求旧 Mock 实现。
 
 ## 从哪里开始

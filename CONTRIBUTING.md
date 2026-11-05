@@ -17,6 +17,8 @@ npm run team:dev -- --name=alice --port=3251
 
 ## GitHub 协作
 
+2026-11-05用户调整：审计前暂停历史集成，PR #4保持Draft。当前候选允许按公共接口独立开发，但功能PR先保持Draft，不向候选/develop/main合并；负责人解除暂停并指定正式集成基线后，再执行下列通常合并流程。角色和交付标准见 [分工说明](docs/engineering/TEAM_WORK_PLAN.md)。
+
 - main：稳定演示，由负责人批准更新。
 - develop：团队集成，研发基线不等于产品质量验收通过。
 - feature/*、fix/*、docs/*、codex/*：独立开发；新组员通常从最新 origin/develop 开始。

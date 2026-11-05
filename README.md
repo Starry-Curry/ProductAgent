@@ -2,9 +2,12 @@
 
 释放人与物的价值：理解你实际拥有的物品、人与物的经历及现实条件，帮助兑现、创造、延续和传递价值。
 
+当前优先级：共享底座与团队并行开发。**审计前暂停历史集成，PR #4保持Draft**；历史材料不等于正式功能。各组可按公共接口独立开分支和提交Draft PR，暂不合并候选/develop/main。具体分工看下方说明。
+
 - [当前工程状态与恢复点](docs/engineering/CURRENT.md)：哪些实际可用、哪些未通过验收。
 - [产品共识定稿](docs/product/PRODUCT_FINAL_V1.md)：产品理念与完整范围。
 - [团队接入指南](docs/engineering/TEAM_INTEGRATION.md)：分支起点、公共服务、离线Mock、专业工具与兼容边界。
+- [分工开发说明](docs/engineering/TEAM_WORK_PLAN.md)：审计前暂停历史集成，角色分工、开工步骤和底座验收边界。
 - [贡献指南](CONTRIBUTING.md) · [工程规则](AGENTS.md) · [文档索引](docs/README.md)。
 - [GitHub 协作操作](docs/GIT_WORKFLOW.md) · [后续研发规划](docs/engineering/NEXT_STEPS.md)。
 

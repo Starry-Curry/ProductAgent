@@ -1,5 +1,9 @@
 # 当前工程状态（2026-11-05）
 
+## 最新范围：先底座，审计前暂停历史集成
+
+用户明确要求不将仓库过程材料默认当正式功能；本轮不新增接入旧分支、旧执行器或旧版界面。PR #4转为Draft暂停集成，main/develop未更新，既有上传成果不擅自回滚。新页面移除“旧版入口”，历史路由/文件保留待审；本机登录仅用于账号/隐私隔离，不是GitHub/百炼登录，也不会开启模型。组员按公共入口和Mock独立开发，功能PR暂为Draft；未解除暂停前不集成。见 [团队分工说明](TEAM_WORK_PLAN.md)。下方原集成流程是此前状态，不能覆盖本段暂停要求。
+
 ## 团队立即开工入口
 
 main 已由负责人授权更新为 `dbd93cf`，旧 main 保存在 `codex/main-backup-20261105-ea32c3f`。本轮团队候选 `codex/wujian-team-ready-v2` 基于该 main，提供独立账号、端口、数据/构建目录的 `npm run team:dev -- --name=alice --port=3251`，以及现有共享服务的 `team:mock` 和 `test:team`。这是开发与接入准备，不宣称真实智能质量通过；Core/Full 仍 **NOT_ACCEPTED**。团队底座公共接口仍为 `foundation-services/1`，没有第二套执行器/数据库。

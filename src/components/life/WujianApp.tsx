@@ -1368,7 +1368,6 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
               ? "在线演示 / 测试案例、资料与创意分别标注"
               : "本机演示 / 真实资料、合成实例与创意候选分别标注"}
           </span>
-          <a href="/legacy">旧版入口</a>
           <a href="/guide">操作指南</a>
         </footer>
       )}

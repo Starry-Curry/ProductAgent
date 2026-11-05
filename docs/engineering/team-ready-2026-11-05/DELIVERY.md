@@ -1,5 +1,9 @@
 # 团队开工底座与协作交接
 
+**用户最新决策：先底座，审计前暂停历史集成。** PR #4已转Draft，不向develop/main合并；后文“准备集成/审查后合并”属于此前阶段，须先解除本次暂停。实际分工、公共接口和历史材料边界以 [TEAM_WORK_PLAN](../TEAM_WORK_PLAN.md) 为新入口。
+
+本次跟进只改登录说明、移除主页面旧版导航及整理协作说明，未新增导入旧模块，历史路由/文件/数据库均保留待审。公共接口不变；`audit-hold/team-tests.txt` 7/7、`audit-hold/typecheck.txt`及`audit-hold/build.txt`通过。公开登录页HTTP200并包含本机账号说明，记录见 `audit-hold/login-http.json`；这不是新一轮浏览器操作或Qwen测试。完整683项及真实浏览器仍是上一阶段记录，本次没有冒充重跑；0新增付费请求。当前3251仍离线，联网底座本次未验收，产品智能质量仍NOT_ACCEPTED。
+
 ## 组员今天能做什么
 
 基于现有 `foundation-services/1`，各自开发页面与专业业务，复用物品/知识/能力、Context、Agent、Task、反馈和授权，不用再写一套模型或记忆系统。入口与可复制示例见 [TEAM_INTEGRATION](../TEAM_INTEGRATION.md)。本轮只补团队运行工具和协作入口，不开发其他产品功能，也不声称智能质量已通过。
