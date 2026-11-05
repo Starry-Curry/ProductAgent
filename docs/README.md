@@ -4,6 +4,8 @@
 | --- | --- |
 | 产品理念、范围与规则 | [产品定稿](product/PRODUCT_FINAL_V1.md) |
 | 当前代码、验收状态、预算与恢复点 | [CURRENT](engineering/CURRENT.md) |
+| 共同开发前：完整功能与交互审阅 | [功能、交互与产品架构](review/2026-11-05/PRODUCT_FUNCTIONS_INTERACTIONS.md) |
+| 共同开发前：源码、数据库、知识与记忆 | [技术架构审计](review/2026-11-05/CODE_ARCHITECTURE_AUDIT.md) |
 | 如何运行、哪里改代码 | [根 README](../README.md) |
 | 分支、PR、检查与同学分工 | [CONTRIBUTING](../CONTRIBUTING.md) |
 | 工程边界 | [AGENTS](../AGENTS.md) |

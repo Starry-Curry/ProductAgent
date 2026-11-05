@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-05T15:45:49.3233435+08:00",
+  "sourceCommit": "32c6119d5f29f954fc78c15c74ea567833bbbfe1",
+  "main": "dbd93cfc9f684ccac7b0f80727cdaebcea898ca9",
+  "developAtStart": "f449067ce939d7fe82a3e48bab15df046d6eb2bc",
+  "developAtCloseout": "3285e8d85407dbd7a17f598fb2994398ac2c20f0",
+  "candidate": "codex/wujian-team-ready-v2",
+  "sourceTreeEqualsDevelop": true,
+  "comparisonCommand": "git diff 32c6119d5f29f954fc78c15c74ea567833bbbfe1 origin/develop --name-only",
+  "changedFiles": [],
+  "pr4": {
+    "state": "closed",
+    "url": "https://github.com/Starry-Curry/ProductAgent/pull/4",
+    "mergedByThisAudit": false,
+    "merged": true,
+    "mergedAt": "2026-11-05T07:35:13Z"
+  },
+  "evidenceMethod": [
+    "git ls-remote",
+    "git fetch origin develop",
+    "git diff of fixed source and remote develop",
+    "GitHub connector get_pr_info"
+  ]
+}

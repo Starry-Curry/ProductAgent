@@ -1,0 +1,69 @@
+{
+  "at": "2026-11-05T15:45:49.3523587+08:00",
+  "sourceCommit": "32c6119d5f29f954fc78c15c74ea567833bbbfe1",
+  "branch": "codex/wujian-predevelopment-audit-v1",
+  "scope": "documentation_and_source_audit_only",
+  "workspace": "D:\\ProductAgent-LifeContext\\.runtime\\qwen-foundation-v1",
+  "initialWorktree": "clean",
+  "offline": {
+    "pass": 683,
+    "durationMs": 71985.2255,
+    "cancelled": 0,
+    "fail": 0,
+    "command": "npm test",
+    "exitCodeCaptured": false,
+    "resultBasis": "Completed Node test-runner summary in raw log; original exec session expired before exit-code collection",
+    "skipped": 0,
+    "log": "offline.txt",
+    "node": "24.22.2",
+    "tests": 683
+  },
+  "typecheck": {
+    "reasonForRepeat": "Initial command output had no collected exit code; reran only typecheck",
+    "exitCode": 0,
+    "at": "2026-11-05T15:19:55.6536485+08:00",
+    "log": "typecheck-r2.txt",
+    "command": "npm run typecheck"
+  },
+  "providerGateProbe": {
+    "report": "provider-gate-probe.json",
+    "exitCode": 0,
+    "realNetworkRequests": 0,
+    "command": "node --experimental-strip-types docs/review/2026-11-05/evidence/provider-gate-probe.mjs",
+    "notIncludedIn683": true,
+    "mode": "in_process_protocol_double"
+  },
+  "newPaidRequests": 0,
+  "privateDatabaseAccess": false,
+  "productionBuild": {
+    "status": "not_run_this_audit",
+    "reason": "No business source or dependency change; source 32c6119 previous-stage evidence referenced separately"
+  },
+  "browser": {
+    "status": "not_run_this_audit",
+    "reason": "Documentation task; historical evidence explicitly dated and linked, not relabelled"
+  },
+  "realHardware": "not_run",
+  "ledger": {
+    "sha256": "50bc0e9fe96614a1dd70110ecc5a6f2f1fc2a5e5e4289a32690c3ee93ed270b4",
+    "requests": 368,
+    "path": "docs/engineering/finals-product-2026-11-05/evidence/model-calls.json",
+    "actualBilling": "not_verified",
+    "unknownUsageReserveCny": 1.786268,
+    "knownEstimatedCny": 55.783876,
+    "maxRequests": 800
+  },
+  "quality": {
+    "formalFrozenFirstAnswers": "0/18_unchanged",
+    "auditIsReleaseApproval": false,
+    "fullFoundation": "NOT_ACCEPTED",
+    "coreFoundation": "NOT_ACCEPTED"
+  },
+  "remote": "remote-state.json",
+  "artifactFormatting": {
+    "file": "typecheck-r2.txt",
+    "sha256BeforeFormatting": "292fac678f539c5fa04b8e706c139afc861f9b6d084d64cec3fa76ce30472160",
+    "change": "Remove trailing blank line only; command output content unchanged",
+    "rawRuntimeCopy": ".runtime/predevelopment-audit/typecheck-r2.txt"
+  }
+}
