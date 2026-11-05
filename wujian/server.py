@@ -7,7 +7,7 @@ from urllib.parse import urlsplit
 from fastapi import Depends, FastAPI, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, ImageOps, UnidentifiedImageError
 from sqlalchemy import or_, select
 from sqlalchemy.exc import IntegrityError
 from starlette.middleware.sessions import SessionMiddleware
@@ -362,7 +362,7 @@ def create_app(settings=None, model_factory=None):
             with Image.open(io.BytesIO(data)) as image:
                 if image.width * image.height > 30_000_000:
                     raise domain.DomainError("照片尺寸过大，请压缩后上传")
-                image = image.convert("RGB")
+                image = ImageOps.exif_transpose(image).convert("RGB")
                 image.thumbnail((2000, 2000))
                 output = io.BytesIO()
                 image.save(output, "JPEG", quality=88)
