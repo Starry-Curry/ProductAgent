@@ -1,0 +1,35 @@
+{
+  "at": "2026-11-04T23:05:06.166Z",
+  "basis": "real_two_authenticated_accounts_real_UI_own_archive_edit_after_item_revocation_SYNTHETIC_story_no_Qwen",
+  "checks": [
+    {
+      "name": "author_can_correct_own_archive_after_revocation_without_item_access_or_owner_private_story_leak",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "created": {
+    "fragment": {
+      "id": "a44f0f2e-b06e-4398-a7bb-d8b1135cf3e4",
+      "author": "u_1bbf4079-01cf-40ea-a184-f867fef88442",
+      "text": "[合成]我自己记录的历史 r3，物品撤权以后这段文字仍属于我",
+      "mediaId": null,
+      "revision": 1,
+      "createdAt": "2026-11-04T23:05:07.518Z",
+      "updatedAt": "2026-11-04T23:05:07.518Z",
+      "demo": false,
+      "itemIds": [
+        "6a8658a1-1c91-4fe1-98c3-e06689c32fce"
+      ],
+      "capturedOn": null,
+      "mediaIds": [],
+      "allowRecall": false,
+      "allowCloud": false,
+      "origin": "user-record"
+    }
+  },
+  "storyId": "a44f0f2e-b06e-4398-a7bb-d8b1135cf3e4",
+  "saveStatus": 200,
+  "status": "passed_no_model_UI_and_domain",
+  "upstreamRequests": 0
+}

@@ -1,0 +1,30 @@
+{
+  "caseId": "N03-2",
+  "arm": "direct",
+  "controlCohort": "additional_authorized_round_same_information",
+  "roundId": "qwen-foundation-20261103-r2",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "at": "2026-11-03T02:26:02.038Z",
+  "sameInformation": {
+    "productRequestNumber": 112,
+    "materialSha256": "b3322bdb84144e719d5a96f33a942503ef0b474d16e77a091ff63bd0f6f33985",
+    "method": "exact user/tool content of product final tool-loop request; excludes system and assistant drafts"
+  },
+  "text": "根据当前提供的资料，**我没有检索到 FUJIFILM instax mini 99 的官方说明书或可核对的原文段落**。因此，我无法为您准确描述该型号自拍定时的具体开启步骤、指示灯的变化规律以及精确的倒计时秒数。\n\n为了对您的相纸负责（避免误操作导致废片），我必须明确说明：**在证据不足的情况下，我不会凭经验编造具体的按键组合、指示灯闪烁次数或等待时间。**\n\n### 目前已知与适用条件\n- **设备状态**：您已装好相纸，准备进行自拍定时拍摄。\n- **设备型号**：FUJIFILM instax mini 99（一次成像相机）。\n- **资料限制**：当前上下文中没有该型号的官方文档来源（`sources: {}`），也没有经过验证的操作记录。\n\n### 建议获取准确信息的途径\n由于不同 instax 机型的自拍定时操作差异很大（例如有些是长按特定按钮，有些是通过模式拨盘切换；倒计时可能是10秒，指示灯可能是先慢闪后快闪），建议您通过以下方式确认，以免浪费已经装入的相纸：\n\n1. **查阅随机说明书**：翻阅 instax mini 99 包装盒内附带的纸质说明书中关于“自拍定时器（Self-timer）”的章节。\n2. **提供官方链接或上传文档**：如果您能找到富士官网关于 mini 99 的电子说明书链接，或者将说明书相关页面拍照/截图上传给我，我可以立即为您提取准确的开启方法、指示灯变化和倒计时时长。\n3. **机身标识观察**：在不按快门的前提下，观察机身正面或顶部是否有带有“时钟”图标的独立按钮或拨杆，这通常是自拍定时的物理开关（但具体操作仍需以说明书为准）。\n\n如果您能提供上述任何一项官方资料，我将立刻为您详细解答如何操作。",
+  "usage": {
+    "completion_tokens": 392,
+    "prompt_tokens": 1173,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 1173
+    },
+    "total_tokens": 1565
+  },
+  "model": "qwen3.8-max-0902",
+  "finishReason": "stop",
+  "fullAnswerMs": 10855,
+  "upstreamNumbers": [
+    8
+  ]
+}

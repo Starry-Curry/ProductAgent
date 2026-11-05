@@ -1,0 +1,16 @@
+✔ SDK generate使用严格JSON Schema、受控HTTPS且只有一次上游请求 (10.5612ms)
+✔ JSON object与自然文本兼容：不自动增加审稿调用 (1.6901ms)
+✔ SDK流聚合UTF8/usage，外部仅收到content且推理不外发 (11.2165ms)
+✔ SDK错误仍保留安全状态分类、拒绝自动重试并不反射上游正文 (5.7543ms)
+✔ SDK整段流截止时间有效，headers后卡住也不重试 (66.6041ms)
+✔ 缺少授权/HTTPS不安全时网络请求为零；返回格式与截断仍拒绝 (18.2835ms)
+✔ SDK complete保持function calling合同；未知custom工具类型仍被拒绝 (1.7048ms)
+✔ 连接成功但流持续不终止，也必须在整段生成预算到达时中止且不重试 (70.2169ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 404.4189

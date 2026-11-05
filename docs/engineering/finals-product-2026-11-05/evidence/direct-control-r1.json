@@ -1,0 +1,34 @@
+{
+  "at": "2026-11-04T23:34:06.527Z",
+  "basis": "same_model_same_effective_acquired_Context_and_official_tool_results_direct_natural_answer_no_new_discovery_no_domain_tools_executed_SYNTHETIC_instances_development_comparison_not_formal_acceptance",
+  "results": [
+    {
+      "caseId": "thermos-spec",
+      "question": "请自主找 THERMOS JNL-355 日本版的厂家资料，完整回答容量、约重量和约外尺寸；不能拿JNL-505、JNL-356或JNL-S系列的参数混用。请给来源，不根据型号数字猜容量。",
+      "referenceRequest": 334,
+      "inputSha256": "f23566a4148cd360c81352f4fe5c7b3d04fbda3f1e2ef48d4284d7548b386736",
+      "elapsedMs": 7383,
+      "model": "qwen3.8-max-0902",
+      "text": "根据 THERMOS（膳魔师）日本官方发布的新闻稿资料，**JNL-355** 的规格如下：\n\n*   **容量**：0.35 L（升）\n*   **约重量**：0.17 kg（即约 170 g）\n*   **约外尺寸（宽 × 深 × 高）**：6.5 × 7.5 × 17 cm\n*   **口径**：约 4 cm\n\n以上参数均严格取自 JNL-355 这一型号在官方规格表中的对应列，未与 JNL-505、JNL-356 或 JNL-S 系列混用。\n\n**来源：**\nTHERMOS 株式会社 2021年8月19日新闻稿《『サーモス 真空断熱ケータイマグ（JNL-355/505/605/755）』》中的“仕様一覧”（规格一览表）。\n网址：[https://www.thermos.jp/info/pdf/20210817140249.pdf](https://www.thermos.jp/info/pdf/20210817140249.pdf)",
+      "tokens": {
+        "input": 9385,
+        "output": 279
+      },
+      "finishReason": "stop"
+    },
+    {
+      "caseId": "pebble-first",
+      "question": "请自主核对 Logitech Pebble Mouse 2 M350s 的官方资料，不要拿旧M350的资料代替。我没有Logi Bolt接收器，能直接连Windows 11蓝牙吗？首次怎样配对、最多记住几台设备、电池需要几节什么型号？请完整回答并给原文来源，不要声称已经控制鼠标。",
+      "referenceRequest": 338,
+      "inputSha256": "b6e07e673651b4cce86538d2610fd015f1be6a802bddf1c9d57bd79c480a1237",
+      "elapsedMs": 25242,
+      "model": "qwen3.8-max-0902",
+      "text": "以下是根据 Logitech 官方支持文档（专指 **Pebble Mouse 2 M350s**，非旧款 M350）为你整理的完整回答。我并未控制或操作你的鼠标，仅提供官方资料说明。\n\n---\n\n### 1. 没有 Logi Bolt 接收器，能直接连 Windows 11 蓝牙吗？\n**可以。**\nPebble Mouse 2 M350s 原生支持 **Bluetooth Low Energy (BLE)** 连接，Logi Bolt 接收器只是“可选”的连接方式，且单买鼠标时包装内并不附带该接收器。\n官方在兼容性列表中明确写道：\n> “BLUETOOTH WIRELESS TECHNOLOGY ENABLED DEVICES: **Windows 10, 11 or later**...”\n> “Compatible with Logi Bolt receiver (only included in Pebble 2 Combo Multi-OS).”\n\n因此，只要你的 Windows 11 电脑具备蓝牙功能，无需任何 USB 接收器即可直接通过蓝牙连接使用。\n\n*来源：Logitech Support - Getting Started - Pebble Mouse 2 M350s (COMPATIBILITY 章节) [^1] [^2]*\n\n---\n\n### 2. 首次怎样配对？\n官方给出的首次蓝牙配对步骤如下：\n1. **拔出绝缘拉片（Pull tab）**：从鼠标上拔出电池绝缘拉片，鼠标会自动开机，此时**通道 1（Channel 1）会自动进入待配对状态**。\n2. **打开电脑的蓝牙设置**：在 Windows 11 中打开“设置 > 蓝牙和其他设备”，添加新设备。\n3. **选择鼠标**：在设备列表中选择对应的鼠标名称（官方提醒：请确保选择的型号与鼠标底部雕刻的型号一致）。选中后即可完成配对并直接使用。\n\n如果日后需要为第 2 或第 3 台设备配对：\n短按底部的 **Easy-Switch 按钮**切换到目标通道，然后**长按该按钮 3 秒钟**，鼠标会进入发现模式（LED 指示灯开始快速闪烁），此时再在新设备的蓝牙设置中搜索并连接即可。\n\n*来源：Logitech Support - Getting Started - Pebble Mouse 2 M350s (Connect your mouse to your device 章节) [^1] [^2]*\n\n---\n\n### 3. 最多记住几台设备？\n**最多 3 台。**\n官方原文说明：\n> “Your mouse can be paired with up to **three different devices** and you can use the Easy-Switch button to toggle between them.”\n\n你可以通过短按鼠标底部的 Easy-Switch 按钮在这三台已配对的设备之间无缝切换。\n\n*来源：同上 [^1] [^2]*\n\n---\n\n### 4. 电池需要几节、什么型号？\n**需要 1 节 AA（5号）碱性电池。**\n官方规格及电源管理部分明确指出：\n> “Requires **1 AA alkaline battery**”\n> “Expected battery life is up to 24 months”\n\n并且根据包装盒清单（What's in the Box），出厂时鼠标内已经预装了一节 AA 碱性电池：\n> “Pebble Mouse 2 M350s, **1 x AA Alkaline battery (pre-installed)**, User documentation, Important Info Document (IID)”\n\n更换电池时，只需掀开鼠标顶盖（Lift the top case off the mouse），取出旧电池，注意正负极方向放入新电池，再盖回顶盖即可。\n\n*来源：Logitech Support - Specification / Getting Started - Pebble Mouse 2 M350s (Battery life and replacement & What's in the Box 章节) [^1] [^2] [^3]*\n\n---\n\n### 参考来源（官方文档链接）\n[^1]: Logitech Support (英文) - *Getting Started - Pebble Mouse 2 M350s*: https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\n[^2]: Logitech Support (西班牙文) - *Getting Started - Pebble Mouse 2 M350s*: https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s\n[^3]: Logitech Support (丹麦文) - *Specification - Pebble Mouse 2 M350s*: https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s",
+      "tokens": {
+        "input": 19057,
+        "output": 1025
+      },
+      "finishReason": "stop"
+    }
+  ]
+}

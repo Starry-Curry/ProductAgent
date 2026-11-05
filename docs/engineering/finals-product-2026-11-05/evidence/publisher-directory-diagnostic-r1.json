@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-04T20:28:24.946Z",
+  "basis": "actual_public_Wikidata_HTTP_only_no_Qwen_no_credentials_no_trust_grant",
+  "brands": [
+    {
+      "brand": "Fellow",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Fellow&language=en&type=item&limit=6&format=json",
+      "entities": [],
+      "errors": [
+        {
+          "stage": "search",
+          "type": "Error",
+          "message": "公开资料网络读取失败，可手动打开官网或上传说明书"
+        }
+      ]
+    },
+    {
+      "brand": "HOTO",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&search=HOTO&language=en&type=item&limit=6&format=json",
+      "entities": [],
+      "errors": [
+        {
+          "stage": "search",
+          "type": "Error",
+          "message": "公开资料网络读取失败，可手动打开官网或上传说明书"
+        }
+      ]
+    },
+    {
+      "brand": "THERMOS",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&search=THERMOS&language=en&type=item&limit=6&format=json",
+      "entities": [],
+      "errors": [
+        {
+          "stage": "search",
+          "type": "Error",
+          "message": "公开资料网络读取失败，可手动打开官网或上传说明书"
+        }
+      ]
+    },
+    {
+      "brand": "Victorinox",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Victorinox&language=en&type=item&limit=6&format=json",
+      "entities": [],
+      "errors": [
+        {
+          "stage": "search",
+          "type": "Error",
+          "message": "公开资料网络读取失败，可手动打开官网或上传说明书"
+        }
+      ]
+    }
+  ]
+}

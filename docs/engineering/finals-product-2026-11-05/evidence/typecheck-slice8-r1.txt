@@ -1,0 +1,4 @@
+tests/finals-focused-knowledge-budget.test.ts(3,115): error TS7034: Variable 'ids' implicitly has type 'any[]' in some locations where its type cannot be determined.
+tests/finals-focused-knowledge-budget.test.ts(5,229): error TS7005: Variable 'ids' implicitly has an 'any[]' type.
+tests/finals-focused-knowledge-budget.test.ts(5,338): error TS7005: Variable 'ids' implicitly has an 'any[]' type.
+tests/finals-focused-knowledge-budget.test.ts(5,521): error TS7005: Variable 'ids' implicitly has an 'any[]' type.

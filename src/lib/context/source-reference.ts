@@ -13,6 +13,11 @@ import {AgentError} from '../agent/contracts.ts';
  * only selects a supplied assertion ID; it never supplies these hash operands. */
 export type KnowledgeReference={id:string;url:string;sourceId?:string;documentHash?:string;quoteRange?:{start:number;end:number};quoteHash?:string};
 const hash=(text:string)=>createHash('sha256').update(text).digest('hex');
+export function bindOriginalReference(doc:AcquiredDocument,sourceId:string):KnowledgeReference{
+ const text=sourceId===doc.id?doc.text:doc.chunks.find(c=>c.id===sourceId)?.text;
+ if(!text)throw Error('original_source_not_found');
+ return {id:'sem:'+hash(JSON.stringify([sourceId,doc.hash,0,text.length])),url:doc.url,sourceId,documentHash:doc.hash,quoteRange:{start:0,end:text.length},quoteHash:hash(text)};
+}
 export function bindSemanticReference(observation:SourceSemanticObservation):KnowledgeReference{
  if(observation.kind==='unknown'||!observation.exactQuote||!observation.quoteRange)throw Error('cannot_bind_unquoted_semantic_gap');
  return {id:observation.id,url:observation.source.url,sourceId:observation.sourceId,documentHash:observation.source.hash,quoteRange:{...observation.quoteRange},quoteHash:hash(observation.exactQuote)};
@@ -36,6 +41,20 @@ export function hasCurrentKnowledgeReference(documents:AcquiredDocument[],refere
 }
 
 export type PublicSourceAssertion={id:string;text:string;kind:'fact'|'operation'|'condition';url:string;model:string;region:string;documentId:string;reference:KnowledgeReference};
+/** Persist the original passages selected by a completed human-guidance answer.
+ * No generated step, interpretation, private condition or causal claim is saved.
+ * "operation" means used for guidance, never independently proved semantics. */
+export function saveGuidanceSources(db:DatabaseSync,state:State,actor:Person,itemId:string,sourceIds:string[],selectedBy:string){
+ const item=state.items.find(i=>i.id===itemId);if(!item||!authorize(db,state,actor,itemId).allowed)throw new AgentError('物品未获当前授权',403);
+ for(const {document:doc} of scopedProductKnowledge(item,readKnowledge(db,state,actor,itemId))){
+  const added=sourceIds.flatMap(sourceId=>{const text=sourceId===doc.id?doc.text:doc.chunks.find(c=>c.id===sourceId)?.text;if(!text)return [];
+   const reference=bindOriginalReference(doc,sourceId);
+   return [{reference,kind:'operation' as const,selectedBy}];});
+  if(!added.length)continue;
+  const entries=[...(doc.sourceSelections?.entries||[]).filter(row=>hasCurrentKnowledgeReference([doc],row.reference)),...added].filter((r,n,a)=>a.findIndex(x=>x.reference.id===r.reference.id)===n);
+  storeOfficialDocument(db,actor,item,{...doc,sourceSelections:{version:1,entries}});
+ }
+}
 /** The existing owner's document body stores ONLY locators into public original
  * text. User queries, inferred explanations/conditions, unknowns and personal
  * stories are never persisted as product knowledge. No second table/cache. */

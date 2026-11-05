@@ -134,7 +134,7 @@ export function VirtualHome({
   data: VirtualHomeData;
   items: Item[];
   active: boolean;
-  onActive: (value: boolean) => void;
+  onActive: (value: boolean,readAuthorizedHomeRecords?:boolean) => void;
   request: (action: string, input?: unknown) => Promise<any>;
   refresh: () => Promise<void>;
   onAsk: (text: string) => void;
@@ -214,7 +214,9 @@ export function VirtualHome({
                   confirmed: true,
                   allowCloud: consent,
                 });
-                onActive(true);
+                // This exact checkbox explicitly includes this synthetic
+                // home's preferences/stories; it grants no personal-space use.
+                onActive(true,consent);
                 await refresh();
                 await fetchKnowledge();
               } catch (e) {

@@ -1,0 +1,28 @@
+✖ 独立账号在异步操作等待期间退出，旧凭证不能接收迟到的私人响应；另一有效账号不受影响 (152.7563ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 349.4596
+
+✖ failing tests:
+
+test at tests\finals-account-late-response.test.ts:2:1
+✖ 独立账号在异步操作等待期间退出，旧凭证不能接收迟到的私人响应；另一有效账号不受影响 (152.7563ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 401
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-account-late-response.test.ts:4:742)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 401,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

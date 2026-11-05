@@ -1,0 +1,350 @@
+{
+  "caseId": "N05-1",
+  "productId": "N05",
+  "question": "准备插一张新的microSD卡录音：是否先关机，卡的哪一面朝上？如果要机内格式化，数据会怎样？",
+  "arm": "product",
+  "at": "2026-11-03T02:19:32.731Z",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "httpStatus": 200,
+  "result": {
+    "session": {
+      "id": "7cb002d3-956e-4d84-bda5-9b41eed3e1b1",
+      "owner": "u_4e824597-2c47-4ccc-9668-45dfa459bc10",
+      "itemId": "be104edf-4a5c-493d-8ebd-decdc3662177",
+      "identity": "[\"u_4e824597-2c47-4ccc-9668-45dfa459bc10\",\"[\\\"H1essential\\\",null,null,null]\"]",
+      "mode": "service",
+      "revision": 1,
+      "status": "waiting_user",
+      "messages": [
+        {
+          "id": "af897d39-d3d0-4aca-a642-420416a3eed7",
+          "role": "user",
+          "text": "准备插一张新的microSD卡录音：是否先关机，卡的哪一面朝上？如果要机内格式化，数据会怎样？",
+          "at": "2026-11-03T02:19:44.676Z",
+          "itemId": "be104edf-4a5c-493d-8ebd-decdc3662177",
+          "memoryPolicy": "off",
+          "capture": false
+        },
+        {
+          "id": "6208ac39-4d93-42d4-b38b-d0b5aef988c7",
+          "role": "assistant",
+          "text": "关于 ZOOM H1essential 的 microSD 卡操作，当前未能检索到该型号的官方说明书原文，因此无法提供经厂家验证的插卡方向图示或格式化菜单路径。以下为基于通用录音设备安全规范的说明，仅供参考，不能替代本机手册：\n\n1.  **是否先关机**：强烈建议在插入或拔出 microSD 卡前将设备完全关机。虽然部分设备支持热插拔，但录音机在通电状态下读写存储卡时意外断开连接，极易导致文件系统损坏或正在录制的音频丢失。\n2.  **卡的朝向**：microSD 卡槽通常有防呆设计，触点面（金属面）一般朝向特定方向（常见为朝下或朝内），且卡片缺口/斜角需与卡槽形状吻合。**切勿用力硬推**，若感觉明显阻力说明方向错误。由于未获取到 H1essential 的插槽示意图，请务必以机身卡槽旁的丝印标识或说明书图示为准。\n3.  **机内格式化的后果**：在录音机内执行“Format”操作会**永久擦除卡上所有数据**（包括录音文件、文件夹结构及隐藏系统文件），且通常无法通过常规手段恢复。格式化仅应在已备份重要数据、确认卡内无保留内容后进行；新卡首次使用建议用本机格式化以确保文件系统兼容，但前提是确认卡为空或数据已转移。\n\n如您能提供 H1essential 说明书 PDF 或官方帮助页面链接，我可以为您读取准确的插卡图示和格式化操作步骤。",
+          "reply": {
+            "modelHistoryText": "关于 ZOOM H1essential 的 microSD 卡操作，当前未能检索到该型号的官方说明书原文，因此无法提供经厂家验证的插卡方向图示或格式化菜单路径。以下为基于通用录音设备安全规范的说明，仅供参考，不能替代本机手册：\n\n1.  **是否先关机**：强烈建议在插入或拔出 microSD 卡前将设备完全关机。虽然部分设备支持热插拔，但录音机在通电状态下读写存储卡时意外断开连接，极易导致文件系统损坏或正在录制的音频丢失。\n2.  **卡的朝向**：microSD 卡槽通常有防呆设计，触点面（金属面）一般朝向特定方向（常见为朝下或朝内），且卡片缺口/斜角需与卡槽形状吻合。**切勿用力硬推**，若感觉明显阻力说明方向错误。由于未获取到 H1essential 的插槽示意图，请务必以机身卡槽旁的丝印标识或说明书图示为准。\n3.  **机内格式化的后果**：在录音机内执行“Format”操作会**永久擦除卡上所有数据**（包括录音文件、文件夹结构及隐藏系统文件），且通常无法通过常规手段恢复。格式化仅应在已备份重要数据、确认卡内无保留内容后进行；新卡首次使用建议用本机格式化以确保文件系统兼容，但前提是确认卡为空或数据已转移。\n\n如您能提供 H1essential 说明书 PDF 或官方帮助页面链接，我可以为您读取准确的插卡图示和格式化操作步骤。",
+            "continuations": [],
+            "actionCards": [],
+            "necessaryConditionChecks": [],
+            "knowledgeWarnings": [],
+            "answer": "关于 ZOOM H1essential 的 microSD 卡操作，当前未能检索到该型号的官方说明书原文，因此无法提供经厂家验证的插卡方向图示或格式化菜单路径。以下为基于通用录音设备安全规范的说明，仅供参考，不能替代本机手册：\n\n1.  **是否先关机**：强烈建议在插入或拔出 microSD 卡前将设备完全关机。虽然部分设备支持热插拔，但录音机在通电状态下读写存储卡时意外断开连接，极易导致文件系统损坏或正在录制的音频丢失。\n2.  **卡的朝向**：microSD 卡槽通常有防呆设计，触点面（金属面）一般朝向特定方向（常见为朝下或朝内），且卡片缺口/斜角需与卡槽形状吻合。**切勿用力硬推**，若感觉明显阻力说明方向错误。由于未获取到 H1essential 的插槽示意图，请务必以机身卡槽旁的丝印标识或说明书图示为准。\n3.  **机内格式化的后果**：在录音机内执行“Format”操作会**永久擦除卡上所有数据**（包括录音文件、文件夹结构及隐藏系统文件），且通常无法通过常规手段恢复。格式化仅应在已备份重要数据、确认卡内无保留内容后进行；新卡首次使用建议用本机格式化以确保文件系统兼容，但前提是确认卡为空或数据已转移。\n\n如您能提供 H1essential 说明书 PDF 或官方帮助页面链接，我可以为您读取准确的插卡图示和格式化操作步骤。",
+            "outcome": "needs_info",
+            "source": "model-general",
+            "model": "qwen3.8-max-0902",
+            "steps": [],
+            "questions": [],
+            "evidenceIds": [],
+            "citations": [],
+            "memoryIds": [],
+            "usedItems": [
+              {
+                "id": "be104edf-4a5c-493d-8ebd-decdc3662177",
+                "name": "[模拟持有] ZOOM H1essential",
+                "model": "H1essential"
+              }
+            ],
+            "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+          },
+          "at": "2026-11-03T02:19:44.676Z"
+        }
+      ],
+      "known": {
+        "memoryPolicy": "off",
+        "interfaceMode": "standard",
+        "uiPage": "item",
+        "useItemMemories": "no",
+        "turnRequestId": "14ebb495-944b-4fbb-8fa8-16f7b179362f"
+      },
+      "tried": [],
+      "memoryEpoch": 0,
+      "createdAt": "2026-11-03T02:19:32.827Z",
+      "updatedAt": "2026-11-03T02:19:44.677Z",
+      "expiresAt": "2026-11-10T02:19:32.827Z",
+      "itemScopes": {
+        "be104edf-4a5c-493d-8ebd-decdc3662177": "[\"u_4e824597-2c47-4ccc-9668-45dfa459bc10\",\"[\\\"H1essential\\\",null,null,null]\"]"
+      }
+    },
+    "reply": {
+      "modelHistoryText": "关于 ZOOM H1essential 的 microSD 卡操作，当前未能检索到该型号的官方说明书原文，因此无法提供经厂家验证的插卡方向图示或格式化菜单路径。以下为基于通用录音设备安全规范的说明，仅供参考，不能替代本机手册：\n\n1.  **是否先关机**：强烈建议在插入或拔出 microSD 卡前将设备完全关机。虽然部分设备支持热插拔，但录音机在通电状态下读写存储卡时意外断开连接，极易导致文件系统损坏或正在录制的音频丢失。\n2.  **卡的朝向**：microSD 卡槽通常有防呆设计，触点面（金属面）一般朝向特定方向（常见为朝下或朝内），且卡片缺口/斜角需与卡槽形状吻合。**切勿用力硬推**，若感觉明显阻力说明方向错误。由于未获取到 H1essential 的插槽示意图，请务必以机身卡槽旁的丝印标识或说明书图示为准。\n3.  **机内格式化的后果**：在录音机内执行“Format”操作会**永久擦除卡上所有数据**（包括录音文件、文件夹结构及隐藏系统文件），且通常无法通过常规手段恢复。格式化仅应在已备份重要数据、确认卡内无保留内容后进行；新卡首次使用建议用本机格式化以确保文件系统兼容，但前提是确认卡为空或数据已转移。\n\n如您能提供 H1essential 说明书 PDF 或官方帮助页面链接，我可以为您读取准确的插卡图示和格式化操作步骤。",
+      "continuations": [],
+      "actionCards": [],
+      "necessaryConditionChecks": [],
+      "knowledgeWarnings": [],
+      "answer": "关于 ZOOM H1essential 的 microSD 卡操作，当前未能检索到该型号的官方说明书原文，因此无法提供经厂家验证的插卡方向图示或格式化菜单路径。以下为基于通用录音设备安全规范的说明，仅供参考，不能替代本机手册：\n\n1.  **是否先关机**：强烈建议在插入或拔出 microSD 卡前将设备完全关机。虽然部分设备支持热插拔，但录音机在通电状态下读写存储卡时意外断开连接，极易导致文件系统损坏或正在录制的音频丢失。\n2.  **卡的朝向**：microSD 卡槽通常有防呆设计，触点面（金属面）一般朝向特定方向（常见为朝下或朝内），且卡片缺口/斜角需与卡槽形状吻合。**切勿用力硬推**，若感觉明显阻力说明方向错误。由于未获取到 H1essential 的插槽示意图，请务必以机身卡槽旁的丝印标识或说明书图示为准。\n3.  **机内格式化的后果**：在录音机内执行“Format”操作会**永久擦除卡上所有数据**（包括录音文件、文件夹结构及隐藏系统文件），且通常无法通过常规手段恢复。格式化仅应在已备份重要数据、确认卡内无保留内容后进行；新卡首次使用建议用本机格式化以确保文件系统兼容，但前提是确认卡为空或数据已转移。\n\n如您能提供 H1essential 说明书 PDF 或官方帮助页面链接，我可以为您读取准确的插卡图示和格式化操作步骤。",
+      "outcome": "needs_info",
+      "source": "model-general",
+      "model": "qwen3.8-max-0902",
+      "steps": [],
+      "questions": [],
+      "evidenceIds": [],
+      "citations": [],
+      "memoryIds": [],
+      "usedItems": [
+        {
+          "id": "be104edf-4a5c-493d-8ebd-decdc3662177",
+          "name": "[模拟持有] ZOOM H1essential",
+          "model": "H1essential"
+        }
+      ],
+      "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+    },
+    "trace": [
+      {
+        "stage": "tool_runtime_REPLY_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:19:32.853Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:19:32.853Z"
+      },
+      {
+        "stage": "practical_model",
+        "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+        "at": "2026-11-03T02:19:35.262Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_START",
+        "detail": "{\"callId\":\"call_ed59065b7577457fb269f713\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:19:35.263Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_DELTA",
+        "detail": "{\"callId\":\"call_ed59065b7577457fb269f713\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:19:35.263Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_END",
+        "detail": "{\"callId\":\"call_ed59065b7577457fb269f713\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:19:35.263Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_END",
+        "detail": "{\"inputTokens\":5382,\"outputTokens\":67}",
+        "at": "2026-11-03T02:19:35.263Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_START",
+        "detail": "{\"callId\":\"call_ed59065b7577457fb269f713\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:19:35.264Z"
+      },
+      {
+        "stage": "tool_policy",
+        "detail": "{\"name\":\"search_product_knowledge\",\"effect\":\"local_write\",\"scope\":\"live_item_grant_public_sources_only\",\"result\":\"sourced_knowledge_cache\",\"idempotency\":\"document_digest\"}",
+        "at": "2026-11-03T02:19:35.266Z"
+      },
+      {
+        "stage": "practical_knowledge",
+        "detail": "{\"itemId\":\"be104edf-4a5c-493d-8ebd-decdc3662177\",\"cached\":false,\"readURLs\":[],\"issues\":[\"未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。\"],\"seedURLs\":[],\"searchAttempted\":false,\"searchCompleted\":false,\"searchURLs\":[],\"verifiedURLs\":[],\"attemptedURLs\":[],\"sources\":[]}",
+        "at": "2026-11-03T02:19:35.291Z"
+      },
+      {
+        "stage": "source_semantics",
+        "detail": "{\"status\":\"no_sources\",\"modelCalls\":0,\"cacheHit\":false,\"rejected\":[],\"sourceIds\":[],\"observations\":[]}",
+        "at": "2026-11-03T02:19:35.297Z"
+      },
+      {
+        "stage": "practical_tool",
+        "detail": "search_product_knowledge completed",
+        "at": "2026-11-03T02:19:35.297Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+        "detail": "{\"callId\":\"call_ed59065b7577457fb269f713\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:19:35.298Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_END",
+        "detail": "{\"callId\":\"call_ed59065b7577457fb269f713\",\"tool\":\"search_product_knowledge\",\"state\":\"success\"}",
+        "at": "2026-11-03T02:19:35.299Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:19:35.299Z"
+      },
+      {
+        "stage": "practical_model",
+        "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+        "at": "2026-11-03T02:19:37.350Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_START",
+        "detail": "{\"callId\":\"call_cceeaea63e2c40199f7f9ed9\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:19:37.351Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_DELTA",
+        "detail": "{\"callId\":\"call_cceeaea63e2c40199f7f9ed9\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:19:37.351Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_END",
+        "detail": "{\"callId\":\"call_cceeaea63e2c40199f7f9ed9\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:19:37.351Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_END",
+        "detail": "{\"inputTokens\":5712,\"outputTokens\":80}",
+        "at": "2026-11-03T02:19:37.351Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_START",
+        "detail": "{\"callId\":\"call_cceeaea63e2c40199f7f9ed9\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:19:37.353Z"
+      },
+      {
+        "stage": "tool_policy",
+        "detail": "{\"name\":\"search_product_knowledge\",\"effect\":\"local_write\",\"scope\":\"live_item_grant_public_sources_only\",\"result\":\"sourced_knowledge_cache\",\"idempotency\":\"document_digest\"}",
+        "at": "2026-11-03T02:19:37.357Z"
+      },
+      {
+        "stage": "practical_knowledge",
+        "detail": "{\"itemId\":\"be104edf-4a5c-493d-8ebd-decdc3662177\",\"cached\":false,\"readURLs\":[],\"issues\":[\"未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。\"],\"seedURLs\":[],\"searchAttempted\":false,\"searchCompleted\":false,\"searchURLs\":[],\"verifiedURLs\":[],\"attemptedURLs\":[],\"sources\":[]}",
+        "at": "2026-11-03T02:19:37.394Z"
+      },
+      {
+        "stage": "source_semantics",
+        "detail": "{\"status\":\"no_sources\",\"modelCalls\":0,\"cacheHit\":false,\"rejected\":[],\"sourceIds\":[],\"observations\":[]}",
+        "at": "2026-11-03T02:19:37.398Z"
+      },
+      {
+        "stage": "practical_tool",
+        "detail": "search_product_knowledge completed",
+        "at": "2026-11-03T02:19:37.398Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+        "detail": "{\"callId\":\"call_cceeaea63e2c40199f7f9ed9\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:19:37.399Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_END",
+        "detail": "{\"callId\":\"call_cceeaea63e2c40199f7f9ed9\",\"tool\":\"search_product_knowledge\",\"state\":\"success\"}",
+        "at": "2026-11-03T02:19:37.401Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:19:37.401Z"
+      },
+      {
+        "stage": "practical_model",
+        "detail": "{\"round\":2,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+        "at": "2026-11-03T02:19:44.640Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_START",
+        "detail": "{\"callId\":\"call_fb1b3759f17342c9befd1041\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:19:44.642Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_DELTA",
+        "detail": "{\"callId\":\"call_fb1b3759f17342c9befd1041\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:19:44.642Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_END",
+        "detail": "{\"callId\":\"call_fb1b3759f17342c9befd1041\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:19:44.642Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_END",
+        "detail": "{\"inputTokens\":6055,\"outputTokens\":354}",
+        "at": "2026-11-03T02:19:44.642Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_START",
+        "detail": "{\"callId\":\"call_fb1b3759f17342c9befd1041\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:19:44.644Z"
+      },
+      {
+        "stage": "tool_policy",
+        "detail": "{\"name\":\"complete_answer\",\"effect\":\"propose\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_no_domain_write\"}",
+        "at": "2026-11-03T02:19:44.647Z"
+      },
+      {
+        "stage": "practical_tool",
+        "detail": "complete_answer completed",
+        "at": "2026-11-03T02:19:44.664Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+        "detail": "{\"callId\":\"call_fb1b3759f17342c9befd1041\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:19:44.665Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_END",
+        "detail": "{\"callId\":\"call_fb1b3759f17342c9befd1041\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+        "at": "2026-11-03T02:19:44.667Z"
+      },
+      {
+        "stage": "practical_completion",
+        "detail": "{\"elapsedMs\":11842,\"calls\":3,\"tools\":3,\"reservedCny\":0.22382399999999997,\"missingKnowledgeIds\":[\"be104edf-4a5c-493d-8ebd-decdc3662177\"],\"adviceOnly\":true}",
+        "at": "2026-11-03T02:19:44.673Z"
+      }
+    ],
+    "tokens": {
+      "input": 17149,
+      "output": 501
+    },
+    "modelCalls": 3,
+    "foundation": {
+      "runId": "e306fbb8-ca75-4bed-8b95-95560f15a1d8",
+      "status": "waiting_user",
+      "basis": "advice_only"
+    }
+  },
+  "fullAnswerMs": 12005,
+  "upstreamNumbers": [
+    125,
+    126,
+    127
+  ],
+  "transport": [
+    {
+      "number": 37,
+      "caseId": "N05-1",
+      "arm": "product",
+      "at": "2026-11-03T02:19:32.939Z",
+      "inputSha256": "4bf3c966f61ca2875acdc5ec56684c2d82b7cfff1e857e2e9be5283db7f33d59",
+      "inputBytes": 17718,
+      "path": "/browser/v1/chat/completions",
+      "status": "returned",
+      "httpStatus": 200
+    },
+    {
+      "number": 38,
+      "caseId": "N05-1",
+      "arm": "product",
+      "at": "2026-11-03T02:19:35.402Z",
+      "inputSha256": "c420ed707c37e592a0b0dc90fef1b096608d1ea69943f405b46a25ca3e7fabd9",
+      "inputBytes": 19265,
+      "path": "/browser/v1/chat/completions",
+      "status": "returned",
+      "httpStatus": 200
+    },
+    {
+      "number": 39,
+      "caseId": "N05-1",
+      "arm": "product",
+      "at": "2026-11-03T02:19:37.489Z",
+      "inputSha256": "9073e160997eff84e0cc01dc2b69c42a1cb7df93df51e1d8153f8a6733e31ecd",
+      "inputBytes": 20857,
+      "path": "/browser/v1/chat/completions",
+      "status": "returned",
+      "httpStatus": 200
+    }
+  ]
+}

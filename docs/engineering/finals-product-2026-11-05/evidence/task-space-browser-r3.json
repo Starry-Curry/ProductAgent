@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-04T22:40:44.930Z",
+  "basis": "real_authenticated_browser_real_Task_and_synthetic_item_setup_assistant_POST_deliberately_aborted_before_server_no_Qwen",
+  "checks": [
+    {
+      "name": "home_scope_does_not_restore_or_submit_old_private_Task",
+      "passed": true
+    },
+    {
+      "name": "original_scope_selection_and_Task_history_preserved_on_return",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "blockedAssistantInputs": [
+    {
+      "requestId": "f9b5e07c-ce14-4df9-9543-f7b0f36b9bd9",
+      "mode": "auto",
+      "question": "只讨论模拟家庭的物品，不接续原私人空间的事项",
+      "temporary": false,
+      "memoryPolicy": "off",
+      "uiContext": {
+        "page": "assistant",
+        "homeId": "young-apartment-v1"
+      }
+    }
+  ],
+  "actor": "u_2cdc5405-6306-4c13-92fb-3850d754ee0c",
+  "taskId": "3e97d746-becc-4480-9e42-bfa4eb81f5fd",
+  "status": "passed_UI_scope_continuity_no_model",
+  "upstreamRequests": 0
+}

@@ -1,0 +1,30 @@
+{
+  "caseId": "N03-3",
+  "arm": "direct",
+  "controlCohort": "additional_authorized_round_same_information",
+  "roundId": "qwen-foundation-20261103-r2",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "at": "2026-11-03T02:26:12.898Z",
+  "sameInformation": {
+    "productRequestNumber": 115,
+    "materialSha256": "b4833963f81ddce7f1ddd8a4673cce2e5d964d446212fcb2a3d33f8adb1a5c5a",
+    "method": "exact user/tool content of product final tool-loop request; excludes system and assistant drafts"
+  },
+  "text": "# 关于 FUJIFILM instax mini 99 的快门与相片取出\n\n## ⚠️ 证据不足说明\n\n当前系统**未检索到该型号的官方说明书原文或可核对资料**，因此我无法为您逐字引用厂家规定。以下内容基于富士 instax mini 系列一次成像相机的通用设计原理进行说明，适用于绝大多数同系列机型（包括 mini 99），但具体细节请以您手中的实物或官方说明书为准。\n\n---\n\n## 一、两个快门分别怎么用？\n\ninstax mini 系列机身通常配备**两个快门按钮**，这是为了方便不同握持方向拍摄而设计的：\n\n| 拍摄方向 | 使用的快门按钮 | 说明 |\n|---------|--------------|------|\n| **横拍（水平握持）** | 机身正面、镜头旁边的**主快门按钮** | 这是最常用的快门，右手食指自然按下即可 |\n| **竖拍（垂直握持）** | 机身底部/侧面的**第二快门按钮** | 当您将相机竖过来时，原来的正面快门位置会变得别扭，此时用底部的快门按钮更方便拇指或食指按压 |\n\n> **简单记忆法：** 哪个按钮在您当前握持姿势下按起来最顺手、手指最自然，就用哪一个。两个快门功能完全相同，只是位置不同。\n\n---\n\n## 二、相片出来时什么时候拿走？\n\n这是一次成像相机使用中**最关键的一步**，操作不当会导致相片损坏或显影失败：\n\n### ✅ 正确做法\n\n1. **按下快门后**，相机会自动将相纸从出片口吐出。\n2. **等待相纸完全自动退出**——不要用手去拽、拉或中途拦截它，让相机自己把整张相纸送出来。\n3. **相纸完全脱离机身后再拿住**。建议捏住相纸的**白色边框**，避免触碰中间的画面区域。\n4. **取出后立即避光保护**：\n   - 不要甩动相纸（这是一个常见误区，甩动不会加速显影，反而可能损伤内部药水层）。\n   - 将相纸画面朝下放置，或放入口袋、书本中遮光。\n   - 在常温下静置约 **60～90 秒**（寒冷环境下可能需要更久），影像会逐渐显现并稳定。\n\n### ❌ 错误做法\n\n- 相纸还没完全出来就硬拽 → 可能导致卡纸或显影不均\n- 刚出来就暴露在强光下长时间照射 → 画面可能过曝发白\n- 用力弯折或甩动 → 破坏化学显影层\n\n---\n\n## 三、适用条件与建议\n\n- 以上操作逻辑适用于 **FUJIFILM instax mini 系列**（含 mini 99）使用 **instax mini 相纸** 的标准场景。\n- 如果您使用的是特殊效果模式（mini 99 支持色彩特效等），快门操作方式不变，但显影时间可能略有差异。\n- **由于当前缺乏该型号的完整官方文档**，强烈建议您：\n  - 查阅随机附带的快速入门指南；\n  - 或访问富士官方网站下载 instax mini 99 的完整说明书 PDF，以获取最权威的操作指引。",
+  "usage": {
+    "completion_tokens": 696,
+    "prompt_tokens": 1164,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 1164
+    },
+    "total_tokens": 1860
+  },
+  "model": "qwen3.8-max-0902",
+  "finishReason": "stop",
+  "fullAnswerMs": 16487,
+  "upstreamNumbers": [
+    9
+  ]
+}

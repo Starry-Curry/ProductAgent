@@ -1,0 +1,24 @@
+{
+  "roundId": "qwen-foundation-20261103-r2",
+  "approved": true,
+  "quote": "批准追加40次／20元",
+  "maxRequests": 40,
+  "maxEstimatedCny": 20,
+  "scope": "Same approved Qwen model/native tools/official document and browser validation; no third-party paid service or hardware",
+  "historicalLedgers": [
+    {
+      "path": "docs/engineering/outcome-qwen-2026-11-02/evidence/model-calls.json",
+      "sha256": "f55e6ed7d23b97773d0a3160d5d4d953794112a5fe265c899f56c6f697c80243"
+    },
+    {
+      "path": "docs/engineering/qwen-foundation-2026-11-02/evidence/model-calls.json",
+      "sha256": "a6092d978ad64d74e53dadb21bb063a40dab9fc2c74da1317fa088f1637c5271"
+    }
+  ],
+  "previousRound": {
+    "id": "qwen-foundation-20261102-r1",
+    "usedRequests": 142,
+    "unusedRequests": 8,
+    "sealedAt": "2026-11-03T02:23:26.575Z"
+  }
+}

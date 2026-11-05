@@ -1,0 +1,14 @@
+{
+  "caseId": "N01-2",
+  "productId": "N01",
+  "question": "同一台机器从墙边和桌面前沿开始量，起点怎么换？开机默认从哪一边算？",
+  "arm": "direct",
+  "at": "2026-11-03T02:20:39.777Z",
+  "status": "blocked_budget",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "error": "acceptance_or_global_budget_exhausted",
+  "fullAnswerMs": 80,
+  "upstreamNumbers": [],
+  "transport": []
+}

@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-03T03:22:04.708Z",
+  "status": 200,
+  "body": {
+    "documents": [],
+    "issues": [
+      "联网搜索未完成或未获授权，本轮不重试。",
+      "未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。"
+    ],
+    "acquisition": {
+      "seedURLs": [],
+      "searchAttempted": true,
+      "searchCompleted": false,
+      "searchURLs": [],
+      "readURLs": [],
+      "verifiedURLs": [],
+      "attemptedURLs": [],
+      "searchFailure": {
+        "type": "Error",
+        "detail": "503 isolated_gateway_rejected"
+      }
+    },
+    "cached": false
+  }
+}

@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import {validationFixture} from '../scripts/life-validation-fixture.ts';
 import {makeKnowledgeDocument,storeOfficialDocument,readKnowledge} from '../src/lib/life/acquisition.ts';
 import {extractSourceSemantics} from '../src/lib/context/source-semantics.ts';
-import {saveSourceSelections,readSourceSelections} from '../src/lib/context/source-reference.ts';
+import {saveSourceSelections,readSourceSelections,saveGuidanceSources} from '../src/lib/context/source-reference.ts';
 import {readReality} from '../src/lib/context/reality-service.ts';
+import {discoverCapabilities} from '../src/lib/context/discovery.ts';
 import {respond} from '../src/lib/agent/service.ts';
 import {migrateUnified} from '../src/lib/foundation/schema.ts';
 import type {Provider} from '../src/lib/ai/provider.ts';
@@ -36,6 +37,7 @@ test('共享知识复用连续原文定位，保持原始正文；私人问题/�
  assert.ok(reality.facts.some(f=>f.value===entries[0].text&&f.basis==='official_source'));
  assert.ok(reality.capabilities.some(c=>c.effect===entries[0].text&&c.status==='conditional'&&!c.executable&&!c.verifiedForThisInstance));
  assert.ok(!JSON.stringify(reality).includes('未提供保修期限'));
+ assert.ok(discoverCapabilities(f.db,f.read(),'lin',{goal:'marked key'}).resources.some(r=>r.id===f.id),'newly learned original capability must be searchable, without an item-name match');
 });
 test('知识来源正文变更/型号变更/撤权后，不复用过期或无权定位',async t=>{
  const f=setup(t);saveSourceSelections(f.db,f.read(),'lin',f.id,await select(f));
@@ -59,4 +61,18 @@ test('有适用缓存的普通问答只调用一次主模型；不强制抽取�
  }};
  const r=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:f.id,question:'这个设备如何按键操作，保修多久？',mode:'service',memoryPolicy:'off'},provider);
  assert.equal(calls,1);assert.equal(r.reply.outcome,'answered');assert.match(r.reply.answer,/按标示键一次/);assert.match(r.reply.answer,/不能推定/);assert.ok(r.reply.citations.some(c=>c.url===f.page.url));
+});
+
+test('最终指导只积累选中的现有原文；不保存模型改写，重复与错物品引用不新增事实',t=>{
+ const f=setup(t);saveGuidanceSources(f.db,f.read(),'lin',f.id,[f.doc.id,'invented-id'],'offline-answer');
+ saveGuidanceSources(f.db,f.read(),'lin',f.id,[f.doc.id],'offline-answer');
+ const reality=readReality(f.db,f.read(),'lin',f.id);assert.equal(reality.facts.filter(x=>x.basis==='official_source').length,1);assert.equal(reality.facts[0].value,f.doc.text);assert.equal(reality.capabilities[0].executable,false);
+ const other=f.add('合成不同型号','其他','Sony','SYNTH-OTHER-92');saveGuidanceSources(f.db,f.read(),'lin',other,[f.doc.id],'offline-answer');assert.equal(readReality(f.db,f.read(),'lin',other).facts.filter(x=>x.basis==='official_source').length,0);
+});
+
+test('公开PDF图示识读可跨入口复用，但始终是模型观测而非官方认证事实；版本变更与错物品失效',t=>{
+ const f=setup(t);const reading={basis:'provider_visual_reading_not_verified_fact' as const,model:'offline-vision-substitute',text:'[合成公开图示识读候选]A label appears in the left view.',pages:[2],sourceHash:'a'.repeat(64),documentHash:f.doc.hash,at:new Date().toISOString()};
+ storeOfficialDocument(f.db,'lin',f.item,{...f.doc,reading:{mode:'pdf_text_layer',limitations:['未实际验证'],figures:[],visualReadings:[reading]}});
+ const r=readReality(f.db,f.read(),'lin',f.id),v=r.facts.find(f=>f.predicate==='visual_reading_candidate');assert.ok(v);assert.equal(v.basis,'inferred_unverified');assert.equal(v.verification,'unverified');assert.ok(!r.capabilities.some(c=>c.basis==='official_source'&&c.effect.includes('left view')));
+ const changed=makeKnowledgeDocument({...f.page,text:f.page.text+' changed'},f.item,[f.page.url]);storeOfficialDocument(f.db,'lin',f.item,{...changed,reading:{mode:'pdf_text_layer',limitations:[],figures:[],visualReadings:[reading]}});assert.equal(readReality(f.db,f.read(),'lin',f.id).facts.some(f=>f.predicate==='visual_reading_candidate'),false);
 });

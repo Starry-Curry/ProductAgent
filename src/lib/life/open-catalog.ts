@@ -4,6 +4,8 @@ import { fetchPublicDocument } from "./sources.ts";
 export type CatalogCandidate = {
   name: string;
   brand: string;
+  /** Bibliographic creators are not a manufacturer or item owner. */
+  creators?: string[];
   model: string;
   category: string;
   lifecycle: "消耗型" | "长期耐用";
@@ -88,7 +90,8 @@ export async function lookupOpenCatalog(
         candidates = [
           {
             name: String(b.title).slice(0, 80),
-            brand: authors.join("、").slice(0, 80),
+            brand: "",
+            creators: authors.map((a:string)=>a.slice(0,100)),
             model: code,
             category: "图书",
             lifecycle: "长期耐用",

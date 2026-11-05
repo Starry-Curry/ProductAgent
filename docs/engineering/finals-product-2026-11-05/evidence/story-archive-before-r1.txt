@@ -1,0 +1,44 @@
+✖ 撤权后不能借旧shared读取当前物品范围的故事/资料，自己的未筛选历史不被删除 (151.3437ms)
+✖ 作者可纠正自己的归档故事但不恢复旧物品或Task授权，也不能为撤权物品新增关联 (162.2946ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 600.2292
+
+✖ failing tests:
+
+test at tests\finals-story-archive.test.ts:3:1
+✖ 撤权后不能借旧shared读取当前物品范围的故事/资料，自己的未筛选历史不被删除 (151.3437ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-story-archive.test.ts:4:39)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /授权/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests\finals-story-archive.test.ts:6:1
+✖ 作者可纠正自己的归档故事但不恢复旧物品或Task授权，也不能为撤权物品新增关联 (162.2946ms)
+  Error: 任务涉及的物品授权已失效
+      at assertItems (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/foundation/tasks.ts:96:11)
+      at getTask (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/foundation/tasks.ts:112:5)
+      at linkTask (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/foundation/tasks.ts:165:24)
+      at recordSpecialist (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/foundation/specialists.ts:24:16)
+      at saveFragment (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/life/stories.ts:195:5)
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-story-archive.test.ts:7:173)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    status: 403
+  }

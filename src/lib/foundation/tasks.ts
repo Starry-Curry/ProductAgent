@@ -24,6 +24,7 @@ export type TaskSpec = {
   version: "task-spec/1";
   taskId: string;
   revision: number;
+  creationFingerprint?:string;
   createdBy: Person;
   goal: string;
   intent: z.infer<typeof taskIntent>;
@@ -84,6 +85,7 @@ const createSchema = z
     itemInstanceIds: z.array(z.string().min(1).max(100)).max(30).default([]),
   })
   .strict();
+export type CreateTaskInput=z.input<typeof createSchema>;
 function put(db: DatabaseSync, t: TaskSpec) {
   db.prepare(
     "INSERT INTO foundation_tasks VALUES(?,?,?,?) ON CONFLICT(id) DO UPDATE SET revision=excluded.revision,body=excluded.body",
@@ -122,6 +124,7 @@ export function getTask(
     contextRefs: t.contextRefs.filter((r) => allowed.includes(r.id)),
     participantIds: [a],
     participantSummaries: undefined,
+    creationFingerprint:undefined,
     experienceRefs:undefined,
     privacyStamp: t.privacyStamp ? Object.fromEntries(Object.entries(t.privacyStamp).filter(([key])=>key==="*"||allowed.some(id=>key==="item:"+id))) : undefined,
   };
@@ -236,6 +239,15 @@ export function createTask(
   const v = createSchema.parse(raw);
   db.exec("BEGIN IMMEDIATE");
   try {
+    const creationFingerprint=fingerprint({goal:v.goal,intent:v.intent,itemIds:[...new Set(v.itemInstanceIds)]});
+    const prior=db.prepare('SELECT task_id FROM foundation_links WHERE kind=? AND ref_id=?').get('request:'+a,v.requestId) as {task_id:string}|undefined;
+    if(prior){
+      const t=getTask(db,read(),a,prior.task_id);
+      const legacyKnown=t.contextRefs.every(r=>['用户选择或确认的业务对象','本次已获准且实际读取的目标资源；不授予操作或分享权限'].includes(r.whyNeeded));
+      const original=t.creationFingerprint||(legacyKnown?fingerprint({goal:t.goal,intent:t.intent,itemIds:t.contextRefs.filter(r=>r.whyNeeded==='用户选择或确认的业务对象').map(r=>r.id)}):undefined);
+      if(original!==creationFingerprint)throw new AgentError('幂等请求内容不同',409);
+      db.exec('COMMIT');return t;
+    }
     const t = linkTask(db, read(), a, {
       kind: "request:" + a,
       refId: v.requestId,
@@ -250,6 +262,7 @@ export function createTask(
         fingerprint([...new Set(v.itemInstanceIds)])
     )
       throw new AgentError("幂等请求内容不同", 409);
+    t.creationFingerprint=creationFingerprint;put(db,t);
     db.exec("COMMIT");
     return t;
   } catch (e) {
@@ -270,7 +283,7 @@ export function resolveTaskContext(
     version: "task-context/1",
     task,
     modelGoal:contextCurrent?task.goal:"旧任务涉及的个人语境已经变更；仅按本轮请求重新核对，不从旧目标补回关系事实",
-    plans:contextCurrent&&task.createdBy===a?(s.plans||[]).filter(p=>p.actor===a&&p.itemIds.every(itemId=>authorize(db,s,a,itemId).allowed)&&(db.prepare("SELECT task_id FROM foundation_links WHERE kind='plan' AND ref_id=?").get(p.id) as {task_id:string}|undefined)?.task_id===id).map(p=>({id:p.id,goal:p.goal,itemIds:p.itemIds,checklist:p.checklist,conditions:p.conditions,sources:p.sources,resourceReview:changedPlanResources(p,s.items),basis:'user_confirmed_plan_not_execution'})):[],
+    plans:contextCurrent&&task.createdBy===a?(s.plans||[]).filter(p=>p.actor===a&&p.itemIds.every(itemId=>authorize(db,s,a,itemId).allowed)&&(db.prepare("SELECT task_id FROM foundation_links WHERE kind='plan' AND ref_id=?").get(p.id) as {task_id:string}|undefined)?.task_id===id).map(p=>({id:p.id,goal:p.goal,itemIds:p.itemIds,checklist:p.checklist,conditions:p.conditions,dependencies:p.dependencies,sources:p.sources,resourceReview:changedPlanResources(p,s.items),basis:'user_confirmed_plan_not_execution'})):[],
     policyRevision: policyRevision(db, s),
     previousOutcomes: previous,
     familyProgress: s.tasks.filter(f=>
@@ -398,6 +411,12 @@ export function assertRunCurrent(db: DatabaseSync, s: State, run: TaskRun) {
   )
     throw new AgentError("物品、记忆或权限已经变化，请重新确认任务", 409);
 }
+/** Bind resources actually read by the existing executor, not model-supplied
+ * permissions. Called synchronously after its live scope/epoch checks. */
+export function bindRunReadResources(db:DatabaseSync,s:State,run:TaskRun,itemIds:string[]){
+ const ids=[...new Set(itemIds)];assertItems(db,s,run.actorId,ids);
+ for(const id of ids)if(!run.itemRevisions[id])run.itemRevisions[id]=itemInstance(s.items.find(i=>i.id===id)!).revision;
+}
 export function finishRun(
   db: DatabaseSync,
   read: () => State,
@@ -407,6 +426,12 @@ export function finishRun(
 ) {
   db.exec("BEGIN IMMEDIATE");
   try {
+    const stored=db.prepare('SELECT body FROM foundation_runs WHERE id=?').get(run.runId) as {body:string}|undefined;
+    const prior=stored?JSON.parse(stored.body) as TaskRun:undefined;
+    if(prior&&prior.status!=='running'&&prior.status===status&&prior.sessionId===sessionId){
+      if(status!=='blocked'&&status!=='failed')assertRunCurrent(db,read(),prior);
+      db.exec('COMMIT');return prior;
+    }
     if (status !== "blocked" && status !== "failed")
       assertRunCurrent(db, read(), run);
     const r = {
@@ -428,9 +453,17 @@ export function finishRun(
         .prepare("SELECT body FROM foundation_tasks WHERE id=?")
         .get(r.taskId) as { body: string };
       const t = JSON.parse(row.body) as TaskSpec;
-      if (t.createdBy === run.actorId)
+      if (t.createdBy === run.actorId){
+        // A private, user-created goal may discover resources after it starts.
+        // Keep those read references with its feedback. Never widen an already
+        // shared task or grant access; revocation still makes its context invalid.
+        const extra=status==='waiting_user'&&!t.participantIds.length?Object.keys(run.itemRevisions).filter(id=>!t.itemInstanceIds.includes(id)):[];
+        const stamp=privacyStamp(db,run.actorId,extra);
         put(db, {
           ...t,
+          itemInstanceIds:[...t.itemInstanceIds,...extra],
+          contextRefs:[...t.contextRefs,...extra.map(id=>({kind:'item' as const,id,revision:run.itemRevisions[id],whyNeeded:'本次已获准且实际读取的目标资源；不授予操作或分享权限'}))],
+          privacyStamp:t.privacyStamp?{...t.privacyStamp,...Object.fromEntries(Object.entries(stamp).filter(([key])=>key!=='*'&&!(key in t.privacyStamp!)))}:undefined,
           revision: t.revision + 1,
           currentStage:
             status === "failed" || status === "blocked"
@@ -438,6 +471,7 @@ export function finishRun(
               : "waiting_user",
           updatedAt: now(),
         });
+      }
     }
     db.exec("COMMIT");
     return r;
@@ -485,6 +519,7 @@ const outcomeSchema = z
     allowCloud: z.boolean().default(false),
   })
   .strict();
+export type OutcomeInput=z.input<typeof outcomeSchema>;
 export function recordOutcome(
   db: DatabaseSync,
   read: () => State,
@@ -594,6 +629,7 @@ const amendSchema = z.object({
   operation:z.enum(["correct","forget","revoke_reuse"]), confirmed:z.literal(true),
   notes:z.string().trim().min(1).max(1200).optional(), reuse:z.boolean().default(false), allowCloud:z.boolean().default(false),
 }).strict();
+export type AmendOutcomeInput=z.input<typeof amendSchema>;
 /** The author can erase their own record even after losing access to its item. No permission is restored. */
 export function amendOutcome(db:DatabaseSync, read:()=>State, a:Person, raw:unknown) {
   const v=amendSchema.parse(raw), hash=fingerprint(v);

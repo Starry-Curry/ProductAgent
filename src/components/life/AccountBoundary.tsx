@@ -42,7 +42,7 @@ export function AccountBoundary() {
         <span className="life-eyebrow">YOUR THINGS, YOUR LIFE</span>
         <h1>让物品，成为你的物品</h1>
         <p>
-          进入自己的空间，邀请家人一起照顾日常。当前为本机独立账号测试服务，不是第三方身份认证。
+          进入自己的物品空间。当前使用本机开发账号，让不同人的测试物品和私人记录相互隔离；不是 GitHub 或阿里云登录。登录不会自动开启云端模型。
         </p>
         <form
           onSubmit={async (e) => {

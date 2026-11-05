@@ -1,0 +1,216 @@
+{
+  "runId": "foundation-independent-r1",
+  "roundId": "qwen-foundation-20261102-r1",
+  "cohort": "first",
+  "originalFirstRun": "foundation-independent-r1",
+  "startedAt": "2026-11-03T02:17:14.431Z",
+  "sourceCommit": "f449067ce939d7fe82a3e48bab15df046d6eb2bc",
+  "frozenHashes": {
+    "questions.frozen.json": "7991b81d681bbb3e1a38ca4ade30de002fa61b0921a67f619b8aeaa60373d6f8",
+    "answers.frozen.json": "dfbcc829b62599e4bf1a1f5df96f32be5bd808ff43d21846ec7af533a5c7988a",
+    "journeys.frozen.json": "f399e119015370169712733dcb870ca0005d71c68d143a1b1626f15c306c9a8e"
+  },
+  "mode": "real_authenticated_App_HTTP_not_browser_UI",
+  "syntheticOwnership": true,
+  "hardwareActions": 0,
+  "maxForwardedAttempts": 54,
+  "globalStartRequests": 88,
+  "globalStartCny": 15.611092,
+  "browserJourneys": "not_run",
+  "priorGatesStatus": {
+    "offline": "passed",
+    "candidateRuntime": "real_browser_development_verified_not_acceptance",
+    "fourFrozenJourneys": "not_run_or_partial",
+    "overall": "not_accepted_pending_independent_quality"
+  },
+  "cases": [
+    {
+      "caseId": "N01-1",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N01-2",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N01-3",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N02-1",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N02-2",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N02-3",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N03-1",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N03-2",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N03-3",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N04-1",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N04-2",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N04-3",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N05-1",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N05-2",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N05-3",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N06-1",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N06-2",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N06-3",
+      "arm": "product",
+      "status": "returned_not_scored"
+    },
+    {
+      "caseId": "N01-1",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N01-2",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N01-3",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N02-1",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N02-2",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N02-3",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N03-1",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N03-2",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N03-3",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N04-1",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N04-2",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N04-3",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N05-1",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N05-2",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N05-3",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N06-1",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N06-2",
+      "arm": "direct",
+      "status": "blocked_budget"
+    },
+    {
+      "caseId": "N06-3",
+      "arm": "direct",
+      "status": "blocked_budget"
+    }
+  ],
+  "errors": [],
+  "status": "execution_recorded_quality_and_browser_not_scored",
+  "finishedAt": "2026-11-03T02:20:43.252Z",
+  "forwardedAttempts": 54,
+  "actualUpstreamRequests": 54,
+  "estimatedCnyDelta": 4.022532000000002,
+  "globalNowRequests": 142,
+  "globalNowCny": 19.633624
+}

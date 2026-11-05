@@ -1,0 +1,11 @@
+{
+  "caseId": "N03-3",
+  "productId": "N03",
+  "question": "这台机身有两个快门，我横着拍和竖着拍分别用哪一个？相片出来时什么时候拿走？",
+  "arm": "product",
+  "at": "2026-11-03T02:18:48.016Z",
+  "status": "not_run",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "requestStart": 112
+}

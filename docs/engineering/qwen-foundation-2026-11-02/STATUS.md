@@ -1,5 +1,7 @@
 # 2026-11-03 新任务：底座收敛候选
 
+> 本次零费用收口见[Core复核](CORE_REVIEW.md)与[CURRENT](../CURRENT.md)：594/594、类型、生产构建通过，但Core仍NOT_ACCEPTED。下方数量与“未运行”均是当时快照，不代表本次最新结果。
+
 旧任务已安全暂停并完整推送543a933；随后才启动本轮。当前最新状态只看[CURRENT](../CURRENT.md)。下文是原始历史快照，保留失败与恢复证据，不覆盖当前代码。
 
 已实现：公开原文定位进入同一既有知识库记录，Reality/Context、资料页与开放创意复用；普通缓存问题取消强制抽取；旧Graph/HomeTask循环清退且保留领域业务；在途状态、跨物品历史、规划续接与软件REA回归修复。技术取舍见[收敛决策](CONVERGENCE_DECISION.md)，团队接口见[SERVICES](SERVICES.md)。

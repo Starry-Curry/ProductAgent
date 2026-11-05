@@ -1,0 +1,30 @@
+{
+  "caseId": "N05-2",
+  "arm": "direct",
+  "controlCohort": "additional_authorized_round_same_information",
+  "roundId": "qwen-foundation-20261103-r2",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "at": "2026-11-03T02:27:38.300Z",
+  "sameInformation": {
+    "productRequestNumber": 131,
+    "materialSha256": "303297c3dca1221c3cf160b653c69dbb58dd40ab795f0e7be6fd645633bb88eb",
+    "method": "exact user/tool content of product final tool-loop request; excludes system and assistant drafts"
+  },
+  "text": "# 关于 ZOOM H1essential 外接领夹麦与机身 XY 麦同时录音的问题\n\n**直接结论：根据当前可核对的资料，无法确认 ZOOM H1essential 支持在插入 MIC/LINE IN 的同时保留机身 XY 麦克风的声音。** 下面按你要求的“接口能力”与“实际录到的声音”两层来分清说明，并明确证据边界。\n\n---\n\n## 一、 证据状态（适用条件与不足）\n\n*   **当前资料限制**：系统内未检索到 ZOOM H1essential 的官方说明书原文或已验证的技术规格段落（`status: no_sources`）。\n*   **不编造原则**：在没有读到该型号适用正文的情况下，我不能为你编造具体的菜单操作路径或断言其内部混音逻辑。\n*   **通用规律参考**：在绝大多数同级别便携录音机（包括 ZOOM 历代 H1 系列）中，3.5mm MIC/LINE IN 接口通常具备**硬件检测开关（Insert Detect）**。一旦插入插头，物理或电子开关会切断/禁用机身内置麦克风，将输入源切换为外部接口。\n\n---\n\n## 二、 分清“接口能力”与“实际录到的声音”\n\n### 1. 接口能力（硬件与信号路由层面）\n*   **MIC/LINE IN 接口的作用**：这是一个 3.5mm 输入接口，设计用于接收外部麦克风（如你的领夹麦）或线路电平信号。\n*   **排他性（大概率）**：对于 H1essential 这类紧凑型双轨录音机，其接口能力通常是**“二选一”**的信号路由——要么使用机身顶部的 X/Y 立体声麦克风胶囊，要么使用 MIC/LINE IN 接口的外部信号。\n*   **是否具备混合能力**：除非官方说明书明确指出该机型支持“内置麦 + 外部输入”的内部混音（Internal Mix）或多轨独立录制（例如 4 轨以上机型），否则接口能力上**不支持**两者同时激活。H1essential 定位为 32-bit float 立体声录音机，通常只生成一个立体声文件（2个轨道）。\n\n### 2. 实际录到的声音（最终文件层面）\n基于上述接口能力的推断，实际录到的声音会出现以下两种情况之一：\n\n*   **情况 A（最常见：接口互斥）**：当你把领夹麦插入 MIC/LINE IN 后，机身 XY 麦被自动静音或断开。你**实际录到的声音只有领夹麦的信号**。XY 麦的声音不会被保留，也不会出现在最终的音频文件中。\n*   **情况 B（极少见：若官方支持混合）**：如果该机型确实支持混合，实际录到的声音将是领夹麦和 XY 麦**混合后的立体声信号**。但请注意，这种混合通常在机内完成，你无法在后期单独分离出纯粹的 XY 麦或纯粹的领夹麦轨道（因为它们共享了仅有的 2 个声道）。\n\n---\n\n## 三、 如何获得确切答案？\n\n由于当前上下文缺乏官方原文支撑，为了对你的实际录音工作负责，建议通过以下方式核实：\n\n1.  **查阅官方说明书**：在 ZOOM 官网下载 H1essential 的 Operation Manual，搜索关键词 `\"MIC/LINE IN\"`、`\"Built-in mic\"` 或 `\"Input select\"`，查看是否有类似 *\"When a plug is inserted into the MIC/LINE IN jack, the built-in microphones are disabled\"* 的明确表述。\n2.  **实物安全测试**：如果你手头有这台机器，可以做一个简单的无损测试：\n    *   开机，不插线，对着 XY 麦说话并按下录音，确认波形正常。\n    *   停止录音，插入领夹麦，对着 XY 麦说话，再对着领夹麦说话，按下录音。\n    *   回放或导入电脑看波形：如果只有领夹麦有波形，XY 麦无波形，即证实了接口互斥。\n\n**总结**：在没有官方文档背书的情况下，按照同类设备的通用设计逻辑，**插入领夹麦后大概率无法同时保留机身 XY 麦的声音**。请以官方说明书或实测结果为准。",
+  "usage": {
+    "completion_tokens": 898,
+    "prompt_tokens": 1922,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 1922
+    },
+    "total_tokens": 2820
+  },
+  "model": "qwen3.8-max-0902",
+  "finishReason": "stop",
+  "fullAnswerMs": 20975,
+  "upstreamNumbers": [
+    14
+  ]
+}

@@ -13,7 +13,7 @@ export const procedureGuidanceSchema=z.object({
  conditions:z.array(z.string().min(1).max(240)).max(12),
 }).strict();
 export const finalResponseSchema = z.object({
-  message: z.string().trim().describe('自然解释、已知与未知；具体行动放在guidance，不在此绕过动作依赖核对'),
+  message: z.string().trim().describe('最终给用户的自然答案，不是进度通知。事实提问在此完整给出有依据的答案、来源和单独的未知；不能只说已查到/已安排却省略内容。具体操作步骤另放guidance，避免重复或绕过动作依赖核对。'),
   guidance: z.union([procedureGuidanceSchema,guidanceSchema]).nullable().describe('型号说明书指导用procedure；跨物品物理行动用资源依赖方案。两者都只是指导或候选，不是设备控制。纯解释用null。'),
 }).strict().superRefine((value, context) => {
   if (!value.message && !value.guidance) context.addIssue({ code: 'custom', message: '最终答复不能同时缺少说明和行动内容' });

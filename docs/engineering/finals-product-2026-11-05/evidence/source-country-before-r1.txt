@@ -1,0 +1,32 @@
+✖ 国家域名可标记来源市场，语言前缀与拼接欺骗不能伪造地区，显式地区路径优先 (1.6238ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 245.1005
+
+✖ failing tests:
+
+test at tests\finals-source-country.test.ts:4:1
+✖ 国家域名可标记来源市场，语言前缀与拼接欺骗不能伪造地区，显式地区路径优先 (1.6238ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'unspecified'
+  - 'jp'
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-source-country.test.ts:5:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'unspecified',
+    expected: 'jp',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

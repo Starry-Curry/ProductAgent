@@ -1,0 +1,30 @@
+{
+  "caseId": "N01-3",
+  "arm": "direct",
+  "controlCohort": "additional_authorized_round_same_information",
+  "roundId": "qwen-foundation-20261103-r2",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "at": "2026-11-03T02:24:39.298Z",
+  "sameInformation": {
+    "productRequestNumber": 97,
+    "materialSha256": "f25f76bac7ba61cad1a40fa93ad7e5fb97352cca95f4523ba1ed9b3c79c3032d",
+    "method": "exact user/tool content of product final tool-loop request; excludes system and assistant drafts"
+  },
+  "text": "针对您提到的 Bosch GLM 50 C Professional 激光测距仪，关于长期存放和更换电池的问题，以下是基于通用电子设备安全规范及同类专业测量工具官方建议的解答。\n\n**需要首先说明的是：** 当前系统未能检索到该型号说明书中关于电池维护的完整原文段落，因此以下回答基于同类专业仪器的通用标准，不编造特定型号的特殊操作指令。\n\n### 1. 测距仪要收起来几个月，电池怎么办？\n\n**必须将电池全部取出。**\n\n*   **原因：** 任何干电池（无论是碱性电池还是碳性电池）在设备内长期放置，都存在漏液的风险。电池漏出的强碱性电解液会腐蚀测距仪内部的金属触点和电路板，这种损坏通常是不可逆的。\n*   **适用条件：** 只要预计闲置时间超过数周至数月，无论电池当前是否还有电，都应当取出。\n*   **存放建议：** 取出的电池应存放在阴凉、干燥的地方，避免阳光直射或高温环境。如果电池已经快没电了，建议直接按环保要求回收处理，不要留待下次使用。\n\n### 2. 现在两节电池只换其中一节合适吗？\n\n**非常不合适，强烈建议两节同时更换为同品牌、同批次的新电池。**\n\n*   **原因一（性能拖累）：** 新旧电池混用时，旧电池的内阻较大、电压较低。新电池不仅要为设备供电，还要“强行”给旧电池充电或克服旧电池的阻力，这会导致新电池的电量被快速消耗，整体使用时间大幅缩短，且可能引起测距仪工作不稳定（如突然关机、屏幕闪烁）。\n*   **原因二（漏液风险剧增）：** 这是最严重的问题。当新旧电池混用导致旧电池被过度放电时，旧电池内部会产生气体，极易引发外壳破裂和严重的化学漏液，从而烧毁您的 GLM 50 C Professional。\n*   **补充注意：** 即使是两节新电池，也请确保它们是**同一品牌、同一类型（例如都是碱性电池）、同一批次**的。绝对不要将不同类型的电池（如碱性电池与充电电池、不同品牌的电池）混合使用。\n\n### 总结与建议\n\n为了您的 Bosch GLM 50 C Professional 能够长期可靠工作：\n1.  **准备收纳前：** 打开电池仓，将里面的两节电池全部取出。\n2.  **下次使用时：** 购买两节全新的、同品牌同型号的优质碱性电池一起装入。\n3.  **获取确切依据：** 如果您希望核对厂家针对此型号的具体免责声明或特殊要求，建议您查阅随机附带的纸质说明书中的“保养与维护”章节，或前往博世（Bosch）官方网站下载 GLM 50 C Professional 的电子版用户手册进行确认。",
+  "usage": {
+    "completion_tokens": 600,
+    "prompt_tokens": 1157,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 1157
+    },
+    "total_tokens": 1757
+  },
+  "model": "qwen3.8-max-0902",
+  "finishReason": "stop",
+  "fullAnswerMs": 14946,
+  "upstreamNumbers": [
+    3
+  ]
+}

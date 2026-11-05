@@ -1,0 +1,21 @@
+✔ 共享知识复用连续原文定位，保持原始正文；私人问题/条件和未知不持久化 (322.997ms)
+✔ 知识来源正文变更/型号变更/撤权后，不复用过期或无权定位 (326.0956ms)
+✔ 有适用缓存的普通问答只调用一次主模型；不强制抽取、允许原文步骤及部分未知 (566.1675ms)
+✔ 最终指导只积累选中的现有原文；不保存模型改写，重复与错物品引用不新增事实 (346.484ms)
+✔ generic directory publisher proof binds brand, independent entity, TLS migration and exact host, never lookalikes/community (16.2445ms)
+✔ generic discovery gets structured company record; native search URL and model declaration alone cannot authenticate publisher (2.3144ms)
+✔ single-page manual keeps actual section index and reads selected article, without silently substituting the first truncated page (758.4364ms)
+✔ 过期或撤回明确授权在实例、目录、共享知识和正文读取中一致拒绝 (919.4735ms)
+✔ 有效明确授权保留共享实例与官方正文读取；纯投影不能越过数据库授权 (309.8805ms)
+✔ 无新授权表的正常旧数据库保留旧共享；显式拒绝不回退旧共享 (345.9769ms)
+✔ 明确授权不覆盖旧共享撤回或转移所有权 (286.1248ms)
+✔ 异步官方获取期间授权撤回，不能落库或返回旧共享资料 (299.7328ms)
+✔ 无焦点创意目录也按当前数据库授权过滤 (267.7612ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4671.2128

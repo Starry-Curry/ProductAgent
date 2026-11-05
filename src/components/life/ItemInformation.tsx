@@ -7,6 +7,7 @@ import type { Item, Person } from "@/lib/domain";
 import type { ProductPack } from "@/lib/products";
 import type { Fragment } from "./Stories";
 import type { RealityCard } from "@/lib/context/reality";
+import type {ItemManagementSnapshot} from '@/lib/life/intake';
 export function ItemInformation({
   item,
   actor,
@@ -16,6 +17,7 @@ export function ItemInformation({
   act,
   fragments,
   refresh,
+  taskId,
 }: {
   item: Item;
   actor: Person;
@@ -25,6 +27,7 @@ export function ItemInformation({
   act: any;
   fragments: Fragment[];
   refresh: any;
+  taskId?:string;
 }) {
   const [sources, setSources] = useState<any[]>([]),
     [notice, setNotice] = useState(""),
@@ -41,19 +44,26 @@ export function ItemInformation({
     [officialDraft, setOfficialDraft] = useState<any>(null);
   const [knowledge, setKnowledge] = useState<any[]>([]);
   const [reality, setReality] = useState<RealityCard>();
+  const [management,setManagement]=useState<ItemManagementSnapshot>();
   useEffect(() => {
+    let current=true;
+    setSources([]);setKnowledge([]);setReality(undefined);setManagement(undefined);
     fetch(`/api/life?itemId=${encodeURIComponent(item.id)}`, {
       headers: { "x-demo-actor": actor },
     })
-      .then((r) => r.json())
+      .then(async r=>{const body=await r.json();if(!r.ok)throw Error(body.error||'物品资料暂时无法读取');return body;})
       .then((d) => {
+        if(!current)return;
         setSources(d.sources || []);
         setKnowledge(d.knowledge || []);
         setReality(d.reality);
+        setManagement(d.management);
       })
-      .catch((e) => setNotice(e.message));
-  }, [item.id, actor]);
+      .catch((e) => {if(current)setNotice(e.message);});
+    return ()=>{current=false;};
+  }, [item, actor]);
   const pack = packs.find((p) => p.id === item.productBinding?.packId);
+  const editing=management?.fields||item;
   async function run(fn: () => Promise<void>) {
     setBusy(true);
     try {
@@ -67,7 +77,7 @@ export function ItemInformation({
   return (
     <div className="life-home-pair">
       <EvidenceClaims key={item.id} actor={actor} itemId={item.id}/>
-      {item.model === "WUJIAN-SOFTWARE-LAMP-1" && item.owner === actor && <SoftwareCapability item={item} actor={actor} />}
+      {item.model === "WUJIAN-SOFTWARE-LAMP-1" && item.owner === actor && <SoftwareCapability item={item} actor={actor} taskId={taskId}/>}
       <section className="life-card">
         <h2>物品资料与属性</h2>
         <dl>
@@ -112,19 +122,20 @@ export function ItemInformation({
         {item.owner === actor && (
           <details>
             <summary>更新数量、有效期和养护信息</summary>
-            <form
+            <form key={management?.revision||'loading'}
               onSubmit={(e) => {
                 e.preventDefault();
                 const f = new FormData(e.currentTarget);
                 run(async () => {
+                  if(!management||management.itemId!==item.id)throw Error('请等待当前物品资料加载完成');
                   await request("updateItem", {
                     itemId: item.id,
+                    expectedManagementRevision:management.revision,
                     brand: f.get("brand"),
                     model: f.get("model"),
                     region: f.get("region"),
                     lifecycle: f.get("lifecycle"),
                     attributes: {
-                      ...item.attributes,
                       quantity:
                         f.get("quantity") !== ""
                           ? Number(f.get("quantity"))
@@ -132,12 +143,14 @@ export function ItemInformation({
                       quantityUnit: f.get("quantityUnit"),
                       expiresOn: f.get("expiresOn"),
                       material: f.get("material"),
+                      dimensions:f.get('dimensions'),
+                      power:f.get('power'),
                       care: f.get("care"),
                     },
                   });
                   await refresh();
                   setNotice(
-                    "已更新管理信息；数量为零或过期的食品不参与创意候选。",
+                    "已更新管理信息；数量为零或已过有效期的物品不参与创意候选。",
                   );
                 });
               }}
@@ -148,7 +161,7 @@ export function ItemInformation({
                   <input
                     name="brand"
                     maxLength={80}
-                    defaultValue={item.brand || ""}
+                    defaultValue={editing.brand || ""}
                   />
                 </label>
                 <label>
@@ -156,7 +169,7 @@ export function ItemInformation({
                   <input
                     name="model"
                     maxLength={100}
-                    defaultValue={item.model || ""}
+                    defaultValue={editing.model || ""}
                   />
                 </label>
               </div>
@@ -164,7 +177,7 @@ export function ItemInformation({
                 生命周期
                 <select
                   name="lifecycle"
-                  defaultValue={item.lifecycle || "长期耐用"}
+                  defaultValue={editing.lifecycle || "长期耐用"}
                 >
                   {[
                     "一次性",
@@ -179,12 +192,13 @@ export function ItemInformation({
               </label>
               <label>
                 产品地区版本
-                <select name="region" defaultValue={item.region || ""}>
+                <select name="region" defaultValue={editing.region || ""}>
                   <option value="">待核对</option>
                   {[
                     "cn",
                     "uk",
                     "us",
+                    "jp",
                     "global",
                     "my",
                     "au",
@@ -207,14 +221,14 @@ export function ItemInformation({
                   type="number"
                   min="0"
                   step="0.1"
-                  defaultValue={item.attributes?.quantity ?? ""}
+                  defaultValue={editing.attributes?.quantity ?? ""}
                 />
               </label>
               <label>
                 数量单位
                 <select
                   name="quantityUnit"
-                  defaultValue={item.attributes?.quantityUnit || "件"}
+                  defaultValue={editing.attributes?.quantityUnit || "件"}
                 >
                   {["件", "份", "克", "毫升", "盆", "米"].map((x) => (
                     <option key={x}>{x}</option>
@@ -226,16 +240,20 @@ export function ItemInformation({
                 <input
                   type="date"
                   name="expiresOn"
-                  defaultValue={item.attributes?.expiresOn || ""}
+                  defaultValue={editing.attributes?.expiresOn || ""}
                 />
               </label>
               <label>
                 材质
                 <input
                   name="material"
-                  defaultValue={item.attributes?.material || ""}
+                  defaultValue={editing.attributes?.material || ""}
                 />
               </label>
+              <div className="life-form-row">
+                <label>尺寸 / 结构（本人记录）<input name="dimensions" maxLength={100} defaultValue={editing.attributes?.dimensions||''}/></label>
+                <label>供电方式（本人记录）<input name="power" maxLength={100} defaultValue={editing.attributes?.power||''}/></label>
+              </div>
               <label>
                 {item.category === "植物"
                   ? "已确认的养护要求"
@@ -244,10 +262,10 @@ export function ItemInformation({
                     : "维护注意事项"}
                 <textarea
                   name="care"
-                  defaultValue={item.attributes?.care || ""}
+                  defaultValue={editing.attributes?.care || ""}
                 />
               </label>
-              <button>保存管理信息</button>
+              <button disabled={busy||!management}>保存管理信息</button>
             </form>
           </details>
         )}
@@ -261,7 +279,7 @@ export function ItemInformation({
             </blockquote>)}
           </details>}
           <p className="life-muted">
-            用于型号问答和能力候选；保留来源、原文位置与版本。自动定位覆盖有限品牌，找不到时可粘贴对应官方链接或上传说明书。地区未确认时需核对来源版本。
+            用于型号问答和能力候选，保留来源、原文位置与版本。物间会尝试发现官网资料；受访问限制或型号无法核实时会保留缺口，也可补充公开资料。地区未确认时需核对来源版本。
           </p>
           <button
             disabled={busy}

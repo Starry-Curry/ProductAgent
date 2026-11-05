@@ -1,0 +1,217 @@
+{
+  "caseId": "brother",
+  "attempt": "r1",
+  "at": "2026-11-04T17:09:53.873Z",
+  "basis": "real_Qwen_browser_synthetic_possession_no_official_URL_supplied_no_hardware",
+  "responses": [
+    {
+      "question": "请自己查找 Brother PT-D210 的官方资料。我装着6毫米TZe标签带，想打印两行文字，可以吗？如果不行，用哪些宽度才可以？这台机器要装几节什么电池？请完整回答，不要教我恢复出厂。",
+      "result": {
+        "session": {
+          "id": "4b42662a-c721-4831-81d2-eb77ab81e1ac",
+          "owner": "u_2779f4a3-9641-4d94-90f2-8576a44dc37c",
+          "itemId": "4043916e-3629-4e19-8c84-a8215fabc92a",
+          "identity": "[\"u_2779f4a3-9641-4d94-90f2-8576a44dc37c\",\"[\\\"PT-D210\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "abe9fd1a-fc0d-4f5e-a541-596105bb0bc6",
+              "role": "user",
+              "text": "请自己查找 Brother PT-D210 的官方资料。我装着6毫米TZe标签带，想打印两行文字，可以吗？如果不行，用哪些宽度才可以？这台机器要装几节什么电池？请完整回答，不要教我恢复出厂。",
+              "at": "2026-11-04T17:10:12.521Z",
+              "itemId": "4043916e-3629-4e19-8c84-a8215fabc92a",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "1f54035c-26d0-4d69-a27d-5b352011b1f0",
+              "role": "assistant",
+              "text": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+              "reply": {
+                "modelHistoryText": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [],
+                "answer": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+                "outcome": "unavailable",
+                "source": "model-general",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "4043916e-3629-4e19-8c84-a8215fabc92a",
+                    "name": "[模拟持有]我的标签机",
+                    "model": "PT-D210"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "使用已确认物品处理实际操作任务",
+                  "itemId": "4043916e-3629-4e19-8c84-a8215fabc92a",
+                  "itemName": "[模拟持有]我的标签机"
+                }
+              },
+              "at": "2026-11-04T17:10:12.521Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "1addb7fa-b7f7-443c-95e8-cb18a894e8f4",
+            "turnScope": "4043916e-3629-4e19-8c84-a8215fabc92a",
+            "lastIntent": "help",
+            "activeItemId": "4043916e-3629-4e19-8c84-a8215fabc92a"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-11-04T17:10:12.121Z",
+          "updatedAt": "2026-11-04T17:10:12.522Z",
+          "expiresAt": "2026-11-11T17:10:12.121Z",
+          "itemScopes": {
+            "4043916e-3629-4e19-8c84-a8215fabc92a": "[\"u_2779f4a3-9641-4d94-90f2-8576a44dc37c\",\"[\\\"PT-D210\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "modelHistoryText": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+          "continuations": [],
+          "actionCards": [],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [],
+          "answer": "这次模型或资料读取没有完成，物品和已有资料仍保留。请稍后继续；没有执行任何设备操作。",
+          "outcome": "unavailable",
+          "source": "model-general",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "4043916e-3629-4e19-8c84-a8215fabc92a",
+              "name": "[模拟持有]我的标签机",
+              "model": "PT-D210"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "使用已确认物品处理实际操作任务",
+            "itemId": "4043916e-3629-4e19-8c84-a8215fabc92a",
+            "itemName": "[模拟持有]我的标签机"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=4043916e-3629-4e19-8c84-a8215fabc92a; domain metadata, not a model answer",
+            "at": "2026-11-04T17:10:12.127Z"
+          },
+          {
+            "stage": "tool_runtime_REPLY_START",
+            "detail": "{}",
+            "at": "2026-11-04T17:10:12.164Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T17:10:12.164Z"
+          },
+          {
+            "stage": "practical_failed",
+            "detail": "模型连接或生成未完成；本次不自动重试",
+            "at": "2026-11-04T17:10:12.516Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":389,\"calls\":1,\"tools\":0,\"reservedCny\":0.302988,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-04T17:10:12.520Z"
+          }
+        ],
+        "tokens": {
+          "input": 0,
+          "output": 0
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "64243f6d-7463-4e79-b316-1611de7bfd79",
+          "status": "partial",
+          "basis": "not_verified"
+        }
+      },
+      "fullAnswerMs": 2321,
+      "streamTextEvents": 1
+    }
+  ],
+  "pageErrors": [],
+  "checks": [
+    {
+      "name": "final_answer_visible",
+      "passed": true,
+      "quality": "requires_original_source_review"
+    },
+    {
+      "name": "no_horizontal_overflow",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "quality": "not_scored",
+  "item": {
+    "id": "4043916e-3629-4e19-8c84-a8215fabc92a",
+    "model": "PT-D210",
+    "brand": "Brother",
+    "synthetic": true
+  },
+  "sharedKnowledge": {
+    "reality": {
+      "version": "reality/1",
+      "id": "4043916e-3629-4e19-8c84-a8215fabc92a",
+      "itemId": "4043916e-3629-4e19-8c84-a8215fabc92a",
+      "name": "[模拟持有]我的标签机",
+      "identity": {
+        "kind": "commercial",
+        "brand": "Brother",
+        "model": "PT-D210",
+        "region": null,
+        "firmware": null,
+        "identityBasis": "user_report"
+      },
+      "instance": {
+        "state": "在用",
+        "availability": "available",
+        "usable": true,
+        "quantity": null,
+        "unit": "件",
+        "synthetic": true,
+        "basis": "user_report"
+      },
+      "facts": [],
+      "capabilities": [],
+      "operations": [],
+      "limits": [],
+      "unknowns": [
+        "材质",
+        "尺寸",
+        "未记录的承重、耐热、稳定性及型号操作不由名称推断"
+      ],
+      "revision": "5d60ebf1ef0658bb89a630e1ea97c06b71a89c82cd47a5b710625723fd32e539"
+    },
+    "knowledge": []
+  },
+  "status": "executed_quality_requires_review",
+  "upstreamRequests": 0,
+  "finishedAt": "2026-11-04T17:10:12.856Z"
+}

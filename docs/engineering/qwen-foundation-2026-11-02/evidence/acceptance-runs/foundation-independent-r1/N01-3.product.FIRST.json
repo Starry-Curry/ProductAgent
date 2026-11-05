@@ -1,0 +1,350 @@
+{
+  "caseId": "N01-3",
+  "productId": "N01",
+  "question": "这台测距仪要收起来几个月，电池怎么办？现在两节电池只换其中一节合适吗？",
+  "arm": "product",
+  "at": "2026-11-03T02:17:44.723Z",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "httpStatus": 200,
+  "result": {
+    "session": {
+      "id": "e9e63123-24fc-46d2-93a6-08a700d018f9",
+      "owner": "u_4e824597-2c47-4ccc-9668-45dfa459bc10",
+      "itemId": "a22046ad-bef8-4951-950d-5963e7960a8b",
+      "identity": "[\"u_4e824597-2c47-4ccc-9668-45dfa459bc10\",\"[\\\"GLM 50 C Professional\\\",null,null,null]\"]",
+      "mode": "service",
+      "revision": 1,
+      "status": "waiting_user",
+      "messages": [
+        {
+          "id": "a1c4c5f6-15a7-4eca-9e67-914753afbd16",
+          "role": "user",
+          "text": "这台测距仪要收起来几个月，电池怎么办？现在两节电池只换其中一节合适吗？",
+          "at": "2026-11-03T02:17:57.159Z",
+          "itemId": "a22046ad-bef8-4951-950d-5963e7960a8b",
+          "memoryPolicy": "off",
+          "capture": false
+        },
+        {
+          "id": "c9e98b33-60f3-46cd-be8c-c33a5003547b",
+          "role": "assistant",
+          "text": "关于 Bosch GLM 50 C Professional 的长期存放与电池更换，目前未能检索到该型号的官方说明书原文，因此无法提供基于厂家文档的确切操作步骤。\n\n不过，针对您提出的两个问题，可以说明以下通用情况与未知项：\n\n1.  **只换一节电池是否合适**：对于使用两节 AAA 电池的精密测量仪器，**不建议**新旧电池混用。旧电池内阻增大、电压下降，与新电池串联时会导致整体供电不稳定，可能影响测距精度或导致设备异常关机；同时旧电池在混合使用中更容易发生漏液风险。建议两节同时更换为同品牌、同批次的新电池。\n2.  **存放几个月的电池处理**：通常建议长期存放前取出电池，防止漏液腐蚀触点。但 GLM 50 C 是否有特殊的内置电容/备用电池用于保持校准数据或设置，目前缺乏原文确认。若设备有非易失性存储，取电不会丢失数据；若有依赖持续供电的部件，则需按说明书执行。\n\n**已知缺口**：未获取到 GLM 50 C Professional 官方手册中关于“长期存放”和“电池维护”的具体条款。如您手边有说明书PDF或官网链接，可提供给我进一步核对；否则建议在存放前取出电池，并记录当前校准状态以便重新启用时验证。",
+          "reply": {
+            "modelHistoryText": "关于 Bosch GLM 50 C Professional 的长期存放与电池更换，目前未能检索到该型号的官方说明书原文，因此无法提供基于厂家文档的确切操作步骤。\n\n不过，针对您提出的两个问题，可以说明以下通用情况与未知项：\n\n1.  **只换一节电池是否合适**：对于使用两节 AAA 电池的精密测量仪器，**不建议**新旧电池混用。旧电池内阻增大、电压下降，与新电池串联时会导致整体供电不稳定，可能影响测距精度或导致设备异常关机；同时旧电池在混合使用中更容易发生漏液风险。建议两节同时更换为同品牌、同批次的新电池。\n2.  **存放几个月的电池处理**：通常建议长期存放前取出电池，防止漏液腐蚀触点。但 GLM 50 C 是否有特殊的内置电容/备用电池用于保持校准数据或设置，目前缺乏原文确认。若设备有非易失性存储，取电不会丢失数据；若有依赖持续供电的部件，则需按说明书执行。\n\n**已知缺口**：未获取到 GLM 50 C Professional 官方手册中关于“长期存放”和“电池维护”的具体条款。如您手边有说明书PDF或官网链接，可提供给我进一步核对；否则建议在存放前取出电池，并记录当前校准状态以便重新启用时验证。",
+            "continuations": [],
+            "actionCards": [],
+            "necessaryConditionChecks": [],
+            "knowledgeWarnings": [],
+            "answer": "关于 Bosch GLM 50 C Professional 的长期存放与电池更换，目前未能检索到该型号的官方说明书原文，因此无法提供基于厂家文档的确切操作步骤。\n\n不过，针对您提出的两个问题，可以说明以下通用情况与未知项：\n\n1.  **只换一节电池是否合适**：对于使用两节 AAA 电池的精密测量仪器，**不建议**新旧电池混用。旧电池内阻增大、电压下降，与新电池串联时会导致整体供电不稳定，可能影响测距精度或导致设备异常关机；同时旧电池在混合使用中更容易发生漏液风险。建议两节同时更换为同品牌、同批次的新电池。\n2.  **存放几个月的电池处理**：通常建议长期存放前取出电池，防止漏液腐蚀触点。但 GLM 50 C 是否有特殊的内置电容/备用电池用于保持校准数据或设置，目前缺乏原文确认。若设备有非易失性存储，取电不会丢失数据；若有依赖持续供电的部件，则需按说明书执行。\n\n**已知缺口**：未获取到 GLM 50 C Professional 官方手册中关于“长期存放”和“电池维护”的具体条款。如您手边有说明书PDF或官网链接，可提供给我进一步核对；否则建议在存放前取出电池，并记录当前校准状态以便重新启用时验证。",
+            "outcome": "needs_info",
+            "source": "model-general",
+            "model": "qwen3.8-max-0902",
+            "steps": [],
+            "questions": [],
+            "evidenceIds": [],
+            "citations": [],
+            "memoryIds": [],
+            "usedItems": [
+              {
+                "id": "a22046ad-bef8-4951-950d-5963e7960a8b",
+                "name": "[模拟持有] Bosch GLM 50 C Professional",
+                "model": "GLM 50 C Professional"
+              }
+            ],
+            "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+          },
+          "at": "2026-11-03T02:17:57.159Z"
+        }
+      ],
+      "known": {
+        "memoryPolicy": "off",
+        "interfaceMode": "standard",
+        "uiPage": "item",
+        "useItemMemories": "no",
+        "turnRequestId": "70c565e7-34a2-4324-80b0-71ceeb113761"
+      },
+      "tried": [],
+      "memoryEpoch": 0,
+      "createdAt": "2026-11-03T02:17:44.902Z",
+      "updatedAt": "2026-11-03T02:17:57.160Z",
+      "expiresAt": "2026-11-10T02:17:44.902Z",
+      "itemScopes": {
+        "a22046ad-bef8-4951-950d-5963e7960a8b": "[\"u_4e824597-2c47-4ccc-9668-45dfa459bc10\",\"[\\\"GLM 50 C Professional\\\",null,null,null]\"]"
+      }
+    },
+    "reply": {
+      "modelHistoryText": "关于 Bosch GLM 50 C Professional 的长期存放与电池更换，目前未能检索到该型号的官方说明书原文，因此无法提供基于厂家文档的确切操作步骤。\n\n不过，针对您提出的两个问题，可以说明以下通用情况与未知项：\n\n1.  **只换一节电池是否合适**：对于使用两节 AAA 电池的精密测量仪器，**不建议**新旧电池混用。旧电池内阻增大、电压下降，与新电池串联时会导致整体供电不稳定，可能影响测距精度或导致设备异常关机；同时旧电池在混合使用中更容易发生漏液风险。建议两节同时更换为同品牌、同批次的新电池。\n2.  **存放几个月的电池处理**：通常建议长期存放前取出电池，防止漏液腐蚀触点。但 GLM 50 C 是否有特殊的内置电容/备用电池用于保持校准数据或设置，目前缺乏原文确认。若设备有非易失性存储，取电不会丢失数据；若有依赖持续供电的部件，则需按说明书执行。\n\n**已知缺口**：未获取到 GLM 50 C Professional 官方手册中关于“长期存放”和“电池维护”的具体条款。如您手边有说明书PDF或官网链接，可提供给我进一步核对；否则建议在存放前取出电池，并记录当前校准状态以便重新启用时验证。",
+      "continuations": [],
+      "actionCards": [],
+      "necessaryConditionChecks": [],
+      "knowledgeWarnings": [],
+      "answer": "关于 Bosch GLM 50 C Professional 的长期存放与电池更换，目前未能检索到该型号的官方说明书原文，因此无法提供基于厂家文档的确切操作步骤。\n\n不过，针对您提出的两个问题，可以说明以下通用情况与未知项：\n\n1.  **只换一节电池是否合适**：对于使用两节 AAA 电池的精密测量仪器，**不建议**新旧电池混用。旧电池内阻增大、电压下降，与新电池串联时会导致整体供电不稳定，可能影响测距精度或导致设备异常关机；同时旧电池在混合使用中更容易发生漏液风险。建议两节同时更换为同品牌、同批次的新电池。\n2.  **存放几个月的电池处理**：通常建议长期存放前取出电池，防止漏液腐蚀触点。但 GLM 50 C 是否有特殊的内置电容/备用电池用于保持校准数据或设置，目前缺乏原文确认。若设备有非易失性存储，取电不会丢失数据；若有依赖持续供电的部件，则需按说明书执行。\n\n**已知缺口**：未获取到 GLM 50 C Professional 官方手册中关于“长期存放”和“电池维护”的具体条款。如您手边有说明书PDF或官网链接，可提供给我进一步核对；否则建议在存放前取出电池，并记录当前校准状态以便重新启用时验证。",
+      "outcome": "needs_info",
+      "source": "model-general",
+      "model": "qwen3.8-max-0902",
+      "steps": [],
+      "questions": [],
+      "evidenceIds": [],
+      "citations": [],
+      "memoryIds": [],
+      "usedItems": [
+        {
+          "id": "a22046ad-bef8-4951-950d-5963e7960a8b",
+          "name": "[模拟持有] Bosch GLM 50 C Professional",
+          "model": "GLM 50 C Professional"
+        }
+      ],
+      "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。"
+    },
+    "trace": [
+      {
+        "stage": "tool_runtime_REPLY_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:17:44.939Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:17:44.939Z"
+      },
+      {
+        "stage": "practical_model",
+        "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+        "at": "2026-11-03T02:17:47.459Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_START",
+        "detail": "{\"callId\":\"call_6407d71fa9cb46e2a7d64394\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:47.462Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_DELTA",
+        "detail": "{\"callId\":\"call_6407d71fa9cb46e2a7d64394\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:47.462Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_END",
+        "detail": "{\"callId\":\"call_6407d71fa9cb46e2a7d64394\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:47.462Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_END",
+        "detail": "{\"inputTokens\":5415,\"outputTokens\":68}",
+        "at": "2026-11-03T02:17:47.462Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_START",
+        "detail": "{\"callId\":\"call_6407d71fa9cb46e2a7d64394\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:47.465Z"
+      },
+      {
+        "stage": "tool_policy",
+        "detail": "{\"name\":\"search_product_knowledge\",\"effect\":\"local_write\",\"scope\":\"live_item_grant_public_sources_only\",\"result\":\"sourced_knowledge_cache\",\"idempotency\":\"document_digest\"}",
+        "at": "2026-11-03T02:17:47.470Z"
+      },
+      {
+        "stage": "practical_knowledge",
+        "detail": "{\"itemId\":\"a22046ad-bef8-4951-950d-5963e7960a8b\",\"cached\":true,\"readURLs\":[],\"issues\":[\"未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。\"],\"seedURLs\":[],\"searchAttempted\":false,\"searchCompleted\":false,\"searchURLs\":[],\"verifiedURLs\":[],\"attemptedURLs\":[],\"sources\":[]}",
+        "at": "2026-11-03T02:17:47.504Z"
+      },
+      {
+        "stage": "source_semantics",
+        "detail": "{\"status\":\"no_sources\",\"modelCalls\":0,\"cacheHit\":false,\"rejected\":[],\"sourceIds\":[],\"observations\":[]}",
+        "at": "2026-11-03T02:17:47.512Z"
+      },
+      {
+        "stage": "practical_tool",
+        "detail": "search_product_knowledge completed",
+        "at": "2026-11-03T02:17:47.512Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+        "detail": "{\"callId\":\"call_6407d71fa9cb46e2a7d64394\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:47.516Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_END",
+        "detail": "{\"callId\":\"call_6407d71fa9cb46e2a7d64394\",\"tool\":\"search_product_knowledge\",\"state\":\"success\"}",
+        "at": "2026-11-03T02:17:47.520Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:17:47.520Z"
+      },
+      {
+        "stage": "practical_model",
+        "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+        "at": "2026-11-03T02:17:50.094Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_START",
+        "detail": "{\"callId\":\"call_76b60a150d034fee8a963f12\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:50.095Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_DELTA",
+        "detail": "{\"callId\":\"call_76b60a150d034fee8a963f12\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:50.095Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_END",
+        "detail": "{\"callId\":\"call_76b60a150d034fee8a963f12\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:50.095Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_END",
+        "detail": "{\"inputTokens\":5746,\"outputTokens\":83}",
+        "at": "2026-11-03T02:17:50.095Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_START",
+        "detail": "{\"callId\":\"call_76b60a150d034fee8a963f12\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:50.098Z"
+      },
+      {
+        "stage": "tool_policy",
+        "detail": "{\"name\":\"search_product_knowledge\",\"effect\":\"local_write\",\"scope\":\"live_item_grant_public_sources_only\",\"result\":\"sourced_knowledge_cache\",\"idempotency\":\"document_digest\"}",
+        "at": "2026-11-03T02:17:50.101Z"
+      },
+      {
+        "stage": "practical_knowledge",
+        "detail": "{\"itemId\":\"a22046ad-bef8-4951-950d-5963e7960a8b\",\"cached\":false,\"readURLs\":[],\"issues\":[\"未取得可核对的完整型号正文。本机仅有有限官方地址适配，不假装已搜索全网；可打开官网检索、粘贴最终链接或上传说明书。\"],\"seedURLs\":[],\"searchAttempted\":false,\"searchCompleted\":false,\"searchURLs\":[],\"verifiedURLs\":[],\"attemptedURLs\":[],\"sources\":[]}",
+        "at": "2026-11-03T02:17:50.135Z"
+      },
+      {
+        "stage": "source_semantics",
+        "detail": "{\"status\":\"no_sources\",\"modelCalls\":0,\"cacheHit\":false,\"rejected\":[],\"sourceIds\":[],\"observations\":[]}",
+        "at": "2026-11-03T02:17:50.139Z"
+      },
+      {
+        "stage": "practical_tool",
+        "detail": "search_product_knowledge completed",
+        "at": "2026-11-03T02:17:50.139Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+        "detail": "{\"callId\":\"call_76b60a150d034fee8a963f12\",\"tool\":\"search_product_knowledge\"}",
+        "at": "2026-11-03T02:17:50.140Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_END",
+        "detail": "{\"callId\":\"call_76b60a150d034fee8a963f12\",\"tool\":\"search_product_knowledge\",\"state\":\"success\"}",
+        "at": "2026-11-03T02:17:50.141Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_START",
+        "detail": "{}",
+        "at": "2026-11-03T02:17:50.141Z"
+      },
+      {
+        "stage": "practical_model",
+        "detail": "{\"round\":2,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+        "at": "2026-11-03T02:17:57.117Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_START",
+        "detail": "{\"callId\":\"call_8759ee899b564649a3bc9844\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:17:57.119Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_DELTA",
+        "detail": "{\"callId\":\"call_8759ee899b564649a3bc9844\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:17:57.119Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_CALL_END",
+        "detail": "{\"callId\":\"call_8759ee899b564649a3bc9844\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:17:57.119Z"
+      },
+      {
+        "stage": "tool_runtime_MODEL_CALL_END",
+        "detail": "{\"inputTokens\":6092,\"outputTokens\":323}",
+        "at": "2026-11-03T02:17:57.120Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_START",
+        "detail": "{\"callId\":\"call_8759ee899b564649a3bc9844\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:17:57.121Z"
+      },
+      {
+        "stage": "tool_policy",
+        "detail": "{\"name\":\"complete_answer\",\"effect\":\"propose\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_no_domain_write\"}",
+        "at": "2026-11-03T02:17:57.125Z"
+      },
+      {
+        "stage": "practical_tool",
+        "detail": "complete_answer completed",
+        "at": "2026-11-03T02:17:57.140Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+        "detail": "{\"callId\":\"call_8759ee899b564649a3bc9844\",\"tool\":\"complete_answer\"}",
+        "at": "2026-11-03T02:17:57.141Z"
+      },
+      {
+        "stage": "tool_runtime_TOOL_RESULT_END",
+        "detail": "{\"callId\":\"call_8759ee899b564649a3bc9844\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+        "at": "2026-11-03T02:17:57.142Z"
+      },
+      {
+        "stage": "practical_completion",
+        "detail": "{\"elapsedMs\":12241,\"calls\":3,\"tools\":3,\"reservedCny\":0.22410000000000005,\"missingKnowledgeIds\":[\"a22046ad-bef8-4951-950d-5963e7960a8b\"],\"adviceOnly\":true}",
+        "at": "2026-11-03T02:17:57.152Z"
+      }
+    ],
+    "tokens": {
+      "input": 17253,
+      "output": 474
+    },
+    "modelCalls": 3,
+    "foundation": {
+      "runId": "381cb7ad-496e-4812-993c-706ff3a79668",
+      "status": "waiting_user",
+      "basis": "advice_only"
+    }
+  },
+  "fullAnswerMs": 12484,
+  "upstreamNumbers": [
+    95,
+    96,
+    97
+  ],
+  "transport": [
+    {
+      "number": 7,
+      "caseId": "N01-3",
+      "arm": "product",
+      "at": "2026-11-03T02:17:45.076Z",
+      "inputSha256": "5c2b3056f626065446da7210489411ce33ff0facf16f2baa996a3f5be0fd94d1",
+      "inputBytes": 17717,
+      "path": "/browser/v1/chat/completions",
+      "status": "returned",
+      "httpStatus": 200
+    },
+    {
+      "number": 8,
+      "caseId": "N01-3",
+      "arm": "product",
+      "at": "2026-11-03T02:17:47.745Z",
+      "inputSha256": "c43c6fe771d6c6d035570aa3950cd60257791846c84b62065058f4a11de09690",
+      "inputBytes": 19251,
+      "path": "/browser/v1/chat/completions",
+      "status": "returned",
+      "httpStatus": 200
+    },
+    {
+      "number": 9,
+      "caseId": "N01-3",
+      "arm": "product",
+      "at": "2026-11-03T02:17:50.229Z",
+      "inputSha256": "d8aad9349b1e504afee71984de8157c03b3659a00c7299e9d215b0dc34c69efa",
+      "inputBytes": 20859,
+      "path": "/browser/v1/chat/completions",
+      "status": "returned",
+      "httpStatus": 200
+    }
+  ]
+}

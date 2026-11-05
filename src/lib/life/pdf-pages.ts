@@ -5,14 +5,32 @@ import {retrieveTaskPassages} from '../agent/kernel/retrieval.ts';
 import type {AcquiredDocument} from './acquisition.ts';
 import {AgentError} from '../agent/contracts.ts';
 import {modelMentioned} from './knowledge.ts';
+import {localOCR} from './documents.ts';
+
+const coverScopes=new Map<string,{basis:'local_cover_ocr_not_semantic_proof';page:1}>();
+/** Some manuals draw their cover model as outlines: useful body text exists
+ * but the model is absent from the text layer. Read the actual cover locally,
+ * never accept a filename or caller-provided supported=true as identity. */
+async function checkPdfModel(parser:import('pdf-parse').PDFParse,text:string,model:string|undefined,hash:string){
+ if(!model)return {basis:'model_not_requested' as const};
+ if(modelMentioned(text,model))return {basis:'model_in_pdf_text_layer' as const};
+ const key=hash+'\n'+model,cached=coverScopes.get(key);if(cached)return cached;
+ const cover=await parser.getScreenshot({partial:[1],desiredWidth:1600,imageDataUrl:false});
+ if(cover.pages.length!==1)throw new AgentError('未取得PDF首页，未确认本次型号');
+ const observed=await localOCR(cover.pages.map(p=>p.data));
+ if(!modelMentioned(observed,model))throw new AgentError('当前PDF文字及首页OCR未确认本次型号，未上传图示');
+ const scope={basis:'local_cover_ocr_not_semantic_proof' as const,page:1 as const};
+ if(coverScopes.size>=12)coverScopes.delete(coverScopes.keys().next().value!);coverScopes.set(key,scope);
+ return scope;
+}
 
 /** Actual page index, not guessed page numbers from a flattened text offset. */
 export async function readPdfPageIndex(url:string,model:string){
  const source=await fetchPublicPdfBytes(url),{PDFParse}=await import('pdf-parse'),parser=new PDFParse({data:source.bytes});
  try{
   const text=await parser.getText({first:80});
-  if(!modelMentioned(text.text,model))throw new AgentError('当前PDF内容未确认本次型号，未上传图示');
-  return {pageCount:text.total,pageIndex:text.pages.map(p=>({page:p.num,text:p.text.replace(/\s+/g,' ').slice(0,260)})),sourceHash:createHash('sha256').update(source.bytes).digest('hex')};
+  const sourceHash=createHash('sha256').update(source.bytes).digest('hex'),modelScope=await checkPdfModel(parser,text.text,model,sourceHash);
+  return {pageCount:text.total,pageIndex:text.pages.map(p=>({page:p.num,text:p.text.replace(/\s+/g,' ').slice(0,260)})),sourceHash,modelScope};
  }finally{await parser.destroy();}
 }
 
@@ -27,7 +45,7 @@ export async function renderPdfPages(bytes:Uint8Array,url:string,query:string,an
  const {PDFParse}=await import('pdf-parse'),parser=new PDFParse({data:bytes});
  try{
   const text=await parser.getText({first:80});
-  if(model&&!modelMentioned(text.text,model))throw new AgentError('当前PDF内容未确认本次型号，未上传图示');
+  const sourceHash=createHash('sha256').update(bytes).digest('hex'),modelScope=await checkPdfModel(parser,text.text,model,sourceHash);
   if(requested.some(n=>!Number.isInteger(n)||n<1||n>Math.min(80,text.total))||requested.length>3)throw new AgentError('页码不在已读取PDF范围，单次最多读取3页');
   const chunks=text.pages.map(p=>({id:'pdf-page:'+p.num,documentId:'pdf',title:'page '+p.num,text:p.text,start:p.num,end:p.num,url,model:''}));
   // Reuse the existing passage selector; this ranks pages, not product facts.
@@ -39,6 +57,6 @@ export async function renderPdfPages(bytes:Uint8Array,url:string,query:string,an
    return {page:p.pageNumber,dataUrl:'data:image/jpeg;base64,'+image.toString('base64')};
   }));
   if(pages.reduce((n,p)=>n+Buffer.byteLength(p.dataUrl),0)>600000)throw new AgentError('所选页面图像过大，请缩小到具体页后重试');
-  return {pages,pageCount:text.total,sourceHash:createHash('sha256').update(bytes).digest('hex'),url,selection:'requested_or_existing_passage_selector_not_semantic_proof' as const};
+  return {pages,pageCount:text.total,sourceHash,modelScope,url,selection:'requested_or_existing_passage_selector_not_semantic_proof' as const};
  }finally{await parser.destroy();}
 }

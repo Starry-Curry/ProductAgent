@@ -1,17 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import type { Item, Person, Plan } from "@/lib/domain";
 import type { TaskSpec, TaskRun } from "@/lib/foundation/tasks";
+import {planStepStatus} from '@/lib/life/plan-presentation';
 export function TaskContinuity({
   actor,
   items,
   onResume,
   onExit,
+  onRestore,
+  scopeId,
 }: {
   actor: Person;
   items: Item[];
   onResume: (taskId: string, itemId?: string, sessionId?: string, newGoal?: string) => void;
   onExit: () => void;
+  onRestore?:(taskId:string|undefined)=>void;
+  scopeId?:'young-apartment-v1';
 }) {
   const [tasks, setTasks] = useState<TaskSpec[]>([]),
     [current, setCurrent] = useState<{
@@ -20,7 +25,7 @@ export function TaskContinuity({
       outcomes: any[];
       familyProgress?:any[];
       previousOutcomes?:any[];
-      plans?:(Pick<Plan,'id'|'goal'|'checklist'|'conditions'|'sources'>&{resourceReview?:{changed:string[];untracked?:string[];affected:number[];notice:string}})[];
+      plans?:(Pick<Plan,'id'|'goal'|'checklist'|'conditions'|'dependencies'|'sources'>&{resourceReview?:{changed:string[];untracked?:string[];affected:number[];notice:string}})[];
     } | null>(null),
     [goal, setGoal] = useState(""),
     [chosen, setChosen] = useState<string[]>([]),
@@ -31,6 +36,10 @@ export function TaskContinuity({
   const [showOlder, setShowOlder] = useState(false);
   const [allowCloud,setAllowCloud]=useState(false);
   const [editing,setEditing]=useState<any>(null),[correction,setCorrection]=useState("");
+  const navigation=useRef(0);
+  const selectionKey='wujian-task:'+actor+(scopeId?':'+scopeId:'');
+  const itemScopeKey=items.map(i=>i.id).sort().join('|');
+  const inScope=(task:TaskSpec)=>task.itemInstanceIds.every(id=>items.some(i=>i.id===id));
   function resetConsent(){setReuse(false);setAllowCloud(false);}
   function chooseReuse(value:boolean){setReuse(value);if(!value)setAllowCloud(false);}
   async function request(action?: string, input?: unknown, id?: string) {
@@ -43,24 +52,28 @@ export function TaskContinuity({
       },
     );
     const d = await r.json();
-    if (!r.ok) throw Error(d.error || "任务未能加载");
+    if (!r.ok) throw Object.assign(Error(d.error || "任务未能加载"),{status:r.status});
     return d;
   }
   useEffect(() => {
     let live = true;
+    setError('');
+    navigation.current++;
     const load = async () => {
+      const selection=navigation.current;let requestedTask:string|null=null;
       try {
         const d = await request();
-        if (!live) return;
-        setTasks(d.tasks);
-        const id = localStorage.getItem("wujian-task:" + actor);
+        if (!live||selection!==navigation.current) return;
+        setTasks(d.tasks.filter(inScope));
+        const id = localStorage.getItem(selectionKey);
+        requestedTask=id;
         if (id) {
-          if (!d.tasks.some((t: TaskSpec) => t.taskId === id)) {
-            setCurrent(null);
-            localStorage.removeItem("wujian-task:" + actor);
-          } else {
+          // A paginated/list snapshot is not the authority for an existing
+          // selection. Read the task itself, then reject a late response if the
+          // user has selected another goal in the meantime.
             const detail = await request(undefined, undefined, id);
-            if (live)
+            if(!inScope(detail.task)){if(live&&selection===navigation.current){setCurrent(null);onRestore?.(undefined);setError('这件事属于另一个物品空间，请切换空间后继续；原记录仍保留。');}return;}
+            if (live&&selection===navigation.current&&localStorage.getItem(selectionKey)===id){
               setCurrent({
                 task: detail.task,
                 runs: detail.runs,
@@ -69,30 +82,38 @@ export function TaskContinuity({
                 previousOutcomes:detail.previousOutcomes,
                 plans:detail.plans,
               });
-          }
-        }
+              onRestore?.(detail.task.taskId);
+            }
+        }else onRestore?.(undefined);
       } catch (e) {
-        if (live) {
-          setCurrent(null);
-          setTasks([]);
+        if (live&&selection===navigation.current&&(!requestedTask||localStorage.getItem(selectionKey)===requestedTask)) {
+          if([401,403].includes((e as Error&{status?:number}).status||0)){
+            setCurrent(null);setTasks([]);localStorage.removeItem(selectionKey);onRestore?.(undefined);
+          }
           setError(e instanceof Error ? e.message : "任务读取失败");
         }
       }
     };
     setCurrent(null);
     setTasks([]);
+    onRestore?.(undefined);
     void load();
     const timer = setInterval(load, 5000);
     return () => {
       live = false;
+      navigation.current++;
       clearInterval(timer);
     };
-  }, [actor]);
+  }, [actor,onRestore,selectionKey,itemScopeKey]);
   async function open(t: TaskSpec, resume = true, fresh = false) {
+    const selection=++navigation.current;
     const d = await request(undefined, undefined, t.taskId);
+    if(selection!==navigation.current)return;
+    if(!inScope(d.task)){setError('这件事属于另一个物品空间，请切换空间后继续；原记录仍保留。');return;}
     if(current?.task.taskId!==t.taskId||fresh){resetConsent();setNotes("");setEditing(null);setCorrection("");}
     setCurrent({ task: d.task, runs: d.runs, outcomes: d.outcomes,familyProgress:d.familyProgress,previousOutcomes:d.previousOutcomes,plans:d.plans });
-    localStorage.setItem("wujian-task:" + actor, t.taskId);
+    localStorage.setItem(selectionKey, t.taskId);
+    onRestore?.(d.task.taskId);
     if (resume) {
       const session = d.runs.find((r: TaskRun) => r.sessionId)?.sessionId;
       onResume(t.taskId, t.itemInstanceIds[0], session, fresh ? d.task.goal : undefined);
@@ -180,7 +201,7 @@ export function TaskContinuity({
           </p>
           {current.familyProgress?.map(f=><p key={f.familyTaskId}>家庭协作：{f.reportedAt?"家人已报告处理完成，仍需你核对结果":f.status==="未解决"?"家人报告尚未解决":f.acceptedAt?"家人已接手":f.seenAt?"家人已查看":"等待家人查看"}。{f.basis==="user_report"?"这是家人的报告，不是设备验证。":""}</p>)}
           {!!current.previousOutcomes?.length&&<details><summary>本次可参考的经验</summary>{current.previousOutcomes.map(o=><p key={o.outcomeId}>你的报告：{o.notes} <small>{o.allowCloud?"已允许云端使用":"仅本机查看，不传云端"}；仍须核对本次条件。</small></p>)}</details>}
-          {!!current.plans?.length&&<details><summary>这件事已保存的方案</summary>{current.plans.map(p=><section key={p.id}><strong>{p.goal}</strong>{!!p.resourceReview?.untracked?.length&&<p role="status">旧方案没有完整的条件快照，需重新核对，不能当作条件未变。</p>}{!!p.resourceReview?.changed.length&&<p role="status">物品条件已变化，需重新核对第{p.resourceReview.affected.map(n=>n+1).join("、")}步。其他步骤未发现登记条件变化，也不代表实物验证。</p>}<ol>{p.checklist?.map((s,n)=><li key={n}>{s.label} · {s.status}</li>)}</ol>{p.conditions?.map((c,n)=><p key={n}>实施前待核对：{c}</p>)}{p.sources?.map((s,n)=><p key={n}><a href={s.url} target="_blank" rel="noreferrer">查看方案资料 {n+1}</a></p>)}<small>保存的是候选方案，不代表实际尝试成功。</small></section>)}</details>}
+          {!!current.plans?.length&&<details><summary>这件事已保存的方案</summary>{current.plans.map(p=><section key={p.id}><strong>{p.goal}</strong>{p.checklist?.some((_s,n)=>!p.dependencies?.find(d=>d.step===n)?.conditions)&&<p role="status">旧方案未记录完整逐步前提，需要重新核对；不能视为条件已满足。</p>}{!!p.resourceReview?.untracked?.length&&<p role="status">旧方案没有完整的条件快照，需重新核对，不能当作条件未变。</p>}{!!p.resourceReview?.changed.length&&<p role="status">物品条件已变化，需重新核对第{p.resourceReview.affected.map(n=>n+1).join("、")}步。其他步骤未发现登记条件变化，也不代表实物验证。</p>}<ol>{p.checklist?.map((s,n)=>{const dependency=p.dependencies?.find(d=>d.step===n);return <li key={n}><strong>{planStepStatus(dependency?.status)}</strong>{!!dependency?.conditions?.length&&<details className="plan-step-conditions" open={n===0}><summary>第{n+1}步 · 实施前先核对{dependency.conditions.length}项</summary><ul>{dependency.conditions.map((c,j)=><li key={j}>{c}</li>)}</ul></details>}<p>{s.label} · {s.status}</p></li>;})}</ol>{!!p.conditions?.length&&<details><summary>查看完整约束与资料缺口（{p.conditions.length}项）</summary>{p.conditions.map((c,n)=><p key={n}>实施前待核对：{c}</p>)}</details>}{p.sources?.map((s,n)=><p key={n}><a href={s.url} target="_blank" rel="noreferrer">查看方案资料 {n+1}</a></p>)}<small>保存的是候选方案，不代表实际尝试成功。</small></section>)}</details>}
           <button
             onClick={() => open(current.task).catch((e) => setError(e.message))}
           >
@@ -188,7 +209,7 @@ export function TaskContinuity({
           </button>
           <button
             onClick={() => {
-              localStorage.removeItem("wujian-task:" + actor);
+              localStorage.removeItem(selectionKey);
               setCurrent(null);
               onExit();
             }}
@@ -232,7 +253,7 @@ export function TaskContinuity({
           )}
           {current.outcomes.map((o) => (
             <div key={o.outcomeId}>
-              <p>{o.status==="forgotten"?"这条经验已忘记":`用户报告：${o.notes}`}</p>
+              <p>{o.status==="forgotten"?"这条经验已忘记":`${o.basis==='software_simulator_readback'?'本机软件回读（不是实物验证）':o.basis==='user_report'?'用户报告':'结果记录'}：${o.notes}`}</p>
               {o.basis==="user_report"&&o.status!=="forgotten"&&<>
                 <small>{o.canReuseForFutureTasks?"你允许以后参考；仍须核对当前条件":"不用于后续任务"}</small>
                 <button disabled={busy} onClick={()=>{setEditing(o);setCorrection(o.notes);setReuse(false);setAllowCloud(false);}}>纠正这条经验</button>

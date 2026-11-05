@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
 import type { Item, Person } from "@/lib/domain";
 import { additionalQuestions } from "@/lib/agent/presentation";
+import {planStepStatus} from '@/lib/life/plan-presentation';
 import type {
   ServiceSession,
   TurnInput,
@@ -353,6 +354,7 @@ export function AssistantConversation({
           <label>
             之前的问题
             <select
+              aria-label="之前的问题"
               disabled={busy || temporary}
               value={session?.id || ""}
               onChange={(e) => {
@@ -465,6 +467,7 @@ export function AssistantConversation({
                 正在一起完成：{message.reply.task.goal}
               </small>
             )}
+            {!!message.reply?.guidanceSources?.length&&<small>AI 整理的指导，可逐步展开原文核对；未验证实物。</small>}
             {message.role === "assistant" ? (
               <div className="assistant-prose"><Markdown components={{a: ({children, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer">{children}</a>}}>{message.text}</Markdown></div>
             ) : <p>{message.text}</p>}
@@ -529,11 +532,19 @@ export function AssistantConversation({
             {message.reply?.actionCards?.map((card) => (
               <div className="home-action-card" key={card.id}>
                 <h3>{card.title}</h3>
-                <ul>
+                {card.planPreview?<>
+                  <p>这是待确认的方案。以下每一步先核对前提；保存不代表条件已满足或动作已执行。</p>
+                  <ol>{card.planPreview.steps.map((step,i)=><li key={i}>
+                    <strong>{planStepStatus(step.status)}</strong>
+                    {!!step.conditions.length&&<details className="plan-step-conditions" open={i===0}><summary>第{i+1}步 · 实施前先核对{step.conditions.length}项</summary><ul>{step.conditions.map((c,n)=><li key={n}>{c}</li>)}</ul></details>}
+                    <p>{step.text}</p>
+                  </li>)}</ol>
+                  {!!card.planPreview.conditions.length&&<details><summary>查看完整约束与资料缺口</summary><ul>{card.planPreview.conditions.map((c,i)=><li key={i}>{c}</li>)}</ul></details>}
+                </>:<ul>
                   {card.detail.map((line, i) => (
                     <li key={i}>{line}</li>
                   ))}
-                </ul>
+                </ul>}
                 {card.status === "pending" ? (
                   <div className="inline">
                     <button
@@ -562,7 +573,7 @@ export function AssistantConversation({
                       : "已取消，未执行"}
                   </p>
                 )}
-                <small>确认后才执行；建议保留 15 分钟。</small>
+                <small>{card.kind==='plan'||card.kind==='taskPlan'?'确认只保存候选计划，不执行实物动作；草稿保留15分钟。':'确认后才执行这项记录操作；建议保留15分钟。'}</small>
                 {card.kind==='gift'&&card.status==='applied'&&<a href="#social" className="text-button">查看赠礼与预览链接</a>}
               </div>
             ))}
@@ -572,9 +583,10 @@ export function AssistantConversation({
             )}
             {!!message.reply?.steps.length && (
               <ol>
-                {message.reply.steps.map((step) => (
+                {message.reply.steps.map((step,n) => (
                   <li key={step.id}>
-                    {step.text}
+                    {message.reply?.stepsInAnswer ? `第 ${n+1} 步` : step.text}
+                    {message.reply?.guidanceSources?.filter(s=>s.id===step.sourceId).map(s=><details key={s.id} className="guidance-original"><summary>查看第 {n+1} 步对应原文</summary><blockquote>{s.text}</blockquote><a href={s.url} target="_blank" rel="noopener noreferrer">{s.title} · 厂家来源 ↗</a><p><small>{s.model} · {s.region} · 原文版本 {s.documentHash.slice(0,12)}。对应原文不等于模型释义已获验证；请核对完整前提。</small></p></details>)}
                     {message.id === last?.id && !temporary && (
                       <button
                         className="text-button"

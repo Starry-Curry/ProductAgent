@@ -1,0 +1,45 @@
+{
+  "at": "2026-11-05T02:51:19.121Z",
+  "openPRs": [
+    {
+      "number": 3,
+      "url": "https://github.com/Starry-Curry/ProductAgent/pull/3",
+      "head": "codex/wujian-finals-product-v1",
+      "headSha": "dbd93cfc9f684ccac7b0f80727cdaebcea898ca9",
+      "base": "codex/wujian-docs-cleanup-v1",
+      "draft": true
+    },
+    {
+      "number": 2,
+      "url": "https://github.com/Starry-Curry/ProductAgent/pull/2",
+      "head": "codex/wujian-docs-cleanup-v1",
+      "headSha": "689293ce0274e1eb45b9ad7b039e0284493d8cb6",
+      "base": "codex/wujian-team-integration-v1",
+      "draft": false
+    },
+    {
+      "number": 1,
+      "url": "https://github.com/Starry-Curry/ProductAgent/pull/1",
+      "head": "codex/wujian-team-integration-v1",
+      "headSha": "56d2c1f7a56a22aa3caff8b4d511726268631a33",
+      "base": "develop",
+      "draft": false
+    }
+  ],
+  "mainCI": [
+    {
+      "id": 41956944131,
+      "sha": "dbd93cfc9f684ccac7b0f80727cdaebcea898ca9",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Starry-Curry/ProductAgent/actions/runs/41956944131"
+    },
+    {
+      "id": 39638816660,
+      "sha": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Starry-Curry/ProductAgent/actions/runs/39638816660"
+    }
+  ]
+}

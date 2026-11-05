@@ -9,7 +9,7 @@ import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import { canRead, type State, type Person } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
-import { virtualHomeItems } from "./virtual-home.ts";
+import { virtualHomeItems,assertVirtualHomeCloud } from "./virtual-home.ts";
 import { ProviderError, type Provider } from "../ai/provider.ts";
 import { boundPack } from "../ai/harness.ts";
 import {
@@ -143,7 +143,9 @@ export async function planDiscovery(
   readCurrent: () => State,
 ): Promise<DiscoveryResult> {
   const input = discoveryInput.parse(raw);
+  let cloudItemIds:string[]=[];
   const checkHome = () => {
+    if(input.model)assertVirtualHomeCloud(readCurrent(),actor,cloudItemIds);
     if (
       input.homeId &&
       (!readCurrent().virtualHomes?.[actor]?.allowCloud ||
@@ -152,9 +154,12 @@ export async function planDiscovery(
       throw new AgentError("请先在首页明确授权这套模拟家庭使用云端模型", 403);
   };
   checkHome();
+  const homeItems=virtualHomeItems(state,actor);
+  if(input.model)assertVirtualHomeCloud(state,actor,[...input.itemIds,...(input.continuation?.itemIds||[]),...(input.itemId?[input.itemId]:[])]);
+  const unconsentedHomeIds=new Set(input.model&&(!state.virtualHomes?.[actor]?.allowCloud||homeItems.length!==8)?homeItems.map(i=>i.id):[]);
   const visible = input.homeId
-    ? virtualHomeItems(state, actor)
-    : state.items.filter((i) => canRead(i, actor));
+    ? homeItems
+    : state.items.filter((i) => canRead(i, actor)&&!unconsentedHomeIds.has(i.id));
   for (const id of [
     ...input.itemIds,
     ...input.excludedItemIds,
@@ -270,6 +275,8 @@ export async function planDiscovery(
       (!onlyNamed.length || onlyNamed.includes(i.id)) &&
       (!selected.length || selected.includes(i.id)),
   );
+  cloudItemIds=items.map(i=>i.id);
+  checkHome();
   const referenceGaps: string[] = [];
   const experiences = input.experienceIds.flatMap((id) => {
     const row = db

@@ -1,0 +1,30 @@
+{
+  "caseId": "N04-1",
+  "arm": "direct",
+  "controlCohort": "additional_authorized_round_same_information",
+  "roundId": "qwen-foundation-20261103-r2",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "at": "2026-11-03T02:26:29.389Z",
+  "sameInformation": {
+    "productRequestNumber": 118,
+    "materialSha256": "05582470910652ed71c0b5a33ce9c073de956bce9ffd3062e394273bb66fd6be",
+    "method": "exact user/tool content of product final tool-loop request; excludes system and assistant drafts"
+  },
+  "text": "# 在 TI-30XS MultiView 上切换到 DEG（角度）并返回计算画面\n\n> **证据说明**：当前资料库中未收录该型号的官方说明书原文，因此以下操作基于 Texas Instruments TI-30XS MultiView 系列科学计算器的通用公开操作逻辑整理。我无法宣称已实际在你的设备上执行或读取状态，请对照你手中机器的按键标识确认。\n\n---\n\n## 一、切换到 DEG（角度模式）\n\nTI-30XS MultiView 的角度单位设置通过 **`mode`** 键完成：\n\n1. **按 `mode` 键**  \n   屏幕会进入模式设置菜单（Mode Settings）。\n\n2. **找到角度单位选项**  \n   使用方向键（上下左右箭头）浏览菜单页面，定位到显示 **DEG / RAD / GRAD** 的那一行。\n   - **DEG** = 角度（Degrees），即你要的\"算角度而不是弧度\"\n   - **RAD** = 弧度（Radians）\n   - **GRAD** = 梯度（Gradians）\n\n3. **选择 DEG**  \n   用左右方向键将高亮/光标移到 **DEG** 上，然后按 **`enter`** 确认选中。\n\n4. **退出设置回到正常计算画面**  \n   按 **`clear`** 键（或按 **`2nd`** + **`quit`**，视具体界面提示），即可退出模式菜单，回到正常的计算主屏幕。\n\n> **确认是否生效**：回到主屏幕后，观察屏幕顶部状态栏，通常会显示一个小字 **\"DEG\"**，表示当前三角函数计算使用的是角度制。如果显示的是 \"RAD\"，则说明还在弧度模式，需要重新操作。\n\n---\n\n## 二、快捷方式（部分场景适用）\n\n在某些 TI-30XS MultiView 固件版本中，你也可以直接在计算时指定单位，而不必全局切换模式：\n- 输入数值后，按 **`2nd`** 再按对应的角度单位键（如标注有 ° 的键），可以临时以角度参与计算。\n- 但如果你希望**所有** sin/cos/tan 等运算默认都用角度，建议直接按上述步骤把全局模式改为 DEG。\n\n---\n\n## 三、注意事项与适用条件\n\n| 项目 | 说明 |\n|------|------|\n| **适用型号** | Texas Instruments TI-30XS MultiView（及同系列的 TI-30X Pro MathPrint 等布局相似的机型）。不同批次按键丝印可能略有差异。 |\n| **影响范围** | 切换为 DEG 后，所有三角函数（sin, cos, tan 及其反函数）的输入/输出均按角度解释，直到你再次改回 RAD 或 GRAD。 |\n| **不改变的内容** | 模式切换不会清除你之前输入的计算历史（MultiView 的历史记录通常保留），但建议切换后先按一次 `clear` 清空当前输入行，避免残留表达式在新模式下产生误解。 |\n| **证据局限** | 由于未取得该型号的完整官方说明书正文进行逐字核对，若你的机器按键布局与上述描述不一致，请以机身印刷标识为准，或查阅 TI 官网提供的 TI-30XS MultiView Guidebook。 |\n\n---\n\n**总结流程**：  \n**`mode` → 方向键选 DEG → `enter` → `clear` 退回主屏幕 → 看顶部状态栏确认显示 DEG**。",
+  "usage": {
+    "completion_tokens": 753,
+    "prompt_tokens": 1151,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 1151
+    },
+    "total_tokens": 1904
+  },
+  "model": "qwen3.8-max-0902",
+  "finishReason": "stop",
+  "fullAnswerMs": 18008,
+  "upstreamNumbers": [
+    10
+  ]
+}

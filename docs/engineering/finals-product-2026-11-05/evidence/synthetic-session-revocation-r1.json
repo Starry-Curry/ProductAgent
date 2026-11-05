@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-05T00:40:20.630Z",
+  "scope": "only_synthetic_book_value_r2_session_read_in_diagnostic_output_revoked_no_private_user_account_or_data_deleted",
+  "logoutStatus": 200,
+  "subsequentPrivateReadStatus": 401,
+  "paidRequests": 0,
+  "credentialValuesRecorded": false
+}

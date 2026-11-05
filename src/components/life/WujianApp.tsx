@@ -35,6 +35,7 @@ import type { ServiceSession, TurnInput } from "@/lib/agent/contracts";
 import { ItemInformation } from "./ItemInformation";
 import { syntheticItem } from "@/lib/life/availability";
 import { itemPhoto } from "@/lib/life/item-photos";
+import {receivedGiftStories} from '@/lib/memory/gift-story';
 type View =
   | "home"
   | "items"
@@ -93,6 +94,8 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [policy, setPolicy] = useState<"off" | "read" | "candidates">("off");
+  const [homePolicy,setHomePolicy]=useState<"off"|"read"|"candidates">('off');
+  useEffect(()=>{setPolicy('off');setHomePolicy('off');},[actor]);
   useEffect(() => {
     try {
       setElder(
@@ -129,8 +132,14 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
   }>({ key: 0, origin: { page: "assistant" } });
   const [homeChoice, setHomeChoice] = useState<boolean | null>(null);
   const homeActive = homeChoice ?? data?.virtualHome?.itemIds.length === 8;
-  function switchHome(value: boolean) {
+  const activeMemoryPolicy=homeActive?homePolicy:policy;
+  function setActiveMemoryPolicy(value:'off'|'read'|'candidates'){if(homeActive)setHomePolicy(value);else setPolicy(value);}
+  function switchHome(value: boolean,readAuthorizedHomeRecords?:boolean) {
+    // Only the explicit initial installation choice sets this scope's read
+    // preference. Returning to an existing home cannot undo a later opt-out.
+    if(value&&readAuthorizedHomeRecords!==undefined)setHomePolicy(readAuthorizedHomeRecords?'read':'off');
     setHomeChoice(value);
+    setActiveTaskId(undefined);
     setMission(null);
     setAskSession(null);
     setEntryQuestion("");
@@ -400,6 +409,8 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     window.scrollTo({ top: 0 });
   }
   function open(id: string, nextTab = "帮助") {
+    const inHome=!!data?.virtualHome.itemIds.includes(id);
+    if(inHome!==homeActive)switchHome(inHome);
     setBackView(view === "add" || view === "item" ? "items" : view);
     setSelected(id);
     setTab(nextTab);
@@ -409,7 +420,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
     if(capability==='family'){go('family');return;}
     open(id,capability==='creative'?'新玩法':capability==='story'?'故事':capability==='persona'?'帮助':'资料与管理');
   }
-  function linkConfirmedTask(taskId:string){setActiveTaskId(taskId);localStorage.setItem('wujian-task:'+actor,taskId);}
+  function linkConfirmedTask(taskId:string){setActiveTaskId(taskId);localStorage.setItem('wujian-task:'+actor+(homeActive?':young-apartment-v1':''),taskId);}
   const allItems = data?.workspace.items.filter((i) => !i.demo) || [];
   const items = homeActive
     ? allItems.filter((i) => data?.virtualHome.itemIds.includes(i.id))
@@ -560,7 +571,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
         </div>
       </header>
       <main className="life-main">
-        {data && <TaskContinuity actor={actor} items={data.workspace.items} onExit={()=>setActiveTaskId(undefined)} onResume={(taskId,itemId,sessionId,newGoal)=>{ask(newGoal||"",itemId,undefined,sessionId,false,undefined,taskId);}}/>}
+        {data && <TaskContinuity actor={actor} scopeId={homeActive?'young-apartment-v1':undefined} items={data.workspace.items.filter(i=>homeActive?data.virtualHome.itemIds.includes(i.id):!data.virtualHome.itemIds.includes(i.id))} onRestore={setActiveTaskId} onExit={()=>setActiveTaskId(undefined)} onResume={(taskId,itemId,sessionId,newGoal)=>{ask(newGoal||"",itemId,undefined,sessionId,false,undefined,taskId);}}/>}
         {!elder && (
           <div className="life-topline">
             <span>把日常用好，把生活留住。</span>
@@ -938,12 +949,13 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
             )}
             {view === "discover" && (
               <Discovery
-                key={actor}
+                key={actor+(homeActive?':home':':personal')}
                 items={items}
                 ideas={data.ideas}
                 request={request}
                 refresh={load}
                 modelAvailable={data.capabilities.model}
+                homeId={homeActive ? "young-apartment-v1" : undefined}
                 onAsk={(context) =>
                   ask("继续这个目标，帮我进一步完善方案", undefined, context)
                 }
@@ -978,16 +990,16 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                   </div>
                 </div>
                 <label className="life-card life-check">
-                  <input type="checkbox" checked={policy !== "off"} onChange={e => setPolicy(e.target.checked ? "read" : "off")} />
+                  <input type="checkbox" disabled={conversationBusy} checked={activeMemoryPolicy !== "off"} onChange={e => setActiveMemoryPolicy(e.target.checked ? "read" : "off")} />
                   使用已获准的个人记忆与经历（仅使用允许云端读取的内容，不自动保存新记忆）
                 </label>
                 <label className="life-card life-check">
                   <input
                     type="checkbox"
-                    checked={policy === "candidates"}
-                    disabled={policy === "off"}
+                    checked={activeMemoryPolicy === "candidates"}
+                    disabled={activeMemoryPolicy === "off" || conversationBusy}
                     onChange={(e) =>
-                      setPolicy(e.target.checked ? "candidates" : "read")
+                      setActiveMemoryPolicy(e.target.checked ? "candidates" : "read")
                     }
                   />
                   允许从这段对话建议记忆（模型可用时分析当前原话；先确认再用于长期个性化，历史私密记忆默认不上云）
@@ -1050,7 +1062,6 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                   taskId={activeTaskId}
                   key={
                     actor +
-                    policy +
                     askEntry.key +
                     (homeActive ? "home" : "personal")
                   }
@@ -1081,7 +1092,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                       ? { ...askEntry.origin!, homeId: "young-apartment-v1" }
                       : askEntry.origin
                   }
-                  memoryPolicy={policy}
+                  memoryPolicy={activeMemoryPolicy}
                   onActivity={() => load().catch(() => {})}
                 />
                 <details className="life-card">
@@ -1240,6 +1251,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                 </div>
                 {tab === "帮助" && (
                   <ItemBelonging
+                    receivedStories={receivedGiftStories(data.workspace,actor,item.id)}
                     onOpenCapability={openCapability}
                     onTaskLinked={linkConfirmedTask}
                     key={actor + item.id}
@@ -1298,6 +1310,7 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
                 )}
                 {tab === "资料与管理" && (
                   <ItemInformation
+                    taskId={activeTaskId}
                     key={actor + item.id}
                     item={item}
                     actor={actor}
@@ -1355,7 +1368,6 @@ export default function WujianApp({ authenticatedAccount }: { authenticatedAccou
               ? "在线演示 / 测试案例、资料与创意分别标注"
               : "本机演示 / 真实资料、合成实例与创意候选分别标注"}
           </span>
-          <a href="/legacy">旧版入口</a>
           <a href="/guide">操作指南</a>
         </footer>
       )}

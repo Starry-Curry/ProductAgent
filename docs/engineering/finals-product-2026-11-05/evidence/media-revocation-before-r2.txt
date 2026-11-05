@@ -1,0 +1,27 @@
+✖ 照片读取服从当前按件授权：撤权后旧shared投影不能恢复照片权限，本人原上传保留 (134.5715ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 376.8379
+
+✖ failing tests:
+
+test at tests\finals-media-permission.test.ts:3:1
+✖ 照片读取服从当前按件授权：撤权后旧shared投影不能恢复照片权限，本人原上传保留 (134.5715ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: 撤权记录必须覆盖过时的shared标志
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-media-permission.test.ts:6:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /授权/,
+    operator: 'throws',
+    diff: 'simple'
+  }

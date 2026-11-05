@@ -65,6 +65,8 @@ export const turnInputSchema = z
   })
   .strict();
 export type TurnInput = z.infer<typeof turnInputSchema>;
+/** Caller input before schema defaults. TurnInput is the parsed internal form. */
+export type TurnRequest = z.input<typeof turnInputSchema>;
 export type Citation = {
   id: string;
   title: string;
@@ -89,7 +91,11 @@ export type AssistantReply = {
   actionCards?: ActionCard[];
   outcome: "answered" | "needs_info" | "referred" | "unavailable" | "blocked";
   answer: string;
-  steps: { id: string; text: string }[];
+  steps: { id: string; text: string; sourceId?: string }[];
+  /** Server-selected public originals, not model quotes or paraphrase certification. */
+  guidanceSources?: {id:string;itemId:string;text:string;url:string;title:string;model:string;region:string;documentHash:string;basis:'official_original_not_paraphrase_verification'}[];
+  /** Steps already present in answer; show compact feedback controls, not a duplicate list. */
+  stepsInAnswer?: boolean;
   questions: string[];
   evidenceIds: string[];
   citations: Citation[];

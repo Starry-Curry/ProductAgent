@@ -2,22 +2,27 @@
 
 释放人与物的价值：理解你实际拥有的物品、人与物的经历及现实条件，帮助兑现、创造、延续和传递价值。
 
+当前优先级：共享底座与团队并行开发。**审计前暂停历史集成，PR #4保持Draft**；历史材料不等于正式功能。各组可按公共接口独立开分支和提交Draft PR，暂不合并候选/develop/main。具体分工看下方说明。
+
 - [当前工程状态与恢复点](docs/engineering/CURRENT.md)：哪些实际可用、哪些未通过验收。
 - [产品共识定稿](docs/product/PRODUCT_FINAL_V1.md)：产品理念与完整范围。
+- [团队接入指南](docs/engineering/TEAM_INTEGRATION.md)：分支起点、公共服务、离线Mock、专业工具与兼容边界。
+- [分工开发说明](docs/engineering/TEAM_WORK_PLAN.md)：审计前暂停历史集成，角色分工、开工步骤和底座验收边界。
 - [贡献指南](CONTRIBUTING.md) · [工程规则](AGENTS.md) · [文档索引](docs/README.md)。
+- [GitHub 协作操作](docs/GIT_WORKFLOW.md) · [后续研发规划](docs/engineering/NEXT_STEPS.md)。
 
 ## 本地运行
 
-使用 **Node.js 24** 与现有 package-lock.json，无需独立数据库服务。
+使用 **Node.js 24** 与现有 package-lock.json，无需独立数据库服务。首次开发先按 [团队接入指南](docs/engineering/TEAM_INTEGRATION.md#从哪里开始) 选择起点；main 已更新到决赛成果，旧团队候选不再是最新底座。develop 同步 PR 合并前，从 `origin/codex/wujian-team-ready-v2` 创建自己的分支；合并后从 `origin/develop` 开始。
 
 ```bash
-git clone https://github.com/Starry-Curry/ProductAgent.git
-cd ProductAgent
 npm ci
-npm run dev
+npm run team:dev -- --name=alice --port=3251
 ```
 
-打开 http://127.0.0.1:3200；Windows 可使用 npm.cmd。服务只绑定本机回环地址，默认本地演示身份与 data-life-v1/ 数据目录，不复用旧工作区数据库；可以用 PRODUCT_AGENT_DATA_DIR 指定独立测试目录。演示身份不代表真实用户认证。停止用 Ctrl+C。
+打开 http://127.0.0.1:3251，注册自己的本地测试账号。团队命令强制关闭付费模型、公开联网和设备实验，使用 `.runtime/team-dev/alice` 和 `.next-team-alice`，不读取其他人的数据库；同机运行另一成员时换名字和端口。Windows 可使用 npm.cmd。停止用 Ctrl+C。原 `npm run dev` 仍保留为本地演示身份入口，不等于账号权限验收。
+
+不需要 Key 就能测试工具往返、Task 和确认反馈：`npm run team:mock`；四方向公共接口与权限回归：`npm run test:team`。Mock 不能证明真实模型质量。
 
 ```bash
 npm run build
@@ -42,7 +47,7 @@ npm start
 | src/lib/life、src/lib/foundation | 物品、关系、任务/结果与领域业务 |
 | tests、scripts | 回归测试、启动和隔离验收 |
 
-修改公共契约或权限事务前先协调底座负责人，按 [贡献流程](CONTRIBUTING.md) 使用独立功能分支与 PR。main 保持稳定；develop 的实际状态看 CURRENT，未建立前不要假定能从其开发。
+GitHub 分工：main 为稳定演示、develop 为团队集成；feature/*、fix/*、docs/*、codex/* 为独立开发分支。通过 PR 合入 develop，需 CI 通过及一名组员审查；main 由负责人批准更新。分支命令与提交流程见 [CONTRIBUTING](CONTRIBUTING.md#github-协作)，底座调用与 Mock 直接见 [TEAM_INTEGRATION](docs/engineering/TEAM_INTEGRATION.md)，不在这里复制。
 
 ## 验证
 

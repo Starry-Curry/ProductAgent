@@ -1,0 +1,68 @@
+✖ 原文字节不变但地区适用性被更正，也不能发布旧范围下的指导 (177.5668ms)
+✔ 主模型尚未收到Context时公开资料换版，可按最新原文继续；已经发给模型之后仍应拒绝旧版本 (156.765ms)
+✔ 模型读取原文后同URL内容换版，旧步骤不能以仍合法的物品ID和旧引文继续发布；旧原文保留 (180.8019ms)
+✔ 增加第九个不同章节不使仍active的已读原文失效，不将阅读窗口LIMIT当成撤销 (244.5466ms)
+✖ 同一HTTP原文的fragment别名换版时旧hash全部失效，不误伤查询参数不同的资料 (128.8594ms)
+✔ 同内容更新定位元数据不能使另一fragment的有效旧引用失效 (123.5962ms)
+✖ 新版插入失败时旧资料仍active，不能先撤掉旧版再留下空缓存 (105.518ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 4
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1495.1556
+
+✖ failing tests:
+
+test at tests\finals-inflight-source-version.test.ts:2:1
+✖ 原文字节不变但地区适用性被更正，也不能发布旧范围下的指导 (177.5668ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-inflight-source-version.test.ts:5:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /范围|资料|原文|变化/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\finals-source-publication.test.ts:3:1
+✖ 同一HTTP原文的fragment别名换版时旧hash全部失效，不误伤查询参数不同的资料 (128.8594ms)
+  AssertionError [ERR_ASSERTION]: 旧fragment不能伪装仍有效的另一份资料
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-source-publication.test.ts:5:122)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\finals-source-publication.test.ts:10:1
+✖ 新版插入失败时旧资料仍active，不能先撤掉旧版再留下空缓存 (105.518ms)
+  AssertionError [ERR_ASSERTION]: 失败不丢失上个有效原文
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-source-publication.test.ts:11:393)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

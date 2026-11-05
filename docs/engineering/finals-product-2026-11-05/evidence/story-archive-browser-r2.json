@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-04T23:04:41.325Z",
+  "basis": "real_two_authenticated_accounts_real_UI_own_archive_edit_after_item_revocation_SYNTHETIC_story_no_Qwen",
+  "checks": [],
+  "errors": [
+    "share 400 {\"error\":\"协作内容无效\"}"
+  ],
+  "status": "failed",
+  "upstreamRequests": 0
+}

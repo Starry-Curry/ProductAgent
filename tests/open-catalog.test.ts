@@ -13,7 +13,7 @@ test("开放条码/ISBN仅产生待确认元信息，来源许可保留、缓存
         url.includes("openlibrary")
           ? {
               "ISBN:9780140328721": {
-                title: "Matilda",
+                title: "[合成书目元信息，不是真实版本断言]",
                 authors: [{ name: "Roald Dahl" }],
                 publish_date: "1988",
                 publishers: [{ name: "Puffin" }],
@@ -35,7 +35,9 @@ test("开放条码/ISBN仅产生待确认元信息，来源许可保留、缓存
     book = await lookupOpenCatalog("9780140328721", read);
   assert.equal(food.candidates[0].category, "食品");
   assert.match(food.candidates[0].license, /ODbL/);
-  assert.equal(book.candidates[0].brand, "Roald Dahl");
+  assert.equal(book.candidates[0].brand, "");
+  assert.deepEqual(book.candidates[0].creators, ["Roald Dahl"]);
+  assert.match(book.candidates[0].source.text, /Roald Dahl/);
   assert.equal(book.candidates[0].model, "9780140328721");
   assert.equal((food.candidates[0] as any).expiresOn, undefined);
   assert.equal(

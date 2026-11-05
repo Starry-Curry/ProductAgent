@@ -1,0 +1,25 @@
+✖ 有商业型号的私人来历问题不强制查厂家；型号操作仍保留缺资料时的官方查询入口 (182.808ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 812.6378
+
+✖ failing tests:
+
+test at tests\finals-private-recall-routing.test.ts:2:1
+✖ 有商业型号的私人来历问题不强制查厂家；型号操作仍保留缺资料时的官方查询入口 (182.808ms)
+  AssertionError [ERR_ASSERTION]: 私人来历不由厂家证明
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-private-recall-routing.test.ts:5:266)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { type: 'function', function: { name: 'search_product_knowledge' } },
+    expected: { type: 'function', function: { name: 'search_product_knowledge' } },
+    operator: 'notDeepStrictEqual',
+    diff: 'simple'
+  }

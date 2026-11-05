@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { assertBudget } from './budget.mjs';
+import {rerankRequest,RERANK_MODEL} from '../../src/lib/ai/qwen-rerank.ts';
 export async function gateway(configPath,options) {
   const limits=options?.limits||{roundId:'real-intelligence-20261031-r1',requests:150,cny:50};
   if (!configPath || path.basename(configPath) !== ".env.local")
@@ -95,13 +96,16 @@ export async function gateway(configPath,options) {
         if (Buffer.byteLength(raw) > (options?.allowBoundedPageImages?700000:180000)) throw Error("input_too_large");
       }
       const body = JSON.parse(raw);
+      const rerank=req.url.endsWith('/rerank/text-rerank/text-rerank');
+      const allowedRerank=rerank&&options?.rerankModel===RERANK_MODEL&&body.model===RERANK_MODEL&&available.includes(RERANK_MODEL);
+      if(rerank){if(!allowedRerank)throw Error('rerank_not_authorized');rerankRequest.parse(body);}
       const nativeSearch=/\/(text|multimodal)-generation\/generation$/.test(req.url);
       const multimodalSearch=req.url.endsWith('/multimodal-generation/generation');
       if(nativeSearch&&(!body.parameters?.enable_search||body.parameters?.search_options?.search_strategy!=='turbo'))throw Error('bounded_search_only');
       const allowedSearch=nativeSearch&&options?.searchModel&&body.model===options.searchModel&&available.includes(body.model);
       const responses=req.url.endsWith('/responses');
       options?.validateRequest?.(body,{nativeSearch,responses});
-      if (body.model !== config.AI_MODEL&&!allowedSearch || body.enable_thinking === true&&!options?.allowThinking) throw Error("pinned_model_or_thinking_not_authorized");
+      if (body.model !== config.AI_MODEL&&!allowedSearch&&!allowedRerank || body.enable_thinking === true&&!options?.allowThinking) throw Error("pinned_model_or_thinking_not_authorized");
       if(responses&&!options?.allowResponses)throw Error('responses_not_authorized');
       if(responses&&((body.stream&&!options?.allowResponsesStream)||!Number.isInteger(body.max_tool_calls)||body.max_tool_calls>4||body.max_tool_calls<1))throw Error('bounded_responses_required');
       if(responses&&options?.allowResponsesStream&&body.store!==false)throw Error('responses_store_false_required');
@@ -114,9 +118,9 @@ export async function gateway(configPath,options) {
       const externalInput=options?.reserveExternalInputs&&(responses||nativeSearch||fileInput);
       // UTF-8 byte count bounds input tokens; highest published Plus tier is
       // reserved until actual usage arrives. An unknown failed charge stays reserved.
-      const reserve =
+      const reserve = rerank?(Buffer.byteLength(body.input.query)*body.input.documents.length+body.input.documents.reduce((n,s)=>n+Buffer.byteLength(s),0))*0.5/1e6:
         ((externalInput?Math.max(Buffer.byteLength(raw),1_000_000):Buffer.byteLength(raw)) * Math.max(8, options?.prices?.input || 0) +
-          (maxTokens + (body.enable_thinking ? 2048 : 0)) * Math.max(64, options?.prices?.output || 0)) /
+          (maxTokens + (body.enable_thinking ? body.thinking_budget : 0)) * Math.max(64, options?.prices?.output || 0)) /
         1e6 + (fileInput?5.12:0)+(nativeSearch||responses?(externalInput?1:5):0);
       assertBudget(ledger,reserve,limits);
       const user = (body.messages||body.input?.messages)?.find((m) => m.role === "user");
@@ -129,10 +133,11 @@ export async function gateway(configPath,options) {
       } catch {
         question = String(user?.content || "").slice(0, 2000);
       }
+      if(rerank)question=body.input.query;
       attempt = {
         number: ledger.attempts.length + 1, evaluation: options?.recordContent === false ? 'private-preview' : String(req.headers["x-wujian-evaluation"] || "unlabeled"),
         stage,
-        kind:responses?'responses_search':nativeSearch?'official_search':'inference',
+        kind:rerank?'rerank':responses?'responses_search':nativeSearch?'official_search':'inference',
         reservedCny: reserve,
         priceSource: "https://help.aliyun.com/zh/model-studio/model-pricing",
         startedAt: new Date().toISOString(),
@@ -153,7 +158,7 @@ export async function gateway(configPath,options) {
         if (!res.writableEnded) controller.abort();
       });
       const response = await fetch(
-        nativeSearch?new URL('/api/v1/services/aigc/'+(multimodalSearch?'multimodal':'text')+'-generation/generation',config.AI_BASE_URL):config.AI_BASE_URL.replace(/\/$/, "") + (responses?'/responses':"/chat/completions"),
+        rerank?new URL('/api/v1/services/rerank/text-rerank/text-rerank',config.AI_BASE_URL):nativeSearch?new URL('/api/v1/services/aigc/'+(multimodalSearch?'multimodal':'text')+'-generation/generation',config.AI_BASE_URL):config.AI_BASE_URL.replace(/\/$/, "") + (responses?'/responses':"/chat/completions"),
         {
           method: "POST",
           redirect: "error",
@@ -162,7 +167,7 @@ export async function gateway(configPath,options) {
             "Content-Type": "application/json",
             ...(multimodalSearch?{'X-DashScope-SSE':'enable'}:{}),
           },
-          body: JSON.stringify(responses?body:nativeSearch?{...body,parameters:{...body.parameters,max_tokens:maxTokens,enable_thinking:false}}:{
+          body: JSON.stringify(rerank||responses?body:nativeSearch?{...body,parameters:{...body.parameters,max_tokens:maxTokens,enable_thinking:false}}:{
             ...body,
             max_tokens: maxTokens,
             enable_thinking: body.enable_thinking === true,
@@ -247,10 +252,10 @@ export async function gateway(configPath,options) {
           model: upstreamModel || body.model,
         };
       } else result = await response.json();
-      if (!response.ok) {attempt.providerError={code:result.code||result.error?.code,message:options?.recordContent===false?undefined:clean(String(result.message||result.error?.message||'').slice(0,300))};throw Error("provider_http_" + response.status);}
+      if (!response.ok) {attempt.providerError={code:options?.recordContent===false?'upstream_http_'+response.status:result.code||result.error?.code,message:options?.recordContent===false?undefined:clean(String(result.message||result.error?.message||'').slice(0,300))};throw Error("provider_http_" + response.status);}
       if(result.code)throw Error('provider_code_'+result.code);
       attempt.status = "returned";
-      const usage=result.usage;const billedUsage=usage&&{...usage,prompt_tokens:usage.prompt_tokens??usage.input_tokens,completion_tokens:usage.completion_tokens??usage.output_tokens};
+      const usage=result.usage;const billedUsage=usage&&{...usage,prompt_tokens:usage.prompt_tokens??usage.input_tokens??(rerank?usage.total_tokens:undefined),completion_tokens:rerank?0:usage.completion_tokens??usage.output_tokens};
       attempt.tokens = billedUsage;
       if(nativeSearch)attempt.searchSources=options?.recordContent===false?undefined:result.output?.search_info;
       attempt.returnedModel = result.model;
@@ -260,7 +265,7 @@ export async function gateway(configPath,options) {
       ) {
         const input = billedUsage.prompt_tokens,
           output = billedUsage.completion_tokens;
-        const [inputRate, outputRate] = options?.prices ? [options.prices.input,options.prices.output] :
+        const [inputRate, outputRate] = rerank?[0.5,0]:options?.prices ? [options.prices.input,options.prices.output] :
           body.model === "qwen3.7-plus"
             ? [2, 8]
             : body.model === "qwen-max"
@@ -276,7 +281,7 @@ export async function gateway(configPath,options) {
         if(!fileInput||Number.isFinite(pdfPages))attempt.estimatedCny = (input * inputRate + output * outputRate) / 1e6+(nativeSearch?0.003:0)+(responses?0.01*(billedUsage.x_tools?.web_search?.count||0)+0.01*(billedUsage.x_tools?.web_extractor?.count||0):0)+(fileInput?pdfPages*0.02:0);
       }
       attempt.finishReason = (result.choices||result.output?.choices)?.[0]?.finish_reason;
-      if (options?.recordContent !== false) attempt.output = clean(responses?result.output?.filter(i=>i.type!=='reasoning'):(result.choices||result.output?.choices)?.[0]?.message || {});
+      if (options?.recordContent !== false) attempt.output = clean(rerank?result.output:responses?result.output?.filter(i=>i.type!=='reasoning'):(result.choices||result.output?.choices)?.[0]?.message || {});
       attempt.elapsedMs = Date.now() - Date.parse(attempt.startedAt);
       save();
       if (body.stream === true) {
@@ -293,11 +298,17 @@ export async function gateway(configPath,options) {
     } catch (e) {
       if (attempt) {
         attempt.status = "failed";
-        attempt.transportCode = e.cause?.code || e.name;
-        attempt.error = String(e.message).replaceAll(
-          config.AI_API_KEY,
-          "[removed]",
-        );
+        if(options?.recordContent===false){
+          // Upstream codes, invalid-JSON excerpts and transport messages can echo
+          // user content. Private previews retain accounting and fixed classes,
+          // never these opaque strings; synthetic evidence mode stays unchanged.
+          const code=e.cause?.code||e.name;
+          attempt.transportCode=['AbortError','TimeoutError','SyntaxError','TypeError','Error','UND_ERR_CONNECT_TIMEOUT','UND_ERR_HEADERS_TIMEOUT','UND_ERR_BODY_TIMEOUT','ECONNRESET','ETIMEDOUT','ENOTFOUND'].includes(code)?code:'upstream_failure';
+          attempt.error=attempt.httpStatus>=400?'provider_http_'+attempt.httpStatus:e.name==='SyntaxError'?'upstream_response_invalid_json':['TimeoutError','AbortError'].includes(e.name)?'upstream_wait_interrupted':'upstream_request_failed';
+        }else{
+          attempt.transportCode = e.cause?.code || e.name;
+          attempt.error = String(e.message).replaceAll(config.AI_API_KEY,"[removed]");
+        }
         attempt.elapsedMs = Date.now() - Date.parse(attempt.startedAt);
         save();
       }

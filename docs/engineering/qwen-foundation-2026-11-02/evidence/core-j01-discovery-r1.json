@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-03T03:04:58.467Z",
+  "basis": "real_browser_Qwen_unknown_brand_no_product_URL_synthetic_ownership_no_hardware",
+  "responses": [],
+  "checks": [],
+  "errors": [
+    "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3232/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3232/\", waiting until \"load\"\u001b[22m\n"
+  ],
+  "pageErrors": [],
+  "upstreamRequests": 0
+}

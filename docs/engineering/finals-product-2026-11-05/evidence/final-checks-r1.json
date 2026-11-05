@@ -1,0 +1,58 @@
+{
+  "observedAt": "2026-11-05T01:03:06.430Z",
+  "sourceCommit": "7a19e301d77c25a297a4f657bd1bf359dea68a20",
+  "workflow": {
+    "run": 8,
+    "id": 41945310718,
+    "url": "https://github.com/Starry-Curry/ProductAgent/actions/runs/41945310718",
+    "conclusion": "success",
+    "observedThroughGitHubConnector": true
+  },
+  "localChecks": [
+    {
+      "command": "node scripts/test-offline.mjs",
+      "exit": 0,
+      "tests": 681,
+      "evidence": "offline-regression-slice10-r1.txt",
+      "basis": "offline_protocol_and_domain_not_model_quality"
+    },
+    {
+      "command": "tsc --noEmit",
+      "exit": 0,
+      "evidence": "typecheck-slice10-r1.txt"
+    },
+    {
+      "command": "next build",
+      "exit": 0,
+      "evidence": "build-slice10-r1.txt"
+    },
+    {
+      "command": "production-browser-smoke --attempt=r2",
+      "exit": 0,
+      "evidence": "production-browser-smoke-r2.json",
+      "modelDisabled": true
+    },
+    {
+      "command": "npm audit --omit=dev --registry=https://registry.npmjs.org/",
+      "exit": 0,
+      "evidence": "dependency-audit-r3.json",
+      "knownProductionAdvisories": 0
+    }
+  ],
+  "round": "finals-product-20261105-r1",
+  "modelRequests": 368,
+  "ledgerSha256": "50bc0e9fe96614a1dd70110ecc5a6f2f1fc2a5e5e4289a32690c3ee93ed270b4",
+  "productQuality": "NOT_ACCEPTED",
+  "formalHistoricalFirstAnswersUnchanged": "0/18",
+  "branchSafety": {
+    "PR": 3,
+    "draft": true,
+    "merged": false,
+    "base": "codex/wujian-docs-cleanup-v1",
+    "PR1and2Unchanged": true,
+    "main": "ea32c3f4c9e18992ca267b6dd74e26e418c9e95a",
+    "develop": "f449067ce939d7fe82a3e48bab15df046d6eb2bc",
+    "originalUntrackedDeliverablesPreserved": true
+  },
+  "limits": "CI and local checks do not prove Qwen semantic correctness, physical creativity, all features complete, or broad security. No source changes follow this commit; later handoff evidence is documentation only."
+}

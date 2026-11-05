@@ -1,0 +1,14 @@
+{
+  "caseId": "N01-3",
+  "productId": "N01",
+  "question": "这台测距仪要收起来几个月，电池怎么办？现在两节电池只换其中一节合适吗？",
+  "arm": "direct",
+  "at": "2026-11-03T02:20:39.989Z",
+  "status": "blocked_budget",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "error": "acceptance_or_global_budget_exhausted",
+  "fullAnswerMs": 74,
+  "upstreamNumbers": [],
+  "transport": []
+}

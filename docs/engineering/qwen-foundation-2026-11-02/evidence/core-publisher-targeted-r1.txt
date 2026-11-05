@@ -1,0 +1,17 @@
+✔ 同一真实账号认领重放返回原实例；不同账号/未确认/已流转不借旧链接越权 (19.1174ms)
+✔ generic directory publisher proof binds brand, independent entity, TLS migration and exact host, never lookalikes/community (18.0274ms)
+✔ generic discovery gets structured company record; native search URL and model declaration alone cannot authenticate publisher (3.2558ms)
+✔ 未登记厂家仍发起真实接口搜索；候选域名不因模型返回就获得官方身份 (260.0066ms)
+✔ 陌生商品搜索：不因下载入口含型号丢掉后排opaque-ID操作章节，正文仍核对型号 (229.7813ms)
+✔ 普通新型号经官方目录定位PDF，按型号/地区缓存与原文定位，更新留旧版本和迁移备份 (263.2346ms)
+✔ 本人核对的官方导入无需再次联网即可成为可追溯操作知识，用户文字不冒充官方 (277.0208ms)
+✔ 跨型号拒绝；读取期间改型号不保存；临时获取不持久化；失败短暂负缓存避免反复联网 (259.1013ms)
+✔ 有规格仍可使用新型号官方操作原文； grounded翻译可读且防止假引用/数字/重复尝试 (722.4758ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4680.9875

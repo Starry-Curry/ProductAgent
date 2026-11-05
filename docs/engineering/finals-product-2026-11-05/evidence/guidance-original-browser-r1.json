@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-05T00:02:46.261Z",
+  "round": "finals-product-20261105-r1",
+  "basis": "real_Qwen_cached_actual_official_M350s_originals_retest_not_first_answer_not_physical_device_verification",
+  "responses": [],
+  "checks": [],
+  "errors": [
+    "{\"error\":\"event: status\\ndata: {\\\"message\\\":\\\"正在核对本次可用的物品与授权\\\"}\\n\\nevent: status\\ndata: {\\\"message\\\":\\\"正在从已核对型号的原文中定位相关内容\\\"}\\n\\nevent: failure\\ndata: {\\\"error\\\":\\\"本轮使用的资料原文或适用范围已换版或失效，未发布旧步骤；请重新提问以使用当前资料。\\\"}\\n\\n\"}"
+  ],
+  "pageErrors": [],
+  "status": "failed",
+  "upstreamRequests": 2
+}

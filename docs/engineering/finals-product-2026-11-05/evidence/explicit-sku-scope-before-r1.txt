@@ -1,0 +1,35 @@
+✔ 共同的厂家商品分类路径不能把另一型号的规格认证为当前型号；网址仅作导航线索 (125.9738ms)
+✔ 通用相同路径和查询参数也不能替代型号核对；确有厂家原文的型号仍可读取 (119.3855ms)
+✔ 不含型号的手册必须保留准确厂家父页及实际链接链，不能只贴一个继承标签 (118.0362ms)
+✖ 显式商品SKU清单优先于页尾提及：另一变体不能借正文出现当前型号而复用 (116.8034ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 763.5967
+
+✖ failing tests:
+
+test at tests\finals-category-path-scope.test.ts:19:1
+✖ 显式商品SKU清单优先于页尾提及：另一变体不能借正文出现当前型号而复用 (116.8034ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-category-path-scope.test.ts:20:464)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

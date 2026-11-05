@@ -4,6 +4,7 @@ import {boundPack} from '../ai/harness.ts';
 import {physicalFactSchema} from '../life/physical-facts.ts';
 import {usable,syntheticItem} from '../life/availability.ts';
 import type {PublicSourceAssertion} from './source-reference.ts';
+import type {PublicVisualReading} from '../life/sources.ts';
 
 export type RealityBasis='official_source'|'user_report'|'inferred_unverified';
 export type RealityFact={
@@ -14,6 +15,7 @@ export type RealityFact={
 export type RealityCapability={
  id:string;effect:string;canonicalKey?:string;basis:RealityBasis;evidenceIds:string[];requires:string[];
  status:'conditional'|'unavailable'|'hypothesis'|'conflicting';executable:false;verifiedForThisInstance:false;
+ representation?:'source_procedure_reference';
 };
 const known=(s?:string)=>s&&!/^(未知|待确认|未确认|不详|无型号)$/.test(s.trim())?s:null;
 const digest=(v:unknown)=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
@@ -21,7 +23,7 @@ const digest=(v:unknown)=>createHash('sha256').update(JSON.stringify(v)).digest(
 export function canonicalCapabilityKey(effect:string){return ({'indoor-storage':'open_container',storage:'open_container',容纳:'open_container',容纳非食品轻小物:'open_container',透明可视:'transparent',提拿:'portable','audio-playback':'sound',lighting:'light',clamp:'clamp',夹持:'clamp',照明:'light',便携:'portable',发声:'sound'} as Record<string,string>)[effect]||(['open_container','portable','light','sound','flat_surface','reflective','transparent','elastic','magnetic'].includes(effect)?effect:undefined);}
 /** Projection, never a second item store. It neither infers functions from names
  * nor converts source claims/user reports into real-world verification. */
-export function projectReality(item:Item,officialAssertions:PublicSourceAssertion[]=[]){
+export function projectReality(item:Item,officialAssertions:PublicSourceAssertion[]=[],visualReadings:(PublicVisualReading&{url:string})[]=[]){
  const pack=boundPack(item),facts:RealityFact[]=[],capabilities:RealityCapability[]=[];
  const add=(predicate:string,value:unknown,basis:RealityBasis,ref:string,component='本体',url?:string)=>{
   const id=item.id+':'+ref;
@@ -34,13 +36,18 @@ export function projectReality(item:Item,officialAssertions:PublicSourceAssertio
  const functional=new Set(['open_container','portable','clamp','light','sound','flat_surface','reflective','transparent','elastic','magnetic']);
  for(const raw of item.attributes?.physicalFacts||[]){const parsed=physicalFactSchema.safeParse(raw);if(!parsed.success)continue;const f=parsed.data;const ref=add(f.key,f.value,'user_report','physical/'+f.id,f.component);if(functional.has(f.key)&&typeof f.value==='boolean')capabilities.push({id:ref,effect:f.key,basis:'user_report',evidenceIds:[ref],requires:['本人报告未证明当前任务的承重、连接或实际状态'],status:f.value?'conditional':'unavailable',executable:false,verifiedForThisInstance:false});}
  for(const f of pack?.claims||[])add('statement',f.text,'official_source',f.id,'本体',pack!.source.url);
+ for(const reading of visualReadings){
+  // Prior public-only visual readings remain fallible model observations. No
+  // hardware capability/control grant or independently authenticated fact.
+  facts.push({id:item.id+':visual:'+digest(reading),subject:item.id,scope:'product',component:'图示识读候选',predicate:'visual_reading_candidate',value:{text:reading.text,pages:reading.pages,model:reading.model,readAt:reading.at,basis:reading.basis},basis:'inferred_unverified',status:'asserted',source:{ref:'visual:'+reading.sourceHash,url:reading.url,model:item.model,version:reading.sourceHash},verification:'unverified'});
+ }
  for(const assertion of officialAssertions){
   if(assertion.model!==item.model||item.region&&item.region!=='unspecified'&&assertion.region!=='unspecified'&&assertion.region!==item.region)continue;
   const id=item.id+':'+assertion.id;
   facts.push({id,subject:item.id,scope:'product',component:'本体',predicate:assertion.kind==='condition'?'source_condition':'statement',value:assertion.text,basis:'official_source',status:'asserted',source:{ref:assertion.id,url:assertion.url,model:assertion.model,version:assertion.reference.documentHash},verification:'source_assertion_not_instance_verification'});
   // A quoted manufacturer procedure supports conditional human guidance. It
   // does not create a hardware-control grant or prove the present unit works.
-  if(assertion.kind==='operation')capabilities.push({id:id+':guidance',effect:assertion.text,basis:'official_source',evidenceIds:[id],requires:['遵循对应原文的完整前提；本件物品状态与配套条件仍需核对'],status:'conditional',executable:false,verifiedForThisInstance:false});
+  if(assertion.kind==='operation')capabilities.push({id:id+':guidance',effect:assertion.text,basis:'official_source',evidenceIds:[id],requires:['遵循对应原文的完整前提；本件物品状态与配套条件仍需核对'],status:'conditional',executable:false,verifiedForThisInstance:false,representation:'source_procedure_reference'});
  }
  if(pack?.constraints?.maxLoadKg!==undefined)add('max_load_kg',pack.constraints.maxLoadKg,'official_source',pack.id+'/maxLoadKg','本体',pack.source.url);
  if(pack?.constraints?.foodContact!==undefined)add('food_contact',pack.constraints.foodContact,'official_source',pack.id+'/foodContact','本体',pack.source.url);
@@ -61,8 +68,16 @@ export type RealityCard=ReturnType<typeof projectReality>;
 /** Compact transport view; full source assertions remain in projectReality and
  * the original item/pack. Dictionary references remove repeated source URLs and
  * boilerplate, not caveats or conflicting measurements. */
-export function modelReality(card:RealityCard){
+export function modelReality(card:RealityCard,options:{sourceAssertions?:'full'|'references'}={}){
  const sources:Record<string,Omit<RealityFact['source'],'ref'>>={},keys=new Map<string,string>();
- const facts=card.facts.map(f=>{const source={url:f.source.url,model:f.source.model,version:f.source.version};const signature=JSON.stringify(source);let sourceId=keys.get(signature);if(!sourceId){sourceId='s'+(keys.size+1);keys.set(signature,sourceId);sources[sourceId]=source;}return {id:f.id,key:f.predicate,value:f.value,basis:f.basis,scope:f.scope,status:f.status,...(f.component!=='本体'?{component:f.component}:{}),sourceId,rawRef:f.source.ref};});
- return {id:card.id,name:card.name,identity:card.identity,instance:card.instance,facts,sources,capabilities:card.capabilities.map(c=>({id:c.id,effect:c.effect,status:c.status,basis:c.basis,evidenceIds:c.evidenceIds,requires:c.requires})),operations:card.operations,limits:card.limits,unknowns:card.unknowns,revision:card.revision,verification:'manufacturer statements and user reports; not device readback or permission to execute'};
+ const selected=card.facts.filter(f=>options.sourceAssertions!=='references'||!f.source.ref.startsWith('sem:'));
+ const facts=selected.map(f=>{const source={url:f.source.url,model:f.source.model,version:f.source.version};const signature=JSON.stringify(source);let sourceId=keys.get(signature);if(!sourceId){sourceId='s'+(keys.size+1);keys.set(signature,sourceId);sources[sourceId]=source;}return {id:f.id,key:f.predicate,value:f.value,basis:f.basis,scope:f.scope,status:f.status,...(f.component!=='本体'?{component:f.component}:{}),sourceId,rawRef:f.source.ref};});
+ return {id:card.id,name:card.name,identity:card.identity,instance:card.instance,facts,sources,capabilities:card.capabilities.filter(c=>options.sourceAssertions!=='references'||c.representation!=='source_procedure_reference').map(c=>({id:c.id,effect:c.effect,status:c.status,basis:c.basis,evidenceIds:c.evidenceIds,requires:c.requires,representation:c.representation})),operations:card.operations,limits:card.limits,unknowns:card.unknowns,revision:card.revision,verification:'manufacturer statements and user reports; not device readback or permission to execute'};
 }
+
+/** An entire previously selected paragraph is a knowledge locator, not a
+ * functional ability to rank every future goal against. Originals stay intact. */
+export function discoverableEffects(card:RealityCard){return card.capabilities.filter(c=>c.status==='conditional'&&c.representation!=='source_procedure_reference').map(c=>c.effect);}
+/** Original knowledge remains searchable even when it is not a capability
+ * label. Used ONLY for ranking; not copied into every catalogue entry. */
+export function knowledgeSearchText(card:RealityCard){return card.facts.filter(f=>f.basis==='official_source'&&f.scope==='product'&&typeof f.value==='string').map(f=>f.value as string);}

@@ -1,0 +1,9 @@
+✔ 原生排序只返回原文索引：授权、型号、边界、重复/越界索引均不成为事实 (14.8137ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 307.4186

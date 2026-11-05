@@ -1610,6 +1610,12 @@ summary { cursor:pointer; }
 .conversation-message.feedback { background:#fff8e8; }
 .conversation-message li { margin-bottom:12px; }
 .conversation-message .text-button { margin-left:8px; }
+.conversation-message .guidance-original { margin:10px 0; min-width:0; }
+.conversation-message .guidance-original summary { cursor:pointer; font-size:13px; font-weight:600; }
+.conversation-message .guidance-original blockquote { margin:10px 0; padding:12px; max-height:20rem; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; border-left:3px solid #9cae94; border-radius:8px; background:#f0f4ed; font-size:14px; line-height:1.65; }
+.conversation-message .guidance-original a { overflow-wrap:anywhere; font-size:13px; }
+@media(max-width:600px){.conversation-message > ol { padding-left:20px; }}
+
 .conversation-feedback { margin:20px 0; padding:16px; border-radius:14px; background:#f8faf6; }
 .conversation-options { margin-bottom:14px; }
 .memory-center { margin-bottom:20px; }

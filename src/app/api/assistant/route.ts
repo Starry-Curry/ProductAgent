@@ -124,7 +124,15 @@ async function POSTHandler(r: Request) {
             if (cancelled) return;
             if (process.env.AUTH_MODE === "authenticated") {
               try { readAccount(r); }
-              catch { cancelled = true; controller.error(new Error("登录已失效")); return; }
+              catch {
+                // Only a fixed public auth error may cross this boundary after
+                // logout. Closing with a transport error hid the cause as an
+                // English "network error" and invited pointless model retries.
+                cancelled = true;
+                controller.enqueue(encoder.encode(`event: failure\ndata: ${JSON.stringify({error:"登录已失效，请重新登录后继续；本次未交付回答。",code:"account_session_revoked"})}\n\n`));
+                controller.close();
+                return;
+              }
             }
             if (!cancelled) controller.enqueue(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
           };

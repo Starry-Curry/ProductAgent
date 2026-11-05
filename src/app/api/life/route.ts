@@ -6,6 +6,7 @@ import {
   virtualHomeItems,
 } from "@/lib/life/virtual-home";
 import { recognizeProduct } from "@/lib/life/product-arrival";
+import {itemManagementSnapshot} from '@/lib/life/intake';
 import { inspectProduct } from "@/lib/life/product-inspection";
 import { installAlphaSamples } from "@/lib/life/alpha-samples";
 import { publicDemo, CloudError } from "@/lib/cloud/runtime";
@@ -70,6 +71,7 @@ import { installLifeDemo } from "@/lib/life/demo";
 import { createLifeGift } from "@/lib/life/gifts";
 import { discoverInTask } from "@/lib/foundation/creative";
 import { readReality } from "@/lib/context/reality-service";
+import { discoverCapabilities } from "@/lib/context/discovery";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 function fail(e: unknown) {
@@ -102,13 +104,19 @@ async function GETHandler(r: Request) {
       db = database(),
       state = read(),
       p = new URL(r.url).searchParams;
+    if(p.has('capabilities')){
+      const goal=z.string().max(2000).parse(p.get('capabilities')||'');
+      const cursor=z.coerce.number().int().nonnegative().max(10000).parse(p.get('cursor')||0);
+      return Response.json(discoverCapabilities(db,state,a,{goal:goal||undefined,cursor}));
+    }
     if (p.has("inspiration"))
       return Response.json(
         searchInspiration(z.string().max(500).parse(p.get("inspiration"))),
       );
     if (p.has("itemId")) {
-      requireVisibleItem(db,state,a,p.get("itemId")!);
+      const focused=requireVisibleItem(db,state,a,p.get("itemId")!);
       return Response.json({
+        management:focused.owner===a?itemManagementSnapshot(focused):undefined,
         reality: readReality(db, state, a, p.get("itemId")!),
         sources: listSources(db, state, a, p.get("itemId")!).map((s) => ({
           ...s,
@@ -438,6 +446,7 @@ async function POSTHandler(r: Request) {
       const v = z
         .object({
           itemId: z.string().min(1),
+          expectedManagementRevision:z.string().regex(/^[a-f0-9]{64}$/).optional(),
           name: z.string().optional(),
           brand: z.string().max(80).optional(),
           model: z.string().max(100).optional(),
@@ -447,6 +456,7 @@ async function POSTHandler(r: Request) {
               "cn",
               "uk",
               "us",
+              "jp",
               "global",
               "my",
               "au",

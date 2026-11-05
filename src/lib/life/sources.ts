@@ -3,11 +3,15 @@ import type { DatabaseSync } from "node:sqlite";
 import { lookup } from "node:dns/promises";
 import { request } from "node:https";
 import { isIP } from "node:net";
-import { canRead, type State, type Person } from "../domain.ts";
+import {createHash} from 'node:crypto';
+import { type State, type Person } from "../domain.ts";
+import {authorize} from '../foundation/policy.ts';
 import { AgentError, type AssistantReply } from "../agent/contracts.ts";
 import { searchProducts } from "../products.ts";
 import { modelMentioned } from "./knowledge.ts";
-export type SourceReading={mode?:'html_text'|'pdf_text_layer'|'unknown';limitations:string[];figures:{url:string;caption:string}[]};
+export type PublicVisualReading={basis:'provider_visual_reading_not_verified_fact';model:string;text:string;pages:number[];sourceHash:string;documentHash:string;at:string};
+export type SourceReading={mode?:'html_text'|'pdf_text_layer'|'unknown';limitations:string[];figures:{url:string;caption:string}[];visualReadings?:PublicVisualReading[]};
+export type OriginalPublicPayload={mediaType:'application/json';sha256:string;text:string};
 
 export function publicAddress(address: string) {
   if (address.includes(":"))
@@ -46,13 +50,18 @@ export function sourceURL(value: string) {
     );
   return url;
 }
+/** HTTP fragments identify a location within a document, not a different
+ * network resource. This key grants no URL permission; fetch still uses sourceURL. */
+export function documentRequestAddress(value:string){const url=new URL(value);url.hash='';return url.href;}
 /** Explicit public document read. Re-check and pin DNS on every same-host canonical redirect. */
 async function fetchPublicSource(
   value: string,
   redirects = 0,
   maxPdfBytes = 12_000_000,
+  publisherChain?: string[],
 ): Promise<{bytes:Buffer;type:string;url:string}> {
   const url = sourceURL(value);
+  publisherChain?.push(url.href);
   reservePublicFetch(url.hostname);
   const addresses = await Promise.race([
     lookup(url.hostname, { all: true }),
@@ -106,7 +115,7 @@ async function fetchPublicSource(
           res.resume();
           reject(
             new AgentError(
-              "来源未公开返回正文；不绕过登录、限制或验证。可打开官方网页人工查找或上传资料。",
+              `公开来源 ${url.hostname} 返回 HTTP ${res.statusCode || 'unknown'}；不绕过登录、限制或验证。`,
             ),
           );
           return;
@@ -134,9 +143,9 @@ async function fetchPublicSource(
     req.setTimeout(8000, () =>
       req.destroy(new AgentError("资料读取超时，请稍后重试或人工补充")),
     );
-    req.on("error", () =>
+    req.on("error", (error) =>
       reject(
-        new AgentError("公开资料网络读取失败，可手动打开官网或上传说明书"),
+        new AgentError(`公开来源 ${url.hostname} 网络读取失败（${'code' in error && typeof error.code === 'string' && /^[A-Z0-9_]{1,40}$/.test(error.code) ? error.code : error.name === 'AbortError' ? 'TIMEOUT' : 'NETWORK_ERROR'}）；未取得正文。`),
       ),
     );
     req.end();
@@ -145,14 +154,22 @@ async function fetchPublicSource(
     const next = sourceURL(new URL(result.location, url).href);
     if (
       redirects >= 2 ||
-      next.hostname.replace(/^www\./, "") !== url.hostname.replace(/^www\./, "")
+      (!publisherChain && next.hostname.replace(/^www\./, "") !== url.hostname.replace(/^www\./, ""))
     )
       throw new AgentError(
         "来源跳转到其他站点或跳转过多；请核对最终链接后主动读取",
       );
-    return fetchPublicSource(next.href, redirects + 1,maxPdfBytes);
+    return fetchPublicSource(next.href, redirects + 1,maxPdfBytes,publisherChain);
   }
   return {...result,url:url.href};
+}
+/** Only the publisher resolver calls this with a public directory's homepage.
+ * Cross-host TLS redirects establish a migration chain, never a model URL grant.
+ * Every hop retains public-only pinned DNS, HTTPS, byte/time and redirect limits. */
+export async function resolvePublicPublisherHomepage(homepage:string){
+ const chain:string[]=[];
+ const page=await fetchPublicSource(homepage,0,1_500_000,chain);
+ return {url:page.url,chain};
 }
 /** Same pinned public fetch and redirect limits; never a provider-side arbitrary URL. */
 export async function fetchPublicPdfBytes(value:string){
@@ -164,6 +181,8 @@ export async function fetchPublicDocument(value:string,redirects=0,maxPdfBytes=1
  title:string;text:string;url:string;links:{title:string;url:string}[];
  extracted?:{name?:string;brand?:string;model?:string};navigationItems?:{id:string;label:string}[];
  reading?:SourceReading;
+  productModels?:string[];
+  originalPayload?:OriginalPublicPayload;
 }>{
  const result=await fetchPublicSource(value,redirects,maxPdfBytes),url=new URL(result.url);
   if (/pdf/i.test(result.type)) {
@@ -183,14 +202,24 @@ export async function fetchPublicDocument(value:string,redirects=0,maxPdfBytes=1
       reading: {mode:'pdf_text_layer',limitations:['PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。'],figures:[]} as SourceReading,
     };
   }
-  if (/application\/json/.test(result.type))
-    return {
-      url: url.href,
-      title: "公开API响应",
-      text: result.bytes.toString("utf8"),
-      links: [],
-    };
+  if (/application\/json/.test(result.type))return extractPublicJSON(result.bytes.toString('utf8'),url.href);
   return extractPublicHTML(result.bytes.toString("utf8"), url.href);
+}
+/** Public commerce JSON is a source format, not a separate knowledge system.
+ * Preserve the original payload while projecting description, actual links and
+ * variant identities through the existing HTML reader. Never execute scripts. */
+export async function extractPublicJSON(raw:string,address:string):Promise<Awaited<ReturnType<typeof fetchPublicDocument>>>{
+ const url=sourceURL(address),data=JSON.parse(raw),p=data?.product;
+ if(!p||typeof p!=='object'||typeof p.title!=='string'||typeof p.body_html!=='string'||!Array.isArray(p.variants))return {url:url.href,title:'公开API响应',text:raw,links:[] as {title:string;url:string}[]};
+ const {load}=await import('cheerio'),$=load('<html><head></head><body><main></main></body></html>');
+ $('head').append($('<title>').text(p.title));$('main').append($('<h1>').text(p.title));
+ if(typeof p.vendor==='string')$('main').append($('<p>').text('发布者声明：'+p.vendor));
+ $('main').append($('<section>').append(p.body_html));
+ const variants=p.variants.slice(0,100).filter((v:any)=>typeof v?.sku==='string'&&v.sku.trim());
+ const productModels=[...new Set<string>(variants.map((v:any)=>v.sku.trim().slice(0,100)))];
+ if(variants.length){const list=$('<ul>');for(const v of variants)list.append($('<li>').text('商品变体SKU：'+v.sku+'；选项：'+(typeof v.title==='string'?v.title:'未知')));$('main').append(list);}
+ const document=await extractPublicHTML($.html(),url.href);
+ return {...document,productModels,extracted:{name:p.title.slice(0,80),brand:typeof p.vendor==='string'?p.vendor.slice(0,80):undefined,model:productModels.length===1?productModels[0]:undefined},originalPayload:{mediaType:'application/json' as const,sha256:createHash('sha256').update(raw).digest('hex'),text:raw}};
 }
 export async function extractPublicHTML(raw: string, address: string) {
   const url = sourceURL(address),
@@ -227,6 +256,13 @@ export async function extractPublicHTML(raw: string, address: string) {
     }
   });
   const links: { title: string; url: string }[] = [];
+  // Single-page manuals expose real section IDs rather than separate chapter
+  // files. Preserve this navigation before truncating text; never invent IDs.
+  $('h1,h2,h3,h4,h5,h6').each((_n,el)=>{
+   const heading=$(el),container=heading.closest('article[id],section[id]');
+   const id=container.attr('id')||heading.attr('id'),title=heading.text().trim().slice(0,150);
+   if(id&&title){const target=new URL(url);target.hash=id;links.push({title,url:target.href});}
+  });
   // Retain named catalogue controls separately from actual hrefs. An ID is not
   // falsely labelled as a discovered URL; manufacturer adapters must verify it.
   const navigationItems=$('a[id]:not([href])').toArray().slice(0,150).map(el=>({id:$(el).attr('id')||'',label:$(el).text().trim().slice(0,150)})).filter(n=>n.id&&n.label);
@@ -283,6 +319,14 @@ export async function extractPublicHTML(raw: string, address: string) {
       } catch {}
   });
   $("script,style,noscript,nav,footer,header,iframe,form").remove();
+  const rawTitle=$("title").text().trim().slice(0,150)||$("h1").first().text().trim().slice(0,150)||url.hostname;
+  let focused=false;
+  if(url.hash){
+   let id='';try{id=decodeURIComponent(url.hash.slice(1));}catch{}
+   const target=$('[id]').filter((_n,el)=>$(el).attr('id')===id).first();
+   const section=target.is('article,section')?target:target.closest('article,section');
+   if(section.length){const content=section.clone();$('body').empty().append($('<p>').text(rawTitle)).append(content);focused=true;}
+  }
   const figures:{url:string;caption:string}[]=[];let uncaptioned=0;
   $('img').each((_n,el)=>{
     const img=$(el);if(img.attr('aria-hidden')==='true'||img.attr('role')==='presentation')return;
@@ -295,12 +339,9 @@ export async function extractPublicHTML(raw: string, address: string) {
   // exact model becomes e.g. MJTD01SYLColor and fails safe boundary matching.
   // Preserve DOM text boundaries instead of weakening model matching.
   $("p,li,h1,h2,h3,h4,br,tr,dt,dd,div,section,span").prepend("\n").append("\n");
-  const title =
-    $("title").text().trim().slice(0, 150) ||
-    $("h1").first().text().trim().slice(0, 150) ||
-    url.hostname;
+  const title =rawTitle;
   const text = (
-    $("main,article").first().text() ||
+    (focused?$("body").text():$("main,article").first().text()) ||
     $("body").text() ||
     $.root().text()
   )
@@ -417,7 +458,7 @@ export function listSources(
   actor: Person,
   itemId: string,
 ) {
-  if (!state.items.some((i) => i.id === itemId && canRead(i, actor)))
+  if (!authorize(db,state,actor,itemId).allowed)
     throw new AgentError("物品未获授权", 403);
   // Sharing an item never automatically shares privately uploaded manuals/notes.
   return db

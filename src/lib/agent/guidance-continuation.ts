@@ -43,7 +43,9 @@ export function continueVerifiedGuidance(
   return {
     ...previous,
     answer:
-      "已记下你报告完成的步骤。下面沿用刚才核验过的指导，从尚未完成的步骤继续；这不代表设备已实际完成。",
+      "已记下你报告完成的步骤。下面沿用刚才有来源的指导，从尚未完成的步骤继续；这不代表设备已实际完成。",
+    modelHistoryText:['用户报告前面的步骤已完成；以下为原指导中尚未尝试的步骤，不是设备回读。',...remaining.map(s=>s.text)].join('\n'),
     steps: remaining,
+    stepsInAnswer:false,
   };
 }

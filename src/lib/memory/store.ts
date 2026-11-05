@@ -3,6 +3,8 @@ import type { DatabaseSync } from "node:sqlite";
 import { canRead, type State, type Person } from "../domain.ts";
 import { isMemoryRecallRequest } from "../skills/memory-storytelling.ts";
 import { invalidatePrivacyScopes } from "./context-lifecycle.ts";
+import {authorize} from '../foundation/policy.ts';
+import {receivedGiftStories,giftStoryMemoryText} from './gift-story.ts';
 import {
   AgentError,
   memorySchema,
@@ -145,7 +147,7 @@ export function listMemories(db: DatabaseSync, state: State, actor: Person) {
         archived:
           !!m.itemId &&
           (!item ||
-            !canRead(item, actor) ||
+            !authorize(db,state,actor,item.id).allowed ||
             (!!m.itemOwner && item.owner !== m.itemOwner)),
       };
     })
@@ -162,7 +164,7 @@ export function saveMemory(
   input: unknown,
   id?: string,
   requestId?: string,
-  storySource?: { id: string; revision: number },
+  storySource?: { id: string; revision: number;kind?:'fragment' }|{kind:'gift_snapshot';id:string;expectedText:string},
 ) {
   let value = memorySchema.parse(input);
   db.exec("BEGIN IMMEDIATE");
@@ -192,7 +194,13 @@ export function saveMemory(
       db.exec("COMMIT");
       return JSON.parse(row.body) as MemoryRecord;
     }
-    if (storySource) {
+    if(storySource?.kind==='gift_snapshot'){
+      const snapshot=receivedGiftStories(read(),actor,value.itemId||'').find(s=>s.id===storySource.id);
+      if(!snapshot)throw new AgentError('赠礼故事不存在或未获当前持有者授权',403);
+      if(snapshot.text!==storySource.expectedText||value.kind!=='story'||value.text!==giftStoryMemoryText(snapshot.text))throw new AgentError('赠礼故事已变化，请重新核对原文',409);
+      if(db.prepare("SELECT id FROM personal_memories WHERE owner=? AND status!='deleted' AND json_extract(body,'$.provenance.sourceId')=? AND json_extract(body,'$.provenance.extractor')='gift-snapshot-consent-v1'").get(actor,snapshot.id))throw new AgentError('这条赠礼故事已保留，请在记忆中纠正或忘记',409);
+    }
+    if (storySource&&storySource.kind!=='gift_snapshot') {
       const row = db
         .prepare(
           "SELECT f.text,f.revision,d.origin FROM life_fragments f JOIN life_fragment_items i ON i.fragment_id=f.id LEFT JOIN life_fragment_details d ON d.fragment_id=f.id WHERE f.id=? AND f.owner=? AND i.item_id=?",
@@ -249,7 +257,7 @@ export function saveMemory(
       : undefined;
     if (
       value.itemId &&
-      !read().items.some((i) => i.id === value.itemId && canRead(i, actor)) &&
+      !authorize(db,read(),actor,value.itemId).allowed &&
       before?.itemId !== value.itemId
     )
       throw new AgentError("物品不存在或没有访问权限", 403);
@@ -268,7 +276,9 @@ export function saveMemory(
       allowCloud: before?.demo || item?.demo ? false : value.allowCloud,
       provenance:
         before?.provenance ||
-        (storySource
+        (storySource?.kind==='gift_snapshot'
+          ? {kind:'story' as const,sourceId:storySource.id,basis:'app_record' as const,at:new Date().toISOString(),extractor:'gift-snapshot-consent-v1'}
+          : storySource
           ? {
               kind: "story" as const,
               sourceId: storySource.id,
@@ -433,6 +443,7 @@ export function recallMemories(
   itemId?: string,
   sessionId?: string,
   includeItemRelationships = false,
+  globalKinds:('interest'|'preference')[] = [],
 ) {
   const q = question.toLowerCase();
   const wantsStory = isMemoryRecallRequest(question);
@@ -470,6 +481,7 @@ export function recallMemories(
     .map((m) => ({
       m,
       score:
+        (!m.itemId && globalKinds.includes(m.kind as 'interest'|'preference') ? 3 : 0) +
         (m.itemId && m.itemId === itemId ? 8 : 0) +
         (m.kind === "preference" ? 2 : 0) +
         (mode === "ideas" && m.kind === "interest" ? 4 : 0) +

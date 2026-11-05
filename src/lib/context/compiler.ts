@@ -12,7 +12,8 @@ import { authorize } from "../foundation/policy.ts";
 import { retrieveTaskPassages } from "../agent/kernel/retrieval.ts";
 import type { EvidencePassage } from "../agent/kernel/contracts.ts";
 import {readReality} from './reality-service.ts';
-import {resourceCatalogue} from './relevance.ts';
+import {discoverableEffects,knowledgeSearchText} from './reality.ts';
+import {resourceCatalogue,mentionedResourceIds} from './relevance.ts';
 import {fingerprint} from '../foundation/legacy.ts';
 import {epoch,listMemories,effectivePersona} from '../memory/store.ts';
 import {rectangleCondition} from '../agent/kernel/physical.ts';
@@ -22,44 +23,70 @@ import {listLifeIdeas} from '../life/ideas.ts';
 import {discoveryInput} from '../life/planning.ts';
 
 
-export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number){
+export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,session:ServiceSession,question:string,temporary=false,queries:string[]=[],extraIds:string[]=[],evidenceByteBudget?:number,ranking?:{originalIds:string[];profileMemoryKinds?:('interest'|'preference')[];knowledgeFocusItemId?:string}){
   const taskId=session.known.foundationTaskId;
   const taskContext=taskId?resolveTaskContext(db,state,actor,taskId):undefined;
   const task=taskContext?.task;
   const focus=session.itemId||session.known.activeItemId||session.known.homeVoiceItemId;
   const home=session.known.homeId==='young-apartment-v1';
-  const homeIds=new Set(home?virtualHomeItems(state,actor).map(i=>i.id):[]);
+  const installedHome=virtualHomeItems(state,actor);
+  const unconsentedHomeIds=new Set(!state.virtualHomes?.[actor]?.allowCloud||installedHome.length!==8?installedHome.map(i=>i.id):[]);
+  const homeIds=new Set(home?installedHome.map(i=>i.id):[]);
   // Task membership limits the initial detailed load, not discovery of the
   // actor's other authorized resources. No stories/locations/notes in catalogue.
-  const allowed=state.items.filter(i=>canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id))));
+  const allowed=state.items.filter(i=>!unconsentedHomeIds.has(i.id)&&canRead(i,actor)&&authorize(db,state,actor,i.id).allowed&&(home?homeIds.has(i.id):!i.demo&&(i.source!=='示例数据'||i.id===focus||task?.itemInstanceIds.includes(i.id))));
+  const realities=new Map(allowed.map(i=>[i.id,readReality(db,state,actor,i.id)]));
+  const knownEffects=Object.fromEntries([...realities].map(([id,r])=>[id,discoverableEffects(r)]));
+  const searchableKnowledge=Object.fromEntries([...realities].map(([id,r])=>[id,knowledgeSearchText(r)]));
   const mentioned=(s:string)=>s.length>1&&question.toLowerCase().includes(s.toLowerCase());
   const focused=allowed.find(i=>i.id===focus);
-  const selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||!task&&(mentioned(i.name)||(!focused||i.model!==focused.model)&&mentioned(i.model))||
+  const named=mentionedResourceIds(allowed,question);
+  let selected=allowed.filter(i=>i.id===focus||task?.itemInstanceIds.includes(i.id)||extraIds.includes(i.id)||!task&&(mentioned(i.name)||(!focused||i.model!==focused.model)&&mentioned(i.model))||
     // Entity matching only. It never chooses an intent or provides a product fact.
-    !task&&!evidenceByteBudget&&[...new Intl.Segmenter('zh',{granularity:'word'}).segment(i.name)].some(s=>s.segment.length>=2&&mentioned(s.segment)));
-  const selection=resourceCatalogue(allowed,question,selected.map(i=>i.id));
-  const semanticItems=selected.map(i=>readReality(db,state,actor,i.id));
-  const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,
+    named.has(i.id));
+  // A goal without a named SKU may still have clear recorded capability/name
+  // matches. Prefill a few ranked candidates rather than requiring a tool round
+  // for already available facts. Others remain discoverable through the tool.
+  if(!selected.length){const candidates=resourceCatalogue(allowed,question,[],12,knownEffects,searchableKnowledge).items;selected=candidates.map(r=>allowed.find(i=>i.id===r.id)!);}
+  const selection=resourceCatalogue(allowed,question,selected.map(i=>i.id),12,knownEffects,searchableKnowledge);
+  // A failed lexical match is NOT evidence that an owned resource is absent.
+  // Keep discovery separate from the small, detailed task context. Public item
+  // labels/capability excerpts only; no locations, notes, stories or owners.
+  const browse=allowed.toSorted((a,b)=>a.id.localeCompare(b.id)).slice(0,30).map(i=>({id:i.id,name:i.name,model:i.model,category:i.category,effects:(knownEffects[i.id]||[]).slice(0,3).map(effect=>effect.length>160?effect.slice(0,160)+'…':effect)}));
+  const catalogue=[...selection.items,...browse].filter((i,n,a)=>a.findIndex(x=>x.id===i.id)===n).map(i=>({...i,
+    details:selected.some(s=>s.id===i.id)?'loaded':'available_via_get_item_context',
+    itemRead:'already_authorized',privateRecords:'separate_consent_required',
+  }));
+  const semanticItems=selected.map(i=>realities.get(i.id)!);
+  const profileMemoryKinds=!home&&!temporary&&session.known.memoryPolicy!=='off'?ranking?.profileMemoryKinds:undefined;
+  const contexts=selected.map(i=>buildContext(db,state,actor,{question,knowledgeQuery:[question,...queries].join(' '),mode:'service',itemId:i.id,temporary,sessionId:session.id,profileMemoryKinds,
     taskMemoryOnly:true,includeItemRelationships:session.known.useItemMemories==='yes',companion:!!session.known.companionItemId,useExperiences:session.known.memoryPolicy!=='off'}));
   // An unbound conversation can still use relevant, explicitly cloud-authorized
   // global preferences. Do not load unrelated item stories to fill an empty set.
-  if(!home&&!selected.length)contexts.push(buildContext(db,state,actor,{question,mode:'service',temporary,sessionId:session.id,taskMemoryOnly:true,useExperiences:false}));
+  if(!home&&!selected.length)contexts.push(buildContext(db,state,actor,{question,mode:'service',temporary,sessionId:session.id,taskMemoryOnly:true,useExperiences:false,profileMemoryKinds}));
   const memoryOn=session.known.memoryPolicy!=='off'&&!temporary;
   const documents=selected.flatMap(i=>{
     return scopedProductKnowledge(i,readKnowledge(db,state,actor,i.id)).map(d=>({...d,itemId:i.id}));
   });
-  const evidence:EvidencePassage[]=selected.flatMap(i=>{
+  const sourceGroups:EvidencePassage[][]=selected.map(i=>{
     const docs=documents.filter(d=>d.itemId===i.id).map(d=>d.document);
     const seed=retrieveKnowledge(db,state,actor,i.id,question);
-    const candidates=retrieveTaskPassages(docs,[question,...queries],seed,evidenceByteBudget?Number.MAX_SAFE_INTEGER:Math.floor(36000/Math.max(1,selected.length)));
-    // Select relevant windows within a per-item byte budget; numerical checks
-    // use the full authorized corpus separately below. Query expansion keeps
-    // late compatibility/specification sections eligible instead of by position.
-    const allocation=evidenceByteBudget ? Math.floor(evidenceByteBudget/Math.max(1,selected.length)) : Infinity;
-    let bytes=0;
-    return candidates.filter(c=>{if(bytes+Buffer.byteLength(c.text)>allocation)return false;bytes+=Buffer.byteLength(c.text);return true;})
-      .map(c=>({id:c.id,itemId:i.id,model:c.model,region:docs.find(d=>d.id===c.documentId)?.region||c.region,title:c.title,text:c.text,url:c.url,documentId:c.documentId,fetchedAt:docs.find(d=>d.id===c.documentId)?.fetchedAt,scopeBasis:documents.find(d=>d.document.id===c.documentId)?.scopeBasis,reading:{mode:docs.find(d=>d.id===c.documentId)?.reading?.mode||'unknown',limitations:docs.find(d=>d.id===c.documentId)?.reading?.limitations||[],figures:[]},basis:'official' as const}));
+    const currentOriginals=new Map(docs.flatMap(d=>d.chunks.map(c=>[c.id,c] as const)));
+    const priority=(ranking?.originalIds||[]).flatMap(id=>{const c=currentOriginals.get(id);return c?[c]:[];});
+    const candidates=[...priority,...retrieveTaskPassages(docs,[question,...queries],seed,evidenceByteBudget?Number.MAX_SAFE_INTEGER:Math.floor(36000/Math.max(1,selected.length)))].filter((c,n,a)=>a.findIndex(x=>x.id===c.id)===n);
+    return candidates.map(c=>({id:c.id,itemId:i.id,model:c.model,region:docs.find(d=>d.id===c.documentId)?.region||c.region,title:c.title,text:c.text,url:c.url,documentId:c.documentId,fetchedAt:docs.find(d=>d.id===c.documentId)?.fetchedAt,scopeBasis:documents.find(d=>d.document.id===c.documentId)?.scopeBasis,reading:{mode:docs.find(d=>d.id===c.documentId)?.reading?.mode||'unknown',limitations:docs.find(d=>d.id===c.documentId)?.reading?.limitations||[],figures:[]},basis:'official' as const}));
   });
+  // Round-robin WHOLE originals under one byte bound. An equal byte slice per
+  // item discarded long Chinese relevant paragraphs while keeping short footer
+  // fragments. Explicit knowledge lookup focuses this same budget on one item;
+  // other items and the full numerical corpus remain in the same Context.
+  const knowledgeFocus=ranking?.knowledgeFocusItemId&&selected.some(s=>s.id===ranking.knowledgeFocusItemId)?ranking.knowledgeFocusItemId:undefined;
+  const groups=knowledgeFocus?sourceGroups.filter(group=>group[0]?.itemId===knowledgeFocus):sourceGroups;
+  const evidence:EvidencePassage[]=[];let sourceBytes=0;
+  const limit=evidenceByteBudget??Infinity,startedGroups=new Set<number>();
+  const add=(passage:EvidencePassage|undefined)=>{if(!passage||sourceBytes+Buffer.byteLength(passage.text)>limit)return false;evidence.push(passage);sourceBytes+=Buffer.byteLength(passage.text);return true;};
+  groups.forEach((group,n)=>{if(add(group[0]))startedGroups.add(n);});
+  for(let depth=1;depth<Math.max(0,...groups.map(g=>g.length));depth++)groups.forEach((group,n)=>{if(startedGroups.has(n))add(group[depth]);});
   // The current user statement is authorized for THIS reply, not automatically
   // confirmed long-term memory, manufacturer evidence or a device observation.
   evidence.push({id:'user:current-turn',itemId:focus||'',model:'',region:'',title:'本轮用户陈述（未独立验证）',text:question,basis:'user_report'});
@@ -93,8 +120,8 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
   return {
     question,items:selected.map(itemContext),
     // No owners, locations, notes, photos or private stories in the catalogue.
-    catalogue:selection.items,
-    discovery:{total:selection.total,matched:selection.matched,truncated:selection.truncated,unmatched:selection.unmatched},
+    catalogue,
+    discovery:{total:selection.total,matched:selection.matched,truncated:selection.truncated,unmatched:selection.unmatched,catalogueComplete:browse.length===allowed.length,nextBrowseCursor:browse.length<allowed.length?browse.length:null,notice:'匹配项用于选择资料，不代表全部库存。available_via_get_item_context表示详情尚未载入，不是用户未登记；这些物品的基础资料读取已获准，可按需用get_item_context，不需要用户再次授权。私人记忆仍按各条授权。更多目录用get_item_context省略query并指定cursor。'},
     // Server-only access set: never serialize it into a model packet. Selection
     // is relevance, not permission; an authorized ID outside top results is valid.
     authorizedItemIds:allowed.map(i=>i.id),
@@ -118,8 +145,8 @@ export function compileTaskContext(db:DatabaseSync,state:State,actor:Person,sess
     priorPlanningContext,
     tried:session.tried,
     history:session.messages.slice(-6).map(m=>({role:m.role,text:m.text.slice(0,1800)})),
-    currentTask:task?{goal:taskContext!.modelGoal,itemIds:task.itemInstanceIds,plans:taskContext!.plans,collaborationProgress:taskContext!.familyProgress}:!temporary&&home&&session.known.homeTaskGoal?{goal:session.known.homeTaskGoal,basis:'previous_conversation_goal_not_verified_result' as const}:undefined,
-    permissions:{readOnly:true,hardwareExecuted:false,memoryPolicy:session.known.memoryPolicy||'legacy'},
+    currentTask:task?{goal:taskContext!.modelGoal,itemIds:task.itemInstanceIds,retention:'already_saved_by_user_not_actual_completion',plans:taskContext!.plans,collaborationProgress:taskContext!.familyProgress}:!temporary&&home&&session.known.homeTaskGoal?{goal:session.known.homeTaskGoal,basis:'previous_conversation_goal_not_verified_result' as const}:undefined,
+    permissions:{readOnly:true,hardwareExecuted:false,memoryPolicy:session.known.memoryPolicy||'legacy',itemRead:'listed_items_already_authorized_read_details_as_needed',privateMemory:'only_explicitly_allowed_and_relevant_records',domainWrites:'explicit_confirmation_required'},
     retrieval:{documents:documents.map(d=>({itemId:d.itemId,id:d.document.id,hash:d.document.hash,url:d.document.url,model:d.document.model,region:d.document.region})),missingItemIds:selected.filter(i=>!documents.some(d=>d.itemId===i.id)).map(i=>i.id)},
     // Explicitly a synthetic household, never a real ownership assertion.
     household:home?'virtual_young_apartment':'user_registered_items_not_physically_verified',

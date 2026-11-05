@@ -1,0 +1,30 @@
+{
+  "caseId": "N05-1",
+  "arm": "direct",
+  "controlCohort": "additional_authorized_round_same_information",
+  "roundId": "qwen-foundation-20261103-r2",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "at": "2026-11-03T02:27:23.241Z",
+  "sameInformation": {
+    "productRequestNumber": 127,
+    "materialSha256": "33df288ec683bdc38c0d9618c4bd29829846a77a6953e926db23b936e32b2fcf",
+    "method": "exact user/tool content of product final tool-loop request; excludes system and assistant drafts"
+  },
+  "text": "# 关于 ZOOM H1essential 插入 microSD 卡与格式化的说明\n\n根据当前系统记录，**我没有检索到 ZOOM H1essential 的官方说明书原文或可核对的正文段落**。因此，我无法为您直接引用该型号的确切操作步骤。按照要求，我不能编造具体操作细节（如“哪一面朝上”的具体朝向），也不能宣称已实际执行任何硬件操作。\n\n不过，针对您的三个问题，我可以基于便携录音机的通用规范提供以下参考，并明确哪些部分需要您通过官方资料核实：\n\n### 1. 是否先关机？\n*   **通用建议**：对于绝大多数便携录音机（包括 ZOOM 系列），在插入或拔出 microSD 卡之前，**强烈建议先将设备完全关机**。这可以防止文件系统损坏、数据丢失或设备无法正确识别存储卡。\n*   **适用条件/证据不足**：H1essential 是否支持热插拔（开机状态下插卡），我目前没有官方原文证实。为安全起见，请默认先关机，直到您在说明书中确认支持热插拔。\n\n### 2. 卡的哪一面朝上？\n*   **证据不足**：microSD 卡槽的物理方向完全取决于设备外壳和主板的工业设计。由于没有 H1essential 的机身图示或说明书原文，**我无法确切告诉您标签面是朝上还是朝下**。\n*   **如何确认**：\n    *   观察卡槽旁边的机身丝印图标（通常会画有一个带缺角的卡片示意图，指示缺口方向和正反面）。\n    *   查阅 ZOOM 官网提供的 H1essential 快速入门指南（Quick Start Guide）中的插图。\n    *   **切勿强行插入**：如果感觉有明显阻力，说明方向反了，硬插可能会损坏卡槽触点。\n\n### 3. 如果要机内格式化，数据会怎样？\n*   **明确结果**：无论在何种设备上执行“格式化（Format）”操作，**该 microSD 卡上的所有现有数据（包括录音文件、文件夹结构等）都会被彻底清除且通常无法恢复**。\n*   **适用条件**：\n    *   如果您使用的是**全新的空卡**，格式化不会造成数据损失，但这是让存储卡建立与 H1essential 兼容的文件系统（通常为 FAT32 或 exFAT）的必要步骤。\n    *   如果卡内有旧数据，请务必在电脑上提前备份后再进行机内格式化。\n    *   建议在首次使用新卡时，优先使用录音机本身进行格式化，而不是用电脑格式化，以确保目录结构和簇大小最符合该机型的录音需求。\n\n---\n\n### 下一步建议\n为了获得准确无误的操作指导，建议您：\n1.  访问 ZOOM 官方网站的支持页面，下载 **H1essential 的完整操作手册（Operation Manual）**。\n2.  或者，如果您手头有说明书的 PDF 文件或网页链接，可以将其内容粘贴/上传给我，我将严格基于您提供的原文为您提取确切的插卡方向和格式化菜单路径。",
+  "usage": {
+    "completion_tokens": 646,
+    "prompt_tokens": 1141,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 1141
+    },
+    "total_tokens": 1787
+  },
+  "model": "qwen3.8-max-0902",
+  "finishReason": "stop",
+  "fullAnswerMs": 15052,
+  "upstreamNumbers": [
+    13
+  ]
+}

@@ -85,9 +85,9 @@ export const homeActionSchema = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("plan"),
-      conditions:z.array(z.string().max(240)).max(10).optional(),
+      conditions:z.array(z.string().max(500)).max(200).optional(),
       sourceRefs:z.array(z.object({id:z.string().max(200),url:z.string().url(),sourceId:z.string().max(200).optional(),documentHash:z.string().regex(/^[a-f0-9]{64}$/).optional(),quoteRange:z.object({start:z.number().int().nonnegative(),end:z.number().int().positive()}).strict().optional(),quoteHash:z.string().regex(/^[a-f0-9]{64}$/).optional()}).strict()).max(8).optional(),
-      dependencies:z.array(z.object({step:z.number().int().min(0).max(29),resourceIds:z.array(z.string().max(100)).max(8),status:z.string().max(80)})).max(30).optional(),
+      dependencies:z.array(z.object({step:z.number().int().min(0).max(29),resourceIds:z.array(z.string().max(100)).max(8),status:z.string().max(80),conditions:z.array(z.string().max(500)).max(32).optional()}).strict()).max(30).optional(),
       resourceRevisions:z.record(z.string().max(100),z.string().max(80)).optional(),
       goal: z.string().min(1).max(150),
       itemIds: z.array(z.string()).max(30),
@@ -109,6 +109,7 @@ export const homeActionSchema = z.discriminatedUnion("kind", [
 ]);
 export type HomeAction = z.infer<typeof homeActionSchema>;
 export type ActionCard = {
+  planPreview?:{steps:{text:string;status:string;conditions:string[]}[];conditions:string[]};
   id: string;
   title: string;
   detail: string[];

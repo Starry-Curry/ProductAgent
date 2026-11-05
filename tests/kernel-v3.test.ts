@@ -111,7 +111,7 @@ test('候选协议错误局部降级，不让正确兄弟项消失',()=>{
  const result=parseDraft({frame,candidates:[candidate,{id:'bad',partId:'p',kind:'unexpected'}],gaps:[]});
  assert.equal(result.candidates.length,1);assert.match(result.gaps[0].reason,/不完整/);
 });
-test('官方相同产品路径可关联规格和说明，不用相似型号猜测',()=>{
+test('旧产品路径分组仅供导航，区分字面型号及一般支持页，不据此认证正文',()=>{
  assert.equal(officialProductPath('https://www.mi.com/sg/product/example-1/specs/'),officialProductPath('https://www.mi.com/ae-en/product/example-1/'));
  assert.notEqual(officialProductPath('https://www.mi.com/sg/product/example-1/'),officialProductPath('https://www.mi.com/sg/product/example-1-pro/'));
  assert.equal(officialProductPath('https://www.mi.com/support/'),undefined);

@@ -1,0 +1,14 @@
+{
+  "caseId": "N06-2",
+  "productId": "N06",
+  "question": "现在速度120，我要121而不是跳到下一个传统档位，怎么换成每次一拍的调法，再启动声音？",
+  "arm": "direct",
+  "at": "2026-11-03T02:20:42.682Z",
+  "status": "blocked_budget",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "error": "acceptance_or_global_budget_exhausted",
+  "fullAnswerMs": 86,
+  "upstreamNumbers": [],
+  "transport": []
+}

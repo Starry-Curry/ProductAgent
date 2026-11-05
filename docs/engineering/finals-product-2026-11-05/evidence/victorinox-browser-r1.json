@@ -1,0 +1,1204 @@
+{
+  "caseId": "victorinox",
+  "attempt": "r1",
+  "at": "2026-11-04T20:27:10.049Z",
+  "basis": "real_Qwen_browser_synthetic_possession_no_official_URL_supplied_no_hardware",
+  "responses": [
+    {
+      "question": "请自主找 Victorinox Climber 1.3703 的厂家资料。它有多少功能、尺寸和重量是多少、刀刃是否可锁定？不要套Climber Plus或不同尺寸刀款，也不要提供危险改造指导。",
+      "result": {
+        "session": {
+          "id": "956fe568-fdc8-4cba-b179-8fb535e33964",
+          "owner": "u_985ce034-b51e-4d7e-82fc-88219046d135",
+          "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+          "identity": "[\"u_985ce034-b51e-4d7e-82fc-88219046d135\",\"[\\\"1.3703\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "5e27e001-3a1d-42e9-ad75-2fc4f57c0c63",
+              "role": "user",
+              "text": "请自主找 Victorinox Climber 1.3703 的厂家资料。它有多少功能、尺寸和重量是多少、刀刃是否可锁定？不要套Climber Plus或不同尺寸刀款，也不要提供危险改造指导。",
+              "at": "2026-11-04T20:27:41.834Z",
+              "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "4093fc62-91fa-497f-b271-a1a9c693492d",
+              "role": "assistant",
+              "text": "根据 Victorinox 官网对型号 1.3703（Climber）的说明，该刀具有 14 项功能；尺寸约为长 91 mm、宽 26 mm、厚 18 mm（英制约 3.6 × 1 × 0.7 in），重量约 82 g（2.9 oz）。官方明确标注“Blade lockable: No”，即刀刃不可锁定，也不支持单手开刃。不同颜色/手柄材质版本（如 1.3703、1.3703.3、1.3703.T）的功能、尺寸和重量一致，仅外观与物料编号后缀不同；以上数据不适用于 Climber Plus 或其他长度/层数的刀款。",
+              "reply": {
+                "modelHistoryText": "根据 Victorinox 官网对型号 1.3703（Climber）的说明，该刀具有 14 项功能；尺寸约为长 91 mm、宽 26 mm、厚 18 mm（英制约 3.6 × 1 × 0.7 in），重量约 82 g（2.9 oz）。官方明确标注“Blade lockable: No”，即刀刃不可锁定，也不支持单手开刃。不同颜色/手柄材质版本（如 1.3703、1.3703.3、1.3703.T）的功能、尺寸和重量一致，仅外观与物料编号后缀不同；以上数据不适用于 Climber Plus 或其他长度/层数的刀款。",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [],
+                "answer": "根据 Victorinox 官网对型号 1.3703（Climber）的说明，该刀具有 14 项功能；尺寸约为长 91 mm、宽 26 mm、厚 18 mm（英制约 3.6 × 1 × 0.7 in），重量约 82 g（2.9 oz）。官方明确标注“Blade lockable: No”，即刀刃不可锁定，也不支持单手开刃。不同颜色/手柄材质版本（如 1.3703、1.3703.3、1.3703.T）的功能、尺寸和重量一致，仅外观与物料编号后缀不同；以上数据不适用于 Climber Plus 或其他长度/层数的刀款。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "stepsInAnswer": false,
+                "questions": [],
+                "evidenceIds": [
+                  "c50c0ab04c0173341437b3c5:0",
+                  "faca43741851842f5c86aca0:0",
+                  "5eca902344052f5de4cdc155:0",
+                  "5efe39db39ab7c4fbaba112a:0",
+                  "67e72afc2b5ada6fc8c82282:0",
+                  "5eca902344052f5de4cdc155:1000",
+                  "5efe39db39ab7c4fbaba112a:1000",
+                  "67e72afc2b5ada6fc8c82282:1002",
+                  "faca43741851842f5c86aca0:994"
+                ],
+                "citations": [
+                  {
+                    "id": "c50c0ab04c0173341437b3c5",
+                    "title": "Victorinox Climber in Black  - 1.3703.3",
+                    "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion",
+                    "kind": "official",
+                    "section": "1.3703；us"
+                  },
+                  {
+                    "id": "faca43741851842f5c86aca0",
+                    "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+                    "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion",
+                    "kind": "official",
+                    "section": "1.3703；unspecified"
+                  },
+                  {
+                    "id": "5eca902344052f5de4cdc155",
+                    "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+                    "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T",
+                    "kind": "official",
+                    "section": "1.3703；unspecified"
+                  },
+                  {
+                    "id": "5efe39db39ab7c4fbaba112a",
+                    "title": "Victorinox Climber in Black  - 1.3703.3",
+                    "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3",
+                    "kind": "official",
+                    "section": "1.3703；us"
+                  },
+                  {
+                    "id": "67e72afc2b5ada6fc8c82282",
+                    "title": "Victorinox Climber in red  - 1.3703",
+                    "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703",
+                    "kind": "official",
+                    "section": "1.3703；us"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+                    "name": "[模拟持有]红色随身多功能工具",
+                    "model": "1.3703"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+                  "itemName": "[模拟持有]红色随身多功能工具"
+                }
+              },
+              "at": "2026-11-04T20:27:41.834Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "f864000d-dab0-4adc-a0c2-9cffc1a7a2e4",
+            "turnScope": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+            "lastIntent": "help",
+            "activeItemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-11-04T20:27:13.280Z",
+          "updatedAt": "2026-11-04T20:27:41.834Z",
+          "expiresAt": "2026-11-11T20:27:13.280Z",
+          "itemScopes": {
+            "712969bc-f2b4-4f55-88f7-9a697711a7ee": "[\"u_985ce034-b51e-4d7e-82fc-88219046d135\",\"[\\\"1.3703\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "modelHistoryText": "根据 Victorinox 官网对型号 1.3703（Climber）的说明，该刀具有 14 项功能；尺寸约为长 91 mm、宽 26 mm、厚 18 mm（英制约 3.6 × 1 × 0.7 in），重量约 82 g（2.9 oz）。官方明确标注“Blade lockable: No”，即刀刃不可锁定，也不支持单手开刃。不同颜色/手柄材质版本（如 1.3703、1.3703.3、1.3703.T）的功能、尺寸和重量一致，仅外观与物料编号后缀不同；以上数据不适用于 Climber Plus 或其他长度/层数的刀款。",
+          "continuations": [],
+          "actionCards": [],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [],
+          "answer": "根据 Victorinox 官网对型号 1.3703（Climber）的说明，该刀具有 14 项功能；尺寸约为长 91 mm、宽 26 mm、厚 18 mm（英制约 3.6 × 1 × 0.7 in），重量约 82 g（2.9 oz）。官方明确标注“Blade lockable: No”，即刀刃不可锁定，也不支持单手开刃。不同颜色/手柄材质版本（如 1.3703、1.3703.3、1.3703.T）的功能、尺寸和重量一致，仅外观与物料编号后缀不同；以上数据不适用于 Climber Plus 或其他长度/层数的刀款。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "stepsInAnswer": false,
+          "questions": [],
+          "evidenceIds": [
+            "c50c0ab04c0173341437b3c5:0",
+            "faca43741851842f5c86aca0:0",
+            "5eca902344052f5de4cdc155:0",
+            "5efe39db39ab7c4fbaba112a:0",
+            "67e72afc2b5ada6fc8c82282:0",
+            "5eca902344052f5de4cdc155:1000",
+            "5efe39db39ab7c4fbaba112a:1000",
+            "67e72afc2b5ada6fc8c82282:1002",
+            "faca43741851842f5c86aca0:994"
+          ],
+          "citations": [
+            {
+              "id": "c50c0ab04c0173341437b3c5",
+              "title": "Victorinox Climber in Black  - 1.3703.3",
+              "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion",
+              "kind": "official",
+              "section": "1.3703；us"
+            },
+            {
+              "id": "faca43741851842f5c86aca0",
+              "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+              "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion",
+              "kind": "official",
+              "section": "1.3703；unspecified"
+            },
+            {
+              "id": "5eca902344052f5de4cdc155",
+              "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+              "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T",
+              "kind": "official",
+              "section": "1.3703；unspecified"
+            },
+            {
+              "id": "5efe39db39ab7c4fbaba112a",
+              "title": "Victorinox Climber in Black  - 1.3703.3",
+              "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3",
+              "kind": "official",
+              "section": "1.3703；us"
+            },
+            {
+              "id": "67e72afc2b5ada6fc8c82282",
+              "title": "Victorinox Climber in red  - 1.3703",
+              "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703",
+              "kind": "official",
+              "section": "1.3703；us"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+              "name": "[模拟持有]红色随身多功能工具",
+              "model": "1.3703"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对已登记的物品性质、限制与未知条件",
+            "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+            "itemName": "[模拟持有]红色随身多功能工具"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=712969bc-f2b4-4f55-88f7-9a697711a7ee; domain metadata, not a model answer",
+            "at": "2026-11-04T20:27:13.283Z"
+          },
+          {
+            "stage": "tool_runtime_REPLY_START",
+            "detail": "{}",
+            "at": "2026-11-04T20:27:13.300Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T20:27:13.301Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T20:27:15.290Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_3816383abe5b4c5d81edf687\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T20:27:15.290Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_3816383abe5b4c5d81edf687\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T20:27:15.290Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_3816383abe5b4c5d81edf687\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T20:27:15.290Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":5514,\"outputTokens\":79}",
+            "at": "2026-11-04T20:27:15.290Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_3816383abe5b4c5d81edf687\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T20:27:15.291Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"search_product_knowledge\",\"effect\":\"local_write\",\"scope\":\"live_item_grant_public_sources_only\",\"result\":\"sourced_knowledge_cache\",\"idempotency\":\"document_digest\"}",
+            "at": "2026-11-04T20:27:15.293Z"
+          },
+          {
+            "stage": "practical_search",
+            "detail": "{\"model\":\"qwen3.8-max-0902\",\"hits\":13,\"events\":[{\"type\":\"response.created\",\"elapsedMs\":833,\"status\":\"queued\"},{\"type\":\"response.in_progress\",\"elapsedMs\":833,\"status\":\"in_progress\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":5384,\"itemType\":\"web_search_call\"},{\"type\":\"response.web_search_call.in_progress\",\"elapsedMs\":5384},{\"type\":\"response.web_search_call.searching\",\"elapsedMs\":5385},{\"type\":\"response.web_search_call.completed\",\"elapsedMs\":5385},{\"type\":\"response.output_item.done\",\"elapsedMs\":5385,\"itemType\":\"web_search_call\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":5884,\"itemType\":\"message\"},{\"type\":\"response.content_part.added\",\"elapsedMs\":5885},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5885},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5914},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5972},{\"type\":\"response.output_text.delta\",\"elapsedMs\":5973},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6035},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6036},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6157},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6157},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6157},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6157},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6254},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6254},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6421},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6482},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6483},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6484},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6538},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6538},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6650},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6651},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6651},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6710},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6710},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6710},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6798},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6798},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6915},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6915},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6915},{\"type\":\"response.output_text.delta\",\"elapsedMs\":6915},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7021},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7021},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7021},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7023},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7145},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7145},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7146},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7146},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7263},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7263},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7264},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7264},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7320},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7320},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7383},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7439},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7439},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7440},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7498},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7498},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7564},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7564},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7619},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7619},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7680},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7681},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7823},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7824},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7824},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7824},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7912},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7915},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7964},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7964},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8109},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8110},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8110},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8110},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8164},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8165},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8220},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8221},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8277},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8333},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8333},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8334},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8393},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8393},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8446},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8529},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8529},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8529},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8583},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8583},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8705},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8705},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8706},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8763},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8764},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8764},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8818},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8878},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8879},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8879},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8995},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8995},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8995},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9052},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9053},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9053},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9113},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9170},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9171},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9171},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9292},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9292},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9292},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9292},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9411},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9411},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9411},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9412},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9473},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9473},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9524},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9582},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9582},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9584},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9639},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9639},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9792},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9792},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9792},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9792},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9904},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9905},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9985},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10025},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10025},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10026},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10082},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10082},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10197},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10198},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10312},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10313},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10313},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10313},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10406},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10407},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10532},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10532},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10532},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10649},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10649},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10649},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10649},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10761},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10761},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10762},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10762},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10881},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10882},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10882},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10882},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10969},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10970},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11094},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11094},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11271},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11272},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11272},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11272},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11336},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11336},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11481},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11482},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11482},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11482},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11539},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11539},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11598},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11657},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11657},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11658},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11720},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11720},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11781},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11810},{\"type\":\"response.output_text.done\",\"elapsedMs\":11811},{\"type\":\"response.content_part.done\",\"elapsedMs\":11814},{\"type\":\"response.output_item.done\",\"elapsedMs\":11819,\"itemType\":\"message\"},{\"type\":\"response.completed\",\"elapsedMs\":11831,\"status\":\"completed\"}]}",
+            "at": "2026-11-04T20:27:27.185Z"
+          },
+          {
+            "stage": "practical_chapter",
+            "detail": "{\"itemId\":\"712969bc-f2b4-4f55-88f7-9a697711a7ee\",\"url\":\"https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion\",\"query\":\"请自主找 Victorinox Climber 1.3703 的厂家资料。它有多少功能、尺寸和重量是多少、刀刃是否可锁定？不要套Climber Plus或不同尺寸刀款，也不要提供危险改造指导。 Victorinox Climber 1.3703 specifications functions weight dimensions blade lock\"}",
+            "at": "2026-11-04T20:27:37.333Z"
+          },
+          {
+            "stage": "practical_chapter",
+            "detail": "{\"itemId\":\"712969bc-f2b4-4f55-88f7-9a697711a7ee\",\"url\":\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion\",\"query\":\"请自主找 Victorinox Climber 1.3703 的厂家资料。它有多少功能、尺寸和重量是多少、刀刃是否可锁定？不要套Climber Plus或不同尺寸刀款，也不要提供危险改造指导。 Victorinox Climber 1.3703 specifications functions weight dimensions blade lock\"}",
+            "at": "2026-11-04T20:27:38.262Z"
+          },
+          {
+            "stage": "practical_knowledge",
+            "detail": "{\"itemId\":\"712969bc-f2b4-4f55-88f7-9a697711a7ee\",\"cached\":false,\"readURLs\":[\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703\",\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3\",\"https://www.victorinox.com/en-US/Watches/Service/Watches-Manuals-and-Quick-Guides/cms/service-watches-instruction-downloads/\",\"https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T\"],\"issues\":[\"搜索命中未通过最终域名/完整型号核对，未采用\"],\"seedURLs\":[],\"searchAttempted\":true,\"searchCompleted\":true,\"searchURLs\":[\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703\",\"https://www.victorinox.com/en-US/Watches/Service/Watches-Manuals-and-Quick-Guides/cms/service-watches-instruction-downloads/\",\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3\",\"https://victorinox.manymanuals.com/\",\"https://www.youtube.com/watch?v=A6kRk2QRCQg\",\"https://legacy-www.victorinox.com/medias/?context=bWFzdGVyfHNlcnZpY2V8MTE0OTM5MXxhcHBsaWNhdGlvbi9wZGZ8aGQ2L2hhYi8xMzYwMjc3MTU5OTM5MC9RZC0wMDE2MV9FTi5wZGZ8MzczOTI4N2UyYmZkYTJlY2RiZGI2ZjcyY2ExZWU2YTNiZTFhMjc0OTg5ZWQ5YWNhNGI2Y2QxMDAyNzBmYTg3Ng\",\"https://www.victorinox.com/en-US/Swiss-Army-Knives/Service/Swiss-Army-Knives-Downloads/cms/service-swiss-army-knife-downloads/\",\"https://docs.rs-online.com/327b/0900766b8141eda5.pdf\",\"https://www.youtube.com/watch?v=W6VqKo8bI2c\",\"https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T\",\"https://www.victorinox.com/en-US/\",\"https://www.victorinox.com/fr-FR/Produits/Swiss-Army-Knife%E2%84%A2-et-outils/Artisanat-et-bricolage/Swiss-Champ%C2%A0XXL/p/1.6795.XXL\",\"https://www.victorinox.com/fr-FR/Produits/Swiss-Army-Knife%E2%84%A2-et-outils/Plein-air/Sets-pour-enfant-My-First-Victorinox-%C3%A9dition-animaux/p/0.2373.E1\"],\"verifiedURLs\":[\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703\",\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3\",\"https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T\"],\"attemptedURLs\":[\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703\",\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3\",\"https://www.victorinox.com/en-US/Watches/Service/Watches-Manuals-and-Quick-Guides/cms/service-watches-instruction-downloads/\",\"https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T\"],\"sources\":[{\"id\":\"c50c0ab04c0173341437b3c5:0\",\"url\":\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion\",\"model\":\"1.3703\"},{\"id\":\"faca43741851842f5c86aca0:0\",\"url\":\"https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion\",\"model\":\"1.3703\"},{\"id\":\"5eca902344052f5de4cdc155:0\",\"url\":\"https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T\",\"model\":\"1.3703\"},{\"id\":\"5efe39db39ab7c4fbaba112a:0\",\"url\":\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3\",\"model\":\"1.3703\"},{\"id\":\"67e72afc2b5ada6fc8c82282:0\",\"url\":\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703\",\"model\":\"1.3703\"},{\"id\":\"5eca902344052f5de4cdc155:1000\",\"url\":\"https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T\",\"model\":\"1.3703\"},{\"id\":\"5efe39db39ab7c4fbaba112a:1000\",\"url\":\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3\",\"model\":\"1.3703\"},{\"id\":\"67e72afc2b5ada6fc8c82282:1002\",\"url\":\"https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703\",\"model\":\"1.3703\"},{\"id\":\"faca43741851842f5c86aca0:994\",\"url\":\"https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion\",\"model\":\"1.3703\"}]}",
+            "at": "2026-11-04T20:27:38.287Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "search_product_knowledge completed",
+            "at": "2026-11-04T20:27:38.289Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_3816383abe5b4c5d81edf687\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T20:27:38.289Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_3816383abe5b4c5d81edf687\",\"tool\":\"search_product_knowledge\",\"state\":\"success\"}",
+            "at": "2026-11-04T20:27:38.290Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T20:27:38.291Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T20:27:41.781Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_512c6e67539d44449ec5fe6f\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T20:27:41.782Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_512c6e67539d44449ec5fe6f\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T20:27:41.782Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_512c6e67539d44449ec5fe6f\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T20:27:41.782Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":15827,\"outputTokens\":201}",
+            "at": "2026-11-04T20:27:41.782Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_512c6e67539d44449ec5fe6f\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T20:27:41.783Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"complete_answer\",\"effect\":\"local_write\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_and_public_original_quote_locators_no_business_write\",\"idempotency\":\"original_document_and_quote_digest\"}",
+            "at": "2026-11-04T20:27:41.784Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "complete_answer completed",
+            "at": "2026-11-04T20:27:41.816Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_512c6e67539d44449ec5fe6f\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T20:27:41.816Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_512c6e67539d44449ec5fe6f\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+            "at": "2026-11-04T20:27:41.817Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":28542,\"calls\":3,\"tools\":2,\"reservedCny\":0.32748400000000005,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-04T20:27:41.826Z"
+          }
+        ],
+        "tokens": {
+          "input": 23547,
+          "output": 970
+        },
+        "modelCalls": 3,
+        "foundation": {
+          "runId": "498ef503-7f7d-4d15-ab76-a520c865b951",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 28687,
+      "streamTextEvents": 1
+    },
+    {
+      "question": "仅凭这款商品页的终身质保字样，能否断定所有损坏都免费维修、在中国任何门店都能受理？请区分已知商品事实、地区条件与尚未取得的售后政策，不编造承诺。",
+      "result": {
+        "session": {
+          "id": "956fe568-fdc8-4cba-b179-8fb535e33964",
+          "owner": "u_985ce034-b51e-4d7e-82fc-88219046d135",
+          "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+          "identity": "[\"u_985ce034-b51e-4d7e-82fc-88219046d135\",\"[\\\"1.3703\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 2,
+          "status": "active",
+          "messages": [
+            {
+              "id": "5e27e001-3a1d-42e9-ad75-2fc4f57c0c63",
+              "role": "user",
+              "text": "请自主找 Victorinox Climber 1.3703 的厂家资料。它有多少功能、尺寸和重量是多少、刀刃是否可锁定？不要套Climber Plus或不同尺寸刀款，也不要提供危险改造指导。",
+              "at": "2026-11-04T20:27:41.834Z",
+              "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "4093fc62-91fa-497f-b271-a1a9c693492d",
+              "role": "assistant",
+              "text": "根据 Victorinox 官网对型号 1.3703（Climber）的说明，该刀具有 14 项功能；尺寸约为长 91 mm、宽 26 mm、厚 18 mm（英制约 3.6 × 1 × 0.7 in），重量约 82 g（2.9 oz）。官方明确标注“Blade lockable: No”，即刀刃不可锁定，也不支持单手开刃。不同颜色/手柄材质版本（如 1.3703、1.3703.3、1.3703.T）的功能、尺寸和重量一致，仅外观与物料编号后缀不同；以上数据不适用于 Climber Plus 或其他长度/层数的刀款。",
+              "reply": {
+                "modelHistoryText": "根据 Victorinox 官网对型号 1.3703（Climber）的说明，该刀具有 14 项功能；尺寸约为长 91 mm、宽 26 mm、厚 18 mm（英制约 3.6 × 1 × 0.7 in），重量约 82 g（2.9 oz）。官方明确标注“Blade lockable: No”，即刀刃不可锁定，也不支持单手开刃。不同颜色/手柄材质版本（如 1.3703、1.3703.3、1.3703.T）的功能、尺寸和重量一致，仅外观与物料编号后缀不同；以上数据不适用于 Climber Plus 或其他长度/层数的刀款。",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [],
+                "answer": "根据 Victorinox 官网对型号 1.3703（Climber）的说明，该刀具有 14 项功能；尺寸约为长 91 mm、宽 26 mm、厚 18 mm（英制约 3.6 × 1 × 0.7 in），重量约 82 g（2.9 oz）。官方明确标注“Blade lockable: No”，即刀刃不可锁定，也不支持单手开刃。不同颜色/手柄材质版本（如 1.3703、1.3703.3、1.3703.T）的功能、尺寸和重量一致，仅外观与物料编号后缀不同；以上数据不适用于 Climber Plus 或其他长度/层数的刀款。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "stepsInAnswer": false,
+                "questions": [],
+                "evidenceIds": [
+                  "c50c0ab04c0173341437b3c5:0",
+                  "faca43741851842f5c86aca0:0",
+                  "5eca902344052f5de4cdc155:0",
+                  "5efe39db39ab7c4fbaba112a:0",
+                  "67e72afc2b5ada6fc8c82282:0",
+                  "5eca902344052f5de4cdc155:1000",
+                  "5efe39db39ab7c4fbaba112a:1000",
+                  "67e72afc2b5ada6fc8c82282:1002",
+                  "faca43741851842f5c86aca0:994"
+                ],
+                "citations": [
+                  {
+                    "id": "c50c0ab04c0173341437b3c5",
+                    "title": "Victorinox Climber in Black  - 1.3703.3",
+                    "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion",
+                    "kind": "official",
+                    "section": "1.3703；us"
+                  },
+                  {
+                    "id": "faca43741851842f5c86aca0",
+                    "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+                    "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion",
+                    "kind": "official",
+                    "section": "1.3703；unspecified"
+                  },
+                  {
+                    "id": "5eca902344052f5de4cdc155",
+                    "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+                    "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T",
+                    "kind": "official",
+                    "section": "1.3703；unspecified"
+                  },
+                  {
+                    "id": "5efe39db39ab7c4fbaba112a",
+                    "title": "Victorinox Climber in Black  - 1.3703.3",
+                    "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3",
+                    "kind": "official",
+                    "section": "1.3703；us"
+                  },
+                  {
+                    "id": "67e72afc2b5ada6fc8c82282",
+                    "title": "Victorinox Climber in red  - 1.3703",
+                    "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703",
+                    "kind": "official",
+                    "section": "1.3703；us"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+                    "name": "[模拟持有]红色随身多功能工具",
+                    "model": "1.3703"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+                  "itemName": "[模拟持有]红色随身多功能工具"
+                }
+              },
+              "at": "2026-11-04T20:27:41.834Z"
+            },
+            {
+              "id": "5f249b6b-6cd8-4f9d-a7e1-029cf79f9a60",
+              "role": "user",
+              "text": "仅凭这款商品页的终身质保字样，能否断定所有损坏都免费维修、在中国任何门店都能受理？请区分已知商品事实、地区条件与尚未取得的售后政策，不编造承诺。",
+              "at": "2026-11-04T20:27:46.578Z",
+              "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "e63d391c-131e-4752-b20d-9684f7d66875",
+              "role": "assistant",
+              "text": "仅凭当前商品页的“Lifetime warranty”字样，不能断定所有损坏都免费维修，也不能断定中国任何门店都能受理。\n\n已知事实：Victorinox 官网对 1.3703（含 1.3703.3、1.3703.T）明确写有“This product is covered by Victorinox Lifetime warranty”，但这只是保修存在的声明，并未在页面中定义“终身”的具体范围、是否包含人为损坏/正常磨损、是否收费、以及受理网点或国家限制。上述页面分别来自美国与墨西哥站点，本身不构成对中国大陆售后政策的直接依据。\n\n尚未取得的关键信息包括：中国大陆适用的保修条款原文、是否区分制造缺陷与使用损伤、是否需要购买凭证或注册、授权服务中心名单及门店受理权限、跨境购买是否影响保修。未读到这些内容前，无法把“Lifetime warranty”等同于“所有损坏免费”或“全国任意门店受理”。\n\n建议下一步：获取 Victorinox 中国大陆官方售后政策或授权服务中心说明，以核对适用地区、免费范围和受理方式；在此之前，仅能确认该型号享有厂家标注的终身保修，但具体执行条件仍以中国区正式条款为准。",
+              "reply": {
+                "modelHistoryText": "仅凭当前商品页的“Lifetime warranty”字样，不能断定所有损坏都免费维修，也不能断定中国任何门店都能受理。\n\n已知事实：Victorinox 官网对 1.3703（含 1.3703.3、1.3703.T）明确写有“This product is covered by Victorinox Lifetime warranty”，但这只是保修存在的声明，并未在页面中定义“终身”的具体范围、是否包含人为损坏/正常磨损、是否收费、以及受理网点或国家限制。上述页面分别来自美国与墨西哥站点，本身不构成对中国大陆售后政策的直接依据。\n\n尚未取得的关键信息包括：中国大陆适用的保修条款原文、是否区分制造缺陷与使用损伤、是否需要购买凭证或注册、授权服务中心名单及门店受理权限、跨境购买是否影响保修。未读到这些内容前，无法把“Lifetime warranty”等同于“所有损坏免费”或“全国任意门店受理”。\n\n建议下一步：获取 Victorinox 中国大陆官方售后政策或授权服务中心说明，以核对适用地区、免费范围和受理方式；在此之前，仅能确认该型号享有厂家标注的终身保修，但具体执行条件仍以中国区正式条款为准。",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [],
+                "answer": "仅凭当前商品页的“Lifetime warranty”字样，不能断定所有损坏都免费维修，也不能断定中国任何门店都能受理。\n\n已知事实：Victorinox 官网对 1.3703（含 1.3703.3、1.3703.T）明确写有“This product is covered by Victorinox Lifetime warranty”，但这只是保修存在的声明，并未在页面中定义“终身”的具体范围、是否包含人为损坏/正常磨损、是否收费、以及受理网点或国家限制。上述页面分别来自美国与墨西哥站点，本身不构成对中国大陆售后政策的直接依据。\n\n尚未取得的关键信息包括：中国大陆适用的保修条款原文、是否区分制造缺陷与使用损伤、是否需要购买凭证或注册、授权服务中心名单及门店受理权限、跨境购买是否影响保修。未读到这些内容前，无法把“Lifetime warranty”等同于“所有损坏免费”或“全国任意门店受理”。\n\n建议下一步：获取 Victorinox 中国大陆官方售后政策或授权服务中心说明，以核对适用地区、免费范围和受理方式；在此之前，仅能确认该型号享有厂家标注的终身保修，但具体执行条件仍以中国区正式条款为准。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "stepsInAnswer": false,
+                "questions": [],
+                "evidenceIds": [
+                  "c50c0ab04c0173341437b3c5:0",
+                  "faca43741851842f5c86aca0:0",
+                  "faca43741851842f5c86aca0:994",
+                  "5eca902344052f5de4cdc155:0",
+                  "5eca902344052f5de4cdc155:1000",
+                  "5efe39db39ab7c4fbaba112a:0",
+                  "5efe39db39ab7c4fbaba112a:1000",
+                  "67e72afc2b5ada6fc8c82282:0",
+                  "67e72afc2b5ada6fc8c82282:1002"
+                ],
+                "citations": [
+                  {
+                    "id": "c50c0ab04c0173341437b3c5",
+                    "title": "Victorinox Climber in Black  - 1.3703.3",
+                    "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion",
+                    "kind": "official",
+                    "section": "1.3703；us"
+                  },
+                  {
+                    "id": "faca43741851842f5c86aca0",
+                    "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+                    "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion",
+                    "kind": "official",
+                    "section": "1.3703；unspecified"
+                  },
+                  {
+                    "id": "5eca902344052f5de4cdc155",
+                    "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+                    "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T",
+                    "kind": "official",
+                    "section": "1.3703；unspecified"
+                  },
+                  {
+                    "id": "5efe39db39ab7c4fbaba112a",
+                    "title": "Victorinox Climber in Black  - 1.3703.3",
+                    "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3",
+                    "kind": "official",
+                    "section": "1.3703；us"
+                  },
+                  {
+                    "id": "67e72afc2b5ada6fc8c82282",
+                    "title": "Victorinox Climber in red  - 1.3703",
+                    "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703",
+                    "kind": "official",
+                    "section": "1.3703；us"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+                    "name": "[模拟持有]红色随身多功能工具",
+                    "model": "1.3703"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+                  "itemName": "[模拟持有]红色随身多功能工具"
+                }
+              },
+              "at": "2026-11-04T20:27:46.578Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "6e03fc22-4e70-4f22-9a0f-32a359510e83",
+            "turnScope": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+            "lastIntent": "help",
+            "activeItemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-11-04T20:27:13.280Z",
+          "updatedAt": "2026-11-04T20:27:46.578Z",
+          "expiresAt": "2026-11-11T20:27:13.280Z",
+          "itemScopes": {
+            "712969bc-f2b4-4f55-88f7-9a697711a7ee": "[\"u_985ce034-b51e-4d7e-82fc-88219046d135\",\"[\\\"1.3703\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "modelHistoryText": "仅凭当前商品页的“Lifetime warranty”字样，不能断定所有损坏都免费维修，也不能断定中国任何门店都能受理。\n\n已知事实：Victorinox 官网对 1.3703（含 1.3703.3、1.3703.T）明确写有“This product is covered by Victorinox Lifetime warranty”，但这只是保修存在的声明，并未在页面中定义“终身”的具体范围、是否包含人为损坏/正常磨损、是否收费、以及受理网点或国家限制。上述页面分别来自美国与墨西哥站点，本身不构成对中国大陆售后政策的直接依据。\n\n尚未取得的关键信息包括：中国大陆适用的保修条款原文、是否区分制造缺陷与使用损伤、是否需要购买凭证或注册、授权服务中心名单及门店受理权限、跨境购买是否影响保修。未读到这些内容前，无法把“Lifetime warranty”等同于“所有损坏免费”或“全国任意门店受理”。\n\n建议下一步：获取 Victorinox 中国大陆官方售后政策或授权服务中心说明，以核对适用地区、免费范围和受理方式；在此之前，仅能确认该型号享有厂家标注的终身保修，但具体执行条件仍以中国区正式条款为准。",
+          "continuations": [],
+          "actionCards": [],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [],
+          "answer": "仅凭当前商品页的“Lifetime warranty”字样，不能断定所有损坏都免费维修，也不能断定中国任何门店都能受理。\n\n已知事实：Victorinox 官网对 1.3703（含 1.3703.3、1.3703.T）明确写有“This product is covered by Victorinox Lifetime warranty”，但这只是保修存在的声明，并未在页面中定义“终身”的具体范围、是否包含人为损坏/正常磨损、是否收费、以及受理网点或国家限制。上述页面分别来自美国与墨西哥站点，本身不构成对中国大陆售后政策的直接依据。\n\n尚未取得的关键信息包括：中国大陆适用的保修条款原文、是否区分制造缺陷与使用损伤、是否需要购买凭证或注册、授权服务中心名单及门店受理权限、跨境购买是否影响保修。未读到这些内容前，无法把“Lifetime warranty”等同于“所有损坏免费”或“全国任意门店受理”。\n\n建议下一步：获取 Victorinox 中国大陆官方售后政策或授权服务中心说明，以核对适用地区、免费范围和受理方式；在此之前，仅能确认该型号享有厂家标注的终身保修，但具体执行条件仍以中国区正式条款为准。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "stepsInAnswer": false,
+          "questions": [],
+          "evidenceIds": [
+            "c50c0ab04c0173341437b3c5:0",
+            "faca43741851842f5c86aca0:0",
+            "faca43741851842f5c86aca0:994",
+            "5eca902344052f5de4cdc155:0",
+            "5eca902344052f5de4cdc155:1000",
+            "5efe39db39ab7c4fbaba112a:0",
+            "5efe39db39ab7c4fbaba112a:1000",
+            "67e72afc2b5ada6fc8c82282:0",
+            "67e72afc2b5ada6fc8c82282:1002"
+          ],
+          "citations": [
+            {
+              "id": "c50c0ab04c0173341437b3c5",
+              "title": "Victorinox Climber in Black  - 1.3703.3",
+              "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion",
+              "kind": "official",
+              "section": "1.3703；us"
+            },
+            {
+              "id": "faca43741851842f5c86aca0",
+              "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+              "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion",
+              "kind": "official",
+              "section": "1.3703；unspecified"
+            },
+            {
+              "id": "5eca902344052f5de4cdc155",
+              "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+              "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T",
+              "kind": "official",
+              "section": "1.3703；unspecified"
+            },
+            {
+              "id": "5efe39db39ab7c4fbaba112a",
+              "title": "Victorinox Climber in Black  - 1.3703.3",
+              "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3",
+              "kind": "official",
+              "section": "1.3703；us"
+            },
+            {
+              "id": "67e72afc2b5ada6fc8c82282",
+              "title": "Victorinox Climber in red  - 1.3703",
+              "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703",
+              "kind": "official",
+              "section": "1.3703；us"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+              "name": "[模拟持有]红色随身多功能工具",
+              "model": "1.3703"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对已登记的物品性质、限制与未知条件",
+            "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+            "itemName": "[模拟持有]红色随身多功能工具"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=712969bc-f2b4-4f55-88f7-9a697711a7ee; domain metadata, not a model answer",
+            "at": "2026-11-04T20:27:42.106Z"
+          },
+          {
+            "stage": "tool_runtime_REPLY_START",
+            "detail": "{}",
+            "at": "2026-11-04T20:27:42.144Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T20:27:42.145Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T20:27:46.526Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_d15f3228014440beaa37a1e4\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T20:27:46.527Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_d15f3228014440beaa37a1e4\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T20:27:46.527Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_d15f3228014440beaa37a1e4\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T20:27:46.527Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":11977,\"outputTokens\":282}",
+            "at": "2026-11-04T20:27:46.527Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_d15f3228014440beaa37a1e4\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T20:27:46.528Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"complete_answer\",\"effect\":\"local_write\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_and_public_original_quote_locators_no_business_write\",\"idempotency\":\"original_document_and_quote_digest\"}",
+            "at": "2026-11-04T20:27:46.529Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "complete_answer completed",
+            "at": "2026-11-04T20:27:46.564Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_d15f3228014440beaa37a1e4\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T20:27:46.564Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_d15f3228014440beaa37a1e4\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+            "at": "2026-11-04T20:27:46.565Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":4464,\"calls\":1,\"tools\":1,\"reservedCny\":0.153876,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-04T20:27:46.573Z"
+          }
+        ],
+        "tokens": {
+          "input": 11977,
+          "output": 282
+        },
+        "modelCalls": 1,
+        "foundation": {
+          "runId": "0934a5ef-1714-49f3-98a1-580765d5ddf0",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 4572,
+      "streamTextEvents": 1
+    }
+  ],
+  "pageErrors": [],
+  "checks": [
+    {
+      "name": "final_answer_visible",
+      "passed": true,
+      "quality": "requires_original_source_review"
+    },
+    {
+      "name": "same_session_continuation",
+      "passed": true
+    },
+    {
+      "name": "no_horizontal_overflow",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "quality": "not_scored",
+  "item": {
+    "id": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+    "model": "1.3703",
+    "brand": "Victorinox",
+    "synthetic": true
+  },
+  "sharedKnowledge": {
+    "reality": {
+      "version": "reality/1",
+      "id": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+      "itemId": "712969bc-f2b4-4f55-88f7-9a697711a7ee",
+      "name": "[模拟持有]红色随身多功能工具",
+      "identity": {
+        "kind": "commercial",
+        "brand": "Victorinox",
+        "model": "1.3703",
+        "region": null,
+        "firmware": null,
+        "identityBasis": "user_report"
+      },
+      "instance": {
+        "state": "在用",
+        "availability": "available",
+        "usable": true,
+        "quantity": null,
+        "unit": "件",
+        "synthetic": true,
+        "basis": "user_report"
+      },
+      "facts": [],
+      "capabilities": [],
+      "operations": [],
+      "limits": [],
+      "unknowns": [
+        "材质",
+        "尺寸",
+        "未记录的承重、耐热、稳定性及型号操作不由名称推断"
+      ],
+      "revision": "8fddb300fea70fa1566167deea446ac816bdff64771c8db0dcbf898b4139c362"
+    },
+    "knowledge": [
+      {
+        "id": "c50c0ab04c0173341437b3c5",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion",
+        "title": "Victorinox Climber in Black  - 1.3703.3",
+        "hash": "6c2c23d291b731b1cc202f5a675220d92b5014e3fce75f0dc2b91cf3d0f69b7c",
+        "model": "1.3703",
+        "brand": "Victorinox",
+        "region": "us",
+        "chain": [
+          "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T",
+          "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3",
+          "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703",
+          "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion"
+        ],
+        "fetchedAt": "2026-11-04T20:27:38.254Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [],
+          "figures": []
+        },
+        "sections": [],
+        "publisherProof": {
+          "version": 1,
+          "brand": "Victorinox",
+          "directoryURL": "https://dbpedia.org/data/Victorinox.json",
+          "entity": "http://dbpedia.org/resource/Victorinox",
+          "record": "{\"http://dbpedia.org/resource/Victorinox\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q24229398\"},{\"type\":\"uri\",\"value\":\"http://www.w3.org/2002/07/owl#Thing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Company\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q4830453\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q43229\"},{\"type\":\"uri\",\"value\":\"http://schema.org/Organization\"},{\"type\":\"uri\",\"value\":\"http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#SocialPerson\"},{\"type\":\"uri\",\"value\":\"http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Agent\"},{\"type\":\"uri\",\"value\":\"http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Organisation\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Agent\"}],\"http://www.w3.org/2002/07/owl#sameAs\":[{\"type\":\"uri\",\"value\":\"http://ca.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ko.dbpedia.org/resource/빅토리녹스\"},{\"type\":\"uri\",\"value\":\"http://sv.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://he.dbpedia.org/resource/ויקטורינוקס\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ka.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://hr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"https://global.dbpedia.org/id/4fJN8\"},{\"type\":\"uri\",\"value\":\"http://sk.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://da.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://it.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://bg.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://arz.dbpedia.org/resource/فيكتورينوكس\"},{\"type\":\"uri\",\"value\":\"http://pl.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ru.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://hu.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://uk.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://fi.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://es.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://viaf.org/viaf/312817165\"},{\"type\":\"uri\",\"value\":\"http://nl.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://pt.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://yago-knowledge.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://tr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://pnb.dbpedia.org/resource/وکٹورینوکس\"},{\"type\":\"uri\",\"value\":\"http://fa.dbpedia.org/resource/ویکتورینوکس\"},{\"type\":\"uri\",\"value\":\"http://cs.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ar.dbpedia.org/resource/فيكتور_إنوكس\"},{\"type\":\"uri\",\"value\":\"http://zh.dbpedia.org/resource/維氏\"},{\"type\":\"uri\",\"value\":\"http://ja.dbpedia.org/resource/ビクトリノックス\"},{\"type\":\"uri\",\"value\":\"http://hy.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://lb.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/4571915-9\"},{\"type\":\"uri\",\"value\":\"http://fr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://rdf.freebase.com/ns/m.033yp6\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/1086760514\"},{\"type\":\"uri\",\"value\":\"http://de.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q503405\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/1088099688\"},{\"type\":\"uri\",\"value\":\"http://mk.dbpedia.org/resource/Викторинокс\"}],\"http://xmlns.com/foaf/0.1/name\":[{\"type\":\"literal\",\"value\":\"Victorinox AG\",\"lang\":\"en\"}],\"http://www.w3.org/2000/01/rdf-schema#label\":[{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"es\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"uk\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"fr\"},{\"type\":\"literal\",\"value\":\"빅토리녹스\",\"lang\":\"ko\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"pt\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"cs\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"de\"},{\"type\":\"literal\",\"value\":\"ビクトリノックス\",\"lang\":\"ja\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"it\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"ru\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"ca\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"sv\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"pl\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"維氏\",\"lang\":\"zh\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"nl\"},{\"type\":\"literal\",\"value\":\"فيكتور إنوكس\",\"lang\":\"ar\"}],\"http://purl.org/dc/terms/subject\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Victorinox\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Knife_manufacturing_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Climbing_and_mountaineering_equipment_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Kitchen_knife_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Tool_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Companies_based_in_the_canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Multi-tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_watch_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Watch_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_established_in_1884\"}],\"http://xmlns.com/foaf/0.1/homepage\":[{\"type\":\"uri\",\"value\":\"http://www.victorinox.com\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#lat\":[{\"type\":\"literal\",\"value\":47.01583480834961,\"datatype\":\"http://www.w3.org/2001/XMLSchema#float\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#long\":[{\"type\":\"literal\",\"value\":8.648333549499512,\"datatype\":\"http://www.w3.org/2001/XMLSchema#float\"}],\"http://xmlns.com/foaf/0.1/depiction\":[{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Swiss_Army_Knive_opened.jpeg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Swiss_Army_pocket_knife,_1900.jpeg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Karl_Elsener.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SwissCard_Lite.png\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SwissCard_Lite_contents.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Money-Clip.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Soldatenmesser_08-2.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Climber.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Electrician-Alox.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Bayonet_SG550.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/My_swiss_army_knife.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Logo.svg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Multitool.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Officer's.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_SwissChamp_Closed.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_kitchen_cutlery.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_pokrowiec.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-111mm.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Broker.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Craftsman.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Pioneer.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Spirit.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Weekender.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Wester_&_Co_2.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SAK_1951.jpg\"}],\"http://www.w3.org/ns/prov#wasDerivedFrom\":[{\"type\":\"uri\",\"value\":\"http://en.wikipedia.org/wiki/Victorinox?oldid=1311523504&ns=0\"}],\"http://www.georss.org/georss/point\":[{\"type\":\"literal\",\"value\":\"47.01583333333333 8.648333333333333\"}],\"http://dbpedia.org/ontology/wikiPageWikiLink\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/President_(corporate_title)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/France\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ricasso\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/File:My_swiss_army_knife.JPG\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Knife_manufacturing_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Coat_of_arms_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ibach,_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/SIG_SG_550\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Victorinox\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_army\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Apparel\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Solingen\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/CEO\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Leatherman\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Armasuisse\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Gerber_multitool\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/NSF_International\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Germany\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Chairman\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Cutlery\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_Knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Fuller_(weapon)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Kitchen_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Multi-tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Armed_Forces\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Tool_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Portmanteau\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aluminium\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Museum_of_Modern_Art\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_made\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(creator)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/File:Victorinox_Officer's.JPG\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watch\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Thomas_Minder\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Franc\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Perfume\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watchmaker\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Bayonet\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Flashlight\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Stainless_steel\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Luggage\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_watch_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Watch_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Multi-tool\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Astronaut\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Light-emitting_diode\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Mount_Everest\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Kitchen_knife_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/NASA\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Schwyz\"}],\"http://dbpedia.org/ontology/wikiPageExternalLink\":[{\"type\":\"uri\",\"value\":\"http://www.sakwiki.com\"},{\"type\":\"uri\",\"value\":\"http://www.victorinox.com\"}],\"http://dbpedia.org/ontology/description\":[{\"type\":\"literal\",\"value\":\"svájci késgyártó cég\",\"lang\":\"hu\"},{\"type\":\"literal\",\"value\":\"azienda svizzera\",\"lang\":\"it\"},{\"type\":\"literal\",\"value\":\"švýcarská firma vyrábějící nože\",\"lang\":\"cs\"},{\"type\":\"literal\",\"value\":\"Svislanda firmao\",\"lang\":\"eo\"},{\"type\":\"literal\",\"value\":\"швейцарска компания\",\"lang\":\"bg\"},{\"type\":\"literal\",\"value\":\"fábrica suiza de navajas suizas, cuchillos, relojes y colonias fundada en 1884\",\"lang\":\"es\"},{\"type\":\"literal\",\"value\":\"חברה\",\"lang\":\"iw\"},{\"type\":\"literal\",\"value\":\"szwajcarskie przedsiębiorstwo zajmujące się produkcją noży, scyzoryków oraz akcesoriów kuchennych\",\"lang\":\"pl\"},{\"type\":\"literal\",\"value\":\"merkezi Schwyz, İsviçre'de bulunan bir bıçak üreticisi\",\"lang\":\"tr\"},{\"type\":\"literal\",\"value\":\"Швейцарский производитель ножей и часов\",\"lang\":\"ru\"},{\"type\":\"literal\",\"value\":\"bedrijf in Zwitserland\",\"lang\":\"nl\"},{\"type\":\"literal\",\"value\":\"Schweizer Hersteller von Taschenmessern, Küchenmessern, Uhren, Reisegepäck und Parfums\",\"lang\":\"de\"},{\"type\":\"literal\",\"value\":\"شركة سويسرية\",\"lang\":\"ar\"},{\"type\":\"literal\",\"value\":\"Swiss manufacturer of Swiss Army Knives, cutlery, watches, travel gear, and fragrances\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"entreprise suisse fabriquant notamment le célèbre couteau suisse\",\"lang\":\"fr\"},{\"type\":\"literal\",\"value\":\"sveitsiläinen työkaluvalmistaja\",\"lang\":\"fi\"},{\"type\":\"literal\",\"value\":\"瑞士公司\",\"lang\":\"zh\"}],\"http://dbpedia.org/ontology/thumbnail\":[{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Logo.svg?width=300\"}],\"http://dbpedia.org/property/wikiPageUsesTemplate\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Main\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Year_needed\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Hidden_begin\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:IPAc-en\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Hidden_end\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Main_article\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Clarify\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Anchor\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Coord\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Infobox_company\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Commons_category\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Use_dmy_dates\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Multiple_image\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Val\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Start_date_and_age\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Small\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Ubl\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Portal\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Knives\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Citation_needed\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Reflist\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Short_description\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:URL\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Authority_control\"}],\"http://dbpedia.org/property/date\":[{\"type\":\"literal\",\"value\":\"July 2017\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"March 2024\",\"lang\":\"en\"}],\"http://dbpedia.org/property/name\":[{\"type\":\"literal\",\"value\":\"Victorinox AG\",\"lang\":\"en\"}],\"http://dbpedia.org/property/type\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"}],\"http://dbpedia.org/ontology/foundingYear\":[{\"type\":\"literal\",\"value\":\"1979\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"},{\"type\":\"literal\",\"value\":\"1884\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"}],\"http://purl.org/linguistics/gold/hypernym\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Manufacturer\"}],\"http://xmlns.com/foaf/0.1/isPrimaryTopicOf\":[{\"type\":\"uri\",\"value\":\"http://en.wikipedia.org/wiki/Victorinox\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#geometry\":[{\"type\":\"literal\",\"value\":\"POINT(8.6483335494995 47.01583480835)\",\"datatype\":\"http://www.openlinksw.com/schemas/virtrdf#Geometry\"}],\"http://dbpedia.org/property/logoSize\":[{\"type\":\"literal\",\"value\":300,\"datatype\":\"http://www.w3.org/2001/XMLSchema#integer\"}],\"http://dbpedia.org/ontology/foundingDate\":[{\"type\":\"literal\",\"value\":\"1979-01-02\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#date\"}],\"http://dbpedia.org/ontology/numberOfEmployees\":[{\"type\":\"literal\",\"value\":\"1850\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#nonNegativeInteger\"}],\"http://dbpedia.org/property/subsid\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"}],\"http://dbpedia.org/property/areaServed\":[{\"type\":\"literal\",\"value\":\"Worldwide\",\"lang\":\"en\"}],\"http://dbpedia.org/property/foundation\":[{\"type\":\"literal\",\"value\":\"--01-02\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gMonthDay\"}],\"http://dbpedia.org/property/numEmployees\":[{\"type\":\"literal\",\"value\":1850,\"datatype\":\"http://www.w3.org/2001/XMLSchema#integer\"}],\"http://dbpedia.org/ontology/type\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"}],\"http://schema.org/sameAs\":[{\"type\":\"uri\",\"value\":\"http://viaf.org/viaf/312817165\"}],\"http://dbpedia.org/property/footer\":[{\"type\":\"literal\",\"value\":\"A SwissCard Lite, so named for including a flashlight with replaceable battery\",\"lang\":\"en\"}],\"http://dbpedia.org/property/image\":[{\"type\":\"literal\",\"value\":\"SwissCard Lite contents.jpg\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"SwissCard Lite.png\",\"lang\":\"en\"}],\"http://dbpedia.org/property/locationCountry\":[{\"type\":\"literal\",\"value\":\"Switzerland\",\"lang\":\"en\"}],\"http://dbpedia.org/ontology/subsidiary\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"}],\"http://dbpedia.org/ontology/product\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watch\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Baggage\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Cutlery\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Clothing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Perfume\"}],\"http://dbpedia.org/property/keyPeople\":[{\"type\":\"literal\",\"value\":\"Carl Elsener Jr. ( )\",\"lang\":\"en\"}],\"http://dbpedia.org/property/products\":[{\"type\":\"literal\",\"value\":\"Swiss Army knives, cutlery, watches, travel gear, apparel, fragrances\",\"lang\":\"en\"}],\"http://dbpedia.org/property/reason\":[{\"type\":\"literal\",\"value\":\"To avoid what?\",\"lang\":\"en\"}],\"http://dbpedia.org/property/locationCity\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ibach,_Switzerland\"}],\"http://dbpedia.org/ontology/formerName\":[{\"type\":\"literal\",\"value\":\"Messerfabrik Carl Elsener\",\"lang\":\"en\"}],\"http://dbpedia.org/ontology/foundedBy\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"}],\"http://dbpedia.org/property/revenue\":[{\"type\":\"literal\",\"value\":\"5.1E8\",\"datatype\":\"http://dbpedia.org/datatype/swissFranc\"}],\"http://dbpedia.org/ontology/revenue\":[{\"type\":\"literal\",\"value\":\"5.1E8\",\"datatype\":\"http://dbpedia.org/datatype/swissFranc\"}],\"http://dbpedia.org/property/formerName\":[{\"type\":\"literal\",\"value\":\"Messerfabrik Carl Elsener\",\"lang\":\"en\"}],\"http://dbpedia.org/property/founder\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"}],\"http://dbpedia.org/ontology/keyPerson\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Carl_Elsener_Jr.\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Chief_executive_officer\"}],\"http://dbpedia.org/property/logo\":[{\"type\":\"literal\",\"value\":\"Victorinox Logo.svg\",\"lang\":\"en\"}],\"http://dbpedia.org/property/cs1Dates\":[{\"type\":\"literal\",\"value\":\"y\",\"lang\":\"en\"}]}}",
+          "recordHash": "c4c799df5f0963c55105376930a80b561e25ee96d0eaf0c849569710ab88a04e",
+          "homepage": "http://www.victorinox.com",
+          "redirectChain": [
+            "https://www.victorinox.com/",
+            "https://www.victorinox.com/en-HK/"
+          ],
+          "verifiedAt": "2026-11-04T20:27:32.166Z"
+        },
+        "chunkCount": 1
+      },
+      {
+        "id": "faca43741851842f5c86aca0",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion",
+        "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+        "hash": "b0f6fbadaadbdf753192edbf684090dacfdf098ebe4467683260595b72f8f3b7",
+        "model": "1.3703",
+        "brand": "Victorinox",
+        "region": "unspecified",
+        "chain": [
+          "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T",
+          "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3",
+          "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703",
+          "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion"
+        ],
+        "fetchedAt": "2026-11-04T20:27:37.325Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [],
+          "figures": []
+        },
+        "sections": [],
+        "publisherProof": {
+          "version": 1,
+          "brand": "Victorinox",
+          "directoryURL": "https://dbpedia.org/data/Victorinox.json",
+          "entity": "http://dbpedia.org/resource/Victorinox",
+          "record": "{\"http://dbpedia.org/resource/Victorinox\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q24229398\"},{\"type\":\"uri\",\"value\":\"http://www.w3.org/2002/07/owl#Thing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Company\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q4830453\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q43229\"},{\"type\":\"uri\",\"value\":\"http://schema.org/Organization\"},{\"type\":\"uri\",\"value\":\"http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#SocialPerson\"},{\"type\":\"uri\",\"value\":\"http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Agent\"},{\"type\":\"uri\",\"value\":\"http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Organisation\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Agent\"}],\"http://www.w3.org/2002/07/owl#sameAs\":[{\"type\":\"uri\",\"value\":\"http://ca.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ko.dbpedia.org/resource/빅토리녹스\"},{\"type\":\"uri\",\"value\":\"http://sv.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://he.dbpedia.org/resource/ויקטורינוקס\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ka.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://hr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"https://global.dbpedia.org/id/4fJN8\"},{\"type\":\"uri\",\"value\":\"http://sk.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://da.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://it.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://bg.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://arz.dbpedia.org/resource/فيكتورينوكس\"},{\"type\":\"uri\",\"value\":\"http://pl.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ru.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://hu.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://uk.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://fi.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://es.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://viaf.org/viaf/312817165\"},{\"type\":\"uri\",\"value\":\"http://nl.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://pt.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://yago-knowledge.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://tr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://pnb.dbpedia.org/resource/وکٹورینوکس\"},{\"type\":\"uri\",\"value\":\"http://fa.dbpedia.org/resource/ویکتورینوکس\"},{\"type\":\"uri\",\"value\":\"http://cs.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ar.dbpedia.org/resource/فيكتور_إنوكس\"},{\"type\":\"uri\",\"value\":\"http://zh.dbpedia.org/resource/維氏\"},{\"type\":\"uri\",\"value\":\"http://ja.dbpedia.org/resource/ビクトリノックス\"},{\"type\":\"uri\",\"value\":\"http://hy.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://lb.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/4571915-9\"},{\"type\":\"uri\",\"value\":\"http://fr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://rdf.freebase.com/ns/m.033yp6\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/1086760514\"},{\"type\":\"uri\",\"value\":\"http://de.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q503405\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/1088099688\"},{\"type\":\"uri\",\"value\":\"http://mk.dbpedia.org/resource/Викторинокс\"}],\"http://xmlns.com/foaf/0.1/name\":[{\"type\":\"literal\",\"value\":\"Victorinox AG\",\"lang\":\"en\"}],\"http://www.w3.org/2000/01/rdf-schema#label\":[{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"es\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"uk\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"fr\"},{\"type\":\"literal\",\"value\":\"빅토리녹스\",\"lang\":\"ko\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"pt\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"cs\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"de\"},{\"type\":\"literal\",\"value\":\"ビクトリノックス\",\"lang\":\"ja\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"it\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"ru\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"ca\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"sv\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"pl\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"維氏\",\"lang\":\"zh\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"nl\"},{\"type\":\"literal\",\"value\":\"فيكتور إنوكس\",\"lang\":\"ar\"}],\"http://purl.org/dc/terms/subject\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Victorinox\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Knife_manufacturing_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Climbing_and_mountaineering_equipment_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Kitchen_knife_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Tool_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Companies_based_in_the_canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Multi-tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_watch_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Watch_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_established_in_1884\"}],\"http://xmlns.com/foaf/0.1/homepage\":[{\"type\":\"uri\",\"value\":\"http://www.victorinox.com\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#lat\":[{\"type\":\"literal\",\"value\":47.01583480834961,\"datatype\":\"http://www.w3.org/2001/XMLSchema#float\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#long\":[{\"type\":\"literal\",\"value\":8.648333549499512,\"datatype\":\"http://www.w3.org/2001/XMLSchema#float\"}],\"http://xmlns.com/foaf/0.1/depiction\":[{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Swiss_Army_Knive_opened.jpeg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Swiss_Army_pocket_knife,_1900.jpeg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Karl_Elsener.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SwissCard_Lite.png\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SwissCard_Lite_contents.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Money-Clip.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Soldatenmesser_08-2.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Climber.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Electrician-Alox.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Bayonet_SG550.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/My_swiss_army_knife.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Logo.svg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Multitool.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Officer's.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_SwissChamp_Closed.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_kitchen_cutlery.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_pokrowiec.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-111mm.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Broker.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Craftsman.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Pioneer.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Spirit.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Weekender.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Wester_&_Co_2.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SAK_1951.jpg\"}],\"http://www.w3.org/ns/prov#wasDerivedFrom\":[{\"type\":\"uri\",\"value\":\"http://en.wikipedia.org/wiki/Victorinox?oldid=1311523504&ns=0\"}],\"http://www.georss.org/georss/point\":[{\"type\":\"literal\",\"value\":\"47.01583333333333 8.648333333333333\"}],\"http://dbpedia.org/ontology/wikiPageWikiLink\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/President_(corporate_title)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/France\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ricasso\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/File:My_swiss_army_knife.JPG\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Knife_manufacturing_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Coat_of_arms_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ibach,_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/SIG_SG_550\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Victorinox\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_army\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Apparel\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Solingen\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/CEO\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Leatherman\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Armasuisse\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Gerber_multitool\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/NSF_International\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Germany\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Chairman\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Cutlery\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_Knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Fuller_(weapon)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Kitchen_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Multi-tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Armed_Forces\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Tool_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Portmanteau\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aluminium\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Museum_of_Modern_Art\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_made\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(creator)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/File:Victorinox_Officer's.JPG\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watch\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Thomas_Minder\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Franc\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Perfume\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watchmaker\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Bayonet\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Flashlight\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Stainless_steel\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Luggage\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_watch_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Watch_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Multi-tool\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Astronaut\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Light-emitting_diode\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Mount_Everest\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Kitchen_knife_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/NASA\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Schwyz\"}],\"http://dbpedia.org/ontology/wikiPageExternalLink\":[{\"type\":\"uri\",\"value\":\"http://www.sakwiki.com\"},{\"type\":\"uri\",\"value\":\"http://www.victorinox.com\"}],\"http://dbpedia.org/ontology/description\":[{\"type\":\"literal\",\"value\":\"svájci késgyártó cég\",\"lang\":\"hu\"},{\"type\":\"literal\",\"value\":\"azienda svizzera\",\"lang\":\"it\"},{\"type\":\"literal\",\"value\":\"švýcarská firma vyrábějící nože\",\"lang\":\"cs\"},{\"type\":\"literal\",\"value\":\"Svislanda firmao\",\"lang\":\"eo\"},{\"type\":\"literal\",\"value\":\"швейцарска компания\",\"lang\":\"bg\"},{\"type\":\"literal\",\"value\":\"fábrica suiza de navajas suizas, cuchillos, relojes y colonias fundada en 1884\",\"lang\":\"es\"},{\"type\":\"literal\",\"value\":\"חברה\",\"lang\":\"iw\"},{\"type\":\"literal\",\"value\":\"szwajcarskie przedsiębiorstwo zajmujące się produkcją noży, scyzoryków oraz akcesoriów kuchennych\",\"lang\":\"pl\"},{\"type\":\"literal\",\"value\":\"merkezi Schwyz, İsviçre'de bulunan bir bıçak üreticisi\",\"lang\":\"tr\"},{\"type\":\"literal\",\"value\":\"Швейцарский производитель ножей и часов\",\"lang\":\"ru\"},{\"type\":\"literal\",\"value\":\"bedrijf in Zwitserland\",\"lang\":\"nl\"},{\"type\":\"literal\",\"value\":\"Schweizer Hersteller von Taschenmessern, Küchenmessern, Uhren, Reisegepäck und Parfums\",\"lang\":\"de\"},{\"type\":\"literal\",\"value\":\"شركة سويسرية\",\"lang\":\"ar\"},{\"type\":\"literal\",\"value\":\"Swiss manufacturer of Swiss Army Knives, cutlery, watches, travel gear, and fragrances\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"entreprise suisse fabriquant notamment le célèbre couteau suisse\",\"lang\":\"fr\"},{\"type\":\"literal\",\"value\":\"sveitsiläinen työkaluvalmistaja\",\"lang\":\"fi\"},{\"type\":\"literal\",\"value\":\"瑞士公司\",\"lang\":\"zh\"}],\"http://dbpedia.org/ontology/thumbnail\":[{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Logo.svg?width=300\"}],\"http://dbpedia.org/property/wikiPageUsesTemplate\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Main\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Year_needed\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Hidden_begin\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:IPAc-en\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Hidden_end\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Main_article\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Clarify\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Anchor\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Coord\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Infobox_company\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Commons_category\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Use_dmy_dates\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Multiple_image\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Val\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Start_date_and_age\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Small\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Ubl\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Portal\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Knives\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Citation_needed\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Reflist\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Short_description\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:URL\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Authority_control\"}],\"http://dbpedia.org/property/date\":[{\"type\":\"literal\",\"value\":\"July 2017\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"March 2024\",\"lang\":\"en\"}],\"http://dbpedia.org/property/name\":[{\"type\":\"literal\",\"value\":\"Victorinox AG\",\"lang\":\"en\"}],\"http://dbpedia.org/property/type\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"}],\"http://dbpedia.org/ontology/foundingYear\":[{\"type\":\"literal\",\"value\":\"1979\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"},{\"type\":\"literal\",\"value\":\"1884\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"}],\"http://purl.org/linguistics/gold/hypernym\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Manufacturer\"}],\"http://xmlns.com/foaf/0.1/isPrimaryTopicOf\":[{\"type\":\"uri\",\"value\":\"http://en.wikipedia.org/wiki/Victorinox\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#geometry\":[{\"type\":\"literal\",\"value\":\"POINT(8.6483335494995 47.01583480835)\",\"datatype\":\"http://www.openlinksw.com/schemas/virtrdf#Geometry\"}],\"http://dbpedia.org/property/logoSize\":[{\"type\":\"literal\",\"value\":300,\"datatype\":\"http://www.w3.org/2001/XMLSchema#integer\"}],\"http://dbpedia.org/ontology/foundingDate\":[{\"type\":\"literal\",\"value\":\"1979-01-02\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#date\"}],\"http://dbpedia.org/ontology/numberOfEmployees\":[{\"type\":\"literal\",\"value\":\"1850\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#nonNegativeInteger\"}],\"http://dbpedia.org/property/subsid\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"}],\"http://dbpedia.org/property/areaServed\":[{\"type\":\"literal\",\"value\":\"Worldwide\",\"lang\":\"en\"}],\"http://dbpedia.org/property/foundation\":[{\"type\":\"literal\",\"value\":\"--01-02\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gMonthDay\"}],\"http://dbpedia.org/property/numEmployees\":[{\"type\":\"literal\",\"value\":1850,\"datatype\":\"http://www.w3.org/2001/XMLSchema#integer\"}],\"http://dbpedia.org/ontology/type\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"}],\"http://schema.org/sameAs\":[{\"type\":\"uri\",\"value\":\"http://viaf.org/viaf/312817165\"}],\"http://dbpedia.org/property/footer\":[{\"type\":\"literal\",\"value\":\"A SwissCard Lite, so named for including a flashlight with replaceable battery\",\"lang\":\"en\"}],\"http://dbpedia.org/property/image\":[{\"type\":\"literal\",\"value\":\"SwissCard Lite contents.jpg\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"SwissCard Lite.png\",\"lang\":\"en\"}],\"http://dbpedia.org/property/locationCountry\":[{\"type\":\"literal\",\"value\":\"Switzerland\",\"lang\":\"en\"}],\"http://dbpedia.org/ontology/subsidiary\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"}],\"http://dbpedia.org/ontology/product\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watch\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Baggage\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Cutlery\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Clothing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Perfume\"}],\"http://dbpedia.org/property/keyPeople\":[{\"type\":\"literal\",\"value\":\"Carl Elsener Jr. ( )\",\"lang\":\"en\"}],\"http://dbpedia.org/property/products\":[{\"type\":\"literal\",\"value\":\"Swiss Army knives, cutlery, watches, travel gear, apparel, fragrances\",\"lang\":\"en\"}],\"http://dbpedia.org/property/reason\":[{\"type\":\"literal\",\"value\":\"To avoid what?\",\"lang\":\"en\"}],\"http://dbpedia.org/property/locationCity\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ibach,_Switzerland\"}],\"http://dbpedia.org/ontology/formerName\":[{\"type\":\"literal\",\"value\":\"Messerfabrik Carl Elsener\",\"lang\":\"en\"}],\"http://dbpedia.org/ontology/foundedBy\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"}],\"http://dbpedia.org/property/revenue\":[{\"type\":\"literal\",\"value\":\"5.1E8\",\"datatype\":\"http://dbpedia.org/datatype/swissFranc\"}],\"http://dbpedia.org/ontology/revenue\":[{\"type\":\"literal\",\"value\":\"5.1E8\",\"datatype\":\"http://dbpedia.org/datatype/swissFranc\"}],\"http://dbpedia.org/property/formerName\":[{\"type\":\"literal\",\"value\":\"Messerfabrik Carl Elsener\",\"lang\":\"en\"}],\"http://dbpedia.org/property/founder\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"}],\"http://dbpedia.org/ontology/keyPerson\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Carl_Elsener_Jr.\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Chief_executive_officer\"}],\"http://dbpedia.org/property/logo\":[{\"type\":\"literal\",\"value\":\"Victorinox Logo.svg\",\"lang\":\"en\"}],\"http://dbpedia.org/property/cs1Dates\":[{\"type\":\"literal\",\"value\":\"y\",\"lang\":\"en\"}]}}",
+          "recordHash": "c4c799df5f0963c55105376930a80b561e25ee96d0eaf0c849569710ab88a04e",
+          "homepage": "http://www.victorinox.com",
+          "redirectChain": [
+            "https://www.victorinox.com/",
+            "https://www.victorinox.com/en-HK/"
+          ],
+          "verifiedAt": "2026-11-04T20:27:32.166Z"
+        },
+        "chunkCount": 2
+      },
+      {
+        "id": "5eca902344052f5de4cdc155",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T",
+        "title": "Victorinox Climber in Red transparent  - 1.3703.T",
+        "hash": "9674267a6ff2831f97af192bad158f9947b69c72cf1daf5dc7ec99d64bf4f08d",
+        "model": "1.3703",
+        "brand": "Victorinox",
+        "region": "unspecified",
+        "chain": [
+          "bailian-responses:structured-search",
+          "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T"
+        ],
+        "fetchedAt": "2026-11-04T20:27:36.357Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [],
+          "figures": [
+            {
+              "url": "https://imageengine.victorinox.com/transform/732a3420-17b2-4d11-9a96-9b0050b2bd65/SAK_1_3703_T__S1?io=transform%3Abackground%2Ccolor%3AF0F0F0&io=transform%3Afit%2Cwidth%3A900%2Cheight%3A650&quality=100",
+              "caption": "Climber 1.3703.T"
+            },
+            {
+              "url": "https://imageengine.victorinox.com/transform/7936bf8b-e8a1-406f-b150-22c96b4b770a/SAK_1_3703_T__B1?io=transform%3Abackground%2Ccolor%3AF0F0F0&io=transform%3Afit%2Cwidth%3A900%2Cheight%3A650&quality=100",
+              "caption": "Climber 1.3703.T"
+            },
+            {
+              "url": "https://imageengine.victorinox.com/transform/f79ef583-c733-48c6-b7d6-75144839a5c1/SAK_1_3703_T__B2?io=transform%3Abackground%2Ccolor%3AF0F0F0&io=transform%3Afit%2Cwidth%3A900%2Cheight%3A650&quality=100",
+              "caption": "Climber 1.3703.T"
+            },
+            {
+              "url": "https://imageengine.victorinox.com/transform/362eea80-f2f0-45a4-a2b8-b2eb34162ebb/SAK_1_3703-T_S2?io=transform%3Abackground%2Ccolor%3AF0F0F0&io=transform%3Afit%2Cwidth%3A900%2Cheight%3A650&quality=100",
+              "caption": "Climber 1.3703.T"
+            }
+          ]
+        },
+        "sections": [
+          {
+            "title": "Climber",
+            "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-name"
+          },
+          {
+            "title": "Product Details",
+            "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion"
+          },
+          {
+            "title": "Medium Pocket Knife for Everyday",
+            "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion"
+          },
+          {
+            "title": "Tools",
+            "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion"
+          },
+          {
+            "title": "Dimensions",
+            "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion"
+          },
+          {
+            "title": "Details",
+            "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion"
+          },
+          {
+            "title": "Warranty",
+            "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion"
+          },
+          {
+            "title": "Reviews & Rating",
+            "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#product-details-accordion"
+          },
+          {
+            "title": "Stay up to date",
+            "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#newsletter-subscription-title-f9ec7ac9-1b53-46d3-a912-1330f3e0a777"
+          },
+          {
+            "title": "(0)",
+            "url": "https://www.victorinox.com/en-MX/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.T#reviews-and-rating"
+          },
+          {
+            "title": "Information onFree Shipping& Returns",
+            "url": "https://www.victorinox.com/en-MX/Frequently-Asked-Questions---FAQs/cms/faq-fulfillment/"
+          },
+          {
+            "title": "Product Support",
+            "url": "https://www.victorinox.com/en-MX/Product-support/cms/product-support/"
+          },
+          {
+            "title": "Online Orders",
+            "url": "https://www.victorinox.com/en-MX/Questions-about-Ordering/cms/service-faq-orders/"
+          }
+        ],
+        "publisherProof": {
+          "version": 1,
+          "brand": "Victorinox",
+          "directoryURL": "https://dbpedia.org/data/Victorinox.json",
+          "entity": "http://dbpedia.org/resource/Victorinox",
+          "record": "{\"http://dbpedia.org/resource/Victorinox\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q24229398\"},{\"type\":\"uri\",\"value\":\"http://www.w3.org/2002/07/owl#Thing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Company\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q4830453\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q43229\"},{\"type\":\"uri\",\"value\":\"http://schema.org/Organization\"},{\"type\":\"uri\",\"value\":\"http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#SocialPerson\"},{\"type\":\"uri\",\"value\":\"http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Agent\"},{\"type\":\"uri\",\"value\":\"http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Organisation\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Agent\"}],\"http://www.w3.org/2002/07/owl#sameAs\":[{\"type\":\"uri\",\"value\":\"http://ca.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ko.dbpedia.org/resource/빅토리녹스\"},{\"type\":\"uri\",\"value\":\"http://sv.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://he.dbpedia.org/resource/ויקטורינוקס\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ka.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://hr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"https://global.dbpedia.org/id/4fJN8\"},{\"type\":\"uri\",\"value\":\"http://sk.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://da.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://it.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://bg.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://arz.dbpedia.org/resource/فيكتورينوكس\"},{\"type\":\"uri\",\"value\":\"http://pl.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ru.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://hu.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://uk.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://fi.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://es.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://viaf.org/viaf/312817165\"},{\"type\":\"uri\",\"value\":\"http://nl.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://pt.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://yago-knowledge.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://tr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://pnb.dbpedia.org/resource/وکٹورینوکس\"},{\"type\":\"uri\",\"value\":\"http://fa.dbpedia.org/resource/ویکتورینوکس\"},{\"type\":\"uri\",\"value\":\"http://cs.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ar.dbpedia.org/resource/فيكتور_إنوكس\"},{\"type\":\"uri\",\"value\":\"http://zh.dbpedia.org/resource/維氏\"},{\"type\":\"uri\",\"value\":\"http://ja.dbpedia.org/resource/ビクトリノックス\"},{\"type\":\"uri\",\"value\":\"http://hy.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://lb.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/4571915-9\"},{\"type\":\"uri\",\"value\":\"http://fr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://rdf.freebase.com/ns/m.033yp6\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/1086760514\"},{\"type\":\"uri\",\"value\":\"http://de.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q503405\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/1088099688\"},{\"type\":\"uri\",\"value\":\"http://mk.dbpedia.org/resource/Викторинокс\"}],\"http://xmlns.com/foaf/0.1/name\":[{\"type\":\"literal\",\"value\":\"Victorinox AG\",\"lang\":\"en\"}],\"http://www.w3.org/2000/01/rdf-schema#label\":[{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"es\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"uk\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"fr\"},{\"type\":\"literal\",\"value\":\"빅토리녹스\",\"lang\":\"ko\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"pt\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"cs\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"de\"},{\"type\":\"literal\",\"value\":\"ビクトリノックス\",\"lang\":\"ja\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"it\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"ru\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"ca\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"sv\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"pl\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"維氏\",\"lang\":\"zh\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"nl\"},{\"type\":\"literal\",\"value\":\"فيكتور إنوكس\",\"lang\":\"ar\"}],\"http://purl.org/dc/terms/subject\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Victorinox\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Knife_manufacturing_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Climbing_and_mountaineering_equipment_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Kitchen_knife_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Tool_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Companies_based_in_the_canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Multi-tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_watch_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Watch_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_established_in_1884\"}],\"http://xmlns.com/foaf/0.1/homepage\":[{\"type\":\"uri\",\"value\":\"http://www.victorinox.com\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#lat\":[{\"type\":\"literal\",\"value\":47.01583480834961,\"datatype\":\"http://www.w3.org/2001/XMLSchema#float\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#long\":[{\"type\":\"literal\",\"value\":8.648333549499512,\"datatype\":\"http://www.w3.org/2001/XMLSchema#float\"}],\"http://xmlns.com/foaf/0.1/depiction\":[{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Swiss_Army_Knive_opened.jpeg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Swiss_Army_pocket_knife,_1900.jpeg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Karl_Elsener.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SwissCard_Lite.png\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SwissCard_Lite_contents.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Money-Clip.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Soldatenmesser_08-2.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Climber.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Electrician-Alox.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Bayonet_SG550.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/My_swiss_army_knife.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Logo.svg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Multitool.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Officer's.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_SwissChamp_Closed.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_kitchen_cutlery.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_pokrowiec.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-111mm.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Broker.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Craftsman.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Pioneer.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Spirit.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Weekender.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Wester_&_Co_2.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SAK_1951.jpg\"}],\"http://www.w3.org/ns/prov#wasDerivedFrom\":[{\"type\":\"uri\",\"value\":\"http://en.wikipedia.org/wiki/Victorinox?oldid=1311523504&ns=0\"}],\"http://www.georss.org/georss/point\":[{\"type\":\"literal\",\"value\":\"47.01583333333333 8.648333333333333\"}],\"http://dbpedia.org/ontology/wikiPageWikiLink\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/President_(corporate_title)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/France\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ricasso\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/File:My_swiss_army_knife.JPG\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Knife_manufacturing_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Coat_of_arms_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ibach,_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/SIG_SG_550\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Victorinox\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_army\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Apparel\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Solingen\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/CEO\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Leatherman\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Armasuisse\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Gerber_multitool\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/NSF_International\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Germany\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Chairman\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Cutlery\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_Knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Fuller_(weapon)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Kitchen_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Multi-tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Armed_Forces\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Tool_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Portmanteau\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aluminium\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Museum_of_Modern_Art\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_made\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(creator)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/File:Victorinox_Officer's.JPG\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watch\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Thomas_Minder\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Franc\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Perfume\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watchmaker\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Bayonet\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Flashlight\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Stainless_steel\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Luggage\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_watch_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Watch_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Multi-tool\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Astronaut\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Light-emitting_diode\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Mount_Everest\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Kitchen_knife_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/NASA\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Schwyz\"}],\"http://dbpedia.org/ontology/wikiPageExternalLink\":[{\"type\":\"uri\",\"value\":\"http://www.sakwiki.com\"},{\"type\":\"uri\",\"value\":\"http://www.victorinox.com\"}],\"http://dbpedia.org/ontology/description\":[{\"type\":\"literal\",\"value\":\"svájci késgyártó cég\",\"lang\":\"hu\"},{\"type\":\"literal\",\"value\":\"azienda svizzera\",\"lang\":\"it\"},{\"type\":\"literal\",\"value\":\"švýcarská firma vyrábějící nože\",\"lang\":\"cs\"},{\"type\":\"literal\",\"value\":\"Svislanda firmao\",\"lang\":\"eo\"},{\"type\":\"literal\",\"value\":\"швейцарска компания\",\"lang\":\"bg\"},{\"type\":\"literal\",\"value\":\"fábrica suiza de navajas suizas, cuchillos, relojes y colonias fundada en 1884\",\"lang\":\"es\"},{\"type\":\"literal\",\"value\":\"חברה\",\"lang\":\"iw\"},{\"type\":\"literal\",\"value\":\"szwajcarskie przedsiębiorstwo zajmujące się produkcją noży, scyzoryków oraz akcesoriów kuchennych\",\"lang\":\"pl\"},{\"type\":\"literal\",\"value\":\"merkezi Schwyz, İsviçre'de bulunan bir bıçak üreticisi\",\"lang\":\"tr\"},{\"type\":\"literal\",\"value\":\"Швейцарский производитель ножей и часов\",\"lang\":\"ru\"},{\"type\":\"literal\",\"value\":\"bedrijf in Zwitserland\",\"lang\":\"nl\"},{\"type\":\"literal\",\"value\":\"Schweizer Hersteller von Taschenmessern, Küchenmessern, Uhren, Reisegepäck und Parfums\",\"lang\":\"de\"},{\"type\":\"literal\",\"value\":\"شركة سويسرية\",\"lang\":\"ar\"},{\"type\":\"literal\",\"value\":\"Swiss manufacturer of Swiss Army Knives, cutlery, watches, travel gear, and fragrances\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"entreprise suisse fabriquant notamment le célèbre couteau suisse\",\"lang\":\"fr\"},{\"type\":\"literal\",\"value\":\"sveitsiläinen työkaluvalmistaja\",\"lang\":\"fi\"},{\"type\":\"literal\",\"value\":\"瑞士公司\",\"lang\":\"zh\"}],\"http://dbpedia.org/ontology/thumbnail\":[{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Logo.svg?width=300\"}],\"http://dbpedia.org/property/wikiPageUsesTemplate\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Main\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Year_needed\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Hidden_begin\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:IPAc-en\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Hidden_end\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Main_article\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Clarify\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Anchor\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Coord\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Infobox_company\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Commons_category\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Use_dmy_dates\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Multiple_image\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Val\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Start_date_and_age\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Small\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Ubl\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Portal\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Knives\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Citation_needed\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Reflist\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Short_description\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:URL\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Authority_control\"}],\"http://dbpedia.org/property/date\":[{\"type\":\"literal\",\"value\":\"July 2017\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"March 2024\",\"lang\":\"en\"}],\"http://dbpedia.org/property/name\":[{\"type\":\"literal\",\"value\":\"Victorinox AG\",\"lang\":\"en\"}],\"http://dbpedia.org/property/type\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"}],\"http://dbpedia.org/ontology/foundingYear\":[{\"type\":\"literal\",\"value\":\"1979\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"},{\"type\":\"literal\",\"value\":\"1884\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"}],\"http://purl.org/linguistics/gold/hypernym\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Manufacturer\"}],\"http://xmlns.com/foaf/0.1/isPrimaryTopicOf\":[{\"type\":\"uri\",\"value\":\"http://en.wikipedia.org/wiki/Victorinox\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#geometry\":[{\"type\":\"literal\",\"value\":\"POINT(8.6483335494995 47.01583480835)\",\"datatype\":\"http://www.openlinksw.com/schemas/virtrdf#Geometry\"}],\"http://dbpedia.org/property/logoSize\":[{\"type\":\"literal\",\"value\":300,\"datatype\":\"http://www.w3.org/2001/XMLSchema#integer\"}],\"http://dbpedia.org/ontology/foundingDate\":[{\"type\":\"literal\",\"value\":\"1979-01-02\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#date\"}],\"http://dbpedia.org/ontology/numberOfEmployees\":[{\"type\":\"literal\",\"value\":\"1850\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#nonNegativeInteger\"}],\"http://dbpedia.org/property/subsid\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"}],\"http://dbpedia.org/property/areaServed\":[{\"type\":\"literal\",\"value\":\"Worldwide\",\"lang\":\"en\"}],\"http://dbpedia.org/property/foundation\":[{\"type\":\"literal\",\"value\":\"--01-02\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gMonthDay\"}],\"http://dbpedia.org/property/numEmployees\":[{\"type\":\"literal\",\"value\":1850,\"datatype\":\"http://www.w3.org/2001/XMLSchema#integer\"}],\"http://dbpedia.org/ontology/type\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"}],\"http://schema.org/sameAs\":[{\"type\":\"uri\",\"value\":\"http://viaf.org/viaf/312817165\"}],\"http://dbpedia.org/property/footer\":[{\"type\":\"literal\",\"value\":\"A SwissCard Lite, so named for including a flashlight with replaceable battery\",\"lang\":\"en\"}],\"http://dbpedia.org/property/image\":[{\"type\":\"literal\",\"value\":\"SwissCard Lite contents.jpg\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"SwissCard Lite.png\",\"lang\":\"en\"}],\"http://dbpedia.org/property/locationCountry\":[{\"type\":\"literal\",\"value\":\"Switzerland\",\"lang\":\"en\"}],\"http://dbpedia.org/ontology/subsidiary\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"}],\"http://dbpedia.org/ontology/product\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watch\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Baggage\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Cutlery\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Clothing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Perfume\"}],\"http://dbpedia.org/property/keyPeople\":[{\"type\":\"literal\",\"value\":\"Carl Elsener Jr. ( )\",\"lang\":\"en\"}],\"http://dbpedia.org/property/products\":[{\"type\":\"literal\",\"value\":\"Swiss Army knives, cutlery, watches, travel gear, apparel, fragrances\",\"lang\":\"en\"}],\"http://dbpedia.org/property/reason\":[{\"type\":\"literal\",\"value\":\"To avoid what?\",\"lang\":\"en\"}],\"http://dbpedia.org/property/locationCity\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ibach,_Switzerland\"}],\"http://dbpedia.org/ontology/formerName\":[{\"type\":\"literal\",\"value\":\"Messerfabrik Carl Elsener\",\"lang\":\"en\"}],\"http://dbpedia.org/ontology/foundedBy\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"}],\"http://dbpedia.org/property/revenue\":[{\"type\":\"literal\",\"value\":\"5.1E8\",\"datatype\":\"http://dbpedia.org/datatype/swissFranc\"}],\"http://dbpedia.org/ontology/revenue\":[{\"type\":\"literal\",\"value\":\"5.1E8\",\"datatype\":\"http://dbpedia.org/datatype/swissFranc\"}],\"http://dbpedia.org/property/formerName\":[{\"type\":\"literal\",\"value\":\"Messerfabrik Carl Elsener\",\"lang\":\"en\"}],\"http://dbpedia.org/property/founder\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"}],\"http://dbpedia.org/ontology/keyPerson\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Carl_Elsener_Jr.\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Chief_executive_officer\"}],\"http://dbpedia.org/property/logo\":[{\"type\":\"literal\",\"value\":\"Victorinox Logo.svg\",\"lang\":\"en\"}],\"http://dbpedia.org/property/cs1Dates\":[{\"type\":\"literal\",\"value\":\"y\",\"lang\":\"en\"}]}}",
+          "recordHash": "c4c799df5f0963c55105376930a80b561e25ee96d0eaf0c849569710ab88a04e",
+          "homepage": "http://www.victorinox.com",
+          "redirectChain": [
+            "https://www.victorinox.com/",
+            "https://www.victorinox.com/en-HK/"
+          ],
+          "verifiedAt": "2026-11-04T20:27:32.166Z"
+        },
+        "chunkCount": 2
+      },
+      {
+        "id": "5efe39db39ab7c4fbaba112a",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3",
+        "title": "Victorinox Climber in Black  - 1.3703.3",
+        "hash": "2f88bb7c4df57a70f3c23bf67c7483ca752e118698effe1442f44522b05f5c87",
+        "model": "1.3703",
+        "brand": "Victorinox",
+        "region": "us",
+        "chain": [
+          "bailian-responses:structured-search",
+          "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3"
+        ],
+        "fetchedAt": "2026-11-04T20:27:34.382Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [],
+          "figures": [
+            {
+              "url": "https://imageengine.victorinox.com/transform/7cc5708b-16c0-4237-904d-6e1b5fa4e7a5/SAK_1_3703_3__S1?io=transform%3Abackground%2Ccolor%3AF0F0F0&io=transform%3Afit%2Cwidth%3A900%2Cheight%3A650&quality=100",
+              "caption": "Climber 1.3703.3"
+            }
+          ]
+        },
+        "sections": [
+          {
+            "title": "Climber",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-name"
+          },
+          {
+            "title": "Product Details",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion"
+          },
+          {
+            "title": "Medium Pocket Knife for Everyday",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion"
+          },
+          {
+            "title": "Tools",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion"
+          },
+          {
+            "title": "Dimensions",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion"
+          },
+          {
+            "title": "Details",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion"
+          },
+          {
+            "title": "Warranty",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion"
+          },
+          {
+            "title": "Reviews & Rating",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#product-details-accordion"
+          },
+          {
+            "title": "Stay up to date",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#newsletter-subscription-title-f9ec7ac9-1b53-46d3-a912-1330f3e0a777"
+          },
+          {
+            "title": "(0)",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703.3#reviews-and-rating"
+          },
+          {
+            "title": "Information onFree Shipping& Returns",
+            "url": "https://www.victorinox.com/en-US/Frequently-Asked-Questions---FAQs/cms/faq-fulfillment/"
+          },
+          {
+            "title": "Product Support",
+            "url": "https://www.victorinox.com/en-US/Product-support/cms/product-support/"
+          },
+          {
+            "title": "Online Orders",
+            "url": "https://www.victorinox.com/en-US/Questions-about-Ordering/cms/service-faq-orders/"
+          },
+          {
+            "title": "Returns",
+            "url": "https://www.victorinox.com/en-US/Questions-about-Returns/cms/service-faq-returns/"
+          }
+        ],
+        "publisherProof": {
+          "version": 1,
+          "brand": "Victorinox",
+          "directoryURL": "https://dbpedia.org/data/Victorinox.json",
+          "entity": "http://dbpedia.org/resource/Victorinox",
+          "record": "{\"http://dbpedia.org/resource/Victorinox\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q24229398\"},{\"type\":\"uri\",\"value\":\"http://www.w3.org/2002/07/owl#Thing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Company\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q4830453\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q43229\"},{\"type\":\"uri\",\"value\":\"http://schema.org/Organization\"},{\"type\":\"uri\",\"value\":\"http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#SocialPerson\"},{\"type\":\"uri\",\"value\":\"http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Agent\"},{\"type\":\"uri\",\"value\":\"http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Organisation\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Agent\"}],\"http://www.w3.org/2002/07/owl#sameAs\":[{\"type\":\"uri\",\"value\":\"http://ca.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ko.dbpedia.org/resource/빅토리녹스\"},{\"type\":\"uri\",\"value\":\"http://sv.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://he.dbpedia.org/resource/ויקטורינוקס\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ka.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://hr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"https://global.dbpedia.org/id/4fJN8\"},{\"type\":\"uri\",\"value\":\"http://sk.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://da.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://it.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://bg.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://arz.dbpedia.org/resource/فيكتورينوكس\"},{\"type\":\"uri\",\"value\":\"http://pl.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ru.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://hu.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://uk.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://fi.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://es.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://viaf.org/viaf/312817165\"},{\"type\":\"uri\",\"value\":\"http://nl.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://pt.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://yago-knowledge.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://tr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://pnb.dbpedia.org/resource/وکٹورینوکس\"},{\"type\":\"uri\",\"value\":\"http://fa.dbpedia.org/resource/ویکتورینوکس\"},{\"type\":\"uri\",\"value\":\"http://cs.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ar.dbpedia.org/resource/فيكتور_إنوكس\"},{\"type\":\"uri\",\"value\":\"http://zh.dbpedia.org/resource/維氏\"},{\"type\":\"uri\",\"value\":\"http://ja.dbpedia.org/resource/ビクトリノックス\"},{\"type\":\"uri\",\"value\":\"http://hy.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://lb.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/4571915-9\"},{\"type\":\"uri\",\"value\":\"http://fr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://rdf.freebase.com/ns/m.033yp6\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/1086760514\"},{\"type\":\"uri\",\"value\":\"http://de.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q503405\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/1088099688\"},{\"type\":\"uri\",\"value\":\"http://mk.dbpedia.org/resource/Викторинокс\"}],\"http://xmlns.com/foaf/0.1/name\":[{\"type\":\"literal\",\"value\":\"Victorinox AG\",\"lang\":\"en\"}],\"http://www.w3.org/2000/01/rdf-schema#label\":[{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"es\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"uk\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"fr\"},{\"type\":\"literal\",\"value\":\"빅토리녹스\",\"lang\":\"ko\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"pt\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"cs\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"de\"},{\"type\":\"literal\",\"value\":\"ビクトリノックス\",\"lang\":\"ja\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"it\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"ru\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"ca\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"sv\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"pl\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"維氏\",\"lang\":\"zh\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"nl\"},{\"type\":\"literal\",\"value\":\"فيكتور إنوكس\",\"lang\":\"ar\"}],\"http://purl.org/dc/terms/subject\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Victorinox\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Knife_manufacturing_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Climbing_and_mountaineering_equipment_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Kitchen_knife_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Tool_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Companies_based_in_the_canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Multi-tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_watch_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Watch_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_established_in_1884\"}],\"http://xmlns.com/foaf/0.1/homepage\":[{\"type\":\"uri\",\"value\":\"http://www.victorinox.com\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#lat\":[{\"type\":\"literal\",\"value\":47.01583480834961,\"datatype\":\"http://www.w3.org/2001/XMLSchema#float\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#long\":[{\"type\":\"literal\",\"value\":8.648333549499512,\"datatype\":\"http://www.w3.org/2001/XMLSchema#float\"}],\"http://xmlns.com/foaf/0.1/depiction\":[{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Swiss_Army_Knive_opened.jpeg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Swiss_Army_pocket_knife,_1900.jpeg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Karl_Elsener.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SwissCard_Lite.png\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SwissCard_Lite_contents.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Money-Clip.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Soldatenmesser_08-2.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Climber.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Electrician-Alox.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Bayonet_SG550.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/My_swiss_army_knife.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Logo.svg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Multitool.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Officer's.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_SwissChamp_Closed.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_kitchen_cutlery.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_pokrowiec.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-111mm.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Broker.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Craftsman.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Pioneer.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Spirit.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Weekender.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Wester_&_Co_2.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SAK_1951.jpg\"}],\"http://www.w3.org/ns/prov#wasDerivedFrom\":[{\"type\":\"uri\",\"value\":\"http://en.wikipedia.org/wiki/Victorinox?oldid=1311523504&ns=0\"}],\"http://www.georss.org/georss/point\":[{\"type\":\"literal\",\"value\":\"47.01583333333333 8.648333333333333\"}],\"http://dbpedia.org/ontology/wikiPageWikiLink\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/President_(corporate_title)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/France\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ricasso\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/File:My_swiss_army_knife.JPG\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Knife_manufacturing_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Coat_of_arms_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ibach,_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/SIG_SG_550\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Victorinox\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_army\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Apparel\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Solingen\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/CEO\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Leatherman\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Armasuisse\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Gerber_multitool\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/NSF_International\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Germany\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Chairman\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Cutlery\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_Knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Fuller_(weapon)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Kitchen_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Multi-tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Armed_Forces\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Tool_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Portmanteau\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aluminium\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Museum_of_Modern_Art\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_made\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(creator)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/File:Victorinox_Officer's.JPG\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watch\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Thomas_Minder\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Franc\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Perfume\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watchmaker\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Bayonet\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Flashlight\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Stainless_steel\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Luggage\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_watch_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Watch_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Multi-tool\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Astronaut\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Light-emitting_diode\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Mount_Everest\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Kitchen_knife_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/NASA\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Schwyz\"}],\"http://dbpedia.org/ontology/wikiPageExternalLink\":[{\"type\":\"uri\",\"value\":\"http://www.sakwiki.com\"},{\"type\":\"uri\",\"value\":\"http://www.victorinox.com\"}],\"http://dbpedia.org/ontology/description\":[{\"type\":\"literal\",\"value\":\"svájci késgyártó cég\",\"lang\":\"hu\"},{\"type\":\"literal\",\"value\":\"azienda svizzera\",\"lang\":\"it\"},{\"type\":\"literal\",\"value\":\"švýcarská firma vyrábějící nože\",\"lang\":\"cs\"},{\"type\":\"literal\",\"value\":\"Svislanda firmao\",\"lang\":\"eo\"},{\"type\":\"literal\",\"value\":\"швейцарска компания\",\"lang\":\"bg\"},{\"type\":\"literal\",\"value\":\"fábrica suiza de navajas suizas, cuchillos, relojes y colonias fundada en 1884\",\"lang\":\"es\"},{\"type\":\"literal\",\"value\":\"חברה\",\"lang\":\"iw\"},{\"type\":\"literal\",\"value\":\"szwajcarskie przedsiębiorstwo zajmujące się produkcją noży, scyzoryków oraz akcesoriów kuchennych\",\"lang\":\"pl\"},{\"type\":\"literal\",\"value\":\"merkezi Schwyz, İsviçre'de bulunan bir bıçak üreticisi\",\"lang\":\"tr\"},{\"type\":\"literal\",\"value\":\"Швейцарский производитель ножей и часов\",\"lang\":\"ru\"},{\"type\":\"literal\",\"value\":\"bedrijf in Zwitserland\",\"lang\":\"nl\"},{\"type\":\"literal\",\"value\":\"Schweizer Hersteller von Taschenmessern, Küchenmessern, Uhren, Reisegepäck und Parfums\",\"lang\":\"de\"},{\"type\":\"literal\",\"value\":\"شركة سويسرية\",\"lang\":\"ar\"},{\"type\":\"literal\",\"value\":\"Swiss manufacturer of Swiss Army Knives, cutlery, watches, travel gear, and fragrances\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"entreprise suisse fabriquant notamment le célèbre couteau suisse\",\"lang\":\"fr\"},{\"type\":\"literal\",\"value\":\"sveitsiläinen työkaluvalmistaja\",\"lang\":\"fi\"},{\"type\":\"literal\",\"value\":\"瑞士公司\",\"lang\":\"zh\"}],\"http://dbpedia.org/ontology/thumbnail\":[{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Logo.svg?width=300\"}],\"http://dbpedia.org/property/wikiPageUsesTemplate\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Main\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Year_needed\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Hidden_begin\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:IPAc-en\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Hidden_end\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Main_article\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Clarify\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Anchor\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Coord\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Infobox_company\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Commons_category\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Use_dmy_dates\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Multiple_image\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Val\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Start_date_and_age\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Small\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Ubl\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Portal\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Knives\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Citation_needed\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Reflist\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Short_description\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:URL\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Authority_control\"}],\"http://dbpedia.org/property/date\":[{\"type\":\"literal\",\"value\":\"July 2017\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"March 2024\",\"lang\":\"en\"}],\"http://dbpedia.org/property/name\":[{\"type\":\"literal\",\"value\":\"Victorinox AG\",\"lang\":\"en\"}],\"http://dbpedia.org/property/type\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"}],\"http://dbpedia.org/ontology/foundingYear\":[{\"type\":\"literal\",\"value\":\"1979\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"},{\"type\":\"literal\",\"value\":\"1884\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"}],\"http://purl.org/linguistics/gold/hypernym\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Manufacturer\"}],\"http://xmlns.com/foaf/0.1/isPrimaryTopicOf\":[{\"type\":\"uri\",\"value\":\"http://en.wikipedia.org/wiki/Victorinox\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#geometry\":[{\"type\":\"literal\",\"value\":\"POINT(8.6483335494995 47.01583480835)\",\"datatype\":\"http://www.openlinksw.com/schemas/virtrdf#Geometry\"}],\"http://dbpedia.org/property/logoSize\":[{\"type\":\"literal\",\"value\":300,\"datatype\":\"http://www.w3.org/2001/XMLSchema#integer\"}],\"http://dbpedia.org/ontology/foundingDate\":[{\"type\":\"literal\",\"value\":\"1979-01-02\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#date\"}],\"http://dbpedia.org/ontology/numberOfEmployees\":[{\"type\":\"literal\",\"value\":\"1850\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#nonNegativeInteger\"}],\"http://dbpedia.org/property/subsid\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"}],\"http://dbpedia.org/property/areaServed\":[{\"type\":\"literal\",\"value\":\"Worldwide\",\"lang\":\"en\"}],\"http://dbpedia.org/property/foundation\":[{\"type\":\"literal\",\"value\":\"--01-02\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gMonthDay\"}],\"http://dbpedia.org/property/numEmployees\":[{\"type\":\"literal\",\"value\":1850,\"datatype\":\"http://www.w3.org/2001/XMLSchema#integer\"}],\"http://dbpedia.org/ontology/type\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"}],\"http://schema.org/sameAs\":[{\"type\":\"uri\",\"value\":\"http://viaf.org/viaf/312817165\"}],\"http://dbpedia.org/property/footer\":[{\"type\":\"literal\",\"value\":\"A SwissCard Lite, so named for including a flashlight with replaceable battery\",\"lang\":\"en\"}],\"http://dbpedia.org/property/image\":[{\"type\":\"literal\",\"value\":\"SwissCard Lite contents.jpg\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"SwissCard Lite.png\",\"lang\":\"en\"}],\"http://dbpedia.org/property/locationCountry\":[{\"type\":\"literal\",\"value\":\"Switzerland\",\"lang\":\"en\"}],\"http://dbpedia.org/ontology/subsidiary\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"}],\"http://dbpedia.org/ontology/product\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watch\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Baggage\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Cutlery\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Clothing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Perfume\"}],\"http://dbpedia.org/property/keyPeople\":[{\"type\":\"literal\",\"value\":\"Carl Elsener Jr. ( )\",\"lang\":\"en\"}],\"http://dbpedia.org/property/products\":[{\"type\":\"literal\",\"value\":\"Swiss Army knives, cutlery, watches, travel gear, apparel, fragrances\",\"lang\":\"en\"}],\"http://dbpedia.org/property/reason\":[{\"type\":\"literal\",\"value\":\"To avoid what?\",\"lang\":\"en\"}],\"http://dbpedia.org/property/locationCity\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ibach,_Switzerland\"}],\"http://dbpedia.org/ontology/formerName\":[{\"type\":\"literal\",\"value\":\"Messerfabrik Carl Elsener\",\"lang\":\"en\"}],\"http://dbpedia.org/ontology/foundedBy\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"}],\"http://dbpedia.org/property/revenue\":[{\"type\":\"literal\",\"value\":\"5.1E8\",\"datatype\":\"http://dbpedia.org/datatype/swissFranc\"}],\"http://dbpedia.org/ontology/revenue\":[{\"type\":\"literal\",\"value\":\"5.1E8\",\"datatype\":\"http://dbpedia.org/datatype/swissFranc\"}],\"http://dbpedia.org/property/formerName\":[{\"type\":\"literal\",\"value\":\"Messerfabrik Carl Elsener\",\"lang\":\"en\"}],\"http://dbpedia.org/property/founder\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"}],\"http://dbpedia.org/ontology/keyPerson\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Carl_Elsener_Jr.\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Chief_executive_officer\"}],\"http://dbpedia.org/property/logo\":[{\"type\":\"literal\",\"value\":\"Victorinox Logo.svg\",\"lang\":\"en\"}],\"http://dbpedia.org/property/cs1Dates\":[{\"type\":\"literal\",\"value\":\"y\",\"lang\":\"en\"}]}}",
+          "recordHash": "c4c799df5f0963c55105376930a80b561e25ee96d0eaf0c849569710ab88a04e",
+          "homepage": "http://www.victorinox.com",
+          "redirectChain": [
+            "https://www.victorinox.com/",
+            "https://www.victorinox.com/en-HK/"
+          ],
+          "verifiedAt": "2026-11-04T20:27:32.166Z"
+        },
+        "chunkCount": 2
+      },
+      {
+        "id": "67e72afc2b5ada6fc8c82282",
+        "processorVersion": "extractive-3-overlap",
+        "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703",
+        "title": "Victorinox Climber in red  - 1.3703",
+        "hash": "9fcfc26c16950b0af258780ff32688d0c27985071cbcb289efd20cf69d7bbf92",
+        "model": "1.3703",
+        "brand": "Victorinox",
+        "region": "us",
+        "chain": [
+          "bailian-responses:structured-search",
+          "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703"
+        ],
+        "fetchedAt": "2026-11-04T20:27:33.238Z",
+        "reading": {
+          "mode": "html_text",
+          "limitations": [],
+          "figures": [
+            {
+              "url": "https://imageengine.victorinox.com/transform/b930a3ee-e28e-40e8-bb94-6f4dbc02bddf/SAK_1_3703__S1?io=transform%3Abackground%2Ccolor%3AF0F0F0&io=transform%3Afit%2Cwidth%3A900%2Cheight%3A650&quality=100",
+              "caption": "Climber 1.3703"
+            },
+            {
+              "url": "https://imageengine.victorinox.com/transform/10ea7d6f-7db6-4693-a0df-17aba620511d/SAK_1_3703__B1?io=transform%3Abackground%2Ccolor%3AF0F0F0&io=transform%3Afit%2Cwidth%3A900%2Cheight%3A650&quality=100",
+              "caption": "Climber 1.3703"
+            },
+            {
+              "url": "https://imageengine.victorinox.com/transform/36b533b4-58a9-4a17-bc0f-2a505fb75f7a/SAK_1-3703_In-Scale_LS1?io=transform%3Abackground%2Ccolor%3AF0F0F0&io=transform%3Afit%2Cwidth%3A900%2Cheight%3A650&quality=100",
+              "caption": "Climber 1.3703"
+            }
+          ]
+        },
+        "sections": [
+          {
+            "title": "Climber",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703#product-name"
+          },
+          {
+            "title": "Product Details",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703#product-details-accordion"
+          },
+          {
+            "title": "Medium Pocket Knife for Everyday",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703#product-details-accordion"
+          },
+          {
+            "title": "Tools",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703#product-details-accordion"
+          },
+          {
+            "title": "Dimensions",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703#product-details-accordion"
+          },
+          {
+            "title": "Details",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703#product-details-accordion"
+          },
+          {
+            "title": "Warranty",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703#product-details-accordion"
+          },
+          {
+            "title": "Reviews & Rating",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703#product-details-accordion"
+          },
+          {
+            "title": "Stay up to date",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703#newsletter-subscription-title-f9ec7ac9-1b53-46d3-a912-1330f3e0a777"
+          },
+          {
+            "title": "(0)",
+            "url": "https://www.victorinox.com/en-US/Products/Swiss-Army-Knife%E2%84%A2-and-Tools/Essentials/Climber/p/1.3703#reviews-and-rating"
+          },
+          {
+            "title": "Information onFree Shipping& Returns",
+            "url": "https://www.victorinox.com/en-US/Frequently-Asked-Questions---FAQs/cms/faq-fulfillment/"
+          },
+          {
+            "title": "Product Support",
+            "url": "https://www.victorinox.com/en-US/Product-support/cms/product-support/"
+          },
+          {
+            "title": "Online Orders",
+            "url": "https://www.victorinox.com/en-US/Questions-about-Ordering/cms/service-faq-orders/"
+          },
+          {
+            "title": "Returns",
+            "url": "https://www.victorinox.com/en-US/Questions-about-Returns/cms/service-faq-returns/"
+          }
+        ],
+        "publisherProof": {
+          "version": 1,
+          "brand": "Victorinox",
+          "directoryURL": "https://dbpedia.org/data/Victorinox.json",
+          "entity": "http://dbpedia.org/resource/Victorinox",
+          "record": "{\"http://dbpedia.org/resource/Victorinox\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q24229398\"},{\"type\":\"uri\",\"value\":\"http://www.w3.org/2002/07/owl#Thing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Company\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q4830453\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q43229\"},{\"type\":\"uri\",\"value\":\"http://schema.org/Organization\"},{\"type\":\"uri\",\"value\":\"http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#SocialPerson\"},{\"type\":\"uri\",\"value\":\"http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Agent\"},{\"type\":\"uri\",\"value\":\"http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Organisation\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/ontology/Agent\"}],\"http://www.w3.org/2002/07/owl#sameAs\":[{\"type\":\"uri\",\"value\":\"http://ca.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ko.dbpedia.org/resource/빅토리녹스\"},{\"type\":\"uri\",\"value\":\"http://sv.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://he.dbpedia.org/resource/ויקטורינוקס\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ka.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://hr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"https://global.dbpedia.org/id/4fJN8\"},{\"type\":\"uri\",\"value\":\"http://sk.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://da.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://it.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://bg.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://arz.dbpedia.org/resource/فيكتورينوكس\"},{\"type\":\"uri\",\"value\":\"http://pl.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ru.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://hu.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://uk.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://fi.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://es.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://viaf.org/viaf/312817165\"},{\"type\":\"uri\",\"value\":\"http://nl.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://pt.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://yago-knowledge.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://tr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://pnb.dbpedia.org/resource/وکٹورینوکس\"},{\"type\":\"uri\",\"value\":\"http://fa.dbpedia.org/resource/ویکتورینوکس\"},{\"type\":\"uri\",\"value\":\"http://cs.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://ar.dbpedia.org/resource/فيكتور_إنوكس\"},{\"type\":\"uri\",\"value\":\"http://zh.dbpedia.org/resource/維氏\"},{\"type\":\"uri\",\"value\":\"http://ja.dbpedia.org/resource/ビクトリノックス\"},{\"type\":\"uri\",\"value\":\"http://hy.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://lb.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/4571915-9\"},{\"type\":\"uri\",\"value\":\"http://fr.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://rdf.freebase.com/ns/m.033yp6\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/1086760514\"},{\"type\":\"uri\",\"value\":\"http://de.dbpedia.org/resource/Victorinox\"},{\"type\":\"uri\",\"value\":\"http://www.wikidata.org/entity/Q503405\"},{\"type\":\"uri\",\"value\":\"http://d-nb.info/gnd/1088099688\"},{\"type\":\"uri\",\"value\":\"http://mk.dbpedia.org/resource/Викторинокс\"}],\"http://xmlns.com/foaf/0.1/name\":[{\"type\":\"literal\",\"value\":\"Victorinox AG\",\"lang\":\"en\"}],\"http://www.w3.org/2000/01/rdf-schema#label\":[{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"es\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"uk\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"fr\"},{\"type\":\"literal\",\"value\":\"빅토리녹스\",\"lang\":\"ko\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"pt\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"cs\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"de\"},{\"type\":\"literal\",\"value\":\"ビクトリノックス\",\"lang\":\"ja\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"it\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"ru\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"ca\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"sv\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"pl\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"維氏\",\"lang\":\"zh\"},{\"type\":\"literal\",\"value\":\"Victorinox\",\"lang\":\"nl\"},{\"type\":\"literal\",\"value\":\"فيكتور إنوكس\",\"lang\":\"ar\"}],\"http://purl.org/dc/terms/subject\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Victorinox\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Knife_manufacturing_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Climbing_and_mountaineering_equipment_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Kitchen_knife_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Tool_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Companies_based_in_the_canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Multi-tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_watch_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Watch_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_established_in_1884\"}],\"http://xmlns.com/foaf/0.1/homepage\":[{\"type\":\"uri\",\"value\":\"http://www.victorinox.com\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#lat\":[{\"type\":\"literal\",\"value\":47.01583480834961,\"datatype\":\"http://www.w3.org/2001/XMLSchema#float\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#long\":[{\"type\":\"literal\",\"value\":8.648333549499512,\"datatype\":\"http://www.w3.org/2001/XMLSchema#float\"}],\"http://xmlns.com/foaf/0.1/depiction\":[{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Swiss_Army_Knive_opened.jpeg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Swiss_Army_pocket_knife,_1900.jpeg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Karl_Elsener.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SwissCard_Lite.png\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SwissCard_Lite_contents.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Money-Clip.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Soldatenmesser_08-2.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Climber.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Electrician-Alox.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Bayonet_SG550.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/My_swiss_army_knife.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Logo.svg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Multitool.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Officer's.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_SwissChamp_Closed.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_kitchen_cutlery.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_pokrowiec.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-111mm.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Broker.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Craftsman.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Pioneer.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Spirit.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox-Weekender.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Wester_&_Co_2.jpg\"},{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/SAK_1951.jpg\"}],\"http://www.w3.org/ns/prov#wasDerivedFrom\":[{\"type\":\"uri\",\"value\":\"http://en.wikipedia.org/wiki/Victorinox?oldid=1311523504&ns=0\"}],\"http://www.georss.org/georss/point\":[{\"type\":\"literal\",\"value\":\"47.01583333333333 8.648333333333333\"}],\"http://dbpedia.org/ontology/wikiPageWikiLink\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/President_(corporate_title)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/France\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ricasso\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/File:My_swiss_army_knife.JPG\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Knife_manufacturing_companies\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Coat_of_arms_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ibach,_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/SIG_SG_550\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Victorinox\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_army\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Apparel\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Solingen\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/CEO\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Leatherman\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Armasuisse\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Gerber_multitool\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/NSF_International\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Germany\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Chairman\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Cutlery\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_Knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Fuller_(weapon)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Kitchen_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Multi-tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Armed_Forces\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_companies_established_in_1884\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Tool_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Portmanteau\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aluminium\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Museum_of_Modern_Art\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_made\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(creator)\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/File:Victorinox_Officer's.JPG\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watch\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Thomas_Minder\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Franc\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Perfume\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watchmaker\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Bayonet\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Flashlight\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Stainless_steel\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Luggage\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Swiss_watch_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Watch_manufacturing_companies_of_Switzerland\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Multi-tool\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Astronaut\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Light-emitting_diode\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Mount_Everest\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Kitchen_knife_brands\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/NASA\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Category:Schwyz\"}],\"http://dbpedia.org/ontology/wikiPageExternalLink\":[{\"type\":\"uri\",\"value\":\"http://www.sakwiki.com\"},{\"type\":\"uri\",\"value\":\"http://www.victorinox.com\"}],\"http://dbpedia.org/ontology/description\":[{\"type\":\"literal\",\"value\":\"svájci késgyártó cég\",\"lang\":\"hu\"},{\"type\":\"literal\",\"value\":\"azienda svizzera\",\"lang\":\"it\"},{\"type\":\"literal\",\"value\":\"švýcarská firma vyrábějící nože\",\"lang\":\"cs\"},{\"type\":\"literal\",\"value\":\"Svislanda firmao\",\"lang\":\"eo\"},{\"type\":\"literal\",\"value\":\"швейцарска компания\",\"lang\":\"bg\"},{\"type\":\"literal\",\"value\":\"fábrica suiza de navajas suizas, cuchillos, relojes y colonias fundada en 1884\",\"lang\":\"es\"},{\"type\":\"literal\",\"value\":\"חברה\",\"lang\":\"iw\"},{\"type\":\"literal\",\"value\":\"szwajcarskie przedsiębiorstwo zajmujące się produkcją noży, scyzoryków oraz akcesoriów kuchennych\",\"lang\":\"pl\"},{\"type\":\"literal\",\"value\":\"merkezi Schwyz, İsviçre'de bulunan bir bıçak üreticisi\",\"lang\":\"tr\"},{\"type\":\"literal\",\"value\":\"Швейцарский производитель ножей и часов\",\"lang\":\"ru\"},{\"type\":\"literal\",\"value\":\"bedrijf in Zwitserland\",\"lang\":\"nl\"},{\"type\":\"literal\",\"value\":\"Schweizer Hersteller von Taschenmessern, Küchenmessern, Uhren, Reisegepäck und Parfums\",\"lang\":\"de\"},{\"type\":\"literal\",\"value\":\"شركة سويسرية\",\"lang\":\"ar\"},{\"type\":\"literal\",\"value\":\"Swiss manufacturer of Swiss Army Knives, cutlery, watches, travel gear, and fragrances\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"entreprise suisse fabriquant notamment le célèbre couteau suisse\",\"lang\":\"fr\"},{\"type\":\"literal\",\"value\":\"sveitsiläinen työkaluvalmistaja\",\"lang\":\"fi\"},{\"type\":\"literal\",\"value\":\"瑞士公司\",\"lang\":\"zh\"}],\"http://dbpedia.org/ontology/thumbnail\":[{\"type\":\"uri\",\"value\":\"http://commons.wikimedia.org/wiki/Special:FilePath/Victorinox_Logo.svg?width=300\"}],\"http://dbpedia.org/property/wikiPageUsesTemplate\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Main\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Tool_manufacturers\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Year_needed\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Hidden_begin\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:IPAc-en\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Hidden_end\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Main_article\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Clarify\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Anchor\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Coord\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Infobox_company\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Commons_category\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Use_dmy_dates\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Multiple_image\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Val\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Start_date_and_age\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Small\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Ubl\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Portal\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Knives\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Citation_needed\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Reflist\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Short_description\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:URL\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Template:Authority_control\"}],\"http://dbpedia.org/property/date\":[{\"type\":\"literal\",\"value\":\"July 2017\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"March 2024\",\"lang\":\"en\"}],\"http://dbpedia.org/property/name\":[{\"type\":\"literal\",\"value\":\"Victorinox AG\",\"lang\":\"en\"}],\"http://dbpedia.org/property/type\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"}],\"http://dbpedia.org/ontology/foundingYear\":[{\"type\":\"literal\",\"value\":\"1979\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"},{\"type\":\"literal\",\"value\":\"1884\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"}],\"http://purl.org/linguistics/gold/hypernym\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Manufacturer\"}],\"http://xmlns.com/foaf/0.1/isPrimaryTopicOf\":[{\"type\":\"uri\",\"value\":\"http://en.wikipedia.org/wiki/Victorinox\"}],\"http://www.w3.org/2003/01/geo/wgs84_pos#geometry\":[{\"type\":\"literal\",\"value\":\"POINT(8.6483335494995 47.01583480835)\",\"datatype\":\"http://www.openlinksw.com/schemas/virtrdf#Geometry\"}],\"http://dbpedia.org/property/logoSize\":[{\"type\":\"literal\",\"value\":300,\"datatype\":\"http://www.w3.org/2001/XMLSchema#integer\"}],\"http://dbpedia.org/ontology/foundingDate\":[{\"type\":\"literal\",\"value\":\"1979-01-02\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#date\"}],\"http://dbpedia.org/ontology/numberOfEmployees\":[{\"type\":\"literal\",\"value\":\"1850\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#nonNegativeInteger\"}],\"http://dbpedia.org/property/subsid\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"}],\"http://dbpedia.org/property/areaServed\":[{\"type\":\"literal\",\"value\":\"Worldwide\",\"lang\":\"en\"}],\"http://dbpedia.org/property/foundation\":[{\"type\":\"literal\",\"value\":\"--01-02\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#gMonthDay\"}],\"http://dbpedia.org/property/numEmployees\":[{\"type\":\"literal\",\"value\":1850,\"datatype\":\"http://www.w3.org/2001/XMLSchema#integer\"}],\"http://dbpedia.org/ontology/type\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Aktiengesellschaft\"}],\"http://schema.org/sameAs\":[{\"type\":\"uri\",\"value\":\"http://viaf.org/viaf/312817165\"}],\"http://dbpedia.org/property/footer\":[{\"type\":\"literal\",\"value\":\"A SwissCard Lite, so named for including a flashlight with replaceable battery\",\"lang\":\"en\"}],\"http://dbpedia.org/property/image\":[{\"type\":\"literal\",\"value\":\"SwissCard Lite contents.jpg\",\"lang\":\"en\"},{\"type\":\"literal\",\"value\":\"SwissCard Lite.png\",\"lang\":\"en\"}],\"http://dbpedia.org/property/locationCountry\":[{\"type\":\"literal\",\"value\":\"Switzerland\",\"lang\":\"en\"}],\"http://dbpedia.org/ontology/subsidiary\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Wenger\"}],\"http://dbpedia.org/ontology/product\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Watch\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Baggage\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Cutlery\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Swiss_Army_knife\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Clothing\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Perfume\"}],\"http://dbpedia.org/property/keyPeople\":[{\"type\":\"literal\",\"value\":\"Carl Elsener Jr. ( )\",\"lang\":\"en\"}],\"http://dbpedia.org/property/products\":[{\"type\":\"literal\",\"value\":\"Swiss Army knives, cutlery, watches, travel gear, apparel, fragrances\",\"lang\":\"en\"}],\"http://dbpedia.org/property/reason\":[{\"type\":\"literal\",\"value\":\"To avoid what?\",\"lang\":\"en\"}],\"http://dbpedia.org/property/locationCity\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Canton_of_Schwyz\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Ibach,_Switzerland\"}],\"http://dbpedia.org/ontology/formerName\":[{\"type\":\"literal\",\"value\":\"Messerfabrik Carl Elsener\",\"lang\":\"en\"}],\"http://dbpedia.org/ontology/foundedBy\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"}],\"http://dbpedia.org/property/revenue\":[{\"type\":\"literal\",\"value\":\"5.1E8\",\"datatype\":\"http://dbpedia.org/datatype/swissFranc\"}],\"http://dbpedia.org/ontology/revenue\":[{\"type\":\"literal\",\"value\":\"5.1E8\",\"datatype\":\"http://dbpedia.org/datatype/swissFranc\"}],\"http://dbpedia.org/property/formerName\":[{\"type\":\"literal\",\"value\":\"Messerfabrik Carl Elsener\",\"lang\":\"en\"}],\"http://dbpedia.org/property/founder\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Karl_Elsener_(inventor)\"}],\"http://dbpedia.org/ontology/keyPerson\":[{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Carl_Elsener_Jr.\"},{\"type\":\"uri\",\"value\":\"http://dbpedia.org/resource/Chief_executive_officer\"}],\"http://dbpedia.org/property/logo\":[{\"type\":\"literal\",\"value\":\"Victorinox Logo.svg\",\"lang\":\"en\"}],\"http://dbpedia.org/property/cs1Dates\":[{\"type\":\"literal\",\"value\":\"y\",\"lang\":\"en\"}]}}",
+          "recordHash": "c4c799df5f0963c55105376930a80b561e25ee96d0eaf0c849569710ab88a04e",
+          "homepage": "http://www.victorinox.com",
+          "redirectChain": [
+            "https://www.victorinox.com/",
+            "https://www.victorinox.com/en-HK/"
+          ],
+          "verifiedAt": "2026-11-04T20:27:32.166Z"
+        },
+        "chunkCount": 2
+      }
+    ]
+  },
+  "status": "executed_quality_requires_review",
+  "upstreamRequests": 4,
+  "finishedAt": "2026-11-04T20:27:46.804Z"
+}

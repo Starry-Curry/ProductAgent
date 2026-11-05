@@ -249,8 +249,9 @@ export function Intake({
               <div className="life-notice" key={c.source.url}>
                 <strong>{c.name}</strong>
                 <p>
-                  {c.brand} · {c.model} · 公共数据库候选
+                  {c.brand ? c.brand+" · " : ""}{c.model} · 公共数据库候选
                 </p>
+                {!!c.creators?.length&&<p>作者：{c.creators.join("、")}（书目记录，不是品牌或赠送者）</p>}
                 <small>
                   {c.license} · {c.fetchedAt} · {c.version}
                 </small>
@@ -496,6 +497,7 @@ export function Intake({
                   "sg",
                   "tw",
                   "hk",
+                  "jp",
                   "de",
                   "fr",
                 ].map((r) => (

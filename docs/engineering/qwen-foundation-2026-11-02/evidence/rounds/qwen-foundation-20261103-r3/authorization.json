@@ -1,0 +1,28 @@
+{
+  "roundId": "qwen-foundation-20261103-r3",
+  "approved": true,
+  "quote": "批准独立追加12次／¥15",
+  "maxRequests": 12,
+  "maxEstimatedCny": 15,
+  "scope": "Repaired Core J01 and necessary Qwen/browser verification only; no third-party paid services or hardware",
+  "historicalLedgers": [
+    {
+      "path": "docs/engineering/outcome-qwen-2026-11-02/evidence/model-calls.json",
+      "sha256": "f55e6ed7d23b97773d0a3160d5d4d953794112a5fe265c899f56c6f697c80243"
+    },
+    {
+      "path": "docs/engineering/qwen-foundation-2026-11-02/evidence/model-calls.json",
+      "sha256": "a6092d978ad64d74e53dadb21bb063a40dab9fc2c74da1317fa088f1637c5271"
+    },
+    {
+      "path": "docs/engineering/qwen-foundation-2026-11-02/evidence/rounds/qwen-foundation-20261103-r2/model-calls.json",
+      "sha256": "fa89c0c82a786dbcb07b27ee228004f45cccdecbbbe99f8c012eb9ddd5888f86"
+    }
+  ],
+  "previousRound": {
+    "id": "qwen-foundation-20261103-r2",
+    "usedRequests": 27,
+    "unknownUsagePreservedRequest": 24,
+    "sealedAt": "2026-11-03T03:28:29.237179+00:00"
+  }
+}

@@ -1,11 +1,12 @@
 import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
-import { canRead, type State, type Person } from "../domain.ts";
+import { type State, type Person } from "../domain.ts";
 import { AgentError } from "../agent/contracts.ts";
 import { invalidateStoryUnderstanding } from "./organization.ts";
 import { clearOwnerContext } from "../memory/store.ts";
 import { migrateUnified } from "../foundation/schema.ts";
 import { recordSpecialist } from "../foundation/specialists.ts";
+import { authorize } from "../foundation/policy.ts";
 
 export const fragmentInput = z
   .object({
@@ -75,7 +76,7 @@ export function listFragments(
   actor: Person,
   itemId?: string,
 ) {
-  if (itemId && !state.items.some((i) => i.id === itemId && canRead(i, actor)))
+  if (itemId && !authorize(db,state,actor,itemId).allowed)
     throw new AgentError("物品未获授权", 403);
   return (
     db
@@ -124,7 +125,7 @@ export function saveFragment(
     for (const id of ids)
       if (
         !previous.includes(id) &&
-        !state.items.some((i) => i.id === id && canRead(i, actor))
+        !authorize(db,state,actor,id).allowed
       )
         throw new AgentError("关联物品未获授权", 403);
     const previousDetails = old ? details(db, old) : undefined;
@@ -191,7 +192,11 @@ export function saveFragment(
       Number(value.allowCloud ?? previousDetails?.allowCloud ?? false),
       value.origin ?? previousDetails?.origin ?? "user-record",
     );
-    recordSpecialist(db,state,actor,{kind:"story",refId:id,revision:(old?.revision||0)+1,itemIds:value.itemIds,intent:"record",goal:"保存这段物品经历",basis:"saved_personal_experience",taskId});
+    // Correcting one's own archived text is not permission to reopen the old
+    // item/task. Keep its original link receipt, and do not create a new active
+    // business run when access to a formerly linked item has been withdrawn.
+    const archivedEdit=!!old&&!taskId&&previous.some(itemId=>!authorize(db,state,actor,itemId).allowed);
+    if(!archivedEdit)recordSpecialist(db,state,actor,{kind:"story",refId:id,revision:(old?.revision||0)+1,itemIds:value.itemIds,intent:"record",goal:"保存这段物品经历",basis:"saved_personal_experience",taskId});
     if (old) invalidateStoryUnderstanding(db, actor, id);
     clearOwnerContext(db, actor, !!old, ids.length || previous.length ? [...new Set([...previous,...ids])] : null);
     for (const previousPhoto of previousDetails?.mediaIds || [])
@@ -261,7 +266,7 @@ export function readMedia(
     !r ||
     (r.owner !== actor &&
       !state.items.some(
-        (i) => i.photo?.includes(`/media/${id}`) && canRead(i, actor),
+        (i) => i.photo?.includes(`/media/${id}`) && authorize(db, state, actor, i.id).allowed,
       ))
   )
     throw new AgentError("照片不存在或未获授权", 403);

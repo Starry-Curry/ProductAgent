@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-04T22:31:14.748Z",
+  "basis": "real_browser_real_accounts_domain_home_installation_permission_UI_only_official_refresh_intentionally_network_aborted_no_Qwen_no_claim_of_source_acquisition",
+  "checks": [
+    {
+      "name": "home_read_mode_follows_initial_explicit_scope_consent_true",
+      "passed": true
+    }
+  ],
+  "errors": [
+    "expect(locator).toBeChecked() failed\n\nLocator:  getByLabel('使用已获准的个人记忆与经历（仅使用允许云端读取的内容，不自动保存新记忆）', { exact: true })\nExpected: checked\nReceived: unchecked\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeChecked\" getByLabel('使用已获准的个人记忆与经历（仅使用允许云端读取的内容，不自动保存新记忆）', { exact: true }) with timeout 5000ms\n  - waiting for getByLabel('使用已获准的个人记忆与经历（仅使用允许云端读取的内容，不自动保存新记忆）', { exact: true })\n    14 × locator resolved to <input type=\"checkbox\"/>\n       - unexpected value \"unchecked\"\n"
+  ],
+  "status": "failed",
+  "upstreamRequests": 0
+}

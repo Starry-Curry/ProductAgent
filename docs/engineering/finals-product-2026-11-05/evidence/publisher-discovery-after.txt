@@ -1,0 +1,15 @@
+✔ 对抗发现：第一批搜索没有厂家站点时，独立目录验证出的站点可启动一次范围内搜索；不认证原命中 (113.4061ms)
+✔ generic directory publisher proof binds brand, independent entity, TLS migration and exact host, never lookalikes/community (5.8553ms)
+✔ generic discovery gets structured company record; native search URL and model declaration alone cannot authenticate publisher (0.6855ms)
+✔ single-page manual keeps actual section index and reads selected article, without silently substituting the first truncated page (182.5103ms)
+✔ 旧目录也按完整品牌身份匹配，不能用嵌入Sony字符串伪造厂家 (0.2293ms)
+✔ 对抗厂家链：多语言公司目录的旧主页失效时，可用独立Wikidata官方站点，不信任搜索声明 (0.8372ms)
+✔ 真实模型返回null表示未知：不应协议报错后抛出无关说明书摘录 (2.9608ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 507.9196

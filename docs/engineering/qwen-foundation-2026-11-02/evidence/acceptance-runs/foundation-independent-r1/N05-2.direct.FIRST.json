@@ -1,0 +1,14 @@
+{
+  "caseId": "N05-2",
+  "productId": "N05",
+  "question": "我给MIC/LINE IN接上领夹麦，还能同时保留机身XY麦声音吗？请分清接口能力和实际录到的声音。",
+  "arm": "direct",
+  "at": "2026-11-03T02:20:42.089Z",
+  "status": "blocked_budget",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "error": "acceptance_or_global_budget_exhausted",
+  "fullAnswerMs": 85,
+  "upstreamNumbers": [],
+  "transport": []
+}

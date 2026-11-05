@@ -116,7 +116,7 @@ export type Care = {
   recipient: Person;
 };
 export type Plan = {
-  dependencies?:{step:number;resourceIds:string[];status:string}[];
+  dependencies?:{step:number;resourceIds:string[];status:string;conditions?:string[]}[];
   resourceRevisions?:Record<string,string>;
   conditions?: string[];
   sources?: {id:string;url:string}[];
@@ -698,7 +698,15 @@ export function mutate(
     g!.revoked = true;
   } else if (action === "claim") {
     const g = s.gifts.find((g) => g.token === p.token);
-    if (!g || g.revoked || g.claimedBy) fail("链接已失效或礼物已被认领");
+    if (!g || g.revoked) fail("链接已失效或礼物已被认领");
+    // A retried confirmation by the same authenticated holder returns the
+    // already-created instance. It does not mint another item or reopen access
+    // after a later transfer; other claimants and unconfirmed requests fail.
+    if(g!.claimedBy){
+      const received=s.items.find(i=>i.id===(g!.receivedItemId||g!.itemId));
+      if(g!.claimedBy===a&&p.received===true&&received?.owner===a)return s;
+      fail("链接已失效或礼物已被认领");
+    }
     if (g!.sender === a) fail("请选择接收者演示身份");
     if (p.received !== true) fail("请确认已实际取得物品");
     let item = s.items.find((i) => i.id === g!.itemId);

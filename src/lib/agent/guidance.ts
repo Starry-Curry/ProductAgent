@@ -2,6 +2,7 @@ import {z} from 'zod';
 import {actionProposal,dependentStep,checkPlanResources,type ActionSource} from './practical-actions.ts';
 import type {NecessaryCheck} from './practical-constraints.ts';
 import type {Item} from '../domain.ts';
+import {planStepStatus} from '../life/plan-presentation.ts';
 
 /** A presentation boundary, not a second model review or persisted Task. The
  * same action dependencies are checked before display and again before save. */
@@ -16,6 +17,10 @@ export function presentGuidance(raw:unknown,question:string,allowed:string[],che
  const value=guidanceSchema.parse(raw);
  // The user's full constraint-bearing goal, not a model's convenient paraphrase.
  const plan=checkPlanResources(actionProposal.parse({...value,kind:'plan'}),allowed,checks,sources,items,question);
- const answer=[value.goal,...plan.steps.map((s,n)=>`${n+1}. ${s}`),...(plan.unresolved.length?['实施条件与边界：',...plan.unresolved.map(s=>'— '+s)]:[])].join('\n\n');
+ const displayedStepConditions=new Set(plan.dependencies.flatMap((d,n)=>d.conditions.map(c=>'第'+(n+1)+'步：'+c)));
+ const globalConditions=plan.unresolved.filter(c=>!displayedStepConditions.has(c));
+ // Conditions remain intact on the saved plan and immediately before each
+ // action. Repeating the whole list at the end buried important boundaries.
+ const answer=[value.goal,...plan.steps.flatMap((s,n)=>{const dependency=plan.dependencies[n];return [`第${n+1}步 · ${planStepStatus(dependency.status)}`,...dependency.conditions.map(c=>'先核对：'+c),'候选动作：'+s];}),...(globalConditions.length?['共同条件与边界：',...globalConditions.map(s=>'— '+s)]:[])].join('\n\n');
  return {answer,plan,basis:'checked_dependencies_not_verified_physical_success' as const};
 }

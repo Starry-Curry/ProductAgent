@@ -1,0 +1,14 @@
+{
+  "caseId": "N02-2",
+  "productId": "N02",
+  "question": "准备出门跑步：怎样真正开始记录，什么时候等定位？跑完怎么停下并保存，别把仅选中跑步当作已经计时。",
+  "arm": "direct",
+  "at": "2026-11-03T02:20:40.363Z",
+  "status": "blocked_budget",
+  "quality": "not_scored",
+  "browserVerified": false,
+  "error": "acceptance_or_global_budget_exhausted",
+  "fullAnswerMs": 74,
+  "upstreamNumbers": [],
+  "transport": []
+}

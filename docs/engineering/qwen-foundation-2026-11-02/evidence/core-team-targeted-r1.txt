@@ -1,0 +1,22 @@
+✔ 共享知识复用连续原文定位，保持原始正文；私人问题/条件和未知不持久化 (336.9048ms)
+✔ 知识来源正文变更/型号变更/撤权后，不复用过期或无权定位 (287.2228ms)
+✔ 有适用缓存的普通问答只调用一次主模型；不强制抽取、允许原文步骤及部分未知 (509.5355ms)
+✔ 最终指导只积累选中的现有原文；不保存模型改写，重复与错物品引用不新增事实 (289.8543ms)
+✖ 独立专业功能使用同一服务、授权、Task和Outcome，无第二套Runtime或事实库 (838.8951ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4083.0992
+
+✖ failing tests:
+
+test at tests\foundation-team-example.test.ts:7:1
+✖ 独立专业功能使用同一服务、授权、Task和Outcome，无第二套Runtime或事实库 (838.8951ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'some')
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/foundation-team-example.test.ts:15:104)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

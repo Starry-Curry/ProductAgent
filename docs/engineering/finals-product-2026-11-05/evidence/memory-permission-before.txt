@@ -1,0 +1,25 @@
+✖ 对抗记忆：显式撤权不能被legacy shared绕过；本人旧经历保留为归档但不能新绑撤权物品 (142.8401ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 364.8453
+
+✖ failing tests:
+
+test at tests\finals-memory-permission.test.ts:6:1
+✖ 对抗记忆：显式撤权不能被legacy shared绕过；本人旧经历保留为归档但不能新绑撤权物品 (142.8401ms)
+  Error: no such table: foundation_grants
+      at mirrorItemGrant (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/foundation/policy.ts:74:6)
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-memory-permission.test.ts:10:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'ERR_SQLITE_ERROR',
+    errcode: 1,
+    errstr: 'SQL logic error'
+  }

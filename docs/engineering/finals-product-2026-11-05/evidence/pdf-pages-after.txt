@@ -1,0 +1,11 @@
+✔ 真实PDF按相关文字定位页并渲染JPEG，只保留最多3页和原始物理页码 (558.3882ms)
+✔ PDF页码越界/小数/超过3页及无效PDF明确拒绝，不把缺页当读取成功 (12.1199ms)
+✔ SDK实际传所选页images和页码，不把整本PDF作为file再次发送（离线HTTP替身） (53.1505ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1012.5649

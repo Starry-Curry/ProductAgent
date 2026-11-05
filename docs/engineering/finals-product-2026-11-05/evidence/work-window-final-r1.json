@@ -1,0 +1,10 @@
+{
+  "observedAt": "2026-11-05T01:04:02.051Z",
+  "recordedStartMinuteUTC": "2026-11-04T17:02:00Z",
+  "conservativeDurationFromUTC": "2026-11-04T17:03:00.000Z",
+  "conservativeElapsedSeconds": 28862,
+  "atLeastEightHours": true,
+  "basis": "actual_wall_clock_window_of_continuous_source_work_tests_real_model_browser_validation_recovery_commits_and_review_not_planned_duration",
+  "productQuality": "NOT_ACCEPTED",
+  "paidRequests": 368
+}

@@ -12,6 +12,7 @@ import { installLifeDemo } from "./life/demo.ts";
 import { seed, mutate, type State, type Person } from "./domain";
 import { migrate } from "./migrations";
 import { migrateUnified } from "./foundation/schema.ts";
+import {assertItemManagementRevision} from './life/intake.ts';
 let connection: DatabaseSync | undefined;
 export function database() {
   const scope = visitorContext.getStore();
@@ -56,7 +57,9 @@ export function write(a: Person, action: string, p: Record<string, unknown>) {
   const db = database();
   db.exec("BEGIN IMMEDIATE");
   try {
-    const s = mutate(read(), a, action, p);
+    const current=read();
+    if(action==='updateItem'&&p.expectedManagementRevision!==undefined)assertItemManagementRevision(current,a,p.itemId,p.expectedManagementRevision);
+    const s = mutate(current, a, action, p);
     db.prepare("UPDATE workspace SET body=? WHERE id=1").run(JSON.stringify(s));
     captureWorkspace(db, s, a, new Date().toISOString());
     db.exec("COMMIT");

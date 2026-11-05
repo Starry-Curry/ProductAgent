@@ -1,0 +1,811 @@
+{
+  "at": "2026-11-04T23:16:48.337Z",
+  "round": "finals-product-20261105-r1",
+  "basis": "real_Qwen_product_retest_same_original_question_new_session_existing_account_not_first_answer_check_acquisition_for_cache_or_discovery",
+  "prior": "thermos-browser-r2.json",
+  "itemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+  "originalQuestionIndex": 0,
+  "responses": [
+    {
+      "question": "请自主找 THERMOS JNL-355 日本版的厂家资料，完整回答容量、约重量和约外尺寸；不能拿JNL-505、JNL-356或JNL-S系列的参数混用。请给来源，不根据型号数字猜容量。",
+      "result": {
+        "session": {
+          "id": "76034c0e-1236-43f4-93be-9484f711b902",
+          "owner": "u_7382e243-e65d-4e48-9173-1cf5a24d6fc8",
+          "itemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+          "identity": "[\"u_7382e243-e65d-4e48-9173-1cf5a24d6fc8\",\"[\\\"JNL-355\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "687fa79b-823a-4c8f-9d6e-ec47abd4bf56",
+              "role": "user",
+              "text": "请自主找 THERMOS JNL-355 日本版的厂家资料，完整回答容量、约重量和约外尺寸；不能拿JNL-505、JNL-356或JNL-S系列的参数混用。请给来源，不根据型号数字猜容量。",
+              "at": "2026-11-04T23:17:41.721Z",
+              "itemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "22405e34-b99e-423b-90d4-237a8ffbbf7d",
+              "role": "assistant",
+              "text": "已查到 THERMOS JNL-355 日本版的官方规格参数，数据来自膳魔师日本官网发布的新闻稿/规格表 PDF，未混用 JNL-505、JNL-356 或 JNL-S 系列参数。",
+              "reply": {
+                "modelHistoryText": "已查到 THERMOS JNL-355 日本版的官方规格参数，数据来自膳魔师日本官网发布的新闻稿/规格表 PDF，未混用 JNL-505、JNL-356 或 JNL-S 系列参数。",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [
+                  "PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。",
+                  "来源网址含国家地区标识，仅为来源市场线索；不单独证明私人实例、固件版本或跨区操作适用。",
+                  "有118处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+                ],
+                "answer": "已查到 THERMOS JNL-355 日本版的官方规格参数，数据来自膳魔师日本官网发布的新闻稿/规格表 PDF，未混用 JNL-505、JNL-356 或 JNL-S 系列参数。",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "stepsInAnswer": false,
+                "questions": [],
+                "evidenceIds": [
+                  "aa9fe46fdc39cc1ba5376696:980",
+                  "7829428275bf224c6efe4d35:3995",
+                  "aa9fe46fdc39cc1ba5376696:0",
+                  "7829428275bf224c6efe4d35:0",
+                  "7829428275bf224c6efe4d35:2002",
+                  "7829428275bf224c6efe4d35:1002",
+                  "aa9fe46fdc39cc1ba5376696:1977",
+                  "7829428275bf224c6efe4d35:6927"
+                ],
+                "citations": [
+                  {
+                    "id": "aa9fe46fdc39cc1ba5376696",
+                    "title": "20210817140249.pdf",
+                    "url": "https://www.thermos.jp/info/pdf/20210817140249.pdf",
+                    "kind": "official",
+                    "section": "JNL-355；jp"
+                  },
+                  {
+                    "id": "7829428275bf224c6efe4d35",
+                    "title": "マグタイプ | 取扱説明書 | お客様サポート | サーモス",
+                    "url": "https://www.thermos.jp/support/manual/mug.html",
+                    "kind": "official",
+                    "section": "JNL-355；jp"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+                    "name": "[模拟持有]日版随身保温杯",
+                    "model": "JNL-355"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+                "route": {
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对已登记的物品性质、限制与未知条件",
+                  "itemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+                  "itemName": "[模拟持有]日版随身保温杯"
+                }
+              },
+              "at": "2026-11-04T23:17:41.721Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "a5364d4f-3e72-4f6a-8181-3e1092c16320",
+            "turnScope": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+            "lastIntent": "help",
+            "activeItemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-11-04T23:16:53.390Z",
+          "updatedAt": "2026-11-04T23:17:41.722Z",
+          "expiresAt": "2026-11-11T23:16:53.390Z",
+          "itemScopes": {
+            "e2095f02-5317-4f95-99e3-1eaa687d5cbe": "[\"u_7382e243-e65d-4e48-9173-1cf5a24d6fc8\",\"[\\\"JNL-355\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "modelHistoryText": "已查到 THERMOS JNL-355 日本版的官方规格参数，数据来自膳魔师日本官网发布的新闻稿/规格表 PDF，未混用 JNL-505、JNL-356 或 JNL-S 系列参数。",
+          "continuations": [],
+          "actionCards": [],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [
+            "PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。",
+            "来源网址含国家地区标识，仅为来源市场线索；不单独证明私人实例、固件版本或跨区操作适用。",
+            "有118处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "answer": "已查到 THERMOS JNL-355 日本版的官方规格参数，数据来自膳魔师日本官网发布的新闻稿/规格表 PDF，未混用 JNL-505、JNL-356 或 JNL-S 系列参数。",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "stepsInAnswer": false,
+          "questions": [],
+          "evidenceIds": [
+            "aa9fe46fdc39cc1ba5376696:980",
+            "7829428275bf224c6efe4d35:3995",
+            "aa9fe46fdc39cc1ba5376696:0",
+            "7829428275bf224c6efe4d35:0",
+            "7829428275bf224c6efe4d35:2002",
+            "7829428275bf224c6efe4d35:1002",
+            "aa9fe46fdc39cc1ba5376696:1977",
+            "7829428275bf224c6efe4d35:6927"
+          ],
+          "citations": [
+            {
+              "id": "aa9fe46fdc39cc1ba5376696",
+              "title": "20210817140249.pdf",
+              "url": "https://www.thermos.jp/info/pdf/20210817140249.pdf",
+              "kind": "official",
+              "section": "JNL-355；jp"
+            },
+            {
+              "id": "7829428275bf224c6efe4d35",
+              "title": "マグタイプ | 取扱説明書 | お客様サポート | サーモス",
+              "url": "https://www.thermos.jp/support/manual/mug.html",
+              "kind": "official",
+              "section": "JNL-355；jp"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+              "name": "[模拟持有]日版随身保温杯",
+              "model": "JNL-355"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+          "route": {
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对已登记的物品性质、限制与未知条件",
+            "itemId": "e2095f02-5317-4f95-99e3-1eaa687d5cbe",
+            "itemName": "[模拟持有]日版随身保温杯"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=e2095f02-5317-4f95-99e3-1eaa687d5cbe; domain metadata, not a model answer",
+            "at": "2026-11-04T23:16:53.401Z"
+          },
+          {
+            "stage": "tool_runtime_REPLY_START",
+            "detail": "{}",
+            "at": "2026-11-04T23:16:53.464Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T23:16:53.466Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"search_product_knowledge\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T23:16:55.706Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_bb85a01843834bd0b251ebac\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T23:16:55.708Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_bb85a01843834bd0b251ebac\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T23:16:55.708Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_bb85a01843834bd0b251ebac\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T23:16:55.708Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":5441,\"outputTokens\":87}",
+            "at": "2026-11-04T23:16:55.708Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_bb85a01843834bd0b251ebac\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T23:16:55.710Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"search_product_knowledge\",\"effect\":\"local_write\",\"scope\":\"live_item_grant_public_sources_only\",\"result\":\"sourced_knowledge_cache\",\"idempotency\":\"document_digest\"}",
+            "at": "2026-11-04T23:16:55.716Z"
+          },
+          {
+            "stage": "practical_search",
+            "detail": "{\"model\":\"qwen3.8-max-0902\",\"hits\":18,\"events\":[{\"type\":\"response.created\",\"elapsedMs\":978,\"status\":\"queued\"},{\"type\":\"response.in_progress\",\"elapsedMs\":978,\"status\":\"in_progress\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":7312,\"itemType\":\"web_search_call\"},{\"type\":\"response.web_search_call.in_progress\",\"elapsedMs\":7312},{\"type\":\"response.web_search_call.searching\",\"elapsedMs\":7313},{\"type\":\"response.web_search_call.completed\",\"elapsedMs\":7313},{\"type\":\"response.output_item.done\",\"elapsedMs\":7314,\"itemType\":\"web_search_call\"},{\"type\":\"response.output_item.added\",\"elapsedMs\":7916,\"itemType\":\"message\"},{\"type\":\"response.content_part.added\",\"elapsedMs\":7916},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7916},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7916},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7916},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7917},{\"type\":\"response.output_text.delta\",\"elapsedMs\":7917},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8122},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8122},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8122},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8122},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8122},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8122},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8326},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8326},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8327},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8327},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8532},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8533},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8737},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8737},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8737},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8738},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8941},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8942},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8942},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8942},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8942},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8942},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8942},{\"type\":\"response.output_text.delta\",\"elapsedMs\":8942},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9105},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9105},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9105},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9105},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9106},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9106},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9157},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9157},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9350},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9350},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9350},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9351},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9351},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9351},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9478},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9478},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9479},{\"type\":\"response.output_text.delta\",\"elapsedMs\":9479},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10579},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10579},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10579},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10590},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10590},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10590},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10785},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10785},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10785},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10785},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10802},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10802},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10852},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10915},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10915},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10915},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10959},{\"type\":\"response.output_text.delta\",\"elapsedMs\":10959},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11193},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11193},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11194},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11194},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11194},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11194},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11194},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11201},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11202},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11202},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11261},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11261},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11400},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11400},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11400},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11401},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11603},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11604},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11604},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11604},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11604},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11676},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11677},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11677},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11682},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11807},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11807},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11808},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11808},{\"type\":\"response.output_text.delta\",\"elapsedMs\":11808},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12012},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12012},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12012},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12013},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12013},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12013},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12013},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12013},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12217},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12218},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12219},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12219},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12219},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12220},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12220},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12220},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12424},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12425},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12425},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12425},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12437},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12437},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12626},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12627},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12630},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12631},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12832},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12832},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12832},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12832},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12832},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12832},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12923},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12930},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12931},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12931},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12990},{\"type\":\"response.output_text.delta\",\"elapsedMs\":12990},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13045},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13045},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13192},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13193},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13212},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13212},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13212},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13212},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13268},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13270},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13381},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13381},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13381},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13381},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13438},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13438},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13488},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13488},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13610},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13611},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13611},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13611},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13682},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13682},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13757},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13758},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13758},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13759},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13810},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13812},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13886},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13886},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13995},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13995},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13995},{\"type\":\"response.output_text.delta\",\"elapsedMs\":13998},{\"type\":\"response.output_text.delta\",\"elapsedMs\":14038},{\"type\":\"response.output_text.delta\",\"elapsedMs\":14039},{\"type\":\"response.output_text.delta\",\"elapsedMs\":14113},{\"type\":\"response.output_text.delta\",\"elapsedMs\":14116},{\"type\":\"response.output_text.delta\",\"elapsedMs\":14220},{\"type\":\"response.output_text.delta\",\"elapsedMs\":14220},{\"type\":\"response.output_text.delta\",\"elapsedMs\":14220},{\"type\":\"response.output_text.delta\",\"elapsedMs\":14221},{\"type\":\"response.output_text.delta\",\"elapsedMs\":14250},{\"type\":\"response.output_text.done\",\"elapsedMs\":14250},{\"type\":\"response.content_part.done\",\"elapsedMs\":14251},{\"type\":\"response.output_item.done\",\"elapsedMs\":14259,\"itemType\":\"message\"},{\"type\":\"response.completed\",\"elapsedMs\":14281,\"status\":\"completed\"}]}",
+            "at": "2026-11-04T23:17:10.136Z"
+          },
+          {
+            "stage": "practical_knowledge",
+            "detail": "{\"itemId\":\"e2095f02-5317-4f95-99e3-1eaa687d5cbe\",\"cached\":false,\"readURLs\":[\"https://www.thermos.jp/info/pdf/20210817140249.pdf\",\"https://www.thermos.jp/product_file/file/jnl.pdf\",\"https://www.thermos.jp/product/series/jnl-s01.html\",\"https://www.thermos.jp/support/manual/mug.html\",\"https://www.thermos.jp/support/manual/product_file/file/jnls_en.pdf\",\"https://www.thermos.jp/support/manual/product_file/file/jnls_cn.pdf\"],\"issues\":[\"搜索命中未通过最终域名/完整型号核对，未采用\",\"官方文档未包含完整型号，未采用：www.thermos.jp\"],\"discoveryPurpose\":\"specifications\",\"seedURLs\":[],\"searchAttempted\":true,\"searchCompleted\":true,\"searchURLs\":[\"https://www.thermos.jp/info/pdf/20210817140249.pdf\",\"https://search.kakaku.com/JNL-355/\",\"https://prtimes.jp/main/html/rd/p/000000062.000053758.html\",\"https://www.amazon.co.jp/%E3%82%B5%E3%83%BC%E3%83%A2%E3%82%B9-%E7%9C%9F%E7%A9%BA%E6%96%AD%E7%86%B1%E3%82%B1%E3%83%BC%E3%82%BF%E3%82%A4%E3%83%9E%E3%82%B0-%E3%83%AD%E3%83%BC%E3%82%BA%E3%83%AC%E3%83%83%E3%83%89-JNL-355-RR/dp/B09C8Q7MV6\",\"https://oekaki-suitou.com/products/detail/26\",\"https://www.miyoshishikki.com/shopdetail/000000004437/\",\"https://www.shopthermos.jp/shop/g/g300061811310/?pctg=1&srsltid=AYCX9vI2YX0cyykaSWEFxKa99NxU59JnqU8743i9H9rzZKgHlNybNZYq\",\"https://search.rakuten.co.jp/search/mall/%E3%82%B5%E3%83%BC%E3%83%A2%E3%82%B9+%E6%B0%B4%E7%AD%92+%E7%9C%9F%E7%A9%BA%E6%96%AD%E7%86%B1%E3%82%B1%E3%83%BC%E3%82%BF%E3%82%A4%E3%83%9E%E3%82%B0+350ml+jnl-355/-/tg1004112/\",\"https://originalprint.jp/bottle/THERMOS%20%E7%9C%9F%E7%A9%BA%E6%96%AD%E7%86%B1%E3%82%B1%E3%83%BC%E3%82%BF%E3%82%A4%E3%83%9E%E3%82%B0%20JNL-355?srsltid=AYCX9vLfSYNxHWlcupuGT1K4tmE3flDIE6imaLEw08HRYcvfU1jMjJk9\",\"https://store.shopping.yahoo.co.jp/soukai/4562344379458.html\",\"https://www.amazon.co.jp/%E3%82%B5%E3%83%BC%E3%83%A2%E3%82%B9-%E7%9C%9F%E7%A9%BA%E6%96%AD%E7%86%B1%E3%82%B1%E3%83%BC%E3%82%BF%E3%82%A4%E3%83%9E%E3%82%B0-%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF-JNL-355-DPBK/dp/B09C8R5138\",\"https://www.thermos.jp/product_file/file/jnl.pdf\",\"https://www.shopthermos.jp/shop/g/g300061810NM0/?pctg=1&srsltid=AYCX9vLwAIoxiO_3OCmn7NgNEoBcaZoPo59dC8YolcGzyDZizA434ixU\",\"https://www.thermos.jp/product/series/jnl-s01.html\",\"https://www.thermos.jp/support/manual/mug.html\",\"https://search.rakuten.co.jp/search/mall/%E3%82%B5%E3%83%BC%E3%83%A2%E3%82%B9+%E6%B0%B4%E7%AD%92+%E7%9C%9F%E7%A9%BA%E6%96%AD%E7%86%B1%E3%82%B1%E3%83%BC%E3%82%BF%E3%82%A4%E3%83%9E%E3%82%B0+350ml+jnl-355/407057/\",\"https://www.thermos.jp/info/detail/20170710110618.html\",\"https://www.thermos.jp/support/manual/results.html\"],\"verifiedURLs\":[\"https://www.thermos.jp/info/pdf/20210817140249.pdf\",\"https://www.thermos.jp/support/manual/mug.html\"],\"attemptedURLs\":[\"https://www.thermos.jp/info/pdf/20210817140249.pdf\",\"https://www.thermos.jp/product_file/file/jnl.pdf\",\"https://www.thermos.jp/product/series/jnl-s01.html\",\"https://www.thermos.jp/support/manual/mug.html\",\"https://www.thermos.jp/support/manual/product_file/file/jnls_en.pdf\",\"https://www.thermos.jp/support/manual/product_file/file/jnls_cn.pdf\"],\"sources\":[{\"id\":\"aa9fe46fdc39cc1ba5376696:980\",\"url\":\"https://www.thermos.jp/info/pdf/20210817140249.pdf\",\"model\":\"JNL-355\"},{\"id\":\"7829428275bf224c6efe4d35:3995\",\"url\":\"https://www.thermos.jp/support/manual/mug.html\",\"model\":\"JNL-355\"},{\"id\":\"aa9fe46fdc39cc1ba5376696:0\",\"url\":\"https://www.thermos.jp/info/pdf/20210817140249.pdf\",\"model\":\"JNL-355\"},{\"id\":\"7829428275bf224c6efe4d35:0\",\"url\":\"https://www.thermos.jp/support/manual/mug.html\",\"model\":\"JNL-355\"},{\"id\":\"7829428275bf224c6efe4d35:2002\",\"url\":\"https://www.thermos.jp/support/manual/mug.html\",\"model\":\"JNL-355\"},{\"id\":\"7829428275bf224c6efe4d35:1002\",\"url\":\"https://www.thermos.jp/support/manual/mug.html\",\"model\":\"JNL-355\"},{\"id\":\"aa9fe46fdc39cc1ba5376696:1977\",\"url\":\"https://www.thermos.jp/info/pdf/20210817140249.pdf\",\"model\":\"JNL-355\"},{\"id\":\"7829428275bf224c6efe4d35:6927\",\"url\":\"https://www.thermos.jp/support/manual/mug.html\",\"model\":\"JNL-355\"}]}",
+            "at": "2026-11-04T23:17:37.857Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "search_product_knowledge completed",
+            "at": "2026-11-04T23:17:37.858Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_bb85a01843834bd0b251ebac\",\"tool\":\"search_product_knowledge\"}",
+            "at": "2026-11-04T23:17:37.862Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_bb85a01843834bd0b251ebac\",\"tool\":\"search_product_knowledge\",\"state\":\"success\"}",
+            "at": "2026-11-04T23:17:37.865Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T23:17:37.866Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":1,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T23:17:41.654Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_95a0dc742a374e9fa1b1f4d2\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:17:41.656Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_95a0dc742a374e9fa1b1f4d2\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:17:41.656Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_95a0dc742a374e9fa1b1f4d2\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:17:41.656Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":22048,\"outputTokens\":93}",
+            "at": "2026-11-04T23:17:41.656Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_95a0dc742a374e9fa1b1f4d2\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:17:41.659Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"complete_answer\",\"effect\":\"local_write\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_and_public_original_quote_locators_no_business_write\",\"idempotency\":\"original_document_and_quote_digest\"}",
+            "at": "2026-11-04T23:17:41.666Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "complete_answer completed",
+            "at": "2026-11-04T23:17:41.693Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_95a0dc742a374e9fa1b1f4d2\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T23:17:41.699Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_95a0dc742a374e9fa1b1f4d2\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+            "at": "2026-11-04T23:17:41.701Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":48302,\"calls\":3,\"tools\":2,\"reservedCny\":0.41668,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-04T23:17:41.714Z"
+          }
+        ],
+        "tokens": {
+          "input": 31190,
+          "output": 900
+        },
+        "modelCalls": 3,
+        "foundation": {
+          "runId": "8eceb7c8-f07f-452b-b065-20d43ddc1a34",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 49504,
+      "streamTextEvents": 1
+    }
+  ],
+  "checks": [
+    {
+      "name": "same_question_real_new_session_answer_visible",
+      "passed": true,
+      "semanticReviewRequired": true
+    }
+  ],
+  "errors": [],
+  "pageErrors": [],
+  "sharedKnowledge": [
+    {
+      "id": "7829428275bf224c6efe4d35",
+      "processorVersion": "extractive-3-overlap",
+      "url": "https://www.thermos.jp/support/manual/mug.html",
+      "title": "マグタイプ | 取扱説明書 | お客様サポート | サーモス",
+      "hash": "d3f59a74b4904835cea1a9b8c81643c204b471c2de95053ec56cbdd69b6d55f9",
+      "model": "JNL-355",
+      "brand": "THERMOS",
+      "region": "jp",
+      "chain": [
+        "bailian-responses:structured-search",
+        "https://www.thermos.jp/support/manual/mug.html"
+      ],
+      "fetchedAt": "2026-11-04T23:17:37.058Z",
+      "reading": {
+        "mode": "html_text",
+        "figures": [
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-s01.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jpi-00.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jow-00pk.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_joi-01pk.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jox-00.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jpj-00.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_asha.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_fjf-00.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jni-04.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-s00tss.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-06b.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-506ds.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-irbj.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-00tss.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-500tss_aderiaretro.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnl-500tss_snps.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnr-04g.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jnr-03ltd.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_joj-01.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          },
+          {
+            "url": "https://www.thermos.jp/product_file/file/s_jol-00.jpg",
+            "caption": "图示没有替代文字，内容未读取"
+          }
+        ],
+        "limitations": [
+          "有118处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。",
+          "来源网址含国家地区标识，仅为来源市场线索；不单独证明私人实例、固件版本或跨区操作适用。"
+        ]
+      },
+      "sections": [
+        {
+          "title": "（2358902）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnls.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1929947）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnls_en.pdf"
+        },
+        {
+          "title": "使用说明书（1893035）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnls_cn.pdf"
+        },
+        {
+          "title": "（2266054）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpi.pdf"
+        },
+        {
+          "title": "（1880537）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jow-pk.pdf"
+        },
+        {
+          "title": "（2596080）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joi501.pdf"
+        },
+        {
+          "title": "（1893084）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jox.pdf"
+        },
+        {
+          "title": "（2498318）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpj.pdf"
+        },
+        {
+          "title": "取扱説明書（1771192）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/asha.pdf"
+        },
+        {
+          "title": "（2408895）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/fjf.pdf"
+        },
+        {
+          "title": "（2408489）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jni.pdf"
+        },
+        {
+          "title": "取扱説明書（2372196）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnl.pdf"
+        },
+        {
+          "title": "取扱説明書（2464982）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnr_r.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（2176389）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnr_en.pdf"
+        },
+        {
+          "title": "使用说明书（2015738）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnr_cn.pdf"
+        },
+        {
+          "title": "（1877705）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joj.pdf"
+        },
+        {
+          "title": "（1773235）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jol.pdf"
+        },
+        {
+          "title": "（2332258）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jom.pdf"
+        },
+        {
+          "title": "（2523220）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jop.pdf"
+        },
+        {
+          "title": "（1909201）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joq.pdf"
+        },
+        {
+          "title": "（2442577）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jos01.pdf"
+        },
+        {
+          "title": "（2455176）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jou.pdf"
+        },
+        {
+          "title": "取扱説明書（1787315）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jov.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1232899）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jov_en.pdf"
+        },
+        {
+          "title": "使用说明书（1211713）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jov_cn.pdf"
+        },
+        {
+          "title": "取扱説明書（1971118）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jow.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1226571）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jow_en.pdf"
+        },
+        {
+          "title": "使用说明书（1176742）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jow_cn.pdf"
+        },
+        {
+          "title": "取扱説明書（2182952）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joy.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1454052）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joy_en.pdf"
+        },
+        {
+          "title": "使用说明书（1368309）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joy_cn.pdf"
+        },
+        {
+          "title": "取扱説明書（2521107）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpa.pdf"
+        },
+        {
+          "title": "取扱説明書（1775076）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpb.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1066953）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpb_en.pdf"
+        },
+        {
+          "title": "使用说明书（1028250）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpb_cn.pdf"
+        },
+        {
+          "title": "取扱説明書（2264407）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpc.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（1711544）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpc_en.pdf"
+        },
+        {
+          "title": "使用说明书（1643774）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpc_cn.pdf"
+        },
+        {
+          "title": "（2774973）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jpf.pdf"
+        },
+        {
+          "title": "（1551306）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/npg.pdf"
+        },
+        {
+          "title": "（1973618）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/rob-003.pdf"
+        },
+        {
+          "title": "（2463873）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnt05.pdf"
+        },
+        {
+          "title": "（2478631）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnr.pdf"
+        },
+        {
+          "title": "（2313102）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jok.pdf"
+        },
+        {
+          "title": "（1769074）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jon.pdf"
+        },
+        {
+          "title": "（1892272）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joo.pdf"
+        },
+        {
+          "title": "（1879079）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jor.pdf"
+        },
+        {
+          "title": "取扱説明書（2524378）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jos.pdf"
+        },
+        {
+          "title": "INSTRUCTION MANUAL（2055762）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jos_en.pdf"
+        },
+        {
+          "title": "使用说明书（1997538）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jos_cn.pdf"
+        },
+        {
+          "title": "（1969626）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/JNF.pdf"
+        },
+        {
+          "title": "（2100634）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jni02.pdf"
+        },
+        {
+          "title": "（2263409）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnl-ol_pa.pdf"
+        },
+        {
+          "title": "（1989670）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnlpb02.pdf"
+        },
+        {
+          "title": "（2189772）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnm.pdf"
+        },
+        {
+          "title": "（1669554）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jno.pdf"
+        },
+        {
+          "title": "（4484104）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jno-252_352_502.pdf"
+        },
+        {
+          "title": "（2262051）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/JNR.pdf"
+        },
+        {
+          "title": "（2426185）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnr_swltd.pdf"
+        },
+        {
+          "title": "（2094133）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jns.pdf"
+        },
+        {
+          "title": "（2263349）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnt.pdf"
+        },
+        {
+          "title": "（2360113）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnt04.pdf"
+        },
+        {
+          "title": "（4265439）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jnw-350_480.pdf"
+        },
+        {
+          "title": "（1729277）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jny.pdf"
+        },
+        {
+          "title": "（2192816）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joa.pdf"
+        },
+        {
+          "title": "（1686990）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jod.pdf"
+        },
+        {
+          "title": "（1753543）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joe.pdf"
+        },
+        {
+          "title": "（2452102）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jof.pdf"
+        },
+        {
+          "title": "（1819173）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/jogr1.pdf"
+        },
+        {
+          "title": "（2396205）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joh.pdf"
+        },
+        {
+          "title": "（2422303）",
+          "url": "https://www.thermos.jp/support/manual/product_file/file/joi.pdf"
+        },
+        {
+          "title": "お願いとご注意",
+          "url": "https://www.thermos.jp/support/manual/mug.html#attention"
+        },
+        {
+          "title": "注意・制限事項",
+          "url": "https://www.thermos.jp/support/manual/mug.html#attention"
+        },
+        {
+          "title": "PDFファイルについて",
+          "url": "https://www.thermos.jp/support/manual/mug.html#attention"
+        },
+        {
+          "title": "お客様サポート",
+          "url": "https://www.thermos.jp/support/"
+        },
+        {
+          "title": "取扱説明書",
+          "url": "https://www.thermos.jp/support/manual/"
+        },
+        {
+          "title": "マグタイプ",
+          "url": "https://www.thermos.jp/support/manual/mug.html"
+        },
+        {
+          "title": "交換用部品の購入方法",
+          "url": "https://www.thermos.jp/support/parts.html"
+        }
+      ],
+      "publisherProof": {
+        "version": 2,
+        "brand": "THERMOS",
+        "directoryURL": "https://www.wikidata.org/wiki/Special:EntityData/Q3523904.json",
+        "entity": "Q3523904",
+        "record": "{\"entities\":{\"Q3523904\":{\"id\":\"Q3523904\",\"labels\":{\"fr\":{\"language\":\"fr\",\"value\":\"Thermos\"},\"nb\":{\"language\":\"nb\",\"value\":\"Thermos\"},\"en\":{\"language\":\"en\",\"value\":\"Thermos L.L.C.\"},\"ja\":{\"language\":\"ja\",\"value\":\"サーモス\"},\"zh\":{\"language\":\"zh\",\"value\":\"膳魔師\"},\"id\":{\"language\":\"id\",\"value\":\"Thermos LLC\"},\"ms\":{\"language\":\"ms\",\"value\":\"Thermos L.L.C\"},\"nl\":{\"language\":\"nl\",\"value\":\"Thermos\"},\"pt\":{\"language\":\"pt\",\"value\":\"Thermos\"},\"mul\":{\"language\":\"mul\",\"value\":\"Thermos\"},\"ast\":{\"language\":\"ast\",\"value\":\"Thermos L.L.C.\"}},\"aliases\":{\"en\":[{\"language\":\"en\",\"value\":\"Thermos\"}],\"ms\":[{\"language\":\"ms\",\"value\":\"Thermos\"}]},\"claims\":{\"P31\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P31\",\"hash\":\"36a727619bec26b91817453972143ef121bc5ab6\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":136675338,\"id\":\"Q136675338\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q3523904$97a19e7c-493d-515f-0684-acb80c1a6cd0\",\"rank\":\"normal\"}],\"P856\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"ec2db9c429393a5150ea8a741be7edac21d180f4\",\"datavalue\":{\"value\":\"http://www.thermos.com/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"id\":\"Q3523904$A9DAC06E-37AD-44BA-95A5-F32CA1A8C7CA\",\"rank\":\"normal\",\"references\":[{\"hash\":\"fa278ebfc458360e5aed63d5058cca83c46134f1\",\"snaks\":{\"P143\":[{\"snaktype\":\"value\",\"property\":\"P143\",\"hash\":\"e4f6d9441d0600513c4533c672b5ab472dc73694\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":328,\"id\":\"Q328\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"}]},\"snaks-order\":[\"P143\"]}]},{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"1f47e294ab4787b9ebe252197317a05dc89a45d2\",\"datavalue\":{\"value\":\"http://www.thermos.jp/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"id\":\"Q3523904$9cb6db4d-4401-cd9e-5853-efc4d4bcaa1c\",\"rank\":\"normal\",\"references\":[{\"hash\":\"a29a646602abf65105ed0f39a44231c962ece9ee\",\"snaks\":{\"P143\":[{\"snaktype\":\"value\",\"property\":\"P143\",\"hash\":\"c6f1777471211df31724ac60175786f3872c83e9\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":177837,\"id\":\"Q177837\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"}]},\"snaks-order\":[\"P143\"]}]}]}}}}",
+        "recordHash": "4bab58da2bad01664c553ed98fbd24612c434d7c74e6fade9632c1ac94b3a6bc",
+        "homepage": "http://www.thermos.jp/",
+        "redirectChain": [
+          "https://www.thermos.jp/"
+        ],
+        "verifiedAt": "2026-11-04T23:17:19.443Z"
+      },
+      "chunkCount": 8
+    },
+    {
+      "id": "aa9fe46fdc39cc1ba5376696",
+      "processorVersion": "extractive-3-overlap",
+      "url": "https://www.thermos.jp/info/pdf/20210817140249.pdf",
+      "title": "20210817140249.pdf",
+      "hash": "fe2237d072a7417bdabfa220e8b3f2237abe3a0cb655913c2d4be2462d74bc53",
+      "model": "JNL-355",
+      "brand": "THERMOS",
+      "region": "jp",
+      "chain": [
+        "bailian-responses:structured-search",
+        "https://www.thermos.jp/info/pdf/20210817140249.pdf"
+      ],
+      "fetchedAt": "2026-11-04T23:17:20.940Z",
+      "reading": {
+        "mode": "pdf_text_layer",
+        "figures": [],
+        "limitations": [
+          "PDF取得文字层；页面图示、按钮符号和装配方向未由文字抽取验证。",
+          "来源网址含国家地区标识，仅为来源市场线索；不单独证明私人实例、固件版本或跨区操作适用。"
+        ]
+      },
+      "sections": [],
+      "publisherProof": {
+        "version": 2,
+        "brand": "THERMOS",
+        "directoryURL": "https://www.wikidata.org/wiki/Special:EntityData/Q3523904.json",
+        "entity": "Q3523904",
+        "record": "{\"entities\":{\"Q3523904\":{\"id\":\"Q3523904\",\"labels\":{\"fr\":{\"language\":\"fr\",\"value\":\"Thermos\"},\"nb\":{\"language\":\"nb\",\"value\":\"Thermos\"},\"en\":{\"language\":\"en\",\"value\":\"Thermos L.L.C.\"},\"ja\":{\"language\":\"ja\",\"value\":\"サーモス\"},\"zh\":{\"language\":\"zh\",\"value\":\"膳魔師\"},\"id\":{\"language\":\"id\",\"value\":\"Thermos LLC\"},\"ms\":{\"language\":\"ms\",\"value\":\"Thermos L.L.C\"},\"nl\":{\"language\":\"nl\",\"value\":\"Thermos\"},\"pt\":{\"language\":\"pt\",\"value\":\"Thermos\"},\"mul\":{\"language\":\"mul\",\"value\":\"Thermos\"},\"ast\":{\"language\":\"ast\",\"value\":\"Thermos L.L.C.\"}},\"aliases\":{\"en\":[{\"language\":\"en\",\"value\":\"Thermos\"}],\"ms\":[{\"language\":\"ms\",\"value\":\"Thermos\"}]},\"claims\":{\"P31\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P31\",\"hash\":\"36a727619bec26b91817453972143ef121bc5ab6\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":136675338,\"id\":\"Q136675338\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q3523904$97a19e7c-493d-515f-0684-acb80c1a6cd0\",\"rank\":\"normal\"}],\"P856\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"ec2db9c429393a5150ea8a741be7edac21d180f4\",\"datavalue\":{\"value\":\"http://www.thermos.com/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"id\":\"Q3523904$A9DAC06E-37AD-44BA-95A5-F32CA1A8C7CA\",\"rank\":\"normal\",\"references\":[{\"hash\":\"fa278ebfc458360e5aed63d5058cca83c46134f1\",\"snaks\":{\"P143\":[{\"snaktype\":\"value\",\"property\":\"P143\",\"hash\":\"e4f6d9441d0600513c4533c672b5ab472dc73694\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":328,\"id\":\"Q328\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"}]},\"snaks-order\":[\"P143\"]}]},{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"1f47e294ab4787b9ebe252197317a05dc89a45d2\",\"datavalue\":{\"value\":\"http://www.thermos.jp/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"id\":\"Q3523904$9cb6db4d-4401-cd9e-5853-efc4d4bcaa1c\",\"rank\":\"normal\",\"references\":[{\"hash\":\"a29a646602abf65105ed0f39a44231c962ece9ee\",\"snaks\":{\"P143\":[{\"snaktype\":\"value\",\"property\":\"P143\",\"hash\":\"c6f1777471211df31724ac60175786f3872c83e9\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":177837,\"id\":\"Q177837\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"}]},\"snaks-order\":[\"P143\"]}]}]}}}}",
+        "recordHash": "4bab58da2bad01664c553ed98fbd24612c434d7c74e6fade9632c1ac94b3a6bc",
+        "homepage": "http://www.thermos.jp/",
+        "redirectChain": [
+          "https://www.thermos.jp/"
+        ],
+        "verifiedAt": "2026-11-04T23:17:19.443Z"
+      },
+      "chunkCount": 3
+    }
+  ],
+  "status": "executed_retest_requires_original_source_review",
+  "upstreamRequests": 3
+}

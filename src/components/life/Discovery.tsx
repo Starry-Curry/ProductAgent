@@ -161,6 +161,7 @@ export function Discovery({
   ).filter(
     (i) =>
       (!itemId || i.itemIds.includes(itemId)) &&
+      (!homeId || i.itemIds.every(id=>items.some(item=>item.id===id))) &&
       (onlySaved ||
         i.demo ||
         synthetic ||

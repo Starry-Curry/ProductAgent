@@ -1,0 +1,192 @@
+{
+  "at": "2026-11-04T21:17:29.104Z",
+  "basis": "real_Qwen_real_UI_natural_chat_candidates_explicit_confirmation_cloud_permission_correction_forgetting_SYNTHETIC_personal_history",
+  "responses": [
+    {
+      "question": "我平时喜欢观察鸟类，周末常去散步。这会儿只是跟你聊聊，不需要给我填表，也先不要安排购物。",
+      "result": {
+        "session": {
+          "id": "c75678f6-a22c-4873-8672-6e4a357f1c57",
+          "owner": "u_6e3c92ee-67a6-4e3e-9d61-ec0c4839d31e",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "36e9f4dd-17f6-49da-bcf2-980eb26210a3",
+              "role": "user",
+              "text": "我平时喜欢观察鸟类，周末常去散步。这会儿只是跟你聊聊，不需要给我填表，也先不要安排购物。",
+              "at": "2026-11-04T21:17:35.563Z",
+              "memoryPolicy": "candidates",
+              "capture": true
+            },
+            {
+              "id": "93468f40-5789-4d8d-8b1a-9c025c1bc785",
+              "role": "assistant",
+              "text": "好的，那我们就轻松聊聊。周末散步观鸟是很棒的放松方式，既能亲近自然，也能让节奏慢下来。你最近有观察到什么有趣的鸟类，或者有什么特别喜欢的观察地点吗？随时想聊什么都可以，我在这里听着。",
+              "reply": {
+                "modelHistoryText": "好的，那我们就轻松聊聊。周末散步观鸟是很棒的放松方式，既能亲近自然，也能让节奏慢下来。你最近有观察到什么有趣的鸟类，或者有什么特别喜欢的观察地点吗？随时想聊什么都可以，我在这里听着。",
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [],
+                "answer": "好的，那我们就轻松聊聊。周末散步观鸟是很棒的放松方式，既能亲近自然，也能让节奏慢下来。你最近有观察到什么有趣的鸟类，或者有什么特别喜欢的观察地点吗？随时想聊什么都可以，我在这里听着。",
+                "outcome": "answered",
+                "source": "model-general",
+                "model": "qwen3.8-max-0902",
+                "steps": [],
+                "stepsInAnswer": false,
+                "questions": [],
+                "evidenceIds": [],
+                "citations": [],
+                "memoryIds": [],
+                "usedItems": [],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。 整理了4条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。",
+                "route": {
+                  "intent": "companion",
+                  "mode": "companion",
+                  "reason": "回应这次交流，不强行围绕物品"
+                }
+              },
+              "at": "2026-11-04T21:17:35.563Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "candidates",
+            "interfaceMode": "standard",
+            "uiPage": "assistant",
+            "useItemMemories": "no",
+            "turnRequestId": "6811c722-a58c-44fd-9496-959758b6baec",
+            "turnScope": "home",
+            "lastIntent": "companion"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-11-04T21:17:31.505Z",
+          "updatedAt": "2026-11-04T21:17:35.565Z",
+          "expiresAt": "2026-11-11T21:17:31.505Z"
+        },
+        "reply": {
+          "modelHistoryText": "好的，那我们就轻松聊聊。周末散步观鸟是很棒的放松方式，既能亲近自然，也能让节奏慢下来。你最近有观察到什么有趣的鸟类，或者有什么特别喜欢的观察地点吗？随时想聊什么都可以，我在这里听着。",
+          "continuations": [],
+          "actionCards": [],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [],
+          "answer": "好的，那我们就轻松聊聊。周末散步观鸟是很棒的放松方式，既能亲近自然，也能让节奏慢下来。你最近有观察到什么有趣的鸟类，或者有什么特别喜欢的观察地点吗？随时想聊什么都可以，我在这里听着。",
+          "outcome": "answered",
+          "source": "model-general",
+          "model": "qwen3.8-max-0902",
+          "steps": [],
+          "stepsInAnswer": false,
+          "questions": [],
+          "evidenceIds": [],
+          "citations": [],
+          "memoryIds": [],
+          "usedItems": [],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。 整理了4条待确认线索，可在下方记忆中确认或丢弃；确认前不用作长期认识。",
+          "route": {
+            "intent": "companion",
+            "mode": "companion",
+            "reason": "回应这次交流，不强行围绕物品"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "companion; target=home; domain metadata, not a model answer",
+            "at": "2026-11-04T21:17:31.507Z"
+          },
+          {
+            "stage": "tool_runtime_REPLY_START",
+            "detail": "{}",
+            "at": "2026-11-04T21:17:31.514Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-04T21:17:31.515Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-04T21:17:34.095Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_bf055875b46c46bc8676b712\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T21:17:34.095Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_bf055875b46c46bc8676b712\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T21:17:34.095Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_bf055875b46c46bc8676b712\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T21:17:34.095Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":4632,\"outputTokens\":85}",
+            "at": "2026-11-04T21:17:34.095Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_bf055875b46c46bc8676b712\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T21:17:34.096Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"complete_answer\",\"effect\":\"local_write\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_and_public_original_quote_locators_no_business_write\",\"idempotency\":\"original_document_and_quote_digest\"}",
+            "at": "2026-11-04T21:17:34.098Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "complete_answer completed",
+            "at": "2026-11-04T21:17:34.101Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_bf055875b46c46bc8676b712\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-04T21:17:34.101Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_bf055875b46c46bc8676b712\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+            "at": "2026-11-04T21:17:34.101Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":2595,\"calls\":1,\"tools\":1,\"reservedCny\":0.058644,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-04T21:17:34.103Z"
+          },
+          {
+            "stage": "memory_proposals",
+            "detail": "4 source-anchored candidates; confirmation required",
+            "at": "2026-11-04T21:17:35.563Z"
+          }
+        ],
+        "tokens": {
+          "input": 4805,
+          "output": 137
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "d36d7837-4172-4689-bb05-1fee6dc4c760",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 4170,
+      "streamTextEvents": 1
+    }
+  ],
+  "checks": [],
+  "errors": [
+    "The expression evaluated to a falsy value:\n\n  assert.ok(original.includes(candidate.text))\n"
+  ],
+  "pageErrors": [],
+  "status": "failed",
+  "upstreamRequests": 2
+}

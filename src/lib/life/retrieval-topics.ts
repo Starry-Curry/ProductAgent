@@ -1,6 +1,7 @@
 import type { KnowledgeChunk } from "./acquisition.ts";
 // Query expansion only, never intent routing or a source of product facts.
 const topics = [
+  ["开机","关机","电源","power on","power off","turning the power"],
   ["配对","连接","蓝牙","pairing","connect","bluetooth"],
   ["初始化","恢复出厂","initialize","initializing","factory settings"],
   ["重置","复位","resetting","reset"],
@@ -23,7 +24,8 @@ export function relevantManualLinks(question:string,links:{title:string;url:stri
  const score=(title:string,g:readonly string[])=>g.reduce((n,t)=>n+(title.toLowerCase()===t?30:title.toLowerCase().includes(t)?t.length:0),0);
  const ordered=[...groups].sort((a,b)=>Math.min(...a.filter(t=>q.includes(t)).map(t=>q.indexOf(t)))-Math.min(...b.filter(t=>q.includes(t)).map(t=>q.indexOf(t))));
  const first=ordered.flatMap(g=>links.map(l=>({l,score:score(l.title,g)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,1).map(x=>x.l));
- const rest=links.map(l=>({l,score:groups.reduce((n,g)=>n+score(l.title,g),0)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).map(x=>x.l);
+ const words=q.match(/[a-z][a-z0-9-]{2,}/g)||[];
+ const rest=links.map(l=>({l,score:groups.reduce((n,g)=>n+score(l.title,g),0)+words.reduce((n,w)=>n+(l.title.toLowerCase().includes(w)?w.length:0),0)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).map(x=>x.l);
  return [...first,...(primaryOnly?[]:rest)].filter((l,n,a)=>a.findIndex(x=>x.url===l.url)===n);
 }
 export function multilingualAnchors(question:string,chunks:KnowledgeChunk[]) {

@@ -30,6 +30,7 @@ export function buildContext(
     companion?: boolean;
     sessionId?: string;
     useExperiences?: boolean;
+    profileMemoryKinds?:('interest'|'preference')[];
   },
 ) {
   if (input.itemId && !authorize(db, state, actor, input.itemId).allowed)
@@ -56,6 +57,7 @@ export function buildContext(
         item?.id,
         input.sessionId,
         input.includeItemRelationships && item?.owner === actor,
+        input.profileMemoryKinds,
       ).filter(
         (m) =>
           storyMemoryRelevant(db, actor, m, input.question) &&

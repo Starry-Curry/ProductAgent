@@ -1,0 +1,25 @@
+✖ 未知文档号PDF不能占满读取：先保留准确型号的厂家身份页，再沿真实链接读共用模块手册 (150.6123ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 401.04
+
+✖ failing tests:
+
+test at tests\finals-discovery-anchor.test.ts:2:1
+✖ 未知文档号PDF不能占满读取：先保留准确型号的厂家身份页，再沿真实链接读共用模块手册 (150.6123ms)
+  AssertionError [ERR_ASSERTION]: 准确型号身份锚点不能被opaque PDF候选挤掉
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-discovery-anchor.test.ts:5:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

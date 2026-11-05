@@ -1,0 +1,8 @@
+{
+  "caseId": "N05-3",
+  "arm": "direct",
+  "status": "not_run_user_reprioritized",
+  "quality": "not_scored",
+  "at": "2026-11-03T02:27:24.197Z",
+  "reason": "User prioritizes frozen first-answer scoring and four real browser journeys. Existing runner stops safely at its next-file guard, after in-flight output is saved; no forced termination."
+}

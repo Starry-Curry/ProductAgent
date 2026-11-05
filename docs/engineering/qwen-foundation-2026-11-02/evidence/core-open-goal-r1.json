@@ -1,0 +1,282 @@
+{
+  "at": "2026-11-03T03:47:53.154Z",
+  "basis": "real_browser_Qwen_open_goal_shared_services_synthetic_owned_resources_not_physical_validation",
+  "responses": [],
+  "checks": [
+    {
+      "name": "independent authenticated HTTP capability service reads the same Reality after 12 distractors",
+      "passed": true
+    }
+  ],
+  "errors": [
+    "locator.click: Error: strict mode violation: getByTestId('task-continuity').locator('summary') resolved to 2 elements:\n    1) <summary>继续我的事</summary> aka getByText('继续我的事')\n    2) <summary>选择这次相关的物品（可不选）</summary> aka getByText('选择这次相关的物品（可不选）')\n\nCall log:\n\u001b[2m  - waiting for getByTestId('task-continuity').locator('summary')\u001b[22m\n"
+  ],
+  "items": [
+    {
+      "id": "0e4e9f00-6ff5-45fa-8803-e04fc8fa3d39",
+      "name": "退役硅胶冰格",
+      "capabilities": [
+        "分隔调色"
+      ],
+      "contents": "本人测试设定：12个独立敞口格，已退出食品用途；是否漏水、颜料相容性未确认。"
+    },
+    {
+      "id": "af8f4889-d835-4f83-9bee-d1a97db952ff",
+      "name": "有围边的硬塑托盘",
+      "capabilities": [
+        "整组端走"
+      ],
+      "contents": "本人测试设定：平整有围边，可平放物品；实际净尺寸、承重和端持稳定性未知。"
+    },
+    {
+      "id": "14243504-c48f-4097-87f2-f57ebf93f9a4",
+      "name": "水彩颜料",
+      "capabilities": [
+        "水彩练习"
+      ],
+      "contents": "本人测试设定：已有固体水彩颜料，品牌与成分未记录。"
+    },
+    {
+      "id": "e13a50aa-b398-4b73-95ff-16e85c3cd93f",
+      "name": "水彩画笔",
+      "capabilities": [
+        "水彩练习"
+      ],
+      "contents": "本人测试设定：已有画笔；不是固定装置或支撑物。"
+    }
+  ],
+  "publicService": {
+    "version": "capability-discovery/1",
+    "resources": [
+      {
+        "id": "14243504-c48f-4097-87f2-f57ebf93f9a4",
+        "name": "[模拟持有]水彩颜料",
+        "identity": {
+          "kind": "unique",
+          "brand": "无品牌",
+          "model": null,
+          "region": null,
+          "firmware": null,
+          "identityBasis": "user_report"
+        },
+        "instance": {
+          "state": "在用",
+          "availability": "available",
+          "usable": true,
+          "quantity": null,
+          "unit": "件",
+          "synthetic": true,
+          "basis": "user_report"
+        },
+        "capabilities": [
+          {
+            "id": "14243504-c48f-4097-87f2-f57ebf93f9a4:attributes/capabilities/3167e7a530d1",
+            "effect": "水彩练习",
+            "basis": "user_report",
+            "evidenceIds": [
+              "14243504-c48f-4097-87f2-f57ebf93f9a4:attributes/capabilities/3167e7a530d1"
+            ],
+            "requires": [
+              "核对当前任务所需的连接、状态及适用条件"
+            ],
+            "status": "conditional",
+            "executable": false,
+            "verifiedForThisInstance": false
+          }
+        ],
+        "facts": [
+          {
+            "id": "14243504-c48f-4097-87f2-f57ebf93f9a4:attributes/capabilities/3167e7a530d1",
+            "subject": "14243504-c48f-4097-87f2-f57ebf93f9a4",
+            "scope": "instance",
+            "component": "本体",
+            "predicate": "capability",
+            "value": "水彩练习",
+            "basis": "user_report",
+            "status": "asserted",
+            "source": {
+              "ref": "attributes/capabilities/3167e7a530d1"
+            },
+            "verification": "user_report_not_measured"
+          },
+          {
+            "id": "14243504-c48f-4097-87f2-f57ebf93f9a4:physical/16d2be19-91e8-4f0e-bd8a-b141512b759b",
+            "subject": "14243504-c48f-4097-87f2-f57ebf93f9a4",
+            "scope": "instance",
+            "component": "本体",
+            "predicate": "contents",
+            "value": "本人测试设定：已有固体水彩颜料，品牌与成分未记录。",
+            "basis": "user_report",
+            "status": "asserted",
+            "source": {
+              "ref": "physical/16d2be19-91e8-4f0e-bd8a-b141512b759b"
+            },
+            "verification": "user_report_not_measured"
+          }
+        ],
+        "unknowns": [
+          "未登记商业型号；不妨碍保存此物品及获准故事",
+          "材质",
+          "尺寸",
+          "未记录的承重、耐热、稳定性及型号操作不由名称推断"
+        ],
+        "revision": "45d885bc2683626d407a6d8734c55e2437ae5addb8b22997a8d8a5a01c10c91e"
+      },
+      {
+        "id": "e13a50aa-b398-4b73-95ff-16e85c3cd93f",
+        "name": "[模拟持有]水彩画笔",
+        "identity": {
+          "kind": "unique",
+          "brand": "无品牌",
+          "model": null,
+          "region": null,
+          "firmware": null,
+          "identityBasis": "user_report"
+        },
+        "instance": {
+          "state": "在用",
+          "availability": "available",
+          "usable": true,
+          "quantity": null,
+          "unit": "件",
+          "synthetic": true,
+          "basis": "user_report"
+        },
+        "capabilities": [
+          {
+            "id": "e13a50aa-b398-4b73-95ff-16e85c3cd93f:attributes/capabilities/3167e7a530d1",
+            "effect": "水彩练习",
+            "basis": "user_report",
+            "evidenceIds": [
+              "e13a50aa-b398-4b73-95ff-16e85c3cd93f:attributes/capabilities/3167e7a530d1"
+            ],
+            "requires": [
+              "核对当前任务所需的连接、状态及适用条件"
+            ],
+            "status": "conditional",
+            "executable": false,
+            "verifiedForThisInstance": false
+          }
+        ],
+        "facts": [
+          {
+            "id": "e13a50aa-b398-4b73-95ff-16e85c3cd93f:attributes/capabilities/3167e7a530d1",
+            "subject": "e13a50aa-b398-4b73-95ff-16e85c3cd93f",
+            "scope": "instance",
+            "component": "本体",
+            "predicate": "capability",
+            "value": "水彩练习",
+            "basis": "user_report",
+            "status": "asserted",
+            "source": {
+              "ref": "attributes/capabilities/3167e7a530d1"
+            },
+            "verification": "user_report_not_measured"
+          },
+          {
+            "id": "e13a50aa-b398-4b73-95ff-16e85c3cd93f:physical/efb1f68a-36a3-4c49-b9f0-abb93f088a48",
+            "subject": "e13a50aa-b398-4b73-95ff-16e85c3cd93f",
+            "scope": "instance",
+            "component": "本体",
+            "predicate": "contents",
+            "value": "本人测试设定：已有画笔；不是固定装置或支撑物。",
+            "basis": "user_report",
+            "status": "asserted",
+            "source": {
+              "ref": "physical/efb1f68a-36a3-4c49-b9f0-abb93f088a48"
+            },
+            "verification": "user_report_not_measured"
+          }
+        ],
+        "unknowns": [
+          "未登记商业型号；不妨碍保存此物品及获准故事",
+          "材质",
+          "尺寸",
+          "未记录的承重、耐热、稳定性及型号操作不由名称推断"
+        ],
+        "revision": "140635e9a83506f84e12bb965f4976460a320b51e9c61aad99c11e166268bd70"
+      },
+      {
+        "id": "0e4e9f00-6ff5-45fa-8803-e04fc8fa3d39",
+        "name": "[模拟持有]退役硅胶冰格",
+        "identity": {
+          "kind": "unique",
+          "brand": "无品牌",
+          "model": null,
+          "region": null,
+          "firmware": null,
+          "identityBasis": "user_report"
+        },
+        "instance": {
+          "state": "在用",
+          "availability": "available",
+          "usable": true,
+          "quantity": null,
+          "unit": "件",
+          "synthetic": true,
+          "basis": "user_report"
+        },
+        "capabilities": [
+          {
+            "id": "0e4e9f00-6ff5-45fa-8803-e04fc8fa3d39:attributes/capabilities/f18d98ede7ad",
+            "effect": "分隔调色",
+            "basis": "user_report",
+            "evidenceIds": [
+              "0e4e9f00-6ff5-45fa-8803-e04fc8fa3d39:attributes/capabilities/f18d98ede7ad"
+            ],
+            "requires": [
+              "核对当前任务所需的连接、状态及适用条件"
+            ],
+            "status": "conditional",
+            "executable": false,
+            "verifiedForThisInstance": false
+          }
+        ],
+        "facts": [
+          {
+            "id": "0e4e9f00-6ff5-45fa-8803-e04fc8fa3d39:attributes/capabilities/f18d98ede7ad",
+            "subject": "0e4e9f00-6ff5-45fa-8803-e04fc8fa3d39",
+            "scope": "instance",
+            "component": "本体",
+            "predicate": "capability",
+            "value": "分隔调色",
+            "basis": "user_report",
+            "status": "asserted",
+            "source": {
+              "ref": "attributes/capabilities/f18d98ede7ad"
+            },
+            "verification": "user_report_not_measured"
+          },
+          {
+            "id": "0e4e9f00-6ff5-45fa-8803-e04fc8fa3d39:physical/9a39733e-6615-4eea-8b50-506353af09b6",
+            "subject": "0e4e9f00-6ff5-45fa-8803-e04fc8fa3d39",
+            "scope": "instance",
+            "component": "本体",
+            "predicate": "contents",
+            "value": "本人测试设定：12个独立敞口格，已退出食品用途；是否漏水、颜料相容性未确认。",
+            "basis": "user_report",
+            "status": "asserted",
+            "source": {
+              "ref": "physical/9a39733e-6615-4eea-8b50-506353af09b6"
+            },
+            "verification": "user_report_not_measured"
+          }
+        ],
+        "unknowns": [
+          "未登记商业型号；不妨碍保存此物品及获准故事",
+          "材质",
+          "尺寸",
+          "未记录的承重、耐热、稳定性及型号操作不由名称推断"
+        ],
+        "revision": "e2fffa5a75b95ea23c9fcd2693874368eed40d635e1760fa3e930480df4f3109"
+      }
+    ],
+    "total": 3,
+    "authorizedTotal": 17,
+    "nextCursor": null,
+    "matching": "lexical_goal_candidates_not_semantic_or_physical_proof",
+    "notice": "只有获准事实和条件化能力；没有实物验证或执行授权。无匹配可省略goal分页浏览，不假定前几件相关。"
+  },
+  "unauthorizedReadStatus": 401,
+  "upstreamRequests": 0
+}

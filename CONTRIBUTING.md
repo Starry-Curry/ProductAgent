@@ -8,26 +8,35 @@
 
 ```bash
 npm ci
-npm run dev
+npm run team:dev -- --name=alice --port=3251
 ```
 
-打开 http://127.0.0.1:3200。默认不需要模型 Key，不产生模型费用。真实模型必须具备当前任务明确授权及有效预算，不能只打开开关绕过费用网关。
+打开 http://127.0.0.1:3251，注册本地测试账号。每人使用自己的 checkout、名字、端口、数据与构建目录；默认不需要 Key，不产生模型费用。`npm run team:mock` 可运行已有共享服务示例。真实模型必须具备当前任务明确授权及有效预算，不能只打开开关绕过费用网关。
 
 同学优先维护负责页面与专业业务；共享 Item/Reality、Context、工具契约、权限事务、模型网关由底座负责人协调。Route Handler 负责解析和映射，权限与写入保留在领域服务。外部文字视为数据，网络 I/O 后复核权限和版本。
 
 ## GitHub 协作
 
-- main：稳定演示；develop：团队集成，是否已建立见 CURRENT，未建立时继续当前独立研发分支，不自行假定存在。
-- develop 必须由通过 typecheck、离线测试和构建的可运行基线建立。研发基线不等于产品验收通过。
-- develop 建立后，从最新 origin/develop 创建 feat/*、fix/*、docs/* 或 codex/*；Codex 默认 codex/*。提交小范围完整变化，PR 到 develop，经 CI + 一名组员审查后集成。
-- 合入 main、分支保护与仓库权限由负责人批准；不强推、不改已发布标签/共享历史、不改全局 Git。使用隔离工作区保护未提交内容与原项目。
+2026-11-05用户调整：审计前暂停历史集成，PR #4保持Draft。当前候选允许按公共接口独立开发，但功能PR先保持Draft，不向候选/develop/main合并；负责人解除暂停并指定正式集成基线后，再执行下列通常合并流程。角色和交付标准见 [分工说明](docs/engineering/TEAM_WORK_PLAN.md)。
 
-仅在 develop 已存在时使用：
+- main：稳定演示，由负责人批准更新。
+- develop：团队集成，研发基线不等于产品质量验收通过。
+- feature/*、fix/*、docs/*、codex/*：独立开发；新组员通常从最新 origin/develop 开始。
+- main 已由负责人授权更新至 `dbd93cf`。develop 同步集成 PR 合并前，临时基线使用 `origin/codex/wujian-team-ready-v2`；它包含 main 和最新团队启动工具。旧 PR #1 的候选不是最新底座；实际状态见 CURRENT。暂时从候选开发的功能 PR 先以该候选为 base，待集成后改向 develop 并复核差异。
+- 个人分支通过 PR 合入 develop，需 CI 通过及一名组员独立审查；不以作者自审替代。不得强推、改写共享历史或自行合并 main。仅在当前仓库配置已核实的提交者，不修改 global Git。
 
 ```bash
+git clone https://github.com/Starry-Curry/ProductAgent.git
+cd ProductAgent
 git fetch origin
-git switch -c codex/your-change origin/develop
+# develop 同步最新底座前：
+git switch -c feature/your-name-your-feature origin/codex/wujian-team-ready-v2
+# 同步集成 PR 合并后，新建功能分支时改用 origin/develop。
 ```
+
+底座服务、类型、Mock 和专业工具接入直接见 [TEAM_INTEGRATION](docs/engineering/TEAM_INTEGRATION.md)，不在本页重复。
+
+日常同步、未提交修改保护、冲突处理和 PR 操作见 [GitHub 协作指南](docs/GIT_WORKFLOW.md)。后续优先级与完成标准见 [研发规划](docs/engineering/NEXT_STEPS.md)。
 
 ## 检查与证据
 

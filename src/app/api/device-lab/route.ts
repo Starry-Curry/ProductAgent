@@ -34,6 +34,7 @@ export const POST = withDemoRequest(async (r: Request) => {
         confirmed: z.boolean().optional(),
         requestId: z.string().uuid().optional(),
         brightness: z.number().int().min(0).max(100).optional(),
+        taskId:z.string().uuid().optional(),
       })
       .strict()
       .parse(await r.json());
@@ -82,6 +83,7 @@ export const POST = withDemoRequest(async (r: Request) => {
         requestId: v.requestId,
         brightness: v.brightness,
         confirmed: v.confirmed === true,
+        ...(v.taskId?{taskId:v.taskId}:{}),
       }),
     );
   } catch (e) {

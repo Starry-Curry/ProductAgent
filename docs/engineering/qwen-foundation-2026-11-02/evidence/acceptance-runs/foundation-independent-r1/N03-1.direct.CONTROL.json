@@ -1,0 +1,30 @@
+{
+  "caseId": "N03-1",
+  "arm": "direct",
+  "controlCohort": "additional_authorized_round_same_information",
+  "roundId": "qwen-foundation-20261103-r2",
+  "status": "returned_not_scored",
+  "quality": "not_scored",
+  "at": "2026-11-03T02:25:54.151Z",
+  "sameInformation": {
+    "productRequestNumber": 109,
+    "materialSha256": "01cd132d014e04192f8c137ef778686bcd6753dcfbb3262d56614d32672d6d22",
+    "method": "exact user/tool content of product final tool-loop request; excludes system and assistant drafts"
+  },
+  "text": "根据当前提供的资料，**无法回答**“拍40厘米小摆件该把 FUJIFILM instax mini 99 的镜头拨到哪里”这个问题。\n\n原因如下：\n\n1. **证据不足**：当前上下文中关于 FUJIFILM instax mini 99 的官方文档和说明书原文为空（`sources: []`，`status: \"no_sources\"`），没有获取到该型号的对焦距离刻度、最近对焦距离或微距模式的具体说明。\n2. **遵守您的要求**：您明确要求“不要拿别的mini机型步骤代替”，因此在没有 mini 99 专属官方资料的情况下，我不能用其他 instax mini 机型（如 mini 90、mini 12 等）的对焦操作来推断或编造 mini 99 的步骤。\n3. **不编造操作**：系统规则明确限制“不得编造操作”，在缺乏该型号适用正文时，不能凭空给出一个拨动位置。\n\n**要获得准确答案，建议您：**\n- 查阅随相机附带的 **FUJIFILM instax mini 99 官方说明书**中关于“拍摄距离”或“微距/近摄模式”的章节，确认镜头上的对焦标识（通常会有标准与微距的切换标记及对应的距离范围）。\n- 或者将说明书相关页面拍照上传 / 提供官方链接，我可以帮您从中提取针对 40cm 距离的确切操作步骤。",
+  "usage": {
+    "completion_tokens": 314,
+    "prompt_tokens": 1170,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "text_tokens": 1170
+    },
+    "total_tokens": 1484
+  },
+  "model": "qwen3.8-max-0902",
+  "finishReason": "stop",
+  "fullAnswerMs": 7881,
+  "upstreamNumbers": [
+    7
+  ]
+}

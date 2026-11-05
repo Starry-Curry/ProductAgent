@@ -21,6 +21,7 @@ import { epoch, saveMemory, getPersona } from "../memory/store.ts";
 import { executeGraph } from "./graph.ts";
 import { buildContext } from "../context/builder.ts";
 import { identity } from "../ai/harness.ts";
+import {bindRunReadResources} from '../foundation/tasks.ts';
 import { readKnowledge } from "../life/acquisition.ts";
 import { continueVerifiedGuidance } from "./guidance-continuation.ts";
 import { beginRun, finishRun, assertRunCurrent, linkTask, getTask } from "../foundation/tasks.ts";
@@ -76,6 +77,7 @@ export async function respond(
     // Legacy commit has already validated its memory epoch, including the caller's
     // own explicitly requested memory write. Do not reject that successful write.
     run.memoryEpoch=result.session.memoryEpoch;
+    bindRunReadResources(db,read(),run,(result.reply.usedItems||[]).map(i=>i.id));
     assertRunCurrent(db,read(),run);
     const finished=finishRun(db,read,run,result.reply.outcome==="blocked"?"blocked":result.reply.outcome==="unavailable"?"partial":"waiting_user",result.session.id);
     if(taskId)db.prepare("INSERT OR IGNORE INTO foundation_links VALUES('session',?,?)").run(result.session.id,taskId);
@@ -287,7 +289,7 @@ async function respondLegacy(
       const continued =
         !session.known.homeId &&
         itemId &&
-        completedStepOrdinals(input.question).length
+        (completedStepOrdinals(input.question).length||session.tried.length)
           ? continueVerifiedGuidance(
               session,
               input.question,

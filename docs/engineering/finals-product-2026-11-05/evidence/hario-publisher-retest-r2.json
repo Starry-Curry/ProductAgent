@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-04T17:26:08.242Z",
+  "proofs": [
+    {
+      "version": 2,
+      "brand": "HARIO",
+      "directoryURL": "https://www.wikidata.org/wiki/Special:EntityData/Q11222262.json",
+      "entity": "Q11222262",
+      "record": "{\"entities\":{\"Q11222262\":{\"id\":\"Q11222262\",\"labels\":{\"ja\":{\"language\":\"ja\",\"value\":\"HARIO\"},\"en\":{\"language\":\"en\",\"value\":\"Hario\"},\"ko\":{\"language\":\"ko\",\"value\":\"HARIO\"},\"fr\":{\"language\":\"fr\",\"value\":\"Hario\"},\"de\":{\"language\":\"de\",\"value\":\"Hario\"}},\"aliases\":{\"ja\":[{\"language\":\"ja\",\"value\":\"ハリオ\"},{\"language\":\"ja\",\"value\":\"HARIO株式会社\"},{\"language\":\"ja\",\"value\":\"ハリオグラス\"},{\"language\":\"ja\",\"value\":\"玻璃王\"}]},\"claims\":{\"P31\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P31\",\"hash\":\"326e3d41d1e9c34715e880be6e1c6a1e822e4317\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":4830453,\"id\":\"Q4830453\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q11222262$A8EFA8D5-7339-44C4-9B23-C53793FE504A\",\"rank\":\"normal\"}],\"P856\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"d5840341a02d232389ae56645fa352b1bc31f2b9\",\"datavalue\":{\"value\":\"http://www.hario.com/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"id\":\"Q11222262$225D0F5B-91DC-437C-A15E-4A4B9F79537B\",\"rank\":\"normal\",\"references\":[{\"hash\":\"a29a646602abf65105ed0f39a44231c962ece9ee\",\"snaks\":{\"P143\":[{\"snaktype\":\"value\",\"property\":\"P143\",\"hash\":\"c6f1777471211df31724ac60175786f3872c83e9\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":177837,\"id\":\"Q177837\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"}]},\"snaks-order\":[\"P143\"]}]},{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"655821e95361dd232a40935be1942045f2d375a8\",\"datavalue\":{\"value\":\"http://www.hario.jp/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"id\":\"Q11222262$b0481133-4648-2cf3-e044-139c2c5fe172\",\"rank\":\"normal\"},{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P856\",\"hash\":\"32ba2782e8fa6d2f20b1eefe852451ba7d1cb4d7\",\"datavalue\":{\"value\":\"https://www.hario-europe.com/\",\"type\":\"string\"},\"datatype\":\"url\"},\"type\":\"statement\",\"qualifiers\":{\"P407\":[{\"snaktype\":\"value\",\"property\":\"P407\",\"hash\":\"daf1c4fcb58181b02dff9cc89deb084004ddae4b\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":1860,\"id\":\"Q1860\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"}]},\"qualifiers-order\":[\"P407\"],\"id\":\"Q11222262$62E3AE35-44A8-4CD0-9B3B-1F6D1E16BCD9\",\"rank\":\"normal\",\"references\":[{\"hash\":\"d134c3783e8cd9a8a8d84847366300851c6af4a3\",\"snaks\":{\"P854\":[{\"snaktype\":\"value\",\"property\":\"P854\",\"hash\":\"9d602ea2fa155721d63b7afd288774f8dc9c5097\",\"datavalue\":{\"value\":\"https://www.hario-europe.com/\",\"type\":\"string\"},\"datatype\":\"url\"}],\"P1476\":[{\"snaktype\":\"value\",\"property\":\"P1476\",\"hash\":\"809d0bea4b561a5be42ff92b8c8980b01dda29f7\",\"datavalue\":{\"value\":{\"text\":\"HARIO Official Web Shop in Europe – HARIO Europe\",\"language\":\"en\"},\"type\":\"monolingualtext\"},\"datatype\":\"monolingualtext\"}],\"P813\":[{\"snaktype\":\"value\",\"property\":\"P813\",\"hash\":\"2815b81c8691baf9d3a579626abaf9dde8088e11\",\"datavalue\":{\"value\":{\"time\":\"+2023-08-04T00:00:00Z\",\"timezone\":0,\"before\":0,\"after\":0,\"precision\":11,\"calendarmodel\":\"http://www.wikidata.org/entity/Q1985727\"},\"type\":\"time\"},\"datatype\":\"time\"}]},\"snaks-order\":[\"P854\",\"P1476\",\"P813\"]}]}]}}}}",
+      "recordHash": "7c1ae7cb639175ae6b7dac59168c9fe9844497cfda7337bc9d706790ed94e5e9",
+      "homepage": "https://www.hario-europe.com/",
+      "redirectChain": [
+        "https://www.hario-europe.com/"
+      ],
+      "verifiedAt": "2026-11-04T17:26:08.242Z"
+    }
+  ],
+  "issues": [],
+  "basis": "live_directory_and_TLS_no_paid_model"
+}
