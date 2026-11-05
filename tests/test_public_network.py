@@ -15,6 +15,37 @@ def dns_rows(*addresses):
 
 
 class PublicNetworkTests(unittest.IsolatedAsyncioTestCase):
+    async def test_same_origin_reader_does_not_forward_session_header_to_another_origin(self):
+        for target in ("https://other.example.com/result", "http://example.com/result"):
+            with self.subTest(target=target):
+                observed = []
+                def serve(request):
+                    observed.append(request)
+                    return httpx.Response(302, headers={"location": target})
+                client = httpx.AsyncClient(transport=httpx.MockTransport(serve))
+                with patch("wujian.knowledge.httpx.AsyncClient", return_value=client), \
+                     patch("wujian.public_network.socket.getaddrinfo", return_value=dns_rows("8.8.8.8")):
+                    with self.assertRaisesRegex(DomainError, "另一站点"):
+                        await download_public("https://example.com/search", same_origin=True,
+                            headers={"Cookie": "anonymous-fixture=not-a-user-credential"})
+                self.assertEqual(len(observed), 1)
+                self.assertEqual(observed[0].headers["host"], "example.com")
+
+    async def test_same_origin_reader_keeps_normal_path_redirects_and_default_reader_can_change_public_origin(self):
+        for restricted, target in ((True, "https://example.com:443/result"), (False, "https://other.example.com/result")):
+            with self.subTest(restricted=restricted):
+                observed = []
+                def serve(request):
+                    observed.append(request)
+                    return httpx.Response(302, headers={"location": target}) if len(observed) == 1 else httpx.Response(200, text="public results")
+                client = httpx.AsyncClient(transport=httpx.MockTransport(serve))
+                with patch("wujian.knowledge.httpx.AsyncClient", return_value=client), \
+                     patch("wujian.public_network.socket.getaddrinfo", return_value=dns_rows("8.8.8.8")):
+                    final, _, body = await download_public("https://example.com/search", same_origin=restricted)
+                self.assertEqual(len(observed), 2)
+                self.assertEqual(body, b"public results")
+                self.assertEqual(final, "https://example.com/result" if restricted else target)
+
     async def test_private_literal_destinations_and_invalid_authorities_rejected(self):
         for url in ["http://127.0.0.1/", "http://10.0.0.1/", "http://169.254.169.254/",
                     "http://[::1]/", "http://224.0.0.1/", "http://198.18.0.1/",

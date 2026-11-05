@@ -66,19 +66,31 @@ async def validate_public_url(url):
     return await resolve_public_url(url)
 
 
-async def download_public(url, *, max_bytes=12 * 1024 * 1024, headers=None):
+async def download_public(url, *, max_bytes=12 * 1024 * 1024, headers=None, same_origin=False, cancel_event=None):
+    def check_cancelled():
+        if cancel_event is not None and cancel_event.is_set():
+            raise asyncio.CancelledError()
+
     # Public-source reads must not silently inherit an unrelated machine proxy.
     async with httpx.AsyncClient(timeout=20, follow_redirects=False, trust_env=False,
                                  limits=httpx.Limits(max_keepalive_connections=0),
                                  headers={"User-Agent": "WujianResearch/0.1"}) as client:
+        initial_origin = None
         for _ in range(5):
+            check_cancelled()
             original, addresses = await validate_public_url(url)
+            check_cancelled()
+            origin = (original.scheme, original.host, original.port)
+            if same_origin and initial_origin is not None and origin != initial_origin:
+                raise DomainError("资料跳转到另一站点，未继续发送本次匿名会话标识", 422)
+            initial_origin = initial_origin or origin
             # Pin the checked address: there is no second system DNS lookup,
             # while Host and TLS verification still use the original domain.
             pinned = original.copy_with(host=addresses[0])
             client.cookies.clear()
             async with client.stream("GET", pinned, headers={**(headers or {}),"Host": original.netloc.decode("ascii")},
                                      extensions={"sni_hostname": original.raw_host.decode("ascii")}) as response:
+                check_cancelled()
                 if response.status_code in {301, 302, 303, 307, 308}:
                     url = urljoin(str(original), response.headers.get("location", ""))
                     continue
@@ -87,9 +99,11 @@ async def download_public(url, *, max_bytes=12 * 1024 * 1024, headers=None):
                 response.raise_for_status()
                 data = bytearray()
                 async for chunk in response.aiter_bytes():
+                    check_cancelled()
                     data.extend(chunk)
                     if len(data) > max_bytes:
                         raise DomainError(f"资料超过当前单文件{max_bytes // (1024 * 1024)}MB限制")
+                check_cancelled()
                 return str(original), response.headers.get("content-type", ""), bytes(data)
     raise DomainError("资料重定向过多", 502)
 

@@ -32,6 +32,44 @@ class SearchReadChainTests(unittest.IsolatedAsyncioTestCase):
     def tearDown(self):
         self.engine.dispose();self.directory.cleanup()
 
+    async def test_bilibili_backend_is_an_explicit_choice_and_does_not_call_paid_search(self):
+        discovery = {"provider": "bilibili_public_search_via_ytdlp",
+            "results": [{"url": "https://www.bilibili.com/video/BV1pa4y1B7f8/",
+                "title": "4种方法，长尾夹秒变手机支架", "author": "顺手TV"}],
+            "evidence_kind": "search_result_not_full_document"}
+        with patch("wujian.community_search.search_bilibili", new=AsyncMock(return_value=discovery)) as community, \
+             patch("wujian.agent_runtime.search_web", new=AsyncMock()) as paid, \
+             patch("wujian.knowledge.download_public", new=AsyncMock()) as originals:
+            chunk = await self.tool(query="长尾夹 手机支架", community="bilibili")
+        self.assertEqual(str(chunk.state), "success")
+        value = json.loads(chunk.content[0].text)
+        self.assertEqual(value["results"][0]["author"], "顺手TV")
+        self.assertEqual(value["results"][0]["read_state"], "not_read")
+        self.assertEqual(value["evidence_kind"], "search_result_not_full_document")
+        community.assert_awaited_once_with("长尾夹 手机支架")
+        paid.assert_not_awaited(); originals.assert_not_awaited()
+        self.assertFalse(self.evidence)
+        with self.sessions() as db:
+            self.assertEqual(list(db.scalars(select(SourceRecord))), [])
+
+    async def test_community_rejection_is_not_silently_replaced_by_paid_search(self):
+        with patch("wujian.community_search.search_bilibili", new=AsyncMock(
+            side_effect=domain.DomainError("公开资料读取受限（HTTP 412）", 502))), \
+             patch("wujian.agent_runtime.search_web", new=AsyncMock()) as paid:
+            chunk = await self.tool(query="杯子 创意玩法", community="bilibili")
+        self.assertEqual(str(chunk.state), "error")
+        self.assertIn("412", chunk.content[0].text)
+        paid.assert_not_awaited()
+
+    async def test_unknown_community_and_unauthorized_item_stop_before_any_search(self):
+        with patch("wujian.community_search.search_bilibili", new=AsyncMock()) as community, \
+             patch("wujian.agent_runtime.search_web", new=AsyncMock()) as paid:
+            invalid = await self.tool(query="生活玩法", community="unknown-provider")
+            forbidden = await self.tool(query="生活玩法", community="bilibili", item_id="not-readable")
+        self.assertEqual(str(invalid.state), "error")
+        self.assertEqual(str(forbidden.state), "error")
+        community.assert_not_awaited(); paid.assert_not_awaited()
+
     async def test_actual_original_is_retained_and_can_be_expanded_after_compact_window(self):
         # Long synthetic transport fixture tests truncation, not intelligence.
         body="<html><title>模拟原文</title><main>"+"\n".join(f"<p>原文行{i}：这是测试内容，不是实测结果。</p>" for i in range(350))+"</main></html>"

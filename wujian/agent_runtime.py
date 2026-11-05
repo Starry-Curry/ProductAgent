@@ -324,14 +324,20 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
             db.commit()
             return {"status": "updated", "growth_note": growth_note}
 
-    async def search_public_web(query: str, read_limit: int = 0, item_id: str | None = None):
-        """Discover public references; optionally retrieve up to 2 originals in this tool. Default 0 only discovers links. For a focused query where an original is needed, choose read_limit=1 or 2 to combine discovery and reading. Each result says retrieved/unavailable/not_read. Return order does not prove relevance or model compatibility; inspect originals or choose other URLs with fetch_document. Video metadata is not watched footage."""
+    async def search_public_web(query: str, read_limit: int = 0, item_id: str | None = None, community: str = "web"):
+        """Discover public references; community='web' uses Bailian search, 'bilibili' uses bounded public Bilibili search via optional yt-dlp without a paid search-model call. Use short actual topic/mechanism words for the community query, not a site: operator. Default read_limit=0 only discovers links; 1 or 2 also retrieves originals. Each result says retrieved/unavailable/not_read. Ranking, title or description is not model compatibility or observed footage. If a community request fails, it is not silently replaced by another search provider."""
         if not 0 <= read_limit <= 2:
             raise domain.DomainError("read_limit须为0、1或2；需要更多时按线索继续读取")
+        if community not in {"web", "bilibili"}:
+            raise domain.DomainError("community请选择web或bilibili")
         if item_id:
             with sessions() as db:
                 domain.accessible_item(db,user_id,item_id)
-        discovery = await search_web(settings, query)
+        if community == "bilibili":
+            from .community_search import search_bilibili
+            discovery = await search_bilibili(query)
+        else:
+            discovery = await search_web(settings, query)
         results = [{**row, "read_state":"not_read"} for row in discovery["results"]]
 
         async def read_original(row):

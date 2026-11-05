@@ -45,7 +45,7 @@ npm.cmd --prefix frontend run build
 
 首次使用前，将 `.env.example` 复制为 `.env` 并在本地填写密钥；已有 `.env` 请保留。`uv.lock` 和 `frontend/package-lock.json` 固定依赖。数据与原始资料保存在 `var/`，与源码分开；不要为了重新启动而删除它。关闭体验档案入口可设置 `WUJIAN_DEMO_MODE=false`。当前会话和部署设置用于本地原型，尚未完成公网生产加固。
 
-公开视频抽帧是可选能力：安装 `uv sync --extra video --cache-dir tmp/uv-cache`，并将本地 FFmpeg 可执行文件的绝对路径填入 `.env` 的 `FFMPEG_BINARY`（或把 FFmpeg 加入 PATH）。当前只支持可匿名读取的单条 B 站 BV 来源、低清有界 MP4 和少量抽帧；平台拒绝、组件缺失或格式超限会真实报错。不是全视频理解、字幕生成或教学动画。此电脑已经配置；队友不使用该能力时无需安装额外组件。
+公开B站搜索与视频抽帧共用现有可选组件：安装 `uv sync --extra video --cache-dir tmp/uv-cache`。搜索只需yt-dlp；抽帧还需将本地 FFmpeg 可执行文件的绝对路径填入 `.env` 的 `FFMPEG_BINARY`（或把 FFmpeg 加入 PATH）。搜索通过既有Agent工具`search_public_web(..., community="bilibili")`按需选用，最多一页五条真实视频线索，不额外调用搜索模型；默认`web`仍走百炼。仅使用工具本次新建的匿名会话，不读取用户登录信息；受限时明确失败，不暗中切换收费搜索。视频观察仍只支持可匿名读取的单条BV、低清有界MP4和少量抽帧。搜索标题、原页文字与实际画面分开，不能当作全视频理解、字幕生成或教学动画。此电脑已经配置；队友不用这些可选能力时无需安装额外组件。
 
 ## 开发与验证
 
@@ -78,6 +78,7 @@ npm.cmd --prefix frontend run build
 | `wujian/devices.py` | 项目内 REA MCP 生命周期、连接目标、观察证据与显式操作 |
 | `wujian/knowledge.py` | 百炼真实搜索、原始网页/PDF 获取、引用与页图读取 |
 | `wujian/source_video.py` | 可选 yt-dlp 平台解析与 FFmpeg 本地抽帧；同一来源与资产体系，原始网页和抽帧来源分开 |
+| `wujian/community_search.py` | 复用可选yt-dlp的公开B站搜索；只有线索，不另建来源/灵感事实库，原文继续沿共同reader读取 |
 | `wujian/server.py` | 登录、API、流式进度、文件权限与静态界面服务 |
 | `frontend/src/features/` | 按物伴、物品、回忆、朋友、事项和共同表单拆分的响应式界面；`src/generated/api.ts` 自动生成 |
 | `fixtures/development/catalog.json` | 中国大陆型号及非标物开发样本；不预置操作答案 |
