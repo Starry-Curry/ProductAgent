@@ -59,5 +59,11 @@
     "fullFoundation": "NOT_ACCEPTED",
     "coreFoundation": "NOT_ACCEPTED"
   },
-  "remote": "remote-state.json"
+  "remote": "remote-state.json",
+  "artifactFormatting": {
+    "file": "typecheck-r2.txt",
+    "sha256BeforeFormatting": "292fac678f539c5fa04b8e706c139afc861f9b6d084d64cec3fa76ce30472160",
+    "change": "Remove trailing blank line only; command output content unchanged",
+    "rawRuntimeCopy": ".runtime/predevelopment-audit/typecheck-r2.txt"
+  }
 }
