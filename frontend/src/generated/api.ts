@@ -1100,6 +1100,12 @@ export interface components {
              */
             enabled: boolean;
             /**
+             * Form
+             * @default auto
+             * @enum {string}
+             */
+            form: "auto" | "keepsake" | "cup" | "stone" | "flower" | "cat";
+            /**
              * Nickname
              * @default
              */
@@ -1122,6 +1128,12 @@ export interface components {
              * @default false
              */
             enabled: boolean;
+            /**
+             * Form
+             * @default auto
+             * @enum {string}
+             */
+            form: "auto" | "keepsake" | "cup" | "stone" | "flower" | "cat";
             /**
              * Nickname
              * @default
@@ -1276,11 +1288,8 @@ export interface components {
             item_ids?: string[];
             /** Photo Ids */
             photo_ids?: string[];
-            /**
-             * Occurred On
-             * Format: date
-             */
-            occurred_on?: string;
+            /** Occurred On */
+            occurred_on?: string | null;
             /**
              * Allow Ai
              * @default false
@@ -1299,11 +1308,8 @@ export interface components {
             item_ids?: string[];
             /** Photo Ids */
             photo_ids?: string[];
-            /**
-             * Occurred On
-             * Format: date
-             */
-            occurred_on?: string;
+            /** Occurred On */
+            occurred_on?: string | null;
             /**
              * Allow Ai
              * @default false
@@ -1320,11 +1326,8 @@ export interface components {
             item_ids: string[];
             /** Photo Ids */
             photo_ids: string[];
-            /**
-             * Occurred On
-             * Format: date
-             */
-            occurred_on: string;
+            /** Occurred On */
+            occurred_on: string | null;
             /**
              * Allow Ai
              * @default false

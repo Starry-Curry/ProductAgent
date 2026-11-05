@@ -170,7 +170,8 @@ export function Pill({
     </button>
   );
 }
-export function safeDate(value: string) {
+export function safeDate(value: string | null | undefined) {
+  if (!value) return "日期未记";
   const parsed = new Date(value);
   return Number.isNaN(parsed.getTime())
     ? value

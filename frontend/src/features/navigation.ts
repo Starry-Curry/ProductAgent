@@ -8,6 +8,7 @@ export type Route = {
   itemId?: string;
   taskId?: string;
   friendId?: string;
+  experienceId?: string;
   scope?: string;
 };
 function parse(): Route {
@@ -23,6 +24,7 @@ function parse(): Route {
     itemId: query.get("item") || undefined,
     taskId: query.get("task") || undefined,
     friendId: query.get("friend") || undefined,
+    experienceId: query.get("experience") || undefined,
     scope: query.get("scope") || undefined,
   };
 }
@@ -32,6 +34,7 @@ export function navigate(route: Route) {
     ["item", route.itemId],
     ["task", route.taskId],
     ["friend", route.friendId],
+    ["experience", route.experienceId],
     ["scope", route.scope],
   ])
     if (value) query.set(key!, value);

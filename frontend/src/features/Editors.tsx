@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { App as AntApp, Modal } from "antd";
 import {
   Camera,
@@ -19,11 +19,13 @@ import {
   type User,
   type Workspace,
 } from "../api";
-import { presentation } from "./shared";
+import { presentation, safeDate } from "./shared";
+import { ObjectCompanion } from "./ObjectCompanion";
 
 export type Editor = {
   kind:
     | "item"
+    | "persona"
     | "presentation"
     | "experience"
     | "gift"
@@ -53,6 +55,7 @@ const today = () => {
 };
 const titles: Record<Editor["kind"], string> = {
   item: "记一件物品",
+  persona: "认识它的另一面",
   presentation: "位置与当前状态",
   experience: "留住这一刻",
   gift: "一份有来处的心意",
@@ -69,23 +72,27 @@ const titles: Record<Editor["kind"], string> = {
 function Photos({
   ids,
   onChange,
+  onBusy,
 }: {
   ids: string[];
-  onChange: (value: string[]) => void;
+  onChange: (value: string[] | ((previous: string[]) => string[])) => void;
+  onBusy: (value: boolean) => void;
 }) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   async function add(file?: File) {
     if (!file) return;
     setBusy(true);
+    onBusy(true);
     setError("");
     try {
       const asset = await upload(file);
-      onChange([...ids, asset.id].slice(-8));
+      onChange((previous) => [...previous, asset.id].slice(-8));
     } catch (error) {
       setError((error as Error).message);
     } finally {
       setBusy(false);
+      onBusy(false);
     }
   }
   return (
@@ -97,7 +104,7 @@ function Photos({
             <button
               type="button"
               aria-label="移除照片"
-              onClick={() => onChange(ids.filter((value) => value !== id))}
+              onClick={() => onChange((previous) => previous.filter((value) => value !== id))}
             >
               <X size={14} />
             </button>
@@ -152,7 +159,7 @@ export default function Editors({
   const { message } = AntApp.useApp();
   const item = editor.item,
     experience = editor.experience;
-  const [name, setName] = useState(experience?.title || item?.name || "");
+  const [name, setName] = useState(experience?.title || (editor.kind === "experience" ? "" : item?.name) || "");
   const [text, setText] = useState(
     experience?.text || (editor.kind === "item" ? item?.description : "") || "",
   );
@@ -160,17 +167,21 @@ export default function Editors({
     [model, setModel] = useState(item?.product.model || "");
   const [kind, setKind] = useState(item?.kind || "standard_product");
   const [photos, setPhotos] = useState(
-    experience?.photo_ids || (item?.photo_id ? [item.photo_id] : []),
+    experience?.photo_ids || (editor.kind === "item" && item?.photo_id ? [item.photo_id] : []),
   );
+  const [photosBusy, setPhotosBusy] = useState(false);
   const [selected, setSelected] = useState<string[]>(
     experience?.item_ids || (item ? [item.id] : []),
   );
-  const [date, setDate] = useState(experience?.occurred_on || today());
+  const [date, setDate] = useState(experience ? experience.occurred_on || "" : today());
   const [allowAI, setAllowAI] = useState(experience?.allow_ai || false);
-  const [enabled, setEnabled] = useState(item?.avatar.enabled || false),
-    [nickname, setNickname] = useState(item?.avatar.nickname || ""),
+  const [enabled, setEnabled] = useState(editor.kind === "persona" || item?.avatar.enabled || false),
+    [nickname, setNickname] = useState(item?.avatar.nickname || (editor.kind === "persona" ? item?.name : "") || ""),
     [personality, setPersonality] = useState(item?.avatar.personality || "");
   const [color, setColor] = useState(item?.avatar.color || "#7e9eac");
+  const [form, setForm] = useState<Item["avatar"]["form"]>(item?.avatar.form || "auto");
+  const [delighted, setDelighted] = useState(false);
+  const personaPreview = useRef<HTMLDivElement>(null);
   const info = item
     ? presentation(item)
     : { location: "", attention: "normal", note: "", cherished: false };
@@ -199,6 +210,8 @@ export default function Editors({
   );
   const [createdItem, setCreatedItem] = useState<Item>();
   const [memoryDrafts, setMemoryDrafts] = useState<Record<string, string>>({});
+  const [memoriesLoading, setMemoriesLoading] = useState(editor.kind === "settings"),
+    [memoriesError, setMemoriesError] = useState("");
   useEffect(() => {
     if (editor.kind === "sharing" && item)
       void request<User[]>(`/items/${item.id}/shares`)
@@ -211,7 +224,8 @@ export default function Editors({
     if (editor.kind === "settings")
       void request<Memory[]>("/memories")
         .then(setMemories)
-        .catch((error) => setError(error.message));
+        .catch((error) => setMemoriesError(error.message))
+        .finally(() => setMemoriesLoading(false));
   }, []);
 
   async function perform(operation: () => Promise<unknown>) {
@@ -228,6 +242,7 @@ export default function Editors({
     }
   }
   async function save() {
+    if (photosBusy) return;
     if (editor.kind === "gift" && !preview) {
       if (!recipient) {
         setError("请选择接收这份心意的朋友");
@@ -248,7 +263,7 @@ export default function Editors({
             market: item?.product.market || "CN",
           },
           description: text,
-          avatar: { enabled, nickname, personality, color },
+          avatar: { enabled, nickname, personality, color, form },
           photo_id: photos[0] || null,
           state: {
             ...item?.state,
@@ -271,6 +286,17 @@ export default function Editors({
           });
         await onDone();
         onItem(result);
+      } else if (editor.kind === "persona" && item) {
+        await request(`/items/${item.id}`, "PUT", {
+          name: item.name,
+          kind: item.kind,
+          product: item.product,
+          description: item.description,
+          photo_id: item.photo_id,
+          state: item.state,
+          avatar: { enabled, nickname: nickname.trim(), personality: personality.trim(), color, form },
+          expected_version: item.version,
+        });
       } else if (editor.kind === "presentation" && item) {
         await request(`/items/${item.id}/presentation`, "PATCH", {
           expected_version: item.version,
@@ -286,7 +312,7 @@ export default function Editors({
           {
             title: name,
             text,
-            occurred_on: date,
+            occurred_on: date || null,
             item_ids: selected,
             photo_ids: photos,
             allow_ai: allowAI,
@@ -305,8 +331,9 @@ export default function Editors({
                 nickname: nickname || item.name,
                 personality,
                 color,
+                form,
               }
-            : { enabled: false },
+            : { enabled: false, form },
         });
       } else if (editor.kind === "reminder") {
         await request("/reminders", "POST", {
@@ -469,11 +496,11 @@ export default function Editors({
             </button>
             <button
               className="primary-button"
-              disabled={busy}
+              disabled={busy || photosBusy}
               type="submit"
               form="interaction-editor"
             >
-              {busy
+              {photosBusy ? "照片上传中…" : busy
                 ? "保存中…"
                 : editor.kind === "gift"
                   ? preview
@@ -498,9 +525,57 @@ export default function Editors({
             {error}
           </p>
         )}
+        {editor.kind === "persona" && item && (
+          <>
+            <div className="persona-preview" ref={personaPreview}>
+              <button type="button" className="persona-preview-touch" aria-label="和分身打个招呼" onClick={() => setDelighted(!delighted)}>
+                <ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, nickname, personality, color, form } }} className="object-companion-alive" size={190} expression={delighted ? "happy" : "calm"} />
+              </button>
+              <strong>{nickname || item.name}</strong>
+              <p>{delighted ? "在呢。今天也一起过吧。" : "轻轻点一下，和它打个招呼。"}</p>
+              <small>形象与招呼预览 · 对话会使用这件物品的身份与获准回忆</small>
+            </div>
+            <fieldset>
+              <legend>想让它是什么模样？</legend>
+              <div className="persona-forms">
+                {([ ["auto", "随物品"], ["keepsake", "纪念物"], ["cup", "杯子"], ["stone", "石头"], ["flower", "花"], ["cat", "小猫"] ] as const).map(([value, label]) => (
+                  <button key={value} type="button" aria-pressed={form === value} onClick={() => setForm(value)}>{label}</button>
+                ))}
+              </div>
+              <small>由你选择，也可以随时换个样子。</small>
+            </fieldset>
+            <label>它的名字<input value={nickname} maxLength={40} onChange={(event) => setNickname(event.target.value)} placeholder={item.name} /></label>
+            <fieldset className="persona-colors">
+              <legend>喜欢的颜色</legend>
+              {[ ["雾蓝", "#7e9eac"], ["陶杏", "#c49c7b"], ["豆绿", "#97a48c"], ["暖粉", "#c39897"] ].map(([label, value]) => (
+                <button type="button" key={value} aria-label={label} aria-pressed={color === value} style={{ background: value }} onClick={() => setColor(value)} />
+              ))}
+              <input type="color" aria-label="自选分身颜色" value={color} onChange={(event) => setColor(event.target.value)} />
+            </fieldset>
+            <fieldset>
+              <legend>相处时，想要什么样的语气？</legend>
+              <div className="persona-temperaments">
+                {["温柔耐心", "活泼好奇", "简洁安静"].map((value) => <button key={value} type="button" className={personality === value ? "active" : ""} onClick={() => setPersonality(value)}>{value}</button>)}
+              </div>
+              <textarea aria-label="分身的性格与说话习惯" rows={2} maxLength={500} value={personality} onChange={(event) => setPersonality(event.target.value)} placeholder="也可以自己写：温柔一点，少说大道理，陪我慢慢聊。" />
+            </fieldset>
+            <label className="check-label"><input type="checkbox" checked={enabled} onChange={(event) => setEnabled(event.target.checked)} />开启这件物品的分身</label>
+            <p className="form-note">这是{item.name}的可选分身。物品照片与已有故事会继续保留；回忆是否用于对话，可以在每段回忆里单独选择。</p>
+            <button type="button" className="quiet-button" onClick={() => {
+              const svg = personaPreview.current?.querySelector("svg");
+              if (!svg) return;
+              const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)], { type: "image/svg+xml;charset=utf-8" }));
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = "物间-物品分身.svg";
+              link.click();
+              setTimeout(() => URL.revokeObjectURL(url), 1000);
+            }}>保存这张形象</button>
+          </>
+        )}
         {editor.kind === "item" && (
           <>
-            <Photos ids={photos} onChange={setPhotos} />
+            <Photos ids={photos} onChange={setPhotos} onBusy={setPhotosBusy} />
             <label>
               物品名称
               <input
@@ -664,7 +739,7 @@ export default function Editors({
         )}
         {editor.kind === "experience" && (
           <>
-            <Photos ids={photos} onChange={setPhotos} />
+            <Photos ids={photos} onChange={setPhotos} onBusy={setPhotosBusy} />
             <label>
               给这一刻一个名字
               <input
@@ -689,10 +764,10 @@ export default function Editors({
               发生的日子
               <input
                 type="date"
-                required
                 value={date}
                 onChange={(event) => setDate(event.target.value)}
               />
+              <small>不记得具体哪天，可以留空。</small>
             </label>
             <fieldset>
               <legend>一起出现在这段经历里的物</legend>
@@ -785,6 +860,7 @@ export default function Editors({
           ) : (
             <div className="gift-preview">
               <h2>{item.name}</h2>
+              {carryAvatar && <div className="persona-gift-preview"><ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, form, nickname: nickname || item.name, personality, color } }} size={140} /></div>}
               <p>
                 送给{" "}
                 {
@@ -1198,10 +1274,13 @@ export default function Editors({
             </label>
             <div className="form-divider">物间对我的理解</div>
             <p className="form-note">
-              这些理解用于相关帮助，不会因共享物品自动分享给朋友。
+              有用的理解会在相处中安静积累；回忆墙保存你主动留下的记录。当前要求优先，你可以随时纠正或移除理解，不会因共享物品自动分享给朋友。
             </p>
+            {memoriesLoading && <p className="muted" role="status">正在读取对你的理解…</p>}
+            {memoriesError && <p className="inline-error" role="alert">暂时未能读取已有理解：{memoriesError}。关闭后重新打开可重试。</p>}
             {memories.map((memory) => (
               <div className="memory-setting" key={memory.id}>
+                <div className="memory-setting-copy">
                 <textarea
                   aria-label="更正理解"
                   value={memoryDrafts[memory.id] ?? memory.content}
@@ -1212,6 +1291,14 @@ export default function Editors({
                     }))
                   }
                 />
+                <div className="understanding-meta">
+                  <span>{memory.basis === "inference" ? "待确认的推测" : "来自你的表达"}</span>
+                  {memory.item_id && <span>关于：{workspace.items.find((item) => item.id === memory.item_id)?.name || "曾经关联的物品"}</span>}
+                  {typeof memory.attributes?.context === "string" && memory.attributes.context && <span>适用情境：{memory.attributes.context}</span>}
+                  {memory.expires_at && <span>有效至：{safeDate(memory.expires_at)}</span>}
+                  {typeof memory.attributes?.source_quote === "string" && memory.attributes.source_quote && <details><summary>当时的话</summary><p>{memory.attributes.source_quote}</p></details>}
+                </div>
+                </div>
                 <button
                   type="button"
                   className="quiet-button"
@@ -1243,6 +1330,7 @@ export default function Editors({
                   type="button"
                   aria-label="移除这条理解"
                   className="quiet-button"
+                  disabled={busy}
                   onClick={() =>
                     void perform(async () => {
                       await request(`/memories/${memory.id}`, "DELETE");
@@ -1256,7 +1344,7 @@ export default function Editors({
                 </button>
               </div>
             ))}
-            {!memories.length && (
+            {!memoriesLoading && !memoriesError && !memories.length && (
               <p className="muted">这里还没有积累的理解。</p>
             )}
           </>

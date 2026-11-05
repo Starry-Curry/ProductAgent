@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { App as AntApp, Modal } from "antd";
 import {
   Camera,
@@ -12,34 +12,52 @@ import {
 import { request, type Experience, type Workspace } from "../api";
 import type { Editor } from "./Editors";
 import { EmptyState, Pill, safeDate } from "./shared";
+import { navigate } from "./navigation";
 
 export default function Memories({
   workspace,
   edit,
   refresh,
   onItem,
+  experienceId,
+  itemId,
+  onCompanion,
 }: {
   workspace: Workspace;
   edit: (editor: Editor) => void;
   refresh: () => Promise<unknown>;
   onItem: (id: string) => void;
+  experienceId?: string;
+  itemId?: string;
+  onCompanion?: () => void;
 }) {
   const [query, setQuery] = useState(""),
-    [scope, setScope] = useState("all"),
-    [selected, setSelected] = useState<Experience>();
+    [scope, setScope] = useState("all");
+  useEffect(() => { setQuery(""); setScope("all"); }, [itemId]);
+  // Resolve the current authorized record rather than retaining a stale copy
+  // after an edit, deletion or sharing change refreshes the workspace.
+  const selected = workspace.experiences.find((exp) => exp.id === experienceId);
   const [photo, setPhoto] = useState("");
+  useEffect(() => setPhoto(""), [experienceId]);
+  useEffect(() => {
+    if (photo && !selected?.photo_ids.some((id) => photo === `/api/assets/${id}`)) setPhoto("");
+  }, [selected, photo]);
+  function close() { navigate({ section: "memories", itemId }); }
   const { message } = AntApp.useApp();
-  const experiences = workspace.experiences.filter(
+  const item = workspace.items.find((value) => value.id === itemId);
+  const related = workspace.experiences.filter((exp) => !itemId || exp.item_ids.includes(itemId));
+  const experiences = related.filter(
     (exp) =>
       (!query ||
         (
           exp.title +
           exp.text +
           Object.values(exp.item_labels).join(" ")
-        ).includes(query)) &&
+        ).toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())) &&
       (scope === "all" ||
-        (scope === "mine" && exp.access === "owner") ||
-        (scope === "shared" && exp.access === "shared")),
+        (scope === "mine" && exp.access === "owner" && !exp.origin_id) ||
+        (scope === "shared" && exp.access === "shared") ||
+        (scope === "received" && Boolean(exp.origin_id))),
   );
   async function remove(exp: Experience) {
     Modal.confirm({
@@ -53,7 +71,7 @@ export default function Memories({
           await request(`/experiences/${exp.id}`, "DELETE", {
             expected_version: exp.version,
           });
-          setSelected(undefined);
+          close();
           await refresh();
         } catch (error) {
           message.error((error as Error).message);
@@ -67,18 +85,19 @@ export default function Memories({
       <div className="page-heading">
         <div>
           <span className="eyebrow">LITTLE MOMENTS, TOGETHER</span>
-          <h1>一起的回忆</h1>
-          <p>有些东西的意义，藏在一起经过的日子里。</p>
+          <h1>{item ? `和${item.avatar.nickname || item.name}的回忆` : "一起的回忆"}</h1>
+          <p>{item ? `关于${item.name}，也关于一起经过的日子。` : "有些东西的意义，藏在一起经过的日子里。"}</p>
+          {itemId && <div className="memory-context-actions">{onCompanion && <button className="quiet-button" onClick={onCompanion}>回去聊聊</button>}<button className="quiet-button" onClick={() => navigate({ section: "memories" })}>看全部回忆</button></div>}
         </div>
-        <button
+        {!!related.length && <button
           className="primary-button"
-          onClick={() => edit({ kind: "experience" })}
+          onClick={() => edit({ kind: "experience", item })}
         >
           <Camera size={18} />
           记下一刻
-        </button>
+        </button>}
       </div>
-      <div className="memory-tools">
+      {(related.length > 0 || Boolean(query) || scope !== "all") && <div className="memory-tools">
         <div className="filter-row">
           <Pill active={scope === "all"} onClick={() => setScope("all")}>
             全部
@@ -88,6 +107,9 @@ export default function Memories({
           </Pill>
           <Pill active={scope === "shared"} onClick={() => setScope("shared")}>
             朋友分享的
+          </Pill>
+          <Pill active={scope === "received"} onClick={() => setScope("received")}>
+            随礼物收到的
           </Pill>
         </div>
         <label className="search-field">
@@ -99,14 +121,17 @@ export default function Memories({
             placeholder="找一段经历，或一件物"
           />
         </label>
-      </div>
+      </div>}
+      {experienceId && !selected && (
+        <p className="inline-error" role="status">这段回忆已不可读取，可能已删除或分享权限已改变。其他记录仍可查看。</p>
+      )}
       {experiences.length ? (
         <div className="memory-grid">
           {experiences.map((exp, index) => (
             <button
               className={`memory-card paper-${index % 3}`}
               key={exp.id}
-              onClick={() => setSelected(exp)}
+              onClick={() => navigate({ section: "memories", itemId, experienceId: exp.id })}
             >
               {exp.photo_ids[0] ? (
                 <img
@@ -141,24 +166,24 @@ export default function Memories({
         </div>
       ) : (
         <EmptyState
-          title="第一段回忆，从你想留下的这一刻开始"
+          title={query || scope !== "all" ? "没有找到符合条件的回忆" : item ? "先留下一刻，不用想好故事" : "第一段回忆，从你想留下的这一刻开始"}
           action={
             <button
               className="primary-button"
-              onClick={() => edit({ kind: "experience" })}
+              onClick={() => edit({ kind: "experience", item })}
             >
               <Camera size={18} />
               记下一刻
             </button>
           }
         >
-          可以只是一句话，也可以关联几件一起出现的物品。
+          {query || scope !== "all" ? "换个关键词或范围看看，原来的记录仍然保留。" : item ? "一张照片、一句话，或今天的心情，都可以。" : "可以只是一句话，也可以关联几件一起出现的物品。"}
         </EmptyState>
       )}
       <Modal
         open={Boolean(selected)}
         title={selected?.title}
-        onCancel={() => setSelected(undefined)}
+        onCancel={close}
         footer={null}
         width={680}
       >
@@ -178,7 +203,6 @@ export default function Memories({
                 <button
                   key={id}
                   onClick={() => {
-                    setSelected(undefined);
                     onItem(id);
                   }}
                 >
@@ -199,7 +223,7 @@ export default function Memories({
                 <button
                   className="soft-button"
                   onClick={() => {
-                    setSelected(undefined);
+                    close();
                     edit({ kind: "experience", experience: selected });
                   }}
                 >
@@ -209,7 +233,7 @@ export default function Memories({
                 <button
                   className="soft-button"
                   onClick={() => {
-                    setSelected(undefined);
+                    close();
                     edit({ kind: "experience-share", experience: selected });
                   }}
                 >

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { App as AntApp } from "antd";
 import {
   ArrowLeft,
   ArrowRight,
@@ -21,7 +20,6 @@ import { request, type Item, type User, type Workspace } from "../api";
 import type { Editor } from "./Editors";
 import {
   attentionLabels,
-  Companion,
   EmptyState,
   ItemCard,
   ObjectVisual,
@@ -31,6 +29,7 @@ import {
 } from "./shared";
 import { navigate, type Route } from "./navigation";
 import Care from "./Care";
+import { ObjectCompanion } from "./ObjectCompanion";
 
 type Props = {
   workspace: Workspace;
@@ -97,8 +96,33 @@ export default function Items({
   function select(item: Item) {
     navigate({ section: "items", scope, itemId: item.id });
   }
+  if (route.itemId) {
+    return (
+      <main className="item-profile-page" aria-label="物品名片">
+        {item ? (
+          <ItemDetail
+            key={item.id}
+            item={item}
+            workspace={workspace}
+            user={user}
+            refresh={refresh}
+            edit={edit}
+            ask={ask}
+            task={task}
+            device={device}
+            onBack={() => navigate({ section: "items", scope })}
+          />
+        ) : (
+          <EmptyState
+            title="暂时无法打开这件物品"
+            action={<button className="soft-button" onClick={() => navigate({ section: "items", scope })}>返回物品</button>}
+          >它可能已被移走，或共享权限已改变。</EmptyState>
+        )}
+      </main>
+    );
+  }
   return (
-    <div className={`items-workspace ${item ? "has-detail" : ""}`}>
+    <div className="items-workspace">
       <section className="items-browser">
         <div className="segmented" role="group" aria-label="物品范围">
           <button
@@ -218,7 +242,6 @@ export default function Items({
               <ItemCard
                 key={value.id}
                 item={value}
-                selected={item?.id === value.id}
                 onSelect={() => select(value)}
               />
             ))}
@@ -266,21 +289,7 @@ export default function Items({
             </button>
           )}
       </section>
-      <aside className={`detail-pane ${item ? "visible" : ""}`}>
-        {item ? (
-          <ItemDetail
-            item={item}
-            workspace={workspace}
-            user={user}
-            refresh={refresh}
-            edit={edit}
-            ask={ask}
-            task={task}
-            device={device}
-            onBack={() => navigate({ section: "items", scope })}
-          />
-        ) : (
-          <>
+      <aside className="detail-pane">
             <section className="rail-section">
               <div className="section-title">
                 <h2>一起照看这个家</h2>
@@ -363,8 +372,6 @@ export default function Items({
               <Wrench size={18} />
               记录一件需要处理的事
             </button>
-          </>
-        )}
       </aside>
     </div>
   );
@@ -383,15 +390,29 @@ function ItemDetail({
 }: Omit<Props, "route"> & { item: Item; onBack: () => void }) {
   const [tab, setTab] = useState("story"),
     [more, setMore] = useState(false),
-    [knowledge, setKnowledge] = useState<Record<string, unknown>[]>([]);
-  const { message } = AntApp.useApp();
+    [attempt, setAttempt] = useState(0),
+    [knowledge, setKnowledge] = useState<{
+      identity: string;
+      rows: Record<string, unknown>[];
+      error: string;
+      loading: boolean;
+    }>({ identity: "", rows: [], error: "", loading: true });
   const info = presentation(item),
     owned = item.owner_id === user.id;
   useEffect(() => {
+    let current = true;
+    const identity = `${item.id}:${item.version}`;
+    setKnowledge({ identity, rows: [], error: "", loading: true });
     void request<Record<string, unknown>[]>(`/items/${item.id}/knowledge`)
-      .then(setKnowledge)
-      .catch(() => setKnowledge([]));
-  }, [item.id, item.version]);
+      .then((rows) => {
+        if (current) setKnowledge({ identity, rows, error: "", loading: false });
+      })
+      .catch((error: Error) => {
+        if (current) setKnowledge({ identity, rows: [], error: error.message, loading: false });
+      });
+    return () => { current = false; };
+  }, [item.id, item.version, attempt]);
+  const knowledgeCurrent = knowledge.identity === `${item.id}:${item.version}`;
   const experiences = workspace.experiences.filter((exp) =>
     exp.item_ids.includes(item.id),
   );
@@ -402,7 +423,7 @@ function ItemDetail({
   );
   return (
     <>
-      <button className="back-link mobile-only" onClick={onBack}>
+      <button className="back-link" onClick={onBack}>
         <ArrowLeft size={18} />
         返回物品
       </button>
@@ -422,6 +443,22 @@ function ItemDetail({
           {owned ? "私人介绍仅自己可见" : "获准共享的物品"}
         </span>
       </div>
+      {item.avatar.enabled && (
+        <div className="persona-strip">
+          <ObjectCompanion item={item} size={80} />
+          <div className="persona-identity">
+            <strong>{item.avatar.nickname || item.name}</strong>
+            <p>{item.avatar.personality || "相处时的样子，由你慢慢决定。"}</p>
+            {item.avatar.growth_note && <p className="persona-growth">{item.avatar.growth_note}</p>}
+          </div>
+          <div className="persona-strip-actions">
+            <button className="soft-button" onClick={() => ask(item, "persona")}>
+              和它聊聊
+            </button>
+            {owned && <button className="quiet-button" onClick={() => edit({ kind: "persona", item })}>它的模样与性格</button>}
+          </div>
+        </div>
+      )}
       {info.attention !== "normal" && (
         <div className="item-attention">
           <span className={`status-tag ${info.attention}`}>
@@ -441,7 +478,14 @@ function ItemDetail({
           }
         >
           <MessageCircle size={18} />
-          {item.kind === "nonstandard_object" ? "聊聊它" : "问问用法"}
+          {item.kind === "nonstandard_object" ? "问问这件物" : "问问用法"}
+        </button>
+        <button
+          className="soft-button"
+          onClick={() => ask(item, "creative")}
+        >
+          <Sparkles size={18} />
+          发现新玩法
         </button>
         <button
           className="primary-button"
@@ -460,15 +504,11 @@ function ItemDetail({
       </div>
       {more && (
         <div className="detail-more">
-          <button onClick={() => ask(item, "creative")}>
-            <Sparkles size={17} />
-            发现新玩法
-          </button>
           {owned && (
             <>
               <button onClick={() => edit({ kind: "item", item })}>
                 <Settings2 size={17} />
-                物品与分身设置
+                编辑物品资料
               </button>
               <button onClick={() => edit({ kind: "presentation", item })}>
                 <MapPin size={17} />
@@ -485,28 +525,22 @@ function ItemDetail({
               <button onClick={() => edit({ kind: "reminder", item })}>
                 照顾与提醒
               </button>
-              <button onClick={() => device(item)}>连接设备与探索</button>
+              <button onClick={() => device(item)}>让它更合心意</button>
             </>
           )}
         </div>
       )}
       {item.description && (
         <blockquote className="personal-story">
-          <Companion small />
           <p>{item.description}</p>
         </blockquote>
       )}
-      {item.avatar.enabled && (
-        <div className="persona-strip">
-          <Companion small />
-          <div>
-            <strong>{item.avatar.nickname || item.name}的分身</strong>
-            <p>{item.avatar.personality || "相处时的样子，由你慢慢决定。"}</p>
-          </div>
-          <button className="quiet-button" onClick={() => ask(item, "persona")}>
-            和它聊聊
-          </button>
-        </div>
+      {!item.avatar.enabled && owned && (
+        <button className="persona-invitation" onClick={() => edit({ kind: "persona", item })}>
+          <Heart size={19} strokeWidth={1.5} />
+          <span>给它一个分身<small>有些东西，也可以成为陪伴。</small></span>
+          <ArrowRight size={17} />
+        </button>
       )}
       {!!tasks.length && (
         <section className="related-tasks">
@@ -535,18 +569,19 @@ function ItemDetail({
           {experiences.map((exp) => (
             <button
               key={exp.id}
-              onClick={() => edit({ kind: "experience", experience: exp })}
-              disabled={exp.access === "shared"}
+              onClick={() => navigate({ section: "memories", experienceId: exp.id })}
             >
               <span className="timeline-dot" />
               <time>{safeDate(exp.occurred_on)}</time>
               <strong>{exp.title}</strong>
               <p>{exp.text.slice(0, 180)}</p>
+              <small>{exp.origin_id ? "随礼物收到的故事 · 保留原作者" : exp.access === "shared" ? "朋友分享的经历" : "我记录的回忆"}</small>
             </button>
           ))}
           {!experiences.length && (
             <p className="empty-note">它的第一段故事，可以从今天开始。</p>
           )}
+          {!!experiences.length && <button className="quiet-button" onClick={() => navigate({ section: "memories" })}>去回忆墙看看 <ArrowRight size={16} /></button>}
         </div>
       )}
       {tab === "knowledge" && (
@@ -569,7 +604,14 @@ function ItemDetail({
                 .join(" · ") || "尚待确认"}
             </dd>
           </dl>
-          {knowledge.map((claim, index) => (
+          {(!knowledgeCurrent || knowledge.loading) && <p className="empty-note" role="status">正在读取这件物品的资料…</p>}
+          {knowledgeCurrent && knowledge.error && (
+            <div className="inline-error" role="alert">
+              <p>资料暂时没有读取成功：{knowledge.error}</p>
+              <button className="quiet-button" onClick={() => setAttempt((value) => value + 1)}>重新读取</button>
+            </div>
+          )}
+          {knowledgeCurrent && knowledge.rows.map((claim, index) => (
             <article key={String(claim.id || index)}>
               <strong>{String(claim.content || "")}</strong>
               <p>{String(claim.source_quote || "")}</p>
@@ -580,7 +622,7 @@ function ItemDetail({
               </small>
             </article>
           ))}
-          {!knowledge.length && (
+          {knowledgeCurrent && !knowledge.loading && !knowledge.error && !knowledge.rows.length && (
             <p className="empty-note">
               尚未取得适用资料，先确认型号，再核对具体用法。
             </p>

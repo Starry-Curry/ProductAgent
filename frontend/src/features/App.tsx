@@ -12,6 +12,7 @@ import {
   Package,
   Plus,
   Settings,
+  Sparkles,
   TreePine,
   Users,
   X,
@@ -26,6 +27,7 @@ import {
   type Item,
   type Run,
   type TaskBoard as Board,
+  type TaskEntry,
   type User,
 } from "../api";
 import DeviceConnection from "../DeviceConnection";
@@ -39,6 +41,7 @@ import Care from "./Care";
 import { TaskCanvas, TaskRail } from "./TaskBoard";
 import { Companion, ObjectVisual, presentation } from "./shared";
 import { navigate, useRoute, useWorkspace, type Section } from "./navigation";
+import { ObjectCompanion } from "./ObjectCompanion";
 
 export default function App() {
   const [user, setUser] = useState<User | null>(),
@@ -75,7 +78,7 @@ const navigation = [
   { key: "memories" as Section, label: "回忆", Icon: BookHeart },
   { key: "friends" as Section, label: "朋友", Icon: Users },
 ];
-type Context = { itemIds: string[]; entry: EntryContext };
+type Context = { itemIds: string[]; entry: EntryContext; draftScope?: string };
 function WorkspaceApp({
   user,
   health,
@@ -100,19 +103,28 @@ function WorkspaceApp({
     }),
     [drafts, setDrafts] = useState<Record<string, Draft>>({});
   const [board, setBoard] = useState<Board>(),
-    [sending, setSending] = useState(false);
+    [sending, setSending] = useState(false),
+    [photoUploads, setPhotoUploads] = useState<Record<string, number>>({});
   const source = useRef<EventSource | null>(null),
     file = useRef<HTMLInputElement>(null),
     opening = useRef(""),
+    openingGeneration = useRef(0),
     currentThread = useRef<string | undefined>(undefined);
   const draftKey =
-    threadId || `new:${context.entry.intent}:${context.itemIds.join(",")}`;
+    threadId || `new:${context.entry.intent}:${context.itemIds.join(",")}${context.draftScope ? `:${context.draftScope}` : ""}`;
   const draft = drafts[draftKey] || { text: "", photos: [] };
+  const activeDraftKey = useRef(draftKey);
+  activeDraftKey.current = draftKey;
   const large = workspace?.preferences.display_mode === "large",
     companionName = workspace?.preferences.companion_name || "阿圆";
   currentThread.current = threadId;
-  function setDraft(value: Draft) {
-    setDrafts((previous) => ({ ...previous, [draftKey]: value }));
+  function setDraft(value: Draft | ((previous: Draft) => Draft)) {
+    setDrafts((previous) => ({
+      ...previous,
+      [draftKey]: typeof value === "function"
+        ? value(previous[draftKey] || { text: "", photos: [] })
+        : value,
+    }));
   }
   function stopWatching() {
     source.current?.close();
@@ -164,7 +176,10 @@ function WorkspaceApp({
         .catch(() => {});
     };
   }
-  async function openThread(identity: string, override?: Context) {
+  async function openThread(identity: string, override?: Context, requestedGeneration?: number) {
+    const generation = requestedGeneration ?? ++openingGeneration.current;
+    if (generation !== openingGeneration.current) return;
+    if (requestedGeneration === undefined) opening.current = "";
     stopWatching();
     currentThread.current = identity;
     setThreadId(identity);
@@ -188,16 +203,20 @@ function WorkspaceApp({
       const history = await request<ChatMessage[]>(
         `/conversations/${identity}/messages`,
       );
-      if (currentThread.current !== identity) return;
+      if (currentThread.current !== identity || generation !== openingGeneration.current) return;
       setMessages(history);
       const last = history.at(-1);
-      if (last?.role === "user" && last.run_id)
-        watch(await request<Run>(`/runs/${last.run_id}`));
+      if (last?.role === "user" && last.run_id) {
+        const latest = await request<Run>(`/runs/${last.run_id}`);
+        if (currentThread.current === identity && generation === openingGeneration.current) watch(latest);
+      }
     } catch (error) {
-      message.error((error as Error).message);
+      if (generation === openingGeneration.current) message.error((error as Error).message);
     }
   }
-  function newTopic(itemIds: string[] = [], intent = "general", text = "") {
+  function newTopic(itemIds: string[] = [], intent = "general", text = "", draftScope = "") {
+    openingGeneration.current += 1;
+    opening.current = "";
     stopWatching();
     currentThread.current = undefined;
     setThreadId(undefined);
@@ -205,10 +224,14 @@ function WorkspaceApp({
     setRun(null);
     setBoard(undefined);
     const entry = { intent } as EntryContext;
-    setContext({ itemIds, entry });
+    setContext({ itemIds, entry, draftScope });
+    const key = `new:${intent}:${itemIds.join(",")}${draftScope ? `:${draftScope}` : ""}`;
     setDrafts((previous) => ({
       ...previous,
-      [`new:${intent}:${itemIds.join(",")}`]: { text, photos: [] },
+      // Re-entering an object/intent must not erase an unsent request or photo.
+      [key]: previous[key] && (previous[key].text.trim() || previous[key].photos.length)
+        ? previous[key]
+        : { text, photos: [] },
     }));
     navigate({ section: "companion" });
     setSidebar(false);
@@ -216,24 +239,29 @@ function WorkspaceApp({
   async function openTask(identity: string) {
     if (opening.current === identity) return;
     opening.current = identity;
+    const generation = ++openingGeneration.current;
+    const routeWhenStarted = location.hash;
     try {
       const next = await request<Board>(`/tasks/${identity}/board`);
-      setBoard(next);
+      if (generation !== openingGeneration.current || location.hash !== routeWhenStarted) return;
       const resumed = await request<{
         conversation_id: string;
         entry_context: EntryContext;
       }>(`/tasks/${identity}/conversation`, "POST");
+      if (generation !== openingGeneration.current || location.hash !== routeWhenStarted) return;
       await openThread(resumed.conversation_id, {
         itemIds: next.task.item_ids,
         entry: { ...resumed.entry_context, task_id: identity },
-      });
+      }, generation);
+      if (generation !== openingGeneration.current) return;
       setBoard(next);
       await refresh();
     } catch (error) {
-      message.error((error as Error).message);
-      navigate({ section: "companion" });
+      if (generation === openingGeneration.current && location.hash === routeWhenStarted) {
+        message.error((error as Error).message);
+      }
     } finally {
-      opening.current = "";
+      if (generation === openingGeneration.current && opening.current === identity) opening.current = "";
     }
   }
   useEffect(() => {
@@ -247,6 +275,8 @@ function WorkspaceApp({
   async function send() {
     if (
       sending ||
+      photoUploads[draftKey] > 0 ||
+      (context.entry.intent === "persona" && !workspace?.items.find((item) => context.itemIds.includes(item.id))?.avatar.enabled) ||
       (run && ["running", "queued"].includes(run.status)) ||
       (!draft.text.trim() && !draft.photos.length)
     )
@@ -261,18 +291,32 @@ function WorkspaceApp({
         item_ids: context.itemIds,
         entry_context: context.entry,
       });
-      currentThread.current = next.conversation_id;
-      setThreadId(next.conversation_id);
-      setDrafts((previous) => ({
-        ...previous,
-        [draftKey]: { text: "", photos: [] },
-        [next.conversation_id]: { text: "", photos: [] },
-      }));
-      await updateMessages(next.conversation_id);
-      watch(next);
+      const stillHere = activeDraftKey.current === draftKey;
+      setDrafts((previous) => {
+        const current = previous[draftKey] || original;
+        const unchanged = current.text === original.text &&
+          current.photos.join("\n") === original.photos.join("\n");
+        const unsent = unchanged ? { text: "", photos: [] } : current;
+        return {
+          ...previous,
+          // Only remove the acknowledged draft; edits made while waiting are
+          // still unsent. Move them to the new conversation when still here.
+          [draftKey]: stillHere ? { text: "", photos: [] } : unsent,
+          [next.conversation_id]: draftKey === next.conversation_id
+            ? unsent
+            : previous[next.conversation_id] || (stillHere ? unsent : { text: "", photos: [] }),
+        };
+      });
+      if (stillHere) {
+        currentThread.current = next.conversation_id;
+        setThreadId(next.conversation_id);
+        await updateMessages(next.conversation_id);
+        if (currentThread.current === next.conversation_id) watch(next);
+      }
       await refresh();
     } catch (error) {
-      setDraft(original);
+      // The draft was never cleared before acknowledgement; restoring a stale
+      // copy here would erase edits made while the request was in flight.
       message.error(
         health?.model_configured
           ? (error as Error).message
@@ -285,6 +329,8 @@ function WorkspaceApp({
   async function addPhoto(selected?: File) {
     if (!selected) return;
     const key = draftKey;
+    const routeWhenStarted = location.hash;
+    setPhotoUploads((previous) => ({ ...previous, [key]: (previous[key] || 0) + 1 }));
     try {
       const result = await upload(selected);
       setDrafts((previous) => {
@@ -297,15 +343,42 @@ function WorkspaceApp({
           },
         };
       });
-      navigate({
-        section: "companion",
-        taskId: context.entry.task_id || undefined,
-      });
+      // A slow upload belongs to the draft that started it. Do not pull the
+      // user back from another topic when that upload finishes.
+      if (activeDraftKey.current === key && location.hash === routeWhenStarted) {
+        navigate({
+          section: "companion",
+          taskId: context.entry.task_id || undefined,
+        });
+      }
     } catch (error) {
       message.error((error as Error).message);
+    } finally {
+      setPhotoUploads((previous) => ({ ...previous, [key]: Math.max(0, (previous[key] || 1) - 1) }));
     }
   }
   function ask(item: Item, intent = "general") {
+    if (intent === "persona") {
+      const inThisPersona = context.entry.intent === "persona" && context.itemIds.length === 1 && context.itemIds[0] === item.id;
+      if (inThisPersona) {
+        if (threadId) {
+          void openThread(threadId);
+          return;
+        }
+        if (draft.text.trim() || draft.photos.length) {
+          navigate({ section: "companion" });
+          setSidebar(false);
+          return;
+        }
+      }
+      const previous = workspace?.conversations
+        .filter((thread) => thread.entry_context?.intent === "persona" && thread.item_ids.length === 1 && thread.item_ids[0] === item.id)
+        .sort((left, right) => (Date.parse(right.updated_at) || 0) - (Date.parse(left.updated_at) || 0))[0];
+      if (previous) {
+        void openThread(previous.id);
+        return;
+      }
+    }
     newTopic(
       [item.id],
       intent,
@@ -369,9 +442,11 @@ function WorkspaceApp({
   const focusedItem = workspace.items.find((item) =>
     context.itemIds.includes(item.id),
   );
+  const persona = context.entry.intent === "persona" && focusedItem?.avatar.enabled ? focusedItem : undefined;
+  const personaUnavailable = context.entry.intent === "persona" && !persona;
   const title =
     route.section === "companion"
-      ? board?.task.goal ||
+      ? (persona ? `和${persona.avatar.nickname || persona.name}聊聊` : undefined) || board?.task.goal ||
         workspace.conversations.find((thread) => thread.id === threadId)
           ?.title ||
         `和${companionName}聊聊`
@@ -392,8 +467,18 @@ function WorkspaceApp({
         refresh,
         onItem,
         onCamera: () => file.current?.click(),
+        onDiscuss: (entry: TaskEntry, mode: "try" | "discuss") => {
+          const text = mode === "try"
+            ? `我想试试「${entry.title}」，先按我的实际条件，一步步教我怎么做。还没有开始操作。`
+            : `想继续聊聊「${entry.title}」，帮我看看适用条件和可以怎么调整。`;
+          setDraft((previous) => ({ ...previous, text: previous.text.trim() ? previous.text.includes(text) ? previous.text : `${previous.text}\n${text}` : text }));
+          document.querySelector<HTMLTextAreaElement>(".composer textarea")?.focus();
+        },
       }
     : undefined;
+  const continuedTaskId = run?.status === "completed" && run.conversation_id === threadId
+    ? String(run.events.filter((event) => event.type === "continuation_saved").at(-1)?.task_id || "")
+    : "";
   return (
     <div
       className={`app-shell ${large ? "large-mode" : ""} ${sidebar ? "sidebar-open" : ""}`}
@@ -546,7 +631,7 @@ function WorkspaceApp({
                 route.section === "items"
                   ? setEditor({ kind: "item" })
                   : route.section === "memories"
-                    ? setEditor({ kind: "experience" })
+                    ? setEditor({ kind: "experience", item: workspace.items.find((item) => item.id === route.itemId) })
                     : file.current?.click()
               }
             >
@@ -562,6 +647,7 @@ function WorkspaceApp({
             <button
               className="avatar-button"
               title="设置与个性化"
+              aria-label="设置与个性化"
               onClick={() => setEditor({ kind: "settings" })}
             >
               <Companion small />
@@ -594,13 +680,18 @@ function WorkspaceApp({
                 draft={draft}
                 setDraft={setDraft}
                 onSend={send}
+                onPhoto={addPhoto}
+                uploading={photoUploads[draftKey] > 0}
                 onStop={() => {
                   if (run)
                     void request(`/runs/${run.id}/cancel`, "POST").catch(
                       (error) => message.error(error.message),
                     );
                 }}
-                companionName={companionName}
+                companionName={persona ? persona.avatar.nickname || persona.name : companionName}
+                assistantAvatar={persona ? <ObjectCompanion item={persona} size={44} /> : undefined}
+                blocked={personaUnavailable}
+                afterMessages={continuedTaskId && board?.task.id !== continuedTaskId ? <button className="continuation-entry soft-button" onClick={() => void openTask(continuedTaskId)}><Sparkles size={17} />查看这次方案</button> : undefined}
                 contextLabel={
                   focusedItem
                     ? context.entry.intent === "persona"
@@ -610,7 +701,24 @@ function WorkspaceApp({
                 }
                 onCameraRef={() => {}}
               >
-                {!messages.length && !board && (
+                {personaUnavailable && <div className="inline-error" role="status"><p>这个分身已关闭或暂不可用，未发送的草稿会保留。</p><button className="soft-button" onClick={() => newTopic(focusedItem ? [focusedItem.id] : [], "general")}>回到阿圆继续聊</button></div>}
+                {persona && (
+                  <div className="persona-chat-tools" aria-label="和物品一起的记录">
+                    <button className="quiet-button" onClick={() => setEditor({ kind: "experience", item: persona })}><BookHeart size={16} />记下这一刻</button>
+                    <button className="quiet-button" onClick={() => navigate({ section: "memories", itemId: persona.id })}>一起的回忆</button>
+                    {threadId && <button className="quiet-button" onClick={() => newTopic([persona.id], "persona", "想和你聊聊今天的事。")}>另起一段</button>}
+                  </div>
+                )}
+                {!messages.length && !board && persona && (
+                  <div className="persona-conversation-intro">
+                    <ObjectCompanion item={persona} size={190} className="object-companion-alive" />
+                    <h2>{persona.avatar.nickname || persona.name}</h2>
+                    <p>{persona.avatar.personality || "愿意听你说，也陪你慢慢记。"}</p>
+                    <small>{persona.name}的物伴 · 和它一起，留下今天的故事。</small>
+                    <button className="quiet-button" onClick={() => onItem(persona.id)}>看看它的名片</button>
+                  </div>
+                )}
+                {!messages.length && !board && !persona && (
                   <div className="companion-home">
                     <div className="companion-greeting">
                       <Companion />
@@ -657,6 +765,15 @@ function WorkspaceApp({
                         {large ? "家人提醒" : "记下一件礼物"}
                       </button>
                     </div>
+                    {!large && (
+                      <button
+                        className="home-creative-entry quiet-button"
+                        onClick={() => newTopic([], "creative", "最近有点无聊，身边这些东西还能怎么玩？")}
+                      >
+                        <Sparkles size={17} />
+                        找点新玩法
+                      </button>
+                    )}
                     {workspace.reminders.some((value) => !value.completed) && (
                       <button
                         className="mobile-attention"
@@ -764,7 +881,7 @@ function WorkspaceApp({
                     </div>
                   </section>
                   <button
-                    className="soft-button full-width"
+                    className="soft-button full-width desktop-creative-entry"
                     onClick={() =>
                       newTopic(
                         [],
@@ -798,6 +915,9 @@ function WorkspaceApp({
             edit={setEditor}
             refresh={refresh}
             onItem={onItem}
+            experienceId={route.experienceId}
+            itemId={route.itemId}
+            onCompanion={route.itemId && workspace.items.find((item) => item.id === route.itemId)?.avatar.enabled ? () => ask(workspace.items.find((item) => item.id === route.itemId)!, "persona") : undefined}
           />
         )}
         {route.section === "friends" && (
@@ -904,7 +1024,7 @@ function WorkspaceApp({
           onClose={() => setDevice(undefined)}
           onAsk={(text) => {
             setDevice(undefined);
-            newTopic([device.id], "general", text);
+            newTopic([device.id], "creative", text, "device");
           }}
         />
       )}

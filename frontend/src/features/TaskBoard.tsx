@@ -7,6 +7,7 @@ import {
   FileText,
   MessageCircle,
   Plus,
+  Sparkles,
   Volume2,
 } from "lucide-react";
 import {
@@ -27,6 +28,7 @@ export type BoardActions = {
   refresh: () => Promise<unknown>;
   onItem: (id: string) => void;
   onCamera: () => void;
+  onDiscuss?: (entry: TaskEntry, mode: "try" | "discuss") => void;
 };
 const labels: Record<string, string> = {
   owned: "家里已有",
@@ -79,6 +81,7 @@ export function TaskCanvas({
   refresh,
   onItem,
   onCamera,
+  onDiscuss,
 }: BoardActions) {
   const { message } = AntApp.useApp();
   const [busy, setBusy] = useState(false),
@@ -140,7 +143,7 @@ export function TaskCanvas({
         <span className="eyebrow">
           {board.kind === "guidance"
             ? "一步一步，接着处理"
-            : "同一件事，慢慢准备"}
+            : board.kind === "idea" ? "找个想试的玩法" : "同一件事，慢慢准备"}
         </span>
         <h2>{board.task.goal}</h2>
         <p>
@@ -148,7 +151,7 @@ export function TaskCanvas({
             ? "这是对方邀请你参与的必要摘要，接受后才能更新清单。"
             : board.kind === "guidance"
               ? "重点放在当前一步，反馈会保存在同一件事情里。"
-              : "已有物品、尚未落实的需求与实际结果分别保留。"}
+              : board.kind === "idea" ? "先看看做法与条件，选中后和阿圆接着聊，试过再留下实际结果。" : "已有物品、尚未落实的需求与实际结果分别保留。"}
         </p>
       </div>
       {board.access === "invited" && (
@@ -172,7 +175,39 @@ export function TaskCanvas({
           接受并一起准备
         </button>
       )}
-      {board.kind === "guidance" && current ? (
+      {board.kind === "idea" ? (
+        <section className="idea-options" aria-label="这次的创意玩法">
+          {board.entries.map((entry, index) => (
+            <article className="idea-option" key={entry.id}>
+              <span className="idea-option-label"><Sparkles size={16} />{entry.group === "step" ? `玩法与步骤 ${index + 1}` : labels[entry.group] || "一起探索"}</span>
+              <h3>{entry.title}</h3>
+              {entry.note && <p className="idea-option-note">{entry.note}</p>}
+              {entry.item_id && workspace.items.some((item) => item.id === entry.item_id) && <button className="quiet-button" onClick={() => onItem(entry.item_id!)}>看看相关物品 <ArrowRight size={15} /></button>}
+              {onDiscuss && <div className="idea-option-actions">
+                {entry.group === "step" && <button className="primary-button" onClick={() => onDiscuss(entry, "try")}>就试这个</button>}
+                <button className="soft-button" onClick={() => onDiscuss(entry, "discuss")}>继续聊这个</button>
+              </div>}
+            </article>
+          ))}
+          {!board.entries.length && <EmptyState title="这份方案还没有具体玩法">可以继续告诉阿圆想做什么，或补充手边物品的情况。</EmptyState>}
+          {!!board.sources.length && (
+            <section className="idea-sources" aria-label="这次参考的资料">
+              <h3>参考与灵感出处</h3>
+              {board.sources.map((source, index) => (
+                <article key={String(source.id || index)}>
+                  <strong>{String(source.title || "相关资料")}</strong>
+                  {Boolean(source.quote) && <p>{String(source.quote)}</p>}
+                  {typeof source.url === "string" && /^https?:\/\//i.test(source.url) && (
+                    <a href={source.url} target="_blank" rel="noopener noreferrer">
+                      看看原分享 <ArrowRight size={14} />
+                    </a>
+                  )}
+                </article>
+              ))}
+            </section>
+          )}
+        </section>
+      ) : board.kind === "guidance" && current ? (
         <>
           <div className="step-track">
             {board.entries.map((entry, index) => (
@@ -438,8 +473,19 @@ export function TaskRail({
   return (
     <>
       <section className="rail-section">
-        <h2>{board.kind === "guidance" ? "这件物品" : "准备清单"}</h2>
-        {board.kind === "guidance" && item ? (
+        <h2>{board.kind === "guidance" ? "这件物品" : board.kind === "idea" ? "围绕这些物品" : "准备清单"}</h2>
+        {board.kind === "idea" ? (
+          <div className="idea-related-items">
+            {workspace.items.filter((value) => board.task.item_ids.includes(value.id)).map((value) => (
+              <button className="context-item" key={value.id} onClick={() => onItem(value.id)}>
+                <ObjectVisual item={value} />
+                <strong>{value.name}</strong>
+                <ArrowRight size={16} />
+              </button>
+            ))}
+            {!item && <p className="empty-note">还没有关联具体物品，可以在对话中一起核对。</p>}
+          </div>
+        ) : board.kind === "guidance" && item ? (
           <button className="context-item" onClick={() => onItem(item.id)}>
             <ObjectVisual item={item} />
             <div>

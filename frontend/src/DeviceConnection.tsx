@@ -8,8 +8,11 @@ export default function DeviceConnection({ item, onClose, onAsk }: { item: Item;
   const [address, setAddress] = useState('');
   const [status, setStatus] = useState<DeviceStatus>();
   const [busy, setBusy] = useState(false);
+  const [advanced, setAdvanced] = useState(false);
   const { message } = App.useApp();
-  useEffect(() => { request<DeviceStatus>('/devices/status').then(setStatus).catch(error => message.error(error.message)); }, []);
+  useEffect(() => {
+    if (advanced) void request<DeviceStatus>('/devices/status').then(setStatus).catch(error => message.error(error.message));
+  }, [advanced]);
   async function connect() {
     setBusy(true);
     try {
@@ -24,7 +27,10 @@ export default function DeviceConnection({ item, onClose, onAsk }: { item: Item;
   }
   const targets = status?.targets.filter(target => target.item_id === item.id) || [];
   return <Modal open title={`让${item.name}更合心意`} onCancel={onClose} footer={null}>
-    <p>先连接它的控制网页或配套软件，再一起探索它能够实现的改变。</p>
+    <p>先看看这件物品能怎样更合心意，再一步步试着实现。</p>
+    <Button type="primary" size="large" style={{ margin: '16px 0' }} onClick={() => onAsk(`我想让${item.name}更符合我的用法，先帮我查资料看看能改哪些，再一步步教我。`)}>先和物伴聊聊怎么改</Button>
+    <details className="editor-details" onToggle={event => setAdvanced(event.currentTarget.open)}>
+    <summary>已有配套软件或控制入口</summary>
     <Space direction="vertical" style={{ width: '100%' }} size="middle">
       <Select style={{ width: '100%' }} value={kind} onChange={setKind} options={[
         { value: 'browser_cdp', label: '网页控制端 · 已开启调试连接的浏览器' },
@@ -36,5 +42,6 @@ export default function DeviceConnection({ item, onClose, onAsk }: { item: Item;
       {targets.map(target => <div key={target.id}><p>{target.address}</p><Button onClick={() => { onClose(); onAsk(`我已为${item.name}登记了控制入口，连接ID是${target.id}。请先探索这个入口的实际能力，看看能否更换屏保或显示内容；还不要执行修改。`); }}>先看看它能做什么</Button></div>)}
       {!targets.length && <small>仅拍照录入物品还没有控制连接。普通显示器的改变通常要从连接电脑或投屏软件入手。</small>}
     </Space>
+    </details>
   </Modal>;
 }
