@@ -405,7 +405,7 @@ async def main(url, output):
         await expect(page.locator(".topbar h1")).to_have_text("和小满聊聊")
         await expect(page.locator(".persona-conversation-intro .object-companion")).to_be_visible()
         await expect(page.locator(".companion-home")).to_have_count(0)
-        await expect(editor).to_have_attribute("placeholder", "说说你想做的事，和小满接着聊…")
+        await expect(editor).to_have_attribute("placeholder", "想问什么，或和小满聊聊今天…")
         await page.set_viewport_size({"width": 390, "height": 844})
         await expect(page.locator(".ant-message-notice")).to_have_count(0)
         await page.screenshot(path=str(output / "persona-chat-mobile.png"), full_page=True, animations="disabled")

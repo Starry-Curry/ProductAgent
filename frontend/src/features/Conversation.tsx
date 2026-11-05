@@ -247,7 +247,7 @@ export default function Conversation({
             onChange={(event) =>
               setDraft({ ...draft, text: event.target.value })
             }
-            placeholder={`说说你想做的事，和${companionName}接着聊…`}
+            placeholder={`想问什么，或和${companionName}聊聊今天…`}
             rows={1}
             variant="borderless"
             autoSize={{ minRows: 1, maxRows: 5 }}

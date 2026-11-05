@@ -43,6 +43,12 @@ const states: Record<string, string> = {
   not_found: "没有找到",
   unchanged: "没有变化",
 };
+const stepStates: Record<string, string> = {
+  pending: "尚未报告完成",
+  ready: "用户报告完成步骤",
+  not_found: "用户报告未找到",
+  unchanged: "用户报告没有变化",
+};
 
 function LegacyPlan({ value }: { value: unknown }) {
   if (typeof value === "string" || typeof value === "number")
@@ -116,24 +122,35 @@ export function TaskCanvas({
     }
   }
   const current = board.entries[focus];
+  const currentItem = workspace.items.find((item) => item.id === current?.item_id);
   function afterSales() {
     const items = workspace.items.filter((item) =>
       board.task.item_ids.includes(item.id),
     );
+    const completed = board.entries.filter((entry) => entry.state === "ready");
+    const remaining = board.entries.filter((entry) => entry.state !== "ready");
+    const entrySummary = (entry: TaskEntry) =>
+      `- ${entry.title}：${(entry.group === "step" ? stepStates : states)[entry.state]}`;
+    const reports = board.task.feedback.flatMap((feedback) => {
+      const quote = typeof feedback.source_quote === "string" ? feedback.source_quote : "";
+      const text = typeof feedback.text === "string" ? feedback.text : "";
+      if (quote.trim()) return [`- 用户原话：${quote}`];
+      return text.trim() ? [`- 反馈记录（未保留原话）：${text}`] : [];
+    });
     setSummary(
       [
         `问题：${board.task.goal}`,
         ...items.map(
           (item) =>
-            `物品：${item.name}；型号：${item.product.model || "尚待确认"}`,
+            `物品：${item.name}${item.kind === "standard_product" ? `；型号：${item.product.model || "尚待确认"}` : ""}`,
         ),
-        "已做检查与实际报告：",
-        ...board.entries.map(
-          (entry) =>
-            `- ${entry.title}：${states[entry.state]}${entry.note ? "；" + entry.note : ""}`,
-        ),
-        "补充症状、时间与错误代码：",
-        "未执行的操作与仍待确认的信息：",
+        "已标记完成或备妥的项目（不代表故障已解决）：",
+        ...(completed.length ? completed.map(entrySummary) : ["尚无已标记完成或备妥的项目。"]),
+        "尚待处理的项目：",
+        ...(remaining.length ? remaining.map(entrySummary) : ["暂无尚待处理的项目。"]),
+        "用户反馈（保留历史记录，不代表当前故障已排除）：",
+        ...(reports.length ? reports : ["尚无单独记录的用户反馈。"]),
+        "仍待补充或核实：症状出现时间、错误代码、目前是否仍有故障，以及尚未完成检查的原因。",
       ].join("\n"),
     );
   }
@@ -227,22 +244,16 @@ export function TaskCanvas({
             <h3>
               第 {focus + 1} 步 · {current.title}
             </h3>
-            {board.task.item_ids[0] &&
-              workspace.items.find(
-                (item) => item.id === board.task.item_ids[0],
-              ) && (
+            {currentItem && (
                 <div className="guidance-visual">
-                  <ObjectVisual
-                    item={workspace.items.find(
-                      (item) => item.id === board.task.item_ids[0],
-                    )!}
-                  />
+                  <ObjectVisual item={currentItem} />
                   <small>请核对你手边的实际物品</small>
                 </div>
               )}
             <p className="guidance-copy">
               {current.note || "先核对这一项，再根据你的实际反馈继续。"}
             </p>
+            {current.state === "ready" && <p className="form-note">{current.group === "step" ? "用户报告完成步骤；是否解决问题，仍以实际反馈为准。" : "用户报告资源已备妥；这不代表检查已完成或故障已解决。"}</p>}
             <div className="guidance-buttons">
               <button
                 className="primary-button"
