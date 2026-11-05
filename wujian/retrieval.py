@@ -18,6 +18,7 @@ from .database import (
     ExperienceRecord,
     KnowledgeClaim,
     Memory,
+    Run,
     SourceRecord,
     TaskRecord,
     now,
@@ -137,6 +138,9 @@ def authorized_documents(sessions, user_id):
         # copying private wall text or treating the write as AI-read consent.
         record_uses = dict(db.execute(select(ExperienceRecord.id, ExperienceRecord.allow_ai)
             .where(ExperienceRecord.creator_id == user_id)).all())
+        terminal_runs = dict(db.execute(select(Run.id, Run.status).where(
+            Run.user_id == user_id, Run.status.in_(("failed", "interrupted"))
+        )).all())
         for conversation in db.scalars(
             select(Conversation).where(Conversation.user_id == user_id)
         ):
@@ -146,6 +150,7 @@ def authorized_documents(sessions, user_id):
                 .order_by(ChatMessage.created_at)
             ).all()
             question = None
+            answered = set()
             for message in messages:
                 if message.role == "user":
                     question = message
@@ -154,6 +159,7 @@ def authorized_documents(sessions, user_id):
                     and message.role == "assistant"
                     and message.run_id == question.run_id
                 ):
+                    answered.add(question.id)
                     if history.blocks(question.id, question.text, message.text):
                         question = None
                         continue
@@ -174,6 +180,25 @@ def authorized_documents(sessions, user_id):
                         },
                     )
                     question = None
+            # A failed generation must not erase what the user actually said.
+            # Keep this as unanswered history, never as an assistant answer or
+            # evidence that an action succeeded. SQL remains the only writer.
+            for message in messages:
+                if (message.role != "user" or message.id in answered
+                    or message.run_id not in terminal_runs
+                    or history.blocks(message.id, message.text)):
+                    continue
+                receipts = record_write_receipts(message, record_uses)
+                add("conversation", message.id, {
+                    "conversation_id": conversation.id,
+                    "user_message_id": message.id,
+                    "user_text": message.text,
+                    "assistant_text": "",
+                    "created_at": message.created_at,
+                    "run_status": terminal_runs[message.run_id],
+                    "evidence_kind": "historical_unanswered_user_message",
+                    **({"record_receipts": receipts} if receipts else {}),
+                })
     return documents
 
 
