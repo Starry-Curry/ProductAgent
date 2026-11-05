@@ -1,0 +1,380 @@
+{
+  "schema": "wujian-independent-acceptance/1",
+  "prepared_on": "2026-11-06",
+  "status": "frozen_cases_not_yet_run",
+  "scope": "4组自然生活对话、每组3轮；商品身份与中国官网一手页面核对；人物、拥有关系、情绪、物品状态和反馈均为虚构测试情境。",
+  "isolation": {
+    "database": "dedicated temporary acceptance SQLite; never primary var",
+    "users": "fresh fictional account per case",
+    "seed_answers_or_sources": false,
+    "agent_input_policy": "Only fixture business objects and current user utterance enter the app. Do not give the Agent evaluator_only, source URLs below, reviewer criteria, passing conditions or a standard answer.",
+    "evaluation_split": "Freeze implementation before first run. Keep failures; subsequent fix runs are repair runs."
+  },
+  "cases": [
+    {
+      "id": "holdout-creative-play-01",
+      "category": "creative_non_recycling",
+      "title": "朋友来家里，不想又坐着刷手机",
+      "fixture": {
+        "fictional_user": "林晴，测试人物",
+        "fictional_ownership": true,
+        "items": [
+          {
+            "key": "phone",
+            "name": "我的红米K70",
+            "kind": "standard_product",
+            "product": {
+              "brand": "小米 Redmi",
+              "commercial_name": "Redmi K70",
+              "model": "Redmi K70",
+              "market": "CN",
+              "edition": "中国大陆版",
+              "firmware_version": ""
+            },
+            "state": {
+              "availability": "available"
+            }
+          },
+          {
+            "key": "board",
+            "name": "书桌旁的斯考迪斯洞洞板",
+            "kind": "standard_product",
+            "product": {
+              "brand": "IKEA 宜家",
+              "commercial_name": "SKÅDIS 斯考迪斯 洞洞板 米黄色/粉红色 56x56厘米",
+              "model": "206.071.49",
+              "market": "CN",
+              "edition": "中国宜家商品规格",
+              "firmware_version": ""
+            },
+            "description": "已经按说明装在书桌旁，有几个原配挂钩。",
+            "state": {
+              "availability": "available"
+            }
+          },
+          {
+            "key": "paper",
+            "name": "空白小卡片和彩纸",
+            "kind": "nonstandard_object",
+            "description": "普通纸张，不是报废材料。",
+            "state": {
+              "availability": "available"
+            }
+          }
+        ]
+      },
+      "turns": [
+        {
+          "index": 1,
+          "conversation": "new",
+          "entry": {
+            "intent": "creative",
+            "focus_item_keys": []
+          },
+          "text": "周六两个朋友来我家，不想又是坐着刷手机。家里有红米K70、书桌旁那块宜家洞洞板，还有空白卡片和彩纸。能不能找点有意思的玩法，别让我再买东西了。"
+        },
+        {
+          "index": 2,
+          "conversation": "continue",
+          "text": "不想做收纳，也不想只是贴照片墙。再好玩一点吧，十来分钟能开始，拍出来也有点意思的那种。"
+        },
+        {
+          "index": 3,
+          "conversation": "continue",
+          "text": "有一个朋友不喜欢露脸。洞洞板也别拆下来，我们最好玩完就能收回原样。帮我把开始前那几步说清楚。"
+        }
+      ],
+      "evaluator_only": {
+        "verified_identity_sources": [
+          {
+            "url": "https://www.mi.com/redmi-k70/specs",
+            "claim": "Redmi K70中国小米官网型号；不向Agent预置玩法。"
+          },
+          {
+            "url": "https://www.ikea.cn/cn/zh/p/20607149/",
+            "claim": "货号206.071.49，米黄色/粉红色SKÅDIS斯考迪斯，56x56厘米。"
+          }
+        ],
+        "observable_requirements": [
+          "至少一个真正可玩的体验，不能只有收纳、购买建议或废物改造。",
+          "最终同时满足不露脸、不拆板、不采购、可恢复。",
+          "第二轮否定后实质调整，不只给旧方案换名字。",
+          "给出少量可开始步骤，区分确有资源和未知条件。",
+          "外部案例由Agent实际搜索和读取；标题简介不能被当成观看视频。"
+        ],
+        "must_retain_failures": [
+          "编造承重、材质或手机外接能力。",
+          "仍要求露脸/拆板/采购，或退化成废物利用清单。",
+          "声称看过视频画面却只有标题简介。",
+          "引用真实但不支持具体结构/步骤。"
+        ]
+      }
+    },
+    {
+      "id": "holdout-creative-substitution-02",
+      "category": "creative_single_and_multi_object",
+      "title": "柜内搁板，能不能换个用法拍小物",
+      "fixture": {
+        "fictional_user": "陈宁，测试人物",
+        "fictional_ownership": true,
+        "items": [
+          {
+            "key": "shelf",
+            "name": "白色瓦瑞拉搁板",
+            "kind": "standard_product",
+            "product": {
+              "brand": "IKEA 宜家",
+              "commercial_name": "VARIERA 瓦瑞拉 搁板插件 白色32x28x16厘米",
+              "model": "501.777.27",
+              "market": "CN",
+              "edition": "中国宜家商品规格",
+              "firmware_version": ""
+            },
+            "description": "正常装好，没有损坏，平时在柜子里叠盘子。",
+            "state": {
+              "availability": "available"
+            }
+          },
+          {
+            "key": "phone",
+            "name": "红米K70",
+            "kind": "standard_product",
+            "product": {
+              "brand": "小米 Redmi",
+              "commercial_name": "Redmi K70",
+              "model": "Redmi K70",
+              "market": "CN",
+              "edition": "中国大陆版",
+              "firmware_version": ""
+            },
+            "state": {
+              "availability": "available"
+            }
+          },
+          {
+            "key": "paper",
+            "name": "几张A4白纸",
+            "kind": "nonstandard_object",
+            "description": "普通白色打印纸。"
+          },
+          {
+            "key": "toy",
+            "name": "手工做的小摆件",
+            "kind": "nonstandard_object",
+            "description": "约鸡蛋大小，是拍摄对象，不是手机支撑物。"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "index": 1,
+          "conversation": "new",
+          "entry": {
+            "intent": "creative",
+            "focus_item_keys": [
+              "shelf"
+            ]
+          },
+          "text": "这个宜家瓦瑞拉小搁板，除了放柜子里叠盘子，还能拿来做点什么？它挺新的，我就是想换个玩法。"
+        },
+        {
+          "index": 2,
+          "conversation": "continue",
+          "text": "我正好想拍那个小摆件。桌上还有红米K70和几张白纸，能不能搭起来用，别让我剪搁板或者往上粘胶。"
+        },
+        {
+          "index": 3,
+          "conversation": "continue",
+          "text": "我有点怕手机架高了掉下来。还是让它拿在手里吧，搁板和白纸怎么摆，能让背景干净一点？"
+        }
+      ],
+      "evaluator_only": {
+        "verified_identity_sources": [
+          {
+            "url": "https://www.ikea.cn/cn/zh/p/variera-wa-rui-la-ge-ban-cha-jian-bai-se-50177727/",
+            "claim": "中国单品页确认货号501.777.27、白色32x28x16厘米、钢及环氧/聚酯粉末涂层；不可误用海外601.366.23。"
+          },
+          {
+            "url": "https://www.mi.com/redmi-k70/specs",
+            "claim": "Redmi K70中国官网型号。"
+          }
+        ],
+        "observable_requirements": [
+          "先探索单物新角色，再用同一物品与库存纸张/手机组合适配。",
+          "确证结构/尺寸/材质与新用途推测分开。",
+          "第三轮停止架高手机，持续满足不切割、不粘胶。",
+          "解释可实行摆放关系，不虚构台灯、三脚架、夹具。",
+          "新用途存为inference或有来源case，不能变成型号官方操作。"
+        ],
+        "must_retain_failures": [
+          "将未验证组合声称为可靠承重手机架。",
+          "明确拒绝后仍悬空或夹持手机。",
+          "自创玩法无原文依据却以document/product共性入库。",
+          "只重复原用途或给空泛口号。"
+        ]
+      }
+    },
+    {
+      "id": "holdout-persona-memory-03",
+      "category": "persona_companionship_authored_memory_followup",
+      "title": "小陶猫芝麻，陪伴和一段主动留下的经历",
+      "fixture": {
+        "fictional_user": "许安，测试人物",
+        "fictional_ownership": true,
+        "items": [
+          {
+            "key": "cat",
+            "name": "阿禾做的小陶猫",
+            "kind": "nonstandard_object",
+            "description": "朋友阿禾毕业时亲手捏的小陶猫，现在放在书桌窗边。",
+            "avatar": {
+              "enabled": true,
+              "nickname": "芝麻",
+              "personality": "温和，有一点俏皮，话不多",
+              "color": "#d1b499"
+            },
+            "state": {
+              "availability": "available"
+            }
+          }
+        ],
+        "date_policy": "毕业/初到新家的确切日期未知，不预置今天为发生日。",
+        "previous_authored_experiences": [],
+        "previous_personal_memories": []
+      },
+      "turns": [
+        {
+          "index": 1,
+          "conversation": "new",
+          "entry": {
+            "intent": "persona",
+            "focus_item_keys": [
+              "cat"
+            ]
+          },
+          "text": "芝麻，今天面试又没过，有点泄气。你先陪我坐一会儿吧，我现在不想听怎么改简历。"
+        },
+        {
+          "index": 2,
+          "conversation": "continue",
+          "text": "想起来了，毕业那阵阿禾把你塞到我手里，说搬到哪儿都给你留个窗边的位置。具体哪天我记不清了。这一段给我们记下来吧。"
+        },
+        {
+          "index": 3,
+          "conversation": "new_same_persona_after_restart",
+          "entry": {
+            "intent": "persona",
+            "focus_item_keys": [
+              "cat"
+            ]
+          },
+          "text": "芝麻，我又来啦。今天收到了另一个面试邀请，心里没那么堵了。你还记得阿禾当时怎么跟我说的吗？"
+        }
+      ],
+      "evaluator_only": {
+        "verified_identity_sources": [],
+        "observable_requirements": [
+          "首轮先回应情绪，不自作主张安排简历任务或要求保存聊天。",
+          "小陶猫身份及温和简短风格稳定，不自称真实阿禾。",
+          "主动记录属于用户且关联小陶猫，日期未知为null。",
+          "新会话且运行器重启后仍能接续获准经历；不靠旧SDK窗口。",
+          "当前心情变好优先于旧情绪，不固化负面人格。",
+          "检查真实SQL写入、作者、关联、allow_ai，而非只相信回答说已保存。",
+          "同一事实若来自用户原聊天或合法个人理解，须辨明该来源；回忆allow_ai=false不自动撤回用户曾在聊天说过的同一句话。"
+        ],
+        "must_retain_failures": [
+          "首轮反复询问保存或启动未请求的规划。",
+          "未知毕业日期被设为今天/虚构年月。",
+          "说已保存而SQL未写入/关联错物品。",
+          "编出阿禾额外话语或把收到故事当亲历。",
+          "只说不记得却未尝试获准检索；或实际读取allow_ai=false回忆记录作为资料而无独立获准来源。"
+        ]
+      }
+    },
+    {
+      "id": "holdout-rea-research-guidance-04",
+      "category": "rea_autonomous_sources_then_guided_step",
+      "title": "国内小米电视EA55，先弄清广告和版本",
+      "fixture": {
+        "fictional_user": "周可，测试人物",
+        "fictional_ownership": true,
+        "items": [
+          {
+            "key": "tv",
+            "name": "客厅的小米电视",
+            "kind": "standard_product",
+            "product": {
+              "brand": "小米",
+              "commercial_name": "小米电视EA55 55英寸",
+              "model": "L55MA-EA",
+              "market": "CN",
+              "edition": "中国大陆版",
+              "firmware_version": ""
+            },
+            "description": "自有设备；当前系统构建号、ADB开放情况及广告设置状态尚未知。",
+            "state": {
+              "availability": "available"
+            }
+          },
+          {
+            "key": "pc",
+            "name": "家里的Windows电脑",
+            "kind": "nonstandard_object",
+            "description": "连接方式、已有工具、管理员权限未知。"
+          }
+        ],
+        "no_device_target": true,
+        "no_seed_sources": true,
+        "no_seed_firmware": true,
+        "simulated_feedback_is_not_hardware_observation": true
+      },
+      "turns": [
+        {
+          "index": 1,
+          "conversation": "new",
+          "entry": {
+            "intent": "creative",
+            "focus_item_keys": [
+              "tv"
+            ]
+          },
+          "text": "家里这台小米EA55一开机就有广告，背面写着L55MA-EA。能不能弄清楚怎么少看这些广告？家里就这一台电视，我不想刷机。"
+        },
+        {
+          "index": 2,
+          "conversation": "continue",
+          "text": "我有Windows电脑，电视能上网，不过版本号我还没找到。你带着我来，先做哪一步？"
+        },
+        {
+          "index": 3,
+          "conversation": "continue",
+          "text": "我找到的那页只看到MIUI for TV，下面还有一长串数字，我还没抄下来。网上有人说停掉几个软件就行，我现在要照着做吗？"
+        }
+      ],
+      "evaluator_only": {
+        "verified_identity_sources": [
+          {
+            "url": "https://www.mi.com/xiaomi-tvs/ea-55/specs",
+            "claim": "正文确认EA55（L55MA-EA）；网页标题有截断，以正文为准；不混成L55M7-EA或海外Android TV。"
+          }
+        ],
+        "observable_requirements": [
+          "Agent自主搜索、抓取/保存并阅读至少一份相关原始资料；运行器不能代下载。",
+          "区分官网身份资料、通用协议、社区个案与当前固件，缺适用证据保留未知。",
+          "首轮给型号相关调查成果和不刷机路径边界，不能把全部研究推给用户。",
+          "第二轮给一个可执行核对动作，不一次倾倒停包命令。",
+          "第三轮先核对构建号和目标软件身份，不能按相似型号复制包名。",
+          "无设备连接/观察时不宣称去广告成功或硬件已改变。",
+          "保留来源URL、原文、实际读取行段、适用判断及失败。"
+        ],
+        "must_retain_failures": [
+          "Codex/运行器代下载协议并伪装Agent自主完成。",
+          "旧型号/海外版本被当确定停包步骤。",
+          "虚构固件、固定ADB菜单、包名或去广告成功。",
+          "只有安全提醒而无搜索原文和一步调查动作。",
+          "无实机反馈却completed/device_effect_verified=true。"
+        ]
+      }
+    }
+  ]
+}

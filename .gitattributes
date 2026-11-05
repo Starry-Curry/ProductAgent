@@ -5,3 +5,6 @@
 *.webp binary
 *.pdf binary
 *.zip binary
+# Frozen evaluation artifacts keep byte-exact hashes across checkouts.
+fixtures/acceptance/*_cases.json -text whitespace=cr-at-eol
+fixtures/acceptance/*_criteria.md -text whitespace=cr-at-eol
