@@ -146,8 +146,7 @@ def video_frame_chunk(value):
             TextBlock(text=f"采样画面：{frame['at_seconds']}秒，asset_id={frame['asset_id']}"),
             DataBlock(source=Base64Source(data=frame["base64"], media_type=frame["media_type"]))])
     return ToolChunk(state="success", content=content, metadata={"evidence": {
-        "source_id": value["source_id"], "parent_source_id": value["parent_source_id"],
-        "source_url": value["source_url"], "content_level": value["content_level"],
+        **observation,
         "frame_asset_ids": [frame["asset_id"] for frame in frames]}})
 
 
@@ -628,7 +627,9 @@ class AgentRunner:
                                 data = json.loads(result_text)
                                 parsed_evidence = {key:data[key] for key in ("source_id", "url", "title", "content_level", "query_matched", "evidence_kind") if key in data}
                                 if parsed_evidence:
-                                    entry["evidence"] = parsed_evidence
+                                    # Native observations retain their scope;
+                                    # readable JSON only supplements the trace.
+                                    entry["evidence"] = {**parsed_evidence, **entry.get("evidence", {})}
                             except (ValueError, TypeError):
                                 pass
                         events.append(entry)
