@@ -100,16 +100,29 @@ def personal_context(db, user_id, item_ids, persona=False):
     Other authorized material stays discoverable through search_world. This is
     context selection over the same SQL facts, not another memory system.
     """
-    memories = domain.recall(db, user_id, limit=100 if persona else 12)
+    # The product permits exactly one focused object for persona conversations.
+    # Apply that scope BEFORE the recency limit: newer notes about other objects
+    # must not crowd out this companion's own older understanding.
+    focused_item = item_ids[0] if persona and len(item_ids) == 1 else None
+    memories = domain.recall(db, user_id, item_id=focused_item, limit=100 if persona and not focused_item else 12)
     experiences = domain.list_experiences(db, user_id, for_ai=True)
+    focused = set(item_ids)
     if persona:
-        focused = set(item_ids)
         memories = [row for row in memories if row["item_id"] is None or row["item_id"] in focused]
         experiences = [row for row in experiences if focused.intersection(row["item_ids"])]
+    tasks = []
+    statement = select(TaskRecord).where(TaskRecord.user_id == user_id).order_by(TaskRecord.updated_at.desc())
+    if not persona:
+        statement = statement.limit(4)
+    for row in db.scalars(statement):
+        if not persona or focused.intersection(row.item_ids):
+            tasks.append(task_view(row))
+            if len(tasks) == 4:
+                break
     # A wall entry may contain 20,000 characters. Load its identity up front,
     # not an autobiographical scene that primes a casual companion to elaborate
     # on it. Original authorized records remain available through the tools.
-    return {"active_personal_memories": memories[:12], "recent_experience_index": [
+    return {"active_personal_memories": memories[:12], "recent_tasks": tasks, "recent_experience_index": [
         {key:row[key] for key in ("id","title","item_ids","occurred_on","origin_id","provenance")}
         for row in experiences[:5]]}
 
@@ -508,8 +521,6 @@ class AgentRunner:
             context = {"user": domain.user_view(user), "date": datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(),
                        "focused_items": selected, "known_resource_index": resources,
                        **personal_context(db, user.id, item_ids, conversation.entry_context.get("intent") == "persona"),
-                       "recent_tasks": [task_view(row) for row in db.scalars(
-                           select(TaskRecord).where(TaskRecord.user_id==user.id).order_by(TaskRecord.updated_at.desc()).limit(4))],
                        "current_question":current.text,"context_revision": revision}
             context["entry_context"] = conversation.entry_context
             from .interactions import preferences
