@@ -40,6 +40,17 @@ class ScriptedModel(ChatModelBase):
 
 
 class AgentIntegrationTests(unittest.TestCase):
+    def test_disabled_item_persona_cannot_be_entered_as_a_chat_role(self):
+        with tempfile.TemporaryDirectory() as directory:
+            app = create_app(Settings(data_dir=Path(directory), api_key='offline-test-no-network', rea_enabled=False),
+                             model_factory=lambda _: ScriptedModel())
+            with TestClient(app) as client:
+                client.post('/api/auth/demo/xiaolin')
+                item = client.post('/api/items', json={'name': '没有分身的杯子'}).json()
+                response = client.post('/api/chat', json={'text': '聊聊', 'item_ids': [item['id']], 'entry_context': {'intent': 'persona'}})
+                self.assertEqual(response.status_code, 400, response.text)
+                self.assertEqual(client.get('/api/conversations').json(), [])
+
     def execute_case(self, mode):
         with tempfile.TemporaryDirectory() as directory:
             app=create_app(Settings(data_dir=Path(directory),api_key='offline-test-no-network'),

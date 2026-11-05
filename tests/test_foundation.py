@@ -515,12 +515,40 @@ class MigrationTests(unittest.TestCase):
                     connection.execute(
                         text("SELECT version_num FROM alembic_version")
                     ).scalar(),
-                    "0005",
+                    "0006",
                 )
                 self.assertFalse(
                     connection.exec_driver_sql("PRAGMA foreign_key_check").fetchall()
                 )
             migrated.dispose()
+            backups = list((Path(directory) / "backups").glob("before-unversioned-to-0006-*.sqlite3"))
+            self.assertEqual(len(backups), 1)
+            import sqlite3
+            from contextlib import closing
+            with closing(sqlite3.connect(backups[0])) as backup:
+                self.assertEqual(backup.execute("SELECT version FROM items WHERE id='headphones'").fetchone()[0], 3)
+                self.assertEqual(backup.execute("PRAGMA integrity_check").fetchone()[0], "ok")
+
+    def test_0005_migration_preserves_story_use_and_completed_reminders(self):
+        with tempfile.TemporaryDirectory() as directory:
+            url = "sqlite:///" + (Path(directory) / "prior.sqlite3").as_posix()
+            engine = create_engine(url)
+            config = Config(str(ROOT / "alembic.ini"))
+            with engine.connect() as connection:
+                config.attributes["connection"] = connection
+                command.upgrade(config, "0005")
+                connection.execute(text("INSERT INTO users VALUES ('owner','lin','小林','test-local-hash')"))
+                connection.execute(text("INSERT INTO experiences(id,creator_id,title,text,item_ids,item_labels,photo_ids,occurred_on,provenance,created_at) VALUES ('story','owner','旧故事','原文','[]','{}','[]','2026-01-01','{}','2026-01-01')"))
+                connection.execute(text("INSERT INTO reminders(id,creator_id,assignee_id,title,due_at,completed) VALUES ('care','owner','owner','处理完的事','2026-01-01',1)"))
+                connection.commit()
+            engine.dispose()
+            migrated, sessions = make_database(Settings(database_url=url))
+            with migrated.connect() as connection:
+                self.assertEqual(connection.execute(text("SELECT allow_ai,version,text FROM experiences WHERE id='story'")).one(), (1,1,'原文'))
+                self.assertEqual(connection.execute(text("SELECT completed,status FROM reminders WHERE id='care'")).one(), (1,'completed'))
+                self.assertFalse(connection.exec_driver_sql("PRAGMA foreign_key_check").fetchall())
+            migrated.dispose()
+            self.assertEqual(len(list((Path(directory) / 'backups').glob('before-0005-to-0006-*.sqlite3'))), 1)
 
 
 if __name__ == "__main__":

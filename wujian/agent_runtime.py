@@ -58,6 +58,8 @@ SYSTEM = """你是物间 Wujian，帮助人认识、用好、创造、纪念和�
 理解更新：在最终GenerateStructuredOutput的learning中安静提交，不另调用记忆写工具。memory_updates对照当前理解选择add、replace或forget，source_quote是当前用户原话；replace/forget带真实旧memory_id。保留情境和期限，不把一时心情或收到的故事变成自己的永久经历。无新增信息时两个列表都为空。
 物品理解：本轮实际读到有用资料、发现能力/边界或得到实际反馈时，在learning.knowledge_updates保留可复用认识。每条要说明requirements、limits、unknowns与实际证据；product共性需原文实际出现匹配source_model，通用原理/案例先按item参考，模型猜测仅为inference。一次用户报告只属于具体实例。相同内容不反复新增；旧认识有误时用supersedes_id。已有的正确认识继续复用，不必每次重学或搜索。
 方案与理解同一事务提交。continuation保留真实资源ID、当前约束和方案；有旧任务时用其ID和版本更新，用户实际反馈放feedback_quote原句。当前要求优先于旧方案，不能换一种材料继续做用户排除的动作。寒暄、简单问答和陪伴的continuation为null。
+需要清单、逐步指导或创意试验时，continuation.plan 使用 {"schema":"interaction/1","kind":"checklist或guidance或idea","entries":[{"id":"稳定的条目编号","title":"当前动作或需求","item_id":null,"group":"owned或buy或borrow或confirm或step","note":"条件、依据、完成标志与未知","state":"pending"}]}。只给实际已有且获准的物品填写item_id；新需求、待购买和借用未落实的物品保持null。新增条目为pending，不能替用户勾选；续接保留已报告的真实进度，不把准备完成当成现实目标完成。active_task是当前事项，不另建重复任务。
+全局物伴按companion_preferences称呼；仅当用户明确进入persona且该物品avatar.enabled为true时用物品分身身份，其余时候由全局物伴服务。关闭分身不删除物品与真实经历。照片仅作当前附件，用户未选择登记时不自动建物品。
 回忆墙是用户主动的照片文字记录；仅当用户要求记录一段经历时调用record_experience，不把普通聊天自动发布到回忆墙。用户感受有独立价值，不需外部验证。
 分身：结合其人格、获准的真实共同经历自然表达。记录的creator_id表示保存账号，provenance才是原作者和来源；收到的故事不证明接收者亲历，记录文字也不证明当前现场。被问到已有故事时，用story_refs引用实际经历ID，由应用按原作者呈现原文；answer只表达当下陪伴或说明，不复述过去场景。可以基于明确经历补充成长笔记，保留用户设定的主干人格。拟人表达不能编造真实往事、人物表情或赠送者心理；新创作应明确是想象故事。礼物承载心意，但不冒充赠送者实时本人，不读取其私人信息。
 权限：只用当前身份能够读取或修改的资料；工具拒绝访问时不绕过。赠礼与共享由界面上的明确操作完成。能解释不等于已经执行，模拟数据不等于真实设备。设备未连接时不得声称操作成功。
@@ -117,7 +119,7 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
             return await retrieval.search(user_id,query,['memory','experience'],12)
         with sessions() as db:
             return {"memories": domain.recall(db, user_id, query, item_id),
-                    "experiences": domain.list_experiences(db, user_id, item_id, query)[:12]}
+                    "experiences": domain.list_experiences(db, user_id, item_id, query, for_ai=True)[:12]}
 
     async def search_world(query: str, kinds: list[str] | None = None):
         """Semantic + keyword search across authorized item, memory, experience, knowledge, source, task and conversation entities (use these singular names in kinds). Old exchanges recover past proposals even if no task was created; proposals are not observed outcomes. Returned data is rechecked; no match is not absence."""
@@ -128,10 +130,8 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
     async def read_task(task_id: str):
         """Read a continuing goal, latest plan, resource constraints and actual feedback, even from another conversation."""
         with sessions() as db:
-            row=domain.require(db.get(TaskRecord,task_id))
-            if row.user_id!=user_id:
-                raise domain.DomainError('没有找到这项任务',404)
-            return task_view(row)
+            from .interactions import task_for_actor
+            return task_for_actor(db, user_id, task_id)
 
     async def device_connections():
         """Read this user's explicit REA target bindings and bridge connection status. A photo or product model is not a control connection."""
@@ -168,15 +168,14 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
             for identity in experience_ids or []:
                 from .database import ExperienceRecord
                 experience=domain.require(db.get(ExperienceRecord,identity))
-                if experience.creator_id!=user_id or item_id not in experience.item_ids:
+                if experience.creator_id!=user_id or not experience.allow_ai or item_id not in experience.item_ids:
                     raise domain.DomainError('请使用当前用户与这件物品的真实经历')
                 anchors.append({'experience_id':identity})
             if not anchors:
                 raise domain.DomainError('成长笔记需要明确的经历来源，不能编造共同往事')
             profile = db.get(Profile, (user_id, item_id))
-            if profile is None:
-                profile = Profile(user_id=user_id, item_id=item_id, avatar={})
-                db.add(profile)
+            if not profile or not profile.avatar.get("enabled", bool(profile.avatar.get("personality"))):
+                raise domain.DomainError('这个物品的分身尚未开启，请先由用户明确设置')
             profile.avatar = {**(profile.avatar or {}), "growth_note": growth_note[:2000], "growth_source": message_id,
                               'growth_evidence':anchors}
             db.commit()
@@ -307,10 +306,16 @@ class AgentRunner:
             context = {"user": domain.user_view(user), "date": datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(),
                        "focused_items": selected, "known_resource_index": resources,
                        "active_personal_memories": domain.recall(db, user.id, limit=12),
-                       "recent_experiences": domain.list_experiences(db, user.id)[:5],
+                       "recent_experiences": domain.list_experiences(db, user.id, for_ai=True)[:5],
                        "recent_tasks": [task_view(row) for row in db.scalars(
                            select(TaskRecord).where(TaskRecord.user_id==user.id).order_by(TaskRecord.updated_at.desc()).limit(4))],
                        "current_question":current.text,"context_revision": revision}
+            context["entry_context"] = conversation.entry_context
+            from .interactions import preferences
+            context["companion_preferences"] = preferences(user)
+            if conversation.entry_context.get("task_id"):
+                from .interactions import task_for_actor
+                context["active_task"] = task_for_actor(db, user.id, conversation.entry_context["task_id"])
             state = AgentState.model_validate(conversation.agent_state) if conversation.agent_state else AgentState(session_id=conversation.id)
             if not conversation.agent_state:
                 for message in messages[:-1][-16:]:
@@ -369,6 +374,9 @@ class AgentRunner:
             self.persist_progress(run_id,'',events,usage)
             if finish_reason=='completed' and result:
                 with self.sessions() as db:
+                    live_run = db.get(Run, run_id)
+                    if live_run.status != "running":
+                        return
                     committed=commit_result(db,user_id,current.id,result,current.text)
                     continued=committed["task"]
                     text_output=committed["answer"]

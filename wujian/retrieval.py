@@ -91,7 +91,7 @@ def authorized_documents(sessions, user_id):
         ):
             if not row.expires_at or row.expires_at > now():
                 add("memory", row.id, domain.memory_view(row))
-        for row in domain.list_experiences(db, user_id):
+        for row in domain.list_experiences(db, user_id, for_ai=True):
             add("experience", row["id"], row)
         for row in db.scalars(select(TaskRecord).where(TaskRecord.user_id == user_id)):
             add("task", row.id, task_view(row))

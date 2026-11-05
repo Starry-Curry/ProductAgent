@@ -26,6 +26,7 @@ class UserView(BaseModel):
 
 
 class AvatarSpec(Input):
+    enabled: bool = False
     nickname: str = Field(default="", max_length=80)
     personality: str = Field(default="", max_length=2000)
     color: str = Field(default="#d49c62", pattern=r"^#[0-9a-fA-F]{6}$")
@@ -56,6 +57,7 @@ class ItemCreate(Input):
     description: str = Field(default="", max_length=8000)
     avatar: AvatarSpec = Field(default_factory=AvatarSpec)
     photo_id: str | None = None
+    state: dict = Field(default_factory=dict)
 
 
 class ItemChange(ItemCreate):
@@ -85,6 +87,11 @@ class ExperienceCreate(Input):
     item_ids: list[str] = Field(default_factory=list, max_length=30)
     photo_ids: list[str] = Field(default_factory=list, max_length=8)
     occurred_on: date = Field(default_factory=date.today)
+    allow_ai: bool = False
+
+
+class ExperienceChange(ExperienceCreate):
+    expected_version: int = Field(ge=1)
 
 
 class TaskSave(Input):
@@ -149,6 +156,8 @@ class ExperienceView(ExperienceCreate):
     item_labels: dict[str, str]
     origin_id: str | None
     provenance: dict = Field(default_factory=dict)
+    version: int = 1
+    access: Literal["owner", "shared"] = "owner"
 
 
 class ChatRequest(Input):
@@ -156,6 +165,7 @@ class ChatRequest(Input):
     conversation_id: str | None = None
     item_ids: list[str] = Field(default_factory=list, max_length=30)
     photo_ids: list[str] = Field(default_factory=list, max_length=4)
+    entry_context: "EntryContext | None" = None
 
 
 class ChatMessageView(BaseModel):
@@ -172,6 +182,7 @@ class ConversationView(BaseModel):
     title: str
     item_ids: list[str]
     updated_at: str
+    entry_context: dict = Field(default_factory=dict)
 
 
 class RunView(BaseModel):
@@ -197,6 +208,7 @@ class ReminderCreate(Input):
     due_at: str = Field(min_length=10, max_length=50)
     assignee_id: str | None = None
     item_id: str | None = None
+    household_id: str | None = None
 
 
 class FriendRequest(Input):
@@ -241,6 +253,151 @@ class ReminderView(BaseModel):
     title: str
     due_at: str
     completed: bool
+    status: str = "pending"
+    version: int = 1
+    feedback: list[dict] = Field(default_factory=list)
+    household_id: str | None = None
+
+
+class Preferences(Input):
+    companion_name: str = Field(default="阿圆", min_length=1, max_length=20)
+    display_mode: Literal["normal", "large"] = "normal"
+
+
+class EntryContext(Input):
+    intent: Literal["general", "guidance", "creative", "planning", "story", "persona"] = "general"
+    task_id: str | None = None
+
+
+class HouseholdCreate(Input):
+    name: str = Field(min_length=1, max_length=60)
+
+
+class HouseholdInvite(Input):
+    user_id: str
+
+
+class HouseholdMemberView(UserView):
+    status: Literal["invited", "active"]
+    role: Literal["owner", "member"]
+
+
+class HouseholdView(BaseModel):
+    id: str
+    name: str
+    creator_id: str
+    membership: str
+    members: list[HouseholdMemberView]
+    item_ids: list[str]
+
+
+class HouseholdItemChange(Input):
+    item_id: str
+    shared: bool = True
+
+
+class ItemPresentation(Input):
+    expected_version: int = Field(ge=1)
+    location: str = Field(default="", max_length=160)
+    attention: Literal["normal", "needs_check", "paused", "needs_restock", "lost", "lent"] = "normal"
+    note: str = Field(default="", max_length=1600)
+    cherished: bool = False
+
+
+class ReminderFeedback(Input):
+    expected_version: int = Field(ge=1)
+    action: Literal["read", "accept", "complete", "reopen"]
+    note: str = Field(default="", max_length=1200)
+
+
+class TaskEntry(Input):
+    id: str = Field(min_length=1, max_length=80)
+    title: str = Field(min_length=1, max_length=200)
+    item_id: str | None = None
+    group: Literal["owned", "buy", "borrow", "confirm", "step"] = "owned"
+    note: str = Field(default="", max_length=2000)
+    state: Literal["pending", "ready", "not_found", "unchanged"] = "pending"
+    assignee_id: str | None = None
+    updated_by: str | None = None
+
+
+class TaskBoardCreate(Input):
+    goal: str = Field(min_length=1, max_length=4000)
+    kind: Literal["checklist", "guidance", "idea"] = "checklist"
+    item_ids: list[str] = Field(default_factory=list, max_length=50)
+    entries: list[TaskEntry] = Field(default_factory=list, max_length=60)
+    constraints: dict = Field(default_factory=dict)
+
+
+class TaskEntryFeedback(Input):
+    expected_version: int = Field(ge=1)
+    state: Literal["pending", "ready", "not_found", "unchanged"]
+    note: str = Field(default="", max_length=2000)
+
+
+class TaskEntryAssignment(Input):
+    expected_version: int = Field(ge=1)
+    assignee_id: str | None = None
+
+
+class TaskBoardView(BaseModel):
+    task: TaskView
+    kind: Literal["checklist", "guidance", "idea", "legacy"]
+    entries: list[TaskEntry]
+    completed_count: int
+    total_count: int
+    conversation_id: str | None
+    sources: list[dict] = Field(default_factory=list)
+    access: Literal["owner", "invited", "active"] = "owner"
+    participants: list[dict] = Field(default_factory=list)
+
+
+class WishCreate(Input):
+    title: str = Field(min_length=1, max_length=120)
+    note: str = Field(default="", max_length=1600)
+    url: str = Field(default="", max_length=2000)
+    visible_to_friends: bool = False
+
+
+class WishView(WishCreate):
+    id: str
+    user_id: str
+    version: int
+
+
+class FriendSpace(BaseModel):
+    person: UserView
+    items: list[ItemView]
+    wishes: list[WishView]
+    experiences: list[ExperienceView] = Field(default_factory=list)
+
+
+class WorkspaceView(BaseModel):
+    preferences: Preferences
+    items: list[ItemView]
+    experiences: list[ExperienceView]
+    households: list[HouseholdView]
+    reminders: list[ReminderView]
+    tasks: list[TaskView]
+    conversations: list[ConversationView]
+    friends: list[FriendView]
+    gifts: list[GiftView]
+    wishes: list[WishView]
+
+
+class Revision(Input):
+    expected_version: int = Field(ge=1)
+
+
+class MemoryCorrection(Input):
+    content: str = Field(min_length=1, max_length=2000)
+
+
+class GiftDecision(Input):
+    action: Literal["decline", "cancel"]
+
+
+ChatRequest.model_rebuild()
 
 
 class MemoryView(BaseModel):

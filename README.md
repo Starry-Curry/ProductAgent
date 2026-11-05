@@ -1,6 +1,10 @@
 # 物间 Wujian
 
-通过理解人和物，连接使用帮助、创造玩法、共同经历和心意传递。当前为本地可运行的开发版，电脑浏览器为主。
+通过理解人和物，连接使用帮助、创造玩法、共同经历和心意传递。当前为本地可运行的开发版，支持电脑和手机浏览器。
+
+最新交互基础版本采用「物伴／物品／回忆／朋友」四栏，提供家庭用品、私人回忆、共同清单、逐步指导、提醒反馈、好友心愿与选择赠礼，并支持大字版。[交互基础版本与模块接口](docs/2026-11-05_交互基础版本与模块接口.md)说明共用契约、权限、迁移、后续模块接入及尚未验收的能力；[手机版整体产品与交互设计稿](docs/2026-11-05_物间手机版整体产品与交互设计稿.md)是功能参照。
+
+本轮 [验证记录](docs/2026-11-05_交互基础版本验证.md)包含 50 项工程回归和双账号电脑/手机浏览器使用旅程，并区分界面业务验证与智能/实物验收。
 
 当前仓库主线采用这份 Python/FastAPI + React/Vite 实现。2026-11-05 经产品负责人授权，将本地最新基线同步到 main/develop；原 TypeScript/Next.js 实现保留在归档标签和提交历史中。[主线同步与分支归档](docs/2026-11-05_主线同步与分支归档.md)说明恢复点与团队接入变化。当前仍是工程基线，智能底座未验收通过，不代表已经对外部署。
 
@@ -26,7 +30,7 @@
 
 ## 队友首次安装
 
-需要 Python 3.12、uv、Node.js 22.12+（本机已用 Node 26 验证）。
+需要 Python 3.12、uv、Node.js 22.12+（本轮使用 Node 24 验证）。
 
 ```powershell
 uv sync --cache-dir tmp/uv-cache
@@ -56,7 +60,8 @@ npm.cmd --prefix frontend run build
 | `wujian/api_models.py` | 真实 API 的输入输出契约；生成 OpenAPI 与前端类型 |
 | `wujian/domain.py` | 界面、Agent 共用的物品、经历、私人理解、共享与赠礼操作 |
 | `wujian/database.py` | SQLAlchemy 业务数据；本地默认 SQLite |
-| `migrations/` | Alembic 版本迁移；已有资料保留，当前版本 0005 |
+| `migrations/` | Alembic 版本迁移；已有资料保留，当前版本 0006，已有 SQLite 升级前备份 |
+| `wujian/interactions.py`、`interaction_routes.py` | 四栏工作区、家庭、回忆用途、清单协作、提醒反馈与心愿接口 |
 | `wujian/foundation.py` | 认识依据、纠正/期限、任务版本、反馈与状态的共同业务操作 |
 | `wujian/retrieval.py` | ReMe 混合检索；索引是可重建投影，SQL 是事实来源 |
 | `wujian/turns.py` | AgentScope 原生最终输出契约；回答与持续计划一次提交 |
@@ -67,7 +72,7 @@ npm.cmd --prefix frontend run build
 | `wujian/devices.py` | 项目内 REA MCP 生命周期、连接目标、观察证据与显式操作 |
 | `wujian/knowledge.py` | 百炼真实搜索、原始网页/PDF 获取、引用与页图读取 |
 | `wujian/server.py` | 登录、API、流式进度、文件权限与静态界面服务 |
-| `frontend/src/` | React/TypeScript 界面；`generated/api.ts` 自动生成 |
+| `frontend/src/features/` | 按物伴、物品、回忆、朋友、事项和共同表单拆分的响应式界面；`src/generated/api.ts` 自动生成 |
 | `fixtures/development/catalog.json` | 中国大陆型号及非标物开发样本；不预置操作答案 |
 | `fixtures/development/foundation_scenarios.json` | 26 件物品旅程所用的新增型号、真实约束和虚构生活情境 |
 | `scripts/evaluate_foundation.py` | 在隔离数据目录中运行真实模型旅程，保留首答，不当作独立验收 |

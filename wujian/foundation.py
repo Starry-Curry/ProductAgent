@@ -19,6 +19,14 @@ from .evidence import locate_quote
 from .retrieval import claim_view, task_view
 
 
+def plan_signature(goal, item_ids, constraints, plan):
+    import hashlib
+    import json
+    return hashlib.sha256(json.dumps({"goal": goal, "item_ids": sorted(item_ids),
+        "constraints": constraints, "plan": plan}, ensure_ascii=False, sort_keys=True,
+        separators=(",", ":")).encode()).hexdigest()
+
+
 def revise_memory(
     db,
     user_id,
@@ -116,6 +124,19 @@ def save_task(
         raise domain.DomainError("未知任务状态")
     if not goal.strip() or len(goal) > 4000:
         raise domain.DomainError("请保留具体任务目标")
+    if plan.get("schema") == "interaction/1":
+        from .api_models import TaskEntry
+        from pydantic import ValidationError
+        if plan.get("kind") not in {"checklist", "guidance", "idea"} or not isinstance(plan.get("entries"), list) or len(plan["entries"]) > 60:
+            raise domain.DomainError("请使用有效的事项类型与不超过60项的清单")
+        try:
+            entries = [TaskEntry.model_validate(entry).model_dump() for entry in plan["entries"]]
+        except ValidationError:
+            raise domain.DomainError("事项条目格式已变化，请重新整理")
+        if len({entry["id"] for entry in entries}) != len(entries):
+            raise domain.DomainError("清单条目编号必须唯一")
+        item_ids = list(dict.fromkeys([*item_ids, *(entry["item_id"] for entry in entries if entry["item_id"])]))
+        plan = {**plan, "entries": entries}
     for identity in item_ids:
         domain.accessible_item(db, user_id, identity)
     values = {
@@ -132,7 +153,8 @@ def save_task(
         if row.user_id != user_id:
             raise domain.DomainError("没有找到这项任务", 404)
         if status == "completed" and not any(
-            f.get("outcome") == "success" for f in row.feedback
+            f.get("outcome") == "success" and f.get("plan_signature") ==
+            plan_signature(goal, item_ids, constraints, plan) for f in row.feedback
         ):
             raise domain.DomainError("方案还没有成功反馈，不能作为已完成的实际任务")
         changed = db.execute(
@@ -185,6 +207,7 @@ def task_feedback(
             "outcome": outcome,
             "source_message_id": message_id,
             "source_quote": source_quote or text,
+            "plan_signature": plan_signature(row.goal, row.item_ids, row.constraints, row.plan),
             "created_at": now(),
         },
     ]

@@ -658,12 +658,447 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspace": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workspace */
+        get: operations["workspace_api_workspace_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/preferences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Preferences */
+        get: operations["preferences_api_preferences_get"];
+        /** Change Preferences */
+        put: operations["change_preferences_api_preferences_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/households": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Households */
+        get: operations["households_api_households_get"];
+        put?: never;
+        /** Create Household */
+        post: operations["create_household_api_households_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/households/{household_id}/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Invite */
+        post: operations["invite_api_households__household_id__invitations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/households/{household_id}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Accept */
+        post: operations["accept_api_households__household_id__accept_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/households/{household_id}/members/{member_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove Member */
+        delete: operations["remove_member_api_households__household_id__members__member_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/households/{household_id}/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Household Item */
+        post: operations["household_item_api_households__household_id__items_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/presentation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Presentation */
+        patch: operations["presentation_api_items__item_id__presentation_patch"];
+        trace?: never;
+    };
+    "/api/experiences/{experience_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit Experience */
+        put: operations["edit_experience_api_experiences__experience_id__put"];
+        post?: never;
+        /** Delete Experience */
+        delete: operations["delete_experience_api_experiences__experience_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/experiences/{experience_id}/shares": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Experience Shares */
+        get: operations["experience_shares_api_experiences__experience_id__shares_get"];
+        put?: never;
+        /** Share Experience */
+        post: operations["share_experience_api_experiences__experience_id__shares_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/experiences/{experience_id}/shares/{recipient_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Revoke Experience */
+        delete: operations["revoke_experience_api_experiences__experience_id__shares__recipient_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/memories/{memory_id}/correction": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Correct Memory */
+        post: operations["correct_memory_api_memories__memory_id__correction_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/reminders/{reminder_id}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reminder Feedback */
+        post: operations["reminder_feedback_api_reminders__reminder_id__feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/task-boards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Board */
+        post: operations["create_board_api_task_boards_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/board": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Board */
+        get: operations["board_api_tasks__task_id__board_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/entries/{entry_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Entry */
+        patch: operations["update_entry_api_tasks__task_id__entries__entry_id__patch"];
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/entries/{entry_id}/assignee": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Assign Entry */
+        patch: operations["assign_entry_api_tasks__task_id__entries__entry_id__assignee_patch"];
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/shares": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Share Task */
+        post: operations["share_task_api_tasks__task_id__shares_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Accept Task */
+        post: operations["accept_task_api_tasks__task_id__accept_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/shares/{participant_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Revoke Task */
+        delete: operations["revoke_task_api_tasks__task_id__shares__participant_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/conversation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Resume Task */
+        post: operations["resume_task_api_tasks__task_id__conversation_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/gifts/{gift_id}/decision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Gift Decision */
+        post: operations["gift_decision_api_gifts__gift_id__decision_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/friends/{friend_id}/space": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Friend Space */
+        get: operations["friend_space_api_friends__friend_id__space_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/wishes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Wishes */
+        get: operations["wishes_api_wishes_get"];
+        put?: never;
+        /** Create Wish */
+        post: operations["create_wish_api_wishes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/wishes/{wish_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Wish */
+        delete: operations["delete_wish_api_wishes__wish_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
         /** AvatarSpec */
         AvatarSpec: {
+            /**
+             * Enabled
+             * @default false
+             */
+            enabled: boolean;
             /**
              * Nickname
              * @default
@@ -682,6 +1117,11 @@ export interface components {
         };
         /** AvatarView */
         AvatarView: {
+            /**
+             * Enabled
+             * @default false
+             */
+            enabled: boolean;
             /**
              * Nickname
              * @default
@@ -755,6 +1195,7 @@ export interface components {
             item_ids?: string[];
             /** Photo Ids */
             photo_ids?: string[];
+            entry_context?: components["schemas"]["EntryContext"] | null;
         };
         /** ConversationView */
         ConversationView: {
@@ -766,6 +1207,10 @@ export interface components {
             item_ids: string[];
             /** Updated At */
             updated_at: string;
+            /** Entry Context */
+            entry_context?: {
+                [key: string]: unknown;
+            };
         };
         /** DeviceBind */
         DeviceBind: {
@@ -810,6 +1255,40 @@ export interface components {
             /** Created At */
             created_at: string;
         };
+        /** EntryContext */
+        EntryContext: {
+            /**
+             * Intent
+             * @default general
+             * @enum {string}
+             */
+            intent: "general" | "guidance" | "creative" | "planning" | "story" | "persona";
+            /** Task Id */
+            task_id?: string | null;
+        };
+        /** ExperienceChange */
+        ExperienceChange: {
+            /** Title */
+            title: string;
+            /** Text */
+            text: string;
+            /** Item Ids */
+            item_ids?: string[];
+            /** Photo Ids */
+            photo_ids?: string[];
+            /**
+             * Occurred On
+             * Format: date
+             */
+            occurred_on?: string;
+            /**
+             * Allow Ai
+             * @default false
+             */
+            allow_ai: boolean;
+            /** Expected Version */
+            expected_version: number;
+        };
         /** ExperienceCreate */
         ExperienceCreate: {
             /** Title */
@@ -825,6 +1304,11 @@ export interface components {
              * Format: date
              */
             occurred_on?: string;
+            /**
+             * Allow Ai
+             * @default false
+             */
+            allow_ai: boolean;
         };
         /** ExperienceView */
         ExperienceView: {
@@ -841,6 +1325,11 @@ export interface components {
              * Format: date
              */
             occurred_on: string;
+            /**
+             * Allow Ai
+             * @default false
+             */
+            allow_ai: boolean;
             /** Id */
             id: string;
             /** Creator Id */
@@ -855,11 +1344,32 @@ export interface components {
             provenance?: {
                 [key: string]: unknown;
             };
+            /**
+             * Version
+             * @default 1
+             */
+            version: number;
+            /**
+             * Access
+             * @default owner
+             * @enum {string}
+             */
+            access: "owner" | "shared";
         };
         /** FriendRequest */
         FriendRequest: {
             /** Username */
             username: string;
+        };
+        /** FriendSpace */
+        FriendSpace: {
+            person: components["schemas"]["UserView"];
+            /** Items */
+            items: components["schemas"]["ItemView"][];
+            /** Wishes */
+            wishes: components["schemas"]["WishView"][];
+            /** Experiences */
+            experiences?: components["schemas"]["ExperienceView"][];
         };
         /** FriendView */
         FriendView: {
@@ -890,6 +1400,14 @@ export interface components {
             /** Experience Ids */
             experience_ids?: string[];
             avatar?: components["schemas"]["AvatarSpec"];
+        };
+        /** GiftDecision */
+        GiftDecision: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "decline" | "cancel";
         };
         /** GiftSnapshot */
         GiftSnapshot: {
@@ -941,6 +1459,60 @@ export interface components {
             /** Device Connected */
             device_connected: boolean;
         };
+        /** HouseholdCreate */
+        HouseholdCreate: {
+            /** Name */
+            name: string;
+        };
+        /** HouseholdInvite */
+        HouseholdInvite: {
+            /** User Id */
+            user_id: string;
+        };
+        /** HouseholdItemChange */
+        HouseholdItemChange: {
+            /** Item Id */
+            item_id: string;
+            /**
+             * Shared
+             * @default true
+             */
+            shared: boolean;
+        };
+        /** HouseholdMemberView */
+        HouseholdMemberView: {
+            /** Id */
+            id: string;
+            /** Username */
+            username: string;
+            /** Display Name */
+            display_name: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "invited" | "active";
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "owner" | "member";
+        };
+        /** HouseholdView */
+        HouseholdView: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Creator Id */
+            creator_id: string;
+            /** Membership */
+            membership: string;
+            /** Members */
+            members: components["schemas"]["HouseholdMemberView"][];
+            /** Item Ids */
+            item_ids: string[];
+        };
         /** ItemChange */
         ItemChange: {
             /** Name */
@@ -960,12 +1532,12 @@ export interface components {
             avatar?: components["schemas"]["AvatarSpec"];
             /** Photo Id */
             photo_id?: string | null;
-            /** Expected Version */
-            expected_version: number;
             /** State */
             state?: {
                 [key: string]: unknown;
             };
+            /** Expected Version */
+            expected_version: number;
         };
         /** ItemCreate */
         ItemCreate: {
@@ -986,6 +1558,36 @@ export interface components {
             avatar?: components["schemas"]["AvatarSpec"];
             /** Photo Id */
             photo_id?: string | null;
+            /** State */
+            state?: {
+                [key: string]: unknown;
+            };
+        };
+        /** ItemPresentation */
+        ItemPresentation: {
+            /** Expected Version */
+            expected_version: number;
+            /**
+             * Location
+             * @default
+             */
+            location: string;
+            /**
+             * Attention
+             * @default normal
+             * @enum {string}
+             */
+            attention: "normal" | "needs_check" | "paused" | "needs_restock" | "lost" | "lent";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /**
+             * Cherished
+             * @default false
+             */
+            cherished: boolean;
         };
         /** ItemView */
         ItemView: {
@@ -1002,14 +1604,14 @@ export interface components {
             avatar: components["schemas"]["AvatarView"];
             /** Photo Id */
             photo_id: string | null;
-            /** Id */
-            id: string;
-            /** Owner Id */
-            owner_id: string;
             /** State */
             state: {
                 [key: string]: unknown;
             };
+            /** Id */
+            id: string;
+            /** Owner Id */
+            owner_id: string;
             /** Version */
             version: number;
             /**
@@ -1033,6 +1635,11 @@ export interface components {
             /** Password */
             password: string;
         };
+        /** MemoryCorrection */
+        MemoryCorrection: {
+            /** Content */
+            content: string;
+        };
         /** MemoryView */
         MemoryView: {
             /** Id */
@@ -1055,6 +1662,20 @@ export interface components {
             attributes?: {
                 [key: string]: unknown;
             };
+        };
+        /** Preferences */
+        Preferences: {
+            /**
+             * Companion Name
+             * @default 阿圆
+             */
+            companion_name: string;
+            /**
+             * Display Mode
+             * @default normal
+             * @enum {string}
+             */
+            display_mode: "normal" | "large";
         };
         /** ProductSpec */
         ProductSpec: {
@@ -1107,6 +1728,23 @@ export interface components {
             assignee_id?: string | null;
             /** Item Id */
             item_id?: string | null;
+            /** Household Id */
+            household_id?: string | null;
+        };
+        /** ReminderFeedback */
+        ReminderFeedback: {
+            /** Expected Version */
+            expected_version: number;
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "read" | "accept" | "complete" | "reopen";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
         };
         /** ReminderView */
         ReminderView: {
@@ -1124,6 +1762,27 @@ export interface components {
             due_at: string;
             /** Completed */
             completed: boolean;
+            /**
+             * Status
+             * @default pending
+             */
+            status: string;
+            /**
+             * Version
+             * @default 1
+             */
+            version: number;
+            /** Feedback */
+            feedback?: {
+                [key: string]: unknown;
+            }[];
+            /** Household Id */
+            household_id?: string | null;
+        };
+        /** Revision */
+        Revision: {
+            /** Expected Version */
+            expected_version: number;
         };
         /** RunView */
         RunView: {
@@ -1150,6 +1809,108 @@ export interface components {
         ShareRequest: {
             /** User Id */
             user_id: string;
+        };
+        /** TaskBoardCreate */
+        TaskBoardCreate: {
+            /** Goal */
+            goal: string;
+            /**
+             * Kind
+             * @default checklist
+             * @enum {string}
+             */
+            kind: "checklist" | "guidance" | "idea";
+            /** Item Ids */
+            item_ids?: string[];
+            /** Entries */
+            entries?: components["schemas"]["TaskEntry"][];
+            /** Constraints */
+            constraints?: {
+                [key: string]: unknown;
+            };
+        };
+        /** TaskBoardView */
+        TaskBoardView: {
+            task: components["schemas"]["TaskView"];
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "checklist" | "guidance" | "idea" | "legacy";
+            /** Entries */
+            entries: components["schemas"]["TaskEntry"][];
+            /** Completed Count */
+            completed_count: number;
+            /** Total Count */
+            total_count: number;
+            /** Conversation Id */
+            conversation_id: string | null;
+            /** Sources */
+            sources?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Access
+             * @default owner
+             * @enum {string}
+             */
+            access: "owner" | "invited" | "active";
+            /** Participants */
+            participants?: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** TaskEntry */
+        TaskEntry: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            /** Item Id */
+            item_id?: string | null;
+            /**
+             * Group
+             * @default owned
+             * @enum {string}
+             */
+            group: "owned" | "buy" | "borrow" | "confirm" | "step";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /**
+             * State
+             * @default pending
+             * @enum {string}
+             */
+            state: "pending" | "ready" | "not_found" | "unchanged";
+            /** Assignee Id */
+            assignee_id?: string | null;
+            /** Updated By */
+            updated_by?: string | null;
+        };
+        /** TaskEntryAssignment */
+        TaskEntryAssignment: {
+            /** Expected Version */
+            expected_version: number;
+            /** Assignee Id */
+            assignee_id?: string | null;
+        };
+        /** TaskEntryFeedback */
+        TaskEntryFeedback: {
+            /** Expected Version */
+            expected_version: number;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "pending" | "ready" | "not_found" | "unchanged";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
         };
         /** TaskFeedback */
         TaskFeedback: {
@@ -1236,6 +1997,74 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /** WishCreate */
+        WishCreate: {
+            /** Title */
+            title: string;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /**
+             * Url
+             * @default
+             */
+            url: string;
+            /**
+             * Visible To Friends
+             * @default false
+             */
+            visible_to_friends: boolean;
+        };
+        /** WishView */
+        WishView: {
+            /** Title */
+            title: string;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /**
+             * Url
+             * @default
+             */
+            url: string;
+            /**
+             * Visible To Friends
+             * @default false
+             */
+            visible_to_friends: boolean;
+            /** Id */
+            id: string;
+            /** User Id */
+            user_id: string;
+            /** Version */
+            version: number;
+        };
+        /** WorkspaceView */
+        WorkspaceView: {
+            preferences: components["schemas"]["Preferences"];
+            /** Items */
+            items: components["schemas"]["ItemView"][];
+            /** Experiences */
+            experiences: components["schemas"]["ExperienceView"][];
+            /** Households */
+            households: components["schemas"]["HouseholdView"][];
+            /** Reminders */
+            reminders: components["schemas"]["ReminderView"][];
+            /** Tasks */
+            tasks: components["schemas"]["TaskView"][];
+            /** Conversations */
+            conversations: components["schemas"]["ConversationView"][];
+            /** Friends */
+            friends: components["schemas"]["FriendView"][];
+            /** Gifts */
+            gifts: components["schemas"]["GiftView"][];
+            /** Wishes */
+            wishes: components["schemas"]["WishView"][];
         };
     };
     responses: never;
@@ -2600,6 +3429,957 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+        };
+    };
+    workspace_api_workspace_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkspaceView"];
+                };
+            };
+        };
+    };
+    preferences_api_preferences_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Preferences"];
+                };
+            };
+        };
+    };
+    change_preferences_api_preferences_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Preferences"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Preferences"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    households_api_households_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HouseholdView"][];
+                };
+            };
+        };
+    };
+    create_household_api_households_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HouseholdCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HouseholdView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    invite_api_households__household_id__invitations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                household_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HouseholdInvite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    accept_api_households__household_id__accept_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                household_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_member_api_households__household_id__members__member_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                household_id: string;
+                member_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    household_item_api_households__household_id__items_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                household_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HouseholdItemChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    presentation_api_items__item_id__presentation_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ItemPresentation"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_experience_api_experiences__experience_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                experience_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExperienceChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExperienceView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_experience_api_experiences__experience_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                experience_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Revision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    experience_shares_api_experiences__experience_id__shares_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                experience_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    share_experience_api_experiences__experience_id__shares_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                experience_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShareRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revoke_experience_api_experiences__experience_id__shares__recipient_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                experience_id: string;
+                recipient_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    correct_memory_api_memories__memory_id__correction_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                memory_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MemoryCorrection"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MemoryView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reminder_feedback_api_reminders__reminder_id__feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                reminder_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReminderFeedback"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReminderView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_board_api_task_boards_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskBoardCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    board_api_tasks__task_id__board_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_entry_api_tasks__task_id__entries__entry_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskEntryFeedback"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_entry_api_tasks__task_id__entries__entry_id__assignee_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskEntryAssignment"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    share_task_api_tasks__task_id__shares_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShareRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    accept_task_api_tasks__task_id__accept_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revoke_task_api_tasks__task_id__shares__participant_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+                participant_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resume_task_api_tasks__task_id__conversation_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    gift_decision_api_gifts__gift_id__decision_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                gift_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GiftDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GiftView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    friend_space_api_friends__friend_id__space_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                friend_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FriendSpace"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    wishes_api_wishes_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WishView"][];
+                };
+            };
+        };
+    };
+    create_wish_api_wishes_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WishCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WishView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_wish_api_wishes__wish_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                wish_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Revision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

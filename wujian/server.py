@@ -12,7 +12,7 @@ from sqlalchemy import or_, select
 from sqlalchemy.exc import IntegrityError
 from starlette.middleware.sessions import SessionMiddleware
 
-from . import devices, domain, foundation
+from . import devices, domain, foundation, interactions
 from .agent_runtime import AgentRunner
 from .api_models import (
     ChatMessageView,
@@ -50,9 +50,12 @@ from .database import (
     ChatMessage,
     Conversation,
     DeviceObservation,
+    ExperienceRecord,
+    ExperienceShare,
     Friendship,
     Gift,
     Grant,
+    HouseholdItem,
     ItemRecord,
     Reminder,
     Run,
@@ -79,6 +82,8 @@ def create_app(settings=None, model_factory=None):
                 run.status, run.error = "interrupted", "服务重启，任务已停止。请继续对话；不会自动重复外部操作。"
             if settings.demo_mode:
                 domain.seed_demo(db)
+                from .interaction_demo import ensure_demo_workspace
+                ensure_demo_workspace(db)
             db.commit()
         yield
         await runner.close()
@@ -220,7 +225,7 @@ def create_app(settings=None, model_factory=None):
 
     @app.get('/api/tasks',response_model=list[TaskView])
     def tasks(user=Depends(current_user),db=Depends(db_session)):
-        return [task_view(row) for row in db.scalars(select(TaskRecord).where(TaskRecord.user_id==user.id).order_by(TaskRecord.updated_at.desc()))]
+        return interactions.list_tasks(db, user.id)
 
     @app.post('/api/tasks',response_model=TaskView)
     def save_task(payload:TaskSave,user=Depends(current_user),db=Depends(db_session)):
@@ -288,7 +293,17 @@ def create_app(settings=None, model_factory=None):
                 raise domain.DomainError("对话附件目前支持照片")
         conversation = owned_conversation(db, user.id, payload.conversation_id) if payload.conversation_id else Conversation(
             id=uid(), user_id=user.id, title=payload.text[:35] or "从一张照片开始")
-        conversation.item_ids, conversation.updated_at = payload.item_ids, now()
+        if not payload.conversation_id or "item_ids" in payload.model_fields_set:
+            conversation.item_ids = payload.item_ids
+        if payload.entry_context is not None:
+            if payload.entry_context.task_id:
+                interactions.task_access(db, user.id, payload.entry_context.task_id)
+            conversation.entry_context = payload.entry_context.model_dump()
+        if (conversation.entry_context or {}).get("intent") == "persona":
+            if len(conversation.item_ids) != 1 or not domain.item_view(db, user.id,
+                    domain.accessible_item(db, user.id, conversation.item_ids[0]))["avatar"].get("enabled"):
+                raise domain.DomainError("请先为这件物品启用分身，或直接向物伴提问")
+        conversation.updated_at = now()
         db.add(conversation)
         db.flush()
         run = Run(id=uid(), conversation_id=conversation.id, user_id=user.id)
@@ -366,9 +381,17 @@ def create_app(settings=None, model_factory=None):
         asset = domain.require(db.get(Asset, asset_id))
         if asset.owner_id != user.id:
             item = db.scalar(select(ItemRecord).where(ItemRecord.photo_id == asset_id))
-            if item is None:
+            item_allowed = False
+            if item is not None:
+                try:
+                    domain.accessible_item(db, user.id, item.id)
+                    item_allowed = True
+                except domain.DomainError:
+                    pass
+            story_allowed = any(asset_id in row.photo_ids for row in db.scalars(select(ExperienceRecord).where(
+                ExperienceRecord.id.in_(select(ExperienceShare.experience_id).where(ExperienceShare.user_id == user.id)))))
+            if not item_allowed and not story_allowed:
                 raise domain.DomainError("没有找到这份文件", 404)
-            domain.accessible_item(db, user.id, item.id)
         return FileResponse(asset.path, media_type=asset.media_type,
                             filename=asset.original_name if not asset.media_type.startswith("image/") else None,
                             content_disposition_type="attachment", headers={"Cache-Control": "private, no-store"})
@@ -409,8 +432,7 @@ def create_app(settings=None, model_factory=None):
 
     @app.get("/api/reminders", response_model=list[ReminderView])
     def reminders(user=Depends(current_user), db=Depends(db_session)):
-        return [{key: getattr(row, key) for key in ("id", "creator_id", "assignee_id", "item_id", "title", "due_at", "completed")}
-                for row in db.scalars(select(Reminder).where(or_(Reminder.creator_id == user.id, Reminder.assignee_id == user.id)).order_by(Reminder.due_at))]
+        return interactions.list_reminders(db, user.id)
 
     @app.post("/api/reminders")
     def add_reminder(payload: ReminderCreate, user=Depends(current_user), db=Depends(db_session)):
@@ -420,6 +442,11 @@ def create_app(settings=None, model_factory=None):
         if payload.item_id:
             domain.accessible_item(db, user.id, payload.item_id)
             domain.accessible_item(db, assignee, payload.item_id)
+        if payload.household_id:
+            interactions.member(db, user.id, payload.household_id)
+            interactions.member(db, assignee, payload.household_id)
+            if payload.item_id and db.get(HouseholdItem, (payload.household_id, payload.item_id)) is None:
+                raise domain.DomainError("这件物品尚未加入家庭共同用品")
         reminder = Reminder(**payload.model_dump(exclude={"assignee_id"}), creator_id=user.id, assignee_id=assignee)
         db.add(reminder)
         db.commit()
@@ -428,10 +455,9 @@ def create_app(settings=None, model_factory=None):
     @app.post("/api/reminders/{reminder_id}/complete")
     def complete_reminder(reminder_id: str, user=Depends(current_user), db=Depends(db_session)):
         reminder = domain.require(db.get(Reminder, reminder_id))
-        if user.id not in {reminder.creator_id, reminder.assignee_id}:
-            raise domain.DomainError("没有找到这项提醒", 404)
-        reminder.completed = True
-        db.commit()
+        from .api_models import ReminderFeedback
+        interactions.reminder_feedback(db, user.id, reminder_id,
+            ReminderFeedback(expected_version=reminder.version, action="complete"))
         return {"status": "user_reported_complete"}
 
     @app.get("/api/sources")
@@ -439,9 +465,13 @@ def create_app(settings=None, model_factory=None):
         return [{"id": row.id, "title": row.title, "url": row.url, "item_id": row.item_id, "fetched_at": row.fetched_at, "page_count": len(row.pages)}
                 for row in db.scalars(select(SourceRecord).where(SourceRecord.owner_id == user.id))]
 
+    from .interaction_routes import register_interactions
+    register_interactions(app, current_user, db_session)
     dist = ROOT / "frontend" / "dist"
     if (dist / "assets").exists():
         app.mount("/assets", StaticFiles(directory=dist / "assets"), name="frontend_assets")
+    if (dist / "illustrations").exists():
+        app.mount("/illustrations", StaticFiles(directory=dist / "illustrations"), name="illustrations")
 
     @app.get("/", include_in_schema=False)
     def index():

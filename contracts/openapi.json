@@ -1636,12 +1636,1340 @@
           }
         }
       }
+    },
+    "/api/workspace": {
+      "get": {
+        "tags": [
+          "Interaction workspace"
+        ],
+        "summary": "Workspace",
+        "operationId": "workspace_api_workspace_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceView"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/preferences": {
+      "get": {
+        "tags": [
+          "Interaction workspace"
+        ],
+        "summary": "Preferences",
+        "operationId": "preferences_api_preferences_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Preferences"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Interaction workspace"
+        ],
+        "summary": "Change Preferences",
+        "operationId": "change_preferences_api_preferences_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Preferences"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Preferences"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/households": {
+      "get": {
+        "tags": [
+          "Households"
+        ],
+        "summary": "Households",
+        "operationId": "households_api_households_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/HouseholdView"
+                  },
+                  "type": "array",
+                  "title": "Response Households Api Households Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Households"
+        ],
+        "summary": "Create Household",
+        "operationId": "create_household_api_households_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HouseholdCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseholdView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/households/{household_id}/invitations": {
+      "post": {
+        "tags": [
+          "Households"
+        ],
+        "summary": "Invite",
+        "operationId": "invite_api_households__household_id__invitations_post",
+        "parameters": [
+          {
+            "name": "household_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Household Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HouseholdInvite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/households/{household_id}/accept": {
+      "post": {
+        "tags": [
+          "Households"
+        ],
+        "summary": "Accept",
+        "operationId": "accept_api_households__household_id__accept_post",
+        "parameters": [
+          {
+            "name": "household_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Household Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/households/{household_id}/members/{member_id}": {
+      "delete": {
+        "tags": [
+          "Households"
+        ],
+        "summary": "Remove Member",
+        "operationId": "remove_member_api_households__household_id__members__member_id__delete",
+        "parameters": [
+          {
+            "name": "household_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Household Id"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Member Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/households/{household_id}/items": {
+      "post": {
+        "tags": [
+          "Households"
+        ],
+        "summary": "Household Item",
+        "operationId": "household_item_api_households__household_id__items_post",
+        "parameters": [
+          {
+            "name": "household_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Household Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HouseholdItemChange"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/presentation": {
+      "patch": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Presentation",
+        "operationId": "presentation_api_items__item_id__presentation_patch",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemPresentation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/experiences/{experience_id}": {
+      "put": {
+        "tags": [
+          "Experiences"
+        ],
+        "summary": "Edit Experience",
+        "operationId": "edit_experience_api_experiences__experience_id__put",
+        "parameters": [
+          {
+            "name": "experience_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Experience Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExperienceChange"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperienceView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Experiences"
+        ],
+        "summary": "Delete Experience",
+        "operationId": "delete_experience_api_experiences__experience_id__delete",
+        "parameters": [
+          {
+            "name": "experience_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Experience Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Revision"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/experiences/{experience_id}/shares": {
+      "get": {
+        "tags": [
+          "Experiences"
+        ],
+        "summary": "Experience Shares",
+        "operationId": "experience_shares_api_experiences__experience_id__shares_get",
+        "parameters": [
+          {
+            "name": "experience_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Experience Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Experiences"
+        ],
+        "summary": "Share Experience",
+        "operationId": "share_experience_api_experiences__experience_id__shares_post",
+        "parameters": [
+          {
+            "name": "experience_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Experience Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShareRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/experiences/{experience_id}/shares/{recipient_id}": {
+      "delete": {
+        "tags": [
+          "Experiences"
+        ],
+        "summary": "Revoke Experience",
+        "operationId": "revoke_experience_api_experiences__experience_id__shares__recipient_id__delete",
+        "parameters": [
+          {
+            "name": "experience_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Experience Id"
+            }
+          },
+          {
+            "name": "recipient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Recipient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/memories/{memory_id}/correction": {
+      "post": {
+        "tags": [
+          "Personal understanding"
+        ],
+        "summary": "Correct Memory",
+        "operationId": "correct_memory_api_memories__memory_id__correction_post",
+        "parameters": [
+          {
+            "name": "memory_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Memory Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryCorrection"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reminders/{reminder_id}/feedback": {
+      "post": {
+        "tags": [
+          "Household care"
+        ],
+        "summary": "Reminder Feedback",
+        "operationId": "reminder_feedback_api_reminders__reminder_id__feedback_post",
+        "parameters": [
+          {
+            "name": "reminder_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reminder Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReminderFeedback"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReminderView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/task-boards": {
+      "post": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Create Board",
+        "operationId": "create_board_api_task_boards_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskBoardCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/board": {
+      "get": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Board",
+        "operationId": "board_api_tasks__task_id__board_get",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/entries/{entry_id}": {
+      "patch": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Update Entry",
+        "operationId": "update_entry_api_tasks__task_id__entries__entry_id__patch",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          },
+          {
+            "name": "entry_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Entry Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskEntryFeedback"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/entries/{entry_id}/assignee": {
+      "patch": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Assign Entry",
+        "operationId": "assign_entry_api_tasks__task_id__entries__entry_id__assignee_patch",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          },
+          {
+            "name": "entry_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Entry Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskEntryAssignment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/shares": {
+      "post": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Share Task",
+        "operationId": "share_task_api_tasks__task_id__shares_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShareRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/accept": {
+      "post": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Accept Task",
+        "operationId": "accept_task_api_tasks__task_id__accept_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/shares/{participant_id}": {
+      "delete": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Revoke Task",
+        "operationId": "revoke_task_api_tasks__task_id__shares__participant_id__delete",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          },
+          {
+            "name": "participant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Participant Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/conversation": {
+      "post": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Resume Task",
+        "operationId": "resume_task_api_tasks__task_id__conversation_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gifts/{gift_id}/decision": {
+      "post": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Gift Decision",
+        "operationId": "gift_decision_api_gifts__gift_id__decision_post",
+        "parameters": [
+          {
+            "name": "gift_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Gift Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GiftDecision"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GiftView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/friends/{friend_id}/space": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Friend Space",
+        "operationId": "friend_space_api_friends__friend_id__space_get",
+        "parameters": [
+          {
+            "name": "friend_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Friend Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendSpace"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/wishes": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Wishes",
+        "operationId": "wishes_api_wishes_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/WishView"
+                  },
+                  "type": "array",
+                  "title": "Response Wishes Api Wishes Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Create Wish",
+        "operationId": "create_wish_api_wishes_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WishCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WishView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/wishes/{wish_id}": {
+      "delete": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Delete Wish",
+        "operationId": "delete_wish_api_wishes__wish_id__delete",
+        "parameters": [
+          {
+            "name": "wish_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Wish Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Revision"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "AvatarSpec": {
         "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": false
+          },
           "nickname": {
             "type": "string",
             "maxLength": 80,
@@ -1667,6 +2995,11 @@
       },
       "AvatarView": {
         "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": false
+          },
           "nickname": {
             "type": "string",
             "maxLength": 80,
@@ -1814,6 +3147,16 @@
             "type": "array",
             "maxItems": 4,
             "title": "Photo Ids"
+          },
+          "entry_context": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EntryContext"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -1840,6 +3183,11 @@
           "updated_at": {
             "type": "string",
             "title": "Updated At"
+          },
+          "entry_context": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Entry Context"
           }
         },
         "type": "object",
@@ -1960,6 +3308,92 @@
         ],
         "title": "DeviceTargetView"
       },
+      "EntryContext": {
+        "properties": {
+          "intent": {
+            "type": "string",
+            "enum": [
+              "general",
+              "guidance",
+              "creative",
+              "planning",
+              "story",
+              "persona"
+            ],
+            "title": "Intent",
+            "default": "general"
+          },
+          "task_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Task Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "EntryContext"
+      },
+      "ExperienceChange": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 20000,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "item_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "title": "Item Ids"
+          },
+          "photo_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Photo Ids"
+          },
+          "occurred_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Occurred On"
+          },
+          "allow_ai": {
+            "type": "boolean",
+            "title": "Allow Ai",
+            "default": false
+          },
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "text",
+          "expected_version"
+        ],
+        "title": "ExperienceChange"
+      },
       "ExperienceCreate": {
         "properties": {
           "title": {
@@ -1994,6 +3428,11 @@
             "type": "string",
             "format": "date",
             "title": "Occurred On"
+          },
+          "allow_ai": {
+            "type": "boolean",
+            "title": "Allow Ai",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -2037,6 +3476,11 @@
             "format": "date",
             "title": "Occurred On"
           },
+          "allow_ai": {
+            "type": "boolean",
+            "title": "Allow Ai",
+            "default": false
+          },
           "id": {
             "type": "string",
             "title": "Id"
@@ -2067,6 +3511,20 @@
             "additionalProperties": true,
             "type": "object",
             "title": "Provenance"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version",
+            "default": 1
+          },
+          "access": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "shared"
+            ],
+            "title": "Access",
+            "default": "owner"
           }
         },
         "additionalProperties": false,
@@ -2097,6 +3555,41 @@
           "username"
         ],
         "title": "FriendRequest"
+      },
+      "FriendSpace": {
+        "properties": {
+          "person": {
+            "$ref": "#/components/schemas/UserView"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ItemView"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "wishes": {
+            "items": {
+              "$ref": "#/components/schemas/WishView"
+            },
+            "type": "array",
+            "title": "Wishes"
+          },
+          "experiences": {
+            "items": {
+              "$ref": "#/components/schemas/ExperienceView"
+            },
+            "type": "array",
+            "title": "Experiences"
+          }
+        },
+        "type": "object",
+        "required": [
+          "person",
+          "items",
+          "wishes"
+        ],
+        "title": "FriendSpace"
       },
       "FriendView": {
         "properties": {
@@ -2171,6 +3664,24 @@
           "recipient_id"
         ],
         "title": "GiftCreate"
+      },
+      "GiftDecision": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "decline",
+              "cancel"
+            ],
+            "title": "Action"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "action"
+        ],
+        "title": "GiftDecision"
       },
       "GiftSnapshot": {
         "properties": {
@@ -2306,6 +3817,140 @@
         ],
         "title": "HealthView"
       },
+      "HouseholdCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "HouseholdCreate"
+      },
+      "HouseholdInvite": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "user_id"
+        ],
+        "title": "HouseholdInvite"
+      },
+      "HouseholdItemChange": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "shared": {
+            "type": "boolean",
+            "title": "Shared",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "item_id"
+        ],
+        "title": "HouseholdItemChange"
+      },
+      "HouseholdMemberView": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "display_name": {
+            "type": "string",
+            "title": "Display Name"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "invited",
+              "active"
+            ],
+            "title": "Status"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "member"
+            ],
+            "title": "Role"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "username",
+          "display_name",
+          "status",
+          "role"
+        ],
+        "title": "HouseholdMemberView"
+      },
+      "HouseholdView": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "creator_id": {
+            "type": "string",
+            "title": "Creator Id"
+          },
+          "membership": {
+            "type": "string",
+            "title": "Membership"
+          },
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/HouseholdMemberView"
+            },
+            "type": "array",
+            "title": "Members"
+          },
+          "item_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Item Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "creator_id",
+          "membership",
+          "members",
+          "item_ids"
+        ],
+        "title": "HouseholdView"
+      },
       "ItemChange": {
         "properties": {
           "name": {
@@ -2346,15 +3991,15 @@
             ],
             "title": "Photo Id"
           },
-          "expected_version": {
-            "type": "integer",
-            "minimum": 1.0,
-            "title": "Expected Version"
-          },
           "state": {
             "additionalProperties": true,
             "type": "object",
             "title": "State"
+          },
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
           }
         },
         "additionalProperties": false,
@@ -2404,6 +4049,11 @@
               }
             ],
             "title": "Photo Id"
+          },
+          "state": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "State"
           }
         },
         "additionalProperties": false,
@@ -2412,6 +4062,51 @@
           "name"
         ],
         "title": "ItemCreate"
+      },
+      "ItemPresentation": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 160,
+            "title": "Location",
+            "default": ""
+          },
+          "attention": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "needs_check",
+              "paused",
+              "needs_restock",
+              "lost",
+              "lent"
+            ],
+            "title": "Attention",
+            "default": "normal"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1600,
+            "title": "Note",
+            "default": ""
+          },
+          "cherished": {
+            "type": "boolean",
+            "title": "Cherished",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "ItemPresentation"
       },
       "ItemView": {
         "properties": {
@@ -2450,6 +4145,11 @@
             ],
             "title": "Photo Id"
           },
+          "state": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "State"
+          },
           "id": {
             "type": "string",
             "title": "Id"
@@ -2457,11 +4157,6 @@
           "owner_id": {
             "type": "string",
             "title": "Owner Id"
-          },
-          "state": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "State"
           },
           "version": {
             "type": "integer",
@@ -2505,9 +4200,9 @@
           "description",
           "avatar",
           "photo_id",
+          "state",
           "id",
           "owner_id",
-          "state",
           "version",
           "access",
           "archived"
@@ -2532,6 +4227,22 @@
           "password"
         ],
         "title": "Login"
+      },
+      "MemoryCorrection": {
+        "properties": {
+          "content": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Content"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "content"
+        ],
+        "title": "MemoryCorrection"
       },
       "MemoryView": {
         "properties": {
@@ -2604,6 +4315,29 @@
           "updated_at"
         ],
         "title": "MemoryView"
+      },
+      "Preferences": {
+        "properties": {
+          "companion_name": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Companion Name",
+            "default": "阿圆"
+          },
+          "display_mode": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "large"
+            ],
+            "title": "Display Mode",
+            "default": "normal"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Preferences"
       },
       "ProductSpec": {
         "properties": {
@@ -2720,6 +4454,17 @@
               }
             ],
             "title": "Item Id"
+          },
+          "household_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Household Id"
           }
         },
         "additionalProperties": false,
@@ -2729,6 +4474,38 @@
           "due_at"
         ],
         "title": "ReminderCreate"
+      },
+      "ReminderFeedback": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "read",
+              "accept",
+              "complete",
+              "reopen"
+            ],
+            "title": "Action"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1200,
+            "title": "Note",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "action"
+        ],
+        "title": "ReminderFeedback"
       },
       "ReminderView": {
         "properties": {
@@ -2766,6 +4543,35 @@
           "completed": {
             "type": "boolean",
             "title": "Completed"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "pending"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version",
+            "default": 1
+          },
+          "feedback": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Feedback"
+          },
+          "household_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Household Id"
           }
         },
         "type": "object",
@@ -2779,6 +4585,21 @@
           "completed"
         ],
         "title": "ReminderView"
+      },
+      "Revision": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "Revision"
       },
       "RunView": {
         "properties": {
@@ -2841,6 +4662,275 @@
           "user_id"
         ],
         "title": "ShareRequest"
+      },
+      "TaskBoardCreate": {
+        "properties": {
+          "goal": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Goal"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "checklist",
+              "guidance",
+              "idea"
+            ],
+            "title": "Kind",
+            "default": "checklist"
+          },
+          "item_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Item Ids"
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/TaskEntry"
+            },
+            "type": "array",
+            "maxItems": 60,
+            "title": "Entries"
+          },
+          "constraints": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Constraints"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "goal"
+        ],
+        "title": "TaskBoardCreate"
+      },
+      "TaskBoardView": {
+        "properties": {
+          "task": {
+            "$ref": "#/components/schemas/TaskView"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "checklist",
+              "guidance",
+              "idea",
+              "legacy"
+            ],
+            "title": "Kind"
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/TaskEntry"
+            },
+            "type": "array",
+            "title": "Entries"
+          },
+          "completed_count": {
+            "type": "integer",
+            "title": "Completed Count"
+          },
+          "total_count": {
+            "type": "integer",
+            "title": "Total Count"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "sources": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "access": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "invited",
+              "active"
+            ],
+            "title": "Access",
+            "default": "owner"
+          },
+          "participants": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Participants"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task",
+          "kind",
+          "entries",
+          "completed_count",
+          "total_count",
+          "conversation_id"
+        ],
+        "title": "TaskBoardView"
+      },
+      "TaskEntry": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          },
+          "group": {
+            "type": "string",
+            "enum": [
+              "owned",
+              "buy",
+              "borrow",
+              "confirm",
+              "step"
+            ],
+            "title": "Group",
+            "default": "owned"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Note",
+            "default": ""
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "ready",
+              "not_found",
+              "unchanged"
+            ],
+            "title": "State",
+            "default": "pending"
+          },
+          "assignee_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assignee Id"
+          },
+          "updated_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated By"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "title"
+        ],
+        "title": "TaskEntry"
+      },
+      "TaskEntryAssignment": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "assignee_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assignee Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "TaskEntryAssignment"
+      },
+      "TaskEntryFeedback": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "ready",
+              "not_found",
+              "unchanged"
+            ],
+            "title": "State"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Note",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "state"
+        ],
+        "title": "TaskEntryFeedback"
       },
       "TaskFeedback": {
         "properties": {
@@ -3068,6 +5158,171 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "WishCreate": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1600,
+            "title": "Note",
+            "default": ""
+          },
+          "url": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Url",
+            "default": ""
+          },
+          "visible_to_friends": {
+            "type": "boolean",
+            "title": "Visible To Friends",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "title": "WishCreate"
+      },
+      "WishView": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1600,
+            "title": "Note",
+            "default": ""
+          },
+          "url": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Url",
+            "default": ""
+          },
+          "visible_to_friends": {
+            "type": "boolean",
+            "title": "Visible To Friends",
+            "default": false
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "id",
+          "user_id",
+          "version"
+        ],
+        "title": "WishView"
+      },
+      "WorkspaceView": {
+        "properties": {
+          "preferences": {
+            "$ref": "#/components/schemas/Preferences"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ItemView"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "experiences": {
+            "items": {
+              "$ref": "#/components/schemas/ExperienceView"
+            },
+            "type": "array",
+            "title": "Experiences"
+          },
+          "households": {
+            "items": {
+              "$ref": "#/components/schemas/HouseholdView"
+            },
+            "type": "array",
+            "title": "Households"
+          },
+          "reminders": {
+            "items": {
+              "$ref": "#/components/schemas/ReminderView"
+            },
+            "type": "array",
+            "title": "Reminders"
+          },
+          "tasks": {
+            "items": {
+              "$ref": "#/components/schemas/TaskView"
+            },
+            "type": "array",
+            "title": "Tasks"
+          },
+          "conversations": {
+            "items": {
+              "$ref": "#/components/schemas/ConversationView"
+            },
+            "type": "array",
+            "title": "Conversations"
+          },
+          "friends": {
+            "items": {
+              "$ref": "#/components/schemas/FriendView"
+            },
+            "type": "array",
+            "title": "Friends"
+          },
+          "gifts": {
+            "items": {
+              "$ref": "#/components/schemas/GiftView"
+            },
+            "type": "array",
+            "title": "Gifts"
+          },
+          "wishes": {
+            "items": {
+              "$ref": "#/components/schemas/WishView"
+            },
+            "type": "array",
+            "title": "Wishes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "preferences",
+          "items",
+          "experiences",
+          "households",
+          "reminders",
+          "tasks",
+          "conversations",
+          "friends",
+          "gifts",
+          "wishes"
+        ],
+        "title": "WorkspaceView"
       }
     }
   }

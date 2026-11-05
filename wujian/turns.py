@@ -121,7 +121,7 @@ def commit_result(db, user_id, message_id, result, current_question):
         task = commit_continuation(
             db, user_id, message_id, result, current_question, commit=False
         )
-        experiences = {row["id"]: row for row in domain.list_experiences(db, user_id)}
+        experiences = {row["id"]: row for row in domain.list_experiences(db, user_id, for_ai=True)}
         stories = []
         for identity in dict.fromkeys(result.story_refs):
             row = experiences.get(identity)
@@ -176,7 +176,7 @@ def grounded_turn_schema(sessions, user_id, message_id):
                             raise domain.DomainError(
                                 "原任务已变化或不可用，请重新read_task后接续"
                             )
-                available = {row["id"] for row in domain.list_experiences(db, user_id)}
+                available = {row["id"] for row in domain.list_experiences(db, user_id, for_ai=True)}
                 if any(identity not in available for identity in self.story_refs):
                     raise ValueError("story_refs包含不可用的经历，请重新读取")
             return self

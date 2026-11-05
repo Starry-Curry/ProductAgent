@@ -17,9 +17,12 @@ from .database import (
     Asset,
     Conversation,
     ExperienceRecord,
+    ExperienceShare,
     Friendship,
     Gift,
     Grant,
+    HouseholdItem,
+    HouseholdMember,
     ItemRecord,
     Memory,
     ProductRecord,
@@ -80,7 +83,24 @@ def accessible_item(db, user_id, item_id, write=False):
         return item
     if not write and db.get(Grant, (item_id, user_id)) is not None:
         return item
+    if not write and household_access(db, user_id, item_id):
+        return item
     raise DomainError("没有找到或无权访问这件物品", 404)
+
+
+def household_access(db, user_id, item_id):
+    return db.scalar(select(HouseholdItem.item_id).join(
+        HouseholdMember, HouseholdMember.household_id == HouseholdItem.household_id
+    ).where(HouseholdItem.item_id == item_id, HouseholdMember.user_id == user_id,
+            HouseholdMember.status == "active")) is not None
+
+
+def item_readers(db, item_id):
+    owner = require(db.get(ItemRecord, item_id)).owner_id
+    return list({owner, *db.scalars(select(Grant.user_id).where(Grant.item_id == item_id)),
+                 *db.scalars(select(HouseholdMember.user_id).join(HouseholdItem,
+                     HouseholdItem.household_id == HouseholdMember.household_id).where(
+                     HouseholdItem.item_id == item_id, HouseholdMember.status == "active"))})
 
 
 def item_view(db, user_id, item):
@@ -92,12 +112,17 @@ def item_view(db, user_id, item):
             "version": item.version, "archived": item.archived,
             "access": "owner" if item.owner_id == user_id else "shared",
             "description": profile.description if profile else "",
-            "avatar": profile.avatar if profile else {}}
+            "avatar": {"enabled": bool(profile and (profile.avatar or {}).get("enabled",
+                bool((profile.avatar or {}).get("personality")))), **(profile.avatar or {})} if profile else {}}
 
 
 def list_items(db, user_id, query="", include_archived=False):
     granted = select(Grant.item_id).where(Grant.user_id == user_id)
-    statement = select(ItemRecord).where(or_(ItemRecord.owner_id == user_id, ItemRecord.id.in_(granted)))
+    family = select(HouseholdItem.item_id).join(HouseholdMember,
+        HouseholdMember.household_id == HouseholdItem.household_id).where(
+        HouseholdMember.user_id == user_id, HouseholdMember.status == "active")
+    statement = select(ItemRecord).where(or_(ItemRecord.owner_id == user_id,
+        ItemRecord.id.in_(granted), ItemRecord.id.in_(family)))
     if not include_archived:
         statement = statement.where(ItemRecord.archived.is_(False))
     rows = db.scalars(statement.order_by(ItemRecord.created_at)).all()
@@ -134,7 +159,7 @@ def create_item(db, user_id, payload: ItemCreate):
     spec=payload.product.model_dump()
     product_id=product_record(db,spec,payload.kind)
     item = ItemRecord(id=uid(), owner_id=user_id, name=payload.name, kind=payload.kind,
-                      product_id=product_id,identity_notes=spec,photo_id=payload.photo_id)
+                      product_id=product_id,identity_notes=spec,photo_id=payload.photo_id,state=payload.state)
     db.add(item)
     db.flush()
     db.add(Profile(user_id=user_id, item_id=item.id, description=payload.description, avatar=payload.avatar.model_dump()))
@@ -161,7 +186,7 @@ def change_item(db, user_id, item_id, payload: ItemChange):
         db.add(profile)
     profile.description = payload.description
     profile.avatar = {**(profile.avatar or {}), **payload.avatar.model_dump()}
-    affected = [user_id, *db.scalars(select(Grant.user_id).where(Grant.item_id == item_id)).all()]
+    affected = item_readers(db, item_id)
     invalidate_context(db, affected)
     db.commit()
     db.expire_all()
@@ -169,15 +194,29 @@ def change_item(db, user_id, item_id, payload: ItemChange):
 
 
 def experience_view(row):
-    return {key: getattr(row, key) for key in ("id", "creator_id", "title", "text", "item_ids", "item_labels", "photo_ids", "occurred_on", "origin_id", "provenance")}
+    return {key: getattr(row, key) for key in ("id", "creator_id", "title", "text", "item_ids", "item_labels", "photo_ids", "occurred_on", "origin_id", "provenance", "version", "allow_ai")}
 
 
-def list_experiences(db, user_id, item_id=None, query=""):
-    rows = db.scalars(select(ExperienceRecord).where(ExperienceRecord.creator_id == user_id)
+def list_experiences(db, user_id, item_id=None, query="", for_ai=False):
+    if item_id:
+        accessible_item(db, user_id, item_id)
+    allowed = ExperienceRecord.creator_id == user_id
+    if not for_ai:
+        allowed = or_(allowed, ExperienceRecord.id.in_(select(ExperienceShare.experience_id).where(ExperienceShare.user_id == user_id)))
+    rows = db.scalars(select(ExperienceRecord).where(allowed)
                       .order_by(ExperienceRecord.occurred_on.desc(), ExperienceRecord.created_at.desc())).all()
-    return [experience_view(row) for row in rows
-            if (not item_id or item_id in row.item_ids)
-            and (not query or query.casefold() in (row.title + row.text).casefold())]
+    result = []
+    accessible = {item["id"] for item in list_items(db, user_id, include_archived=True)}
+    for row in rows:
+        if (for_ai and not row.allow_ai) or (item_id and item_id not in row.item_ids) or (query and query.casefold() not in (row.title + row.text).casefold()):
+            continue
+        value = experience_view(row)
+        value["access"] = "owner" if row.creator_id == user_id else "shared"
+        if value["access"] == "shared":
+            value.update(allow_ai=False, item_ids=[identity for identity in row.item_ids if identity in accessible],
+                item_labels={identity: label for identity, label in row.item_labels.items() if identity in accessible})
+        result.append(value)
+    return result
 
 
 def create_experience(db, user_id, payload: ExperienceCreate):
@@ -187,6 +226,7 @@ def create_experience(db, user_id, payload: ExperienceCreate):
     row = ExperienceRecord(creator_id=user_id, title=payload.title, text=payload.text,
                            item_ids=list(labels), item_labels=labels, photo_ids=payload.photo_ids,
                            occurred_on=payload.occurred_on.isoformat(),
+                           allow_ai=payload.allow_ai,
                            provenance={"kind":"authored_record","author_id":user_id,
                                        "author_name":db.get(User,user_id).display_name})
     db.add(row)
@@ -278,12 +318,14 @@ def accept_gift(db, user_id, gift_id):
     if gift.status != "pending":
         raise DomainError("礼物状态已变化", 409)
     item = require(db.get(ItemRecord, gift.item_id))
+    affected = item_readers(db, item.id)
     # Compare-and-set protects the ownership transition and repeated acceptance.
     changed = db.execute(update(ItemRecord).where(ItemRecord.id == item.id, ItemRecord.owner_id == gift.sender_id)
                          .values(owner_id=user_id, state={}, version=ItemRecord.version + 1, photo_id=None))
     if changed.rowcount != 1:
         raise DomainError("物品归属已变化，请刷新", 409)
     db.execute(delete(Grant).where(Grant.item_id == item.id))
+    db.execute(delete(HouseholdItem).where(HouseholdItem.item_id == item.id))
     profile = db.get(Profile, (user_id, item.id))
     if profile is None:
         profile = Profile(user_id=user_id, item_id=item.id)
@@ -308,7 +350,7 @@ def accept_gift(db, user_id, gift_id):
     gift.status = "accepted"
     from .continuity import copy_public_evidence
     copy_public_evidence(db,gift.sender_id,user_id,item,gift.snapshot.get('public_source_ids',[]))
-    invalidate_context(db, [user_id, gift.sender_id], stop_running=True)
+    invalidate_context(db, [*affected, user_id, gift.sender_id], stop_running=True)
     db.commit()
     return gift_view(db, gift)
 
