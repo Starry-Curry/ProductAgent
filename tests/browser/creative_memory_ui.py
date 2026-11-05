@@ -576,6 +576,65 @@ async def main(url, output):
         await expect(page.get_by_label("想留下的话", exact=True)).to_have_value("")
         await page.get_by_role("button", name="取消", exact=True).click()
         results.append("mobile discoverability: persona chat fits the first card screen; an empty object memory wall removes unused controls and offers one contextual record action")
+        await page.get_by_role("button", name="记下一刻", exact=True).click()
+        moment = "今天下班有点晚，看到这块小石头，想起了海边。没有拍照片也想留一句。"
+        await page.get_by_label("想留下的话", exact=True).fill(moment)
+        await expect(page.get_by_label("给这一刻一个名字", exact=True)).to_have_value("")
+        await page.get_by_role("button", name="保存", exact=True).click()
+        await expect(page.locator(".editor-form")).to_be_hidden()
+        assert workspace["experiences"][-1]["title"] == "今天下班有点晚，看到这块小石头，想起了海边"
+        assert workspace["experiences"][-1]["text"] == moment
+        assert workspace["experiences"][-1]["allow_ai"] is False
+        assert workspace["experiences"][-1]["item_ids"] == ["quiet_stone"]
+        results.append("lightweight authoring: one natural sentence saves without inventing a separate title; title uses only its opening, full original and AI opt-in remain unchanged")
+
+        await page.evaluate("""() => {window.__speechFixture=[];window.SpeechRecognition=class {
+          constructor(){window.__speechFixture.push(this);this.stopped=false}
+          start(){} stop(){this.stopped=true}
+          emit(text){this.onresult?.({results:[[{transcript:text}]]})}
+        };}""")
+        await page.evaluate("location.hash='items?scope=personal&item=cup'")
+        await page.get_by_role("button", name="和它聊聊", exact=True).click()
+        await editor.fill("这是小陶的未发送草稿。")
+        await page.get_by_title("语音输入", exact=True).click()
+        await page.evaluate("window.__oldSpeechResult=window.__speechFixture[0].onresult;window.__speechFixture[0].emit('这一句已经识别了。')")
+        await expect(editor).to_have_value("这是小陶的未发送草稿。 这一句已经识别了。")
+        await page.get_by_role("button", name="历史与正在做的事", exact=True).click()
+        await page.get_by_title("另起一个话题", exact=True).click()
+        next_draft = await editor.input_value()
+        assert await page.evaluate("window.__speechFixture[0].stopped") is True
+        await expect(page.get_by_title("停止语音识别", exact=True)).to_have_count(0)
+        await page.evaluate("window.__oldSpeechResult({results:[[{transcript:'这句来自上一段，已经迟到了。'}]]})")
+        await expect(editor).to_have_value(next_draft)
+        await page.evaluate("location.hash='items?scope=personal&item=cup'")
+        await page.get_by_role("button", name="和它聊聊", exact=True).click()
+        await expect(editor).to_have_value("这是小陶的未发送草稿。 这一句已经识别了。")
+        results.append("speech ownership: same-mounted new topic stops old recognition, ignores queued late results, and retains already recognized words in the original draft; transport is a browser fixture")
+        await editor.fill("今天想和你聊聊。")
+        await page.wait_for_function("document.querySelector('.composer textarea').getBoundingClientRect().height < 50")
+        short_height = (await editor.bounding_box())["height"]
+        paragraph = "今天下班比平时晚，回家的路上买了一小束花。放在你旁边以后，桌子看起来没那么空了。其实也没有什么大事，只是想把这一会儿的心情讲给你听。"
+        await editor.fill(paragraph)
+        await page.wait_for_function("document.querySelector('.composer textarea').getBoundingClientRect().height > 60")
+        assert (await editor.bounding_box())["height"] > short_height + 15
+        chats_before_keys = api_calls.count("POST /chat")
+        await editor.evaluate("node=>node.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',bubbles:true,isComposing:true}))")
+        await expect(editor).to_have_value(paragraph)
+        await editor.press("End")
+        await editor.press("Shift+Enter")
+        await expect(editor).to_have_value(paragraph + "\n")
+        assert api_calls.count("POST /chat") == chats_before_keys
+        await editor.fill((paragraph + "\n") * 15)
+        await page.wait_for_function("document.querySelector('.composer textarea').scrollHeight > document.querySelector('.composer textarea').clientHeight")
+        geometry = await editor.evaluate("node=>({height:node.getBoundingClientRect().height,line:parseFloat(getComputedStyle(node).lineHeight),scroll:node.scrollHeight,client:node.clientHeight})")
+        assert geometry["height"] <= geometry["line"] * 5 + 18, geometry
+        assert geometry["scroll"] > geometry["client"], geometry
+        assert not await page.evaluate("document.documentElement.scrollWidth > innerWidth")
+        await editor.fill("今天就先聊到这里。")
+        async with page.expect_response("**/api/chat"):
+            await editor.press("Enter")
+        assert api_calls.count("POST /chat") == chats_before_keys + 1
+        results.append("composer sizing: a natural paragraph expands up to five lines then scrolls; composing Enter and Shift+Enter preserve input; plain Enter sends once through the API fixture")
         workspace["conversations"].insert(0, {"id":"video_progress_thread","title":"看看视频步骤（UI样本）","item_ids":["cup"],"updated_at":"2026-11-06T12:00:00Z","entry_context":{"intent":"general"}})
         chat_messages["video_progress_thread"] = [{"id":"video_user","role":"user","text":"能看看这个视频里具体怎么做吗？（UI样本）","photo_ids":[],"run_id":"video_progress"}]
         await page.reload()

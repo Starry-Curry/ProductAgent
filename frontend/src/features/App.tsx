@@ -678,6 +678,7 @@ function WorkspaceApp({
                     : run
                 }
                 draft={draft}
+                draftIdentity={draftKey}
                 setDraft={setDraft}
                 onSend={send}
                 onPhoto={addPhoto}

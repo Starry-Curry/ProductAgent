@@ -854,7 +854,6 @@ small {
   outline: none;
   resize: none;
   min-height: 30px;
-  max-height: 130px;
   line-height: 1.65;
   padding: 8px 0;
   font-size: 15px;

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Camera, Check, Mic, Send, Square, X } from "lucide-react";
+import { Input } from "antd";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { type ChatMessage, type Run } from "../api";
@@ -39,6 +40,7 @@ export default function Conversation({
   messages,
   run,
   draft,
+  draftIdentity,
   setDraft,
   onSend,
   onPhoto,
@@ -55,6 +57,7 @@ export default function Conversation({
   messages: ChatMessage[];
   run: Run | null;
   draft: Draft;
+  draftIdentity: string;
   setDraft: (draft: Draft | ((previous: Draft) => Draft)) => void;
   onSend: () => Promise<void>;
   onPhoto: (photo?: File) => Promise<void>;
@@ -76,10 +79,19 @@ export default function Conversation({
   const busy = run?.status === "queued" || run?.status === "running";
   useEffect(() => {
     onCameraRef(() => file.current?.click());
-    return () => {
-      recognition.current?.stop();
-    };
   }, []);
+  useEffect(() => {
+    setListening(false);
+    setVoiceError("");
+    return () => {
+      const previous = recognition.current;
+      recognition.current = null;
+      if (previous) {
+        previous.onresult = previous.onerror = previous.onend = null;
+        previous.stop();
+      }
+    };
+  }, [draftIdentity, blocked]);
   useEffect(() => {
     if (messages.length)
       bottom.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
@@ -105,6 +117,7 @@ export default function Conversation({
     current.lang = "zh-CN";
     current.interimResults = false;
     current.onresult = (event) => {
+      if (recognition.current !== current) return;
       const transcript = event.results[0]?.[0]?.transcript || "";
       setDraft((previous) => ({
         ...previous,
@@ -112,10 +125,13 @@ export default function Conversation({
       }));
     };
     current.onerror = () => {
+      if (recognition.current !== current) return;
       setListening(false);
       setVoiceError("这次没有听清，可以再试或输入文字。");
     };
-    current.onend = () => setListening(false);
+    current.onend = () => {
+      if (recognition.current === current) setListening(false);
+    };
     try {
       current.start();
       setListening(true);
@@ -225,7 +241,7 @@ export default function Conversation({
           >
             <Camera size={23} />
           </button>
-          <textarea
+          <Input.TextArea
             aria-label="对物伴说"
             value={draft.text}
             onChange={(event) =>
@@ -233,6 +249,8 @@ export default function Conversation({
             }
             placeholder={`说说你想做的事，和${companionName}接着聊…`}
             rows={1}
+            variant="borderless"
+            autoSize={{ minRows: 1, maxRows: 5 }}
             onKeyDown={(event) => {
               if (
                 event.key === "Enter" &&

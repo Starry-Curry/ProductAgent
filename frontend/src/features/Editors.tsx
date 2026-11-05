@@ -310,7 +310,7 @@ export default function Editors({
           experience ? `/experiences/${experience.id}` : "/experiences",
           experience ? "PUT" : "POST",
           {
-            title: name,
+            title: experience ? name : name.trim() || text.trim().split(/[\n。！？!?]/)[0].slice(0, 60) || "生活中的一刻",
             text,
             occurred_on: date || null,
             item_ids: selected,
@@ -743,10 +743,11 @@ export default function Editors({
             <label>
               给这一刻一个名字
               <input
-                required
+                required={Boolean(experience)}
                 value={name}
                 readOnly={Boolean(experience?.origin_id)}
                 onChange={(event) => setName(event.target.value)}
+                placeholder={experience ? undefined : "可留空，保存时用正文开头作标题"}
               />
             </label>
             <label>
