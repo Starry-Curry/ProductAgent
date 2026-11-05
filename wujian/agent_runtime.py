@@ -373,21 +373,25 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
         return video_frame_chunk(value)
 
     async def view_source_page(source_id: str, page: int):
-        """Inspect an original PDF page as an image with Qwen vision, preserving page number and source. Useful for diagrams/directions."""
+        """Look directly at ONE original PDF page with the main model. Returns the actual rendered image, page number and source; no second model paraphrases the page. Use for diagrams/directions, not evidence about a live physical object."""
         with sessions() as db:
             source = readable_source(db,user_id,source_id)
             asset = domain.require(db.get(Asset, source.asset_id))
-            image = await asyncio.to_thread(render_source_page, settings, source, asset, page)
-            source_url = source.url
-        from openai import AsyncOpenAI
-        async with AsyncOpenAI(api_key=settings.api_key, base_url=settings.base_url, max_retries=1, timeout=60) as client:
-            result = await client.chat.completions.create(model=settings.vision_model, max_tokens=2000,
-                messages=[{"role": "user", "content": [
-                    {"type": "text", "text": "仔细阅读此说明书原始页，保留操作步骤、图示方向、观察视角、前置条件与警告。无法辨认的地方说明未知，不补造。"},
-                    {"type": "image_url", "image_url": {"url": "data:image/png;base64," + image}},
-                ]}])
-        return {"source_id": source_id, "url": source_url, "page": page,
-                "visual_reading": result.choices[0].message.content, "evidence_kind": "model_interpretation_of_original_page"}
+            asset_id = asset.id
+        image = await asyncio.to_thread(render_source_page, settings, source, asset, page)
+        with sessions() as db:
+            current = readable_source(db,user_id,source_id)
+            if current.asset_id != asset_id:
+                raise domain.DomainError("资料原件已更新，请重新读取后再查看页图",409)
+            observation = {"source_id":source_id, "url":current.url, "page":page,
+                "asset_id":asset_id, "evidence_kind":"original_pdf_page_image",
+                "content_level":"single_pdf_page_not_full_document"}
+        if evidence_sources is not None:
+            evidence_sources.add(source_id)
+        return ToolChunk(state="success",content=[
+            TextBlock(text=json.dumps(observation,ensure_ascii=False,separators=(",",":"))),
+            DataBlock(source=Base64Source(data=image,media_type="image/png"))],
+            metadata={"evidence":observation})
 
     async def list_sources(item_id: str | None = None):
         """List this user's retained document identities; documents are reusable across tasks without copying their full text."""
@@ -542,7 +546,7 @@ class AgentRunner:
                           model=self.model_factory(self.settings), toolkit=toolkit, state=state,
                           react_config=ReActConfig(max_iters=10), context_config=ContextConfig(trigger_ratio=0.75, tool_result_limit=18000),
                           injection_config=InjectionConfig(timezone="Asia/Shanghai"))
-            text_output, events, usage, last_flush = "", [], {"scope": "agent_model_only_excludes_search_vision_embeddings"}, 0.0
+            text_output, events, usage, last_flush = "", [], {"scope": "agent_model_only_excludes_search_embeddings"}, 0.0
             finish_reason = None
             model_started, tool_started = None, {}
             tool_results, tool_arguments, tool_names = {}, {}, {}

@@ -16,6 +16,8 @@ class Settings:
     api_key: str = field(default="", repr=False)
     base_url: str = "https://dashscope.aliyuncs.com/compatible-mode/v1"
     model: str = "qwen3.6-plus"
+    # Kept for the parallel teaching/3D integration; ordinary PDF observation
+    # now uses the main model's native image input without a second RPC.
     vision_model: str = "qwen3-vl-plus"
     thinking_enabled: bool = True
     thinking_budget: int | None = None

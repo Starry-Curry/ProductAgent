@@ -2,6 +2,9 @@
 import asyncio
 import base64
 import io
+import math
+import threading
+from contextlib import ExitStack
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
 
@@ -15,6 +18,10 @@ from .domain import DomainError, accessible_item
 from .source_content import parse_public_text, public_image_candidates
 from .public_network import resolve_public_url
 from .source_access import readable_source
+
+# PDFium forbids concurrent calls even for different documents. Keep its
+# native lifetime under one lock; other I/O and model work remain concurrent.
+_PDF_RENDER_LOCK = threading.Lock()
 
 
 async def search_web(settings, query: str):
@@ -246,18 +253,24 @@ def render_source_page(settings, source, asset, page):
     import pypdfium2 as pdfium
     if asset.media_type != "application/pdf":
         raise DomainError("此来源不是PDF")
-    document = pdfium.PdfDocument(asset.path)
-    try:
+    with _PDF_RENDER_LOCK, ExitStack() as cleanup:
+        document = pdfium.PdfDocument(asset.path)
+        cleanup.callback(document.close)
         if page < 1 or page > len(document):
             raise DomainError("页码超出范围")
         pdf_page = document[page - 1]
-        bitmap = pdf_page.render(scale=1.4)
+        cleanup.callback(pdf_page.close)
+        width,height = pdf_page.get_size()
+        if not all(math.isfinite(value) and value > 0 for value in (width,height)):
+            raise DomainError("此PDF页尺寸无效")
+        scale = min(1.4, 2000 / max(width,height))
+        bitmap = pdf_page.render(scale=scale)
+        cleanup.callback(bitmap.close)
         image = bitmap.to_pil()
+        cleanup.callback(image.close)
         output = io.BytesIO()
         image.save(output, format="PNG")
-        image.close()
-        bitmap.close()
-        pdf_page.close()
-        return base64.b64encode(output.getvalue()).decode()
-    finally:
-        document.close()
+        data = output.getvalue()
+        if len(data) > 8 * 1024 * 1024:
+            raise DomainError("此页图像超过8MB，请使用文字片段或其它清楚的图示")
+        return base64.b64encode(data).decode()
