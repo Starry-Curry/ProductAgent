@@ -1,0 +1,24 @@
+{
+  "documents": [
+    {
+      "file": "docs/review/2026-11-05/PRODUCT_FUNCTIONS_INTERACTIONS.md",
+      "utf8Bytes": 26272,
+      "lines": 293,
+      "diagrams": 2
+    },
+    {
+      "file": "docs/review/2026-11-05/CODE_ARCHITECTURE_AUDIT.md",
+      "utf8Bytes": 53092,
+      "lines": 544,
+      "diagrams": 4
+    }
+  ],
+  "localLinks": "passed_by_team_check",
+  "fixedSourceAnchors": 15,
+  "markdownFenceBalance": true,
+  "mermaidDiagrams": 6,
+  "mermaidRendering": "not_run; structure manually reviewed",
+  "businessSourceChanges": 0,
+  "scopeCheck": "passed",
+  "paidRequests": 0
+}

@@ -2,18 +2,19 @@
 
 释放人与物的价值：理解你实际拥有的物品、人与物的经历及现实条件，帮助兑现、创造、延续和传递价值。
 
-当前优先级：共享底座与团队并行开发。**审计前暂停历史集成，PR #4保持Draft**；历史材料不等于正式功能。各组可按公共接口独立开分支和提交Draft PR，暂不合并候选/develop/main。具体分工看下方说明。
+当前优先级：共享底座与共同开发前审阅。PR #4已于2026-11-05在远端合并，develop为`3285e8d`，代码树与本次审计的团队候选`32c6119`相同。历史材料不等于正式能力，Core/Full质量仍未通过；各组按公共接口独立开发和审查，不直接更新main。具体分工看下方说明。
 
 - [当前工程状态与恢复点](docs/engineering/CURRENT.md)：哪些实际可用、哪些未通过验收。
 - [产品共识定稿](docs/product/PRODUCT_FINAL_V1.md)：产品理念与完整范围。
 - [团队接入指南](docs/engineering/TEAM_INTEGRATION.md)：分支起点、公共服务、离线Mock、专业工具与兼容边界。
 - [分工开发说明](docs/engineering/TEAM_WORK_PLAN.md)：审计前暂停历史集成，角色分工、开工步骤和底座验收边界。
+- 共同开发前审阅：[完整功能与交互](docs/review/2026-11-05/PRODUCT_FUNCTIONS_INTERACTIONS.md) · [结合源码的技术架构审计](docs/review/2026-11-05/CODE_ARCHITECTURE_AUDIT.md)，区分设计、落地、真实验证和未达标项。
 - [贡献指南](CONTRIBUTING.md) · [工程规则](AGENTS.md) · [文档索引](docs/README.md)。
 - [GitHub 协作操作](docs/GIT_WORKFLOW.md) · [后续研发规划](docs/engineering/NEXT_STEPS.md)。
 
 ## 本地运行
 
-使用 **Node.js 24** 与现有 package-lock.json，无需独立数据库服务。首次开发先按 [团队接入指南](docs/engineering/TEAM_INTEGRATION.md#从哪里开始) 选择起点；main 已更新到决赛成果，旧团队候选不再是最新底座。develop 同步 PR 合并前，从 `origin/codex/wujian-team-ready-v2` 创建自己的分支；合并后从 `origin/develop` 开始。
+使用 **Node.js 24** 与现有 package-lock.json，无需独立数据库服务。先fetch最新远端，再从`origin/develop`创建自己的功能分支。接入方式见 [团队接入指南](docs/engineering/TEAM_INTEGRATION.md#从哪里开始)；其中“PR #4合并前”的临时分支说明已是历史。
 
 ```bash
 npm ci
