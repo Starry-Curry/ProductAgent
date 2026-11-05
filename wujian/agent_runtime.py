@@ -192,21 +192,39 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
 
     async def update_item_identity(item_id: str, name: str, product: ProductSpec,
                                    basis: str, source_id: str | None = None):
-        """Update an OWNED object's identity while recognizing it or applying a user correction. basis: user_report, visual_inference, or document_match. Document matches require an observed source_id; uncertain photographic candidates must stay provisional, never invent an exact model."""
+        """Update an OWNED object's identity. A new/changed exact model with user_report must appear in the CURRENT user's actual words; an unchanged known model need not be repeated to rename the item. document_match requires the model in the retained source text, not just a related URL. A possible photographic candidate stays visual_inference/provisional; never label your own guess as a user report."""
         if basis not in {"user_report", "visual_inference", "document_match"}:
             raise domain.DomainError("未知的身份依据")
         product = ProductSpec.model_validate(product)
         with sessions() as db:
             item = domain.accessible_item(db, user_id, item_id, write=True)
             view = domain.item_view(db, user_id, item)
+            from .learning import normalized_model
+            model = normalized_model(product.model)
+            previous_model = normalized_model(item.product.get("model", ""))
+            identity_evidence = {"basis":basis, "source_id":source_id,
+                "message_id":message_id, "provisional":basis == "visual_inference"}
+            if basis == "user_report":
+                message = domain.require(db.get(ChatMessage, message_id))
+                conversation = domain.require(db.get(Conversation, message.conversation_id))
+                if message.role != "user" or conversation.user_id != user_id:
+                    raise domain.DomainError("身份报告必须来自当前用户的实际消息")
+                reported = bool(model and model in normalized_model(message.text))
+                if model and model != previous_model and not reported:
+                    raise domain.DomainError("当前用户没有报告这个新型号，不能作为user_report确立；先保留未知或明确的visual_inference候选。")
+                # Renaming is not fresh evidence for a previously guessed SKU.
+                # Preserve its original evidence (and uncertainty) unless the
+                # user actually supplies the same model in this message.
+                if model == previous_model and not reported and view["state"].get("identity_evidence"):
+                    identity_evidence = view["state"]["identity_evidence"]
             if basis == "document_match":
                 source = domain.require(db.get(SourceRecord, source_id or ""))
                 if source.owner_id != user_id or source.item_id not in {None, item_id}:
                     raise domain.DomainError("请使用与当前物品相关的获准资料")
+                if not model or model not in normalized_model(source.title + " " + source.content):
+                    raise domain.DomainError("原资料没有这个具体型号，不能作为document_match确立；通用资料仍可用于了解，候选身份须保留推测性质。")
                 product.source_urls = list(dict.fromkeys([*product.source_urls, source.url]))
-            state = {**view["state"], "identity_evidence": {
-                "basis": basis, "source_id": source_id, "message_id": message_id,
-                "provisional": basis == "visual_inference"}}
+            state = {**view["state"], "identity_evidence":identity_evidence}
             return domain.change_item(db, user_id, item_id, ItemChange(
                 name=name, kind=item.kind, product=product, state=state,
                 description=view["description"], avatar=AvatarSpec(**{
