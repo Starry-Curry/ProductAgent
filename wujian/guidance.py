@@ -2,6 +2,8 @@
 import hashlib
 import json
 import re
+import unicodedata
+from decimal import Decimal, InvalidOperation
 
 from . import domain
 from .api_models import TaskEntry
@@ -18,12 +20,58 @@ def step_signature(entry):
         'note':entry.get('note',''),'guidance':details},sort_keys=True,ensure_ascii=False).encode()).hexdigest()
 
 
+_NUMBER_CHARS = '0-9.零〇一二两三四五六七八九十百千点'
+_PARAMETER = re.compile(
+    rf'(?<![{_NUMBER_CHARS}])([{_NUMBER_CHARS}]+)\s*'
+    r'(秒钟|分钟|小时|秒|摄氏度|°c|伏特|瓦特|伏|瓦)')
+_DIGITS = dict(zip('零〇一二两三四五六七八九', [0,0,1,2,2,3,4,5,6,7,8,9]))
+
+
+def _quantity(number):
+    """Normalize common written Chinese numbers, without substring matching."""
+    try:
+        return Decimal(number)
+    except InvalidOperation:
+        pass
+    integer, separator, fraction = number.partition('点')
+    if any(char not in _DIGITS for char in fraction):
+        return None
+    if not any(char in '十百千' for char in integer):
+        if any(char not in _DIGITS for char in integer):
+            return None
+        digits = ''.join(str(_DIGITS[char]) for char in integer) or '0'
+        return Decimal(digits + ('.' + ''.join(str(_DIGITS[char]) for char in fraction) if separator and fraction else ''))
+    total, current = 0, 0
+    for char in integer:
+        if char in _DIGITS:
+            current = _DIGITS[char]
+        elif char in '十百千':
+            total += (current or 1) * {'十':10,'百':100,'千':1000}[char]
+            current = 0
+        else:
+            return None
+    decimal = Decimal('0.' + ''.join(str(_DIGITS[char]) for char in fraction)) if fraction else Decimal(0)
+    return Decimal(total + current) + decimal
+
+
+def _parameters(text):
+    canonical = {'秒钟':('time',1),'秒':('time',1),'分钟':('time',60),'小时':('time',3600),
+        '摄氏度':('celsius',1),'°c':('celsius',1),'伏特':('voltage',1),'伏':('voltage',1),
+        '瓦特':('power',1),'瓦':('power',1)}
+    for match in _PARAMETER.finditer(unicodedata.normalize('NFKC',text).casefold()):
+        number = _quantity(match[1])
+        if number is not None:
+            dimension, multiplier = canonical[match[2]]
+            yield (dimension,number*multiplier),match[0]
+
+
 def validate_parameters(text,entries):
     evidence_text=' '.join(evidence['quote'] for entry in entries
         for evidence in (entry.get('guidance') or {}).get('evidence',[]))
-    for value,unit in re.findall(r'(\d+(?:\.\d+)?)\s*(秒|分钟|小时|℃|°C|伏|瓦)',text):
-        if not re.search(re.escape(value)+r'\s*'+re.escape(unit),evidence_text):
-            raise domain.DomainError(f'操作参数 {value}{unit} 没有在本轮适用引文中出现，请按实际原文修正，不沿用其他型号的数字，也不要编造强制关机/重置分支')
+    supported = {quantity for quantity,_ in _parameters(evidence_text)}
+    for quantity,label in _parameters(text):
+        if quantity not in supported:
+            raise domain.DomainError(f'操作参数 {label} 没有在本轮适用引文中出现，请按实际原文修正，不沿用其他型号的数字，也不要编造强制关机/重置分支')
 
 
 def render_current_step(plan,status):

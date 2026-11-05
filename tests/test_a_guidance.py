@@ -69,6 +69,18 @@ class TeachingTests(unittest.TestCase):
             self.assertIn('长按电源按钮约2秒',text)
             self.assertNotIn('7秒',text)
 
+    def test_parameters_compare_whole_quantities_and_written_numbers(self):
+        def evidence(quote):
+            return [{'guidance':{'evidence':[{'quote':quote}]}}]
+        for instruction,quote in [('按住5秒','按住15秒'),('按住七秒','按住2秒'),
+            ('按住十二秒','按住2秒'),('等待0.5分钟','等待5秒'),('使用5伏','使用5瓦')]:
+            with self.subTest(instruction=instruction,quote=quote):
+                with self.assertRaises(domain.DomainError):
+                    guidance.validate_parameters(instruction,evidence(quote))
+        for instruction,quote in [('按住两秒','按住2.0秒钟'),('等待1分钟','等待60秒'),
+            ('等三十秒','等0.5分钟'),('水温３７℃','水温37摄氏度'),('等待两点五秒','等待2.5秒')]:
+            guidance.validate_parameters(instruction,evidence(quote))
+
     def test_feedback_atomic_idempotent_and_resume(self):
         with self.sessions() as db:
             task = self.save(db)
@@ -135,6 +147,20 @@ class TeachingTests(unittest.TestCase):
             domain.remove_memory(db,self.owner,memory['id'])
             db.refresh(run)
             self.assertEqual(run.status,'interrupted')
+
+    def test_retried_forget_does_not_interrupt_new_unrelated_run(self):
+        with self.sessions() as db:
+            memory = foundation.revise_memory(db,self.owner,'report','已经遗忘的偏好')
+            domain.remove_memory(db,self.owner,memory['id'])
+            retired_at = db.get(Memory,memory['id']).attributes['retired_at']
+            conversation = Conversation(user_id=self.owner)
+            db.add(conversation); db.flush()
+            run = Run(user_id=self.owner,conversation_id=conversation.id,status='running')
+            db.add(run); db.commit()
+            domain.remove_memory(db,self.owner,memory['id'])
+            db.refresh(run)
+            self.assertEqual(run.status,'running')
+            self.assertEqual(db.get(Memory,memory['id']).attributes['retired_at'],retired_at)
 
     def test_forget_excludes_echoed_answers_but_keeps_unrelated_history(self):
         with self.sessions() as db:
