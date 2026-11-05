@@ -104,7 +104,7 @@ def _structured_metadata(soup, url):
     seen = set()
     video_meta_descriptions = []
     host = (urlsplit(url).hostname or "").lower()
-    is_bilibili = host == "bilibili.com" or host.endswith(".bilibili.com")
+    is_bilibili = (host == "bilibili.com" or host.endswith(".bilibili.com")) and urlsplit(url).path.startswith("/video/")
 
     def add(label, value):
         value = _text(value)
@@ -293,7 +293,16 @@ def parse_public_text(data, content_type, url):
     metadata, links = _structured_metadata(soup, url)
     articles, article_links = _support_json_articles(soup, url)
     links.extend(article_links)
-    for anchor in soup.select("a[href]"):
+    parsed = urlsplit(url)
+    host = (parsed.hostname or "").lower()
+    is_video = (host == "bilibili.com" or host.endswith(".bilibili.com")) and parsed.path.startswith("/video/")
+    # A real video response had 472 chars of relevant text but 5,281 chars of
+    # navigation/recommended links. Those are not the uploader's references.
+    # Keep canonical parts above and explicit description links, not the feed.
+    anchors = soup.select(".basic-desc-info a[href],.desc-info-text a[href],.video-desc a[href]") if is_video else soup.select("a[href]")
+    for anchor in anchors:
+        if anchor.find_parent(["nav", "aside", "header", "footer"]):
+            continue
         target = urljoin(url, anchor.get("href", ""))
         if urlsplit(target).scheme in {"http", "https"}:
             links.append({"title": anchor.get_text(" ", strip=True)[:120], "url": target})
@@ -301,9 +310,7 @@ def parse_public_text(data, content_type, url):
         node.decompose()
     _preserve_preformatted(soup)
     body = ("[公开页面内嵌正文 JSON：问题与回答；未执行脚本]\n" + "\n\n".join(articles)) if articles else "\n".join(line.strip() for line in soup.get_text("\n").splitlines() if line.strip())
-    parsed = urlsplit(url)
-    host = (parsed.hostname or "").lower()
-    if (host == "bilibili.com" or host.endswith(".bilibili.com")) and metadata:
+    if is_video and metadata:
         # Keep the canonical description/parts, not recommendations and account
         # controls from the surrounding DOM. The original response is retained.
         body = "[本次读取标题、公开简介与分P信息；完整原始网页已保存，不包含视频画面观察。]"

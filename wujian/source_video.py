@@ -17,7 +17,7 @@ import tempfile
 import threading
 import time
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, urlsplit
 
 from PIL import Image
 
@@ -67,8 +67,16 @@ def canonical_video_url(url):
             or parsed.username or parsed.password or port not in {None, 443}):
         raise DomainError("仅支持已获准的B站BV视频来源", 422)
     match = re.fullmatch(r"/video/(BV[0-9A-Za-z]{10})/?", parsed.path)
-    if not match or parsed.query or parsed.fragment:
-        raise DomainError("仅支持单条规范BV视频来源，不支持列表或播放参数", 422)
+    # Ordinary copied links include attribution/tracking. It is safe to drop
+    # those without changing the resource. A different part is not equivalent:
+    # never silently turn a P2 tutorial into P1 observations.
+    tracking = {"spm_id_from", "vd_source", "share_source", "share_medium", "share_plat",
+                "share_session_id", "share_tag", "unique_k"}
+    parameters = parse_qsl(parsed.query, keep_blank_values=True)
+    if (not match or parsed.fragment or any(
+            key not in tracking and not (key == "p" and value == "1")
+            for key, value in parameters)):
+        raise DomainError("仅支持单条BV视频的首P；不支持列表、其它分P或未知播放参数", 422)
     return f"https://www.bilibili.com/video/{match[1]}/", match[1]
 
 

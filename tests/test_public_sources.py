@@ -62,6 +62,27 @@ class PublicSourceTests(unittest.TestCase):
         self.assertNotIn("拆电源",content)
         self.assertNotIn("会员广告",content)
 
+    def test_video_links_keep_uploader_references_and_parts_without_navigation_or_recommendations(self):
+        state={"videoData":{"title":"长尾夹做支架","desc":"原作者简介","pages":[{"page":1,"part":"两夹拼接"}]}}
+        html=('<script>window.__INITIAL_STATE__='+json.dumps(state)+'</script>'
+              '<nav><a href="/">首页</a></nav><a href="/video/BVunrelated/">推荐别的视频</a>'
+              '<div class="basic-desc-info"><a href="https://example.com/original-guide">作者图文说明</a></div>')
+        content,_,links,_,_=parse_document(html.encode(),"text/html","https://www.bilibili.com/video/BVexample/")
+        self.assertEqual([row["title"] for row in links],["P1: 两夹拼接","作者图文说明"])
+        self.assertIn("原作者简介",content)
+
+    def test_bilibili_article_is_not_reduced_to_a_video_description(self):
+        html='<title>手工图文教程</title><meta name="description" content="作者的手工教程"><article>第一步将纸向内折。<a href="/read/cv123">另一篇教程</a></article>'
+        content,_,links,_,_=parse_document(html.encode(),"text/html","https://www.bilibili.com/read/cv456")
+        self.assertIn("第一步将纸向内折",content)
+        self.assertNotIn("没有观看视频",content)
+        self.assertEqual(links[0]["url"],"https://www.bilibili.com/read/cv123")
+
+    def test_article_navigation_does_not_displace_actual_body_links(self):
+        html='<header><a href="/ad">活动促销</a></header><article>教程<a href="guide.md">原始步骤</a></article>'
+        _,_,links,_,_=parse_document(html.encode(),"text/html","https://example.com/post")
+        self.assertEqual(links,[{"title":"原始步骤","url":"https://example.com/guide.md"}])
+
     def test_jsonld_description_read_but_javascript_not_evaluated(self):
         html = b'''<script type="application/ld+json">{"@type":"VideoObject","description":"public description"}</script>
                    <script>window.__INITIAL_STATE__={"note":undefined};</script>'''

@@ -228,6 +228,14 @@ class SourceVideoTests(unittest.IsolatedAsyncioTestCase):
 
 
 class FormatAndDecoderTests(unittest.TestCase):
+    def test_copied_tracking_link_and_explicit_first_part_keep_the_same_video_identity(self):
+        for suffix in ["?spm_id_from=333.337.search-card.all.click&vd_source=synthetic",
+                       "?p=1&share_source=copy_web&share_medium=android"]:
+            self.assertEqual(canonical_video_url(URL+suffix),(URL,BVID))
+        for suffix in ["?p=1&p=2", "?token=not-a-public-link", "?playlist=next"]:
+            with self.assertRaises(domain.DomainError):
+                canonical_video_url(URL+suffix)
+
     def test_rejects_playlist_parameters_wrong_identity_drm_and_manifest_formats(self):
         for url in [URL + "?p=2", URL + "#x", "http://www.bilibili.com/video/" + BVID,
                     "https://user:password@www.bilibili.com/video/" + BVID,

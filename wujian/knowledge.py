@@ -235,7 +235,7 @@ def source_content_level(source):
     if source.content.startswith("[公开字幕文本"):
         return "subtitle_text_not_video_observation"
     host = (urlsplit(source.url).hostname or "").lower()
-    if host == "bilibili.com" or host.endswith(".bilibili.com"):
+    if (host == "bilibili.com" or host.endswith(".bilibili.com")) and urlsplit(source.url).path.startswith("/video/"):
         return "public_video_page_or_metadata_not_video_observation"
     if host == "xiaohongshu.com" or host.endswith(".xiaohongshu.com"):
         return "public_note_text_or_metadata_not_image_observation"
