@@ -451,6 +451,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/creative-explorations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Creative Exploration */
+        post: operations["creative_exploration_api_creative_explorations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/runs/{run_id}": {
         parameters: {
             query?: never;
@@ -1211,6 +1228,20 @@ export interface components {
             entry_context?: {
                 [key: string]: unknown;
             };
+        };
+        /** CreativeRequest */
+        CreativeRequest: {
+            /** Item Ids */
+            item_ids?: string[];
+            /** Photo Ids */
+            photo_ids?: string[];
+            /** Goal */
+            goal: string;
+            /**
+             * Constraints
+             * @default
+             */
+            constraints: string;
         };
         /** DeviceBind */
         DeviceBind: {
@@ -2981,6 +3012,39 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ChatRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    creative_exploration_api_creative_explorations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreativeRequest"];
             };
         };
         responses: {

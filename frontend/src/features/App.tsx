@@ -12,6 +12,7 @@ import {
   Package,
   Plus,
   Settings,
+  Sparkles,
   TreePine,
   Users,
   X,
@@ -36,6 +37,7 @@ import Items from "./Items";
 import Memories from "./Memories";
 import Friends from "./Friends";
 import Care from "./Care";
+import CreativeSources from "./CreativeSources";
 import { TaskCanvas, TaskRail } from "./TaskBoard";
 import { Companion, ObjectVisual, presentation } from "./shared";
 import { navigate, useRoute, useWorkspace, type Section } from "./navigation";
@@ -125,7 +127,10 @@ function WorkspaceApp({
     );
     if (currentThread.current === identity) setMessages(next);
   }
-  function watch(initial: Run) {
+  function watch(
+    initial: Run,
+    taskId: string | null | undefined = context.entry.task_id,
+  ) {
     stopWatching();
     setRun(initial);
     if (!["queued", "running"].includes(initial.status)) return;
@@ -140,8 +145,8 @@ function WorkspaceApp({
         void updateMessages(value.conversation_id);
         void refresh()
           .then(() => {
-            if (context.entry.task_id)
-              void request<Board>(`/tasks/${context.entry.task_id}/board`)
+            if (taskId)
+              void request<Board>(`/tasks/${taskId}/board`)
                 .then(setBoard)
                 .catch(() => setBoard(undefined));
           })
@@ -191,8 +196,11 @@ function WorkspaceApp({
       if (currentThread.current !== identity) return;
       setMessages(history);
       const last = history.at(-1);
-      if (last?.role === "user" && last.run_id)
-        watch(await request<Run>(`/runs/${last.run_id}`));
+      if (last?.run_id)
+        watch(
+          await request<Run>(`/runs/${last.run_id}`),
+          nextContext.entry.task_id || null,
+        );
     } catch (error) {
       message.error((error as Error).message);
     }
@@ -254,13 +262,22 @@ function WorkspaceApp({
     setSending(true);
     const original = { ...draft };
     try {
-      const next = await request<Run>("/chat", "POST", {
-        text: original.text,
-        photo_ids: original.photos,
-        conversation_id: threadId || null,
-        item_ids: context.itemIds,
-        entry_context: context.entry,
-      });
+      const next =
+        context.entry.intent === "creative" && !threadId
+          ? await request<Run>("/creative-explorations", "POST", {
+              goal:
+                original.text ||
+                "看看照片中的东西还能怎么玩，先核对识别和实际条件。",
+              item_ids: context.itemIds,
+              photo_ids: original.photos,
+            })
+          : await request<Run>("/chat", "POST", {
+              text: original.text,
+              photo_ids: original.photos,
+              conversation_id: threadId || null,
+              item_ids: context.itemIds,
+              entry_context: context.entry,
+            });
       currentThread.current = next.conversation_id;
       setThreadId(next.conversation_id);
       setDrafts((previous) => ({
@@ -605,8 +622,17 @@ function WorkspaceApp({
                   focusedItem
                     ? context.entry.intent === "persona"
                       ? `和${focusedItem.avatar.nickname || focusedItem.name}的分身聊聊`
-                      : focusedItem.name
-                    : undefined
+                      : `${focusedItem.name}${context.entry.intent === "creative" ? " · 发现新玩法" : ""}`
+                    : context.entry.intent === "creative"
+                      ? "一起发现新玩法"
+                      : undefined
+                }
+                afterMessages={
+                  context.entry.intent === "creative" && (
+                    <div className="creative-sources-inline">
+                      <CreativeSources run={run} />
+                    </div>
+                  )
                 }
                 onCameraRef={() => {}}
               >
@@ -674,6 +700,20 @@ function WorkspaceApp({
                         <ArrowLeft size={17} />
                       </button>
                     )}
+                    <button
+                      className="companion-creative-entry"
+                      onClick={() =>
+                        newTopic(
+                          [],
+                          "creative",
+                          "最近有点无聊，想用身边已有的东西找点新玩法。先帮我找找相关公开分享，再一起探索。\n",
+                        )
+                      }
+                    >
+                      <Sparkles size={22} />
+                      <span>和阿圆找找新玩法</span>
+                      <ArrowLeft size={17} />
+                    </button>
                     <div className="home-continuations">
                       <div className="section-title">
                         <h2>继续手边的事</h2>
@@ -716,6 +756,8 @@ function WorkspaceApp({
             <aside className="context-rail">
               {board && boardActions ? (
                 <TaskRail {...boardActions} />
+              ) : context.entry.intent === "creative" ? (
+                <CreativeSources run={run} />
               ) : (
                 <>
                   <section className="rail-section">
@@ -790,6 +832,7 @@ function WorkspaceApp({
             ask={ask}
             task={(id) => void openTask(id)}
             device={setDevice}
+            creative={(item) => ask(item, "creative")}
           />
         )}
         {route.section === "memories" && (

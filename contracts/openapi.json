@@ -1152,6 +1152,47 @@
         }
       }
     },
+    "/api/creative-explorations": {
+      "post": {
+        "tags": [
+          "Creative exploration"
+        ],
+        "summary": "Creative Exploration",
+        "operationId": "creative_exploration_api_creative_explorations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreativeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/runs/{run_id}": {
       "get": {
         "summary": "Run Status",
@@ -3198,6 +3239,44 @@
           "updated_at"
         ],
         "title": "ConversationView"
+      },
+      "CreativeRequest": {
+        "properties": {
+          "item_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "title": "Item Ids"
+          },
+          "photo_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Photo Ids"
+          },
+          "goal": {
+            "type": "string",
+            "maxLength": 8000,
+            "minLength": 1,
+            "title": "Goal"
+          },
+          "constraints": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Constraints",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "goal"
+        ],
+        "title": "CreativeRequest"
       },
       "DeviceBind": {
         "properties": {

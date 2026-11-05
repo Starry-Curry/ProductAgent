@@ -235,6 +235,8 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
         async def invoke(*args, **kwargs):
             try:
                 value = await function(*args, **kwargs)
+                from .creative import record_research
+                record_research(sessions, user_id, message_id, function.__name__, value)
                 return ToolResponse(content=[TextBlock(text=json.dumps(value, ensure_ascii=False, separators=(",", ":")))])
             except Exception as error:
                 message = error.message if isinstance(error, domain.DomainError) else f"工具未完成（{type(error).__name__}），请调整方案或说明当前限制。"
@@ -311,6 +313,8 @@ class AgentRunner:
                            select(TaskRecord).where(TaskRecord.user_id==user.id).order_by(TaskRecord.updated_at.desc()).limit(4))],
                        "current_question":current.text,"context_revision": revision}
             context["entry_context"] = conversation.entry_context
+            if conversation.entry_context.get("intent") == "creative":
+                context["creative_research"] = "这是与全局物伴聊天中的新玩法探索：先检索公开分享/实践并读取可访问原文，再基于真实物品提出少量不同方向。明确来源、条件差异、最低试法与未知。不能用搜索摘要冒充已读案例。方案用 interaction/1、kind=idea，不创建重复物品或另一套任务。资料不足时说明或补问，continuation为null。"
             from .interactions import preferences
             context["companion_preferences"] = preferences(user)
             if conversation.entry_context.get("task_id"):
@@ -377,6 +381,9 @@ class AgentRunner:
                     live_run = db.get(Run, run_id)
                     if live_run.status != "running":
                         return
+                    if db.get(Conversation, conversation_id).entry_context.get("intent") == "creative":
+                        from .creative import require_research
+                        require_research(db, live_run, result)
                     committed=commit_result(db,user_id,current.id,result,current.text)
                     continued=committed["task"]
                     text_output=committed["answer"]
@@ -421,7 +428,9 @@ class AgentRunner:
             run = db.get(Run, run_id)
             if run.status != "running":
                 raise asyncio.CancelledError()
-            run.text, run.events, run.usage, run.updated_at = text, list(events), dict(usage), now()
+            from .creative import RESEARCH_EVENTS
+            research = [event for event in run.events if event.get("type") in RESEARCH_EVENTS]
+            run.text, run.events, run.usage, run.updated_at = text, [*events, *research], dict(usage), now()
             db.commit()
 
     def fail(self, run_id, status, message):

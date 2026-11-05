@@ -17,6 +17,7 @@ from .agent_runtime import AgentRunner
 from .api_models import (
     ChatMessageView,
     ChatRequest,
+    CreativeRequest,
     ConversationView,
     DeviceBind,
     DeviceProposal,
@@ -316,6 +317,18 @@ def create_app(settings=None, model_factory=None):
             raise domain.DomainError("这段对话已有进行中的任务，请等待或停止后继续", 409)
         runner.start(run.id)
         return RunView.model_validate(run, from_attributes=True)
+
+    @app.post("/api/creative-explorations", response_model=RunView, tags=["Creative exploration"])
+    async def creative_exploration(payload: CreativeRequest, user=Depends(current_user), db=Depends(db_session)):
+        from .creative import exploration_text
+        from .api_models import EntryContext
+        if not payload.goal.strip():
+            raise domain.DomainError("先说说你想获得什么体验")
+        view = await chat(ChatRequest(text=exploration_text(payload), item_ids=payload.item_ids,
+            photo_ids=payload.photo_ids, entry_context=EntryContext(intent="creative")), user, db)
+        db.get(Conversation, view.conversation_id).title = payload.goal.strip()[:35]
+        db.commit()
+        return view
 
     def owned_run(db, user_id, run_id):
         row = domain.require(db.get(Run, run_id))

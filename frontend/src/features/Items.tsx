@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { App as AntApp } from "antd";
 import {
   ArrowLeft,
@@ -41,6 +41,7 @@ type Props = {
   ask: (item: Item, intent?: string) => void;
   task: (id: string) => void;
   device: (item: Item) => void;
+  creative: (item: Item) => void;
 };
 export default function Items({
   workspace,
@@ -51,10 +52,17 @@ export default function Items({
   ask,
   task,
   device,
+  creative,
 }: Props) {
   const [query, setQuery] = useState(""),
     [filter, setFilter] = useState("all"),
     [room, setRoom] = useState("");
+  const browser = useRef<HTMLElement>(null),
+    scrollPosition = useRef(0);
+  useEffect(() => {
+    if (!route.itemId && browser.current)
+      browser.current.scrollTop = scrollPosition.current;
+  }, [route.itemId]);
   const houses = workspace.households.filter(
     (house) => house.membership === "active",
   );
@@ -95,11 +103,39 @@ export default function Items({
     (item) => presentation(item).attention === "needs_restock",
   ).length;
   function select(item: Item) {
+    scrollPosition.current = browser.current?.scrollTop || 0;
     navigate({ section: "items", scope, itemId: item.id });
   }
+  if (item)
+    return (
+      <main className="item-profile-page">
+        <div className="item-profile-navigation">
+          <button
+            className="back-link"
+            onClick={() => navigate({ section: "items", scope })}
+          >
+            <ArrowLeft size={18} />
+            返回{scope === "household" ? "家庭用品" : "我的物品"}
+          </button>
+          <span>物品名片</span>
+        </div>
+        <ItemDetail
+          key={item.id}
+          item={item}
+          workspace={workspace}
+          user={user}
+          refresh={refresh}
+          edit={edit}
+          ask={ask}
+          task={task}
+          device={device}
+          creative={creative}
+        />
+      </main>
+    );
   return (
-    <div className={`items-workspace ${item ? "has-detail" : ""}`}>
-      <section className="items-browser">
+    <div className="items-workspace">
+      <section className="items-browser" ref={browser}>
         <div className="segmented" role="group" aria-label="物品范围">
           <button
             className={scope === "household" ? "active" : ""}
@@ -218,7 +254,6 @@ export default function Items({
               <ItemCard
                 key={value.id}
                 item={value}
-                selected={item?.id === value.id}
                 onSelect={() => select(value)}
               />
             ))}
@@ -266,105 +301,89 @@ export default function Items({
             </button>
           )}
       </section>
-      <aside className={`detail-pane ${item ? "visible" : ""}`}>
-        {item ? (
-          <ItemDetail
-            item={item}
-            workspace={workspace}
-            user={user}
-            refresh={refresh}
-            edit={edit}
-            ask={ask}
-            task={task}
-            device={device}
-            onBack={() => navigate({ section: "items", scope })}
-          />
-        ) : (
-          <>
-            <section className="rail-section">
-              <div className="section-title">
-                <h2>一起照看这个家</h2>
-                <button
-                  className="icon-button"
-                  title="管理家庭成员"
-                  onClick={() => edit({ kind: "household" })}
-                >
-                  <Settings2 size={18} />
-                </button>
-              </div>
-              {houses.length > 1 && (
-                <select
-                  aria-label="当前家庭"
-                  value={houseId}
-                  onChange={(event) => setHouseId(event.target.value)}
-                >
-                  {houses.map((house) => (
-                    <option key={house.id} value={house.id}>
-                      {house.name}
-                    </option>
-                  ))}
-                </select>
-              )}
-              <div className="member-avatars">
-                {house?.members
-                  .filter((member) => member.status === "active")
-                  .map((member) => (
-                    <button
-                      key={member.id}
-                      title={member.display_name}
-                      onClick={() => edit({ kind: "household" })}
-                    >
-                      <span className="person-avatar">
-                        {member.display_name.slice(-1)}
-                      </span>
-                      <small>{member.display_name}</small>
-                    </button>
-                  ))}
-              </div>
-              {!house && (
-                <p className="muted">
-                  好友和家庭成员分别授权，加入后再选择共同物品。
-                </p>
-              )}
-            </section>
-            <section className="rail-section">
-              <h2>需要处理</h2>
-              <Care
-                workspace={workspace}
-                user={user}
-                refresh={refresh}
-                onItem={(id) =>
-                  navigate({ section: "items", scope, itemId: id })
-                }
-                householdId={house?.id}
-                compact
-              />
-            </section>
-            {items
-              .filter((item) => presentation(item).attention === "paused")
-              .slice(0, 1)
-              .map((item) => (
-                <button
-                  className="attention-summary"
-                  key={item.id}
-                  onClick={() => select(item)}
-                >
-                  <ObjectVisual item={item} />
-                  <div>
-                    <strong>{item.name}还需要留意</strong>
-                    <p>{presentation(item).note || "处理前先暂停使用。"}</p>
-                  </div>
-                </button>
-              ))}
-            <button
-              className="primary-button full-width"
-              onClick={() => edit({ kind: "reminder" })}
-            >
-              <Wrench size={18} />
-              记录一件需要处理的事
-            </button>
-          </>
-        )}
+      <aside className="detail-pane">
+        <>
+          <section className="rail-section">
+            <div className="section-title">
+              <h2>一起照看这个家</h2>
+              <button
+                className="icon-button"
+                title="管理家庭成员"
+                onClick={() => edit({ kind: "household" })}
+              >
+                <Settings2 size={18} />
+              </button>
+            </div>
+            {houses.length > 1 && (
+              <select
+                aria-label="当前家庭"
+                value={houseId}
+                onChange={(event) => setHouseId(event.target.value)}
+              >
+                {houses.map((house) => (
+                  <option key={house.id} value={house.id}>
+                    {house.name}
+                  </option>
+                ))}
+              </select>
+            )}
+            <div className="member-avatars">
+              {house?.members
+                .filter((member) => member.status === "active")
+                .map((member) => (
+                  <button
+                    key={member.id}
+                    title={member.display_name}
+                    onClick={() => edit({ kind: "household" })}
+                  >
+                    <span className="person-avatar">
+                      {member.display_name.slice(-1)}
+                    </span>
+                    <small>{member.display_name}</small>
+                  </button>
+                ))}
+            </div>
+            {!house && (
+              <p className="muted">
+                好友和家庭成员分别授权，加入后再选择共同物品。
+              </p>
+            )}
+          </section>
+          <section className="rail-section">
+            <h2>需要处理</h2>
+            <Care
+              workspace={workspace}
+              user={user}
+              refresh={refresh}
+              onItem={(id) => navigate({ section: "items", scope, itemId: id })}
+              householdId={house?.id}
+              compact
+            />
+          </section>
+          {items
+            .filter((item) => presentation(item).attention === "paused")
+            .slice(0, 1)
+            .map((item) => (
+              <button
+                className="attention-summary"
+                key={item.id}
+                onClick={() => select(item)}
+              >
+                <ObjectVisual item={item} />
+                <div>
+                  <strong>{item.name}还需要留意</strong>
+                  <p>{presentation(item).note || "处理前先暂停使用。"}</p>
+                </div>
+              </button>
+            ))}
+          <button
+            className="primary-button full-width"
+            onClick={() => edit({ kind: "reminder" })}
+          >
+            <Wrench size={18} />
+            记录一件需要处理的事
+          </button>
+        </>
       </aside>
     </div>
   );
@@ -379,8 +398,8 @@ function ItemDetail({
   ask,
   task,
   device,
-  onBack,
-}: Omit<Props, "route"> & { item: Item; onBack: () => void }) {
+  creative,
+}: Omit<Props, "route"> & { item: Item }) {
   const [tab, setTab] = useState("story"),
     [more, setMore] = useState(false),
     [knowledge, setKnowledge] = useState<Record<string, unknown>[]>([]);
@@ -401,231 +420,255 @@ function ItemDetail({
       !["completed", "cancelled"].includes(task.status),
   );
   return (
-    <>
-      <button className="back-link mobile-only" onClick={onBack}>
-        <ArrowLeft size={18} />
-        返回物品
-      </button>
-      <div className="detail-hero">
-        <ObjectVisual item={item} />
-      </div>
-      <div className="detail-heading">
-        <div>
-          <h1>{item.name}</h1>
-          <p>
-            <MapPin size={16} />
-            {info.location || item.product.model || "独一份的存在"}
-          </p>
+    <article className="item-profile-card">
+      <div className="item-profile-top">
+        <div className="detail-hero">
+          <ObjectVisual item={item} />
         </div>
-        <span className="privacy-label">
-          <LockKeyhole size={15} />
-          {owned ? "私人介绍仅自己可见" : "获准共享的物品"}
-        </span>
-      </div>
-      {info.attention !== "normal" && (
-        <div className="item-attention">
-          <span className={`status-tag ${info.attention}`}>
-            {attentionLabels[info.attention]}
+        <div className="item-profile-identity">
+          <span className="eyebrow">
+            {item.kind === "nonstandard_object"
+              ? "独一份的存在"
+              : "生活里的好伙伴"}
           </span>
-          <span>{info.note || "使用前请先核对当前状态。"}</span>
-        </div>
-      )}
-      <div className="detail-actions">
-        <button
-          className="soft-button"
-          onClick={() =>
-            ask(
-              item,
-              item.kind === "nonstandard_object" ? "general" : "guidance",
-            )
-          }
-        >
-          <MessageCircle size={18} />
-          {item.kind === "nonstandard_object" ? "聊聊它" : "问问用法"}
-        </button>
-        <button
-          className="primary-button"
-          onClick={() => edit({ kind: "experience", item })}
-        >
-          记一段
-        </button>
-        <button
-          className="icon-button"
-          title="更多物品操作"
-          aria-expanded={more}
-          onClick={() => setMore(!more)}
-        >
-          <MoreHorizontal size={22} />
-        </button>
-      </div>
-      {more && (
-        <div className="detail-more">
-          <button onClick={() => ask(item, "creative")}>
-            <Sparkles size={17} />
-            发现新玩法
-          </button>
-          {owned && (
-            <>
-              <button onClick={() => edit({ kind: "item", item })}>
-                <Settings2 size={17} />
-                物品与分身设置
-              </button>
-              <button onClick={() => edit({ kind: "presentation", item })}>
-                <MapPin size={17} />
-                位置与当前状态
-              </button>
-              <button onClick={() => edit({ kind: "sharing", item })}>
-                <Users size={17} />
-                共享与家庭用品
-              </button>
-              <button onClick={() => edit({ kind: "gift", item })}>
-                <Gift size={17} />
-                送出这件物品
-              </button>
-              <button onClick={() => edit({ kind: "reminder", item })}>
-                照顾与提醒
-              </button>
-              <button onClick={() => device(item)}>连接设备与探索</button>
-            </>
-          )}
-        </div>
-      )}
-      {item.description && (
-        <blockquote className="personal-story">
-          <Companion small />
-          <p>{item.description}</p>
-        </blockquote>
-      )}
-      {item.avatar.enabled && (
-        <div className="persona-strip">
-          <Companion small />
-          <div>
-            <strong>{item.avatar.nickname || item.name}的分身</strong>
-            <p>{item.avatar.personality || "相处时的样子，由你慢慢决定。"}</p>
+          <div className="detail-heading">
+            <div>
+              <h1>{item.name}</h1>
+              <p>
+                <MapPin size={16} />
+                {info.location || item.product.model || "独一份的存在"}
+              </p>
+            </div>
+            <span className="privacy-label">
+              <LockKeyhole size={15} />
+              {owned ? "私人介绍仅自己可见" : "获准共享的物品"}
+            </span>
           </div>
-          <button className="quiet-button" onClick={() => ask(item, "persona")}>
-            和它聊聊
-          </button>
-        </div>
-      )}
-      {!!tasks.length && (
-        <section className="related-tasks">
-          <h3>正在做的事</h3>
-          {tasks.map((value) => (
-            <button key={value.id} onClick={() => task(value.id)}>
-              {value.goal}
-              <ArrowRight size={16} />
-            </button>
-          ))}
-        </section>
-      )}
-      <div className="detail-tabs">
-        <Pill active={tab === "story"} onClick={() => setTab("story")}>
-          它的经历
-        </Pill>
-        <Pill active={tab === "knowledge"} onClick={() => setTab("knowledge")}>
-          用法与资料
-        </Pill>
-        <Pill active={tab === "care"} onClick={() => setTab("care")}>
-          照顾与历史
-        </Pill>
-      </div>
-      {tab === "story" && (
-        <div className="story-timeline">
-          {experiences.map((exp) => (
-            <button
-              key={exp.id}
-              onClick={() => edit({ kind: "experience", experience: exp })}
-              disabled={exp.access === "shared"}
-            >
-              <span className="timeline-dot" />
-              <time>{safeDate(exp.occurred_on)}</time>
-              <strong>{exp.title}</strong>
-              <p>{exp.text.slice(0, 180)}</p>
-            </button>
-          ))}
-          {!experiences.length && (
-            <p className="empty-note">它的第一段故事，可以从今天开始。</p>
+          {info.attention !== "normal" && (
+            <div className="item-attention">
+              <span className={`status-tag ${info.attention}`}>
+                {attentionLabels[info.attention]}
+              </span>
+              <span>{info.note || "使用前请先核对当前状态。"}</span>
+            </div>
           )}
-        </div>
-      )}
-      {tab === "knowledge" && (
-        <section className="knowledge-section">
-          <dl>
-            <dt>品牌／型号</dt>
-            <dd>
-              {[item.product.brand, item.product.model]
-                .filter(Boolean)
-                .join(" · ") || "尚待确认"}
-            </dd>
-            <dt>地区／版本</dt>
-            <dd>
-              {[
-                item.product.market,
-                item.product.edition,
-                item.product.firmware_version,
-              ]
-                .filter(Boolean)
-                .join(" · ") || "尚待确认"}
-            </dd>
-          </dl>
-          {knowledge.map((claim, index) => (
-            <article key={String(claim.id || index)}>
-              <strong>{String(claim.content || "")}</strong>
-              <p>{String(claim.source_quote || "")}</p>
-              <small>
-                {claim.basis === "document"
-                  ? "资料中的依据，仍须核对适用条件"
-                  : "来自用户报告或待核实认识"}
-              </small>
-            </article>
-          ))}
-          {!knowledge.length && (
-            <p className="empty-note">
-              尚未取得适用资料，先确认型号，再核对具体用法。
-            </p>
-          )}
-          <button className="soft-button" onClick={() => ask(item, "guidance")}>
-            和物伴一起核对用法
-            <ArrowRight size={16} />
-          </button>
-        </section>
-      )}
-      {tab === "care" && (
-        <>
-          <Care
-            workspace={{
-              ...workspace,
-              reminders: workspace.reminders.filter(
-                (value) => value.item_id === item.id,
-              ),
-            }}
-            user={user}
-            refresh={refresh}
-            onItem={() => {}}
-          />
-          <p className="form-note">
-            处理反馈和实物状态分别保留，需要改变状态时再明确更新。
-          </p>
-          {owned && (
+          <div className="detail-actions">
             <button
               className="soft-button"
-              onClick={() => edit({ kind: "presentation", item })}
+              onClick={() =>
+                ask(
+                  item,
+                  item.kind === "nonstandard_object" ? "general" : "guidance",
+                )
+              }
             >
-              更新实际状态
+              <MessageCircle size={18} />
+              {item.kind === "nonstandard_object" ? "聊聊它" : "问问用法"}
             </button>
+            <button
+              className="primary-button"
+              onClick={() => edit({ kind: "experience", item })}
+            >
+              记一段
+            </button>
+            <button
+              className="icon-button"
+              title="更多物品操作"
+              aria-expanded={more}
+              onClick={() => setMore(!more)}
+            >
+              <MoreHorizontal size={22} />
+            </button>
+          </div>
+          {more && (
+            <div className="detail-more">
+              {owned && (
+                <>
+                  <button onClick={() => edit({ kind: "item", item })}>
+                    <Settings2 size={17} />
+                    物品与分身设置
+                  </button>
+                  <button onClick={() => edit({ kind: "presentation", item })}>
+                    <MapPin size={17} />
+                    位置与当前状态
+                  </button>
+                  <button onClick={() => edit({ kind: "sharing", item })}>
+                    <Users size={17} />
+                    共享与家庭用品
+                  </button>
+                  <button onClick={() => edit({ kind: "gift", item })}>
+                    <Gift size={17} />
+                    送出这件物品
+                  </button>
+                  <button onClick={() => edit({ kind: "reminder", item })}>
+                    照顾与提醒
+                  </button>
+                  <button onClick={() => device(item)}>连接设备与探索</button>
+                </>
+              )}
+            </div>
           )}
-        </>
-      )}
-      {owned && (
-        <button
-          className="keep-record"
-          onClick={() => edit({ kind: "presentation", item })}
-        >
-          实物不在了，也可以保留记录
-          <ArrowRight size={17} />
+          {item.description && (
+            <blockquote className="personal-story">
+              <Companion small />
+              <p>{item.description}</p>
+            </blockquote>
+          )}
+          {item.avatar.enabled && (
+            <div className="persona-strip">
+              <Companion small />
+              <div>
+                <strong>{item.avatar.nickname || item.name}的分身</strong>
+                <p>
+                  {item.avatar.personality || "相处时的样子，由你慢慢决定。"}
+                </p>
+              </div>
+              <button
+                className="quiet-button"
+                onClick={() => ask(item, "persona")}
+              >
+                和它聊聊
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="item-profile-sections">
+        <button className="item-creative-entry" onClick={() => creative(item)}>
+          <span className="creative-entry-icon">
+            <Sparkles size={26} />
+          </span>
+          <span>
+            <strong>发现新玩法</strong>
+            <small>找找相关分享，再一起看看它的新可能</small>
+          </span>
+          <ArrowRight size={20} />
         </button>
-      )}
-    </>
+        {!!tasks.length && (
+          <section className="related-tasks">
+            <h3>正在做的事</h3>
+            {tasks.map((value) => (
+              <button key={value.id} onClick={() => task(value.id)}>
+                {value.goal}
+                <ArrowRight size={16} />
+              </button>
+            ))}
+          </section>
+        )}
+        <div className="detail-tabs">
+          <Pill active={tab === "story"} onClick={() => setTab("story")}>
+            它的经历
+          </Pill>
+          <Pill
+            active={tab === "knowledge"}
+            onClick={() => setTab("knowledge")}
+          >
+            用法与资料
+          </Pill>
+          <Pill active={tab === "care"} onClick={() => setTab("care")}>
+            照顾与历史
+          </Pill>
+        </div>
+        {tab === "story" && (
+          <div className="story-timeline">
+            {experiences.map((exp) => (
+              <button
+                key={exp.id}
+                onClick={() => edit({ kind: "experience", experience: exp })}
+                disabled={exp.access === "shared"}
+              >
+                <span className="timeline-dot" />
+                <time>{safeDate(exp.occurred_on)}</time>
+                <strong>{exp.title}</strong>
+                <p>{exp.text.slice(0, 180)}</p>
+              </button>
+            ))}
+            {!experiences.length && (
+              <p className="empty-note">它的第一段故事，可以从今天开始。</p>
+            )}
+          </div>
+        )}
+        {tab === "knowledge" && (
+          <section className="knowledge-section">
+            <dl>
+              <dt>品牌／型号</dt>
+              <dd>
+                {[item.product.brand, item.product.model]
+                  .filter(Boolean)
+                  .join(" · ") || "尚待确认"}
+              </dd>
+              <dt>地区／版本</dt>
+              <dd>
+                {[
+                  item.product.market,
+                  item.product.edition,
+                  item.product.firmware_version,
+                ]
+                  .filter(Boolean)
+                  .join(" · ") || "尚待确认"}
+              </dd>
+            </dl>
+            {knowledge.map((claim, index) => (
+              <article key={String(claim.id || index)}>
+                <strong>{String(claim.content || "")}</strong>
+                <p>{String(claim.source_quote || "")}</p>
+                <small>
+                  {claim.basis === "document"
+                    ? "资料中的依据，仍须核对适用条件"
+                    : "来自用户报告或待核实认识"}
+                </small>
+              </article>
+            ))}
+            {!knowledge.length && (
+              <p className="empty-note">
+                尚未取得适用资料，先确认型号，再核对具体用法。
+              </p>
+            )}
+            <button
+              className="soft-button"
+              onClick={() => ask(item, "guidance")}
+            >
+              和物伴一起核对用法
+              <ArrowRight size={16} />
+            </button>
+          </section>
+        )}
+        {tab === "care" && (
+          <>
+            <Care
+              workspace={{
+                ...workspace,
+                reminders: workspace.reminders.filter(
+                  (value) => value.item_id === item.id,
+                ),
+              }}
+              user={user}
+              refresh={refresh}
+              onItem={() => {}}
+            />
+            <p className="form-note">
+              处理反馈和实物状态分别保留，需要改变状态时再明确更新。
+            </p>
+            {owned && (
+              <button
+                className="soft-button"
+                onClick={() => edit({ kind: "presentation", item })}
+              >
+                更新实际状态
+              </button>
+            )}
+          </>
+        )}
+        {owned && (
+          <button
+            className="keep-record"
+            onClick={() => edit({ kind: "presentation", item })}
+          >
+            实物不在了，也可以保留记录
+            <ArrowRight size={17} />
+          </button>
+        )}
+      </div>
+    </article>
   );
 }
