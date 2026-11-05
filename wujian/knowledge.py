@@ -100,7 +100,8 @@ async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=F
     with sessions() as db:
         if item_id:
             accessible_item(db, user_id, item_id)
-        existing = db.scalar(select(SourceRecord).where(SourceRecord.owner_id == user_id, SourceRecord.url == url, SourceRecord.item_id == item_id).order_by(SourceRecord.fetched_at.desc()))
+        existing = db.scalar(select(SourceRecord).where(SourceRecord.owner_id == user_id, SourceRecord.url == url,
+            SourceRecord.item_id == item_id, SourceRecord.origin == "public_web").order_by(SourceRecord.fetched_at.desc()))
         if existing and not refresh:
             result = source_excerpt(existing, max_chars=excerpt_chars)
             # Reopening a cached index must retain its navigation affordance.
@@ -229,6 +230,8 @@ def source_excerpt(source, query="", page=None, *, max_chars=12000):
 
 def source_content_level(source):
     """Evidence granularity, not a claim that the source's advice is correct."""
+    if source.origin == "video_frame_sample":
+        return "sampled_video_frames_not_full_video"
     if source.content.startswith("[公开字幕文本"):
         return "subtitle_text_not_video_observation"
     host = (urlsplit(source.url).hostname or "").lower()

@@ -66,7 +66,7 @@ def referenced_sources(result):
     """Normalize already supplied references, never invent supporting evidence."""
     return list(dict.fromkeys([*result.source_refs,
         *(change.source_id for change in result.learning.knowledge_updates
-          if change.basis == "document" and change.source_id),
+          if change.basis in {"document", "inference"} and change.source_id),
         *re.findall(r"\[([a-f0-9]{32})\]",result.answer)]))[:8]
 
 
@@ -167,7 +167,7 @@ def commit_result(db, user_id, message_id, result, current_question, *, commit=T
             title = source.title.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]").replace("\n", " ")[:160]
             url = source.url.replace("<", "%3C").replace(">", "%3E").replace("\n", "")
             level = source_content_level(source)
-            depth = "（已读公开页面文字，未观看视频）" if "not_video_observation" in level else "（已读笔记文字，未核对图片）" if "not_image_observation" in level else ""
+            depth = "（已看指定区间抽帧，未观看完整视频或音频）" if level == "sampled_video_frames_not_full_video" else "（已读公开页面文字，未观看视频）" if "not_video_observation" in level else "（已读笔记文字，未核对图片）" if "not_image_observation" in level else ""
             rendered=f"[{title or '原始资料'}](<{url}>){depth}"
             if f"[{identity}]" in result.answer:
                 inline[f"[{identity}]"]=rendered

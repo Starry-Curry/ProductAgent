@@ -317,6 +317,14 @@ def save_claim(
         ):
             raise domain.DomainError("请引用当前用户实际报告的原话")
         status = "user_reported"
+    elif source_id:
+        # An interpretation of a real image/sample is still provisional, but
+        # must keep the observation it was based on. Do not strip its source
+        # merely because the model's explanation is not a verbatim document.
+        source = domain.require(db.get(SourceRecord, source_id))
+        if source.owner_id != user_id:
+            raise domain.DomainError("请使用自己已获取的推测参考资料", 404)
+    retained_source_id = source_id if basis in {"document", "inference"} else None
     if supersedes_id:
         previous = domain.require(db.get(KnowledgeClaim, supersedes_id))
         if previous.owner_id != user_id:
@@ -329,7 +337,7 @@ def save_claim(
             == (item.product_id if scope == "product" else None),
             KnowledgeClaim.item_id == (item.id if scope == "item" else None),
             KnowledgeClaim.content == content,
-            KnowledgeClaim.source_id == (source_id if basis == "document" else None),
+            KnowledgeClaim.source_id == retained_source_id,
             KnowledgeClaim.basis == basis,
             KnowledgeClaim.status != "superseded",
         )
@@ -347,7 +355,7 @@ def save_claim(
         content=content,
         conditions=conditions,
         basis=basis,
-        source_id=source_id if basis == "document" else None,
+        source_id=retained_source_id,
         source_quote=source_quote,
         source_message_id=message_id,
         status=status,

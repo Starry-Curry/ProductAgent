@@ -14,7 +14,7 @@ from PIL import Image
 from wujian import domain
 from wujian.config import Settings
 from wujian.database import Asset, SourceRecord, make_database, uid
-from wujian.knowledge import fetch_source_image, validate_source_image
+from wujian.knowledge import fetch_source, fetch_source_image, source_content_level, validate_source_image
 from wujian.source_content import public_image_candidates
 
 
@@ -69,6 +69,20 @@ class SourceImageTests(unittest.IsolatedAsyncioTestCase):
                 with self.assertRaises(domain.DomainError):
                     await fetch_source_image(self.settings, self.sessions, actor, source_id, url)
             download.assert_not_awaited()
+
+    async def test_video_sample_with_same_url_does_not_replace_cached_original_page(self):
+        original_id=self.source()
+        with self.sessions() as db:
+            original=db.get(SourceRecord,original_id)
+            sample=SourceRecord(owner_id=self.owner,url=original.url,title="抽帧",
+                origin="video_frame_sample",content='{"frames":[]}',pages=[],fetched_at="2099-01-01T00:00:00Z")
+            db.add(sample);db.commit()
+            self.assertEqual(source_content_level(sample),"sampled_video_frames_not_full_video")
+        with patch("wujian.knowledge.download_public",new=AsyncMock()) as download:
+            result=await fetch_source(self.settings,self.sessions,self.owner,"https://example.com/product")
+        self.assertEqual(result["source_id"],original_id)
+        self.assertEqual(result["content_level"],"document_text")
+        download.assert_not_awaited()
 
     async def test_declared_private_image_still_fails_public_address_check(self):
         source_id = self.source("http://127.0.0.1/private.png")

@@ -30,7 +30,8 @@ class KnowledgeUpdate(BaseModel):
     conditions: Applicability
     basis: Literal["document", "user_report", "inference"]
     scope: Literal["product", "item"]
-    source_id: str | None = None
+    source_id: str | None = Field(default=None,
+        description="Actually retained source for document evidence, or the source of a provisional visual interpretation/inference. Video frames use their derived sample source ID; observed images do not turn a model interpretation into a verified procedure.")
     source_quote: str = Field(
         default="",
         description="For user_report copy CURRENT user words. For document prefer leaving this empty and give exact source_line_start/end from the numbered tool result; the program copies actual original evidence. Never paraphrase a source or copy a search summary.",

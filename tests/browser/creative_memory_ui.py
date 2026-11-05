@@ -47,6 +47,7 @@ async def main(url, output):
     board_sources = {}
     task_started = asyncio.Event()
     run_started = asyncio.Event()
+    video_finished = asyncio.Event()
     api_calls = []
     uploads = {"count": 0}
     understandings = [{"id": "understanding", "item_id": "cup", "content": "你不想改变这份毕业礼物的样子。", "basis": "inference", "source_message_id": "message_fixture", "updated_at": "2026-11-06T09:00:00Z", "expires_at": "2026-12-01T00:00:00Z", "supersedes_id": None, "attributes": {"kind": "meaning", "context": "讨论毕业礼物的新玩法时", "source_quote": "这是小雨送的，我不想拆它。"}}]
@@ -102,6 +103,13 @@ async def main(url, output):
                 run_started.set()
                 await asyncio.sleep(0.7)
                 body = {"id": "slow_run", "conversation_id": "slow_thread", "status": "running", "text": "", "events": [], "error": "", "usage": {}}
+            elif path == "/runs/video_progress":
+                body = {"id":"video_progress","conversation_id":"video_progress_thread","status":"running","text":"","events":[{"type":"tool_start","name":"sample_video_frames"}],"error":"","usage":{}}
+            elif path == "/runs/video_progress/events":
+                await video_finished.wait()
+                body = {"id":"video_progress","conversation_id":"video_progress_thread","status":"failed","text":"","events":[{"type":"tool_start","name":"sample_video_frames"}],"error":"还没有取得视频关键帧（受控界面失败样本）","usage":{}}
+                await route.fulfill(content_type="text/event-stream", body="data: " + json.dumps(body, ensure_ascii=False) + "\n\n")
+                return
             elif path == "/assets" and route.request.method == "POST":
                 uploads["count"] += 1
                 identity = f"uploaded_photo_{uploads['count']}"
@@ -568,6 +576,17 @@ async def main(url, output):
         await expect(page.get_by_label("想留下的话", exact=True)).to_have_value("")
         await page.get_by_role("button", name="取消", exact=True).click()
         results.append("mobile discoverability: persona chat fits the first card screen; an empty object memory wall removes unused controls and offers one contextual record action")
+        workspace["conversations"].insert(0, {"id":"video_progress_thread","title":"看看视频步骤（UI样本）","item_ids":["cup"],"updated_at":"2026-11-06T12:00:00Z","entry_context":{"intent":"general"}})
+        chat_messages["video_progress_thread"] = [{"id":"video_user","role":"user","text":"能看看这个视频里具体怎么做吗？（UI样本）","photo_ids":[],"run_id":"video_progress"}]
+        await page.reload()
+        await page.get_by_role("button", name="历史与正在做的事", exact=True).click()
+        await page.locator(".recent-topics").get_by_role("button", name="看看视频步骤（UI样本）", exact=True).click()
+        await expect(page.locator(".chat-message.assistant")).to_contain_text("提取视频关键画面")
+        video_finished.set()
+        await expect(page.locator(".inline-error")).to_contain_text("还没有取得视频关键帧")
+        await expect(page.get_by_role("button", name="停止生成", exact=True)).to_have_count(0)
+        await expect(page.locator(".thinking-dots")).to_have_count(0)
+        results.append("video activity and failure: current sampling work has a clear label; a failed run reports that frames were not obtained rather than implying success")
         assert not browser_errors, browser_errors
         report = {"scope": "frontend browser with explicit API fixtures; no model or device acceptance", "passed": results, "browser_errors": browser_errors}
         (output / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

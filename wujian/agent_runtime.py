@@ -46,6 +46,7 @@ from .database import (
 from .knowledge import fetch_source, fetch_source_image, render_source_page, search_web, source_excerpt, source_images
 from .retrieval import task_view
 from .source_access import readable_source
+from .source_video import retained_video_frames, sample_source_video
 from .turns import TurnResult, commit_result, grounded_turn_schema
 
 logger = logging.getLogger(__name__)
@@ -70,8 +71,8 @@ SYSTEM = """你是物间 Wujian，帮助人认识、用好、创造、纪念和�
 """
 
 COMPANION_VOICE = """
-当前窗口是物品分身：用它的昵称和用户设定的性格陪人聊天，这是面向真实生活的陪伴，不是即兴续写角色小说。
-可以轻松、俏皮、安静，也可以用“我陪着你”等拟人表达；关于过去发生了什么，只能依据记录。不要为气氛补出动作、天气、触感、对方心情或日常习惯，也不要声称能看到眼前现场或让实物发热。
+当前窗口是物品的数字形象：用它的昵称和用户设定的性格，在当下陪人聊天。过去的事来自用户记录，不是这份数字形象当时身在现场的感官记忆。
+可以轻松、俏皮、安静，也可以用“我陪着你”等当下拟人表达。关于真实往事，以记录者的视角和署名为准，不以“我当时感受到/看见”补入感官体验；记录里缺失的细节、对方此刻想法及用户记不起的原因都保持未知。也不要声称能看到眼前现场或让实物发热。
 已有回忆由程序紧接answer呈现原文，因此找回故事时：story_refs填写实际记录；answer只回应此刻的人，不再讲一遍过去。
 示例（仅说明表达方式，不是用户经历）：记录只写“搬家时收到一封信”，用户问“你还记得那封信吗？”——可答“你留的那段文字还在。想念的时候，我们就一起看看。”并引用真实记录；不能续写“那天你红着眼把信折好”。
 用户主动想玩想象故事时可以创作，并自然说明是一起想象的新故事。没有求助时不布置任务，不每轮追问，不引导把所有聊天都保存；先回应这一句话真正的情绪和意图。
@@ -110,6 +111,30 @@ def personal_context(db, user_id, item_ids, persona=False):
     return {"active_personal_memories": memories[:12], "recent_experience_index": [
         {key:row[key] for key in ("id","title","item_ids","occurred_on","origin_id","provenance")}
         for row in experiences[:5]]}
+
+
+def video_frame_chunk(value):
+    frames = value.pop("frames")
+    manifest = value["manifest"]
+    observation = {key:value[key] for key in ("source_id","parent_source_id","source_url","content_level")}
+    observation.update(
+        evidence_kind="timestamped_still_images",
+        observed_frame_times_seconds=[frame["at_seconds"] for frame in frames],
+        original_duration_seconds=manifest.get("original_duration_seconds"),
+        reading_scope="此次只提供下列时刻的静态画面；没有观察其余时刻或音频，不能由未采样的动作推断它没有发生。",
+        timestamp_precision=manifest.get("timestamp_precision"))
+    # Decoder/format/download details stay in the retained source manifest.
+    # The model needs observation times and images, not an interval that looks
+    # like a claim to have watched every frame within it.
+    content = [TextBlock(text=json.dumps(observation, ensure_ascii=False, separators=(",", ":")))]
+    for frame in frames:
+        content.extend([
+            TextBlock(text=f"采样画面：{frame['at_seconds']}秒，asset_id={frame['asset_id']}"),
+            DataBlock(source=Base64Source(data=frame["base64"], media_type=frame["media_type"]))])
+    return ToolChunk(state="success", content=content, metadata={"evidence": {
+        "source_id": value["source_id"], "parent_source_id": value["parent_source_id"],
+        "source_url": value["source_url"], "content_level": value["content_level"],
+        "frame_asset_ids": [frame["asset_id"] for frame in frames]}})
 
 
 @dataclass
@@ -295,11 +320,13 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
         return result
 
     async def read_source(source_id: str, query: str = "", page: int | None = None):
-        """Read a retained source near a keyword or on a specific 1-based PDF page. Use to inspect exact operating conditions."""
+        """Reopen a retained original, near a keyword or on a 1-based PDF page. A video_frame_sample source reopens its actual saved timestamped images without re-downloading; its scope remains a few frames, not full video."""
         with sessions() as db:
             source = readable_source(db,user_id,source_id)
             if evidence_sources is not None:
                 evidence_sources.add(source_id)
+            if source.origin == "video_frame_sample":
+                return video_frame_chunk(retained_video_frames(db, user_id, source_id))
             return {**source_excerpt(source, query, page), "images":source_images(source,db.get(Asset,source.asset_id))}
 
     async def view_source_image(source_id: str, image_url: str):
@@ -313,6 +340,14 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
             DataBlock(source=Base64Source(data=encoded,media_type=value["media_type"]))],
             metadata={"evidence":{key:value[key] for key in
                 ("source_id","source_url","image_url","asset_id","evidence_kind")}})
+
+    async def sample_video_frames(source_id: str, start_seconds: float, end_seconds: float, frame_count: int = 3):
+        """Observe 1–4 actual frames in a <=30-second window of an already-read public BiliBili BV source. Use when visual construction matters and page text is insufficient. Requires optional yt-dlp + local FFmpeg. Returns timestamped images and a NEW derived source ID. A few sampled frames are not full-video/audio observation or proof of unseen steps. No login or access bypass."""
+        value = await sample_source_video(settings, sessions, user_id, source_id,
+                                          start_seconds, end_seconds, frame_count)
+        if evidence_sources is not None:
+            evidence_sources.add(value["source_id"])
+        return video_frame_chunk(value)
 
     async def view_source_page(source_id: str, page: int):
         """Inspect an original PDF page as an image with Qwen vision, preserving page number and source. Useful for diagrams/directions."""
@@ -382,7 +417,7 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
                                                           message="Registered user-scoped domain tool"))
 
     reads = [find_items, read_item, view_item_photo, recall_memories, search_public_web, fetch_document, read_source,
-             view_source_page, view_source_image, list_sources, list_reminders, search_world, read_task, device_connections]
+             view_source_page, view_source_image, sample_video_frames, list_sources, list_reminders, search_world, read_task, device_connections]
     writes = [record_experience, evolve_avatar, update_item_identity, update_item_condition, explore_device]
     return Toolkit(tools=[*(wrap(fn, True) for fn in reads), *(wrap(fn, False) for fn in writes)],
                    skills_or_loaders=[LocalSkillLoader(str(ROOT/'agent_skills'),scan_subdir=True)])
@@ -513,7 +548,7 @@ class AgentRunner:
                         if str(event.state) == "error":
                             entry["error_detail"] = result_text[:2000]
                         name = tool_names.get(identity)
-                        if name in {"search_public_web", "fetch_document", "read_source", "Skill",
+                        if name in {"search_public_web", "fetch_document", "read_source", "sample_video_frames", "Skill",
                                     "GenerateStructuredOutput", "update_item_identity", "update_item_condition",
                                     "record_experience", "evolve_avatar"}:
                             entry["arguments"] = tool_arguments.get(identity, "")

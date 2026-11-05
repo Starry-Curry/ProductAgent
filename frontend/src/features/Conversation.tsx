@@ -24,6 +24,7 @@ const toolLabels: Record<string, string> = {
   read_item: "核对这件物品",
   view_item_photo: "看看这件物品的照片",
   view_source_image: "核对原文配图",
+  sample_video_frames: "提取视频关键画面",
   search_public_web: "查找公开资料",
   fetch_document: "阅读原始资料",
   read_source: "核对资料细节",

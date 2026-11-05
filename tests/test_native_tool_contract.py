@@ -15,7 +15,7 @@ from wujian import domain
 from wujian.api_models import ExperienceCreate
 from wujian.agent_runtime import make_tools
 from wujian.config import Settings
-from wujian.database import Asset, Grant, ItemRecord, make_database
+from wujian.database import Asset, Grant, ItemRecord, SourceRecord, make_database
 
 
 class NativeToolContractTests(unittest.TestCase):
@@ -104,3 +104,44 @@ class NativeToolContractTests(unittest.TestCase):
         images=[block for message in formatted for block in (message.get("content") or [])
                 if isinstance(block,dict) and block.get("type")=="image_url"]
         self.assertEqual(len(images),1)
+
+    def test_video_samples_keep_timestamps_and_images_in_native_sdk_transport(self):
+        value={"source_id":"synthetic_frames","parent_source_id":"synthetic_page",
+            "source_url":"https://www.bilibili.com/video/BV1pa4y1B7f8/",
+            "content_level":"sampled_video_frames_not_full_video",
+            "manifest":{"reading_scope":"仅两个抽帧，不是完整视频"},
+            "frames":[{"asset_id":f"frame-{second}","at_seconds":second,"media_type":"image/png",
+                       "base64":"c3ludGhldGljLXRyYW5zcG9ydC1vbmx5"} for second in [3.5,7.5]]}
+        with patch("wujian.agent_runtime.sample_source_video",new=AsyncMock(return_value=value)):
+            result=asyncio.run(self.tools["sample_video_frames"](
+                source_id="synthetic_page",start_seconds=0,end_seconds=10,frame_count=2))
+        self.assertEqual(str(result.state),"success")
+        self.assertEqual(result.metadata["evidence"]["source_id"],"synthetic_frames")
+        self.assertEqual(result.metadata["evidence"]["frame_asset_ids"],["frame-3.5","frame-7.5"])
+        self.assertIn("3.5秒",result.content[1].text)
+        self.assertNotIn("base64",result.content[0].text)
+        observed=json.loads(result.content[0].text)
+        self.assertEqual(observed["observed_frame_times_seconds"],[3.5,7.5])
+        self.assertEqual(observed["evidence_kind"],"timestamped_still_images")
+        formatted=asyncio.run(DashScopeChatFormatter().format([AssistantMsg(name="offline-test",content=[
+            ToolResultBlock(id="test-video",name="sample_video_frames",output=result.content,state=result.state)])]))
+        images=[block for message in formatted for block in (message.get("content") or [])
+                if isinstance(block,dict) and block.get("type")=="image_url"]
+        self.assertEqual(len(images),2)
+
+    def test_read_source_reopens_actual_saved_video_frames_without_new_download(self):
+        with self.sessions() as db:
+            db.add(SourceRecord(id="saved_sample",owner_id="person_demo_owner",origin="video_frame_sample",
+                url="https://www.bilibili.com/video/BV1pa4y1B7f8/",title="抽帧",content="{}",pages=[]))
+            db.commit()
+        value={"source_id":"saved_sample","parent_source_id":"original_page",
+            "source_url":"https://www.bilibili.com/video/BV1pa4y1B7f8/",
+            "content_level":"sampled_video_frames_not_full_video","manifest":{},
+            "frames":[{"asset_id":"saved_frame","at_seconds":3.5,"media_type":"image/png","base64":"c3ludGhldGlj"}]}
+        with patch("wujian.agent_runtime.retained_video_frames",return_value=value), \
+             patch("wujian.agent_runtime.sample_source_video",new=AsyncMock()) as sample:
+            result=asyncio.run(self.tools["read_source"](source_id="saved_sample"))
+        self.assertEqual(str(result.state),"success")
+        self.assertIsInstance(result.content[2],DataBlock)
+        self.assertEqual(result.metadata["evidence"]["source_id"],"saved_sample")
+        sample.assert_not_awaited()

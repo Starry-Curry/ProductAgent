@@ -153,6 +153,26 @@ class FoundationTests(unittest.TestCase):
                     "网上没有这段原话",
                 )
 
+    def test_visual_inference_retains_its_actual_source_without_becoming_verified_knowledge(self):
+        with self.sessions() as db:
+            observed=SourceRecord(owner_id=self.owner,origin="video_frame_sample",title="夹子局部画面（模拟）",
+                url="https://www.bilibili.com/video/BV1pa4y1B7f8/",content='{"frames":[]}',pages=[])
+            foreign=SourceRecord(owner_id=self.friend,title="朋友私有资料",url="https://example.invalid/source",content="private")
+            db.add_all([observed,foreign]);db.commit()
+            def save(source_id):
+                return foundation.save_claim(db,self.owner,"synthetic-user-message","item_demo_lamp",
+                    "画面中的夹子可能用金属手柄作连接，具体扣法尚不清楚。",
+                    {"kind":"case","unknowns":["没有看到完整连接动作"]},"inference","item",source_id)
+            claim=save(observed.id)
+            self.assertEqual(claim["source_id"],observed.id)
+            self.assertEqual(claim["basis"],"inference")
+            self.assertEqual(claim["status"],"provisional")
+            self.assertEqual(save(observed.id)["id"],claim["id"])
+            with self.assertRaises(domain.DomainError):
+                save(foreign.id)
+            with self.assertRaises(domain.DomainError):
+                save("not-an-observed-source")
+
     def test_continuing_task_keeps_actual_feedback_and_prevents_old_plan_overwrite(
         self,
     ):
