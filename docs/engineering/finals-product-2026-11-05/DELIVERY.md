@@ -37,12 +37,16 @@ node scripts/finals/preview.mjs --port=3242 --rerank --vision
 
 ## 本次实际检查
 
-- 集中离线：[680/680](evidence/offline-regression-slice9-r4.txt)，类型：[最终源码检查](evidence/typecheck-slice9-r6.txt)，生产构建：[slice9-r2](evidence/build-slice9-r2.txt)。后续如仅文档变化不重跑全套；如果再改源码则重新确认覆盖范围。
+- 集中离线：[681/681](evidence/offline-regression-slice10-r1.txt)，类型：[最终源码检查](evidence/typecheck-slice10-r1.txt)，生产构建：[slice10-r1](evidence/build-slice10-r1.txt)。后续如仅文档变化不重跑全套；如果再改源码则重新确认覆盖范围。
 - 团队独立功能：[公共服务Mock示例](evidence/team-example-slice9-r1.txt)可运行、确认反馈幂等、默认不允许云端。它不证明千问质量；旧抽取/契约[benchmark](evidence/benchmark-slice9-r1.txt)零真实调用，也不作为当前智能正确率。
 - [费用与延迟快照](evidence/usage-summary-slice9-r1.json)：本轮368项模型/原生工具请求（含失败/重试），已知估算¥55.783876，未知用量另预留¥1.786268；上限800次、无金额上限。普通官网访问与模型列表读取不是计费推理。实际账单以服务方为准。
 - 上游请求P50约4.124s/P95约33.332s；12个具名浏览器开发样本的完整可见答复P50约9.016s/P95约56.635s，混有失败兜底，**不是实际生活任务成功耗时或独立质量统计**。
 - 默认真实冒烟：[原始输出](evidence/final-private-preview-smoke-r1.json)、[桌面](evidence/final-private-preview-r1-desktop.png)、[移动](evidence/final-private-preview-r1-mobile.png)；图书故事/任务/反馈：[记录](evidence/book-value-browser-r2.json)、[桌面](evidence/book-value-r2-desktop.png)、[移动](evidence/book-value-r2-mobile.png)。
 - 全部真实失败、脚本错误、修复、首次/复测区别及原始链接见[逐案审阅](QUALITY_REVIEW.md)、[逐层F1–F12对抗覆盖](ADVERSARIAL_COVERAGE.md)。没有外部真人盲评、现实设备验证或“模型自评分证明创造力”的结论。
+
+依赖层新增实测：Next15.5.28不变，PostCSS仅同主版本升级8.5.32；官方[审计后结果](evidence/dependency-audit-r3.json)为0项已知生产依赖漏洞，[恶意map回归](evidence/postcss-security-r1.txt)只使用自造无敏感内容文件。[最终生产包浏览器](evidence/production-browser-smoke-r2.json)、[桌面](evidence/production-smoke-r2-desktop.png)、[手机](evidence/production-smoke-r2-mobile.png)在新隔离目录完成录入/数量0/状态同步/匿名401，关闭模型与公开抓取，0费用；不是重复宣称Qwen成功。
+
+审查入口：[草稿PR #3](https://github.com/Starry-Curry/ProductAgent/pull/3)，base为文档分支，依赖PR #2/#1。786bf55的Validate #7已成功；后续提交的CI必须按对应SHA另看，不能借用旧绿灯。原始评测、复测、依赖失败与恢复证据均保留。
 
 ## 仍阻止可靠产品的缺陷
 

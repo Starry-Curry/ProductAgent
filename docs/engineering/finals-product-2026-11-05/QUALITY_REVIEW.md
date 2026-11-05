@@ -125,3 +125,12 @@
 独立人工核对路径（公开网页访问，不是新增百炼请求）：[Logitech M350s指南](https://support.logi.com/hc/en-us/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s)、[Canon R50短片记录](https://cam.start.canon/en/C011/manual/html/UG-05_Shooting-2_0030.html)、[R50短片IS](https://cam.start.canon/en/C011/manual/html/UG-05_Shooting-2_0110.html)。只核对原文支持范围，不把模型流畅当正确。没有真人盲评结果。
 
 安全资料注入三反例（全链替身）：来源指令不能授予其他账号读取、不能借其他实例原文发布步骤、不能把建议故事变成已确认写入。恶意来源仍可能诱导多余的待确认卡片；“未越权/未落库”不等于交互不受干扰。
+
+
+## 切片10：最终包、依赖层与发布边界
+
+- `production-browser-smoke-r1`确为`next start`生产包，不是开发服务器：新的隔离数据目录/账号，UI录入合成画、版本化更新数量0、Reality同步及匿名401，桌面/手机截图。关闭模型与公开抓取，0请求；不算真实智能质量。
+- GitHub PR #3保持draft、base文档候选PR #2、间接依赖PR #1；786bf55的Validate #7成功。连接器创建权限403后，复用既有GitHub登录身份并核实login/ID创建，没有增加权限/输出凭证或改变原PR。
+- 依赖审计r1：当前npmmirror审计端点404（未实现）；r2临时用官方npm只读接口，发现PostCSS已公告的源映射读取/XSS依赖风险，Next仅受该依赖传递影响。未发现实际私人文件泄露。
+- 以官方PostCSS修复公告与当前8.5.32发布记录为依据，保留Next15.5.28，仅同主版本override PostCSS8.4.31→8.5.32；npm报告只改1个包，lockfile12行。r3生产依赖审计0，另以自制无敏感内容map验证不读取/泄露其sourcesContent。没有大版本框架迁移或全局Node改动。
+- 参考：[官方安全公告](https://github.com/advisories/GHSA-fxqj-rqcc-2cmp)、[PostCSS发布](https://github.com/postcss/postcss/releases)。审计归零只覆盖当时已知的生产依赖公告，不证明应用逻辑、私有数据或所有攻击都安全。
