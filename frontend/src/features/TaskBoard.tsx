@@ -1,3 +1,5 @@
+import TeachingDiagram from "./TeachingDiagram";
+import "../teaching-diagram.css";
 import { useEffect, useState } from "react";
 import { App as AntApp, Modal } from "antd";
 import {
@@ -286,6 +288,7 @@ export function TaskCanvas({
                 />
               </div>
             )}
+            <TeachingDiagram board={board} entry={current} update={update} />
             <div className="guidance-buttons">
               <button
                 className="primary-button"

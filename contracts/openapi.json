@@ -3093,6 +3093,58 @@
           }
         }
       }
+    },
+    "/api/tasks/{task_id}/diagram": {
+      "post": {
+        "tags": [
+          "3D teaching demo"
+        ],
+        "summary": "Diagram",
+        "operationId": "diagram_api_tasks__task_id__diagram_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiagramRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3479,6 +3531,28 @@
           "created_at"
         ],
         "title": "DeviceTargetView"
+      },
+      "DiagramRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "step_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Step Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "step_id"
+        ],
+        "title": "DiagramRequest"
       },
       "EntryContext": {
         "properties": {

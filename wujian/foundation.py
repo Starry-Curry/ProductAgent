@@ -22,6 +22,7 @@ from .retrieval import claim_view, task_view
 def plan_signature(goal, item_ids, constraints, plan):
     import hashlib
     import json
+    plan = {key:value for key,value in plan.items() if key != 'visualizations'}
     return hashlib.sha256(json.dumps({"goal": goal, "item_ids": sorted(item_ids),
         "constraints": constraints, "plan": plan}, ensure_ascii=False, sort_keys=True,
         separators=(",", ":")).encode()).hexdigest()

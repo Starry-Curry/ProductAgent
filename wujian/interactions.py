@@ -294,7 +294,14 @@ def board(db, user_id, task_id):
                         "quote": claim.get("source_quote", ""), "item_id": item_id}
                 except domain.DomainError:
                     pass
-    return {"task": task_for_actor(db, user_id, task_id), "kind": plan.get("kind", "legacy") if plan.get("schema") == "interaction/1" else "legacy",
+    task_value = task_for_actor(db, user_id, task_id)
+    if task_value['plan'].get('visualizations'):
+        from .guidance import step_signature
+        signatures={entry['id']:step_signature(entry) for entry in entries}
+        task_value['plan']={**task_value['plan'],'visualizations':{
+            key:value for key,value in task_value['plan']['visualizations'].items()
+            if signatures.get(key)==value.get('step_signature')}}
+    return {"task": task_value, "kind": plan.get("kind", "legacy") if plan.get("schema") == "interaction/1" else "legacy",
         "entries": entries, "completed_count": sum(entry["state"] == "ready" for entry in entries),
         "total_count": len(entries), "conversation_id": conversation_id, "sources": list(sources.values()),
         "access": access, "participants": participants}

@@ -496,6 +496,8 @@ def create_app(settings=None, model_factory=None):
 
     from .interaction_routes import register_interactions
     register_interactions(app, current_user, db_session)
+    from .teaching_diagram import register_diagrams
+    register_diagrams(app, current_user, db_session, settings)
     dist = ROOT / "frontend" / "dist"
     if (dist / "assets").exists():
         app.mount("/assets", StaticFiles(directory=dist / "assets"), name="frontend_assets")

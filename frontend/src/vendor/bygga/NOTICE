@@ -1,0 +1,14 @@
+Bygga is an independent, unofficial project. It is not affiliated with,
+sponsored or endorsed by Inter IKEA Systems B.V. or any IKEA company.
+
+The MIT license in LICENSE covers Bygga's own code, drawings and voice clips.
+It grants no rights in anyone else's trademarks: IKEA, the IKEA logo and IKEA
+product names (KALLAX, BILLY, MALM and the rest) are trademarks of Inter IKEA
+Systems B.V., used here only to say which product a guide is for.
+
+IKEA's product listings are not part of this repository. scripts/ikea/fetch.ts
+downloads them for local use, and only the catalog rows derived from them
+(names, product types and sizes in src/data) ship with the app.
+
+Assembly guides are generated drawings, not IKEA's instructions. Always check
+them against the official manual that comes with the product.
