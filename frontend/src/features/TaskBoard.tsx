@@ -1,3 +1,5 @@
+import CameraGuidance from "./CameraGuidance";
+import "../camera-guidance.css";
 import { useEffect, useState } from "react";
 import { App as AntApp, Modal } from "antd";
 import {
@@ -327,6 +329,7 @@ export function TaskCanvas({
                 没有变化
               </button>
             </div>
+            <CameraGuidance board={board} entry={current} />
             <div className="guidance-helper">
               <Companion small />
               <button className="quiet-button" onClick={onCamera}>
