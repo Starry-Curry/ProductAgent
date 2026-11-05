@@ -54,4 +54,6 @@ git push origin <完整SHA>:refs/heads/<原分支名>
 
 本地 Node24 实际通过：`npm run test:team` 7/7；`team:mock` 的 Task/Run/确认反馈/重复写入幂等且0上游请求；typecheck复测；完整离线回归683/683；独立 `.next-team-release` 生产构建。`team-browser.json` 记录实际 `team:dev`→浏览器注册→首页、390像素移动端无横向溢出、匿名API401、0页面异常；截图为 `team-desktop.png` 与 `team-mobile.png`。均未调用真实Qwen，不新增智能质量结论。构建自动改写的 Next 类型引用/配置只恢复为本轮开始时的已提交内容，不提交个人构建目录。
 
+截图独立检查发现首轮截在首页数据加载中，故首轮只能证明账号和页面外壳，不能据此声称物品工作区已加载。另存 `team-browser-r2.json` 与 `team-desktop-r2.png` / `team-mobile-r2.png`：明确等待加载结束，实际通过表单确认录入合成物品，物主读取200、匿名读取同件物品401，移动端无横向溢出、0页面异常。没有覆盖首次日志/截图，也没有调用模型。这一复验才支撑“组员能在独立工作区实际录入并读回物品”的结论。
+
 main 的 `dbd93cf` 在 GitHub 的 [Validate](https://github.com/Starry-Curry/ProductAgent/actions/runs/41956944131) 已成功；不把上一提交 CI 冒充本次新 HEAD 通过。Core/Full 和全产品质量仍 NOT_ACCEPTED：陌生型号来源覆盖、语义操作正确性和物理创意可靠性尚有失败，旧18题0/18及全部费用/失败记录不改变。团队能够并行开发是工程接入结论，不是产品可靠性认证。
