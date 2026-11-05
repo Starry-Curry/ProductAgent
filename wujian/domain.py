@@ -52,14 +52,15 @@ def require(row, message="没有找到或无权访问", status=404):
     return row
 
 
-def invalidate_context(db, user_ids, stop_running=False):
+def invalidate_context(db, user_ids, stop_running=False, except_run_id=None):
     for conversation in db.scalars(select(Conversation).where(Conversation.user_id.in_(list(user_ids)))):
         conversation.agent_state = None
         conversation.context_revision += 1
         conversation.reset_after = now()
     if stop_running:
         for run in db.scalars(select(Run).where(Run.user_id.in_(list(user_ids)), Run.status.in_(["queued", "running"]))):
-            run.status, run.error, run.updated_at = "interrupted", "物品授权或归属已变化，请基于最新权限继续。", now()
+            if run.id != except_run_id:
+                run.status, run.error, run.updated_at = "interrupted", "相关信息已更新，请基于最新状态继续。", now()
 
 
 def friends(db, user_id):
@@ -106,14 +107,16 @@ def item_readers(db, item_id):
 def item_view(db, user_id, item):
     accessible_item(db, user_id, item.id)
     profile = db.get(Profile, (user_id, item.id))
+    from .memory_lifecycle import current_avatar
+    avatar = current_avatar(db,user_id,item.id,profile.avatar) if profile else {}
     return {"id": item.id, "owner_id": item.owner_id, "name": item.name, "kind": item.kind,
             "product": item.product, "product_id":item.product_id, "identity_notes":item.identity_notes,
             "state": item.state, "photo_id": item.photo_id,
             "version": item.version, "archived": item.archived,
             "access": "owner" if item.owner_id == user_id else "shared",
             "description": profile.description if profile else "",
-            "avatar": {"enabled": bool(profile and (profile.avatar or {}).get("enabled",
-                bool((profile.avatar or {}).get("personality")))), **(profile.avatar or {})} if profile else {}}
+            "avatar": {"enabled": bool(profile and avatar.get("enabled",
+                bool(avatar.get("personality")))), **avatar} if profile else {}}
 
 
 def list_items(db, user_id, query="", include_archived=False):
@@ -167,7 +170,7 @@ def create_item(db, user_id, payload: ItemCreate):
     return item_view(db, user_id, item)
 
 
-def change_item(db, user_id, item_id, payload: ItemChange):
+def change_item(db, user_id, item_id, payload: ItemChange, *, origin_run_id=None):
     accessible_item(db, user_id, item_id, write=True)
     if payload.photo_id:
         own_asset(db, user_id, payload.photo_id)
@@ -187,7 +190,7 @@ def change_item(db, user_id, item_id, payload: ItemChange):
     profile.description = payload.description
     profile.avatar = {**(profile.avatar or {}), **payload.avatar.model_dump()}
     affected = item_readers(db, item_id)
-    invalidate_context(db, affected)
+    invalidate_context(db, affected, stop_running=True, except_run_id=origin_run_id)
     db.commit()
     db.expire_all()
     return item_view(db, user_id, db.get(ItemRecord, item_id))
@@ -225,7 +228,7 @@ def create_experience(db, user_id, payload: ExperienceCreate):
         own_asset(db, user_id, photo_id)
     row = ExperienceRecord(creator_id=user_id, title=payload.title, text=payload.text,
                            item_ids=list(labels), item_labels=labels, photo_ids=payload.photo_ids,
-                           occurred_on=payload.occurred_on.isoformat(),
+                           occurred_on=payload.occurred_on.isoformat() if payload.occurred_on else None,
                            allow_ai=payload.allow_ai,
                            provenance={"kind":"authored_record","author_id":user_id,
                                        "author_name":db.get(User,user_id).display_name})
@@ -236,6 +239,11 @@ def create_experience(db, user_id, payload: ExperienceCreate):
 
 def memory_view(row):
     return {key: getattr(row, key) for key in ("id", "item_id", "content", "basis", "source_message_id", "updated_at", "supersedes_id", "expires_at", "attributes")}
+
+
+def agent_item_view(value):
+    """Expose the physical reference without a confusable model-table key."""
+    return {"item_id": value["id"], **{key:field for key,field in value.items() if key not in {"id", "product_id"}}}
 
 
 def recall(db, user_id, query="", item_id=None, limit=20):
@@ -258,8 +266,9 @@ def remove_memory(db, user_id, memory_id):
     row = require(db.get(Memory, memory_id))
     if row.user_id != user_id:
         raise DomainError("没有找到这条记忆", 404)
-    row.active = False
-    invalidate_context(db, [user_id])
+    from .memory_lifecycle import retire
+    retire(row, "forgotten")
+    invalidate_context(db, [user_id], stop_running=True)
     db.commit()
 
 

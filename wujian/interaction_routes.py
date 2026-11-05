@@ -82,8 +82,15 @@ def register_interactions(app, current_user, db_session):
         previous = domain.require(db.get(Memory, memory_id))
         if previous.user_id != user.id:
             raise domain.DomainError("没有找到这条理解", 404)
-        return foundation.revise_memory(db, user.id, "explicit_correction:" + uid(), payload.content,
-            item_id=previous.item_id, supersedes_id=memory_id, attributes=previous.attributes)
+        result = foundation.revise_memory(db, user.id, "explicit_correction:" + uid(), payload.content,
+            item_id=previous.item_id, supersedes_id=memory_id, attributes={
+                **{key:value for key,value in (previous.attributes or {}).items() if key not in {"evidence", "retirement"}},
+                "source_quote": payload.content, "source_kind": "explicit_correction", "corrected_from": memory_id})
+        if result.get("status") == "previously_removed":
+            raise domain.DomainError("这段理解此前已撤回，不能直接作为更正恢复", 409)
+        domain.invalidate_context(db, [user.id], stop_running=True)
+        db.commit()
+        return result
 
     @app.post("/api/reminders/{reminder_id}/feedback", response_model=ReminderView, tags=["Household care"])
     def reminder_feedback(reminder_id: str, payload: ReminderFeedback, user=Depends(current_user), db=Depends(db_session)):

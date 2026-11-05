@@ -22,8 +22,8 @@ async def search_web(settings, query: str):
                            timeout=60, max_retries=1) as client:
         response = await client.responses.create(
             model=settings.model,
-            input="搜索以下公开资料，给出来源；只概述搜索发现，不把搜索摘要当成已读取的说明书：\n" + query[:1200],
-            tools=[{"type": "web_search"}], max_output_tokens=1800,
+            input="查找相关原始网页。只列出网页标题与链接，不生成操作步骤、效果保证或综合结论：\n" + query[:1200],
+            tools=[{"type": "web_search"}], max_output_tokens=700,
             extra_body={"enable_thinking": False},
             store=False,
         )
@@ -31,26 +31,35 @@ async def search_web(settings, query: str):
     calls = [block for block in output if block.get("type") == "web_search_call" and block.get("status") == "completed"]
     if not calls:
         raise DomainError("搜索服务未返回可验证的搜索调用记录，不能把模型生成的链接当作搜索结果", 502)
-    urls, texts = [], []
+    results = {}
+    def add(source):
+        url=source.get("url")
+        if url:
+            previous=results.get(url,{"url":url})
+            results[url]={**previous,**{key:source[key] for key in ("url","title") if source.get(key)}}
     for call in calls:
-        urls.extend(source.get("url") for source in call.get("action", {}).get("sources", []) if source.get("url"))
+        for source in call.get("action", {}).get("sources", []):
+            add(source)
     for block in output:
         if block.get("type") != "message":
             continue
         for part in block.get("content", []):
             if part.get("type") == "output_text":
-                texts.append(part.get("text", ""))
-                urls.extend(annotation.get("url") for annotation in part.get("annotations", []) if annotation.get("url"))
+                for annotation in part.get("annotations", []):
+                    add(annotation)
     return {"provider": "bailian_responses_web_search", "query": query,
-            "results": [{"url": url} for url in list(dict.fromkeys(urls))[:15]],
-            "search_summary": "\n".join(texts)[:9000], "evidence_kind": "search_result_not_full_document"}
+            "observed_queries": [call.get("action",{}).get("query") for call in calls
+                                 if isinstance(call.get("action",{}).get("query"),str)],
+            "results": list(results.values())[:15],
+            "evidence_kind": "search_result_not_full_document",
+            "reading_note":"只取得搜索线索，尚未读取这些网页；请取得适用原文后分析。"}
 
 
 async def validate_public_url(url):
     return await resolve_public_url(url)
 
 
-async def download_public(url, *, max_bytes=12 * 1024 * 1024):
+async def download_public(url, *, max_bytes=12 * 1024 * 1024, headers=None):
     # Public-source reads must not silently inherit an unrelated machine proxy.
     async with httpx.AsyncClient(timeout=20, follow_redirects=False, trust_env=False,
                                  limits=httpx.Limits(max_keepalive_connections=0),
@@ -61,7 +70,7 @@ async def download_public(url, *, max_bytes=12 * 1024 * 1024):
             # while Host and TLS verification still use the original domain.
             pinned = original.copy_with(host=addresses[0])
             client.cookies.clear()
-            async with client.stream("GET", pinned, headers={"Host": original.netloc.decode("ascii")},
+            async with client.stream("GET", pinned, headers={**(headers or {}),"Host": original.netloc.decode("ascii")},
                                      extensions={"sni_hostname": original.raw_host.decode("ascii")}) as response:
                 if response.status_code in {301, 302, 303, 307, 308}:
                     url = urljoin(str(original), response.headers.get("location", ""))
@@ -87,13 +96,13 @@ def parse_document(data, content_type, url):
     return content, [], links, media_type, title
 
 
-async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=False):
+async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=False, *, excerpt_chars=12000):
     with sessions() as db:
         if item_id:
             accessible_item(db, user_id, item_id)
         existing = db.scalar(select(SourceRecord).where(SourceRecord.owner_id == user_id, SourceRecord.url == url, SourceRecord.item_id == item_id).order_by(SourceRecord.fetched_at.desc()))
         if existing and not refresh:
-            result = source_excerpt(existing)
+            result = source_excerpt(existing, max_chars=excerpt_chars)
             # Reopening a cached index must retain its navigation affordance.
             # The immutable original response is already saved, no new fetch.
             asset = db.get(Asset, existing.asset_id) if existing.asset_id else None
@@ -120,7 +129,7 @@ async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=F
         db.add(asset)
         db.add(source)
         db.commit()
-        return {**source_excerpt(source), "links": links,
+        return {**source_excerpt(source, max_chars=excerpt_chars), "links": links,
                 "images": source_images(source, asset)}
 
 
@@ -193,7 +202,7 @@ def validate_source_image(data):
         raise DomainError("来源响应不是可验证的完整图片", 422) from error
 
 
-def source_excerpt(source, query="", page=None):
+def source_excerpt(source, query="", page=None, *, max_chars=12000):
     text = source.content
     offset = 0
     if page is not None:
@@ -208,12 +217,12 @@ def source_excerpt(source, query="", page=None):
             offset = text.rfind('\n',0,offset)+1
             text = text[offset:position + 10500]
     first_line = source.content[:max(0,offset)].count('\n')+1
-    numbered = '\n'.join(f'{first_line+i}: {line}' for i,line in enumerate(text[:12000].splitlines()))
+    numbered = '\n'.join(f'{first_line+i}: {line}' for i,line in enumerate(text[:max_chars].splitlines()))
     return {"source_id": source.id, "title": source.title, "url": source.url,
             "fetched_at": source.fetched_at, "text": numbered, "page": page,
             "line_numbered":True,"first_line":first_line,
             "page_count": len(source.pages), "original_asset_id": source.asset_id,
-            "truncated": len(text) > 12000, "evidence_kind": "retrieved_document",
+            "truncated": len(text) > max_chars, "evidence_kind": "retrieved_document",
             "query_matched": query.casefold() in source.content.casefold() if query else None,
             "content_level": source_content_level(source)}
 

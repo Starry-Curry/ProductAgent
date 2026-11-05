@@ -27,6 +27,22 @@ def plan_signature(goal, item_ids, constraints, plan):
         separators=(",", ":")).encode()).hexdigest()
 
 
+def normalize_expiry(expires_at):
+    """One expiry contract for native model repair and authoritative writes."""
+    if not expires_at:
+        return None
+    try:
+        parsed = datetime.fromisoformat(expires_at.replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            raise ValueError()
+        expiry = parsed.astimezone(timezone.utc).isoformat()
+        if expiry <= now():
+            raise ValueError()
+        return expiry
+    except ValueError:
+        raise domain.DomainError("临时条件需要带时区且尚未过期的ISO时间；按当前日期填写有效期限，或无需长期保留时不新增理解")
+
+
 def revise_memory(
     db,
     user_id,
@@ -48,17 +64,7 @@ def revise_memory(
             raise domain.DomainError("没有找到这条理解", 404)
         if not previous.active:
             raise domain.DomainError("旧理解已被更新，请重新读取当前理解", 409)
-    expiry = None
-    if expires_at:
-        try:
-            parsed = datetime.fromisoformat(expires_at.replace("Z", "+00:00"))
-            if parsed.tzinfo is None:
-                raise ValueError()
-            expiry = parsed.astimezone(timezone.utc).isoformat()
-            if expiry <= now():
-                raise ValueError()
-        except ValueError:
-            raise domain.DomainError("临时条件需要带时区且尚未过期的ISO时间")
+    expiry = normalize_expiry(expires_at)
     # remember uses this same session; keep correction and replacement atomic.
     if item_id:
         domain.accessible_item(db, user_id, item_id)
@@ -67,10 +73,31 @@ def revise_memory(
         raise domain.DomainError("理解内容应为1至2000字")
     import hashlib
 
-    identity = hashlib.sha256(f"{user_id}\0{item_id}\0{content}".encode()).hexdigest()
+    import json
+    attributes = attributes or {}
+    # Same words in different situations or roles are different understanding.
+    scope = {"kind": attributes.get("kind", ""), "context": attributes.get("context", "").strip()}
+    identity = hashlib.sha256(json.dumps([user_id, item_id, content, scope],
+        ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     row = db.get(Memory, identity)
+    if row is None:
+        # Reuse already persisted IDs only when their actual scope matches.
+        # No migration/deletion of old history is necessary for this JSON data.
+        legacy = db.get(Memory, hashlib.sha256(f"{user_id}\0{item_id}\0{content}".encode()).hexdigest())
+        if legacy and {"kind": (legacy.attributes or {}).get("kind", ""),
+                       "context": (legacy.attributes or {}).get("context", "").strip()} == scope:
+            row, identity = legacy, legacy.id
     if row and not row.active:
-        return {"status": "previously_removed", "id": identity}
+        reason = (row.attributes or {}).get("retirement", {}).get("reason")
+        if reason == "superseded" and previous is not None:
+            # Explicit new evidence may return to a former preference. Keep
+            # its old version retired and avoid A->B->A reference cycles.
+            identity = hashlib.sha256(f"{identity}\0{message_id}\0{supersedes_id}".encode()).hexdigest()
+            row = db.get(Memory, identity)
+        else:
+            return {"status": "previously_removed", "id": identity}
+    from .memory_lifecycle import with_evidence
+    evidence_attributes = with_evidence(attributes, message_id, row)
     if row is None:
         row = Memory(
             id=identity,
@@ -81,16 +108,18 @@ def revise_memory(
             source_message_id=message_id,
             supersedes_id=supersedes_id,
             expires_at=expiry,
-            attributes=attributes or {},
+            attributes=evidence_attributes,
         )
         db.add(row)
     elif attributes:
-        row.attributes = attributes
+        row.attributes = evidence_attributes
         row.source_message_id = message_id
         row.basis = basis
         row.expires_at = expiry
         row.updated_at = now()
     if previous and previous.id != identity:
+        from .memory_lifecycle import retirement_attributes
+        previous_attributes = retirement_attributes(previous, "superseded", message_id)
         changed = db.execute(
             update(Memory)
             .where(
@@ -98,13 +127,35 @@ def revise_memory(
                 Memory.user_id == user_id,
                 Memory.active.is_(True),
             )
-            .values(active=False)
+            .values(active=False, attributes=previous_attributes)
         )
         if changed.rowcount != 1:
             raise domain.DomainError("旧理解已被更新，请重新读取当前理解", 409)
         domain.invalidate_context(db, [user_id])
     db.commit() if commit else db.flush()
     return domain.memory_view(row)
+
+
+def validate_plan(plan):
+    """The same plan contract is checked by model repair and business writes."""
+    if plan.get("schema") != "interaction/1":
+        return plan
+    from .api_models import TaskEntry
+    from pydantic import ValidationError
+    if plan.get("kind") not in {"checklist", "guidance", "idea"} or not isinstance(plan.get("entries"), list) or len(plan["entries"]) > 60:
+        raise domain.DomainError("请使用有效的事项类型与不超过60项的清单")
+    entries, errors = [], []
+    for index, entry in enumerate(plan["entries"]):
+        try:
+            entries.append(TaskEntry.model_validate(entry).model_dump())
+        except ValidationError as error:
+            for detail in error.errors(include_input=False, include_url=False):
+                errors.append(f"entries[{index}].{'.'.join(map(str,detail['loc']))}: {detail['msg']}")
+    if errors:
+        raise domain.DomainError("事项条目需要修正：\n" + "\n".join(errors[:12]))
+    if len({entry["id"] for entry in entries}) != len(entries):
+        raise domain.DomainError("清单条目编号必须唯一")
+    return {**plan, "entries": entries}
 
 
 def save_task(
@@ -124,19 +175,9 @@ def save_task(
         raise domain.DomainError("未知任务状态")
     if not goal.strip() or len(goal) > 4000:
         raise domain.DomainError("请保留具体任务目标")
+    plan = validate_plan(plan)
     if plan.get("schema") == "interaction/1":
-        from .api_models import TaskEntry
-        from pydantic import ValidationError
-        if plan.get("kind") not in {"checklist", "guidance", "idea"} or not isinstance(plan.get("entries"), list) or len(plan["entries"]) > 60:
-            raise domain.DomainError("请使用有效的事项类型与不超过60项的清单")
-        try:
-            entries = [TaskEntry.model_validate(entry).model_dump() for entry in plan["entries"]]
-        except ValidationError:
-            raise domain.DomainError("事项条目格式已变化，请重新整理")
-        if len({entry["id"] for entry in entries}) != len(entries):
-            raise domain.DomainError("清单条目编号必须唯一")
-        item_ids = list(dict.fromkeys([*item_ids, *(entry["item_id"] for entry in entries if entry["item_id"])]))
-        plan = {**plan, "entries": entries}
+        item_ids = list(dict.fromkeys([*item_ids, *(entry["item_id"] for entry in plan["entries"] if entry["item_id"])]))
     for identity in item_ids:
         domain.accessible_item(db, user_id, identity)
     values = {
@@ -385,7 +426,9 @@ def update_condition(
         raise domain.DomainError("物品状态已更新，请重新读取", 409)
     domain.invalidate_context(
         db,
-        [user_id, *db.scalars(select(Grant.user_id).where(Grant.item_id == item_id))],
+        domain.item_readers(db, item_id),
+        stop_running=True,
+        except_run_id=message.run_id,
     )
     db.commit()
     db.refresh(item)

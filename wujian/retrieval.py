@@ -80,7 +80,7 @@ def authorized_documents(sessions, user_id):
 
     with sessions() as db:
         for row in domain.list_items(db, user_id):
-            add("item", row["id"], row)
+            add("item", row["id"], domain.agent_item_view(row))
             if row["access"] == "shared":
                 from .foundation import known_claims
 
@@ -118,13 +118,8 @@ def authorized_documents(sessions, user_id):
             )
         # Exchanges already exist in SQL. Index them without turning model advice
         # into user facts or depending on an optional model memory/task tool call.
-        retired_sources = set(
-            db.scalars(
-                select(Memory.source_message_id).where(
-                    Memory.user_id == user_id, Memory.active.is_(False)
-                )
-            )
-        )
+        from .memory_lifecycle import history_policy
+        history = history_policy(db, user_id)
         for conversation in db.scalars(
             select(Conversation).where(Conversation.user_id == user_id)
         ):
@@ -133,8 +128,6 @@ def authorized_documents(sessions, user_id):
                 .where(ChatMessage.conversation_id == conversation.id)
                 .order_by(ChatMessage.created_at)
             ).all()
-            if any(message.id in retired_sources for message in messages):
-                continue  # do not resurface superseded/forgotten source conversations
             question = None
             for message in messages:
                 if message.role == "user":
@@ -144,6 +137,9 @@ def authorized_documents(sessions, user_id):
                     and message.role == "assistant"
                     and message.run_id == question.run_id
                 ):
+                    if history.blocks(question.id, question.text, message.text):
+                        question = None
+                        continue
                     add(
                         "conversation",
                         question.id,
@@ -155,6 +151,7 @@ def authorized_documents(sessions, user_id):
                             "created_at": question.created_at,
                             "evidence_kind": "historical_exchange",
                             "assistant_advice_is_not_observed_success": True,
+                            "assistant_text_is_generated_not_user_life_evidence": True,
                         },
                     )
                     question = None

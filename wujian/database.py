@@ -103,7 +103,7 @@ class ExperienceRecord(Base):
     item_ids: Mapped[list] = mapped_column(JSON, default=list)
     item_labels: Mapped[dict] = mapped_column(JSON, default=dict)
     photo_ids: Mapped[list] = mapped_column(JSON, default=list)
-    occurred_on: Mapped[str] = mapped_column(String)
+    occurred_on: Mapped[str | None] = mapped_column(String, nullable=True)
     origin_id: Mapped[str | None] = mapped_column(String, nullable=True)
     provenance: Mapped[dict] = mapped_column(JSON, default=dict)
     created_at: Mapped[str] = mapped_column(String, default=now)

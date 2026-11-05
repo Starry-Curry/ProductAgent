@@ -2970,6 +2970,19 @@
             "title": "Enabled",
             "default": false
           },
+          "form": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "keepsake",
+              "cup",
+              "stone",
+              "flower",
+              "cat"
+            ],
+            "title": "Form",
+            "default": "auto"
+          },
           "nickname": {
             "type": "string",
             "maxLength": 80,
@@ -2999,6 +3012,19 @@
             "type": "boolean",
             "title": "Enabled",
             "default": false
+          },
+          "form": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "keepsake",
+              "cup",
+              "stone",
+              "flower",
+              "cat"
+            ],
+            "title": "Form",
+            "default": "auto"
           },
           "nickname": {
             "type": "string",
@@ -3370,8 +3396,15 @@
             "title": "Photo Ids"
           },
           "occurred_on": {
-            "type": "string",
-            "format": "date",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Occurred On"
           },
           "allow_ai": {
@@ -3425,8 +3458,15 @@
             "title": "Photo Ids"
           },
           "occurred_on": {
-            "type": "string",
-            "format": "date",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Occurred On"
           },
           "allow_ai": {
@@ -3472,8 +3512,15 @@
             "title": "Photo Ids"
           },
           "occurred_on": {
-            "type": "string",
-            "format": "date",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Occurred On"
           },
           "allow_ai": {

@@ -27,6 +27,7 @@ class UserView(BaseModel):
 
 class AvatarSpec(Input):
     enabled: bool = False
+    form: Literal["auto", "keepsake", "cup", "stone", "flower", "cat"] = "auto"
     nickname: str = Field(default="", max_length=80)
     personality: str = Field(default="", max_length=2000)
     color: str = Field(default="#d49c62", pattern=r"^#[0-9a-fA-F]{6}$")
@@ -86,7 +87,7 @@ class ExperienceCreate(Input):
     text: str = Field(min_length=1, max_length=20000)
     item_ids: list[str] = Field(default_factory=list, max_length=30)
     photo_ids: list[str] = Field(default_factory=list, max_length=8)
-    occurred_on: date = Field(default_factory=date.today)
+    occurred_on: date | None = None
     allow_ai: bool = False
 
 
@@ -150,7 +151,7 @@ class DeviceStatusView(BaseModel):
 class ExperienceView(ExperienceCreate):
     item_ids: list[str]
     photo_ids: list[str]
-    occurred_on: date
+    occurred_on: date | None
     id: str
     creator_id: str
     item_labels: dict[str, str]

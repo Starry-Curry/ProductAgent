@@ -248,7 +248,12 @@ def _support_json_articles(soup, url):
 def parse_public_text(data, content_type, url):
     """Return (content, links, media_type, title) without network or execution."""
     media_type = content_type.split(";", 1)[0].lower().strip()
-    decoded = UnicodeDammit(data).unicode_markup or ""
+    # Public pages often omit a charset. The detector misidentified an actual
+    # valid UTF-8 Chinese page as CP775, corrupting its title and evidence.
+    # BeautifulSoup still owns BOM/legacy-encoding fallback; prefer UTF-8 when
+    # it decodes strictly instead of trusting statistical guessing first.
+    decoded = UnicodeDammit(data, known_definite_encodings=["utf-8"],
+                            is_html=media_type in {"text/html","application/xhtml+xml"}).unicode_markup or ""
     if not decoded.strip():
         return "", [], media_type or "text/plain", url
     if media_type in {"application/json", "application/ld+json"} or decoded.lstrip().startswith(("{", "[")):

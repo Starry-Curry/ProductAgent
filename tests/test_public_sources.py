@@ -13,6 +13,21 @@ from wujian.knowledge import fetch_source, parse_document
 
 
 class PublicSourceTests(unittest.TestCase):
+    def test_utf8_without_charset_and_legacy_declared_encoding_preserve_chinese(self):
+        text="<title>杯子投影与生活创意</title><main>原作者：用透明片画图案。</main>"
+        content,_,_,_,title=parse_document(text.encode("utf-8"),"text/html","https://example.invalid/page")
+        self.assertEqual(title,"杯子投影与生活创意")
+        self.assertIn("用透明片画图案",content)
+        legacy='<meta charset="gb2312">'+text
+        content,_,_,_,title=parse_document(legacy.encode("gb2312"),"text/html","https://example.invalid/legacy")
+        self.assertEqual(title,"杯子投影与生活创意")
+        self.assertIn("原作者",content)
+
+    def test_bom_encoded_json_still_uses_the_original_unicode_text(self):
+        body=json.dumps({"body":[{"from":0,"to":1,"content":"原始字幕文字"}]},ensure_ascii=False)
+        content,*_=parse_document(body.encode("utf-16"),"application/json","https://example.invalid/subtitle.json")
+        self.assertIn("原始字幕文字",content)
+
     def test_video_description_and_parts_survive_without_claiming_video_observation(self):
         state = {"videoData": {"title": "夹子的新玩法", "desc": "四种手机支架", "bvid": "BVexample",
                                "pages": [{"page": 2, "part": "折叠方法"}]}}

@@ -138,7 +138,7 @@ def change_experience(db, user_id, identity, payload):
     changed = db.execute(update(ExperienceRecord).where(ExperienceRecord.id == identity,
         ExperienceRecord.creator_id == user_id, ExperienceRecord.version == payload.expected_version).values(
         title=payload.title, text=payload.text, item_ids=list(labels), item_labels=labels,
-        photo_ids=payload.photo_ids, occurred_on=payload.occurred_on.isoformat(), allow_ai=payload.allow_ai,
+        photo_ids=payload.photo_ids, occurred_on=payload.occurred_on.isoformat() if payload.occurred_on else None, allow_ai=payload.allow_ai,
         version=ExperienceRecord.version + 1))
     if changed.rowcount != 1:
         raise domain.DomainError("这段回忆已更新，草稿仍保留，请核对后再保存", 409)
