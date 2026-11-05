@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-05T01:04:02.676Z",
+  "base": "7a19e301d77c25a297a4f657bd1bf359dea68a20",
+  "files": 10,
+  "bytes": 92560,
+  "issues": [],
+  "largeEvidenceReviewed": [],
+  "linksChecked": 45,
+  "historicalAnchorsUnchanged": true,
+  "currentRoundPrefixUnchanged": true,
+  "requests": 368,
+  "inflight": 0,
+  "ledgerSha256": "50bc0e9fe96614a1dd70110ecc5a6f2f1fc2a5e5e4289a32690c3ee93ed270b4"
+}

@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-05T01:00:49.355Z",
+  "basis": "real_local_old_and_fixed_PostCSS_same_CSS_own_synthetic_map_only_no_private_file_no_network_exfil_no_model",
+  "cases": [
+    {
+      "label": "baseline",
+      "version": "8.4.31",
+      "syntheticMapReadIntoOutput": true
+    },
+    {
+      "label": "fixed",
+      "version": "8.5.32",
+      "syntheticMapReadIntoOutput": false
+    }
+  ],
+  "oldPackageSha256": "803bd4d3de6bd009828978749db0558375bcde95d76683fad3fdcf4aa37c8453",
+  "oldLicense": "MIT",
+  "paidRequests": 0
+}
