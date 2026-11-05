@@ -79,7 +79,11 @@ class RequestBudget:
         the normal application's network configuration is not monkey-patched.
         """
         host = urlsplit(base_url).hostname
-        sync_send, async_send = library.Client.send, library.AsyncClient.send
+        # `send` can follow several redirects internally. Count the actual
+        # transport request for each hop, not only the outer SDK operation.
+        # These private methods are checked against both locked HTTPX versions
+        # by the offline redirect/retry/stream tests below this harness.
+        sync_send, async_send = library.Client._send_single_request, library.AsyncClient._send_single_request
         sync_init, async_init = library.Client.__init__, library.AsyncClient.__init__
         budget = self
 
@@ -121,7 +125,7 @@ class RequestBudget:
             return response
 
         library.Client.__init__, library.AsyncClient.__init__ = initialize_sync, initialize_async
-        library.Client.send, library.AsyncClient.send = send, asend
+        library.Client._send_single_request, library.AsyncClient._send_single_request = send, asend
         restore_other = None
         if library is httpx:
             # Current OpenAI SDK uses httpx2; explicit legacy clients still use
@@ -133,7 +137,7 @@ class RequestBudget:
             if restore_other:
                 restore_other()
             library.Client.__init__, library.AsyncClient.__init__ = sync_init, async_init
-            library.Client.send, library.AsyncClient.send = sync_send, async_send
+            library.Client._send_single_request, library.AsyncClient._send_single_request = sync_send, async_send
         return restore
 
 
