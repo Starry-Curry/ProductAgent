@@ -1,5 +1,71 @@
 {
-  "status": "planned_not_executed",
-  "reason": "恢复清单必须先提交并推送，之后才执行删除；实际执行后另提交结果。",
-  "snapshot": "../BRANCH_SNAPSHOT.json"
+  "at": "2026-11-05T03:01:24.433Z",
+  "status": "deleted_remote_refs_only",
+  "recoveryCommit": "29eb3301ac18d3e086ff237c93bd960ad4dce6d8",
+  "deleted": [
+    {
+      "branch": "codex/wujian-creativity-engine-v2",
+      "sha": "a24bfd7f49147e80c08077c9c168bae640255078"
+    },
+    {
+      "branch": "codex/wujian-experience-lifecycle-v1",
+      "sha": "c31a535b54f1e0e97b484af5910f34e67eb132d7"
+    },
+    {
+      "branch": "codex/wujian-framework-evidence-v1",
+      "sha": "1cb97646cb8ea058af86515eb79d03d2b899f7b9"
+    },
+    {
+      "branch": "codex/wujian-integrated-agent-v1",
+      "sha": "f0e3114924a1d22b01b413d6d3e40b35fe6d6d41"
+    },
+    {
+      "branch": "codex/wujian-intelligence-alpha",
+      "sha": "7c513170a28d5dd76fe7845e0debdc163c53ea19"
+    },
+    {
+      "branch": "codex/wujian-intelligence-behavior-v1",
+      "sha": "d02b35e5df2de038299def6aacb56e0cc2a7b43f"
+    },
+    {
+      "branch": "codex/wujian-intelligence-kernel-v3",
+      "sha": "0432ace33cc333bbbbe4bd9db59d3ec20760c7c7"
+    },
+    {
+      "branch": "codex/wujian-outcome-qwen-v3",
+      "sha": "c18b26d758af9281677150c513d9225a19bb4e67"
+    },
+    {
+      "branch": "codex/wujian-personal-objects-v1",
+      "sha": "113696effe5f7f162fe9dccfbdf0bb64a7737d55"
+    },
+    {
+      "branch": "codex/wujian-practical-agent-v1",
+      "sha": "84f601b8b68bc52471a96cc6c6f6475531e816d6"
+    },
+    {
+      "branch": "codex/wujian-product-foundation-v1",
+      "sha": "d8eee9306e8eb53975e80eb98d3b1ace812777b7"
+    },
+    {
+      "branch": "codex/wujian-qwen-foundation-v1",
+      "sha": "5b8573defab97afe3ffc273970cf22b766788929"
+    },
+    {
+      "branch": "codex/wujian-unified-foundation-v2",
+      "sha": "7d682465eb91d4ead6a282852921a8d88b6fabc4"
+    },
+    {
+      "branch": "codex/wujian-unified-home-beta",
+      "sha": "a2a9a23d5d05bc187300c57aaa01b400772d727e"
+    }
+  ],
+  "deletedCount": 14,
+  "remoteRemaining": 16,
+  "keptBranchesVerified": true,
+  "mainUnchanged": true,
+  "developUnchanged": true,
+  "localWorktreesAndHistoryPreserved": true,
+  "forcePush": false,
+  "paidRequests": 0
 }

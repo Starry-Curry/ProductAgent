@@ -30,9 +30,13 @@ Node.js 24；Windows 可用 npm.cmd。合并集成 PR 后，新功能改从 orig
 
 本次开始时 main=`dbd93cfc9f684ccac7b0f80727cdaebcea898ca9`，develop=`f449067ce939d7fe82a3e48bab15df046d6eb2bc`，后者是前者祖先。main 的历史保护分支 `codex/main-backup-20261105-ea32c3f` 保留。准备团队候选→develop 的同步 PR，必须最新 CI 通过且一名组员独立审查，作者不替代组员审批、不直接更新 develop。旧 PR #1/#2/#3 保留，本轮未修改它们；新的同步 PR 包含它们已进入 main 的成果，组员应审查最新候选，不重复合并旧候选。
 
+已创建 [PR #4：最新底座→develop](https://github.com/Starry-Curry/ProductAgent/pull/4)。这是当前团队同步入口，尚未合并；组员从该 PR 源分支即可开始独立开发。最终是否符合合并条件，以最新 HEAD 的 CI 与一名其他组员实际审查为准，不因创建 PR 自动放行。
+
 用户本轮另行授权清理旧分支。完整分支名、40位 SHA、main 包含关系、开放 PR 与保留原因见 [BRANCH_SNAPSHOT.json](BRANCH_SNAPSHOT.json)。14个旧Codex分支符合清理条件；只删除远端分支引用，所有提交已被 main 包含，本地分支/worktree/未提交修改/原始费用证据不删除。`codex/wujian-real-intelligence-eval-v1` 有未提交评测记录，保留；开放 PR 的源/目标、独立成果、其他成员 feat/*、main、develop、旧 main 恢复点都保留。
 
 删除前先推送本清单作为恢复锚点，再重新核对远端 SHA，以普通 atomic push 删除；不强推、不 filter-repo、不改历史。实际删除是否成功以提交后的 [分支结果](evidence/branch-cleanup-result.json) 为准，不能把清单当执行完成。
+
+实际已执行：恢复清单先发布于 `29eb3301ac18d3e086ff237c93bd960ad4dce6d8`，随后14个目标分支普通原子删除成功；含新团队候选后剩16个远端分支，所有保留分支SHA一致，main/develop未变化。未清空/删除任何本地worktree或数据库；原评测工作区的未提交调用/费用文件原地保留。
 
 恢复单个旧远端分支（先检查是否已有同名分支，不覆盖新成果）：
 

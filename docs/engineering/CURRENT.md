@@ -6,6 +6,8 @@ main 已由负责人授权更新为 `dbd93cf`，旧 main 保存在 `codex/main-b
 
 develop 核对时仍为 `f449067`；同步集成 PR 经 CI 和一名组员审查之前，组员从 `origin/codex/wujian-team-ready-v2` 创建各自功能分支，个人 PR 暂指向该候选。同步后统一从最新 origin/develop 开始，功能 PR 改向 develop 并核对差异。见 [接入指南](TEAM_INTEGRATION.md) 和 [本轮交接/验证/分支恢复清单](team-ready-2026-11-05/DELIVERY.md)。不覆盖旧 PR 或他人分支；下面状态为历史轮次快照，其中“未合 main”仅指当时。
 
+已创建 [团队同步PR #4](https://github.com/Starry-Curry/ProductAgent/pull/4)，未自动合并。实际团队启动/浏览器认证、7项团队测试、683项离线、类型复测、生产构建通过，0付费请求。用户授权的14个历史Codex远端分支已清理，含新候选后剩16个；全部SHA恢复锚点先推送于 `29eb330`。有未提交评测证据、独立成果、开放PR、本地worktree和私人数据库均保留。
+
 2026-11-05 本轮恢复交接：`codex/wujian-finals-product-v1` 基于文档候选 `689293c`，业务沿用 `56d2c1f`。用户扩大到决赛整体产品闭环，并要求逐层对抗审查及至少八小时持续研发（已按实际时间达到）；新授权800次上游请求、不设金额上限，旧账目仍封存。实际进展、费用和未达标项见 [本轮状态](finals-product-2026-11-05/STATUS.md)。这是独立研发，未合并main/develop；下方历史质量结论不被代码修复或阶段提交替代。
 
 2026-11-05 仓库协作整理：文档候选分支为 `codex/wujian-docs-cleanup-v1`，业务集成候选仍为下述团队分支。本次只精简重复报告并补充 [GitHub 操作指南](../GIT_WORKFLOW.md) 与 [后续规划](NEXT_STEPS.md)，不修改业务、权限、历史证据或智能验收结论。核对时 PR #1 仍开放且没有组员审查，develop/main 未更新；旧分支和未发布的本地清理恢复点保留。本次未运行付费模型，不重新运行全量测试或生产构建；文档差异与链接另行核对。
