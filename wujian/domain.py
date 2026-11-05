@@ -301,6 +301,18 @@ def remove_memory(db, user_id, memory_id):
     row = require(db.get(Memory, memory_id))
     if row.user_id != user_id:
         raise DomainError("没有找到这条记忆", 404)
+    if not row.active:
+        return
+    # A duplicate request may have loaded active=True before the first forget
+    # committed. Only the actual SQL transition may invalidate later chats.
+    # RETURNING retains the latest evidence even if this Session held old data.
+    changed = db.execute(update(Memory).where(
+        Memory.id == memory_id, Memory.user_id == user_id, Memory.active.is_(True)
+    ).values(active=False).returning(Memory.attributes)
+        .execution_options(synchronize_session=False)).first()
+    if changed is None:
+        return
+    row.attributes = changed[0] or {}
     from .memory_lifecycle import retire
     retire(row, "forgotten")
     invalidate_context(db, [user_id], stop_running=True)
