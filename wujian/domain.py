@@ -260,6 +260,8 @@ def remove_memory(db, user_id, memory_id):
     row = require(db.get(Memory, memory_id))
     if row.user_id != user_id:
         raise DomainError("没有找到这条记忆", 404)
+    if not row.active:
+        return
     row.active = False
     row.attributes = {**(row.attributes or {}), 'retired_at': now()}
     invalidate_context(db, [user_id], stop_running=True)
