@@ -252,7 +252,7 @@ export async function gateway(configPath,options) {
           model: upstreamModel || body.model,
         };
       } else result = await response.json();
-      if (!response.ok) {attempt.providerError={code:result.code||result.error?.code,message:options?.recordContent===false?undefined:clean(String(result.message||result.error?.message||'').slice(0,300))};throw Error("provider_http_" + response.status);}
+      if (!response.ok) {attempt.providerError={code:options?.recordContent===false?'upstream_http_'+response.status:result.code||result.error?.code,message:options?.recordContent===false?undefined:clean(String(result.message||result.error?.message||'').slice(0,300))};throw Error("provider_http_" + response.status);}
       if(result.code)throw Error('provider_code_'+result.code);
       attempt.status = "returned";
       const usage=result.usage;const billedUsage=usage&&{...usage,prompt_tokens:usage.prompt_tokens??usage.input_tokens??(rerank?usage.total_tokens:undefined),completion_tokens:rerank?0:usage.completion_tokens??usage.output_tokens};
@@ -298,11 +298,17 @@ export async function gateway(configPath,options) {
     } catch (e) {
       if (attempt) {
         attempt.status = "failed";
-        attempt.transportCode = e.cause?.code || e.name;
-        attempt.error = String(e.message).replaceAll(
-          config.AI_API_KEY,
-          "[removed]",
-        );
+        if(options?.recordContent===false){
+          // Upstream codes, invalid-JSON excerpts and transport messages can echo
+          // user content. Private previews retain accounting and fixed classes,
+          // never these opaque strings; synthetic evidence mode stays unchanged.
+          const code=e.cause?.code||e.name;
+          attempt.transportCode=['AbortError','TimeoutError','SyntaxError','TypeError','Error','UND_ERR_CONNECT_TIMEOUT','UND_ERR_HEADERS_TIMEOUT','UND_ERR_BODY_TIMEOUT','ECONNRESET','ETIMEDOUT','ENOTFOUND'].includes(code)?code:'upstream_failure';
+          attempt.error=attempt.httpStatus>=400?'provider_http_'+attempt.httpStatus:e.name==='SyntaxError'?'upstream_response_invalid_json':['TimeoutError','AbortError'].includes(e.name)?'upstream_wait_interrupted':'upstream_request_failed';
+        }else{
+          attempt.transportCode = e.cause?.code || e.name;
+          attempt.error = String(e.message).replaceAll(config.AI_API_KEY,"[removed]");
+        }
         attempt.elapsedMs = Date.now() - Date.parse(attempt.startedAt);
         save();
       }

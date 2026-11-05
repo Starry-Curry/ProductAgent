@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-04T23:54:07.368Z",
+  "basis": "real_authenticated_UI_story_consent_persona_Task_feedback_new_Task_real_Qwen_SYNTHETIC_history_and_possession_catalog_metadata_reused_from_actual_public_lookup_not_new_official_knowledge_or_real_reading",
+  "responses": [],
+  "checks": [],
+  "errors": [
+    "locator.check: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('使用已获准的个人记忆与经历（仅使用允许云端读取的内容，不自动保存新记忆）', { exact: true })\u001b[22m\n"
+  ],
+  "catalogIdentity": {
+    "name": "Fantastic Mr. Fox",
+    "author": "Roald Dahl",
+    "isbn": "9780140328721",
+    "source": "https://openlibrary.org/isbn/9780140328721"
+  },
+  "itemId": "7aedbc2c-a2d8-46c6-95d0-729828dd9545",
+  "taskId": "7f86328c-292f-45e3-813e-a750000af2aa",
+  "status": "failed",
+  "upstreamRequests": 0
+}

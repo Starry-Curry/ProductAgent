@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-04T23:47:23.985Z",
+  "basis": "real_browser_ZXing_generated_QR_decode_and_live_public_catalogs_SYNTHETIC_possession_not_camera_physical_package_or_Qwen",
+  "cases": [],
+  "errors": [
+    "QRCodeWriter.encode fixture omitted required hints Map; TypeError reading hints.get. This is runner setup, not App behavior."
+  ],
+  "status": "failed_fixture_generation_before_browser",
+  "upstreamRequests": 0
+}

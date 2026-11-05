@@ -1,0 +1,18 @@
+✔ 独立账号、会话、家庭邀请、状态、赠礼与双向隐私 (436.5766ms)
+{"event":"api_request","requestId":"a807457d-e156-476d-af6c-e3b05b5a8153","path":"/api/life","method":"GET","status":200,"elapsedMs":35}
+{"event":"api_request","requestId":"3b07db32-5ff0-4c04-b413-6b1c41de8a4f","path":"/api/life","method":"GET","status":200,"elapsedMs":39}
+{"event":"api_request","requestId":"3589bb4b-fe7f-4e28-b2db-e1b6579bc342","path":"/api/life","method":"GET","status":403,"elapsedMs":0}
+{"event":"model_request","request":"9b12580f52c1de5f47f4afad8a4f46da","status":"400","elapsedMs":8,"reservedTokens":2127}
+{"event":"model_request","request":"6fcd7de162a7f131dcde014d6aa6548a","status":"200","elapsedMs":7,"reservedTokens":2127}
+{"event":"api_request","requestId":"21cae86e-73dc-4bf6-8919-35d764284727","path":"/api/life","method":"GET","status":401,"elapsedMs":3}
+✔ 公开会话不可伪造；并发请求上下文隔离、来源验证、过期拒绝与响应脱敏 (392.1481ms)
+✔ JSON模式显式JSON约束，普通问答可关闭；400错误安全分类，超时可配置，SSRF特殊地址拒绝 (10.038ms)
+✔ 独立账号在异步操作等待期间退出，旧凭证不能接收迟到的私人响应；另一有效账号不受影响 (176.1876ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 879.5264

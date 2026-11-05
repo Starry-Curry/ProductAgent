@@ -1,0 +1,31 @@
+✔ 同页锚点不是新HTTP章节；已有完整正文时不重复联网和存三份同一资料 (188.3098ms)
+✔ 一个不合法的辅助链接不能使整份有效原文丢失；仅排除该导航项 (123.5897ms)
+✔ 辅助导航网络失败不能吞掉已取得的适用正文；权限错误仍由原guard中止 (181.8039ms)
+✖ 模型显式读取已经发现的同页锚点也复用当前正文，记录缓存而非伪装新获取 (194.3829ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1350.8174
+
+✖ failing tests:
+
+test at tests\finals-manual-navigation.test.ts:19:1
+✖ 模型显式读取已经发现的同页锚点也复用当前正文，记录缓存而非伪装新获取 (194.3829ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-manual-navigation.test.ts:23:134)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

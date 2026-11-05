@@ -13,7 +13,7 @@ import {
   findOfficial,
   type PublicDocument,
 } from "./knowledge.ts";
-import { fetchPublicDocument, sourceURL, listSources,type SourceReading,type OriginalPublicPayload } from "./sources.ts";
+import { fetchPublicDocument, sourceURL,documentRequestAddress,listSources,type SourceReading,type OriginalPublicPayload } from "./sources.ts";
 import type { Provider } from "../ai/provider.ts";
 import { selectTaskEvidence } from "./knowledge-task.ts";
 import { multilingualAnchors } from "./retrieval-topics.ts";
@@ -62,9 +62,12 @@ export type AcquiredDocument = {
 };
 /** Exact URL grant from a manufacturer's exact-model page, never a blanket CDN allowlist. */
 export function exactProductSubject(doc:AcquiredDocument,model:string){return doc.productModels?.length ? doc.productModels.some(m=>modelMentioned(m,model)) : modelMentioned(doc.title,model);}
+export function manufacturerLinkedManual(doc:AcquiredDocument,item:Item,documents:AcquiredDocument[]){
+ return doc.applicability==='manufacturer_linked_manual'&&documents.some(parent=>(officialDomain(parent.url,item.brand||'')||publisherOwns(parent.url,item.brand||'',parent.publisherProof))&&exactProductSubject(parent,item.model)&&doc.chain.includes(parent.url)&&parent.sections?.some(l=>l.url===doc.url&&isProductManual(l)));
+}
 export function trustedOfficialDocument(doc:AcquiredDocument,item:Item,documents:AcquiredDocument[]){
  if(officialDomain(doc.url,item.brand||doc.brand||'')||publisherOwns(doc.url,item.brand||doc.brand||'',doc.publisherProof))return true;
- return doc.applicability==='manufacturer_linked_manual'&&documents.some(parent=>(officialDomain(parent.url,item.brand||'')||publisherOwns(parent.url,item.brand||'',parent.publisherProof))&&exactProductSubject(parent,item.model)&&doc.chain.includes(parent.url)&&parent.sections?.some(l=>l.url===doc.url&&isProductManual(l)));
+ return manufacturerLinkedManual(doc,item,documents);
 }
 const digest = (s: string) => createHash("sha256").update(s).digest("hex");
 export const knowledgeIdentity = (item: Item) =>
@@ -183,7 +186,7 @@ export function makeKnowledgeDocument(
       if(country!==region)return reading;
       return {mode:reading?.mode||'html_text' as const,figures:reading?.figures||[],...reading,limitations:[...(reading?.limitations||[]),'来源网址含国家地区标识，仅为来源市场线索；不单独证明私人实例、固件版本或跨区操作适用。']};
     })(),
-    sections: d.links.filter(l=>officialDomain(l.url,item.brand||'')||isProductManual(l)).slice(0,300),
+    sections: d.links.filter(l=>{try{sourceURL(l.url);return officialDomain(l.url,item.brand||'')||isProductManual(l);}catch{return false;}}).slice(0,300),
   };
 }
 function tableExists(db: DatabaseSync) {
@@ -342,7 +345,18 @@ export function storeOfficialDocument(
   item: Item,
   d: AcquiredDocument,
 ) {
-  const identity = knowledgeIdentity(item),
+  const identity = knowledgeIdentity(item),body=JSON.stringify(d),address=documentRequestAddress(d.url);
+  db.exec('SAVEPOINT publish_official_document');
+  try{
+  // An old fragment URL cannot remain an active copy of a replaced HTTP body.
+  // Equal-content aliases retain their references; query parameters stay distinct.
+  const siblings=db.prepare("SELECT id,url,hash FROM life_knowledge_documents WHERE owner=? AND item_id=? AND identity=? AND status='active'").all(actor,item.id,identity) as {id:string;url:string;hash:string}[];
+  // An active exact body may only be receiving selections/reading metadata.
+  // That is not publication of a newer HTTP body: legacy anchor snapshots
+  // already supplied to this turn must not be silently revoked by annotation.
+  const activeExact=siblings.some(row=>row.url===d.url&&row.hash===d.hash);
+  for(const row of siblings)if(!activeExact&&row.hash!==d.hash&&documentRequestAddress(row.url)===address)db.prepare("UPDATE life_knowledge_documents SET status='superseded' WHERE id=?").run(row.id);
+  const
     same = db
       .prepare(
         "SELECT id FROM life_knowledge_documents WHERE owner=? AND item_id=? AND identity=? AND url=? AND hash=?",
@@ -355,9 +369,8 @@ export function storeOfficialDocument(
   if (same) {
     db.prepare(
       "UPDATE life_knowledge_documents SET status='active',body=?,created_at=? WHERE id=?",
-    ).run(JSON.stringify(d), d.fetchedAt, same.id);
-    return;
-  }
+    ).run(body, d.fetchedAt, same.id);
+  }else{
   db.prepare(
     "INSERT INTO life_knowledge_documents VALUES(?,?,?,?,?,?,?,?,?)",
   ).run(
@@ -367,10 +380,13 @@ export function storeOfficialDocument(
     identity,
     d.url,
     d.hash,
-    JSON.stringify(d),
+    body,
     "active",
     d.fetchedAt,
   );
+  }
+  db.exec('RELEASE SAVEPOINT publish_official_document');
+  }catch(error){db.exec('ROLLBACK TO SAVEPOINT publish_official_document; RELEASE SAVEPOINT publish_official_document');throw error;}
 }
 /** Only server-verified official-public imports may enter the official cache. Ordinary user text keeps its own provenance. */
 export function indexOfficialSource(

@@ -467,6 +467,7 @@ export function AssistantConversation({
                 正在一起完成：{message.reply.task.goal}
               </small>
             )}
+            {!!message.reply?.guidanceSources?.length&&<small>AI 整理的指导，可逐步展开原文核对；未验证实物。</small>}
             {message.role === "assistant" ? (
               <div className="assistant-prose"><Markdown components={{a: ({children, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer">{children}</a>}}>{message.text}</Markdown></div>
             ) : <p>{message.text}</p>}
@@ -585,6 +586,7 @@ export function AssistantConversation({
                 {message.reply.steps.map((step,n) => (
                   <li key={step.id}>
                     {message.reply?.stepsInAnswer ? `第 ${n+1} 步` : step.text}
+                    {message.reply?.guidanceSources?.filter(s=>s.id===step.sourceId).map(s=><details key={s.id} className="guidance-original"><summary>查看第 {n+1} 步对应原文</summary><blockquote>{s.text}</blockquote><a href={s.url} target="_blank" rel="noopener noreferrer">{s.title} · 厂家来源 ↗</a><p><small>{s.model} · {s.region} · 原文版本 {s.documentHash.slice(0,12)}。对应原文不等于模型释义已获验证；请核对完整前提。</small></p></details>)}
                     {message.id === last?.id && !temporary && (
                       <button
                         className="text-button"

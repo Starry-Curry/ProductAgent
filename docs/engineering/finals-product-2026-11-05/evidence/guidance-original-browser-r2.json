@@ -1,0 +1,422 @@
+{
+  "at": "2026-11-05T00:06:24.307Z",
+  "round": "finals-product-20261105-r1",
+  "basis": "real_Qwen_cached_actual_official_M350s_originals_retest_not_first_answer_not_physical_device_verification",
+  "responses": [
+    {
+      "question": "请自主核对 Logitech Pebble Mouse 2 M350s 的官方资料，不要拿旧M350的资料代替。我没有Logi Bolt接收器，能直接连Windows 11蓝牙吗？首次怎样配对、最多记住几台设备、电池需要几节什么型号？请完整回答并给原文来源，不要声称已经控制鼠标。",
+      "result": {
+        "session": {
+          "id": "edaa54ec-4705-48fd-b96e-0ce69650200d",
+          "owner": "u_f0bccc8f-3422-45bc-a304-cbdcf470bb73",
+          "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+          "identity": "[\"u_f0bccc8f-3422-45bc-a304-cbdcf470bb73\",\"[\\\"Pebble Mouse 2 M350s\\\",null,null,null]\"]",
+          "mode": "auto",
+          "revision": 1,
+          "status": "active",
+          "messages": [
+            {
+              "id": "a88ecc56-f357-49ca-8e61-6fbb204bdf13",
+              "role": "user",
+              "text": "请自主核对 Logitech Pebble Mouse 2 M350s 的官方资料，不要拿旧M350的资料代替。我没有Logi Bolt接收器，能直接连Windows 11蓝牙吗？首次怎样配对、最多记住几台设备、电池需要几节什么型号？请完整回答并给原文来源，不要声称已经控制鼠标。",
+              "at": "2026-11-05T00:06:38.509Z",
+              "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+              "memoryPolicy": "off",
+              "capture": false
+            },
+            {
+              "id": "65be69ad-d4d7-4b9e-94c0-667f07aff3c5",
+              "role": "assistant",
+              "text": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方规格明确列出该鼠标支持 Bluetooth Low Energy，兼容设备包含“Windows 10, 11 or later”。Logi Bolt 接收器仅为可选连接方式，且包装内不含接收器，因此没有接收器时可直接使用 Windows 11 自带的蓝牙功能连接。\n2.  **首次蓝牙配对方法**：\n    *   拔出鼠标底部的电池绝缘拉条，鼠标会自动开机并默认进入通道 1 的待配对状态。\n    *   在 Windows 11 中打开“设置 > 蓝牙和其他设备 > 添加设备”，选择“蓝牙”。\n    *   在设备列表中选择与鼠标底部刻印型号一致的名称（如 Pebble M350s）即可完成配对。\n    *   若需配对新设备或切换通道，短按 Easy-Switch 按钮选择目标通道后，长按该按钮 3 秒，直到指示灯快速闪烁即进入可被发现模式。\n3.  **最多记住设备数**：最多可配对并存储 3 台设备，通过 Easy-Switch 按钮短按即可在已配对设备间切换。\n4.  **电池规格**：需要 1 节 AA 碱性电池（出厂已预装 1 节）。官方标称续航最长可达 24 个月；更换时掀开鼠标上盖，注意正负极方向装入新电池后盖回上盖即可。\n\n未知说明：官方资料未给出 Windows 11 下蓝牙配对的具体系统版本号下限（仅写“Windows 11 or later”），也未说明是否支持充电电池或镍氢电池，仅明确要求“AA alkaline battery”。\n\n1. 拔出鼠标电池仓的绝缘拉条，鼠标自动开机并进入通道1待配对状态。\n\n2. 在 Windows 11 打开蓝牙设置，点击“添加设备”>“蓝牙”，在列表中选择与鼠标底部刻印型号一致的设备名完成配对。\n\n3. 如需配对第2/3台设备：短按 Easy-Switch 按钮选择目标通道，再长按3秒至LED快闪进入发现模式，然后在电脑蓝牙设置中完成配对。\n\n4. 确认电池为1节AA碱性电池；更换时掀开上盖，按正确极性装入新电池后盖回上盖。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标底部型号刻印与蓝牙列表名称一致\n\n— 使用AA碱性电池，非充电电池",
+              "reply": {
+                "modelHistoryText": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方规格明确列出该鼠标支持 Bluetooth Low Energy，兼容设备包含“Windows 10, 11 or later”。Logi Bolt 接收器仅为可选连接方式，且包装内不含接收器，因此没有接收器时可直接使用 Windows 11 自带的蓝牙功能连接。\n2.  **首次蓝牙配对方法**：\n    *   拔出鼠标底部的电池绝缘拉条，鼠标会自动开机并默认进入通道 1 的待配对状态。\n    *   在 Windows 11 中打开“设置 > 蓝牙和其他设备 > 添加设备”，选择“蓝牙”。\n    *   在设备列表中选择与鼠标底部刻印型号一致的名称（如 Pebble M350s）即可完成配对。\n    *   若需配对新设备或切换通道，短按 Easy-Switch 按钮选择目标通道后，长按该按钮 3 秒，直到指示灯快速闪烁即进入可被发现模式。\n3.  **最多记住设备数**：最多可配对并存储 3 台设备，通过 Easy-Switch 按钮短按即可在已配对设备间切换。\n4.  **电池规格**：需要 1 节 AA 碱性电池（出厂已预装 1 节）。官方标称续航最长可达 24 个月；更换时掀开鼠标上盖，注意正负极方向装入新电池后盖回上盖即可。\n\n未知说明：官方资料未给出 Windows 11 下蓝牙配对的具体系统版本号下限（仅写“Windows 11 or later”），也未说明是否支持充电电池或镍氢电池，仅明确要求“AA alkaline battery”。\n\n1. 拔出鼠标电池仓的绝缘拉条，鼠标自动开机并进入通道1待配对状态。\n\n2. 在 Windows 11 打开蓝牙设置，点击“添加设备”>“蓝牙”，在列表中选择与鼠标底部刻印型号一致的设备名完成配对。\n\n3. 如需配对第2/3台设备：短按 Easy-Switch 按钮选择目标通道，再长按3秒至LED快闪进入发现模式，然后在电脑蓝牙设置中完成配对。\n\n4. 确认电池为1节AA碱性电池；更换时掀开上盖，按正确极性装入新电池后盖回上盖。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标底部型号刻印与蓝牙列表名称一致\n\n— 使用AA碱性电池，非充电电池",
+                "guidanceSources": [
+                  {
+                    "id": "bc8ee0b533b44eb41290a6bd:996",
+                    "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+                    "text": "Mouse 2 M350s overview\n\n〔此处图示未读取〕\n\n1 - Scroll Wheel / Customizable middle click\n\n2 - Battery (and receiver) compartment\n\n3 - On/off toggle switch\n\n4 - Connection status LEDs\n\n5 - Easy-switch / Connection button\n\n6 - High precision sensor\n\n \n\nConnect your mouse to your device\n\nYou can pair your mouse to your device using the Bluetooth Low Energy connection.\n\nTo pair through Bluetooth:\n\n〔此处图示未读取〕\n\nRemove the pull tab from the mouse. It will automatically turn on. Channel 1 will be ready to pair.\n\nOpen the Bluetooth preferences on your device. (Click here for more details on how to do this on your computer). Add a new peripheral by selecting the mouse from your list of devices (make sure you select the same model number that is engraved under your mouse) and your mouse will be ready to use.\n\nIf you experience issues with Bluetooth, click here for Bluetooth troubleshooting.\n\nYour mouse can be paired with up to three different devices and you can use the Easy-Switch button to toggle between them.\n\nIf you want to pair additional devices to your mouse:\n\n〔此处图示未读取〕\n\nSelect the channel you want using the Easy-Switch button — press and then hold the same button for three seconds. This will put the mouse in discovery mode so it can be seen by your computer. The LED will start blinking rapidly.\n\nOpen the Bluetooth settings on your computer to",
+                    "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+                    "model": "Pebble Mouse 2 M350s",
+                    "region": "unspecified",
+                    "documentHash": "4b223cd9838a4a1ab1fcc4e8ae2186f301a116752a0ff571e2676e65079c340c",
+                    "basis": "official_original_not_paraphrase_verification"
+                  },
+                  {
+                    "id": "bc8ee0b533b44eb41290a6bd:1997",
+                    "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+                    "text": "them.\n\nIf you want to pair additional devices to your mouse:\n\n〔此处图示未读取〕\n\nSelect the channel you want using the Easy-Switch button — press and then hold the same button for three seconds. This will put the mouse in discovery mode so it can be seen by your computer. The LED will start blinking rapidly.\n\nOpen the Bluetooth settings on your computer to complete the pairing. You can find more details here.\n\nOnce paired, a short press on the Easy-Switch button lets you toggle between your devices.\n\nLogi Bolt receiver optional connection method \n\nPebble Mouse 2 M350s is compatible with Logi Bolt receiver so you can also connect the Pebble Mouse 2 M350s via Logi Bolt receiver (but the receiver needs to be\npurchased separately\n):\n\nDownload and install\nLogi Options+ app\n\n \nhere or you can also use Logi Web Connect.\n\nPlug the Logi Bolt receiver into a USB-A port on your computer.\n\nFollow instructions from the software to pair the device with dongle\n\nUse Logi Options+ app to explore all possibilities this mouse has to offer. To download and learn more, go\nhere\n.\n\nPairing a device again\n\nIf a device becomes disconnected from the mouse, you can easily re-pair the device with the mouse. Here's how:\n\nOn the mouse\n\nPress and then hold down the Easy-Switch button until the status light starts blinking rapidly.\n\nThe mouse is now in pairi",
+                    "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+                    "model": "Pebble Mouse 2 M350s",
+                    "region": "unspecified",
+                    "documentHash": "4b223cd9838a4a1ab1fcc4e8ae2186f301a116752a0ff571e2676e65079c340c",
+                    "basis": "official_original_not_paraphrase_verification"
+                  },
+                  {
+                    "id": "d817fcd8aa5b44f51fabaebd:6988",
+                    "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+                    "text": "compatible Logitech keyboard, the keyboard will follow the mouse and switch computers at the same time.\n\nIn Logi Options+, select the Pebble Mouse 2 M350s and go to the mouse Flow menu.\n\n〔此处图示未读取〕\n\n \n\nYou will need to install \n\nLogi Options+\n\napp on both computers, and follow\n\nthese instructions\n.\n\nTo download Logi Options+ app and learn more, go\nhere\n.\n\n \n\nPOWER MANAGEMENT\n\nCheck battery status\n\nBattery life and replacement\n\nInstalling a new battery\n\nCheck battery status\n\nYou can install Logi Options+ app to receive battery status notifications, including low-charge warnings.\n\nTo download Logi Options+ app and learn more, go\n\nhere\n\n.\n\nBattery life and replacement\n\nBattery information:\n\nRequires 1 AA alkaline battery\n\nExpected battery life is up to 24 months\n\nInstalling a new battery\n\nLift the top case off the mouse. Take out the old battery and insert the new battery, making sure that it faces the correct direction, and then put back the top case.\n\n〔此处图示未读取〕\n\n \n\nCOMPATIBILITY\n\nBLUETOOTH WIRELESS TECHNOLOGY ENABLED DEVICES:\n\nWindows 10, 11 or later\n\nmacOS 11 or later\n\niPadOS 14 or later\n\niOS 14 or later\n\nAndroid 9.0 or later\n\nChrome OS\n\nLinux\n\nCompatible with Logi Bolt receiver (only included in Pebble 2 Combo Multi-OS).\n\nAviso importante:\nLogitech Options ha llegado al fin de su asistencia y ya no recibe mantenimiento. P",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "model": "Pebble Mouse 2 M350s",
+                    "region": "unspecified",
+                    "documentHash": "1805e5669ac07f5104a81032ceaac8de95bb755aff230cb26db58a6266d5d46f",
+                    "basis": "official_original_not_paraphrase_verification"
+                  }
+                ],
+                "continuations": [],
+                "actionCards": [],
+                "necessaryConditionChecks": [],
+                "knowledgeWarnings": [
+                  "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。",
+                  "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+                ],
+                "answer": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方规格明确列出该鼠标支持 Bluetooth Low Energy，兼容设备包含“Windows 10, 11 or later”。Logi Bolt 接收器仅为可选连接方式，且包装内不含接收器，因此没有接收器时可直接使用 Windows 11 自带的蓝牙功能连接。\n2.  **首次蓝牙配对方法**：\n    *   拔出鼠标底部的电池绝缘拉条，鼠标会自动开机并默认进入通道 1 的待配对状态。\n    *   在 Windows 11 中打开“设置 > 蓝牙和其他设备 > 添加设备”，选择“蓝牙”。\n    *   在设备列表中选择与鼠标底部刻印型号一致的名称（如 Pebble M350s）即可完成配对。\n    *   若需配对新设备或切换通道，短按 Easy-Switch 按钮选择目标通道后，长按该按钮 3 秒，直到指示灯快速闪烁即进入可被发现模式。\n3.  **最多记住设备数**：最多可配对并存储 3 台设备，通过 Easy-Switch 按钮短按即可在已配对设备间切换。\n4.  **电池规格**：需要 1 节 AA 碱性电池（出厂已预装 1 节）。官方标称续航最长可达 24 个月；更换时掀开鼠标上盖，注意正负极方向装入新电池后盖回上盖即可。\n\n未知说明：官方资料未给出 Windows 11 下蓝牙配对的具体系统版本号下限（仅写“Windows 11 or later”），也未说明是否支持充电电池或镍氢电池，仅明确要求“AA alkaline battery”。\n\n1. 拔出鼠标电池仓的绝缘拉条，鼠标自动开机并进入通道1待配对状态。\n\n2. 在 Windows 11 打开蓝牙设置，点击“添加设备”>“蓝牙”，在列表中选择与鼠标底部刻印型号一致的设备名完成配对。\n\n3. 如需配对第2/3台设备：短按 Easy-Switch 按钮选择目标通道，再长按3秒至LED快闪进入发现模式，然后在电脑蓝牙设置中完成配对。\n\n4. 确认电池为1节AA碱性电池；更换时掀开上盖，按正确极性装入新电池后盖回上盖。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标底部型号刻印与蓝牙列表名称一致\n\n— 使用AA碱性电池，非充电电池",
+                "outcome": "answered",
+                "source": "model-with-evidence",
+                "model": "qwen3.8-max-0902",
+                "steps": [
+                  {
+                    "id": "procedure-edaa54ec-4705-48fd-b96e-0ce69650200d-0-0",
+                    "text": "拔出鼠标电池仓的绝缘拉条，鼠标自动开机并进入通道1待配对状态。",
+                    "sourceId": "bc8ee0b533b44eb41290a6bd:996"
+                  },
+                  {
+                    "id": "procedure-edaa54ec-4705-48fd-b96e-0ce69650200d-0-1",
+                    "text": "在 Windows 11 打开蓝牙设置，点击“添加设备”>“蓝牙”，在列表中选择与鼠标底部刻印型号一致的设备名完成配对。",
+                    "sourceId": "bc8ee0b533b44eb41290a6bd:996"
+                  },
+                  {
+                    "id": "procedure-edaa54ec-4705-48fd-b96e-0ce69650200d-0-2",
+                    "text": "如需配对第2/3台设备：短按 Easy-Switch 按钮选择目标通道，再长按3秒至LED快闪进入发现模式，然后在电脑蓝牙设置中完成配对。",
+                    "sourceId": "bc8ee0b533b44eb41290a6bd:1997"
+                  },
+                  {
+                    "id": "procedure-edaa54ec-4705-48fd-b96e-0ce69650200d-0-3",
+                    "text": "确认电池为1节AA碱性电池；更换时掀开上盖，按正确极性装入新电池后盖回上盖。",
+                    "sourceId": "d817fcd8aa5b44f51fabaebd:6988"
+                  }
+                ],
+                "stepsInAnswer": true,
+                "questions": [],
+                "evidenceIds": [
+                  "d817fcd8aa5b44f51fabaebd:999",
+                  "bc8ee0b533b44eb41290a6bd:996",
+                  "d817fcd8aa5b44f51fabaebd:6988",
+                  "b593261dc57ab7dd321e2579:0",
+                  "bc8ee0b533b44eb41290a6bd:6987",
+                  "d817fcd8aa5b44f51fabaebd:1997",
+                  "bc8ee0b533b44eb41290a6bd:0",
+                  "b593261dc57ab7dd321e2579:1001",
+                  "bc8ee0b533b44eb41290a6bd:1997",
+                  "d817fcd8aa5b44f51fabaebd:0",
+                  "b593261dc57ab7dd321e2579:1997",
+                  "d817fcd8aa5b44f51fabaebd:2993",
+                  "75fbe8716efb4e9584df6949:0",
+                  "d817fcd8aa5b44f51fabaebd:11957"
+                ],
+                "citations": [
+                  {
+                    "id": "d817fcd8aa5b44f51fabaebd",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "bc8ee0b533b44eb41290a6bd",
+                    "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+                    "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "b593261dc57ab7dd321e2579",
+                    "title": "Specification - Pebble Mouse 2 M350s – Logitech Support + overførselSustainability Navigation",
+                    "url": "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  },
+                  {
+                    "id": "75fbe8716efb4e9584df6949",
+                    "title": "Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+                    "url": "https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s",
+                    "kind": "official",
+                    "section": "Pebble Mouse 2 M350s；unspecified"
+                  }
+                ],
+                "memoryIds": [],
+                "usedItems": [
+                  {
+                    "id": "29a85310-1461-4b1a-93df-b13b701faec4",
+                    "name": "[模拟持有]日常切换设备的鼠标",
+                    "model": "Pebble Mouse 2 M350s"
+                  }
+                ],
+                "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+                "route": {
+                  "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+                  "itemName": "[模拟持有]日常切换设备的鼠标",
+                  "intent": "help",
+                  "mode": "service",
+                  "reason": "核对适用资料与使用条件"
+                }
+              },
+              "at": "2026-11-05T00:06:38.509Z"
+            }
+          ],
+          "known": {
+            "memoryPolicy": "off",
+            "interfaceMode": "standard",
+            "uiPage": "item",
+            "useItemMemories": "no",
+            "turnRequestId": "a120f4ed-62ac-4aed-9ee2-3d0c72295d59",
+            "turnScope": "29a85310-1461-4b1a-93df-b13b701faec4",
+            "lastIntent": "help",
+            "activeItemId": "29a85310-1461-4b1a-93df-b13b701faec4"
+          },
+          "tried": [],
+          "memoryEpoch": 0,
+          "createdAt": "2026-11-05T00:06:28.607Z",
+          "updatedAt": "2026-11-05T00:06:38.509Z",
+          "expiresAt": "2026-11-12T00:06:28.607Z",
+          "itemScopes": {
+            "29a85310-1461-4b1a-93df-b13b701faec4": "[\"u_f0bccc8f-3422-45bc-a304-cbdcf470bb73\",\"[\\\"Pebble Mouse 2 M350s\\\",null,null,null]\"]"
+          }
+        },
+        "reply": {
+          "modelHistoryText": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方规格明确列出该鼠标支持 Bluetooth Low Energy，兼容设备包含“Windows 10, 11 or later”。Logi Bolt 接收器仅为可选连接方式，且包装内不含接收器，因此没有接收器时可直接使用 Windows 11 自带的蓝牙功能连接。\n2.  **首次蓝牙配对方法**：\n    *   拔出鼠标底部的电池绝缘拉条，鼠标会自动开机并默认进入通道 1 的待配对状态。\n    *   在 Windows 11 中打开“设置 > 蓝牙和其他设备 > 添加设备”，选择“蓝牙”。\n    *   在设备列表中选择与鼠标底部刻印型号一致的名称（如 Pebble M350s）即可完成配对。\n    *   若需配对新设备或切换通道，短按 Easy-Switch 按钮选择目标通道后，长按该按钮 3 秒，直到指示灯快速闪烁即进入可被发现模式。\n3.  **最多记住设备数**：最多可配对并存储 3 台设备，通过 Easy-Switch 按钮短按即可在已配对设备间切换。\n4.  **电池规格**：需要 1 节 AA 碱性电池（出厂已预装 1 节）。官方标称续航最长可达 24 个月；更换时掀开鼠标上盖，注意正负极方向装入新电池后盖回上盖即可。\n\n未知说明：官方资料未给出 Windows 11 下蓝牙配对的具体系统版本号下限（仅写“Windows 11 or later”），也未说明是否支持充电电池或镍氢电池，仅明确要求“AA alkaline battery”。\n\n1. 拔出鼠标电池仓的绝缘拉条，鼠标自动开机并进入通道1待配对状态。\n\n2. 在 Windows 11 打开蓝牙设置，点击“添加设备”>“蓝牙”，在列表中选择与鼠标底部刻印型号一致的设备名完成配对。\n\n3. 如需配对第2/3台设备：短按 Easy-Switch 按钮选择目标通道，再长按3秒至LED快闪进入发现模式，然后在电脑蓝牙设置中完成配对。\n\n4. 确认电池为1节AA碱性电池；更换时掀开上盖，按正确极性装入新电池后盖回上盖。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标底部型号刻印与蓝牙列表名称一致\n\n— 使用AA碱性电池，非充电电池",
+          "guidanceSources": [
+            {
+              "id": "bc8ee0b533b44eb41290a6bd:996",
+              "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+              "text": "Mouse 2 M350s overview\n\n〔此处图示未读取〕\n\n1 - Scroll Wheel / Customizable middle click\n\n2 - Battery (and receiver) compartment\n\n3 - On/off toggle switch\n\n4 - Connection status LEDs\n\n5 - Easy-switch / Connection button\n\n6 - High precision sensor\n\n \n\nConnect your mouse to your device\n\nYou can pair your mouse to your device using the Bluetooth Low Energy connection.\n\nTo pair through Bluetooth:\n\n〔此处图示未读取〕\n\nRemove the pull tab from the mouse. It will automatically turn on. Channel 1 will be ready to pair.\n\nOpen the Bluetooth preferences on your device. (Click here for more details on how to do this on your computer). Add a new peripheral by selecting the mouse from your list of devices (make sure you select the same model number that is engraved under your mouse) and your mouse will be ready to use.\n\nIf you experience issues with Bluetooth, click here for Bluetooth troubleshooting.\n\nYour mouse can be paired with up to three different devices and you can use the Easy-Switch button to toggle between them.\n\nIf you want to pair additional devices to your mouse:\n\n〔此处图示未读取〕\n\nSelect the channel you want using the Easy-Switch button — press and then hold the same button for three seconds. This will put the mouse in discovery mode so it can be seen by your computer. The LED will start blinking rapidly.\n\nOpen the Bluetooth settings on your computer to",
+              "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+              "model": "Pebble Mouse 2 M350s",
+              "region": "unspecified",
+              "documentHash": "4b223cd9838a4a1ab1fcc4e8ae2186f301a116752a0ff571e2676e65079c340c",
+              "basis": "official_original_not_paraphrase_verification"
+            },
+            {
+              "id": "bc8ee0b533b44eb41290a6bd:1997",
+              "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+              "text": "them.\n\nIf you want to pair additional devices to your mouse:\n\n〔此处图示未读取〕\n\nSelect the channel you want using the Easy-Switch button — press and then hold the same button for three seconds. This will put the mouse in discovery mode so it can be seen by your computer. The LED will start blinking rapidly.\n\nOpen the Bluetooth settings on your computer to complete the pairing. You can find more details here.\n\nOnce paired, a short press on the Easy-Switch button lets you toggle between your devices.\n\nLogi Bolt receiver optional connection method \n\nPebble Mouse 2 M350s is compatible with Logi Bolt receiver so you can also connect the Pebble Mouse 2 M350s via Logi Bolt receiver (but the receiver needs to be\npurchased separately\n):\n\nDownload and install\nLogi Options+ app\n\n \nhere or you can also use Logi Web Connect.\n\nPlug the Logi Bolt receiver into a USB-A port on your computer.\n\nFollow instructions from the software to pair the device with dongle\n\nUse Logi Options+ app to explore all possibilities this mouse has to offer. To download and learn more, go\nhere\n.\n\nPairing a device again\n\nIf a device becomes disconnected from the mouse, you can easily re-pair the device with the mouse. Here's how:\n\nOn the mouse\n\nPress and then hold down the Easy-Switch button until the status light starts blinking rapidly.\n\nThe mouse is now in pairi",
+              "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+              "model": "Pebble Mouse 2 M350s",
+              "region": "unspecified",
+              "documentHash": "4b223cd9838a4a1ab1fcc4e8ae2186f301a116752a0ff571e2676e65079c340c",
+              "basis": "official_original_not_paraphrase_verification"
+            },
+            {
+              "id": "d817fcd8aa5b44f51fabaebd:6988",
+              "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+              "text": "compatible Logitech keyboard, the keyboard will follow the mouse and switch computers at the same time.\n\nIn Logi Options+, select the Pebble Mouse 2 M350s and go to the mouse Flow menu.\n\n〔此处图示未读取〕\n\n \n\nYou will need to install \n\nLogi Options+\n\napp on both computers, and follow\n\nthese instructions\n.\n\nTo download Logi Options+ app and learn more, go\nhere\n.\n\n \n\nPOWER MANAGEMENT\n\nCheck battery status\n\nBattery life and replacement\n\nInstalling a new battery\n\nCheck battery status\n\nYou can install Logi Options+ app to receive battery status notifications, including low-charge warnings.\n\nTo download Logi Options+ app and learn more, go\n\nhere\n\n.\n\nBattery life and replacement\n\nBattery information:\n\nRequires 1 AA alkaline battery\n\nExpected battery life is up to 24 months\n\nInstalling a new battery\n\nLift the top case off the mouse. Take out the old battery and insert the new battery, making sure that it faces the correct direction, and then put back the top case.\n\n〔此处图示未读取〕\n\n \n\nCOMPATIBILITY\n\nBLUETOOTH WIRELESS TECHNOLOGY ENABLED DEVICES:\n\nWindows 10, 11 or later\n\nmacOS 11 or later\n\niPadOS 14 or later\n\niOS 14 or later\n\nAndroid 9.0 or later\n\nChrome OS\n\nLinux\n\nCompatible with Logi Bolt receiver (only included in Pebble 2 Combo Multi-OS).\n\nAviso importante:\nLogitech Options ha llegado al fin de su asistencia y ya no recibe mantenimiento. P",
+              "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+              "model": "Pebble Mouse 2 M350s",
+              "region": "unspecified",
+              "documentHash": "1805e5669ac07f5104a81032ceaac8de95bb755aff230cb26db58a6266d5d46f",
+              "basis": "official_original_not_paraphrase_verification"
+            }
+          ],
+          "continuations": [],
+          "actionCards": [],
+          "necessaryConditionChecks": [],
+          "knowledgeWarnings": [
+            "有17处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。",
+            "有1处图示没有替代文字；未识别的按钮、方向与安装图不得猜测。"
+          ],
+          "answer": "根据 Logitech Pebble Mouse 2 M350s 的官方资料（非旧款 M350），针对你的问题回答如下：\n\n1.  **能否直连 Windows 11 蓝牙**：可以。官方规格明确列出该鼠标支持 Bluetooth Low Energy，兼容设备包含“Windows 10, 11 or later”。Logi Bolt 接收器仅为可选连接方式，且包装内不含接收器，因此没有接收器时可直接使用 Windows 11 自带的蓝牙功能连接。\n2.  **首次蓝牙配对方法**：\n    *   拔出鼠标底部的电池绝缘拉条，鼠标会自动开机并默认进入通道 1 的待配对状态。\n    *   在 Windows 11 中打开“设置 > 蓝牙和其他设备 > 添加设备”，选择“蓝牙”。\n    *   在设备列表中选择与鼠标底部刻印型号一致的名称（如 Pebble M350s）即可完成配对。\n    *   若需配对新设备或切换通道，短按 Easy-Switch 按钮选择目标通道后，长按该按钮 3 秒，直到指示灯快速闪烁即进入可被发现模式。\n3.  **最多记住设备数**：最多可配对并存储 3 台设备，通过 Easy-Switch 按钮短按即可在已配对设备间切换。\n4.  **电池规格**：需要 1 节 AA 碱性电池（出厂已预装 1 节）。官方标称续航最长可达 24 个月；更换时掀开鼠标上盖，注意正负极方向装入新电池后盖回上盖即可。\n\n未知说明：官方资料未给出 Windows 11 下蓝牙配对的具体系统版本号下限（仅写“Windows 11 or later”），也未说明是否支持充电电池或镍氢电池，仅明确要求“AA alkaline battery”。\n\n1. 拔出鼠标电池仓的绝缘拉条，鼠标自动开机并进入通道1待配对状态。\n\n2. 在 Windows 11 打开蓝牙设置，点击“添加设备”>“蓝牙”，在列表中选择与鼠标底部刻印型号一致的设备名完成配对。\n\n3. 如需配对第2/3台设备：短按 Easy-Switch 按钮选择目标通道，再长按3秒至LED快闪进入发现模式，然后在电脑蓝牙设置中完成配对。\n\n4. 确认电池为1节AA碱性电池；更换时掀开上盖，按正确极性装入新电池后盖回上盖。\n\n操作前提与未确认条件：\n\n— Windows 11 蓝牙功能已开启且支持 BLE\n\n— 鼠标底部型号刻印与蓝牙列表名称一致\n\n— 使用AA碱性电池，非充电电池",
+          "outcome": "answered",
+          "source": "model-with-evidence",
+          "model": "qwen3.8-max-0902",
+          "steps": [
+            {
+              "id": "procedure-edaa54ec-4705-48fd-b96e-0ce69650200d-0-0",
+              "text": "拔出鼠标电池仓的绝缘拉条，鼠标自动开机并进入通道1待配对状态。",
+              "sourceId": "bc8ee0b533b44eb41290a6bd:996"
+            },
+            {
+              "id": "procedure-edaa54ec-4705-48fd-b96e-0ce69650200d-0-1",
+              "text": "在 Windows 11 打开蓝牙设置，点击“添加设备”>“蓝牙”，在列表中选择与鼠标底部刻印型号一致的设备名完成配对。",
+              "sourceId": "bc8ee0b533b44eb41290a6bd:996"
+            },
+            {
+              "id": "procedure-edaa54ec-4705-48fd-b96e-0ce69650200d-0-2",
+              "text": "如需配对第2/3台设备：短按 Easy-Switch 按钮选择目标通道，再长按3秒至LED快闪进入发现模式，然后在电脑蓝牙设置中完成配对。",
+              "sourceId": "bc8ee0b533b44eb41290a6bd:1997"
+            },
+            {
+              "id": "procedure-edaa54ec-4705-48fd-b96e-0ce69650200d-0-3",
+              "text": "确认电池为1节AA碱性电池；更换时掀开上盖，按正确极性装入新电池后盖回上盖。",
+              "sourceId": "d817fcd8aa5b44f51fabaebd:6988"
+            }
+          ],
+          "stepsInAnswer": true,
+          "questions": [],
+          "evidenceIds": [
+            "d817fcd8aa5b44f51fabaebd:999",
+            "bc8ee0b533b44eb41290a6bd:996",
+            "d817fcd8aa5b44f51fabaebd:6988",
+            "b593261dc57ab7dd321e2579:0",
+            "bc8ee0b533b44eb41290a6bd:6987",
+            "d817fcd8aa5b44f51fabaebd:1997",
+            "bc8ee0b533b44eb41290a6bd:0",
+            "b593261dc57ab7dd321e2579:1001",
+            "bc8ee0b533b44eb41290a6bd:1997",
+            "d817fcd8aa5b44f51fabaebd:0",
+            "b593261dc57ab7dd321e2579:1997",
+            "d817fcd8aa5b44f51fabaebd:2993",
+            "75fbe8716efb4e9584df6949:0",
+            "d817fcd8aa5b44f51fabaebd:11957"
+          ],
+          "citations": [
+            {
+              "id": "d817fcd8aa5b44f51fabaebd",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+              "url": "https://support.logi.com/hc/es/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "bc8ee0b533b44eb41290a6bd",
+              "title": "Getting Started - Pebble Mouse 2 M350s – Logitech Support + DownloadSustainability Navigation",
+              "url": "https://support.logi.com/hc/en-001/articles/16171126528407-Getting-Started-Pebble-Mouse-2-M350s",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "b593261dc57ab7dd321e2579",
+              "title": "Specification - Pebble Mouse 2 M350s – Logitech Support + overførselSustainability Navigation",
+              "url": "https://support.logi.com/hc/da/articles/16171133096087-Specification-Pebble-Mouse-2-M350s",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            },
+            {
+              "id": "75fbe8716efb4e9584df6949",
+              "title": "Pebble Mouse 2 M350s – Logitech Asistencia + descargaSustainability Navigation",
+              "url": "https://support.logi.com/hc/es/articles/16171145124631-Pebble-Mouse-2-M350s",
+              "kind": "official",
+              "section": "Pebble Mouse 2 M350s；unspecified"
+            }
+          ],
+          "memoryIds": [],
+          "usedItems": [
+            {
+              "id": "29a85310-1461-4b1a-93df-b13b701faec4",
+              "name": "[模拟持有]日常切换设备的鼠标",
+              "model": "Pebble Mouse 2 M350s"
+            }
+          ],
+          "caveat": "依据当前资料与获准报告；建议不等于已执行或实物验证。",
+          "route": {
+            "itemId": "29a85310-1461-4b1a-93df-b13b701faec4",
+            "itemName": "[模拟持有]日常切换设备的鼠标",
+            "intent": "help",
+            "mode": "service",
+            "reason": "核对适用资料与使用条件"
+          }
+        },
+        "trace": [
+          {
+            "stage": "intent_routed",
+            "detail": "help; target=29a85310-1461-4b1a-93df-b13b701faec4; domain metadata, not a model answer",
+            "at": "2026-11-05T00:06:28.614Z"
+          },
+          {
+            "stage": "practical_rerank",
+            "detail": "{\"model\":\"qwen3.7-text-rerank\",\"candidates\":42,\"selected\":[\"d817fcd8aa5b44f51fabaebd:999\",\"bc8ee0b533b44eb41290a6bd:996\",\"d817fcd8aa5b44f51fabaebd:6988\",\"b593261dc57ab7dd321e2579:0\",\"bc8ee0b533b44eb41290a6bd:6987\",\"d817fcd8aa5b44f51fabaebd:1997\",\"bc8ee0b533b44eb41290a6bd:0\",\"b593261dc57ab7dd321e2579:1001\",\"bc8ee0b533b44eb41290a6bd:1997\",\"d817fcd8aa5b44f51fabaebd:0\",\"b593261dc57ab7dd321e2579:1997\",\"d817fcd8aa5b44f51fabaebd:2993\"],\"scores\":[0.8943430989775618,0.8588765401726898,0.8275989944890622,0.8216793113199434,0.8068515085968566,0.7916258264505374,0.7380071003244852,0.7295810735562234,0.6869271094525115,0.6570761199908213,0.6203023071961852,0.6169024479801162],\"basis\":\"retrieval_only_not_fact_certification\"}",
+            "at": "2026-11-05T00:06:29.910Z"
+          },
+          {
+            "stage": "tool_runtime_REPLY_START",
+            "detail": "{}",
+            "at": "2026-11-05T00:06:29.942Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_START",
+            "detail": "{}",
+            "at": "2026-11-05T00:06:29.943Z"
+          },
+          {
+            "stage": "practical_model",
+            "detail": "{\"round\":0,\"model\":\"qwen3.8-max-0902\",\"toolCalls\":[\"complete_answer\"],\"finish\":\"tool_calls\"}",
+            "at": "2026-11-05T00:06:38.326Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_START",
+            "detail": "{\"callId\":\"call_fc107c88b8204441980ae5c9\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-05T00:06:38.331Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_DELTA",
+            "detail": "{\"callId\":\"call_fc107c88b8204441980ae5c9\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-05T00:06:38.331Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_CALL_END",
+            "detail": "{\"callId\":\"call_fc107c88b8204441980ae5c9\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-05T00:06:38.331Z"
+          },
+          {
+            "stage": "tool_runtime_MODEL_CALL_END",
+            "detail": "{\"inputTokens\":23283,\"outputTokens\":787}",
+            "at": "2026-11-05T00:06:38.331Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_START",
+            "detail": "{\"callId\":\"call_fc107c88b8204441980ae5c9\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-05T00:06:38.337Z"
+          },
+          {
+            "stage": "tool_policy",
+            "detail": "{\"name\":\"complete_answer\",\"effect\":\"local_write\",\"scope\":\"live_item_grants_and_final_response_contract\",\"result\":\"final_candidate_and_public_original_quote_locators_no_business_write\",\"idempotency\":\"original_document_and_quote_digest\"}",
+            "at": "2026-11-05T00:06:38.357Z"
+          },
+          {
+            "stage": "practical_tool",
+            "detail": "complete_answer completed",
+            "at": "2026-11-05T00:06:38.462Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_TEXT_DELTA",
+            "detail": "{\"callId\":\"call_fc107c88b8204441980ae5c9\",\"tool\":\"complete_answer\"}",
+            "at": "2026-11-05T00:06:38.467Z"
+          },
+          {
+            "stage": "tool_runtime_TOOL_RESULT_END",
+            "detail": "{\"callId\":\"call_fc107c88b8204441980ae5c9\",\"tool\":\"complete_answer\",\"state\":\"success\"}",
+            "at": "2026-11-05T00:06:38.472Z"
+          },
+          {
+            "stage": "practical_completion",
+            "detail": "{\"elapsedMs\":9869,\"calls\":2,\"tools\":1,\"reservedCny\":0.315805,\"missingKnowledgeIds\":[],\"adviceOnly\":true}",
+            "at": "2026-11-05T00:06:38.495Z"
+          }
+        ],
+        "tokens": {
+          "input": 39437,
+          "output": 787
+        },
+        "modelCalls": 2,
+        "foundation": {
+          "runId": "1d812a0f-b142-44d1-9200-d92160af9dba",
+          "status": "waiting_user",
+          "basis": "advice_only"
+        }
+      },
+      "fullAnswerMs": 10865,
+      "streamTextEvents": 1
+    }
+  ],
+  "checks": [],
+  "errors": [
+    "Cannot read properties of undefined (reading 'some')"
+  ],
+  "pageErrors": [],
+  "status": "failed",
+  "upstreamRequests": 2
+}

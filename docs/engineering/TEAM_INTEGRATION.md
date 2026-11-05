@@ -50,6 +50,8 @@ Mock 无网络、不代表 Qwen、创意质量或实物效果。原真实模型�
 
 本轮补充导出既有 `amendOutcome` 与其输入类型，组员不必为了纠正/遗忘经历去引用内部实现。没有新建Runtime、数据库、Context或记忆系统；私人Outcome不能因物品共享而自动传给别人。
 
+决赛分支的展示契约另有兼容可选字段：`AssistantReply.steps[].sourceId`、`guidanceSources`为服务器绑定的当前公开原文/实例/文档hash，不是模型释义认证；旧消费者可忽略。`CatalogCandidate.creators`区分书目作者与品牌，不自动转成厂家事实。专业功能继续使用原`respond`和领域服务，无需新增运行器。路径分组不再认证型号，旧资料仍保存，但投影需要准确型号或实际厂家链接链。
+
 ## 一个直接复用的最小功能
 
 完整可复制模块：[goal-feature.ts](../../examples/foundation/goal-feature.ts)；离线Provider：[mock-provider.ts](../../examples/foundation/mock-provider.ts)。它们不引用内部运行器：

@@ -50,6 +50,9 @@ export function sourceURL(value: string) {
     );
   return url;
 }
+/** HTTP fragments identify a location within a document, not a different
+ * network resource. This key grants no URL permission; fetch still uses sourceURL. */
+export function documentRequestAddress(value:string){const url=new URL(value);url.hash='';return url.href;}
 /** Explicit public document read. Re-check and pin DNS on every same-host canonical redirect. */
 async function fetchPublicSource(
   value: string,

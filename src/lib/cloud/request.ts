@@ -51,6 +51,10 @@ export function withDemoRequest<T extends unknown[]>(
         assertAccountOrigin(r);
         return await accountContext.run(readAccount(r), async () => {
           const response = await handler(r, ...args);
+          // A successful initial login does not authorize a late response after
+          // this exact session was logged out or expired during network I/O.
+          // Streaming handlers still guard their later events independently.
+          readAccount(r);
           response.headers.set("Cache-Control", "private, no-store");
           return response;
         });

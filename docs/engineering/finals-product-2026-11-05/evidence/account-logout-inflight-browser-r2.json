@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-05T00:17:38.175Z",
+  "basis": "real_Qwen_inflight_synthetic_new_account_actual_logout_HTTP_and_SSE_revocation_not_hardware_or_broad_security_certification",
+  "checks": [
+    {
+      "name": "revoked_cookie_cannot_receive_final_SSE_answer_or_read_item_and_reload_requires_login",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "pageErrors": [],
+  "modelStartedBeforeLogout": true,
+  "loggedOutAt": "2026-11-05T00:17:42.193Z",
+  "stream": {
+    "transportError": "Failed to fetch"
+  },
+  "httpStatus": 200,
+  "subsequentPrivateReadStatus": 401,
+  "visibleError": "network error\n\n重试这次请求刷新会话",
+  "status": "passed_actual_inflight_revocation_not_task_answer_success",
+  "upstreamRequests": 1
+}

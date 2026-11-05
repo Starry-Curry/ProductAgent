@@ -1,0 +1,62 @@
+✖ 同页锚点不是新HTTP章节；已有完整正文时不重复联网和存三份同一资料 (202.6049ms)
+✖ 一个不合法的辅助链接不能使整份有效原文丢失；仅排除该导航项 (120.797ms)
+✖ 辅助导航网络失败不能吞掉已取得的适用正文；权限错误仍由原guard中止 (163.631ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1109.0728
+
+✖ failing tests:
+
+test at tests\finals-manual-navigation.test.ts:6:1
+✖ 同页锚点不是新HTTP章节；已有完整正文时不重复联网和存三份同一资料 (202.6049ms)
+  AssertionError [ERR_ASSERTION]: 缓存同页正文不应重新请求两个fragment
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-manual-navigation.test.ts:9:189)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\finals-manual-navigation.test.ts:11:1
+✖ 一个不合法的辅助链接不能使整份有效原文丢失；仅排除该导航项 (120.797ms)
+  Error: 仅支持公开 HTTPS 资料链接，不支持本地、IP 地址或带账号的链接
+      at sourceURL (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/life/sources.ts:48:11)
+      at officialDomain (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/life/knowledge.ts:89:16)
+      at file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/life/acquisition.ts:186:33
+      at Array.filter (<anonymous>)
+      at makeKnowledgeDocument (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/life/acquisition.ts:186:23)
+      at TestContext.<anonymous> (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-manual-navigation.test.ts:12:106)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    status: 400
+  }
+
+test at tests\finals-manual-navigation.test.ts:14:1
+✖ 辅助导航网络失败不能吞掉已取得的适用正文；权限错误仍由原guard中止 (163.631ms)
+  Error: offline_auxiliary_source_failure
+      at file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/tests/finals-manual-navigation.test.ts:16:117
+      at Object.apply (node:internal/test_runner/mock/mock:805:20)
+      at result (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/life/sources.ts:81:17)
+      at new Promise (<anonymous>)
+      at fetchPublicSource (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/life/sources.ts:76:24)
+      at async fetchPublicDocument (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/life/sources.ts:184:15)
+      at async readRelevant (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/practical.ts:176:19)
+      at async executePractical (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/practical.ts:191:31)
+      at async executeGraph (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/graph.ts:585:19)
+      at async respondLegacy (file:///D:/ProductAgent-LifeContext/.runtime/qwen-foundation-v1/src/lib/agent/service.ts:317:11) {
+    status: 400
+  }
