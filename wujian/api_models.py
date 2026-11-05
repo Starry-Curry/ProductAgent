@@ -195,6 +195,13 @@ class RunView(BaseModel):
     usage: dict
 
 
+class CreativeRequest(Input):
+    item_ids: list[str] = Field(default_factory=list, max_length=12)
+    photo_ids: list[str] = Field(default_factory=list, max_length=4)
+    goal: str = Field(min_length=1, max_length=8000)
+    constraints: str = Field(default="", max_length=2000)
+
+
 class GiftCreate(Input):
     item_id: str
     recipient_id: str

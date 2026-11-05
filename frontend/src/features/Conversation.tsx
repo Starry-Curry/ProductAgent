@@ -44,6 +44,7 @@ export default function Conversation({
   contextLabel,
   onCameraRef,
   children,
+  afterMessages,
 }: {
   messages: ChatMessage[];
   run: Run | null;
@@ -55,6 +56,7 @@ export default function Conversation({
   contextLabel?: string;
   onCameraRef: (callback: () => void) => void;
   children?: React.ReactNode;
+  afterMessages?: React.ReactNode;
 }) {
   const bottom = useRef<HTMLDivElement>(null),
     file = useRef<HTMLInputElement>(null),
@@ -187,6 +189,7 @@ export default function Conversation({
             {run.error || "当前处理暂时停在这里，可以继续这个话题。"}
           </p>
         )}
+        {afterMessages}
         <div ref={bottom} />
       </div>
       <footer className="composer-wrap">

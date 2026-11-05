@@ -23,6 +23,252 @@
   background: var(--paper);
   font-size: 12px;
 }
+.item-profile-page {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 24px clamp(24px, 3.4vw, 58px) 50px;
+}
+.item-profile-navigation {
+  max-width: 1240px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 13px;
+}
+.item-profile-card {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: clamp(24px, 3vw, 44px);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--paper);
+}
+.item-profile-top {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(25px, 3.5vw, 55px);
+  align-items: start;
+}
+.item-profile-card .detail-hero {
+  height: clamp(320px, 29vw, 440px);
+  margin: 0;
+  border-radius: 20px;
+}
+.item-profile-identity {
+  min-width: 0;
+  padding-top: 7px;
+}
+.item-profile-card .detail-heading {
+  margin: 12px 0 22px;
+  flex-wrap: wrap;
+}
+.item-profile-card .detail-heading h1 {
+  font-size: clamp(27px, 2.6vw, 39px);
+  line-height: 1.35;
+}
+.item-profile-card .detail-heading p {
+  font-size: 15px;
+  margin-top: 13px;
+}
+.item-profile-card .privacy-label {
+  max-width: none;
+  font-size: 12px;
+}
+.item-profile-card .personal-story {
+  margin: 25px 0;
+  font-size: 17px;
+}
+.item-profile-sections {
+  margin-top: 34px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.item-creative-entry {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  padding: 21px 24px;
+  border: 1px solid #dde3d6;
+  border-radius: 20px;
+  background: linear-gradient(110deg, #e9ece1, #f6f3eb);
+  text-align: left;
+}
+.creative-entry-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #7d916a;
+  background: #f7f9f1;
+}
+.item-creative-entry > span:nth-child(2) {
+  flex: 1;
+}
+.item-creative-entry strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 550;
+}
+.item-creative-entry small {
+  display: block;
+  margin-top: 7px;
+  color: #7d8579;
+  font-size: 13px;
+}
+.item-profile-card .detail-tabs .filter-pill {
+  font-size: 14px;
+  padding: 11px 23px;
+}
+.item-profile-card .story-timeline {
+  max-width: 820px;
+}
+.item-profile-card .story-timeline strong {
+  font-size: 17px;
+}
+.item-profile-card .story-timeline p {
+  font-size: 14px;
+}
+.item-profile-card .story-timeline time {
+  font-size: 12px;
+}
+.item-profile-card .keep-record {
+  max-width: 820px;
+}
+.creative-sources h2 {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.creative-sources > .muted {
+  font-size: 12px;
+  line-height: 1.8;
+  margin-bottom: 22px;
+}
+.creative-source {
+  display: block;
+  color: inherit;
+  border-top: 1px solid var(--line);
+  padding: 18px 0;
+}
+.creative-source > span {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 3px 9px;
+  font-size: 10px;
+  background: var(--blue-soft);
+  color: var(--blue-deep);
+}
+.creative-source > strong {
+  display: block;
+  margin: 10px 0;
+  font-size: 14px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.creative-source > small {
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.creative-source-empty {
+  padding: 25px 0;
+  color: var(--muted);
+}
+.creative-source-empty p {
+  font-size: 13px;
+  margin-top: 15px;
+}
+.creative-sources-inline,
+.companion-creative-entry {
+  display: none;
+}
+@media (max-width: 760px) {
+  .item-profile-page {
+    padding: 18px 15px 30px;
+  }
+  .item-profile-navigation {
+    margin-bottom: 14px;
+    font-size: 11px;
+  }
+  .item-profile-card {
+    padding: 17px;
+    border-radius: 22px;
+  }
+  .item-profile-top {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 21px;
+  }
+  .item-profile-card .detail-hero {
+    height: 280px;
+    border-radius: 16px;
+  }
+  .item-profile-card .detail-heading h1 {
+    font-size: 28px;
+  }
+  .item-profile-card .detail-heading p {
+    font-size: 13px;
+  }
+  .item-profile-card .privacy-label {
+    font-size: 10px;
+  }
+  .item-profile-card .personal-story {
+    font-size: 15px;
+  }
+  .item-profile-sections {
+    margin-top: 23px;
+    padding-top: 22px;
+  }
+  .item-creative-entry {
+    padding: 17px 13px;
+    gap: 10px;
+    border-radius: 16px;
+  }
+  .creative-entry-icon {
+    width: 39px;
+    height: 39px;
+    flex-shrink: 0;
+  }
+  .item-creative-entry strong {
+    font-size: 17px;
+  }
+  .item-creative-entry small {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .item-profile-card .detail-tabs .filter-pill {
+    padding: 9px 13px;
+    font-size: 12px;
+  }
+  .creative-sources-inline {
+    display: block;
+    padding: 20px 6px 0;
+  }
+  .creative-sources-inline .creative-sources {
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+  }
+  .companion-creative-entry {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 16px;
+    margin-bottom: 25px;
+    border-radius: 17px;
+    background: var(--sage);
+    width: 100%;
+    text-align: left;
+  }
+  .companion-creative-entry span {
+    flex: 1;
+  }
+}
 * {
   box-sizing: border-box;
 }
