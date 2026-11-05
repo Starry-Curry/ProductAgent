@@ -1,9 +1,10 @@
 """Shared business operations used by both HTTP routes and agent tools."""
+import hashlib
 import json
 import secrets
 
 from pwdlib import PasswordHash
-from sqlalchemy import delete, or_, select, update
+from sqlalchemy import delete, or_, select, text, update
 
 from .api_models import (
     ExperienceCreate,
@@ -15,6 +16,7 @@ from .api_models import (
 from .config import ROOT
 from .database import (
     Asset,
+    ChatMessage,
     Conversation,
     ExperienceRecord,
     ExperienceShare,
@@ -222,10 +224,39 @@ def list_experiences(db, user_id, item_id=None, query="", for_ai=False):
     return result
 
 
-def create_experience(db, user_id, payload: ExperienceCreate):
+def create_experience(db, user_id, payload: ExperienceCreate, *, source_message_id=None):
+    """Create an authored wall record, optionally replay-safe for an Agent call.
+
+    The tool opens a fresh session. Its originating message owns a compact
+    exact-payload receipt, committed with the record. It survives deletion of
+    the wall entry, without retaining another copy of the wall's text/media.
+    Distinct messages or payloads remain distinct intentional recordings.
+    """
+    source_message, recording_key = None, None
+    if source_message_id:
+        if db.get_bind().dialect.name == "sqlite":
+            db.execute(text("BEGIN IMMEDIATE"))
+        source_message = require(db.scalar(select(ChatMessage).where(
+            ChatMessage.id == source_message_id).with_for_update()))
+        conversation = require(db.get(Conversation, source_message.conversation_id))
+        if source_message.role != "user" or conversation.user_id != user_id:
+            raise DomainError("回忆记录必须对应当前用户的实际消息", 403)
+        identity = payload.model_dump(mode="json")
+        identity["item_ids"] = sorted(set(identity["item_ids"]))
+        recording_key = hashlib.sha256(json.dumps(identity, ensure_ascii=False,
+            sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
     labels = {item_id: accessible_item(db, user_id, item_id).name for item_id in dict.fromkeys(payload.item_ids)}
     for photo_id in payload.photo_ids:
         own_asset(db, user_id, photo_id)
+    if source_message and recording_key in (source_message.recorded_experiences or {}):
+        previous = db.get(ExperienceRecord, source_message.recorded_experiences[recording_key])
+        if previous is None or previous.creator_id != user_id:
+            raise DomainError("这条旧请求已处理，但相应回忆已被删除；不能用旧请求重新生成。", 409)
+        # A later edit may have withdrawn AI consent. A replay is not another
+        # grant to read the edited text, nor permission to overwrite it.
+        return {**experience_view(previous), "status":"already_recorded"} if previous.allow_ai else {
+            "id": previous.id, "version": previous.version,
+            "status": "already_recorded", "allow_ai": False}
     row = ExperienceRecord(creator_id=user_id, title=payload.title, text=payload.text,
                            item_ids=list(labels), item_labels=labels, photo_ids=payload.photo_ids,
                            occurred_on=payload.occurred_on.isoformat() if payload.occurred_on else None,
@@ -233,6 +264,10 @@ def create_experience(db, user_id, payload: ExperienceCreate):
                            provenance={"kind":"authored_record","author_id":user_id,
                                        "author_name":db.get(User,user_id).display_name})
     db.add(row)
+    if source_message:
+        db.flush()
+        source_message.recorded_experiences = {
+            **(source_message.recorded_experiences or {}), recording_key: row.id}
     db.commit()
     return experience_view(row)
 

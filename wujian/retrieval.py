@@ -15,6 +15,7 @@ from . import domain
 from .database import (
     ChatMessage,
     Conversation,
+    ExperienceRecord,
     KnowledgeClaim,
     Memory,
     SourceRecord,
@@ -120,6 +121,10 @@ def authorized_documents(sessions, user_id):
         # into user facts or depending on an optional model memory/task tool call.
         from .memory_lifecycle import history_policy
         history = history_policy(db, user_id)
+        # A conversation can point back to a wall record it created without
+        # copying private wall text or treating the write as AI-read consent.
+        record_uses = dict(db.execute(select(ExperienceRecord.id, ExperienceRecord.allow_ai)
+            .where(ExperienceRecord.creator_id == user_id)).all())
         for conversation in db.scalars(
             select(Conversation).where(Conversation.user_id == user_id)
         ):
@@ -140,6 +145,10 @@ def authorized_documents(sessions, user_id):
                     if history.blocks(question.id, question.text, message.text):
                         question = None
                         continue
+                    receipts = [{"experience_id":identity, "reference_kind":"record_write_receipt",
+                        "ai_reference_allowed":bool(record_uses[identity])}
+                        for identity in dict.fromkeys((question.recorded_experiences or {}).values())
+                        if identity in record_uses]
                     add(
                         "conversation",
                         question.id,
@@ -152,6 +161,7 @@ def authorized_documents(sessions, user_id):
                             "evidence_kind": "historical_exchange",
                             "assistant_advice_is_not_observed_success": True,
                             "assistant_text_is_generated_not_user_life_evidence": True,
+                            **({"record_receipts":receipts} if receipts else {}),
                         },
                     )
                     question = None

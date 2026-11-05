@@ -55,7 +55,7 @@ class ExperienceDateMigrationTests(unittest.TestCase):
             engine, sessions = make_database(settings)
             try:
                 with engine.connect() as connection:
-                    self.assertEqual(connection.execute(text("SELECT version_num FROM alembic_version")).scalar(), "0007")
+                    self.assertEqual(connection.execute(text("SELECT version_num FROM alembic_version")).scalar(), "0008")
                     self.assertEqual(connection.exec_driver_sql("PRAGMA foreign_key_check").fetchall(), [])
                     date_column = next(row for row in inspect(connection).get_columns("experiences") if row["name"] == "occurred_on")
                     self.assertTrue(date_column["nullable"])
@@ -69,7 +69,7 @@ class ExperienceDateMigrationTests(unittest.TestCase):
             finally:
                 engine.dispose()
 
-            backups = list((Path(directory) / "backups").glob("before-0006-to-0007-*.sqlite3"))
+            backups = list((Path(directory) / "backups").glob("before-0006-to-0008-*.sqlite3"))
             self.assertEqual(len(backups), 1)
             with closing(sqlite3.connect(backups[0])) as backup:
                 self.assertEqual(backup.execute("PRAGMA integrity_check").fetchone()[0], "ok")
@@ -80,7 +80,7 @@ class ExperienceDateMigrationTests(unittest.TestCase):
                 self.assertEqual(backup.execute("PRAGMA foreign_key_check").fetchall(), [])
             reopened, _ = make_database(settings)
             reopened.dispose()
-            self.assertEqual(len(list((Path(directory) / "backups").glob("before-0006-to-0007-*.sqlite3"))), 1)
+            self.assertEqual(len(list((Path(directory) / "backups").glob("before-0006-to-0008-*.sqlite3"))), 1)
 
 
 class UnknownExperienceDateJourneys(unittest.TestCase):
