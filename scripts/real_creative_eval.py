@@ -267,7 +267,7 @@ def execution_manifest(config, root):
     hashes = {path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
               for path in paths if path.is_file()}
     packages = {}
-    for name in ("agentscope", "reme", "openai", "httpx", "httpx2", "SQLAlchemy", "pydantic"):
+    for name in ("agentscope", "reme-ai", "openai", "httpx", "httpx2", "SQLAlchemy", "pydantic", "yt-dlp"):
         try:
             packages[name] = version(name)
         except PackageNotFoundError:

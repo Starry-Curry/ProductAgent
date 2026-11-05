@@ -123,6 +123,8 @@ class RequestBudgetTests(unittest.TestCase):
             self.assertFalse(manifest["thinking_enabled"])
             self.assertTrue(manifest["provider_stream"])
             self.assertEqual(manifest["thinking_budget"], 2048)
+            self.assertTrue(manifest["packages"]["reme-ai"])
+            self.assertIn("yt-dlp", manifest["packages"])
             self.assertEqual(manifest["implementation_sha256"], {
                 "wujian/agent_runtime.py": hashlib.sha256(runtime.read_bytes()).hexdigest()})
             payload = json.dumps(manifest)
