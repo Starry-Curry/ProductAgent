@@ -646,6 +646,59 @@ async def main(url, output):
         await expect(page.get_by_role("button", name="停止生成", exact=True)).to_have_count(0)
         await expect(page.locator(".thinking-dots")).to_have_count(0)
         results.append("video activity and failure: current sampling work has a clear label; a failed run reports that frames were not obtained rather than implying success")
+        # The hero is a presentation of an explicitly enabled persona, never a
+        # replacement for an actual object photo or automatic personification.
+        hero_base = {**workspace["items"][1], "name":"折纸鲸鱼（合成UI走查）", "photo_id":None,
+                     "avatar":{**workspace["items"][1]["avatar"], "enabled":True, "nickname":"小鲸", "form":"keepsake"}}
+        hero_items = [
+            {**hero_base, "id":"hero_persona"},
+            {**hero_base, "id":"hero_photo", "photo_id":"item_photo"},
+            {**hero_base, "id":"hero_disabled", "avatar":{**hero_base["avatar"], "enabled":False}},
+        ]
+        workspace["items"].extend(hero_items)
+        hero_cases = []
+        for width, height, view in [(390,844,"mobile"),(1440,1000,"desktop")]:
+            await page.set_viewport_size({"width":width,"height":height})
+            for item in hero_items:
+                await page.goto(url + "/#items?scope=personal&item=" + item["id"])
+                await page.reload()
+                hero = page.locator(".detail-hero")
+                await expect(hero).to_be_visible()
+                assert not await page.evaluate("document.documentElement.scrollWidth > innerWidth")
+                if item["id"] == "hero_persona":
+                    await expect(hero.locator(".object-companion")).to_have_count(1)
+                    await expect(hero.locator(".object-placeholder,.object-photo")).to_have_count(0)
+                    await expect(hero.locator("small")).to_have_text("小鲸 · 物品分身")
+                    await expect(page.locator(".persona-strip .object-companion")).to_have_count(0)
+                    svg = hero.locator(".object-companion > svg")
+                    await expect(svg).to_have_css("animation-name","wujian-companion-breathe")
+                    shape_box = await hero.locator(".object-companion").bounding_box()
+                    hero_box = await hero.bounding_box()
+                    assert shape_box["width"] >= 200 and shape_box["height"] >= 200
+                    assert shape_box["y"] >= hero_box["y"] and shape_box["y"] + shape_box["height"] <= hero_box["y"] + hero_box["height"]
+                    await page.emulate_media(reduced_motion="reduce")
+                    await expect(svg).to_have_css("animation-name","none")
+                    await expect(svg).to_have_css("transform","none")
+                    await page.emulate_media(reduced_motion="no-preference")
+                elif item["id"] == "hero_photo":
+                    await expect(hero.locator(".object-photo")).to_have_attribute("src","/api/assets/item_photo")
+                    await expect(hero.locator(".object-companion,.object-placeholder")).to_have_count(0)
+                    await expect(page.locator(".persona-strip .object-companion")).to_have_count(1)
+                    await page.emulate_media(reduced_motion="reduce")
+                    await expect(page.locator(".persona-strip .object-companion > svg")).to_have_css("animation-name","none")
+                    await page.emulate_media(reduced_motion="no-preference")
+                else:
+                    await expect(hero.locator(".object-placeholder")).to_have_count(1)
+                    await expect(hero.locator(".object-companion,.object-photo")).to_have_count(0)
+                    await expect(page.locator(".persona-strip")).to_have_count(0)
+                if item["avatar"]["enabled"] and view == "mobile":
+                    entry = await page.get_by_role("button",name="和它聊聊",exact=True).bounding_box()
+                    nav = await page.locator(".bottom-navigation").bounding_box()
+                    assert entry["y"] + entry["height"] <= nav["y"], (item["id"],entry,nav)
+                await page.screenshot(path=str(output / f"{item['id']}-{view}.png"),full_page=True,animations="disabled")
+                hero_cases.append({"state":item["id"],"viewport":[width,height],"passed":True})
+        (output / "persona-hero-report.json").write_text(json.dumps({"scope":"Rendered Chrome with API/media fixtures; no model or actual photo quality claim", "cases":hero_cases,"page_errors":browser_errors},ensure_ascii=False,indent=2),encoding="utf-8")
+        results.append("persona hero: mobile/desktop show a labeled large optional persona only without a photo, actual photos stay primary, disabled personas retain ordinary placeholders; no duplicate strip avatar, first-screen chat entry and reduced-motion behavior hold")
         assert not browser_errors, browser_errors
         report = {"scope": "frontend browser with explicit API fixtures; no model or device acceptance", "passed": results, "browser_errors": browser_errors}
         (output / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

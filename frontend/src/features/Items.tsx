@@ -428,7 +428,12 @@ function ItemDetail({
         返回物品
       </button>
       <div className="detail-hero">
-        <ObjectVisual item={item} />
+        {!item.photo_id && item.avatar.enabled ? (
+          <div className="detail-companion-hero">
+            <ObjectCompanion item={item} size={220} className="object-companion-alive" />
+            <small>{item.avatar.nickname || item.name} · 物品分身</small>
+          </div>
+        ) : <ObjectVisual item={item} />}
       </div>
       <div className="detail-heading">
         <div>
@@ -445,7 +450,7 @@ function ItemDetail({
       </div>
       {item.avatar.enabled && (
         <div className="persona-strip">
-          <ObjectCompanion item={item} size={80} />
+          {item.photo_id && <ObjectCompanion item={item} size={80} />}
           <div className="persona-identity">
             <strong>{item.avatar.nickname || item.name}</strong>
             <p>{item.avatar.personality || "相处时的样子，由你慢慢决定。"}</p>

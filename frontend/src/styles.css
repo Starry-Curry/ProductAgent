@@ -1154,6 +1154,20 @@ small {
 .item-profile-page .detail-hero .object-photo {
   object-fit: contain;
 }
+.detail-companion-hero {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: radial-gradient(ellipse at center, #fffdf6, #eee9df);
+}
+.detail-companion-hero > small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
 .item-profile-page .detail-heading h1 {
   font-size: clamp(25px, 2.2vw, 34px);
 }
