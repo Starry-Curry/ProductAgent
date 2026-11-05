@@ -44,7 +44,7 @@ from .database import (
     now,
 )
 from .knowledge import fetch_source, fetch_source_image, render_source_page, search_web, source_excerpt, source_images
-from .retrieval import task_view
+from .retrieval import record_write_receipts, task_view
 from .source_access import readable_source
 from .source_video import retained_video_frames, sample_source_video
 from .turns import TurnResult, commit_result, grounded_turn_schema
@@ -535,15 +535,43 @@ class AgentRunner:
                 from .interactions import task_for_actor
                 context["active_task"] = task_for_actor(db, user.id, conversation.entry_context["task_id"])
             state = AgentState.model_validate(conversation.agent_state) if conversation.agent_state else AgentState(session_id=conversation.id)
-            if not conversation.agent_state:
-                for message in messages[:-1][-16:]:
-                    if message.created_at < conversation.reset_after:
-                        continue
-                    historical_text = message.text
-                    if message.photo_ids:
-                        historical_text += "\n原始照片引用：" + ",".join(message.photo_ids)
-                    state.context.append(UserMsg(name=user.display_name, content=historical_text) if message.role == "user"
-                                         else AssistantMsg(name="物间", content=historical_text))
+            history = messages[:-1]
+            last_answer = next((index for index in range(len(history) - 1, -1, -1)
+                if history[index].role == "assistant"), -1)
+            unanswered = {message.id for message in history[last_answer + 1:]}
+            if conversation.agent_state:
+                # The SDK checkpoint and successful assistant message commit
+                # atomically. Failed/cancelled turns after that boundary have
+                # SQL user messages but are absent from the checkpoint.
+                history = history[last_answer + 1:]
+            else:
+                # Bound completed history as before, not the unanswered batch.
+                history = history[max(0, last_answer - 15):]
+            history = [message for message in history if message.created_at >= conversation.reset_after]
+            receipt_ids = {identity for message in history if message.role == "user"
+                for identity in (message.recorded_experiences or {}).values()}
+            record_uses = dict(db.execute(select(ExperienceRecord.id, ExperienceRecord.allow_ai).where(
+                ExperienceRecord.creator_id == user.id, ExperienceRecord.id.in_(receipt_ids))).all()) if receipt_ids else {}
+            for message in history:
+                historical_text = message.text
+                receipts = record_write_receipts(message, record_uses) if message.role == "user" else []
+                if receipts:
+                    historical_text += "\nrecord_receipts=" + json.dumps(receipts, ensure_ascii=False, separators=(",", ":"))
+                if message.photo_ids:
+                    historical_text += "\n原始照片引用：" + ",".join(message.photo_ids)
+                if message.role == "user":
+                    content = [TextBlock(text=historical_text)]
+                    if message.id in unanswered:
+                        # Recover actual unanswered attachments, not merely
+                        # their IDs; do not invent a successful prior reply.
+                        for identity in message.photo_ids:
+                            asset = domain.own_asset(db, user.id, identity)
+                            content.append(DataBlock(source=Base64Source(
+                                data=base64.b64encode(Path(asset.path).read_bytes()).decode(),
+                                media_type=asset.media_type)))
+                    state.context.append(UserMsg(name=user.display_name, content=content))
+                else:
+                    state.context.append(AssistantMsg(name="物间", content=historical_text))
             inputs = [TextBlock(text=current.text or "请看看这张照片，帮助我认识物品。")]
             if current.photo_ids:
                 inputs.append(TextBlock(text="以下附件的照片引用（顺序对应）：" + ",".join(current.photo_ids)))

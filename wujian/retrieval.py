@@ -26,6 +26,18 @@ from .database import (
 logger = logging.getLogger(__name__)
 
 
+def record_write_receipts(message, record_uses):
+    """Project linked, still-existing own records without granting body access.
+
+    record_uses is an owner-filtered SQL mapping of record ID to AI permission.
+    Both restored chat and the disposable search index use this same receipt.
+    """
+    return [{"experience_id": identity, "reference_kind": "record_write_receipt",
+        "ai_reference_allowed": bool(record_uses[identity])}
+        for identity in dict.fromkeys((message.recorded_experiences or {}).values())
+        if identity in record_uses]
+
+
 def task_view(row):
     return {
         key: getattr(row, key)
@@ -145,10 +157,7 @@ def authorized_documents(sessions, user_id):
                     if history.blocks(question.id, question.text, message.text):
                         question = None
                         continue
-                    receipts = [{"experience_id":identity, "reference_kind":"record_write_receipt",
-                        "ai_reference_allowed":bool(record_uses[identity])}
-                        for identity in dict.fromkeys((question.recorded_experiences or {}).values())
-                        if identity in record_uses]
+                    receipts = record_write_receipts(question, record_uses)
                     add(
                         "conversation",
                         question.id,
