@@ -1,0 +1,130 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_kind": "development_simulation",
+  "physical_devices_available": false,
+  "sources": [
+    {
+      "id": "source_sony_cn",
+      "url": "https://www.sonystyle.com.cn/products/headphone/wh_1000xm5/wh_1000xm5_r_feature.html",
+      "title": "索尼中国在线商城 WH-1000XM5 玫瑰灰",
+      "checked_on": "2026-11-04",
+      "checked_scope": "product_identity_only",
+      "note": "核对中国销售型号；不据此声称所有操作资料已获取。"
+    },
+    {
+      "id": "source_mijia_cn",
+      "url": "https://www.mi.com/mjsmartlamp-1s/specs",
+      "title": "小米中国官网 米家台灯1S 产品参数",
+      "checked_on": "2026-11-04",
+      "checked_scope": "product_identity_only",
+      "note": "官网检索内容确认名称与 MJTD01SYL 型号；本轮直接打开超时。后续使用具体参数前复核全文，避免混用增强版或海外资料。"
+    },
+    {
+      "id": "source_epson_cn",
+      "url": "https://www.epson.com.cn/products/l-all-in-ones/l3256/",
+      "title": "爱普生中国 Epson L3256 产品页",
+      "checked_on": "2026-11-04",
+      "checked_scope": "product_identity_only",
+      "note": "核对国内 L3256 身份；后续操作需继续获取适用说明书。"
+    }
+  ],
+  "products": [
+    {
+      "id": "product_sony_wh1000xm5_cn",
+      "brand": "Sony 索尼",
+      "commercial_name": "WH-1000XM5 无线降噪耳机",
+      "model": "WH-1000XM5",
+      "market": "CN",
+      "edition": "中国大陆销售款，玫瑰灰，对应所列中国商城页面",
+      "hardware_revision": null,
+      "firmware_version": null,
+      "source_ids": ["source_sony_cn"]
+    },
+    {
+      "id": "product_mijia_lamp1s_cn",
+      "brand": "米家",
+      "commercial_name": "米家台灯1S",
+      "model": "MJTD01SYL",
+      "market": "CN",
+      "edition": "对应中国官网米家台灯1S参数页，不混用1S增强版",
+      "hardware_revision": null,
+      "firmware_version": null,
+      "source_ids": ["source_mijia_cn"]
+    },
+    {
+      "id": "product_epson_l3256_cn",
+      "brand": "Epson 爱普生",
+      "commercial_name": "L3256 墨仓式无线多功能一体机",
+      "model": "L3256",
+      "market": "CN",
+      "edition": "中国大陆产品，对应所列爱普生中国页面",
+      "hardware_revision": null,
+      "firmware_version": null,
+      "source_ids": ["source_epson_cn"]
+    }
+  ],
+  "people": [
+    {"id": "person_demo_owner", "display_name": "模拟用户小林"},
+    {"id": "person_demo_friend", "display_name": "模拟好友小夏"}
+  ],
+  "items": [
+    {
+      "id": "item_demo_headphones",
+      "owner_id": "person_demo_owner",
+      "name": "我的耳机（模拟档案）",
+      "kind": "standard_product",
+      "product_id": "product_sony_wh1000xm5_cn",
+      "personal_description": "模拟拥有关系；并未连接或观察真实耳机。"
+    },
+    {
+      "id": "item_demo_lamp",
+      "owner_id": "person_demo_owner",
+      "name": "书桌上的灯（模拟档案）",
+      "kind": "standard_product",
+      "product_id": "product_mijia_lamp1s_cn",
+      "personal_description": "模拟读书角资源；实际摆放、尺寸与当前配置未知。"
+    },
+    {
+      "id": "item_demo_printer",
+      "owner_id": "person_demo_owner",
+      "name": "家里的打印机（模拟档案）",
+      "kind": "standard_product",
+      "product_id": "product_epson_l3256_cn",
+      "personal_description": "模拟家庭帮助场景；当前网络与耗材状态未知。"
+    },
+    {
+      "id": "item_demo_stone",
+      "owner_id": "person_demo_owner",
+      "name": "旅行带回的石头（模拟纪念物）",
+      "kind": "nonstandard_object",
+      "product_id": null,
+      "personal_description": "虚构纪念物；未提供照片，不推断矿物成分或承重能力。"
+    },
+    {
+      "id": "item_demo_sunflower",
+      "owner_id": "person_demo_owner",
+      "name": "手绘向日葵（模拟手作）",
+      "kind": "nonstandard_object",
+      "product_id": null,
+      "personal_description": "虚构的手绘礼物，用于故事与分身传递开发。"
+    }
+  ],
+  "experiences": [
+    {
+      "id": "experience_demo_reading_evening",
+      "creator_id": "person_demo_owner",
+      "title": "第一个安静读书的晚上（虚构）",
+      "text": "模拟记录：把旅行的石头放在台灯旁，读了一会儿书，感觉这个角落开始属于自己。",
+      "occurred_on": "2026-10-30",
+      "item_ids": ["item_demo_lamp", "item_demo_stone"]
+    },
+    {
+      "id": "experience_demo_gift_story",
+      "creator_id": "person_demo_owner",
+      "title": "给朋友的向日葵故事（虚构）",
+      "text": "模拟创作：画里的向日葵每天寻找一点光，希望把温暖送给小夏。尚未发生实际赠礼。",
+      "occurred_on": "2026-11-01",
+      "item_ids": ["item_demo_sunflower"]
+    }
+  ]
+}

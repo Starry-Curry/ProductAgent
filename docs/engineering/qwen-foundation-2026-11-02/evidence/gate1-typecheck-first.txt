@@ -1,9 +1,0 @@
-
-> product-agent@0.1.0 typecheck
-> tsc --noEmit
-
-scripts/kernel-v3/compare.ts(7,29): error TS2307: Cannot find module '../../src/lib/agent/kernel/context.ts' or its corresponding type declarations.
-scripts/kernel-v3/compare.ts(46,651): error TS7006: Parameter 's' implicitly has an 'any' type.
-scripts/kernel-v3/evaluate.ts(8,29): error TS2307: Cannot find module '../../src/lib/agent/kernel/context.ts' or its corresponding type declarations.
-scripts/kernel-v3/experience.ts(7,29): error TS2307: Cannot find module '../../src/lib/agent/kernel/context.ts' or its corresponding type declarations.
-scripts/kernel-v3/experience.ts(27,296): error TS7006: Parameter 'r' implicitly has an 'any' type.

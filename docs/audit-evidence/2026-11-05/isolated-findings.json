@@ -1,0 +1,49 @@
+{
+  "kind": "isolated_engineering_audit",
+  "date": "2026-11-05",
+  "real_model_calls": false,
+  "cases": [
+    {
+      "id": "A01",
+      "scenario": "只共享物品后读取绑定该物品的legacy来源",
+      "expected": "未明确分类的历史来源不自动向其他用户开放",
+      "observed": "readable_source返回整个来源，含虚构私人附注",
+      "confirmed": true,
+      "code": "wujian/source_access.py:11-14"
+    },
+    {
+      "id": "A02",
+      "scenario": "遗忘后同文与同义改写重新写入",
+      "observed": {
+        "same_content": "previously_removed",
+        "paraphrase_accepted": true
+      },
+      "conclusion": "只抑制同一内容哈希，未提供语义遗忘保障",
+      "confirmed": true,
+      "code": "wujian/foundation.py:62-65"
+    },
+    {
+      "id": "A03",
+      "scenario": "相同content不同context的理解",
+      "observed": {
+        "same_id": true,
+        "context_after": "阅读"
+      },
+      "conclusion": "记忆身份不含情境，第二次写入覆盖第一种情境",
+      "confirmed": true,
+      "code": "wujian/foundation.py:62-84"
+    },
+    {
+      "id": "A04",
+      "scenario": "旧方案成功后替换成尚未尝试的新方案并标完成",
+      "expected": "完成必须对应当前方案的实际结果",
+      "observed": {
+        "status": "completed",
+        "feedback_count": 1
+      },
+      "conclusion": "成功反馈未绑定计划版本，历史成功可放行新计划完成",
+      "confirmed": true,
+      "code": "wujian/foundation.py:130-145"
+    }
+  ]
+}

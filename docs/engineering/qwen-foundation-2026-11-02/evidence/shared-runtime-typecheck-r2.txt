@@ -1,7 +1,0 @@
-
-> product-agent@0.1.0 typecheck
-> tsc --noEmit
-
-tests/life-acquisition.test.ts(34,61): error TS2322: Type '() => Promise<{ model: string; text: string; events: never[]; usage: {}; status: string; hits: { title: string; url: string; }[]; }>' is not assignable to type '(query: string, sites?: string[] | undefined) => Promise<SearchResponse>'.
-  Type 'Promise<{ model: string; text: string; events: never[]; usage: {}; status: string; hits: { title: string; url: string; }[]; }>' is not assignable to type 'Promise<SearchResponse>'.
-    Property 'tokens' is missing in type '{ model: string; text: string; events: never[]; usage: {}; status: string; hits: { title: string; url: string; }[]; }' but required in type 'SearchResponse'.

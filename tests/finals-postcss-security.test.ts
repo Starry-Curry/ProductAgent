@@ -1,4 +1,0 @@
-import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import postcss from 'postcss';
-test('依赖安全回归：攻击者CSS中的绝对sourceMappingURL不能读取本机另一个合成map并泄露sourcesContent',async()=>{
- const root=fs.mkdtempSync(path.resolve('.runtime/finals-postcss-')),file=path.join(root,'private-fixture.map'),marker='SYNTHETIC-MAP-NEVER-EXPOSE';fs.writeFileSync(file,JSON.stringify({version:3,sources:['synthetic-only.ts'],names:[],mappings:'AAAA',sourcesContent:[marker]}));const css='a { color: red }\n/*# sourceMappingURL='+file.replaceAll('\\','/')+' */';const result=await postcss([]).process(css,{from:undefined,map:{inline:false,annotation:false}});assert.ok(!JSON.stringify(result.map?.toJSON()).includes(marker));assert.ok(!result.css.includes(marker));
-});

@@ -1,8 +1,0 @@
-
-> product-agent@0.1.0 typecheck
-> tsc --noEmit
-
-src/lib/context/source-semantics.ts(47,17): error TS2323: Cannot redeclare exported variable 'modelSourceSemantics'.
-src/lib/context/source-semantics.ts(47,17): error TS2393: Duplicate function implementation.
-src/lib/context/source-semantics.ts(70,17): error TS2323: Cannot redeclare exported variable 'modelSourceSemantics'.
-src/lib/context/source-semantics.ts(70,17): error TS2393: Duplicate function implementation.

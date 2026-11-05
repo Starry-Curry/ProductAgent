@@ -1,8 +1,0 @@
-{
-  "at": "2026-11-01T14:21:59.378Z",
-  "basis": "final_production_build_existing_synthetic_task_resume_no_new_model",
-  "checks": [],
-  "pageErrors": [],
-  "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('task-continuity').locator('[data-task-id=\"14550828-0719-4a12-9ff6-e455643238a4\"]')\u001b[22m\n",
-  "newModelRequests": 0
-}

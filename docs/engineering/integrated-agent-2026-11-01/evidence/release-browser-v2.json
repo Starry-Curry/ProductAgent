@@ -1,8 +1,0 @@
-{
-  "at": "2026-11-01T14:27:52.245Z",
-  "basis": "final_production_build_existing_synthetic_task_resume_no_new_model",
-  "checks": [],
-  "pageErrors": [],
-  "error": "expect(locator).toContainText(expected) failed\n\nLocator: locator('.assistant-prose').last()\nExpected substring: \"310\"\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toContainText\" locator('.assistant-prose').last() with timeout 5000ms\n  - waiting for locator('.assistant-prose').last()\n",
-  "newModelRequests": 0
-}

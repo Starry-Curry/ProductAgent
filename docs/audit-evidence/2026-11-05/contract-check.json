@@ -1,0 +1,13 @@
+{
+  "openapi_matches_source": true,
+  "path_count": 38,
+  "operation_count": 46,
+  "tables": 20,
+  "python": "3.12.14",
+  "source_origins": [
+    [
+      "legacy",
+      3
+    ]
+  ]
+}

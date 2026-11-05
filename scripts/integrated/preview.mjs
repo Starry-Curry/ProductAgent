@@ -1,9 +1,0 @@
-import {spawn} from 'node:child_process';import {pathToFileURL} from 'node:url';import path from 'node:path';import fs from 'node:fs';
-import {integratedGateway,ROUND} from './gateway.mjs';
-const gate=await integratedGateway({recordContent:process.argv.includes('--record-synthetic-evidence')}),project=process.cwd();
-const child=spawn(process.execPath,['--import',pathToFileURL(path.join(project,'scripts/alpha/network-hook.mjs')).href,'node_modules/next/dist/bin/next','start','--hostname','127.0.0.1','--port','3233'],{windowsHide:true,stdio:'inherit',env:{...process.env,PRODUCT_AGENT_DATA_DIR:path.join(project,'.runtime/practical-preview'),WUJIAN_BUILD_DIR:'.next-integrated',AUTH_MODE:'authenticated',AI_ALLOW_PAID_CALLS:'true',WUJIAN_ALLOW_PAID_CALLS:'true',AI_API_KEY:'fixture-only',AI_BASE_URL:'https://dashscope.aliyuncs.com/compatible-mode/v1',AI_MODEL:gate.model,AI_TASK_MODEL:gate.model,AI_CREATIVE_MODEL:gate.model,AI_REQUEST_TIMEOUT_MS:'90000',AI_ENABLE_THINKING:'false',WUJIAN_AGENT_RUNTIME:'native',WUJIAN_PRACTICAL_THINKING:'true',WUJIAN_ALLOW_SEARCH:'false',WUJIAN_ALLOW_PUBLIC_FETCH:'true',WUJIAN_EXPERIMENTAL_FACT_QA:'false',WUJIAN_EXPERIMENTAL_KERNEL_V3:'false',ALPHA_GATEWAY:gate.url,WUJIAN_ENABLE_DEVICE_LAB:'true',LANGSMITH_TRACING:'false',LANGCHAIN_TRACING_V2:'false',NEXT_TELEMETRY_DISABLED:'1'}});
-fs.writeFileSync('.runtime/integrated-preview.json',JSON.stringify({url:'http://127.0.0.1:3233',round:ROUND,syntheticDataOnly:true}));
-fs.writeFileSync('.runtime/integrated-gateway.json',JSON.stringify({url:gate.url,model:gate.model}));
-let stopping=false;async function stop(){if(stopping)return;stopping=true;child.kill();await gate.close();}
-process.on('SIGINT',()=>stop().then(()=>process.exit(0)));process.on('SIGTERM',()=>stop().then(()=>process.exit(0)));child.on('exit',c=>stop().then(()=>process.exit(c||0)));
-setTimeout(()=>stop().then(()=>process.exit(0)),60*60*1000);

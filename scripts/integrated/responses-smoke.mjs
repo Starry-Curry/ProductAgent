@@ -1,5 +1,0 @@
-import fs from 'node:fs';
-import {integratedGateway,ROOT} from './gateway.mjs';
-const file=ROOT+'/responses-search-smoke.json';if(fs.existsSync(file))throw Error('preserve_evidence');
-const gate=await integratedGateway({recordContent:true});
-try{const start=Date.now(),r=await fetch(gate.url+'/v1/responses',{method:'POST',headers:{Authorization:'Bearer fixture-only','content-type':'application/json','x-wujian-evaluation':'responses-official-search-smoke'},body:JSON.stringify({model:gate.model,input:'Find Sony official SRS-XB100 Help Guide. Return actual official source URLs for Bluetooth pairing. Do not invent URLs.',tools:[{type:'web_search'},{type:'web_extractor'}],enable_thinking:true,max_output_tokens:3000,max_tool_calls:3}),signal:AbortSignal.timeout(95000)});const data=await r.json();fs.writeFileSync(file,JSON.stringify({httpStatus:r.status,elapsedMs:Date.now()-start,result:data},null,2));console.log(JSON.stringify({status:r.status,types:data.output?.map(o=>o.type),usage:data.usage,error:data.error}));}finally{await gate.close();}

@@ -1,0 +1,437 @@
+{
+  "date": "2026-11-05",
+  "scope": "snapshot_code_comparison_no_remote_execution",
+  "local": {
+    "path": "D:\\D盘桌面\\wujian_final",
+    "branch": "codex/wujian-audit",
+    "committed": false,
+    "text_files": 75
+  },
+  "main": {
+    "sha": "dbd93cfc9f684ccac7b0f80727cdaebcea898ca9",
+    "tree": "171c81904f97a17c78d6bacb5edc1c197aa3b3fe",
+    "date_utc": "2026-11-05T01:04:37Z"
+  },
+  "develop": {
+    "sha": "e7a326d3804e9b57af3eeb84d9f2a31474f779af",
+    "tree": "3efd9e45da4b82e3247cc08ef417b9328ce8c2d6",
+    "date_utc": "2026-11-05T07:58:34Z"
+  },
+  "main_to_develop": {
+    "ahead": 8,
+    "behind": 0,
+    "changed": 45,
+    "added": 35,
+    "modified": 10,
+    "files": [
+      {
+        "filename": "CHANGELOG.md",
+        "status": "modified",
+        "additions": 6,
+        "deletions": 0,
+        "changes": 6,
+        "previous_filename": null
+      },
+      {
+        "filename": "CONTRIBUTING.md",
+        "status": "modified",
+        "additions": 8,
+        "deletions": 6,
+        "changes": 14,
+        "previous_filename": null
+      },
+      {
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 3,
+        "changes": 12,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/GIT_WORKFLOW.md",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 9,
+        "changes": 20,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/README.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0,
+        "changes": 2,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/CURRENT.md",
+        "status": "modified",
+        "additions": 21,
+        "deletions": 1,
+        "changes": 22,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/TEAM_INTEGRATION.md",
+        "status": "modified",
+        "additions": 29,
+        "deletions": 9,
+        "changes": 38,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/TEAM_WORK_PLAN.md",
+        "status": "added",
+        "additions": 88,
+        "deletions": 0,
+        "changes": 88,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/BRANCH_SNAPSHOT.json",
+        "status": "added",
+        "additions": 236,
+        "deletions": 0,
+        "changes": 236,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/DELIVERY.md",
+        "status": "added",
+        "additions": 63,
+        "deletions": 0,
+        "changes": 63,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/audit-hold/build.txt",
+        "status": "added",
+        "additions": 57,
+        "deletions": 0,
+        "changes": 57,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/audit-hold/login-http.json",
+        "status": "added",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/audit-hold/pr-paused.json",
+        "status": "added",
+        "additions": 9,
+        "deletions": 0,
+        "changes": 9,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/audit-hold/team-tests.txt",
+        "status": "added",
+        "additions": 20,
+        "deletions": 0,
+        "changes": 20,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/audit-hold/typecheck.txt",
+        "status": "added",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/branch-cleanup-result.json",
+        "status": "added",
+        "additions": 71,
+        "deletions": 0,
+        "changes": 71,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/build.txt",
+        "status": "added",
+        "additions": 57,
+        "deletions": 0,
+        "changes": 57,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/github-before.json",
+        "status": "added",
+        "additions": 45,
+        "deletions": 0,
+        "changes": 45,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/integration-pr.json",
+        "status": "added",
+        "additions": 8,
+        "deletions": 0,
+        "changes": 8,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/offline-regression.txt",
+        "status": "added",
+        "additions": 703,
+        "deletions": 0,
+        "changes": 703,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/team-browser-r2.json",
+        "status": "added",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/team-browser.json",
+        "status": "added",
+        "additions": 11,
+        "deletions": 0,
+        "changes": 11,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/team-config.json",
+        "status": "added",
+        "additions": 8,
+        "deletions": 0,
+        "changes": 8,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/team-desktop-r2.png",
+        "status": "added",
+        "additions": 0,
+        "deletions": 0,
+        "changes": 0,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/team-desktop.png",
+        "status": "added",
+        "additions": 0,
+        "deletions": 0,
+        "changes": 0,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/team-mobile-r2.png",
+        "status": "added",
+        "additions": 0,
+        "deletions": 0,
+        "changes": 0,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/team-mobile.png",
+        "status": "added",
+        "additions": 0,
+        "deletions": 0,
+        "changes": 0,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/team-mock.txt",
+        "status": "added",
+        "additions": 15,
+        "deletions": 0,
+        "changes": 15,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/team-tests.txt",
+        "status": "added",
+        "additions": 20,
+        "deletions": 0,
+        "changes": 20,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/typecheck-r2.txt",
+        "status": "added",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/engineering/team-ready-2026-11-05/evidence/typecheck.txt",
+        "status": "added",
+        "additions": 12,
+        "deletions": 0,
+        "changes": 12,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/review/2026-11-05/CODE_ARCHITECTURE_AUDIT.md",
+        "status": "added",
+        "additions": 545,
+        "deletions": 0,
+        "changes": 545,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/review/2026-11-05/PRODUCT_FUNCTIONS_INTERACTIONS.md",
+        "status": "added",
+        "additions": 292,
+        "deletions": 0,
+        "changes": 292,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/review/2026-11-05/evidence/document-checks.json",
+        "status": "added",
+        "additions": 24,
+        "deletions": 0,
+        "changes": 24,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/review/2026-11-05/evidence/offline.txt",
+        "status": "added",
+        "additions": 703,
+        "deletions": 0,
+        "changes": 703,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/review/2026-11-05/evidence/provider-gate-probe.json",
+        "status": "added",
+        "additions": 11,
+        "deletions": 0,
+        "changes": 11,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/review/2026-11-05/evidence/provider-gate-probe.mjs",
+        "status": "added",
+        "additions": 42,
+        "deletions": 0,
+        "changes": 42,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/review/2026-11-05/evidence/remote-state.json",
+        "status": "added",
+        "additions": 24,
+        "deletions": 0,
+        "changes": 24,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/review/2026-11-05/evidence/typecheck-r2.txt",
+        "status": "added",
+        "additions": 3,
+        "deletions": 0,
+        "changes": 3,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/review/2026-11-05/evidence/verification.json",
+        "status": "added",
+        "additions": 69,
+        "deletions": 0,
+        "changes": 69,
+        "previous_filename": null
+      },
+      {
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 3,
+        "deletions": 0,
+        "changes": 3,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/team-dev.mjs",
+        "status": "added",
+        "additions": 64,
+        "deletions": 0,
+        "changes": 64,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/life/AccountBoundary.tsx",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/life/WujianApp.tsx",
+        "status": "modified",
+        "additions": 0,
+        "deletions": 1,
+        "changes": 1,
+        "previous_filename": null
+      },
+      {
+        "filename": "tests/team-dev.test.ts",
+        "status": "added",
+        "additions": 26,
+        "deletions": 0,
+        "changes": 26,
+        "previous_filename": null
+      }
+    ],
+    "src_lib_identical": true
+  },
+  "local_comparison": {
+    "main": {
+      "remote_files": 2679,
+      "local_text_files": 75,
+      "same_path": [
+        {
+          "path": ".env.example",
+          "identical": false
+        },
+        {
+          "path": ".gitignore",
+          "identical": false
+        },
+        {
+          "path": "README.md",
+          "identical": false
+        }
+      ],
+      "local_only_count": 72,
+      "remote_only_count": 2676,
+      "matching_content_any_path": []
+    },
+    "develop": {
+      "remote_files": 2714,
+      "local_text_files": 75,
+      "same_path": [
+        {
+          "path": ".env.example",
+          "identical": false
+        },
+        {
+          "path": ".gitignore",
+          "identical": false
+        },
+        {
+          "path": "README.md",
+          "identical": false
+        }
+      ],
+      "local_only_count": 72,
+      "remote_only_count": 2711,
+      "matching_content_any_path": []
+    }
+  },
+  "remote_workflows": [
+    ".github/workflows/ci.yml"
+  ]
+}

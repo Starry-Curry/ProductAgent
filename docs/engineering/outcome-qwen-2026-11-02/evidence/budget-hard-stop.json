@@ -1,7 +1,0 @@
-{
-  "round": "outcome-qwen-20261102-r1",
-  "upstreamRequests": 250,
-  "networkRequests": 0,
-  "blocked": true,
-  "error": "stage_budget_exhausted"
-}

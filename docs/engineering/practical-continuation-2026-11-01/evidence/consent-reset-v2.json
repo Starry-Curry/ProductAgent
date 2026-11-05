@@ -1,8 +1,0 @@
-{
-  "at": "2026-10-31T21:26:36.237Z",
-  "checks": [],
-  "errors": [
-    "locator.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('用户名', { exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <input required=\"\" name=\"name\" minlength=\"2\" maxlength=\"32\" autocomplete=\"username\"/>\u001b[22m\n\u001b[2m    - fill(\"合成续作验收1793481013231\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m  - element was detached from the DOM, retrying\u001b[22m\n"
-  ],
-  "modelRequests": 0
-}

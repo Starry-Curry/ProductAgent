@@ -1,0 +1,186 @@
+{
+  "date": "2026-11-05",
+  "fingerprint": "eee52f098965f677fae717ea901f1f33184b91170ea4195f1e41a0234391329c",
+  "files": [
+    {
+      "path": "agent_skills/creative-use/SKILL.md",
+      "sha256": "c27217df9791512a194aa43ceb484b9f592315ac35e078e770e850bb0869ae10"
+    },
+    {
+      "path": "agent_skills/product-guidance/SKILL.md",
+      "sha256": "57751ca5239419fc8c8d9a8a41acc7e5c6ab7f4bce12ac76efdf61fdb7808d6e"
+    },
+    {
+      "path": "contracts/openapi.json",
+      "sha256": "1700ed6d619c83e1a4878386c5acd6b0314df7256c0e184ff11c36f9628c550a"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "sha256": "dceec83e7ae29f435470213be244751f63d0827b669c1e234c16105195263dc7"
+    },
+    {
+      "path": "frontend/package.json",
+      "sha256": "631687e1e75679e3ac4b72d02cd41b873e5086d9c7f9e9fdc594a7a8bac01381"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "ec2152f6866b31fb5c7004a4a934f474b80be549f02d9821512f9ce848fd2e5c"
+    },
+    {
+      "path": "frontend/src/ChatPanel.tsx",
+      "sha256": "01071875b7565f5a78d6b4931c3ce04374a9e91bb0c317fa8ae1e1042d3dd0c7"
+    },
+    {
+      "path": "frontend/src/DeviceConnection.tsx",
+      "sha256": "c47b9bcf0c20535f3dc7d6320f39a2b5f5cd4c7e1f0414d22845e4e719d644cf"
+    },
+    {
+      "path": "frontend/src/EditorDialogs.tsx",
+      "sha256": "f075d2f8ac7608c602c719b04c1183153e6ed9196c63775544833f3661234ce9"
+    },
+    {
+      "path": "frontend/src/Views.tsx",
+      "sha256": "da7c5d1043608422cf699df079bbe1e27a23d6136b797d7471777abd7754636d"
+    },
+    {
+      "path": "frontend/src/api.ts",
+      "sha256": "ee350fa166a036c44887417a7ee6daef2105771d3c915c21b889c4a958f8865c"
+    },
+    {
+      "path": "frontend/src/generated/api.ts",
+      "sha256": "2e0d84605d3a82c6e07e1ec12b583bc75fdc1803f0d16b200625ddcc2784e66f"
+    },
+    {
+      "path": "frontend/src/main.tsx",
+      "sha256": "7f140702f8c746b2572d029063a3d8b1e25ca6b6a21d54ab1dc3ce6df231ade7"
+    },
+    {
+      "path": "migrations/versions/0001_existing_v02_schema.py",
+      "sha256": "bd13a2dbb464ea32d6448bffeb088a67588344a112041293034a0c20f6b4bf67"
+    },
+    {
+      "path": "migrations/versions/0002_shared_product_knowledge_tasks_and_.py",
+      "sha256": "629d81fa9aa5eca1c19503c6446d53496c3f7e1563c1e1ba86378de500de5f51"
+    },
+    {
+      "path": "migrations/versions/0003_unresolved_identity.py",
+      "sha256": "0247095a94b88dc4e19ae283a72ace89e341f4916c9f2fdd163b6858a378db74"
+    },
+    {
+      "path": "migrations/versions/0004_story_provenance.py",
+      "sha256": "0347ff087d45821c5e183baa87542b4d2794b32307c765b87beb69256b0875d6"
+    },
+    {
+      "path": "migrations/versions/0005_product_identity.py",
+      "sha256": "4f40e44cbc53b6c20f400b96116096546072581f195dc8fac593216dfbccb167"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "74040e79961840b634a048119db354ea7f47caae957b806f02de06665a1e3d71"
+    },
+    {
+      "path": "tests/test_agent_loop.py",
+      "sha256": "91a156c55857732e32a408c73660d5decdb3de34361c0a6ea13c5222e0c7eaf1"
+    },
+    {
+      "path": "tests/test_contracts.py",
+      "sha256": "30638584a289412452f7533d8a67f815111388b86e44791ce00293d67677a903"
+    },
+    {
+      "path": "tests/test_foundation.py",
+      "sha256": "c299ed0865504227e7b0f19be455ec59fc287da9c92aa8d494d8a67c098ce299"
+    },
+    {
+      "path": "tests/test_journeys.py",
+      "sha256": "a418f7bb41cdf25753735019a46b62b1515f5d845dd9171140f89087f62bd4ef"
+    },
+    {
+      "path": "tests/test_learning.py",
+      "sha256": "6bf3286662a23f935bf976e890c539c33bb9d993d76ebb7356805a42a48aceb2"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "17367ca5a2606acf367eb4d62c15bc7c73e1c9a527c41b96674e38d40a10c32d"
+    },
+    {
+      "path": "wujian/__init__.py",
+      "sha256": "3fb999e7a09f43d1e9e185a05f272c9d1c210c69c906547ccd3509be65f3209a"
+    },
+    {
+      "path": "wujian/__main__.py",
+      "sha256": "043577ff9b401ae13af425c6d777356382015de5f95c3a30724b49daf99748a8"
+    },
+    {
+      "path": "wujian/agent_runtime.py",
+      "sha256": "d089a3dc7985d8b1aef0cf0d830ccd71d6c6a99b9807b7882c5041f3f0a062ab"
+    },
+    {
+      "path": "wujian/api_models.py",
+      "sha256": "33ab5225001019c2cf679e43bca6d07fdb73f50b48377c322e1736dc6945de38"
+    },
+    {
+      "path": "wujian/config.py",
+      "sha256": "f03b7cb9294590090cf608f2054c63c221cc75f09df3b69b0da0b53e04bbc560"
+    },
+    {
+      "path": "wujian/continuity.py",
+      "sha256": "2a065b3037871c5139f079da1c306f94a7ba7fdf37975cb9c949e1dc964cc6fa"
+    },
+    {
+      "path": "wujian/contracts.py",
+      "sha256": "4437e7334bcf1ab4ad347b4c9f985225f2be4f2a527f8344f4506539609c8e4f"
+    },
+    {
+      "path": "wujian/database.py",
+      "sha256": "3e5d03224c9630426f13978e2b481d6d7ac23a7002f990e85a36dc9a241ef9b1"
+    },
+    {
+      "path": "wujian/devices.py",
+      "sha256": "0be76bf759ee865f6dfa47335fdf472d28919b2c274b9b7af61c6492682ae6d0"
+    },
+    {
+      "path": "wujian/domain.py",
+      "sha256": "be0fcf064c6d88c0836a09236ade49a94249ba5a63c71451a20c9d8b8aeb30c7"
+    },
+    {
+      "path": "wujian/evidence.py",
+      "sha256": "ba72cb0ae53ab84271d0c01f61ac0f9edc048cec1d7f73ee86cfc64a97cb5f55"
+    },
+    {
+      "path": "wujian/foundation.py",
+      "sha256": "11fe430285021ae0339d3717e8a119e26f246091c6818380cb1cc13daeb46c26"
+    },
+    {
+      "path": "wujian/identity.py",
+      "sha256": "43c4f5df7997554811db2b9c790a7bb908f9989371516604460459b94c4c9814"
+    },
+    {
+      "path": "wujian/knowledge.py",
+      "sha256": "e9861005a97f7d9d86e9265714f395df583bce63f313ecb37fd10c8a5bd26500"
+    },
+    {
+      "path": "wujian/learning.py",
+      "sha256": "a5e8ceafaa7aa978f72ac3bd002e21c9dbd00bcb250c35085087c8a6ce112e59"
+    },
+    {
+      "path": "wujian/migrate.py",
+      "sha256": "3ef9a1d85cb8248385dbf5047992c07aaf7ea8511cc5529ac1036a360e32b583"
+    },
+    {
+      "path": "wujian/retrieval.py",
+      "sha256": "f2f736baf1c94d246a30d79f904f831d55cb23aa6522fd75c355656560a5a388"
+    },
+    {
+      "path": "wujian/server.py",
+      "sha256": "9b88fa4558de4389c466af2a4ad9504a4af6b9bb5e4b7cfcc708d9c208550e7d"
+    },
+    {
+      "path": "wujian/source_access.py",
+      "sha256": "3e5b1561cfb7455fa7e187e38f1148448fdfc2fe61cf9eb06692cd0302dd71ac"
+    },
+    {
+      "path": "wujian/turns.py",
+      "sha256": "1d0bc8f1cd7718da2396a5fe54a405932258087baec1165281e559cb413ee0cb"
+    }
+  ]
+}

@@ -1,9 +1,0 @@
-✔ 开放条码/ISBN仅产生待确认元信息，来源许可保留、缓存命中、不猜持有/保质期 (2.6033ms)
-ℹ tests 1
-ℹ suites 0
-ℹ pass 1
-ℹ fail 0
-ℹ cancelled 0
-ℹ skipped 0
-ℹ todo 0
-ℹ duration_ms 244.6273

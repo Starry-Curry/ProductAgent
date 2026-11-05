@@ -1,2 +1,0 @@
-tests/finals-discovery-purpose.test.ts(5,126): error TS7006: Parameter 'query' implicitly has an 'any' type.
-tests/finals-discovery-purpose.test.ts(5,474): error TS7006: Parameter 'url' implicitly has an 'any' type.

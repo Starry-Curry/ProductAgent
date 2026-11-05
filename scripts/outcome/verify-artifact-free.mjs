@@ -1,7 +1,0 @@
-import fs from 'node:fs';import path from 'node:path';import {spawnSync} from 'node:child_process';import {ROOT} from './gateway.mjs';
-const root=process.cwd(),source=path.resolve('artifacts'),backup=path.resolve('.runtime/artifacts-verification-preserved'),generated=path.resolve('.runtime/artifacts-verification-generated');
-for(const p of [source,backup,generated])if(!p.toLowerCase().startsWith((root+path.sep).toLowerCase()))throw Error('outside_workspace');
-if(fs.existsSync(backup)||fs.existsSync(generated))throw Error('do_not_overwrite_previous_work');const existed=fs.existsSync(source);if(existed)fs.renameSync(source,backup);let result;
-try{const output=fs.openSync(ROOT+'/regression-artifact-free.txt','w');try{result=spawnSync(process.execPath,['scripts/test-offline.mjs'],{env:process.env,windowsHide:true,stdio:['ignore',output,output]});}finally{fs.closeSync(output);}}
-finally{if(fs.existsSync(source))fs.renameSync(source,generated);if(existed)fs.renameSync(backup,source);}
-fs.writeFileSync(ROOT+'/artifact-free-verification.json',JSON.stringify({basis:'full_offline_suite_with_ignored_legacy_artifacts_temporarily_absent_then_restored',exitCode:result?.status,artifactsRestored:existed===fs.existsSync(source),error:result?.error?.message},null,2));console.log(JSON.stringify({exitCode:result?.status,restored:existed===fs.existsSync(source)}));process.exitCode=result?.status??1;

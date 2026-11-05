@@ -1,8 +1,0 @@
-{
-  "request": 3,
-  "status": "client_timeout",
-  "timeoutMs": 95000,
-  "usage": "unknown_reserved_in_ledger",
-  "productionAdopted": false,
-  "notes": "One bounded compatibility attempt; no source results obtained, no repeat."
-}

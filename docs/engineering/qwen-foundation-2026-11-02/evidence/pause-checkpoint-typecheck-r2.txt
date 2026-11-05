@@ -1,8 +1,0 @@
-
-> product-agent@0.1.0 typecheck
-> tsc --noEmit
-
-tests/foundation.test.ts(1091,63): error TS2345: Argument of type '{}' is not assignable to parameter of type '{ timeoutMs: number; maxTokens: number; thinking?: boolean | undefined; thinkingBudget?: number | undefined; toolChoice?: "auto" | "required" | "none" | { type: "function"; function: { name: string; }; } | undefined; onText?: ((text: string) => void) | undefined; }'.
-  Type '{}' is missing the following properties from type '{ timeoutMs: number; maxTokens: number; thinking?: boolean | undefined; thinkingBudget?: number | undefined; toolChoice?: "auto" | "required" | "none" | { type: "function"; function: { name: string; }; } | undefined; onText?: ((text: string) => void) | undefined; }': timeoutMs, maxTokens
-tests/foundation.test.ts(1094,64): error TS2345: Argument of type '{}' is not assignable to parameter of type '{ timeoutMs: number; maxTokens: number; thinking?: boolean | undefined; thinkingBudget?: number | undefined; toolChoice?: "auto" | "required" | "none" | { type: "function"; function: { name: string; }; } | undefined; onText?: ((text: string) => void) | undefined; }'.
-  Type '{}' is missing the following properties from type '{ timeoutMs: number; maxTokens: number; thinking?: boolean | undefined; thinkingBudget?: number | undefined; toolChoice?: "auto" | "required" | "none" | { type: "function"; function: { name: string; }; } | undefined; onText?: ((text: string) => void) | undefined; }': timeoutMs, maxTokens

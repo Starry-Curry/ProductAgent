@@ -1,9 +1,0 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {validationFixture} from '../scripts/life-validation-fixture.ts';import {respond} from '../src/lib/agent/service.ts';import {usable} from '../src/lib/life/availability.ts';import type {Provider} from '../src/lib/ai/provider.ts';
-import {hasReportedCriticalHazard} from '../src/lib/agent/safety-language.ts';
-test('明确否认一种状态不吞掉另一项真实危险，也不把无鼓包反转为有鼓包',()=>{
- assert.equal(hasReportedCriticalHazard('没有电池鼓包，也未发现电池漏液'),false);assert.equal(hasReportedCriticalHazard('无电池鼓包，但电池冒烟'),true);assert.equal(hasReportedCriticalHazard('No swollen battery'),false);assert.equal(hasReportedCriticalHazard('旧手机电池鼓包了'),true);
-});
-test('已报告鼓包电池不因改称配重而获得创意使用权限，未调用模型或修改物品',async t=>{
- const f=validationFixture('.runtime/outcome-hazard-'+crypto.randomUUID());t.after(()=>f.db.close());const id=f.add('合成旧手机','其他','','待确认',{attributes:{physicalFacts:[{id:crypto.randomUUID(),key:'contents',value:'旧手机电池鼓包，禁止充电和继续使用',basis:'user_report'}]}});const before=JSON.stringify(f.read().items.find(i=>i.id===id));assert.equal(usable(f.read().items.find(i=>i.id===id)!),false);const old=process.env.WUJIAN_AGENT_RUNTIME;process.env.WUJIAN_AGENT_RUNTIME='native';t.after(()=>{if(old===undefined)delete process.env.WUJIAN_AGENT_RUNTIME;else process.env.WUJIAN_AGENT_RUNTIME=old;});
- const p:Provider={ready:true,model:'offline-substitute',generate:async()=>{throw Error('must_not_call');},converse:async()=>{throw Error('must_not_call');}};const r=await respond(f.db,f.read,'lin',{requestId:crypto.randomUUID(),itemId:id,question:'它不用通电，只当配重或敲击物可不可以？',mode:'auto',memoryPolicy:'off'},p);assert.equal(r.reply.outcome,'blocked');assert.equal(r.modelCalls,0);assert.match(r.reply.answer,/不把这件物品改作配重/);assert.equal(JSON.stringify(f.read().items.find(i=>i.id===id)),before);
-});

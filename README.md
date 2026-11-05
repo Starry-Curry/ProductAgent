@@ -1,63 +1,108 @@
 # 物间 Wujian
 
-释放人与物的价值：理解你实际拥有的物品、人与物的经历及现实条件，帮助兑现、创造、延续和传递价值。
+通过理解人和物，连接使用帮助、创造玩法、共同经历和心意传递。当前为本地可运行的开发版，电脑浏览器为主。
 
-当前优先级：共享底座与共同开发前审阅。PR #4已于2026-11-05在远端合并，develop为`3285e8d`，代码树与本次审计的团队候选`32c6119`相同。历史材料不等于正式能力，Core/Full质量仍未通过；各组按公共接口独立开发和审查，不直接更新main。具体分工看下方说明。
+当前仓库主线采用这份 Python/FastAPI + React/Vite 实现。2026-11-05 经产品负责人授权，将本地最新基线同步到 main/develop；原 TypeScript/Next.js 实现保留在归档标签和提交历史中。[主线同步与分支归档](docs/2026-11-05_主线同步与分支归档.md)说明恢复点与团队接入变化。当前仍是工程基线，智能底座未验收通过，不代表已经对外部署。
 
-- [当前工程状态与恢复点](docs/engineering/CURRENT.md)：哪些实际可用、哪些未通过验收。
-- [产品共识定稿](docs/product/PRODUCT_FINAL_V1.md)：产品理念与完整范围。
-- [团队接入指南](docs/engineering/TEAM_INTEGRATION.md)：分支起点、公共服务、离线Mock、专业工具与兼容边界。
-- [分工开发说明](docs/engineering/TEAM_WORK_PLAN.md)：审计前暂停历史集成，角色分工、开工步骤和底座验收边界。
-- 共同开发前审阅：[完整功能与交互](docs/review/2026-11-05/PRODUCT_FUNCTIONS_INTERACTIONS.md) · [结合源码的技术架构审计](docs/review/2026-11-05/CODE_ARCHITECTURE_AUDIT.md)，区分设计、落地、真实验证和未达标项。
-- [贡献指南](CONTRIBUTING.md) · [工程规则](AGENTS.md) · [文档索引](docs/README.md)。
-- [GitHub 协作操作](docs/GIT_WORKFLOW.md) · [后续研发规划](docs/engineering/NEXT_STEPS.md)。
+共同开发先阅读[产品功能、交互与总体架构审计](docs/2026-11-05_物间产品功能交互与总体架构审计.md)、[代码、数据库与技术架构审计](docs/2026-11-05_物间代码数据库与技术架构审计.md)和[贡献指南](CONTRIBUTING.md)。新功能从 develop 建分支，复用共同业务对象、迁移和接口。
 
-## 本地运行
+产品约定见 [开发基线](04_物间_开发基线与协作约定.md)，实际架构见 [底座机制实施与真实验证](docs/2026-11-04_底座机制实施与真实验证.md)，最新修复和仍未通过的项目见 [底座缺口修复与验收状态](docs/2026-11-04_底座缺口修复与验收状态.md)。01、02、03 原文件保留；冲突以用户后续明确约定为准。
 
-使用 **Node.js 24** 与现有 package-lock.json，无需独立数据库服务。先fetch最新远端，再从`origin/develop`创建自己的功能分支。接入方式见 [团队接入指南](docs/engineering/TEAM_INTEGRATION.md#从哪里开始)；其中“PR #4合并前”的临时分支说明已是历史。
+[任务计划与实施状态](05_物间_产品深度对齐与智能底座任务计划.md)包含理解人、创造力、REA 接入、阶段验收与产品完整度待办。当前共享机制已接通并经过工程回归；创意、分身事实准确性和响应时间尚未达到产品验收要求。
 
-```bash
-npm ci
-npm run team:dev -- --name=alice --port=3251
+## 现在打开
+
+服务启动后访问 **http://127.0.0.1:8000**。可以注册自己的账号，或在登录页进入「小林的物间」「小夏的物间」体验两方赠礼。体验档案中的拥有关系、个人经历和联调物品为模拟数据；模型回答来自真实百炼调用。
+
+这台电脑已安装本项目依赖并构建界面，重新启动只需在项目目录运行：
+
+```powershell
+.venv\Scripts\python.exe -m wujian serve
 ```
 
-打开 http://127.0.0.1:3251，注册自己的本地测试账号。团队命令强制关闭付费模型、公开联网和设备实验，使用 `.runtime/team-dev/alice` 和 `.next-team-alice`，不读取其他人的数据库；同机运行另一成员时换名字和端口。Windows 可使用 npm.cmd。停止用 Ctrl+C。原 `npm run dev` 仍保留为本地演示身份入口，不等于账号权限验收。
+也可双击 `start-wujian.cmd`。窗口中的 Ctrl+C 停止服务。若提示端口被占用，已有实例可能正在运行，可直接打开上述地址。
 
-不需要 Key 就能测试工具往返、Task 和确认反馈：`npm run team:mock`；四方向公共接口与权限回归：`npm run test:team`。Mock 不能证明真实模型质量。
+密钥只放本地 `.env`，不用发送到聊天或前端。`.env.example` 说明可选配置。普通对话、联网搜索、说明书图示识读和语义检索会调用百炼；离线测试不会。默认仅监听本机；本轮没有购买资源、开通云服务或对外部署。
 
-```bash
-npm run build
-npm start
+## 队友首次安装
+
+需要 Python 3.12、uv、Node.js 22.12+（本机已用 Node 26 验证）。
+
+```powershell
+uv sync --cache-dir tmp/uv-cache
+npm.cmd --prefix frontend ci --registry=https://registry.npmjs.org/ --cache=tmp/npm-cache
+npm.cmd --prefix frontend run build
+.venv\Scripts\python.exe -m wujian serve
 ```
 
-生产方式本地启动也不代表已公开部署。构建目录与当前候选的具体启动参数以 CURRENT 为准。
+首次使用前，将 `.env.example` 复制为 `.env` 并在本地填写密钥；已有 `.env` 请保留。`uv.lock` 和 `frontend/package-lock.json` 固定依赖。数据与原始资料保存在 `var/`，与源码分开；不要为了重新启动而删除它。关闭体验档案入口可设置 `WUJIAN_DEMO_MODE=false`。当前会话和部署设置用于本地原型，尚未完成公网生产加固。
 
-## 模型与数据
+## 开发与验证
 
-默认付费关闭，未配置模型时可运行本地物品与业务界面；不把本地规则或模型替身称为真实智能。可参考 .env.example 配置当前工作区安全环境，.env.local 和 Key 不进入 Git。真实千问、搜索、抽取等收费能力须有当前任务授权、两个费用开关及有效网关台账，操作方法看 CURRENT，不能仅以启动参数替代授权。
-
-商品官方事实、用户报告、合成家庭、模型设想与实际设备验证必须分开；物品来源及能力不代表已拥有或已获设备控制授权。不上传私人数据库或秘密，安全说明见 [SECURITY](SECURITY.md)。
-
-## 在哪里改代码
-
-| 位置 | 内容 |
-| --- | --- |
-| src/app、src/components/life | 页面、接口和生活体验 |
-| src/lib/context | 物品事实、来源、能力与任务相关上下文 |
-| src/lib/agent、src/lib/ai | Agent 调用、工具及模型接口 |
-| src/lib/life、src/lib/foundation | 物品、关系、任务/结果与领域业务 |
-| tests、scripts | 回归测试、启动和隔离验收 |
-
-GitHub 分工：main 为稳定演示、develop 为团队集成；feature/*、fix/*、docs/*、codex/* 为独立开发分支。通过 PR 合入 develop，需 CI 通过及一名组员审查；main 由负责人批准更新。分支命令与提交流程见 [CONTRIBUTING](CONTRIBUTING.md#github-协作)，底座调用与 Mock 直接见 [TEAM_INTEGRATION](docs/engineering/TEAM_INTEGRATION.md)，不在这里复制。
-
-## 验证
-
-```bash
-npm run typecheck
-npm test
-npm run build
+```powershell
+.venv\Scripts\python.exe -m unittest discover -s tests -v
+.venv\Scripts\python.exe -m wujian validate fixtures/development/catalog.json
+.venv\Scripts\python.exe -m wujian openapi contracts/openapi.json
+npm.cmd --prefix frontend run types
+npm.cmd --prefix frontend run build
 ```
 
-开发期优先相关定向检查，集成时集中回归；涉及用户流程需实际浏览器验证。付费调用和实体操作必须单独符合授权，CI 不产生模型费用。自动检查通过不等于真实任务或整个产品验收通过。
+开发界面可另外运行 `npm.cmd --prefix frontend run dev`。Vite 将 `/api` 代理到后端；日常体验直接使用后端提供的同源构建版。
 
-[历史文档及固定恢复链接](docs/HISTORY.md) · [第三方声明](THIRD_PARTY_NOTICES.md) · [变更记录](CHANGELOG.md)。
+## 实现与协作入口
+
+| 文件 | 职责 |
+|---|---|
+| `wujian/api_models.py` | 真实 API 的输入输出契约；生成 OpenAPI 与前端类型 |
+| `wujian/domain.py` | 界面、Agent 共用的物品、经历、私人理解、共享与赠礼操作 |
+| `wujian/database.py` | SQLAlchemy 业务数据；本地默认 SQLite |
+| `migrations/` | Alembic 版本迁移；已有资料保留，当前版本 0005 |
+| `wujian/foundation.py` | 认识依据、纠正/期限、任务版本、反馈与状态的共同业务操作 |
+| `wujian/retrieval.py` | ReMe 混合检索；索引是可重建投影，SQL 是事实来源 |
+| `wujian/turns.py` | AgentScope 原生最终输出契约；回答与持续计划一次提交 |
+| `wujian/learning.py` | 主 Agent 的结构化认识更新、当前用户依据与型号适用性核对 |
+| `wujian/continuity.py`、`source_access.py` | 家庭共享和赠礼中的公开商品证据接续；私人理解不混入 |
+| `wujian/agent_runtime.py` | AgentScope 主循环接入、工具、上下文和任务结果 |
+| `agent_skills/` | 按需加载的产品指导与创意探索技能，共用同一组业务对象 |
+| `wujian/devices.py` | 项目内 REA MCP 生命周期、连接目标、观察证据与显式操作 |
+| `wujian/knowledge.py` | 百炼真实搜索、原始网页/PDF 获取、引用与页图读取 |
+| `wujian/server.py` | 登录、API、流式进度、文件权限与静态界面服务 |
+| `frontend/src/` | React/TypeScript 界面；`generated/api.ts` 自动生成 |
+| `fixtures/development/catalog.json` | 中国大陆型号及非标物开发样本；不预置操作答案 |
+| `fixtures/development/foundation_scenarios.json` | 26 件物品旅程所用的新增型号、真实约束和虚构生活情境 |
+| `scripts/evaluate_foundation.py` | 在隔离数据目录中运行真实模型旅程，保留首答，不当作独立验收 |
+| `tests/` | SDK 集成、共享身份、权限、赠礼与必要业务规则 |
+
+修改公共接口：先改 Pydantic，重新导出 OpenAPI 和前端类型，再更新调用方。功能调用已有业务操作，不再建立另一套物品或记忆。数据库启动时应用迁移；结构变化新增迁移，不能以删除 `var/` 或静默 `create_all` 代替。备份保存在 `var/backups/`。
+
+## REA 前置准备与今晚接入
+
+这台电脑已验证项目内 REA 6.8.0 的真实 MCP 握手及 229 个工具发现。队友首次准备运行：
+
+```powershell
+npm.cmd exec --cache D:/D盘桌面/wujian_final/tmp/npm-cache --registry=https://registry.npmjs.org/ --yes --package=rea-agents@6.8.0 -- rea --help
+```
+
+其他目录安装时改用对应绝对缓存路径，或把实际 `rea.mjs` 路径写入本地 `WUJIAN_REA_ENTRY`。不修改 Codex 全局配置。REA 在明确请求连接时启动，应用关闭时清理。工具目录不会全量塞入模型。
+
+物品详情 → 更多 →「连接设备与探索」。当前支持本机浏览器调试入口和已授权的 JavaScript/Electron 软件包。后者默认放入 `var/device-artifacts/`，或使用本地 JSON 数组配置 `WUJIAN_REA_ARTIFACT_ROOTS`。实际设备的控制软件、协议或网页入口到位后，再选对应适配路径。
+
+后端具有连接、探索、操作提案、显式执行与证据读取 API；界面当前提供连接与先探索入口。尚未连接你的显示屏，也尚未完成实际屏保改变。照片录入和 MCP 连通都不等于设备可控制；执行仍需具体目标和可用控制通道。
+
+## 真实开发验证
+
+以下会调用本地配置的百炼账号，使用新建隔离目录和明确虚构的生活记录：
+
+```powershell
+.venv\Scripts\python.exe scripts/evaluate_foundation.py --real --only all
+```
+
+可将 `all` 换为 `manual`、`memory`、`cases`、`journey`、`gift` 或 `rea` 进行针对性复测。结果在 `var/evaluations/<时间>/results.json`，既保留成功也保留失败。工程回归、开发复测和独立验收分开；不能把运行完成数当作智能质量通过数。
+
+## 当前边界
+
+已接通真实千问对话、工具调用、联网查资料、图片输入、跨会话私人理解及基础回忆/赠礼闭环。智能质量仍需独立验收，不能用工程测试数量代替。
+
+真实测试已观察到跨新会话恢复同一任务、按失败反馈修改计划、主动记录多物回忆和选择性赠礼。但创意仍会过度肯定未经验证的效果，分身仍会混淆所收到故事的经历主体；仅增加作者来源尚未使模型可靠遵循。长任务达到数分钟，尚需改进。陌生物品目前只有开发样本成功，18 题独立验收尚未执行。
+
+天猫订单导入、系统级到时推送、实体物流、自动照片归档、完整图形分身成长、自动语义冲突判定、跨账号共建商品知识库尚未实现。提醒目前是应用内事项与完成状态。

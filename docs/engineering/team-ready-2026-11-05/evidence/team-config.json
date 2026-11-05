@@ -1,8 +1,0 @@
-{
-  "url": "http://127.0.0.1:3258",
-  "dataDirectory": "D:\\ProductAgent-LifeContext\\.runtime\\qwen-foundation-v1\\.runtime\\team-dev\\integration-smoke",
-  "buildDirectory": ".next-team-integration-smoke",
-  "authentication": "authenticated",
-  "paidCalls": false,
-  "publicFetch": false
-}

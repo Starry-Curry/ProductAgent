@@ -1,4 +1,0 @@
-tests/finals-preview-failure-privacy.test.ts(5,142): error TS7006: Parameter 'a' implicitly has an 'any' type.
-tests/finals-source-injection-boundary.test.ts(3,279): error TS2322: Type '"chen"' is not assignable to type 'Person'.
-tests/finals-source-injection-boundary.test.ts(3,367): error TS2551: Property 'notes' does not exist on type 'Item'. Did you mean 'note'?
-tests/finals-source-injection-boundary.test.ts(4,671): error TS2345: Argument of type '"chen"' is not assignable to parameter of type 'Person'.

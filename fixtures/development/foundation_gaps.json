@@ -1,0 +1,11 @@
+{
+  "kind": "fictional_development_scenarios_not_independent_acceptance",
+  "memory": [
+    {"id":"quiet_understanding","new_conversation":true,"text":"我租房，墙面不能打孔也不能留胶痕。我喜欢暖黄光。旅行带回来的石头是和外婆最后一次去海边捡的，不要磨、不要粘。我只是随便聊聊，先不用写回忆墙。"},
+    {"id":"contextual_correction","new_conversation":true,"text":"补充一下，上次我说喜欢暖黄光，是读书放松的时候；做手工我喜欢白光。不要把它理解成所有时候都用黄光。另外今天石头先收起来，今天的布置别用它。"},
+    {"id":"recall_updated_understanding","new_conversation":true,"text":"你现在记得我布置房间要注意什么、读书和做手工对光线分别有什么偏好吗？那块石头对我有什么特别的意义？先简单说说就好，不用给我方案。"}
+  ],
+  "cases": [
+    {"id":"public_case_transfer","new_conversation":true,"text":"想用家里现有的窗帘、台灯和纸板玩一点不一样的拍照效果，不买东西、不伤墙，也不用那块纪念石头。你能先找找网上别人真正做过的一两个案例，看看具体是怎么做的，再挑一个适合我试的小玩法吗？我不想只听抽象的气氛描述。"}
+  ]
+}

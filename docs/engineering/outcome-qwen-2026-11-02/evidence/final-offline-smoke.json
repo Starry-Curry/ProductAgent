@@ -1,9 +1,0 @@
-{
-  "basis": "real_browser_final_build_offline_no_model_quality_claim",
-  "url": "http://127.0.0.1:3239",
-  "build": ".next-outcome-final-snapshot",
-  "errors": [],
-  "mobileOverflow": false,
-  "authenticatedHomeVisible": true,
-  "newUpstreamRequests": 0
-}

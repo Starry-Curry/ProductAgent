@@ -1,1 +1,0 @@
-{"checks":[],"errors":["The expression evaluated to a falsy value:\n\n  assert.ok(!r.trace.some(t=>t.stage==='practical_tool_failed'||t.stage==='practical_failed'))\n"],"upstreamRequests":3}

@@ -1,2 +1,0 @@
-{"arm":"product-slice","case":"painting","returned":true,"requestCount":1}
-{"arm":"product-slice","case":"box","returned":true,"requestCount":2}
