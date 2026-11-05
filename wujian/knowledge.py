@@ -2,18 +2,19 @@
 import asyncio
 import base64
 import io
-import ipaddress
-import socket
+from pathlib import Path
 from urllib.parse import urljoin, urlsplit
 
 import httpx
-from bs4 import BeautifulSoup
 from openai import AsyncOpenAI
 from pypdf import PdfReader
 from sqlalchemy import select
 
 from .database import Asset, SourceRecord, uid
 from .domain import DomainError, accessible_item
+from .source_content import parse_public_text, public_image_candidates
+from .public_network import resolve_public_url
+from .source_access import readable_source
 
 
 async def search_web(settings, query: str):
@@ -46,34 +47,34 @@ async def search_web(settings, query: str):
 
 
 async def validate_public_url(url):
-    parsed = urlsplit(url)
-    if parsed.scheme not in {"http", "https"} or not parsed.hostname or parsed.username or parsed.password:
-        raise DomainError("只支持公开的 HTTP 或 HTTPS 资料地址")
-    if parsed.port not in (None, 80, 443):
-        raise DomainError("不支持此资料端口")
-    try:
-        addresses = await asyncio.to_thread(socket.getaddrinfo, parsed.hostname, parsed.port or 443)
-    except OSError as error:
-        raise DomainError("资料域名无法解析", 502) from error
-    if not addresses or any(not ipaddress.ip_address(address[4][0]).is_global for address in addresses):
-        raise DomainError("资料读取不能访问本机或内网地址")
+    return await resolve_public_url(url)
 
 
-async def download_public(url):
-    async with httpx.AsyncClient(timeout=20, follow_redirects=False, headers={"User-Agent": "WujianResearch/0.1"}) as client:
+async def download_public(url, *, max_bytes=12 * 1024 * 1024):
+    # Public-source reads must not silently inherit an unrelated machine proxy.
+    async with httpx.AsyncClient(timeout=20, follow_redirects=False, trust_env=False,
+                                 limits=httpx.Limits(max_keepalive_connections=0),
+                                 headers={"User-Agent": "WujianResearch/0.1"}) as client:
         for _ in range(5):
-            await validate_public_url(url)
-            async with client.stream("GET", url) as response:
+            original, addresses = await validate_public_url(url)
+            # Pin the checked address: there is no second system DNS lookup,
+            # while Host and TLS verification still use the original domain.
+            pinned = original.copy_with(host=addresses[0])
+            client.cookies.clear()
+            async with client.stream("GET", pinned, headers={"Host": original.netloc.decode("ascii")},
+                                     extensions={"sni_hostname": original.raw_host.decode("ascii")}) as response:
                 if response.status_code in {301, 302, 303, 307, 308}:
-                    url = urljoin(url, response.headers.get("location", ""))
+                    url = urljoin(str(original), response.headers.get("location", ""))
                     continue
+                if response.status_code in {401, 403, 412, 429}:
+                    raise DomainError(f"公开资料读取受限（HTTP {response.status_code}）；未登录或绕过限制，请换公开来源", 502)
                 response.raise_for_status()
                 data = bytearray()
                 async for chunk in response.aiter_bytes():
                     data.extend(chunk)
-                    if len(data) > 12 * 1024 * 1024:
-                        raise DomainError("资料超过当前单文件12MB限制")
-                return str(response.url), response.headers.get("content-type", ""), bytes(data)
+                    if len(data) > max_bytes:
+                        raise DomainError(f"资料超过当前单文件{max_bytes // (1024 * 1024)}MB限制")
+                return str(original), response.headers.get("content-type", ""), bytes(data)
     raise DomainError("资料重定向过多", 502)
 
 
@@ -82,17 +83,8 @@ def parse_document(data, content_type, url):
         reader = PdfReader(io.BytesIO(data))
         pages = [{"page": index + 1, "text": (page.extract_text() or "")[:16000]} for index, page in enumerate(reader.pages[:160])]
         return "\n\n".join(f"[第{page['page']}页]\n{page['text']}" for page in pages), pages, [], "application/pdf", "PDF资料"
-    soup = BeautifulSoup(data, "html.parser")
-    title = soup.title.get_text(" ", strip=True) if soup.title else urlsplit(url).hostname
-    links = []
-    for anchor in soup.select("a[href]"):
-        target = urljoin(url, anchor.get("href", ""))
-        if urlsplit(target).scheme in {"http", "https"}:
-            links.append({"title": anchor.get_text(" ", strip=True)[:120], "url": target})
-    for node in soup.select("script,style,noscript,nav,footer,header"):
-        node.decompose()
-    content = "\n".join(line.strip() for line in soup.get_text("\n").splitlines() if line.strip())
-    return content[:300000], [], links[:100], "text/html", title
+    content, links, media_type, title = parse_public_text(data, content_type, url)
+    return content, [], links, media_type, title
 
 
 async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=False):
@@ -101,7 +93,17 @@ async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=F
             accessible_item(db, user_id, item_id)
         existing = db.scalar(select(SourceRecord).where(SourceRecord.owner_id == user_id, SourceRecord.url == url, SourceRecord.item_id == item_id).order_by(SourceRecord.fetched_at.desc()))
         if existing and not refresh:
-            return source_excerpt(existing)
+            result = source_excerpt(existing)
+            # Reopening a cached index must retain its navigation affordance.
+            # The immutable original response is already saved, no new fetch.
+            asset = db.get(Asset, existing.asset_id) if existing.asset_id else None
+            result["images"] = source_images(existing, asset)
+            if asset and asset.media_type != "application/pdf":
+                path = Path(asset.path)
+                if path.is_file():
+                    _, _, links, _, _ = parse_document(path.read_bytes(), asset.media_type, existing.url)
+                    result["links"] = links
+            return result
     final_url, content_type, data = await download_public(url)
     content, pages, links, media_type, title = await asyncio.to_thread(parse_document, data, content_type, final_url)
     if not content.strip() and not pages:
@@ -118,7 +120,77 @@ async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=F
         db.add(asset)
         db.add(source)
         db.commit()
-        return {**source_excerpt(source), "links": links}
+        return {**source_excerpt(source), "links": links,
+                "images": source_images(source, asset)}
+
+
+def source_images(source, asset):
+    """Image hints from an already authorized source's immutable HTML asset.
+
+    Caller must use readable_source before passing a source here. Hints do not
+    download pictures and are not observations of the user's physical object.
+    """
+    if source.origin != "public_web" or not asset or asset.media_type != "text/html":
+        return []
+    path = Path(asset.path)
+    if not path.is_file():
+        return []
+    return public_image_candidates(path.read_bytes(), source.url)
+
+
+async def fetch_source_image(settings, sessions, user_id, source_id, image_url):
+    """Read one actual image declared by an authorized public HTML source.
+
+    Returns a validated raster image for the main multimodal model. No second
+    vision-model call or device observation is performed here.
+    """
+    with sessions() as db:
+        source = readable_source(db, user_id, source_id)
+        asset = db.get(Asset, source.asset_id) if source.asset_id else None
+        candidates = source_images(source, asset)
+        candidate = next((row for row in candidates if row["url"] == image_url), None)
+        if not candidate:
+            raise DomainError("图片不在这份获准原始网页的图片线索中；不能读取任意链接", 403)
+        source_url = source.url
+    final_url, _, data = await download_public(image_url, max_bytes=4 * 1024 * 1024)
+    if len(data) > 4 * 1024 * 1024:
+        raise DomainError("图片超过4MB限制", 422)
+    media_type, width, height = await asyncio.to_thread(validate_source_image, data)
+    with sessions() as db:
+        # A grant may have been revoked while the public download was running.
+        readable_source(db, user_id, source_id)
+        image_asset_id = uid()
+        path = settings.data_dir / "assets" / image_asset_id
+        path.write_bytes(data)
+        db.add(Asset(id=image_asset_id, owner_id=user_id, path=str(path), media_type=media_type,
+                     original_name=f"source-image-{source_id}"))
+        db.commit()
+    return {"source_id": source_id, "source_url": source_url, "image_url": final_url,
+            "declared_image_url": image_url, "asset_id": image_asset_id,
+            "media_type": media_type, "width": width, "height": height,
+            "alt": candidate["alt"], "base64": base64.b64encode(data).decode("ascii"),
+            "evidence_kind": "source_image_for_model_observation",
+            "limitations": "原始公开来源配图；不是用户当前实物、额定能力或实测结果的证明。文字标签与模型看图解释须分别表达。"}
+
+
+def validate_source_image(data):
+    from PIL import Image, UnidentifiedImageError
+
+    try:
+        with Image.open(io.BytesIO(data)) as image:
+            formats = {"JPEG": "image/jpeg", "PNG": "image/png", "WEBP": "image/webp"}
+            media = formats.get(image.format)
+            if not media or getattr(image, "is_animated", False):
+                raise DomainError("只支持静态JPEG、PNG或WebP来源图片", 422)
+            width, height = image.size
+            if width <= 0 or height <= 0 or width > 8192 or height > 8192 or width * height > 12000000:
+                raise DomainError("来源图片超出8192边长或1200万像素限制", 422)
+            image.verify()
+        with Image.open(io.BytesIO(data)) as image:
+            image.load()
+        return media, width, height
+    except (UnidentifiedImageError, OSError, ValueError, Image.DecompressionBombError) as error:
+        raise DomainError("来源响应不是可验证的完整图片", 422) from error
 
 
 def source_excerpt(source, query="", page=None):
@@ -141,7 +213,21 @@ def source_excerpt(source, query="", page=None):
             "fetched_at": source.fetched_at, "text": numbered, "page": page,
             "line_numbered":True,"first_line":first_line,
             "page_count": len(source.pages), "original_asset_id": source.asset_id,
-            "truncated": len(text) > 12000, "evidence_kind": "retrieved_document"}
+            "truncated": len(text) > 12000, "evidence_kind": "retrieved_document",
+            "query_matched": query.casefold() in source.content.casefold() if query else None,
+            "content_level": source_content_level(source)}
+
+
+def source_content_level(source):
+    """Evidence granularity, not a claim that the source's advice is correct."""
+    if source.content.startswith("[公开字幕文本"):
+        return "subtitle_text_not_video_observation"
+    host = (urlsplit(source.url).hostname or "").lower()
+    if host == "bilibili.com" or host.endswith(".bilibili.com"):
+        return "public_video_page_or_metadata_not_video_observation"
+    if host == "xiaohongshu.com" or host.endswith(".xiaohongshu.com"):
+        return "public_note_text_or_metadata_not_image_observation"
+    return "document_text"
 
 
 def render_source_page(settings, source, asset, page):
