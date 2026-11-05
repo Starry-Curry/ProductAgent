@@ -1,6 +1,7 @@
 """Evidence-grounded updates emitted by the main Agent's native final contract."""
 
 import re
+import unicodedata
 from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
@@ -100,7 +101,36 @@ class Learning(BaseModel):
 
 
 def normalized_model(value):
-    return re.sub(r"[^\w]", "", value).casefold()
+    return re.sub(r"[^\w]", "", unicodedata.normalize("NFKC", value)).casefold()
+
+
+def model_mentioned(model, *texts):
+    """Find a whole model label, allowing typography, not neighboring SKUs.
+
+    Chinese may sit next to an ASCII label. A label inside a larger ASCII
+    identifier (including a joined suffix) is not that model. Presence alone
+    still proves neither an assertion's meaning nor procedural applicability.
+    """
+    label = normalized_model(model)
+    if not label:
+        return False
+    joiners = "._-\u2010\u2011\u2012\u2013\u2014\u2015\u2212"
+    separators = re.escape(joiners)
+    pattern = re.compile(r"(?<![a-z0-9])" +
+        (r"[\s" + separators + r"]*").join(map(re.escape, label)) +
+        r"(?![a-z0-9]|[" + separators + r"]+[a-z0-9])")
+    for text in texts:
+        text = unicodedata.normalize("NFKC", text).casefold()
+        for match in pattern.finditer(text):
+            # Inspect only the adjacent prefix, rather than copying and
+            # rescanning the whole document for every candidate label.
+            prefix = match.start() - 1
+            while prefix >= 0 and text[prefix] in joiners:
+                prefix -= 1
+            if prefix >= 0 and text[prefix].isascii() and text[prefix].isalnum():
+                continue
+            return True
+    return False
 
 
 def validate_learning(db, user_id, message_id, learning):
@@ -177,16 +207,17 @@ def _validate_knowledge_change(db, user_id, message, change):
             )
         change.source_quote = quote
         expected = normalized_model(item.product.get("model", ""))
+        model_text_matched = model_mentioned(item.product.get("model", ""), source.title, source.content)
         if (
             not change.source_model
             and expected
-            and expected in normalized_model(source.title + " " + source.content)
+            and model_text_matched
         ):
             change.source_model = item.product["model"]
         if change.scope == "product" and not (
             expected
             and normalized_model(change.source_model) == expected
-            and expected in normalized_model(source.title + " " + source.content)
+            and model_text_matched
         ):
             raise domain.DomainError(
                 f"该来源原文没有匹配型号 {item.product.get('model','')}，仅填写source_model不能建立匹配。"
@@ -257,7 +288,7 @@ def apply_learning(db, user_id, message_id, learning):
             matched = bool(
                 expected
                 and normalized_model(change.source_model) == expected
-                and expected in normalized_model(source.title + " " + source.content)
+                and model_mentioned(item.product.get("model", ""), source.title, source.content)
             )
             if change.scope == "product" and not matched:
                 raise domain.DomainError(

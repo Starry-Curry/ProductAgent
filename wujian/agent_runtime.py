@@ -211,7 +211,7 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
         with sessions() as db:
             item = domain.accessible_item(db, user_id, item_id, write=True)
             view = domain.item_view(db, user_id, item)
-            from .learning import normalized_model
+            from .learning import model_mentioned, normalized_model
             model = normalized_model(product.model)
             previous_model = normalized_model(item.product.get("model", ""))
             identity_evidence = {"basis":basis, "source_id":source_id,
@@ -221,7 +221,7 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
                 conversation = domain.require(db.get(Conversation, message.conversation_id))
                 if message.role != "user" or conversation.user_id != user_id:
                     raise domain.DomainError("身份报告必须来自当前用户的实际消息")
-                reported = bool(model and model in normalized_model(message.text))
+                reported = model_mentioned(product.model, message.text)
                 if model and model != previous_model and not reported:
                     raise domain.DomainError("当前用户没有报告这个新型号，不能作为user_report确立；先保留未知或明确的visual_inference候选。")
                 # Renaming is not fresh evidence for a previously guessed SKU.
@@ -233,7 +233,7 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
                 source = domain.require(db.get(SourceRecord, source_id or ""))
                 if source.owner_id != user_id or source.item_id not in {None, item_id}:
                     raise domain.DomainError("请使用与当前物品相关的获准资料")
-                if not model or model not in normalized_model(source.title + " " + source.content):
+                if not model_mentioned(product.model, source.title, source.content):
                     raise domain.DomainError("原资料没有这个具体型号，不能作为document_match确立；通用资料仍可用于了解，候选身份须保留推测性质。")
                 product.source_urls = list(dict.fromkeys([*product.source_urls, source.url]))
             state = {**view["state"], "identity_evidence":identity_evidence}
