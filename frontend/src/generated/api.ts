@@ -468,6 +468,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/guidance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Begin Guidance */
+        post: operations["begin_guidance_api_guidance_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/guidance-feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Guidance Feedback */
+        post: operations["guidance_feedback_api_tasks__task_id__guidance_feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/runs/{run_id}": {
         parameters: {
             query?: never;
@@ -1472,6 +1506,81 @@ export interface components {
             /** Created At */
             created_at: string;
         };
+        /** GuidanceDetails */
+        GuidanceDetails: {
+            /**
+             * Kind
+             * @default operate
+             * @enum {string}
+             */
+            kind: "identify" | "observe" | "operate" | "verify" | "contact_support";
+            /** Instruction */
+            instruction: string;
+            /**
+             * Success Signal
+             * @default
+             */
+            success_signal: string;
+            /**
+             * If Not Found
+             * @default
+             */
+            if_not_found: string;
+            /**
+             * If Unchanged
+             * @default
+             */
+            if_unchanged: string;
+            /**
+             * Caution
+             * @default
+             */
+            caution: string;
+            /**
+             * Target Label
+             * @default
+             */
+            target_label: string;
+            /** Evidence */
+            evidence?: components["schemas"]["StepEvidence"][];
+            /**
+             * Observed Quote
+             * @default
+             */
+            observed_quote: string;
+            /** Observed Message Id */
+            observed_message_id?: string | null;
+        };
+        /** GuidanceFeedback */
+        GuidanceFeedback: {
+            /** Expected Version */
+            expected_version: number;
+            /** Step Id */
+            step_id: string;
+            /**
+             * Outcome
+             * @enum {string}
+             */
+            outcome: "done" | "not_found" | "unchanged";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /** Photo Ids */
+            photo_ids?: string[];
+            /** Receipt Id */
+            receipt_id: string;
+        };
+        /** GuidanceRequest */
+        GuidanceRequest: {
+            /** Item Id */
+            item_id: string;
+            /** Question */
+            question: string;
+            /** Photo Ids */
+            photo_ids?: string[];
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -1841,6 +1950,27 @@ export interface components {
             /** User Id */
             user_id: string;
         };
+        /** StepEvidence */
+        StepEvidence: {
+            /** Source Id */
+            source_id: string;
+            /**
+             * Quote
+             * @default
+             */
+            quote: string;
+            /** Source Line Start */
+            source_line_start?: number | null;
+            /** Source Line End */
+            source_line_end?: number | null;
+            /** Page */
+            page?: number | null;
+            /**
+             * Source Model
+             * @default
+             */
+            source_model: string;
+        };
         /** TaskBoardCreate */
         TaskBoardCreate: {
             /** Goal */
@@ -1920,6 +2050,7 @@ export interface components {
             assignee_id?: string | null;
             /** Updated By */
             updated_by?: string | null;
+            guidance?: components["schemas"]["GuidanceDetails"] | null;
         };
         /** TaskEntryAssignment */
         TaskEntryAssignment: {
@@ -3045,6 +3176,74 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CreativeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    begin_guidance_api_guidance_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GuidanceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    guidance_feedback_api_tasks__task_id__guidance_feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GuidanceFeedback"];
             };
         };
         responses: {

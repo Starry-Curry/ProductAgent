@@ -6,7 +6,7 @@ from typing import Literal
 from pydantic import BaseModel, Field, model_validator
 
 from . import domain, foundation
-from .database import ChatMessage, Conversation, Memory, SourceRecord
+from .database import ChatMessage, Conversation, Memory, SourceRecord, now
 from .evidence import locate_quote
 
 
@@ -191,7 +191,8 @@ def apply_learning(db, user_id, message_id, learning):
                 raise domain.DomainError("没有找到这条理解", 404)
             if change.operation == "forget":
                 old.active = False
-                domain.invalidate_context(db, [user_id])
+                old.attributes = {**(old.attributes or {}), 'retired_at': now()}
+                domain.invalidate_context(db, [user_id], stop_running=True, except_run_id=message.run_id)
                 saved["memories"].append({"id": old.id, "status": "forgotten"})
                 continue
         row = foundation.revise_memory(

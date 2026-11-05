@@ -16,6 +16,7 @@ import {
   type TaskEntry,
   type User,
   type Workspace,
+  type Run,
 } from "../api";
 import { Companion, EmptyState, ObjectVisual, speak } from "./shared";
 
@@ -27,6 +28,8 @@ export type BoardActions = {
   refresh: () => Promise<unknown>;
   onItem: (id: string) => void;
   onCamera: () => void;
+  onRun: (run: Run) => Promise<void>;
+  running: boolean;
 };
 const labels: Record<string, string> = {
   owned: "家里已有",
@@ -79,35 +82,59 @@ export function TaskCanvas({
   refresh,
   onItem,
   onCamera,
+  onRun,
+  running,
 }: BoardActions) {
   const { message } = AntApp.useApp();
   const [busy, setBusy] = useState(false),
     [focus, setFocus] = useState(0),
-    [summary, setSummary] = useState<string>();
+    [summary, setSummary] = useState<string>(),
+    [observation, setObservation] = useState("");
   useEffect(() => {
+    const progress = board.task.plan.guidance as
+      { active_step_id?: string } | undefined;
+    const active = board.entries.findIndex(
+      (entry) => entry.id === progress?.active_step_id,
+    );
     setFocus(
       Math.max(
         0,
-        board.entries.findIndex((entry) => entry.state !== "ready"),
+        active >= 0
+          ? active
+          : board.entries.findIndex((entry) => entry.state !== "ready"),
       ),
     );
-  }, [board.task.id]);
-  async function mark(entry: TaskEntry, state: string) {
-    if (busy) return false;
+  }, [board.task.id, board.task.version]);
+  async function report(outcome: string) {
+    if (busy || running || !current) return;
     setBusy(true);
     try {
-      update(
-        await request<Board>(
-          `/tasks/${board.task.id}/entries/${entry.id}`,
-          "PATCH",
-          { expected_version: board.task.version, state, note: entry.note },
-        ),
+      const receiptKey = `${board.task.id}:${board.task.version}:${current.id}:${outcome}:${observation}`;
+      const stored = sessionStorage.getItem("guidance-feedback");
+      const previous = stored ? JSON.parse(stored) : null;
+      const receipt =
+        previous?.key === receiptKey ? previous.id : crypto.randomUUID();
+      sessionStorage.setItem(
+        "guidance-feedback",
+        JSON.stringify({ key: receiptKey, id: receipt }),
       );
-      await refresh();
-      return true;
+      const next = await request<Run>(
+        `/tasks/${board.task.id}/guidance-feedback`,
+        "POST",
+        {
+          expected_version: board.task.version,
+          step_id: current.id,
+          outcome,
+          note: observation,
+          receipt_id: receipt,
+        },
+      );
+      update(await request<Board>(`/tasks/${board.task.id}/board`));
+      setObservation("");
+      await onRun(next);
     } catch (error) {
       message.error((error as Error).message);
-      return false;
+      update(await request<Board>(`/tasks/${board.task.id}/board`));
     } finally {
       setBusy(false);
     }
@@ -206,31 +233,96 @@ export function TaskCanvas({
                 </div>
               )}
             <p className="guidance-copy">
-              {current.note || "先核对这一项，再根据你的实际反馈继续。"}
+              {current.guidance?.instruction ||
+                current.note ||
+                "先核对这一项，再根据你的实际反馈继续。"}
             </p>
+            {current.guidance && (
+              <div className="step-details">
+                {current.guidance.success_signal && (
+                  <p>
+                    <strong>留意这个信号</strong>
+                    {current.guidance.success_signal}
+                  </p>
+                )}
+                {current.guidance.caution && (
+                  <p className="step-caution">{current.guidance.caution}</p>
+                )}
+                {current.guidance.observed_quote && (
+                  <p className="step-observation">
+                    你的实际报告：{current.guidance.observed_quote}
+                  </p>
+                )}
+                {current.guidance.evidence?.map((evidence, index) => {
+                  const source = board.sources.find(
+                    (source) => source.id === evidence.source_id,
+                  );
+                  return (
+                    <details key={index}>
+                      <summary>
+                        {String(source?.title || "步骤依据")}
+                        {evidence.page ? ` · 第 ${evidence.page} 页` : ""}
+                      </summary>
+                      <blockquote>{evidence.quote}</blockquote>
+                      {typeof source?.url === "string" &&
+                        source.url.startsWith("https://") && (
+                          <a
+                            href={source.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            核对原文
+                          </a>
+                        )}
+                    </details>
+                  );
+                })}
+                <textarea
+                  aria-label="这一步的实际情况"
+                  placeholder="可补充你看到的灯、声音或其他情况…"
+                  value={observation}
+                  onChange={(event) => setObservation(event.target.value)}
+                  maxLength={1600}
+                />
+              </div>
+            )}
             <div className="guidance-buttons">
               <button
                 className="primary-button"
-                disabled={busy || board.access === "invited"}
+                disabled={
+                  busy ||
+                  running ||
+                  board.access !== "owner" ||
+                  !current.guidance
+                }
                 onClick={async () => {
-                  if (await mark(current, "ready"))
-                    setFocus(Math.min(focus + 1, board.entries.length - 1));
+                  await report("done");
                 }}
               >
-                做到了
+                {running ? "阿圆正在接着看…" : "检查过了"}
                 <Check size={18} />
               </button>
               <button
                 className="soft-button"
-                disabled={busy || board.access === "invited"}
-                onClick={() => void mark(current, "not_found")}
+                disabled={
+                  busy ||
+                  running ||
+                  board.access !== "owner" ||
+                  !current.guidance
+                }
+                onClick={() => void report("not_found")}
               >
                 我没找到
               </button>
               <button
                 className="soft-button"
-                disabled={busy || board.access === "invited"}
-                onClick={() => void mark(current, "unchanged")}
+                disabled={
+                  busy ||
+                  running ||
+                  board.access !== "owner" ||
+                  !current.guidance
+                }
+                onClick={() => void report("unchanged")}
               >
                 没有变化
               </button>

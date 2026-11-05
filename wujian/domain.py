@@ -52,14 +52,16 @@ def require(row, message="没有找到或无权访问", status=404):
     return row
 
 
-def invalidate_context(db, user_ids, stop_running=False):
+def invalidate_context(db, user_ids, stop_running=False, except_run_id=None):
     for conversation in db.scalars(select(Conversation).where(Conversation.user_id.in_(list(user_ids)))):
         conversation.agent_state = None
         conversation.context_revision += 1
         conversation.reset_after = now()
     if stop_running:
         for run in db.scalars(select(Run).where(Run.user_id.in_(list(user_ids)), Run.status.in_(["queued", "running"]))):
-            run.status, run.error, run.updated_at = "interrupted", "物品授权或归属已变化，请基于最新权限继续。", now()
+            if run.id == except_run_id:
+                continue
+            run.status, run.error, run.updated_at = "interrupted", "相关资料、理解或授权已更新，请基于最新内容继续。", now()
 
 
 def friends(db, user_id):
@@ -259,7 +261,8 @@ def remove_memory(db, user_id, memory_id):
     if row.user_id != user_id:
         raise DomainError("没有找到这条记忆", 404)
     row.active = False
-    invalidate_context(db, [user_id])
+    row.attributes = {**(row.attributes or {}), 'retired_at': now()}
+    invalidate_context(db, [user_id], stop_running=True)
     db.commit()
 
 

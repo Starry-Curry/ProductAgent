@@ -55,15 +55,40 @@ async def validate_public_url(url):
         addresses = await asyncio.to_thread(socket.getaddrinfo, parsed.hostname, parsed.port or 443)
     except OSError as error:
         raise DomainError("资料域名无法解析", 502) from error
-    if not addresses or any(not ipaddress.ip_address(address[4][0]).is_global for address in addresses):
-        raise DomainError("资料读取不能访问本机或内网地址")
+    resolved = list(dict.fromkeys(address[4][0] for address in addresses))
+    if not resolved:
+        raise DomainError('资料域名没有可用地址',502)
+    if any(not ipaddress.ip_address(address).is_global for address in resolved):
+        # Some local VPNs return RFC 2544 / RFC 5180 benchmark addresses (Fake-IP).
+        # Do not whitelist them or trust the proxy's eventual destination. Resolve
+        # the public hostname independently, then pin the verified IP + TLS SNI.
+        benchmark = lambda address: ipaddress.ip_address(address) in ipaddress.ip_network('198.18.0.0/15') or ipaddress.ip_address(address) in ipaddress.ip_network('2001:2::/48')
+        try:
+            ipaddress.ip_address(parsed.hostname)
+            literal = True
+        except ValueError:
+            literal = False
+        if literal or not all(benchmark(address) for address in resolved):
+            raise DomainError("资料读取不能访问本机或内网地址")
+        async with httpx.AsyncClient(timeout=12,trust_env=False,transport=httpx.AsyncHTTPTransport(retries=1)) as resolver:
+            response = await resolver.get('https://cloudflare-dns.com/dns-query',
+                params={'name':parsed.hostname,'type':'A'},headers={'Accept':'application/dns-json'})
+            response.raise_for_status()
+            resolved = [row['data'] for row in response.json().get('Answer',[]) if row.get('type') in {1,28}]
+        if not resolved or any(not ipaddress.ip_address(address).is_global for address in resolved):
+            raise DomainError('公开解析没有可用公网地址，资料读取已停止',502)
+    return next((address for address in resolved if ':' not in address),resolved[0])
 
 
 async def download_public(url):
-    async with httpx.AsyncClient(timeout=20, follow_redirects=False, headers={"User-Agent": "WujianResearch/0.1"}) as client:
+    async with httpx.AsyncClient(timeout=20, follow_redirects=False, trust_env=False,
+            transport=httpx.AsyncHTTPTransport(retries=1),headers={"User-Agent": "WujianResearch/0.1"}) as client:
         for _ in range(5):
-            await validate_public_url(url)
-            async with client.stream("GET", url) as response:
+            address = await validate_public_url(url)
+            original = httpx.URL(url)
+            pinned = original.copy_with(host=address)
+            async with client.stream("GET", pinned,headers={'Host':original.netloc.decode()},
+                    extensions={'sni_hostname':original.host}) as response:
                 if response.status_code in {301, 302, 303, 307, 308}:
                     url = urljoin(url, response.headers.get("location", ""))
                     continue
@@ -73,7 +98,7 @@ async def download_public(url):
                     data.extend(chunk)
                     if len(data) > 12 * 1024 * 1024:
                         raise DomainError("资料超过当前单文件12MB限制")
-                return str(response.url), response.headers.get("content-type", ""), bytes(data)
+                return str(original), response.headers.get("content-type", ""), bytes(data)
     raise DomainError("资料重定向过多", 502)
 
 

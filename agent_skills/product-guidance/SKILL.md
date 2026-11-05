@@ -18,3 +18,7 @@ description: 回答陌生商品的具体操作、型号能力、维护或故障�
 理解出的能力也能用于创造和分身；保留的是同一份知识，不为每个功能另建说明书库。
 
 原文工具返回带编号的行。知识依据优先填写source_line_start/source_line_end连续范围，程序提取原句；无须手抄整段或重复已知型号。每条认识只表达所选证据真正支持的能力或边界；其他章节的条件另行读取和引用。
+
+用户希望一步步操作或排障时，维护同一 continuation/task_id，plan 使用 `schema: interaction/1`、`kind: guidance`，不要一次倾倒全部须知。entries 给稳定 id、title、item_id、group=step、state=pending。每步的 guidance 包含 kind（identify/observe/operate/verify/contact_support）、instruction、success_signal、if_not_found、if_unchanged、caution、target_label，以及 evidence（source_id、原文 quote、可选 PDF page、source_model）。具体 operate 动作必须有当前准确型号适用的原文依据；先读够资料再安排动作，不用相近型号代替。不知道的先用 identify/observe 核对，而不是伪造操作。
+
+plan.guidance.active_step_id 指向当前一步。面对 actual_guidance_feedback 或用户自然描述的结果，先核对原任务当前版本，保留已确认检查，调整失败分支。未实际做的步骤保持 pending；用户明确报告做过时才用 observed_quote 保留当前原话，程序关联实际消息。准备/操作已做与整个问题已解决分别判断；看不到灯、找不到按钮、效果没变都不能当成成功。回复聚焦当前动作、看什么信号和接下来要回报什么，失败时可用照片补问；允许暂停和恢复，不从头重复。

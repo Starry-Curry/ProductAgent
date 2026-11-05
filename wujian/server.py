@@ -39,6 +39,7 @@ from .api_models import (
     ReminderCreate,
     ReminderView,
     RunView,
+    GuidanceRequest, GuidanceFeedback, EntryContext,
     ShareRequest,
     TaskFeedback,
     TaskSave,
@@ -335,6 +336,21 @@ def create_app(settings=None, model_factory=None):
         if row.user_id != user_id:
             raise domain.DomainError("没有找到这项任务", 404)
         return row
+
+    @app.post('/api/guidance', response_model=RunView, tags=['Step-by-step guidance'])
+    async def begin_guidance(payload: GuidanceRequest, user=Depends(current_user), db=Depends(db_session)):
+        return await chat(ChatRequest(text=payload.question, item_ids=[payload.item_id],
+            photo_ids=payload.photo_ids, entry_context=EntryContext(intent='guidance')),user,db)
+
+    @app.post('/api/tasks/{task_id}/guidance-feedback', response_model=RunView, tags=['Step-by-step guidance'])
+    async def guidance_feedback(task_id: str, payload: GuidanceFeedback, user=Depends(current_user), db=Depends(db_session)):
+        from .guidance import start_feedback
+        if not settings.api_key:
+            raise domain.DomainError('请先配置百炼 API Key，反馈会由阿圆接着处理',503)
+        run = start_feedback(db,user.id,task_id,payload)
+        if run.status == 'queued':
+            runner.start(run.id)
+        return RunView.model_validate(run,from_attributes=True)
 
     @app.get("/api/runs/{run_id}", response_model=RunView)
     def run_status(run_id: str, user=Depends(current_user), db=Depends(db_session)):

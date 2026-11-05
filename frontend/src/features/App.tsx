@@ -145,9 +145,22 @@ function WorkspaceApp({
         void updateMessages(value.conversation_id);
         void refresh()
           .then(() => {
-            if (taskId)
-              void request<Board>(`/tasks/${taskId}/board`)
-                .then(setBoard)
+            const continued = [...value.events]
+              .reverse()
+              .find((event) => event.type === "continuation_saved")?.task_id;
+            const nextTask =
+              taskId || (typeof continued === "string" ? continued : undefined);
+            if (nextTask)
+              void request<Board>(`/tasks/${nextTask}/board`)
+                .then((next) => {
+                  if (currentThread.current === value.conversation_id) {
+                    setBoard(next);
+                    setContext((previous) => ({
+                      ...previous,
+                      entry: { ...previous.entry, task_id: nextTask },
+                    }));
+                  }
+                })
                 .catch(() => setBoard(undefined));
           })
           .catch(() => {});
@@ -214,10 +227,17 @@ function WorkspaceApp({
     setBoard(undefined);
     const entry = { intent } as EntryContext;
     setContext({ itemIds, entry });
-    setDrafts((previous) => ({
-      ...previous,
-      [`new:${intent}:${itemIds.join(",")}`]: { text, photos: [] },
-    }));
+    setDrafts((previous) => {
+      const key = `new:${intent}:${itemIds.join(",")}`;
+      const saved = previous[key];
+      return {
+        ...previous,
+        [key]:
+          saved && (saved.text.trim() || saved.photos.length)
+            ? saved
+            : { text, photos: [] },
+      };
+    });
     navigate({ section: "companion" });
     setSidebar(false);
   }
@@ -409,6 +429,14 @@ function WorkspaceApp({
         refresh,
         onItem,
         onCamera: () => file.current?.click(),
+        running: !!run && ["queued", "running"].includes(run.status),
+        onRun: async (next: Run) => {
+          await openThread(next.conversation_id, {
+            itemIds: board.task.item_ids,
+            entry: { intent: "guidance", task_id: board.task.id },
+          });
+          watch(next, board.task.id);
+        },
       }
     : undefined;
   return (

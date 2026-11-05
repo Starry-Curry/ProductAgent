@@ -4125,3 +4125,47 @@ small {
     scroll-behavior: auto !important;
   }
 }
+.step-details {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0;
+}
+.step-details p {
+  margin: 0;
+  line-height: 1.7;
+}
+.step-details strong {
+  display: block;
+  color: var(--accent, #6e9aaa);
+}
+.step-details textarea {
+  width: 100%;
+  min-height: 70px;
+  padding: 12px;
+  border: 1px solid #ded8d1;
+  border-radius: 16px;
+  background: #fcfaf8;
+  font: inherit;
+  resize: vertical;
+}
+.step-details details {
+  padding: 12px 16px;
+  background: #f0eeea;
+  border-radius: 14px;
+}
+.step-details summary {
+  cursor: pointer;
+}
+.step-details blockquote {
+  margin: 12px 0;
+  white-space: pre-wrap;
+  font-size: 14px;
+}
+.step-caution {
+  color: #9b6145;
+}
+.step-observation {
+  padding: 12px;
+  background: #e8eeed;
+  border-radius: 12px;
+}

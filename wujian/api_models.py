@@ -317,6 +317,28 @@ class ReminderFeedback(Input):
     note: str = Field(default="", max_length=1200)
 
 
+class StepEvidence(Input):
+    source_id: str
+    quote: str = Field(default="", max_length=4000)
+    source_line_start: int | None = Field(default=None, ge=1)
+    source_line_end: int | None = Field(default=None, ge=1)
+    page: int | None = Field(default=None, ge=1)
+    source_model: str = Field(default="", max_length=120)
+
+
+class GuidanceDetails(Input):
+    kind: Literal["identify", "observe", "operate", "verify", "contact_support"] = "operate"
+    instruction: str = Field(min_length=1, max_length=2400)
+    success_signal: str = Field(default="", max_length=1000)
+    if_not_found: str = Field(default="", max_length=1000)
+    if_unchanged: str = Field(default="", max_length=1000)
+    caution: str = Field(default="", max_length=1000)
+    target_label: str = Field(default="", max_length=160)
+    evidence: list[StepEvidence] = Field(default_factory=list, max_length=6)
+    observed_quote: str = Field(default="", max_length=2400)
+    observed_message_id: str | None = None
+
+
 class TaskEntry(Input):
     id: str = Field(min_length=1, max_length=80)
     title: str = Field(min_length=1, max_length=200)
@@ -326,6 +348,22 @@ class TaskEntry(Input):
     state: Literal["pending", "ready", "not_found", "unchanged"] = "pending"
     assignee_id: str | None = None
     updated_by: str | None = None
+    guidance: GuidanceDetails | None = None
+
+
+class GuidanceRequest(Input):
+    item_id: str
+    question: str = Field(min_length=1, max_length=6000)
+    photo_ids: list[str] = Field(default_factory=list, max_length=4)
+
+
+class GuidanceFeedback(Input):
+    expected_version: int = Field(ge=1)
+    step_id: str = Field(min_length=1, max_length=80)
+    outcome: Literal["done", "not_found", "unchanged"]
+    note: str = Field(default="", max_length=1600)
+    photo_ids: list[str] = Field(default_factory=list, max_length=4)
+    receipt_id: str = Field(min_length=8, max_length=80)
 
 
 class TaskBoardCreate(Input):

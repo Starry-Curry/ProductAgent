@@ -67,10 +67,17 @@ def revise_memory(
         raise domain.DomainError("理解内容应为1至2000字")
     import hashlib
 
-    identity = hashlib.sha256(f"{user_id}\0{item_id}\0{content}".encode()).hexdigest()
+    context = str((attributes or {}).get("context", "")).strip().casefold()
+    identity_text = f"{user_id}\0{item_id}\0{content}" + (f"\0{context}" if context else "")
+    identity = hashlib.sha256(identity_text.encode()).hexdigest()
     row = db.get(Memory, identity)
     if row and not row.active:
+        if previous:
+            raise domain.DomainError("这份旧理解已被遗忘，请换成你当前明确希望保留的内容", 409)
         return {"status": "previously_removed", "id": identity}
+    provenance = list(dict.fromkeys([*((row.attributes or {}).get("source_message_ids", []) if row else []),
+        *([row.source_message_id] if row else []), message_id]))
+    merged_attributes = {**(row.attributes or {} if row else {}), **(attributes or {}), "source_message_ids": provenance}
     if row is None:
         row = Memory(
             id=identity,
@@ -81,14 +88,15 @@ def revise_memory(
             source_message_id=message_id,
             supersedes_id=supersedes_id,
             expires_at=expiry,
-            attributes=attributes or {},
+            attributes=merged_attributes,
         )
         db.add(row)
-    elif attributes:
-        row.attributes = attributes
+    else:
+        row.attributes = merged_attributes
         row.source_message_id = message_id
-        row.basis = basis
-        row.expires_at = expiry
+        if attributes or expires_at is not None:
+            row.basis = basis
+            row.expires_at = expiry
         row.updated_at = now()
     if previous and previous.id != identity:
         changed = db.execute(
@@ -98,11 +106,13 @@ def revise_memory(
                 Memory.user_id == user_id,
                 Memory.active.is_(True),
             )
-            .values(active=False)
+            .values(active=False, attributes={**(previous.attributes or {}), 'retired_at': now()})
         )
         if changed.rowcount != 1:
             raise domain.DomainError("旧理解已被更新，请重新读取当前理解", 409)
-        domain.invalidate_context(db, [user_id])
+        source_message = db.get(ChatMessage, message_id)
+        domain.invalidate_context(db, [user_id], stop_running=True,
+            except_run_id=source_message.run_id if source_message else None)
     db.commit() if commit else db.flush()
     return domain.memory_view(row)
 
@@ -124,6 +134,12 @@ def save_task(
         raise domain.DomainError("未知任务状态")
     if not goal.strip() or len(goal) > 4000:
         raise domain.DomainError("请保留具体任务目标")
+    previous_plan = None
+    if task_id:
+        prior_task = domain.require(db.get(TaskRecord, task_id))
+        if prior_task.user_id != user_id:
+            raise domain.DomainError("没有找到这项任务", 404)
+        previous_plan = prior_task.plan
     if plan.get("schema") == "interaction/1":
         from .api_models import TaskEntry
         from pydantic import ValidationError
@@ -137,6 +153,8 @@ def save_task(
             raise domain.DomainError("清单条目编号必须唯一")
         item_ids = list(dict.fromkeys([*item_ids, *(entry["item_id"] for entry in entries if entry["item_id"])]))
         plan = {**plan, "entries": entries}
+    from .guidance import validate_plan
+    plan = validate_plan(db, user_id, item_ids, plan, message_id, previous_plan)
     for identity in item_ids:
         domain.accessible_item(db, user_id, identity)
     values = {

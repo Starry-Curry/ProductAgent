@@ -1202,6 +1202,13 @@ export default function Editors({
             </p>
             {memories.map((memory) => (
               <div className="memory-setting" key={memory.id}>
+                <small className="muted">
+                  {String(memory.attributes?.context || "日常理解")}
+                  {memory.expires_at
+                    ? ` · 有效至 ${new Date(memory.expires_at).toLocaleDateString()}`
+                    : ""}
+                  {memory.basis === "inference" ? " · 推测，可更正" : ""}
+                </small>
                 <textarea
                   aria-label="更正理解"
                   value={memoryDrafts[memory.id] ?? memory.content}

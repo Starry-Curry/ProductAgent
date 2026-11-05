@@ -17,6 +17,7 @@ from .database import (
     Conversation,
     KnowledgeClaim,
     Memory,
+    Run,
     SourceRecord,
     TaskRecord,
     now,
@@ -118,13 +119,11 @@ def authorized_documents(sessions, user_id):
             )
         # Exchanges already exist in SQL. Index them without turning model advice
         # into user facts or depending on an optional model memory/task tool call.
-        retired_sources = set(
-            db.scalars(
-                select(Memory.source_message_id).where(
-                    Memory.user_id == user_id, Memory.active.is_(False)
-                )
-            )
-        )
+        retired_sources, retired_ids, legacy_cutoff = set(), set(), ''
+        for memory in db.scalars(select(Memory).where(Memory.user_id == user_id, Memory.active.is_(False))):
+            retired_ids.add(memory.id)
+            legacy_cutoff = max(legacy_cutoff,(memory.attributes or {}).get('retired_at',''))
+            retired_sources.update([memory.source_message_id, *(memory.attributes or {}).get("source_message_ids", [])])
         for conversation in db.scalars(
             select(Conversation).where(Conversation.user_id == user_id)
         ):
@@ -144,6 +143,12 @@ def authorized_documents(sessions, user_id):
                     and message.role == "assistant"
                     and message.run_id == question.run_id
                 ):
+                    run = db.get(Run,message.run_id) if message.run_id else None
+                    provenance = [event for event in run.events if event.get('type')=='memory_context'] if run else []
+                    used_memories = {identity for event in provenance for identity in event.get('memory_ids',[])}
+                    if used_memories & retired_ids or (not provenance and question.created_at < legacy_cutoff):
+                        question = None
+                        continue
                     add(
                         "conversation",
                         question.id,

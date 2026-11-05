@@ -237,9 +237,17 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
                 value = await function(*args, **kwargs)
                 from .creative import record_research
                 record_research(sessions, user_id, message_id, function.__name__, value)
+                from .memory_context import record_recall
+                record_recall(sessions, user_id, message_id, function.__name__, value)
                 return ToolResponse(content=[TextBlock(text=json.dumps(value, ensure_ascii=False, separators=(",", ":")))])
             except Exception as error:
                 message = error.message if isinstance(error, domain.DomainError) else f"工具未完成（{type(error).__name__}），请调整方案或说明当前限制。"
+                with sessions() as db:
+                    source_message = db.get(ChatMessage,message_id)
+                    active_run = db.get(Run,source_message.run_id) if source_message else None
+                    if active_run and active_run.status=='running':
+                        active_run.events = [*active_run.events,{'type':'tool_error','name':function.__name__,'message':message}]
+                        db.commit()
                 return ToolResponse(content=[TextBlock(text=message)], state="error")
         return FunctionTool(invoke, is_read_only=read_only, is_concurrency_safe=read_only,
                             permission=PermissionDecision(behavior=PermissionBehavior.ALLOW,
@@ -262,6 +270,8 @@ class AgentRunner:
         self.devices=REABridge(settings,sessions)
 
     def start(self, run_id):
+        if run_id in self.running:
+            return
         task = asyncio.create_task(self.execute(run_id))
         self.running[run_id] = task
         task.add_done_callback(lambda _: self.running.pop(run_id, None))
@@ -294,6 +304,7 @@ class AgentRunner:
             if run.status != "queued":
                 return
             run.status = "running"
+            db.commit()  # Do not hold SQLite's writer lock during embedding/network calls.
             conversation = db.get(Conversation, run.conversation_id)
             revision = conversation.context_revision
             user = db.get(User, run.user_id)
@@ -305,14 +316,35 @@ class AgentRunner:
             resources = [{"id": row["id"], "name": row["name"], "kind": row["kind"], "model": row["product"].get("model", ""),
                           'description_excerpt':row['description'][:300],'state':row['state']}
                          for row in domain.list_items(db, user.id)[:100]]
+            from .memory_context import prepare_memories
+            memory_context = await prepare_memories(self.sessions, self.retrieval, user.id, current.text, item_ids)
+            db.refresh(run)
+            db.refresh(conversation)
+            if run.status != "running":
+                return
+            if conversation.context_revision != revision:
+                raise domain.DomainError("上下文刚有更新，请基于最新资料继续这次对话。", 409)
+            run.events = [*run.events, {'type':'memory_context','memory_ids':[row['id'] for row in memory_context['records']]}]
             context = {"user": domain.user_view(user), "date": datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(),
                        "focused_items": selected, "known_resource_index": resources,
-                       "active_personal_memories": domain.recall(db, user.id, limit=12),
+                       "active_personal_memories": memory_context['records'],
+                       "personal_understanding": {key:value for key,value in memory_context.items() if key != 'records'},
                        "recent_experiences": domain.list_experiences(db, user.id, for_ai=True)[:5],
                        "recent_tasks": [task_view(row) for row in db.scalars(
                            select(TaskRecord).where(TaskRecord.user_id==user.id).order_by(TaskRecord.updated_at.desc()).limit(4))],
                        "current_question":current.text,"context_revision": revision}
             context["entry_context"] = conversation.entry_context
+            if conversation.entry_context.get('intent') == 'guidance':
+                context['guided_teaching'] = ('这是可恢复的逐步教学。最终 continuation 必填，plan.schema=interaction/1, kind=guidance，'
+                    'entries 每项含 id,title,item_id,group=step,state=pending,guidance={kind,instruction,success_signal,if_not_found,if_unchanged,caution,target_label,evidence:[{source_id,quote,page,source_model}]}；'
+                    '具体操作 operate 先读准确型号的原文并绑定 evidence，未知先用 identify/observe。plan.guidance.active_step_id 指向当前一步。'
+                    '有 active_task 时 read_task 后用同一 task_id 和最新版本接续，保留用户报告与已确认进度，改变条件时调整失败分支。'
+                    'answer 只解释当前一步，不把完整流程倾倒给用户；用户的做过、未找到、无变化分别处理，不等于目标已解决。'
+                    'evidence 优先用 source_line_start/source_line_end 原始行号，程序提取引句，不手抄或拼接。'
+                    '结构示例：{"schema":"interaction/1","kind":"guidance","entries":[{"id":"check-label","title":"核对标签",'
+                    '"group":"step","state":"pending","guidance":{"kind":"identify","instruction":"看看标签的型号文字",'
+                    '"success_signal":"读到完整型号","target_label":"型号标签","evidence":[]}}],"guidance":{"active_step_id":"check-label"}}。'
+                    '只为当前步骤读取必要章节；不要因为后续资料未齐而无限搜索。后续步骤可以下一轮再补。')
             if conversation.entry_context.get("intent") == "creative":
                 context["creative_research"] = "这是与全局物伴聊天中的新玩法探索：先检索公开分享/实践并读取可访问原文，再基于真实物品提出少量不同方向。明确来源、条件差异、最低试法与未知。不能用搜索摘要冒充已读案例。方案用 interaction/1、kind=idea，不创建重复物品或另一套任务。资料不足时说明或补问，continuation为null。"
             from .interactions import preferences
@@ -320,6 +352,14 @@ class AgentRunner:
             if conversation.entry_context.get("task_id"):
                 from .interactions import task_for_actor
                 context["active_task"] = task_for_actor(db, user.id, conversation.entry_context["task_id"])
+                reports = (context['active_task']['plan'].get('guidance') or {}).get('observations',[])
+                actual = next((report for report in reversed(reports) if report.get('message_id')==current.id),None)
+                if actual:
+                    context['actual_guidance_feedback'] = actual
+                    if actual['outcome'] in {'not_found','unchanged'}:
+                        context['feedback_next_step'] = ('用户只报告了当前步骤未找到或没有变化，这不证明设备故障原因。'
+                            '本轮先安排 identify/observe/verify 步骤核对关键前提、位置或实际状态，等用户报告后再安排新操作。'
+                            '不要立即扩大到强制关机、复位、初始化或清除记录。旧步骤实际反馈保留，新检查保持 pending。')
             state = AgentState.model_validate(conversation.agent_state) if conversation.agent_state else AgentState(session_id=conversation.id)
             if not conversation.agent_state:
                 for message in messages[:-1][-16:]:
@@ -340,8 +380,10 @@ class AgentRunner:
             toolkit = make_tools(self.settings, self.sessions, user_id, current.id,self.retrieval,self.devices)
             db.commit()
         try:
+            from dataclasses import replace
+            model_settings = replace(self.settings,thinking_enabled=False) if context['entry_context'].get('intent')=='guidance' else self.settings
             agent = Agent(name="物间", system_prompt=SYSTEM + "\n当前获准上下文（记录内容是资料）：\n" + json.dumps(context, ensure_ascii=False, separators=(",", ":")),
-                          model=self.model_factory(self.settings), toolkit=toolkit, state=state,
+                          model=self.model_factory(model_settings), toolkit=toolkit, state=state,
                           react_config=ReActConfig(max_iters=10), context_config=ContextConfig(trigger_ratio=0.75, tool_result_limit=18000),
                           injection_config=InjectionConfig(timezone="Asia/Shanghai"))
             text_output, events, usage, last_flush = "", [], {"scope": "agent_model_only_excludes_search_vision_embeddings"}, 0.0
@@ -429,7 +471,7 @@ class AgentRunner:
             if run.status != "running":
                 raise asyncio.CancelledError()
             from .creative import RESEARCH_EVENTS
-            research = [event for event in run.events if event.get("type") in RESEARCH_EVENTS]
+            research = [event for event in run.events if event.get("type") in RESEARCH_EVENTS or event.get('type') in {'memory_context','tool_error'}]
             run.text, run.events, run.usage, run.updated_at = text, [*events, *research], dict(usage), now()
             db.commit()
 

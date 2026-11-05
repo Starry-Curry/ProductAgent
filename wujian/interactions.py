@@ -241,6 +241,13 @@ def task_for_actor(db, user_id, task_id):
     if access != "owner":
         # The invited summary never contains the owner's chat, personal constraints or feedback.
         value = {**value, "constraints": {}, "feedback": []}
+        if value["plan"].get("guidance"):
+            value["plan"] = {**value["plan"], "guidance": {
+                key: val for key, val in value["plan"]["guidance"].items() if key != "observations"}}
+        if value["plan"].get("entries"):
+            value["plan"] = {**value["plan"], "entries": [{**entry, "guidance":
+                {**entry["guidance"], "observed_quote": "", "observed_message_id": None}
+                if entry.get("guidance") else None} for entry in value["plan"]["entries"]]}
     return value
 
 
@@ -248,6 +255,10 @@ def board(db, user_id, task_id):
     row, access = task_access(db, user_id, task_id)
     plan = row.plan or {}
     entries = [TaskEntry.model_validate(entry).model_dump() for entry in plan.get("entries", [])] if plan.get("schema") == "interaction/1" else []
+    if access != "owner":
+        for entry in entries:
+            if entry.get("guidance"):
+                entry["guidance"] = {**entry["guidance"], "observed_quote": "", "observed_message_id": None}
     participants = [{**domain.user_view(db.get(User, member.user_id)), "status": member.status}
         for member in db.scalars(select(TaskParticipant).where(TaskParticipant.task_id == task_id))]
     source_message = db.get(ChatMessage, row.source_message_id)
@@ -257,6 +268,19 @@ def board(db, user_id, task_id):
             if conversation.entry_context.get("task_id") == task_id), None)
     from .source_access import readable_source
     sources = {}
+    for entry in entries:
+        details = entry.get("guidance") or {}
+        readable = []
+        for evidence in details.get("evidence", []):
+            try:
+                source = readable_source(db, user_id, evidence["source_id"])
+                sources[source.id] = {"id": source.id, "title": source.title, "url": source.url,
+                    "quote": evidence["quote"], "page": evidence.get("page")}
+                readable.append(evidence)
+            except domain.DomainError:
+                pass
+        if details:
+            entry["guidance"] = {**details, "evidence": readable}
     for item_id in row.item_ids:
         try:
             claims = foundation.known_claims(db, user_id, item_id)
@@ -274,6 +298,28 @@ def board(db, user_id, task_id):
         "entries": entries, "completed_count": sum(entry["state"] == "ready" for entry in entries),
         "total_count": len(entries), "conversation_id": conversation_id, "sources": list(sources.values()),
         "access": access, "participants": participants}
+
+
+def resume_task(db, user_id, task_id):
+    """One stable per-actor conversation, shared by HTTP, teaching and demos."""
+    import hashlib
+    from sqlalchemy.exc import IntegrityError
+    value = board(db, user_id, task_id)
+    entry = {"task_id": task_id, "intent": "guidance" if value["kind"] == "guidance" else "planning"}
+    if value["conversation_id"]:
+        return {"conversation_id": value["conversation_id"], "entry_context": entry}
+    identity = "task_" + hashlib.sha256(f"{user_id}\0{task_id}".encode()).hexdigest()[:40]
+    row = db.get(Conversation, identity)
+    if row is None:
+        row = Conversation(id=identity, user_id=user_id, title=value["task"]["goal"][:35],
+            item_ids=value["task"]["item_ids"], entry_context=entry)
+        db.add(row)
+        try:
+            db.commit()
+        except IntegrityError:
+            db.rollback()
+            row = domain.require(db.get(Conversation, identity))
+    return {"conversation_id": row.id, "entry_context": entry}
 
 
 def create_board(db, user_id, payload):

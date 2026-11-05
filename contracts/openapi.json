@@ -1193,6 +1193,99 @@
         }
       }
     },
+    "/api/guidance": {
+      "post": {
+        "tags": [
+          "Step-by-step guidance"
+        ],
+        "summary": "Begin Guidance",
+        "operationId": "begin_guidance_api_guidance_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidanceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/guidance-feedback": {
+      "post": {
+        "tags": [
+          "Step-by-step guidance"
+        ],
+        "summary": "Guidance Feedback",
+        "operationId": "guidance_feedback_api_tasks__task_id__guidance_feedback_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidanceFeedback"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/runs/{run_id}": {
       "get": {
         "summary": "Run Status",
@@ -3850,6 +3943,171 @@
         ],
         "title": "GiftView"
       },
+      "GuidanceDetails": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "identify",
+              "observe",
+              "operate",
+              "verify",
+              "contact_support"
+            ],
+            "title": "Kind",
+            "default": "operate"
+          },
+          "instruction": {
+            "type": "string",
+            "maxLength": 2400,
+            "minLength": 1,
+            "title": "Instruction"
+          },
+          "success_signal": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Success Signal",
+            "default": ""
+          },
+          "if_not_found": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "If Not Found",
+            "default": ""
+          },
+          "if_unchanged": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "If Unchanged",
+            "default": ""
+          },
+          "caution": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Caution",
+            "default": ""
+          },
+          "target_label": {
+            "type": "string",
+            "maxLength": 160,
+            "title": "Target Label",
+            "default": ""
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/StepEvidence"
+            },
+            "type": "array",
+            "maxItems": 6,
+            "title": "Evidence"
+          },
+          "observed_quote": {
+            "type": "string",
+            "maxLength": 2400,
+            "title": "Observed Quote",
+            "default": ""
+          },
+          "observed_message_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed Message Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "instruction"
+        ],
+        "title": "GuidanceDetails"
+      },
+      "GuidanceFeedback": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "step_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Step Id"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "done",
+              "not_found",
+              "unchanged"
+            ],
+            "title": "Outcome"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1600,
+            "title": "Note",
+            "default": ""
+          },
+          "photo_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Photo Ids"
+          },
+          "receipt_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 8,
+            "title": "Receipt Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "step_id",
+          "outcome",
+          "receipt_id"
+        ],
+        "title": "GuidanceFeedback"
+      },
+      "GuidanceRequest": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 6000,
+            "minLength": 1,
+            "title": "Question"
+          },
+          "photo_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Photo Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "item_id",
+          "question"
+        ],
+        "title": "GuidanceRequest"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -4742,6 +5000,68 @@
         ],
         "title": "ShareRequest"
       },
+      "StepEvidence": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Quote",
+            "default": ""
+          },
+          "source_line_start": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Line Start"
+          },
+          "source_line_end": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Line End"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "source_model": {
+            "type": "string",
+            "maxLength": 120,
+            "title": "Source Model",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_id"
+        ],
+        "title": "StepEvidence"
+      },
       "TaskBoardCreate": {
         "properties": {
           "goal": {
@@ -4943,6 +5263,16 @@
               }
             ],
             "title": "Updated By"
+          },
+          "guidance": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GuidanceDetails"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
