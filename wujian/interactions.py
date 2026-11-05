@@ -304,13 +304,19 @@ def update_entry(db, user_id, task_id, entry_id, payload):
         raise domain.DomainError("请让当前负责人报告这项进度", 403)
     if payload.state == "ready" and entry.get("item_id"):
         item = domain.accessible_item(db, user_id, entry["item_id"])
-        if item.archived or item.state.get("availability") == "unavailable" or item.state.get("presentation", {}).get("attention") in {"paused", "lost", "lent"}:
+        # Reporting a diagnostic action does not make the device usable.
+        # Resource preparation still requires availability, and both require access.
+        if entry.get("group", "owned") != "step" and (
+            item.archived
+            or item.state.get("availability") == "unavailable"
+            or item.state.get("presentation", {}).get("attention") in {"paused", "lost", "lent"}
+        ):
             raise domain.DomainError("这件物品目前不可用，请先调整物品或方案", 409)
     if entry["state"] == payload.state and entry.get("note", "") == payload.note and entry.get("updated_by") == user_id:
         return board(db, user_id, task_id)
     entry.update(state=payload.state, note=payload.note, updated_by=user_id)
     plan["entries"] = entries
-    # Ready means the preparation is ready, never that the real-world goal succeeded.
+    # Ready reports prepared resources or completed steps, never overall success.
     status = "ready" if entries and all(entry["state"] == "ready" for entry in entries) else "in_progress"
     changed = db.execute(update(TaskRecord).where(TaskRecord.id == task_id, TaskRecord.version == payload.expected_version).values(
         plan=plan, status=status, version=TaskRecord.version + 1, updated_at=now()))
