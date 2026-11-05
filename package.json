@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "team:dev": "node scripts/team-dev.mjs",
+    "team:mock": "node --experimental-strip-types examples/foundation/run-mock.ts",
+    "test:team": "node --experimental-strip-types --test tests/foundation-four-paths.test.ts tests/team-dev.test.ts",
     "dev": "node scripts/life-local.mjs dev",
     "start": "node scripts/life-local.mjs start",
     "dev:life": "node scripts/life-local.mjs dev",

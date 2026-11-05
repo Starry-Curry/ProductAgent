@@ -1,4 +1,10 @@
-# 当前工程状态（2026-11-03）
+# 当前工程状态（2026-11-05）
+
+## 团队立即开工入口
+
+main 已由负责人授权更新为 `dbd93cf`，旧 main 保存在 `codex/main-backup-20261105-ea32c3f`。本轮团队候选 `codex/wujian-team-ready-v2` 基于该 main，提供独立账号、端口、数据/构建目录的 `npm run team:dev -- --name=alice --port=3251`，以及现有共享服务的 `team:mock` 和 `test:team`。这是开发与接入准备，不宣称真实智能质量通过；Core/Full 仍 **NOT_ACCEPTED**。团队底座公共接口仍为 `foundation-services/1`，没有第二套执行器/数据库。
+
+develop 核对时仍为 `f449067`；同步集成 PR 经 CI 和一名组员审查之前，组员从 `origin/codex/wujian-team-ready-v2` 创建各自功能分支，个人 PR 暂指向该候选。同步后统一从最新 origin/develop 开始，功能 PR 改向 develop 并核对差异。见 [接入指南](TEAM_INTEGRATION.md) 和 [本轮交接/验证/分支恢复清单](team-ready-2026-11-05/DELIVERY.md)。不覆盖旧 PR 或他人分支；下面状态为历史轮次快照，其中“未合 main”仅指当时。
 
 2026-11-05 本轮恢复交接：`codex/wujian-finals-product-v1` 基于文档候选 `689293c`，业务沿用 `56d2c1f`。用户扩大到决赛整体产品闭环，并要求逐层对抗审查及至少八小时持续研发（已按实际时间达到）；新授权800次上游请求、不设金额上限，旧账目仍封存。实际进展、费用和未达标项见 [本轮状态](finals-product-2026-11-05/STATUS.md)。这是独立研发，未合并main/develop；下方历史质量结论不被代码修复或阶段提交替代。
 

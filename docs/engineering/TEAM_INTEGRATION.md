@@ -2,34 +2,50 @@
 
 本页供组员直接开始开发，不是新的架构方案。产品权威为 [PRODUCT_FINAL_V1](../product/PRODUCT_FINAL_V1.md)。**共享底座可集成，不代表 Core Foundation 智能质量通过；后者仍 NOT_ACCEPTED。**
 
-2026-11-05 后续研发提示：决赛分支`codex/wujian-finals-product-v1`仍在独立研发，未合入本页团队候选。下面的零费用交付记录是历史轮次，不表示当前新轮次没有授权。最新实际状态见[CURRENT](CURRENT.md)。公共`foundation-services/1`入口不变；Provider增加可选`rerank(query,documents)`，旧Mock可不实现，不需要专业模块另建检索器或直接调用原生模型。
+2026-11-05：负责人已授权将决赛成果 `dbd93cf` 更新到 main。当前团队接入分支 `codex/wujian-team-ready-v2` 在其基础上整理启动、分工和集成；没有另建智能运行器。develop 同步前暂以本分支开发。真实智能质量仍 NOT_ACCEPTED；可独立开发不等于问答和创造力已可靠。公共`foundation-services/1`入口不变，Provider 的可选 `rerank` 不要求旧 Mock 实现。
 
 ## 从哪里开始
 
-最新候选分支：`codex/wujian-team-integration-v1`，基于 `codex/wujian-qwen-foundation-v1@5b8573d`。集成 [PR #1](https://github.com/Starry-Curry/ProductAgent/pull/1) 目标为 `develop`；在 CI + 一名组员审查完成前，不宣称已经进入 develop。
+最新团队候选：`codex/wujian-team-ready-v2`，包含 main 的 `dbd93cf` 及团队启动工具。develop 核对时仍为 `f449067`。本次准备新的同步集成 PR，需 CI + 一名组员审查；不直接覆盖 develop，也不重新更新 main。旧 PR #1/#2/#3 保留，不能再把旧候选误当成最新起点。
 
-合并前需立即开发时，可以从该明确候选创建自己的功能分支，但 PR 先标明依赖底座集成 PR；合并后从更新的 `origin/develop` 开分支。不要从较旧的 main 重新造底座，不直接向 develop/main 推送功能。
+大家可以立即从这个候选创建各自分支、各自 clone。候选进 develop 前，个人 PR 先指向候选，避免重复显示整套底座；集成后改向 develop 并重新核对差异和 CI。已经开工的分支只合并更新，不重建或覆盖本地工作。
 
 ```bash
 git fetch origin
 # 集成PR合并前的临时起点
-git switch -c codex/my-feature origin/codex/wujian-team-integration-v1
+git switch -c feature/alice-my-feature origin/codex/wujian-team-ready-v2
 # 集成PR合并后，新功能改用 origin/develop 作为起点
 npm ci
-npm run dev
+npm run team:dev -- --name=alice --port=3251
 ```
 
-Node.js **24**，使用现有 lockfile。默认 http://127.0.0.1:3200，仅本机、演示身份、付费关闭；不能当作真实账号认证。开发/集成测试设置独立 `PRODUCT_AGENT_DATA_DIR`，不要指向私人数据库。需要独立账号的零费用预览见 [CURRENT](CURRENT.md)；不复制其他人的 `.env.local`、Cookie 或 SQLite。
+Node.js **24**，使用现有 lockfile。上面打开 http://127.0.0.1:3251，先注册本地测试账号。团队命令只监听本机，使用现有 authenticated 模式；强制关闭模型费用、公开联网、设备实验及未达标问答实验。数据在 `.runtime/team-dev/alice`，构建在 `.next-team-alice`；同机另一人换为 `--name=bob --port=3252`。各自 clone 或 worktree；Git 分支只隔离代码，不会隔离共用文件夹里的环境和 SQLite，不要两个人/Agent同时改同一工作区。
+
+`npm run team:dev -- --name=alice --port=3251 --check` 只检查并展示非敏感配置，不启动服务。不复制别人的 `.env.local`、Key、Cookie 或数据库。不通过公共数据目录共享开发状态，集成数据使用明确合成 fixture。零模型模式中智能回答不可用是预期；测试连续工具协议用下列 Mock，不能把它当千问成功。需要真实 Qwen 时由底座负责人使用已授权网关统一安排，不直接改启动脚本打开收费。
 
 ```bash
-node --experimental-strip-types examples/foundation/run-mock.ts
-node --experimental-strip-types --test tests/foundation-four-paths.test.ts
+npm run team:mock
+npm run test:team
 npm run typecheck
 npm test
 npm run build
 ```
 
-Mock 无网络、不代表 Qwen、创意质量或实物效果。原真实模型成功/失败、被冻结的首答和费用台账保留；本轮没有新付费授权，不开启模型网关。
+Mock 无网络、不代表 Qwen、创意质量或实物效果。四方向测试复用真实领域事务/测试账号，Provider 为替身：物品→Reality；目标→多物品→Task；反馈→新任务→纠正/遗忘；共享→跨账号读取→撤权。原真实模型成功/失败、被冻结的首答和费用台账保留；本轮不新增付费请求。
+
+## 怎么分工才不互相覆盖
+
+| 角色（由团队认领，不虚构人员） | 独立负责 | 需要共同协调 |
+| --- | --- | --- |
+| 物品与资料体验 | 录入/详情组件、资料展示、对应业务和测试 | Item/Reality 公共语义、来源认证 |
+| 创意/任务体验 | 自己的界面、组合服务、反馈展示 | 复用 respond、Task、Outcome，不建第二 Agent |
+| 故事/数字分身 | 自己的展示和已有故事领域服务 | 私人 Context、分享授权、遗忘 |
+| 家庭/赠礼或其他专业能力 | 已有领域模块及自己的页面 | 跨账号事务、撤权、安全回归 |
+| 底座维护者 | services.ts、Context、工具注册、Provider、身份/费用、数据库迁移 | 所有公共契约变更提前在小 PR 协调 |
+
+这是分工建议，不要求现在开发全部功能。开始前在 GitHub Issue 写负责范围、预期文件、公共接口需求和验收方式；同一个大页面先划组件边界，由一人整合入口。新依赖及 package-lock 由一个 PR 更新，数据库迁移编号先协调。分支不能自动解决修改同一行的冲突。
+
+每个功能用小 PR 尽早合入 develop，不等最后一天才一次合并。同步前保存自己的修改，然后 `git fetch origin`、`git merge origin/develop`，冲突逐段处理，不强推、不整份覆盖他人代码。CI 通过且一名其他组员审查后，由维护者合并；最终 develop→main 由产品负责人明确批准。分支保护是否在 GitHub 服务端启用，以仓库设置实际状态为准，本说明不冒充强制保护已配置。
 
 ## 公共服务契约 v1
 
@@ -72,6 +88,8 @@ const outcome = confirmGoalOutcome(db, read, actor, result, {
 ```
 
 路径按调用文件位置调整；上面为仓库根模块的示意调用。真正可执行的初始化/隔离数据库见 [run-mock.ts](../../examples/foundation/run-mock.ts)，不要把测试fixture用于生产。`startGoal` 创建任务不是每句聊天的硬要求；普通问题直接调用 `respond` 即可。
+
+接入现有 App 时，HTTP 组合层沿用 `src/lib/db.ts` 的 `localOnly(request)`、`actor(request)`、`database()`、`read`，以及 `src/lib/life/provider.ts` 的 `lifeProvider()`；Route 的请求生命周期继续由现有 `withDemoRequest` 包装，保留会话复核与错误映射。专业业务函数只接收注入的 db/read/已认证 actor/provider，不自行读取 Cookie、Key 或构造用户身份。现有 `/api/life`、`/api/assistant`、`/api/foundation` 的能力优先复用，不为每个页面复制一个运行器。Provider/数据库适配器属于应用装配层，不是需要每个专业模块依赖的智能内核。离线 fixture 只用于 examples/tests，不能被 App Route 引用。
 
 读获准记忆优先通过Context及 `resolveTaskContext.previousOutcomes`，不要原始SQL扫全用户历史。写入/纠正/遗忘用既有领域服务；本轮不新增私密画像或新的Memory表。
 

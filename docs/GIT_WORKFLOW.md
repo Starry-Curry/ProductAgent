@@ -10,7 +10,7 @@
 | develop | 团队集成 | 功能 PR，CI 通过，并经一名组员独立审查 |
 | feature/*、fix/*、docs/*、codex/* | 独立开发 | 从当前有效团队基线创建，推送自己的分支 |
 
-**2026-11-05 核对：** [PR #1](https://github.com/Starry-Curry/ProductAgent/pull/1) 仍开放，尚无独立审查，未合入 develop。需要最新底座时暂从 `origin/codex/wujian-team-integration-v1` 创建分支；PR #1 合并后，新任务从最新 `origin/develop` 开始。是否已合并请查看 PR 实际状态，不长期照抄这个临时例外。
+**2026-11-05 更新：** 负责人已将最新成果 `dbd93cf` 更新到 main，develop 仍为旧版 `f449067`。本次团队同步候选为 `origin/codex/wujian-team-ready-v2`。同步集成 PR 经 CI 和组员审查、合入 develop 前，大家从该候选开始；之后统一从最新 develop 开始。旧 PR #1 的候选不再是最新底座。实际集成状态见 [CURRENT](engineering/CURRENT.md)。
 
 ## 首次加入
 
@@ -26,13 +26,13 @@ git config --local user.email "你的GitHub隐私邮箱"
 
 邮箱从自己的 GitHub Settings → Emails 复制，不猜用户 ID，不使用其他人的身份。不要输出全部 Git 配置来排错，其中可能包含认证信息。
 
-PR #1 合并前的临时起点：
+develop 同步最新底座前的临时起点：
 
 ```bash
-git switch -c feature/your-feature origin/codex/wujian-team-integration-v1
+git switch -c feature/your-name-your-feature origin/codex/wujian-team-ready-v2
 ```
 
-PR #1 合并后的正常起点：
+同步集成 PR 合并后的正常起点：
 
 ```bash
 git fetch origin
@@ -70,7 +70,7 @@ git fetch origin
 git merge origin/develop
 ```
 
-PR #1 合并前，同步最新底座时将上面的合并来源换成 `origin/codex/wujian-team-integration-v1`。不要在有未保存修改时盲目合并，也不要强推解决冲突。
+develop 同步前，将上面的合并来源换成 `origin/codex/wujian-team-ready-v2`。不要在有未保存修改时盲目合并，也不要强推解决冲突。每人使用独立 clone 或 worktree、自己的端口和测试目录，不能共用同一个正在修改的工作区；启动命令见团队接入指南。
 
 暂时不能提交时，可使用命名 stash；确认恢复成功之前不要删除 stash：
 
@@ -90,9 +90,9 @@ git status
 
 在 GitHub 打开 Compare & pull request，通常选择个人分支 → develop。按 [PR 模板](../.github/PULL_REQUEST_TEMPLATE.md) 写用户收益、范围、实际检查、失败/未测项和恢复点。CI 离线运行，不启用付费模型。
 
-- PR #1 合并前，纯粹依赖该候选的小改动可先以团队集成分支为 base，避免重复展示底座代码；说明依赖 #1。
-- 文档清理 PR 应先合入其候选 base，再由 GitHub 对 PR #1 的新 HEAD 重跑 CI，并重新审查；不能沿用旧 HEAD 的绿灯放行。
-- 如果 PR #1 先合并，依赖 PR 改向 develop 后重新核对差异和 CI，避免重复带入已合并内容。
+- 最新底座尚未进入 develop 时，个人功能 PR 先指向 `codex/wujian-team-ready-v2`，说明依赖同步集成 PR，先供评审。
+- 同步集成 PR 合入后，个人 PR 改向 develop，重新核对差异并检查最新 HEAD 的 CI，不能沿用旧 HEAD 的绿灯放行。
+- 同一个 PR 只解决一个可验收问题，尽早集成，不把全部人的工作拖到最后一次性合并。
 - 作者不能代替另一名组员批准自己的 PR。CI 绿灯是工程检查，不表示真实智能质量通过。
 - 更新 main 仍需负责人批准；本指南不授予自动合并、改保护规则或公开部署权限。
 
@@ -100,7 +100,7 @@ git status
 
 日常只清理已确认无用且可恢复的文件。删除分支前核对完整 SHA、提交是否已保留、开放 PR 和使用者；历史费用、失败证据、冻结题、许可证及私人数据不能按“旧”字直接删除。
 
-本次核对时 PR #1 尚未合并，也未确认历史分支无人使用，因此**未删除任何远端分支**。旧分支名单是候选，不是必须执行的删除命令；不删除本地其他任务的 worktree，不强推或重写历史。
+本轮用户另行授权清理旧分支。只处理已被 main 包含、无开放 PR 且无未提交工作的旧 Codex 分支；完整 SHA、保留原因和实际删除结果见 [团队底座交接与恢复](engineering/team-ready-2026-11-05/DELIVERY.md)。不删除本地其他任务的 worktree、独立成果分支或历史提交，不强推或重写历史。
 
 恢复旧文件可先查看固定提交，或建立独立恢复分支；已发布修改需要撤销时用新的 revert 提交经 PR 审查，不覆盖当前工作区：
 

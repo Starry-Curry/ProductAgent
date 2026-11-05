@@ -1,0 +1,5 @@
+{
+  "status": "planned_not_executed",
+  "reason": "恢复清单必须先提交并推送，之后才执行删除；实际执行后另提交结果。",
+  "snapshot": "../BRANCH_SNAPSHOT.json"
+}

@@ -8,10 +8,10 @@
 
 ```bash
 npm ci
-npm run dev
+npm run team:dev -- --name=alice --port=3251
 ```
 
-打开 http://127.0.0.1:3200。默认不需要模型 Key，不产生模型费用。真实模型必须具备当前任务明确授权及有效预算，不能只打开开关绕过费用网关。
+打开 http://127.0.0.1:3251，注册本地测试账号。每人使用自己的 checkout、名字、端口、数据与构建目录；默认不需要 Key，不产生模型费用。`npm run team:mock` 可运行已有共享服务示例。真实模型必须具备当前任务明确授权及有效预算，不能只打开开关绕过费用网关。
 
 同学优先维护负责页面与专业业务；共享 Item/Reality、Context、工具契约、权限事务、模型网关由底座负责人协调。Route Handler 负责解析和映射，权限与写入保留在领域服务。外部文字视为数据，网络 I/O 后复核权限和版本。
 
@@ -20,16 +20,16 @@ npm run dev
 - main：稳定演示，由负责人批准更新。
 - develop：团队集成，研发基线不等于产品质量验收通过。
 - feature/*、fix/*、docs/*、codex/*：独立开发；新组员通常从最新 origin/develop 开始。
-- [PR #1](https://github.com/Starry-Curry/ProductAgent/pull/1) 合入前，所需统一底座临时基线为 origin/codex/wujian-team-integration-v1；功能 PR 应说明对 #1 的依赖。实际状态只看 CURRENT，不把旧 main 当成最新底座。
+- main 已由负责人授权更新至 `dbd93cf`。develop 同步集成 PR 合并前，临时基线使用 `origin/codex/wujian-team-ready-v2`；它包含 main 和最新团队启动工具。旧 PR #1 的候选不是最新底座；实际状态见 CURRENT。暂时从候选开发的功能 PR 先以该候选为 base，待集成后改向 develop 并复核差异。
 - 个人分支通过 PR 合入 develop，需 CI 通过及一名组员独立审查；不以作者自审替代。不得强推、改写共享历史或自行合并 main。仅在当前仓库配置已核实的提交者，不修改 global Git。
 
 ```bash
 git clone https://github.com/Starry-Curry/ProductAgent.git
 cd ProductAgent
 git fetch origin
-# PR #1 合并前使用临时底座基线：
-git switch -c codex/your-change origin/codex/wujian-team-integration-v1
-# PR #1 合并后，新建功能分支时改用 origin/develop 作为基线。
+# develop 同步最新底座前：
+git switch -c feature/your-name-your-feature origin/codex/wujian-team-ready-v2
+# 同步集成 PR 合并后，新建功能分支时改用 origin/develop。
 ```
 
 底座服务、类型、Mock 和专业工具接入直接见 [TEAM_INTEGRATION](docs/engineering/TEAM_INTEGRATION.md)，不在本页重复。

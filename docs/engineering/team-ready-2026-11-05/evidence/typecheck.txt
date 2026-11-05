@@ -1,0 +1,12 @@
+
+> product-agent@0.1.0 typecheck
+> tsc --noEmit
+
+tests/team-dev.test.ts(9,76): error TS2345: Argument of type '{ AI_ALLOW_PAID_CALLS: string; WUJIAN_ALLOW_PAID_CALLS: string; WUJIAN_ALLOW_PUBLIC_FETCH: string; PRODUCT_AGENT_DATA_DIR: string; }' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{ AI_ALLOW_PAID_CALLS: string; WUJIAN_ALLOW_PAID_CALLS: string; WUJIAN_ALLOW_PUBLIC_FETCH: string; PRODUCT_AGENT_DATA_DIR: string; }' but required in type 'ProcessEnv'.
+tests/team-dev.test.ts(20,74): error TS2345: Argument of type '{}' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{}' but required in type 'ProcessEnv'.
+tests/team-dev.test.ts(21,72): error TS2345: Argument of type '{}' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{}' but required in type 'ProcessEnv'.
+tests/team-dev.test.ts(25,60): error TS2345: Argument of type '{}' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{}' but required in type 'ProcessEnv'.

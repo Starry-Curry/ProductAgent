@@ -10,14 +10,16 @@
 
 ## 本地运行
 
-使用 **Node.js 24** 与现有 package-lock.json，无需独立数据库服务。首次开发先按 [贡献指南](CONTRIBUTING.md#github-协作) 选择分支：通常从最新 develop 开始；PR #1 合并前临时使用 codex/wujian-team-integration-v1。以下命令在所选分支运行。
+使用 **Node.js 24** 与现有 package-lock.json，无需独立数据库服务。首次开发先按 [团队接入指南](docs/engineering/TEAM_INTEGRATION.md#从哪里开始) 选择起点；main 已更新到决赛成果，旧团队候选不再是最新底座。develop 同步 PR 合并前，从 `origin/codex/wujian-team-ready-v2` 创建自己的分支；合并后从 `origin/develop` 开始。
 
 ```bash
 npm ci
-npm run dev
+npm run team:dev -- --name=alice --port=3251
 ```
 
-打开 http://127.0.0.1:3200；Windows 可使用 npm.cmd。服务只绑定本机回环地址，默认本地演示身份与 data-life-v1/ 数据目录，不复用旧工作区数据库；可以用 PRODUCT_AGENT_DATA_DIR 指定独立测试目录。演示身份不代表真实用户认证。停止用 Ctrl+C。
+打开 http://127.0.0.1:3251，注册自己的本地测试账号。团队命令强制关闭付费模型、公开联网和设备实验，使用 `.runtime/team-dev/alice` 和 `.next-team-alice`，不读取其他人的数据库；同机运行另一成员时换名字和端口。Windows 可使用 npm.cmd。停止用 Ctrl+C。原 `npm run dev` 仍保留为本地演示身份入口，不等于账号权限验收。
+
+不需要 Key 就能测试工具往返、Task 和确认反馈：`npm run team:mock`；四方向公共接口与权限回归：`npm run test:team`。Mock 不能证明真实模型质量。
 
 ```bash
 npm run build
