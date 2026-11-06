@@ -1,9 +1,11 @@
 """SQL replay, permissions and bounded media; no provider or user database."""
 import base64
+import asyncio
 import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import AsyncMock, patch
 
 from wujian import domain
 from wujian.api_models import ExperienceCreate
@@ -16,6 +18,7 @@ class ConversationContextTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         settings = Settings(data_dir=Path(self.temp.name))
+        self.settings = settings
         settings.prepare()
         self.engine, self.sessions = make_database(settings)
         self.db = self.sessions()
@@ -173,6 +176,109 @@ class ConversationContextTests(unittest.TestCase):
         current = self.message("user", "start again")
         self.chat.reset_after = current.created_at
         self.assertEqual(self.replay(current).source_index, [])
+
+    def search_trace(self, original_reads, *, state="success", status="failed", name="search_public_web",
+                     created_at="2026-11-06T09:00:00+00:00", owner=None, conversation_id=None, **extra_evidence):
+        self.db.add(Run(user_id=owner or self.owner, conversation_id=conversation_id or self.chat.id,
+            status=status, created_at=created_at, events=[
+                {"type": "tool_start", "id": "search", "name": name},
+                {"type": "tool_end", "id": "search", "state": state,
+                 "evidence": {"original_reads": original_reads, **extra_evidence}}]))
+        self.db.flush()
+
+    def test_search_original_read_survives_later_failed_generation_as_sql_pointer(self):
+        self.source("actual-cn-guide")
+        self.search_trace([{"read_state": "retrieved", "source_id": "actual-cn-guide",
+                            "url": "https://untrusted.invalid/trace-only", "title": "untrusted trace title",
+                            "text": "body must not replay", "content_level": "document_text"}])
+        result = self.replay(self.message("user", "continue the same manual"))
+        self.assertEqual([row["source_id"] for row in result.source_index], ["actual-cn-guide"])
+        pointer = result.source_index[0]
+        self.assertEqual(pointer["url"], "https://example.com/manual")
+        self.assertEqual(pointer["title"], "previously fetched manual")
+        self.assertEqual(pointer["acquired_in_run_status"], "failed")
+        self.assertEqual(pointer["reading_scope"], "document_text")
+        for text in ("very large original body", "body must not replay", "untrusted trace title", "trace-only"):
+            self.assertNotIn(text, json.dumps(result.source_index))
+
+    def test_real_search_tool_metadata_replays_its_retained_original_without_model_call(self):
+        from wujian.agent_runtime import make_tools
+        message = self.message("user", "find the applicable public manual")
+        self.db.commit()
+        tools = {tool.name: tool for tool in make_tools(self.settings, self.sessions, self.owner, message.id).tool_groups[0].tools}
+        url = "https://example.com/synthetic-cn-manual"
+        with patch("wujian.agent_runtime.search_web", new=AsyncMock(return_value={"results": [{"url": url, "title": "Only a search label"}]})), \
+             patch("wujian.knowledge.download_public", new=AsyncMock(return_value=(url, "text/html", b"<main>Actual retained synthetic manual body.</main>"))):
+            chunk = asyncio.run(tools["search_public_web"](query="synthetic manual", read_limit=1))
+        self.assertEqual(str(chunk.state), "success", chunk)
+        original = chunk.metadata["evidence"]["original_reads"][0]
+        self.assertEqual(original["read_state"], "retrieved")
+        self.db.add(Run(user_id=self.owner, conversation_id=self.chat.id, status="failed", created_at=message.created_at,
+            events=[{"type": "tool_start", "id": "native-search", "name": "search_public_web"},
+                    {"type": "tool_end", "id": "native-search", "state": "success", "evidence": chunk.metadata["evidence"]}]))
+        self.db.flush()
+        result = self.replay(self.message("user", "continue after the timeout"))
+        self.assertEqual([row["source_id"] for row in result.source_index], [original["source_id"]])
+        self.assertNotIn("Actual retained synthetic manual body.", json.dumps(result.source_index))
+
+    def test_search_replay_requires_success_retrieved_existing_readable_source(self):
+        for identity in ("error-tool", "not-read", "unavailable", "missing-state", "wrong-tool", "label-only", "revoked"):
+            self.source(identity)
+        self.source("foreign-private", self.friend)
+        self.search_trace([{"read_state": "retrieved", "source_id": "error-tool"}], state="error")
+        self.search_trace([{"read_state": "retrieved", "source_id": "wrong-tool"}], name="unknown_tool")
+        self.search_trace([{"read_state": "not_read", "source_id": "not-read"},
+                           {"read_state": "unavailable", "source_id": "unavailable"},
+                           {"source_id": "missing-state"},
+                           {"read_state": "retrieved", "source_id": "nonexistent"},
+                           {"read_state": "retrieved", "source_id": "foreign-private"},
+                           {"read_state": "retrieved", "source_id": "revoked"},
+                           {"read_state": "retrieved", "url": "https://example.com/no-id"},
+                           "label-only"], provider_labels=[{"source_id": "label-only"}], source_id="label-only")
+        self.db.get(SourceRecord, "revoked").owner_id = self.friend
+        self.db.flush()
+        self.assertEqual(self.replay(self.message("user", "continue")).source_index, [])
+
+    def test_search_pointer_limits_and_run_scope_remain_bounded(self):
+        for number in range(10):
+            self.source(f"search-{number}")
+        self.search_trace([{"read_state": "retrieved", "source_id": f"search-{number}"} for number in range(10)])
+        current = self.message("user", "continue")
+        self.assertEqual(len(self.replay(current).source_index), 8)
+        self.chat.reset_after = current.created_at
+        self.assertEqual(self.replay(current).source_index, [])
+        self.chat.reset_after = ""
+        self.db.query(Run).delete()
+        for extra in ({"owner": self.friend}, {"created_at": "2026-11-06T23:00:00+00:00"},
+                      {"conversation_id": "another-conversation"}):
+            if "conversation_id" in extra:
+                self.db.add(Conversation(id=extra["conversation_id"], user_id=self.owner))
+                self.db.flush()
+            self.search_trace([{"read_state": "retrieved", "source_id": "search-0"}], **extra)
+        self.assertEqual(self.replay(current).source_index, [])
+
+    def test_list_sources_returns_newest_sixty_with_stable_ties_and_existing_filters(self):
+        from wujian.agent_runtime import make_tools
+        for number in range(101):
+            identity = f"tie-{number:03}"
+            self.source(identity)
+            self.db.get(SourceRecord, identity).fetched_at = "2026-01-01T00:00:00+00:00"
+        self.source("newest")
+        self.db.get(SourceRecord, "newest").fetched_at = "2026-11-07T00:00:00+00:00"
+        self.db.get(SourceRecord, "newest").item_id = "item_demo_lamp"
+        self.source("foreign-newest", self.friend)
+        self.db.get(SourceRecord, "foreign-newest").fetched_at = "2026-12-01T00:00:00+00:00"
+        message = self.message("user", "list sources")
+        self.db.commit()
+        tools = {tool.name: tool for tool in make_tools(self.settings, self.sessions, self.owner, message.id).tool_groups[0].tools}
+        result = asyncio.run(tools["list_sources"]())
+        self.assertEqual(str(result.state), "success", result)
+        rows = json.loads(result.content[0].text)
+        self.assertEqual(len(rows), 60)
+        self.assertEqual([row["source_id"] for row in rows[:3]], ["newest", "tie-100", "tie-099"])
+        self.assertNotIn("foreign-newest", {row["source_id"] for row in rows})
+        scoped = asyncio.run(tools["list_sources"](item_id="item_demo_lamp"))
+        self.assertEqual([row["source_id"] for row in json.loads(scoped.content[0].text)], ["newest"])
 
     def test_receipts_follow_current_permission_and_removal(self):
         from wujian.database import ExperienceRecord

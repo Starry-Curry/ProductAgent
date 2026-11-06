@@ -32,6 +32,13 @@ def apply_entry_reports(proposed, previous, reports, current_question, *, db, us
         evidence.append({"entry_id": report.entry_id, "state": STATES[report.action_result],
                          "source_quote": quote, "entry_title": old[report.entry_id]["title"]})
     result = deepcopy(proposed)
+    # Guidance proposals are deltas. Omission is not a request to erase an
+    # unfinished step; preserve the prior order and append genuinely new IDs.
+    # Checklist and idea retain their existing full-plan semantics.
+    if proposed.get('kind') == 'guidance' and previous.get('kind') == 'guidance':
+        changes = {entry['id']:entry for entry in result['entries']}
+        result['entries'] = [deepcopy(changes.get(identity,entry)) for identity,entry in old.items()] + [
+            entry for entry in result['entries'] if entry['id'] not in old]
     present = set()
     for entry in result["entries"]:
         identity = entry["id"]

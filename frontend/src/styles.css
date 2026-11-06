@@ -1,15 +1,15 @@
 :root {
   font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  color: #282c2b;
-  background: #faf8f5;
+  color: #323b3b;
+  background: #faf9f6;
   font-synthesis: none;
-  --blue: #7b9fad;
-  --blue-deep: #598395;
-  --blue-soft: #dce6e9;
-  --cream: #f2ede6;
-  --line: #e7e1da;
-  --muted: #858680;
-  --paper: #fcfaf8;
+  --blue: #89a9b7;
+  --blue-deep: #4c7486;
+  --blue-soft: #e6eef0;
+  --cream: #f3f0eb;
+  --line: #e8e7e1;
+  --muted: #828781;
+  --paper: #fffdfa;
   --sage: #e7e8df;
   --peach: #f1e6df;
   --sidebar: clamp(220px, 17.1vw, 270px);
@@ -3040,6 +3040,7 @@ small {
 }
 .demo-entry > div {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
   margin: 14px 0;
@@ -4292,3 +4293,48 @@ small {
 
 .community-login-qr { display:block; width:180px; max-width:100%; padding:8px; background:white; border-radius:12px; margin:12px auto; }
 .community-connection { margin-bottom:1.2rem; }
+
+/* Shared visual language from the responsive desktop/mobile reference. */
+.app-shell { background: #faf9f6; }
+.sidebar { background: #f6f5f0; overflow-y: auto; }
+.primary-navigation { margin-top: 32px; }
+.primary-navigation button { font-size: 17px; padding: 13px 18px; min-height: 50px; gap: 14px; border-radius: 13px; }
+.primary-navigation button.active { background: var(--blue-soft); color: #456978; }
+.recent-topics { flex: 1; min-height: 55px; max-height: 190px; overflow-y: auto; }
+.sidebar .brand, .primary-navigation { flex-shrink: 0; }
+.sidebar-tasks { max-height: 130px; flex-shrink: 0; }
+.sidebar-shortcuts { border-top: 1px solid var(--line); padding: 13px 0; margin: 15px 6px 0; flex-shrink: 0; }
+.sidebar-shortcuts button { display: flex; align-items: center; gap: 12px; padding: 11px 10px; width: 100%; border-radius: 11px; text-align: left; font-size: 13px; color: #697676; }
+.sidebar-shortcuts button:hover, .sidebar-shortcuts button.active { background: var(--blue-soft); color: var(--blue-deep); }
+.sidebar-shortcuts button small { margin-left: auto; color: var(--muted); }
+.sidebar-account { margin-top: auto; flex-shrink: 0; }
+.greeting-bubble { background: #eee8e1; border-radius: 28px 28px 28px 8px; }
+.companion-art { transform-origin: 50% 85%; animation: ayuan-breathe 5.2s ease-in-out infinite; }
+.companion-art.small { animation: none; }
+.is-thinking .companion-art { animation: ayuan-listening 2.2s ease-in-out infinite; }
+@keyframes ayuan-breathe { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1deg); } }
+@keyframes ayuan-listening { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-3px) rotate(2deg); } }
+.task-overview > p { color: var(--muted); margin-bottom: 18px; }
+.task-overview > .primary-button { margin-bottom: 15px; }
+.task-overview-row { display: flex; align-items: center; gap: 13px; width: 100%; padding: 15px 4px; border-top: 1px solid var(--line); text-align: left; }
+.task-overview-row > svg { color: var(--blue-deep); flex-shrink: 0; }
+.task-overview-row > svg:last-child { margin-left: auto; transform: rotate(180deg); }
+.task-overview-row > span { min-width: 0; }
+.task-overview-row strong, .task-overview-row small { display: block; overflow-wrap: anywhere; }
+.task-overview-row small { color: var(--muted); margin-top: 5px; }
+.memory-cover-wrap { position: relative; overflow: hidden; border-radius: 18px 18px 0 0; }
+.memory-cover-wrap .memory-cover { display: block; width: 100%; object-fit: cover; }
+.memory-cover-caption { position: absolute; bottom: 10px; right: 10px; padding: 4px 9px; border-radius: 20px; background: #fffdf6ed; color: #657474; font-size: 10px; line-height: 1.5; box-shadow: 0 1px 6px #353b3910; }
+@media (prefers-reduced-motion: reduce) { .companion-art, .is-thinking .companion-art { animation: none; transform: none; } }
+@media (max-width: 760px) {
+ .sidebar-shortcuts button { min-height: 44px; }
+ .greeting-bubble { border-radius: 25px 25px 25px 8px; }
+ .memory-cover-wrap { border-radius: 15px 15px 0 0; }
+}
+
+@media (max-width: 760px) {
+ .topbar-actions > .soft-button[title="给我的家庭提醒"] { display: none; }
+ .topbar-actions .camera-action { width: 35px; height: 35px; padding: 7px; justify-content: center; }
+ .topbar-actions .camera-action > span { display: none; }
+ .topbar-heading { min-width: 0; }
+}

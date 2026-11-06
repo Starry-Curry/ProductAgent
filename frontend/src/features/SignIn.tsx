@@ -149,8 +149,14 @@ export default function SignIn({
               <button disabled={busy} onClick={() => void login("xiaoxia")}>
                 小夏的物间
               </button>
+              <button disabled={busy} onClick={() => void login("mom")}>
+                妈妈的物间
+              </button>
+              <button disabled={busy} onClick={() => void login("grandpa")}>
+                姥爷的大字版
+              </button>
             </div>
-            <small>体验档案中的人物、拥有关系与生活记录均为模拟。</small>
+            <small>体验档案含模拟人物与生活记录，也可使用自己的实物测试。</small>
           </div>
         )}
       </section>

@@ -1,6 +1,7 @@
-import { useId } from "react";
+import { useId, useState } from "react";
 import type { CSSProperties } from "react";
 import type { Item } from "../api";
+import "./object-portrait.css";
 
 export type ObjectExpression = "calm" | "happy" | "sleepy";
 export type ObjectShape = "cup" | "stone" | "flower" | "keepsake" | "cat" | "dango_leaf" | "dango_hat" | "dango_bow";
@@ -89,6 +90,7 @@ export function ObjectCompanion({
   className?: string;
 }) {
   const identity = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const [failedImage, setFailedImage] = useState("");
   if (!item.avatar.enabled) return null;
   const form = item.avatar.form && item.avatar.form !== "auto" ? item.avatar.form : shape || shapeFor(item.name);
   const color = /^#(?:[a-f\d]{3}|[a-f\d]{6})$/i.test(item.avatar.color || "")
@@ -102,6 +104,17 @@ export function ObjectCompanion({
     position: "relative", display: "inline-block", width: size, height: size,
     maxWidth: "100%", flexShrink: 0, verticalAlign: "middle", lineHeight: 0,
   };
+
+  if (item.avatar.image_id && failedImage !== item.avatar.image_id) {
+    const imageId = item.avatar.image_id;
+    return <span className={`object-companion object-portrait ${className}`} style={style} data-form="photo-plush">
+      <img src={`/api/assets/${imageId}`} alt={`${name}的AI创作分身，非实物照片`}
+        title="AI创作形象，非实物照片"
+        onError={() => setFailedImage(imageId)} />
+      {showPhoto && item.photo_id && <img className="object-portrait-source"
+        src={`/api/assets/${item.photo_id}`} alt={`${item.name}的实物照片`} />}
+    </span>;
+  }
 
   return (
     <span className={`object-companion ${className}`} style={style} data-form={form}>

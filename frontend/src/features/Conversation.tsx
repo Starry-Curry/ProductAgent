@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { type ChatMessage, type Run } from "../api";
 import { Companion, speak } from "./shared";
+import "./conversation-presence.css";
 
 export type Draft = { text: string; photos: string[] };
 type Recognition = {
@@ -19,23 +20,6 @@ type Recognition = {
     | null;
   onerror: (() => void) | null;
   onend: (() => void) | null;
-};
-const toolLabels: Record<string, string> = {
-  find_items: "寻找相关物品",
-  read_item: "核对这件物品",
-  view_item_photo: "看看这件物品的照片",
-  view_source_image: "核对原文配图",
-  sample_video_frames: "提取视频关键画面",
-  search_public_web: "查找公开资料",
-  fetch_document: "阅读原始资料",
-  read_source: "核对资料细节",
-  view_source_page: "查看说明书图示",
-  recall_memories: "回看获准经历",
-  record_experience: "记下你想留下的这件事",
-  evolve_avatar: "整理相处的默契",
-  search_world: "寻找相关的物与经历",
-  read_task: "接续正在做的事",
-  GenerateStructuredOutput: "整理回答与后续安排",
 };
 
 export default function Conversation({
@@ -144,9 +128,6 @@ export default function Conversation({
       setVoiceError("暂时无法使用麦克风，请检查浏览器权限。");
     }
   }
-  const latest = run?.events
-    .filter((event) => event.type === "tool_start")
-    .at(-1);
   return (
     <section className="conversation">
       <div className="conversation-scroll">
@@ -187,20 +168,15 @@ export default function Conversation({
         ))}
         {afterMessages}
         {busy && (
-          <div className="chat-message assistant">
+          <div className="chat-message assistant assistant-presence" role="status" aria-label={`${companionName}正在准备回答`}>
             {assistantAvatar || <Companion small />}
-            <div className="chat-bubble">
-              <span className="thinking-dots">
+            <div className="assistant-presence-content" aria-hidden="true">
+              <span className="assistant-presence-dots">
                 <i />
                 <i />
                 <i />
               </span>
-              <span>
-                {latest
-                  ? toolLabels[String(latest.name)] || "继续处理当前问题"
-                  : "正在理解你的这次需要"}
-                …
-              </span>
+              <span>稍等一下</span>
             </div>
           </div>
         )}

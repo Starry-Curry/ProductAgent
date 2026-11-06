@@ -4,6 +4,7 @@ People and ownership are fictional. A real user message is installed as a test
 fixture because posting it through the production run endpoint invokes a model.
 """
 import asyncio
+import base64
 import concurrent.futures
 import copy
 import json
@@ -124,6 +125,27 @@ class ButlerActionTests(unittest.TestCase):
         self.assertEqual(cancelled["status"], "cancelled")
         self.assertEqual(self.ok(self.confirm(action))["status"], "cancelled")
         self.assertEqual(self.count(Reminder), before)
+
+    def test_generic_final_plan_cannot_erase_an_already_prepared_action(self):
+        """Reproduce the real-model drift: final continuation reused action ID."""
+        from wujian import foundation
+        from wujian.turns import grounded_turn_schema
+        message_id = self.message()
+        action = self.propose(message_id=message_id)
+        proposal = {"goal": "提醒家人检查滤芯", "item_ids": [], "constraints": {},
+            "plan": {"schema": "interaction/1", "kind": "checklist", "entries": []},
+            "task_id": action["task_id"], "expected_version": action["version"]}
+        result = grounded_turn_schema(self.app.state.sessions, self.owner_id, message_id).model_validate({
+            "answer": "待确认卡片已经准备好了。", "continuation": proposal,
+            "learning": {"memory_updates": [], "knowledge_updates": []}})
+        self.assertIsNone(result.continuation)
+        with self.app.state.sessions() as db:
+            with self.assertRaisesRegex(domain.DomainError, "专用确认/取消"):
+                foundation.save_task(db, self.owner_id, message_id, proposal["goal"], [], {},
+                    proposal["plan"], task_id=action["task_id"], expected_version=action["version"])
+            db.rollback()
+        # The original signed review remains usable and executes exactly once.
+        self.assertEqual(self.ok(self.confirm(action))["status"], "confirmed")
 
     def test_stale_review_cannot_execute(self):
         action = self.propose()
@@ -286,6 +308,33 @@ class ButlerActionTests(unittest.TestCase):
             gift = db.get(Gift, result["result_id"])
             self.assertEqual(gift.snapshot["avatar"]["personality"], gift_personality)
             self.assertEqual(gift.snapshot["experiences"], [])
+
+    def test_native_gift_carries_selected_portrait_without_private_growth(self):
+        from wujian.database import Asset
+        item = self.item()
+        path = Path(self.temp.name) / "selected-portrait.png"
+        # Valid one-pixel transport fixture; the real UI probe separately uses
+        # generated object portraits and never calls this visual acceptance.
+        path.write_bytes(base64.b64decode("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/lXcAAAAASUVORK5CYII="))
+        with self.app.state.sessions() as db:
+            db.add(Asset(id="selected_portrait", owner_id=self.owner_id, path=str(path),
+                media_type="image/png", original_name="portrait.png"))
+            db.get(Profile, (self.owner_id, item["id"])).avatar = {
+                "enabled": True, "image_id": "selected_portrait", "nickname": "小杯",
+                "personality": "私人性格不要复制", "growth_note": "私人经历不要复制"}
+            db.commit()
+        message_id = self.message("把这只杯子和它现在的形象送给小雨，写上记得喝水。")
+        tools = {tool.name: tool for tool in make_tools(self.settings,
+            self.app.state.sessions, self.owner_id, message_id).tool_groups[0].tools}
+        reply = asyncio.run(tools["prepare_gift"](item_id=item["id"], recipient_id=self.friend_id,
+            message="记得喝水。"))
+        self.assertEqual(str(reply.state), "success", reply)
+        result = self.ok(self.confirm(json.loads(reply.content[0].text)))
+        with self.app.state.sessions() as db:
+            avatar = db.get(Gift, result["result_id"]).snapshot["avatar"]
+            self.assertEqual(avatar["image_id"], "selected_portrait")
+            self.assertEqual(avatar["personality"], "")
+            self.assertNotIn("growth_note", avatar)
 
 
 if __name__ == "__main__":

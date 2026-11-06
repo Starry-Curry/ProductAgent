@@ -1,0 +1,16 @@
+{
+  "width": 405,
+  "height": 720,
+  "video_sha256": "96d2cbb947a695e354ea91e82236dfa72c4fec0d27957a2938975a68ef1f118a",
+  "roi": [112, 392, 309, 455],
+  "targets": {
+    "power": [127, 416, 148, 435],
+    "mode": [189, 416, 210, 435],
+    "start": [277, 415, 300, 440],
+    "temperature": [173, 401, 193, 418],
+    "time": [153, 416, 173, 435],
+    "pressure": [172, 435, 193, 451]
+  },
+  "basis": "Codex visually reviewed control locations on the first frame of the user-supplied real AS2 movie; these are reference-image coordinates, not a video trajectory.",
+  "method": "OpenCV ORB descriptor matches and RANSAC homography estimated from each actual camera/video frame"
+}

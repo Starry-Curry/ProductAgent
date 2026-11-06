@@ -217,10 +217,14 @@ class SourcePageObservationTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(actual.size, original.size)
             self.assertEqual(actual.size, (336, 252))
         metadata = json.loads(reply.content[0].text)
-        self.assertEqual(metadata, {
+        self.assertEqual({key:value for key,value in metadata.items() if key!='applicability'}, {
             "source_id": self.source_id, "url": "https://example.invalid/offline-pdf-fixture",
             "page": 1, "asset_id": asset_id, "evidence_kind": "original_pdf_page_image",
             "content_level": "single_pdf_page_not_full_document"})
+        self.assertEqual(metadata['applicability']['targets'],[{
+            'item_id':self.item['id'],'model':'MJTD01SYL','market':'CN',
+            'model_in_source_text':True,'status':'model_mentioned_requires_procedure_check'}])
+        self.assertFalse(metadata['applicability']['procedure_compatibility_verified'])
         self.assertEqual(reply.metadata["evidence"], metadata)
         formatted = await DashScopeChatFormatter().format([AssistantMsg(name="offline-pdf-probe", content=[
             ToolResultBlock(id="real-page", name="view_source_page", output=reply.content, state=reply.state)])])

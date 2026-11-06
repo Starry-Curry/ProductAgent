@@ -1152,6 +1152,99 @@
         }
       }
     },
+    "/api/guidance": {
+      "post": {
+        "tags": [
+          "Step-by-step guidance"
+        ],
+        "summary": "Begin Guidance",
+        "operationId": "begin_guidance_api_guidance_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidanceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/guidance-feedback": {
+      "post": {
+        "tags": [
+          "Step-by-step guidance"
+        ],
+        "summary": "Guidance Feedback",
+        "operationId": "guidance_feedback_api_tasks__task_id__guidance_feedback_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidanceFeedback"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/runs/{run_id}": {
       "get": {
         "summary": "Run Status",
@@ -3286,6 +3379,544 @@
         }
       }
     },
+    "/api/items/{item_id}/avatar-image": {
+      "post": {
+        "summary": "Create Image",
+        "operationId": "create_image_api_items__item_id__avatar_image_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AvatarImageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AvatarImageResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/earbuds/devices": {
+      "get": {
+        "summary": "Inspect",
+        "operationId": "inspect_api_earbuds_devices_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds": {
+      "get": {
+        "summary": "Status",
+        "operationId": "status_api_items__item_id__earbuds_get",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds/console": {
+      "post": {
+        "summary": "Create",
+        "operationId": "create_api_items__item_id__earbuds_console_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsoleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds/read": {
+      "post": {
+        "summary": "Read",
+        "operationId": "read_api_items__item_id__earbuds_read_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds/noise-mode": {
+      "post": {
+        "summary": "Set Mode",
+        "operationId": "set_mode_api_items__item_id__earbuds_noise_mode_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoiseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds/volume/read": {
+      "post": {
+        "summary": "Read Volume",
+        "operationId": "read_volume_api_items__item_id__earbuds_volume_read_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds/volume": {
+      "post": {
+        "summary": "Set Volume",
+        "operationId": "set_volume_api_items__item_id__earbuds_volume_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VolumeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workbenches/{task_id}": {
+      "get": {
+        "summary": "Get Workbench",
+        "operationId": "get_workbench_api_workbenches__task_id__get",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkbenchView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/workbenches": {
+      "get": {
+        "summary": "List Workbenches",
+        "operationId": "list_workbenches_api_items__item_id__workbenches_get",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkbenchView"
+                  },
+                  "title": "Response List Workbenches Api Items  Item Id  Workbenches Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workbenches/{task_id}/device": {
+      "post": {
+        "summary": "Device Operation",
+        "operationId": "device_operation_api_workbenches__task_id__device_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/community/bilibili/references/search": {
+      "post": {
+        "tags": [
+          "Community references"
+        ],
+        "summary": "Search",
+        "operationId": "search_api_community_bilibili_references_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferenceSearch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/community/bilibili/references/read": {
+      "post": {
+        "tags": [
+          "Community references"
+        ],
+        "summary": "Read",
+        "operationId": "read_api_community_bilibili_references_read_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferenceRead"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/experiences/{experience_id}/photo-matches": {
       "post": {
         "tags": [
@@ -3387,6 +4018,162 @@
           }
         }
       }
+    },
+    "/api/tasks/{task_id}/diagram": {
+      "post": {
+        "tags": [
+          "3D teaching demo"
+        ],
+        "summary": "Diagram",
+        "operationId": "diagram_api_tasks__task_id__diagram_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiagramRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/grounding": {
+      "post": {
+        "tags": [
+          "Camera guidance demo"
+        ],
+        "summary": "Grounding",
+        "operationId": "grounding_api_tasks__task_id__grounding_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroundingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroundingView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/picture": {
+      "post": {
+        "tags": [
+          "Teaching pictures"
+        ],
+        "summary": "Picture",
+        "operationId": "picture_api_tasks__task_id__picture_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiagramRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3457,6 +4244,38 @@
         ],
         "title": "ActionView"
       },
+      "AvatarImageRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "AvatarImageRequest"
+      },
+      "AvatarImageResult": {
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "title": "Asset Id"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model"
+          }
+        },
+        "type": "object",
+        "required": [
+          "asset_id",
+          "model"
+        ],
+        "title": "AvatarImageResult"
+      },
       "AvatarSpec": {
         "properties": {
           "enabled": {
@@ -3497,6 +4316,18 @@
             "pattern": "^#[0-9a-fA-F]{6}$",
             "title": "Color",
             "default": "#d49c62"
+          },
+          "image_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Id"
           },
           "growth_enabled": {
             "type": "boolean",
@@ -3556,6 +4387,18 @@
             "pattern": "^#[0-9a-fA-F]{6}$",
             "title": "Color",
             "default": "#d49c62"
+          },
+          "image_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Id"
           },
           "growth_enabled": {
             "type": "boolean",
@@ -3792,6 +4635,25 @@
         ],
         "title": "CommunitySessionView"
       },
+      "ConsoleRequest": {
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ConsoleRequest"
+      },
       "ConversationView": {
         "properties": {
           "id": {
@@ -3868,6 +4730,31 @@
         ],
         "title": "DeviceProposal"
       },
+      "DeviceRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "op": {
+            "type": "string",
+            "title": "Op"
+          },
+          "args": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Args"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "op"
+        ],
+        "title": "DeviceRequest"
+      },
       "DeviceStatusView": {
         "properties": {
           "bridge_connected": {
@@ -3936,6 +4823,139 @@
           "created_at"
         ],
         "title": "DeviceTargetView"
+      },
+      "DiagramRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "step_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Step Id"
+          },
+          "photo_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 2,
+            "title": "Photo Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "step_id"
+        ],
+        "title": "DiagramRequest"
+      },
+      "EarbudResult": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "default": ""
+          },
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          },
+          "target_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Id"
+          },
+          "console_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Console Url"
+          },
+          "observed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed At"
+          },
+          "observation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Id"
+          },
+          "devices": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Devices"
+          },
+          "state": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "State"
+          },
+          "available": {
+            "type": "boolean",
+            "title": "Available",
+            "default": false
+          },
+          "physical_effect_verified": {
+            "type": "boolean",
+            "title": "Physical Effect Verified",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "EarbudResult"
       },
       "EntryContext": {
         "properties": {
@@ -4558,6 +5578,187 @@
         ],
         "title": "GiftView"
       },
+      "GroundingRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "step_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Step Id"
+          },
+          "frame_id": {
+            "type": "string",
+            "title": "Frame Id"
+          },
+          "anchor": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "bottommost",
+              "topmost",
+              "leftmost",
+              "rightmost",
+              "center"
+            ],
+            "title": "Anchor",
+            "default": "auto"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "step_id",
+          "frame_id"
+        ],
+        "title": "GroundingRequest"
+      },
+      "GroundingView": {
+        "properties": {
+          "visible": {
+            "type": "boolean",
+            "title": "Visible"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "prefixItems": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ],
+                "type": "array",
+                "maxItems": 4,
+                "minItems": 4
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bbox"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 120,
+            "title": "Label"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence"
+          },
+          "explanation": {
+            "type": "string",
+            "maxLength": 800,
+            "title": "Explanation"
+          },
+          "candidates": {
+            "items": {
+              "prefixItems": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                }
+              ],
+              "type": "array",
+              "maxItems": 4,
+              "minItems": 4
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Candidates"
+          },
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "step_id": {
+            "type": "string",
+            "title": "Step Id"
+          },
+          "frame_id": {
+            "type": "string",
+            "title": "Frame Id"
+          },
+          "task_version": {
+            "type": "integer",
+            "title": "Task Version"
+          },
+          "width": {
+            "type": "integer",
+            "title": "Width"
+          },
+          "height": {
+            "type": "integer",
+            "title": "Height"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model"
+          },
+          "elapsed_seconds": {
+            "type": "number",
+            "title": "Elapsed Seconds"
+          },
+          "evidence_kind": {
+            "type": "string",
+            "const": "model_grounding_on_snapshot",
+            "title": "Evidence Kind",
+            "default": "model_grounding_on_snapshot"
+          },
+          "selection_basis": {
+            "type": "string",
+            "enum": [
+              "model",
+              "user_spatial_hint",
+              "unresolved"
+            ],
+            "title": "Selection Basis",
+            "default": "model"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "visible",
+          "label",
+          "confidence",
+          "explanation",
+          "candidates",
+          "task_id",
+          "step_id",
+          "frame_id",
+          "task_version",
+          "width",
+          "height",
+          "model",
+          "elapsed_seconds"
+        ],
+        "title": "GroundingView"
+      },
       "GrowthEvidence": {
         "properties": {
           "message_id": {
@@ -4704,6 +5905,183 @@
           "evidence"
         ],
         "title": "GrowthTrait"
+      },
+      "GuidanceDetails": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "identify",
+              "observe",
+              "operate",
+              "verify",
+              "contact_support"
+            ],
+            "title": "Kind",
+            "default": "operate"
+          },
+          "basis": {
+            "type": "string",
+            "enum": [
+              "document",
+              "general",
+              "user_report"
+            ],
+            "title": "Basis",
+            "description": "通用建议用general；已核验型号原文用document；不因没有手册而拒绝初步帮助。",
+            "default": "general"
+          },
+          "instruction": {
+            "type": "string",
+            "maxLength": 2400,
+            "minLength": 1,
+            "title": "Instruction"
+          },
+          "success_signal": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Success Signal",
+            "default": ""
+          },
+          "if_not_found": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "If Not Found",
+            "default": ""
+          },
+          "if_unchanged": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "If Unchanged",
+            "default": ""
+          },
+          "caution": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Caution",
+            "default": ""
+          },
+          "target_label": {
+            "type": "string",
+            "maxLength": 160,
+            "title": "Target Label",
+            "default": ""
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/StepEvidence"
+            },
+            "type": "array",
+            "maxItems": 6,
+            "title": "Evidence"
+          },
+          "observed_quote": {
+            "type": "string",
+            "maxLength": 2400,
+            "title": "Observed Quote",
+            "description": "仅在用户实际做过或报告结果时填写本轮连续原话。计划做的动作不是实际完成。",
+            "default": ""
+          },
+          "observed_message_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed Message Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "instruction"
+        ],
+        "title": "GuidanceDetails"
+      },
+      "GuidanceFeedback": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "step_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Step Id"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "done",
+              "not_found",
+              "unchanged"
+            ],
+            "title": "Outcome"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1600,
+            "title": "Note",
+            "default": ""
+          },
+          "photo_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Photo Ids"
+          },
+          "receipt_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 8,
+            "title": "Receipt Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "step_id",
+          "outcome",
+          "receipt_id"
+        ],
+        "title": "GuidanceFeedback"
+      },
+      "GuidanceRequest": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 6000,
+            "minLength": 1,
+            "title": "Question"
+          },
+          "photo_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Photo Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "item_id",
+          "question"
+        ],
+        "title": "GuidanceRequest"
       },
       "HTTPValidationError": {
         "properties": {
@@ -5250,6 +6628,25 @@
         ],
         "title": "MemoryView"
       },
+      "NoiseRequest": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "off",
+              "light",
+              "balanced"
+            ],
+            "title": "Mode"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "mode"
+        ],
+        "title": "NoiseRequest"
+      },
       "PhotoMatchCandidate": {
         "properties": {
           "item_id": {
@@ -5474,6 +6871,56 @@
         "additionalProperties": false,
         "type": "object",
         "title": "ProductSpec"
+      },
+      "ReferenceRead": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "Url"
+          },
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "title": "ReferenceRead"
+      },
+      "ReferenceSearch": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Query"
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "default": 5
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "title": "ReferenceSearch"
       },
       "Register": {
         "properties": {
@@ -5748,6 +7195,68 @@
         ],
         "title": "ShareRequest"
       },
+      "StepEvidence": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Quote",
+            "default": ""
+          },
+          "source_line_start": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Line Start"
+          },
+          "source_line_end": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Line End"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "source_model": {
+            "type": "string",
+            "maxLength": 120,
+            "title": "Source Model",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_id"
+        ],
+        "title": "StepEvidence"
+      },
       "TaskBoardCreate": {
         "properties": {
           "goal": {
@@ -5949,6 +7458,16 @@
               }
             ],
             "title": "Updated By"
+          },
+          "guidance": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GuidanceDetails"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -6357,6 +7876,29 @@
         ],
         "title": "ValidationError"
       },
+      "VolumeRequest": {
+        "properties": {
+          "volume": {
+            "type": "number",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Volume"
+          },
+          "endpoint_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Endpoint Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "volume",
+          "endpoint_id"
+        ],
+        "title": "VolumeRequest"
+      },
       "WishChange": {
         "properties": {
           "title": {
@@ -6476,6 +8018,109 @@
           "version"
         ],
         "title": "WishView"
+      },
+      "WorkbenchSource": {
+        "properties": {
+          "html": {
+            "type": "string",
+            "maxLength": 80000,
+            "title": "Html",
+            "default": ""
+          },
+          "css": {
+            "type": "string",
+            "maxLength": 50000,
+            "title": "Css",
+            "default": ""
+          },
+          "javascript": {
+            "type": "string",
+            "maxLength": 80000,
+            "title": "Javascript",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "WorkbenchSource"
+      },
+      "WorkbenchView": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "published": {
+            "type": "boolean",
+            "title": "Published"
+          },
+          "source": {
+            "$ref": "#/components/schemas/WorkbenchSource"
+          },
+          "source_sha256": {
+            "type": "string",
+            "title": "Source Sha256"
+          },
+          "source_history": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Source History"
+          },
+          "document_html": {
+            "type": "string",
+            "title": "Document Html"
+          },
+          "checks": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checks"
+          },
+          "bridge": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Bridge"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id",
+          "item_id",
+          "version",
+          "title",
+          "published",
+          "source",
+          "source_sha256",
+          "document_html",
+          "bridge",
+          "url"
+        ],
+        "title": "WorkbenchView"
       },
       "WorkspaceView": {
         "properties": {

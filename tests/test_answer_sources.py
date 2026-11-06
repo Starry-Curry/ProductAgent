@@ -52,6 +52,45 @@ class AnswerSourceTests(unittest.TestCase):
                 commit_result(db,self.owner,self.message,result,"帮我看看这个公开案例。")
             self.assertEqual(db.query(Memory).filter(Memory.user_id==self.owner).count(),0)
 
+    def test_editorial_game_title_is_not_presented_as_the_original_videos_title(self):
+        with self.sessions() as db:
+            original=SourceRecord(owner_id=self.owner,origin="public_web",
+                url="https://www.bilibili.com/video/BV1pa4y1B7f8/",
+                title="原页 [音箱] 评测",content="合成元数据，仅检验引用呈现")
+            db.add(original);db.flush()
+            row=SourceRecord(owner_id=self.owner,origin="curated_reference",
+                url="https://www.bilibili.com/video/BV1pa4y1B7f8/",
+                title="灵感参考｜生活声音猜谜",content=f"[Codex编者整理] 猜谜是编者待试设计。\n原始资料 [{original.id}] 原页音箱评测")
+            db.add(row);db.commit()
+            result=commit_result(db,self.owner,self.message,self.result([row.id]),"帮我看看这个公开案例。")
+            self.assertIn("整理的灵感《生活声音猜谜》（待试",result["answer"])
+            self.assertIn("原页不等于本玩法教程",result["answer"])
+            self.assertIn(r"[原页 \[音箱\] 评测]",result["answer"])
+            self.assertNotIn(f"[{row.title}]",result["answer"])
+
+    def test_editorial_provenance_cannot_disclose_another_owners_source_title(self):
+        with self.sessions() as db:
+            other=SourceRecord(owner_id=self.friend,origin="public_web",url="https://example.invalid/other",
+                title="不能披露的他人私人检索标题",content="合成记录")
+            db.add(other);db.flush()
+            row=SourceRecord(owner_id=self.owner,origin="curated_reference",url="https://example.invalid/public",
+                title="测试提案",content=f"原始资料 [{other.id}] 伪造的跨用户引用")
+            db.add(row);db.commit()
+            answer=commit_result(db,self.owner,self.message,self.result([row.id]),"帮我看看这个公开案例。")["answer"]
+            self.assertNotIn(other.title,answer)
+            self.assertNotIn(other.url,answer)
+            self.assertIn("[原始资料]",answer)
+
+    def test_retired_editorial_reference_can_be_revisited_without_looking_active(self):
+        with self.sessions() as db:
+            row=SourceRecord(owner_id=self.owner,origin="curated_reference_retired",url="https://example.invalid/public",
+                title="灵感参考｜已撤回的合成测试",content="旧正文保留供回查")
+            db.add(row);db.commit()
+            answer=commit_result(db,self.owner,self.message,self.result([row.id]),"帮我看看这个公开案例。")["answer"]
+            self.assertIn("已撤回的整理灵感",answer)
+            self.assertIn("仅供历史回查",answer)
+            self.assertNotIn("（待试",answer)
+
     def test_reading_without_support_can_finish_with_an_honest_limitation(self):
         value = self.result([]).model_dump()
         schema = grounded_turn_schema(self.sessions, self.owner, self.message, {"actually_read"})

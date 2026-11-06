@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field, model_validator
 
 from . import domain, foundation
 from .database import ChatMessage, Conversation, Memory, SourceRecord
-from .evidence import locate_quote
+from .evidence import locate_quote, locate_user_quote
 
 
 class Applicability(BaseModel):
@@ -136,32 +136,57 @@ def model_mentioned(model, *texts):
     return False
 
 
-def validate_learning(db, user_id, message_id, learning):
+def _validated_learning(db, user_id, message_id, learning):
     if not learning.knowledge_updates and not learning.memory_updates:
-        return
+        return learning, []
     message = domain.require(db.get(ChatMessage, message_id))
     conversation = domain.require(db.get(Conversation, message.conversation_id))
     if message.role != "user" or conversation.user_id != user_id:
         raise domain.DomainError("理解更新必须来自当前用户")
-    errors = []
+    errors, accepted = [], {"memory_updates": [], "knowledge_updates": []}
     for field, changes, validate in (
         ("memory_updates", learning.memory_updates, _validate_memory_change),
         ("knowledge_updates", learning.knowledge_updates, _validate_knowledge_change),
     ):
+        failed_targets = set()
+        candidates = []
         for index, change in enumerate(changes):
             try:
                 validate(db, user_id, message, change)
+                candidates.append((index, change))
             except domain.DomainError as error:
-                errors.append(f"{field}[{index}]: {error.message}")
+                errors.append({"field": field, "index": index, "reason": error.message})
+                target = change.memory_id if field == "memory_updates" else change.supersedes_id
+                if target:
+                    failed_targets.add(target)
+        for index, change in candidates:
+            target = change.memory_id if field == "memory_updates" else change.supersedes_id
+            if target and target in failed_targets:
+                errors.append({"field": field, "index": index,
+                    "reason": "同一旧记录的另一更改未通过校验，本次不部分修改这一组记录"})
+            else:
+                accepted[field].append(change)
+    return Learning(**accepted), errors
+
+
+def _learning_error(errors):
+    return domain.DomainError("请一次修正以下依据错误；无法核实的条目不要写成事实，可在回答中说明未知。保留已核实的有用认识，无须为每个检索结果建立知识：\n" +
+        "\n".join(f"{entry['field']}[{entry['index']}]: {entry['reason']}" for entry in errors[:12]))
+
+
+def validate_learning(db, user_id, message_id, learning):
+    _, errors = _validated_learning(db, user_id, message_id, learning)
     if errors:
-        raise domain.DomainError("请一次修正以下依据错误；无法核实的条目不要写成事实，可在回答中说明未知。保留已核实的有用认识，无须为每个检索结果建立知识：\n" + "\n".join(errors[:12]))
+        raise _learning_error(errors)
 
 
 def _validate_memory_change(db, user_id, message, change):
     if change.operation != "forget":
         change.expires_at=foundation.normalize_expiry(change.expires_at)
-    if change.source_quote not in message.text:
+    anchored = locate_user_quote(message.text, change.source_quote)
+    if anchored is None:
         raise domain.DomainError("个人理解的source_quote未对应当前用户原话")
+    change.source_quote = anchored
     if change.operation in {"replace", "forget"}:
         old = domain.require(db.get(Memory, change.memory_id or ""))
         if old.user_id != user_id:
@@ -243,22 +268,23 @@ def _validate_knowledge_change(db, user_id, message, change):
                 problems.append("资料绑定到另一型号")
         if problems:
             raise domain.DomainError("；".join(problems))
-    if change.basis == "user_report" and (
-        change.scope == "product"
-        or not change.source_quote
-        or change.source_quote not in message.text
-    ):
-        raise domain.DomainError("用户报告必须保留当前原话并仅用于具体实例")
+    if change.basis == "user_report":
+        anchored = locate_user_quote(message.text, change.source_quote)
+        if change.scope == "product" or anchored is None:
+            raise domain.DomainError("用户报告必须保留当前原话并仅用于具体实例")
+        change.source_quote = anchored
 
 def apply_learning(db, user_id, message_id, learning):
-    validate_learning(db, user_id, message_id, learning)
+    learning, rejected = _validated_learning(db, user_id, message_id, learning)
+    if rejected and not learning.knowledge_updates and not learning.memory_updates:
+        raise _learning_error(rejected)
     if not learning.knowledge_updates and not learning.memory_updates:
         return {"knowledge": [], "memories": []}
     message = domain.require(db.get(ChatMessage, message_id))
     conversation = domain.require(db.get(Conversation, message.conversation_id))
     if message.role != "user" or conversation.user_id != user_id:
         raise domain.DomainError("理解更新必须来自当前用户的实际任务")
-    saved = {"knowledge": [], "memories": []}
+    saved = {"knowledge": [], "memories": [], "rejected": rejected}
     for change in learning.memory_updates:
         if change.source_quote not in message.text:
             raise domain.DomainError("个人理解未对应当前用户原话")

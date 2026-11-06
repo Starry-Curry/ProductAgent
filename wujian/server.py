@@ -72,6 +72,14 @@ from .database import (
 from .retrieval import task_view
 
 
+class FrontendStaticFiles(StaticFiles):
+    async def get_response(self,path,scope):
+        response=await super().get_response(path,scope)
+        if response.status_code==200 and path.lower().endswith('.mjs'):
+            response.headers['content-type']='text/javascript; charset=utf-8'
+        return response
+
+
 def create_app(settings=None, model_factory=None):
     settings = settings or Settings.load()
     settings.prepare()
@@ -152,7 +160,9 @@ def create_app(settings=None, model_factory=None):
         if not settings.demo_mode:
             raise domain.DomainError("体验档案未开放", 404)
         identity = {"xiaolin": "person_demo_owner", "xiaoxia": "person_demo_friend"}.get(persona)
-        user = domain.require(db.get(User, identity or ""))
+        family_username = {"mom": "xiaolin_mom_demo", "grandpa": "xiaolin_grandpa_demo"}.get(persona)
+        user = domain.require(db.scalar(select(User).where(User.username == family_username)) if family_username
+                              else db.get(User, identity or ""))
         request.session.clear()
         request.session["user_id"] = user.id
         return domain.user_view(user)
@@ -331,6 +341,22 @@ def create_app(settings=None, model_factory=None):
             raise domain.DomainError("没有找到这项任务", 404)
         return row
 
+    from .api_models import GuidanceRequest, GuidanceFeedback, EntryContext
+    @app.post('/api/guidance', response_model=RunView, tags=['Step-by-step guidance'])
+    async def begin_guidance(payload: GuidanceRequest, user=Depends(current_user), db=Depends(db_session)):
+        return await chat(ChatRequest(text=payload.question, item_ids=[payload.item_id],
+            photo_ids=payload.photo_ids, entry_context=EntryContext(intent='guidance')),user,db)
+
+    @app.post('/api/tasks/{task_id}/guidance-feedback', response_model=RunView, tags=['Step-by-step guidance'])
+    async def guidance_feedback(task_id: str, payload: GuidanceFeedback, user=Depends(current_user), db=Depends(db_session)):
+        from .guidance import start_feedback
+        if not settings.api_key:
+            raise domain.DomainError('请先配置百炼 API Key，反馈会由阿圆接着处理',503)
+        run = start_feedback(db,user.id,task_id,payload)
+        if run.status == 'queued':
+            runner.start(run.id)
+        return RunView.model_validate(run,from_attributes=True)
+
     @app.get("/api/runs/{run_id}", response_model=RunView)
     def run_status(run_id: str, user=Depends(current_user), db=Depends(db_session)):
         return owned_run(db, user.id, run_id)
@@ -370,7 +396,13 @@ def create_app(settings=None, model_factory=None):
             with Image.open(io.BytesIO(data)) as image:
                 if image.width * image.height > 30_000_000:
                     raise domain.DomainError("照片尺寸过大，请压缩后上传")
-                image = ImageOps.exif_transpose(image).convert("RGB")
+                image = ImageOps.exif_transpose(image)
+                if 'A' in image.getbands() or 'transparency' in image.info:
+                    rgba=image.convert('RGBA')
+                    image=Image.new('RGB',rgba.size,'white')
+                    image.paste(rgba,mask=rgba.getchannel('A'))
+                else:
+                    image=image.convert('RGB')
                 image.thumbnail((2000, 2000))
                 output = io.BytesIO()
                 image.save(output, "JPEG", quality=88)
@@ -405,6 +437,7 @@ def create_app(settings=None, model_factory=None):
                         ExperienceRecord.household_id.in_(scope.members),
                         ExperienceRecord.id.in_(scope.shared_ids)))))
             gift_allowed = not (item_allowed or story_allowed) and any(asset_id == gift.snapshot.get("photo_id") or
+                asset_id == gift.snapshot.get("avatar", {}).get("image_id") or
                 any(asset_id in story.get("photo_ids",[]) for story in gift.snapshot.get("experiences",[]))
                 for gift in db.scalars(select(Gift).where(Gift.status.in_(["pending","accepted"]),
                     or_(Gift.sender_id == user.id,Gift.recipient_id == user.id))))
@@ -474,6 +507,14 @@ def create_app(settings=None, model_factory=None):
     register_interactions(app, current_user, db_session)
     from .butler_actions import register_routes as register_butler_routes
     register_butler_routes(app,current_user,db_session,settings)
+    from .avatar_images import register_routes as register_avatar_images
+    register_avatar_images(app,current_user,db_session,settings)
+    from .earbuds import register_routes as register_earbud_routes
+    register_earbud_routes(app,current_user,db_session,settings)
+    from .coding_workbench import register_routes as register_coding_workbench
+    register_coding_workbench(app,current_user,db_session,settings)
+    from .community_reference_routes import register_reference_routes
+    register_reference_routes(app,current_user,sessions,runner)
     from .photo_matching_routes import register_photo_matching
     register_photo_matching(app, current_user, settings, sessions)
 
@@ -489,9 +530,15 @@ def create_app(settings=None, model_factory=None):
     async def community_close(user=Depends(current_user)):
         await runner.communities.close(user.id)
         return await runner.communities.status(user.id)
+    from .teaching_diagram import register_diagrams
+    from .camera_guidance import register_camera
+    from .lesson_assets import register_pictures
+    register_diagrams(app,current_user,db_session,settings)
+    register_camera(app,current_user,db_session,settings)
+    register_pictures(app,current_user,db_session,settings)
     dist = ROOT / "frontend" / "dist"
     if (dist / "assets").exists():
-        app.mount("/assets", StaticFiles(directory=dist / "assets"), name="frontend_assets")
+        app.mount("/assets", FrontendStaticFiles(directory=dist / "assets"), name="frontend_assets")
     if (dist / "illustrations").exists():
         app.mount("/illustrations", StaticFiles(directory=dist / "illustrations"), name="illustrations")
 

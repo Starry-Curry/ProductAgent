@@ -59,13 +59,13 @@ export default function Care({ workspace, user, refresh, onItem, householdId, co
         const spoken = `${from}的提醒。${item ? `${item.name}。` : ""}${reminder.title}。${location ? `位置：${location}。` : ""}${dueLabel(reminder.due_at)}。`;
         const mine = reminder.assignee_id === user.id;
         return (
-          <article className={`care-card ${reminder.completed ? "completed" : ""}`} key={reminder.id}>
+          <article className={`care-card ${reminder.completed ? "completed" : "care-awaiting"}`} key={reminder.id}>
             {item && (!compact || large) && <button className="care-photo" onClick={() => large ? onAsk?.(item.id, reminder) : onItem(item.id, reminder.household_id || undefined)}
               disabled={large && !onAsk} aria-label={large ? `问问${item.name}怎么用` : `查看${item.name}`}><ObjectVisual item={item} /></button>}
             <div className="care-copy">
               <small className="care-people">{from}的提醒</small>
               <div className="care-title"><ClipboardList size={18} /><strong>{reminder.title}</strong>
-                <span className={`status-tag ${reminder.completed ? "normal" : "needs_check"}`}>{labels[reminder.status] || "待处理"}</span>
+                <span className={`care-status ${reminder.completed ? "is-done" : ""}`}><span aria-hidden="true" />{labels[reminder.status] || "待处理"}</span>
               </div>
               <p className="care-context">{item?.name || (reminder.item_id ? "关联物品暂不可查看" : "家庭事项")}{location ? ` · ${location}` : ""}</p>
               <p><time dateTime={reminder.due_at}>{dueLabel(reminder.due_at)}</time></p>

@@ -81,8 +81,8 @@ export default function GiftExperience({ gift, userId, workspace, refresh, onClo
       <div className="gift-experience-stage">
         {companion.avatar.enabled
           ? <ObjectCompanion item={companion} size={210} expression={opened ? "happy" : "calm"} showPhoto />
-          : preview.photo_id
-            ? <img className="gift-object-photo" src={`/api/assets/${encodeURIComponent(preview.photo_id)}`} alt={gift.snapshot.name} />
+          : companion.photo_id
+            ? <img className="gift-object-photo" src={`/api/assets/${encodeURIComponent(companion.photo_id)}`} alt={gift.snapshot.name} />
             : <GiftIcon className="gift-wrapped-icon" size={120} strokeWidth={.85} aria-hidden />}
         <span className="gift-stage-caption">{opened ? (companion.avatar.nickname || gift.snapshot.name) : "有一份心意，在这里等你"}</span>
         {!opened && <button type="button" className="primary-button" onClick={() => setOpened(true)}>

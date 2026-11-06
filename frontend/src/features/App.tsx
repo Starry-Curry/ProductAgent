@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { App as AntApp } from "antd";
+import { App as AntApp, Modal } from "antd";
 import {
   ArrowLeft,
   Bell,
   BookHeart,
   Camera,
   ChevronDown,
+  ClipboardList,
   Coffee,
   Gift,
   Menu,
@@ -16,6 +17,7 @@ import {
   Sparkles,
   TreePine,
   Users,
+  Wrench,
   X,
 } from "lucide-react";
 import {
@@ -40,7 +42,7 @@ import Items from "./Items";
 import Memories from "./Memories";
 import Friends from "./Friends";
 import Care from "./Care";
-import { TaskCanvas, TaskRail } from "./TaskBoard";
+import { GuidanceTools, TaskCanvas, TaskRail } from "./TaskBoard";
 import ButlerActionCard from "./ButlerActionCard";
 import { Companion, ObjectVisual, presentation } from "./shared";
 import { navigate, useRoute, useWorkspace, type Section } from "./navigation";
@@ -96,7 +98,8 @@ function WorkspaceApp({
   const { message } = AntApp.useApp();
   const [editor, setEditor] = useState<Editor>(),
     [device, setDevice] = useState<Item>(),
-    [sidebar, setSidebar] = useState(false);
+    [sidebar, setSidebar] = useState(false),
+    [taskOverview, setTaskOverview] = useState(false);
   const [threadId, setThreadId] = useState<string>(),
     [messages, setMessages] = useState<ChatMessage[]>([]),
     [run, setRun] = useState<Run | null>(null);
@@ -167,9 +170,14 @@ function WorkspaceApp({
       if (!taskId || large) return;
       void request<Board>(`/tasks/${taskId}/board`).then((next) => {
         if (currentThread.current !== value.conversation_id || generation !== openingGeneration.current || location.hash !== routeWhenStarted) return;
+        if (next.task.plan.schema === "workbench/1") {
+          setBoard(undefined);
+          setContext((previous) => ({ ...previous, itemIds: next.task.item_ids, entry: { ...previous.entry, task_id: taskId } }));
+          return;
+        }
         // Show a newly prepared activity in the same chat. Creative/guidance
         // tasks retain their explicit entry and their existing presentation.
-        if (context.entry.task_id || (next.task.plan.kind === "checklist" && !next.task.plan.pending_action)) {
+        if (context.entry.task_id || (["checklist", "guidance"].includes(String(next.task.plan.kind)) && !next.task.plan.pending_action)) {
           setBoard((previous) => previous?.task.id === next.task.id && previous.task.version > next.task.version ? previous : next);
           setContext((previous) => ({ ...previous, itemIds: next.task.item_ids, entry: { ...previous.entry, task_id: taskId } }));
         }
@@ -277,6 +285,11 @@ function WorkspaceApp({
     try {
       const next = await request<Board>(`/tasks/${identity}/board`);
       if (generation !== openingGeneration.current || location.hash !== routeWhenStarted) return;
+      if (next.task.plan.schema === "workbench/1" && next.task.item_ids[0]) {
+        setBoard(undefined);
+        navigate({ section: "items", itemId: next.task.item_ids[0], panel: "workbench", taskId: identity });
+        return;
+      }
       const resumed = await request<{
         conversation_id: string;
         entry_context: EntryContext;
@@ -297,11 +310,26 @@ function WorkspaceApp({
       if (generation === openingGeneration.current && opening.current === identity) opening.current = "";
     }
   }
+  async function resumeWorkbench(identity: string) {
+    if (large) return;
+    const generation = ++openingGeneration.current;
+    const routeWhenStarted = location.hash;
+    try {
+      const work = await request<{ task_id: string; item_id: string }>(`/workbenches/${identity}`);
+      const resumed = await request<{ conversation_id: string; entry_context: EntryContext }>(`/tasks/${identity}/conversation`, "POST");
+      if (generation !== openingGeneration.current || location.hash !== routeWhenStarted) return;
+      setBoard(undefined);
+      await openThread(resumed.conversation_id, { itemIds: [work.item_id], entry: { ...resumed.entry_context, intent: "creative", task_id: identity } }, generation);
+    } catch (error) {
+      if (generation === openingGeneration.current && location.hash === routeWhenStarted) message.error((error as Error).message);
+    }
+  }
   useEffect(() => {
     if (
       !large && route.section === "companion" &&
       route.taskId &&
-      board?.task.id !== route.taskId
+      board?.task.id !== route.taskId &&
+      !(context.entry.task_id === route.taskId && workspace?.tasks.some((task) => task.id === route.taskId && task.plan.schema === "workbench/1"))
     )
       void openTask(route.taskId);
   }, [route.taskId, route.section, large]);
@@ -455,11 +483,11 @@ function WorkspaceApp({
     newTopic(
       [item.id],
       intent,
-      intent === "guidance"
+      text || (intent === "guidance"
         ? `我想了解${item.name}的用法，请先核对型号、现状和适用资料。`
         : intent === "persona"
           ? "想和你聊聊今天的事。"
-          : `想聊聊${item.name}。`,
+          : `想聊聊${item.name}。`),
     );
   }
   function onItem(identity: string, householdId?: string) {
@@ -566,9 +594,15 @@ function WorkspaceApp({
     ...(run && run.conversation_id === threadId ? run.events.filter((event) => event.type === "action_proposed").map((event) => String(event.task_id)) : []),
     ...workspace.tasks.filter((task) => task.plan.pending_action && messages.some((message) => message.id === (task.plan.pending_action as Record<string, unknown>).origin_message_id)).map((task) => task.id),
   ])].filter((id) => board?.task.id !== id) : [];
+  const publishedWorkbench = !large && run && run.conversation_id === threadId
+    ? run.events.filter((event) => event.type === "workbench_published").at(-1) : undefined;
+  const currentWorkbench = workspace.tasks.find((task) => task.id === context.entry.task_id && task.plan.schema === "workbench/1");
+  const workbenchLink = publishedWorkbench
+    ? { taskId: String(publishedWorkbench.task_id || ""), itemId: String(publishedWorkbench.item_id || "") }
+    : currentWorkbench ? { taskId: currentWorkbench.id, itemId: currentWorkbench.item_ids[0] } : undefined;
   return (
     <div
-      className={`app-shell ${large ? "large-mode" : ""} ${sidebar ? "sidebar-open" : ""}`}
+      className={`app-shell ${large ? "large-mode" : ""} ${sidebar ? "sidebar-open" : ""} ${sending || run?.status === "running" || run?.status === "queued" ? "is-thinking" : ""}`}
     >
       <aside className="sidebar">
         <a className="brand" href="#companion">
@@ -638,31 +672,11 @@ function WorkspaceApp({
             <p className="empty-note">从你此刻想做的事开始。</p>
           )}
         </section>}
-        {!large && <section className="sidebar-tasks">
-          <div className="section-title">
-            <h3>正在做的事</h3>
-            <button
-              className="icon-button"
-              title="整理一件事"
-              onClick={() => setEditor({ kind: "task" })}
-            >
-              <Plus size={17} />
-            </button>
-          </div>
-          {workspace.tasks
-            .filter((task) => !["completed", "cancelled"].includes(task.status))
-            .slice(0, 5)
-            .map((task) => (
-              <button
-                key={task.id}
-                className={board?.task.id === task.id ? "active" : ""}
-                onClick={() => void openTask(task.id)}
-              >
-                <span className="task-dot" />
-                <span>{task.goal}</span>
-              </button>
-            ))}
-        </section>}
+        {!large && <nav className="sidebar-shortcuts" aria-label="生活快捷入口">
+          <button onClick={() => { setTaskOverview(true); setSidebar(false); }}><ClipboardList size={18} /><span>做件事</span><small>{workspace.tasks.filter((task) => !["completed", "cancelled"].includes(task.status)).length || ""}</small></button>
+          <button className={route.section === "care" ? "active" : ""} onClick={() => { navigate({ section: "care" }); setSidebar(false); }}><BookHeart size={18} /><span>家人交代的事</span></button>
+          <button onClick={() => { openCreativity(); setSidebar(false); }}><Sparkles size={18} /><span>发现新用法</span></button>
+        </nav>}
         <div className="sidebar-account">
           <span className="person-avatar">{user.display_name.slice(-1)}</span>
           <div>
@@ -718,6 +732,7 @@ function WorkspaceApp({
             <span className="topbar-divider" />
             {!large && <button
               className="camera-action"
+              aria-label={route.section === "items" ? "记一件物品" : route.section === "memories" ? "记下一刻" : "拍一下"}
               onClick={() =>
                 route.section === "items"
                   ? setEditor({ kind: "item" })
@@ -748,7 +763,7 @@ function WorkspaceApp({
         </header>
         {health?.demo_mode && user.id.startsWith("person_demo_") && (
           <div className="demo-ribbon">
-            体验档案 · 人物、持有与生活记录为模拟；操作结果按实际记录呈现。
+            体验档案含模拟人物与生活记录；设备操作以实际回执为准。
           </div>
         )}
         {route.section === "companion" && (
@@ -793,7 +808,13 @@ function WorkspaceApp({
                 companionName={persona ? persona.avatar.nickname || persona.name : companionName}
                 assistantAvatar={persona ? <ObjectCompanion item={persona} size={44} /> : undefined}
                 blocked={personaUnavailable}
-                afterMessages={<>{actionTaskIds.map((id) => <ButlerActionCard key={id} taskId={id} refresh={refresh} />)}{!large && board && boardActions && board.task.plan.kind === "checklist" && <TaskCanvas {...boardActions} />}{continuedTaskId && board?.task.id !== continuedTaskId && !actionTaskIds.includes(continuedTaskId) && <button className="continuation-entry soft-button" onClick={() => void openTask(continuedTaskId)}><Sparkles size={17} />查看这次方案</button>}</>}
+                afterMessages={<>
+                  {actionTaskIds.map((id) => <ButlerActionCard key={id} taskId={id} refresh={refresh} />)}
+                  {workbenchLink?.taskId && workspace.items.some((item) => item.id === workbenchLink.itemId) && <button className="continuation-entry soft-button" onClick={() => navigate({ section: "items", itemId: workbenchLink.itemId, panel: "workbench", taskId: workbenchLink.taskId })}><Wrench size={17} />打开我的新工具</button>}
+                  {!large && board && boardActions && board.task.plan.kind === "checklist" && <TaskCanvas {...boardActions} />}
+                  {!large && board && board.task.plan.kind === "guidance" && board.entries.some((entry) => "guidance" in entry && entry.guidance) && <GuidanceTools board={board} update={(value) => { setBoard(value); void refresh(); }} initial={!messages.length} photos={draft.photos.length ? draft.photos : [...messages].reverse().find((value) => value.role === "user" && value.photo_ids.length)?.photo_ids || []} running={sending || run?.status === "running" || run?.status === "queued"} onRun={async (value) => { await openThread(value.conversation_id, { itemIds: board.task.item_ids, entry: { intent: "guidance", task_id: board.task.id } }); if (currentThread.current === value.conversation_id) watch(value); await refresh(); }} explain={() => { setDraft((previous) => ({ ...previous, text: previous.text || "这一步还有点不明白，结合这件物品再帮我讲讲吧。" })); document.querySelector<HTMLTextAreaElement>(".composer textarea")?.focus(); }} />}
+                  {continuedTaskId && board?.task.id !== continuedTaskId && !actionTaskIds.includes(continuedTaskId) && <button className="continuation-entry soft-button" onClick={() => void openTask(continuedTaskId)}><Sparkles size={17} />查看这次方案</button>}
+                </>}
                 contextLabel={
                   focusedItem
                     ? !large && context.entry.intent === "persona"
@@ -919,7 +940,7 @@ function WorkspaceApp({
                     </div>}
                   </div>
                 )}
-                {!large && board && boardActions && board.task.plan.kind !== "checklist" && <TaskCanvas {...boardActions} />}
+                {!large && board && boardActions && board.task.plan.kind !== "checklist" && !(board.task.plan.kind === "guidance" && board.entries.some((entry) => "guidance" in entry && entry.guidance)) && <TaskCanvas {...boardActions} />}
               </Conversation>
             </main>
             {!large && <aside className="context-rail">
@@ -999,6 +1020,7 @@ function WorkspaceApp({
             edit={setEditor}
             ask={ask}
             task={(id) => void openTask(id)}
+            continueWorkbench={(id) => void resumeWorkbench(id)}
             device={setDevice}
           />
         )}
@@ -1103,6 +1125,14 @@ function WorkspaceApp({
           event.target.value = "";
         }}
       />
+      {!large && <Modal title="做件事" open={taskOverview} onCancel={() => setTaskOverview(false)} footer={null} width={580}>
+        <div className="task-overview">
+          <p>从一个想做的事开始，或接着上次的进度。</p>
+          <button className="primary-button" onClick={() => { setTaskOverview(false); newTopic([], "planning", "我想用家里已有的东西做件事，先和我一起理理想法。"); }}><Plus size={17} />和{companionName}一起规划</button>
+          {workspace.tasks.filter((task) => !task.plan.pending_action).map((task) => <button className="task-overview-row" key={task.id} onClick={() => { setTaskOverview(false); void openTask(task.id); }}><ClipboardList size={19} /><span><strong>{task.goal}</strong><small>{task.status === "completed" ? "已完成 · 可以回看" : task.status === "cancelled" ? "已结束 · 保留记录" : "继续这件事"}</small></span><ArrowLeft size={17} /></button>)}
+          {!workspace.tasks.length && <p className="empty-note">还没有安排的事。野餐、布置一角，或者一个新想法，都可以从这里开始。</p>}
+        </div>
+      </Modal>}
       {!large && editor && (
         <Editors
           key={editor.kind + (editor.item?.id || editor.experience?.id || editor.wish?.id || "")}

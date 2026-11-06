@@ -451,6 +451,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/guidance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Begin Guidance */
+        post: operations["begin_guidance_api_guidance_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/guidance-feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Guidance Feedback */
+        post: operations["guidance_feedback_api_tasks__task_id__guidance_feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/runs/{run_id}": {
         parameters: {
             query?: never;
@@ -1174,6 +1208,227 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/items/{item_id}/avatar-image": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Image */
+        post: operations["create_image_api_items__item_id__avatar_image_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/earbuds/devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Inspect */
+        get: operations["inspect_api_earbuds_devices_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Status */
+        get: operations["status_api_items__item_id__earbuds_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds/console": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create */
+        post: operations["create_api_items__item_id__earbuds_console_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read */
+        post: operations["read_api_items__item_id__earbuds_read_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds/noise-mode": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set Mode */
+        post: operations["set_mode_api_items__item_id__earbuds_noise_mode_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds/volume/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read Volume */
+        post: operations["read_volume_api_items__item_id__earbuds_volume_read_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds/volume": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set Volume */
+        post: operations["set_volume_api_items__item_id__earbuds_volume_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workbenches/{task_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Workbench */
+        get: operations["get_workbench_api_workbenches__task_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/workbenches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Workbenches */
+        get: operations["list_workbenches_api_items__item_id__workbenches_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workbenches/{task_id}/device": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Device Operation */
+        post: operations["device_operation_api_workbenches__task_id__device_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/community/bilibili/references/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Search */
+        post: operations["search_api_community_bilibili_references_search_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/community/bilibili/references/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read */
+        post: operations["read_api_community_bilibili_references_read_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/experiences/{experience_id}/photo-matches": {
         parameters: {
             query?: never;
@@ -1210,6 +1465,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/tasks/{task_id}/diagram": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Diagram */
+        post: operations["diagram_api_tasks__task_id__diagram_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/grounding": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Grounding */
+        post: operations["grounding_api_tasks__task_id__grounding_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/picture": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Picture */
+        post: operations["picture_api_tasks__task_id__picture_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1235,6 +1541,18 @@ export interface components {
             details: string[];
             /** Result Id */
             result_id?: string | null;
+        };
+        /** AvatarImageRequest */
+        AvatarImageRequest: {
+            /** Expected Version */
+            expected_version: number;
+        };
+        /** AvatarImageResult */
+        AvatarImageResult: {
+            /** Asset Id */
+            asset_id: string;
+            /** Model */
+            model: string;
         };
         /** AvatarSpec */
         AvatarSpec: {
@@ -1264,6 +1582,8 @@ export interface components {
              * @default #d49c62
              */
             color: string;
+            /** Image Id */
+            image_id?: string | null;
             /**
              * Growth Enabled
              * @default true
@@ -1300,6 +1620,8 @@ export interface components {
              * @default #d49c62
              */
             color: string;
+            /** Image Id */
+            image_id?: string | null;
             /**
              * Growth Enabled
              * @default true
@@ -1388,6 +1710,11 @@ export interface components {
             /** Qr Data Url */
             qr_data_url?: string | null;
         };
+        /** ConsoleRequest */
+        ConsoleRequest: {
+            /** Address */
+            address?: string | null;
+        };
         /** ConversationView */
         ConversationView: {
             /** Id */
@@ -1420,6 +1747,17 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** DeviceRequest */
+        DeviceRequest: {
+            /** Expected Version */
+            expected_version: number;
+            /** Op */
+            op: string;
+            /** Args */
+            args?: {
+                [key: string]: unknown;
+            };
+        };
         /** DeviceStatusView */
         DeviceStatusView: {
             /** Bridge Connected */
@@ -1445,6 +1783,53 @@ export interface components {
             address: string;
             /** Created At */
             created_at: string;
+        };
+        /** DiagramRequest */
+        DiagramRequest: {
+            /** Expected Version */
+            expected_version: number;
+            /** Step Id */
+            step_id: string;
+            /** Photo Ids */
+            photo_ids?: string[];
+        };
+        /** EarbudResult */
+        EarbudResult: {
+            /** Status */
+            status: string;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            /** Item Id */
+            item_id?: string | null;
+            /** Target Id */
+            target_id?: string | null;
+            /** Console Url */
+            console_url?: string | null;
+            /** Observed At */
+            observed_at?: string | null;
+            /** Observation Id */
+            observation_id?: string | null;
+            /** Devices */
+            devices?: {
+                [key: string]: unknown;
+            }[];
+            /** State */
+            state?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Available
+             * @default false
+             */
+            available: boolean;
+            /**
+             * Physical Effect Verified
+             * @default false
+             */
+            physical_effect_verified: boolean;
         };
         /** EntryContext */
         EntryContext: {
@@ -1685,6 +2070,74 @@ export interface components {
             /** Created At */
             created_at: string;
         };
+        /** GroundingRequest */
+        GroundingRequest: {
+            /** Expected Version */
+            expected_version: number;
+            /** Step Id */
+            step_id: string;
+            /** Frame Id */
+            frame_id: string;
+            /**
+             * Anchor
+             * @default auto
+             * @enum {string}
+             */
+            anchor: "auto" | "bottommost" | "topmost" | "leftmost" | "rightmost" | "center";
+        };
+        /** GroundingView */
+        GroundingView: {
+            /** Visible */
+            visible: boolean;
+            /** Bbox */
+            bbox?: [
+                number,
+                number,
+                number,
+                number
+            ] | null;
+            /** Label */
+            label: string;
+            /** Confidence */
+            confidence: number;
+            /** Explanation */
+            explanation: string;
+            /** Candidates */
+            candidates: [
+                number,
+                number,
+                number,
+                number
+            ][];
+            /** Task Id */
+            task_id: string;
+            /** Step Id */
+            step_id: string;
+            /** Frame Id */
+            frame_id: string;
+            /** Task Version */
+            task_version: number;
+            /** Width */
+            width: number;
+            /** Height */
+            height: number;
+            /** Model */
+            model: string;
+            /** Elapsed Seconds */
+            elapsed_seconds: number;
+            /**
+             * Evidence Kind
+             * @default model_grounding_on_snapshot
+             * @constant
+             */
+            evidence_kind: "model_grounding_on_snapshot";
+            /**
+             * Selection Basis
+             * @default model
+             * @enum {string}
+             */
+            selection_basis: "model" | "user_spatial_hint" | "unresolved";
+        };
         /** GrowthEvidence */
         GrowthEvidence: {
             /** Message Id */
@@ -1734,6 +2187,89 @@ export interface components {
             context: string;
             /** Evidence */
             evidence: components["schemas"]["GrowthEvidence"][];
+        };
+        /** GuidanceDetails */
+        GuidanceDetails: {
+            /**
+             * Kind
+             * @default operate
+             * @enum {string}
+             */
+            kind: "identify" | "observe" | "operate" | "verify" | "contact_support";
+            /**
+             * Basis
+             * @description 通用建议用general；已核验型号原文用document；不因没有手册而拒绝初步帮助。
+             * @default general
+             * @enum {string}
+             */
+            basis: "document" | "general" | "user_report";
+            /** Instruction */
+            instruction: string;
+            /**
+             * Success Signal
+             * @default
+             */
+            success_signal: string;
+            /**
+             * If Not Found
+             * @default
+             */
+            if_not_found: string;
+            /**
+             * If Unchanged
+             * @default
+             */
+            if_unchanged: string;
+            /**
+             * Caution
+             * @default
+             */
+            caution: string;
+            /**
+             * Target Label
+             * @default
+             */
+            target_label: string;
+            /** Evidence */
+            evidence?: components["schemas"]["StepEvidence"][];
+            /**
+             * Observed Quote
+             * @description 仅在用户实际做过或报告结果时填写本轮连续原话。计划做的动作不是实际完成。
+             * @default
+             */
+            observed_quote: string;
+            /** Observed Message Id */
+            observed_message_id?: string | null;
+        };
+        /** GuidanceFeedback */
+        GuidanceFeedback: {
+            /** Expected Version */
+            expected_version: number;
+            /** Step Id */
+            step_id: string;
+            /**
+             * Outcome
+             * @enum {string}
+             */
+            outcome: "done" | "not_found" | "unchanged";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /** Photo Ids */
+            photo_ids?: string[];
+            /** Receipt Id */
+            receipt_id: string;
+        };
+        /** GuidanceRequest */
+        GuidanceRequest: {
+            /** Item Id */
+            item_id: string;
+            /** Question */
+            question: string;
+            /** Photo Ids */
+            photo_ids?: string[];
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -1957,6 +2493,14 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** NoiseRequest */
+        NoiseRequest: {
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "off" | "light" | "balanced";
+        };
         /** PhotoMatchCandidate */
         PhotoMatchCandidate: {
             /** Item Id */
@@ -2061,6 +2605,23 @@ export interface components {
             /** Source Urls */
             source_urls?: string[];
         };
+        /** ReferenceRead */
+        ReferenceRead: {
+            /** Url */
+            url: string;
+            /** Item Id */
+            item_id?: string | null;
+        };
+        /** ReferenceSearch */
+        ReferenceSearch: {
+            /** Query */
+            query: string;
+            /**
+             * Limit
+             * @default 5
+             */
+            limit: number;
+        };
         /** Register */
         Register: {
             /** Username */
@@ -2162,6 +2723,27 @@ export interface components {
             /** User Id */
             user_id: string;
         };
+        /** StepEvidence */
+        StepEvidence: {
+            /** Source Id */
+            source_id: string;
+            /**
+             * Quote
+             * @default
+             */
+            quote: string;
+            /** Source Line Start */
+            source_line_start?: number | null;
+            /** Source Line End */
+            source_line_end?: number | null;
+            /** Page */
+            page?: number | null;
+            /**
+             * Source Model
+             * @default
+             */
+            source_model: string;
+        };
         /** TaskBoardCreate */
         TaskBoardCreate: {
             /** Goal */
@@ -2241,6 +2823,7 @@ export interface components {
             assignee_id?: string | null;
             /** Updated By */
             updated_by?: string | null;
+            guidance?: components["schemas"]["GuidanceDetails"] | null;
         };
         /** TaskEntryAssignment */
         TaskEntryAssignment: {
@@ -2392,6 +2975,13 @@ export interface components {
             /** Context */
             ctx?: Record<string, never>;
         };
+        /** VolumeRequest */
+        VolumeRequest: {
+            /** Volume */
+            volume: number;
+            /** Endpoint Id */
+            endpoint_id: string;
+        };
         /** WishChange */
         WishChange: {
             /** Title */
@@ -2459,6 +3049,56 @@ export interface components {
             user_id: string;
             /** Version */
             version: number;
+        };
+        /** WorkbenchSource */
+        WorkbenchSource: {
+            /**
+             * Html
+             * @default
+             */
+            html: string;
+            /**
+             * Css
+             * @default
+             */
+            css: string;
+            /**
+             * Javascript
+             * @default
+             */
+            javascript: string;
+        };
+        /** WorkbenchView */
+        WorkbenchView: {
+            /** Task Id */
+            task_id: string;
+            /** Item Id */
+            item_id: string;
+            /** Version */
+            version: number;
+            /** Title */
+            title: string;
+            /** Published */
+            published: boolean;
+            source: components["schemas"]["WorkbenchSource"];
+            /** Source Sha256 */
+            source_sha256: string;
+            /** Source History */
+            source_history?: {
+                [key: string]: unknown;
+            }[];
+            /** Document Html */
+            document_html: string;
+            /** Checks */
+            checks?: {
+                [key: string]: unknown;
+            } | null;
+            /** Bridge */
+            bridge: {
+                [key: string]: unknown;
+            };
+            /** Url */
+            url: string;
         };
         /** WorkspaceView */
         WorkspaceView: {
@@ -3397,6 +4037,74 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ChatRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    begin_guidance_api_guidance_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GuidanceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    guidance_feedback_api_tasks__task_id__guidance_feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GuidanceFeedback"];
             };
         };
         responses: {
@@ -5011,6 +5719,422 @@ export interface operations {
             };
         };
     };
+    create_image_api_items__item_id__avatar_image_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AvatarImageRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AvatarImageResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    inspect_api_earbuds_devices_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+        };
+    };
+    status_api_items__item_id__earbuds_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_api_items__item_id__earbuds_console_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConsoleRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_api_items__item_id__earbuds_read_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_mode_api_items__item_id__earbuds_noise_mode_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoiseRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_volume_api_items__item_id__earbuds_volume_read_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_volume_api_items__item_id__earbuds_volume_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VolumeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_workbench_api_workbenches__task_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkbenchView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_workbenches_api_items__item_id__workbenches_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkbenchView"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    device_operation_api_workbenches__task_id__device_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeviceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_api_community_bilibili_references_search_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReferenceSearch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_api_community_bilibili_references_read_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReferenceRead"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     match_api_experiences__experience_id__photo_matches_post: {
         parameters: {
             query?: never;
@@ -5102,6 +6226,111 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CommunitySessionView"];
+                };
+            };
+        };
+    };
+    diagram_api_tasks__task_id__diagram_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiagramRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grounding_api_tasks__task_id__grounding_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GroundingRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroundingView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    picture_api_tasks__task_id__picture_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiagramRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

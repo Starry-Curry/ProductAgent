@@ -72,24 +72,36 @@ def _source_index(db, user_id, conversation, current_message):
                  if event.get("type") == "tool_start"}
         for event in reversed(run.events):
             evidence = event.get("evidence") or {}
-            identity = evidence.get("source_id")
             if (event.get("type") != "tool_end" or event.get("state") != "success"
-                    or names.get(event.get("id")) not in {
-                        "read_source", "fetch_document", "sample_video_frames",
-                        "view_source_image", "view_source_page"}
-                    or not isinstance(identity, str) or identity in found):
+                    or not isinstance(evidence, dict)):
                 continue
-            try:
-                source = readable_source(db, user_id, identity)
-            except domain.DomainError:
+            name = names.get(event.get("id"))
+            if name in {"read_source", "fetch_document", "sample_video_frames",
+                        "view_source_image", "view_source_page"}:
+                reads = [evidence]
+            elif name == "search_public_web" and isinstance(evidence.get("original_reads"), list):
+                # Only the registered search tool's successful original reads
+                # count. Search labels, URLs and unavailable results are clues,
+                # not acquired sources, even if they contain source-like IDs.
+                reads = [entry for entry in evidence["original_reads"]
+                         if isinstance(entry, dict) and entry.get("read_state") == "retrieved"]
+            else:
                 continue
-            found[identity] = {"source_id": identity, "title": source.title[:240],
-                "url": source.url[:1000], "origin": source.origin,
-                "reference_kind": "previously_read_source_pointer",
-                "acquired_in_run_status": run.status,
-                "reading_scope": str(evidence.get("reading_scope", ""))[:500]}
-            if len(found) == 8:
-                return list(found.values())
+            for read in reads:
+                identity = read.get("source_id")
+                if not isinstance(identity, str) or identity in found:
+                    continue
+                try:
+                    source = readable_source(db, user_id, identity)
+                except domain.DomainError:
+                    continue
+                found[identity] = {"source_id": identity, "title": source.title[:240],
+                    "url": source.url[:1000], "origin": source.origin,
+                    "reference_kind": "previously_read_source_pointer",
+                    "acquired_in_run_status": run.status,
+                    "reading_scope": str(read.get("reading_scope", read.get("content_level", "")))[:500]}
+                if len(found) == 8:
+                    return list(found.values())
     return list(found.values())
 
 

@@ -181,12 +181,15 @@ export default function Editors({
   );
   const [date, setDate] = useState(experience ? experience.occurred_on || "" : today());
   const [allowAI, setAllowAI] = useState(experience?.allow_ai || false);
-  const [matchPhotos, setMatchPhotos] = useState(true);
+  const [matchPhotos, setMatchPhotos] = useState(false);
   const [enabled, setEnabled] = useState(editor.kind === "persona" || item?.avatar.enabled || false),
     [nickname, setNickname] = useState(item?.avatar.nickname || (editor.kind === "persona" ? item?.name : "") || ""),
-    [personality, setPersonality] = useState(item?.avatar.personality || "");
+    [personality, setPersonality] = useState(editor.kind === "gift" ? "" : item?.avatar.personality || "");
   const [color, setColor] = useState(item?.avatar.color || "#7e9eac");
   const [form, setForm] = useState<Item["avatar"]["form"]>(item?.avatar.form || "auto");
+  const [imageId, setImageId] = useState<string | null>(item?.avatar.image_id || null),
+    [imageBusy, setImageBusy] = useState(false),
+    [imageError, setImageError] = useState("");
   const [delighted, setDelighted] = useState(false);
   const personaPreview = useRef<HTMLDivElement>(null);
   const info = item
@@ -256,7 +259,7 @@ export default function Editors({
     }
   }
   async function save() {
-    if (photosBusy) return;
+    if (photosBusy || imageBusy) return;
     if (scopedSelection && (!selectedHouse || outOfScope.length)) {
       setError("请先确认家庭范围，并手动移除不属于这个家庭的关联物品；原关联不会自动删除。");
       return;
@@ -297,7 +300,7 @@ export default function Editors({
             market: item?.product.market || "CN",
           },
           description: text,
-          avatar: { enabled, nickname, personality, color, form },
+          avatar: { enabled, nickname, personality, color, form, image_id: imageId },
           photo_id: photos[0] || null,
           state: {
             ...item?.state,
@@ -328,7 +331,7 @@ export default function Editors({
           description: item.description,
           photo_id: item.photo_id,
           state: item.state,
-          avatar: { enabled, nickname: nickname.trim(), personality: personality.trim(), color, form },
+          avatar: { enabled, nickname: nickname.trim(), personality: personality.trim(), color, form, image_id: imageId },
           expected_version: item.version,
         });
       } else if (editor.kind === "presentation" && item) {
@@ -402,6 +405,7 @@ export default function Editors({
                 personality,
                 color,
                 form,
+                image_id: imageId,
               }
             : { enabled: false, form },
         });
@@ -539,23 +543,45 @@ export default function Editors({
     </label>
   );
   const avatarControls = <>
+    {editor.kind === "persona" && item && <div className="persona-photo-create">
+      <strong>从实物照片，长出它的样子</strong>
+      <p>AI会参考照片的轮廓与配色，生成柔软的小伙伴。这是创作形象，并非实物照片；保存才会换上。</p>
+      <div className="persona-image-actions">
+        <button type="button" className="soft-button" disabled={busy || imageBusy || !item.photo_id}
+          onClick={async () => {
+            if (busy || imageBusy) return;
+            setImageBusy(true); setImageError("");
+            try {
+              const result = await request<{ asset_id: string; model: string }>(`/items/${item.id}/avatar-image`, "POST", { expected_version: item.version });
+              setImageId(result.asset_id);
+              setEnabled(true);
+            } catch (error) {
+              setImageError((error as Error).message);
+            } finally { setImageBusy(false); }
+          }}><ImagePlus size={16} />{imageBusy ? "它的样子正在长出来…" : imageId ? "再长一个样子" : "用物品照片生成"}</button>
+        {imageId && <button type="button" className="quiet-button" disabled={imageBusy} onClick={() => setImageId(null)}>换回已有样式</button>}
+      </div>
+      {!item.photo_id && <span className="persona-generation-note">先在物品资料里添加一张实物照片。</span>}
+      {imageBusy && <span className="persona-generation-note" role="status">需要一点时间，你可以先想想它叫什么。</span>}
+      {imageError && <p className="inline-error" role="alert">{imageError}</p>}
+    </div>}
     <fieldset>
       <legend>想让它是什么模样？</legend>
       <div className="persona-forms">
         {([ ["auto", "随物品"], ["keepsake", "围巾团子"], ["dango_leaf", "叶子团子"], ["dango_hat", "小帽团子"], ["dango_bow", "蝴蝶结团子"], ["cup", "杯子"], ["stone", "石头"], ["flower", "花"], ["cat", "小猫"] ] as const).map(([value, label]) => (
-          <button key={value} type="button" aria-pressed={form === value} onClick={() => setForm(value)}>{label}</button>
+          <button key={value} type="button" aria-pressed={!imageId && form === value} disabled={imageBusy} onClick={() => { setForm(value); setImageId(null); }}>{label}</button>
         ))}
       </div>
-      <small>由你选择，也可以随时换个样子。</small>
+      <small>{imageId ? "正在使用AI生成的创作形象，也可以选下方样式换回来。" : "由你选择，也可以随时换个样子。"}</small>
     </fieldset>
     <label>它的名字<input value={nickname} maxLength={40} onChange={(event) => setNickname(event.target.value)} placeholder={item?.name} /></label>
-    <fieldset className="persona-colors">
+    {!imageId && <fieldset className="persona-colors">
       <legend>喜欢的颜色</legend>
       {[ ["雾蓝", "#7e9eac"], ["陶杏", "#c49c7b"], ["豆绿", "#97a48c"], ["暖粉", "#c39897"] ].map(([label, value]) => (
         <button type="button" key={value} aria-label={label} aria-pressed={color === value} style={{ background: value }} onClick={() => setColor(value)} />
       ))}
       <input type="color" aria-label="自选分身颜色" value={color} onChange={(event) => setColor(event.target.value)} />
-    </fieldset>
+    </fieldset>}
     <fieldset>
       <legend>相处时，想要什么样的语气？</legend>
       <div className="persona-temperaments">
@@ -593,7 +619,7 @@ export default function Editors({
             </button>
             <button
               className="primary-button"
-              disabled={busy || photosBusy}
+              disabled={busy || photosBusy || imageBusy}
               type="submit"
               form="interaction-editor"
             >
@@ -626,7 +652,7 @@ export default function Editors({
           <>
             <div className="persona-preview" ref={personaPreview}>
               <button type="button" className="persona-preview-touch" aria-label="和分身打个招呼" onClick={() => setDelighted(!delighted)}>
-                <ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, nickname, personality, color, form } }} className="object-companion-alive" size={190} expression={delighted ? "happy" : "calm"} />
+                <ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, nickname, personality, color, form, image_id: imageId } }} className="object-companion-alive" size={190} expression={delighted ? "happy" : "calm"} />
               </button>
               <strong>{nickname || item.name}</strong>
               <p>{delighted ? "在呢。今天也一起过吧。" : "轻轻点一下，和它打个招呼。"}</p>
@@ -635,7 +661,18 @@ export default function Editors({
             {avatarControls}
             <label className="check-label"><input type="checkbox" checked={enabled} onChange={(event) => setEnabled(event.target.checked)} />开启这件物品的分身</label>
             <p className="form-note">这是{item.name}的可选分身。物品照片与已有故事会继续保留；回忆是否用于对话，可以在每段回忆里单独选择。</p>
-            <button type="button" className="quiet-button" onClick={() => {
+            <button type="button" className="quiet-button" onClick={async () => {
+              if (imageId) {
+                try {
+                  const response = await fetch(`/api/assets/${imageId}`);
+                  if (!response.ok) throw new Error("这张形象暂时不可读取，请刷新后重试");
+                  const url = URL.createObjectURL(await response.blob());
+                  const link = document.createElement("a");
+                  link.href = url; link.download = "物间-物品分身.png"; link.click();
+                  setTimeout(() => URL.revokeObjectURL(url), 1000);
+                } catch (error) { message.error((error as Error).message); }
+                return;
+              }
               const svg = personaPreview.current?.querySelector("svg");
               if (!svg) return;
               const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)], { type: "image/svg+xml;charset=utf-8" }));
@@ -948,7 +985,7 @@ export default function Editors({
               </label>
               {carryAvatar && (
                 <>
-                  <div className="persona-gift-preview"><ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, form, nickname: nickname || item.name, personality, color } }} size={120} /></div>
+                  <div className="persona-gift-preview"><ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, form, nickname: nickname || item.name, personality, color, image_id: imageId } }} size={120} /></div>
                   {avatarControls}
                   <p className="form-note">这些设定只属于这份礼物，不修改你当前物品的分身。接收者可以选择唤醒，也能修改自己的形象和性格；你的私人聊天不会送出。</p>
                 </>
@@ -957,7 +994,7 @@ export default function Editors({
           ) : (
             <div className="gift-preview">
               <h2>{item.name}</h2>
-              {carryAvatar && <div className="persona-gift-preview"><ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, form, nickname: nickname || item.name, personality, color } }} size={140} /></div>}
+              {carryAvatar && <div className="persona-gift-preview"><ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, form, nickname: nickname || item.name, personality, color, image_id: imageId } }} size={140} /></div>}
               <p>
                 送给{" "}
                 {

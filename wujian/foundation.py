@@ -15,13 +15,16 @@ from .database import (
     TaskRecord,
     now,
 )
-from .evidence import locate_quote
+from .evidence import locate_quote, locate_user_quote
 from .retrieval import claim_view, task_view
 
 
 def plan_signature(goal, item_ids, constraints, plan):
     import hashlib
     import json
+    plan = {key:value for key,value in plan.items() if key != "visualizations"}
+    if isinstance(plan.get("guidance"),dict):
+        plan = {**plan,"guidance":{key:value for key,value in plan["guidance"].items() if key != "pictures"}}
     return hashlib.sha256(json.dumps({"goal": goal, "item_ids": sorted(item_ids),
         "constraints": constraints, "plan": plan}, ensure_ascii=False, sort_keys=True,
         separators=(",", ":")).encode()).hexdigest()
@@ -175,7 +178,19 @@ def save_task(
         raise domain.DomainError("未知任务状态")
     if not goal.strip() or len(goal) > 4000:
         raise domain.DomainError("请保留具体任务目标")
+    if plan.get("schema") == "workbench/1":
+        # Source, hash-bound checks and publication are authoritative receipts
+        # written only by the dedicated workbench operations. A generic task
+        # plan must never be able to fabricate them, including on first create.
+        raise domain.DomainError("工作台只能通过专用创建、写入、检查与发布操作维护", 409)
     plan = validate_plan(plan)
+    previous = db.get(TaskRecord,task_id) if task_id else None
+    if previous and (previous.plan.get("pending_action") or previous.plan.get("schema") == "workbench/1"):
+        if previous.user_id != user_id:
+            raise domain.DomainError("没有找到这项任务", 404)
+        raise domain.DomainError("这项任务由专用确认/取消或工作台操作维护，不能用普通方案覆盖它", 409)
+    from .guidance import validate_plan as validate_guidance
+    plan = validate_guidance(db,user_id,item_ids,plan,message_id,previous.plan if previous else None)
     # Give the native Agent a repairable field error instead of making it
     # regenerate the whole proposal while guessing which opaque ID was wrong.
     # The same current permission check still runs for every supplied reference.
@@ -297,6 +312,9 @@ def normalize_claim_evidence(db, user_id, basis, scope, source_id, source_quote)
             raise domain.DomainError("请使用自己已获取的资料", 404)
         if source.origin == "video_frame_sample":
             return "inference", "item", ""
+        from .knowledge import source_content_level
+        if source_content_level(source) == 'public_page_metadata_only_not_document_body':
+            return "inference", "item", ""
     return basis, scope, source_quote
 
 
@@ -346,13 +364,14 @@ def save_claim(
         from .database import Conversation
 
         conversation = domain.require(db.get(Conversation, message.conversation_id))
+        anchored = locate_user_quote(message.text, source_quote)
         if (
             conversation.user_id != user_id
             or message.role != "user"
-            or not source_quote.strip()
-            or source_quote not in message.text
+            or anchored is None
         ):
             raise domain.DomainError("请引用当前用户实际报告的原话")
+        source_quote = anchored
         status = "user_reported"
     elif source_id:
         # An interpretation of a real image/sample is still provisional, but
@@ -368,6 +387,12 @@ def save_claim(
             conditions = {**conditions, "identity_match": "unverified", "evidence_kind": "timestamped_still_images",
                           "reading_scope": "sampled_video_frames_not_full_video"}
             conditions.pop("source_lines", None)
+        elif evidence_source:
+            from .knowledge import source_content_level
+            if source_content_level(evidence_source) == 'public_page_metadata_only_not_document_body':
+                conditions = {**conditions, "identity_match":"unverified", "evidence_kind":"public_page_metadata",
+                    "reading_scope":"public_page_metadata_only_not_document_body"}
+                conditions.pop("source_lines", None)
     if supersedes_id:
         previous = domain.require(db.get(KnowledgeClaim, supersedes_id))
         if previous.owner_id != user_id:
@@ -448,13 +473,14 @@ def update_condition(
     from .database import Conversation
 
     conversation = domain.require(db.get(Conversation, message.conversation_id))
+    anchored = locate_user_quote(message.text, source_quote)
     if (
         conversation.user_id != user_id
         or message.role != "user"
-        or not source_quote
-        or source_quote not in message.text
+        or anchored is None
     ):
         raise domain.DomainError("请使用当前用户报告的实际物品状态")
+    source_quote = anchored
     state = {
         **item.state,
         **changes,

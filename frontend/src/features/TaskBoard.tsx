@@ -1,3 +1,9 @@
+import type { Run } from "../api";
+import TeachingDiagram from "./TeachingDiagram";
+import StepIllustration from "./StepIllustration";
+import CameraGuidance from "./CameraGuidance";
+import "../teaching-diagram.css";
+import "../camera-guidance.css";
 import { useEffect, useRef, useState } from "react";
 import { App as AntApp, Modal } from "antd";
 import {
@@ -583,7 +589,7 @@ export function TaskRail({
           <p className="empty-note">步骤和原方案已保留在当前事项中，可以接着和阿圆核对。</p>
         )}
       </section>}
-      <section className="rail-section" id={`task-people-${board.task.id}`}>
+      {(board.kind !== "guidance" || board.sources.length > 0) && <section className="rail-section" id={`task-people-${board.task.id}`}>
         <h2>{board.kind === "guidance" ? "可核对的资料" : "一起准备"}</h2>
         {board.kind === "guidance" ? (
           board.sources.length ? (
@@ -593,7 +599,7 @@ export function TaskRail({
                 <strong>{String(source.title)}</strong>
                 <p>{String(source.quote || "")}</p>
                 {typeof source.url === "string" &&
-                  source.url.startsWith("https://") && (
+                  (source.url.startsWith("https://") || source.url.startsWith("/api/assets/")) && (
                     <a
                       href={source.url}
                       target="_blank"
@@ -682,8 +688,8 @@ export function TaskRail({
             </small>
           </>
         )}
-      </section>
-      {board.access === "owner" && (
+      </section>}
+      {board.access === "owner" && !(board.kind === "guidance" && board.entries.some((entry) => entry.guidance)) && (
         <section className="rail-section actual-feedback">
           <h2>实际尝试后</h2>
           <label>
@@ -719,5 +725,156 @@ export function TaskRail({
         拍给物伴看，接着聊
       </button>
     </>
+  );
+}
+
+export function GuidanceTools({
+  board,
+  update,
+  photos = [],
+  initial = false,
+  onRun,
+  running = false,
+  explain,
+}: {
+  board: Board;
+  update: (board: Board) => void;
+  photos?: string[];
+  initial?: boolean;
+  onRun: (run: Run) => Promise<void>;
+  running?: boolean;
+  explain: () => void;
+}) {
+  const { message } = AntApp.useApp();
+  const [busy, setBusy] = useState(false);
+  const active = (
+    board.task.plan.guidance as { active_step_id?: string } | undefined
+  )?.active_step_id;
+  const current =
+    board.entries.find((entry) => entry.id === active) ||
+    board.entries.find((entry) => entry.state !== "ready") ||
+    board.entries.at(-1);
+  if (!current?.guidance) return null;
+  const lesson = (
+    board.task.plan.guidance as {
+      lesson?: {
+        phase: string;
+        inputs: Record<string, unknown>;
+        definition: {
+          steps: { id: string; requires_input?: string; adaptive?: boolean }[];
+        };
+      };
+    }
+  )?.lesson;
+  const inputKey = lesson?.definition.steps.find(
+    (step) => step.id === current.id,
+  )?.requires_input;
+  const provided = (inputKey ? lesson?.inputs[inputKey] : null) as {
+    status?: string;
+    profile_id?: string;
+  } | null;
+  const waitingInput =
+    !!inputKey &&
+    !(
+      provided?.status === "ready" ||
+      (provided?.profile_id && !provided?.status)
+    );
+  const adaptive = !!lesson?.definition.steps.find(
+    (step) => step.id === current.id,
+  )?.adaptive;
+  async function confirm() {
+    if (!current) return;
+    setBusy(true);
+    try {
+      const key = `${board.task.id}:${board.task.version}:${current.id}`;
+      const saved = sessionStorage.getItem("lesson-receipt");
+      const previous = saved ? JSON.parse(saved) : null;
+      const receipt = previous?.key === key ? previous.id : crypto.randomUUID();
+      sessionStorage.setItem(
+        "lesson-receipt",
+        JSON.stringify({ key, id: receipt }),
+      );
+      const next = await request<Run>(
+        `/tasks/${board.task.id}/guidance-feedback`,
+        "POST",
+        {
+          expected_version: board.task.version,
+          step_id: current.id,
+          outcome: "done",
+          receipt_id: receipt,
+        },
+      );
+      await onRun(next);
+    } catch (error) {
+      message.error((error as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  if (board.task.status === "completed")
+    return (
+      <p className="muted">这次教学已按你的反馈完成。可以继续聊成品效果。</p>
+    );
+  return (
+    <section className="guidance-tools" aria-label="当前回答的辅助工具">
+      <p className="muted">
+        {lesson
+          ? adaptive
+            ? "当前补充核对"
+            : `第 ${board.entries.findIndex((entry) => entry.id === current.id) + 1} 步`
+          : "当前"}{" "}
+        · {current.title}
+      </p>
+      {initial && <p className="saved-step">{current.guidance.instruction}</p>}
+      {!adaptive && (
+        <StepIllustration
+          key={board.task.id + current.id}
+          board={board}
+          entry={current}
+          update={update}
+          enabled={!running && !busy}
+          photos={photos}
+        />
+      )}
+      <div className="guidance-assists">
+        <button
+          className="primary-button"
+          disabled={
+            busy ||
+            running ||
+            waitingInput ||
+            lesson?.phase === "paused" ||
+            board.access !== "owner"
+          }
+          onClick={() => void confirm()}
+        >
+          <Check size={17} />
+          {waitingInput ? "先告诉阿圆材料条件" : "我完成了这一步"}
+        </button>
+        <button
+          className="quiet-button"
+          disabled={busy || running}
+          onClick={explain}
+        >
+          这一步怎么做？
+        </button>
+        {!adaptive && (
+          <TeachingDiagram
+            key={board.task.id + current.id}
+            board={board}
+            entry={current}
+            update={update}
+            photoIds={photos}
+            onConfirm={!waitingInput && !running && !busy ? confirm : undefined}
+          />
+        )}
+        <CameraGuidance
+          key={"camera-" + board.task.id}
+          board={board}
+          entry={current}
+          onConfirm={!waitingInput && !running && !busy ? confirm : undefined}
+        />
+      </div>
+    </section>
   );
 }

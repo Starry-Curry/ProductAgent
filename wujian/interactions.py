@@ -318,6 +318,16 @@ def board(db, user_id, task_id):
                         "quote": claim.get("source_quote", ""), "item_id": item_id}
                 except domain.DomainError:
                     pass
+    if plan.get('guidance',{}).get('lesson') and row.item_ids:
+        item=domain.accessible_item(db,user_id,row.item_ids[0])
+        original_id=item.state.get('teaching',{}).get('manual_source_id')
+        if original_id:
+            original=readable_source(db,user_id,original_id)
+            from .lessons import step_definition
+            step=step_definition(row)
+            sources[original.id]={'id':original.id,'title':original.title,
+                'url':'/api/assets/'+original.asset_id if original.asset_id else original.url,
+                'quote':f"当前操作可核对原始 PDF 第 {step['manual_pdf_page']} 页；上方导览为改写，不是原文。" if step and step.get('manual_pdf_page') else '官方原始 PDF；补充核对是一般观察建议。'}
     return {"task": projected, "kind": plan.get("kind", "legacy") if plan.get("schema") == "interaction/1" else "legacy",
         "entries": entries, "completed_count": sum(entry["state"] == "ready" for entry in entries),
         "total_count": len(entries), "conversation_id": conversation_id, "sources": list(sources.values()),
@@ -353,6 +363,9 @@ def validate_entry_ready(db, user_id, entry):
 
 
 def update_entry(db, user_id, task_id, entry_id, payload):
+    task,_ = task_access(db,user_id,task_id,writing=True)
+    if task.plan.get("guidance",{}).get("lesson"):
+        raise domain.DomainError("请在当前教学步骤中报告实际结果",409)
     row, access = task_access(db, user_id, task_id, writing=True)
     plan = dict(row.plan or {})
     if plan.get("schema") != "interaction/1":
@@ -583,3 +596,25 @@ def workspace(db, user_id):
         "friends": domain.friends(db, user_id),
         "gifts": [domain.gift_view(db, row) for row in db.scalars(select(Gift).where(or_(Gift.sender_id == user_id, Gift.recipient_id == user_id)).order_by(Gift.created_at.desc()))],
         "wishes": [wish_view(row) for row in db.scalars(select(Wish).where(Wish.user_id == user_id))]}
+
+
+def resume_task(db, user_id, task_id):
+    """One stable per-actor conversation, shared by HTTP, teaching and demos."""
+    import hashlib
+    from sqlalchemy.exc import IntegrityError
+    value = board(db, user_id, task_id)
+    entry = {"task_id": task_id, "intent": "guidance" if value["kind"] == "guidance" else "planning"}
+    if value["conversation_id"]:
+        return {"conversation_id": value["conversation_id"], "entry_context": entry}
+    identity = "task_" + hashlib.sha256(f"{user_id}\0{task_id}".encode()).hexdigest()[:40]
+    row = db.get(Conversation, identity)
+    if row is None:
+        row = Conversation(id=identity, user_id=user_id, title=value["task"]["goal"][:35],
+            item_ids=value["task"]["item_ids"], entry_context=entry)
+        db.add(row)
+        try:
+            db.commit()
+        except IntegrityError:
+            db.rollback()
+            row = domain.require(db.get(Conversation, identity))
+    return {"conversation_id": row.id, "entry_context": entry}

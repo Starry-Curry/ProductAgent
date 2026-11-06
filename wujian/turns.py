@@ -16,6 +16,14 @@ def _plan_schema(schema):
     """Expose the shared entry contract without replacing legacy dict plans."""
     from .preparation_plan import PreparationReport
     entry_schema = TaskEntry.model_json_schema()
+    definitions = entry_schema.pop('$defs', {})
+    def inline(value):
+        if isinstance(value,list):return [inline(part) for part in value]
+        if not isinstance(value,dict):return value
+        if '$ref' in value and value['$ref'].startswith('#/$defs/'):
+            return inline({**definitions[value['$ref'].split('/')[-1]],**{key:part for key,part in value.items() if key!='$ref'}})
+        return {key:inline(part) for key,part in value.items()}
+    entry_schema = inline(entry_schema)
     entry_schema["properties"]["group"]["description"] = (
         "owned/buy/borrow/confirm are resource preparation categories; "
         "step is an action or inspection instruction, including viewing a version number."
@@ -86,7 +94,11 @@ class EntryProgressReport(BaseModel):
 ContinuingPlan.model_rebuild()
 
 
+from .lessons import LessonAction
+
+
 class TurnResult(BaseModel):
+    lesson_action: LessonAction | None = None
     # Evidence and the actual proposal precede prose in the native schema.
     # Same fields, same transaction; no extra generation or reviewer.
     learning: Learning
@@ -113,6 +125,9 @@ def referenced_sources(result):
     return list(dict.fromkeys([*result.source_refs,
         *(change.source_id for change in result.learning.knowledge_updates
           if change.basis in {"document", "inference"} and change.source_id),
+        *(evidence['source_id'] for entry in
+          (result.continuation.plan.get('entries',[]) if result.continuation else [])
+          for evidence in (entry.get('guidance') or {}).get('evidence',[])),
         *re.findall(r"\[([a-f0-9]{32})\]",result.answer)]))[:8]
 
 
@@ -258,9 +273,47 @@ def _mark_displayed_gift_stories(db, user_id, message_id, experiences):
 def commit_result(db, user_id, message_id, result, current_question, *, commit=True):
     with db.begin_nested():
         learned = apply_learning(db, user_id, message_id, result.learning)
-        task = commit_continuation(
-            db, user_id, message_id, result, current_question, commit=False
-        )
+        learning_rejections = learned.get("rejected", [])
+        controlled_answer=None
+        rejected_actions=[]
+        if result.lesson_action:
+            from .lessons import apply_action
+            try:
+                with db.begin_nested():
+                    controlled,controlled_answer=apply_action(db,user_id,message_id,result.lesson_action)
+                if result.lesson_action.kind in {'explain','adapt'}:controlled_answer=None
+                elif result.lesson_action.kind=='provide_input' and result.lesson_action.material:
+                    from .lessons import input_ready,step_definition
+                    step=step_definition(controlled)
+                    if not step or not input_ready(controlled.plan['guidance']['lesson'],step.get('requires_input')):
+                        controlled_answer=None
+                from .retrieval import task_view
+                task=task_view(controlled)
+            except domain.DomainError as error:
+                if error.status!=409:raise
+                # An invalid proposed state update cannot destroy a useful answer.
+                task=None;controlled_answer=None
+                rejected_actions.append({'kind':result.lesson_action.kind,'reason':error.message})
+                if result.lesson_action.kind=='confirm':result.answer+='\n\n当前步骤还未推进，我们先核对实际情况再继续。'
+        else:
+            task = commit_continuation(db, user_id, message_id, result, current_question, commit=False)
+        if task is None:
+            # A short answer may omit plan changes. Keep the actual statement
+            # on the active task anyway; recording it does not infer success.
+            message=domain.require(db.get(ChatMessage,message_id))
+            conversation=db.get(Conversation,message.conversation_id)
+            identity=conversation.entry_context.get('task_id')
+            active=db.get(TaskRecord,identity) if identity else None
+            if active and active.user_id==user_id and active.plan.get('kind')=='guidance' and active.status not in {'completed','cancelled'}:
+                from .database import now
+                progress=dict(active.plan.get('guidance') or {})
+                observations=list(progress.get('observations',[]))
+                if not any(row.get('message_id')==message_id for row in observations):
+                    observations.append({'receipt_id':'message-'+message_id,'message_id':message_id,
+                        'step_id':progress.get('active_step_id'),'outcome':'unknown','text':message.text,
+                        'source':'conversation','created_at':now()})
+                    task=foundation.save_task(db,user_id,message_id,active.goal,active.item_ids,active.constraints,
+                        {**active.plan,'guidance':{**progress,'observations':observations}},active.id,active.version,active.status,commit=False)
         experiences = {row["id"]: row for row in domain.list_experiences(db, user_id, for_ai=True)}
         stories = []
         for identity in dict.fromkeys(result.story_refs):
@@ -289,13 +342,35 @@ def commit_result(db, user_id, message_id, result, current_question, *, commit=T
             title = source.title.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]").replace("\n", " ")[:160]
             url = source.url.replace("<", "%3C").replace(">", "%3E").replace("\n", "")
             level = source_content_level(source)
-            depth = "（已看指定区间抽帧，未观看完整视频或音频）" if level == "sampled_video_frames_not_full_video" else "（已读公开页面文字，未观看视频）" if "not_video_observation" in level else "（已读笔记文字，未核对图片）" if "not_image_observation" in level else ""
-            rendered=f"[{title or '原始资料'}](<{url}>){depth}"
+            depth = "（已看指定区间抽帧，未观看完整视频或音频）" if level == "sampled_video_frames_not_full_video" else "（仅取得页面标题/简介，未读取正文）" if level == "public_page_metadata_only_not_document_body" else "（已读公开页面文字，未观看视频）" if "not_video_observation" in level else "（已读笔记文字，未核对图片）" if "not_image_observation" in level else ""
+            if source.origin in {"curated_reference", "curated_reference_retired"}:
+                # The editorial proposal is not hosted at the original URL.
+                # Linking its invented title directly to that URL would make a
+                # source about a device look like the author's tutorial for our
+                # new application. Keep authorship and link role separate.
+                original_title, original_url = "原始资料", url
+                for original_id in re.findall(r"^原始资料 \[([a-f0-9]{32})\]", source.content, re.MULTILINE)[:8]:
+                    try:
+                        original = readable_source(db, user_id, original_id)
+                    except domain.DomainError:
+                        continue
+                    if original.origin != "public_web":
+                        continue
+                    original_title = original.title.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]").replace("\n", " ")[:160]
+                    original_url = original.url.replace("<", "%3C").replace(">", "%3E").replace("\n", "")
+                    break
+                editorial_title = title.removeprefix("灵感参考｜")
+                label = "已撤回的整理灵感" if source.origin == "curated_reference_retired" else "整理的灵感"
+                state = "仅供历史回查" if source.origin == "curated_reference_retired" else "待试"
+                rendered = (f"{label}《{editorial_title or '编者参考'}》（{state}；"
+                            f"原始线索：[{original_title}](<{original_url}>)，原页不等于本玩法教程）")
+            else:
+                rendered=f"[{title or '原始资料'}](<{url}>){depth}"
             if f"[{identity}]" in result.answer:
                 inline[f"[{identity}]"]=rendered
             else:
                 citations.append(rendered)
-        answer=result.answer
+        answer=controlled_answer or result.answer
         for marker,rendered in inline.items():
             answer=answer.replace(marker,rendered)
         if result.story_refs:
@@ -304,10 +379,12 @@ def commit_result(db, user_id, message_id, result, current_question, *, commit=T
     db.commit() if commit else db.flush()
     return {
         "task": task,
+        "rejected_actions": rejected_actions,
         "learned": learned,
         "answer": answer + ("\n\n" + "\n\n".join(stories) if stories else "")
             + ("\n\n参考：" + "；".join(citations) if citations else "")
-            + ("\n\n" + result.source_limitations if result.source_limitations else ""),
+            + ("\n\n" + result.source_limitations if result.source_limitations else "")
+            + (f"\n\n补充：已保留核对成功的部分；另有{len(learning_rejections)}条理解未能核对依据，未保存。" if learning_rejections else ""),
     }
 
 
@@ -326,6 +403,11 @@ def grounded_turn_schema(sessions, user_id, message_id, evidence_sources=None, *
                 raise ValueError("本轮已读取资料：请用source_refs列出确实支持回答的原文ID；如果原文不足以支持方案，则用source_limitations诚实说明限制，不能宣称案例已经核实。")
             with sessions() as db:
                 message = domain.require(db.get(ChatMessage, message_id))
+                if self.continuation and self.continuation.task_id:
+                    target = db.get(TaskRecord,self.continuation.task_id)
+                    if target and target.user_id == user_id and (target.plan.get("guidance",{}).get("lesson")
+                            or target.plan.get("pending_action") or target.plan.get("schema") == "workbench/1"):
+                        self.continuation = None
                 # Exercise the same SQL-only business path, then ALWAYS undo
                 # it. A second handwritten validator had drifted: invalid
                 # expiry/completion passed the SDK and failed too late to

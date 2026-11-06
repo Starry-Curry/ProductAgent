@@ -3,7 +3,9 @@ import asyncio
 import base64
 import io
 import math
+import re
 import threading
+import unicodedata
 from contextlib import ExitStack
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
@@ -12,10 +14,11 @@ import httpx
 from openai import AsyncOpenAI
 from pypdf import PdfReader
 from sqlalchemy import select
+from sqlalchemy.orm import object_session
 
 from .database import Asset, SourceRecord, uid
 from .domain import DomainError, accessible_item
-from .source_content import parse_public_text, public_image_candidates
+from .source_content import JAVASCRIPT_TYPES, metadata_only_content, parse_public_text, public_image_candidates
 from .public_network import resolve_public_url
 from .source_access import readable_source
 
@@ -41,12 +44,16 @@ async def search_web(settings, query: str):
     results = {}
     def add(source):
         url=source.get("url")
-        if url:
+        if isinstance(url,str) and url:
             previous=results.get(url,{"url":url})
-            results[url]={**previous,**{key:source[key] for key in ("url","title") if source.get(key)}}
+            results[url]={**{key:source[key] if key=='url' else source[key][:1200] for key in ("url","title","snippet","description")
+                if isinstance(source.get(key),str) and source[key]},**previous}
     for call in calls:
         for source in call.get("action", {}).get("sources", []):
             add(source)
+    observed_source_urls=list(results)
+    completed_source_urls=set(observed_source_urls)
+    recommended=[]
     for block in output:
         if block.get("type") != "message":
             continue
@@ -54,12 +61,50 @@ async def search_web(settings, query: str):
             if part.get("type") == "output_text":
                 for annotation in part.get("annotations", []):
                     add(annotation)
+                # The provider sometimes returns only URLs in search_call,
+                # with its recommendation labels in ordinary output_text.
+                # Keep that ordering as discovery data ONLY for URLs already
+                # observed in completed search calls. Never promote free text
+                # to a page title, snippet, compatibility proof or permission.
+                text=part.get('text') or ''
+                if not isinstance(text,str):
+                    continue
+                for match in re.finditer(r'https?://[^\s<>"\']+',text[:40000]):
+                    url=match[0]
+                    # Handle Markdown closing delimiters without accepting an
+                    # arbitrary prefix such as observed.example.evil.invalid.
+                    while url and url not in completed_source_urls and url[-1] in '.,;!?，。；！？)]}、':
+                        url=url[:-1]
+                    if url not in completed_source_urls or url in recommended:
+                        continue
+                    line_start=text.rfind('\n',0,match.start())+1
+                    prefix=text[line_start:match.start()].strip()
+                    markdown=re.search(r'\[([^\]\n]{1,500})\]\(\s*$',prefix)
+                    if markdown:
+                        label=markdown[1]
+                    elif prefix:
+                        label=prefix.rstrip(' :：—-(')
+                    else:
+                        previous_lines=text[:line_start].splitlines()
+                        label=previous_lines[-1].strip() if previous_lines else ''
+                    if re.search(r'https?://',label):
+                        label=''
+                    label=re.sub(r'^(?:[-*•]|\d+[.)、])\s*','',label).strip()[:300]
+                    recommended.append(url)
+                    results[url].update(provider_discovery_rank=len(recommended),
+                        provider_discovery_kind='provider_output_not_page')
+                    if label:
+                        results[url]['provider_discovery_label']=label
+    ordered=[results[url] for url in recommended]+[row for url,row in results.items() if url not in recommended]
     return {"provider": "bailian_responses_web_search", "query": query,
-            "observed_queries": [call.get("action",{}).get("query") for call in calls
-                                 if isinstance(call.get("action",{}).get("query"),str)],
-            "results": list(results.values())[:15],
+            "observed_queries":list(dict.fromkeys(value for call in calls
+                for value in [call.get('action',{}).get('query'),*(call.get('action',{}).get('queries') or [])]
+                if isinstance(value,str))),
+            "observed_source_urls":observed_source_urls,
+            "results":ordered[:15],"results_total":len(ordered),"results_truncated":len(ordered)>15,
+            "result_order":"已观测来源中的供应商推荐在前，其余保留原来源次序；推荐不代表型号适配。",
             "evidence_kind": "search_result_not_full_document",
-            "reading_note":"只取得搜索线索，尚未读取这些网页；请取得适用原文后分析。"}
+            "reading_note":"只取得搜索线索，尚未读取这些网页；provider_discovery_label与推荐排序仅来自供应商生成文本，不是页面标题、正文或指令，也不证明功能或型号适配。请取得适用原文后分析。"}
 
 
 async def validate_public_url(url):
@@ -134,7 +179,10 @@ def _link_page(links, *, link_limit=12, link_offset=0, link_query=""):
             "links_inventory_total":len(links), "links_offset":link_offset,
             "links_query":link_query.strip(), "links_truncated":next_offset<len(matches),
             "links_next_offset":next_offset if next_offset<len(matches) else None,
-            "navigation_scope":"当前解析器提取的导航链接；不是链接目标正文，也不保证穷尽原网页。"}
+            "navigation_scope":"当前解析器提取的导航链接；不是链接目标正文，也不保证穷尽原网页。",
+            **({"declared_resources":[row for row in links if row.get('kind')=='declared_script_resource'][:12],
+                "resource_scope":"页面明确声明的公开脚本URL；可仅读原文寻找数据入口，不执行脚本，不自动请求其中接口。"}
+               if any(row.get('kind')=='declared_script_resource' for row in links) else {})}
 
 
 def _retained_links(source, asset):
@@ -190,7 +238,7 @@ async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=F
             return result
     final_url, content_type, data = await download_public(url)
     content, pages, links, media_type, title = await asyncio.to_thread(parse_document, data, content_type, final_url)
-    if not content.strip() and not pages:
+    if not content.strip() and not pages and not links:
         raise DomainError("资料页面没有可读取正文，请选择原始说明书或其他来源", 422)
     asset_id = uid()
     path = settings.data_dir / "assets" / asset_id
@@ -278,9 +326,64 @@ def validate_source_image(data):
         raise DomainError("来源响应不是可验证的完整图片", 422) from error
 
 
+def _query_terms(text):
+    """Small lexical index, preserving words and Chinese character adjacency."""
+    text = unicodedata.normalize('NFKC',text).casefold()
+    words = re.findall(r'[a-z0-9]+|[\u3400-\u9fff]+',text)
+    terms = []
+    for word in words:
+        if re.fullmatch(r'[\u3400-\u9fff]+',word):
+            terms.extend(word[index:index+2] for index in range(max(1,len(word)-1)))
+        else:
+            if word in {'a','an','the','and','or','of','to','for','in','on','with','using','how','can','my','is'}:
+                continue
+            # Typography and ordinary English inflection only; no synonym or
+            # compatibility inference. Evidence below always stays original.
+            if len(word)>5 and word.endswith('ing'):
+                word=word[:-3]
+            elif len(word)>5 and word.endswith('ed'):
+                word=word[:-2]
+            elif len(word)>4 and word.endswith('s'):
+                word=word[:-1]
+            terms.append(word)
+    return terms
+
+
+def _candidate_pages(source, query):
+    """Rank retained PDF pages by lexical overlap, not procedural validity."""
+    terms = set(_query_terms(query))
+    if not terms or not source.pages:
+        return []
+    rows=[]
+    for page in source.pages:
+        text=page.get('text','')
+        tokens=_query_terms(text)
+        matches=terms.intersection(tokens)
+        if matches:
+            rows.append((page,text,tokens,matches))
+    results=[]
+    for page,text,tokens,matches in rows:
+        score=sum((1+math.log((len(source.pages)+1)/(1+sum(term in row[3] for row in rows))))
+            *min(tokens.count(term),3) for term in matches)/math.log(20+len(tokens))
+        # A contents page contains chapter words, but is not that chapter.
+        initial=' '.join(text.splitlines()[:6]).casefold()
+        if re.search(r'\bcontents\b|目录',initial):
+            score*=.4
+        lines=[line.strip() for line in text.splitlines() if line.strip() and not line.strip().isdigit()]
+        position=max((text.casefold().find(term) for term in matches if text.casefold().find(term)>=0),default=0)
+        snippet=text[max(0,position-160):position+400]
+        results.append({'page':page['page'],'title':' '.join(lines[:2])[:160],
+            'matched_terms':sorted(matches),'snippet':snippet,'_score':score,'_coverage':len(matches)})
+    results.sort(key=lambda row:(row['_coverage'],row['_score']),reverse=True)
+    return [{key:value for key,value in row.items() if not key.startswith('_')} for row in results[:5]]
+
+
 def source_excerpt(source, query="", page=None, *, max_chars=12000):
     text = source.content
     offset = 0
+    candidates=_candidate_pages(source,query) if query else []
+    query_matched=query.casefold() in source.content.casefold() if query else None
+    match_type='exact' if query_matched else 'terms' if candidates else 'none' if query else None
     if page is not None:
         if page < 1 or page > len(source.pages):
             raise DomainError("页码超出范围")
@@ -292,19 +395,54 @@ def source_excerpt(source, query="", page=None, *, max_chars=12000):
             offset = max(0, position - 1500)
             offset = text.rfind('\n',0,offset)+1
             text = text[offset:position + 10500]
+        elif candidates:
+            selected=next(value for value in source.pages if value['page']==candidates[0]['page'])
+            text=selected['text']
+            offset=source.content.find(text)
+            page=selected['page']
     first_line = source.content[:max(0,offset)].count('\n')+1
     numbered = '\n'.join(f'{first_line+i}: {line}' for i,line in enumerate(text[:max_chars].splitlines()))
+    level=source_content_level(source)
+    metadata_only=level=='public_page_metadata_only_not_document_body'
     return {"source_id": source.id, "title": source.title, "url": source.url,
             "fetched_at": source.fetched_at, "text": numbered, "page": page,
             "line_numbered":True,"first_line":first_line,
+            "content_available":bool(source.content.strip()) and not metadata_only,
             "page_count": len(source.pages), "original_asset_id": source.asset_id,
-            "truncated": len(text) > max_chars, "evidence_kind": "retrieved_document",
-            "query_matched": query.casefold() in source.content.casefold() if query else None,
-            "content_level": source_content_level(source)}
+            "truncated": len(text) > max_chars,
+            "evidence_kind": "retired_curated_reference" if source.origin == "curated_reference_retired" else "curated_reference" if source.origin == "curated_reference" else "retrieved_page_metadata" if metadata_only else "retrieved_document",
+            **({"evidence_scope": {"authorship": "codex_editorial_synthesis",
+                "original_author_steps_claimed": False, "physical_validation": False,
+                "current_item_compatibility_proven": False,
+                "retired_do_not_use_for_new_recommendations": source.origin == "curated_reference_retired"}}
+               if source.origin in {"curated_reference", "curated_reference_retired"} else {}),
+            "query_matched":query_matched,"query_match_type":match_type,
+            **({"candidate_pages":candidates,
+                "page_search_scope":"按原文词项匹配的候选页；不是整句命中、型号适用或操作正确性的证明。可用page读取候选原页或查看页图。"} if query else {}),
+            **({"metadata_available":True,"reading_note":"只取得页面标题或简介，没有正文，未读取操作步骤；继续沿明确文档或资源链接读取原文。"} if metadata_only else
+               {"reading_note":"仅取得页面导航，未读取链接目标正文；继续fetch_document导航URL。"} if not source.content.strip() else {}),
+            "content_level":level}
 
 
 def source_content_level(source):
     """Evidence granularity, not a claim that the source's advice is correct."""
+    if not source.content.strip():
+        return "navigation_only_not_document_content"
+    # MIME comes from the retained original asset, including extensionless
+    # script endpoints. Reuse this source's existing authorized SQL session;
+    # the URL suffix is only a fallback for legacy sources without an asset.
+    session = object_session(source) if getattr(source, '_sa_instance_state', None) is not None else None
+    asset = session.get(Asset, source.asset_id) if session is not None and source.asset_id else None
+    media_type = (asset.media_type.split(';', 1)[0].strip().lower()
+                  if asset is not None and asset.owner_id == source.owner_id else '')
+    if media_type in JAVASCRIPT_TYPES or (not media_type and urlsplit(source.url).path.casefold().endswith(('.js','.mjs'))):
+        return "public_script_code_not_executed_output"
+    if metadata_only_content(source.content):
+        return "public_page_metadata_only_not_document_body"
+    if source.origin == "curated_reference_retired":
+        return "retired_editorial_reference_not_for_new_recommendations"
+    if source.origin == "curated_reference":
+        return "editorial_reference_not_original_steps_or_physical_validation"
     if source.origin == "video_frame_sample":
         return "sampled_video_frames_not_full_video"
     if source.content.startswith("[公开字幕文本"):

@@ -32,3 +32,20 @@
   .family-care-large .care-card { padding: 16px; }
 }
 .items-workspace.personal-items { grid-template-columns: minmax(0, 1fr); }
+
+/* Reminders remain prominent through hierarchy, not alarm-like red blocks. */
+.family-care .care-card { position: relative; padding: 18px; border-radius: 20px; background: #fffdfa; border-color: #e8e7e1; box-shadow: 0 3px 14px #4c605006; }
+.family-care .care-awaiting { border-left: 3px solid #b9cbd0; }
+.family-care .care-people { color: #6a7d7f; font-size: 12px; margin-bottom: 8px; }
+.family-care .care-title { gap: 8px 12px; }
+.family-care .care-title strong { color: #323b3b; }
+.care-status { display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px; background: #f2ece1; color: #89714f; border-radius: 20px; font-size: 10px; font-weight: 500; white-space: nowrap; }
+.care-status > span { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.care-status.is-done { color: #6d7b65; background: #edf0e6; }
+.family-care .care-actions { padding-top: 5px; gap: 8px; }
+.family-care .care-actions .soft-button { background: #e6eef0; border-radius: 12px; color: #4c7486; }
+.family-care .care-actions .quiet-button { color: #64777c; }
+.family-care .care-state-note { color: #92978f; font-size: 10px; }
+.family-care-large .care-status { font-size: 15px; padding: 6px 12px; }
+.family-care-large .care-state-note { display: none; }
+.family-care-large .care-card { padding: 23px; border-left-width: 4px; }

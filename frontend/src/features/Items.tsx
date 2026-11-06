@@ -31,6 +31,8 @@ import { navigate, type Route } from "./navigation";
 import Care from "./Care";
 import FamilyMemories from "./FamilyMemories";
 import { ObjectCompanion, PersonaGrowth } from "./ObjectCompanion";
+import EarbudConsole from "./EarbudConsole";
+import GeneratedWorkbench from "./GeneratedWorkbench";
 
 type Props = {
   workspace: Workspace;
@@ -38,8 +40,9 @@ type Props = {
   route: Route;
   refresh: () => Promise<unknown>;
   edit: (editor: Editor) => void;
-  ask: (item: Item, intent?: string) => void;
+  ask: (item: Item, intent?: string, text?: string) => void;
   task: (id: string) => void;
+  continueWorkbench: (id: string) => void;
   device: (item: Item) => void;
 };
 export default function Items({
@@ -50,6 +53,7 @@ export default function Items({
   edit,
   ask,
   task,
+  continueWorkbench,
   device,
 }: Props) {
   const [query, setQuery] = useState(""),
@@ -102,6 +106,22 @@ export default function Items({
       householdId: scope === "household" ? house?.id : undefined });
   }
   if (route.itemId) {
+    if (item && route.panel === "workbench" && item.owner_id === user.id) {
+      const installed = /(?:huawei|华为)/i.test(item.product.brand + item.name)
+        && /4e/i.test((item.product.model + item.name).replace(/\s/g, ""));
+      return <main className="item-profile-page"><GeneratedWorkbench item={item} taskId={route.taskId}
+        onClose={() => navigate({ ...route, panel: undefined, taskId: undefined })}
+        onSelect={(id) => navigate({ ...route, taskId: id })}
+        onAsk={(text) => ask(item, "general", text)} onContinue={continueWorkbench}
+        installedAvailable={installed}
+        onInstalled={() => navigate({ ...route, panel: "earbuds", taskId: undefined })} /></main>;
+    }
+    if (item && route.panel === "earbuds" && item.owner_id === user.id) {
+      return <main className="item-profile-page" aria-label="耳机控制台">
+        <EarbudConsole itemId={item.id} photoId={item.photo_id || undefined}
+          onClose={() => navigate({ ...route, panel: "workbench", taskId: undefined })} />
+      </main>;
+    }
     return (
       <main className="item-profile-page" aria-label="物品名片">
         {item ? (
@@ -401,7 +421,7 @@ function ItemDetail({
   device,
   onBack,
   householdId,
-}: Omit<Props, "route"> & { item: Item; onBack: () => void; householdId?: string }) {
+}: Omit<Props, "route" | "continueWorkbench"> & { item: Item; onBack: () => void; householdId?: string }) {
   const [growthBusy, setGrowthBusy] = useState(false);
   const [growthError, setGrowthError] = useState("");
   async function changeGrowth(change: { growth_enabled?: boolean; growth_dismissed_ids?: string[] }) {
@@ -524,6 +544,9 @@ function ItemDetail({
         >
           {householdId ? "和家人记一段" : "记一段"}
         </button>
+        {owned && <button className="soft-button" onClick={() => navigate({ section: "items", itemId: item.id, panel: "workbench" })}>
+          <Wrench size={18} />我的工作台
+        </button>}
         <button
           className="icon-button"
           title="更多物品操作"

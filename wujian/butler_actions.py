@@ -142,13 +142,18 @@ def propose(db, user_id, message_id, kind, payload, settings):
         TaskRecord.source_message_id == message_id)) if (row.plan or {}).get("pending_action", {}).get("kind") == kind), None)
     if existing and existing.plan["pending_action"].get("status") != "pending":
         return preview(db, user_id, existing.id, settings)
+    if existing:
+        if existing.plan["pending_action"].get("payload") == values:
+            # A retried tool call is the same reviewed proposal, not a generic
+            # task edit or another permission to execute its business action.
+            return preview(db, user_id, existing.id, settings)
+        raise domain.DomainError("这条请求已有待确认内容；请先取消旧草稿，再用新的请求说明修改，不能静默替换待确认操作", 409)
     guards = _guards(db, user_id, kind, values)
     action = {"kind": kind, "payload": values, "guards": guards, "status": "pending", "details": details,
               "origin_message_id":message_id}
     plan = {"schema": "interaction/1", "kind": "checklist", "entries": [], "pending_action": action}
     task = foundation.save_task(db, user_id, message_id, title,
         [values["item_id"]] if values.get("item_id") else [], {}, plan,
-        task_id=existing.id if existing else None, expected_version=existing.version if existing else None,
         status="ready", commit=False)
     row = domain.require(db.get(TaskRecord, task["id"]))
     action = {**action, "signature": _signer(settings).dumps(_claims(user_id,row,action))}

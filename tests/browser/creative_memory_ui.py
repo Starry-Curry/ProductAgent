@@ -204,6 +204,8 @@ async def main(url, output):
         await expect(page.locator(".memory-detail")).to_contain_text("洗衣机装好了，小雨来帮忙")
         await expect(page.locator(".memory-detail")).to_contain_text("不提供给物伴作为对话资料")
         await page.locator(".ant-modal-close").last.click()
+        await expect(page.locator(".memory-box")).to_be_visible()
+        await page.locator(".memory-view-switch button").nth(1).click()
         await page.get_by_role("button", name="我记录的", exact=True).click()
         await expect(page.locator(".memory-card")).to_have_count(1)
         await expect(page.locator(".memory-card")).not_to_contain_text("毕业寄语")
@@ -230,7 +232,7 @@ async def main(url, output):
         await page.get_by_role("button", name="移除照片", exact=True).click()
         await expect(page.locator(".editor-photos img")).to_have_count(1)
         await expect(page.locator(".editor-photos img")).to_have_attribute("src", "/api/assets/uploaded_photo_3")
-        await expect(page.get_by_label("允许物伴在相关对话中参考这段回忆", exact=True)).not_to_be_checked()
+        await expect(page.get_by_label("允许我的物伴在相关对话中参考这段回忆", exact=True)).not_to_be_checked()
         await page.get_by_role("button", name="保存", exact=True).click()
         await expect(page.locator(".ant-modal")).to_have_count(0)
         assert workspace["experiences"][-1]["photo_ids"] == ["uploaded_photo_3"]
@@ -522,6 +524,7 @@ async def main(url, output):
         await page.get_by_role("button", name="一起的回忆", exact=True).click()
         await expect(page.locator(".page-heading h1")).to_have_text("和小满的回忆")
         await expect(page.locator(".memories-page")).not_to_contain_text("只属于洗衣机的记录")
+        await page.locator(".memory-view-switch button").nth(1).click()
         await page.locator(".memory-card").filter(has_text="坐在窗边的一会儿").click()
         await expect(page.locator(".memory-detail")).to_contain_text("下班后用小雨送的杯子喝茶")
         await page.locator(".ant-modal-close").last.click()
@@ -640,12 +643,13 @@ async def main(url, output):
         await page.reload()
         await page.get_by_role("button", name="历史与正在做的事", exact=True).click()
         await page.locator(".recent-topics").get_by_role("button", name="看看视频步骤（UI样本）", exact=True).click()
-        await expect(page.locator(".chat-message.assistant")).to_contain_text("提取视频关键画面")
+        await expect(page.locator(".assistant-presence")).to_contain_text("稍等一下")
+        await expect(page.locator(".assistant-presence")).not_to_contain_text("sample_video_frames")
         video_finished.set()
         await expect(page.locator(".inline-error")).to_contain_text("还没有取得视频关键帧")
         await expect(page.get_by_role("button", name="停止生成", exact=True)).to_have_count(0)
-        await expect(page.locator(".thinking-dots")).to_have_count(0)
-        results.append("video activity and failure: current sampling work has a clear label; a failed run reports that frames were not obtained rather than implying success")
+        await expect(page.locator(".assistant-presence")).to_have_count(0)
+        results.append("video activity and failure: a quiet presence replaces internal tool chatter; a failed run still reports the actual missing frames")
         # The hero is a presentation of an explicitly enabled persona, never a
         # replacement for an actual object photo or automatic personification.
         hero_base = {**workspace["items"][1], "name":"折纸鲸鱼（合成UI走查）", "photo_id":None,

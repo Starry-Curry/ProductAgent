@@ -5,13 +5,91 @@ the downloaded response is extracted; embedded JavaScript is never executed.
 """
 import json
 import re
-from urllib.parse import urljoin, urlsplit
+from urllib.parse import parse_qsl, urljoin, urlsplit
 
 from bs4 import BeautifulSoup, UnicodeDammit
 from .source_howto import extract_howto, is_howto
 
 
 MAX_CONTENT = 300000
+JAVASCRIPT_TYPES = {"application/javascript", "application/x-javascript", "text/javascript", "application/ecmascript"}
+METADATA_PREFIX = "[公开页面元数据；描述不等于已验证操作]\n"
+METADATA_ONLY_PREFIX = "[仅取得公开页面元数据；没有正文，未读取操作步骤]\n"
+
+
+def _structured_body_present(lines):
+    return any(line.startswith(('JSON-LD articleBody:', 'JSON-LD 回答:', 'HowTo 步骤 ')) for line in lines)
+
+
+def metadata_only_content(content):
+    if content.startswith(METADATA_ONLY_PREFIX):
+        return True
+    if content.startswith(METADATA_PREFIX):
+        # Retained pre-marker pages used a blank separator before DOM body.
+        # An exactly empty body can be recognized without a length heuristic
+        # or reparsing the original on every read. Authored JSON-LD stays text.
+        metadata, separator, body = content.partition('\n\n')
+        return bool(separator and not body.strip() and not _structured_body_present(metadata.splitlines()))
+    return False
+
+
+def _declared_navigation(soup, url):
+    """Expose resource declarations as navigation, never execute page code.
+
+    Old manual viewers often put the only useful page in a frame or in the
+    URL's page parameter. A candidate copied from that parameter is explicitly
+    NOT the result of evaluating the viewer or reading its target.
+    """
+    links = []
+
+    def add(value, title, kind, *, same_origin=False):
+        if not isinstance(value, str) or not value.strip() or len(value) > 2000:
+            return
+        if any(ord(char) < 32 for char in value) or "\\" in value:
+            return
+        try:
+            target = urljoin(url, value.strip())
+            parsed, original = urlsplit(target), urlsplit(url)
+        except ValueError:
+            return
+        if parsed.scheme not in {"http", "https"} or not parsed.hostname or parsed.username or parsed.password:
+            return
+        if same_origin and (parsed.scheme, parsed.netloc) != (original.scheme, original.netloc):
+            return
+        links.append({"title":title[:180], "url":target, "kind":kind})
+
+    for node in soup.select("frame[src],iframe[src],object[data],embed[src]")[:40]:
+        # Invisible tracking frames do not describe the document's contents.
+        if node.get("hidden") is not None or str(node.get("height", "")) == "0" or re.search(
+                r"display\s*:\s*none|visibility\s*:\s*hidden", node.get("style", ""), re.I):
+            continue
+        add(node.get("src") or node.get("data"),
+            node.get("title") or node.get("name") or "页面声明的嵌入文档（目标未读取）", "declared_embedded_document")
+
+    scripts = "\n".join((node.string or "")[:100000] for node in soup.find_all("script")[:40])[:200000]
+    if re.search(r"<(?:frame|iframe|frameset)\b", scripts, re.I):
+        try:
+            parameters=parse_qsl(urlsplit(url).query,max_num_fields=50)
+        except ValueError:
+            parameters=[]
+        for key, value in parameters:
+            if (re.fullmatch(r"[A-Za-z][\w-]{0,30}", key)
+                    and re.search(r"[\"']"+re.escape(key)+r"[\"']", scripts)
+                    and re.search(r"\.html?(?:[?#].*)?$|\.pdf(?:[?#].*)?$", value, re.I)):
+                add(value, "页面参数中的文档候选（未执行脚本、目标未读取）", "wrapper_query_page_candidate", same_origin=True)
+        for value in re.findall(r"[\"']([^\"'\s<>]+\.html?(?:[?#][^\"'\s<>]*)?)[\"']", scripts)[:20]:
+            add(value, "框架脚本声明的页面候选（目标未读取）", "wrapper_literal_page_candidate", same_origin=True)
+
+    for node in soup.select("script[src]")[:20]:
+        value = node.get("src")
+        try:
+            name = urlsplit(value).path.rsplit("/", 1)[-1] if isinstance(value, str) else ""
+        except ValueError:
+            # A malformed declaration must not discard this page's readable
+            # body or its other valid navigation/resource declarations.
+            continue
+        add(value, "页面声明的脚本资源（仅读代码、未执行）："+name, "declared_script_resource")
+    return links
 
 
 def public_image_candidates(data, url, limit=6):
@@ -280,6 +358,10 @@ def parse_public_text(data, content_type, url):
                         lines.append(f"[{line.get('from', '?')}–{line.get('to', '?')}秒] {_text(line.get('content'))}")
                 return "\n".join(lines)[:MAX_CONTENT], [], "application/json", "公开字幕文本"
             return json.dumps(value, ensure_ascii=False, indent=2)[:MAX_CONTENT], [], "application/json", "JSON资料"
+    if media_type in JAVASCRIPT_TYPES:
+        # Public source code can reveal a declared data endpoint, but variables
+        # and requests are not evaluated or automatically followed.
+        return decoded[:MAX_CONTENT], [], media_type, urlsplit(url).path.rsplit("/", 1)[-1] or "公开脚本代码"
     if media_type.startswith("text/") and media_type not in {"text/html", "text/xml"}:
         # Keep Markdown/code literal: HTML stripping corrupts <target> and
         # shell redirections. Only extract navigation alongside the original.
@@ -314,6 +396,8 @@ def parse_public_text(data, content_type, url):
         target = urljoin(url, anchor.get("href", ""))
         if urlsplit(target).scheme in {"http", "https"}:
             links.append({"title": anchor.get_text(" ", strip=True)[:120], "url": target})
+    if not is_video:
+        links.extend(_declared_navigation(soup, url))
     for node in soup.select("script,style,noscript,nav,footer,header,title"):
         node.decompose()
     _preserve_preformatted(soup)
@@ -328,6 +412,11 @@ def parse_public_text(data, content_type, url):
         if gate and not has_note_text:
             from .domain import DomainError
             raise DomainError("笔记返回登录提示，没有取得笔记原文；请换公开来源", 422)
-    content = ("[公开页面元数据；描述不等于已验证操作]\n" + "\n".join(metadata) + "\n\n" if metadata else "") + body
-    unique = {link["url"]: link for link in links}
+    metadata_only = bool(metadata and not body.strip() and not _structured_body_present(metadata))
+    content = ((METADATA_ONLY_PREFIX if metadata_only else METADATA_PREFIX) + "\n".join(metadata) + "\n\n" if metadata else "") + body
+    unique = {}
+    for link in links:
+        # Keep an actual anchor's author-supplied title when a script also
+        # mentions that same URL as an unverified resource candidate.
+        unique.setdefault(link["url"],link)
     return content[:MAX_CONTENT], list(unique.values())[:100], "text/html", title

@@ -62,8 +62,15 @@ class NativeToolContractTests(unittest.TestCase):
     def test_actual_source_reading_metadata_survives_sdk_adapter(self):
         value={"source_id":"synthetic_source","url":"https://example.invalid/public",
                "title":"运输契约样本","content_level":"document_text","text":"1: 原始正文"}
+        # fetch_source retains this fact before the SDK adapter rechecks its
+        # present permission and applicability; mock transport, not persistence.
+        with self.sessions() as db:
+            db.add(SourceRecord(id=value['source_id'],owner_id='person_demo_owner',
+                url=value['url'],title=value['title'],content='原始正文',origin='public_web'))
+            db.commit()
         with patch("wujian.agent_runtime.fetch_source",new=AsyncMock(return_value=value)):
             result=asyncio.run(self.tools["fetch_document"](url=value["url"]))
+        self.assertEqual(str(result.state),'success')
         self.assertEqual(result.metadata["evidence"]["source_id"],"synthetic_source")
         self.assertEqual(json.loads(result.content[0].text)["text"],value["text"])
 

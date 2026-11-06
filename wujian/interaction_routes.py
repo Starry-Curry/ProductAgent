@@ -141,24 +141,7 @@ def register_interactions(app, current_user, db_session):
 
     @app.post("/api/tasks/{task_id}/conversation", tags=["Continuing tasks"])
     def resume_task(task_id: str, user=Depends(current_user), db=Depends(db_session)):
-        board = interactions.board(db, user.id, task_id)
-        if board["conversation_id"]:
-            return {"conversation_id": board["conversation_id"], "entry_context": {"task_id": task_id, "intent": "planning"}}
-        import hashlib
-        from sqlalchemy.exc import IntegrityError
-        identity = "task_" + hashlib.sha256(f"{user.id}\0{task_id}".encode()).hexdigest()[:40]
-        existing = db.get(Conversation, identity)
-        if existing:
-            return {"conversation_id": existing.id, "entry_context": existing.entry_context}
-        row = Conversation(id=identity, user_id=user.id, title=board["task"]["goal"][:35],
-            item_ids=board["task"]["item_ids"], entry_context={"task_id": task_id, "intent": "planning"})
-        db.add(row)
-        try:
-            db.commit()
-        except IntegrityError:
-            db.rollback()
-            row = domain.require(db.get(Conversation, identity))
-        return {"conversation_id": row.id, "entry_context": row.entry_context}
+        return interactions.resume_task(db,user.id,task_id)
 
     @app.post("/api/gifts/{gift_id}/decision", response_model=GiftView, tags=["Friends"])
     def gift_decision(gift_id: str, payload: GiftDecision, user=Depends(current_user), db=Depends(db_session)):

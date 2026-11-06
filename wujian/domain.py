@@ -2,12 +2,15 @@
 import hashlib
 import json
 import secrets
+import shutil
+from pathlib import Path
 
 from pwdlib import PasswordHash
 from sqlalchemy import delete, or_, select, text, update
 
 from .api_models import (
     ExperienceCreate,
+    AvatarSpec,
     GiftCreate,
     ItemChange,
     ItemCreate,
@@ -163,6 +166,8 @@ def product_record(db, spec, kind="standard_product"):
 def create_item(db, user_id, payload: ItemCreate):
     if payload.photo_id:
         own_asset(db, user_id, payload.photo_id)
+    if payload.avatar.image_id:
+        own_asset(db, user_id, payload.avatar.image_id)
     spec=payload.product.model_dump()
     product_id=product_record(db,spec,payload.kind)
     item = ItemRecord(id=uid(), owner_id=user_id, name=payload.name, kind=payload.kind,
@@ -178,6 +183,8 @@ def change_item(db, user_id, item_id, payload: ItemChange, *, origin_run_id=None
     accessible_item(db, user_id, item_id, write=True)
     if payload.photo_id:
         own_asset(db, user_id, payload.photo_id)
+    if payload.avatar.image_id:
+        own_asset(db, user_id, payload.avatar.image_id)
     spec=payload.product.model_dump()
     product_id=product_record(db,spec,payload.kind)
     updated = db.execute(update(ItemRecord).where(ItemRecord.id == item_id, ItemRecord.owner_id == user_id,
@@ -195,7 +202,7 @@ def change_item(db, user_id, item_id, payload: ItemChange, *, origin_run_id=None
     avatar_update = payload.avatar.model_dump()
     # Existing clients changing a color/name must not reset owner growth
     # controls merely because newly added optional fields have defaults.
-    for control in ("growth_enabled", "growth_dismissed_ids"):
+    for control in ("growth_enabled", "growth_dismissed_ids", "image_id"):
         if control not in payload.avatar.model_fields_set:
             avatar_update.pop(control, None)
     profile.avatar = {**(profile.avatar or {}), **avatar_update}
@@ -407,6 +414,12 @@ def gift_view(db, row):
             "snapshot": snapshot, "status": row.status, "created_at": row.created_at}
 
 
+def _gift_avatar(value):
+    """Selected appearance and an authored gift voice, without private growth."""
+    return AvatarSpec(**{key: value[key] for key in
+        ("enabled", "form", "nickname", "personality", "color", "image_id") if key in value}).model_dump()
+
+
 def create_gift(db, user_id, payload: GiftCreate, *, commit=True):
     item = accessible_item(db, user_id, payload.item_id, write=True)
     if item.archived:
@@ -415,6 +428,13 @@ def create_gift(db, user_id, payload: GiftCreate, *, commit=True):
         raise DomainError("请先建立好友关系")
     if db.scalar(select(Gift.id).where(Gift.item_id == item.id, Gift.status == "pending")):
         raise DomainError("这件物品已有待接收的礼物", 409)
+    # Only the appearance explicitly selected for this gift may travel. A
+    # shared item or a readable foreign picture is not permission to give it.
+    avatar = _gift_avatar(payload.avatar.model_dump())
+    if avatar.get("image_id"):
+        portrait = own_asset(db, user_id, avatar["image_id"])
+        if not portrait.media_type.startswith("image/"):
+            raise DomainError("请选择自己的分身图片")
     experiences = []
     if len({entry.experience_id for entry in payload.surprises}) != len(payload.surprises):
         raise DomainError("同一段故事只需一个彩蛋提示")
@@ -430,7 +450,7 @@ def create_gift(db, user_id, payload: GiftCreate, *, commit=True):
         view["provenance"] = shared_story_provenance(experience.provenance)
         experiences.append(view)
     snapshot = {"name": item.name, "product": item.product, "message": payload.message,
-                "avatar": payload.avatar.model_dump(), "experiences": experiences,
+                "avatar": avatar, "experiences": experiences,
                 "sender_name": db.get(User, user_id).display_name,
                 "photo_id":item.photo_id,
                 "surprises":[entry.model_dump() for entry in payload.surprises]}
@@ -450,61 +470,93 @@ def accept_gift(db, user_id, gift_id, *, acceptance=None):
         return gift_view(db, gift)
     if gift.status != "pending":
         raise DomainError("礼物状态已变化", 409)
-    item = require(db.get(ItemRecord, gift.item_id))
-    affected = item_readers(db, item.id)
-    # Compare-and-set protects the ownership transition and repeated acceptance.
-    changed = db.execute(update(ItemRecord).where(ItemRecord.id == item.id, ItemRecord.owner_id == gift.sender_id)
-                         .values(owner_id=user_id, state={}, version=ItemRecord.version + 1, photo_id=None))
-    if changed.rowcount != 1:
-        raise DomainError("物品归属已变化，请刷新", 409)
-    db.execute(delete(Grant).where(Grant.item_id == item.id))
-    db.execute(delete(HouseholdItem).where(HouseholdItem.item_id == item.id))
-    profile = db.get(Profile, (user_id, item.id))
-    if profile is None:
-        profile = Profile(user_id=user_id, item_id=item.id)
-        db.add(profile)
-    profile.description = gift.snapshot["message"]
-    profile.avatar = {**gift.snapshot["avatar"], "gift_from": gift.snapshot["sender_name"],
-                      "gift_message": gift.snapshot["message"]}
-    if acceptance is not None:
-        profile.avatar = {**profile.avatar, "enabled":acceptance.wake_avatar}
-    photo_id = gift.snapshot.get("photo_id")
-    if photo_id:
-        original = own_asset(db, gift.sender_id, photo_id)
-        copied = Asset(id=uid(),owner_id=user_id,path=original.path,
-                       media_type=original.media_type,original_name=original.original_name)
-        db.add(copied)
-        db.flush()
-        item.photo_id = copied.id
-    memory_refs = []
-    for experience in gift.snapshot["experiences"]:
-        new_photos = []
-        for photo_id in experience["photo_ids"]:
-            asset = own_asset(db, gift.sender_id, photo_id)
-            copied = Asset(id=uid(), owner_id=user_id, path=asset.path, media_type=asset.media_type, original_name=asset.original_name)
+    copied_path = None
+    try:
+        # Claim the pending gift before changing its item. Cancellation and
+        # acceptance compete on this same row, so a stale preview cannot
+        # overwrite a completed decision or repeat the transfer.
+        claimed = db.execute(update(Gift).where(Gift.id == gift.id,
+            Gift.status == "pending").values(status="accepted"))
+        if claimed.rowcount != 1:
+            db.rollback()
+            db.expire_all()
+            gift = require(db.get(Gift, gift_id))
+            if gift.status == "accepted":
+                return gift_view(db, gift)
+            raise DomainError("礼物状态已变化", 409)
+        portrait_id = gift.snapshot.get("avatar", {}).get("image_id")
+        portrait = own_asset(db, gift.sender_id, portrait_id) if portrait_id else None
+        if portrait and not portrait.media_type.startswith("image/"):
+            raise DomainError("这份礼物的分身图片已不可用，请让赠送者重新送出", 409)
+        item = require(db.get(ItemRecord, gift.item_id))
+        affected = item_readers(db, item.id)
+        # Compare-and-set protects the ownership transition and repeated acceptance.
+        changed = db.execute(update(ItemRecord).where(ItemRecord.id == item.id, ItemRecord.owner_id == gift.sender_id)
+                             .values(owner_id=user_id, state={}, version=ItemRecord.version + 1, photo_id=None))
+        if changed.rowcount != 1:
+            raise DomainError("物品归属已变化，请刷新", 409)
+        db.execute(delete(Grant).where(Grant.item_id == item.id))
+        db.execute(delete(HouseholdItem).where(HouseholdItem.item_id == item.id))
+        profile = db.get(Profile, (user_id, item.id))
+        if profile is None:
+            profile = Profile(user_id=user_id, item_id=item.id)
+            db.add(profile)
+        profile.description = gift.snapshot["message"]
+        profile.avatar = {**_gift_avatar(gift.snapshot["avatar"]), "gift_from": gift.snapshot["sender_name"],
+                          "gift_message": gift.snapshot["message"]}
+        if acceptance is not None:
+            profile.avatar = {**profile.avatar, "enabled":acceptance.wake_avatar}
+        photo_id = gift.snapshot.get("photo_id")
+        if photo_id:
+            original = own_asset(db, gift.sender_id, photo_id)
+            copied = Asset(id=uid(),owner_id=user_id,path=original.path,
+                           media_type=original.media_type,original_name=original.original_name)
             db.add(copied)
-            new_photos.append(copied.id)
-        received = ExperienceRecord(id=uid(), creator_id=user_id, title=experience["title"], text=experience["text"],
-                               item_ids=[item.id], item_labels={item.id: gift.snapshot["name"]},
-                               photo_ids=new_photos, occurred_on=experience["occurred_on"], origin_id=experience["id"],
-                               provenance={**shared_story_provenance(experience.get("provenance",{})),"kind":"received_story",
-                                           "author_id":experience.get("provenance",{}).get("author_id",gift.sender_id),
-                                           "author_name":experience.get("provenance",{}).get("author_name",gift.snapshot["sender_name"]),
-                                           "gift_id":gift.id,"sender_name":gift.snapshot["sender_name"]},
-                               allow_ai=bool(acceptance and acceptance.allow_story_ai))
-        db.add(received)
-        surprise = next((entry for entry in gift.snapshot.get("surprises",[])
-                         if entry["experience_id"] == experience["id"]),None)
-        if surprise:
-            memory_refs.append({"experience_id":received.id,"hint":surprise["hint"],
-                                "trigger_words":surprise.get("trigger_words",[]),"unlocked":False})
-    if memory_refs:
-        profile.avatar = {**profile.avatar,"gift_memories":memory_refs}
-    gift.status = "accepted"
-    from .continuity import copy_public_evidence
-    copy_public_evidence(db,gift.sender_id,user_id,item,gift.snapshot.get('public_source_ids',[]))
-    invalidate_context(db, [*affected, user_id, gift.sender_id], stop_running=True)
-    db.commit()
+            db.flush()
+            item.photo_id = copied.id
+        memory_refs = []
+        for experience in gift.snapshot["experiences"]:
+            new_photos = []
+            for photo_id in experience["photo_ids"]:
+                asset = own_asset(db, gift.sender_id, photo_id)
+                copied = Asset(id=uid(), owner_id=user_id, path=asset.path, media_type=asset.media_type, original_name=asset.original_name)
+                db.add(copied)
+                new_photos.append(copied.id)
+            received = ExperienceRecord(id=uid(), creator_id=user_id, title=experience["title"], text=experience["text"],
+                                   item_ids=[item.id], item_labels={item.id: gift.snapshot["name"]},
+                                   photo_ids=new_photos, occurred_on=experience["occurred_on"], origin_id=experience["id"],
+                                   provenance={**shared_story_provenance(experience.get("provenance",{})),"kind":"received_story",
+                                               "author_id":experience.get("provenance",{}).get("author_id",gift.sender_id),
+                                               "author_name":experience.get("provenance",{}).get("author_name",gift.snapshot["sender_name"]),
+                                               "gift_id":gift.id,"sender_name":gift.snapshot["sender_name"]},
+                                   allow_ai=bool(acceptance and acceptance.allow_story_ai))
+            db.add(received)
+            surprise = next((entry for entry in gift.snapshot.get("surprises",[])
+                             if entry["experience_id"] == experience["id"]),None)
+            if surprise:
+                memory_refs.append({"experience_id":received.id,"hint":surprise["hint"],
+                                    "trigger_words":surprise.get("trigger_words",[]),"unlocked":False})
+        if memory_refs:
+            profile.avatar = {**profile.avatar,"gift_memories":memory_refs}
+        from .continuity import copy_public_evidence
+        copy_public_evidence(db,gift.sender_id,user_id,item,gift.snapshot.get('public_source_ids',[]))
+        invalidate_context(db, [*affected, user_id, gift.sender_id], stop_running=True)
+        # Recipient-owned bytes no longer depend on the sender's file.
+        if portrait:
+            copied_id = uid()
+            copied_path = Path(portrait.path).with_name(copied_id)
+            shutil.copyfile(portrait.path, copied_path)
+            db.add(Asset(id=copied_id, owner_id=user_id, path=str(copied_path),
+                media_type=portrait.media_type, original_name=portrait.original_name))
+            profile.avatar = {**profile.avatar, "image_id": copied_id}
+        db.commit()
+    except Exception as error:
+        db.rollback()
+        if copied_path is not None:
+            copied_path.unlink(missing_ok=True)
+        if isinstance(error, OSError):
+            raise DomainError("这份礼物的分身图片暂时不可读取，未改变物品归属，请稍后重试", 409) from None
+        raise
     return gift_view(db, gift)
 
 

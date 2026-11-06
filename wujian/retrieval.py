@@ -108,7 +108,15 @@ def authorized_documents(sessions, user_id):
         for row in domain.list_experiences(db, user_id, for_ai=True):
             add("experience", row["id"], row)
         for row in db.scalars(select(TaskRecord).where(TaskRecord.user_id == user_id)):
-            add("task", row.id, task_view(row))
+            value=task_view(row)
+            plan={key:part for key,part in value['plan'].items() if key!='visualizations'}
+            if isinstance(plan.get('guidance'),dict):
+                progress={key:part for key,part in plan['guidance'].items() if key!='pictures'}
+                if progress.get('lesson'):
+                    lesson=progress['lesson']
+                    progress['lesson']={key:lesson[key] for key in ['id','revision','phase','inputs'] if key in lesson}
+                plan['guidance']=progress
+            add("task", row.id, {**value,'plan':plan})
         for row in db.scalars(
             select(KnowledgeClaim).where(
                 KnowledgeClaim.owner_id == user_id,
@@ -117,7 +125,8 @@ def authorized_documents(sessions, user_id):
         ):
             add("knowledge", row.id, claim_view(row))
         for row in db.scalars(
-            select(SourceRecord).where(SourceRecord.owner_id == user_id)
+            select(SourceRecord).where(SourceRecord.owner_id == user_id,
+                                       SourceRecord.origin != "curated_reference_retired")
         ):
             add(
                 "source",

@@ -183,6 +183,69 @@ class UnderstandingTests(unittest.TestCase):
         self.assertEqual(Learning.model_validate({}).model_dump(),
             {"knowledge_updates":[], "memory_updates":[]})
 
+    def test_frozen_natural_preferences_and_curly_quoted_nickname_both_save(self):
+        from sqlalchemy import select
+        text = "平时跟我聊天，我不想每段结尾都被追问。以后除非真缺关键条件，就别用问号收尾；我需要的时候会自己接着说。我工作间那台爱普生，我习惯叫它‘小墨’，不是正式型号。今天先到这儿。"
+        nickname_quote = "我工作间那台爱普生，我习惯叫它'小墨'，不是正式型号。"
+        with self.sessions() as db:
+            item = domain.create_item(db, self.owner, ItemCreate(name="工作间的爱普生",
+                product=ProductSpec(brand="爱普生", model="L8188", market="CN")))
+            message_id = self.message(db, text)
+            result = self.result(memories=[
+                {"operation": "add", "content": "平时聊天除非缺关键条件，避免每段以追问结尾",
+                 "kind": "preference", "context": "日常对话表达", "source_quote": "以后除非真缺关键条件，就别用问号收尾"},
+                {"operation": "add", "content": "习惯把工作间的爱普生打印机叫小墨，不是正式型号",
+                 "item_id": item["id"], "kind": "meaning", "context": "这台打印机的昵称", "source_quote": nickname_quote}])
+            checked = grounded_turn_schema(self.sessions, self.owner, message_id).model_validate(result.model_dump())
+            self.assertEqual(checked.learning.memory_updates[1].source_quote,
+                "我工作间那台爱普生，我习惯叫它‘小墨’，不是正式型号。")
+            saved = commit_result(db, self.owner, message_id, checked, text)
+            self.assertEqual(len(saved["learned"]["memories"]), 2)
+            rows = list(db.scalars(select(Memory).where(Memory.source_message_id == message_id)))
+            self.assertEqual(len(rows), 2)
+            self.assertIn("‘小墨’", next(row.attributes["source_quote"] for row in rows if row.item_id == item["id"]))
+
+    def test_user_quote_reanchoring_changes_typography_not_words_or_word_boundaries(self):
+        from wujian.evidence import locate_user_quote
+        self.assertEqual(locate_user_quote("我叫它‘小墨’。", "我叫它'小墨'。"), "我叫它‘小墨’。")
+        self.assertEqual(locate_user_quote('call  it “ink”', 'call it "ink"'), 'call  it “ink”')
+        for original, rewritten in (("I am not able", "I am notable"),
+                ("我不喜欢‘红色’", "我喜欢'红色'"), ("型号 A1", "型号 A2"),
+                ("先不要分享", "现在可以分享")):
+            with self.subTest(original=original, rewritten=rewritten):
+                self.assertIsNone(locate_user_quote(original, rewritten))
+
+    def test_optional_independent_learning_keeps_valid_entry_and_reports_rejection(self):
+        with self.sessions() as db:
+            text = "平时别在末尾追问，打印机叫‘小墨’。"
+            message_id = self.message(db, text)
+            result = self.result(memories=[
+                {"operation": "add", "content": "日常聊天避免在末尾追问", "kind": "preference",
+                 "context": "日常聊天", "source_quote": "平时别在末尾追问"},
+                {"operation": "add", "content": "家里还有一台佳能打印机", "kind": "meaning",
+                 "context": "拥有物品", "source_quote": "我还有一台佳能打印机"}],
+                answer="两个习惯我记下了。")
+            saved = commit_result(db, self.owner, message_id, result, text)
+            self.assertEqual(len(saved["learned"]["memories"]), 1)
+            self.assertEqual(len(saved["learned"]["rejected"]), 1)
+            self.assertIn("1条理解未能核对依据，未保存", saved["answer"])
+            self.assertEqual(len(domain.recall(db, self.owner)), 1)
+
+    def test_partial_learning_does_not_split_correlated_changes_to_same_old_memory(self):
+        with self.sessions() as db:
+            old = domain.remember(db, self.owner, "阅读时喜欢白光", "old-fixture")
+            text = "阅读改成暖光，另一个建议我还没确认。"
+            message_id = self.message(db, text)
+            changes = [
+                {"operation": "replace", "memory_id": old["id"], "content": "阅读时喜欢暖光",
+                 "kind": "preference", "context": "阅读照明", "source_quote": "阅读改成暖光"},
+                {"operation": "forget", "memory_id": old["id"], "content": "",
+                 "kind": "preference", "context": "阅读照明", "source_quote": "请删除这条旧偏好"}]
+            with self.assertRaises(domain.DomainError):
+                commit_result(db, self.owner, message_id, self.result(memories=changes), text)
+            db.expire_all()
+            self.assertTrue(db.get(Memory, old["id"]).active)
+
     def test_memory_correction_and_task_validation_share_one_transaction(self):
         with self.sessions() as db:
             old = domain.remember(
