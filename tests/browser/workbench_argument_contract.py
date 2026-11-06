@@ -8,6 +8,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from wujian.coding_workbench import run_checks
+from tests.browser.workbench_console_acceptance import console_rendering_assertions
 
 
 def main():
@@ -29,9 +30,11 @@ def main():
     unknown_source = {"html": '<button id="read">Read</button><p id="status">Ready</p>', "css": "",
                       "javascript": "document.querySelector('#read').onclick=async()=>{try{const r=await window.wujian.request('read_state',{});document.querySelector('#status').textContent=Object.values(r.state.battery).map(v=>(v==null?'未知':v)+'%').join(' ');}catch(e){document.querySelector('#status').textContent=e.message;}}"}
     unknown = run_checks(unknown_source)
-    assert unknown["passed"] is False, unknown
-    assert unknown["browser"]["rendering_assertions"]["unknown_has_no_percentage_suffix"] is False, unknown
-    receipts.append({"case": "unknown_battery_with_percent_unit", "actual_pass": unknown["passed"],
+    assert unknown["passed"] is True, unknown  # Generic smoke makes no console rendering claim.
+    console = console_rendering_assertions(unknown["browser"])
+    assert console["unknown_has_no_percentage_suffix"] is False, unknown
+    receipts.append({"case": "unknown_battery_with_percent_unit", "generic_smoke_pass": unknown["passed"],
+                     "console_unknown_unit_pass": console["unknown_has_no_percentage_suffix"],
                      "unknown_text": unknown["browser"]["unknown_text"]})
     print(json.dumps({"passed": True, "scope": "production isolated browser checker; simulated bridge only", "cases": receipts}, ensure_ascii=True))
 

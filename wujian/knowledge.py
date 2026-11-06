@@ -141,7 +141,12 @@ async def download_public(url, *, max_bytes=12 * 1024 * 1024, headers=None, same
                     continue
                 if response.status_code in {401, 403, 412, 429}:
                     raise DomainError(f"公开资料读取受限（HTTP {response.status_code}）；未登录或绕过限制，请换公开来源", 502)
-                response.raise_for_status()
+                try:
+                    response.raise_for_status()
+                except httpx.HTTPStatusError as error:
+                    # Keep the actual public-document HTTP failure observable
+                    # without leaking a pinned-IP URL or an untrusted body.
+                    raise DomainError(f"公开资料读取失败（HTTP {response.status_code}）；尚未取得正文，请检查公开地址或换来源", 502) from error
                 data = bytearray()
                 async for chunk in response.aiter_bytes():
                     check_cancelled()
@@ -255,6 +260,113 @@ async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=F
         return {**source_excerpt(source, max_chars=excerpt_chars),
                 **_link_page(links,link_limit=link_limit,link_offset=link_offset,link_query=link_query),
                 "images": source_images(source, asset)}
+
+
+def _manual_attachment_candidates(source, asset):
+    """A narrow declared-link rule, not a crawler or compatibility decision."""
+    if (not asset or asset.owner_id != source.owner_id or asset.id != source.asset_id
+            or asset.media_type != 'text/html' or source_content_level(source) != 'document_text'):
+        return None
+    from bs4 import BeautifulSoup
+    path=Path(asset.path)
+    if not path.is_file():
+        return None
+    soup=BeautifulSoup(path.read_bytes(),'html.parser')
+    headings=[node.get_text(' ',strip=True) for node in soup.select('title,h1,h2,h3')
+        if not node.find_parent(['nav','footer','header','aside','template','script','noscript'])]
+    manual_name=re.compile(r"用户指南|(?:使用|用户|操作|产品)手册|说明书|\b(?:user|owner)(?:['’]s)?\s+(?:manual|guide)\b|\b(?:instructions?|service|installation)\s+manual\b|\boperating\s+instructions\b|\bmanual(?:\.pdf)?\s*(?:$|[|–—-])",re.I)
+    if not any(manual_name.search(heading) for heading in headings):
+        return None
+    declared={row['url']:row for row in _retained_links(source,asset)}
+    candidates={}
+    download_label=re.compile(r"^(?:(?:立即|点击|马上)?下载(?:\s*(?:PDF|手册|说明书|用户指南))?|download(?:\s+(?:now|pdf|manual|user(?:['’]s)?\s+guide|the\s+manual))?)[.!。！]?$",re.I)
+    for node in soup.select('a[href]'):
+        if node.find_parent(['nav','footer','header','aside']):
+            continue
+        try:
+            target=urljoin(source.url,node.get('href','').strip())
+            parsed=urlsplit(target)
+        except ValueError:
+            continue
+        if (parsed.scheme not in {'https','http'} or not parsed.hostname
+                or parsed.username or parsed.password
+                or parsed._replace(fragment='').geturl()==urlsplit(source.url)._replace(fragment='').geturl()):
+            continue
+        label=' '.join(node.get_text(' ',strip=True).split())
+        if (parsed.path.casefold().endswith('.pdf') or node.get('type','').split(';',1)[0].strip().casefold()=='application/pdf'
+                or node.has_attr('download') or download_label.fullmatch(label)):
+            # The parser's retained navigation is bounded. Seeing another
+            # eligible DOM link outside that inventory defeats uniqueness;
+            # do not turn a truncated inventory into an automatic choice.
+            if target not in declared:
+                return None
+            candidates.setdefault(target,declared[target])
+    return list(candidates.values())
+
+
+def _source_pointer(value):
+    return {key:value[key] for key in ('source_id','url','title','original_asset_id','content_level','page_count') if key in value}
+
+
+async def fetch_manual_source(settings, sessions, user_id, url, item_id=None, refresh=False, **kwargs):
+    """Read at most ONE explicit attachment of an unambiguous manual landing.
+
+    Both reads use the existing source writer and public pinned downloader.
+    A title/link never proves model compatibility;
+    a non-PDF target does not recursively become another attachment landing.
+    """
+    landing=await fetch_source(settings,sessions,user_id,url,item_id,refresh,**kwargs)
+    with sessions() as db:
+        source=readable_source(db,user_id,landing['source_id'])
+        asset=db.get(Asset,source.asset_id) if source.asset_id else None
+        if asset and asset.media_type=='application/pdf':
+            if asset.owner_id != source.owner_id or not Path(asset.path).is_file():
+                raise DomainError('PDF原件不可用，请重新读取',409)
+            return {**landing,'manual_resolution':{'status':'already_pdf','pdf_obtained':True,'automatic_attachment_reads':0}}
+        candidates=_manual_attachment_candidates(source,asset)
+        original_asset_id=source.asset_id
+    if candidates is None:
+        return {**landing,'manual_resolution':{'status':'not_applicable','pdf_obtained':False,'automatic_attachment_reads':0}}
+    if len(candidates)!=1:
+        return {**landing,'manual_resolution':{'status':'ambiguous' if candidates else 'no_candidate',
+            'candidate_count':len(candidates),'candidates':candidates,'pdf_obtained':False,'automatic_attachment_reads':0}}
+    declared_url=candidates[0]['url']
+    resolution={'declared_url':declared_url,'candidate_count':1,'automatic_attachment_reads':1,'pdf_obtained':False}
+    pointer=_source_pointer(landing)
+    failure=None
+    document=None
+    try:
+        document=await fetch_source(settings,sessions,user_id,declared_url,item_id,refresh,**kwargs)
+    except Exception as error:
+        failure=error
+    with sessions() as db:
+        # A read chain cannot keep using a source whose grant/original changed
+        # while the attachment was being fetched.
+        current=readable_source(db,user_id,landing['source_id'])
+        if current.asset_id != original_asset_id:
+            raise DomainError('下载入口原件已更新，请重新读取',409)
+        retained=db.get(Asset,current.asset_id)
+        if (not retained or retained.id != original_asset_id or retained.owner_id != current.owner_id
+                or not Path(retained.path).is_file()):
+            raise DomainError('下载入口原件不可用或归属已变，请重新读取',409)
+        if item_id:
+            accessible_item(db,user_id,item_id)
+        if failure is not None:
+            reason=failure.message if isinstance(failure,DomainError) else f'附件读取未完成（{type(failure).__name__}）'
+            return {**landing,'manual_resolution':{**resolution,'status':'unavailable','reason':reason},
+                'reading_note':'仅保留下载入口；附件读取未完成，尚未取得PDF手册。'}
+        attachment=readable_source(db,user_id,document['source_id'])
+        actual_asset=db.get(Asset,attachment.asset_id) if attachment.asset_id else None
+        is_pdf=bool(actual_asset and actual_asset.owner_id==attachment.owner_id and actual_asset.media_type=='application/pdf')
+    chain=[{**pointer,'role':'manual_download_landing'},
+        {**_source_pointer(document),'role':'retrieved_pdf' if is_pdf else 'non_pdf_attachment','declared_url':declared_url}]
+    if not is_pdf:
+        return {**landing,'attachment_source':_source_pointer(document),'document_read_chain':chain,
+            'manual_resolution':{**resolution,'status':'not_pdf'},
+            'reading_note':'已读取唯一声明的附件，但返回内容不是PDF；保留下载入口，未当作已读手册，也未继续追踪其他链接。'}
+    return {**document,'landing_source':pointer,'document_read_chain':chain,
+        'manual_resolution':{**resolution,'status':'retrieved_pdf','pdf_obtained':True,'compatibility_verified':False},
+        'reading_note':'已沿手册下载入口唯一明确链接取得实际PDF；入口和附件均已保留。此读取链不证明型号、地区、章节或操作适用，仍需核对原文。'}
 
 
 def source_images(source, asset):

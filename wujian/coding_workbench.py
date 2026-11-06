@@ -24,6 +24,7 @@ from sqlalchemy import select, update
 
 from . import domain
 from .database import Asset, ChatMessage, Conversation, TaskRecord, now, uid
+from .evidence import locate_user_quote
 
 SCHEMA = "workbench/1"
 MEDIA_TYPE = "application/vnd.wujian.workbench+json"
@@ -66,7 +67,7 @@ def bridge_contract():
         "arguments": {"read_state": {}, "read_volume": {}, "set_noise_mode": {"mode": "off|light|balanced"}, "set_volume": {"level": "number 0..100"}},
         "promise_return": "IMPORTANT: await window.wujian.request(...) resolves DIRECTLY to the actual result object shown below. There is NO result.ok and NO result.result wrapper. Transport/error/device failures reject the Promise; catch and visibly show error.message.",
         "read_state_example": {"status": "observed", "observed_at": "timestamp", "state": {"battery": {"left": 72, "right": 68, "case": 90}, "noise_mode": "off"}},
-        "read_state_result": "const result=await window.wujian.request('read_state',{}); use result.state.battery.left/right/case and result.state.noise_mode. Battery number|null; unknown shows 未知, never 0% by default. Mode labels: off=关闭降噪, light=轻度降噪, balanced=均衡降噪, never call light transparency/通透.",
+        "read_state_result": "const result=await window.wujian.request('read_state',{}); use result.state.battery.left/right/case and result.state.noise_mode. Battery number|null; unknown shows 未知, never 0% by default. One unknown field does not imply disconnection; diagnose connection failure only from an actual connection error. Mode labels: off=关闭降噪, light=轻度降噪, balanced=均衡降噪, never call light transparency/通透.",
         "volume_example": {"status": "observed", "state": {"volume": 35, "muted": False, "scope": "windows_output_endpoint"}},
         "volume_result": "const result=await window.wujian.request('read_volume',{}); use result.state.volume (NOT level and NOT result.result). It is Windows output endpoint volume, separate from earbud internal volume. set_volume args use level, but returned state still uses volume.",
         "write_rule": "Generated code may REQUEST changes only. Parent UI asks for a real user click; no write runs on page load. Display pending/denied/errors honestly.",
@@ -163,9 +164,10 @@ def create(db, user_id, message_id, item_id, goal, source_quote):
     domain.accessible_item(db, user_id, item_id, write=True)
     message = domain.require(db.get(ChatMessage, message_id))
     conversation = domain.require(db.get(Conversation, message.conversation_id))
-    if (message.role != "user" or conversation.user_id != user_id or not source_quote.strip()
-            or source_quote not in message.text):
+    anchored_quote = locate_user_quote(message.text, source_quote)
+    if message.role != "user" or conversation.user_id != user_id or anchored_quote is None:
         raise domain.DomainError("建立工作台需要当前用户实际提出目标的原话", 403)
+    source_quote = anchored_quote  # Retain the actual user span, including original quote glyphs.
     existing = next((task for task in db.scalars(select(TaskRecord).where(
         TaskRecord.user_id == user_id, TaskRecord.source_message_id == message_id))
         if task.plan.get("schema") == SCHEMA and task.item_ids == [item_id]), None)

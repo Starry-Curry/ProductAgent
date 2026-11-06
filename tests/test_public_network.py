@@ -15,6 +15,19 @@ def dns_rows(*addresses):
 
 
 class PublicNetworkTests(unittest.IsolatedAsyncioTestCase):
+    async def test_document_http_failure_retains_status_without_response_body_or_pinned_url(self):
+        for code in (404, 500):
+            with self.subTest(code=code):
+                client = httpx.AsyncClient(transport=httpx.MockTransport(
+                    lambda request: httpx.Response(code, text="untrusted response body")))
+                with patch("wujian.knowledge.httpx.AsyncClient", return_value=client), \
+                     patch("wujian.public_network.socket.getaddrinfo", return_value=dns_rows("8.8.8.8")):
+                    with self.assertRaises(DomainError) as failure:
+                        await download_public("https://example.com/missing-manual")
+                self.assertIn(f"HTTP {code}", failure.exception.message)
+                self.assertNotIn("untrusted response body", failure.exception.message)
+                self.assertNotIn("8.8.8.8", failure.exception.message)
+
     async def test_same_origin_reader_does_not_forward_session_header_to_another_origin(self):
         for target in ("https://other.example.com/result", "http://example.com/result"):
             with self.subTest(target=target):

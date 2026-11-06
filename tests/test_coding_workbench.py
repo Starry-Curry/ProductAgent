@@ -50,6 +50,66 @@ class CodingWorkbenchTests(unittest.TestCase):
             checked = workbench.check(db, "person_demo_owner", task["task_id"], task["version"])
             return workbench.publish(db, "person_demo_owner", task["task_id"], checked["version"])
 
+    def test_create_reanchors_rhythm_request_quotes_and_retains_original_span(self):
+        # Verbatim opening of the retained failed request, without private IDs.
+        original = "我想给这副华为 FreeBuds 4E 另做一个叫‘节奏回声’的小作品，放在它的工作台里，原来的耳机操控台请完整保留，别改它。"
+        candidate = original.replace("‘", "'").replace("’", "'")
+        with self.app.state.sessions() as db:
+            db.get(ChatMessage, self.message_id).text = "阿圆，" + original
+            db.commit()
+            created = workbench.create(db, "person_demo_owner", self.message_id, "item_demo_lamp", "私有可逆草稿", candidate)
+            task = db.get(TaskRecord, created["task_id"])
+            self.assertEqual(task.constraints["request_quote"], original)
+            self.assertEqual(task.source_message_id, self.message_id)
+            self.assertEqual(task.user_id, "person_demo_owner")
+            self.assertFalse(task.plan["published"])
+            self.assertNotIn("origin", task.plan)
+            self.assertEqual(workbench.create(db, "person_demo_owner", self.message_id, "item_demo_lamp", "私有可逆草稿", candidate)["task_id"], task.id)
+
+    def test_create_reanchors_only_consecutive_whitespace_and_same_kind_quotes(self):
+        original = '请做一个叫“节奏回声”的小作品，保留 a  b 的显示。'
+        with self.app.state.sessions() as db:
+            db.get(ChatMessage, self.message_id).text = original
+            db.commit()
+            created = workbench.create(db, "person_demo_owner", self.message_id, "item_demo_lamp", "排版测试草稿",
+                '请做一个叫"节奏回声"的小作品，保留 a b 的显示。')
+            self.assertEqual(db.get(TaskRecord, created["task_id"]).constraints["request_quote"], original)
+            with self.assertRaises(domain.DomainError):
+                workbench.create(db, "person_demo_owner", self.message_id, "item_demo_lamp", "不能合并词边界",
+                    '请做一个叫"节奏回声"的小作品，保留 ab 的显示。')
+
+    def test_create_rejects_deleted_middle_negation_splicing_or_changed_model_number_content(self):
+        original = "我想为 FreeBuds 4E 做‘节奏回声’，保留 40% 的显示，但我不要删除旧工作台。"
+        candidates = [original.replace("我不要", "我要"),
+                      "我想为 FreeBuds 4E 做‘节奏回声’，但我不要删除旧工作台。",
+                      original.replace("4E", "5E"), original.replace("40%", "80%"),
+                      original.replace("节奏回声", "音乐回声")]
+        with self.app.state.sessions() as db:
+            db.get(ChatMessage, self.message_id).text = original
+            db.commit()
+            for quote in candidates:
+                with self.subTest(quote=quote), self.assertRaises(domain.DomainError) as denied:
+                    workbench.create(db, "person_demo_owner", self.message_id, "item_demo_lamp", "仍须原词原句", quote)
+                self.assertEqual(denied.exception.status, 403)
+
+    def test_create_keeps_owned_user_message_and_current_quote_boundary(self):
+        original = "请创建‘节奏回声’草稿。"
+        with self.app.state.sessions() as db:
+            current = db.get(ChatMessage, self.message_id)
+            current.text = original
+            other = ChatMessage(conversation_id=current.conversation_id, role="user", text="这条消息没有要求创建草稿。")
+            assistant = ChatMessage(conversation_id=current.conversation_id, role="assistant", text=original)
+            foreign_chat = Conversation(user_id="person_demo_friend")
+            db.add_all([other, assistant, foreign_chat]); db.flush()
+            foreign = ChatMessage(conversation_id=foreign_chat.id, role="user", text=original)
+            db.add(foreign); db.commit()
+            for message in (other, assistant, foreign):
+                with self.subTest(role=message.role, message=message.id), self.assertRaises(domain.DomainError) as denied:
+                    workbench.create(db, "person_demo_owner", message.id, "item_demo_lamp", "不可借别处的原话", "请创建'节奏回声'草稿。")
+                self.assertEqual(denied.exception.status, 403)
+            with self.assertRaises(domain.DomainError):
+                workbench.create(db, "person_demo_friend", self.message_id, "item_demo_lamp", "非owner不能创建", "请创建'节奏回声'草稿。")
+
     def test_owner_source_versions_checks_and_publication_are_one_task(self):
         created = self.create()
         self.assertEqual(self.create()["task_id"], created["task_id"])

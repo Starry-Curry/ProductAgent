@@ -42,7 +42,10 @@ from .database import (
     User,
     now,
 )
-from .knowledge import fetch_source, fetch_source_image, render_source_page, search_web, source_excerpt, source_images, source_navigation
+# Resolve one unambiguous manual attachment through the existing source reader;
+# keep this patchable tool boundary while knowledge.fetch_source remains the writer.
+from .knowledge import fetch_manual_source as fetch_source
+from .knowledge import fetch_source_image, render_source_page, search_web, source_excerpt, source_images, source_navigation
 from .retrieval import task_view
 from .source_access import readable_source
 from .source_video import retained_video_frames, sample_source_video
@@ -230,6 +233,11 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
         if communities and (await communities.status(user_id)).get('connected'):
             return lambda request: communities.request(user_id, request)
         return None
+
+    def document_read_metadata(value):
+        # Only actual reader outcomes/at-most-two-node chains, without bodies.
+        return {key:value[key] for key in ('document_read_chain','manual_resolution') if key in value
+            and (key!='manual_resolution' or value[key].get('status')!='not_applicable')}
 
     async def read_product_guide(topic: str = "overview"):
         """Read versioned Wujian app instructions and real UI entries. Topics: overview, assistant, items, creative, memories, family, gifts, companion, devices. For requests to actually record, remind or gift, use the business tools instead of merely explaining these instructions."""
@@ -791,11 +799,14 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
                         "task_id", "item_id", "version", "published", "url", "source_sha256") if key in value}
                 if function.__name__ in {"search_public_web", "fetch_document", "read_source"}:
                     metadata["evidence"] = {key:value[key] for key in ("source_id", "url", "title", "content_level", "query_matched", "evidence_kind", "applicability") if key in value}
+                    metadata["evidence"].update(document_read_metadata(value))
                     if function.__name__ == "search_public_web":
                         metadata["evidence"]["original_reads"] = [
                             {"url":row["url"],"read_state":row["read_state"],
                              **({"source_id":row["original"]["source_id"],
-                                 "content_level":row["original"]["content_level"]} if row.get("original") else {})}
+                                 "url":row["original"].get("url",row["url"]),
+                                 "content_level":row["original"]["content_level"],
+                                 **document_read_metadata(row["original"])} if row.get("original") else {})}
                             for row in value["results"] if row["read_state"] != "not_read"]
                 return ToolChunk(content=[TextBlock(text=json.dumps(value, ensure_ascii=False, separators=(",", ":")))],
                                  state="success", metadata=metadata)
@@ -896,8 +907,6 @@ class AgentRunner:
             lesson = lesson_context(db.get(TaskRecord,conversation.entry_context.get('task_id'))) if conversation.entry_context.get('task_id') else None
             if lesson:context['step_by_step_lesson']=lesson
             lesson_mode = bool(lesson)
-            if conversation.entry_context.get('intent') == 'guidance':
-                context['guidance_method'] = '先回答当前问题。需要实际操作时continuation.plan使用interaction/1、kind=guidance；每步guidance含instruction、success_signal、target_label、basis和真实evidence。通用初步建议basis=general，型号专用步骤需要document原文；负反馈先核对，不复读旧步骤，不凭空复位。只填写本轮变化，未实际执行仍pending。'
             from .conversation_context import build_conversation_context
             replay = build_conversation_context(db,user.id,conversation,current)
             state = replay.state
@@ -914,11 +923,17 @@ class AgentRunner:
             # Reuse the SDK loader and the same repository Skill, not a second
             # copy of instructions or another orchestration layer.
             preloaded_skills = []
-            if (context["entry_context"].get("intent") == "creative"
-                    or context.get("active_task", {}).get("plan", {}).get("kind") == "idea"):
-                for skill in await LocalSkillLoader(str(ROOT / "agent_skills" / "creative-use")).list_skills():
-                    if skill.name == "creative-use":
-                        prompt += "\n已按当前创意入口加载的工作方法（无需再次用Skill读取）：\n" + skill.markdown
+            entry_skill = None
+            if not lesson_mode:
+                if context["entry_context"].get("intent") == "guidance":
+                    entry_skill = "product-guidance"
+                elif (context["entry_context"].get("intent") == "creative"
+                        or context.get("active_task", {}).get("plan", {}).get("kind") == "idea"):
+                    entry_skill = "creative-use"
+            if entry_skill:
+                for skill in await LocalSkillLoader(str(ROOT / "agent_skills" / entry_skill)).list_skills():
+                    if skill.name == entry_skill:
+                        prompt += "\n已按当前入口加载的工作方法（无需再次用Skill读取）：\n" + skill.markdown
                         preloaded_skills.append(skill.name)
             if context["entry_context"].get("intent") == "persona":
                 prompt += "\n" + COMPANION_VOICE

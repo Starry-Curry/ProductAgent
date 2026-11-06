@@ -158,16 +158,16 @@ export default function GeneratedWorkbench({ item, taskId, onSelect, onClose, on
     {error && <div className="inline-error" role="alert">{error}<button className="quiet-button" onClick={() => void load()}>重新读取</button></div>}
     {busy && <p className="workbench-loading" role="status">打开工作台…</p>}
     {!taskId && !busy && <>
-      {installedAvailable && onInstalled && <section className="workbench-group"><h2>已有工具</h2>
-        <button className="workbench-installed" onClick={onInstalled}><span className="workbench-tool-icon"><Wrench size={25} /></span>
-          <span><strong>耳机操控台</strong><small>查看电量、调整降噪和电脑输出音量</small><em>已有工具 · 已接入的耳机能力</em></span><ExternalLink size={18} />
-        </button>
-      </section>}
       <section className="workbench-group"><h2>阿圆为我做的</h2>
         {works.length ? <div className="workbench-projects">{works.map((work) => <button key={work.task_id} onClick={() => onSelect(work.task_id)}>
           <Code2 size={24} /><strong title={work.title}>{work.title}</strong><span className={work.published ? "ready" : ""}>{work.published ? "可以打开" : "还在制作"}</span><small>阿圆制作 · 第 {work.version} 版</small>
         </button>)}</div> : <p className="workbench-empty">想要一个合用的小工具，可以直接告诉阿圆。做好后就会留在这里。</p>}
       </section>
+      {installedAvailable && onInstalled && <section className="workbench-group"><h2>已有工具</h2>
+        <button className="workbench-installed" onClick={onInstalled}><span className="workbench-tool-icon"><Wrench size={25} /></span>
+          <span><strong>耳机操控台</strong><small>查看电量、调整降噪和电脑输出音量</small><em>已有工具 · 已接入的耳机能力</em></span><ExternalLink size={18} />
+        </button>
+      </section>}
       <form className="workbench-new" onSubmit={(event) => { event.preventDefault(); if (goal.trim()) onAsk(goal.trim()); }}>
         <div><Sparkles size={21} /><h2>想让它多做点什么？</h2></div>
         <textarea value={goal} maxLength={2000} rows={2} onChange={(event) => setGoal(event.target.value)}

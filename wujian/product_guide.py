@@ -48,7 +48,7 @@ _TOPICS = {
     },
     "devices": {
         "title": "让设备更合自己的心意",
-        "instructions": "从物品的新玩法/工作台入口或直接对阿圆描述具体改变。阿圆可以为同一物品亲自编写HTML/CSS/JavaScript小工具、检查并发布到工作台；已安装工具与阿圆制作的作品会区分，点继续改可接着完善同一份作品。先读取已有型号与状态、查证适用资料，再指导或使用已连接且获准的本机工具。连接蓝牙不保证协议可控，浏览器检查也不证明实物效果；设备模式/音量改变要由用户在外层确认。",
+        "instructions": "从物品的新玩法/工作台入口或直接对阿圆描述具体改变。阿圆可以为同一物品亲自编写HTML/CSS/JavaScript小工具、检查并发布到工作台；已安装工具与阿圆制作的作品会区分，点继续改可接着完善同一份作品。先读取已有型号与状态、查证适用资料，再指导或使用已连接且获准的本机工具。连接蓝牙不保证协议可控，浏览器检查也不证明实物效果；某项电量未知不等于整个连接失败，不能凭空诊断原因。设备模式/音量改变要由用户在外层确认。",
         "entry": "#companion", "tools": ["read_item", "device_connections", "inspect_earbuds", "connect_earbuds", "read_earbuds", "create_workbench", "write_workbench", "check_workbench", "publish_workbench"],
     },
 }

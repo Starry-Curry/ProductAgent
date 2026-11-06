@@ -21,9 +21,14 @@ QUESTION="这台爱普生L3256打印出来总有横向白条，我现在只有�
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--real',action='store_true')
+    parser.add_argument('--reader-retest',action='store_true',help='One authorized development retest after the unique-declared-manual reader and shared Skill integration')
     args=parser.parse_args()
     if not args.real:
         parser.error('--real required: existing authorized Bailian account')
+    if args.reader_retest:
+        original=json.loads((ROOT/'tmp/acceptance/2026-11-07_item_guidance_entry/053526/results.json').read_text(encoding='utf-8'))['frozen_question']
+        if QUESTION.encode('utf-8')!=original.encode('utf-8'):
+            raise RuntimeError('Original question bytes changed')
     sys.stdout.reconfigure(encoding='utf-8',errors='backslashreplace')
     from fastapi.testclient import TestClient
     from sqlalchemy import select
@@ -49,6 +54,11 @@ def main():
         'entry_contract':'Items.tsx ask(item,guidance) -> App.tsx newTopic([item.id],guidance) -> /api/chat',
         'frozen_question':QUESTION,'conditions':execution_manifest(config,ROOT),
         'script_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'errors':[]}
+    if args.reader_retest:
+        report.update(kind='item_usage_entry_after_unique_manual_reader_development_retest',
+            original_report='tmp/acceptance/2026-11-07_item_guidance_entry/053526/results.json',
+            question_utf8_sha256=hashlib.sha256(QUESTION.encode('utf-8')).hexdigest(),
+            condition='Same original question, fresh account/item/empty sources/new conversation; shared Skill and new reader, not an independent first answer or isolated single-variable comparison')
     def checked(response):
         if not response.is_success:
             raise RuntimeError(f'HTTP {response.status_code}: {response.text[:1200]}')

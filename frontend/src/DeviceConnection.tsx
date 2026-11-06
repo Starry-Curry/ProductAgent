@@ -38,7 +38,7 @@ export default function DeviceConnection({ item, onClose, onAsk }: { item: Item;
       ]} />
       <Input value={address} onChange={event => setAddress(event.target.value)} placeholder={kind === 'browser_cdp' ? '本机调试连接地址，例如 http://127.0.0.1:9222' : '已授权的软件包绝对路径'} />
       <Button type="primary" loading={busy} disabled={!address.trim()} onClick={connect}>连接这个入口</Button>
-      <small>{status?.bridge_connected ? 'REA 探索服务已连接。具体能改什么，需要检查实际入口。' : '连接入口时会启动本机探索服务。'}</small>
+      <small>{status?.bridge_connected ? '设备探索服务已连接。具体能改什么，需要检查实际入口。' : '连接入口时会启动本机探索服务。'}</small>
       {targets.map(target => <div key={target.id}><p>{target.address}</p><Button onClick={() => { onClose(); onAsk(`我已为${item.name}登记了控制入口，连接ID是${target.id}。请先探索这个入口的实际能力，看看能否更换屏保或显示内容；还不要执行修改。`); }}>先看看它能做什么</Button></div>)}
       {!targets.length && <small>仅拍照录入物品还没有控制连接。普通显示器的改变通常要从连接电脑或投屏软件入手。</small>}
     </Space>
