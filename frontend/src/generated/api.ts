@@ -934,6 +934,40 @@ export interface paths {
         patch: operations["update_entry_api_tasks__task_id__entries__entry_id__patch"];
         trace?: never;
     };
+    "/api/tasks/{task_id}/entries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add Entry */
+        post: operations["add_entry_api_tasks__task_id__entries_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/entries/{entry_id}/details": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Edit Entry */
+        patch: operations["edit_entry_api_tasks__task_id__entries__entry_id__details_patch"];
+        trace?: never;
+    };
     "/api/tasks/{task_id}/entries/{entry_id}/assignee": {
         parameters: {
             query?: never;
@@ -1079,10 +1113,62 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
+        /** Change Wish */
+        put: operations["change_wish_api_wishes__wish_id__put"];
         post?: never;
         /** Delete Wish */
         delete: operations["delete_wish_api_wishes__wish_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/action": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Action */
+        get: operations["get_action_api_tasks__task_id__action_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/action/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Confirm Action */
+        post: operations["confirm_action_api_tasks__task_id__action_confirm_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/action/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel Action */
+        post: operations["cancel_action_api_tasks__task_id__action_cancel_post"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -1128,6 +1214,28 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ActionDecision */
+        ActionDecision: {
+            /** Expected Version */
+            expected_version: number;
+        };
+        /** ActionView */
+        ActionView: {
+            /** Task Id */
+            task_id: string;
+            /** Version */
+            version: number;
+            /** Kind */
+            kind: string;
+            /** Status */
+            status: string;
+            /** Title */
+            title: string;
+            /** Details */
+            details: string[];
+            /** Result Id */
+            result_id?: string | null;
+        };
         /** AvatarSpec */
         AvatarSpec: {
             /**
@@ -1140,7 +1248,7 @@ export interface components {
              * @default auto
              * @enum {string}
              */
-            form: "auto" | "keepsake" | "cup" | "stone" | "flower" | "cat";
+            form: "auto" | "keepsake" | "dango_leaf" | "dango_hat" | "dango_bow" | "cup" | "stone" | "flower" | "cat";
             /**
              * Nickname
              * @default
@@ -1176,7 +1284,7 @@ export interface components {
              * @default auto
              * @enum {string}
              */
-            form: "auto" | "keepsake" | "cup" | "stone" | "flower" | "cat";
+            form: "auto" | "keepsake" | "dango_leaf" | "dango_hat" | "dango_bow" | "cup" | "stone" | "flower" | "cat";
             /**
              * Nickname
              * @default
@@ -1209,6 +1317,8 @@ export interface components {
              * @default
              */
             gift_message: string;
+            /** Gift Memories */
+            gift_memories?: components["schemas"]["GiftMemoryView"][];
             /**
              * Growth Note
              * @default
@@ -1367,6 +1477,8 @@ export interface components {
              * @default false
              */
             allow_ai: boolean;
+            /** Household Id */
+            household_id?: string | null;
             /** Expected Version */
             expected_version: number;
         };
@@ -1390,6 +1502,8 @@ export interface components {
              * @default false
              */
             allow_ai: boolean;
+            /** Household Id */
+            household_id?: string | null;
         };
         /** ExperienceView */
         ExperienceView: {
@@ -1411,6 +1525,8 @@ export interface components {
              * @default false
              */
             allow_ai: boolean;
+            /** Household Id */
+            household_id?: string | null;
             /** Id */
             id: string;
             /** Creator Id */
@@ -1467,6 +1583,19 @@ export interface components {
             /** Sender Id */
             sender_id: string;
         };
+        /** GiftAccept */
+        GiftAccept: {
+            /**
+             * Wake Avatar
+             * @default false
+             */
+            wake_avatar: boolean;
+            /**
+             * Allow Story Ai
+             * @default false
+             */
+            allow_story_ai: boolean;
+        };
         /** GiftCreate */
         GiftCreate: {
             /** Item Id */
@@ -1481,6 +1610,8 @@ export interface components {
             /** Experience Ids */
             experience_ids?: string[];
             avatar?: components["schemas"]["AvatarSpec"];
+            /** Surprises */
+            surprises?: components["schemas"]["GiftSurprise"][];
         };
         /** GiftDecision */
         GiftDecision: {
@@ -1489,6 +1620,25 @@ export interface components {
              * @enum {string}
              */
             action: "decline" | "cancel";
+        };
+        /** GiftMemoryView */
+        GiftMemoryView: {
+            /** Experience Id */
+            experience_id: string;
+            /** Hint */
+            hint: string;
+            /** Trigger Words */
+            trigger_words?: string[];
+            /**
+             * Unlocked
+             * @default false
+             */
+            unlocked: boolean;
+            /**
+             * Chat Allowed
+             * @default true
+             */
+            chat_allowed: boolean;
         };
         /** GiftSnapshot */
         GiftSnapshot: {
@@ -1507,6 +1657,19 @@ export interface components {
             sender_name: string;
             /** Public Source Ids */
             public_source_ids?: string[];
+            /** Photo Id */
+            photo_id?: string | null;
+            /** Surprises */
+            surprises?: components["schemas"]["GiftSurprise"][];
+        };
+        /** GiftSurprise */
+        GiftSurprise: {
+            /** Experience Id */
+            experience_id: string;
+            /** Hint */
+            hint: string;
+            /** Trigger Words */
+            trigger_words?: string[];
         };
         /** GiftView */
         GiftView: {
@@ -2086,6 +2249,48 @@ export interface components {
             /** Assignee Id */
             assignee_id?: string | null;
         };
+        /** TaskEntryCreate */
+        TaskEntryCreate: {
+            /** Expected Version */
+            expected_version: number;
+            /** Title */
+            title: string;
+            /** Item Id */
+            item_id?: string | null;
+            /**
+             * Group
+             * @default owned
+             * @enum {string}
+             */
+            group: "owned" | "buy" | "borrow" | "confirm" | "step";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /** Assignee Id */
+            assignee_id?: string | null;
+        };
+        /** TaskEntryDetails */
+        TaskEntryDetails: {
+            /** Expected Version */
+            expected_version: number;
+            /** Title */
+            title: string;
+            /** Item Id */
+            item_id?: string | null;
+            /**
+             * Group
+             * @default owned
+             * @enum {string}
+             */
+            group: "owned" | "buy" | "borrow" | "confirm" | "step";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+        };
         /** TaskEntryFeedback */
         TaskEntryFeedback: {
             /** Expected Version */
@@ -2186,6 +2391,28 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /** WishChange */
+        WishChange: {
+            /** Title */
+            title: string;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /**
+             * Url
+             * @default
+             */
+            url: string;
+            /**
+             * Visible To Friends
+             * @default false
+             */
+            visible_to_friends: boolean;
+            /** Expected Version */
+            expected_version: number;
         };
         /** WishCreate */
         WishCreate: {
@@ -3496,7 +3723,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["GiftAccept"] | null;
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {
@@ -4254,6 +4485,77 @@ export interface operations {
             };
         };
     };
+    add_entry_api_tasks__task_id__entries_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskEntryCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_entry_api_tasks__task_id__entries__entry_id__details_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskEntryDetails"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     assign_entry_api_tasks__task_id__entries__entry_id__assignee_patch: {
         parameters: {
             query?: never;
@@ -4538,6 +4840,41 @@ export interface operations {
             };
         };
     };
+    change_wish_api_wishes__wish_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                wish_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WishChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WishView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     delete_wish_api_wishes__wish_id__delete: {
         parameters: {
             query?: never;
@@ -4560,6 +4897,107 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_action_api_tasks__task_id__action_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActionView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    confirm_action_api_tasks__task_id__action_confirm_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActionDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActionView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_action_api_tasks__task_id__action_cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActionDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActionView"];
                 };
             };
             /** @description Validation Error */

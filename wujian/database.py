@@ -109,6 +109,7 @@ class ExperienceRecord(Base):
     created_at: Mapped[str] = mapped_column(String, default=now)
     version: Mapped[int] = mapped_column(Integer, default=1)
     allow_ai: Mapped[bool] = mapped_column(Boolean, default=False)
+    household_id: Mapped[str | None] = mapped_column(ForeignKey("households.id"), nullable=True, index=True)
 
 
 class Memory(Base):

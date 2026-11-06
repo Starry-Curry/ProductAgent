@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { App as AntApp } from "antd";
 import {
   ArrowLeft,
+  Bell,
   BookHeart,
   Camera,
   ChevronDown,
@@ -26,6 +27,7 @@ import {
   type Health,
   type Item,
   type Run,
+  type Reminder,
   type TaskBoard as Board,
   type TaskEntry,
   type User,
@@ -39,6 +41,7 @@ import Memories from "./Memories";
 import Friends from "./Friends";
 import Care from "./Care";
 import { TaskCanvas, TaskRail } from "./TaskBoard";
+import ButlerActionCard from "./ButlerActionCard";
 import { Companion, ObjectVisual, presentation } from "./shared";
 import { navigate, useRoute, useWorkspace, type Section } from "./navigation";
 import { ObjectCompanion } from "./ObjectCompanion";
@@ -89,7 +92,7 @@ function WorkspaceApp({
   onLogout: () => void;
 }) {
   const { workspace, refresh, error } = useWorkspace(user),
-    route = useRoute();
+    rawRoute = useRoute();
   const { message } = AntApp.useApp();
   const [editor, setEditor] = useState<Editor>(),
     [device, setDevice] = useState<Item>(),
@@ -117,6 +120,21 @@ function WorkspaceApp({
   activeDraftKey.current = draftKey;
   const large = workspace?.preferences.display_mode === "large",
     companionName = workspace?.preferences.companion_name || "阿圆";
+  // The accessible display has only questions and reminders. Derive its view
+  // synchronously so a pasted hash cannot flash a complex page before effects.
+  const route: typeof rawRoute = large
+    ? { section: rawRoute.section === "care" ? "care" as Section : "companion" as Section }
+    : rawRoute;
+  useEffect(() => {
+    if (!large) return;
+    setEditor(undefined);
+    setDevice(undefined);
+    setSidebar(false);
+    if (context.entry.task_id || board || !["general", "guidance"].includes(context.entry.intent))
+      newTopic(context.itemIds, "guidance");
+    if (!["companion", "care"].includes(rawRoute.section) || rawRoute.taskId || rawRoute.itemId || rawRoute.friendId || rawRoute.experienceId || rawRoute.householdId)
+      navigate({ section: route.section });
+  }, [large, rawRoute.section, rawRoute.taskId, rawRoute.itemId, rawRoute.friendId, rawRoute.experienceId, rawRoute.householdId]);
   currentThread.current = threadId;
   function setDraft(value: Draft | ((previous: Draft) => Draft)) {
     setDrafts((previous) => ({
@@ -140,7 +158,27 @@ function WorkspaceApp({
   function watch(initial: Run) {
     stopWatching();
     setRun(initial);
-    if (!["queued", "running"].includes(initial.status)) return;
+    const generation = openingGeneration.current;
+    const routeWhenStarted = location.hash;
+    function finish(value: Run) {
+      void updateMessages(value.conversation_id);
+      void refresh().catch(() => {});
+      const taskId = String(value.events.filter((event) => event.type === "continuation_saved").at(-1)?.task_id || context.entry.task_id || "");
+      if (!taskId || large) return;
+      void request<Board>(`/tasks/${taskId}/board`).then((next) => {
+        if (currentThread.current !== value.conversation_id || generation !== openingGeneration.current || location.hash !== routeWhenStarted) return;
+        // Show a newly prepared activity in the same chat. Creative/guidance
+        // tasks retain their explicit entry and their existing presentation.
+        if (context.entry.task_id || (next.task.plan.kind === "checklist" && !next.task.plan.pending_action)) {
+          setBoard((previous) => previous?.task.id === next.task.id && previous.task.version > next.task.version ? previous : next);
+          setContext((previous) => ({ ...previous, itemIds: next.task.item_ids, entry: { ...previous.entry, task_id: taskId } }));
+        }
+      }).catch(() => {});
+    }
+    if (!["queued", "running"].includes(initial.status)) {
+      finish(initial);
+      return;
+    }
     const eventSource = new EventSource(`/api/runs/${initial.id}/events`);
     source.current = eventSource;
     eventSource.onmessage = (event) => {
@@ -149,15 +187,7 @@ function WorkspaceApp({
       setRun(value);
       if (!["queued", "running"].includes(value.status)) {
         eventSource.close();
-        void updateMessages(value.conversation_id);
-        void refresh()
-          .then(() => {
-            if (context.entry.task_id)
-              void request<Board>(`/tasks/${context.entry.task_id}/board`)
-                .then(setBoard)
-                .catch(() => setBoard(undefined));
-          })
-          .catch(() => {});
+        finish(value);
       }
     };
     eventSource.onerror = () => {
@@ -168,8 +198,7 @@ function WorkspaceApp({
             setRun(value);
             if (!["queued", "running"].includes(value.status)) {
               eventSource.close();
-              void updateMessages(value.conversation_id);
-              void refresh().catch(() => {});
+              finish(value);
             }
           }
         })
@@ -178,7 +207,7 @@ function WorkspaceApp({
   }
   async function openThread(identity: string, override?: Context, requestedGeneration?: number) {
     const generation = requestedGeneration ?? ++openingGeneration.current;
-    if (generation !== openingGeneration.current) return;
+    if (generation !== openingGeneration.current) return false;
     if (requestedGeneration === undefined) opening.current = "";
     stopWatching();
     currentThread.current = identity;
@@ -203,15 +232,18 @@ function WorkspaceApp({
       const history = await request<ChatMessage[]>(
         `/conversations/${identity}/messages`,
       );
-      if (currentThread.current !== identity || generation !== openingGeneration.current) return;
+      if (currentThread.current !== identity || generation !== openingGeneration.current) return false;
       setMessages(history);
       const last = history.at(-1);
       if (last?.role === "user" && last.run_id) {
         const latest = await request<Run>(`/runs/${last.run_id}`);
-        if (currentThread.current === identity && generation === openingGeneration.current) watch(latest);
+        if (currentThread.current !== identity || generation !== openingGeneration.current) return false;
+        watch(latest);
       }
+      return true;
     } catch (error) {
       if (generation === openingGeneration.current) message.error((error as Error).message);
+      return false;
     }
   }
   function newTopic(itemIds: string[] = [], intent = "general", text = "", draftScope = "") {
@@ -237,6 +269,7 @@ function WorkspaceApp({
     setSidebar(false);
   }
   async function openTask(identity: string) {
+    if (large) return;
     if (opening.current === identity) return;
     opening.current = identity;
     const generation = ++openingGeneration.current;
@@ -266,12 +299,12 @@ function WorkspaceApp({
   }
   useEffect(() => {
     if (
-      route.section === "companion" &&
+      !large && route.section === "companion" &&
       route.taskId &&
       board?.task.id !== route.taskId
     )
       void openTask(route.taskId);
-  }, [route.taskId, route.section]);
+  }, [route.taskId, route.section, large]);
   async function send() {
     if (
       sending ||
@@ -289,7 +322,7 @@ function WorkspaceApp({
         photo_ids: original.photos,
         conversation_id: threadId || null,
         item_ids: context.itemIds,
-        entry_context: context.entry,
+        entry_context: large ? { intent: "guidance" } : context.entry,
       });
       const stillHere = activeDraftKey.current === draftKey;
       setDrafts((previous) => {
@@ -357,15 +390,52 @@ function WorkspaceApp({
       setPhotoUploads((previous) => ({ ...previous, [key]: Math.max(0, (previous[key] || 1) - 1) }));
     }
   }
-  function ask(item: Item, intent = "general") {
+  function openCreativity(itemIds: string[] = []) {
+    const availableIds = itemIds.filter((id) => workspace?.items.some((item) => item.id === id));
+    const item = availableIds.length === 1
+      ? workspace?.items.find((item) => item.id === availableIds[0])
+      : undefined;
+    newTopic(
+      availableIds,
+      "creative",
+      item
+        ? `用${item.name}还能做些什么？请结合已有物品与我的实际条件，一起找找新玩法。`
+        : "最近有点无聊，身边这些东西还能怎么玩？",
+    );
+  }
+  async function ask(item: Item, intent = "general", text?: string) {
+    if (intent === "creative") {
+      openCreativity([item.id]);
+      return;
+    }
     if (intent === "persona") {
+      function preparePrompt(key: string) {
+        if (!text?.trim()) return;
+        const incoming = text;
+        setDrafts((previous) => {
+          const pending = previous[key] || { text: "", photos: [] };
+          return { ...previous, [key]: { ...pending, text: pending.text.trim()
+            ? pending.text.includes(incoming) ? pending.text : `${pending.text}\n${incoming}` : incoming } };
+        });
+      }
+      async function restore(identity: string) {
+        const generation = openingGeneration.current + 1;
+        const restoring = openThread(identity, { itemIds: [item.id], entry: { intent: "persona" } });
+        const targetRoute = location.hash;
+        const restored = await restoring;
+        // A slow history request must not seed a different object or pull a
+        // user back after they switched windows while the request was pending.
+        if (restored && generation === openingGeneration.current && currentThread.current === identity && location.hash === targetRoute)
+          preparePrompt(identity);
+      }
       const inThisPersona = context.entry.intent === "persona" && context.itemIds.length === 1 && context.itemIds[0] === item.id;
       if (inThisPersona) {
         if (threadId) {
-          void openThread(threadId);
+          await restore(threadId);
           return;
         }
         if (draft.text.trim() || draft.photos.length) {
+          preparePrompt(draftKey);
           navigate({ section: "companion" });
           setSidebar(false);
           return;
@@ -375,32 +445,34 @@ function WorkspaceApp({
         .filter((thread) => thread.entry_context?.intent === "persona" && thread.item_ids.length === 1 && thread.item_ids[0] === item.id)
         .sort((left, right) => (Date.parse(right.updated_at) || 0) - (Date.parse(left.updated_at) || 0))[0];
       if (previous) {
-        void openThread(previous.id);
+        await restore(previous.id);
         return;
       }
+      newTopic([item.id], "persona", text || "想和你聊聊今天的事。");
+      preparePrompt(`new:persona:${item.id}`);
+      return;
     }
     newTopic(
       [item.id],
       intent,
       intent === "guidance"
         ? `我想了解${item.name}的用法，请先核对型号、现状和适用资料。`
-        : intent === "creative"
-          ? `用${item.name}还能做些什么？请结合已有物品与我的实际条件，一起找找新玩法。`
-          : intent === "persona"
-            ? "想和你聊聊今天的事。"
-            : `想聊聊${item.name}。`,
+        : intent === "persona"
+          ? "想和你聊聊今天的事。"
+          : `想聊聊${item.name}。`,
     );
   }
-  function onItem(identity: string) {
-    navigate({
-      section: "items",
-      scope:
-        workspace?.items.find((item) => item.id === identity)?.owner_id ===
-        user.id
-          ? "personal"
-          : "household",
-      itemId: identity,
-    });
+  function onItem(identity: string, householdId?: string) {
+    if (large) {
+      newTopic([identity], "guidance", "我想问问这件东西怎么用，请一步一步教我。");
+      return;
+    }
+    const families = workspace?.households.filter((family) =>
+      family.membership === "active" && family.item_ids.includes(identity)) || [];
+    const household = families.find((family) => family.id === householdId)
+      || families.find((family) => family.id === route.householdId) || families[0];
+    navigate({ section: "items", scope: household ? "household" : "personal",
+      householdId: household?.id, itemId: identity });
   }
   async function changeMode(value: string) {
     if (!workspace) return;
@@ -414,6 +486,14 @@ function WorkspaceApp({
     } catch (error) {
       message.error((error as Error).message);
     }
+  }
+  function askReminder(itemId?: string, reminder?: Reminder) {
+    const item = workspace?.items.find((value) => value.id === itemId);
+    newTopic(item ? [item.id] : [], "guidance",
+      reminder
+        ? `家人给我留了提醒「${reminder.title}」。${item ? `我想问问${item.name}怎么用，` : "我想问问这件事，"}请一步一步教我。`
+        : item ? `我想问问${item.name}怎么用，请一步一步告诉我。` : "我想问问家人给我留的提醒。",
+      reminder ? `reminder:${reminder.id}` : "");
   }
   async function logout() {
     try {
@@ -439,14 +519,17 @@ function WorkspaceApp({
         )}
       </div>
     );
-  const focusedItem = workspace.items.find((item) =>
+  const focusedItems = workspace.items.filter((item) =>
     context.itemIds.includes(item.id),
   );
-  const persona = context.entry.intent === "persona" && focusedItem?.avatar.enabled ? focusedItem : undefined;
-  const personaUnavailable = context.entry.intent === "persona" && !persona;
+  const focusedItem = focusedItems[0];
+  const persona = !large && context.entry.intent === "persona" && focusedItem?.avatar.enabled ? focusedItem : undefined;
+  const personaUnavailable = !large && context.entry.intent === "persona" && !persona;
+  const myFamilyReminders = workspace.reminders.filter((reminder) =>
+    reminder.assignee_id === user.id && Boolean(reminder.household_id) && !reminder.completed);
   const title =
     route.section === "companion"
-      ? (persona ? `和${persona.avatar.nickname || persona.name}聊聊` : undefined) || board?.task.goal ||
+      ? large ? "物间" : (persona ? `和${persona.avatar.nickname || persona.name}聊聊` : undefined) || board?.task.goal ||
         workspace.conversations.find((thread) => thread.id === threadId)
           ?.title ||
         `和${companionName}聊聊`
@@ -476,9 +559,13 @@ function WorkspaceApp({
         },
       }
     : undefined;
-  const continuedTaskId = run?.status === "completed" && run.conversation_id === threadId
+  const continuedTaskId = !large && run?.status === "completed" && run.conversation_id === threadId
     ? String(run.events.filter((event) => event.type === "continuation_saved").at(-1)?.task_id || "")
     : "";
+  const actionTaskIds = !large ? [...new Set([
+    ...(run && run.conversation_id === threadId ? run.events.filter((event) => event.type === "action_proposed").map((event) => String(event.task_id)) : []),
+    ...workspace.tasks.filter((task) => task.plan.pending_action && messages.some((message) => message.id === (task.plan.pending_action as Record<string, unknown>).origin_message_id)).map((task) => task.id),
+  ])].filter((id) => board?.task.id !== id) : [];
   return (
     <div
       className={`app-shell ${large ? "large-mode" : ""} ${sidebar ? "sidebar-open" : ""}`}
@@ -526,7 +613,7 @@ function WorkspaceApp({
             </button>
           ))}
         </nav>
-        <section className="recent-topics">
+        {!large && <section className="recent-topics">
           <div className="section-title">
             <h3>最近的对话</h3>
             <button
@@ -550,8 +637,8 @@ function WorkspaceApp({
           {!workspace.conversations.length && (
             <p className="empty-note">从你此刻想做的事开始。</p>
           )}
-        </section>
-        <section className="sidebar-tasks">
+        </section>}
+        {!large && <section className="sidebar-tasks">
           <div className="section-title">
             <h3>正在做的事</h3>
             <button
@@ -575,7 +662,7 @@ function WorkspaceApp({
                 <span>{task.goal}</span>
               </button>
             ))}
-        </section>
+        </section>}
         <div className="sidebar-account">
           <span className="person-avatar">{user.display_name.slice(-1)}</span>
           <div>
@@ -584,13 +671,13 @@ function WorkspaceApp({
               退出／切换账号
             </button>
           </div>
-          <button
+          {!large && <button
             className="icon-button"
             title="个人设置与理解"
             onClick={() => setEditor({ kind: "settings" })}
           >
             <Settings size={21} />
-          </button>
+          </button>}
         </div>
       </aside>
       {sidebar && (
@@ -605,7 +692,7 @@ function WorkspaceApp({
           <div className="topbar-heading">
             <button
               className="icon-button mobile-only"
-              title="历史与正在做的事"
+              title={large ? "问答与家人提醒" : "历史与正在做的事"}
               onClick={() => setSidebar(true)}
             >
               <Menu size={22} />
@@ -624,8 +711,12 @@ function WorkspaceApp({
               </select>
               <ChevronDown size={13} />
             </label>
+            {!large && <button className="soft-button" title="给我的家庭提醒" aria-label={`给我的家庭提醒，${myFamilyReminders.length}条待处理`}
+              onClick={() => navigate({ section: "care" })}>
+              <Bell size={18} /><span>{myFamilyReminders.length || "提醒"}</span>
+            </button>}
             <span className="topbar-divider" />
-            <button
+            {!large && <button
               className="camera-action"
               onClick={() =>
                 route.section === "items"
@@ -643,15 +734,16 @@ function WorkspaceApp({
                     ? "记一刻"
                     : "拍一下"}
               </span>
-            </button>
-            <button
+            </button>}
+            {!large && <button
               className="avatar-button"
               title="设置与个性化"
               aria-label="设置与个性化"
               onClick={() => setEditor({ kind: "settings" })}
             >
               <Companion small />
-            </button>
+            </button>}
+            {large && <button className="quiet-button" onClick={() => void logout()}>退出账号</button>}
           </div>
         </header>
         {health?.demo_mode && user.id.startsWith("person_demo_") && (
@@ -660,9 +752,18 @@ function WorkspaceApp({
           </div>
         )}
         {route.section === "companion" && (
-          <div className={`companion-workspace ${board ? "with-task" : ""}`}>
+          <div className={`companion-workspace ${board && !large ? "with-task" : ""}`}>
             <main className="companion-main">
+              {!large && !persona && (
+                <nav className="companion-shortcuts" aria-label="对话快捷入口">
+                  <button className="quiet-button" onClick={() => openCreativity(context.itemIds)}>
+                    <Sparkles size={17} />
+                    找点新玩法
+                  </button>
+                </nav>
+              )}
               <Conversation
+                readAloud={large}
                 messages={messages}
                 run={
                   sending && !run
@@ -692,12 +793,12 @@ function WorkspaceApp({
                 companionName={persona ? persona.avatar.nickname || persona.name : companionName}
                 assistantAvatar={persona ? <ObjectCompanion item={persona} size={44} /> : undefined}
                 blocked={personaUnavailable}
-                afterMessages={continuedTaskId && board?.task.id !== continuedTaskId ? <button className="continuation-entry soft-button" onClick={() => void openTask(continuedTaskId)}><Sparkles size={17} />查看这次方案</button> : undefined}
+                afterMessages={<>{actionTaskIds.map((id) => <ButlerActionCard key={id} taskId={id} refresh={refresh} />)}{!large && board && boardActions && board.task.plan.kind === "checklist" && <TaskCanvas {...boardActions} />}{continuedTaskId && board?.task.id !== continuedTaskId && !actionTaskIds.includes(continuedTaskId) && <button className="continuation-entry soft-button" onClick={() => void openTask(continuedTaskId)}><Sparkles size={17} />查看这次方案</button>}</>}
                 contextLabel={
                   focusedItem
-                    ? context.entry.intent === "persona"
+                    ? !large && context.entry.intent === "persona"
                       ? `和${focusedItem.avatar.nickname || focusedItem.name}的分身聊聊`
-                      : focusedItem.name
+                      : focusedItems.map((item) => item.name).join("、")
                     : undefined
                 }
                 onCameraRef={() => {}}
@@ -719,15 +820,15 @@ function WorkspaceApp({
                     <button className="quiet-button" onClick={() => onItem(persona.id)}>看看它的名片</button>
                   </div>
                 )}
-                {!messages.length && !board && !persona && (
+                {!messages.length && (!board || large) && !persona && (
                   <div className="companion-home">
                     <div className="companion-greeting">
                       <Companion />
                       <div className="greeting-bubble">
                         <p>
-                          我在。今天想问什么，
+                          {large ? "有问题，直接问我。" : "我在。今天想问什么，"}
                           <br />
-                          或记下什么？
+                          {!large && "或记下什么？"}
                         </p>
                         <span className="greeting-spark">✦</span>
                       </div>
@@ -755,27 +856,19 @@ function WorkspaceApp({
                         <TreePine size={25} strokeWidth={1.3} />
                         {large ? "拍给我看" : "准备去野餐"}
                       </button>
-                      <button
-                        onClick={() =>
-                          large
-                            ? navigate({ section: "care" })
-                            : setEditor({ kind: "item" })
-                        }
+                      {!large && <button
+                        onClick={() => setEditor({ kind: "item" })}
                       >
                         <Gift size={24} strokeWidth={1.3} />
-                        {large ? "家人提醒" : "记下一件礼物"}
-                      </button>
+                        记下一件礼物
+                      </button>}
                     </div>
-                    {!large && (
-                      <button
-                        className="home-creative-entry quiet-button"
-                        onClick={() => newTopic([], "creative", "最近有点无聊，身边这些东西还能怎么玩？")}
-                      >
-                        <Sparkles size={17} />
-                        找点新玩法
-                      </button>
-                    )}
-                    {workspace.reminders.some((value) => !value.completed) && (
+                    {large && <section className="large-home-reminders">
+                      <h2>家人提醒</h2>
+                      <Care workspace={{ ...workspace, reminders: myFamilyReminders }} user={user} refresh={refresh}
+                        onItem={onItem} large onAsk={askReminder} />
+                    </section>}
+                    {!large && myFamilyReminders.length > 0 && (
                       <button
                         className="mobile-attention"
                         onClick={() => navigate({ section: "care" })}
@@ -784,15 +877,13 @@ function WorkspaceApp({
                         <span>
                           家人提醒 ·{" "}
                           {
-                            workspace.reminders.find(
-                              (value) => !value.completed,
-                            )?.title
+                            myFamilyReminders[0]?.title
                           }
                         </span>
                         <ArrowLeft size={17} />
                       </button>
                     )}
-                    <div className="home-continuations">
+                    {!large && <div className="home-continuations">
                       <div className="section-title">
                         <h2>继续手边的事</h2>
                         <button
@@ -825,13 +916,13 @@ function WorkspaceApp({
                           可以轻轻问一句，也可以从拍一张照片开始。
                         </p>
                       )}
-                    </div>
+                    </div>}
                   </div>
                 )}
-                {board && boardActions && <TaskCanvas {...boardActions} />}
+                {!large && board && boardActions && board.task.plan.kind !== "checklist" && <TaskCanvas {...boardActions} />}
               </Conversation>
             </main>
-            <aside className="context-rail">
+            {!large && <aside className="context-rail">
               {board && boardActions ? (
                 <TaskRail {...boardActions} />
               ) : (
@@ -848,6 +939,7 @@ function WorkspaceApp({
                       user={user}
                       refresh={refresh}
                       onItem={onItem}
+                      onAsk={askReminder}
                     />
                     {workspace.tasks
                       .filter(
@@ -895,7 +987,7 @@ function WorkspaceApp({
                   </button>
                 </>
               )}
-            </aside>
+            </aside>}
           </div>
         )}
         {route.section === "items" && (
@@ -929,6 +1021,7 @@ function WorkspaceApp({
             edit={setEditor}
             refresh={refresh}
             onItem={onItem}
+            onCompanion={(item, text) => { void ask(item, "persona", text); }}
             askText={(text) => newTopic([], "general", text)}
           />
         )}
@@ -936,18 +1029,21 @@ function WorkspaceApp({
           <main className="page-content large-care">
             <div className="page-heading">
               <h1>家人提醒</h1>
-              <button
+              {!large && <button
                 className="soft-button"
                 onClick={() => setEditor({ kind: "reminder" })}
               >
                 记录一件事
-              </button>
+              </button>}
             </div>
             <Care
-              workspace={workspace}
+              workspace={large ? { ...workspace, reminders: myFamilyReminders } : workspace}
+              householdId={large ? undefined : route.householdId}
               user={user}
               refresh={refresh}
               onItem={onItem}
+              large={large}
+              onAsk={askReminder}
             />
           </main>
         )}
@@ -1007,9 +1103,9 @@ function WorkspaceApp({
           event.target.value = "";
         }}
       />
-      {editor && (
+      {!large && editor && (
         <Editors
-          key={editor.kind + (editor.item?.id || editor.experience?.id || "")}
+          key={editor.kind + (editor.item?.id || editor.experience?.id || editor.wish?.id || "")}
           editor={editor}
           workspace={workspace}
           user={user}
@@ -1019,7 +1115,7 @@ function WorkspaceApp({
           onTask={(id) => void openTask(id)}
         />
       )}
-      {device && (
+      {!large && device && (
         <DeviceConnection
           item={device}
           onClose={() => setDevice(undefined)}

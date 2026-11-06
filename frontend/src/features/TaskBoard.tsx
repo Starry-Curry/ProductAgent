@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { App as AntApp, Modal } from "antd";
 import {
   ArrowRight,
@@ -6,6 +6,7 @@ import {
   Clipboard,
   FileText,
   MessageCircle,
+  Pencil,
   Plus,
   Sparkles,
   Volume2,
@@ -19,6 +20,8 @@ import {
   type Workspace,
 } from "../api";
 import { Companion, EmptyState, ObjectVisual, speak } from "./shared";
+import "./outing-task.css";
+import ButlerActionCard from "./ButlerActionCard";
 
 export type BoardActions = {
   board: Board;
@@ -49,6 +52,122 @@ const stepStates: Record<string, string> = {
   not_found: "用户报告未找到",
   unchanged: "用户报告没有变化",
 };
+
+const availability: Record<TaskEntry["group"], string> = {
+  owned: "有 · 已有物品",
+  buy: "没有 · 需要补充",
+  borrow: "待确认 · 想借用",
+  confirm: "待确认 · 核对一下",
+  step: "准备事项",
+};
+type EntryDraft = {
+  id?: string;
+  title: string;
+  group: TaskEntry["group"];
+  item_id: string;
+  item_editable: boolean;
+  note: string;
+  assignee_id: string;
+};
+
+function useTaskIdentity(taskId: string) {
+  const identity = useRef(taskId);
+  identity.current = taskId;
+  useEffect(() => {
+    identity.current = taskId;
+    return () => { identity.current = ""; };
+  }, [taskId]);
+  return identity;
+}
+
+// Preparation, availability and responsibility belong to the same task entry.
+// Nothing entered here creates an inventory item or claims the trip happened.
+function PreparationList({ board, workspace, user, update, refresh, onItem }: BoardActions) {
+  const { message } = AntApp.useApp();
+  const [busy, setBusy] = useState(false);
+  const [draft, setDraft] = useState<EntryDraft>();
+  const [formError, setFormError] = useState("");
+  const currentTask = useTaskIdentity(board.task.id);
+  useEffect(() => { setDraft(undefined); setFormError(""); }, [board.task.id]);
+  const canEdit = (entry: TaskEntry) => board.access === "owner" ||
+    (board.access === "active" && entry.assignee_id === user.id);
+  const people = board.participants.filter((person) => person.status === "active" && person.id !== user.id);
+  const nameOf = (id?: string | null) => !id ? "待认领" : id === user.id ? "我" :
+    String(board.participants.find((person) => person.id === id)?.display_name || workspace.friends.find((friend) => friend.id === id)?.display_name || "参与者");
+  async function mutate(path: string, method: string, body: Record<string, unknown>) {
+    if (busy) return false;
+    const taskId = board.task.id;
+    setBusy(true);
+    try {
+      const next = await request<Board>(`/tasks/${taskId}${path}`, method, { expected_version: board.task.version, ...body });
+      if (currentTask.current !== taskId) return false;
+      update(next);
+      // A refresh failure must not make a successful canonical write look undone.
+      try { await refresh(); } catch { message.warning("清单已保存，其他页面稍后刷新即可。"); }
+      return currentTask.current === taskId;
+    } catch (error) {
+      const text = (error as Error).message;
+      if (currentTask.current !== taskId) return false;
+      message.error(text);
+      setFormError(text);
+      // A concurrent edit can change the task version. Keep the unsaved form,
+      // but reload the actual board so the next explicit retry uses its version.
+      try {
+        const latest = await request<Board>(`/tasks/${taskId}/board`);
+        if (currentTask.current === taskId) update(latest);
+      } catch { /* Original error remains visible. */ }
+      return false;
+    } finally { setBusy(false); }
+  }
+  async function save() {
+    if (!draft || !draft.title.trim()) { setFormError("先写下要准备什么。"); return; }
+    const body = {
+      title: draft.title.trim(), group: draft.group,
+      ...(draft.item_editable ? { item_id: draft.item_id || null } : {}),
+      note: draft.note.trim(),
+      ...(!draft.id ? { assignee_id: board.access === "owner" ? draft.assignee_id || null : user.id } : {}),
+    };
+    if (await mutate(draft.id ? `/entries/${draft.id}/details` : "/entries", draft.id ? "PATCH" : "POST", body)) setDraft(undefined);
+  }
+  return <section className="outing-preparation" aria-label="物品准备清单">
+    <div className="outing-list-heading">
+      <div><h3>要带的东西</h3><p>有了什么，和实际备好了什么，分开记。</p></div>
+      {board.access !== "invited" && <button className="soft-button" disabled={busy} onClick={() => { setFormError(""); setDraft({ title: "", group: "confirm", item_id: "", item_editable: true, note: "", assignee_id: user.id }); }}><Plus size={16} />补充一项</button>}
+    </div>
+    <div className="outing-progress" aria-live="polite"><strong>已准备 {board.completed_count} / {board.total_count}</strong><progress max={Math.max(1, board.total_count)} value={board.completed_count} /></div>
+    <div className="outing-entries">
+      {board.entries.map((entry) => {
+        const item = workspace.items.find((value) => value.id === entry.item_id);
+        return <article className={`outing-entry ${entry.state === "ready" ? "is-ready" : ""}`} key={entry.id}>
+          <input type="checkbox" aria-label={`已准备：${entry.title}`} checked={entry.state === "ready"} disabled={busy || !canEdit(entry)} onChange={(event) => void mutate(`/entries/${entry.id}`, "PATCH", { state: event.target.checked ? "ready" : "pending", note: entry.note })} />
+          <div className="outing-entry-content">
+            <div className="outing-entry-title">{item && <button className="outing-item-image" aria-label={`查看${item.name}`} onClick={() => onItem(item.id)}><ObjectVisual item={item} /></button>}<div><strong>{entry.title}</strong><div className="outing-entry-badges"><span className={`outing-availability ${entry.group}`}>{availability[entry.group]}</span><span>{entry.state === "ready" ? "已准备（用户报告）" : entry.state === "not_found" ? "还没找到" : "尚未准备好"}</span></div></div></div>
+            {entry.note && <p className="outing-entry-note">{entry.note}</p>}
+            <div className="outing-entry-actions">
+              {board.access === "owner" ? <label className="outing-assignment">谁来准备<select aria-label={`由谁准备${entry.title}`} disabled={busy} value={entry.assignee_id || ""} onChange={(event) => void mutate(`/entries/${entry.id}/assignee`, "PATCH", { assignee_id: event.target.value || null })}><option value="">待认领</option><option value={user.id}>我</option>{people.map((person) => <option key={String(person.id)} value={String(person.id)}>{String(person.display_name)}</option>)}</select></label> : <span className="outing-person">{entry.assignee_id ? `${nameOf(entry.assignee_id)}负责` : "还没人认领"}</span>}
+              {canEdit(entry) && <button className="quiet-button" disabled={busy} onClick={() => { setFormError(""); setDraft({ id: entry.id, title: entry.title, group: entry.group, item_id: entry.item_id || "", item_editable: board.access === "owner" || !!entry.item_id, note: entry.note, assignee_id: entry.assignee_id || "" }); }}><Pencil size={14} />修改</button>}
+            </div>
+          </div>
+        </article>;
+      })}
+      {!board.entries.length && <EmptyState title="还没有清单项目">告诉阿圆这次想做什么，也可以自己补充。</EmptyState>}
+    </div>
+    {board.access === "owner" && <button className="quiet-button outing-invite-link" onClick={() => document.getElementById(`task-people-${board.task.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" })}>想交给朋友？先邀请一起准备 <ArrowRight size={15} /></button>}
+    <p className="form-note">勾选仅表示用户报告已备妥。新增项目不会自动变成已拥有的物品，也不会把活动标成完成。</p>
+    <Modal open={!!draft} title={draft?.id ? "修改准备项目" : "还要准备什么"} onCancel={() => { if (!busy) setDraft(undefined); }} maskClosable={!busy} closable={!busy} destroyOnHidden footer={<><button className="soft-button" disabled={busy} onClick={() => setDraft(undefined)}>取消</button><button className="primary-button" disabled={busy || !draft?.title.trim()} onClick={() => void save()}>{busy ? "保存中…" : "保存到清单"}</button></>}>
+      {draft && <form className="outing-entry-form" onSubmit={(event) => { event.preventDefault(); void save(); }}>
+        <label>准备什么<input autoFocus maxLength={200} value={draft.title} onChange={(event) => setDraft({ ...draft, title: event.target.value })} placeholder="比如冰袋、充电宝，或再装一壶水" /></label>
+        <label>现在有吗<select value={draft.group} onChange={(event) => setDraft({ ...draft, group: event.target.value as TaskEntry["group"] })}>{Object.entries(availability).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
+        {draft.item_editable && <label>关联已录入物品（可不选）<select value={draft.item_id} onChange={(event) => setDraft({ ...draft, item_id: event.target.value })}><option value="">不关联物品</option>{workspace.items.map((item) => <option key={item.id} value={item.id}>{item.name}{item.product.model ? ` · ${item.product.model}` : ""}</option>)}</select></label>}
+        {board.access === "active" && <p className="form-note">不必分享私人库存。选“有”并填好说明就能一起准备；关联物品仅支持双方都能查看的物品。</p>}
+        {!draft.id && board.access === "owner" && <label>谁来准备<select value={draft.assignee_id} onChange={(event) => setDraft({ ...draft, assignee_id: event.target.value })}><option value="">待认领</option><option value={user.id}>我</option>{people.map((person) => <option key={String(person.id)} value={String(person.id)}>{String(person.display_name)}</option>)}</select></label>}
+        <label>补充说明<textarea rows={3} maxLength={2000} value={draft.note} onChange={(event) => setDraft({ ...draft, note: event.target.value })} placeholder="数量、放在哪里，或还需要确认的事情" /></label>
+        {draft.id && <p className="form-note">修改名称、有无或关联物品后，会重新等待准备确认；只改说明会保留进度。</p>}
+        {formError && <p className="outing-form-error" role="alert">{formError}</p>}
+      </form>}
+    </Modal>
+  </section>;
+}
 
 function LegacyPlan({ value }: { value: unknown }) {
   if (typeof value === "string" || typeof value === "number")
@@ -93,7 +212,9 @@ export function TaskCanvas({
   const [busy, setBusy] = useState(false),
     [focus, setFocus] = useState(0),
     [summary, setSummary] = useState<string>();
+  const currentTask = useTaskIdentity(board.task.id);
   useEffect(() => {
+    setSummary(undefined);
     setFocus(
       Math.max(
         0,
@@ -103,17 +224,18 @@ export function TaskCanvas({
   }, [board.task.id]);
   async function mark(entry: TaskEntry, state: string) {
     if (busy) return false;
+    const taskId = board.task.id;
     setBusy(true);
     try {
-      update(
-        await request<Board>(
-          `/tasks/${board.task.id}/entries/${entry.id}`,
+      const next = await request<Board>(
+          `/tasks/${taskId}/entries/${entry.id}`,
           "PATCH",
           { expected_version: board.task.version, state, note: entry.note },
-        ),
-      );
+        );
+      if (currentTask.current !== taskId) return false;
+      update(next);
       await refresh();
-      return true;
+      return currentTask.current === taskId;
     } catch (error) {
       message.error((error as Error).message);
       return false;
@@ -154,6 +276,11 @@ export function TaskCanvas({
       ].join("\n"),
     );
   }
+  if (board.task.plan?.pending_action) return <div className="task-canvas"><ButlerActionCard taskId={board.task.id} refresh={refresh} onUpdated={async () => {
+    const identity = board.task.id;
+    const latest = await request<Board>(`/tasks/${identity}/board`);
+    if (currentTask.current === identity) update(latest);
+  }} /></div>;
   return (
     <div className="task-canvas">
       <div className="task-heading">
@@ -176,11 +303,12 @@ export function TaskCanvas({
           className="primary-button"
           disabled={busy}
           onClick={async () => {
+            const taskId = board.task.id;
             setBusy(true);
             try {
-              update(
-                await request<Board>(`/tasks/${board.task.id}/accept`, "POST"),
-              );
+              const next = await request<Board>(`/tasks/${taskId}/accept`, "POST");
+              if (currentTask.current !== taskId) return;
+              update(next);
               await refresh();
             } catch (error) {
               message.error((error as Error).message);
@@ -308,43 +436,7 @@ export function TaskCanvas({
         </>
       ) : board.kind !== "legacy" ? (
         <>
-          <div className="plan-overview">
-            {(["owned", "buy", "borrow", "confirm"] as const).map((group) => {
-              const entries = board.entries.filter(
-                (entry) => entry.group === group,
-              );
-              return (
-                entries.length > 0 && (
-                  <div className="plan-group" key={group}>
-                    <span className="group-label">{labels[group]}</span>
-                    <div className="plan-group-items">
-                      {entries.map((entry) => (
-                        <button
-                          key={entry.id}
-                          onClick={() =>
-                            entry.item_id && onItem(entry.item_id!)
-                          }
-                          disabled={!entry.item_id}
-                        >
-                          {entry.item_id &&
-                            workspace.items.find(
-                              (item) => item.id === entry.item_id,
-                            ) && (
-                              <ObjectVisual
-                                item={workspace.items.find(
-                                  (item) => item.id === entry.item_id,
-                                )!}
-                              />
-                            )}
-                          <span>{entry.title}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )
-              );
-            })}
-          </div>
+          <PreparationList {...{ board, workspace, user, update, refresh, onItem, onCamera }} />
           {workspace.items
             .filter(
               (item) =>
@@ -358,12 +450,6 @@ export function TaskCanvas({
                 <p>{item.name}目前不适合使用，这次先不带。</p>
               </div>
             ))}
-          {!board.entries.length && (
-            <EmptyState title="先说说目标，必要时再整理清单" />
-          )}
-          <p className="form-note">
-            新增需求不会自动进入物品库存。清单进度即时保存，准备就绪也不等于活动已经完成。
-          </p>
         </>
       ) : (
         <section className="legacy-plan">
@@ -427,34 +513,15 @@ export function TaskRail({
     [invite, setInvite] = useState(""),
     [resultText, setResultText] = useState(""),
     [outcome, setOutcome] = useState("partial");
-  async function mark(entry: TaskEntry, checked: boolean) {
-    if (busy) return;
-    setBusy(true);
-    try {
-      update(
-        await request<Board>(
-          `/tasks/${board.task.id}/entries/${entry.id}`,
-          "PATCH",
-          {
-            expected_version: board.task.version,
-            state: checked ? "ready" : "pending",
-            note: entry.note,
-          },
-        ),
-      );
-      await refresh();
-    } catch (error) {
-      message.error((error as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  }
+  const currentTask = useTaskIdentity(board.task.id);
+  useEffect(() => { setInvite(""); setResultText(""); setOutcome("partial"); }, [board.task.id]);
   async function feedback() {
     if (busy || !resultText.trim()) return;
+    const taskId = board.task.id;
     setBusy(true);
     try {
       let next = await request<Task>(
-        `/tasks/${board.task.id}/feedback`,
+        `/tasks/${taskId}/feedback`,
         "POST",
         { text: resultText, outcome, expected_version: board.task.version },
       );
@@ -468,7 +535,9 @@ export function TaskRail({
           expected_version: next.version,
           status: "completed",
         });
-      update(await request<Board>(`/tasks/${board.task.id}/board`));
+      const latest = await request<Board>(`/tasks/${taskId}/board`);
+      if (currentTask.current !== taskId) return;
+      update(latest);
       setResultText("");
       await refresh();
       message.success("实际反馈已保留在同一件事情里。");
@@ -481,9 +550,10 @@ export function TaskRail({
   const item = workspace.items.find((item) =>
     board.task.item_ids.includes(item.id),
   );
+  if (board.task.plan?.pending_action) return <section className="rail-section"><h2>管家待办</h2><p className="empty-note">先核对操作卡片中的接收人和内容。确认结果和回执会保留在同一件事情里。</p></section>;
   return (
     <>
-      <section className="rail-section">
+      {board.kind !== "checklist" && <section className="rail-section">
         <h2>{board.kind === "guidance" ? "这件物品" : board.kind === "idea" ? "围绕这些物品" : "准备清单"}</h2>
         {board.kind === "idea" ? (
           <div className="idea-related-items">
@@ -510,118 +580,10 @@ export function TaskRail({
             <ArrowRight size={17} />
           </button>
         ) : (
-          <>
-            <div className="checklist-progress">
-              <strong>
-                已准备 {board.completed_count} / {board.total_count}
-              </strong>
-              <progress
-                max={Math.max(1, board.total_count)}
-                value={board.completed_count}
-              />
-              <Companion small />
-            </div>
-            <div className="checklist-entries">
-              {board.entries.map((entry) => (
-                <div className="checklist-entry" key={entry.id}>
-                  <input
-                    type="checkbox"
-                    aria-label={`准备${entry.title}`}
-                    checked={entry.state === "ready"}
-                    disabled={
-                      busy ||
-                      board.access === "invited" ||
-                      (board.access !== "owner" &&
-                        !!entry.assignee_id &&
-                        entry.assignee_id !== user.id)
-                    }
-                    onChange={(event) => void mark(entry, event.target.checked)}
-                  />
-                  <button
-                    disabled={!entry.item_id}
-                    className="entry-detail"
-                    onClick={() => entry.item_id && onItem(entry.item_id)}
-                  >
-                    {entry.item_id &&
-                      workspace.items.find(
-                        (item) => item.id === entry.item_id,
-                      ) && (
-                        <ObjectVisual
-                          item={workspace.items.find(
-                            (item) => item.id === entry.item_id,
-                          )!}
-                        />
-                      )}
-                    <div>
-                      <strong>{entry.title}</strong>
-                      <p>
-                        {entry.state === "ready"
-                          ? "已准备（用户报告）"
-                          : labels[entry.group]}
-                        {entry.updated_by
-                          ? " · " +
-                            (entry.updated_by === user.id
-                              ? "我"
-                              : workspace.friends.find(
-                                  (friend) => friend.id === entry.updated_by,
-                                )?.display_name || "参与者") +
-                            "更新"
-                          : ""}
-                      </p>
-                    </div>
-                  </button>
-                  {board.access === "owner" ? (
-                    <select
-                      className="entry-assignment"
-                      aria-label={`分配${entry.title}`}
-                      value={entry.assignee_id || ""}
-                      disabled={busy}
-                      onChange={async (event) => {
-                        setBusy(true);
-                        try {
-                          update(
-                            await request<Board>(
-                              `/tasks/${board.task.id}/entries/${entry.id}/assignee`,
-                              "PATCH",
-                              {
-                                expected_version: board.task.version,
-                                assignee_id: event.target.value || null,
-                              },
-                            ),
-                          );
-                          await refresh();
-                        } catch (error) {
-                          message.error((error as Error).message);
-                        } finally {
-                          setBusy(false);
-                        }
-                      }}
-                    >
-                      <option value="">待认领</option>
-                      <option value={user.id}>我</option>
-                      {board.participants
-                        .filter((person) => person.status === "active")
-                        .map((person) => (
-                          <option
-                            key={String(person.id)}
-                            value={String(person.id)}
-                          >
-                            {String(person.display_name)}
-                          </option>
-                        ))}
-                    </select>
-                  ) : entry.assignee_id ? (
-                    <small>
-                      {entry.assignee_id === user.id ? "交给我" : "已有负责人"}
-                    </small>
-                  ) : null}
-                </div>
-              ))}
-            </div>
-          </>
+          <p className="empty-note">步骤和原方案已保留在当前事项中，可以接着和阿圆核对。</p>
         )}
-      </section>
-      <section className="rail-section">
+      </section>}
+      <section className="rail-section" id={`task-people-${board.task.id}`}>
         <h2>{board.kind === "guidance" ? "可核对的资料" : "一起准备"}</h2>
         {board.kind === "guidance" ? (
           board.sources.length ? (
@@ -651,7 +613,7 @@ export function TaskRail({
         ) : (
           <>
             <div className="member-avatars">
-              <span className="person-avatar">我</span>
+              <span className="person-avatar" title={board.access === "owner" ? "我 · 发起人" : "发起人"}>{board.access === "owner" ? "我" : "主"}</span>
               {board.participants.map((person) => (
                 <span
                   key={String(person.id)}
@@ -662,7 +624,7 @@ export function TaskRail({
                   }
                   className={`person-avatar ${person.status === "active" ? "" : "pending"}`}
                 >
-                  {String(person.display_name).slice(-1)}
+                  {person.id === user.id ? "我" : String(person.display_name).slice(0, 1)}
                 </span>
               ))}
             </div>
@@ -692,15 +654,16 @@ export function TaskRail({
                   className="soft-button"
                   disabled={!invite || busy}
                   onClick={async () => {
+                    const taskId = board.task.id;
                     setBusy(true);
                     try {
-                      update(
-                        await request<Board>(
-                          `/tasks/${board.task.id}/shares`,
+                      const next = await request<Board>(
+                          `/tasks/${taskId}/shares`,
                           "POST",
                           { user_id: invite },
-                        ),
-                      );
+                        );
+                      if (currentTask.current !== taskId) return;
+                      update(next);
                       setInvite("");
                       await refresh();
                     } catch (error) {

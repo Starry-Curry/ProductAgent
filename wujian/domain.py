@@ -207,7 +207,7 @@ def change_item(db, user_id, item_id, payload: ItemChange, *, origin_run_id=None
 
 
 def experience_view(row):
-    return {key: getattr(row, key) for key in ("id", "creator_id", "title", "text", "item_ids", "item_labels", "photo_ids", "occurred_on", "origin_id", "provenance", "version", "allow_ai")}
+    return {key: getattr(row, key) for key in ("id", "creator_id", "title", "text", "item_ids", "item_labels", "photo_ids", "occurred_on", "origin_id", "provenance", "version", "allow_ai", "household_id")}
 
 
 def shared_story_provenance(provenance):
@@ -241,23 +241,36 @@ def wall_storage_view(db, user_id, item_ids=None):
 
 
 def list_experiences(db, user_id, item_id=None, query="", for_ai=False):
+    from .family_memory import ExperienceReadScope, can_read_experience, family_experience_visible
     if item_id:
         accessible_item(db, user_id, item_id)
-    allowed = ExperienceRecord.creator_id == user_id
+    scope = ExperienceReadScope.load(db, user_id, for_ai=for_ai)
+    allowed = or_(ExperienceRecord.creator_id == user_id, ExperienceRecord.household_id.in_(scope.members))
     if not for_ai:
-        allowed = or_(allowed, ExperienceRecord.id.in_(select(ExperienceShare.experience_id).where(ExperienceShare.user_id == user_id)))
+        allowed = or_(allowed, ExperienceRecord.id.in_(scope.shared_ids))
     rows = db.scalars(select(ExperienceRecord).where(allowed)
                       .order_by(ExperienceRecord.occurred_on.desc(), ExperienceRecord.created_at.desc())).all()
     result = []
-    accessible = {item["id"] for item in list_items(db, user_id, include_archived=True)}
+    # Individual story shares expose only already-readable linked item IDs.
+    # This needs no item profiles, growth projections or per-item permission IO.
+    accessible = set()
+    if scope.shared_ids:
+        accessible = set(db.scalars(select(ItemRecord.id).where(or_(
+            ItemRecord.owner_id == user_id,
+            ItemRecord.id.in_(select(Grant.item_id).where(Grant.user_id == user_id)),
+            ItemRecord.id.in_({identity for ids in scope.items.values() for identity in ids})))))
     for row in rows:
-        if (for_ai and not row.allow_ai) or (item_id and item_id not in row.item_ids) or (query and query.casefold() not in (row.title + row.text).casefold()):
+        if not can_read_experience(db, user_id, row, for_ai=for_ai, scope=scope) or (item_id and item_id not in row.item_ids) or (query and query.casefold() not in (row.title + row.text).casefold()):
             continue
         value = experience_view(row)
         value["access"] = "owner" if row.creator_id == user_id else "shared"
         if value["access"] == "shared":
-            value.update(allow_ai=False, item_ids=[identity for identity in row.item_ids if identity in accessible],
-                item_labels={identity: label for identity, label in row.item_labels.items() if identity in accessible},
+            is_family = family_experience_visible(db, user_id, row, scope=scope)
+            visible_items = scope.items.get(row.household_id, set()) if is_family else accessible
+            value.update(allow_ai=row.allow_ai if is_family else False,
+                household_id=row.household_id if is_family else None,
+                item_ids=[identity for identity in row.item_ids if identity in visible_items],
+                item_labels={identity: label for identity, label in row.item_labels.items() if identity in visible_items},
                 provenance=shared_story_provenance(row.provenance))
         result.append(value)
     return result
@@ -286,6 +299,8 @@ def create_experience(db, user_id, payload: ExperienceCreate, *, source_message_
         identity["item_ids"] = sorted(set(identity["item_ids"]))
         recording_key = hashlib.sha256(json.dumps(identity, ensure_ascii=False,
             sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+    from .family_memory import active_members, validate_family_scope
+    validate_family_scope(db, user_id, payload.household_id, payload.item_ids)
     labels = {item_id: accessible_item(db, user_id, item_id).name for item_id in dict.fromkeys(payload.item_ids)}
     for photo_id in payload.photo_ids:
         own_asset(db, user_id, photo_id)
@@ -301,7 +316,7 @@ def create_experience(db, user_id, payload: ExperienceCreate, *, source_message_
     row = ExperienceRecord(creator_id=user_id, title=payload.title, text=payload.text,
                            item_ids=list(labels), item_labels=labels, photo_ids=payload.photo_ids,
                            occurred_on=payload.occurred_on.isoformat() if payload.occurred_on else None,
-                           allow_ai=payload.allow_ai,
+                           allow_ai=payload.allow_ai, household_id=payload.household_id,
                            provenance={"kind":"authored_record","author_id":user_id,
                                        "author_name":db.get(User,user_id).display_name})
     if source_message and payload.allow_ai:
@@ -312,6 +327,9 @@ def create_experience(db, user_id, payload: ExperienceCreate, *, source_message_
         db.flush()
         source_message.recorded_experiences = {
             **(source_message.recorded_experiences or {}), recording_key: row.id}
+    # Other family members may have an in-flight answer based on the old wall.
+    # The author's current record_experience call must not interrupt itself.
+    invalidate_context(db, active_members(db, payload.household_id) - {user_id}, stop_running=True)
     db.commit()
     return experience_view(row)
 
@@ -322,7 +340,11 @@ def memory_view(row):
 
 def agent_item_view(value):
     """Expose the physical reference without a confusable model-table key."""
-    return {"item_id": value["id"], **{key:field for key,field in value.items() if key not in {"id", "product_id"}}}
+    avatar = dict(value.get("avatar", {}))
+    if "gift_memories" in avatar:
+        avatar["gift_memories"] = [entry for entry in avatar["gift_memories"] if entry.get("chat_allowed", True)]
+    return {"item_id": value["id"], **{key:field for key,field in value.items() if key not in {"id", "product_id", "avatar"}},
+            "avatar": avatar}
 
 
 def recall(db, user_id, query="", item_id=None, limit=20):
@@ -385,7 +407,7 @@ def gift_view(db, row):
             "snapshot": snapshot, "status": row.status, "created_at": row.created_at}
 
 
-def create_gift(db, user_id, payload: GiftCreate):
+def create_gift(db, user_id, payload: GiftCreate, *, commit=True):
     item = accessible_item(db, user_id, payload.item_id, write=True)
     if item.archived:
         raise DomainError("请先恢复这件物品")
@@ -394,26 +416,33 @@ def create_gift(db, user_id, payload: GiftCreate):
     if db.scalar(select(Gift.id).where(Gift.item_id == item.id, Gift.status == "pending")):
         raise DomainError("这件物品已有待接收的礼物", 409)
     experiences = []
+    if len({entry.experience_id for entry in payload.surprises}) != len(payload.surprises):
+        raise DomainError("同一段故事只需一个彩蛋提示")
+    if any(entry.experience_id not in payload.experience_ids for entry in payload.surprises):
+        raise DomainError("彩蛋必须关联本次明确选中的故事")
     for identity in dict.fromkeys(payload.experience_ids):
         experience = require(db.get(ExperienceRecord, identity))
         if experience.creator_id != user_id or item.id not in experience.item_ids:
             raise DomainError("只能附上自己创作且与这件物品关联的回忆")
         view = experience_view(experience)
+        view["household_id"] = None
         view["item_ids"], view["item_labels"] = [item.id], {item.id: item.name}
         view["provenance"] = shared_story_provenance(experience.provenance)
         experiences.append(view)
     snapshot = {"name": item.name, "product": item.product, "message": payload.message,
                 "avatar": payload.avatar.model_dump(), "experiences": experiences,
-                "sender_name": db.get(User, user_id).display_name}
+                "sender_name": db.get(User, user_id).display_name,
+                "photo_id":item.photo_id,
+                "surprises":[entry.model_dump() for entry in payload.surprises]}
     from .continuity import public_product_sources
     snapshot['public_source_ids'] = [source.id for source, _ in public_product_sources(db,user_id,item)]
     gift = Gift(sender_id=user_id, recipient_id=payload.recipient_id, item_id=item.id, snapshot=snapshot)
     db.add(gift)
-    db.commit()
+    db.commit() if commit else db.flush()
     return gift_view(db, gift)
 
 
-def accept_gift(db, user_id, gift_id):
+def accept_gift(db, user_id, gift_id, *, acceptance=None):
     gift = require(db.get(Gift, gift_id))
     if gift.recipient_id != user_id:
         raise DomainError("没有找到这份礼物", 404)
@@ -437,6 +466,17 @@ def accept_gift(db, user_id, gift_id):
     profile.description = gift.snapshot["message"]
     profile.avatar = {**gift.snapshot["avatar"], "gift_from": gift.snapshot["sender_name"],
                       "gift_message": gift.snapshot["message"]}
+    if acceptance is not None:
+        profile.avatar = {**profile.avatar, "enabled":acceptance.wake_avatar}
+    photo_id = gift.snapshot.get("photo_id")
+    if photo_id:
+        original = own_asset(db, gift.sender_id, photo_id)
+        copied = Asset(id=uid(),owner_id=user_id,path=original.path,
+                       media_type=original.media_type,original_name=original.original_name)
+        db.add(copied)
+        db.flush()
+        item.photo_id = copied.id
+    memory_refs = []
     for experience in gift.snapshot["experiences"]:
         new_photos = []
         for photo_id in experience["photo_ids"]:
@@ -444,13 +484,22 @@ def accept_gift(db, user_id, gift_id):
             copied = Asset(id=uid(), owner_id=user_id, path=asset.path, media_type=asset.media_type, original_name=asset.original_name)
             db.add(copied)
             new_photos.append(copied.id)
-        db.add(ExperienceRecord(creator_id=user_id, title=experience["title"], text=experience["text"],
+        received = ExperienceRecord(id=uid(), creator_id=user_id, title=experience["title"], text=experience["text"],
                                item_ids=[item.id], item_labels={item.id: gift.snapshot["name"]},
                                photo_ids=new_photos, occurred_on=experience["occurred_on"], origin_id=experience["id"],
                                provenance={**shared_story_provenance(experience.get("provenance",{})),"kind":"received_story",
                                            "author_id":experience.get("provenance",{}).get("author_id",gift.sender_id),
                                            "author_name":experience.get("provenance",{}).get("author_name",gift.snapshot["sender_name"]),
-                                           "gift_id":gift.id,"sender_name":gift.snapshot["sender_name"]}))
+                                           "gift_id":gift.id,"sender_name":gift.snapshot["sender_name"]},
+                               allow_ai=bool(acceptance and acceptance.allow_story_ai))
+        db.add(received)
+        surprise = next((entry for entry in gift.snapshot.get("surprises",[])
+                         if entry["experience_id"] == experience["id"]),None)
+        if surprise:
+            memory_refs.append({"experience_id":received.id,"hint":surprise["hint"],
+                                "trigger_words":surprise.get("trigger_words",[]),"unlocked":False})
+    if memory_refs:
+        profile.avatar = {**profile.avatar,"gift_memories":memory_refs}
     gift.status = "accepted"
     from .continuity import copy_public_evidence
     copy_public_evidence(db,gift.sender_id,user_id,item,gift.snapshot.get('public_source_ids',[]))

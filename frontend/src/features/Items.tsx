@@ -29,6 +29,7 @@ import {
 } from "./shared";
 import { navigate, type Route } from "./navigation";
 import Care from "./Care";
+import FamilyMemories from "./FamilyMemories";
 import { ObjectCompanion, PersonaGrowth } from "./ObjectCompanion";
 
 type Props = {
@@ -59,22 +60,25 @@ export default function Items({
   );
   const [houseId, setHouseId] = useState(houses[0]?.id || "");
   useEffect(() => {
-    if (!houses.some((house) => house.id === houseId))
+    if (route.householdId && houses.some((house) => house.id === route.householdId))
+      setHouseId(route.householdId);
+    else if (!houses.some((house) => house.id === houseId))
       setHouseId(houses[0]?.id || "");
-  }, [workspace.households]);
-  const house = houses.find((house) => house.id === houseId);
+  }, [workspace.households, route.householdId]);
+  const house = houses.find((house) => house.id === route.householdId)
+    || houses.find((house) => house.id === houseId) || houses[0];
   const scope = route.scope || "household";
   const item = workspace.items.find((item) => item.id === route.itemId);
   const items = workspace.items.filter((item) =>
     scope === "personal"
-      ? item.owner_id === user.id
+      ? item.owner_id === user.id && !workspace.households.some((family) => family.item_ids.includes(item.id))
       : house?.item_ids.includes(item.id),
   );
   const visible = items.filter((item) => {
     const info = presentation(item);
     return (
       (!query ||
-        (item.name + item.avatar.nickname + item.product.model + info.location)
+        (item.name + item.avatar.nickname + item.product.brand + item.product.commercial_name + item.product.model + info.location)
           .toLowerCase()
           .includes(query.toLowerCase())) &&
       (!room || info.location === room) &&
@@ -94,7 +98,8 @@ export default function Items({
     (item) => presentation(item).attention === "needs_restock",
   ).length;
   function select(item: Item) {
-    navigate({ section: "items", scope, itemId: item.id });
+    navigate({ section: "items", scope, itemId: item.id,
+      householdId: scope === "household" ? house?.id : undefined });
   }
   if (route.itemId) {
     return (
@@ -110,19 +115,20 @@ export default function Items({
             ask={ask}
             task={task}
             device={device}
-            onBack={() => navigate({ section: "items", scope })}
+            householdId={scope === "household" && house?.item_ids.includes(item.id) ? house.id : undefined}
+            onBack={() => navigate({ section: "items", scope, householdId: scope === "household" ? house?.id : undefined })}
           />
         ) : (
           <EmptyState
             title="暂时无法打开这件物品"
-            action={<button className="soft-button" onClick={() => navigate({ section: "items", scope })}>返回物品</button>}
+            action={<button className="soft-button" onClick={() => navigate({ section: "items", scope, householdId: scope === "household" ? house?.id : undefined })}>返回物品</button>}
           >它可能已被移走，或共享权限已改变。</EmptyState>
         )}
       </main>
     );
   }
   return (
-    <div className="items-workspace">
+    <div className={`items-workspace ${scope === "personal" ? "personal-items" : ""}`}>
       <section className="items-browser">
         <div className="segmented" role="group" aria-label="物品范围">
           <button
@@ -130,10 +136,10 @@ export default function Items({
             onClick={() => {
               setFilter("all");
               setRoom("");
-              navigate({ section: "items", scope: "household" });
+              navigate({ section: "items", scope: "household", householdId: house?.id });
             }}
           >
-            家庭用品
+            家庭物品
           </button>
           <button
             className={scope === "personal" ? "active" : ""}
@@ -148,6 +154,13 @@ export default function Items({
         </div>
         {scope === "household" && (
           <div className="mobile-household-tools">
+            {houses.length > 1 && <select className="family-household-select" aria-label="选择家庭" value={house?.id || ""}
+              onChange={(event) => {
+                setHouseId(event.target.value); setFilter("all"); setRoom("");
+                navigate({ section: "items", scope: "household", householdId: event.target.value });
+              }}>
+              {houses.map((family) => <option key={family.id} value={family.id}>{family.name}</option>)}
+            </select>}
             <button
               className="quiet-button"
               onClick={() => edit({ kind: "household" })}
@@ -157,7 +170,7 @@ export default function Items({
             </button>
             <button
               className="quiet-button"
-              onClick={() => navigate({ section: "care" })}
+              onClick={() => navigate({ section: "care", householdId: house?.id })}
             >
               共同照顾的事
               <ArrowRight size={16} />
@@ -231,7 +244,7 @@ export default function Items({
               </Pill>
               <span className="scope-note">
                 <LockKeyhole size={14} />
-                私人故事单独管理
+                未加入家庭的私人物品
               </span>
             </>
           )}
@@ -289,7 +302,7 @@ export default function Items({
             </button>
           )}
       </section>
-      <aside className="detail-pane">
+      {scope === "household" && <aside className="detail-pane">
             <section className="rail-section">
               <div className="section-title">
                 <h2>一起照看这个家</h2>
@@ -342,8 +355,8 @@ export default function Items({
                 workspace={workspace}
                 user={user}
                 refresh={refresh}
-                onItem={(id) =>
-                  navigate({ section: "items", scope, itemId: id })
+                onItem={(id, reminderHouseholdId) =>
+                  navigate({ section: "items", scope, itemId: id, householdId: reminderHouseholdId || house?.id })
                 }
                 householdId={house?.id}
                 compact
@@ -367,12 +380,12 @@ export default function Items({
               ))}
             <button
               className="primary-button full-width"
-              onClick={() => edit({ kind: "reminder" })}
+              onClick={() => edit({ kind: "reminder", householdId: house?.id })}
             >
               <Wrench size={18} />
               记录一件需要处理的事
             </button>
-      </aside>
+      </aside>}
     </div>
   );
 }
@@ -387,7 +400,8 @@ function ItemDetail({
   task,
   device,
   onBack,
-}: Omit<Props, "route"> & { item: Item; onBack: () => void }) {
+  householdId,
+}: Omit<Props, "route"> & { item: Item; onBack: () => void; householdId?: string }) {
   const [growthBusy, setGrowthBusy] = useState(false);
   const [growthError, setGrowthError] = useState("");
   async function changeGrowth(change: { growth_enabled?: boolean; growth_dismissed_ids?: string[] }) {
@@ -463,6 +477,9 @@ function ItemDetail({
       <div className="detail-heading">
         <div>
           <h1>{item.name}</h1>
+          {item.kind === "standard_product" && item.product.model && (
+            <p>{[item.product.brand, item.product.commercial_name, item.product.model].filter(Boolean).join(" · ")}</p>
+          )}
           <p>
             <MapPin size={16} />
             {info.location || item.product.model || "独一份的存在"}
@@ -470,30 +487,9 @@ function ItemDetail({
         </div>
         <span className="privacy-label">
           <LockKeyhole size={15} />
-          {owned ? "私人介绍仅自己可见" : "获准共享的物品"}
+          {householdId ? "家庭共享物品 · 回忆另选范围" : owned ? "私人介绍仅自己可见" : "获准共享的物品"}
         </span>
       </div>
-      {item.avatar.enabled && (
-        <div className="persona-strip">
-          {item.photo_id && <ObjectCompanion item={item} size={80} />}
-          <div className="persona-identity">
-            <strong>{item.avatar.nickname || item.name}</strong>
-            <p>{item.avatar.personality || "相处时的样子，由你慢慢决定。"}</p>
-            {owned && <PersonaGrowth avatar={item.avatar} busy={growthBusy}
-              onToggle={(enabled) => { void changeGrowth({ growth_enabled: enabled }); }}
-              onDismiss={(id) => { void changeGrowth({ growth_dismissed_ids:
-                [...new Set([...(item.avatar.growth_dismissed_ids || []), id])] }); }}
-              onExperience={(id) => navigate({ section: "memories", itemId: item.id, experienceId: id })} />}
-            {growthError && <p className="inline-error" role="alert">{growthError}</p>}
-          </div>
-          <div className="persona-strip-actions">
-            <button className="soft-button" onClick={() => ask(item, "persona")}>
-              和它聊聊
-            </button>
-            {owned && <button className="quiet-button" onClick={() => edit({ kind: "persona", item })}>它的模样与性格</button>}
-          </div>
-        </div>
-      )}
       {info.attention !== "normal" && (
         <div className="item-attention">
           <span className={`status-tag ${info.attention}`}>
@@ -524,9 +520,9 @@ function ItemDetail({
         </button>
         <button
           className="primary-button"
-          onClick={() => edit({ kind: "experience", item })}
+          onClick={() => edit({ kind: "experience", item, householdId })}
         >
-          记一段
+          {householdId ? "和家人记一段" : "记一段"}
         </button>
         <button
           className="icon-button"
@@ -557,12 +553,34 @@ function ItemDetail({
                 <Gift size={17} />
                 送出这件物品
               </button>
-              <button onClick={() => edit({ kind: "reminder", item })}>
+              <button onClick={() => edit({ kind: "reminder", item, householdId })}>
                 照顾与提醒
               </button>
               <button onClick={() => device(item)}>让它更合心意</button>
             </>
           )}
+          {householdId && !owned && <button onClick={() => edit({ kind: "reminder", item, householdId })}>给家人留个提醒</button>}
+        </div>
+      )}
+      {item.avatar.enabled && (
+        <div className="persona-strip">
+          {item.photo_id && <ObjectCompanion item={item} size={80} />}
+          <div className="persona-identity">
+            <strong>{item.avatar.nickname || item.name}</strong>
+            <p>{item.avatar.personality || "相处时的样子，由你慢慢决定。"}</p>
+            {owned && <PersonaGrowth avatar={item.avatar} busy={growthBusy}
+              onToggle={(enabled) => { void changeGrowth({ growth_enabled: enabled }); }}
+              onDismiss={(id) => { void changeGrowth({ growth_dismissed_ids:
+                [...new Set([...(item.avatar.growth_dismissed_ids || []), id])] }); }}
+              onExperience={(id) => navigate({ section: "memories", itemId: item.id, experienceId: id })} />}
+            {growthError && <p className="inline-error" role="alert">{growthError}</p>}
+          </div>
+          <div className="persona-strip-actions">
+            <button className="soft-button" onClick={() => ask(item, "persona")}>
+              和它聊聊
+            </button>
+            {owned && <button className="quiet-button" onClick={() => edit({ kind: "persona", item })}>它的模样与性格</button>}
+          </div>
         </div>
       )}
       {item.description && (
@@ -590,7 +608,7 @@ function ItemDetail({
       )}
       <div className="detail-tabs">
         <Pill active={tab === "story"} onClick={() => setTab("story")}>
-          它的经历
+          {householdId ? "家庭共同回忆" : "它的经历"}
         </Pill>
         <Pill active={tab === "knowledge"} onClick={() => setTab("knowledge")}>
           用法与资料
@@ -599,7 +617,8 @@ function ItemDetail({
           照顾与历史
         </Pill>
       </div>
-      {tab === "story" && (
+      {tab === "story" && householdId && <FamilyMemories workspace={workspace} item={item} householdId={householdId} edit={edit} />}
+      {tab === "story" && !householdId && (
         <div className="story-timeline">
           {experiences.map((exp) => (
             <button
@@ -680,6 +699,7 @@ function ItemDetail({
             user={user}
             refresh={refresh}
             onItem={() => {}}
+            householdId={householdId}
           />
           <p className="form-note">
             处理反馈和实物状态分别保留，需要改变状态时再明确更新。

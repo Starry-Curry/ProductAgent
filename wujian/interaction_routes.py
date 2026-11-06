@@ -8,7 +8,8 @@ from .api_models import (
     HouseholdInvite, HouseholdItemChange, HouseholdView, ItemPresentation, ItemView,
     MemoryCorrection, MemoryView, Preferences, ReminderFeedback, ReminderView,
     Revision, ShareRequest, TaskBoardCreate, TaskBoardView, TaskEntryFeedback, TaskEntryAssignment,
-    WishCreate, WishView, WorkspaceView,
+    TaskEntryCreate, TaskEntryDetails,
+    WishCreate, WishChange, WishView, WorkspaceView,
 )
 from .database import Conversation, ExperienceRecord, ExperienceShare, Gift, Memory, TaskParticipant, User, Wish, uid
 
@@ -108,6 +109,14 @@ def register_interactions(app, current_user, db_session):
     def update_entry(task_id: str, entry_id: str, payload: TaskEntryFeedback, user=Depends(current_user), db=Depends(db_session)):
         return interactions.update_entry(db, user.id, task_id, entry_id, payload)
 
+    @app.post("/api/tasks/{task_id}/entries", response_model=TaskBoardView, tags=["Continuing tasks"])
+    def add_entry(task_id: str, payload: TaskEntryCreate, user=Depends(current_user), db=Depends(db_session)):
+        return interactions.add_entry(db, user.id, task_id, payload)
+
+    @app.patch("/api/tasks/{task_id}/entries/{entry_id}/details", response_model=TaskBoardView, tags=["Continuing tasks"])
+    def edit_entry(task_id: str, entry_id: str, payload: TaskEntryDetails, user=Depends(current_user), db=Depends(db_session)):
+        return interactions.edit_entry(db, user.id, task_id, entry_id, payload)
+
     @app.patch("/api/tasks/{task_id}/entries/{entry_id}/assignee", response_model=TaskBoardView, tags=["Continuing tasks"])
     def assign_entry(task_id: str, entry_id: str, payload: TaskEntryAssignment, user=Depends(current_user), db=Depends(db_session)):
         return interactions.assign_entry(db, user.id, task_id, entry_id, payload)
@@ -179,6 +188,10 @@ def register_interactions(app, current_user, db_session):
     @app.post("/api/wishes", response_model=WishView, tags=["Friends"])
     def create_wish(payload: WishCreate, user=Depends(current_user), db=Depends(db_session)):
         return interactions.create_wish(db, user.id, payload)
+
+    @app.put("/api/wishes/{wish_id}", response_model=WishView, tags=["Friends"])
+    def change_wish(wish_id: str, payload: WishChange, user=Depends(current_user), db=Depends(db_session)):
+        return interactions.change_wish(db, user.id, wish_id, payload)
 
     @app.delete("/api/wishes/{wish_id}", tags=["Friends"])
     def delete_wish(wish_id: str, payload: Revision, user=Depends(current_user), db=Depends(db_session)):

@@ -113,6 +113,9 @@ export function ItemCard({
       </div>
       <div className="item-card-copy">
         <strong>{item.name}</strong>
+        {item.kind === "standard_product" && item.product.model && (
+          <small className="item-product-identity">{[item.product.brand, item.product.model].filter(Boolean).join(" · ")}</small>
+        )}
         <div>
           <span>
             <MapPin size={14} />

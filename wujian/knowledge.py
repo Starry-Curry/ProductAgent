@@ -117,7 +117,56 @@ def parse_document(data, content_type, url):
     return content, [], links, media_type, title
 
 
-async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=False, *, excerpt_chars=12000):
+def _link_page(links, *, link_limit=12, link_offset=0, link_query=""):
+    """Page the reader's existing extracted navigation, never source facts."""
+    if isinstance(link_limit, bool) or not isinstance(link_limit, int) or not 1 <= link_limit <= 100:
+        raise DomainError("link_limit须为1到100的整数")
+    if isinstance(link_offset, bool) or not isinstance(link_offset, int) or link_offset < 0:
+        raise DomainError("link_offset须为非负整数")
+    if not isinstance(link_query, str) or len(link_query) > 200:
+        raise DomainError("链接查询须为不超过200字的文字")
+    query=link_query.strip().casefold()
+    matches=[row for row in links if not query or query in
+             (row.get("title", "")+" "+row.get("url", "")).casefold()]
+    page=matches[link_offset:link_offset+link_limit]
+    next_offset=link_offset+len(page)
+    return {"links":page, "links_total":len(matches),
+            "links_inventory_total":len(links), "links_offset":link_offset,
+            "links_query":link_query.strip(), "links_truncated":next_offset<len(matches),
+            "links_next_offset":next_offset if next_offset<len(matches) else None,
+            "navigation_scope":"当前解析器提取的导航链接；不是链接目标正文，也不保证穷尽原网页。"}
+
+
+def _retained_links(source, asset):
+    if (not asset or asset.id != source.asset_id or asset.owner_id != source.owner_id
+            or source.origin != "public_web"):
+        raise DomainError("原始导航文件不可用",404)
+    if asset.media_type == "application/pdf":
+        # PDF text/pages retain their existing semantics; this reader does not
+        # claim to extract annotation links from the PDF itself.
+        return []
+    path=Path(asset.path)
+    if not path.is_file():
+        raise DomainError("原始导航文件不可用",404)
+    _,_,links,_,_=parse_document(path.read_bytes(),asset.media_type,source.url)
+    return links
+
+
+def source_navigation(db, user_id, source_id, *, link_limit=12, link_offset=0, link_query=""):
+    """Reopen retained navigation with present permission; no network/refetch."""
+    source=readable_source(db,user_id,source_id)
+    _link_page([],link_limit=link_limit,link_offset=link_offset,link_query=link_query)
+    asset=db.get(Asset,source.asset_id) if source.asset_id else None
+    return {"source_id":source.id, "url":source.url,
+            "evidence_kind":"retained_source_navigation_not_target_documents",
+            **_link_page(_retained_links(source,asset),link_limit=link_limit,
+                         link_offset=link_offset,link_query=link_query)}
+
+
+async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=False, *, excerpt_chars=12000,
+                       link_limit=12, link_offset=0, link_query=""):
+    # Validate before network or writes, even for a cached source.
+    _link_page([],link_limit=link_limit,link_offset=link_offset,link_query=link_query)
     with sessions() as db:
         if item_id:
             accessible_item(db, user_id, item_id)
@@ -129,11 +178,15 @@ async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=F
             # The immutable original response is already saved, no new fetch.
             asset = db.get(Asset, existing.asset_id) if existing.asset_id else None
             result["images"] = source_images(existing, asset)
-            if asset and asset.media_type != "application/pdf":
-                path = Path(asset.path)
-                if path.is_file():
-                    _, _, links, _, _ = parse_document(path.read_bytes(), asset.media_type, existing.url)
-                    result["links"] = links
+            try:
+                result.update(_link_page(_retained_links(existing,asset),link_limit=link_limit,
+                    link_offset=link_offset,link_query=link_query))
+            except DomainError as error:
+                # Navigation availability must not erase already retained
+                # source text or pretend an unreadable inventory is empty.
+                result.update(links=[],links_total=None,links_inventory_total=None,
+                              links_truncated=False,links_next_offset=None,
+                              navigation_error=error.message)
             return result
     final_url, content_type, data = await download_public(url)
     content, pages, links, media_type, title = await asyncio.to_thread(parse_document, data, content_type, final_url)
@@ -151,7 +204,8 @@ async def fetch_source(settings, sessions, user_id, url, item_id=None, refresh=F
         db.add(asset)
         db.add(source)
         db.commit()
-        return {**source_excerpt(source, max_chars=excerpt_chars), "links": links,
+        return {**source_excerpt(source, max_chars=excerpt_chars),
+                **_link_page(links,link_limit=link_limit,link_offset=link_offset,link_query=link_query),
                 "images": source_images(source, asset)}
 
 

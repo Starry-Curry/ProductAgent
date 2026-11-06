@@ -614,8 +614,23 @@ small {
   overflow: hidden;
 }
 .companion-main {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   min-height: 0;
+}
+.companion-shortcuts {
+  display: flex;
+  flex-shrink: 0;
+  padding: 5px 20px 0;
+}
+.companion-shortcuts .quiet-button {
+  min-height: 42px;
+  color: var(--blue-deep);
+}
+.companion-main > .conversation {
+  flex: 1;
+  height: auto;
 }
 .context-rail {
   border-left: 1px solid var(--line);
@@ -774,6 +789,13 @@ small {
 }
 .chat-bubble p + p {
   margin-top: 8px;
+}
+.chat-bubble img {
+  display: block;
+  max-width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  border-radius: 12px;
 }
 .chat-bubble ul,
 .chat-bubble ol {
@@ -1076,6 +1098,13 @@ small {
 .item-card:nth-child(3n) .object-placeholder {
   background: linear-gradient(135deg, #d9d8d4, #f4f0e9 50%, #d9d5ce);
 }
+.item-product-identity {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
 .item-card-copy {
   padding: 13px 14px 15px;
 }
@@ -1179,10 +1208,6 @@ small {
 .item-profile-page .detail-actions > .primary-button {
   flex: 0 1 auto;
   min-width: 135px;
-}
-.home-creative-entry {
-  margin: -8px 0 22px;
-  color: var(--blue-deep);
 }
 .story-timeline small {
   display: block;

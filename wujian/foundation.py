@@ -176,10 +176,31 @@ def save_task(
     if not goal.strip() or len(goal) > 4000:
         raise domain.DomainError("请保留具体任务目标")
     plan = validate_plan(plan)
+    # Give the native Agent a repairable field error instead of making it
+    # regenerate the whole proposal while guessing which opaque ID was wrong.
+    # The same current permission check still runs for every supplied reference.
+    references = [(f"item_ids[{index}]", identity) for index, identity in enumerate(item_ids)]
+    if plan.get("schema") == "interaction/1":
+        references.extend((f"plan.entries[{index}].item_id", entry["item_id"])
+                          for index, entry in enumerate(plan["entries"]) if entry["item_id"])
+    invalid = []
+    checked = {}
+    for path, identity in references:
+        if identity not in checked:
+            try:
+                domain.accessible_item(db, user_id, identity)
+                checked[identity] = True
+            except domain.DomainError:
+                checked[identity] = False
+        if not checked[identity]:
+            invalid.append(f"{path}={identity!r}：当前没有找到或无权使用")
+    if invalid:
+        available = [{"item_id": row["id"], "name": row["name"]}
+                     for row in domain.list_items(db, user_id)[:40]]
+        raise domain.DomainError("请修正物品引用，不要改写或猜测ID：\n" + "\n".join(invalid[:12])
+                                 + "\n当前获准物品引用：" + str(available))
     if plan.get("schema") == "interaction/1":
         item_ids = list(dict.fromkeys([*item_ids, *(entry["item_id"] for entry in plan["entries"] if entry["item_id"])]))
-    for identity in item_ids:
-        domain.accessible_item(db, user_id, identity)
     values = {
         "goal": goal,
         "item_ids": list(dict.fromkeys(item_ids)),
@@ -264,6 +285,21 @@ def task_feedback(
     return task_view(row)
 
 
+def normalize_claim_evidence(db, user_id, basis, scope, source_id, source_quote):
+    """A derived observation cannot grant the authority of an authored document.
+
+    Keep the interpretation and its source, bounded to an instance hypothesis.
+    This is determined by the retained source kind, not by an LLM declaration.
+    """
+    if basis in {"document", "inference"} and source_id:
+        source = domain.require(db.get(SourceRecord, source_id))
+        if source.owner_id != user_id:
+            raise domain.DomainError("请使用自己已获取的资料", 404)
+        if source.origin == "video_frame_sample":
+            return "inference", "item", ""
+    return basis, scope, source_quote
+
+
 def save_claim(
     db,
     user_id,
@@ -279,6 +315,7 @@ def save_claim(
     commit=True,
 ):
     item = domain.accessible_item(db, user_id, item_id)
+    basis, scope, source_quote = normalize_claim_evidence(db, user_id, basis, scope, source_id, source_quote)
     if basis not in {"document", "user_report", "inference"} or scope not in {
         "product",
         "item",
@@ -325,6 +362,12 @@ def save_claim(
         if source.owner_id != user_id:
             raise domain.DomainError("请使用自己已获取的推测参考资料", 404)
     retained_source_id = source_id if basis in {"document", "inference"} else None
+    if retained_source_id:
+        evidence_source = db.get(SourceRecord, retained_source_id)
+        if evidence_source and evidence_source.origin == "video_frame_sample":
+            conditions = {**conditions, "identity_match": "unverified", "evidence_kind": "timestamped_still_images",
+                          "reading_scope": "sampled_video_frames_not_full_video"}
+            conditions.pop("source_lines", None)
     if supersedes_id:
         previous = domain.require(db.get(KnowledgeClaim, supersedes_id))
         if previous.owner_id != user_id:

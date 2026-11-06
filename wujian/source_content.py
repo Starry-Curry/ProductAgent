@@ -8,6 +8,7 @@ import re
 from urllib.parse import urljoin, urlsplit
 
 from bs4 import BeautifulSoup, UnicodeDammit
+from .source_howto import extract_howto, is_howto
 
 
 MAX_CONTENT = 300000
@@ -29,7 +30,7 @@ def public_image_candidates(data, url, limit=6):
         if parsed.path.lower().endswith((".svg", ".gif", ".ico")) or target in seen:
             return
         seen.add(target)
-        priority = 0 if origin == "page_image_metadata" else 1 if origin == "product_jsonld" else 2 if isinstance(alt, str) and len(alt) > 2 and alt in title else 3
+        priority = 0 if origin == "page_image_metadata" else 1 if origin in {"product_jsonld", "howto_jsonld"} else 2 if isinstance(alt, str) and len(alt) > 2 and alt in title else 3
         candidates.append({"url": target, "alt": _text(alt, 300), "origin": origin, "_priority": priority})
 
     for node in soup.select('meta[property="og:image"],meta[name="twitter:image"]')[:4]:
@@ -42,6 +43,9 @@ def public_image_candidates(data, url, limit=6):
             for child in value[:30]:
                 visit(child, depth + 1)
         elif isinstance(value, dict):
+            if is_howto(value):
+                for entry in extract_howto(value, url)[2]:
+                    add(entry["url"], entry["alt"], entry["origin"])
             kind = value.get("@type")
             if kind == "Product" or (isinstance(kind, list) and "Product" in kind):
                 images = value.get("image", [])
@@ -132,6 +136,10 @@ def _structured_metadata(soup, url):
             for child in value[:80]:
                 jsonld(child, depth + 1)
         elif isinstance(value, dict):
+            if is_howto(value):
+                howto_lines, howto_links, _ = extract_howto(value, url)
+                lines.extend(howto_lines)
+                links.extend(howto_links)
             for key in ("headline", "name", "description", "articleBody", "uploadDate", "datePublished", "duration"):
                 add("JSON-LD " + key, value.get(key))
             kind = value.get("@type")

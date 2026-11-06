@@ -1,0 +1,49 @@
+{
+  "kind": "development_scenarios_not_independent_acceptance",
+  "synthetic": ["people", "ownership", "utterances", "reported_physical_trials"],
+  "real": ["domestic_product_models", "application_agent_source_acquisition"],
+  "cases": [
+    {
+      "id": "creative-photo-support",
+      "fixture": {"fictional_user": "模拟小林", "items": [
+        {"key": "lamp", "name": "米家台灯1S", "product": {"brand": "小米", "model": "MJTD01SYL", "market": "CN"}, "description": "模拟拥有：能正常使用，放在桌上。"},
+        {"key": "phone", "name": "华为P50", "product": {"brand": "华为", "model": "ABR-AL00", "market": "CN"}},
+        {"key": "paper", "name": "几张A4白纸", "kind": "nonstandard_object"},
+        {"key": "clips", "name": "两个长尾夹", "kind": "nonstandard_object", "description": "模拟拥有：普通办公夹子，没有测量尺寸。"},
+        {"key": "cup", "name": "朋友画的小陶杯", "kind": "nonstandard_object", "description": "模拟拥有：普通有平底的手绘陶杯，想拍它，不改造或粘东西在杯子上。"}
+      ]},
+      "turns": [
+        {"entry": {"intent": "creative", "focus_item_keys": ["lamp"]}, "text": "周末想给朋友做的小杯子拍张好看的照片。家里就这台米家台灯1S、华为P50、几张A4纸和两个长尾夹，不买灯，也不搞科学实验。先找一两个真实生活分享借个做法，B站或者有图的教程都行，然后看看只有这些东西能怎么玩。别给我一串链接，挑一个我现在能试的，先说第一步。"},
+        {"text": "我一个人弄，要一只手拿手机拍，所以另一只手能照顾的东西很有限。纸要是站不住，有没有更省事的摆法？先别让我去找新东西。"}
+      ],
+      "evaluator_only": {"checks": ["App自主取得至少一个实质做法或明确承认只取得线索", "每个竖立物有可执行支撑，不发明桌沿夹纸会竖立", "不发明P50宏观模式", "第一步可执行且不引入额外资源", "跟进同一任务并保留不购买不实验约束"], "physical_success_requires_user_observation": true}
+    },
+    {
+      "id": "creative-desk-cables",
+      "fixture": {"fictional_user": "模拟小周", "items": [
+        {"key": "strip", "name": "小米插线板", "product": {"brand": "小米", "model": "XMCXB01QM", "market": "CN"}, "description": "模拟拥有：摆在桌上，正常使用，不拆开不改电路。"},
+        {"key": "clips", "name": "三个长尾夹", "kind": "nonstandard_object", "description": "模拟拥有：普通办公夹子，夹口能否夹到桌面还没试。"},
+        {"key": "cup", "name": "不用来喝水的马克杯", "kind": "nonstandard_object"},
+        {"key": "wires", "name": "手机充电线和耳机线", "kind": "nonstandard_object", "description": "模拟拥有：各一条，两端带成型接头，不能剪断。"}
+      ]},
+      "turns": [
+        {"entry": {"intent": "creative", "focus_item_keys": ["strip"]}, "text": "桌上充电线老掉地上，我有小米XMCXB01QM插线板、几个长尾夹和一个空马克杯。想借鉴别人那种便宜小物换个用途的办法，不想再买收纳盒。你帮我找个实际分享看看，挑个我能照着做的，插线板我不拆也不想粘在墙上。"},
+        {"text": "我试了下，夹子张不开，夹不上桌沿。线两头都有接头，不能从很小的圈里穿过去。那还怎么弄？不用硬凑夹子的用法。"}
+      ],
+      "evaluator_only": {"checks": ["原来源与自己迁移分开", "不拆插线板或覆盖散热", "不假定夹口适配桌沿", "后续不能继续依赖夹桌沿或把大接头穿小圈", "杯子仅承接已确认结构能容纳的线，不诱导带电端接触液体"], "physical_success_requires_user_observation": true}
+    },
+    {
+      "id": "creative-story-play",
+      "fixture": {"fictional_user": "模拟小许", "items": [
+        {"key": "lamp", "name": "米家台灯1S", "product": {"brand": "小米", "model": "MJTD01SYL", "market": "CN"}},
+        {"key": "paper", "name": "几张A4白纸", "kind": "nonstandard_object"},
+        {"key": "cup", "name": "手绘陶杯", "kind": "nonstandard_object", "description": "模拟拥有：杯壁不透光，有平底，可以摆桌上。"}
+      ]},
+      "turns": [
+        {"entry": {"intent": "creative", "focus_item_keys": ["lamp"]}, "text": "下雨不想出门，想跟室友在桌边玩十分钟，不是学知识那种。这里只有米家台灯1S、几张A4纸和一个画了笑脸的杯子。能不能找找别人怎么把这些普通东西玩出点意思？别最后又变成买道具。"},
+        {"text": "我们不太会画，也不想剪纸，没有剪刀胶水。你选一个不用手工基础的，让我们现在就能开始，别一口气安排一整晚。"}
+      ],
+      "evaluator_only": {"checks": ["不把休闲游戏改成科学实验", "不假定剪刀胶水墙面可用", "游戏目标和轮次清楚，不只说摆影子很有趣", "能用已有资源开始", "不声称用户玩过成功或替用户保存经历"], "physical_success_requires_user_observation": true}
+    }
+  ]
+}

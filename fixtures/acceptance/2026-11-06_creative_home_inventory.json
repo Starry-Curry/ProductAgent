@@ -1,0 +1,467 @@
+{
+  "kind": "development_scenarios_not_independent_acceptance",
+  "synthetic": [
+    "people",
+    "ownership",
+    "utterances"
+  ],
+  "real": [
+    "existing_domestic_product_models",
+    "application_agent_source_acquisition"
+  ],
+  "cases": [
+    {
+      "id": "creative-photo-support-home-inventory",
+      "fixture": {
+        "fictional_user": "模拟家庭测试者",
+        "items": [
+          {
+            "key": "lamp",
+            "name": "米家台灯1S",
+            "product": {
+              "brand": "小米",
+              "model": "MJTD01SYL",
+              "market": "CN"
+            },
+            "description": "模拟家庭拥有：可以正常开关、调光。"
+          },
+          {
+            "key": "phone",
+            "name": "华为P50",
+            "product": {
+              "brand": "华为",
+              "model": "ABR-AL00",
+              "market": "CN"
+            },
+            "description": "模拟家庭拥有：能拍照，不预设特殊相机模式。"
+          },
+          {
+            "key": "strip",
+            "name": "小米插线板",
+            "product": {
+              "brand": "小米",
+              "model": "XMCXB01QM",
+              "market": "CN"
+            },
+            "description": "模拟家庭拥有：正常使用，不拆开或改电路。"
+          },
+          {
+            "key": "paper",
+            "name": "A4白纸",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：几张普通白纸。"
+          },
+          {
+            "key": "clips",
+            "name": "办公长尾夹",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：几个普通办公长尾夹，未量尺寸。"
+          },
+          {
+            "key": "cup",
+            "name": "朋友画的小陶杯",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：平底、不透光、杯上有笑脸的纪念杯，不粘胶不拆改。"
+          },
+          {
+            "key": "glass",
+            "name": "两个透明玻璃杯",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通玻璃杯，耐热条件未知。"
+          },
+          {
+            "key": "books",
+            "name": "几本书",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通书籍，不损坏。"
+          },
+          {
+            "key": "tape",
+            "name": "纸胶带",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通可手撕纸胶带，粘贴前先试小角。"
+          },
+          {
+            "key": "scissors",
+            "name": "剪刀",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通家用剪刀。"
+          },
+          {
+            "key": "pen",
+            "name": "铅笔和水笔",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通文具。"
+          },
+          {
+            "key": "box",
+            "name": "空快递纸箱",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一个干净空纸箱，约鞋盒大小。"
+          },
+          {
+            "key": "cloth",
+            "name": "干净白色棉布",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一块普通白色棉布，不接触热灯头。"
+          },
+          {
+            "key": "string",
+            "name": "棉绳",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一小卷棉绳。"
+          },
+          {
+            "key": "bag",
+            "name": "手提布袋",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通帆布袋。"
+          },
+          {
+            "key": "mat",
+            "name": "桌垫",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一张普通桌垫。"
+          },
+          {
+            "key": "wires",
+            "name": "手机线和耳机线",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：两端带成型接头，不剪断。"
+          },
+          {
+            "key": "chair",
+            "name": "桌子和椅子",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通家庭桌椅，桌面厚度未测量。"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "entry": {
+            "intent": "creative",
+            "focus_item_keys": []
+          },
+          "text": "我想把朋友做的小杯子拍好看一点，家里的东西都记在物品里了。你先看看有什么能用，找个别人分享过的办法借鉴一下，别让我买摄影灯。"
+        },
+        {
+          "text": "我一个人拍，一只手要拿手机。就挑一个最省事的摆法，第一步做什么？"
+        }
+      ],
+      "evaluator_only": {
+        "checks": [
+          "App先用已有资源特征决定方向，非固定点子强配",
+          "用户缺件与原文要求区分，不假定录入之外必定没有",
+          "App自行搜读实际来源，或诚实说明获取范围",
+          "至少一个可开始的普通生活方案，无明显危险或根本无法执行的动作",
+          "不把当前提案当用户已完成；跟进同一任务保留约束"
+        ],
+        "ordinary_adjustable_details_not_acceptance_blocker": true,
+        "physical_trial_is_not_performed": true
+      }
+    },
+    {
+      "id": "creative-desk-cables-home-inventory",
+      "fixture": {
+        "fictional_user": "模拟家庭测试者",
+        "items": [
+          {
+            "key": "lamp",
+            "name": "米家台灯1S",
+            "product": {
+              "brand": "小米",
+              "model": "MJTD01SYL",
+              "market": "CN"
+            },
+            "description": "模拟家庭拥有：可以正常开关、调光。"
+          },
+          {
+            "key": "phone",
+            "name": "华为P50",
+            "product": {
+              "brand": "华为",
+              "model": "ABR-AL00",
+              "market": "CN"
+            },
+            "description": "模拟家庭拥有：能拍照，不预设特殊相机模式。"
+          },
+          {
+            "key": "strip",
+            "name": "小米插线板",
+            "product": {
+              "brand": "小米",
+              "model": "XMCXB01QM",
+              "market": "CN"
+            },
+            "description": "模拟家庭拥有：正常使用，不拆开或改电路。"
+          },
+          {
+            "key": "paper",
+            "name": "A4白纸",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：几张普通白纸。"
+          },
+          {
+            "key": "clips",
+            "name": "办公长尾夹",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：几个普通办公长尾夹，未量尺寸。"
+          },
+          {
+            "key": "cup",
+            "name": "朋友画的小陶杯",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：平底、不透光、杯上有笑脸的纪念杯，不粘胶不拆改。"
+          },
+          {
+            "key": "glass",
+            "name": "两个透明玻璃杯",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通玻璃杯，耐热条件未知。"
+          },
+          {
+            "key": "books",
+            "name": "几本书",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通书籍，不损坏。"
+          },
+          {
+            "key": "tape",
+            "name": "纸胶带",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通可手撕纸胶带，粘贴前先试小角。"
+          },
+          {
+            "key": "scissors",
+            "name": "剪刀",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通家用剪刀。"
+          },
+          {
+            "key": "pen",
+            "name": "铅笔和水笔",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通文具。"
+          },
+          {
+            "key": "box",
+            "name": "空快递纸箱",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一个干净空纸箱，约鞋盒大小。"
+          },
+          {
+            "key": "cloth",
+            "name": "干净白色棉布",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一块普通白色棉布，不接触热灯头。"
+          },
+          {
+            "key": "string",
+            "name": "棉绳",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一小卷棉绳。"
+          },
+          {
+            "key": "bag",
+            "name": "手提布袋",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通帆布袋。"
+          },
+          {
+            "key": "mat",
+            "name": "桌垫",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一张普通桌垫。"
+          },
+          {
+            "key": "wires",
+            "name": "手机线和耳机线",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：两端带成型接头，不剪断。"
+          },
+          {
+            "key": "chair",
+            "name": "桌子和椅子",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通家庭桌椅，桌面厚度未测量。"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "entry": {
+            "intent": "creative",
+            "focus_item_keys": []
+          },
+          "text": "桌上充电线老掉地上，家里的东西你看看能不能换个用法帮我收拾一下。不想买收纳盒，你找个真实分享借鉴一下吧。"
+        },
+        {
+          "text": "夹子张不开，夹不上桌沿。线两头都有大接头，也不能从很小的圈穿过去。还有什么现成东西能用？"
+        }
+      ],
+      "evaluator_only": {
+        "checks": [
+          "App先用已有资源特征决定方向，非固定点子强配",
+          "用户缺件与原文要求区分，不假定录入之外必定没有",
+          "App自行搜读实际来源，或诚实说明获取范围",
+          "至少一个可开始的普通生活方案，无明显危险或根本无法执行的动作",
+          "不把当前提案当用户已完成；跟进同一任务保留约束"
+        ],
+        "ordinary_adjustable_details_not_acceptance_blocker": true,
+        "physical_trial_is_not_performed": true
+      }
+    },
+    {
+      "id": "creative-story-play-home-inventory",
+      "fixture": {
+        "fictional_user": "模拟家庭测试者",
+        "items": [
+          {
+            "key": "lamp",
+            "name": "米家台灯1S",
+            "product": {
+              "brand": "小米",
+              "model": "MJTD01SYL",
+              "market": "CN"
+            },
+            "description": "模拟家庭拥有：可以正常开关、调光。"
+          },
+          {
+            "key": "phone",
+            "name": "华为P50",
+            "product": {
+              "brand": "华为",
+              "model": "ABR-AL00",
+              "market": "CN"
+            },
+            "description": "模拟家庭拥有：能拍照，不预设特殊相机模式。"
+          },
+          {
+            "key": "strip",
+            "name": "小米插线板",
+            "product": {
+              "brand": "小米",
+              "model": "XMCXB01QM",
+              "market": "CN"
+            },
+            "description": "模拟家庭拥有：正常使用，不拆开或改电路。"
+          },
+          {
+            "key": "paper",
+            "name": "A4白纸",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：几张普通白纸。"
+          },
+          {
+            "key": "clips",
+            "name": "办公长尾夹",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：几个普通办公长尾夹，未量尺寸。"
+          },
+          {
+            "key": "cup",
+            "name": "朋友画的小陶杯",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：平底、不透光、杯上有笑脸的纪念杯，不粘胶不拆改。"
+          },
+          {
+            "key": "glass",
+            "name": "两个透明玻璃杯",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通玻璃杯，耐热条件未知。"
+          },
+          {
+            "key": "books",
+            "name": "几本书",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通书籍，不损坏。"
+          },
+          {
+            "key": "tape",
+            "name": "纸胶带",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通可手撕纸胶带，粘贴前先试小角。"
+          },
+          {
+            "key": "scissors",
+            "name": "剪刀",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通家用剪刀。"
+          },
+          {
+            "key": "pen",
+            "name": "铅笔和水笔",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通文具。"
+          },
+          {
+            "key": "box",
+            "name": "空快递纸箱",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一个干净空纸箱，约鞋盒大小。"
+          },
+          {
+            "key": "cloth",
+            "name": "干净白色棉布",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一块普通白色棉布，不接触热灯头。"
+          },
+          {
+            "key": "string",
+            "name": "棉绳",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一小卷棉绳。"
+          },
+          {
+            "key": "bag",
+            "name": "手提布袋",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通帆布袋。"
+          },
+          {
+            "key": "mat",
+            "name": "桌垫",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：一张普通桌垫。"
+          },
+          {
+            "key": "wires",
+            "name": "手机线和耳机线",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：两端带成型接头，不剪断。"
+          },
+          {
+            "key": "chair",
+            "name": "桌子和椅子",
+            "kind": "nonstandard_object",
+            "description": "模拟家庭拥有：普通家庭桌椅，桌面厚度未测量。"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "entry": {
+            "intent": "creative",
+            "focus_item_keys": []
+          },
+          "text": "下雨在家有点无聊，想跟室友在桌边玩十分钟。你看看我们已经有的东西，去B站或者别的公开社区找点好玩的，别搞科学实验，也别只推荐废物利用。"
+        },
+        {
+          "text": "别安排一整晚，就挑一个规则简单、我们现在就能开始的。"
+        }
+      ],
+      "evaluator_only": {
+        "checks": [
+          "App先用已有资源特征决定方向，非固定点子强配",
+          "用户缺件与原文要求区分，不假定录入之外必定没有",
+          "App自行搜读实际来源，或诚实说明获取范围",
+          "至少一个可开始的普通生活方案，无明显危险或根本无法执行的动作",
+          "不把当前提案当用户已完成；跟进同一任务保留约束"
+        ],
+        "ordinary_adjustable_details_not_acceptance_blocker": true,
+        "physical_trial_is_not_performed": true
+      }
+    }
+  ]
+}

@@ -314,6 +314,13 @@ def current_avatar(db, user_id, item_id, avatar, *, history=None):
     Agent/card/retrieval projections. No second persona memory is written.
     """
     value = dict(avatar or {})
+    if value.get("gift_memories"):
+        refs = value["gift_memories"]
+        stories = {row.id: row for row in db.scalars(select(ExperienceRecord).where(
+            ExperienceRecord.id.in_([entry.get("experience_id") for entry in refs]),
+            ExperienceRecord.creator_id == user_id)) if row.origin_id and item_id in row.item_ids}
+        value["gift_memories"] = [{**entry, "chat_allowed": stories[entry["experience_id"]].allow_ai}
+            for entry in refs if entry.get("experience_id") in stories]
     enabled = value.get("growth_enabled", True)
     history = history or scoped_history_policy(db, user_id)
     value["growth_stopped_traits"] = stopped_growth_traits(db, user_id, item_id, value, history)

@@ -18,7 +18,7 @@ from sqlalchemy import select
 
 from wujian.api_models import TaskEntry
 from wujian.config import Settings
-from wujian.database import TaskRecord
+from wujian.database import SourceRecord, TaskRecord
 from wujian.server import create_app
 
 
@@ -39,8 +39,10 @@ class ContractModel(ChatModelBase):
         self.calls += 1
         if index >= len(self.proposals):
             raise AssertionError("Unexpected SDK retry beyond the supplied repair")
+        proposal=self.proposals[index]
         return ChatResponse(content=[ToolCallBlock(id=f"proposal-{self.calls}",
-            name="GenerateStructuredOutput", input=json.dumps(self.proposals[index], ensure_ascii=False))],
+            name=proposal.get("_tool_name","GenerateStructuredOutput"),
+            input=json.dumps(proposal.get("_arguments",proposal), ensure_ascii=False))],
             is_last=True, usage=ChatUsage(input_tokens=10, output_tokens=5, time=0))
 
 
@@ -77,10 +79,11 @@ class AgentPlanContractTests(unittest.TestCase):
         return {"id": identity, "title": "折一张纸作为起点", "item_id": self.item["id"],
             "group": "step", "note": "尚未试过这个玩法", "state": state}
 
-    def run_turn(self, proposals, text="帮我安排一下卡片小游戏怎么开始。"):
+    def run_turn(self, proposals, text="帮我安排一下卡片小游戏怎么开始。", *, entry_intent="general"):
         self.model.proposals = proposals
-        run = self.ok(self.client.post("/api/chat", json={"text": text, "item_ids": [self.item["id"]]}))
-        deadline = time.monotonic() + 5
+        run = self.ok(self.client.post("/api/chat", json={"text": text, "item_ids": [self.item["id"]],
+            "entry_context":{"intent":entry_intent}}))
+        deadline = time.monotonic() + 8
         while run["status"] in {"queued", "running"} and time.monotonic() < deadline:
             time.sleep(.02)
             run = self.ok(self.client.get("/api/runs/" + run["id"]))
@@ -166,12 +169,100 @@ class AgentPlanContractTests(unittest.TestCase):
     def test_current_actual_feedback_can_advance_entries_without_claiming_success(self):
         board = self.board()
         quote = "第一张纸折好了，第二步没找到夹子。"
-        plan, feedback = self.run_turn([self.proposal([
-            self.entry("fold", "ready"), self.entry("find", "not_found")], board, quote)], quote)
+        proposal = self.proposal([self.entry("fold", "ready"), self.entry("find")], board, quote)
+        proposal["continuation"]["progress_reports"] = [
+            {"entry_id":"fold", "action_result":"completed", "source_quote":"第一张纸折好了"}]
+        plan, feedback = self.run_turn([proposal], quote)
         self.assertEqual(self.model.calls, 1)
-        self.assertEqual([entry["state"] for entry in plan["entries"]], ["ready", "not_found"])
+        self.assertEqual([entry["state"] for entry in plan["entries"]], ["ready", "pending"])
         self.assertEqual(len(feedback), 1)
         self.assertEqual(feedback[0]["outcome"], "unknown")
+        self.assertEqual(feedback[0]["progress_reports"][0]["entry_id"], "fold")
+        self.assertEqual(feedback[0]["progress_reports"][0]["source_quote"], "第一张纸折好了")
+
+    def test_opening_settings_quote_does_not_unlock_version_step(self):
+        board = self.ok(self.client.post("/api/task-boards", json={
+            "goal":"了解电视的软件版本", "kind":"guidance", "entries":[
+                {**self.entry("version"),"title":"查看并报告软件版本"}]}))
+        quote="我只打开设置了，里面有通用和关于本机，接下来点哪个？"
+        invalid=self.proposal([{**self.entry("version","ready"),"title":"查看并报告软件版本"}],board,quote)
+        repaired=copy.deepcopy(invalid)
+        repaired["continuation"]["plan"]["entries"][0]["state"]="pending"
+        plan, feedback=self.run_turn([invalid,repaired],quote)
+        self.assertEqual(self.model.calls,2)
+        self.assertEqual(plan["entries"][0]["state"],"pending")
+        self.assertNotIn("progress_reports", feedback[0])
+
+    def test_one_entry_report_cannot_change_another_entry_or_new_proposal(self):
+        board=self.ok(self.client.post("/api/task-boards",json={
+            "goal":"准备纸卡", "kind":"guidance", "entries":[self.entry(),self.entry("second")]}))
+        quote="第一张纸折好了，后面的还没开始。"
+        invalid=self.proposal([self.entry("fold","ready"),self.entry("second","ready"),self.entry("new","ready")],board,quote)
+        invalid["continuation"]["progress_reports"]=[{"entry_id":"fold","action_result":"completed","source_quote":"第一张纸折好了"}]
+        repaired=copy.deepcopy(invalid)
+        for entry in repaired["continuation"]["plan"]["entries"][1:]:
+            entry["state"]="pending"
+        plan,_=self.run_turn([invalid,repaired],quote)
+        self.assertEqual(self.model.calls,2)
+        self.assertEqual([entry["state"] for entry in plan["entries"]],["ready","pending","pending"])
+
+    def test_progress_report_can_change_only_existing_step_and_requires_current_quote(self):
+        board=self.board()
+        invalid=self.proposal([self.entry()],board)
+        invalid["continuation"]["progress_reports"]=[{"entry_id":"fold","action_result":"completed","source_quote":"纸折好了"}]
+        repaired=self.proposal([self.entry()],board)
+        plan,_=self.run_turn([invalid,repaired],"先等等，纸还没折。")
+        self.assertEqual(self.model.calls,2)
+        self.assertEqual(plan["entries"][0]["state"],"pending")
+
+    def test_reported_ui_entry_cannot_disappear_when_the_model_abbreviates_plan(self):
+        board=self.board()
+        board=self.ok(self.client.patch(f"/api/tasks/{board['task']['id']}/entries/fold",json={
+            "expected_version":board["task"]["version"],"state":"ready"}))
+        plan,_=self.run_turn([self.proposal([self.entry("next")],board)],"下一步怎么做？")
+        self.assertEqual({entry["id"]:entry["state"] for entry in plan["entries"]},
+                         {"next":"pending","fold":"ready"})
+
+    def test_report_cannot_transfer_completion_to_renamed_action(self):
+        board=self.board()
+        invalid=self.proposal([{**self.entry("fold","ready"),"title":"把纸剪成小方块"}],board)
+        invalid["continuation"]["progress_reports"]=[{"entry_id":"fold","action_result":"completed","source_quote":"纸折好了"}]
+        repaired=self.proposal([self.entry()],board)
+        plan,_=self.run_turn([invalid,repaired],"纸折好了，但没有剪。")
+        self.assertEqual(self.model.calls,2)
+        self.assertEqual(plan["entries"][0]["title"],"折一张纸作为起点")
+
+    def test_new_proposal_is_not_execution_even_with_a_current_feedback_quote(self):
+        quote="纸我拿出来了。"
+        invalid=self.proposal([self.entry("fold","ready")],quote=quote)
+        repaired=self.proposal([self.entry("fold")],quote=quote)
+        plan,_=self.run_turn([invalid,repaired],quote)
+        self.assertEqual(self.model.calls,2)
+        self.assertEqual(plan["entries"][0]["state"],"pending")
+
+    def test_report_alone_persists_current_evidence_and_preview_does_not_apply_twice(self):
+        board=self.board()
+        proposal=self.proposal([self.entry()],board)
+        proposal["continuation"]["plan"]["entries"][0]["note"]=""
+        proposal["continuation"]["progress_reports"]=[{
+            "entry_id":"fold","action_result":"completed","source_quote":"纸折好了"}]
+        plan,feedback=self.run_turn([proposal],"纸折好了，后面的还没弄。")
+        self.assertEqual(self.model.calls,1)
+        self.assertEqual(plan["entries"][0]["state"],"ready")
+        self.assertEqual(plan["entries"][0]["note"],board["entries"][0]["note"])
+        self.assertEqual(len(feedback),1)
+        self.assertEqual(feedback[0]["progress_reports"][0]["entry_title"],"折一张纸作为起点")
+
+    def test_a_report_cannot_claim_completion_of_a_new_entry(self):
+        board=self.board()
+        quote="纸我拿出来了。"
+        invalid=self.proposal([self.entry(),self.entry("new","ready")],board,quote)
+        invalid["continuation"]["progress_reports"]=[{
+            "entry_id":"new","action_result":"completed","source_quote":quote}]
+        repaired=self.proposal([self.entry(),self.entry("new")],board,quote)
+        plan,_=self.run_turn([invalid,repaired],quote)
+        self.assertEqual(self.model.calls,2)
+        self.assertEqual([entry["state"] for entry in plan["entries"]],["pending","pending"])
 
     def test_legacy_dictionary_plan_remains_unchanged(self):
         legacy = {"steps": ["折一张卡片"], "notes": {"word": "ready"}}
@@ -179,6 +270,45 @@ class AgentPlanContractTests(unittest.TestCase):
         self.assertEqual(self.model.calls, 1)
         self.assertEqual(plan, legacy)
         self.assertEqual(feedback, [])
+
+    def source(self, identity):
+        with self.app.state.sessions() as db:
+            db.add(SourceRecord(id=identity,owner_id=self.user["id"],origin="upload",
+                title="原作者笔记",url="",content="成功读取以后才交给模型的独特正文",pages=[]))
+            db.commit()
+
+    def test_creative_bare_citation_requires_successful_native_read(self):
+        identity="unread-bare-source"
+        self.source(identity)
+        proposal=self.proposal([self.entry()])
+        proposal["source_refs"]=[identity]
+        self.run_turn([proposal,{"_tool_name":"read_source","_arguments":{"source_id":identity}},proposal],
+            entry_intent="creative")
+        self.assertEqual(self.model.calls,3)
+        self.assertIn("尚未实际读取",self.model.inputs[1])
+        self.assertIn("成功读取以后才交给模型的独特正文",self.model.inputs[2])
+
+    def test_creative_inline_citation_cannot_bypass_reading(self):
+        identity="a"*32
+        self.source(identity)
+        invalid=self.proposal([self.entry()])
+        invalid["answer"]+=f"[{identity}]"
+        repaired=self.proposal([self.entry()])
+        self.run_turn([invalid,repaired],entry_intent="creative")
+        self.assertEqual(self.model.calls,2)
+        self.assertIn("尚未实际读取",self.model.inputs[1])
+
+    def test_failed_navigation_read_does_not_grant_citation_permission(self):
+        identity="unavailable-navigation"
+        self.source(identity)
+        invalid=self.proposal([self.entry()])
+        invalid["source_refs"]=[identity]
+        repaired=self.proposal([self.entry()])
+        self.run_turn([{"_tool_name":"read_source","_arguments":{"source_id":identity,"link_query":""}},
+            invalid,repaired],entry_intent="creative")
+        self.assertEqual(self.model.calls,3)
+        self.assertIn("尚未实际读取",self.model.inputs[2])
+        self.assertNotIn("成功读取以后才交给模型的独特正文",self.model.inputs[1])
 
 
 if __name__ == "__main__":

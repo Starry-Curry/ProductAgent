@@ -20,6 +20,7 @@ from sqlalchemy import text
 from . import domain, interactions
 from .api_models import ExperienceChange, ExperienceView, Input
 from .database import Asset, ExperienceRecord, ItemRecord
+from .family_memory import household_item_ids, validate_family_scope
 
 MAX_REFERENCES = 24
 MAX_IMAGE_BYTES = 10 * 1024 * 1024
@@ -102,6 +103,15 @@ def _authored(db, user_id, identity, expected_version):
     return row
 
 
+def _inventory(db, user_id, row):
+    inventory = domain.list_items(db, user_id)
+    if row.household_id:
+        validate_family_scope(db, user_id, row.household_id, row.item_ids)
+        shared = household_item_ids(db, row.household_id)
+        inventory = [item for item in inventory if item["id"] in shared]
+    return inventory
+
+
 async def observe_photos(settings, photo_blocks, references, *, model=None):
     """Reuse the application's AgentScope multimodal SDK and primary model."""
     if model is None:
@@ -131,7 +141,7 @@ async def match_experience_photos(settings, sessions, user_id, identity, payload
         row = _authored(db, user_id, identity, payload.expected_version)
         photo_ids = list(row.photo_ids)
         photos = [(key, _image_block(domain.own_asset(db, user_id, key))) for key in photo_ids]
-        inventory = domain.list_items(db, user_id)
+        inventory = _inventory(db, user_id, row)
         inventory_snapshot = {item["id"]: (item["version"], item["photo_id"]) for item in inventory}
         excluded = set(payload.exclude_item_ids)
         pending = [item for item in inventory if item["id"] not in excluded]
@@ -183,7 +193,7 @@ async def match_experience_photos(settings, sessions, user_id, identity, payload
         row = _authored(db, user_id, identity, payload.expected_version)
         if row.photo_ids != photo_ids:
             raise domain.DomainError("照片已变化，未使用旧识别结果", 409)
-        current_inventory = domain.list_items(db, user_id)
+        current_inventory = _inventory(db, user_id, row)
         if {item["id"]: (item["version"], item["photo_id"]) for item in current_inventory} != inventory_snapshot:
             # Every candidate was part of the ambiguity judgment, including
             # those the model did not return. A new lookalike or a changed

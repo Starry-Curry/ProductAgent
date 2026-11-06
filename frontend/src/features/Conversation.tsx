@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Camera, Check, Mic, Send, Square, X } from "lucide-react";
+import { Camera, Check, Mic, Send, Square, Volume2, X } from "lucide-react";
 import { Input } from "antd";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { type ChatMessage, type Run } from "../api";
-import { Companion } from "./shared";
+import { Companion, speak } from "./shared";
 
 export type Draft = { text: string; photos: string[] };
 type Recognition = {
@@ -55,6 +55,7 @@ export default function Conversation({
   onCameraRef,
   children,
   afterMessages,
+  readAloud = false,
 }: {
   messages: ChatMessage[];
   run: Run | null;
@@ -72,6 +73,7 @@ export default function Conversation({
   onCameraRef: (callback: () => void) => void;
   children?: React.ReactNode;
   afterMessages?: React.ReactNode;
+  readAloud?: boolean;
 }) {
   const bottom = useRef<HTMLDivElement>(null),
     file = useRef<HTMLInputElement>(null),
@@ -177,6 +179,9 @@ export default function Conversation({
               >
                 {value.text}
               </ReactMarkdown>
+              {readAloud && value.role === "assistant" && <button type="button" className="soft-button" onClick={() => {
+                if (!speak(value.text)) setVoiceError("当前浏览器暂时无法朗读，可以直接看文字。");
+              }}><Volume2 size={20} />听一遍</button>}
             </div>
           </div>
         ))}

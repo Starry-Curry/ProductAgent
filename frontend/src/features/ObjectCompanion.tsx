@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import type { Item } from "../api";
 
 export type ObjectExpression = "calm" | "happy" | "sleepy";
-export type ObjectShape = "cup" | "stone" | "flower" | "keepsake" | "cat";
+export type ObjectShape = "cup" | "stone" | "flower" | "keepsake" | "cat" | "dango_leaf" | "dango_hat" | "dango_bow";
 type CompanionItem = Pick<Item, "name" | "kind" | "avatar" | "photo_id">;
 
 /** A small, inspectable view over the same profile used by the main Agent.
@@ -162,14 +162,31 @@ export function ObjectCompanion({
           <path d="M120 175L120 184" stroke="#879a75" strokeWidth="6" strokeLinecap="round" />
         </>}
 
-        {form === "keepsake" && <>
+        {["keepsake", "dango_leaf", "dango_hat", "dango_bow"].includes(form) && <>
           <path d="M52 168C45 141 55 97 79 84Q120 61 161 84C187 99 199 145 188 171Q176 199 120 200Q66 200 52 168Z"
             fill={`url(#${body})`} stroke="#c9c1b2" strokeWidth="2" />
           <path d="M69 111Q80 90 104 86" fill="none" stroke="#fffdf7" strokeWidth="8" strokeLinecap="round" opacity=".7" />
-          <path d="M53 170Q123 188 187 168L185 181Q119 209 56 185Z" fill={color} opacity=".8" />
-          <path d="M149 185L147 211L164 209L166 181" fill={color} />
-          <path d="M151 201L161 199M151 206L160 204" stroke={tint(color, .5)} strokeWidth="2" />
-          <path d="M111 80Q119 70 127 79" fill="none" stroke="#c9c1b2" strokeWidth="3" strokeLinecap="round" />
+          {form === "keepsake" && <>
+            <path d="M53 170Q123 188 187 168L185 181Q119 209 56 185Z" fill={color} opacity=".8" />
+            <path d="M149 185L147 211L164 209L166 181" fill={color} />
+            <path d="M151 201L161 199M151 206L160 204" stroke={tint(color, .5)} strokeWidth="2" />
+            <path d="M111 80Q119 70 127 79" fill="none" stroke="#c9c1b2" strokeWidth="3" strokeLinecap="round" />
+          </>}
+          {form === "dango_leaf" && <>
+            <path d="M119 83Q95 76 96 48Q125 47 128 77Q137 52 159 58Q157 83 125 85Z" fill="#a7b58f" stroke="#829b75" strokeWidth="2" />
+            <path d="M120 81L105 58M126 81L150 65" fill="none" stroke="#dce4ce" strokeWidth="2" strokeLinecap="round" />
+          </>}
+          {form === "dango_hat" && <>
+            <path d="M76 91Q74 49 119 43Q161 47 164 91Z" fill={color} stroke={tint(color,.15)} strokeWidth="2" />
+            <path d="M74 83Q119 72 166 83L166 96Q117 85 73 96Z" fill={tint(color,.35)} />
+            <path d="M93 77Q93 61 108 54M116 74L116 53M140 78Q141 64 132 55" fill="none" stroke={tint(color,.5)} strokeWidth="3" strokeLinecap="round" />
+            <circle cx="118" cy="40" r="12" fill={tint(color,.6)} />
+          </>}
+          {form === "dango_bow" && <>
+            <path d="M142 86Q125 63 137 57Q151 55 158 73Q171 53 182 62Q188 76 163 87Z" fill={color} stroke={tint(color,.2)} strokeWidth="2" />
+            <ellipse cx="157" cy="80" rx="8" ry="9" fill={tint(color,.35)} />
+            <path d="M86 176Q118 192 153 176L149 187Q118 205 90 187Z" fill={color} opacity=".65" />
+          </>}
         </>}
 
         {form === "cat" && <>

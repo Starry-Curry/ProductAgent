@@ -57,7 +57,8 @@ export default function Memories({
         ).toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())) &&
       (scope === "all" ||
         (scope === "mine" && exp.access === "owner" && !exp.origin_id) ||
-        (scope === "shared" && exp.access === "shared") ||
+        (scope === "shared" && exp.access === "shared" && !exp.household_id) ||
+        (scope === "family" && Boolean(exp.household_id)) ||
         (scope === "received" && Boolean(exp.origin_id))),
   );
   async function remove(exp: Experience) {
@@ -109,6 +110,9 @@ export default function Memories({
           <Pill active={scope === "shared"} onClick={() => setScope("shared")}>
             朋友分享的
           </Pill>
+          <Pill active={scope === "family"} onClick={() => setScope("family")}>
+            家庭共同回忆
+          </Pill>
           <Pill active={scope === "received"} onClick={() => setScope("received")}>
             随礼物收到的
           </Pill>
@@ -155,7 +159,9 @@ export default function Memories({
                     "属于这一刻的记录"}
                 </p>
                 <small>
-                  {exp.access === "shared"
+                  {exp.household_id
+                    ? `${workspace.households.find((house) => house.id === exp.household_id)?.name || "家庭"} · ${exp.access === "owner" ? "我记录的" : `${String(exp.provenance.author_name || "家人")}记录的`}`
+                    : exp.access === "shared"
                     ? `来自${String(exp.provenance.author_name || "朋友")}的分享`
                     : exp.origin_id
                       ? "随礼物收到的原故事"
@@ -215,7 +221,9 @@ export default function Memories({
               <PhotoMatchFinder key={selected.id} experience={selected} items={workspace.items} onDone={refresh} />}
             <p className="form-note">
               <LockKeyhole size={14} />
-              {selected.access === "shared"
+              {selected.household_id
+                ? `${workspace.households.find((house) => house.id === selected.household_id)?.name || "这个家庭"}的已加入成员可见。${selected.allow_ai ? "记录者允许家庭成员各自的物伴在相关对话中参考。" : "仅供家人阅读，不作为家庭成员物伴的对话资料。"}其他私人记录不会一起开放。`
+                : selected.access === "shared"
                 ? "这是对方选择分享的原文，未开放其他私人记录或智能使用许可。"
                 : selected.allow_ai
                   ? "允许物伴在相关对话中参考。分享范围另外选择。"

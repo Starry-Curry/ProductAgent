@@ -284,6 +284,20 @@ def execution_manifest(config, root):
             "implementation_sha256": hashes}
 
 
+def resumed_context(sessions, conversation_id):
+    """Resume the cloned conversation's actual entry, not the CLI case default.
+
+    Explicitly sending a generic entry/focus would overwrite the application
+    context and turn a creative/persona repair probe into another product path.
+    """
+    from wujian.database import Conversation
+    with sessions() as db:
+        row = db.get(Conversation, conversation_id)
+        if row is None:
+            raise RuntimeError("Resumed evaluation conversation is missing")
+        return json.loads(json.dumps(row.entry_context or {"intent": "general"})), list(row.item_ids or [])
+
+
 def main():
     # Windows redirected stdout otherwise defaults to GBK: one model emoji can
     # stop a multi-turn probe after a paid response. The UTF-8 artifact is saved
@@ -419,6 +433,10 @@ def main():
             item_map = dict(zip(fixture_keys, [row["id"] for row in items]))
             entry = {"intent":case["intent"]}
             focused = [items[0]["id"]] if case["focus"] else []
+            if resumed:
+                entry, focused = resumed_context(app.state.sessions, conversation)
+                report["resumed_entry_context"] = entry
+                report["resumed_focused_item_ids"] = focused
             for index, turn in enumerate(case["turns"][:args.turns or None]):
                 text = turn["text"] if isinstance(turn,dict) else turn
                 if isinstance(turn,dict):
@@ -444,7 +462,8 @@ def main():
                     checked(client.post(f"/api/runs/{run['id']}/cancel"))
                 conversation = run["conversation_id"]
                 report["turns"].append({"index":index, "text":text, "elapsed":round(time.monotonic()-started,2),
-                                        "http_attempts":budget.local_attempts-before, "run":run})
+                                        "http_attempts":budget.local_attempts-before, "run":run,
+                                        "workspace_snapshot":checked(client.get("/api/workspace"))})
                 save()
                 print(json.dumps({"case":args.case,"turn":index,"status":run["status"],"elapsed":round(time.monotonic()-started,1),"http_attempts":budget.local_attempts-before,"answer":run["text"],"error":run.get("error"),"budget":budget.summary()["attempted"]}, ensure_ascii=False),flush=True)
                 if run["status"] != "completed":

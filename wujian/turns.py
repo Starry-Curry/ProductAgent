@@ -7,25 +7,42 @@ from pydantic import BaseModel, Field, model_validator
 
 from . import domain, foundation
 from .api_models import TaskEntry
-from .database import ChatMessage, TaskRecord
+from .database import ChatMessage, Conversation, ItemRecord, Profile, TaskRecord
 from .evidence import locate_quote
 from .learning import Learning, apply_learning
 
 
 def _plan_schema(schema):
     """Expose the shared entry contract without replacing legacy dict plans."""
+    entry_schema = TaskEntry.model_json_schema()
+    entry_schema["properties"]["group"]["description"] = (
+        "owned/buy/borrow/confirm are resource preparation categories; "
+        "step is an action or inspection instruction, including viewing a version number."
+    )
+    entry_schema["properties"]["state"]["description"] = (
+        "Retain current persisted state. New entries start pending. "
+        "For a step, ready means the user reported its action completed; "
+        "a proposed/available instruction or reaching an earlier menu is still pending. "
+        "Use progress_reports for a specific existing entry's actual result."
+    )
     schema["properties"] = {
         "schema": {"const": "interaction/1"},
         "kind": {"enum": ["checklist", "guidance", "idea"],
             "description": "Presentation of the whole plan; idea is not an entry group."},
         "entries": {"type": "array", "maxItems": 60,
             "description": "New proposals start pending. Keep existing reported states unless the current user supplies actual feedback. Entry ready means reported preparation/action progress, not merely that an idea is available.",
-            "items": TaskEntry.model_json_schema()},
+            "items": entry_schema},
+        "preparation_reports": {"type": "array", "maxItems": 60,
+            "description": "For CHECKLIST only: exact current user evidence for each resource correction (title/group/item_id/note), newly confirmed purchase, or owned resource without inventory ID. Each entry is {entry_id,source_quote}. Unknown inventory is confirm, never buy by default. Reuse ALL existing entry IDs; do not replace them with new IDs. A changed title/group/item_id resets that existing entry to pending, keeping assignment. These reports cannot mark work done. Empty for guidance/idea and if no current correction.",
+            "items": {"type": "object", "properties": {
+                "entry_id": {"type": "string", "minLength": 1, "maxLength": 80},
+                "source_quote": {"type": "string", "minLength": 1, "maxLength": 4000}},
+                "required": ["entry_id", "source_quote"], "additionalProperties": False}},
     }
 
 
 class ContinuingPlan(BaseModel):
-    goal: str = Field(description="The substantive goal being proposed or continued")
+    goal: str = Field(description="The user's actual goal; do not replace it with an unchosen mechanism such as uninstalling, buying or resetting")
     item_ids: list[str] = Field(
         description="Actual accessible resource IDs; never substitute names or invented resources"
     )
@@ -49,9 +66,26 @@ class ContinuingPlan(BaseModel):
         default="",
         description="Exact CURRENT user words reporting actual results or changed preferences; empty if none",
     )
+    progress_reports: list["EntryProgressReport"] = Field(
+        default_factory=list, max_length=60,
+        description="Only CURRENT user reports about specific EXISTING task entries. Empty for proposals/questions/menu navigation that has not completed the entry. Each quote must directly report that entry's action/result, not merely an earlier prerequisite. New entries always start pending. General feedback_quote does not change entry progress.",
+    )
     outcome: Literal["success", "failure", "partial", "preference", "unknown"] = (
         "unknown"
     )
+
+
+class EntryProgressReport(BaseModel):
+    entry_id: str = Field(min_length=1, max_length=80,
+        description="ID of the existing entry whose exact action the current user reports, not a new proposed step")
+    action_result: Literal["completed", "not_done", "not_found", "unchanged"] = Field(
+        description="Report of what happened, not readiness of an instruction. completed means that exact entry action/preparation was actually completed, not merely an earlier prerequisite. not_done corrects/reopens a previous completion."
+    )
+    source_quote: str = Field(min_length=1, max_length=4000,
+        description="Exact current user words directly attesting this entry's result. Opening Settings does not attest reading its version number. If only part of a compound action was done, leave it pending and describe the partial observation in constraints.")
+
+
+ContinuingPlan.model_rebuild()
 
 
 class TurnResult(BaseModel):
@@ -68,7 +102,7 @@ class TurnResult(BaseModel):
         max_length=5,
     )
     continuation: ContinuingPlan | None = Field(
-        description="Retain any proposed creative options as well as substantive plans/continuing tasks, including inspiration the user has not selected yet. Use interaction/1 kind=idea entries for alternatives. Null only for no proposal (simple questions, acknowledgements, story-only recording and companionship). Keep actual user requirements separate from proposed mechanisms."
+        description="Retain useful creative alternatives as kind=idea. For kind=guidance retain the current observable action and its completion criterion, not a speculative list of unchosen future changes. Continue the same task with current user constraints. Null for simple questions, acknowledgements, story-only recording and companionship."
     )
     answer: str = Field(
         min_length=1,
@@ -124,22 +158,18 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
                 raise domain.DomainError("任务已更新，请重新读取后继续", 409)
         constraints = constraint_patch(current.constraints if current else {},
                                        plan.constraints, plan.feedback_quote)
-        # Agent proposals and reported execution share one board, but must not
-        # share a success meaning. UI progress already has its own explicit
-        # user action path. A literal feedback quote is necessary here, not a
-        # claim that arbitrary quoted words semantically prove completion.
-        proposed = foundation.validate_plan(plan.plan)
-        if proposed.get("schema") == "interaction/1" and not plan.feedback_quote:
-            previous = (
-                {entry["id"]: entry for entry in current.plan.get("entries", [])}
-                if current is not None and current.plan.get("schema") == "interaction/1" else {}
-            )
-            for entry in proposed["entries"]:
-                old = previous.get(entry["id"])
-                if old is None and entry["state"] != "pending":
-                    raise domain.DomainError("没有本轮实际反馈，新增提案条目必须从pending开始，不能报告已准备或执行结果")
-                if old is not None and entry["state"] != old.get("state", "pending"):
-                    raise domain.DomainError("没有本轮实际反馈，不能改变已有条目进度，请保留原状态")
+        from .task_progress import apply_entry_reports
+        proposed, progress_evidence = apply_entry_reports(
+            foundation.validate_plan(plan.plan), current.plan if current else {},
+            plan.progress_reports, current_question, db=db, user_id=user_id)
+        if plan.status == "completed" and proposed.get("schema") == "interaction/1":
+            if current is None:
+                raise domain.DomainError("新方案还没有实际结果，不能直接标为完成")
+            if not proposed["entries"] or any(entry["state"] != "ready" for entry in proposed["entries"]):
+                raise domain.DomainError("仍有未完成条目，不能仅凭总体success反馈将任务标为completed")
+        # Keep the parsed proposal immutable: SDK preview rolls back and the
+        # same result is committed later. Reports are applied to a fresh plan.
+        feedback_quote = plan.feedback_quote or (current_question if progress_evidence else "")
         if task_id is None:
             created = foundation.save_task(
                 db,
@@ -148,27 +178,41 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
                 plan.goal,
                 plan.item_ids,
                 constraints,
-                plan.plan,
-                status="exploring" if plan.feedback_quote else plan.status,
+                proposed,
+                status="exploring" if feedback_quote else plan.status,
                 commit=False,
             )
             task_id, version = created["id"], created["version"]
-            if not plan.feedback_quote:
+            if not feedback_quote:
                 saved = created
-        if plan.feedback_quote:
+        if feedback_quote:
+            if current is not None and plan.status == "completed":
+                # A current report can complete the last existing step. Save
+                # that exact proposed state before signing its success receipt;
+                # signing the old pending plan would reject an honest report.
+                prepared = foundation.save_task(db, user_id, message_id, plan.goal,
+                    plan.item_ids, constraints, proposed, task_id, version,
+                    "in_progress", commit=False)
+                version = prepared["version"]
             feedback = foundation.task_feedback(
                 db,
                 user_id,
                 message_id,
                 task_id,
-                plan.feedback_quote,
+                feedback_quote,
                 plan.outcome,
                 version,
-                source_quote=plan.feedback_quote,
+                source_quote=feedback_quote,
                 commit=False,
             )
             version = feedback["version"]
-        if plan.task_id is not None or plan.feedback_quote:
+            if progress_evidence:
+                row = db.get(TaskRecord, task_id)
+                row.feedback = [
+                    {**entry, "progress_reports": progress_evidence}
+                    if entry.get("source_message_id") == message_id else entry
+                    for entry in row.feedback]
+        if plan.task_id is not None or feedback_quote:
             saved = foundation.save_task(
                 db,
                 user_id,
@@ -176,7 +220,7 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
                 plan.goal,
                 plan.item_ids,
                 constraints,
-                plan.plan,
+                proposed,
                 task_id,
                 version,
                 plan.status,
@@ -184,6 +228,33 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
             )
     db.commit() if commit else db.flush()
     return saved
+
+
+def _mark_displayed_gift_stories(db, user_id, message_id, experiences):
+    """The chat display and its progress are one commit, not two Agent actions."""
+    from sqlalchemy import select
+    message = db.get(ChatMessage, message_id)
+    conversation = db.get(Conversation, message.conversation_id) if message else None
+    if (not conversation or conversation.user_id != user_id or message.role != "user"
+            or conversation.entry_context.get("intent") != "persona" or len(conversation.item_ids) != 1):
+        return
+    item_id = conversation.item_ids[0]
+    item = db.scalar(select(ItemRecord).where(ItemRecord.id == item_id).with_for_update())
+    if not item or item.owner_id != user_id or item.archived:
+        return
+    profile = db.get(Profile, (user_id, item_id))
+    if not profile or not profile.avatar.get("enabled"):
+        return
+    displayed = {row["id"] for row in experiences if row["creator_id"] == user_id
+                 and row["origin_id"] and row["allow_ai"] and item_id in row["item_ids"]}
+    refs = [dict(entry) for entry in profile.avatar.get("gift_memories", [])]
+    changed = False
+    for entry in refs:
+        if entry.get("experience_id") in displayed and not entry.get("unlocked"):
+            entry["unlocked"], changed = True, True
+    if changed:
+        profile.avatar = {**profile.avatar, "gift_memories": refs}
+        item.version += 1
 
 
 def commit_result(db, user_id, message_id, result, current_question, *, commit=True):
@@ -209,6 +280,7 @@ def commit_result(db, user_id, message_id, result, current_question, *, commit=T
             quote = "\n".join("> " + line for line in row["text"].splitlines())
             stories.append(
                 f"{attribution}《{row['title']}》" + (f"（{row['occurred_on']}）" if row['occurred_on'] else "") + f"：\n\n{quote}"
+                + "".join(f"\n\n![这段记录的照片](/api/assets/{identity})" for identity in row["photo_ids"])
             )
         from .source_access import readable_source
         from .knowledge import source_content_level
@@ -228,6 +300,9 @@ def commit_result(db, user_id, message_id, result, current_question, *, commit=T
         answer=result.answer
         for marker,rendered in inline.items():
             answer=answer.replace(marker,rendered)
+        if result.story_refs:
+            _mark_displayed_gift_stories(db,user_id,message_id,
+                [experiences[identity] for identity in dict.fromkeys(result.story_refs)])
     db.commit() if commit else db.flush()
     return {
         "task": task,
@@ -245,6 +320,10 @@ def grounded_turn_schema(sessions, user_id, message_id, evidence_sources=None, *
         @model_validator(mode="after")
         def check_evidence(self):
             self.source_refs = referenced_sources(self)
+            if evidence_sources is not None:
+                unread = set(self.source_refs) - set(evidence_sources or ())
+                if unread:
+                    raise ValueError("引用的来源尚未实际读取，请先read_source/fetch_document取得原文或画面，再引用支持当前回答的资料。")
             if evidence_sources and not self.source_refs and not self.source_limitations:
                 raise ValueError("本轮已读取资料：请用source_refs列出确实支持回答的原文ID；如果原文不足以支持方案，则用source_limitations诚实说明限制，不能宣称案例已经核实。")
             with sessions() as db:

@@ -8,14 +8,14 @@ import json
 import sqlite3
 import tempfile
 import unittest
-from contextlib import closing
+from contextlib import ExitStack, closing
 from datetime import date
 from pathlib import Path
 
 from alembic import command
 from alembic.config import Config
-from sqlalchemy import create_engine, inspect, text
-from sqlalchemy.orm import sessionmaker
+from alembic.script import ScriptDirectory
+from sqlalchemy import MetaData, create_engine, inspect, text
 
 from wujian import domain, interactions
 from wujian.api_models import ExperienceChange, ExperienceCreate, GiftCreate, ItemCreate
@@ -26,36 +26,58 @@ from wujian.retrieval import authorized_documents
 
 class ExperienceDateMigrationTests(unittest.TestCase):
     def test_0006_upgrade_preserves_story_date_share_gift_and_verified_backup(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory() as directory, ExitStack() as resources:
             settings = Settings(data_dir=Path(directory))
             settings.prepare()
             old_engine = create_engine(settings.database_url)
+            resources.callback(old_engine.dispose)
             config = Config(str(ROOT / "alembic.ini"))
             config.set_main_option("script_location", str(ROOT / "migrations"))
+            head = ScriptDirectory.from_config(config).get_current_head()
             with old_engine.connect() as connection:
                 config.attributes["connection"] = connection
                 command.upgrade(config, "0006")
                 connection.commit()
-            old_sessions = sessionmaker(old_engine, expire_on_commit=False)
-            with old_sessions() as db:
-                domain.seed_demo(db)
-                item = domain.create_item(db, "person_demo_owner", ItemCreate(
-                    name="小雨送的手工杯", kind="nonstandard_object"))
-                story = domain.create_experience(db, "person_demo_owner", ExperienceCreate(
-                    title="毕业那天", text="毕业前，小雨把亲手做的杯子递给我。",
-                    item_ids=[item["id"]], occurred_on=date(2025, 6, 18), allow_ai=False))
-                interactions.share_experience(db, "person_demo_owner", story["id"], "person_demo_friend")
-                gift = domain.create_gift(db, "person_demo_owner", GiftCreate(
-                    item_id=item["id"], recipient_id="person_demo_friend",
-                    message="把这段故事也交给你。", experience_ids=[story["id"]]))
-                original_story = domain.experience_view(db.get(ExperienceRecord, story["id"]))
-                original_snapshot = db.get(Gift, gift["id"]).snapshot
+                # Build a genuine historical row against reflected 0006 tables.
+                # Current ORM writers contain columns that did not exist then.
+                tables = MetaData()
+                tables.reflect(bind=connection)
+                for user_id in ["person_demo_owner", "person_demo_friend"]:
+                    connection.execute(tables.tables["users"].insert().values(
+                        id=user_id, username=user_id, display_name=user_id,
+                        password_hash="offline-historical-fixture"))
+                item = {"id":"historical-cup", "name":"小雨送的手工杯"}
+                connection.execute(tables.tables["items"].insert().values(
+                    id=item["id"], owner_id="person_demo_owner", name=item["name"],
+                    kind="nonstandard_object", product_id=None, identity_notes={}, state={},
+                    photo_id=None, archived=False, version=1, created_at="2026-11-01"))
+                story = {"id":"historical-story"}
+                original_story = {"id":story["id"], "creator_id":"person_demo_owner",
+                    "title":"毕业那天", "text":"毕业前，小雨把亲手做的杯子递给我。",
+                    "item_ids":[item["id"]], "item_labels":{item["id"]:item["name"]},
+                    "photo_ids":[], "occurred_on":"2025-06-18", "origin_id":None,
+                    "provenance":{"kind":"authored_record", "author_id":"person_demo_owner"},
+                    "version":1, "allow_ai":False}
+                connection.execute(tables.tables["experiences"].insert().values(
+                    **original_story, created_at="2026-11-01"))
+                connection.execute(tables.tables["experience_shares"].insert().values(
+                    experience_id=story["id"], user_id="person_demo_friend"))
+                original_snapshot = {"name":item["name"], "product":{},
+                    "message":"把这段故事也交给你。", "avatar":{},
+                    "experiences":[dict(original_story)], "sender_name":"小林"}
+                gift = {"id":"historical-gift"}
+                connection.execute(tables.tables["gifts"].insert().values(id=gift["id"],
+                    sender_id="person_demo_owner", recipient_id="person_demo_friend",
+                    item_id=item["id"], snapshot=original_snapshot, status="pending", created_at="2026-11-01"))
+                connection.commit()
+                original_story["household_id"] = None
             old_engine.dispose()
 
             engine, sessions = make_database(settings)
+            resources.callback(engine.dispose)
             try:
                 with engine.connect() as connection:
-                    self.assertEqual(connection.execute(text("SELECT version_num FROM alembic_version")).scalar(), "0008")
+                    self.assertEqual(connection.execute(text("SELECT version_num FROM alembic_version")).scalar(), head)
                     self.assertEqual(connection.exec_driver_sql("PRAGMA foreign_key_check").fetchall(), [])
                     date_column = next(row for row in inspect(connection).get_columns("experiences") if row["name"] == "occurred_on")
                     self.assertTrue(date_column["nullable"])
@@ -69,7 +91,7 @@ class ExperienceDateMigrationTests(unittest.TestCase):
             finally:
                 engine.dispose()
 
-            backups = list((Path(directory) / "backups").glob("before-0006-to-0008-*.sqlite3"))
+            backups = list((Path(directory) / "backups").glob(f"before-0006-to-{head}-*.sqlite3"))
             self.assertEqual(len(backups), 1)
             with closing(sqlite3.connect(backups[0])) as backup:
                 self.assertEqual(backup.execute("PRAGMA integrity_check").fetchone()[0], "ok")
@@ -79,8 +101,9 @@ class ExperienceDateMigrationTests(unittest.TestCase):
                 self.assertEqual(backup.execute("SELECT count(*) FROM experience_shares WHERE experience_id=?", (story["id"],)).fetchone()[0], 1)
                 self.assertEqual(backup.execute("PRAGMA foreign_key_check").fetchall(), [])
             reopened, _ = make_database(settings)
+            resources.callback(reopened.dispose)
             reopened.dispose()
-            self.assertEqual(len(list((Path(directory) / "backups").glob("before-0006-to-0008-*.sqlite3"))), 1)
+            self.assertEqual(len(list((Path(directory) / "backups").glob(f"before-0006-to-{head}-*.sqlite3"))), 1)
 
 
 class UnknownExperienceDateJourneys(unittest.TestCase):

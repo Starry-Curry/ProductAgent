@@ -28,6 +28,7 @@ from .api_models import (
     FriendRequest,
     FriendView,
     GiftCreate,
+    GiftAccept,
     GiftView,
     HealthView,
     ItemChange,
@@ -57,6 +58,7 @@ from .database import (
     Gift,
     Grant,
     HouseholdItem,
+    HouseholdMember,
     ItemRecord,
     Reminder,
     Run,
@@ -386,17 +388,27 @@ def create_app(settings=None, model_factory=None):
     def asset_file(asset_id: str, user=Depends(current_user), db=Depends(db_session)):
         asset = domain.require(db.get(Asset, asset_id))
         if asset.owner_id != user.id:
-            item = db.scalar(select(ItemRecord).where(ItemRecord.photo_id == asset_id))
             item_allowed = False
-            if item is not None:
+            for item in db.scalars(select(ItemRecord).where(ItemRecord.photo_id == asset_id)):
                 try:
                     domain.accessible_item(db, user.id, item.id)
                     item_allowed = True
+                    break
                 except domain.DomainError:
                     pass
-            story_allowed = any(asset_id in row.photo_ids for row in db.scalars(select(ExperienceRecord).where(
-                ExperienceRecord.id.in_(select(ExperienceShare.experience_id).where(ExperienceShare.user_id == user.id)))))
-            if not item_allowed and not story_allowed:
+            from .family_memory import ExperienceReadScope, can_read_experience
+            story_allowed = False
+            if not item_allowed:
+                scope = ExperienceReadScope.load(db, user.id)
+                story_allowed = any(asset_id in row.photo_ids and can_read_experience(db,user.id,row,scope=scope)
+                    for row in db.scalars(select(ExperienceRecord).where(or_(
+                        ExperienceRecord.household_id.in_(scope.members),
+                        ExperienceRecord.id.in_(scope.shared_ids)))))
+            gift_allowed = not (item_allowed or story_allowed) and any(asset_id == gift.snapshot.get("photo_id") or
+                any(asset_id in story.get("photo_ids",[]) for story in gift.snapshot.get("experiences",[]))
+                for gift in db.scalars(select(Gift).where(Gift.status.in_(["pending","accepted"]),
+                    or_(Gift.sender_id == user.id,Gift.recipient_id == user.id))))
+            if not item_allowed and not story_allowed and not gift_allowed:
                 raise domain.DomainError("没有找到这份文件", 404)
         return FileResponse(asset.path, media_type=asset.media_type,
                             filename=asset.original_name if not asset.media_type.startswith("image/") else None,
@@ -433,8 +445,8 @@ def create_app(settings=None, model_factory=None):
         return domain.create_gift(db, user.id, payload)
 
     @app.post("/api/gifts/{gift_id}/accept", response_model=GiftView)
-    def receive_gift(gift_id: str, user=Depends(current_user), db=Depends(db_session)):
-        return domain.accept_gift(db, user.id, gift_id)
+    def receive_gift(gift_id: str, payload: GiftAccept | None = None, user=Depends(current_user), db=Depends(db_session)):
+        return domain.accept_gift(db, user.id, gift_id, acceptance=payload)
 
     @app.get("/api/reminders", response_model=list[ReminderView])
     def reminders(user=Depends(current_user), db=Depends(db_session)):
@@ -442,21 +454,8 @@ def create_app(settings=None, model_factory=None):
 
     @app.post("/api/reminders")
     def add_reminder(payload: ReminderCreate, user=Depends(current_user), db=Depends(db_session)):
-        assignee = payload.assignee_id or user.id
-        if assignee != user.id and not domain.are_friends(db, user.id, assignee):
-            raise domain.DomainError("请选择已接受关系的家人或朋友")
-        if payload.item_id:
-            domain.accessible_item(db, user.id, payload.item_id)
-            domain.accessible_item(db, assignee, payload.item_id)
-        if payload.household_id:
-            interactions.member(db, user.id, payload.household_id)
-            interactions.member(db, assignee, payload.household_id)
-            if payload.item_id and db.get(HouseholdItem, (payload.household_id, payload.item_id)) is None:
-                raise domain.DomainError("这件物品尚未加入家庭共同用品")
-        reminder = Reminder(**payload.model_dump(exclude={"assignee_id"}), creator_id=user.id, assignee_id=assignee)
-        db.add(reminder)
-        db.commit()
-        return {"id": reminder.id}
+        from .butler_actions import create_reminder
+        return create_reminder(db,user.id,payload)
 
     @app.post("/api/reminders/{reminder_id}/complete")
     def complete_reminder(reminder_id: str, user=Depends(current_user), db=Depends(db_session)):
@@ -473,6 +472,8 @@ def create_app(settings=None, model_factory=None):
 
     from .interaction_routes import register_interactions
     register_interactions(app, current_user, db_session)
+    from .butler_actions import register_routes as register_butler_routes
+    register_butler_routes(app,current_user,db_session,settings)
     from .photo_matching_routes import register_photo_matching
     register_photo_matching(app, current_user, settings, sessions)
 

@@ -29,7 +29,8 @@ class KnowledgeUpdate(BaseModel):
     content: str = Field(min_length=1, max_length=4000,
         description="One narrowly scoped reusable claim actually supported by its quoted evidence. Do not bundle unrelated mechanisms/commands or upgrade a page description into observed steps. Put adaptations and unverified explanations in separate inference claims.")
     conditions: Applicability
-    basis: Literal["document", "user_report", "inference"]
+    basis: Literal["document", "user_report", "inference"] = Field(
+        description="document is the author's actual readable text with exact lines/quote. Interpretations of pictures or sampled frames are inference with the actual observation source_id, never document or proof of physical success. user_report is CURRENT user words only.")
     scope: Literal["product", "item"] = Field(description="Use product ONLY when the retained original explicitly matches this physical item's exact model. Generic brand/tool/community examples belong to item with applicability unknown; source_model cannot establish compatibility by itself.")
     source_id: str | None = Field(default=None,
         description="Actually retained source for document evidence, or the source of a provisional visual interpretation/inference. Video frames use their derived sample source ID; observed images do not turn a model interpretation into a verified procedure.")
@@ -93,7 +94,7 @@ class Learning(BaseModel):
     knowledge_updates: list[KnowledgeUpdate] = Field(
         default_factory=list,
         max_length=12,
-        description="New reusable capabilities, boundaries, procedures or cases learned this turn. Include useful evidence from documents actually read; empty when nothing was learned. A hypothesis stays inference.",
+        description="Optional narrowly verified reusable understanding, only when useful beyond the current answer. Reading a document does not require storing a claim. Omit uncertain/irrelevant learning and deliver the current step; retained sources remain available. A hypothesis stays inference.",
     )
     memory_updates: list[MemoryUpdate] = Field(
         default_factory=list,
@@ -172,6 +173,12 @@ def _validate_memory_change(db, user_id, message, change):
 
 
 def _validate_knowledge_change(db, user_id, message, change):
+    basis, scope, quote = foundation.normalize_claim_evidence(db, user_id, change.basis,
+        change.scope, change.source_id, change.source_quote)
+    if (basis, scope, quote) != (change.basis, change.scope, change.source_quote):
+        change.basis, change.scope, change.source_quote = basis, scope, quote
+        change.source_line_start = change.source_line_end = None
+        change.source_model = ""
     try:
         item = domain.accessible_item(db, user_id, change.item_id)
     except domain.DomainError:

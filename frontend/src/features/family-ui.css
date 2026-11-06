@@ -1,0 +1,34 @@
+.family-care .care-people { display: block; color: #596f76; font-size: 12px; margin-bottom: 5px; }
+.family-care .care-context { color: #526267; }
+.family-care .care-state-note { display: block; margin-top: 9px; color: #777d77; font-size: 11px; line-height: 1.6; }
+.family-care button:disabled { opacity: .55; cursor: default; }
+.family-care-large .care-card { gap: 16px; padding: 20px; flex-wrap: wrap; }
+.family-care-large .care-copy { flex-basis: 220px; }
+.family-care-large .care-photo { width: 106px; height: 106px; }
+.family-care-large .care-people, .family-care-large .care-copy p { font-size: 19px; line-height: 1.65; color: #4c5b60; }
+.family-care-large .care-title strong { font-size: 25px; line-height: 1.65; }
+.family-care-large .care-title .status-tag { font-size: 15px; }
+.family-care-large .care-actions { gap: 12px; }
+.family-care-large .care-actions button { min-height: 54px; font-size: 20px; padding: 12px 18px; flex-grow: 1; }
+.family-memory-heading { display: flex; gap: 12px; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.family-memory-heading h3 { display: flex; align-items: center; gap: 8px; }
+.family-memory-heading p, .family-memory-author { color: #697575; font-size: 13px; line-height: 1.7; }
+.family-memory-grid { display: grid; gap: 14px; margin: 20px 0; }
+.family-memory-card { display: flex; text-align: left; gap: 14px; width: 100%; border: 1px solid var(--line); padding: 15px; border-radius: 17px; background: #fcfaf8; }
+.family-memory-card img { width: 92px; height: 92px; object-fit: cover; border-radius: 12px; flex-shrink: 0; }
+.family-memory-card span { min-width: 0; overflow-wrap: anywhere; }
+.family-memory-card strong { display: block; margin: 6px 0; }
+.family-memory-card small { color: #6d7775; }
+.family-memory-card p { line-height: 1.7; white-space: pre-wrap; }
+.family-household-select { min-height: 40px; max-width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 7px 10px; background: #fcfaf8; }
+.gift-story-selection + .gift-story-selection { margin-top: 14px; }
+.gift-surprise-setting { margin: 8px 0 8px 24px; padding: 12px; border-left: 2px solid #b4c7c8; background: #f7f5f0; border-radius: 0 10px 10px 0; }
+.gift-surprise-setting > label { margin: 10px 0; }
+.gift-surprise-setting small, .gift-surprise-preview small { display: block; color: #667477; line-height: 1.7; }
+@media (max-width: 480px) {
+  .family-memory-card { padding: 12px; gap: 10px; }
+  .family-memory-card img { width: 70px; height: 80px; }
+  .family-care-large .care-photo { width: 86px; height: 86px; }
+  .family-care-large .care-card { padding: 16px; }
+}
+.items-workspace.personal-items { grid-template-columns: minmax(0, 1fr); }

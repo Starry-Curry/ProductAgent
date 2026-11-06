@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { App as AntApp, Modal } from "antd";
 import {
   ArrowLeft,
   ArrowRight,
@@ -7,21 +6,22 @@ import {
   Heart,
   Link,
   Plus,
+  Pencil,
   Trash2,
   Users,
 } from "lucide-react";
 import {
   request,
   type FriendSpace,
-  type Gift,
   type Item,
   type User,
   type Wish,
   type Workspace,
 } from "../api";
 import type { Editor } from "./Editors";
-import { EmptyState, ItemCard, ObjectVisual, Pill, safeDate } from "./shared";
+import { EmptyState, ItemCard, Pill, safeDate } from "./shared";
 import { navigate, type Route } from "./navigation";
+import GiftExperience from "./GiftExperience";
 
 export default function Friends({
   workspace,
@@ -30,6 +30,7 @@ export default function Friends({
   edit,
   refresh,
   onItem,
+  onCompanion,
   askText,
 }: {
   workspace: Workspace;
@@ -38,23 +39,27 @@ export default function Friends({
   edit: (editor: Editor) => void;
   refresh: () => Promise<unknown>;
   onItem: (id: string) => void;
+  onCompanion: (item: Item, text?: string) => void;
   askText: (text: string) => void;
 }) {
   const [tab, setTab] = useState("friends"),
     [space, setSpace] = useState<FriendSpace>(),
     [subtab, setSubtab] = useState("wishes");
   const [selected, setSelected] = useState<Wish>(),
-    [gift, setGift] = useState<Gift>();
+    [giftId, setGiftId] = useState<string>();
+  const gift = workspace.gifts.find((candidate) => candidate.id === giftId);
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
-  const { message } = AntApp.useApp();
   useEffect(() => {
+    let current = true;
     setSelected(undefined);
     setSpace(undefined);
+    setError("");
     if (route.friendId)
       void request<FriendSpace>(`/friends/${route.friendId}/space`)
-        .then(setSpace)
-        .catch((error) => setError(error.message));
+        .then((value) => { if (current) setSpace(value); })
+        .catch((error) => { if (current) setError(error.message); });
+    return () => { current = false; };
   }, [route.friendId, workspace]);
   async function action(operation: () => Promise<unknown>) {
     if (busy) return;
@@ -119,7 +124,7 @@ export default function Friends({
               </span>
               <div>
                 <h1>{person.display_name}的主页</h1>
-                <p>看看对方愿意与你分享的物与心意。</p>
+                <p>看看TA想收到的礼物，也看看愿意与你分享的物与故事。</p>
               </div>
             </div>
             <div className="segmented">
@@ -127,7 +132,7 @@ export default function Friends({
                 className={subtab === "wishes" ? "active" : ""}
                 onClick={() => setSubtab("wishes")}
               >
-                想要的 {space.wishes.length}
+                心愿单 {space.wishes.length}
               </button>
               <button
                 className={subtab === "items" ? "active" : ""}
@@ -144,7 +149,7 @@ export default function Friends({
             </div>
             {subtab === "wishes" && (
               <>
-                <h2 className="subsection-heading">对方的想买</h2>
+                <h2 className="subsection-heading">想收到的礼物</h2>
                 {space.wishes.length ? (
                   wishCards(space.wishes)
                 ) : (
@@ -246,7 +251,7 @@ export default function Friends({
                         <h2>{friend.display_name}</h2>
                         <p>
                           {friend.accepted
-                            ? "看看分享的物与心意"
+                            ? "看看TA想收到的礼物"
                             : friend.incoming
                               ? "希望和你相连"
                               : "等待对方接受"}
@@ -293,7 +298,7 @@ export default function Friends({
                   <button
                     className="gift-card"
                     key={gift.id}
-                    onClick={() => setGift(gift)}
+                    onClick={() => setGiftId(gift.id)}
                   >
                     <GiftIcon size={32} strokeWidth={1.2} />
                     <div>
@@ -369,7 +374,7 @@ export default function Friends({
             <h1>{selected.title}</h1>
             <p className="wish-owner">
               {selected.user_id === user.id ? "我" : person?.display_name}
-              加入了想买清单
+              加入了心愿单
             </p>
             <blockquote className="wish-note">
               {selected.note || "有个喜欢的东西，慢慢了解。"}
@@ -403,6 +408,11 @@ export default function Friends({
               这里只整理心意与条件，不代表已经购买、拥有或完成实物交付。
             </p>
             {selected.user_id === user.id && (
+              <button className="soft-button" onClick={() => edit({ kind: "wish", wish: selected })}>
+                <Pencil size={16} />编辑心愿与可见范围
+              </button>
+            )}
+            {selected.user_id === user.id && (
               <button
                 className="quiet-button"
                 onClick={() =>
@@ -434,95 +444,8 @@ export default function Friends({
           </div>
         )}
       </aside>
-      <Modal
-        open={Boolean(gift)}
-        title="一份送来的心意"
-        onCancel={() => setGift(undefined)}
-        footer={null}
-        width={640}
-      >
-        {gift && (
-          <div className="gift-preview">
-            <GiftIcon size={38} strokeWidth={1.1} />
-            <h2>{gift.snapshot.name}</h2>
-            <p>
-              来自 {gift.sender.display_name} · 送给{" "}
-              {gift.recipient.display_name}
-            </p>
-            <blockquote>{gift.snapshot.message}</blockquote>
-            {gift.snapshot.experiences.map((exp) => (
-              <article key={exp.id}>
-                <h3>{exp.title}</h3>
-                <p>{exp.text}</p>
-                <small>
-                  {String(
-                    exp.provenance?.author_name || gift.sender.display_name,
-                  )}
-                  的原记录
-                </small>
-              </article>
-            ))}
-            {gift.snapshot.avatar.enabled && (
-              <article>
-                <h3>{gift.snapshot.avatar.nickname || "随礼物送来的分身"}</h3>
-                <p>{gift.snapshot.avatar.personality}</p>
-              </article>
-            )}
-            <p className="form-note">
-              数字接收后由你决定之后的样子与新经历。私人聊天不会跟随转移，实体交付由双方另行确认。
-            </p>
-            <div className="detail-actions">
-              {gift.status === "pending" && gift.recipient.id === user.id && (
-                <>
-                  <button
-                    className="soft-button"
-                    disabled={busy}
-                    onClick={() =>
-                      void action(async () => {
-                        await request(`/gifts/${gift.id}/decision`, "POST", {
-                          action: "decline",
-                        });
-                        setGift(undefined);
-                      })
-                    }
-                  >
-                    婉拒这份心意
-                  </button>
-                  <button
-                    className="primary-button"
-                    disabled={busy}
-                    onClick={() =>
-                      void action(async () => {
-                        await request(`/gifts/${gift.id}/accept`, "POST");
-                        setGift(undefined);
-                        message.success("已经接收，可以开始属于你的新故事。");
-                      })
-                    }
-                  >
-                    接收礼物与所选故事
-                  </button>
-                </>
-              )}
-              {gift.status === "pending" && gift.sender.id === user.id && (
-                <button
-                  className="soft-button"
-                  disabled={busy}
-                  onClick={() =>
-                    void action(async () => {
-                      await request(`/gifts/${gift.id}/decision`, "POST", {
-                        action: "cancel",
-                      });
-                      setGift(undefined);
-                    })
-                  }
-                >
-                  取消待接收的心意
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-      </Modal>
+      {gift && <GiftExperience key={gift.id} gift={gift} userId={user.id} workspace={workspace}
+        refresh={refresh} onClose={() => setGiftId(undefined)} onItem={onItem} onCompanion={onCompanion} />}
     </div>
   );
 }

@@ -1504,6 +1504,23 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/GiftAccept"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -2508,6 +2525,119 @@
         }
       }
     },
+    "/api/tasks/{task_id}/entries": {
+      "post": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Add Entry",
+        "operationId": "add_entry_api_tasks__task_id__entries_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskEntryCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/entries/{entry_id}/details": {
+      "patch": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Edit Entry",
+        "operationId": "edit_entry_api_tasks__task_id__entries__entry_id__details_patch",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          },
+          {
+            "name": "entry_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Entry Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskEntryDetails"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/tasks/{task_id}/entries/{entry_id}/assignee": {
       "patch": {
         "tags": [
@@ -2911,6 +3041,56 @@
       }
     },
     "/api/wishes/{wish_id}": {
+      "put": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Change Wish",
+        "operationId": "change_wish_api_wishes__wish_id__put",
+        "parameters": [
+          {
+            "name": "wish_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Wish Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WishChange"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WishView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Friends"
@@ -2944,6 +3124,152 @@
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/action": {
+      "get": {
+        "tags": [
+          "Butler actions"
+        ],
+        "summary": "Get Action",
+        "operationId": "get_action_api_tasks__task_id__action_get",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/action/confirm": {
+      "post": {
+        "tags": [
+          "Butler actions"
+        ],
+        "summary": "Confirm Action",
+        "operationId": "confirm_action_api_tasks__task_id__action_confirm_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionDecision"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/action/cancel": {
+      "post": {
+        "tags": [
+          "Butler actions"
+        ],
+        "summary": "Cancel Action",
+        "operationId": "cancel_action_api_tasks__task_id__action_cancel_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionDecision"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionView"
+                }
               }
             }
           },
@@ -3065,6 +3391,72 @@
   },
   "components": {
     "schemas": {
+      "ActionDecision": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "ActionDecision"
+      },
+      "ActionView": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "details": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Details"
+          },
+          "result_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id",
+          "version",
+          "kind",
+          "status",
+          "title",
+          "details"
+        ],
+        "title": "ActionView"
+      },
       "AvatarSpec": {
         "properties": {
           "enabled": {
@@ -3077,6 +3469,9 @@
             "enum": [
               "auto",
               "keepsake",
+              "dango_leaf",
+              "dango_hat",
+              "dango_bow",
               "cup",
               "stone",
               "flower",
@@ -3133,6 +3528,9 @@
             "enum": [
               "auto",
               "keepsake",
+              "dango_leaf",
+              "dango_hat",
+              "dango_bow",
               "cup",
               "stone",
               "flower",
@@ -3181,6 +3579,13 @@
             "type": "string",
             "title": "Gift Message",
             "default": ""
+          },
+          "gift_memories": {
+            "items": {
+              "$ref": "#/components/schemas/GiftMemoryView"
+            },
+            "type": "array",
+            "title": "Gift Memories"
           },
           "growth_note": {
             "type": "string",
@@ -3610,6 +4015,17 @@
             "title": "Allow Ai",
             "default": false
           },
+          "household_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Household Id"
+          },
           "expected_version": {
             "type": "integer",
             "minimum": 1.0,
@@ -3670,6 +4086,17 @@
             "type": "boolean",
             "title": "Allow Ai",
             "default": false
+          },
+          "household_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Household Id"
           }
         },
         "additionalProperties": false,
@@ -3723,6 +4150,17 @@
             "type": "boolean",
             "title": "Allow Ai",
             "default": false
+          },
+          "household_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Household Id"
           },
           "id": {
             "type": "string",
@@ -3871,6 +4309,23 @@
         ],
         "title": "FriendView"
       },
+      "GiftAccept": {
+        "properties": {
+          "wake_avatar": {
+            "type": "boolean",
+            "title": "Wake Avatar",
+            "default": false
+          },
+          "allow_story_ai": {
+            "type": "boolean",
+            "title": "Allow Story Ai",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GiftAccept"
+      },
       "GiftCreate": {
         "properties": {
           "item_id": {
@@ -3897,6 +4352,14 @@
           },
           "avatar": {
             "$ref": "#/components/schemas/AvatarSpec"
+          },
+          "surprises": {
+            "items": {
+              "$ref": "#/components/schemas/GiftSurprise"
+            },
+            "type": "array",
+            "maxItems": 6,
+            "title": "Surprises"
           }
         },
         "additionalProperties": false,
@@ -3924,6 +4387,41 @@
           "action"
         ],
         "title": "GiftDecision"
+      },
+      "GiftMemoryView": {
+        "properties": {
+          "experience_id": {
+            "type": "string",
+            "title": "Experience Id"
+          },
+          "hint": {
+            "type": "string",
+            "title": "Hint"
+          },
+          "trigger_words": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Trigger Words"
+          },
+          "unlocked": {
+            "type": "boolean",
+            "title": "Unlocked",
+            "default": false
+          },
+          "chat_allowed": {
+            "type": "boolean",
+            "title": "Chat Allowed",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "experience_id",
+          "hint"
+        ],
+        "title": "GiftMemoryView"
       },
       "GiftSnapshot": {
         "properties": {
@@ -3960,6 +4458,24 @@
             },
             "type": "array",
             "title": "Public Source Ids"
+          },
+          "photo_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Id"
+          },
+          "surprises": {
+            "items": {
+              "$ref": "#/components/schemas/GiftSurprise"
+            },
+            "type": "array",
+            "title": "Surprises"
           }
         },
         "type": "object",
@@ -3972,6 +4488,35 @@
           "sender_name"
         ],
         "title": "GiftSnapshot"
+      },
+      "GiftSurprise": {
+        "properties": {
+          "experience_id": {
+            "type": "string",
+            "title": "Experience Id"
+          },
+          "hint": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Hint"
+          },
+          "trigger_words": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Trigger Words"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "experience_id",
+          "hint"
+        ],
+        "title": "GiftSurprise"
       },
       "GiftView": {
         "properties": {
@@ -5440,6 +5985,119 @@
         ],
         "title": "TaskEntryAssignment"
       },
+      "TaskEntryCreate": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          },
+          "group": {
+            "type": "string",
+            "enum": [
+              "owned",
+              "buy",
+              "borrow",
+              "confirm",
+              "step"
+            ],
+            "title": "Group",
+            "default": "owned"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Note",
+            "default": ""
+          },
+          "assignee_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assignee Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "title"
+        ],
+        "title": "TaskEntryCreate"
+      },
+      "TaskEntryDetails": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          },
+          "group": {
+            "type": "string",
+            "enum": [
+              "owned",
+              "buy",
+              "borrow",
+              "confirm",
+              "step"
+            ],
+            "title": "Group",
+            "default": "owned"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Note",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "title"
+        ],
+        "title": "TaskEntryDetails"
+      },
       "TaskEntryFeedback": {
         "properties": {
           "expected_version": {
@@ -5698,6 +6356,45 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "WishChange": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1600,
+            "title": "Note",
+            "default": ""
+          },
+          "url": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Url",
+            "default": ""
+          },
+          "visible_to_friends": {
+            "type": "boolean",
+            "title": "Visible To Friends",
+            "default": false
+          },
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "expected_version"
+        ],
+        "title": "WishChange"
       },
       "WishCreate": {
         "properties": {
