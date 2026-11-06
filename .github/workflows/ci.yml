@@ -2,7 +2,7 @@ name: Wujian offline checks
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, feat/as2-adaptive-lessons]
   pull_request:
     branches: [main, develop]
 

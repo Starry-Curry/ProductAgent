@@ -16,10 +16,15 @@ from wujian.database import Asset,SourceRecord,User,make_database,uid
 from wujian.lessons import package_for
 
 
-def seed(settings,media_dir,manual,clean=False,prepare_video=True):
+def seed(settings,media_dir,manual,clean=False,prepare_video=True,prepared_bundle=None):
+    bundle=None
+    if prepared_bundle:
+        from scripts.demo_assets import verify_bundle
+        prepared_bundle=Path(prepared_bundle).resolve();bundle=verify_bundle(prepared_bundle)
     settings.prepare();engine,sessions=make_database(settings)
     marker=settings.data_dir/'as2-demo-manifest.json'
-    if marker.exists():return json.loads(marker.read_text(encoding='utf-8'))
+    if marker.exists():
+        engine.dispose();return json.loads(marker.read_text(encoding='utf-8'))
     with sessions() as db:
         if clean:
             if db.scalar(select(User.id).limit(1)):raise ValueError('Clean profile requires a new database; existing users are preserved')
@@ -34,7 +39,7 @@ def seed(settings,media_dir,manual,clean=False,prepare_video=True):
         photo=asset(media_dir/'pic/1.jpg','image/jpeg')
         video=asset(media_dir/'pic/movie.mp4','video/mp4')
         original_video=video
-        if prepare_video and shutil.which('ffmpeg'):
+        if prepare_video and not bundle and shutil.which('ffmpeg'):
             prepared=settings.data_dir/'prepared';prepared.mkdir(exist_ok=True)
             preview=prepared/'as2-browser.mp4'
             subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-i',str(media_dir/'pic/movie.mp4'),
@@ -50,10 +55,15 @@ def seed(settings,media_dir,manual,clean=False,prepare_video=True):
             state={'teaching':{'package_id':'loklik-as2','video_id':video,'panel_photo_id':panel}}))
         row=domain.accessible_item(db,owner,item['id'])
         from scripts.prepare_as2_pictures import prepare_pictures
-        pictures=prepare_pictures(media_dir,manual,settings.data_dir/'prepared',asset)
+        pictures={key:asset(prepared_bundle/path,'image/png' if path.endswith('.png') else 'image/jpeg')
+            for key,path in bundle['prepared_pictures'].items()} if bundle else prepare_pictures(media_dir,manual,settings.data_dir/'prepared',asset)
         row.state={**row.state,'teaching':{**row.state['teaching'],'picture_assets':pictures}}
         reference=json.loads((ROOT/'fixtures/teaching/loklik-as2-reference.json').read_text(encoding='utf-8'))
-        if shutil.which('ffmpeg') and hashlib.sha256((media_dir/'pic/movie.mp4').read_bytes()).hexdigest()==reference['video_sha256']:
+        if bundle:
+            reference=dict(bundle['reference']);image=prepared_bundle/reference.pop('image_path')
+            reference['image_id']=asset(image,'image/png')
+            row.state={**row.state,'teaching':{**row.state['teaching'],'reference':reference}}
+        elif shutil.which('ffmpeg') and hashlib.sha256((media_dir/'pic/movie.mp4').read_bytes()).hexdigest()==reference['video_sha256']:
             prepared=settings.data_dir/'prepared';prepared.mkdir(exist_ok=True)
             image=prepared/'as2-reference.png'
             subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-ss','0','-i',str(media_dir/'pic/movie.mp4'),
@@ -74,7 +84,7 @@ def seed(settings,media_dir,manual,clean=False,prepare_video=True):
         db.commit()
         manifest={'item_id':row.id,'photo_id':photo,'panel_photo_id':panel,'video_id':video,'original_video_id':original_video,'manual_asset_id':manual_asset,
             'source_id':guide.id,'manual_source_id':original.id,'data_dir':str(settings.data_dir.resolve()),
-            'physical_operation_verified':False,'media_origin':'User-supplied AS2 photos and 18.23 second real video',
+            'physical_operation_verified':False,'media_origin':'User-supplied AS2 photos and 18.23 second exterior video (bundled copy is silent H.264)' if bundle else 'User-supplied AS2 photos and 18.23 second real video',
             'start_text':'我不知道这台烫印机怎么用，请带我一步一步来。',
             'route':'/#items?item='+row.id,'package_id':package['id']}
         marker.write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
@@ -83,8 +93,13 @@ def seed(settings,media_dir,manual,clean=False,prepare_video=True):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--data-dir',type=Path,required=True);parser.add_argument('--media-dir',type=Path,default=ROOT/'data/realdemo/LOKLiK_AS2')
-    parser.add_argument('--manual',type=Path,required=True);parser.add_argument('--clean-profile',action='store_true')
+    parser.add_argument('--data-dir',type=Path,required=True);parser.add_argument('--media-dir',type=Path)
+    parser.add_argument('--manual',type=Path);parser.add_argument('--bundle',type=Path,default=ROOT/'demo/as2');parser.add_argument('--clean-profile',action='store_true')
     args=parser.parse_args()
+    if bool(args.media_dir)!=bool(args.manual):parser.error('--media-dir and --manual must be supplied together')
+    bundle=None
+    if not args.media_dir:
+        from scripts.demo_assets import verify_bundle
+        manifest=verify_bundle(args.bundle);args.media_dir=args.bundle/manifest['media_dir'];args.manual=args.bundle/manifest['manual'];bundle=args.bundle
     settings=Settings(data_dir=args.data_dir,rea_enabled=False)
-    print(json.dumps(seed(settings,args.media_dir,args.manual,args.clean_profile),ensure_ascii=False,indent=2))
+    print(json.dumps(seed(settings,args.media_dir,args.manual,args.clean_profile,prepared_bundle=bundle),ensure_ascii=False,indent=2))
