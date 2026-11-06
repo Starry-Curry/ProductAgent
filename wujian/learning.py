@@ -58,7 +58,7 @@ class MemoryUpdate(BaseModel):
     operation: Literal["add", "replace", "forget"]
     memory_id: str | None = None
     content: str = Field(max_length=2000,
-        description="Required for every change: describe the retained understanding for add/replace; may be empty only for forget. source_quote is evidence, not a substitute for content.")
+        description="One understanding of the user supported by CURRENT user words, not YOUR proposed options, substitute materials or unaccepted next steps (keep those in continuation). A quote's presence does not support added assertions. Required for add/replace; empty only for forget.")
     item_id: str | None = None
     kind: Literal[
         "preference",
@@ -203,7 +203,8 @@ def _validate_knowledge_change(db, user_id, message, change):
         quote = locate_quote(source.content, change.source_quote)
         if quote is None or len(quote.strip()) < 8:
             raise domain.DomainError(
-                f"source_quote未匹配实际原文，请重新read_source({source.id})选择连续原句；不能把摘要、改写或省略号当作原文"
+                f"source_quote未匹配实际原文：请使用read_source({source.id})所标的source_line_start/source_line_end连续行号，由程序复制原文，source_quote留空即可；"
+                "也可复制连续原句，但不能改写、拼接片段、删去中间文字或把字面\\n当换行。行号引用仍须支持content，通用资料不写成型号共性。"
             )
         change.source_quote = quote
         expected = normalized_model(item.product.get("model", ""))

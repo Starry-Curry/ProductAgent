@@ -6,9 +6,22 @@ from typing import Literal
 from pydantic import BaseModel, Field, model_validator
 
 from . import domain, foundation
+from .api_models import TaskEntry
 from .database import ChatMessage, TaskRecord
 from .evidence import locate_quote
 from .learning import Learning, apply_learning
+
+
+def _plan_schema(schema):
+    """Expose the shared entry contract without replacing legacy dict plans."""
+    schema["properties"] = {
+        "schema": {"const": "interaction/1"},
+        "kind": {"enum": ["checklist", "guidance", "idea"],
+            "description": "Presentation of the whole plan; idea is not an entry group."},
+        "entries": {"type": "array", "maxItems": 60,
+            "description": "New proposals start pending. Keep existing reported states unless the current user supplies actual feedback. Entry ready means reported preparation/action progress, not merely that an idea is available.",
+            "items": TaskEntry.model_json_schema()},
+    }
 
 
 class ContinuingPlan(BaseModel):
@@ -20,7 +33,8 @@ class ContinuingPlan(BaseModel):
         description="Current user requirements and conditions, including temporary exclusions"
     )
     plan: dict = Field(
-        description="Proposed actions/alternatives, why they can work, minimum trial and unknown conditions; a proposal is not executed success"
+        description="Proposed actions/alternatives, why they can work, minimum trial and unknown conditions; a proposal is not executed success",
+        json_schema_extra=_plan_schema,
     )
     task_id: str | None = Field(
         description="Matching existing task ID; null only for a genuinely new goal"
@@ -82,12 +96,29 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
     # One transaction and one domain write path. No second model, writer or classifier.
     with db.begin_nested():
         task_id, version = plan.task_id, plan.expected_version
+        current = None
         if task_id:
             current = domain.require(db.get(TaskRecord, task_id))
             if current.user_id != user_id:
                 raise domain.DomainError("没有找到这项任务", 404)
             if current.version != version:
                 raise domain.DomainError("任务已更新，请重新读取后继续", 409)
+        # Agent proposals and reported execution share one board, but must not
+        # share a success meaning. UI progress already has its own explicit
+        # user action path. A literal feedback quote is necessary here, not a
+        # claim that arbitrary quoted words semantically prove completion.
+        proposed = foundation.validate_plan(plan.plan)
+        if proposed.get("schema") == "interaction/1" and not plan.feedback_quote:
+            previous = (
+                {entry["id"]: entry for entry in current.plan.get("entries", [])}
+                if current is not None and current.plan.get("schema") == "interaction/1" else {}
+            )
+            for entry in proposed["entries"]:
+                old = previous.get(entry["id"])
+                if old is None and entry["state"] != "pending":
+                    raise domain.DomainError("没有本轮实际反馈，新增提案条目必须从pending开始，不能报告已准备或执行结果")
+                if old is not None and entry["state"] != old.get("state", "pending"):
+                    raise domain.DomainError("没有本轮实际反馈，不能改变已有条目进度，请保留原状态")
         if task_id is None:
             created = foundation.save_task(
                 db,
