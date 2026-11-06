@@ -85,6 +85,8 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
             current = domain.require(db.get(TaskRecord, task_id))
             if current.user_id != user_id:
                 raise domain.DomainError("没有找到这项任务", 404)
+            if current.plan.get('guidance',{}).get('lesson'):
+                raise domain.DomainError('已审核教学不能经普通continuation整表重写；请保留回答并从原教学入口继续',409)
             if current.version != version:
                 raise domain.DomainError("任务已更新，请重新读取后继续", 409)
         if task_id is None:
@@ -220,6 +222,12 @@ def grounded_turn_schema(sessions, user_id, message_id):
                     except domain.DomainError as error:raise ValueError(error.message) from error
                 if active and active.plan.get('guidance',{}).get('lesson') and self.continuation:
                     raise ValueError('当前是已核验的逐步教学；请解释当前一步，明确实际完成时用lesson_action，不删除或跳过原步骤')
+                if self.continuation and self.continuation.task_id:
+                    target=db.get(TaskRecord,self.continuation.task_id)
+                    if target and target.user_id==user_id and target.plan.get('guidance',{}).get('lesson'):
+                        # Other conversations may discuss it, but cannot replace
+                        # its controller metadata or reviewed presentation assets.
+                        self.continuation=None
                 from .guidance import validate_specific_advice
                 entries=self.continuation.plan.get('entries',[]) if self.continuation else []
                 known=[message.text]

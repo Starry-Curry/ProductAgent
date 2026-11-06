@@ -174,3 +174,34 @@ class LessonJourneyTests(unittest.TestCase):
         picture=response.json()['task']['plan']['guidance']['pictures']['power']
         self.assertEqual(picture['evidence_kind'],'unannotated_source_image')
         self.assertNotIn('point',picture);self.assertEqual(response.json()['completed_count'],0)
+
+    def test_other_chat_cannot_overwrite_reviewed_lesson_or_its_models(self):
+        from wujian.database import Conversation,TaskRecord
+        from wujian.turns import grounded_turn_schema,commit_result
+        board=self.board();plan=board['task']['plan']
+        bad={**plan,'guidance':{'active_step_id':'mode'}}
+        with self.app.state.sessions() as db:
+            conversation=Conversation(user_id='person_demo_owner',entry_context={'intent':'general'})
+            db.add(conversation);db.flush()
+            message=ChatMessage(conversation_id=conversation.id,role='user',text='继续聊一下模式键');db.add(message);db.commit()
+            schema=grounded_turn_schema(self.app.state.sessions,'person_demo_owner',message.id)
+            result=schema(answer='模式键用于切换预置，原来的教学进度保留。',continuation={
+                'goal':'学会使用AS2','task_id':self.task,'expected_version':board['task']['version'],
+                'item_ids':[self.item],'constraints':{},'plan':bad,'status':'in_progress'})
+            self.assertIsNone(result.continuation)
+            commit_result(db,'person_demo_owner',message.id,result,message.text)
+            self.assertTrue(db.get(TaskRecord,self.task).plan['guidance']['lesson'])
+        self.assertEqual(self.board()['task']['plan']['visualizations']['mode']['nature'],'reviewed_schematic')
+
+    def test_reviewed_diagram_is_restored_without_a_qwen_downgrade(self):
+        from wujian.database import TaskRecord
+        with self.app.state.sessions() as db:
+            task=db.get(TaskRecord,self.task);visual=dict(task.plan['visualizations'])
+            visual['power']={'nature':'model_generated_schematic','scene':{'parts':[]}}
+            task.plan={**task.plan,'visualizations':visual};db.commit()
+        board=self.board()
+        with patch('wujian.teaching_diagram.generate_scene',new_callable=AsyncMock) as model:
+            response=self.client.post('/api/tasks/'+self.task+'/diagram',json={'expected_version':board['task']['version'],'step_id':'power'})
+        self.assertEqual(response.status_code,200,response.text);model.assert_not_called()
+        restored=response.json()['task']['plan']['visualizations']['power']
+        self.assertEqual(restored['nature'],'reviewed_schematic');self.assertGreater(len(restored['scene']['parts']),20)
