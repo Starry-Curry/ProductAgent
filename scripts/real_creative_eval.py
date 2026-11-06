@@ -293,6 +293,8 @@ def main():
                         help="Explicitly identify a previously frozen independent case, not an ordinary development fixture")
     parser.add_argument("--label", default="first")
     parser.add_argument("--turns", type=int, default=0)
+    parser.add_argument("--request-limit", type=int, default=600,
+                        help="Authorized total ceiling; cannot itself raise an existing ledger's ceiling")
     parser.add_argument("--thinking-budget", type=int, default=None,
                         help="Explicit performance experiment; leaves normal default unchanged")
     parser.add_argument("--model", help="Explicit same-provider comparison; does not edit .env or the application default")
@@ -303,6 +305,8 @@ def main():
     args = parser.parse_args()
     if not args.real:
         parser.error("--real required; this uses the authorized Bailian account")
+    if args.request_limit < 1:
+        parser.error("--request-limit must be positive")
     if args.independent and (not args.cases_file or args.resume_from):
         parser.error("--independent requires a frozen --cases-file and cannot be used for resumed development")
     from fastapi.testclient import TestClient
@@ -326,7 +330,7 @@ def main():
         raise RuntimeError("Local API key missing")
     initial_ledger = folder / "api-budget.json"
     initial = json.loads(initial_ledger.read_text(encoding="utf-8"))["reserved_or_attempted"] if initial_ledger.exists() else 0
-    budget = RequestBudget(folder / "request-budget.sqlite3", initial=initial)
+    budget = RequestBudget(folder / "request-budget.sqlite3", limit=args.request_limit, initial=initial)
     restore = budget.install(config.base_url)
     stamp = time.strftime("%Y%m%d-%H%M%S")
     output = folder / f"{args.case}-{args.label}-{stamp}"
