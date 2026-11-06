@@ -1,4 +1,4 @@
-param([int]$Port=8021,[switch]$Offline,[switch]$NewSession,[switch]$SkipInstall,[string]$PythonIndex='')
+param([int]$Port=8021,[switch]$Offline,[switch]$NewSession,[switch]$SkipInstall,[string]$PythonIndex='',[string]$NpmRegistry='')
 $ErrorActionPreference='Stop'
 Set-Location -LiteralPath $PSScriptRoot
 if(-not $SkipInstall){
@@ -21,7 +21,11 @@ if(-not $SkipInstall){
   & uv sync --frozen
   if($LASTEXITCODE -ne 0){throw 'Python dependency installation failed; retry with -PythonIndex https://mirrors.aliyun.com/pypi/simple'}
  }
- & npm.cmd --prefix frontend ci
+ if($NpmRegistry){
+  & npm.cmd --prefix frontend ci --registry $NpmRegistry
+ }else{
+  & npm.cmd --prefix frontend ci
+ }
  if($LASTEXITCODE -ne 0){throw 'Frontend dependency installation failed'}
  & npm.cmd --prefix frontend run build
  if($LASTEXITCODE -ne 0){throw 'Frontend build failed'}
