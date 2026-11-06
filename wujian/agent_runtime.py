@@ -360,7 +360,7 @@ class AgentRunner:
             user = db.get(User, run.user_id)
             messages = db.scalars(select(ChatMessage).where(ChatMessage.conversation_id == conversation.id)
                                  .order_by(ChatMessage.created_at)).all()
-            current = messages[-1]
+            current = domain.require(db.scalar(select(ChatMessage).where(ChatMessage.run_id==run_id,ChatMessage.role=='user')))
             item_ids = conversation.item_ids
             selected = [domain.item_view(db, user.id, domain.accessible_item(db, user.id, identity)) for identity in item_ids]
             resources = [{"id": row["id"], "name": row["name"], "kind": row["kind"], "model": row["product"].get("model", ""),
@@ -445,7 +445,7 @@ class AgentRunner:
                             'error':local_evidence.get('local_ai_error'),'source_ids':[row['id'] for row in local_evidence['results']]}]
                         local_db.commit()
             model_settings = self.settings
-            from .lessons import LESSON_SYSTEM,grounded_lesson_schema
+            from .lessons import LESSON_SYSTEM,grounded_lesson_schema,bind_intent
             prompt=LESSON_SYSTEM if lesson_mode else SYSTEM
             if lesson_mode and self.model_factory is model_for:
                 from dataclasses import replace
@@ -460,6 +460,7 @@ class AgentRunner:
                           react_config=ReActConfig(max_iters=4 if lesson_mode else 7), context_config=ContextConfig(trigger_ratio=0.75, tool_result_limit=6000),
                           injection_config=InjectionConfig(timezone="Asia/Shanghai"))
             text_output, events, usage, last_flush = "", [], {"scope": "agent_model_only_excludes_search_vision_embeddings"}, 0.0
+            tool_output={}
             finish_reason = None
             model_started, tool_started = None, {}
             result=None
@@ -472,8 +473,11 @@ class AgentRunner:
                         elif event_type == "tool_call_start":
                             tool_started[event.tool_call_id] = time.monotonic()
                             events.append({"type": "tool_start", "name": event.tool_call_name, "id": event.tool_call_id})
+                        elif event_type == 'tool_result_text_delta':
+                            tool_output[event.tool_call_id]=(tool_output.get(event.tool_call_id,'')+event.delta)[-2400:]
                         elif event_type == "tool_result_end":
                             events.append({"type": "tool_end", "id": event.tool_call_id, "state": str(event.state),"elapsed_seconds":round(time.monotonic()-tool_started.pop(event.tool_call_id,time.monotonic()),3)})
+                            if str(event.state)=='error':events.append({'type':'tool_validation_error','id':event.tool_call_id,'detail':tool_output.get(event.tool_call_id,'')})
                         elif event_type == "model_call_start":
                             model_started = time.monotonic()
                         elif event_type == "model_call_end":
@@ -484,7 +488,10 @@ class AgentRunner:
                             finish_reason = str(event.finished_reason)
                         elif isinstance(event, Msg) and event.role == "assistant":
                             if event.structured_output is not None:
-                                result=TurnResult.model_validate(event.structured_output)
+                                payload=dict(event.structured_output)
+                                if lesson_mode and payload.get('lesson_action'):
+                                    payload['lesson_action']=bind_intent(payload['lesson_action'],context['step_by_step_lesson'],current.text).model_dump()
+                                result=TurnResult.model_validate(payload)
                                 text_output=result.answer
                         if time.monotonic() - last_flush > 0.25:
                             self.persist_progress(run_id,'',events,usage)
@@ -492,6 +499,8 @@ class AgentRunner:
             except TimeoutError:
                 finish_reason='timeout'
             if deadline.expired():finish_reason='timeout'
+            if lesson_mode and finish_reason=='completed' and result is None:
+                finish_reason='missing_structured_output'
             if finish_reason not in {'completed','interrupted'} and self.model_factory is model_for:
                 with self.sessions() as check_db:
                     if check_db.get(Run,run_id).status!='running':return
@@ -515,6 +524,7 @@ class AgentRunner:
                     committed=commit_result(db,user_id,current.id,result,current.text)
                     continued=committed["task"]
                     text_output=committed["answer"]
+                    events.extend({'type':'lesson_action_rejected',**value} for value in committed.get('rejected_actions',[]))
                     events.append({"type":"understanding_saved","knowledge_count":len(committed["learned"]["knowledge"]),"memory_count":len(committed["learned"]["memories"])})
                 if continued:
                     events.append({'type':'continuation_saved','task_id':continued['id']})

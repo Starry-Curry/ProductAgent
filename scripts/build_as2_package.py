@@ -111,11 +111,12 @@ for value in steps:
     if identity in {'drawer_out','fabric','design','cover','remove'}:
         value['part_offsets']={part:[0,0,110] for part in ['drawer','mat','pull_tab']}
     if identity=='drawer_out' or identity=='remove':value['movement']=[0,0,-110]
-package={'id':'loklik-as2','revision':'2026-11-06.4','goal':'学会用 AS2 完成一次烫印','product_match':{'brand':'LOKLiK','model':'AS2'},
+material['input_question']='这次用的转印耗材叫什么？不知道名称也没关系，可以先看包装品名或拍给我；不用一次报齐参数，我们先识别它。'
+material['reviewed_instruction']='AS2 有四组固定预置及四组自定义参数。模式①为145℃/15秒/80kg，适用于普通或变色龙热转印刻字膜；②为150℃/15秒/80kg，适用于闪光、全息刻字膜及烫画膜；③为160℃/20秒/80kg，适用于可打印刻字膜及热转印纸；④为200℃/40秒/80kg，适用于热升华纸。实际耗材有不同要求时按其说明核对。'
+package={'id':'loklik-as2','revision':'2026-11-06.5','goal':'学会用 AS2 完成一次烫印','product_match':{'brand':'LOKLiK','model':'AS2'},
     'manual':{'index_url':'https://www.loklik.cn/files-download/','url':'https://video.loklik.cn/wp-content/uploads/2026/06/多功能自动衣服印画机AS2-说明书.pdf',
         'identity':'大陆 220V HPA01 实体按键版；不是 HPA01-2 Smart 触屏版'},'model_file':'loklik-as2-model.json',
-    'profiles':[{'id':'plain-htv-mode1','name':'普通刻字膜 / 模式①','required_report':['普通','刻字膜','145','15','80'],
-        'instruction':'已记录你报告的材料包装条件。短按左半边循环箭头的“模式”键，切换到①；核对屏幕为145℃、15秒、80kg，不一致先告诉我。'}],
+    'profiles':[],
     'steps':steps,'authoring':'Codex authored, checked against supplied photos and mainland official PDF; instruction text is a paraphrase, not a verbatim manual transcript.'}
 package['controls']=[
     {'id':'power','name':'电源键（⏻）','location':'面板最左侧','purpose':'开关机','question_aliases':['⏻'],'answer_terms':['电源','开关机','开机','关机']},
@@ -123,5 +124,22 @@ package['controls']=[
     {'id':'auto','name':'自动熨压键（A）','location':'右半区、品牌启动键左边','purpose':'自动熨压模式','question_aliases':['A键','A 键','带 A','带A'],'answer_terms':['自动熨压','自动压烫','自动烫印']},
     {'id':'start','name':'启动键（品牌图标）','location':'面板最右侧','purpose':'预热/开始当前压烫','question_aliases':['品牌图标'],'answer_terms':['启动','压烫','烫印','预热']}
 ]
+package['parameter_input']={'material_categories':['转印','刻字','升华','烫画'],
+    'limits':{'temperature_c':[100,210],'duration_s':[1,3600],'pressure_kg':[1,80]},
+    'nature':'Only records actual user packaging conditions; not a claim of observed temperature or real pressing success.'}
+package['controls'].extend([
+    {'id':'temperature','name':'温度键','location':'三枚小参数键的上方，温度计图标','purpose':'短按使温度闪烁后用加减键调整','question_aliases':['温度键'],'answer_terms':['温度','℃']},
+    {'id':'time','name':'时间键','location':'三枚小参数键左侧，时钟图标','purpose':'短按使时间闪烁后用加减键调整','question_aliases':['时间键'],'answer_terms':['时间','秒']},
+    {'id':'pressure','name':'压力键','location':'三枚小参数键下方','purpose':'短按使压力闪烁后用加减键调整','question_aliases':['压力键'],'answer_terms':['压力','kg']}
+])
+for identity,name,terms,temp,seconds,number in [
+    ('plain-htv-mode1','普通刻字膜',['普通刻字膜','普通热转印刻字膜','变色龙刻字膜'],145,15,'①'),
+    ('glitter-mode2','闪光或全息刻字膜',['闪光刻字膜','全息刻字膜','闪光热刻字膜','烫画膜'],150,15,'②'),
+    ('printable-mode3','可打印刻字膜或热转印纸',['可打印刻字膜','热转印纸'],160,20,'③'),
+    ('sublimation-mode4','热升华纸',['热升华纸'],200,40,'④')]:
+    package['profiles'].append({'id':identity,'name':name+' / 模式'+number,'material_terms':terms,
+        'parameters':{'temperature_c':temp,'duration_s':seconds,'pressure_kg':80},
+        'required_report':(['普通','刻字膜'] if identity=='plain-htv-mode1' else [terms[0]])+[str(temp),str(seconds),'80'],
+        'instruction':f'按 AS2 手册，这类耗材可参考模式{number}：{temp}℃、{seconds}秒、80kg；若包装标注不同先告诉我。短按左半边循环箭头的模式键切换到{number}，核对屏幕后告诉我。'})
 (folder/'loklik-as2.json').write_text(json.dumps(package,ensure_ascii=False,indent=2),encoding='utf-8')
 print('Authored',len(parts),'exterior parts and',len(steps),'sequential steps')

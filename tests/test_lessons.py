@@ -29,6 +29,14 @@ class QuestionModel(ChatModelBase):
             is_last=True,usage=ChatUsage(input_tokens=10,output_tokens=10,time=0))
 
 
+class ScenarioModel(QuestionModel):
+    def __init__(self,payloads):super().__init__();self.payloads=payloads;self.calls=0
+    async def _call_api(self,model_name,messages,**kwargs):
+        value=self.payloads[min(self.calls,len(self.payloads)-1)];self.calls+=1
+        return ChatResponse(content=[ToolCallBlock(id='scenario-'+str(self.calls),name='GenerateStructuredOutput',input=json.dumps(value))],
+            is_last=True,usage=ChatUsage(input_tokens=10,output_tokens=10,time=0))
+
+
 class LessonJourneyTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();folder=Path(self.tmp.name);media=folder/'media';(media/'pic').mkdir(parents=True)
@@ -56,6 +64,9 @@ class LessonJourneyTests(unittest.TestCase):
     def board(self):return self.client.get('/api/tasks/'+self.task+'/board').json()
 
     def chat(self,text):return self.wait(self.client.post('/api/chat',json={'text':text,'conversation_id':self.conversation}))
+
+    def scenario(self,*payloads):
+        model=ScenarioModel(list(payloads));self.app.state.runner.model_factory=lambda _:model;return model
 
     def done(self,receipt=None):
         board=self.board();payload={'expected_version':board['task']['version'],'step_id':board['task']['plan']['guidance']['active_step_id'],
@@ -174,3 +185,105 @@ class LessonJourneyTests(unittest.TestCase):
         picture=response.json()['task']['plan']['guidance']['pictures']['power']
         self.assertEqual(picture['evidence_kind'],'unannotated_source_image')
         self.assertNotIn('point',picture);self.assertEqual(response.json()['completed_count'],0)
+
+    def test_invalid_state_proposal_preserves_a_useful_answer_without_retrying_it_away(self):
+        self.done();answer='塑料片可能是保护膜或转印材料，不能直接认定。先看包装品名，或者拍正反面给我。'
+        model=self.scenario({'answer':answer,'lesson_action':{'kind':'provide_input','profile_id':None}})
+        run=self.chat('衣服和塑料的片片，具体参数我不是很清楚')
+        self.assertEqual(run['text'],answer);self.assertEqual(model.calls,1)
+        self.assertTrue(any(e['type']=='lesson_action_rejected' for e in run['events']))
+        self.assertEqual(self.board()['completed_count'],1)
+
+    def test_literal_echo_is_rejected_and_native_sdk_can_repair_only_the_answer(self):
+        self.done();text='衣服和塑料的片片，具体参数我不是很清楚'
+        self.scenario({'answer':text},{'answer':'先看那片材料的包装品名，别直接把普通塑料片当转印膜。包装上写的是什么？'})
+        run=self.chat(text)
+        self.assertNotEqual(run['text'],text);self.assertIn('包装品名',run['text'])
+        self.assertTrue(any(e['type']=='tool_end' and e['state']=='error' for e in run['events']))
+
+    def test_help_is_inserted_revised_and_returns_to_the_original_step(self):
+        self.done();help_step={'title':'识别转印耗材','instruction':'先看外包装品名。没有包装时可以拍材料正反面，先不按模式键。',
+            'success_signal':'告诉我包装品名或材料特征。','target_label':'转印耗材外包装上的品名','kind':'identify'}
+        self.scenario({'answer':'先识别这张片，不能把普通塑料当转印膜。看看包装品名。','lesson_action':{'kind':'adapt','help_step':help_step}})
+        self.chat('衣服和塑料的片片，具体参数我不是很清楚');board=self.board();active=board['task']['plan']['guidance']['active_step_id']
+        self.assertTrue(active.startswith('help-'));self.assertEqual(board['total_count'],13)
+        self.chat('包装暂时找不到，继续帮我识别。');self.assertEqual(self.board()['total_count'],13)
+        self.assertEqual(self.board()['task']['plan']['guidance']['active_step_id'],active)
+        self.chat('找到包装了，是热升华纸。');board=self.board()
+        self.assertEqual(board['task']['plan']['guidance']['active_step_id'],'mode')
+        self.assertEqual(board['completed_count'],2);self.assertEqual(board['total_count'],13)
+        material=board['task']['plan']['guidance']['lesson']['inputs']['material_parameters']
+        self.assertEqual(material['profile_id'],'sublimation-mode4');self.assertEqual(material['basis'],'reviewed_manual_preset')
+
+    def test_partial_material_and_nonpreset_packaging_are_recorded_without_inventing_numbers(self):
+        self.done();self.scenario({'answer':'先识别包装，参数不清楚就先留空。','lesson_action':{'kind':'provide_input','material':{'name':'塑料片'}}})
+        self.chat('我只有一张塑料片，温度不知道。');board=self.board()
+        self.assertEqual(board['task']['plan']['guidance']['lesson']['inputs']['material_parameters']['status'],'partial')
+        self.assertEqual(self.client.post('/api/tasks/'+self.task+'/guidance-feedback',json={'expected_version':board['task']['version'],'step_id':'mode','outcome':'done','receipt_id':'still-partial'}).status_code,409)
+        self.scenario({'answer':'这些条件来自你的包装，不套预置；先核对屏幕显示。','lesson_action':{'kind':'provide_input','material':{
+            'name':'某牌热转印膜','temperature_c':140,'duration_s':20,'pressure_kg':30}}})
+        self.chat('包装写某牌热转印膜，140℃、20秒、30kg。');board=self.board()
+        value=board['task']['plan']['guidance']['lesson']['inputs']['material_parameters']
+        self.assertEqual(value['status'],'ready');self.assertIsNone(value['profile_id']);self.assertEqual(value['basis'],'user_packaging')
+        self.assertEqual(value['fields']['temperature_c']['value'],140)
+        self.assertEqual(board['completed_count'],1)
+        self.assertEqual(next(e for e in board['entries'] if e['id']=='mode')['guidance']['kind'],'verify')
+        self.assertEqual(board['task']['plan']['visualizations']['mode']['scene']['focus_ids'],['display'])
+        self.assertEqual(board['task']['plan']['visualizations']['mode']['nature'],'reviewed_schematic')
+
+    def test_other_chat_cannot_overwrite_reviewed_lesson_or_its_models(self):
+        from wujian.database import Conversation,TaskRecord
+        from wujian.turns import grounded_turn_schema,commit_result
+        board=self.board();plan=board['task']['plan']
+        bad={**plan,'guidance':{'active_step_id':'mode'}}
+        with self.app.state.sessions() as db:
+            conversation=Conversation(user_id='person_demo_owner',entry_context={'intent':'general'})
+            db.add(conversation);db.flush()
+            message=ChatMessage(conversation_id=conversation.id,role='user',text='继续聊一下模式键');db.add(message);db.commit()
+            schema=grounded_turn_schema(self.app.state.sessions,'person_demo_owner',message.id)
+            result=schema(answer='模式键用于切换预置，原来的教学进度保留。',continuation={
+                'goal':'学会使用AS2','task_id':self.task,'expected_version':board['task']['version'],
+                'item_ids':[self.item],'constraints':{},'plan':bad,'status':'in_progress'})
+            self.assertIsNone(result.continuation)
+            commit_result(db,'person_demo_owner',message.id,result,message.text)
+            self.assertTrue(db.get(TaskRecord,self.task).plan['guidance']['lesson'])
+        self.assertEqual(self.board()['task']['plan']['visualizations']['mode']['nature'],'reviewed_schematic')
+
+    def test_other_device_question_does_not_advance_the_heat_press(self):
+        self.scenario({'answer':'键盘已经连上就先试着输入几个字，看看是否正常。','topic':'other','lesson_action':{'kind':'confirm'}})
+        run=self.chat('先问一下别的，我的蓝牙键盘已经连接好了。')
+        self.assertIn('键盘',run['text']);self.assertEqual(self.board()['completed_count'],0)
+        self.assertEqual(self.board()['task']['plan']['guidance']['active_step_id'],'power')
+
+    def test_new_packaging_can_be_saved_together_with_a_help_step(self):
+        self.done()
+        self.scenario({'answer':'已记下包装参数，先观察屏幕上现在的数值。','lesson_action':{'kind':'adapt',
+            'material':{'name':'某牌热转印膜','temperature_c':140,'duration_s':20,'pressure_kg':30},
+            'help_step':{'title':'观察当前屏幕','kind':'observe','instruction':'先看屏幕显示的当前温度，告诉我实际数字。',
+                'success_signal':'报告实际显示值。','target_label':'面板的显示屏'}}})
+        self.chat('包装写某牌热转印膜，140℃、20秒、30kg；还没设置，先看看屏幕。')
+        board=self.board();self.assertEqual(board['total_count'],13);self.assertEqual(board['completed_count'],1)
+        self.assertEqual(board['task']['plan']['guidance']['lesson']['inputs']['material_parameters']['status'],'ready')
+        self.assertEqual(board['task']['plan']['visualizations']['mode']['scene']['focus_ids'],['display'])
+
+    def test_model_cannot_swap_temperature_and_time_in_a_material_report(self):
+        self.done();answer='先按包装上的名称和条件核对，不套默认预置。'
+        self.scenario({'answer':answer,'lesson_action':{'kind':'provide_input','material':{
+            'name':'某牌热转印膜','temperature_c':140,'duration_s':160,'pressure_kg':30}}})
+        run=self.chat('某牌热转印膜，温度160℃，时间140秒，压力30kg。')
+        self.assertEqual(run['text'],answer);self.assertEqual(self.board()['completed_count'],1)
+        self.assertNotIn('material_parameters',self.board()['task']['plan']['guidance']['lesson']['inputs'])
+        self.assertTrue(any(e['type']=='lesson_action_rejected' for e in run['events']))
+
+    def test_reviewed_diagram_is_restored_without_a_qwen_downgrade(self):
+        from wujian.database import TaskRecord
+        with self.app.state.sessions() as db:
+            task=db.get(TaskRecord,self.task);visual=dict(task.plan['visualizations'])
+            visual['power']={'nature':'model_generated_schematic','scene':{'parts':[]}}
+            task.plan={**task.plan,'visualizations':visual};db.commit()
+        board=self.board()
+        with patch('wujian.teaching_diagram.generate_scene',new_callable=AsyncMock) as model:
+            response=self.client.post('/api/tasks/'+self.task+'/diagram',json={'expected_version':board['task']['version'],'step_id':'power'})
+        self.assertEqual(response.status_code,200,response.text);model.assert_not_called()
+        restored=response.json()['task']['plan']['visualizations']['power']
+        self.assertEqual(restored['nature'],'reviewed_schematic');self.assertGreater(len(restored['scene']['parts']),20)

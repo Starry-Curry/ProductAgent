@@ -185,6 +185,19 @@ def register_diagrams(app,current_user,db_session,settings):
         cached=task.plan.get('visualizations',{}).get(payload.step_id)
         if cached and cached.get('nature')=='reviewed_schematic' and cached.get('step_signature')==step_signature(entry):
             return interactions.board(db,user.id,task_id)
+        if task.plan.get('guidance',{}).get('lesson'):
+            from .lessons import package_for,cache_aids
+            item=domain.accessible_item(db,user.id,entry.get('item_id') or task.item_ids[0])
+            package=package_for(item)
+            variant=task.plan['guidance']['lesson'].get('definition',{})
+            if package and variant.get('id')==package['id'] and variant.get('model_file')==package['model_file']:package=variant
+            if package and any(step['id']==entry['id'] for step in package['steps']):
+                from .source_access import readable_source
+                for evidence in entry['guidance']['evidence']:readable_source(db,user.id,evidence['source_id'])
+                plan=cache_aids(task.plan,item,package)
+                foundation.save_task(db,user.id,task.source_message_id,task.goal,task.item_ids,task.constraints,
+                    plan,task.id,payload.expected_version,task.status)
+                return interactions.board(db,user.id,task_id)
         if not settings.api_key: raise domain.DomainError('请先配置百炼 API Key',503)
         target_id=entry.get('item_id') or next(iter(task.item_ids),None)
         if not target_id: raise domain.DomainError('先关联正在处理的实物',409)

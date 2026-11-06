@@ -214,13 +214,13 @@ def start_feedback(db, user_id, task_id, payload):
     if not entry or not entry.get('guidance'):
         raise domain.DomainError('这一步尚未核对，请先回到对话补充资料',409)
     if progress.get('lesson'):
-        from .lessons import step_definition
+        from .lessons import step_definition,input_ready
         if progress.get('active_step_id')!=payload.step_id:
             raise domain.DomainError('请先完成当前一步，不能跳步确认',409)
         if progress['lesson']['phase']=='paused':
             raise domain.DomainError('教学已暂停，先恢复再继续',409)
         step=step_definition(row,entry)
-        if payload.outcome=='done' and step.get('requires_input') and not progress['lesson']['inputs'].get(step['requires_input']):
+        if payload.outcome=='done' and not input_ready(progress['lesson'],step.get('requires_input')):
             raise domain.DomainError('先核对当前步骤需要的材料条件，再确认完成',409)
     for photo_id in payload.photo_ids:
         asset = domain.own_asset(db,user_id,photo_id)

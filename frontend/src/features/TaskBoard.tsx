@@ -103,14 +103,28 @@ export function GuidanceTools({
       lesson?: {
         phase: string;
         inputs: Record<string, unknown>;
-        definition: { steps: { id: string; requires_input?: string }[] };
+        definition: {
+          steps: { id: string; requires_input?: string; adaptive?: boolean }[];
+        };
       };
     }
   )?.lesson;
   const inputKey = lesson?.definition.steps.find(
     (step) => step.id === current.id,
   )?.requires_input;
-  const waitingInput = !!inputKey && !lesson?.inputs[inputKey];
+  const provided = (inputKey ? lesson?.inputs[inputKey] : null) as {
+    status?: string;
+    profile_id?: string;
+  } | null;
+  const waitingInput =
+    !!inputKey &&
+    !(
+      provided?.status === "ready" ||
+      (provided?.profile_id && !provided?.status)
+    );
+  const adaptive = !!lesson?.definition.steps.find(
+    (step) => step.id === current.id,
+  )?.adaptive;
   async function confirm() {
     if (!current) return;
     setBusy(true);
@@ -148,19 +162,23 @@ export function GuidanceTools({
     <section className="guidance-tools" aria-label="当前回答的辅助工具">
       <p className="muted">
         {lesson
-          ? `第 ${board.entries.findIndex((entry) => entry.id === current.id) + 1} / ${board.total_count} 步`
+          ? adaptive
+            ? "当前补充核对"
+            : `第 ${board.entries.findIndex((entry) => entry.id === current.id) + 1} 步`
           : "当前"}{" "}
         · {current.title}
       </p>
       {initial && <p className="saved-step">{current.guidance.instruction}</p>}
-      <StepIllustration
-        key={board.task.id + current.id}
-        board={board}
-        entry={current}
-        update={update}
-        enabled={!running && !busy}
-        photos={photos}
-      />
+      {!adaptive && (
+        <StepIllustration
+          key={board.task.id + current.id}
+          board={board}
+          entry={current}
+          update={update}
+          enabled={!running && !busy}
+          photos={photos}
+        />
+      )}
       <div className="guidance-assists">
         <button
           className="primary-button"
@@ -183,14 +201,16 @@ export function GuidanceTools({
         >
           这一步怎么做？
         </button>
-        <TeachingDiagram
-          key={board.task.id + current.id}
-          board={board}
-          entry={current}
-          update={update}
-          photoIds={photos}
-          onConfirm={!waitingInput && !running && !busy ? confirm : undefined}
-        />
+        {!adaptive && (
+          <TeachingDiagram
+            key={board.task.id + current.id}
+            board={board}
+            entry={current}
+            update={update}
+            photoIds={photos}
+            onConfirm={!waitingInput && !running && !busy ? confirm : undefined}
+          />
+        )}
         <CameraGuidance
           key={"camera-" + board.task.id}
           board={board}

@@ -1,0 +1,46 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AS2 连续教学修复与审阅说明</title>
+<style>body{max-width:1000px;margin:48px auto;padding:0 24px;background:#faf8f5;color:#302f2b;font:17px/1.85 system-ui,sans-serif}h1,h2{line-height:1.4}h2{margin-top:40px}table{border-collapse:collapse;width:100%;font-size:15px}td,th{border:1px solid #d9d4cd;padding:12px;text-align:left;vertical-align:top}code,pre{background:#eeeae4;border-radius:6px}code{padding:2px 5px}pre{padding:18px;overflow:auto}a{color:#507d8e}.note{border-left:4px solid #7fa0ac;padding:12px 18px;background:#f0eeea}</style>
+<h1>AS2 连续教学修复与审阅说明</h1>
+<p>2026-11-06 · <code>feat/as2-adaptive-lessons</code>。保留原版展示；新修复独立运行和审阅，不合入 develop/main，不发 PR。</p>
+<p class="note">AS2 是经过手册与实拍校核的示范物品。软件可以记录用户报告、展示指引和跟随可见部位；目前没有机器遥测，不能认定按键实际按下、温度已到或压烫成功。所有测试完成反馈都是模拟输入。</p>
+<h2>这次实际修复了什么</h2>
+<p>用户那句“衣服和塑料的片片，具体参数我不是很清楚”的原始运行记录显示：模型最初已经解释未知材料，却提交了缺少依据的材料状态建议。旧结构把回答与状态字段一起反复校验，最终模型为了满足“保留原话”的要求，把回答改成用户原话。现在模型只提交回答和小型意图，任务身份、版本、当前步骤与本轮原话由服务器绑定；非法状态建议单独拒绝，保留有用回答。原样复读有明确回退校核，错误细节记录到 run 事件。</p>
+<p>3D 变差是另一处问题：从普通会话提交的 continuation 可以覆盖另一教学任务的 plan，使 lesson 定义丢失、缓存失效，随后触发 Qwen 重生简图。原始几何文件没有被删除。现在跨会话不能整表覆盖已校核教学，图解缓存损坏会从原审核几何修复；默认展示完整机器，可以主动切换细节。恢复分支为 <code>fix/as2-reviewed-demo-restore</code>。</p>
+<h2>不是固定 12 轮，也不要求照模板输入</h2>
+<p>AS2 的 12 个基础动作来自审核教程，作为可追溯的主流程；不是所有产品固定 12 步。任意自然语言问题继续进入同一个 AgentScope 主 Agent。未知材料可以分轮记录，不强迫背出三项参数；已知耗材类别可使用手册推荐预置，明确区分手册推荐值与用户实际报告值。</p>
+<p>主 Agent 可以用 <code>adapt</code> 插入一个识别、观察或核对步骤；处于补充步骤时再调整它，不反复增加同类步骤。核对完成后回到原主步骤，旧完成记录保留。实际复测中基础 12 步变为 13 步；未确认材料时仍只完成开机一步。不会凭模型猜测跳过主流程的操作确认。</p>
+<p>非预置包装参数按用户报告保存，例如 140℃ / 20秒 / 30kg；数值与原话中的字段、单位绑定，不套 145℃ 预置。当前步骤改为核对屏幕，箭头与审核 3D 同时指向显示屏。条件尚不完整时保留模型的解释；条件齐备后的操作交接由控制器输出当前核对步骤，避免文字另起一个没有记入计划的动作。用户报告包装参数不代表材料适用性已独立确认，也不代表机器屏幕已经设置正确。</p>
+<p>临时问其他物品时保留当前教学；另一物品的“好了”不能推进 AS2。暂停、负反馈、没找到、疑问、视频定位都不代表完成。所有确认使用同一个任务、版本和幂等回执。</p>
+<h2>真实代码链路</h2>
+<table><tr><th>阶段</th><th>操作与代码入口</th></tr>
+<tr><td>收到输入</td><td><code>wujian/server.py</code> 创建用户消息与 Run；<code>agent_runtime.py</code> 按 run_id 查本轮用户消息，加载当前物品、当前有效私人记忆和任务状态。SSE 仅展示进度，最终回答统一提交。</td></tr>
+<tr><td>审核教程快速路径</td><td><code>lessons.prepare_turn</code>：准确匹配品牌/型号和数据包后创建任务；明确短确认、暂停、解释或已知耗材走同一控制器。此路径不调用模型，并在 usage 标明 <code>reviewed_procedure_no_model_call</code>。</td></tr>
+<tr><td>自然问答</td><td>同一个 <code>AgentScope 2.0.11</code> 主 Agent，实际模型 <code>qwen3.6-plus</code>。教学疑问关闭 thinking，使用小型 <code>LessonReply / LessonIntent</code>，不让模型重抄整张任务表。普通问答仍使用已有工具和记忆底座。</td></tr>
+<tr><td>结合搜索</td><td>Agent 按需调用 <code>search_public_web</code> → 百炼 Responses web_search → <code>fetch_document</code> 抓原文/PDF → <code>read_source / view_source_page</code>。代码在 <code>agent_runtime.make_tools</code> 和 <code>knowledge.py</code>。已有手册够用时不每轮重复联网；用户明确要求搜索时使用工具。失败/超时先结合现有信息回答并承认没读到新来源，不能把摘要当说明书原文。本轮材料分支复测未宣称完成了新的联网搜索验收。</td></tr>
+<tr><td>意图绑定、状态提交</td><td><code>lessons.bind_intent / validate_action / record_material / insert_help / apply_action</code>：服务器绑定用户原话、当前步骤、版本；材料部分写入、补充步骤、暂停/恢复和确认共用 <code>TaskRecord.plan</code>。<code>turns.commit_result</code> 用保存点处理冲突，状态建议失败也保留回答；权限失败仍拒绝。</td></tr>
+<tr><td>默认照片</td><td><code>lesson_assets.py</code> 与 <code>StepIllustration.tsx</code>。AS2 坐标来自对应实拍的审核裁图；通用物品可使用已读取的 PDF 页或实拍，让 <code>qwen3-vl-plus</code> 定位后叠箭头。无法定位时显示原图，不伪造坐标。</td></tr>
+<tr><td>可选 3D</td><td><code>teaching_diagram.py</code>、<code>lessons.cache_aids</code>、<code>TeachingDiagram.tsx</code>。AS2 使用 Codex 审核的几何与动作；不是 Qwen 任意重建。Bygga/Three.js 是渲染器，不限制 IKEA。其他物品保留照片/文档 → Qwen 有界几何 JSON → 同一渲染器的生成路径，但准确外观和运动尚未泛化验收。新增材料识别步骤不展示一个无关的机器按键模型。</td></tr>
+<tr><td>可选相机</td><td><code>CameraGuidance.tsx</code>、<code>camera/autoSession.ts</code> 自动取帧/重定位；<code>referenceTracker.ts</code> 做 ORB/RANSAC；必要时 <code>camera_guidance.py</code> 调用 <code>qwen3-vl-plus</code> 返回框；<code>vitTracker.ts</code> 追踪、<code>opticalFlow.ts</code> 兼容回退。低置信或丢失清除标注再寻找；不要求逐帧点击，也不把框当操作完成。</td></tr></table>
+<h2>数据放在哪里</h2>
+<p>恢复版展示：<code>D:\Project\Tianmao\ProductAgent\tmp\as2-showcase\wujian.sqlite3</code>。新版开发复测与展示使用单独数据目录，运行时以各自 runtime.json 中的 data_dir 为准，绝不通过删除旧库回到第一步。SQLite 是本地文件，可以用 DB Browser for SQLite、DBeaver 等按文件打开；不是一个已经开放的远程数据库端口。</p>
+<p>可以审阅 users、items、conversations、messages、runs、tasks、sources、assets 及认识/记忆等业务表。任务 plan 保存当前步骤、材料输入、原话证据、调整历史、图示缓存；Run 保留真实模型调用/错误事件。文件引用的照片/PDF/视频在相邻 assets 目录。ReMe 只作可重建检索投影，权限与事实仍由 SQL 库裁定。不要把私人库、密钥和实拍提交 Git。</p>
+<h2>NPU 与本地小模型：当前事实及部署路线</h2>
+<p>现网页 ORB/RANSAC、LK 是 CPU 传统视觉；ViTTrack 是 OpenCV Zoo 的小神经网络（714,726 字节，约 0.68MiB），但当前 ONNX Runtime Web 使用 WASM，仍是 CPU。Three.js 使用 GPU 绘图不算 AI 推理。硬件换成 NPU 不会自动使相同模型识别更准。</p>
+<p>新增 <code>scripts/probe_vittrack_openvino.py</code> 直接读取现有 ONNX，静态 template [1,3,128,128]、search [1,3,256,256]，在明确指定的 OpenVINO 设备上推理，检查 EXECUTION_DEVICES，不自动回退 CPU。本机实际 GPU.0 为 RTX 4060；AS2 实拍控制面板测试共 116 次，推理中位数约 2.61ms，但 7.67 秒处跟丢。可视检查也看到了框从按键区漂到显示区，因此它不是连续 18 秒成功跟踪，更不是有独立真值的精度评测。此脚本是部署实验，还未改成网页的 NPU 追踪后端。</p>
+<p>本机没有 Intel NPU；NPU 试验明确返回 device_unavailable、0 次推理。不能把 GPU 结果或任务管理器截图当作比赛电脑的 NPU 验收。</p>
+<p>建议比赛先用已有 MiniLM 本地语义检索路径满足真实 NPU 使用：模型在 NPU 编码问题与资料 → 排序选出的内容进入 Qwen 回答上下文，实际影响最终 AI 输出。该路径已有固定 [1,128] 输入、真实推理回执与严格设备校验，比临时把整个相机链路搬到 NPU 风险小。视觉再验证“云端定位＋本地模型跟踪整个控制面板＋平面映射到小按键＋丢失重找”，不能仅追一个十几像素的小按钮并长期沿用旧框。</p>
+<pre>uv sync --extra intel
+.venv\Scripts\python.exe scripts/local_ai.py download
+.venv\Scripts\python.exe scripts/local_ai.py probe --device NPU --require-accelerator --seconds 30 --output tmp/npu-proof.json
+
+$env:WUJIAN_LOCAL_EMBEDDING_DIR=(Resolve-Path var/models/multilingual-minilm).Path
+$env:WUJIAN_LOCAL_AI_DEVICE='NPU'
+$env:WUJIAN_LOCAL_AI_REQUIRED='true'
+.venv\Scripts\python.exe -m wujian serve --port 8020</pre>
+<p>上述命令应在比赛 Intel 机器运行，并检查任务管理器 NPU 图与 <code>GET /api/local-ai</code>、Run 的 <code>local_ai_context</code> 回执。设备缺失或编译失败必须报告，不能悄悄切 CPU。ViTTrack 也可在同一机器用脚本 <code>--device NPU --video 实拍.mp4 --box x1 y1 x2 y2 --output tmp/vittrack-npu.json</code> 验证；框使用首帧 405×720 坐标，不能拿别的分辨率直接复用。</p>
+<h2>验证与仍存在的边界</h2>
+<p>112 项离线测试通过，覆盖复读修复、非法状态不毁回答、补充步骤插入/修订/返回、未知材料、非预置参数、单位绑定、其他物品不推进、跨会话覆盖、审核模型恢复、权限和幂等。前端生产构建通过；重新导出 OpenAPI 和前端类型，公共契约无变化。浏览器验证第一步仍未完成、审核模型未触发重生成、未知耗材正常回复，未见页面脚本错误。真实 Qwen 复测保留首答及后续复测，耗时约 7–20 秒的材料解释仍存在等待，不应承诺实时。</p>
+<p>原版完整 MP4 为约 1分58秒的连续软件交互录像，包含文字、实拍箭头、原始说明书页、3D、实拍视频自动定位和 12 步完成。全过程明确标为模拟用户完成反馈，没有实际开机或压烫。真实 API 成功不等于材料识别准确；未知材料外观判断仍有泛化风险，需要进一步做带标签耗材照片与独立评审。不能只凭一张照片推荐热压参数。</p>
+<p>参考：<a href="https://github.com/opencv/opencv_zoo/tree/main/models/object_tracking_vittrack">OpenCV Zoo ViTTrack</a>；<a href="https://docs.openvino.ai/2026/openvino-workflow/running-inference/inference-devices-and-modes/npu-device.html">OpenVINO NPU 文档</a>；<a href="https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2">MiniLM 模型卡</a>；<a href="https://www.loklik.cn/files-download/">LOKLiK 官方资料下载</a>。上游许可证保留。</p>
+</html>

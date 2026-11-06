@@ -306,7 +306,7 @@ def board(db, user_id, task_id):
             step=step_definition(row)
             sources[original.id]={'id':original.id,'title':original.title,
                 'url':'/api/assets/'+original.asset_id if original.asset_id else original.url,
-                'quote':f"当前操作可核对原始 PDF 第 {step['manual_pdf_page']} 页；上方导览为改写，不是原文。" if step else '官方原始 PDF，保留页图以供核验。'}
+                'quote':f"当前操作可核对原始 PDF 第 {step['manual_pdf_page']} 页；上方导览为改写，不是原文。" if step and step.get('manual_pdf_page') else '官方原始 PDF；当前补充核对是一般观察建议，不冒充手册原文。'}
     if task_value['plan'].get('visualizations'):
         from .guidance import step_signature
         signatures={entry['id']:step_signature(entry) for entry in entries}

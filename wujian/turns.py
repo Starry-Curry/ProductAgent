@@ -85,6 +85,8 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
             current = domain.require(db.get(TaskRecord, task_id))
             if current.user_id != user_id:
                 raise domain.DomainError("没有找到这项任务", 404)
+            if current.plan.get('guidance',{}).get('lesson'):
+                raise domain.DomainError('已审核教学不能经普通continuation整表重写；请保留回答并从原教学入口继续',409)
             if current.version != version:
                 raise domain.DomainError("任务已更新，请重新读取后继续", 409)
         if task_id is None:
@@ -148,12 +150,26 @@ def commit_result(db, user_id, message_id, result, current_question):
     with db.begin_nested():
         learned = apply_learning(db, user_id, message_id, result.learning)
         controlled_answer=None
+        rejected_actions=[]
         if result.lesson_action:
             from .lessons import apply_action
-            controlled,controlled_answer=apply_action(db,user_id,message_id,result.lesson_action)
-            if result.lesson_action.kind=='explain':controlled_answer=None
-            from .retrieval import task_view
-            task=task_view(controlled)
+            try:
+                with db.begin_nested():
+                    controlled,controlled_answer=apply_action(db,user_id,message_id,result.lesson_action)
+                if result.lesson_action.kind in {'explain','adapt'}:controlled_answer=None
+                elif result.lesson_action.kind=='provide_input' and result.lesson_action.material:
+                    from .lessons import input_ready,step_definition
+                    step=step_definition(controlled)
+                    if not step or not input_ready(controlled.plan['guidance']['lesson'],step.get('requires_input')):
+                        controlled_answer=None
+                from .retrieval import task_view
+                task=task_view(controlled)
+            except domain.DomainError as error:
+                if error.status!=409:raise
+                # An invalid proposed state update cannot destroy a useful answer.
+                task=None;controlled_answer=None
+                rejected_actions.append({'kind':result.lesson_action.kind,'reason':error.message})
+                if result.lesson_action.kind=='confirm':result.answer+='\n\n当前步骤还未推进，我们先核对实际情况再继续。'
         else:
             task = commit_continuation(db, user_id, message_id, result, current_question, commit=False)
         if task is None:
@@ -198,6 +214,7 @@ def commit_result(db, user_id, message_id, result, current_question):
     return {
         "task": task,
         "learned": learned,
+        'rejected_actions':rejected_actions,
         "answer": answer + ("\n\n" + "\n\n".join(stories) if stories else ""),
     }
 
@@ -220,6 +237,10 @@ def grounded_turn_schema(sessions, user_id, message_id):
                     except domain.DomainError as error:raise ValueError(error.message) from error
                 if active and active.plan.get('guidance',{}).get('lesson') and self.continuation:
                     raise ValueError('当前是已核验的逐步教学；请解释当前一步，明确实际完成时用lesson_action，不删除或跳过原步骤')
+                if self.continuation and self.continuation.task_id:
+                    target=db.get(TaskRecord,self.continuation.task_id)
+                    if target and target.user_id==user_id and target.plan.get('guidance',{}).get('lesson'):
+                        self.continuation=None
                 from .guidance import validate_specific_advice
                 entries=self.continuation.plan.get('entries',[]) if self.continuation else []
                 known=[message.text]

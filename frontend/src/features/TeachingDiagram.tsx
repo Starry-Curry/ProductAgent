@@ -144,7 +144,7 @@ export default function TeachingDiagram({
     [failure, setFailure] = useState(""),
     [open, setOpen] = useState(false),
     [ready, setReady] = useState(false);
-  const [detailView, setDetailView] = useState(true);
+  const [detailView, setDetailView] = useState(false);
   const candidate = (
     board.task.plan.visualizations as Record<string, Saved> | undefined
   )?.[entry.id];
