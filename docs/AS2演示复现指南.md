@@ -16,9 +16,11 @@ Copy-Item .env.example .env
 
 ```powershell
 .\demo.ps1
+# 默认 PyPI 域名无法连接时，可指定镜像；运行时版本与 SHA256 仍取自同一 uv.lock：
+.\demo.ps1 -PythonIndex https://mirrors.aliyun.com/pypi/simple
 ```
 
-脚本依次执行 `uv sync --frozen`、`npm --prefix frontend ci`、前端生产构建，然后校验本地资产、生成独立 SQLite 档案和第一步教学，再启动 `127.0.0.1:8021`。如 PowerShell 执行策略阻止本地脚本，可直接按下面的 Python/Node 命令启动；不需要修改整台电脑的执行策略。
+脚本默认依次执行 `uv sync --frozen`、`npm --prefix frontend ci`、前端生产构建，然后校验本地资产、生成独立 SQLite 档案和第一步教学，再启动 `127.0.0.1:8021`。指定 PythonIndex 时，从同一锁文件导出带哈希的运行时依赖，用 `uv pip install --require-hashes` 通过镜像安装；本地项目按 pyproject 构建依赖安装，锁文件不改写。如 PowerShell 执行策略阻止本地脚本，可直接按下面的 Python/Node 命令启动；不需要修改整台电脑的执行策略。
 
 终端会打印带实际 task ID 的链接。页面选择“**小林的物间**”，然后打开打印的链接。不要复制其他机器旧的 task ID。
 
