@@ -262,12 +262,25 @@ class Retrieval:
         self.hashes[user_id] = {}
         return app
 
-    async def search(self, user_id, query, kinds=None, limit=8):
+    async def search(self, user_id, query, kinds=None, limit=8, item_ids=None):
         if not query.strip():
             return {"results": [], "mode": "empty_query"}
         lock = self.locks.setdefault(user_id, asyncio.Lock())
         async with lock:
             documents = authorized_documents(self.sessions, user_id)
+            scoped_paths = None
+            if item_ids:
+                from .database import ItemRecord
+                with self.sessions() as db:
+                    products = {domain.accessible_item(db,user_id,i).product_id for i in item_ids}
+                def relevant(doc):
+                    data = doc['data']
+                    if doc['kind'] == 'knowledge':
+                        return data.get('item_id') in item_ids or bool(data.get('product_id') and data['product_id'] in products)
+                    return data.get('item_id') in item_ids or bool(set(data.get('item_ids', [])) & set(item_ids))
+                scoped_paths = {path for path,doc in documents.items() if relevant(doc)}
+                if not scoped_paths:
+                    return {'results':[], 'mode':'no_applicable_evidence', 'absence_is_not_proven':True}
             app = await self._app(user_id)
             from reme.enumeration import ComponentEnum
             from reme.schema import FileChunk, FileNode
@@ -309,7 +322,8 @@ class Retrieval:
             if self.local:
                 # ReMe still owns keyword retrieval; local embeddings add semantic
                 # candidates, with reciprocal-rank fusion and the SAME SQL visibility.
-                allowed={path:doc for path,doc in documents.items() if not kinds or doc['kind'] in kinds}
+                allowed={path:doc for path,doc in documents.items() if (not kinds or doc['kind'] in kinds)
+                    and (scoped_paths is None or path in scoped_paths)}
                 preferred=[hit['path'] for hit in hits if hit['path'] in allowed]
                 candidates=list(dict.fromkeys([*preferred,*allowed]))[:250]
                 def semantic_text(doc):
@@ -334,6 +348,7 @@ class Retrieval:
                     doc
                     and doc["hash"] == documents.get(path, {}).get("hash")
                     and (not kinds or doc["kind"] in kinds)
+                    and (scoped_paths is None or path in scoped_paths)
                 ):
                     results.append(
                         {key: doc[key] for key in ("kind", "id", "data")}

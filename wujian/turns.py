@@ -12,13 +12,20 @@ from .api_models import TaskEntry
 from .lessons import LessonAction
 
 
+class GuidanceProgress(BaseModel):
+    model_config = ConfigDict(extra='allow')
+    active_step_id: str | None = None
+    overview: list[str] = Field(default_factory=list, max_length=8, description='首次教学的简短路线标题；待核验部分只是阶段目标，不是已验证操作。')
+    research_pending: bool = False
+
+
 class InteractionPlan(BaseModel):
     """Expose actual step fields to the SDK, rather than an opaque plan object."""
     model_config = ConfigDict(extra='allow')
     schema_version: Literal['interaction/1'] = Field(default='interaction/1',alias='schema')
     kind: Literal['guidance','checklist','idea']
     entries: list[TaskEntry] = Field(default_factory=list,max_length=60)
-    guidance: dict = Field(default_factory=dict)
+    guidance: GuidanceProgress = Field(default_factory=GuidanceProgress)
 
 
 class ContinuingPlan(BaseModel):
@@ -56,6 +63,8 @@ class ContinuingPlan(BaseModel):
 
 
 class TurnResult(BaseModel):
+    assistance_mode: Literal['answer', 'research', 'teach'] = Field(default='answer', description='按当前自然语言意图选择；用户要求带做或需要持续操作时teach，查证资料时research。')
+    target_item_ids: list[str] = Field(default_factory=list, description='本轮实际回答的获准物品ID，与当前聚焦物一致；没有识别清楚时留空并核对。')
     answer: str = Field(
         min_length=1,
         description="Final natural-language answer for the person; use item names here, internal IDs only in structured fields",
@@ -73,9 +82,15 @@ class TurnResult(BaseModel):
 
 
 def commit_continuation(db, user_id, message_id, result, current_question, commit=True):
+    from .assistance import check_turn_scope
     plan = result.continuation
     if plan is None:
         return None
+    message = db.get(ChatMessage, message_id)
+    if message:
+        check_turn_scope(db, user_id, message, result)
+    elif plan.plan.get('kind') == 'guidance':
+        raise domain.DomainError('教学必须关联当前用户的真实对话。')
     if plan.feedback_quote and plan.feedback_quote not in current_question:
         raise domain.DomainError("任务反馈未对应当前用户原话")
     # One transaction and one domain write path. No second model, writer or classifier.
@@ -158,6 +173,12 @@ def commit_result(db, user_id, message_id, result, current_question):
             task=task_view(controlled)
         else:
             task = commit_continuation(db, user_id, message_id, result, current_question, commit=False)
+        if task and task['plan'].get('kind') == 'guidance':
+            message = domain.require(db.get(ChatMessage, message_id))
+            conversation = db.get(Conversation, message.conversation_id)
+            conversation.entry_context = {**conversation.entry_context, 'intent':'guidance', 'task_id':task['id']}
+            if not conversation.item_ids:
+                conversation.item_ids = task['item_ids']
         if task is None:
             # A short answer may omit plan changes. Keep the actual statement
             # on the active task anyway; recording it does not infer success.
@@ -214,6 +235,10 @@ def grounded_turn_schema(sessions, user_id, message_id):
                 validate_learning(db, user_id, message_id, self.learning)
                 message = domain.require(db.get(ChatMessage, message_id))
                 conversation = db.get(Conversation, message.conversation_id)
+                from .assistance import check_turn_scope, check_teaching_request, check_research_request
+                check_turn_scope(db, user_id, message, self)
+                check_teaching_request(db, message, self)
+                check_research_request(db, user_id, message)
                 active=db.get(TaskRecord,conversation.entry_context.get('task_id')) if conversation.entry_context.get('task_id') else None
                 if result_action:=self.lesson_action:
                     if self.continuation:raise ValueError('逐步教学用lesson_action，不同时重写整张continuation')

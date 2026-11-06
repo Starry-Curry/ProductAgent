@@ -136,12 +136,16 @@ function WorkspaceApp({
     const settle = (value: Run) => {
       void updateMessages(value.conversation_id);
       void refresh()
-        .then(() => {
+        .then((nextWorkspace) => {
+          const live = nextWorkspace.conversations.find((thread) => thread.id === value.conversation_id);
+          if (currentThread.current !== value.conversation_id) return;
+          if (live) setContext({itemIds: live.item_ids, entry: live.entry_context as EntryContext});
           const continued = [...value.events]
             .reverse()
             .find((event) => event.type === "continuation_saved")?.task_id;
           const nextTask =
-            taskId || (typeof continued === "string" ? continued : undefined);
+            (typeof continued === "string" ? continued : live ? live.entry_context?.task_id as string | undefined : taskId) || undefined;
+          if (!nextTask) setBoard(undefined);
           if (nextTask)
             void request<Board>(`/tasks/${nextTask}/board`)
               .then((next) => {
@@ -149,6 +153,7 @@ function WorkspaceApp({
                   setBoard(next);
                   setContext((previous) => ({
                     ...previous,
+                    itemIds: next.task.item_ids,
                     entry: { ...previous.entry, task_id: nextTask },
                   }));
                 }
@@ -662,9 +667,9 @@ function WorkspaceApp({
                 }
                 afterMessages={
                   <>
-                    {context.entry.intent === "creative" && (
+                    {(context.entry.intent === "creative" || run?.events.some((event) => typeof event.type === "string" && ["research_search", "research_source", "research_unavailable"].includes(event.type))) && (
                       <div className="creative-sources-inline">
-                        <CreativeSources run={run} />
+                        <CreativeSources run={run} guidance={context.entry.intent !== "creative"} />
                       </div>
                     )}
                     {board?.kind === "guidance" && (
@@ -689,15 +694,6 @@ function WorkspaceApp({
                           })
                             .then(boardActions!.onRun)
                             .catch((error) => message.error(error.message))
-                        }
-                        photos={
-                          [...messages]
-                            .reverse()
-                            .find(
-                              (message) =>
-                                message.role === "user" &&
-                                message.photo_ids.length,
-                            )?.photo_ids || []
                         }
                       />
                     )}

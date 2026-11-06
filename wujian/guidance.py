@@ -24,7 +24,7 @@ def step_signature(entry):
 _NUMBER_CHARS = '0-9.零〇一二两三四五六七八九十百千点'
 _PARAMETER = re.compile(
     rf'(?<![{_NUMBER_CHARS}])([{_NUMBER_CHARS}]+)\s*'
-    r'(秒钟|分钟|小时|秒|摄氏度|°c|伏特|瓦特|伏|瓦)')
+    r'(秒钟|分钟|小时|秒|摄氏度|°c|伏特|瓦特|千克|公斤|kg|伏|瓦)')
 _DIGITS = dict(zip('零〇一二两三四五六七八九', [0,0,1,2,2,3,4,5,6,7,8,9]))
 
 
@@ -58,7 +58,7 @@ def _quantity(number):
 def _parameters(text):
     canonical = {'秒钟':('time',1),'秒':('time',1),'分钟':('time',60),'小时':('time',3600),
         '摄氏度':('celsius',1),'°c':('celsius',1),'伏特':('voltage',1),'伏':('voltage',1),
-        '瓦特':('power',1),'瓦':('power',1)}
+        '瓦特':('power',1),'瓦':('power',1),'千克':('mass',1),'公斤':('mass',1),'kg':('mass',1)}
     for match in _PARAMETER.finditer(unicodedata.normalize('NFKC',text).casefold()):
         number = _quantity(match[1])
         if number is not None:
@@ -83,12 +83,21 @@ def validate_specific_advice(text,entries,known_text='',allow_visual=False):
                 validate_parameters(sentence,entries)
     known=unicodedata.normalize('NFKC',known_text).casefold()
     for sentence in re.split(r'[。！？\n]',text):
+        if list(_parameters(sentence)) and not re.search(r'(?:你|我|用户)(?:已经|刚才|之前|说|按了|长按了)',sentence):
+            supported = {quantity for quantity,_ in _parameters(known_text)}
+            supported.update(quantity for entry in entries for evidence in (entry.get('guidance') or {}).get('evidence',[])
+                for quantity,_ in _parameters(evidence.get('quote','')))
+            if any(quantity not in supported for quantity,_ in _parameters(sentence)):
+                raise domain.DomainError('当前动作包含未核验的时长、温度、电气或负载参数，请使用适用原文，不把精确数值标成通用建议。')
         for connector in re.findall(r'USB[-‐‑– ]?C|Type[-‐‑– ]?C|Micro[-‐‑– ]?USB',sentence,re.I):
             normal=lambda value:re.sub(r'[-‐‑–\s]','',value).casefold()
             if normal(connector) not in normal(known) and not re.search(r'如果|假如|若是|若使用',sentence):
                 raise domain.DomainError('没有核验这件物品的具体接口类型；请改用原装供电连接等通用描述，不猜测接口。无需为了这点阻止初步回答')
         if re.search(r'如果|假如|若有|若是|如有|若使用|有没有|是否有|能否看到|有无',sentence):continue
         if allow_visual and re.search(r'图中|照片|看起来|似乎',sentence):continue
+        for detail in re.findall(r'(?<![A-Za-z])AAA?(?![A-Za-z])|[1-9]号电池|(?<![A-Za-z])CR\d{3,4}(?![A-Za-z])|(?<![A-Za-z])(?:ON|OFF)(?![A-Za-z])',sentence,re.I):
+            if detail.casefold() not in known:
+                raise domain.DomainError('尚未核验当前物品的电池规格或开关标识，先核对可见文字，不把型号记忆写成通用步骤。')
         specifics=re.findall(r'触控|触摸|旋钮|底座[^，。；\n]{0,8}(?:电源键|指示灯)',sentence)
         for value in specifics:
             if value not in known_text:
@@ -127,10 +136,13 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
         targets = [domain.accessible_item(db,user_id,identity) for identity in target_ids]
         if details['kind'] == 'operate' and len(targets)>1 and not entry.get('item_id'):
             raise domain.DomainError('每个具体操作步骤需指明正在处理哪件实物')
-        if details['kind'] == 'operate' and not details['evidence'] and details['basis']=='document':
+        if not details['evidence'] and details['basis']=='document':
             raise domain.DomainError('标为说明书操作的步骤需要适用原文；通用初步建议可标basis=general，不冒充型号已核验')
         for evidence in details['evidence']:
             source = readable_source(db,user_id,evidence['source_id'])
+            from .assistance import source_applies
+            if not source_applies(db, source, target_ids):
+                raise domain.DomainError('这份资料关联另一件不同型号的物品，不能作为当前操作的依据。')
             if evidence.get('source_line_start'):
                 start = evidence['source_line_start']
                 end = evidence.get('source_line_end') or start
@@ -152,13 +164,15 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
             if details['kind'] == 'operate':
                 named = [item.product.get('model','') for item in targets if item.product.get('model')]
                 normalized = lambda text: re.sub(r'[^\w]','',text).casefold()
-                if named and not any(normalized(model) in normalized(source.title+' '+source.content)
-                    and normalized(evidence.get('source_model') or model)==normalized(model) for model in named):
+                from .assistance import identity_in_source
+                if named and not any(identity_in_source(item,source)
+                    and normalized(evidence.get('source_model') or item.product.get('model',''))==normalized(item.product.get('model','')) for item in targets):
                     raise domain.DomainError('操作资料没有匹配当前准确型号；相近型号只能作参考')
+        advice = '。'.join(details.get(field,'') for field in ['instruction','success_signal','caution','if_not_found','if_unchanged'])
         if details['basis']=='document' or details['evidence']:
-            validate_parameters(details['instruction'],[entry])
+            validate_parameters(advice,[entry])
         else:
-            validate_specific_advice(details['instruction'],[entry],current_message.text if current_message else '')
+            validate_specific_advice(advice,[entry],current_message.text if current_message else '')
         old = old_entries.get(entry['id'])
         same_step = old and step_signature(old)==step_signature(entry)
         old_details = old.get('guidance') or {} if old else {}
@@ -173,6 +187,12 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
             details['observed_message_id'] = current_message.id
             entry['updated_by'] = user_id
     progress = dict(plan.get('guidance') or {})
+    overview = progress.get('overview') or plan.get('overview')
+    if isinstance(overview, str):
+        overview = [overview]
+    if isinstance(overview, list):
+        progress['overview'] = [value[:240] for value in overview[:8] if isinstance(value, str) and value.strip()]
+    plan = {key:value for key,value in plan.items() if key != 'overview'}
     prior = (previous or {}).get('guidance') or {}
     observations=list(prior.get('observations',[]))
     # Model advice is not a report. A new conversational observation must point
@@ -213,6 +233,8 @@ def start_feedback(db, user_id, task_id, payload):
     entry = next((entry for entry in row.plan.get('entries',[]) if entry['id']==payload.step_id),None)
     if not entry or not entry.get('guidance'):
         raise domain.DomainError('这一步尚未核对，请先回到对话补充资料',409)
+    if progress.get('active_step_id') and progress['active_step_id'] != payload.step_id:
+        raise domain.DomainError('请只反馈当前步骤，不能跳步确认。',409)
     if progress.get('lesson'):
         from .lessons import step_definition
         if progress.get('active_step_id')!=payload.step_id:
@@ -255,7 +277,7 @@ def start_feedback(db, user_id, task_id, payload):
     run = Run(id=run_id,user_id=user_id,conversation_id=conversation.id)
     db.add(run)
     db.add(ChatMessage(id=message_id,conversation_id=conversation.id,role='user',text=text,
-        photo_ids=payload.photo_ids,run_id=run.id))
+        photo_ids=payload.photo_ids,item_ids=row.item_ids,run_id=run.id))
     try:
         db.commit()
     except IntegrityError:

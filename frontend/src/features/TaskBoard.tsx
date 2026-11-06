@@ -111,6 +111,10 @@ export function GuidanceTools({
     (step) => step.id === current.id,
   )?.requires_input;
   const waitingInput = !!inputKey && !lesson?.inputs[inputKey];
+  const overview = (board.task.plan.guidance as {overview?: unknown})?.overview;
+  const outline = Array.isArray(overview)
+    ? overview.filter((value): value is string => typeof value === "string")
+    : lesson ? board.entries.map((entry) => entry.title) : [];
   async function confirm() {
     if (!current) return;
     setBusy(true);
@@ -146,6 +150,13 @@ export function GuidanceTools({
     );
   return (
     <section className="guidance-tools" aria-label="当前回答的辅助工具">
+      {outline.length > 0 && (
+        <details className="guidance-overview">
+          <summary>这次怎么做 · 查看总览</summary>
+          <ol>{outline.map((title, index) => <li key={index}>{title}</li>)}</ol>
+          <p className="muted">先了解路线，再按当前一步操作；待核对的部分会随实际反馈调整。</p>
+        </details>
+      )}
       <p className="muted">
         {lesson
           ? `第 ${board.entries.findIndex((entry) => entry.id === current.id) + 1} / ${board.total_count} 步`

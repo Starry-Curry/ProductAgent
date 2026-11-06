@@ -515,13 +515,13 @@ class MigrationTests(unittest.TestCase):
                     connection.execute(
                         text("SELECT version_num FROM alembic_version")
                     ).scalar(),
-                    "0006",
+                    "0007",
                 )
                 self.assertFalse(
                     connection.exec_driver_sql("PRAGMA foreign_key_check").fetchall()
                 )
             migrated.dispose()
-            backups = list((Path(directory) / "backups").glob("before-unversioned-to-0006-*.sqlite3"))
+            backups = list((Path(directory) / "backups").glob("before-unversioned-to-0007-*.sqlite3"))
             self.assertEqual(len(backups), 1)
             import sqlite3
             from contextlib import closing
@@ -548,7 +548,7 @@ class MigrationTests(unittest.TestCase):
                 self.assertEqual(connection.execute(text("SELECT completed,status FROM reminders WHERE id='care'")).one(), (1,'completed'))
                 self.assertFalse(connection.exec_driver_sql("PRAGMA foreign_key_check").fetchall())
             migrated.dispose()
-            self.assertEqual(len(list((Path(directory) / 'backups').glob('before-0005-to-0006-*.sqlite3'))), 1)
+            self.assertEqual(len(list((Path(directory) / 'backups').glob('before-0005-to-0007-*.sqlite3'))), 1)
 
 
 if __name__ == "__main__":

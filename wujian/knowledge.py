@@ -4,9 +4,12 @@ import base64
 import io
 import ipaddress
 import socket
+import os
+from urllib.request import getproxies
 from urllib.parse import urljoin, urlsplit
 
 import httpx
+import httpcore
 from bs4 import BeautifulSoup
 from openai import AsyncOpenAI
 from pypdf import PdfReader
@@ -14,6 +17,21 @@ from sqlalchemy import select
 
 from .database import Asset, SourceRecord, uid
 from .domain import DomainError, accessible_item
+
+
+def public_transport():
+    """Honor the operator's configured transport, still CONNECT to pinned IPs.
+
+    A proxy is infrastructure configuration, never a model/tool parameter.
+    URL/DNS validation, TLS SNI and per-redirect pinning remain mandatory.
+    """
+    proxy = os.getenv('WUJIAN_RESEARCH_PROXY') or getproxies().get('https')
+    if proxy and urlsplit(proxy).scheme not in {'http', 'https'}:
+        raise DomainError('资料代理需使用已配置的 HTTP/HTTPS 网络通道', 502)
+    if proxy:
+        from .source_transport import PinnedProxyTransport
+        return PinnedProxyTransport(proxy)
+    return httpx.AsyncHTTPTransport(retries=1, limits=httpx.Limits(max_keepalive_connections=0))
 
 
 async def search_web(settings, query: str):
@@ -45,7 +63,7 @@ async def search_web(settings, query: str):
             "search_summary": "\n".join(texts)[:9000], "evidence_kind": "search_result_not_full_document"}
 
 
-async def validate_public_url(url):
+async def validate_public_url(url, all_addresses=False):
     parsed = urlsplit(url)
     if parsed.scheme not in {"http", "https"} or not parsed.hostname or parsed.username or parsed.password:
         raise DomainError("只支持公开的 HTTP 或 HTTPS 资料地址")
@@ -70,39 +88,55 @@ async def validate_public_url(url):
             literal = False
         if literal or not all(benchmark(address) for address in resolved):
             raise DomainError("资料读取不能访问本机或内网地址")
-        async with httpx.AsyncClient(timeout=12,trust_env=False,transport=httpx.AsyncHTTPTransport(retries=1)) as resolver:
-            response = await resolver.get('https://cloudflare-dns.com/dns-query',
-                params={'name':parsed.hostname,'type':'A'},headers={'Accept':'application/dns-json'})
-            response.raise_for_status()
-            resolved = [row['data'] for row in response.json().get('Answer',[]) if row.get('type') in {1,28}]
+        resolved = []
+        last_error = None
+        async with httpx.AsyncClient(timeout=7,trust_env=False,transport=public_transport()) as resolver:
+            for endpoint in ['https://dns.alidns.com/resolve', 'https://cloudflare-dns.com/dns-query']:
+                try:
+                    async with asyncio.timeout(8):
+                        response = await resolver.get(endpoint,
+                            params={'name':parsed.hostname,'type':'A'},headers={'Accept':'application/dns-json'})
+                        response.raise_for_status()
+                        resolved = [row['data'] for row in response.json().get('Answer',[]) if row.get('type') in {1,28}]
+                    break
+                except (httpx.HTTPError, httpcore.NetworkError, httpcore.TimeoutException, TimeoutError) as error:
+                    last_error = error
+        if not resolved and last_error:
+            raise DomainError('独立公网解析未完成；这不是没有资料，请稍后接续或换公开来源。',502) from last_error
         if not resolved or any(not ipaddress.ip_address(address).is_global for address in resolved):
             raise DomainError('公开解析没有可用公网地址，资料读取已停止',502)
-    return next((address for address in resolved if ':' not in address),resolved[0])
+    ordered = sorted(resolved, key=lambda address: ':' in address)
+    return ordered[:3] if all_addresses else ordered[0]
 
 
 async def download_public(url):
-    async with httpx.AsyncClient(timeout=20, follow_redirects=False, trust_env=False,
-            transport=httpx.AsyncHTTPTransport(retries=1),headers={"User-Agent": "WujianResearch/0.1"}) as client:
+    async with httpx.AsyncClient(timeout=httpx.Timeout(16,connect=6), follow_redirects=False, trust_env=False,
+            transport=public_transport(),headers={"User-Agent": "WujianResearch/0.1"}) as client:
         for _ in range(5):
-            address = await validate_public_url(url)
+            addresses = await validate_public_url(url, all_addresses=True)
+            if isinstance(addresses,str):addresses=[addresses]
             original = httpx.URL(url)
-            pinned = original.copy_with(host=address)
             headers={'Host':original.netloc.decode()}
             # Public manual CDN requires its publisher's normal hotlink Referer.
             # Keep verified DNS, IP pinning and TLS SNI; no proxy/private bypass.
             if original.host=='video.loklik.cn':headers['Referer']='https://www.loklik.cn/'
-            async with client.stream("GET", pinned,headers=headers,
-                    extensions={'sni_hostname':original.host}) as response:
-                if response.status_code in {301, 302, 303, 307, 308}:
-                    url = urljoin(url, response.headers.get("location", ""))
-                    continue
-                response.raise_for_status()
-                data = bytearray()
-                async for chunk in response.aiter_bytes():
-                    data.extend(chunk)
-                    if len(data) > 12 * 1024 * 1024:
-                        raise DomainError("资料超过当前单文件12MB限制")
-                return str(original), response.headers.get("content-type", ""), bytes(data)
+            for index,address in enumerate(addresses):
+                pinned = original.copy_with(host=address)
+                try:
+                    async with client.stream("GET", pinned,headers=headers,
+                            extensions={'sni_hostname':original.host}) as response:
+                        if response.status_code in {301, 302, 303, 307, 308}:
+                            url = urljoin(url, response.headers.get("location", ""))
+                            break
+                        response.raise_for_status()
+                        data = bytearray()
+                        async for chunk in response.aiter_bytes():
+                            data.extend(chunk)
+                            if len(data) > 12 * 1024 * 1024:
+                                raise DomainError("资料超过当前单文件12MB限制")
+                        return str(original), response.headers.get("content-type", ""), bytes(data)
+                except (httpx.NetworkError,httpx.TimeoutException,httpcore.NetworkError,httpcore.TimeoutException):
+                    if index == len(addresses)-1:raise
     raise DomainError("资料重定向过多", 502)
 
 

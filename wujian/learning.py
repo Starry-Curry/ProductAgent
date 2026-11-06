@@ -147,16 +147,17 @@ def validate_learning(db, user_id, message_id, learning):
                 )
             change.source_quote = quote
             expected = normalized_model(item.product.get("model", ""))
+            from .assistance import identity_in_source
             if (
                 not change.source_model
                 and expected
-                and expected in normalized_model(source.title + " " + source.content)
+                and identity_in_source(item, source)
             ):
                 change.source_model = item.product["model"]
             if change.scope == "product" and not (
                 expected
                 and normalized_model(change.source_model) == expected
-                and expected in normalized_model(source.title + " " + source.content)
+                and identity_in_source(item, source)
             ):
                 raise domain.DomainError(
                     "型号共性需要原文中的匹配source_model；通用案例按item参考保留"

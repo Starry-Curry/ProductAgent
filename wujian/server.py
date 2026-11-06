@@ -323,6 +323,12 @@ def create_app(settings=None, model_factory=None):
             if payload.entry_context.task_id:
                 interactions.task_access(db, user.id, payload.entry_context.task_id)
             conversation.entry_context = payload.entry_context.model_dump()
+        from .assistance import bind_task, resolve_focus, wants_steps
+        conversation.item_ids = resolve_focus(db, user.id, payload.text, conversation.item_ids)
+        conversation.entry_context = bind_task(db, user.id, conversation.item_ids,
+            conversation.entry_context, detach=True)
+        if wants_steps(payload.text) and conversation.entry_context.get('intent', 'general') in {'general', 'guidance'}:
+            conversation.entry_context = {**conversation.entry_context, 'intent':'guidance'}
         if (conversation.entry_context or {}).get("intent") == "persona":
             if len(conversation.item_ids) != 1 or not domain.item_view(db, user.id,
                     domain.accessible_item(db, user.id, conversation.item_ids[0]))["avatar"].get("enabled"):
@@ -332,7 +338,8 @@ def create_app(settings=None, model_factory=None):
         db.flush()
         run = Run(id=uid(), conversation_id=conversation.id, user_id=user.id)
         db.add(run)
-        db.add(ChatMessage(conversation_id=conversation.id, role="user", text=payload.text, photo_ids=payload.photo_ids, run_id=run.id))
+        db.add(ChatMessage(conversation_id=conversation.id, role="user", text=payload.text, photo_ids=payload.photo_ids,
+            item_ids=conversation.item_ids, run_id=run.id))
         try:
             db.commit()
         except IntegrityError:

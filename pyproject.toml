@@ -9,6 +9,7 @@ dependencies = [
     "beautifulsoup4>=4.12,<5",
     "fastapi>=0.115,<1",
     "httpx>=0.28,<1",
+    "httpcore>=1.0.9,<2",
     "itsdangerous>=2.2,<3",
     "pillow>=11,<13",
     "pwdlib[argon2]>=0.2,<1",

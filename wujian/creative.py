@@ -29,9 +29,10 @@ def record_research(sessions, user_id, message_id, name, value):
         if not run or run.user_id != user_id or run.status != "running":
             return
         if value.get('available') is False:
-            receipt={'type':'research_unavailable','at':now(),'operation':name,'reason':value.get('reason','unavailable')}
+            receipt={'type':'research_unavailable','at':now(),'operation':name,'reason':value.get('reason','unavailable'),
+                'query':value.get('query'),'url':value.get('url'),'http_status':value.get('http_status')}
         elif name == "search_public_web":
-            receipt = {"type": "research_search", "at": now(), "sources": value.get("results", [])[:15]}
+            receipt = {"type": "research_search", "at": now(), "query":value.get('query',''), "sources": value.get("results", [])[:15]}
         else:
             source = readable_source(db, user_id, value.get("source_id", ""))
             if source.origin != "public_web":

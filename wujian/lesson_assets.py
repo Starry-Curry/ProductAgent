@@ -57,9 +57,11 @@ def register_pictures(app,current_user,db_session,settings):
             domain.own_asset(db,user.id,cached['image_id'])
             return interactions.board(db,user.id,task.id)
         item=domain.accessible_item(db,user.id,entry.get('item_id') or task.item_ids[0])
-        image_id=next(iter(reversed(payload.photo_ids)),None) or item.photo_id
+        from .assistance import item_photos
+        available=item_photos(db,user.id,[item.id])
+        image_id=next(iter(reversed(payload.photo_ids)),None) or (available[0].id if available else None)
         source_id=None;page_number=None
-        if not payload.photo_ids:
+        if not payload.photo_ids and not image_id:
             for evidence in entry['guidance'].get('evidence',[]):
                 source=readable_source(db,user.id,evidence['source_id'])
                 if not source.asset_id or source.owner_id!=user.id:continue

@@ -207,7 +207,9 @@ def register_diagrams(app,current_user,db_session,settings):
         import base64,io
         from PIL import Image,ImageOps
         photo_ids=list(payload.photo_ids)
-        if not photo_ids and item.photo_id: photo_ids.append(item.photo_id)
+        if not photo_ids:
+            from .assistance import item_photos
+            photo_ids=[asset.id for asset in item_photos(db,user.id,[item.id],limit=2)]
         for identity in photo_ids[:2]:
             asset=domain.own_asset(db,user.id,identity) if identity in payload.photo_ids else db.get(Asset,identity)
             if asset and asset.media_type.startswith('image/'):
