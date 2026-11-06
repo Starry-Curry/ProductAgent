@@ -180,10 +180,13 @@ def _select_format(info, bvid, end_seconds):
         raise DomainError("采样时间超过可确认的视频时长", 422)
     candidates = []
     for fmt in info.get("formats", []):
+        dimensions = (fmt.get("width"), fmt.get("height"))
+        if not all(isinstance(edge, (int, float)) and math.isfinite(edge) and edge > 0 for edge in dimensions):
+            continue
+        short_edge, long_edge = sorted(dimensions)
         if (fmt.get("ext") != "mp4" or fmt.get("protocol") not in {None, "https", "http"}
                 or fmt.get("fragments") or fmt.get("manifest_url") or fmt.get("has_drm") or fmt.get("vcodec") in {None, "none"}
-                or not isinstance(fmt.get("height"), (int, float)) or not 0 < fmt["height"] <= 480
-                or not isinstance(fmt.get("width"), (int, float)) or not 0 < fmt["width"] <= 854):
+                or short_edge > 480 or long_edge > 854):
             continue
         parsed = urlsplit(fmt.get("url", ""))
         host = parsed.hostname or ""
@@ -197,7 +200,7 @@ def _select_format(info, bvid, end_seconds):
         candidates.append({**fmt, "estimated_bytes": size})
     if not candidates:
         raise DomainError("未取得12MB以内可匿名读取的低分辨率单文件MP4格式", 422)
-    return min(candidates, key=lambda fmt: (fmt["height"], not str(fmt.get("vcodec")).startswith("avc"),
+    return min(candidates, key=lambda fmt: (min(fmt["width"], fmt["height"]), not str(fmt.get("vcodec")).startswith("avc"),
                                            fmt.get("filesize") or fmt.get("filesize_approx") or MEDIA_LIMIT))
 
 

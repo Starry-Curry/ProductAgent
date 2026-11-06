@@ -228,6 +228,30 @@ class SourceVideoTests(unittest.IsolatedAsyncioTestCase):
 
 
 class FormatAndDecoderTests(unittest.TestCase):
+    def test_portrait_low_resolution_formats_share_the_landscape_resource_bounds(self):
+        # Geometry from an actual anonymous Bili response; metadata/ownership
+        # here remain explicitly synthetic, not a successful media download.
+        info = metadata()
+        info["formats"][0].update(width=360, height=640, tbr=353.527)
+        larger = {**info["formats"][0], "format_id": "30032", "width": 480, "height": 852}
+        info["formats"].append(larger)
+        selected = _select_format(info, BVID, 30)
+        self.assertEqual((selected["width"], selected["height"]), (360, 640))
+        self.assertLess(selected["estimated_bytes"], MEDIA_LIMIT)
+        info["formats"] = [larger]
+        self.assertEqual(_select_format(info, BVID, 30)["format_id"], "30032")
+
+    def test_portrait_does_not_allow_larger_pixels_or_bypass_other_format_limits(self):
+        for change in ({"width": 481, "height": 640}, {"width": 360, "height": 855},
+                       {"width": 720, "height": 1280}, {"width": float("nan"), "height": 640},
+                       {"width": 360, "height": float("inf")}, {"filesize": MEDIA_LIMIT + 1},
+                       {"has_drm": True}, {"manifest_url": "https://example.invalid/manifest.mpd"}):
+            info = metadata()
+            info["formats"][0].update(width=360, height=640)
+            info["formats"][0].update(change)
+            with self.subTest(change=change), self.assertRaises(domain.DomainError):
+                _select_format(info, BVID, 30)
+
     def test_copied_tracking_link_and_explicit_first_part_keep_the_same_video_identity(self):
         for suffix in ["?spm_id_from=333.337.search-card.all.click&vd_source=synthetic",
                        "?p=1&share_source=copy_web&share_medium=android"]:
