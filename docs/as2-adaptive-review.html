@@ -24,7 +24,7 @@
 <tr><td>可选相机</td><td><code>CameraGuidance.tsx</code>、<code>camera/autoSession.ts</code> 自动取帧/重定位；<code>referenceTracker.ts</code> 做 ORB/RANSAC；必要时 <code>camera_guidance.py</code> 调用 <code>qwen3-vl-plus</code> 返回框；<code>vitTracker.ts</code> 追踪、<code>opticalFlow.ts</code> 兼容回退。低置信或丢失清除标注再寻找；不要求逐帧点击，也不把框当操作完成。</td></tr></table>
 <h2>数据放在哪里</h2>
 <p>恢复版展示：<code>D:\Project\Tianmao\ProductAgent\tmp\as2-showcase\wujian.sqlite3</code>。新版开发复测与展示使用单独数据目录，运行时以各自 runtime.json 中的 data_dir 为准，绝不通过删除旧库回到第一步。SQLite 是本地文件，可以用 DB Browser for SQLite、DBeaver 等按文件打开；不是一个已经开放的远程数据库端口。</p>
-<p>可以审阅 users、items、conversations、messages、runs、tasks、sources、assets 及认识/记忆等业务表。任务 plan 保存当前步骤、材料输入、原话证据、调整历史、图示缓存；Run 保留真实模型调用/错误事件。文件引用的照片/PDF/视频在相邻 assets 目录。ReMe 只作可重建检索投影，权限与事实仍由 SQL 库裁定。不要把私人库、密钥和实拍提交 Git。</p>
+<p>可以审阅 users、items、conversations、messages、runs、tasks、sources、assets 及认识/记忆等业务表。任务 plan 保存当前步骤、材料输入、原话证据、调整历史、图示缓存；Run 保留真实模型调用/错误事件。文件引用的照片/PDF/视频在相邻 assets 目录。ReMe 只作可重建检索投影，权限与事实仍由 SQL 库裁定。不要把私人库、密钥和未授权实拍提交 Git；用户明确授权发布的 AS2 演示资源见 demo/as2。</p>
 <h2>NPU 与本地小模型：当前事实及部署路线</h2>
 <p>现网页 ORB/RANSAC、LK 是 CPU 传统视觉；ViTTrack 是 OpenCV Zoo 的小神经网络（714,726 字节，约 0.68MiB），但当前 ONNX Runtime Web 使用 WASM，仍是 CPU。Three.js 使用 GPU 绘图不算 AI 推理。硬件换成 NPU 不会自动使相同模型识别更准。</p>
 <p>新增 <code>scripts/probe_vittrack_openvino.py</code> 直接读取现有 ONNX，静态 template [1,3,128,128]、search [1,3,256,256]，在明确指定的 OpenVINO 设备上推理，检查 EXECUTION_DEVICES，不自动回退 CPU。本机实际 GPU.0 为 RTX 4060；AS2 实拍控制面板测试共 116 次，推理中位数约 2.61ms，但 7.67 秒处跟丢。可视检查也看到了框从按键区漂到显示区，因此它不是连续 18 秒成功跟踪，更不是有独立真值的精度评测。此脚本是部署实验，还未改成网页的 NPU 追踪后端。</p>
