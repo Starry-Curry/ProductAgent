@@ -75,22 +75,24 @@ def validate_preparation(proposed, previous, current_question):
             raise domain.DomainError(f"条目{report.entry_id}的source_quote必须引用本轮用户原话，不能使用旧消息、改写或编造。"
                                      "引用应支持本条拥有、确实缺少或修改；未登记不代表没有，不知道时用confirm。")
         supported.add(report.entry_id)
+    problems = []
     for identity, entry in by_id.items():
         original = old.get(identity)
         changed = original is not None and any(entry.get(field) != original.get(field)
             for field in ("title", "group", "item_id"))
         if original is not None and entry.get("note", "") != original.get("note", "") and identity not in supported:
-            raise domain.DomainError(f"修改清单条目{identity}（{original['title']}）的note不能静默丢弃：请在continuation.plan.preparation_reports加入"
-                f'{{"entry_id":"{identity}","source_quote":"本轮用户支持这项修改的实际连续原话"}}，并保留这项新note；'
-                "若没有本轮修改依据，请保持原note，不要在回答中声称已更新。未知库存用confirm。")
+            problems.append(f"{identity}（{original['title']}）：修改note需preparation_reports；有依据应保留新note，不能静默丢弃更新。")
         if changed:
             if identity not in supported:
-                raise domain.DomainError(f"修改已有条目{identity}（{original['title']}）的title/group/item_id，需preparation_reports引用本轮实际修改原话；请复用原ID。")
+                problems.append(f"{identity}（{original['title']}）：修改title/group/item_id需preparation_reports引用本轮原话；复用原ID。")
             if entry.get("state", "pending") != "pending":
-                raise domain.DomainError(f"条目{identity}的准备内容已改变，state必须pending；不能把旧动作的完成进度迁移到改名、换分类或换物品的新准备。")
+                problems.append(f"{identity}：准备内容已改变，state必须pending，不能沿用旧完成进度。")
         needs_basis = (original is None or entry.get("group") != original.get("group")) and (
             entry.get("group") == "buy" or (entry.get("group") == "owned" and not entry.get("item_id")))
         if needs_basis and identity not in supported:
-            raise domain.DomainError(f"条目{identity}（{entry['title']}）归为{entry.get('group')}需preparation_reports引用本轮用户确认已有或确实缺少的原话。"
-                                     "未登记不代表没有；未知用confirm，不能为了通过校验而编造引用。")
+            problems.append(f"{identity}（{entry['title']}）：归为{entry.get('group')}需preparation_reports引用本轮确认已有或缺少的原话；未知用confirm。")
+    if problems:
+        raise domain.DomainError("请一次修正以下清单问题：\n" + "\n".join(problems[:30]) +
+            '\n在continuation.plan.preparation_reports逐项加入{"entry_id":"上列ID","source_quote":"本轮支持该修改的实际原话"}。'
+            "没有依据就保留原条目，别声称已更新；未登记不代表没有，未知用confirm。")
     return supported

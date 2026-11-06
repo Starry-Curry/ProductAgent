@@ -14,6 +14,7 @@ from .learning import Learning, apply_learning
 
 def _plan_schema(schema):
     """Expose the shared entry contract without replacing legacy dict plans."""
+    from .preparation_plan import PreparationReport
     entry_schema = TaskEntry.model_json_schema()
     entry_schema["properties"]["group"]["description"] = (
         "owned/buy/borrow/confirm are resource preparation categories; "
@@ -34,10 +35,7 @@ def _plan_schema(schema):
             "items": entry_schema},
         "preparation_reports": {"type": "array", "maxItems": 60,
             "description": "For CHECKLIST only: exact current user evidence for each resource correction (title/group/item_id/note), newly confirmed purchase, or owned resource without inventory ID. Each entry is {entry_id,source_quote}. Unknown inventory is confirm, never buy by default. Reuse ALL existing entry IDs; do not replace them with new IDs. A changed title/group/item_id resets that existing entry to pending, keeping assignment. These reports cannot mark work done. Empty for guidance/idea and if no current correction.",
-            "items": {"type": "object", "properties": {
-                "entry_id": {"type": "string", "minLength": 1, "maxLength": 80},
-                "source_quote": {"type": "string", "minLength": 1, "maxLength": 4000}},
-                "required": ["entry_id", "source_quote"], "additionalProperties": False}},
+            "items": PreparationReport.model_json_schema()},
     }
 
 

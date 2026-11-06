@@ -91,7 +91,7 @@ class PreparationEditContractTests(unittest.TestCase):
         plan, _ = c.run_turn([self.proposal([forged], board), self.proposal([repaired], board)],
                             "先看看清单，别替我改分工。")
         self.assertEqual(c.model.calls, 2)
-        self.assertIn("note不能静默丢弃", c.model.inputs[1])
+        self.assertIn("note需preparation_reports", c.model.inputs[1])
         for key in ("note", "assignee_id", "updated_by"):
             self.assertEqual(plan["entries"][0][key], before[key])
 
