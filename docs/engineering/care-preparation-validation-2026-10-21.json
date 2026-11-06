@@ -1,0 +1,100 @@
+{
+  "measuredAt": "2026-10-21T08:56:20.727441+00:00",
+  "base": "9ba0bc8bc750721986b4824a681aef99670b1957",
+  "branch": "feat/wujian-task-planning",
+  "kind": "local-offline-incremental-verification",
+  "realModelCalls": 0,
+  "unit": {
+    "passed": 188,
+    "failed": 0,
+    "baselinePassed": 177,
+    "log": ".runtime/care-unit-release.log"
+  },
+  "typecheck": {
+    "passed": true,
+    "log": ".runtime/care-typecheck-delivery.log"
+  },
+  "productionBuild": {
+    "passed": true,
+    "directory": ".next-care-final",
+    "log": ".runtime/care-build-delivery.log"
+  },
+  "care": {
+    "passed": true,
+    "realModelCalls": 0,
+    "checks": [
+      "right-corner mode switch and two-entry navigation",
+      "actor and version survive reload",
+      "legacy preference keys",
+      "only assigned tasks",
+      "acknowledgement keeps reminder active",
+      "ask for help and complete task",
+      "incoming task refresh",
+      "unified Q&A and no preparation mutation in care",
+      "selected item answers from existing product evidence and seller entry",
+      "390px large text and buttons",
+      "switch back preserves inventory"
+    ]
+  },
+  "preparation": {
+    "passed": true,
+    "realModelCalls": 0,
+    "kind": "isolated-production-browser",
+    "checks": [
+      "goal and explicit save",
+      "dependencies and per-step confirmation",
+      "reload retains progress",
+      "camera power report adds charge dependency",
+      "time limit and exclusion preserve completion",
+      "owner isolation",
+      "390px layout"
+    ],
+    "planId": "2f41eafc-fa12-42f9-902b-4bed5c0f09ee",
+    "revision": 5
+  },
+  "otherBrowserJourneys": {
+    "life-integration": "passed",
+    "life-formats": "passed",
+    "integration": "passed",
+    "household-integration": "passed",
+    "home-integration": "passed",
+    "foundation-integration": {
+      "passed": false,
+      "failure": "390px /guide horizontal overflow, line 297",
+      "baselineSameFailure": true,
+      "logs": [
+        ".runtime/care-legacy-final.log",
+        ".runtime/baseline/foundation-browser.log"
+      ]
+    }
+  },
+  "benchmark": {
+    "unsafeAccepted": 0,
+    "falseRejections": 1,
+    "foundationRegressions": 0,
+    "sameAsBaseline": true,
+    "log": ".runtime/care-benchmark.log"
+  },
+  "visualReview": {
+    "reviewed": true,
+    "paths": [
+      "artifacts/care/desktop.png",
+      "artifacts/care/mobile.png",
+      "artifacts/care/mobile-tasks.png",
+      "artifacts/care/preview.png"
+    ]
+  },
+  "limitations": [
+    "Photography preparation uses bounded local rules; not general AI task planning.",
+    "Demo actor and task inbox are local; no cross-device synchronization or phone notifications.",
+    "No new paid-model evaluation; historical model-quality failures remain.",
+    "No remote push, PR, merge or public deployment."
+  ],
+  "preservedEarlierFailures": [
+    "initial client bundle imported node:crypto (fixed)",
+    "new browser fixture missed required lifecycle (fixed)",
+    "new browser fixture assumed no existing plans (fixed)",
+    "life-formats story menu had to be expanded before existing assertions (fixed)",
+    "integration browser hardcoded Windows executable (EDGE_PATH override added)"
+  ]
+}

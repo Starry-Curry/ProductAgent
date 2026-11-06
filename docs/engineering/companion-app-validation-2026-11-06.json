@@ -1,0 +1,112 @@
+{
+  "at": "2026-11-05T19:32:02.136Z",
+  "base": "http://127.0.0.1:3210",
+  "results": [
+    {
+      "name": "private object create and personal/family isolation",
+      "passed": true,
+      "ms": 48
+    },
+    {
+      "name": "real photo upload and replacement",
+      "passed": true,
+      "ms": 44
+    },
+    {
+      "name": "private wishlist visibility and explicit sharing",
+      "passed": true,
+      "ms": 13
+    },
+    {
+      "name": "gift note is saved without fake purchase or ownership transfer",
+      "passed": true,
+      "ms": 6
+    },
+    {
+      "name": "story CRUD and opt-in text sharing",
+      "passed": true,
+      "ms": 15
+    },
+    {
+      "name": "borrow request, owner approval, return request, owner confirmation",
+      "passed": true,
+      "ms": 21
+    },
+    {
+      "name": "household notice acknowledgement does not repair object",
+      "passed": true,
+      "ms": 13
+    },
+    {
+      "name": "activity plan checkbox and assignee persist; stale writes rejected",
+      "passed": true,
+      "ms": 11
+    },
+    {
+      "name": "live reply evidence",
+      "source": "model-general",
+      "modelCalls": 1,
+      "answer": "先从一个你最常使用、也最容易看到的小区域开始，比如抽屉或桌面，只花10分钟把东西分成‘常用’‘不常用’和‘不确定’三类。\n接着为‘常用’物品固定一个简单好找的位置，其他暂时收进盒子并贴上手写标签，不用一次做完，保持轻松就好。",
+      "tokens": {
+        "input": 2073,
+        "output": 97
+      }
+    },
+    {
+      "name": "real model conversational answer",
+      "passed": true,
+      "ms": 2744
+    },
+    {
+      "name": "unknown item reply",
+      "source": "model-general",
+      "answer": "这个杯子目前状态是‘损坏’，不建议再放入微波炉使用。为了安全，我们先确认几件事：\n\n1. 杯子表面是否有裂纹、掉漆、金属镶边或明显塑料感？\n2. 您手边是否还有原包装盒、购物小票，或曾拍过产品标签的照片？\n\n如果有，我可以帮您一起辨认材质；如果没有，也建议换一个明确标有‘微波炉适用’的杯子——尤其加热液体时，安全第一。",
+      "modelCalls": 1
+    },
+    {
+      "name": "unknown device avoids invented exact controls",
+      "passed": true,
+      "ms": 4985
+    },
+    {
+      "name": "vision candidates",
+      "candidates": [
+        {
+          "name": "保温杯",
+          "category": "饮具",
+          "basis": "visual-inference",
+          "uncertainties": [
+            "无可见品牌或型号标识",
+            "材质无法确认（可能为不锈钢内胆+硅胶/涂层外壳）",
+            "是否带密封圈或饮用口结构不可见"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "real visual recognition of synthetic photo",
+      "passed": true,
+      "ms": 2689
+    },
+    {
+      "name": "cleanup only records created by this verification",
+      "passed": true,
+      "ms": 24
+    }
+  ],
+  "unitTests": {
+    "total": 205,
+    "passed": 205
+  },
+  "scope": "Isolated companion app data; synthetic cases; no original user data edited.",
+  "checks": {
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "benchmark": "passed, zero regressions"
+  },
+  "browserContinuation": {
+    "first": "Windows 11 select a desktop file",
+    "second": "我已经选中了，接下来呢？",
+    "result": "Actual qwen-plus continued to right-click Copy / Ctrl+C without replaying selection."
+  }
+}

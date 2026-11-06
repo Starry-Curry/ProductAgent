@@ -1,0 +1,5 @@
+
+> product-agent@0.1.0 test:integration
+> node tests/integration.mjs
+
+{"kind":"local-api-and-browser-no-real-model","passed":true,"elapsedMs":4958,"checks":["missing-model trace","replay authorization","cross-origin write denied","gift original author","dynamic candidate constraints","private Context","desktop/mobile no page errors"],"realModelCalls":0}

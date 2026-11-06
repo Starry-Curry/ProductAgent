@@ -1,0 +1,99 @@
+{
+  "kind": "synthetic-input-real-local-api-no-model",
+  "input": {
+    "itemId": "d8e7b954-5b9e-4bd2-abf9-f9a4e9a9004d",
+    "question": "电池规格是什么？",
+    "mode": "service"
+  },
+  "httpStatus": 422,
+  "result": {
+    "error": "请核对具体型号并确认资料包；知识不足时不生成专属步骤或组合结论。",
+    "run": {
+      "id": "4d4eba88-8117-47bd-98e4-2d7a98a899ad",
+      "actor": "friend",
+      "itemId": "d8e7b954-5b9e-4bd2-abf9-f9a4e9a9004d",
+      "itemOwner": "friend",
+      "identity": "[\"M-R0061\",null,null,null]",
+      "mode": "service",
+      "status": "needs_identity",
+      "startedAt": "2026-10-17T02:49:52.564Z",
+      "latencyMs": 10,
+      "model": null,
+      "promptVersion": "item-assist-extractive-v2",
+      "tools": [
+        {
+          "name": "resolve_item",
+          "status": "allowed"
+        },
+        {
+          "name": "failure_boundary",
+          "status": "needs_identity"
+        }
+      ],
+      "evidenceIds": [],
+      "tokens": null,
+      "cost": null,
+      "objectivelyVerified": false,
+      "schemaVersion": 2,
+      "events": [
+        {
+          "sequence": 1,
+          "stage": "created",
+          "at": "2026-10-17T02:49:52.564Z",
+          "elapsedMs": 0,
+          "detail": "已解析演示身份和物品权限；未留存问题正文"
+        },
+        {
+          "sequence": 2,
+          "stage": "identity_checked",
+          "at": "2026-10-17T02:49:52.573Z",
+          "elapsedMs": 9,
+          "detail": "型号或资料待确认"
+        },
+        {
+          "sequence": 3,
+          "stage": "failed",
+          "at": "2026-10-17T02:49:52.574Z",
+          "elapsedMs": 10,
+          "detail": "needs_identity"
+        }
+      ],
+      "questionHash": "57920857c3e9e4d40558bf1a5c09288162abab8881c73220cfc7b16879966611",
+      "replayPolicy": "validated-content-only",
+      "errorCode": "needs_identity"
+    }
+  },
+  "replay": {
+    "replay": {
+      "ok": true,
+      "mode": "trace-only",
+      "events": [
+        {
+          "sequence": 1,
+          "stage": "created",
+          "at": "2026-10-17T02:49:52.564Z",
+          "elapsedMs": 0,
+          "detail": "已解析演示身份和物品权限；未留存问题正文"
+        },
+        {
+          "sequence": 2,
+          "stage": "identity_checked",
+          "at": "2026-10-17T02:49:52.573Z",
+          "elapsedMs": 9,
+          "detail": "型号或资料待确认"
+        },
+        {
+          "sequence": 3,
+          "stage": "failed",
+          "at": "2026-10-17T02:49:52.574Z",
+          "elapsedMs": 10,
+          "detail": "needs_identity"
+        }
+      ],
+      "status": "needs_identity",
+      "errorCode": "needs_identity",
+      "modelCalled": false,
+      "note": "未保存私人问题或失败回答正文；只能回放阶段与失败原因，不能复现原始模型输出。"
+    }
+  }
+}

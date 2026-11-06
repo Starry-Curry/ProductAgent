@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-21",
+  "baseline": "05e34ea",
+  "branch": "feat/life-context-v1-d",
+  "kind": "isolated-node24-production-and-edge-not-public-deployment",
+  "realModelCalls": 0,
+  "cloud": {
+    "passed": true,
+    "checks": [
+      "two visitor namespaces: items/stories/media/memory/sessions isolated; forged actor/tenant denied; no anonymous admin",
+      "server restart preserves opaque session, original story and photo",
+      "consistent SQLite snapshot and empty-volume restore preserve data and visitor isolation",
+      "browser story refresh, no local identity switch or developer setup UI; no API key in HTML/JS/API",
+      "enabled AI uses test-process-only stub; global budget survives restart and applies to another visitor (0 real model calls)",
+      "HTTP rate limit active; AI disabled and zero live model calls",
+      "logout revokes credentials; explicit expired-space cleanup preserves other spaces"
+    ],
+    "realModelCalls": 0,
+    "docker": "not installed; Node production simulation only"
+  },
+  "checks": {
+    "unit": {
+      "passed": 155,
+      "total": 155,
+      "command": "npm test"
+    },
+    "typecheck": "passed",
+    "build": "passed Next.js 15.5.28",
+    "life": "passed API/Edge and PDF/local OCR/barcode/upload retry; separate synthetic database",
+    "legacy": "passed four integration groups; local role simulation remains local",
+    "cloudSecurity": "passed 2 tests including 30-entry cap and protocol/error/SSRF assertions",
+    "startup": "refused missing invitation/open-access, invalid budget, unverified Volume and missing paid authorization before server startup",
+    "benchmark": {
+      "unsafeAccepted": 0,
+      "unsafeSamples": 5,
+      "falseRejections": 1,
+      "foundationRegressions": 0
+    },
+    "audit": "unavailable: npm audit returned no vulnerability metadata; not a clean audit claim"
+  },
+  "notVerified": [
+    "Docker image build (Docker not installed)",
+    "Linux mounted-volume permissions and Railway redeployment",
+    "Public HTTPS / Secure Cookie real transport",
+    "Cloud-region network to Beijing DashScope",
+    "Live Qwen 400/timeout fixes and previous A5 continuation"
+  ],
+  "limits": [
+    "No payment/purchase/push/merge/public deployment",
+    "Only synthetic data, isolated .runtime databases",
+    "Cookie namespace is not real identity; invitation/global limits still required",
+    "Single instance only; maintenance cleanup and backup retention remain operator duties",
+    "Original 23 acceptance grades unchanged"
+  ]
+}

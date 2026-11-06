@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    env_file: cloud.env
+    environment:
+      AUTH_MODE: public-demo
+      WUJIAN_DEPLOYMENT: cloud
+      PRODUCT_AGENT_DATA_DIR: /data/wujian
+      PORT: "3000"
+    volumes:
+      - life-data:/data
+    restart: unless-stopped
+    expose: ["3000"]
+    stop_grace_period: 120s
+  https:
+    image: caddy:2
+    environment:
+      DEMO_DOMAIN: ${DEMO_DOMAIN:?Set DEMO_DOMAIN through --env-file cloud.env}
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on: [app]
+    restart: unless-stopped
+volumes:
+  life-data:
+  caddy-data:
+  caddy-config:

@@ -1,0 +1,13 @@
+{
+  "product": "物间 Wujian",
+  "snapshotDate": "2026-11-06",
+  "timezone": "Asia/Shanghai",
+  "profile": "desktop",
+  "branch": "reference/desktop-20261106",
+  "nodeMajor": 24,
+  "entry": "http://127.0.0.1:3210/",
+  "sharedResponsiveSource": true,
+  "containsCredentials": false,
+  "containsUserDatabase": false,
+  "publicMobileNetworkStatus": "VPN required on the user's tested phone network; domestic ingress unresolved"
+}

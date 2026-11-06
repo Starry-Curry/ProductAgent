@@ -1,0 +1,615 @@
+{
+  "date": "2026-11-06",
+  "entry": "https://chrome-captain-blocked-spectacular.trycloudflare.com/",
+  "unit": {
+    "passed": 239,
+    "failed": 0,
+    "newAdversarialCases": 16
+  },
+  "typecheck": "passed",
+  "build": "passed",
+  "benchmark": {
+    "regressions": 0,
+    "modelCalls": 0
+  },
+  "modelPlanning": [
+    {
+      "name": "home-party",
+      "goal": "明天家里开party，6个人一起吃饭聊天听音乐，帮我准备真正需要的东西。",
+      "ms": 14151,
+      "passed": true,
+      "plan": {
+        "id": "9dae7dc6-a3a8-42d3-bbb2-7c2d654f5c56",
+        "owner": "lin",
+        "goal": "明天家里开party，6个人一起吃饭聊天听音乐，帮我准备真正需要的东西。",
+        "title": "家庭聚会准备清单",
+        "people": 6,
+        "assumptions": [
+          "不外卖不做饭，仅需布置与基础供应；家中已有水杯、纸巾、桌椅、基础照明"
+        ],
+        "scheduledDate": "2026-11-07",
+        "items": [
+          {
+            "id": "ae0c7300-8da8-4821-a81c-be5f2e04ccdc",
+            "label": "餐食（含主食+小食）",
+            "quantity": "6份",
+            "reason": "6人简餐需求",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "d4ccc7ad-b50a-4e17-a2bf-9bf0730579f5",
+            "label": "饮品（非酒精）",
+            "quantity": "2L+6包",
+            "reason": "解渴补足饮用量",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "8f58e57c-f4a0-4597-ba4c-ec9ff842c783",
+            "label": "音乐设备",
+            "quantity": "1台",
+            "reason": "营造轻松氛围",
+            "priority": "optional",
+            "itemId": "life-sample-1",
+            "group": "owned",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "bca1245f-1d4f-4831-8b0e-35765f602f67",
+            "label": "围坐空间",
+            "quantity": "6座",
+            "reason": "确保人人有位可坐",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "a05314da-c6c5-4698-b51a-ae6a6bc54829",
+            "label": "互动道具",
+            "quantity": "1副",
+            "reason": "促进聊天与游戏",
+            "priority": "optional",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          }
+        ],
+        "warnings": [],
+        "revision": 1,
+        "at": "2026-11-06T06:03:12.593Z",
+        "source": "model-reviewed",
+        "reviewNote": "AI 已按活动目标规划并复查，再核对家里已有的物品。",
+        "model": "qwen-plus"
+      }
+    },
+    {
+      "name": "no-shopping",
+      "goal": "周末4个人在家聊天玩桌游，不做饭，不买新东西，优先用现有物品或借用。",
+      "ms": 10220,
+      "passed": true,
+      "plan": {
+        "id": "e2d3ede9-12fc-4ce9-aa2c-ef108435850f",
+        "owner": "lin",
+        "goal": "周末4个人在家聊天玩桌游，不做饭，不买新东西，优先用现有物品或借用。",
+        "title": "4人居家桌游聊天夜",
+        "people": 4,
+        "assumptions": [
+          "已有基础桌游1-2款（如UNO、卡坦岛）",
+          "家中有可用坐具（沙发/椅子）及平整桌面"
+        ],
+        "items": [
+          {
+            "id": "b53074b9-5192-4046-abca-9549add53148",
+            "label": "桌游",
+            "quantity": "1款",
+            "reason": "核心互动载体",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "9e4e9cc9-6894-4710-b034-955090652070",
+            "label": "饮品",
+            "quantity": "足量",
+            "reason": "维持聊天续航",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "af89a755-fbfa-4263-a862-af2c4fff5a3e",
+            "label": "小食",
+            "quantity": "适量",
+            "reason": "轻量补充能量",
+            "priority": "optional",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "5efac8d8-9636-4444-a0a6-c66e998c9f21",
+            "label": "照明",
+            "quantity": "1处",
+            "reason": "确保桌面光线充足",
+            "priority": "optional",
+            "itemId": "lamp",
+            "group": "owned",
+            "done": false,
+            "assignee": "我"
+          }
+        ],
+        "warnings": [],
+        "revision": 1,
+        "at": "2026-11-06T06:03:22.821Z",
+        "source": "model-reviewed",
+        "reviewNote": "AI 已按活动目标规划并复查，再核对家里已有的物品。",
+        "model": "qwen-plus"
+      }
+    },
+    {
+      "name": "child-party",
+      "goal": "明天给8岁孩子办生日聚会，4个孩子和2位家长，不要酒精和明火，不要过度布置。",
+      "ms": 12708,
+      "passed": true,
+      "plan": {
+        "id": "159d6913-1454-4ccc-b0ba-1e34da6f48a0",
+        "owner": "lin",
+        "goal": "明天给8岁孩子办生日聚会，4个孩子和2位家长，不要酒精和明火，不要过度布置。",
+        "title": "8岁儿童生日家庭聚会",
+        "people": 6,
+        "assumptions": [
+          "家中已有基础桌椅、水杯、纸巾；不提供正餐，仅零食饮品和互动环节"
+        ],
+        "scheduledDate": "2026-11-07",
+        "items": [
+          {
+            "id": "a3b8ccf7-fca4-4932-967e-e013d4ce1792",
+            "label": "无糖小蛋糕或纸杯蛋糕（6份）",
+            "quantity": "6个",
+            "reason": "非明火、无酒精的庆祝核心",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "a75612af-a966-4695-8dcb-faa24e2cfc93",
+            "label": "果汁与瓶装水",
+            "quantity": "2L",
+            "reason": "儿童友好饮品，无需冷藏设备",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "ad7bbbe1-e380-4042-93c5-8ba4673edae4",
+            "label": "安全趣味玩具/桌游",
+            "quantity": "1套",
+            "reason": "促进孩子互动，无明火无噪音",
+            "priority": "optional",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "65a87ef4-9977-4572-8efd-7dcf85864cd0",
+            "label": "儿童洗手液与擦手纸",
+            "quantity": "1瓶+1包",
+            "reason": "4个孩子高频接触后需及时清洁",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          }
+        ],
+        "warnings": [],
+        "revision": 1,
+        "at": "2026-11-06T06:03:35.529Z",
+        "source": "model-reviewed",
+        "reviewNote": "AI 已按活动目标规划并复查，再核对家里已有的物品。",
+        "model": "qwen-plus"
+      }
+    },
+    {
+      "name": "picnic",
+      "goal": "两个人周末去公园野餐，不烧烤，优先使用家里已有物品。",
+      "ms": 14175,
+      "passed": true,
+      "plan": {
+        "id": "5d70afea-7e71-48f1-89ba-bac687f30b88",
+        "owner": "lin",
+        "goal": "两个人周末去公园野餐，不烧烤，优先使用家里已有物品。",
+        "title": "公园轻量野餐",
+        "people": 2,
+        "assumptions": [
+          "两人均无行动障碍，可携带中等重量物品；公园有阴凉处和基础座椅（如长椅）"
+        ],
+        "items": [
+          {
+            "id": "d8563c55-0a75-41e7-b125-cbbe002dbe9f",
+            "label": "野餐垫",
+            "quantity": "1",
+            "reason": "提供干净坐卧区域",
+            "priority": "essential",
+            "itemId": "life-sample-19",
+            "group": "owned",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "5b1d3a33-8d0c-4776-bedf-b477fd18b297",
+            "label": "便携餐盒/保鲜盒",
+            "quantity": "2–3个",
+            "reason": "盛装预备好的冷食或水果",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "a48e0f96-6921-4ef6-8d46-1dfa4c43aabb",
+            "label": "保温袋或冷藏包",
+            "quantity": "1",
+            "reason": "保持冷食/饮品低温",
+            "priority": "optional",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "0cc75f20-2fed-4017-921c-7b439d4de427",
+            "label": "可重复使用餐具",
+            "quantity": "2套",
+            "reason": "环保且免洗纸具",
+            "priority": "recommended",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "cb530d65-4af8-40a4-947e-36d0c9fbd86e",
+            "label": "水壶/饮料瓶",
+            "quantity": "2个",
+            "reason": "装饮用水或自制饮品",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          },
+          {
+            "id": "9c4bfccc-b4c5-4fb5-b78e-97399754800d",
+            "label": "小垃圾袋",
+            "quantity": "2个",
+            "reason": "带走所有垃圾，无痕野餐",
+            "priority": "essential",
+            "group": "missing",
+            "done": false,
+            "assignee": "我"
+          }
+        ],
+        "warnings": [],
+        "revision": 1,
+        "at": "2026-11-06T06:03:49.705Z",
+        "source": "model-reviewed",
+        "reviewNote": "AI 已按活动目标规划并复查，再核对家里已有的物品。",
+        "model": "qwen-plus"
+      }
+    }
+  ],
+  "photoRecognition": [
+    {
+      "name": "photo-kettle",
+      "passed": true,
+      "ms": 2890,
+      "candidates": [
+        {
+          "name": "小米 Electric Kettle 2 电热水壶",
+          "brand": "小米",
+          "model": "MJDSH04YM",
+          "category": "电热水壶",
+          "basis": "visual-inference",
+          "observedText": "xiaomi",
+          "confidence": 0.9,
+          "uncertainties": [
+            "推测型号，未实物核对"
+          ],
+          "modelStatus": "estimated",
+          "referenceProductId": "xiaomi-kettle2-uk"
+        }
+      ],
+      "notice": "已给出最可能的产品；推测型号可直接采用，也可改正，不会自动替你保存。"
+    },
+    {
+      "name": "photo-purifier",
+      "passed": true,
+      "ms": 2989,
+      "candidates": [
+        {
+          "name": "小米 Smart Air Purifier 4 Lite 空气净化器",
+          "brand": "小米",
+          "model": "AC-M17-SC",
+          "category": "空气净化器",
+          "basis": "visual-inference",
+          "confidence": 0.95,
+          "uncertainties": [
+            "推测型号，未实物核对"
+          ],
+          "modelStatus": "estimated",
+          "referenceProductId": "xiaomi-purifier4lite-global"
+        }
+      ],
+      "notice": "已给出最可能的产品；推测型号可直接采用，也可改正，不会自动替你保存。"
+    },
+    {
+      "name": "photo-plant",
+      "passed": true,
+      "ms": 2831,
+      "candidates": [
+        {
+          "name": "绿萝（Epipremnum aureum）",
+          "category": "观叶植物",
+          "basis": "visual-inference",
+          "confidence": 0.95,
+          "uncertainties": [
+            "推测为常见栽培品种‘黄金葛’或‘花叶绿萝’，未实物核对具体园艺变种"
+          ],
+          "modelStatus": "unknown"
+        }
+      ],
+      "notice": "已给出最可能的产品；推测型号可直接采用，也可改正，不会自动替你保存。"
+    }
+  ],
+  "publicHttpsSmoke": [
+    {
+      "name": "public HTTPS, secure visitor cookies, all 9 real model types",
+      "passed": true
+    },
+    {
+      "name": "two real public visitors cannot read each other's private item",
+      "passed": true
+    },
+    {
+      "name": "cross-origin mutation blocked",
+      "passed": true
+    },
+    {
+      "name": "public bounded real model planning and critique",
+      "passed": true,
+      "ms": 16018,
+      "items": [
+        "足够分量的餐食（含主食、小食、水果）",
+        "饮品（非酒精为主）",
+        "可围坐的舒适座位区",
+        "便携蓝牙音箱",
+        "简易桌面/托盘（用于摆食物饮品）",
+        "儿童安全防护（如边角防撞贴、低矮区域清障）"
+      ]
+    },
+    {
+      "name": "public photo upload and real product/model recognition",
+      "passed": true,
+      "candidate": {
+        "name": "小米 Electric Kettle 2 电热水壶",
+        "brand": "小米",
+        "model": "MJDSH04YM",
+        "category": "电热水壶",
+        "basis": "visual-inference",
+        "observedText": "xiaomi",
+        "confidence": 0.9,
+        "uncertainties": [
+          "推测型号，未实物核对"
+        ],
+        "modelStatus": "estimated",
+        "referenceProductId": "xiaomi-kettle2-uk"
+      }
+    },
+    {
+      "name": "public real vision localization with overlay coordinates",
+      "passed": true,
+      "target": {
+        "label": "电源",
+        "x": 0.81,
+        "y": 0.19,
+        "width": 0.18,
+        "height": 0.08,
+        "confidence": 0.95,
+        "visible": true
+      }
+    }
+  ],
+  "qr": {
+    "encoder": "@zxing/library QRCodeWriter",
+    "decoder": "@zxing/library QRCodeReader",
+    "errorCorrection": "M",
+    "quietZoneModules": 4,
+    "decoded": "https://chrome-captain-blocked-spectacular.trycloudflare.com/",
+    "verified": true
+  },
+  "browserLayouts": {
+    "checks": [
+      {
+        "label": "home-390",
+        "height": 844,
+        "overflow": [],
+        "pageWidth": 390,
+        "width": 390
+      },
+      {
+        "label": "home-390-final",
+        "height": 844,
+        "overflow": [],
+        "pageWidth": 390,
+        "width": 390
+      },
+      {
+        "label": "items-390",
+        "height": 844,
+        "overflow": [],
+        "pageWidth": 390,
+        "width": 390
+      },
+      {
+        "label": "item-detail-390",
+        "height": 844,
+        "overflow": [],
+        "pageWidth": 390,
+        "width": 390
+      },
+      {
+        "label": "friends-390",
+        "height": 844,
+        "overflow": [],
+        "pageWidth": 390,
+        "width": 390
+      },
+      {
+        "label": "friends-320",
+        "height": 740,
+        "overflow": [],
+        "pageWidth": 320,
+        "width": 320
+      },
+      {
+        "label": "items-320",
+        "height": 740,
+        "overflow": [],
+        "pageWidth": 320,
+        "width": 320
+      },
+      {
+        "label": "settings-320",
+        "height": 740,
+        "overflow": [],
+        "pageWidth": 320,
+        "width": 320
+      },
+      {
+        "label": "tasks-430",
+        "height": 932,
+        "overflow": [],
+        "pageWidth": 430,
+        "width": 430
+      },
+      {
+        "label": "task-create-430",
+        "height": 932,
+        "overflow": [],
+        "pageWidth": 430,
+        "width": 430
+      },
+      {
+        "label": "elder-430",
+        "height": 932,
+        "overflow": [],
+        "pageWidth": 430,
+        "width": 430
+      },
+      {
+        "label": "multimodal-390",
+        "height": 844,
+        "overflow": [],
+        "pageWidth": 390,
+        "width": 390
+      },
+      {
+        "label": "activity-plan-390",
+        "height": 844,
+        "overflow": [],
+        "pageWidth": 390,
+        "width": 390
+      },
+      {
+        "label": "activity-plan-final-390",
+        "height": 844,
+        "overflow": [],
+        "pageWidth": 390,
+        "width": 390
+      },
+      {
+        "label": "photo-upload-390",
+        "height": 844,
+        "overflow": [],
+        "pageWidth": 390,
+        "width": 390
+      }
+    ],
+    "overflowFailures": 0
+  },
+  "hardwareLimitations": [
+    "No physical iOS/Android camera or cellular-network test was performed.",
+    "Camera guidance uses periodic frame inference, not continuous AR tracking."
+  ],
+  "finalPartySemanticReview": {
+    "status": 200,
+    "ms": 12536,
+    "source": "model-reviewed",
+    "items": [
+      {
+        "label": "即食餐食（如披萨、熟食拼盘）",
+        "group": "missing"
+      },
+      {
+        "label": "饮品（含非酒精）",
+        "group": "missing"
+      },
+      {
+        "label": "背景音乐设备",
+        "itemId": "life-sample-1",
+        "group": "owned"
+      },
+      {
+        "label": "可围坐的座位与桌面",
+        "itemId": "life-sample-7",
+        "group": "owned"
+      },
+      {
+        "label": "垃圾收纳与收尾工具",
+        "group": "missing"
+      }
+    ],
+    "passed": true
+  },
+  "deliveryHttp": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 7140,
+      "type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/manifest.webmanifest",
+      "status": 200,
+      "bytes": 485,
+      "type": "application/manifest+json"
+    },
+    {
+      "path": "/share/phone-entry.png",
+      "status": 200,
+      "bytes": 19511,
+      "type": "image/png"
+    },
+    {
+      "path": "/mobile-delivery-report.html",
+      "status": 200,
+      "bytes": 7593,
+      "type": "text/html; charset=UTF-8"
+    }
+  ],
+  "browserEndToEnd": {
+    "aliasToKnownPurifierAndOriginalQuestion": "passed",
+    "futureTaskDateSaved": "2026-11-07",
+    "partyChatRoutesToModelPlan": "passed",
+    "knownSpeakerMatchedAfterSemanticFix": "passed",
+    "automaticPhotoModelGuessAndSave": "passed, official manual cached reference attached, own photo retained, estimated identity note visible"
+  }
+}

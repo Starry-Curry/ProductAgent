@@ -1,0 +1,21 @@
+物间 · 固定二维码电脑版服务器
+
+固定入口：https://wujian-pc-home.yanxianglong31.chatgpt.site/
+二维码：artifacts/mobile-delivery/物间-手机扫码.png
+
+把二维码图片或固定入口发给同学即可。不同 Wi-Fi 和手机流量都可访问，无需安装 App。
+电脑开机、登录当前用户、保持联网后，服务自动启动，不需要打开 Codex、项目文件夹或终端。
+可以关闭屏幕。请接电、保持开盖，不要手动睡眠。关机、合盖睡眠或断网期间不能使用 App；恢复后原二维码仍然有效。
+
+手动启动：双击 START_MOBILE_SHARE.command。
+停止共享：双击 STOP_MOBILE_SHARE.command。
+停止后再次登录系统仍会自动启动。要彻底取消自动启动，请先停止，再移走 ~/Library/LaunchAgents/com.wujian.pc-host.plist。
+
+实际程序、模型配置和访客数据库安装在：
+~/Library/Application Support/Wujian Host
+请不要删除此文件夹。源代码修改不会自动更新运行中的安装副本，需要重新安装更新。
+故障日志位于该目录的 logs 文件夹，不要把 .env.local、host-key 或数据库发给别人。
+
+这是访客演示版，默认演示空间有效期 72 小时。二维码地址固定不等于演示空间永不过期。
+App 的计算与业务数据库在电脑；固定公网入口由 Sites 托管，转发请求、临时中转内容并缓存公开静态素材。无需登录阿里云。
+网址可持续复用，但仍依赖当前托管服务、账号和网络正常，不承诺永久无条件可用。

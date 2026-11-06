@@ -1,0 +1,306 @@
+{
+  "date": "2026-10-20",
+  "authorization": {
+    "total": 8,
+    "text": 6,
+    "vision": 2
+  },
+  "usage": {
+    "total": 6,
+    "text": 6,
+    "vision": 0,
+    "remainingVision": 2,
+    "inputTokens": 17146,
+    "outputTokens": 4171,
+    "billing": "实际账单未知；HTTP400与网络失败用量不可得；不再自动调用"
+  },
+  "requests": [
+    {
+      "number": 1,
+      "purpose": "MAF10-first",
+      "vision": false,
+      "model": "qwen-plus",
+      "at": "2026-10-20T12:00:47.110Z",
+      "inputCharacters": 27368,
+      "status": 200,
+      "tokens": {
+        "total_tokens": 12662,
+        "completion_tokens": 1344,
+        "prompt_tokens": 11318,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 30776
+    },
+    {
+      "number": 2,
+      "purpose": "Sony-agent",
+      "vision": false,
+      "model": "qwen-plus",
+      "at": "2026-10-20T12:01:18.336Z",
+      "inputCharacters": 9855,
+      "status": 200,
+      "tokens": {
+        "total_tokens": 4163,
+        "completion_tokens": 599,
+        "prompt_tokens": 3564,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 13644
+    },
+    {
+      "number": 3,
+      "purpose": "Sony-direct",
+      "vision": false,
+      "model": "qwen-plus",
+      "at": "2026-10-20T12:01:32.024Z",
+      "inputCharacters": 125,
+      "status": 400,
+      "elapsedMs": 492
+    },
+    {
+      "number": 4,
+      "purpose": "creative-without-context",
+      "vision": false,
+      "model": "qwen-plus",
+      "at": "2026-10-20T12:01:32.543Z",
+      "inputCharacters": 3064,
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2408,
+        "completion_tokens": 1283,
+        "prompt_tokens": 1125,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 29019
+    },
+    {
+      "number": 5,
+      "purpose": "creative-with-context",
+      "vision": false,
+      "model": "qwen-plus",
+      "at": "2026-10-20T12:02:01.637Z",
+      "inputCharacters": 3091,
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2084,
+        "completion_tokens": 945,
+        "prompt_tokens": 1139,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 21349
+    },
+    {
+      "number": 6,
+      "purpose": "MAF10-continue-fixed",
+      "vision": false,
+      "model": "qwen-plus",
+      "at": "2026-10-20T12:03:59.914Z",
+      "inputCharacters": 27828,
+      "status": "network_failed",
+      "elapsedMs": 40037
+    }
+  ],
+  "cases": [
+    {
+      "name": "MAF10-first",
+      "result": "部分可用：9步保留、1步隐藏，仍有未经完整语义核验的说法；食品与实机结果未知",
+      "answer": "以下保留了可核对的步骤；缺失环节见说明，不将部分指导当作完整任务。",
+      "steps": [
+        "检查与准备：请先断开电源，待机器完全冷却。取出炸篮、炸板和烤架，用软布或海绵蘸中性洗涤剂清洗；切勿使用钢丝球等研磨材料，以免损伤涂层。主机腔体可用微湿软布擦拭，表面仅限干布或中性清洁剂微湿布擦拭。炸板与烤架可放入洗碗机清洗，炸篮也可水洗或洗碗机清洗，但整机不可浸水或冲洗。",
+        "开机：将电源线接入接地良好的插座。首次通电时，按电源开关开机，进入语言选择界面；旋转控制旋钮选择所需语言，点按旋钮确认。此时无需连接 Wi-Fi 或 App 即可使用基础功能。",
+        "设置：首次使用前建议除味：确保炸篮已清洁并完全放回主机，空篮状态下设定最高温度 220°C，运行 5 分钟。过程中可能出现少量白烟或气味，属正常现象。完成后等待机器自然冷却。",
+        "实际使用：将炸板放入炸篮底部；若食材较多，可加装烤架分层摆放。注意：过小食材（如豌豆、碎肉末）易从烤架缝隙掉落，不建议直接使用烤架；务必确保食材不会掉落进主机腔体。",
+        "设置：将装好食材的炸篮完全推入主机。旋转并点按控制旋钮，选择「手动模式」或任一预设菜谱（如鸡翅、薯条、酸奶等）；再旋转并点按设定模式（脆烤/脱脂）、食材量（单层/双层）、温度与时间；最后点按旋钮启动，即开始倒计时。",
+        "实际使用：烹饪中可旋转旋钮调节时间或温度（酸奶模式除外），但须点按旋钮确认；否则 5 秒后自动恢复原设定。脱脂模式下仅可调时间，不可调温度。",
+        "结束处理：烹饪结束时，机器会发出提示音，屏幕显示「Completed」（部分食谱会进入保温状态，显示「Keeping warm…」）。此时炸篮极烫，请勿徒手触碰；小心抽出，用防热夹具取食。",
+        "清洁养护：每次使用后均需清洁：断电并彻底冷却后，取出炸篮、炸板、烤架单独清洗；主机腔体用微湿软布擦拭，切勿用水冲洗或浸泡整机。定期清洁有助于延长使用寿命。",
+        "设置：如您后续希望使用米家 App 远程控制或固件升级，请在 Wi-Fi 设置界面通过控制旋钮开启 Wi-Fi，并按 App 提示添加设备（需下载「Xiaomi Home」App，欧洲地区名称）。当前纯本地操作已可完整完成烹饪。"
+      ],
+      "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。 实际烹饪前，请按所选食材、份量及官方食谱确认程序/参数；本次只提供控制流程，不凭空设定熟度或食品时温。 已隐藏1条未通过证据检查的步骤，未据此宣称完整完成任务。"
+    },
+    {
+      "name": "MAF10-continue",
+      "result": "失败：初始未恢复目标，0模型调用，错误返回资料不足",
+      "answer": "资料已保存，但目前未找到能直接回答这个问题的原文。关键词出现不代表参数或操作已经确认；请补充对应型号的相关章节，或换一个更具体的问题。",
+      "steps": [],
+      "caveat": "尚未确认答案，不推断官方参数。"
+    },
+    {
+      "name": "Sony-agent",
+      "result": "部分可用：4步保留/2步隐藏，充电任务标签正确；引用检查不等于逐断言语义证明",
+      "answer": "以下保留了可核对的步骤；缺失环节见说明，不将部分指导当作完整任务。",
+      "steps": [
+        "充电前检查：使用随附的USB Type-C充电线；确认电源适配器输出电流为0.5 A（500 mA）或更高，或使用运行中的个人电脑（非休眠状态）。",
+        "连接电源：将USB-C线一端插入耳机底部接口，另一端接入AC插座（通过适配器）或电脑USB口；若耳机开机状态下开始充电，会自动关机。",
+        "连接与条件：确保环境温度在5 °C–35 °C范围内；避免通过USB集线器连接，必须直连电脑或适配器；若长时间未使用，指示灯可能延迟亮起，请稍作等待。",
+        "确认结束与断开：充电约3小时（从完全耗尽至满电），橙色指示灯自动熄灭，表示已充满；此时可拔下USB-C线。"
+      ],
+      "caveat": "按当前型号/资料地区原文组织；引用检查不是完整语义或实物验证。 已隐藏2条未通过证据检查的步骤，未据此宣称完整完成任务。"
+    },
+    {
+      "name": "Sony-direct",
+      "result": "失败：HTTP400，没有可比较的答案",
+      "error": "请求失败：模型服务返回 400，请核对账户权限或稍后重试。",
+      "note": "对照脚本曾沿用JSON输出配置；已为未来普通问答对照关闭JSON_MODE，但未追加真实重测，400具体服务错误正文未保留。"
+    },
+    {
+      "name": "creative-without-context",
+      "result": "失败：协议/未登记物资等问题，最终回退本地",
+      "cloudRejected": true,
+      "ideaTitles": [
+        "围绕旅行背包做一次细节发现挑战",
+        "用旅行背包与棉质外套做一次出行减负试装",
+        "用已有衣物试一套新搭配",
+        "带已有背包出发做一次观察散步"
+      ]
+    },
+    {
+      "name": "creative-with-context",
+      "result": "失败：原始内容侧重建筑/轻装，但协议/物资问题仍回退，不能判增益",
+      "cloudRejected": true,
+      "ideaTitles": [
+        "围绕旅行背包做一次细节发现挑战",
+        "用旅行背包与棉质外套做一次出行减负试装",
+        "用已有衣物试一套新搭配",
+        "带已有背包出发做一次观察散步"
+      ]
+    },
+    {
+      "name": "vision-not-run",
+      "result": "未配置视觉模型，未发请求"
+    },
+    {
+      "name": "MAF10-continue-fixed",
+      "result": "在线失败：目标恢复并发出请求，网络超时；未重试",
+      "answer": "请求失败：模型连接未完成（网络或超时），可以保留问题后重试。",
+      "steps": []
+    }
+  ],
+  "offlineContinuation": {
+    "networkCalls": 0,
+    "firstStep": "开机：将空气炸锅放在平稳、水平的台面上，确保四周留有足够散热空间。接通电源，按压电源按钮开机；首次开机将进入语言选择界面，旋转控制旋钮选择所需语言，再按压旋钮确认。",
+    "stepCount": 5,
+    "note": "使用历史第40次响应，当前Graph离线回放；不是本轮在线通过"
+  },
+  "publicReference": {
+    "at": "2026-10-20T12:06:28.847Z",
+    "elapsedMs": 1419,
+    "modelCalls": 0,
+    "source": "actual-server-fetch-and-local-adaptation",
+    "ideas": [
+      {
+        "id": "d9227f31-9130-49f8-8875-78db21335750",
+        "title": "给旧照片做一份不伤原件的主题索引",
+        "itemIds": [
+          "eb174a3b-580a-4c4a-b09d-c09f25ed565a"
+        ],
+        "minutes": 5,
+        "steps": [
+          "先核对是否为普通纸质照片；玻璃底片、粘连或破损材料不要自行处理",
+          "保持照片原有保护材料，仅从边缘拿取，避免触碰影像表面；不拆除粘贴或清洗",
+          "在不标记原件的前提下口述分组与主题索引；缺少合适保护材料时只做索引，不换包装"
+        ],
+        "missing": [
+          "照片实际材质/状态与原保护材料需本人核对；本方案不证明容器具有档案级保护能力"
+        ],
+        "limits": [
+          "参考机构原文仅支持避免接触影像面和边缘拿取；主题索引是本地改编，未实物验证",
+          "不对原件写字、粘贴、加热或清洗；专业保存条件请查看完整来源"
+        ],
+        "rationale": "把真实公开保护建议变成不改动原件的整理任务，不凭收纳盒类别推断保护性能。",
+        "source": "local-candidate",
+        "evidence": [],
+        "creativeEvidenceSources": [
+          {
+            "kind": "third-party",
+            "title": "Care, Handling and Storage of Photographs - Collections Care (Preservation, Library of Congress)",
+            "url": "https://www.loc.gov/preservation/care/photo.html",
+            "excerpt": "Avoid touching the image area of a photograph. Whenever possible handle the photograph by its edges or its housing materials.",
+            "conditions": [
+              "仅短摘录作为灵感，未核验整套玩法或适用型号"
+            ],
+            "license": "许可未核定；仅保存链接、元信息与短摘录，不保留整篇内容",
+            "attribution": "Care, Handling and Storage of Photographs - Collections Care (Preservation, Library of Congress) · www.loc.gov",
+            "fetchedAt": "2026-10-20T12:06:28.834Z",
+            "verified": "public-page-read",
+            "id": "63adb153-3bda-4d9d-afea-4100cb0b60d3"
+          }
+        ],
+        "direction": "生活改善",
+        "tested": false,
+        "goal": "整理老照片，不改变原件"
+      },
+      {
+        "id": "14c31a11-ae59-4d94-a112-4ad7c6cc281a",
+        "title": "把一件常用物画成今天的小速写",
+        "itemIds": [
+          "eb174a3b-580a-4c4a-b09d-c09f25ed565a"
+        ],
+        "minutes": 10,
+        "steps": [
+          "选一个身边可观察的物品",
+          "用纸笔画轮廓或写三个细节",
+          "可拍照保存，不追求画得像"
+        ],
+        "limits": [
+          "确认纸笔和观察对象在场",
+          "物品能力来自已登记信息/类别匹配，仍须现场核对；方案未实物验证。"
+        ],
+        "source": "local-candidate",
+        "evidence": [],
+        "tested": false,
+        "goal": "整理老照片，不改变原件"
+      }
+    ],
+    "missing": [
+      "照片实际材质/状态与原保护材料需本人核对；本方案不证明容器具有档案级保护能力"
+    ],
+    "failed": [
+      "Wikibooks Cookbook:Mise_en_place 实际服务器读取失败"
+    ],
+    "note": "LoC公开机构短摘录、许可未全面核定，不冒充完整开放许可库；经过本地规则改编并进入实际功能"
+  },
+  "checks": {
+    "fullDomainSuite": "153/153通过（最终源代码）",
+    "typecheck": "passed",
+    "build": "passed",
+    "browser": "pending-final",
+    "benchmark": {
+      "unsafeAccepted": 0,
+      "benignFalseRejections": 1,
+      "meaning": "有限确定性基准仍误拒1条正确改写，不代表一般语义可靠性"
+    },
+    "storybookBrowser": "桌面/390px、默认收起、照片组/章节/焦点/Esc、CRUD/赠后隐私通过",
+    "legacy": "四组API/Edge旅程通过",
+    "lifeBrowser": "新版主旅程及真实本机PDF/OCR/扫码/照片/图文/部分成功重试两组全部通过，均0模型调用"
+  },
+  "privacy": "仅独立合成测试库与公开资料；当前项目配置由进程读取，未打印密钥、未修改默认费用开关",
+  "dataSafety": {
+    "schema": 6,
+    "integrity": {
+      "integrity_check": "ok"
+    },
+    "backup": true,
+    "unchanged": {
+      "workspace": true,
+      "life_fragments": true,
+      "life_fragment_items": true,
+      "life_fragment_details": true,
+      "life_media": true
+    },
+    "cloud": "unauthorized"
+  },
+  "repairedTestFailures": [
+    "schema6版本断言与重建幂等修复",
+    "跨物品/故事照片用途隔离修复；保留403删除断言",
+    "刷新恢复当前hash后，旧脚本强制回首页的断言改为先检验助手恢复再导航首页"
+  ]
+}

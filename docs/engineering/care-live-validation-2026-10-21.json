@@ -1,0 +1,1362 @@
+{
+  "date": "2026-10-21",
+  "kind": "real-provider-with-synthetic-fixtures-and-separated-local-regressions",
+  "provider": "Beijing DashScope / qwen-plus",
+  "source": {
+    "baseCommit": "b22f297355978ccc43be889c94b01eb72d540d13",
+    "note": "各轮在工作区逐步修复；原账本HEAD是基线，不表示所有轮次使用相同源码。以下哈希仅对应最终源码。",
+    "finalSha256": {
+      "src/lib/agent/graph.ts": "b31a3537090629e7f78b1b108f0236276c20ce416cfbc14774a109f0031a9282",
+      "src/lib/agent/prompts.ts": "d9c1f38fc5db5d49085327947a6427c7f3f3829f59ddad9c3f026a434486d4ae",
+      "src/lib/agent/safety-language.ts": "cb7e9d9ff37948e8e0632a6bc8cfa8f0e05989a392520df42e07429d6d258d3f",
+      "src/lib/home/decisions.ts": "0e523abfdafd9ebeb2d9c263051ccce7bf62e50ccd137067b20fcb755dc47909",
+      "src/lib/home/router.ts": "ceb6587b50d4254244217d7682b1d1c227c46723040072fd32aa42e63bfddc40",
+      "src/lib/skills/knowledge.ts": "c51e64fce4b48b9f888cca49ec09ce4bf781ce90b0c1a3deb8934360f1d6516c",
+      "tests/foundation.test.ts": "0f94b6f3d5d320c9ac15b964891e40a040ecbab7dc79710ad3af7758cd31352a"
+    }
+  },
+  "counts": {
+    "baseScenarios": 9,
+    "baseTurns": 18,
+    "scenarioAttemptsIncludingBrowser": 18,
+    "executedTurnsIncludingRetests": 36,
+    "attemptedModelRequests": 29,
+    "http200": 27,
+    "transportFailures": 2,
+    "requestCap": 30,
+    "physicalDeviceTests": 0
+  },
+  "usageReportedBySuccessfulResponses": {
+    "prompt_tokens": 58956,
+    "completion_tokens": 6288,
+    "total_tokens": 65244
+  },
+  "cost": "未估价，以百炼账单为准；超时请求可能仍产生服务端消耗，成功响应token汇总不是完整计费证明。",
+  "evaluationMethod": "逐条阅读实际答复并与预先列出的标准比较；由开发代理审阅，非独立用户研究。HTTP200、结构校验或引用ID正确不等于业务通过。保留失败与后续修复，局部通过不外推。",
+  "requests": [
+    {
+      "number": 1,
+      "case": "care-computer/1/1",
+      "at": "2026-10-21T09:05:24.190Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2048,
+        "completion_tokens": 68,
+        "prompt_tokens": 1980,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 2547
+    },
+    {
+      "number": 2,
+      "case": "care-computer/1/2",
+      "at": "2026-10-21T09:05:26.768Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2270,
+        "completion_tokens": 171,
+        "prompt_tokens": 2099,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 4570
+    },
+    {
+      "number": 3,
+      "case": "care-computer/1/2",
+      "at": "2026-10-21T09:05:31.356Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2469,
+        "completion_tokens": 109,
+        "prompt_tokens": 2360,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 3378
+    },
+    {
+      "number": 4,
+      "case": "care-computer/1/2",
+      "at": "2026-10-21T09:05:34.750Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2668,
+        "completion_tokens": 109,
+        "prompt_tokens": 2559,
+        "prompt_tokens_details": {
+          "cached_tokens": 2240
+        }
+      },
+      "elapsedMs": 2957
+    },
+    {
+      "number": 5,
+      "case": "care-mouse/1/3",
+      "at": "2026-10-21T09:06:02.981Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2530,
+        "completion_tokens": 35,
+        "prompt_tokens": 2495,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 2736
+    },
+    {
+      "number": 6,
+      "case": "care-mouse/1/3",
+      "at": "2026-10-21T09:06:05.731Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2995,
+        "completion_tokens": 104,
+        "prompt_tokens": 2891,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 3428
+    },
+    {
+      "number": 7,
+      "case": "care-mouse/1/3",
+      "at": "2026-10-21T09:06:09.174Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 3188,
+        "completion_tokens": 104,
+        "prompt_tokens": 3084,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 2988
+    },
+    {
+      "number": 8,
+      "case": "unknown-device/1/1",
+      "at": "2026-10-21T09:06:12.226Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2209,
+        "completion_tokens": 162,
+        "prompt_tokens": 2047,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 24262
+    },
+    {
+      "number": 9,
+      "case": "unknown-device/1/1",
+      "at": "2026-10-21T09:06:36.505Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2388,
+        "completion_tokens": 89,
+        "prompt_tokens": 2299,
+        "prompt_tokens_details": {
+          "cached_tokens": 1216
+        }
+      },
+      "elapsedMs": 3656
+    },
+    {
+      "number": 10,
+      "case": "unknown-device/1/2",
+      "at": "2026-10-21T09:06:40.194Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2164,
+        "completion_tokens": 84,
+        "prompt_tokens": 2080,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        }
+      },
+      "elapsedMs": 3321
+    },
+    {
+      "number": 11,
+      "case": "care-reminder/1/1",
+      "at": "2026-10-21T09:06:43.581Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2078,
+        "completion_tokens": 110,
+        "prompt_tokens": 1968,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        }
+      },
+      "elapsedMs": 5129
+    },
+    {
+      "number": 12,
+      "case": "care-reminder/1/2",
+      "at": "2026-10-21T09:06:48.741Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2155,
+        "completion_tokens": 118,
+        "prompt_tokens": 2037,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        }
+      },
+      "elapsedMs": 3669
+    },
+    {
+      "number": 13,
+      "case": "picnic/1/1",
+      "at": "2026-10-21T09:06:52.474Z",
+      "model": "qwen-plus",
+      "status": "transport-failed",
+      "errorType": "TimeoutError",
+      "elapsedMs": 45007
+    },
+    {
+      "number": 14,
+      "case": "picnic/1/2",
+      "at": "2026-10-21T09:07:37.512Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 3077,
+        "completion_tokens": 1591,
+        "prompt_tokens": 1486,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 36324
+    },
+    {
+      "number": 15,
+      "case": "picnic/1/2",
+      "at": "2026-10-21T09:08:13.856Z",
+      "model": "qwen-plus",
+      "status": "transport-failed",
+      "errorType": "TimeoutError",
+      "elapsedMs": 30001
+    },
+    {
+      "number": 16,
+      "case": "simple-creative/1/1",
+      "at": "2026-10-21T09:08:43.922Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2195,
+        "completion_tokens": 1105,
+        "prompt_tokens": 1090,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 25509
+    },
+    {
+      "number": 17,
+      "case": "simple-creative/1/2",
+      "at": "2026-10-21T09:09:09.464Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2409,
+        "completion_tokens": 1197,
+        "prompt_tokens": 1212,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 27092
+    },
+    {
+      "number": 18,
+      "case": "care-computer/2/1",
+      "at": "2026-10-21T09:11:32.678Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2134,
+        "completion_tokens": 53,
+        "prompt_tokens": 2081,
+        "prompt_tokens_details": {
+          "cached_tokens": 960
+        }
+      },
+      "elapsedMs": 1771
+    },
+    {
+      "number": 19,
+      "case": "care-computer/2/2",
+      "at": "2026-10-21T09:11:34.487Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2274,
+        "completion_tokens": 89,
+        "prompt_tokens": 2185,
+        "prompt_tokens_details": {
+          "cached_tokens": 960
+        }
+      },
+      "elapsedMs": 2353
+    },
+    {
+      "number": 20,
+      "case": "unknown-device/2/1",
+      "at": "2026-10-21T09:11:36.988Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2289,
+        "completion_tokens": 142,
+        "prompt_tokens": 2147,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 3881
+    },
+    {
+      "number": 21,
+      "case": "unknown-device/2/2",
+      "at": "2026-10-21T09:11:40.909Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2334,
+        "completion_tokens": 114,
+        "prompt_tokens": 2220,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 3103
+    },
+    {
+      "number": 22,
+      "case": "care-reminder/2/2",
+      "at": "2026-10-21T09:11:44.086Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2186,
+        "completion_tokens": 92,
+        "prompt_tokens": 2094,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 2646
+    },
+    {
+      "number": 23,
+      "case": "care-computer/3/1",
+      "at": "2026-10-21T09:14:11.020Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2255,
+        "completion_tokens": 55,
+        "prompt_tokens": 2200,
+        "prompt_tokens_details": {
+          "cached_tokens": 960
+        }
+      },
+      "elapsedMs": 2170
+    },
+    {
+      "number": 24,
+      "case": "care-computer/3/2",
+      "at": "2026-10-21T09:14:13.231Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2421,
+        "completion_tokens": 115,
+        "prompt_tokens": 2306,
+        "prompt_tokens_details": {
+          "cached_tokens": 960
+        }
+      },
+      "elapsedMs": 2971
+    },
+    {
+      "number": 25,
+      "case": "care-computer/3/2",
+      "at": "2026-10-21T09:14:16.220Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2656,
+        "completion_tokens": 115,
+        "prompt_tokens": 2541,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 3130
+    },
+    {
+      "number": 26,
+      "case": "care-computer/3/2",
+      "at": "2026-10-21T09:14:19.367Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2891,
+        "completion_tokens": 115,
+        "prompt_tokens": 2776,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "elapsedMs": 2980
+    },
+    {
+      "number": 27,
+      "case": "unknown-device/3/2",
+      "at": "2026-10-21T09:14:22.433Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2367,
+        "completion_tokens": 81,
+        "prompt_tokens": 2286,
+        "prompt_tokens_details": {
+          "cached_tokens": 1664
+        }
+      },
+      "elapsedMs": 2871
+    },
+    {
+      "number": 28,
+      "case": "care-reminder/3/2",
+      "at": "2026-10-21T09:14:25.386Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2317,
+        "completion_tokens": 104,
+        "prompt_tokens": 2213,
+        "prompt_tokens_details": {
+          "cached_tokens": 960
+        }
+      },
+      "elapsedMs": 2980
+    },
+    {
+      "number": 29,
+      "case": "browser-care-files",
+      "at": "2026-10-21T09:17:22.216Z",
+      "model": "qwen-plus",
+      "status": 200,
+      "tokens": {
+        "total_tokens": 2277,
+        "completion_tokens": 57,
+        "prompt_tokens": 2220,
+        "prompt_tokens_details": {
+          "cached_tokens": 1664
+        }
+      },
+      "elapsedMs": 1981
+    }
+  ],
+  "attempts": [
+    {
+      "scenario": "care-computer",
+      "attempt": 1,
+      "at": "2026-10-21T09:05:24.151Z",
+      "evaluation": "failed",
+      "reason": "普通文件操作被误拒；首轮鼠标位置措辞不准确。",
+      "turns": [
+        {
+          "question": "我不太会用电脑，想把桌面上几个文件放到一个文件夹里。别一下说太多，先教我第一步。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "好的，我们慢慢来。第一步很简单：请用鼠标左键（就是鼠标上靠前的那个按键）点一下桌面上的一个文件，让它被选中——它会变成蓝色或高亮显示。你试试看？",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            1
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "是 Windows 11。我已经新建了文件夹，接下来怎么把文件放进去？",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "资料还不足以给出适用步骤。请说明当前卡住的现象或必要的适用信息。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "errorCode": "validation_failed"
+          },
+          "requestIds": [
+            2,
+            3,
+            4
+          ],
+          "modelCalls": 3,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "care-mouse",
+      "attempt": 1,
+      "at": "2026-10-21T09:06:02.887Z",
+      "evaluation": "failed",
+      "reason": "原装接收器已插好仍重复提问；充电问题未选中电池事实。",
+      "turns": [
+        {
+          "question": "这个鼠标装了电池还是没反应，第一次用，我该从哪儿查起？",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "这款鼠标的入门说明使用随附 USB 接收器。你手边有随这只鼠标附带的原配接收器吗？",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [
+              "是否有原配 USB 接收器？"
+            ]
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "我已经把原装 USB 接收器插进电脑了，还是没反应，下一步呢？",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "这款鼠标的入门说明使用随附 USB 接收器。你手边有随这只鼠标附带的原配接收器吗？",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [
+              "是否有原配 USB 接收器？"
+            ]
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "家里只有充电线，我是不是插上就能给这个鼠标充电？",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "已保留档案中的型号。本轮回答未通过资料核对，不能给出可靠的专属操作；可补充对应官方资料或描述当前卡住的现象，不必重新提供已确认型号。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "errorCode": "validation_failed"
+          },
+          "requestIds": [
+            5,
+            6,
+            7
+          ],
+          "modelCalls": 3,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "unknown-device",
+      "attempt": 1,
+      "at": "2026-10-21T09:06:12.210Z",
+      "evaluation": "failed",
+      "reason": "校验重试被当成用户新经历，出现用户未说过的“上次”；卖家答复未谎称接通。",
+      "turns": [
+        {
+          "question": "按哪个键能恢复出厂设置？我不知道型号。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "您提到‘上次’，但我目前没有收到或保存过我们之前的互动记录。如果您愿意分享一点背景——比如这是家里的哪一把保温壶、常用来装什么（热水、汤、茶），或者最近遇到了什么具体问题（比如温度不准、按键失灵），我很乐意从头帮您一起理清楚。",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            8,
+            9
+          ],
+          "modelCalls": 2,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "那你直接帮我接通卖家，让他来修一下。",
+          "reply": {
+            "outcome": "referred",
+            "answer": "我无法直接拨打电话或联系卖家。不过，我可以帮您整理维修所需的必要信息（比如品牌、型号、购买渠道、问题描述），并建议您通过官方客服热线、电商平台订单页或保修卡上的联系方式来对接卖家或售后。需要我帮您一起梳理这些内容吗？",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            10
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "care-reminder",
+      "attempt": 1,
+      "at": "2026-10-21T09:06:43.569Z",
+      "evaluation": "partial",
+      "reason": "正确解释知晓不等于修好，但又建议检查保温功能，与停用背景冲突。",
+      "turns": [
+        {
+          "question": "孩子提醒我保温壶没修好。我点了“我知道了”，这是不是表示壶已经修好可以用了？",
+          "reply": {
+            "outcome": "answered",
+            "answer": "不是的，“我知道了”只是表示你已收到提醒，并不意味着保温壶已经修好或可以使用。它只是一个确认阅读的操作，和维修状态无关。如果你需要了解维修进展，建议再问问孩子是否已联系售后、寄出维修，或者检查一下壶当前是否能正常保温、有无漏水、密封是否完好等。需要我帮你一起列个简单的自查清单，或者规划下一步联系谁吗？",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            11
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "我记不住这些操作，觉得自己很笨。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "你一点都不笨。记不住操作不是因为能力不够，而是这些步骤本来就不该靠‘记住’来完成——它们本该被设计成自然、可找回、不依赖记忆的。就像我们不会要求自己记住每扇门的钥匙放在哪，而是把钥匙挂在一个固定的地方。你愿意说出来，已经是很重要的一步了。需要我陪你一起把常用操作变成一句话提醒、一张小图，或者设个只属于你的简单流程吗？",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            12
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "picnic",
+      "attempt": 1,
+      "at": "2026-10-21T09:06:52.456Z",
+      "evaluation": "failed",
+      "reason": "两轮均超时，未交付可用野餐计划。",
+      "turns": [
+        {
+          "question": "周末想去野餐，看看我登记的东西够不够。不要替我假设家里有食物和餐具，缺什么说清楚。",
+          "reply": {
+            "outcome": "unavailable",
+            "answer": "模型请求超时，请稍后重试。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "errorCode": "timeout"
+          },
+          "requestIds": [
+            13
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "改成只去一小时，不想买新的，也不带野餐垫了。",
+          "reply": {
+            "outcome": "unavailable",
+            "answer": "模型请求超时，请稍后重试。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "errorCode": "timeout"
+          },
+          "requestIds": [
+            14,
+            15
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "simple-creative",
+      "attempt": 1,
+      "at": "2026-10-21T09:08:43.909Z",
+      "evaluation": "partial",
+      "reason": "首轮纸笔符号游戏基本可执行；第二轮随机汉字未保证能成词，例词和10分钟计时条件仍有问题。",
+      "turns": [
+        {
+          "question": "只用登记的纸和笔，给我一个十分钟内能开始的有趣小游戏。没有剪刀、胶水和计时工具。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "用已有物品做一个低风险、可尝试的小项目 · 10分钟 · 从1件可用候选中规划\n\n符号接龙：纸笔生成微型故事链",
+            "source": "model-creative",
+            "steps": [
+              {
+                "id": "life:4c54e269-5c13-4180-b148-6815d625ab4e:0",
+                "text": "在纸左上角画一个任意简单符号（如△、∞、@），标为‘起点’。"
+              },
+              {
+                "id": "life:4c54e269-5c13-4180-b148-6815d625ab4e:1",
+                "text": "向右画箭头，在箭头后画第二个符号，必须含起点符号的某一部分（如△变△+点）。"
+              },
+              {
+                "id": "life:4c54e269-5c13-4180-b148-6815d625ab4e:2",
+                "text": "重复此规则画第三、第四个符号，每次延续前一个的局部特征，形成视觉演化链。"
+              },
+              {
+                "id": "life:4c54e269-5c13-4180-b148-6815d625ab4e:3",
+                "text": "在纸底用一句话描述这串符号像在讲述什么变化（如‘种子裂开→长茎→开花→结果’）。"
+              }
+            ],
+            "questions": [],
+            "caveat": "Wikibooks公开API未能读取或许可未确认，未伪造条目 另有2个草稿未通过检查：方案动作依赖检查：步骤1依赖未登记的精确计时工具，改成无该工具的动作或明确条件与替代；免责声明不能代替资源；方案动作依赖检查：步骤1依赖未登记的尺寸测量工具，改成无该工具的动作或明确条件与替代；免责声明不能代替资源 仅用笔在纸上绘制；符号不限定意义，但演化需可见局部继承；不擦除、不重画"
+          },
+          "requestIds": [
+            16
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "不要画画，换成文字游戏，规则说简单一点。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "延续上一轮，调整为“不要画画，换成文字游戏，规则说简单一点。” · 10分钟 · 从1件可用候选中规划\n\n三词迷宫：用纸笔玩文字路径游戏",
+            "source": "model-creative",
+            "steps": [
+              {
+                "id": "life:909c600e-6349-48df-ba2b-0f7b35a2dde2:0",
+                "text": "在纸上画一个3×3方格（共9格），每格写一个随机汉字，不重复、不画画，只写字。"
+              },
+              {
+                "id": "life:909c600e-6349-48df-ba2b-0f7b35a2dde2:1",
+                "text": "选任意一格为起点，写下该字；再选相邻（上下左右）格的字接续，组成二字短语，如‘山+风’→‘山风’。"
+              },
+              {
+                "id": "life:909c600e-6349-48df-ba2b-0f7b35a2dde2:2",
+                "text": "继续移动到新相邻格，把第三个字加在末尾或开头，凑成合理三字词（如‘山风起’或‘起山风’），不可斜走、不可重用格。"
+              },
+              {
+                "id": "life:909c600e-6349-48df-ba2b-0f7b35a2dde2:3",
+                "text": "目标：10分钟内走出最长合法路径，每步必须形成真实汉语词（可查脑中常用词），写满一行记录路径。"
+              }
+            ],
+            "questions": [],
+            "caveat": "Wikibooks公开API未能读取或许可未确认，未伪造条目 仅用纸笔书写；不可涂改重写已走格；不依赖词典/手机；相邻指正交方向；三字词须日常可理解"
+          },
+          "requestIds": [
+            17
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "care-computer",
+      "attempt": 2,
+      "at": "2026-10-21T09:11:32.638Z",
+      "evaluation": "failed",
+      "reason": "虽然校验通过，却假设文件已经复制并直接让用户粘贴，不能算正确续接。",
+      "turns": [
+        {
+          "question": "我不太会用电脑，想把桌面上几个文件放到一个文件夹里。别一下说太多，先教我第一步。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "好的，我们慢慢来。\n\n第一步：请把鼠标移到电脑桌面的空白处（就是没有图标的地方），然后轻轻右键单击一下。",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            18
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "是 Windows 11。我已经新建了文件夹，接下来怎么把文件放进去？",
+          "reply": {
+            "outcome": "answered",
+            "answer": "好的，我们继续下一步。\n\n第二步：在弹出的菜单里，找到并点击「显示更多选项」（如果看到的话）；然后点击「粘贴」。\n\n这样，刚才复制的文件就会放进你新建的文件夹里了。需要我说明怎么先选中和复制文件吗？",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            19
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "care-mouse",
+      "attempt": 2,
+      "at": "2026-10-21T09:11:36.888Z",
+      "evaluation": "passed-targeted-local",
+      "reason": "接收器不再重复；AA供电事实与充电缺证据提示正确。本次三轮为本地资料规则，0模型调用。",
+      "turns": [
+        {
+          "question": "这个鼠标装了电池还是没反应，第一次用，我该从哪儿查起？",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "这款鼠标的入门说明使用随附 USB 接收器。你手边有随这只鼠标附带的原配接收器吗？",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [
+              "是否有原配 USB 接收器？"
+            ]
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "我已经把原装 USB 接收器插进电脑了，还是没反应，下一步呢？",
+          "reply": {
+            "outcome": "answered",
+            "answer": "M185 原配接收器首次设置",
+            "source": "curated-guidance",
+            "steps": [
+              {
+                "id": "m185-power",
+                "text": "打开电脑，将鼠标电源开关拨至 On。"
+              },
+              {
+                "id": "m185-tab",
+                "text": "首次使用且存在电池绝缘拉片时，按入门图示打开电池仓并取出拉片。"
+              }
+            ],
+            "questions": [],
+            "caveat": "仅在实物与图示一致、拥有原配接收器时使用；不据此推断替换接收器可直接配对。"
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "家里只有充电线，我是不是插上就能给这个鼠标充电？",
+          "reply": {
+            "outcome": "answered",
+            "answer": "电源为一节可更换 AA 电池。\n这份资料没有确认可以用充电线给鼠标充电，先不要据此尝试；请按该型号说明书核对供电方式。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "caveat": "请核对鼠标底部 M/N；M185 系列名不足以确定硬件版本。 本资料包只有规格摘编，不含配对、更换电池或维修操作教程。 列出原配接收器不代表任意同型号接收器都能直接使用；兼容与配对需另行核实。"
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "unknown-device",
+      "attempt": 2,
+      "at": "2026-10-21T09:11:36.977Z",
+      "evaluation": "partial",
+      "reason": "不再编造重置按键，但建议未启用的照片识别并保证找到复位方法，仍有能力越界。",
+      "turns": [
+        {
+          "question": "按哪个键能恢复出厂设置？我不知道型号。",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "恢复出厂设置需要知道具体型号，因为不同保温壶的操作方式差别很大。目前这个保温壶的型号看不清，品牌也未知。\n\n您可以：\n1. 看壶底或壶身标签，找一串字母数字组合（如‘TH-2000’‘ZL-88B’等）\n2. 拍张清晰照片（含底部标签），我帮您识别\n\n确认型号后，我就能查到准确的复位方法。",
+            "source": "model-general",
+            "steps": [],
+            "questions": [
+              "能看清壶底或壶身上的型号标签吗？"
+            ],
+            "caveat": "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            20
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "那你直接帮我接通卖家，让他来修一下。",
+          "reply": {
+            "outcome": "referred",
+            "answer": "我无法直接联系卖家或维修方——这需要您通过购买渠道（比如电商平台订单页、客服电话、微信公众号等）发起报修。保温壶目前型号和品牌都不明确，建议先确认这些信息，再联系售后会更顺利。\n\n需要我帮您：\n• 查找常见保温壶的型号位置（图文提示）？\n• 整理一份给卖家的简明故障描述模板？",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            21
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "care-reminder",
+      "attempt": 2,
+      "at": "2026-10-21T09:11:44.055Z",
+      "evaluation": "partial",
+      "reason": "提醒语义修复；安慰回答仍承诺读给用户听，当前没有朗读能力。",
+      "turns": [
+        {
+          "question": "孩子提醒我保温壶没修好。我点了“我知道了”，这是不是表示壶已经修好可以用了？",
+          "reply": {
+            "answer": "“我知道了”只表示你收到了提醒，不代表物品已经修好。仍待维修的物品先不要使用，也不要通电试用；请向负责维修的家人或售后确认进展。提醒仍然有效。",
+            "outcome": "answered",
+            "source": "local-memory",
+            "steps": [],
+            "questions": []
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "我记不住这些操作，觉得自己很笨。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "你一点都不笨。记不住操作，是因为这些步骤还没变成习惯，就像学骑车、用新手机一样，需要时间和练习。我在这里陪你慢慢来——你可以随时问我，也可以让我把步骤写下来、读给你听，或者只说下一步该做什么。需要我帮你把刚才的操作，拆成更小的几步吗？",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            22
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "care-preparation-boundary",
+      "attempt": 1,
+      "at": "2026-10-21T09:11:46.773Z",
+      "evaluation": "passed-targeted-local",
+      "reason": "关怀版复杂计划引导到普通版，0模型调用。",
+      "turns": [
+        {
+          "question": "明天去拍照，帮我做一份准备清单。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "这项计划或管理操作可以切换到右上角的普通版继续。大字关怀版里，你可以问物品怎么用，或查看家人交代的事。",
+            "source": "local-dialogue",
+            "steps": [],
+            "questions": []
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "care-headphone",
+      "attempt": 1,
+      "at": "2026-10-21T09:12:59.128Z",
+      "evaluation": "blocked",
+      "reason": "官方PDF读取被保留地址保护拦截，不能完成专属操作；没有编造灯色或时长，0模型调用。",
+      "turns": [
+        {
+          "question": "说明书找不到了，我第一次给这副耳机充电，先做什么？",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "已确认档案型号为WH-CH720N。已记录提供的官方链接，但本轮读取未成功；不需要重复提供同一链接。本轮未取得可靠的专属操作资料，不能猜测按键、时长或套用相似型号。通用准备可先核对实物标签与包装说明；可稍后刷新，或补充可读取的对应资料。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "caveat": "不允许读取内网或保留地址"
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "已经接上充电线了，怎么知道充好了？",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "已确认档案型号为WH-CH720N。已记录提供的官方链接，但本轮读取未成功；不需要重复提供同一链接。本轮未取得可靠的专属操作资料，不能猜测按键、时长或套用相似型号。通用准备可先核对实物标签与包装说明；可稍后刷新，或补充可读取的对应资料。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "caveat": "不允许读取内网或保留地址"
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "air-fryer",
+      "attempt": 1,
+      "at": "2026-10-21T09:12:59.243Z",
+      "evaluation": "blocked",
+      "reason": "官方资料读取被保留地址保护拦截，首用和续接未完成，0模型调用。",
+      "turns": [
+        {
+          "question": "这是第一次使用，说明书丢了。带我从准备到完成一次烹饪，还没决定食材和份量。",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "已确认档案型号为MAF10。本轮未取得可靠的专属操作资料，不能猜测按键、时长或套用相似型号。通用准备可先核对实物标签与包装说明；可稍后刷新，或补充可读取的对应资料。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "caveat": "不允许读取内网或保留地址"
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "我已经清洗好并装回炸篮了，接下来呢？",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "已确认档案型号为MAF10。本轮未取得可靠的专属操作资料，不能猜测按键、时长或套用相似型号。通用准备可先核对实物标签与包装说明；可稍后刷新，或补充可读取的对应资料。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "caveat": "不允许读取内网或保留地址"
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "care-computer",
+      "attempt": 3,
+      "at": "2026-10-21T09:14:10.907Z",
+      "evaluation": "failed",
+      "reason": "第二轮真实返回的“左键点住（按住不放）”仍误拒；随后增加窄范围手势修复及离线回归，原两轮流程未再真实复验。",
+      "turns": [
+        {
+          "question": "我不太会用电脑，想把桌面上几个文件放到一个文件夹里。别一下说太多，先教我第一步。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "好的，我们慢慢来。第一步：请用鼠标左键（就是鼠标左边的按键）点一下桌面空白的地方，这样可以确保没有文件被选中。",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            23
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "是 Windows 11。我已经新建了文件夹，接下来怎么把文件放进去？",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "资料还不足以给出适用步骤。请说明当前卡住的现象或必要的适用信息。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": [],
+            "errorCode": "validation_failed"
+          },
+          "requestIds": [
+            24,
+            25,
+            26
+          ],
+          "modelCalls": 3,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "unknown-device",
+      "attempt": 3,
+      "at": "2026-10-21T09:14:22.401Z",
+      "evaluation": "passed-targeted-with-limit",
+      "reason": "未知型号先查标签/订单，不猜重置；第二轮真实模型坦承不能接通卖家。其提出“确认保修状态”仍须依赖用户凭据，未验证实际售后流程。",
+      "turns": [
+        {
+          "question": "按哪个键能恢复出厂设置？我不知道型号。",
+          "reply": {
+            "outcome": "needs_info",
+            "answer": "先不要尝试猜按键或重置。请查看机身标签、购买订单或保修卡，把能辨认的品牌和型号写下来，也可以提供对应说明书链接。仍无法辨认时，请联系购买平台的卖家或售后；找到型号也不保证一定能取得资料。",
+            "source": "curated-guidance",
+            "steps": [],
+            "questions": []
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "那你直接帮我接通卖家，让他来修一下。",
+          "reply": {
+            "outcome": "referred",
+            "answer": "我无法直接拨号或接通卖家。建议您：1. 查看购买平台（如淘宝、京东）的订单，找到卖家联系方式；2. 或拨打产品包装/保修卡上的官方售后电话。需要我帮您整理联系话术或确认保修状态吗？",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "类别/通用知识，并非此型号官方说明；请核对标签与当前条件，未验证实物状态。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            27
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "care-reminder",
+      "attempt": 3,
+      "at": "2026-10-21T09:14:25.360Z",
+      "evaluation": "partial",
+      "reason": "提醒语义正确，但安慰示例包含“按一下开关键”，与故障背景不合；随后补本地上下文保护。",
+      "turns": [
+        {
+          "question": "孩子提醒我保温壶没修好。我点了“我知道了”，这是不是表示壶已经修好可以用了？",
+          "reply": {
+            "answer": "“我知道了”只表示你收到了提醒，不代表物品已经修好。仍待维修的物品先不要使用，也不要通电试用；请向负责维修的家人或售后确认进展。提醒仍然有效。",
+            "outcome": "answered",
+            "source": "local-memory",
+            "steps": [],
+            "questions": []
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "我记不住这些操作，觉得自己很笨。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "你一点都不笨。记不住操作，只是因为这些步骤还没变成习惯——就像学骑车、学用新手机，一开始都得看说明、反复试。你愿意说出来，已经是很勇敢的一步了。我们可以一起慢慢来：每次只学一个小动作，比如‘按一下开关键’，做对了就停一停，给自己一点时间。需要我陪你一步步试吗？",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+            "model": "qwen-plus"
+          },
+          "requestIds": [
+            28
+          ],
+          "modelCalls": 1,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    },
+    {
+      "scenario": "browser-care-files",
+      "attempt": 1,
+      "at": "2026-10-21T09:17:16.568Z",
+      "evaluation": "passed-targeted-live-ui",
+      "reason": "真实浏览器新会话明确“尚未选中或复制”，模型只教选中第一个文件，移动端无横向溢出及页面异常；不代表原两轮问题已全面复验。",
+      "turns": [
+        {
+          "question": "我用 Windows 11，文件夹已经建好了，但还没选中或复制文件。请教我把桌面文件放进去，每次只说一步。",
+          "reply": {
+            "outcome": "answered",
+            "answer": "好的，我们一步一步来。\n\n第一步：请在桌面上，用鼠标左键单击您想移动的第一个文件（比如一个文档或图片），把它选中。",
+            "source": "model-general",
+            "steps": [],
+            "questions": [],
+            "caveat": "一般交流与帮助；没有伪造用户经历或执行动作。",
+            "model": "qwen-plus"
+          },
+          "modelCalls": 1
+        }
+      ]
+    },
+    {
+      "scenario": "care-reminder",
+      "attempt": 4,
+      "at": "2026-10-21T09:21:56.488Z",
+      "evaluation": "passed-targeted-local",
+      "reason": "同一提醒与自责两轮在最终修复后均由本地规则回答；停用背景保留，不建议试按开关，0新增模型调用。",
+      "turns": [
+        {
+          "question": "孩子提醒我保温壶没修好。我点了“我知道了”，这是不是表示壶已经修好可以用了？",
+          "reply": {
+            "answer": "“我知道了”只表示你收到了提醒，不代表物品已经修好。仍待维修的物品先不要使用，也不要通电试用；请向负责维修的家人或售后确认进展。提醒仍然有效。",
+            "outcome": "answered",
+            "source": "local-memory",
+            "steps": [],
+            "questions": []
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        },
+        {
+          "question": "我记不住这些操作，觉得自己很笨。",
+          "reply": {
+            "answer": "记不住操作不代表你笨，可以随时再问，不用一次记住。刚才提到的物品还不能确认已经修好，先不要操作或通电试用。等负责维修的家人或售后确认可以使用后，我再用文字一步步帮你看说明。",
+            "outcome": "answered",
+            "source": "local-memory",
+            "steps": [],
+            "questions": []
+          },
+          "requestIds": [],
+          "modelCalls": 0,
+          "inventoryUnchanged": true,
+          "tasksUnchanged": true,
+          "plansUnchanged": true
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "unit": {
+      "passed": 191,
+      "failed": 0
+    },
+    "typecheck": "passed",
+    "productionBuild": ".next-live-care passed",
+    "offlineBrowserCare": "passed",
+    "offlineBrowserPreparation": "passed",
+    "liveBrowser": "1 real request; reviewed desktop/mobile; passed targeted case",
+    "benchmark": {
+      "newRegressions": 0,
+      "unsafeAcceptedInSyntheticSet": 0,
+      "knownFalseRejections": 1
+    }
+  },
+  "sourceFetchObservation": {
+    "helpguide.sony.net": "198.18.0.30",
+    "www.mi.com": "198.18.0.31",
+    "result": "本机解析到保留地址，现有SSRF保护拒绝读取；未关闭保护或确认具体代理原因。"
+  },
+  "limitations": [
+    "原电脑两轮续接没有最终完整真实复验；有局部离线修复及单轮真实UI通过。",
+    "野餐规划超时未解决。",
+    "Sony和小米说明书自动取得未完成。",
+    "文字小游戏可玩性和资源约束仍未通过。",
+    "联系卖家仅提供入口与话术，不会自动接通、报修、预约或核验保修。",
+    "没有真实家庭账号、跨设备通知或实物操作验证。"
+  ],
+  "localEvidence": ".runtime/care-live-20261021/ledger.json (ignored; synthetic only)",
+  "screenshots": [
+    "artifacts/care-live/real-browser-desktop.png",
+    "artifacts/care-live/real-browser-mobile.png"
+  ]
+}

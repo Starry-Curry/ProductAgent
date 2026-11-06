@@ -1,0 +1,101 @@
+{
+  "measuredAt": "2026-10-19T17:23:53.504780+00:00",
+  "branch": "feat/life-context-v1-d",
+  "startingCommit": "4706929",
+  "functionalBatches": [
+    "bc49587",
+    "9288072",
+    "c6a70c9"
+  ],
+  "fullUnitTests": {
+    "passed": 128,
+    "failed": 0,
+    "codeBase": "c6a70c9; closing changes cover OCR runtime file loading, launcher port fallback and guide/test updates"
+  },
+  "closingLauncherTests": {
+    "passed": 2,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "productionBuild": "passed; fixed initial Webpack traineddata parsing failure",
+  "benchmark": {
+    "regressions": 0
+  },
+  "lifeAcceptance": {
+    "passed": true,
+    "measuredAt": "2026-10-19T17:20:16.799Z",
+    "checks": [
+      "A: 新建照片物品、类别/能力/状态与确认型号绑定",
+      "B: 官方 AA 电池资料、用户说明书摘录与本人结果反馈（0 模型调用）",
+      "C: 新物品参与组合、收藏与尝试、状态变化阻止旧方案执行",
+      "D: 图文保存、双物品唯一原文、编辑解除关联、越权拒绝及删除照片",
+      "E: 共享物品、创建家庭事项、另一演示成员实际接手",
+      "新版产品路径：目标对话连续修改、家庭完成状态、社交礼物独立、首页提问App指南",
+      "浏览器：展柜→物品问答、故事保存刷新、创意生成、390px 无横溢出"
+    ],
+    "server": {
+      "passed": true,
+      "kind": "isolated-production-server",
+      "base": "http://127.0.0.1:60214",
+      "dataDirectory": "D:\\ProductAgent-LifeContext\\.runtime\\verification-Ayzt5R",
+      "realModelCalls": 0,
+      "journeys": [
+        "tests/life-integration.mjs",
+        "tests/life-formats.mjs"
+      ]
+    }
+  },
+  "formatsAcceptance": {
+    "passed": true,
+    "measuredAt": "2026-10-19T17:20:24.021Z",
+    "checks": [
+      "真实 PDF 文字提取（合成PDF）",
+      "生产API实际本机OCR（合成图片说明书）；云端关闭",
+      "浏览器实际解码 QR 和 EAN-13 图片",
+      "浏览器照片录入、类别与生命周期",
+      "浏览器图文新增、修改、删除",
+      "照片自定义选择、缩略图/文件名、更换/移除、格式错误及390px布局；类别切换的生命周期默认值",
+      "资料保存失败后独立重试不重复创建物品；浏览器后退可用"
+    ],
+    "realModelCalls": 0
+  },
+  "legacyAcceptance": {
+    "passed": true,
+    "kind": "isolated-production-server",
+    "base": "http://127.0.0.1:53062",
+    "dataDirectory": "D:\\ProductAgent-LifeContext\\.runtime\\verification-Tl5dtb",
+    "realModelCalls": 0,
+    "journeys": [
+      "tests/integration.mjs",
+      "tests/foundation-integration.mjs",
+      "tests/household-integration.mjs",
+      "tests/home-integration.mjs"
+    ]
+  },
+  "publicDocumentProbe": {
+    "brand": "宜家",
+    "model": "305.976.49",
+    "documents": 1,
+    "characters": 1692,
+    "relatedLinks": 9,
+    "persistedToDailyDatabase": false,
+    "note": "Explicit read of public official page, no new curated product facts manufactured"
+  },
+  "runtime": {
+    "url": "http://127.0.0.1:3201",
+    "http": 200,
+    "guide": 200,
+    "cloudState": "unauthorized",
+    "modelReady": false,
+    "original3200": "left intact"
+  },
+  "realPaidModelCalls": 0,
+  "databaseMigration": "none; life schema remains2",
+  "limits": [
+    "Official discovery has limited adapters and exact-model checks; unknown brands or blocked/JS-only sites require user URL/manual input.",
+    "OCR uses packaged Chinese/English data; real image and scanned PDF execution verified on synthetic English print, not broad OCR accuracy. Text PDF first20 pages; scan OCR first3 pages.",
+    "Offline goal planning is deterministic capability composition plus12 recipes; no claim of Qwen creativity or semantic verification.",
+    "Vision transport/consent/error paths use offline substitutes only; real model/account/region/quality not verified.",
+    "No global barcode product registry, restricted-platform crawling or real cross-device household authentication."
+  ]
+}

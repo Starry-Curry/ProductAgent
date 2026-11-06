@@ -1,0 +1,12 @@
+{$DEMO_DOMAIN} {
+    reverse_proxy app:3000 {
+        transport http {
+            response_header_timeout 120s
+        }
+    }
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy same-origin
+        X-Frame-Options DENY
+    }
+}

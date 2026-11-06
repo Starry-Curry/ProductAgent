@@ -1,0 +1,33 @@
+{
+  "kind": "export-pattern-scan-not-security-audit",
+  "filesScanned": 91,
+  "findings": [
+    {
+      "file": "review-evidence/changes.patch",
+      "line": 2996,
+      "kind": "credential-assignment",
+      "reviewedTestFixture": true
+    },
+    {
+      "file": "review-evidence/changes.patch",
+      "line": 3008,
+      "kind": "credential-assignment",
+      "reviewedTestFixture": true
+    },
+    {
+      "file": "tests/reliability.test.ts",
+      "line": 200,
+      "kind": "credential-assignment",
+      "reviewedTestFixture": true
+    },
+    {
+      "file": "tests/reliability.test.ts",
+      "line": 212,
+      "kind": "credential-assignment",
+      "reviewedTestFixture": true
+    }
+  ],
+  "unresolved": 0,
+  "excluded": "real databases, env credentials, cookies, caches, git, dependencies, nested archives",
+  "privacy": "Only source-defined mock seed and newly generated synthetic tests/screenshots; no live business DB or user runtime log copied."
+}

@@ -1,0 +1,202 @@
+{
+  "date": "2026-11-06",
+  "scope": "real appliances + friends + task dates + multimodal companion",
+  "unit": {
+    "passed": 223,
+    "failed": 0,
+    "paidCalls": 0
+  },
+  "typecheck": "passed",
+  "productionBuild": "passed",
+  "benchmark": {
+    "regressions": 0,
+    "paidCalls": 0
+  },
+  "initialManualCases": {
+    "passed": 8,
+    "failed": 1
+  },
+  "finalManualCases": [
+    {
+      "reference": "mi-lamp-1s-tw",
+      "question": "怎么使用旋钮调节亮度？",
+      "httpStatus": 200,
+      "passedStructuralChecks": true,
+      "elapsedMs": 5880,
+      "source": "model-with-evidence",
+      "outcome": "answered",
+      "steps": 1,
+      "citations": 1
+    },
+    {
+      "reference": "philips-add6910-hk",
+      "question": "怎么使用童锁后取热水？",
+      "httpStatus": 200,
+      "passedStructuralChecks": true,
+      "elapsedMs": 14927,
+      "source": "curated-guidance",
+      "outcome": "answered",
+      "steps": 4,
+      "citations": 1
+    },
+    {
+      "reference": "xiaomi-purifier4lite-global",
+      "question": "怎么清洁滤芯？可以水洗吗？",
+      "httpStatus": 200,
+      "passedStructuralChecks": true,
+      "elapsedMs": 11343,
+      "source": "model-with-evidence",
+      "outcome": "answered",
+      "steps": 3,
+      "citations": 3
+    },
+    {
+      "reference": "xiaomi-kettle2-uk",
+      "question": "第一次怎么用这个水壶烧水？",
+      "httpStatus": 200,
+      "passedStructuralChecks": true,
+      "elapsedMs": 14203,
+      "source": "model-with-evidence",
+      "outcome": "answered",
+      "steps": 4,
+      "citations": 2
+    },
+    {
+      "reference": "xiaomi-airfryer65-uk",
+      "question": "怎么清洗炸篮？",
+      "httpStatus": 200,
+      "passedStructuralChecks": true,
+      "elapsedMs": 10007,
+      "source": "model-with-evidence",
+      "outcome": "answered",
+      "steps": 3,
+      "citations": 2
+    },
+    {
+      "reference": "xiaomi-g20lite-uk",
+      "question": "怎么充电？",
+      "httpStatus": 200,
+      "passedStructuralChecks": true,
+      "elapsedMs": 23376,
+      "source": "curated-guidance",
+      "outcome": "answered",
+      "steps": 5,
+      "citations": 1
+    },
+    {
+      "reference": "jbl-go4-global",
+      "question": "怎么配对手机蓝牙？",
+      "httpStatus": 200,
+      "passedStructuralChecks": true,
+      "elapsedMs": 9432,
+      "source": "model-with-evidence",
+      "outcome": "answered",
+      "steps": 3,
+      "citations": 1
+    },
+    {
+      "reference": "logitech-m185-mr0061",
+      "question": "第一次如何使用这个鼠标？",
+      "httpStatus": 200,
+      "passedStructuralChecks": true,
+      "elapsedMs": 11477,
+      "source": "model-with-evidence",
+      "outcome": "answered",
+      "steps": 3,
+      "citations": 1
+    },
+    {
+      "reference": "sony-wx350",
+      "question": "这个相机怎么使用拍摄照片？",
+      "httpStatus": 200,
+      "passedStructuralChecks": true,
+      "elapsedMs": 11166,
+      "source": "model-with-evidence",
+      "outcome": "answered",
+      "steps": 4,
+      "citations": 3
+    }
+  ],
+  "visionLocalization": {
+    "status": 200,
+    "ms": 3316,
+    "instruction": "按一下电源键，开启洗衣机。",
+    "target": {
+      "label": "电源",
+      "x": 0.81,
+      "y": 0.19,
+      "width": 0.18,
+      "height": 0.08,
+      "confidence": 0.95,
+      "visible": true
+    },
+    "source": "vision-model",
+    "model": "qwen3-vl-plus"
+  },
+  "additionsAPI": [
+    {
+      "name": "9 exact-model profiles, all corresponding images and manuals available",
+      "passed": true,
+      "items": 15
+    },
+    {
+      "name": "friend lookup, request and recipient acceptance persist",
+      "passed": true
+    },
+    {
+      "name": "task date create, edit and assignee read persist",
+      "passed": true
+    }
+  ],
+  "productionSmoke": {
+    "at": "2026-11-06T04:49:57.099Z",
+    "port": 3210,
+    "referenceTypes": 9,
+    "referenceItems": 15,
+    "photosAndManuals": "passed",
+    "demoAnswers": true,
+    "friendList": "passed",
+    "dateField": "verified in isolated QA",
+    "guideAPI": "real vision tested in QA"
+  },
+  "browser": {
+    "friendRequestAndRecipientAcceptance": "passed in isolated QA, including refresh",
+    "taskDateEditPersistence": "passed in isolated QA",
+    "stepImageArrowNavigation": "passed on production",
+    "visionOverlayOnSample": "passed on production with real vision-model source",
+    "periodicRecognitionStartPause": "passed on production",
+    "video": {
+      "passed": true,
+      "codec": "webm",
+      "durationSeconds": 12.477941,
+      "width": 960,
+      "height": 720,
+      "readyState": 4,
+      "download": "artifacts/companion-app/washer-step-guide.webm"
+    },
+    "physicalCamera": "not hardware tested",
+    "finalCompactGuideLayout": "passed at 1280x720, step title/image/navigation visible together"
+  },
+  "limitations": [
+    "Known models use verified official manual caches; arbitrary live web retrieval is not validated.",
+    "Native web search returned no structured sources.",
+    "Periodic image localization is not continuous AR tracking.",
+    "Demo users do not represent real cross-device accounts.",
+    "Demonstration fallback answers are explicitly labelled and have no invented citations."
+  ],
+  "multimodalChatSmoke": {
+    "httpStatus": 200,
+    "ms": 3707,
+    "outcome": "answered",
+    "source": "local-dialogue",
+    "demonstration": true,
+    "steps": [
+      "按一下“电源”键，开启洗衣机。",
+      "把衣物放入滚筒，再关好机门。",
+      "打开洗涤剂盒，按洗涤剂包装说明加入洗衣液。",
+      "转动程序旋钮，选择适合衣物的日常洗涤程序。",
+      "确认机门关好后，按“启动 / 暂停”键开始洗涤。"
+    ],
+    "question": "unknown washing-machine walkthrough, no item model supplied"
+  }
+}

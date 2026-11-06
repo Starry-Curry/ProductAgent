@@ -1,0 +1,88 @@
+{
+  "verifiedAt": "2026-10-17T18:40:00.321Z",
+  "branch": "feat/agent-memory-foundation",
+  "baseCommit": "53a43437e94a51017bb4415cac4ad68d9245cf5a",
+  "runtime": "Node 24.19.0 / Windows / Next 15.5.28",
+  "checks": {
+    "unitAndDomain": {
+      "passed": 42,
+      "total": 42
+    },
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "legacyBenchmark": {
+      "cases": 7,
+      "unsafeAccepted": 0,
+      "knownBenignFalseRejections": 1
+    },
+    "foundationBenchmark": {
+      "cases": 7,
+      "regressions": 0,
+      "coverage": {
+        "productIntroFactCount": 3,
+        "productIntroProcedureCount": 0,
+        "reviewedProcedureCount": 2,
+        "unknownItemCanAskNecessaryQuestion": true,
+        "windows11StepsAfterClarification": 3,
+        "m185StepsAfterReceiverConfirmation": 3,
+        "realModelCalls": 0
+      }
+    },
+    "oldIntegration": {
+      "kind": "local-api-and-browser-no-real-model",
+      "passed": true,
+      "elapsedMs": 3255,
+      "checks": [
+        "missing-model trace",
+        "replay authorization",
+        "cross-origin write denied",
+        "gift original author",
+        "dynamic candidate constraints",
+        "private Context",
+        "desktop/mobile no page errors"
+      ],
+      "realModelCalls": 0
+    },
+    "newIntegration": {
+      "kind": "isolated-api-and-edge-browser",
+      "passed": true,
+      "realModelCalls": 0,
+      "elapsedMs": 5955,
+      "checks": [
+        "API scope/forget authorization",
+        "persistent clarification",
+        "tried-step feedback without repeat",
+        "attach unregistered session without losing attempts",
+        "previewed family summary with source context",
+        "explicitly save latest useful method locally",
+        "explicit interest and present intent",
+        "optional companion grounded in own story",
+        "forget removes old rendered and resumed story",
+        "missing provider is explicit",
+        "desktop/mobile/elder layout"
+      ]
+    }
+  },
+  "realModelCalls": 0,
+  "physicalDeviceTests": 0,
+  "privateConfigInspectedOrChanged": false,
+  "dailyDatabaseMigrated": false,
+  "limits": [
+    "Offline fixtures do not estimate live-model or competitor performance.",
+    "Current production identity is still local-demo; real authentication is not implemented.",
+    "Knowledge remains 4 product packs / 12 facts and 2 reviewed limited procedures.",
+    "Keyword risk and relevance checks are not broad semantic verification.",
+    "Original /api/ai retains extractive paraphrase limitations.",
+    "Checkpoint resume after a user pause is tested; crash recovery during an in-flight model call is not guaranteed."
+  ],
+  "sourceSha256": {
+    "src/lib/agent/graph.ts": "57c211bed74a6648e86f121539318d78857ef960034ae3de4487b8f68f15e525",
+    "src/lib/agent/service.ts": "3b4ba5aac1e9dbc3b1969bd58c80a770aed485067bdc0b15c5c6f381b3183114",
+    "src/lib/agent/prompts.ts": "75afe85c46ef7c93482046f7cad69d23c6513e5c8380b727400a91c42ac2a737",
+    "src/lib/memory/store.ts": "92363441efe98cb8e90e798f5353ff6a3b4406bc86fa5c5dd29a4d7e682deaab",
+    "src/lib/repositories/sessions.ts": "f71d663d1a34fcce453700ea3fefee23f8c40a2587e80c78bb45c0a989fe8363",
+    "src/lib/skills/registry.ts": "90d8e4eaa65619715167ac92199e725538424178010b62ae9f63b802c102314f",
+    "src/lib/skills/knowledge.ts": "6d836b01715acf6a7bc9285c6151dcc54514fac9b85ec52fa200093d1ddb7800",
+    "src/app/api/memories/route.ts": "cf95f678ea659694ca46c873e0a098aaf641e17cfac1ffcfe9579766aab83ff1"
+  }
+}

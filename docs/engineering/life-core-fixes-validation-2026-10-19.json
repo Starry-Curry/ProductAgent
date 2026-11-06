@@ -1,0 +1,101 @@
+{
+  "measuredAt": "2026-10-19T08:59:22.195006+00:00",
+  "kind": "offline-core-fixes-final-validation",
+  "unit": {
+    "passed": 108,
+    "failed": 0,
+    "addedThisRound": 7
+  },
+  "typecheck": "passed",
+  "productionBuild": "passed",
+  "benchmark": {
+    "passed": true,
+    "foundationRegressions": 0,
+    "knownLimit": "旧保守校验器仍误拒一例正确改写，不把引用ID当语义证明"
+  },
+  "lifeJourneys": {
+    "passed": true,
+    "measuredAt": "2026-10-19T08:57:12.504Z",
+    "kind": "isolated-api-and-edge-acceptance",
+    "checks": [
+      "A: 新建照片物品、类别/能力/状态与确认型号绑定",
+      "B: 官方 AA 电池资料、用户说明书摘录与本人结果反馈（0 模型调用）",
+      "C: 新物品参与组合、收藏与尝试、状态变化阻止旧方案执行",
+      "D: 图文保存、双物品唯一原文、编辑解除关联、越权拒绝及删除照片",
+      "E: 共享物品、创建家庭事项、另一演示成员实际接手",
+      "浏览器：展柜→物品问答、故事保存刷新、创意生成、390px 无横溢出"
+    ],
+    "baseline": {
+      "items": 25,
+      "syntheticItems": 25,
+      "packs": 11,
+      "facts": 33,
+      "procedures": 2,
+      "boundInstances": 10,
+      "distinctBoundModels": 10,
+      "legacyCases": 8,
+      "creativeRecipes": 12,
+      "familyTasks": 7,
+      "gifts": 1,
+      "photoFragments": 2,
+      "fragments": 3
+    },
+    "createdItems": 3,
+    "realModelCalls": 0,
+    "limits": "所有新增数据为合成验收数据；规则候选不是模型或实物验证。未进行付费模型、视觉识物、真人研究或真实家庭同步。"
+  },
+  "lifeFormats": {
+    "passed": true,
+    "measuredAt": "2026-10-19T08:57:15.644Z",
+    "checks": [
+      "真实 PDF 文字提取（合成PDF）",
+      "浏览器实际解码 QR 和 EAN-13 图片",
+      "浏览器照片录入、类别与生命周期",
+      "浏览器图文新增、修改、删除",
+      "资料保存失败后独立重试不重复创建物品；浏览器后退可用"
+    ],
+    "realModelCalls": 0
+  },
+  "legacyJourneys": {
+    "passed": true,
+    "scripts": [
+      "integration",
+      "foundation-integration",
+      "household-integration",
+      "home-integration"
+    ],
+    "isolated": true
+  },
+  "cloud": {
+    "realPaidCalls": 0,
+    "userDecision": "暂不授权，完成离线验证",
+    "tested": "配置/授权状态、双开关、generate/complete离线协议、401/403/429/503/网络/无效JSON/null/缺message；模型创意以离线Provider替身验证",
+    "notVerified": "真实北京百炼账户、网络连通、真实问答/开放创意质量"
+  },
+  "schema": {
+    "lifeVersion": 2,
+    "upgradeBackupAndIdempotency": "passed; v1→v2保留片段，单独临时库"
+  },
+  "limits": [
+    "没有视觉识别/OCR/通用条码库/真实家庭账户",
+    "资料判定与12类本地配方仍是有限规则",
+    "既有重复候选不破坏性合并，保持旧ID与反馈；新的同内容请求复用已存候选",
+    "首页及浏览器截图来自合成测试数据，不是实际用户研究"
+  ],
+  "sha256": {
+    "scripts/life-local.mjs": "a02e9b3f4354e8b5666cbd21d2b581eb836e56e0b2f855872cc6222ff749b962",
+    "src/lib/ai/provider.ts": "d94af8ac99cfb811a256ea9b1977bc27d3e8fa88fc5f4e6d7baba4f973f429b6",
+    "src/lib/life/provider.ts": "5dce9e9bb4c8ebcb8ae2f5a5e248eeeb65aa5be5ba75548965f5c64c2a4fcef7",
+    "src/lib/life/intake.ts": "25c69b6b6f83344cad7c5d35d768953f078d3dabf785502020d316907eef62fc",
+    "src/lib/life/schema.ts": "65d62181719043c2c6a7092f7b28fba96067b886f0919c28a8605dbddac10f6e",
+    "src/lib/life/ideas.ts": "21cff0c6971231b0995e1f2541750380c1a386aebcd911fb8cdbbd5d1b77cec7",
+    "src/lib/life/sources.ts": "f4d67af7682054ba9534464f4caae2b009d8a0d841044722c15b621519bcfdf6",
+    "src/lib/life/recall.ts": "c19b0e7a59300fdc2649c84bda95f124a7163a843a20ed42c6d820edded23d7c",
+    "src/components/life/Intake.tsx": "b9e9b43a391aee1cabea3a853a84830a6fddf593f6eab3d151df69255c5b8cb6",
+    "src/components/life/WujianApp.tsx": "2d4a56600c376fc63293a44a22eb1f641b07d1f9bcabc7d6ecc0e9bae86b0ad0",
+    "src/lib/memory/store.ts": "390d33a5b9286801a8e2986f35c187e40e3109d65907c8e51878e0298d11096c",
+    "tests/life.test.ts": "9211d9640784566ec544488c46f030c7f5f44041930fa8f113fc1fd8a122c0bb",
+    "tests/life-formats.mjs": "7796f554630646f6efb984d14e506d32d34b1028fbc4d0e29d0a695e374d7ccf",
+    "tests/life-integration.mjs": "65a6194d325c8c05498405cf533453736b1c280452d1ce671be722136d45bce6"
+  }
+}

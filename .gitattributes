@@ -4,4 +4,9 @@
 *.jpeg binary
 *.webp binary
 *.pdf binary
-*.zip binary
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Linux deployment entrypoints
+*.sh text eol=lf
+Dockerfile text eol=lf

@@ -1,0 +1,51 @@
+{
+  "at": "2026-11-06T08:14:16.341Z",
+  "origin": "https://wujian-pc-home.yanxianglong31.chatgpt.site/",
+  "siteProject": "appgprj_6aed839bc740819184a70f172a8ac4f5",
+  "deployment": "appgdep_6aed8a5195548191b09d06b045000819",
+  "sourceCommit": "ce2a7b5a54b37cc0b2d82c128c135d917d1eba01",
+  "gatewayTests": {
+    "pass": 2,
+    "fail": 0
+  },
+  "mobileRegression": {
+    "pass": 16,
+    "fail": 0
+  },
+  "phoneNetworkDomainReachable": "user confirmed offline page visible",
+  "publicHealth": 200,
+  "publicAsset": {
+    "status": 200,
+    "bytes": 173019
+  },
+  "sessionPost": 200,
+  "modelPlanningMs": 8672,
+  "modelCritiqueMs": 2177,
+  "modelPlanningStatus": 200,
+  "modelCritiqueStatus": 200,
+  "appPlanPostMs": 10973,
+  "planItems": 5,
+  "stop": {
+    "online": false,
+    "http": 503
+  },
+  "restart": {
+    "online": true,
+    "sameURL": true,
+    "sameVisitorPlanPreserved": true
+  },
+  "qrDecoded": "https://wujian-pc-home.yanxianglong31.chatgpt.site/",
+  "mobileLayout": {
+    "width": 390,
+    "scrollWidth": 390
+  },
+  "launchAgentInstalled": true,
+  "wholeComputerRebootTested": false,
+  "fullBuildRepeated": false,
+  "limitations": [
+    "72h visitor space",
+    "host must be logged in, online and awake",
+    "no universal network or perpetual hosting guarantee",
+    "relay buffers HTTP; no SSE/WebSocket passthrough"
+  ]
+}

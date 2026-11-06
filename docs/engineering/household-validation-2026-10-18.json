@@ -1,0 +1,123 @@
+{
+  "kind": "household-cases-one-time-introduction-and-demo-isolation",
+  "measuredAt": "2026-10-18T06:09:21.350Z",
+  "baseCommit": "60b0ad915d9e2fa090a2e81a177f018124f76b40",
+  "branch": "feat/household-demo-conversations",
+  "unitTests": {
+    "passed": 63,
+    "failed": 0,
+    "newHouseholdTests": 8
+  },
+  "typecheck": {
+    "passed": true,
+    "checkedByProductionBuild": true
+  },
+  "productionBuild": {
+    "passed": true
+  },
+  "benchmarks": {
+    "passed": true,
+    "foundationRegressions": 0,
+    "knownLegacyFalseRejections": 1
+  },
+  "acceptance": {
+    "passed": true,
+    "original": {
+      "kind": "local-api-and-browser-no-real-model",
+      "passed": true,
+      "elapsedMs": 3702,
+      "checks": [
+        "missing-model trace",
+        "replay authorization",
+        "cross-origin write denied",
+        "gift original author",
+        "dynamic candidate constraints",
+        "private Context",
+        "desktop/mobile no page errors"
+      ],
+      "realModelCalls": 0
+    },
+    "foundation": {
+      "kind": "isolated-api-and-edge-browser",
+      "passed": true,
+      "realModelCalls": 0,
+      "elapsedMs": 8403,
+      "checks": [
+        "API scope/forget authorization",
+        "persistent clarification",
+        "tried-step feedback without repeat",
+        "attach unregistered session without losing attempts",
+        "previewed family summary with source context",
+        "automatically extract latest useful method from feedback",
+        "item story automatically extracts interest; present intent takes precedence",
+        "optional companion grounded in own story",
+        "forget removes old rendered and resumed story",
+        "missing provider is explicit",
+        "desktop/mobile/elder layout"
+      ]
+    },
+    "household": {
+      "passed": true,
+      "kind": "isolated-edge-household-cases-and-one-time-introduction",
+      "realModelCalls": 0,
+      "checks": [
+        "eight cases and synthetic provenance",
+        "no repeated memory creation forms",
+        "official facts through real API and UI",
+        "case-only conversational memory",
+        "forgotten case memory stays forgotten",
+        "one-time introduction saved or skipped across reload",
+        "desktop and 390px layout"
+      ]
+    }
+  },
+  "content": {
+    "newCases": 8,
+    "newOfficialPacks": 7,
+    "totalPacks": 11,
+    "totalClaims": 33,
+    "reviewedProcedures": 2,
+    "syntheticStories": 16,
+    "syntheticMemories": 24,
+    "syntheticFamilyTasks": 4,
+    "syntheticPlans": 2
+  },
+  "privacyChecks": [
+    "demo memories excluded from real/global recall and real resources",
+    "demo memories stay local even with attempted cloud permission",
+    "case edits/forget/repeat-forget/expiry/close preserve real sessions",
+    "first introduction saved/skipped only once per actor",
+    "no installer reset or recreation of forgotten memories",
+    "stable UUID for demo memory correction/deletion APIs"
+  ],
+  "resolvedDuringVerification": [
+    {
+      "kind": "build",
+      "issue": "New homepage import was initially placed before the use-client directive.",
+      "resolution": "Client directive restored as the first statement; final build and browser tests pass."
+    },
+    {
+      "kind": "test",
+      "issue": "First URL-host assertion used an incorrectly escaped regex.",
+      "resolution": "Replaced with URL hostname validation; full suite passes."
+    },
+    {
+      "kind": "isolation",
+      "issue": "Original global context invalidation would also clear real sessions after demo operations.",
+      "resolution": "Added case-scoped context invalidation and scoped cross-tab notifications; regression covers correction, repeat deletion, expiry and closing."
+    }
+  ],
+  "dataMigration": {
+    "schema": 5,
+    "backup": ".before-v4-to-v5.sqlite",
+    "strategy": "additive tables plus versioned demo install, preserve existing rows"
+  },
+  "realModelCalls": 0,
+  "limits": [
+    "All scenario stories and preference examples are synthetic.",
+    "Facts are limited to exact official regional sources; not real-world verification.",
+    "Story extraction and recall remain local bounded rules.",
+    "No new real OCR/orders/IoT/accounts integration."
+  ],
+  "evidence": "review-evidence/household-20261018"
+}

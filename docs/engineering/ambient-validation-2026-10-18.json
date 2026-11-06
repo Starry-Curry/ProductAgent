@@ -1,0 +1,103 @@
+{
+  "kind": "ambient-memory-and-item-story-offline-verification",
+  "measuredAt": "2026-10-18T05:15:28.141Z",
+  "baseCommit": "9c14eb145350b146f9e4aae928781fc61db085cf",
+  "branch": "feat/ambient-memory-experience",
+  "runtime": "Node.js 24 / Next.js 15.5.28 / Windows Edge",
+  "unitTests": {
+    "passed": 55,
+    "failed": 0,
+    "newAmbientTests": 11,
+    "command": "node --experimental-strip-types --test tests/*.test.ts",
+    "regressionCases": [
+      "delayed older source does not overwrite newer preference change"
+    ]
+  },
+  "typecheck": {
+    "passed": true,
+    "alsoCheckedByProductionBuild": true
+  },
+  "productionBuild": {
+    "passed": true,
+    "guideRoute": true
+  },
+  "benchmarks": {
+    "passed": true,
+    "foundationRegressions": 0,
+    "legacyFalseRejections": 1,
+    "limits": "Synthetic contract fixtures; no competitor, real-device or broad semantic accuracy claim."
+  },
+  "acceptance": {
+    "passed": true,
+    "command": "node scripts/verify-local.mjs",
+    "original": {
+      "kind": "local-api-and-browser-no-real-model",
+      "passed": true,
+      "elapsedMs": 4937,
+      "checks": [
+        "missing-model trace",
+        "replay authorization",
+        "cross-origin write denied",
+        "gift original author",
+        "dynamic candidate constraints",
+        "private Context",
+        "desktop/mobile no page errors"
+      ],
+      "realModelCalls": 0
+    },
+    "foundation": {
+      "kind": "isolated-api-and-edge-browser",
+      "passed": true,
+      "realModelCalls": 0,
+      "elapsedMs": 7323,
+      "checks": [
+        "API scope/forget authorization",
+        "persistent clarification",
+        "tried-step feedback without repeat",
+        "attach unregistered session without losing attempts",
+        "previewed family summary with source context",
+        "automatically extract latest useful method from feedback",
+        "item story automatically extracts interest; present intent takes precedence",
+        "optional companion grounded in own story",
+        "forget removes old rendered and resumed story",
+        "missing provider is explicit",
+        "desktop/mobile/elder layout"
+      ]
+    },
+    "additionalChecks": [
+      "pause/resume UI and API agree",
+      "guide desktop and 390px layout",
+      "item story original timeline visible",
+      "memory collection form hidden by default"
+    ]
+  },
+  "realModelCalls": 0,
+  "secrets": "No key contents read or printed. Test servers explicitly disable provider credentials and paid calls.",
+  "testData": "All write/migration/integration tests use separate temporary databases; screenshots use synthetic fixtures.",
+  "resolvedDuringVerification": [
+    {
+      "kind": "product-ui",
+      "issue": "Original story timeline was accidentally included in collapsed manual-entry details.",
+      "resolution": "Timeline is now directly visible; only optional manual-entry form is collapsed."
+    },
+    {
+      "kind": "test-selector",
+      "issue": "One waiting locator still expected the service send button in story mode.",
+      "resolution": "Locator now supports distinct story/service labels; full acceptance rerun passed."
+    },
+    {
+      "kind": "memory-ordering",
+      "issue": "Delayed older sources could overwrite a newer preference change.",
+      "resolution": "Compare source occurrence times before upsert; regression asserts an older positive interest cannot replace a newer negative statement."
+    }
+  ],
+  "limits": [
+    "Rule-based local extraction; no arbitrary semantic understanding.",
+    "Story mode is local acknowledgement/recall, not a live-model conversation.",
+    "Owned/purchased/observed facts are not all used in planning.",
+    "Main domain state remains JSON workspace, demo roles are not real accounts.",
+    "No real OCR/order/IoT integration or real-world device validation."
+  ],
+  "previousLiveValidation": "docs/engineering/live-validation-2026-10-18.json",
+  "evidence": "review-evidence/ambient-20261018"
+}

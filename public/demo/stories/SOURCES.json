@@ -1,0 +1,33 @@
+[
+  {
+    "purpose": "独立公开场景配图，用于虚构演示；非用户生活、非同日实拍，不从关联物品生成",
+    "downloadedOn": "2026-10-21",
+    "processing": "仅缩放、JPEG 压缩和移除 EXIF，不裁切或生成画面",
+    "file": "park.jpg",
+    "author": "Ashley Knedler",
+    "source": "https://commons.wikimedia.org/wiki/File:Tree_archway_in_a_park_(Unsplash).jpg",
+    "original": "https://unsplash.com/photos/9SW9IvKD9OY",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+    "purpose": "独立公开场景配图，用于虚构演示；非用户生活、非同日实拍，不从关联物品生成",
+    "downloadedOn": "2026-10-21",
+    "processing": "仅缩放、JPEG 压缩和移除 EXIF，不裁切或生成画面",
+    "file": "afternoon.jpg",
+    "author": "Andres Molina",
+    "source": "https://unsplash.com/photos/a-cup-of-coffee-and-a-notebook-on-a-table-8CGOX7oSMbI",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license"
+  },
+  {
+    "purpose": "独立公开场景配图，用于虚构演示；非用户生活、非同日实拍，不从关联物品生成",
+    "downloadedOn": "2026-10-21",
+    "processing": "仅缩放、JPEG 压缩和移除 EXIF，不裁切或生成画面",
+    "file": "window.jpg",
+    "author": "Connor Home",
+    "source": "https://unsplash.com/photos/a-coffee-table-with-a-book-on-top-of-it-djJoOgDRvzU",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license"
+  }
+]

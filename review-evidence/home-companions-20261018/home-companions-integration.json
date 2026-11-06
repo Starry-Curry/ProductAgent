@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "kind": "isolated-edge-home-scene-and-dialogue",
+  "realModelCalls": 0,
+  "checks": [
+    "room and object characters",
+    "help/story/recall in one session",
+    "plan confirmed into existing module",
+    "family preview and task creation",
+    "owner placement and keyboard controls persisted",
+    "animation toggle persisted",
+    "OS reduced motion",
+    "390px no overflow",
+    "existing navigation retained",
+    "no browser errors"
+  ]
+}

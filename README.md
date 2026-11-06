@@ -1,108 +1,158 @@
-# 物间 Wujian
+# 物间 · 电脑版参考分支
 
-通过理解人和物，连接使用帮助、创造玩法、共同经历和心意传递。当前为本地可运行的开发版，电脑浏览器为主。
+请先阅读 [本分支的运行与参考说明](REFERENCE_VERSION.md)。这是 2026-11-06 的完整源码快照，包含普通版、大字版、问答、物品、朋友、活动和手机适配。已知网络限制：当前手机公网入口需要 VPN，国内免 VPN 入口尚未完成。
 
-当前仓库主线采用这份 Python/FastAPI + React/Vite 实现。2026-11-05 经产品负责人授权，将本地最新基线同步到 main/develop；原 TypeScript/Next.js 实现保留在归档标签和提交历史中。[主线同步与分支归档](docs/2026-11-05_主线同步与分支归档.md)说明恢复点与团队接入变化。当前仍是工程基线，智能底座未验收通过，不代表已经对外部署。
+![电脑版参考](docs/reference/screenshots/desktop-home.jpg)
 
-共同开发先阅读[产品功能、交互与总体架构审计](docs/2026-11-05_物间产品功能交互与总体架构审计.md)、[代码、数据库与技术架构审计](docs/2026-11-05_物间代码数据库与技术架构审计.md)和[贡献指南](CONTRIBUTING.md)。新功能从 develop 建分支，复用共同业务对象、迁移和接口。
+以下保留历史说明。
 
-产品约定见 [开发基线](04_物间_开发基线与协作约定.md)，实际架构见 [底座机制实施与真实验证](docs/2026-11-04_底座机制实施与真实验证.md)，最新修复和仍未通过的项目见 [底座缺口修复与验收状态](docs/2026-11-04_底座缺口修复与验收状态.md)。01、02、03 原文件保留；冲突以用户后续明确约定为准。
+---
 
-[任务计划与实施状态](05_物间_产品深度对齐与智能底座任务计划.md)包含理解人、创造力、REA 接入、阶段验收与产品完整度待办。当前共享机制已接通并经过工程回归；创意、分身事实准确性和响应时间尚未达到产品验收要求。
+# 固定二维码 · 电脑作为服务器（2026-11-06）
 
-## 现在打开
+当前固定入口：https://wujian-pc-home.yanxianglong31.chatgpt.site/ 。已安装 macOS 登录自动运行服务，App 和业务数据在本机；通过 Sites 固定入口转发。开机登录联网后自动恢复，不需要重换二维码。关机、睡眠、合盖断连时显示离线提示。原 trycloudflare 临时链接已失效。详见 [电脑共享说明](电脑共享使用说明.txt) 与 [实现及验收报告](docs/engineering/pc-host-fixed-entry-2026-11-06.md)。下方保留历史记录。
 
-服务启动后访问 **http://127.0.0.1:8000**。可以注册自己的账号，或在登录页进入「小林的物间」「小夏的物间」体验两方赠礼。体验档案中的拥有关系、个人经历和联调物品为模拟数据；模型回答来自真实百炼调用。
+---
 
-这台电脑已安装本项目依赖并构建界面，重新启动只需在项目目录运行：
+# 手机扫码版（2026-11-06）
 
-```powershell
-.venv\Scripts\python.exe -m wujian serve
-```
+入口：https://chrome-captain-blocked-spectacular.trycloudflare.com/ 。二维码和阅读版报告位于 artifacts/mobile-delivery；Mac 双击 START_MOBILE_SHARE.command 可重开分享。电脑和分享进程需要保持运行，重开隧道后请使用新二维码。[本轮实现与技术报告](docs/engineering/mobile-delivery-2026-11-06.md)。以下保留历史记录。
 
-也可双击 `start-wujian.cmd`。窗口中的 Ctrl+C 停止服务。若提示端口被占用，已有实例可能正在运行，可直接打开上述地址。
+---
 
-密钥只放本地 `.env`，不用发送到聊天或前端。`.env.example` 说明可选配置。普通对话、联网搜索、说明书图示识读和语义检索会调用百炼；离线测试不会。默认仅监听本机；本轮没有购买资源、开通云服务或对外部署。
+# 当前物伴 App（2026-11-06）
 
-## 队友首次安装
+本机预览：http://127.0.0.1:3210/ 。Mac 双击 START_WUJIAN.command；Windows 使用 Node.js 24 安装依赖后运行 START_WUJIAN.cmd。当前功能与边界见 [使用说明](物间-App使用说明.txt) 和 [最新实现报告](docs/engineering/real-devices-social-multimodal-2026-11-06.md)。以下为保留的历史记录。
 
-需要 Python 3.12、uv、Node.js 22.12+（本机已用 Node 26 验证）。
+---
 
-```powershell
-uv sync --cache-dir tmp/uv-cache
-npm.cmd --prefix frontend ci --registry=https://registry.npmjs.org/ --cache=tmp/npm-cache
-npm.cmd --prefix frontend run build
-.venv\Scripts\python.exe -m wujian serve
-```
+## 2026-10-21 · 物品照片补齐
 
-首次使用前，将 `.env.example` 复制为 `.env` 并在本地填写密钥；已有 `.env` 请保留。`uv.lock` 和 `frontend/package-lock.json` 固定依赖。数据与原始资料保存在 `var/`，与源码分开；不要为了重新启动而删除它。关闭体验档案入口可设置 `WUJIAN_DEMO_MODE=false`。当前会话和部署设置用于本地原型，尚未完成公网生产加固。
+已用内置 image_gen 补齐并统一 25 件演示物品的写实配图，暖木/米白/浅绿自然光风格；首页、展柜、详情与关怀版选中物品预览接入同一映射。上传照片优先，不改库存和用户照片。WebP 总计约 2.65 MB。191 项单测、类型、生产构建、25 图桌面/手机检查及关怀回归通过。
 
-## 开发与验证
+见 [配图报告](docs/engineering/object-photography-2026-10-21.md)、[验证记录](docs/engineering/object-photography-validation-2026-10-21.json) 与 [素材及完整提示词](public/demo/objects-v1/SOURCES.json)。以下为历史记录。
 
-```powershell
-.venv\Scripts\python.exe -m unittest discover -s tests -v
-.venv\Scripts\python.exe -m wujian validate fixtures/development/catalog.json
-.venv\Scripts\python.exe -m wujian openapi contracts/openapi.json
-npm.cmd --prefix frontend run types
-npm.cmd --prefix frontend run build
-```
+---
 
-开发界面可另外运行 `npm.cmd --prefix frontend run dev`。Vite 将 `/api` 代理到后端；日常体验直接使用后端提供的同源构建版。
+## 2026-10-21 · 大字关怀版 API 接入与真实案例复测
 
-## 实现与协作入口
+北京百炼 qwen-plus 已接通；本轮 29 次真实模型请求（27 HTTP200、2 超时），覆盖预设 9 类问题及定向复测，另含本地规则结果。修复文件操作误拒、接收器重复确认、校验反馈串入用户经历、未知型号能力误述，以及停用提醒后的错误操作引导。最终 191/191 单测、类型、生产构建、关怀版及摄影准备浏览器回归通过；真实浏览器单轮问答通过。
 
-| 文件 | 职责 |
-|---|---|
-| `wujian/api_models.py` | 真实 API 的输入输出契约；生成 OpenAPI 与前端类型 |
-| `wujian/domain.py` | 界面、Agent 共用的物品、经历、私人理解、共享与赠礼操作 |
-| `wujian/database.py` | SQLAlchemy 业务数据；本地默认 SQLite |
-| `migrations/` | Alembic 版本迁移；已有资料保留，当前版本 0005 |
-| `wujian/foundation.py` | 认识依据、纠正/期限、任务版本、反馈与状态的共同业务操作 |
-| `wujian/retrieval.py` | ReMe 混合检索；索引是可重建投影，SQL 是事实来源 |
-| `wujian/turns.py` | AgentScope 原生最终输出契约；回答与持续计划一次提交 |
-| `wujian/learning.py` | 主 Agent 的结构化认识更新、当前用户依据与型号适用性核对 |
-| `wujian/continuity.py`、`source_access.py` | 家庭共享和赠礼中的公开商品证据接续；私人理解不混入 |
-| `wujian/agent_runtime.py` | AgentScope 主循环接入、工具、上下文和任务结果 |
-| `agent_skills/` | 按需加载的产品指导与创意探索技能，共用同一组业务对象 |
-| `wujian/devices.py` | 项目内 REA MCP 生命周期、连接目标、观察证据与显式操作 |
-| `wujian/knowledge.py` | 百炼真实搜索、原始网页/PDF 获取、引用与页图读取 |
-| `wujian/server.py` | 登录、API、流式进度、文件权限与静态界面服务 |
-| `frontend/src/` | React/TypeScript 界面；`generated/api.ts` 自动生成 |
-| `fixtures/development/catalog.json` | 中国大陆型号及非标物开发样本；不预置操作答案 |
-| `fixtures/development/foundation_scenarios.json` | 26 件物品旅程所用的新增型号、真实约束和虚构生活情境 |
-| `scripts/evaluate_foundation.py` | 在隔离数据目录中运行真实模型旅程，保留首答，不当作独立验收 |
-| `tests/` | SDK 集成、共享身份、权限、赠礼与必要业务规则 |
+**业务验收未全部通过**：野餐规划超时、官方资料因本机解析到保留地址未读取、文字游戏规则不够可靠；原电脑两轮问题最终未完整真实重测。当前本机 3203 预览仅进程内开启真实 AI，环境文件默认费用开关仍关闭。详见 [本轮报告](docs/engineering/care-live-2026-10-21.md) 与 [逐条验证记录](docs/engineering/care-live-validation-2026-10-21.json)。密钥和原始账本不入 Git，未推送、合并或公开部署。下方为历史记录。
 
-修改公共接口：先改 Pydantic，重新导出 OpenAPI 和前端类型，再更新调用方。功能调用已有业务操作，不再建立另一套物品或记忆。数据库启动时应用迁移；结构变化新增迁移，不能以删除 `var/` 或静默 `create_all` 代替。备份保存在 `var/backups/`。
+---
 
-## REA 前置准备与今晚接入
+# 本轮更新（2026-10-21）
 
-这台电脑已验证项目内 REA 6.8.0 的真实 MCP 握手及 229 个工具发现。队友首次准备运行：
+新版右上角已恢复 **大字关怀版**，只保留问答、售后入口和分配给当前成员的家庭事项；普通版新增可保存、跟进和调整的摄影准备清单。使用现有应用，不迁移旧数据库。见 [本轮实现与验收](docs/engineering/care-preparation-2026-10-21.md)。下方为原交接与历史记录。
 
-```powershell
-npm.cmd exec --cache D:/D盘桌面/wujian_final/tmp/npm-cache --registry=https://registry.npmjs.org/ --yes --package=rea-agents@6.8.0 -- rea --help
-```
+---
 
-其他目录安装时改用对应绝对缓存路径，或把实际 `rea.mjs` 路径写入本地 `WUJIAN_REA_ENTRY`。不修改 Codex 全局配置。REA 在明确请求连接时启动，应用关闭时清理。工具目录不会全量塞入模型。
+# 当前交接入口（2026-10-21）
 
-物品详情 → 更多 →「连接设备与探索」。当前支持本机浏览器调试入口和已授权的 JavaScript/Electron 软件包。后者默认放入 `var/device-artifacts/`，或使用本地 JSON 数组配置 `WUJIAN_REA_ARTIFACT_ROOTS`。实际设备的控制软件、协议或网页入口到位后，再选对应适配路径。
+**[物间完整项目交接手册](docs/handoff/WUJIAN_PROJECT_HANDOFF.md)** · [本轮脱敏结果与失败](docs/handoff/INTELLIGENCE_RESULTS_20261021.json) · [历史安全扫描](docs/handoff/HANDOFF_SAFETY.json)
 
-后端具有连接、探索、操作提案、显式执行与证据读取 API；界面当前提供连接与先探索入口。尚未连接你的显示屏，也尚未完成实际屏保改变。照片录入和 MCP 连通都不等于设备可控制；执行仍需具体目标和可用控制通道。
+交接分支：`handoff/wujian-prelim-20261021`。当前是智能质量仍有缺口的开发候选，已停止全面冲刺。新开发者从手册的“先从这里开始”及第8节任务驱动物品组织方案接手。最后源码修复 `6d385df` 只有针对性/类型验收，未重新完整构建与浏览器回归；下面旧版本的测试、视觉、费用和启动状态是历史记录，不覆盖最新交接。
 
-## 真实开发验证
+---
 
-以下会调用本地配置的百炼账号，使用新建隔离目录和明确虚构的生活记录：
+当前版本（2026-10-21）：[正式候选冲刺交接](docs/engineering/wujian-final-2026-10-21.md) · [实际验收与93次请求记录](docs/engineering/wujian-final-validation-2026-10-21.json)。168项领域测试、类型、构建及核心回归通过；严格产品验收仍有明确缺口。可打开[最新故事书合成预览](http://127.0.0.1:3201/#stories)，费用关闭；默认启动 START_LIFE_RC.cmd，手动云端 START_LIFE_CLOUD.cmd。当前构建用 build:rc，未推送或公开部署。下方旧调用额度与验收结论仅代表相应历史阶段。
+
+部署阶段记录（冲刺前）：[在线Demo部署准备](docs/engineering/cloud-demo-2026-10-21.md)与[离线生产验收](docs/engineering/cloud-demo-validation-2026-10-21.json)。已支持服务端访客隔离、持久化及费用控制；尚未公开部署，Docker/公网HTTPS/真实云端Qwen待验证。本机启动方式保持不变。
+
+历史RC：[定向修复与分层故事](docs/engineering/wujian-rc-targeted-2026-10-20.md)。原23项不变；新增6次文字实测有明确失败，不宣称全部通过。
+
+# 物间 · ProductAgent
+
+## 2026-10-20 阶段候选（历史记录）
+
+[RC验收、演示与交接](docs/engineering/wujian-rc-handoff-2026-10-20.md) · [固定矩阵](docs/engineering/wujian-rc-acceptance.json)。新增40次真实测试已用尽；故事书完整旅程、开放食品录入、商品帮助与受控创意已有真实运行证据，严格完整验收仍有明确缺口，不宣称通用可靠创意/实机完成烹饪。
+
+可双击 `START_LIFE_RC.cmd` 默认离线启动，优先3201并打印可用端口；费用不默认开启。故事支持多照、日期、全文/放大、跨物品关联和独立引用授权。
+
+以真实物品、个人 Context 与生活经历为基础的本机个人/家庭 AI 生活助手。新版采用 **真实物品展柜＋生活故事（B＋C）**，在原有 Next.js、LangGraph、Qwen、Product Pack、Memory 和家庭/礼物能力上增量开发。
+
+当前工作区：`D:\ProductAgent-LifeContext`；分支：`feat/life-context-v1-d`；基线 `4451ca2`。原版 `D:\ProductAgent-Dev` 的代码和数据保持独立。以下启动方式覆盖历史说明中的旧机器路径、3100 端口和二维空间默认首页。
+
+## 本轮产品体验
+
+首页可直接提问；物品详情使用同一上下文连续交流。发现页以目标对话为入口，时间、演示数据与选物为可选条件，可继续“更有趣”“换方向”或排除某件物品。服务端解析前一轮所属候选、实际资源和反馈；云端就绪后使用现有Qwen开放规划，未授权时仅有限规则与能力组合，不冒充真实模型。
+
+家庭独立管理事项/共享物品；社交承载礼物与选中的文字故事。生活片段既可汇总，也在物品详情查看。新版聊天叙述不会自动保存为生活故事；明确“记住”、候选确认与图文主动保存仍分别保留。操作问题可按需检索有限官方来源，仍须核对型号与资料地区；缺资料不编造参数。旧版仍在 /legacy。
+
+新版统一入口为“问物间”，支持详情物品上下文、发现方案续谈及本人历史会话。可在交流偏好设置称呼、风格、记忆引用；单件伙伴须主动开启。常见物品操作按需获取有限品牌的官方网页/PDF，核对型号/地区并缓存；资料页可刷新并查看来源版本。WUJIAN_ALLOW_PUBLIC_FETCH=false 可关闭这条联网路径。
+
+上轮15次验证保留为历史记录。上轮新增30次授权已用尽，含失败、中断及原生搜索：商品帮助有改善，但MAF10仍是部分流程，开放创意物理可行性未达目标，模型自检不等于验证。详见 docs/engineering/life-knowledge-creative-validation-2026-10-20.json。默认启动费用关闭，继续真实测试需新授权。
+
+创意可引用本人确认权利的文字或可访问公开链接（仅短摘录），生成不同方向并延续约束/反馈。可选复核会额外使用1次模型请求；质量失败明确退回本地有限规划。Wikibooks仅适配/协议验证，实际读取失败；Hackaday未接入。百炼原生搜索须在本机另行设置 WUJIAN_ALLOW_SEARCH=true，且正常模型费用开关也获准；默认关闭，搜索另有费用。搜索只用于取得URL，再读取并核对型号/地区，生成的引用不作已验证网页。
+
+## 启动
+
+Node.js **24**，使用 package-lock.json：
 
 ```powershell
-.venv\Scripts\python.exe scripts/evaluate_foundation.py --real --only all
+Set-Location D:\ProductAgent-LifeContext
+npm.cmd ci --cache .npm
+npm.cmd run build
+npm.cmd run start:life
 ```
 
-可将 `all` 换为 `manual`、`memory`、`cases`、`journey`、`gift` 或 `rea` 进行针对性复测。结果在 `var/evaluations/<时间>/results.json`，既保留成功也保留失败。工程回归、开发复测和独立验收分开；不能把运行完成数当作智能质量通过数。
+打开 [物间新版](http://127.0.0.1:3200)，也可双击 `START_LIFE.cmd`。开发使用 `npm run dev:life`。更新源码后须重新 build:rc；启动器只在缺少构建时自动构建。默认仅监听本机、费用与外部 tracing 关闭。
 
-## 当前边界
+独立数据库为 `data-life-v1/demo.sqlite`。程序拒绝旧 `data/` 和其他工作区；测试使用 `.runtime/verification-*`。不要复制旧数据库、照片或环境密钥。
 
-已接通真实千问对话、工具调用、联网查资料、图片输入、跨会话私人理解及基础回忆/赠礼闭环。智能质量仍需独立验收，不能用工程测试数量代替。
+当前若3200已被本人手动云端服务占用，可用 `$env:PORT='3201'` 后 `npm run start:life` 启动费用关闭的新版预览，仍使用本开发目录的数据。本轮预览为 http://127.0.0.1:3201；已有云端服务需由其启动者重启以加载最新构建，不能把旧进程缓存当新版验收。
 
-真实测试已观察到跨新会话恢复同一任务、按失败反馈修改计划、主动记录多物回忆和选择性赠礼。但创意仍会过度肯定未经验证的效果，分身仍会混淆所收到故事的经历主体；仅增加作者来源尚未使模型可靠遵循。长任务达到数分钟，尚需改进。陌生物品目前只有开发样本成功，18 题独立验收尚未执行。
+## 本机千问配置与手动费用开关
 
-天猫订单导入、系统级到时推送、实体物流、自动照片归档、完整图形分身成长、自动语义冲突判定、跨账号共建商品知识库尚未实现。提醒目前是应用内事项与完成状态。
+可双击 `START_LIFE_CLOUD.cmd`：只显示配置状态，端口空闲后须输入 `CLOUD` 才授权本次服务；不会自动调用模型。退出窗口或 Ctrl+C 后授权撤销，双击 `START_LIFE.cmd` 恢复离线。端口占用不会杀进程，会显示后续5个端口内的空闲地址，再等待本次费用确认；无需先手动停旧服务。也可自行设置 PORT。
+
+仅在当前工作区被Git忽略的 `.env.local` 填写：`AI_API_KEY`、`AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1`、`AI_MODEL=qwen-plus`、`AI_JSON_MODE=true`、`AI_ENABLE_THINKING=false`。可参考空 `.env.example`，已有配置不要覆盖，不要将Key发到聊天或提交Git。
+
+默认 `npm run start:life` / `dev:life` 保持费用关闭。另获授权后，停止自己启动的服务，使用 `npm run start:life -- --cloud`（开发同理）手动启用本次进程；退出并以不带 `--cloud` 的命令重启即可撤销。改配置需重启。只加载本工作区配置，不找其他工作区密钥。前端区分缺密钥、缺配置、未授权和准备就绪；“就绪”只说明静态配置齐备，网络、账户和模型实际质量需另验证。请求失败显示认证/限流/网络/响应异常，本轮真实调用0。
+
+录入资料失败会提示物品已建档，可仅重试资料或先查看物品；重复同一请求不会重复创建。发现默认排除新旧合成案例，需本人明确勾选体验演示。同一内容/物品候选复用原ID与收藏，全部收藏不会因新生成挤出最近列表。
+
+## 连续规划与私人记录
+
+发现与主助手共享本轮目标、排除物品、选物、时间与限制，候选去重不改变这些条件。除原12类配方外，新增按能力的整理、学习观察、出行有限规划；离线仍是确定性兜底，云端开放规划未经真实模型验证。可在可选条件中明确选用本人提供的经验，才将正文用于本次获准模型请求；第三方经验不视为官方或实物验证。数量单位独立保存，不自动换算。
+
+赠出物品不会删除本人长期记忆或生活片段。离手关联的私人长期记录在记忆管理中保留，只在主动回忆时使用，不交给收礼人，不用于普通商品指导；仍可纠正和遗忘。
+
+## 本轮资料补全与识别
+
+录入及物品资料中可按品牌＋完整型号主动查找官方正文（有限适配，非全网搜索）。找到后须核对地区/实物再选用；可核对段落位置和相关说明书链接。未命中可人工官网检索或粘贴公开链接，支持公开PDF。资料不足不生成官方参数。
+
+图片说明书或扫描PDF请勾选「本机OCR」后上传：Tesseract中文＋英文、本机处理，扫描PDF最多前3页；文字PDF前20页。语言数据由package-lock中的开源依赖提供，运行不下载，不上传照片；识别错误须本人核对。
+
+照片云端识别为可选接口：在本机忽略配置添加 `AI_VISION_MODEL=qwen-vl-plus`（账户支持与收费另核实）。本次云端服务已确认授权且逐张勾选同意后才发送，返回待核对候选，不自动建档或凭外观绑定精确型号。本轮未真实调用。协议依据：[百炼视觉接口](https://www.alibabacloud.com/help/en/model-studio/vision)；本机OCR依据：[Tesseract.js API](https://github.com/naptha/tesseract.js/blob/master/docs/api.md)。
+
+## 可以实际做什么
+
+- **录入与知识**：手动名称/品牌/型号、真实照片保存、条码/二维码图片解码、公开资料链接、PDF/TXT/MD 说明书文字提取；核对后绑定已有型号包。类别、生命周期、数量/有效期、材质、供电和维护信息分别保存。
+- **智能帮助**：复用 LangGraph、来源筛选、受控工具、会话和反馈；未知型号不编参数。普通对话无需物品。默认无付费模型时，精选帮助、本地记录可用，模型不可用明确提示。
+- **发现**：12 类本地能力配方动态匹配单件/多物品及当前时间/要求，支持收藏、尝试和反馈；另支持用户提交经验来源与模型生成路径。所有候选有条件，未验证不标成实物验证。
+- **生活故事**：照片＋原话、一份片段关联多件物品、查看/编辑/删除、主动请求本地回忆；与聊天历史、待确认记忆分别处理。
+- **家庭与礼物**：共享物品、负责人任务、动作确认、选中文字故事快照和认领；人物仍是明确标注的本机演示身份。
+
+首页可载入 25 件合成展柜实例（10 个绑定型号），3 个生活片段（2 个图文）、家庭事项与礼物。资料沿用 11 包/33 事实/2 个有限过程，不能当作全品类完整说明书库。示意照片不冒充对应型号实拍或用户真实经历。
+
+## 验证与交接
+
+```powershell
+npm.cmd test
+npm.cmd run typecheck
+npm.cmd run test:benchmark
+npm.cmd run build
+npm.cmd run test:life
+npm.cmd run test:acceptance
+```
+
+按顺序运行，避免并行启动多项构建/浏览器。`test:life` 自动使用独立库与随机本机端口，包含 PDF、QR、EAN-13、照片录入/故事编辑删除；`test:acceptance` 回归旧版入口。旧页面保留在 [/legacy](http://127.0.0.1:3200/legacy)，操作指南在 [/guide](http://127.0.0.1:3200/guide)。
+
+- [本轮架构、来源、数据边界与接续说明](docs/engineering/life-context-handoff-2026-10-19.md)
+- [本轮端到端验收](docs/engineering/life-context-validation-2026-10-19.json)
+- [实现状态](IMPLEMENTATION_STATUS.md)、[开发报告](DEVELOPMENT_REPORT.md)、[技术交接](REVIEW_HANDOFF.md)
+- [文档索引](docs/README.md)、[此前 README 历史快照](docs/archive/README-before-life-2026-10-19.md)
+
+当前视觉接口尚未经真实模型验证，官方查找仅有限适配；没有通用条码商品库、订单/社区全站 API、真实家庭同步、IoT 或后台通知。真实模型和实物效果须另获授权后验证；不得用离线测试证明真人留存或模型准确率。密钥、数据库、缓存和私人材料继续排除 Git。

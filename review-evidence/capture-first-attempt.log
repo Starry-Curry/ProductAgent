@@ -1,0 +1,9 @@
+file:///D:/D%E7%9B%98%E6%A1%8C%E9%9D%A2/Product-Agent-Review-Exports/Review-20261017-104400/project/review-tools/capture.mjs:26
+ const input={itemId:item.id,question:'电池规格是什么？',mode:'service'};
+                          ^
+
+TypeError: Cannot read properties of undefined (reading 'id')
+    at file:///D:/D%E7%9B%98%E6%A1%8C%E9%9D%A2/Product-Agent-Review-Exports/Review-20261017-104400/project/review-tools/capture.mjs:26:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.16.0

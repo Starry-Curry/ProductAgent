@@ -1,48 +1,25 @@
-# 物间共同开发
+# Git协作流程
 
-当前 main/develop 使用 Python/FastAPI 智能后端与 React/Vite 前端；旧 Next.js 实现在归档标签中。首次接入先阅读 README 和两份 2026-11-05 审计，不以“基线已提交”理解为“智能底座已验收”。
-
-## 本地准备
-
-建议 Python 3.12、uv、Node.js 22.12 或以上。
+统一在本仓库开发。main为团队集成主线；每项工作从main建立功能分支，经PR审查后合并。
 
 ```powershell
-uv sync --frozen --cache-dir tmp/uv-cache
-npm.cmd --prefix frontend ci --cache=tmp/npm-cache
-npm.cmd --prefix frontend run build
-.venv\Scripts\python.exe -m wujian serve
+git switch main
+git pull --ff-only
+git switch -c feat/item-recognition
+# 修改、验证并更新文档
+git add src tests docs
+git commit -m "feat: add confirmed recognition candidates"
+git push -u origin feat/item-recognition
 ```
 
-在本地从 `.env.example` 建立自己的 `.env`，不要覆盖已有密钥。未配置密钥时可以运行基本业务和离线测试，真实模型、搜索和向量调用需要配置与有效授权。默认访问 http://127.0.0.1:8000 。
+未提交改动先提交或妥善保存再切分支。不要force push覆盖队友。
 
-每位成员使用自己的 `var/`，不要通过 Git 或网盘共用 SQLite 文件。旧 TypeScript `demo.sqlite` 不能直接用于当前应用。
+- 分支：feat/...、fix/...、docs/...、chore/...。
+- 提交：feat:、fix:、docs:、test:、chore:，说明一个完整变化。
+- PR说明实际变化、测试、已知限制及迁移影响。离线替身不能算真实模型成功。
+- 在已验收提交建立版本标签，标签不移动；通过GitHub Releases分发ZIP，模型/运行时另行管理。
+- 不再用“最新/最终版2/某人版本”文件夹作为开发主线。
 
-## 分支和评审
+Node24、npm ci；CI运行离线测试、类型检查、基准及构建。集成测试用独立数据库；真实模型请求需要当前任务授权。提交前检查git status、git diff --cached --stat，不提交凭证、私人材料或运行产物。
 
-从最新 develop 建立功能分支，提交前核对差异和不应上传的本地数据。小批提交，PR 到 develop；main 由负责人明确批准更新。公共接口、迁移和结果语义由底座负责人统一复核。
-
-```powershell
-git switch develop
-git pull --ff-only origin develop
-git switch -c feat/your-feature
-```
-
-此命令用于干净、已在当前实现基线上的检出。仍在旧 TypeScript 工作区且有未提交修改的成员，应先保存其分支，再使用新目录检出当前基线，不直接覆盖旧工作区。
-
-## 必要检查
-
-```powershell
-.venv\Scripts\python.exe -m unittest discover -s tests -v
-.venv\Scripts\python.exe -m wujian validate fixtures/development/catalog.json
-.venv\Scripts\python.exe -m wujian openapi contracts/openapi.json
-npm.cmd --prefix frontend run types
-npm.cmd --prefix frontend run build
-```
-
-只改文档时检查链接、事实与引用；业务修改运行受影响的检查，集成时完整回归。新失败应有可复现证据；不要把已有34项通过当作覆盖全部缺口。
-
-CI只进行离线工程检查，不设置真实百炼密钥，不连接设备。真实模型验收、独立样本与实机效果分别记录，不能以 CI 成功代替。
-
-## 历史和恢复
-
-`docs/2026-11-05_主线同步与分支归档.md` 列出旧分支与归档标签。每个归档标签固定原提交，包括当时的源码、文档和历史证据；无需把两套运行时叠放在当前主线。
+原交付没有.git。f058488与118e295是来源记录，不是本仓库恢复出的历史；此后以当前仓库真实commit/PR为准。来源见docs/engineering/import-provenance.json。

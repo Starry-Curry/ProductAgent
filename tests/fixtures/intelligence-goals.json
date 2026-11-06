@@ -1,0 +1,22 @@
+{
+  "policy": "Freeze holdout before any real runs. Scoring is external to generation; never infer success from HTTP200.",
+  "development": [
+    {"id":"play","goal":"只用登记的手电筒、透明杯和纸笔，设计两个不同的单人小游戏，不做科学实验，不买材料。","items":[{"name":"手电筒","category":"照明"},{"name":"透明杯","category":"容器","attributes":{"material":"玻璃"}},{"name":"纸笔","category":"文具"}],"followup":"不用手电筒，缩短到五分钟，换一种更有趣的规则"},
+    {"id":"desk","goal":"只用已有物品改善书桌摆放，不假定还有其他杂物。给出能真正执行的方案。","items":[{"name":"铅笔","category":"文具"},{"name":"空玻璃杯","category":"容器"},{"name":"笔记本","category":"文具"}]},
+    {"id":"writing","goal":"只用一张纸和一支笔做一个有趣的独处活动，没有任何计时工具。","items":[{"name":"纸和笔","category":"文具"}],"minutes":10},
+    {"id":"wardrobe","goal":"只用登记的衣物，准备一套明天散步穿的搭配，说明怎样根据天气调整，不虚构天气。","items":[{"name":"棉衬衫","category":"服装","attributes":{"material":"棉"}},{"name":"深色长裤","category":"服装"},{"name":"薄围巾","category":"服装"}]},
+    {"id":"trip","goal":"只用登记物品准备一次轻松的近处散步，零预算，十分钟做完准备。","items":[{"name":"帆布背包","category":"出行用品"},{"name":"相机","category":"电子设备","attributes":{"capabilities":["拍照"]}},{"name":"纸笔","category":"文具"}],"minutes":10},
+    {"id":"cooking-prep","goal":"只用已有物品准备明早不用加热的水果加餐，不假设有刀具、饮水或额外食物。","items":[{"name":"完整香蕉","category":"食品","attributes":{"quantity":2}},{"name":"食品盒","category":"容器"}],"minutes":5}
+  ],
+  "holdout": [
+    {"id":"held-postcard","goal":"只用纸笔和一本旧书，为自己做一个有趣的阅读纪念，不剪不粘、不用计时工具。","items":[{"name":"纸笔","category":"文具"},{"name":"旧书","category":"书籍"}],"minutes":10},
+    {"id":"held-garden","goal":"只用这些物品给阳台绿植做一份有趣的观察记录，不浇水，不猜植物品种或健康。","items":[{"name":"盆栽","category":"植物"},{"name":"铅笔与纸","category":"文具"}],"minutes":10},
+    {"id":"held-pack","goal":"只用登记的背包、围巾和笔记本，让明天带东西出门更方便，不添置材料。","items":[{"name":"布背包","category":"出行用品"},{"name":"围巾","category":"服装"},{"name":"笔记本","category":"文具"}],"followup":"不要用围巾，五分钟以内，保留原来的出行目标"},
+    {"id":"held-photo","goal":"只用数码相机和纸笔，做一个有主题的创作，不打印、不贴照片，不需要光学实验。","items":[{"name":"数码相机","category":"电子设备","attributes":{"capabilities":["数字照片拍摄"]}},{"name":"纸笔","category":"文具"}],"minutes":20}
+  ],
+  "personal": [
+    {"id":"personal-photo","goal":"只用登记物品规划一次半小时的摄影散步，不买东西，给出具体成果。","items":[{"name":"数码相机","category":"电子设备","attributes":{"capabilities":["拍照"]}},{"name":"背包","category":"出行用品"},{"name":"纸笔","category":"文具"}],"preference":"我喜欢拍建筑细节，偏好慢慢走，不想赶多个地点。","scope":"摄影 散步","minutes":30},
+    {"id":"personal-learning","goal":"只用登记的书和纸笔，规划一个二十分钟的阅读学习活动，不依赖计时设备。","items":[{"name":"一本书","category":"书籍"},{"name":"纸笔","category":"文具"}],"preference":"我喜欢通过画图和对比来理解阅读内容，不喜欢抄写长段原文。","scope":"阅读 学习","minutes":20},
+    {"id":"personal-creative","goal":"只用纸笔做一个独处创作活动，十分钟以内，不购买材料。","items":[{"name":"纸笔","category":"文具"}],"preference":"我喜欢文字接龙和幽默短故事，不喜欢画画。","scope":"创作 活动","minutes":10}
+  ]
+}
