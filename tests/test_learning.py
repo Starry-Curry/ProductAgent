@@ -157,6 +157,32 @@ class UnderstandingTests(unittest.TestCase):
                 "（电源）按钮约5秒钟或以上手动进入配对模式。",
             )
 
+    def test_native_feedback_reports_quote_and_model_errors_together(self):
+        with self.sessions() as db:
+            item = self.headphones(db)
+            source = self.source(db, item)
+            source.title = "通用蓝牙指南"
+            source.content = "打开蓝牙后，观察设备实际显示的配对状态。"
+            db.commit()
+            message = self.message(db, "先帮我看资料，暂时别动耳机。")
+            bad = self.result(knowledge=[self.knowledge(item, source,
+                source_quote="并没有出现在原文中的命令")]).model_dump()
+            import time
+            schema = grounded_turn_schema(self.sessions, self.owner, message,
+                deadline_at=time.monotonic()+30)
+            with self.assertRaises(ValueError) as failure:
+                schema.model_validate(bad)
+            text = str(failure.exception)
+            self.assertIn("source_quote", text)
+            self.assertIn("WH-CH720N", text)
+            self.assertIn("本轮还剩", text)
+            self.assertEqual(foundation.known_claims(db, self.owner, item["id"]), [])
+
+    def test_optional_learning_can_be_omitted_without_dropping_answer(self):
+        from wujian.learning import Learning
+        self.assertEqual(Learning.model_validate({}).model_dump(),
+            {"knowledge_updates":[], "memory_updates":[]})
+
     def test_memory_correction_and_task_validation_share_one_transaction(self):
         with self.sessions() as db:
             old = domain.remember(

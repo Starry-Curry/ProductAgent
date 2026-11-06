@@ -29,7 +29,7 @@ import {
 } from "./shared";
 import { navigate, type Route } from "./navigation";
 import Care from "./Care";
-import { ObjectCompanion } from "./ObjectCompanion";
+import { ObjectCompanion, PersonaGrowth } from "./ObjectCompanion";
 
 type Props = {
   workspace: Workspace;
@@ -388,6 +388,31 @@ function ItemDetail({
   device,
   onBack,
 }: Omit<Props, "route"> & { item: Item; onBack: () => void }) {
+  const [growthBusy, setGrowthBusy] = useState(false);
+  const [growthError, setGrowthError] = useState("");
+  async function changeGrowth(change: { growth_enabled?: boolean; growth_dismissed_ids?: string[] }) {
+    if (growthBusy) return;
+    setGrowthBusy(true);
+    setGrowthError("");
+    try {
+      await request(`/items/${item.id}`, "PUT", {
+        name: item.name, kind: item.kind, product: item.product,
+        description: item.description, photo_id: item.photo_id, state: item.state,
+        expected_version: item.version,
+        avatar: {
+          enabled: item.avatar.enabled, form: item.avatar.form,
+          nickname: item.avatar.nickname, personality: item.avatar.personality,
+          color: item.avatar.color, growth_enabled: item.avatar.growth_enabled,
+          growth_dismissed_ids: item.avatar.growth_dismissed_ids, ...change,
+        },
+      });
+      await refresh();
+    } catch (error) {
+      setGrowthError((error as Error).message);
+    } finally {
+      setGrowthBusy(false);
+    }
+  }
   const [tab, setTab] = useState("story"),
     [more, setMore] = useState(false),
     [attempt, setAttempt] = useState(0),
@@ -454,7 +479,12 @@ function ItemDetail({
           <div className="persona-identity">
             <strong>{item.avatar.nickname || item.name}</strong>
             <p>{item.avatar.personality || "相处时的样子，由你慢慢决定。"}</p>
-            {item.avatar.growth_note && <p className="persona-growth">{item.avatar.growth_note}</p>}
+            {owned && <PersonaGrowth avatar={item.avatar} busy={growthBusy}
+              onToggle={(enabled) => { void changeGrowth({ growth_enabled: enabled }); }}
+              onDismiss={(id) => { void changeGrowth({ growth_dismissed_ids:
+                [...new Set([...(item.avatar.growth_dismissed_ids || []), id])] }); }}
+              onExperience={(id) => navigate({ section: "memories", itemId: item.id, experienceId: id })} />}
+            {growthError && <p className="inline-error" role="alert">{growthError}</p>}
           </div>
           <div className="persona-strip-actions">
             <button className="soft-button" onClick={() => ask(item, "persona")}>

@@ -6,6 +6,52 @@ export type ObjectExpression = "calm" | "happy" | "sleepy";
 export type ObjectShape = "cup" | "stone" | "flower" | "keepsake" | "cat";
 type CompanionItem = Pick<Item, "name" | "kind" | "avatar" | "photo_id">;
 
+/** A small, inspectable view over the same profile used by the main Agent.
+ * Keeping this separate from the illustration prevents inferred preferences
+ * from silently changing the person's chosen appearance or personality.
+ */
+export function PersonaGrowth({ avatar, onToggle, onDismiss, onExperience, busy = false }: {
+  avatar: Item["avatar"];
+  onToggle?: (enabled: boolean) => void;
+  onDismiss?: (id: string) => void;
+  onExperience?: (id: string) => void;
+  busy?: boolean;
+}) {
+  const traits = avatar.growth_traits || [];
+  const enabled = avatar.growth_enabled !== false;
+  const dimensions = { pace: "说话节奏", humor: "玩笑方式", support: "陪伴方式", relationship: "我们的默契" };
+  return <details className="persona-growth-details">
+    <summary>我们相处的样子</summary>
+    {onToggle && <label className="persona-growth-switch">
+      <input type="checkbox" checked={enabled} disabled={busy}
+        onChange={(event) => onToggle(event.target.checked)} />
+      随着相处慢慢成长
+    </label>}
+    <p>{!enabled ? "先按你设定的性格相处，回忆仍然保留。"
+      : "从你分享的经历中慢慢形成默契。今天想怎样聊，直接告诉它就好。"}</p>
+    {enabled && traits.map((trait) => <article className="persona-growth-trait" key={trait.id}>
+      <strong>{dimensions[trait.dimension]}</strong>
+      <p>{trait.behavior}</p>
+      <small>适用时：{trait.context}</small>
+      <details>
+        <summary>来自哪些相处</summary>
+        {trait.evidence.map((evidence, index) => evidence.message_id
+          ? <blockquote key={`${evidence.message_id}-${index}`}>{evidence.quote || "你在聊天中分享的经历"}</blockquote>
+          : <p key={`${evidence.experience_id}-${index}`}>
+            {onExperience && evidence.experience_id
+              ? <button className="quiet-button" type="button"
+                onClick={() => onExperience(evidence.experience_id!)}>查看关联回忆</button>
+              : "你允许它参考的回忆"}
+          </p>)}
+      </details>
+      {onDismiss && <button className="quiet-button" type="button" disabled={busy}
+        onClick={() => onDismiss(trait.id)}>不再作为这个分身的特点</button>}
+    </article>)}
+    {enabled && !traits.length && avatar.growth_note && <p>{avatar.growth_note}</p>}
+    {enabled && !traits.length && !avatar.growth_note && <p>还没有需要长期沿用的特点，先自然地聊聊。</p>}
+  </details>;
+}
+
 function shapeFor(name: string): ObjectShape {
   if (/向日葵|花束|鲜花|花朵|植物|盆栽|玫瑰|郁金香|雏菊/.test(name)) return "flower";
   if (/石头|卵石|鹅卵石|石子|纪念石/.test(name)) return "stone";

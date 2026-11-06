@@ -179,3 +179,23 @@ class RequestBudgetTests(unittest.TestCase):
                 self.assertEqual(budget.summary()["attempted"],2)
             finally:
                 restore()
+
+    def test_explicit_uncapped_phase_still_counts_and_can_be_tightened(self):
+        with tempfile.TemporaryDirectory() as folder:
+            budget = RequestBudget(Path(folder)/"new-phase.sqlite3", limit=None)
+            for _ in range(4):
+                budget.reserve("/mock")
+            self.assertEqual(budget.summary()["attempted"], 4)
+            self.assertIsNone(budget.summary()["ceiling"])
+            limited = RequestBudget(budget.path, limit=4)
+            with self.assertRaises(RuntimeError):
+                limited.reserve("/mock")
+
+    def test_uncapped_argument_does_not_reopen_exhausted_historical_ledger(self):
+        with tempfile.TemporaryDirectory() as folder:
+            old = RequestBudget(Path(folder)/"old-phase.sqlite3", limit=1)
+            old.reserve("/mock")
+            reopened = RequestBudget(old.path, limit=None)
+            self.assertEqual(reopened.summary()["ceiling"], 1)
+            with self.assertRaises(RuntimeError):
+                reopened.reserve("/mock")

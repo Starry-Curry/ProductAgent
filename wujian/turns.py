@@ -30,7 +30,7 @@ class ContinuingPlan(BaseModel):
         description="Actual accessible resource IDs; never substitute names or invented resources"
     )
     constraints: dict = Field(
-        description="Current user requirements and conditions, including temporary exclusions"
+        description="For a new task, user requirements/conditions including exclusions. For an existing task, a PATCH: omitted keys remain unchanged, reuse exact current keys for the same concept. Null explicitly removes a key. Changing/removing an existing value requires feedback_quote from the CURRENT user; new facts/conditions can be added. Keep proposals in plan, not user constraints."
     )
     plan: dict = Field(
         description="Proposed actions/alternatives, why they can work, minimum trial and unknown conditions; a proposal is not executed success",
@@ -84,6 +84,25 @@ def referenced_sources(result):
         *re.findall(r"\[([a-f0-9]{32})\]",result.answer)]))[:8]
 
 
+def constraint_patch(previous, incoming, feedback_quote):
+    """An Agent's abbreviated continuation must not erase prior conditions.
+
+    UI full-edit semantics are unchanged. Null is an explicit deletion, and
+    actual user feedback is necessary (not a semantic proof) for revisions.
+    Keep the incoming patch intact: the native preview is rolled back and the
+    same result is later committed, so consuming deletion tombstones is wrong.
+    """
+    merged = dict(previous)
+    for key, value in incoming.items():
+        if key in previous and value != previous[key] and not feedback_quote:
+            raise domain.DomainError("修改或移除已有任务条件需要本轮用户反馈；遗漏的条件会保留，请复用原条件名称")
+        if value is None:
+            merged.pop(key, None)
+        else:
+            merged[key] = value
+    return merged
+
+
 def commit_continuation(db, user_id, message_id, result, current_question, commit=True):
     plan = result.continuation
     if plan is None:
@@ -103,6 +122,8 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
                 raise domain.DomainError("没有找到这项任务", 404)
             if current.version != version:
                 raise domain.DomainError("任务已更新，请重新读取后继续", 409)
+        constraints = constraint_patch(current.constraints if current else {},
+                                       plan.constraints, plan.feedback_quote)
         # Agent proposals and reported execution share one board, but must not
         # share a success meaning. UI progress already has its own explicit
         # user action path. A literal feedback quote is necessary here, not a
@@ -126,7 +147,7 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
                 message_id,
                 plan.goal,
                 plan.item_ids,
-                plan.constraints,
+                constraints,
                 plan.plan,
                 status="exploring" if plan.feedback_quote else plan.status,
                 commit=False,
@@ -154,7 +175,7 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
                 message_id,
                 plan.goal,
                 plan.item_ids,
-                plan.constraints,
+                constraints,
                 plan.plan,
                 task_id,
                 version,
@@ -217,7 +238,7 @@ def commit_result(db, user_id, message_id, result, current_question, *, commit=T
     }
 
 
-def grounded_turn_schema(sessions, user_id, message_id, evidence_sources=None):
+def grounded_turn_schema(sessions, user_id, message_id, evidence_sources=None, *, deadline_at=None):
     """Native SDK validation returns grounding errors to the same Agent to repair."""
 
     class GroundedTurnResult(TurnResult):
@@ -235,6 +256,12 @@ def grounded_turn_schema(sessions, user_id, message_id, evidence_sources=None):
                 checkpoint=db.begin_nested()
                 try:
                     commit_result(db,user_id,message_id,self,message.text,commit=False)
+                except domain.DomainError as error:
+                    if deadline_at is not None:
+                        import time
+                        remaining=max(0,int(deadline_at-time.monotonic()))
+                        raise ValueError(error.message + f"\n本轮还剩约{remaining}秒。优先交付已核实的下一步；无法核实的可选学习不要写成事实，说明范围并保留来源。") from None
+                    raise
                 finally:
                     checkpoint.rollback()
             return self

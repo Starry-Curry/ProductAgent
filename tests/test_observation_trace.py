@@ -98,7 +98,7 @@ class ObservationTraceTests(unittest.TestCase):
                     return Toolkit(tools=[FunctionTool(read_source, is_read_only=True,
                         permission=PermissionDecision(behavior=PermissionBehavior.ALLOW, message="Offline transport fixture"))])
 
-                with patch("wujian.agent_runtime.sample_source_video", new=AsyncMock(side_effect=lambda *a: video_fixture())), \
+                with patch("wujian.agent_runtime.sample_source_video", new=AsyncMock(side_effect=lambda *a, **kw: video_fixture())), \
                      patch("wujian.agent_runtime.retained_video_frames", side_effect=lambda *a: video_fixture()):
                     if compact:
                         tool_patch = patch("wujian.agent_runtime.make_tools", side_effect=compact_tools)

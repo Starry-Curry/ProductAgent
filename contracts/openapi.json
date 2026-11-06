@@ -2959,6 +2959,108 @@
           }
         }
       }
+    },
+    "/api/experiences/{experience_id}/photo-matches": {
+      "post": {
+        "tags": [
+          "Experiences"
+        ],
+        "summary": "Match",
+        "operationId": "match_api_experiences__experience_id__photo_matches_post",
+        "parameters": [
+          {
+            "name": "experience_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Experience Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhotoMatchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhotoMatchResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/community/bilibili/session": {
+      "get": {
+        "summary": "Community Status",
+        "operationId": "community_status_api_community_bilibili_session_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunitySessionView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Community Start",
+        "operationId": "community_start_api_community_bilibili_session_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunitySessionView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Community Close",
+        "operationId": "community_close_api_community_bilibili_session_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunitySessionView"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3000,6 +3102,19 @@
             "pattern": "^#[0-9a-fA-F]{6}$",
             "title": "Color",
             "default": "#d49c62"
+          },
+          "growth_enabled": {
+            "type": "boolean",
+            "title": "Growth Enabled",
+            "default": true
+          },
+          "growth_dismissed_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Growth Dismissed Ids"
           }
         },
         "additionalProperties": false,
@@ -3044,6 +3159,19 @@
             "title": "Color",
             "default": "#d49c62"
           },
+          "growth_enabled": {
+            "type": "boolean",
+            "title": "Growth Enabled",
+            "default": true
+          },
+          "growth_dismissed_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Growth Dismissed Ids"
+          },
           "gift_from": {
             "type": "string",
             "title": "Gift From",
@@ -3071,6 +3199,20 @@
             },
             "type": "array",
             "title": "Growth Evidence"
+          },
+          "growth_traits": {
+            "items": {
+              "$ref": "#/components/schemas/GrowthTrait"
+            },
+            "type": "array",
+            "title": "Growth Traits"
+          },
+          "growth_stopped_traits": {
+            "items": {
+              "$ref": "#/components/schemas/GrowthStoppedTrait"
+            },
+            "type": "array",
+            "title": "Growth Stopped Traits"
           }
         },
         "additionalProperties": false,
@@ -3188,6 +3330,62 @@
         "additionalProperties": false,
         "type": "object",
         "title": "ChatRequest"
+      },
+      "CommunitySessionView": {
+        "properties": {
+          "failure_phase": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Phase"
+          },
+          "failure_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Reason"
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "connected": {
+            "type": "boolean",
+            "title": "Connected"
+          },
+          "remaining_seconds": {
+            "type": "integer",
+            "title": "Remaining Seconds"
+          },
+          "qr_data_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Qr Data Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "stage",
+          "connected",
+          "remaining_seconds"
+        ],
+        "title": "CommunitySessionView"
       },
       "ConversationView": {
         "properties": {
@@ -3376,8 +3574,8 @@
           "text": {
             "type": "string",
             "maxLength": 20000,
-            "minLength": 1,
-            "title": "Text"
+            "title": "Text",
+            "default": ""
           },
           "item_ids": {
             "items": {
@@ -3422,7 +3620,6 @@
         "type": "object",
         "required": [
           "title",
-          "text",
           "expected_version"
         ],
         "title": "ExperienceChange"
@@ -3438,8 +3635,8 @@
           "text": {
             "type": "string",
             "maxLength": 20000,
-            "minLength": 1,
-            "title": "Text"
+            "title": "Text",
+            "default": ""
           },
           "item_ids": {
             "items": {
@@ -3478,8 +3675,7 @@
         "additionalProperties": false,
         "type": "object",
         "required": [
-          "title",
-          "text"
+          "title"
         ],
         "title": "ExperienceCreate"
       },
@@ -3494,8 +3690,8 @@
           "text": {
             "type": "string",
             "maxLength": 20000,
-            "minLength": 1,
-            "title": "Text"
+            "title": "Text",
+            "default": ""
           },
           "item_ids": {
             "items": {
@@ -3578,7 +3774,6 @@
         "type": "object",
         "required": [
           "title",
-          "text",
           "item_ids",
           "photo_ids",
           "occurred_on",
@@ -3817,6 +4012,153 @@
           "created_at"
         ],
         "title": "GiftView"
+      },
+      "GrowthEvidence": {
+        "properties": {
+          "message_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message Id"
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Quote",
+            "default": ""
+          },
+          "experience_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Experience Id"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "lineage_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 160
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lineage Id",
+            "description": "Original source identity stamped by the authoritative writer, never supplied by the model",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GrowthEvidence"
+      },
+      "GrowthStoppedTrait": {
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "pace",
+              "humor",
+              "support",
+              "relationship"
+            ],
+            "title": "Dimension"
+          },
+          "behavior": {
+            "type": "string",
+            "maxLength": 600,
+            "minLength": 1,
+            "title": "Behavior"
+          },
+          "context": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Context"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dimension",
+          "behavior",
+          "context"
+        ],
+        "title": "GrowthStoppedTrait",
+        "description": "A local expression control, with no private story or evidence identities."
+      },
+      "GrowthTrait": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "pace",
+              "humor",
+              "support",
+              "relationship"
+            ],
+            "title": "Dimension"
+          },
+          "behavior": {
+            "type": "string",
+            "maxLength": 600,
+            "minLength": 1,
+            "title": "Behavior"
+          },
+          "context": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Context"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/GrowthEvidence"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Evidence"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "dimension",
+          "behavior",
+          "context",
+          "evidence"
+        ],
+        "title": "GrowthTrait"
       },
       "HTTPValidationError": {
         "properties": {
@@ -4362,6 +4704,157 @@
           "updated_at"
         ],
         "title": "MemoryView"
+      },
+      "PhotoMatchCandidate": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "photo_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Photo Ids"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "same_instance",
+              "possible"
+            ],
+            "title": "Verdict"
+          },
+          "evidence_kind": {
+            "type": "string",
+            "enum": [
+              "distinctive_detail",
+              "visible_identity",
+              "category_only"
+            ],
+            "title": "Evidence Kind"
+          },
+          "reference_detail": {
+            "type": "string",
+            "maxLength": 600,
+            "title": "Reference Detail"
+          },
+          "observed_detail": {
+            "type": "string",
+            "maxLength": 600,
+            "title": "Observed Detail"
+          },
+          "explanation": {
+            "type": "string",
+            "maxLength": 800,
+            "title": "Explanation"
+          },
+          "ambiguous_with": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 24,
+            "title": "Ambiguous With"
+          },
+          "item_name": {
+            "type": "string",
+            "title": "Item Name"
+          },
+          "auto_linked": {
+            "type": "boolean",
+            "title": "Auto Linked",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "item_id",
+          "photo_ids",
+          "verdict",
+          "evidence_kind",
+          "reference_detail",
+          "observed_detail",
+          "explanation",
+          "item_name"
+        ],
+        "title": "PhotoMatchCandidate"
+      },
+      "PhotoMatchRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "apply_confident": {
+            "type": "boolean",
+            "title": "Apply Confident",
+            "default": true
+          },
+          "exclude_item_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 2000,
+            "title": "Exclude Item Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "PhotoMatchRequest"
+      },
+      "PhotoMatchResult": {
+        "properties": {
+          "experience": {
+            "$ref": "#/components/schemas/ExperienceView"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/PhotoMatchCandidate"
+            },
+            "type": "array",
+            "title": "Candidates"
+          },
+          "examined_items": {
+            "type": "integer",
+            "title": "Examined Items"
+          },
+          "examined_item_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Examined Item Ids"
+          },
+          "remaining_items": {
+            "type": "integer",
+            "title": "Remaining Items"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "experience",
+          "candidates",
+          "examined_items",
+          "examined_item_ids",
+          "remaining_items",
+          "note"
+        ],
+        "title": "PhotoMatchResult"
       },
       "Preferences": {
         "properties": {

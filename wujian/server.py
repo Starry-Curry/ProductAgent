@@ -17,6 +17,7 @@ from .agent_runtime import AgentRunner
 from .api_models import (
     ChatMessageView,
     ChatRequest,
+    CommunitySessionView,
     ConversationView,
     DeviceBind,
     DeviceProposal,
@@ -155,8 +156,13 @@ def create_app(settings=None, model_factory=None):
         return domain.user_view(user)
 
     @app.post("/api/auth/logout")
-    def logout(request: Request):
+    async def logout(request: Request):
+        user_id=request.session.get("user_id")
+        # Failing to reclaim an external collector must not leave this app's
+        # session authenticated. The manager retains any unreaped process.
         request.session.clear()
+        if user_id:
+            await runner.communities.close(user_id)
         return {"status": "ok"}
 
     @app.get("/api/me", response_model=UserView)
@@ -467,6 +473,21 @@ def create_app(settings=None, model_factory=None):
 
     from .interaction_routes import register_interactions
     register_interactions(app, current_user, db_session)
+    from .photo_matching_routes import register_photo_matching
+    register_photo_matching(app, current_user, settings, sessions)
+
+    @app.get("/api/community/bilibili/session", response_model=CommunitySessionView)
+    async def community_status(user=Depends(current_user)):
+        return await runner.communities.status(user.id)
+
+    @app.post("/api/community/bilibili/session", response_model=CommunitySessionView)
+    async def community_start(user=Depends(current_user)):
+        return await runner.communities.start(user.id)
+
+    @app.delete("/api/community/bilibili/session", response_model=CommunitySessionView)
+    async def community_close(user=Depends(current_user)):
+        await runner.communities.close(user.id)
+        return await runner.communities.status(user.id)
     dist = ROOT / "frontend" / "dist"
     if (dist / "assets").exists():
         app.mount("/assets", StaticFiles(directory=dist / "assets"), name="frontend_assets")

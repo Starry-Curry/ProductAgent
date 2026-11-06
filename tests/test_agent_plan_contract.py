@@ -90,9 +90,40 @@ class AgentPlanContractTests(unittest.TestCase):
             self.assertEqual(len(tasks), 1, "Preview/repair must not create extra tasks")
             return copy.deepcopy(tasks[0].plan), copy.deepcopy(tasks[0].feedback)
 
-    def board(self):
+    def board(self, constraints=None):
         return self.ok(self.client.post("/api/task-boards", json={"goal": "准备卡片小游戏",
-            "kind": "guidance", "entries": [self.entry()]}))
+            "kind": "guidance", "entries": [self.entry()], "constraints":constraints or {}}))
+
+    def stored_constraints(self):
+        with self.app.state.sessions() as db:
+            return copy.deepcopy(db.scalar(select(TaskRecord).where(
+                TaskRecord.user_id == self.user["id"])).constraints)
+
+    def test_short_agent_continuation_keeps_previous_exclusions(self):
+        board = self.board({"不购买":True, "不要实验":True})
+        proposal = self.proposal([self.entry()], board)
+        proposal["continuation"]["constraints"] = {"桌沿":"夹子夹不上"}
+        self.run_turn([proposal], "桌沿太厚，夹不上，先换个摆法。")
+        self.assertEqual(self.stored_constraints(),
+            {"不购买":True, "不要实验":True, "桌沿":"夹子夹不上"})
+
+    def test_constraint_changes_without_feedback_return_native_repair(self):
+        board = self.board({"不购买":True})
+        invalid = self.proposal([self.entry()], board)
+        invalid["continuation"]["constraints"] = {"不购买":None}
+        repaired = self.proposal([self.entry()], board)
+        self.run_turn([invalid,repaired], "继续上次的玩法。")
+        self.assertEqual(self.model.calls,2)
+        self.assertEqual(self.stored_constraints(),{"不购买":True})
+
+    def test_explicit_constraint_deletion_survives_rolled_back_native_preview(self):
+        board = self.board({"不购买":True,"预算":0})
+        quote = "可以买了，预算改成二十元。"
+        proposal = self.proposal([self.entry()],board,quote)
+        proposal["continuation"]["constraints"] = {"不购买":None,"预算":20}
+        self.run_turn([proposal],quote)
+        self.assertEqual(self.model.calls,1)
+        self.assertEqual(self.stored_constraints(),{"预算":20})
 
     def test_new_proposal_progress_repairs_and_native_schema_exposes_entry_contract(self):
         invalid = self.proposal([self.entry("fold", "ready"), self.entry("find", "not_found"),

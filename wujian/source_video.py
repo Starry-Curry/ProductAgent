@@ -39,6 +39,9 @@ def retained_video_frames(db, user_id, source_id):
     if source.origin != "video_frame_sample":
         raise DomainError("此来源不是已留存的视频抽帧", 422)
     manifest = json.loads(source.content)
+    original = readable_source(db, user_id, manifest["parent_source_id"])
+    if original.origin != "public_web" or canonical_video_url(original.url)[0] != source.url:
+        raise DomainError("抽帧对应的原资料已改变", 409)
     records = manifest.get("frames", [])
     if not 1 <= len(records) <= 4:
         raise DomainError("已留存抽帧清单无效", 422)
@@ -80,7 +83,7 @@ def canonical_video_url(url):
     return f"https://www.bilibili.com/video/{match[1]}/", match[1]
 
 
-def sampling_times(start_seconds, end_seconds, frame_count):
+def sampling_times(start_seconds, end_seconds, frame_count, at_seconds=None):
     if (isinstance(frame_count, bool) or not isinstance(frame_count, int) or not 1 <= frame_count <= 4
             or isinstance(start_seconds, bool) or isinstance(end_seconds, bool)):
         raise DomainError("抽帧数量须为1至4，时间窗须为有限秒数", 422)
@@ -90,6 +93,15 @@ def sampling_times(start_seconds, end_seconds, frame_count):
         raise DomainError("采样时间必须为有限秒数", 422) from None
     if not math.isfinite(start) or not math.isfinite(end) or start < 0 or not 0 < end - start <= 30:
         raise DomainError("采样时间窗须为0至30秒的正区间", 422)
+    if at_seconds is not None:
+        if not isinstance(at_seconds, list) or not 1 <= len(at_seconds) <= 4:
+            raise DomainError("精确观察时间须为1至4个秒数", 422)
+        if any(isinstance(value, bool) or not isinstance(value, (int, float))
+               or not math.isfinite(value) or not start <= value < end for value in at_seconds):
+            raise DomainError("精确观察时间须位于指定窗口内，不包含窗口终点", 422)
+        if sorted(set(at_seconds)) != at_seconds:
+            raise DomainError("精确观察时间须递增且不能重复", 422)
+        return list(at_seconds)
     return [round(start + (end - start) * (index + 0.5) / frame_count, 3) for index in range(frame_count)]
 
 
@@ -254,23 +266,50 @@ def _sample_local_media(executable, media, times, cancelled):
 
 
 async def sample_source_video(settings, sessions, user_id, source_id,
-                              start_seconds, end_seconds, frame_count=3):
+                              start_seconds, end_seconds, frame_count=3, at_seconds=None):
     """Return bounded actual frames; no visual model, animation or remote ffmpeg."""
-    times = sampling_times(start_seconds, end_seconds, frame_count)
+    times = sampling_times(start_seconds, end_seconds, frame_count, at_seconds)
+    reused_media_id = None
     with sessions() as db:
         parent = readable_source(db, user_id, source_id)
+        if parent.origin == "video_frame_sample":
+            # A follow-up may inspect an exact contact/action moment using the
+            # bounded original already retained. Never re-download just because
+            # sparse first observations missed a transition.
+            previous = json.loads(parent.content)
+            original = readable_source(db, user_id, previous["parent_source_id"])
+            if original.origin != "public_web" or canonical_video_url(original.url)[0] != parent.url:
+                raise DomainError("已留存视频与原资料不匹配", 409)
+            asset = db.get(Asset, previous["video_asset_id"])
+            if not asset or asset.owner_id != user_id or asset.media_type != "video/mp4":
+                raise DomainError("已留存原视频不可用", 404)
+            path = Path(asset.path)
+            if not path.is_file() or not 12 <= path.stat().st_size <= MEDIA_LIMIT:
+                raise DomainError("已留存原视频已失效或超过上限", 404)
+            media = path.read_bytes()
+            if media[4:8] != b"ftyp":
+                raise DomainError("已留存内容不是单文件MP4", 422)
+            reused_media_id = asset.id
+            source_id, parent = original.id, original
+            info = {"id": previous["bvid"], "title": previous["title"],
+                    "duration": previous["original_duration_seconds"]}
+            fmt = {"format_id": previous["format_id"], "width": previous["source_width"],
+                   "height": previous["source_height"]}
+            if not isinstance(info["duration"], (int, float)) or float(end_seconds) > info["duration"]:
+                raise DomainError("采样时间超过已留存视频时长", 422)
         if parent.origin != "public_web":
             raise DomainError("仅支持已读取的公开B站网页来源", 422)
         url, bvid = canonical_video_url(parent.url)
     executable = _ffmpeg_executable()
-    _yt_types()  # Fail before network when the optional dependency is absent.
-    info = await asyncio.to_thread(_extract_metadata, url)
-    fmt = _select_format(info, bvid, float(end_seconds))
-    try:
-        _, _, media = await asyncio.wait_for(download_public(fmt["url"], max_bytes=MEDIA_LIMIT,
-            headers={**PUBLIC_HEADERS, "Range": "bytes=0-"}), timeout=30)
-    except Exception:
-        raise DomainError("公开视频媒体读取受限或超过12MB／时间上限", 502) from None
+    if reused_media_id is None:
+        _yt_types()  # Fail before network when the optional dependency is absent.
+        info = await asyncio.to_thread(_extract_metadata, url)
+        fmt = _select_format(info, bvid, float(end_seconds))
+        try:
+            _, _, media = await asyncio.wait_for(download_public(fmt["url"], max_bytes=MEDIA_LIMIT,
+                headers={**PUBLIC_HEADERS, "Range": "bytes=0-"}), timeout=30)
+        except Exception:
+            raise DomainError("公开视频媒体读取受限或超过12MB／时间上限", 502) from None
     if len(media) > MEDIA_LIMIT or len(media) < 12 or media[4:8] != b"ftyp":
         raise DomainError("取得内容不是有界单文件MP4", 422)
     cancelled = threading.Event()
@@ -287,6 +326,10 @@ async def sample_source_video(settings, sessions, user_id, source_id,
         current_url, _ = canonical_video_url(parent.url)
         if current_url != url or parent.origin != "public_web":
             raise DomainError("资料来源在采样过程中已改变", 409)
+        if reused_media_id is not None:
+            reused = db.get(Asset, reused_media_id)
+            if not reused or reused.owner_id != user_id or reused.media_type != "video/mp4":
+                raise DomainError("视频原件在采样过程中已改变", 409)
         created_paths = []
         try:
             def retain(body, media_type, name):
@@ -296,7 +339,7 @@ async def sample_source_video(settings, sessions, user_id, source_id,
                 path.write_bytes(body)
                 db.add(Asset(id=asset_id, owner_id=user_id, path=str(path), media_type=media_type, original_name=name))
                 return asset_id
-            media_id = retain(media, "video/mp4", f"{bvid}-anonymous-original.mp4")
+            media_id = reused_media_id or retain(media, "video/mp4", f"{bvid}-anonymous-original.mp4")
             manifest_frames = []
             for frame in frames:
                 asset_id = retain(frame["body"], "image/png", f"{bvid}-at-{frame['at_seconds']}s.png")
@@ -307,6 +350,10 @@ async def sample_source_video(settings, sessions, user_id, source_id,
                 "format_id": str(fmt.get("format_id", ""))[:80], "source_width": fmt["width"], "source_height": fmt["height"],
                 "requested_window_seconds": [float(start_seconds), float(end_seconds)], "frames": manifest_frames,
                 "timestamp_precision": "记录请求的seek秒数；解码帧按源帧率量化，不声称精确逐帧PTS。",
+                "sampling_method": "explicit_timestamps" if at_seconds is not None else "uniform_midpoints",
+                "media_reused": reused_media_id is not None,
+                "observation_limits": {"audio_observed": False, "full_video_observed": False,
+                    "continuous_motion_observed": False, "unseen_steps_known": False},
                 "reading_scope": SCOPE, "download_scope": "取得一条有界低分辨率原视频文件，然后只在本地抽取指定帧；不是只下载该时间窗。"}
             derived = SourceRecord(owner_id=user_id, item_id=parent.item_id, origin="video_frame_sample",
                 title=f"视频抽帧：{manifest['title']}", url=url, content=json.dumps(manifest, ensure_ascii=False),

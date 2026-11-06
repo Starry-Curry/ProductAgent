@@ -1,7 +1,8 @@
 from datetime import date
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+from .persona_models import GrowthStoppedTrait, GrowthTrait
 
 
 class Input(BaseModel):
@@ -31,6 +32,8 @@ class AvatarSpec(Input):
     nickname: str = Field(default="", max_length=80)
     personality: str = Field(default="", max_length=2000)
     color: str = Field(default="#d49c62", pattern=r"^#[0-9a-fA-F]{6}$")
+    growth_enabled: bool = True
+    growth_dismissed_ids: list[str] = Field(default_factory=list, max_length=100)
 
 
 class ProductSpec(Input):
@@ -49,6 +52,8 @@ class AvatarView(AvatarSpec):
     growth_note: str = ""
     growth_source: str = ""
     growth_evidence: list[dict] = Field(default_factory=list)
+    growth_traits: list[GrowthTrait] = Field(default_factory=list)
+    growth_stopped_traits: list[GrowthStoppedTrait] = Field(default_factory=list)
 
 
 class ItemCreate(Input):
@@ -84,15 +89,30 @@ class ItemView(ItemCreate):
 
 class ExperienceCreate(Input):
     title: str = Field(min_length=1, max_length=160)
-    text: str = Field(min_length=1, max_length=20000)
+    text: str = Field(default="", max_length=20000)
     item_ids: list[str] = Field(default_factory=list, max_length=30)
     photo_ids: list[str] = Field(default_factory=list, max_length=8)
     occurred_on: date | None = None
     allow_ai: bool = False
 
+    @model_validator(mode="after")
+    def has_content(self):
+        if not self.text.strip() and not self.photo_ids:
+            raise ValueError("留下一句话或一张照片即可")
+        return self
+
 
 class ExperienceChange(ExperienceCreate):
     expected_version: int = Field(ge=1)
+
+
+class CommunitySessionView(BaseModel):
+    failure_phase: str | None = None
+    failure_reason: str | None = None
+    stage: str
+    connected: bool
+    remaining_seconds: int
+    qr_data_url: str | None = None
 
 
 class TaskSave(Input):

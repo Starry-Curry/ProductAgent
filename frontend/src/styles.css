@@ -4254,3 +4254,16 @@ small {
     scroll-behavior: auto !important;
   }
 }
+
+/* Grounded companion traits stay secondary to the object and conversation. */
+.persona-growth-details { margin-top: .7rem; font-size: .88rem; color: var(--text-muted, #716e68); }
+.persona-growth-details > summary { cursor: pointer; color: var(--text, #3f4442); }
+.persona-growth-details > p { margin: .65rem 0; }
+.persona-growth-switch { display: flex; align-items: center; gap: .5rem; margin-top: .8rem; }
+.persona-growth-trait { padding: .7rem 0; border-top: 1px solid #d8d3c966; overflow-wrap: anywhere; }
+.persona-growth-trait p { margin: .35rem 0; }
+.persona-growth-trait blockquote { margin: .6rem 0; padding: .5rem .7rem; border-left: 2px solid #8ca8af; background: #ffffff66; white-space: pre-wrap; }
+.persona-growth-trait .quiet-button { margin-top: .45rem; }
+
+.community-login-qr { display:block; width:180px; max-width:100%; padding:8px; background:white; border-radius:12px; margin:12px auto; }
+.community-connection { margin-bottom:1.2rem; }

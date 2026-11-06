@@ -46,7 +46,7 @@ class SearchReadChainTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(value["results"][0]["author"], "顺手TV")
         self.assertEqual(value["results"][0]["read_state"], "not_read")
         self.assertEqual(value["evidence_kind"], "search_result_not_full_document")
-        community.assert_awaited_once_with("长尾夹 手机支架")
+        community.assert_awaited_once_with("长尾夹 手机支架", requester=None)
         paid.assert_not_awaited(); originals.assert_not_awaited()
         self.assertFalse(self.evidence)
         with self.sessions() as db:

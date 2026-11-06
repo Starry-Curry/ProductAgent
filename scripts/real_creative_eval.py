@@ -29,7 +29,9 @@ class RequestBudget:
     Authorization header, URL query or request body is retained in the ledger.
     """
 
-    def __init__(self, path: Path, limit=600, initial=0):
+    def __init__(self, path: Path, limit: int | None = 600, initial=0):
+        if limit is not None and (isinstance(limit, bool) or limit < 1):
+            raise ValueError("Request limit must be positive or explicitly None")
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.limit = limit
@@ -37,8 +39,11 @@ class RequestBudget:
         self._lock = threading.Lock()
         with self.connect() as db:
             db.execute("CREATE TABLE IF NOT EXISTS counter (id INTEGER PRIMARY KEY, used INTEGER NOT NULL, ceiling INTEGER NOT NULL)")
-            db.execute("INSERT OR IGNORE INTO counter VALUES (1, ?, ?)", (initial, limit))
-            db.execute("UPDATE counter SET ceiling = MIN(ceiling, ?) WHERE id=1", (limit,))
+            # -1 records an explicitly uncapped NEW authorization. Opening an
+            # existing bounded ledger never raises or removes its old ceiling.
+            db.execute("INSERT OR IGNORE INTO counter VALUES (1, ?, ?)", (initial, -1 if limit is None else limit))
+            if limit is not None:
+                db.execute("UPDATE counter SET ceiling = CASE WHEN ceiling < 0 THEN ? ELSE MIN(ceiling, ?) END WHERE id=1", (limit, limit))
             db.execute("CREATE TABLE IF NOT EXISTS attempts (id INTEGER PRIMARY KEY, started REAL, endpoint TEXT, status TEXT, elapsed REAL)")
 
     @contextmanager
@@ -54,7 +59,7 @@ class RequestBudget:
         with self.connect() as db:
             db.execute("BEGIN IMMEDIATE")
             used, ceiling = db.execute("SELECT used, ceiling FROM counter WHERE id=1").fetchone()
-            if used >= ceiling:
+            if ceiling >= 0 and used >= ceiling:
                 raise RuntimeError("Real evaluation API request budget exhausted")
             db.execute("UPDATE counter SET used=used+1 WHERE id=1")
             cursor = db.execute("INSERT INTO attempts(started,endpoint,status) VALUES (?,?,?)", (time.time(), endpoint, "started"))
@@ -70,7 +75,7 @@ class RequestBudget:
         with self.connect() as db:
             used, ceiling = db.execute("SELECT used,ceiling FROM counter WHERE id=1").fetchone()
             groups = db.execute("SELECT endpoint,status,count(*) FROM attempts GROUP BY endpoint,status").fetchall()
-        return {"attempted": used, "ceiling": ceiling, "groups": groups}
+        return {"attempted": used, "ceiling": None if ceiling < 0 else ceiling, "groups": groups}
 
     def install(self, base_url, library=httpx):
         """Instrument HTTPX used by AgentScope, OpenAI search/vision and ReMe.
@@ -293,8 +298,10 @@ def main():
                         help="Explicitly identify a previously frozen independent case, not an ordinary development fixture")
     parser.add_argument("--label", default="first")
     parser.add_argument("--turns", type=int, default=0)
-    parser.add_argument("--request-limit", type=int, default=600,
-                        help="Authorized total ceiling; cannot itself raise an existing ledger's ceiling")
+    parser.add_argument("--request-limit", default="600",
+                        help="Authorized total ceiling or explicit 'unlimited'; never raises an existing ledger's ceiling")
+    parser.add_argument("--evaluation-root", type=Path,
+                        help="Separate local evaluation directory for a new authorized phase; preserves historical ledgers")
     parser.add_argument("--thinking-budget", type=int, default=None,
                         help="Explicit performance experiment; leaves normal default unchanged")
     parser.add_argument("--model", help="Explicit same-provider comparison; does not edit .env or the application default")
@@ -305,8 +312,12 @@ def main():
     args = parser.parse_args()
     if not args.real:
         parser.error("--real required; this uses the authorized Bailian account")
-    if args.request_limit < 1:
-        parser.error("--request-limit must be positive")
+    try:
+        args.request_limit = None if args.request_limit == "unlimited" else int(args.request_limit)
+        if args.request_limit is not None and args.request_limit < 1:
+            raise ValueError()
+    except ValueError:
+        parser.error("--request-limit must be positive or 'unlimited' under explicit authorization")
     if args.independent and (not args.cases_file or args.resume_from):
         parser.error("--independent requires a frozen --cases-file and cannot be used for resumed development")
     from fastapi.testclient import TestClient
@@ -316,7 +327,9 @@ def main():
     from wujian.retrieval import claim_view
     from wujian.server import create_app
 
-    folder = ROOT / "var/evaluations/2026-11-06-creative-memory-rea"
+    folder = args.evaluation_root.resolve() if args.evaluation_root else ROOT / "var/evaluations/2026-11-06-creative-memory-rea"
+    if not folder.resolve().is_relative_to(ROOT.resolve()):
+        parser.error("--evaluation-root must stay within the project workspace")
     config = Settings.load()
     if args.model:
         config.model=args.model

@@ -1088,6 +1088,42 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/experiences/{experience_id}/photo-matches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Match */
+        post: operations["match_api_experiences__experience_id__photo_matches_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/community/bilibili/session": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Community Status */
+        get: operations["community_status_api_community_bilibili_session_get"];
+        put?: never;
+        /** Community Start */
+        post: operations["community_start_api_community_bilibili_session_post"];
+        /** Community Close */
+        delete: operations["community_close_api_community_bilibili_session_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1120,6 +1156,13 @@ export interface components {
              * @default #d49c62
              */
             color: string;
+            /**
+             * Growth Enabled
+             * @default true
+             */
+            growth_enabled: boolean;
+            /** Growth Dismissed Ids */
+            growth_dismissed_ids?: string[];
         };
         /** AvatarView */
         AvatarView: {
@@ -1150,6 +1193,13 @@ export interface components {
              */
             color: string;
             /**
+             * Growth Enabled
+             * @default true
+             */
+            growth_enabled: boolean;
+            /** Growth Dismissed Ids */
+            growth_dismissed_ids?: string[];
+            /**
              * Gift From
              * @default
              */
@@ -1173,6 +1223,10 @@ export interface components {
             growth_evidence?: {
                 [key: string]: unknown;
             }[];
+            /** Growth Traits */
+            growth_traits?: components["schemas"]["GrowthTrait"][];
+            /** Growth Stopped Traits */
+            growth_stopped_traits?: components["schemas"]["GrowthStoppedTrait"][];
         };
         /** Body_upload_api_assets_post */
         Body_upload_api_assets_post: {
@@ -1208,6 +1262,21 @@ export interface components {
             /** Photo Ids */
             photo_ids?: string[];
             entry_context?: components["schemas"]["EntryContext"] | null;
+        };
+        /** CommunitySessionView */
+        CommunitySessionView: {
+            /** Failure Phase */
+            failure_phase?: string | null;
+            /** Failure Reason */
+            failure_reason?: string | null;
+            /** Stage */
+            stage: string;
+            /** Connected */
+            connected: boolean;
+            /** Remaining Seconds */
+            remaining_seconds: number;
+            /** Qr Data Url */
+            qr_data_url?: string | null;
         };
         /** ConversationView */
         ConversationView: {
@@ -1282,7 +1351,10 @@ export interface components {
         ExperienceChange: {
             /** Title */
             title: string;
-            /** Text */
+            /**
+             * Text
+             * @default
+             */
             text: string;
             /** Item Ids */
             item_ids?: string[];
@@ -1302,7 +1374,10 @@ export interface components {
         ExperienceCreate: {
             /** Title */
             title: string;
-            /** Text */
+            /**
+             * Text
+             * @default
+             */
             text: string;
             /** Item Ids */
             item_ids?: string[];
@@ -1320,7 +1395,10 @@ export interface components {
         ExperienceView: {
             /** Title */
             title: string;
-            /** Text */
+            /**
+             * Text
+             * @default
+             */
             text: string;
             /** Item Ids */
             item_ids: string[];
@@ -1443,6 +1521,56 @@ export interface components {
             status: string;
             /** Created At */
             created_at: string;
+        };
+        /** GrowthEvidence */
+        GrowthEvidence: {
+            /** Message Id */
+            message_id?: string | null;
+            /**
+             * Quote
+             * @default
+             */
+            quote: string;
+            /** Experience Id */
+            experience_id?: string | null;
+            /** Version */
+            version?: number | null;
+            /**
+             * Lineage Id
+             * @description Original source identity stamped by the authoritative writer, never supplied by the model
+             */
+            readonly lineage_id?: string | null;
+        };
+        /**
+         * GrowthStoppedTrait
+         * @description A local expression control, with no private story or evidence identities.
+         */
+        GrowthStoppedTrait: {
+            /**
+             * Dimension
+             * @enum {string}
+             */
+            dimension: "pace" | "humor" | "support" | "relationship";
+            /** Behavior */
+            behavior: string;
+            /** Context */
+            context: string;
+        };
+        /** GrowthTrait */
+        GrowthTrait: {
+            /** Id */
+            id: string;
+            /**
+             * Dimension
+             * @enum {string}
+             */
+            dimension: "pace" | "humor" | "support" | "relationship";
+            /** Behavior */
+            behavior: string;
+            /** Context */
+            context: string;
+            /** Evidence */
+            evidence: components["schemas"]["GrowthEvidence"][];
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -1665,6 +1793,64 @@ export interface components {
             attributes?: {
                 [key: string]: unknown;
             };
+        };
+        /** PhotoMatchCandidate */
+        PhotoMatchCandidate: {
+            /** Item Id */
+            item_id: string;
+            /** Photo Ids */
+            photo_ids: string[];
+            /**
+             * Verdict
+             * @enum {string}
+             */
+            verdict: "same_instance" | "possible";
+            /**
+             * Evidence Kind
+             * @enum {string}
+             */
+            evidence_kind: "distinctive_detail" | "visible_identity" | "category_only";
+            /** Reference Detail */
+            reference_detail: string;
+            /** Observed Detail */
+            observed_detail: string;
+            /** Explanation */
+            explanation: string;
+            /** Ambiguous With */
+            ambiguous_with?: string[];
+            /** Item Name */
+            item_name: string;
+            /**
+             * Auto Linked
+             * @default false
+             */
+            auto_linked: boolean;
+        };
+        /** PhotoMatchRequest */
+        PhotoMatchRequest: {
+            /** Expected Version */
+            expected_version: number;
+            /**
+             * Apply Confident
+             * @default true
+             */
+            apply_confident: boolean;
+            /** Exclude Item Ids */
+            exclude_item_ids?: string[];
+        };
+        /** PhotoMatchResult */
+        PhotoMatchResult: {
+            experience: components["schemas"]["ExperienceView"];
+            /** Candidates */
+            candidates: components["schemas"]["PhotoMatchCandidate"][];
+            /** Examined Items */
+            examined_items: number;
+            /** Examined Item Ids */
+            examined_item_ids: string[];
+            /** Remaining Items */
+            remaining_items: number;
+            /** Note */
+            note: string;
         };
         /** Preferences */
         Preferences: {
@@ -4383,6 +4569,101 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    match_api_experiences__experience_id__photo_matches_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                experience_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PhotoMatchRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PhotoMatchResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    community_status_api_community_bilibili_session_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommunitySessionView"];
+                };
+            };
+        };
+    };
+    community_start_api_community_bilibili_session_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommunitySessionView"];
+                };
+            };
+        };
+    };
+    community_close_api_community_bilibili_session_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommunitySessionView"];
                 };
             };
         };

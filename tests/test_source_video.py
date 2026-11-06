@@ -60,7 +60,36 @@ class SourceVideoTests(unittest.IsolatedAsyncioTestCase):
 
     async def call(self, **kwargs):
         return await sample_source_video(self.settings, self.sessions, kwargs.pop("user_id", self.owner),
-            self.source_id, kwargs.pop("start_seconds", 5), kwargs.pop("end_seconds", 10), kwargs.pop("frame_count", 1))
+            kwargs.pop("source_id", self.source_id), kwargs.pop("start_seconds", 5),
+            kwargs.pop("end_seconds", 10), kwargs.pop("frame_count", 1), kwargs.pop("at_seconds", None))
+
+    async def test_targeted_followup_reuses_authorized_media_without_network_or_new_video_asset(self):
+        with patch("wujian.source_video._ffmpeg_executable", return_value="trusted-ffmpeg"), \
+             patch("wujian.source_video._yt_types"), patch("wujian.source_video._extract_metadata", return_value=metadata()), \
+             patch("wujian.source_video.download_public", new=AsyncMock(return_value=(MEDIA_URL, "video/mp4", MP4))), \
+             patch("wujian.source_video._decode_frames", return_value=[frame(7.5)]):
+            first = await self.call()
+        with patch("wujian.source_video._ffmpeg_executable", return_value="trusted-ffmpeg"), \
+             patch("wujian.source_video._yt_types") as sdk, \
+             patch("wujian.source_video.download_public", new=AsyncMock()) as download, \
+             patch("wujian.source_video._decode_frames", return_value=[frame(8), frame(8.5)]) as decode:
+            followup = await self.call(source_id=first["source_id"], at_seconds=[8, 8.5])
+        sdk.assert_not_called()
+        download.assert_not_awaited()
+        self.assertEqual(decode.call_args.args[2], [8, 8.5])
+        self.assertTrue(followup["manifest"]["media_reused"])
+        self.assertFalse(followup["manifest"]["observation_limits"]["continuous_motion_observed"])
+        self.assertEqual(followup["parent_source_id"], self.source_id)
+        with self.sessions() as db:
+            self.assertEqual(len([asset for asset in db.scalars(select(Asset)) if asset.media_type == "video/mp4"]), 1)
+            db.get(SourceRecord, self.source_id).owner_id = self.friend
+            db.commit()
+            with self.assertRaises(domain.DomainError):
+                retained_video_frames(db, self.owner, followup["source_id"])
+        with patch("wujian.source_video._ffmpeg_executable") as dependency:
+            with self.assertRaises(domain.DomainError):
+                await self.call(source_id=first["source_id"])
+            dependency.assert_not_called()
 
     async def test_permissions_and_non_bv_sources_fail_before_dependency_or_network(self):
         with patch("wujian.source_video._yt_types") as dependency, patch("wujian.source_video.download_public", new=AsyncMock()) as download:
@@ -80,6 +109,10 @@ class SourceVideoTests(unittest.IsolatedAsyncioTestCase):
             with self.subTest(start=start, end=end, count=count), self.assertRaises(domain.DomainError):
                 sampling_times(start, end, count)
         self.assertEqual(sampling_times(5, 10, 2), [6.25, 8.75])
+        self.assertEqual(sampling_times(5, 10, 3, [5, 5.25, 9.99]), [5, 5.25, 9.99])
+        for times in [[True], [float("nan")], [4], [10], [6, 5], [6, 6], [], [5, 6, 7, 8, 9], "7"]:
+            with self.subTest(times=times), self.assertRaises(domain.DomainError):
+                sampling_times(5, 10, 3, times)
 
     async def test_derived_source_keeps_parent_scope_and_retains_actual_assets(self):
         observed = frame(7.5)

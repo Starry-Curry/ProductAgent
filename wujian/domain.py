@@ -106,11 +106,11 @@ def item_readers(db, item_id):
                      HouseholdItem.item_id == item_id, HouseholdMember.status == "active"))})
 
 
-def item_view(db, user_id, item):
+def item_view(db, user_id, item, *, history=None):
     accessible_item(db, user_id, item.id)
     profile = db.get(Profile, (user_id, item.id))
     from .memory_lifecycle import current_avatar
-    avatar = current_avatar(db,user_id,item.id,profile.avatar) if profile else {}
+    avatar = current_avatar(db,user_id,item.id,profile.avatar,history=history) if profile else {}
     return {"id": item.id, "owner_id": item.owner_id, "name": item.name, "kind": item.kind,
             "product": item.product, "product_id":item.product_id, "identity_notes":item.identity_notes,
             "state": item.state, "photo_id": item.photo_id,
@@ -131,7 +131,9 @@ def list_items(db, user_id, query="", include_archived=False):
     if not include_archived:
         statement = statement.where(ItemRecord.archived.is_(False))
     rows = db.scalars(statement.order_by(ItemRecord.created_at)).all()
-    views = [item_view(db, user_id, row) for row in rows]
+    from .memory_lifecycle import scoped_history_policy
+    history = scoped_history_policy(db, user_id)
+    views = [item_view(db, user_id, row, history=history) for row in rows]
     if query:
         query = query.casefold()
         views = [row for row in views if query in json.dumps(row, ensure_ascii=False).casefold()]
@@ -190,7 +192,13 @@ def change_item(db, user_id, item_id, payload: ItemChange, *, origin_run_id=None
         profile = Profile(user_id=user_id, item_id=item_id)
         db.add(profile)
     profile.description = payload.description
-    profile.avatar = {**(profile.avatar or {}), **payload.avatar.model_dump()}
+    avatar_update = payload.avatar.model_dump()
+    # Existing clients changing a color/name must not reset owner growth
+    # controls merely because newly added optional fields have defaults.
+    for control in ("growth_enabled", "growth_dismissed_ids"):
+        if control not in payload.avatar.model_fields_set:
+            avatar_update.pop(control, None)
+    profile.avatar = {**(profile.avatar or {}), **avatar_update}
     affected = item_readers(db, item_id)
     invalidate_context(db, affected, stop_running=True, except_run_id=origin_run_id)
     db.commit()
@@ -200,6 +208,36 @@ def change_item(db, user_id, item_id, payload: ItemChange, *, origin_run_id=None
 
 def experience_view(row):
     return {key: getattr(row, key) for key in ("id", "creator_id", "title", "text", "item_ids", "item_labels", "photo_ids", "occurred_on", "origin_id", "provenance", "version", "allow_ai")}
+
+
+def shared_story_provenance(provenance):
+    """Transfer authorship, never private consent receipts or visual references."""
+    return {key: value for key, value in (provenance or {}).items()
+            if key in {"kind", "author_id", "author_name", "gift_id", "sender_name"}
+            and isinstance(value, str)}
+
+
+def wall_storage_view(db, user_id, item_ids=None):
+    """Owner-only storage receipt counts, without reading private story content."""
+    from sqlalchemy import func
+    total = db.scalar(select(func.count()).select_from(ExperienceRecord).where(
+        ExperienceRecord.creator_id == user_id)) or 0
+    readable = db.scalar(select(func.count()).select_from(ExperienceRecord).where(
+        ExperienceRecord.creator_id == user_id, ExperienceRecord.allow_ai.is_(True))) or 0
+    scope = set(item_ids or [])
+    scoped = []
+    if scope:
+        for item_id in scope:
+            accessible_item(db, user_id, item_id)
+        scoped = [allowed for linked, allowed in db.execute(select(
+            ExperienceRecord.item_ids, ExperienceRecord.allow_ai).where(
+                ExperienceRecord.creator_id == user_id)) if scope.intersection(linked)]
+    return {"saved_record_count":total,"ai_readable_record_count":readable,
+            "focused_items":None if not scope else {
+                "item_ids":sorted(scope), "saved_record_count":len(scoped),
+                "ai_readable_record_count":sum(bool(value) for value in scoped)},
+            "storage_is_separate_from_ai_permission":True,
+            "note":"保存数量仅确认记录存在，不提供关闭AI许可的正文、标题或照片。检索为空不能说没有保存；可提示在回忆墙查看。"}
 
 
 def list_experiences(db, user_id, item_id=None, query="", for_ai=False):
@@ -219,12 +257,13 @@ def list_experiences(db, user_id, item_id=None, query="", for_ai=False):
         value["access"] = "owner" if row.creator_id == user_id else "shared"
         if value["access"] == "shared":
             value.update(allow_ai=False, item_ids=[identity for identity in row.item_ids if identity in accessible],
-                item_labels={identity: label for identity, label in row.item_labels.items() if identity in accessible})
+                item_labels={identity: label for identity, label in row.item_labels.items() if identity in accessible},
+                provenance=shared_story_provenance(row.provenance))
         result.append(value)
     return result
 
 
-def create_experience(db, user_id, payload: ExperienceCreate, *, source_message_id=None):
+def create_experience(db, user_id, payload: ExperienceCreate, *, source_message_id=None, ai_consent_quote=""):
     """Create an authored wall record, optionally replay-safe for an Agent call.
 
     The tool opens a fresh session. Its originating message owns a compact
@@ -241,6 +280,8 @@ def create_experience(db, user_id, payload: ExperienceCreate, *, source_message_
         conversation = require(db.get(Conversation, source_message.conversation_id))
         if source_message.role != "user" or conversation.user_id != user_id:
             raise DomainError("回忆记录必须对应当前用户的实际消息", 403)
+        if payload.allow_ai and (not ai_consent_quote.strip() or ai_consent_quote not in source_message.text):
+            raise DomainError("允许回忆用于对话需要当前用户明确许可的原话；没有许可仍可正常记录", 403)
         identity = payload.model_dump(mode="json")
         identity["item_ids"] = sorted(set(identity["item_ids"]))
         recording_key = hashlib.sha256(json.dumps(identity, ensure_ascii=False,
@@ -263,6 +304,9 @@ def create_experience(db, user_id, payload: ExperienceCreate, *, source_message_
                            allow_ai=payload.allow_ai,
                            provenance={"kind":"authored_record","author_id":user_id,
                                        "author_name":db.get(User,user_id).display_name})
+    if source_message and payload.allow_ai:
+        row.provenance = {**row.provenance, "ai_consent": {
+            "message_id": source_message.id, "quote": ai_consent_quote}}
     db.add(row)
     if source_message:
         db.flush()
@@ -333,9 +377,12 @@ def share_item(db, user_id, item_id, recipient_id, revoke=False):
 
 
 def gift_view(db, row):
+    snapshot={**row.snapshot, "experiences":[
+        {**story, "provenance":shared_story_provenance(story.get("provenance",{}))}
+        for story in row.snapshot.get("experiences",[])]}
     return {"id": row.id, "sender": user_view(db.get(User, row.sender_id)),
             "recipient": user_view(db.get(User, row.recipient_id)), "item_id": row.item_id,
-            "snapshot": row.snapshot, "status": row.status, "created_at": row.created_at}
+            "snapshot": snapshot, "status": row.status, "created_at": row.created_at}
 
 
 def create_gift(db, user_id, payload: GiftCreate):
@@ -353,6 +400,7 @@ def create_gift(db, user_id, payload: GiftCreate):
             raise DomainError("只能附上自己创作且与这件物品关联的回忆")
         view = experience_view(experience)
         view["item_ids"], view["item_labels"] = [item.id], {item.id: item.name}
+        view["provenance"] = shared_story_provenance(experience.provenance)
         experiences.append(view)
     snapshot = {"name": item.name, "product": item.product, "message": payload.message,
                 "avatar": payload.avatar.model_dump(), "experiences": experiences,
@@ -399,7 +447,7 @@ def accept_gift(db, user_id, gift_id):
         db.add(ExperienceRecord(creator_id=user_id, title=experience["title"], text=experience["text"],
                                item_ids=[item.id], item_labels={item.id: gift.snapshot["name"]},
                                photo_ids=new_photos, occurred_on=experience["occurred_on"], origin_id=experience["id"],
-                               provenance={**experience.get("provenance",{}),"kind":"received_story",
+                               provenance={**shared_story_provenance(experience.get("provenance",{})),"kind":"received_story",
                                            "author_id":experience.get("provenance",{}).get("author_id",gift.sender_id),
                                            "author_name":experience.get("provenance",{}).get("author_name",gift.snapshot["sender_name"]),
                                            "gift_id":gift.id,"sender_name":gift.snapshot["sender_name"]}))

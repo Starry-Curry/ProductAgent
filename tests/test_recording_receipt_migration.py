@@ -39,7 +39,7 @@ class RecordingReceiptMigrationTests(unittest.TestCase):
                 self.assertEqual(question.recorded_experiences,{})
                 item=domain.create_item(db,'receipt-owner',ItemCreate(name='外婆的围巾',kind='nonstandard_object'))
                 record=domain.create_experience(db,'receipt-owner',ExperienceCreate(
-                    title='找回围巾',text='今天找到了围巾。',item_ids=[item['id']],allow_ai=True),
+                    title='找回围巾',text='今天找到了围巾。',item_ids=[item['id']],allow_ai=False),
                     source_message_id=question.id)
                 receipts=dict(db.get(ChatMessage,question.id).recorded_experiences)
                 self.assertEqual(list(receipts.values()),[record['id']])

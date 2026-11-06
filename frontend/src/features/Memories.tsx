@@ -13,6 +13,7 @@ import { request, type Experience, type Workspace } from "../api";
 import type { Editor } from "./Editors";
 import { EmptyState, Pill, safeDate } from "./shared";
 import { navigate } from "./navigation";
+import { PhotoMatchFinder } from "./PhotoMatchReview";
 
 export default function Memories({
   workspace,
@@ -210,6 +211,8 @@ export default function Memories({
                 </button>
               ))}
             </div>
+            {selected.access === "owner" && !selected.origin_id && selected.photo_ids.length > 0 &&
+              <PhotoMatchFinder key={selected.id} experience={selected} items={workspace.items} onDone={refresh} />}
             <p className="form-note">
               <LockKeyhole size={14} />
               {selected.access === "shared"

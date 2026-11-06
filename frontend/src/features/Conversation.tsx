@@ -31,6 +31,8 @@ const toolLabels: Record<string, string> = {
   read_source: "核对资料细节",
   view_source_page: "查看说明书图示",
   recall_memories: "回看获准经历",
+  record_experience: "记下你想留下的这件事",
+  evolve_avatar: "整理相处的默契",
   search_world: "寻找相关的物与经历",
   read_task: "接续正在做的事",
   GenerateStructuredOutput: "整理回答与后续安排",

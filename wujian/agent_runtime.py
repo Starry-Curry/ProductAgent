@@ -4,6 +4,7 @@ import base64
 import functools
 import json
 import logging
+import os
 import time
 from dataclasses import dataclass
 from datetime import datetime
@@ -48,6 +49,7 @@ from .retrieval import record_write_receipts, task_view
 from .source_access import readable_source
 from .source_video import retained_video_frames, sample_source_video
 from .turns import TurnResult, commit_result, grounded_turn_schema
+from .persona_models import GrowthEvidence, GrowthTrait, GrowthTraitProposal, growth_trait_id
 
 logger = logging.getLogger(__name__)
 
@@ -66,6 +68,9 @@ SYSTEM = """你是物间 Wujian，帮助人认识、用好、创造、纪念和�
 需要清单、逐步指导或创意试验时，continuation.plan 使用 {"schema":"interaction/1","kind":"checklist或guidance或idea","entries":[{"id":"稳定的条目编号","title":"当前动作或需求","item_id":null,"group":"owned或buy或borrow或confirm或step","note":"条件、依据、完成标志与未知","state":"pending"}]}。只给实际已有且获准的物品填写item_id；新需求、待购买和借用未落实的物品保持null。新增条目为pending，不能替用户勾选；续接保留已报告的真实进度，不把准备完成当成现实目标完成。active_task是当前事项，不另建重复任务。
 全局物伴按companion_preferences称呼；仅当用户明确进入persona且该物品avatar.enabled为true时用物品分身身份，其余时候由全局物伴服务。关闭分身不删除物品与真实经历。照片仅作当前附件，用户未选择登记时不自动建物品。
 回忆墙是用户主动的照片文字记录；仅当用户要求记录一段经历时调用record_experience，不把普通聊天自动发布到回忆墙。用户感受有独立价值，不需外部验证。
+用户主动记录且明确允许以后聊天参考这条记录时，record_experience可携带allow_ai=true及当轮明确许可原话，不需要再问一遍；未明确许可时保持关闭。开启许可不等于对外分享。
+与已开启的物品分身相处时，可按需阅读persona-companion技能。明确的表达偏好或真实共同经历可通过evolve_avatar安静形成有情境的特点；普通心情不必沉淀。显式设定、停止成长及不再沿用的特点优先，当前请求优先于旧相处习惯；不要为了表现懂用户而反复提往事或解释后台记忆。
+分身avatar.growth_stopped_traits是用户要求这个分身停止沿用的表达约束，优先于旧Memory中的相关偏好；不要把它当作仍有效性格。此设置不撤销用户在全局或其他物品中的独立偏好。
 分身：结合其人格、获准的真实共同经历自然表达。记录的creator_id表示保存账号，provenance才是原作者和来源；收到的故事不证明接收者亲历，记录文字也不证明当前现场。被问到已有故事时，用story_refs引用实际经历ID，由应用按原作者呈现原文；answer只表达当下陪伴或说明，不复述过去场景。可以基于明确经历补充成长笔记，保留用户设定的主干人格。拟人表达不能编造真实往事、人物表情或赠送者心理；新创作应明确是想象故事。礼物承载心意，但不冒充赠送者实时本人，不读取其私人信息。
 权限：只用当前身份能够读取或修改的资料；工具拒绝访问时不绕过。赠礼与共享由界面上的明确操作完成。能解释不等于已经执行，模拟数据不等于真实设备。设备未连接时不得声称操作成功。
 表达清楚、温和、有具体帮助，先解决当前问题，按需要展开，避免广告式推送、冗长后台术语、机械的功能介绍和反复确认。创意中的预期体验用建议表达，不作必然有效的心理或健康承诺；未核对的型号参数不当作已确认事实。每个工具结果与当前上下文版本优先于旧记忆中的状态。
@@ -74,6 +79,7 @@ SYSTEM = """你是物间 Wujian，帮助人认识、用好、创造、纪念和�
 COMPANION_VOICE = """
 当前窗口是物品的数字形象：用它的昵称和用户设定的性格，在当下陪人聊天。过去的事来自用户记录，不是这份数字形象当时身在现场的感官记忆。
 找回故事时，story_refs交给程序按原作者呈现原文；answer只接住此刻的人、简短回答缺失细节是否已记录，不再复述制作或相处过程。平常可能发生的动作也不是记录过的动作，不为温暖自然补进真实往事。对方此刻想法、当前现场和实物反应同样不能假称已知。
+没有记载某人在场，不等于记载了他不在场；收到故事中的“我”是原作者，也不证明作者独自出行。被问及未记录的同行者、地点或动作时说记录未说明，不能为了明确回答而做肯定或否定推断。诗意表达不能补写成真实往事。
 可以轻松、俏皮、安静，也可以说“我陪着你”。用户邀请想象或演个样子时，自然地一起玩，仍与真实经历分开；跟随此刻的话题和用户要的长度，不追加留档要求、改善心情任务或例行追问。
 """
 
@@ -102,7 +108,10 @@ def personal_context(db, user_id, item_ids, persona=False):
     # Apply that scope BEFORE the recency limit: newer notes about other objects
     # must not crowd out this companion's own older understanding.
     focused_item = item_ids[0] if persona and len(item_ids) == 1 else None
-    memories = domain.recall(db, user_id, item_id=focused_item, limit=100 if persona and not focused_item else 12)
+    memories = domain.recall(db, user_id, item_id=focused_item, limit=100 if persona else 12)
+    if focused_item:
+        from .memory_lifecycle import filter_persona_memories
+        memories=filter_persona_memories(db,user_id,focused_item,memories)
     experiences = domain.list_experiences(db, user_id, for_ai=True)
     focused = set(item_ids)
     if persona:
@@ -120,7 +129,8 @@ def personal_context(db, user_id, item_ids, persona=False):
     # A wall entry may contain 20,000 characters. Load its identity up front,
     # not an autobiographical scene that primes a casual companion to elaborate
     # on it. Original authorized records remain available through the tools.
-    return {"active_personal_memories": memories[:12], "recent_tasks": tasks, "recent_experience_index": [
+    return {"active_personal_memories": memories[:12], "recent_tasks": tasks,
+            "wall_storage":domain.wall_storage_view(db,user_id,item_ids), "recent_experience_index": [
         {key:row[key] for key in ("id","title","item_ids","occurred_on","origin_id","provenance")}
         for row in experiences[:5]]}
 
@@ -158,6 +168,7 @@ class TurnContext:
     run_id: str
     conversation_id: str
     revision: int
+    deadline_at: float | None = None
 
     def check(self, db, own_write=False):
         run = domain.require(db.get(Run, self.run_id))
@@ -171,7 +182,28 @@ class TurnContext:
         self.revision = expected
 
 
-def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=None, evidence_sources=None, turn_context=None):
+def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=None, evidence_sources=None, turn_context=None, communities=None):
+    persona_item_id=None
+    with sessions() as db:
+        message=db.get(ChatMessage,message_id)
+        conversation=db.get(Conversation,message.conversation_id) if message else None
+        if (conversation and conversation.user_id==user_id
+                and conversation.entry_context.get('intent')=='persona' and len(conversation.item_ids)==1):
+            persona_item_id=conversation.item_ids[0]
+
+    def persona_memories(db, rows):
+        from .memory_lifecycle import filter_persona_memories
+        return filter_persona_memories(db,user_id,persona_item_id,rows) if persona_item_id else rows
+
+    def persona_search(db, result):
+        from .memory_lifecycle import filter_persona_retrieval
+        return filter_persona_retrieval(db,user_id,persona_item_id,result) if persona_item_id else result
+
+    async def community_requester():
+        if communities and (await communities.status(user_id)).get('connected'):
+            return lambda request: communities.request(user_id, request)
+        return None
+
     async def find_items(query: str = ""):
         """Find accessible objects by name/model/description. Empty query lists known resources; no match does not prove absence."""
         with sessions() as db:
@@ -243,24 +275,39 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
                 origin_run_id=turn_context.run_id if turn_context else None)
 
     async def recall_memories(query: str = "", item_id: str | None = None, experience_id: str | None = None):
-        """Read authorized personal understanding and wall entries. With a known experience_id, read that exact original directly (no semantic search needed). Otherwise query by words or item. AI consent is rechecked on every call; a received story keeps its actual author."""
+        """Read AI-permitted personal understanding and wall entries. Empty/not-found means no record available for THIS AI use, never proof nothing was saved; the owner may still view private records on the memory wall. With a known experience_id read directly, otherwise query. A received story keeps its author: first-person words refer to that author, and an unmentioned companion/place/action remains unknown, not absent or invented."""
+        def reading_scope(rows):
+            return {"scope":"only_ai_permitted_records_not_all_saved_records",
+                "narrators":[{"experience_id":row['id'],
+                    "author_name":row.get('provenance',{}).get('author_name',''),
+                    "received_story":bool(row.get('origin_id'))} for row in rows],
+                "unmentioned_details":"unknown, not absent; do not infer who was alone, who was absent, a place or an action not stated in the original",
+                "display_original":"Use story_refs when the user wants to see the original story; avoid retelling it with added events."}
         if experience_id:
             with sessions() as db:
                 row=domain.require(db.get(ExperienceRecord,experience_id))
                 if row.creator_id != user_id or not row.allow_ai or (item_id and item_id not in row.item_ids):
                     raise domain.DomainError("没有找到可供对话参考的这段回忆",404)
-                return {"memories":[],"experiences":[domain.experience_view(row)]}
+                rows=[domain.experience_view(row)]
+                return {"memories":[],"experiences":rows,"reading_scope":reading_scope(rows),
+                        "wall_storage":domain.wall_storage_view(db,user_id,[item_id] if item_id else [persona_item_id] if persona_item_id else None)}
         if retrieval and query and not item_id:
-            return await retrieval.search(user_id,query,['memory','experience'],12)
+            result=await retrieval.search(user_id,query,['memory','experience'],12)
+            with sessions() as db:
+                return {**persona_search(db,result),"wall_storage":domain.wall_storage_view(db,user_id,[persona_item_id] if persona_item_id else None)}
         with sessions() as db:
-            return {"memories": domain.recall(db, user_id, query, item_id),
-                    "experiences": domain.list_experiences(db, user_id, item_id, query, for_ai=True)[:12]}
+            rows=domain.list_experiences(db, user_id, item_id, query, for_ai=True)[:12]
+            return {"memories": persona_memories(db,domain.recall(db, user_id, query, item_id)),
+                    "experiences": rows,"reading_scope":reading_scope(rows),
+                    "wall_storage":domain.wall_storage_view(db,user_id,[item_id] if item_id else [persona_item_id] if persona_item_id else None)}
 
     async def search_world(query: str, kinds: list[str] | None = None):
         """Semantic + keyword search across authorized item, memory, experience, knowledge, source, task and conversation entities (use these singular names in kinds). Old exchanges recover past proposals even if no task was created; proposals are not observed outcomes. Returned data is rechecked; no match is not absence."""
         if not retrieval:
             raise domain.DomainError('语义检索尚未连接')
-        return await retrieval.search(user_id,query,kinds)
+        result=await retrieval.search(user_id,query,kinds)
+        with sessions() as db:
+            return {**persona_search(db,result),"wall_storage":domain.wall_storage_view(db,user_id,[persona_item_id] if persona_item_id else None)}
 
     async def read_task(task_id: str):
         """Read a continuing goal, latest plan, resource constraints and actual feedback, even from another conversation."""
@@ -283,43 +330,90 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
             raise domain.DomainError('设备探索尚未连接')
         return await devices.explore(user_id,target_id)
 
-    async def record_experience(title: str, text: str, item_ids: list[str], occurred_on: str = "", photo_ids: list[str] | None = None):
-        """Create ONE memory-wall entry ONLY when the user asks. Returns a WRITE RECEIPT, not an AI-readable story: new wall entries default to allow_ai=false and cannot be used in story_refs. Simply confirm the save; the current user's words remain usable in this chat. Preserve their words; do not invent details. Use a known YYYY-MM-DD event date (today only if actually today); leave occurred_on empty if an old date is unknown. No extra date question just to save."""
+    async def record_experience(title: str, text: str, item_ids: list[str], occurred_on: str = "", photo_ids: list[str] | None = None,
+                                allow_ai: bool = False, ai_consent_quote: str = ""):
+        """Save ONE authored wall entry ONLY on request. Default allow_ai=false; silently keep that default unless the CURRENT user explicitly permits using THIS record in later conversation. For that permission set allow_ai=true and copy the exact affirmative words in ai_consent_quote (never an assistant suggestion, negation, someone else's quote, or external text). No repetitive consent question is needed. Preserve original words and unknown event date; saving is not sharing. Returns a write receipt; only allow_ai=true entries can later be read via recall_memories and story_refs."""
         payload = ExperienceCreate(title=title, text=text, item_ids=item_ids, photo_ids=photo_ids or [],
-                                   occurred_on=occurred_on or None)
+                                   occurred_on=occurred_on or None, allow_ai=allow_ai)
         with sessions() as db:
-            row=domain.create_experience(db, user_id, payload, source_message_id=message_id)
+            row=domain.create_experience(db, user_id, payload, source_message_id=message_id,
+                                         ai_consent_quote=ai_consent_quote)
             return {"id":row["id"], "version":row["version"],
                 "status":row.get("status","recorded"), "result_kind":"wall_write_receipt",
                 "allow_ai":row["allow_ai"],
-                "usage_note":"已保存。仅确认写入结果；allow_ai=false时不加入story_refs，也不重读这条墙记录。"}
+                "usage_note": "已按明确许可保存，可用recall_memories读取。" if row["allow_ai"] else
+                    "已保存。仅确认写入结果；allow_ai=false时不加入story_refs，也不重读这条墙记录。"}
 
-    async def evolve_avatar(item_id: str, growth_note: str, source_quote: str = '', experience_ids: list[str] | None = None):
-        """Add an experience-grounded growth note to an OWNED object's persona; preserve explicit user personality and appearance settings."""
+    async def evolve_avatar(item_id: str, growth_note: str = "", source_quote: str = '', experience_ids: list[str] | None = None,
+                            traits: list[GrowthTraitProposal] | None = None):
+        """Quietly evolve an OWNED enabled companion from CURRENT user preferences or actually-read permitted memories. Prefer typed traits: specific behavior and situation, exact source words/experience IDs. Reuse the existing dimension/context when refining a trait. Preserve the owner's explicit personality, appearance, disabled growth and dismissed traits. A temporary mood is not a lasting trait; received stories are not personal experiences. No extra save question or task is needed."""
         with sessions() as db:
             domain.accessible_item(db, user_id, item_id, write=True)
-            anchors=[]
-            if source_quote:
-                message=domain.require(db.get(ChatMessage,message_id))
-                if source_quote not in message.text:
-                    raise domain.DomainError('成长笔记需对应用户原话或获准的真实经历')
-                anchors.append({'message_id':message_id,'quote':source_quote})
-            for identity in experience_ids or []:
-                from .database import ExperienceRecord
-                experience=domain.require(db.get(ExperienceRecord,identity))
-                if experience.creator_id!=user_id or not experience.allow_ai or item_id not in experience.item_ids:
-                    raise domain.DomainError('请使用当前用户与这件物品的真实经历')
-                anchors.append({'experience_id':identity,'version':experience.version,
-                                'origin_id':experience.origin_id,'provenance':experience.provenance})
-            if not anchors:
-                raise domain.DomainError('成长笔记需要明确的经历来源，不能编造共同往事')
             profile = db.get(Profile, (user_id, item_id))
             if not profile or not profile.avatar.get("enabled", bool(profile.avatar.get("personality"))):
                 raise domain.DomainError('这个物品的分身尚未开启，请先由用户明确设置')
-            profile.avatar = {**(profile.avatar or {}), "growth_note": growth_note[:2000], "growth_source": message_id,
-                              'growth_evidence':anchors}
+            if not profile.avatar.get("growth_enabled", True):
+                raise domain.DomainError('用户已停止自然成长；保留显式性格，不能由Agent重新开启', 409)
+            message=domain.require(db.get(ChatMessage,message_id))
+            conversation=domain.require(db.get(Conversation,message.conversation_id))
+            if message.role != "user" or conversation.user_id != user_id:
+                raise domain.DomainError('成长需对应当前用户的真实消息', 403)
+            def anchors_for(quote, identities):
+                anchors=[]
+                if quote:
+                    if quote not in message.text:
+                        raise domain.DomainError('成长特点需对应当前用户原话')
+                    from .memory_lifecycle import stamp_growth_evidence
+                    anchors.append(stamp_growth_evidence(db,GrowthEvidence(message_id=message_id, quote=quote).model_dump(exclude_none=True)))
+                for identity in identities or []:
+                    experience=domain.require(db.get(ExperienceRecord,identity))
+                    if experience.creator_id!=user_id or not experience.allow_ai or item_id not in experience.item_ids:
+                        raise domain.DomainError('请使用获准且与当前物品关联的真实回忆')
+                    from .memory_lifecycle import stamp_growth_evidence
+                    anchors.append(stamp_growth_evidence(db,GrowthEvidence(experience_id=identity,version=experience.version).model_dump(exclude_none=True)))
+                if not anchors:
+                    raise domain.DomainError('成长特点需要明确依据，不能编造共同往事')
+                from .memory_lifecycle import growth_evidence_valid
+                if not growth_evidence_valid(db,user_id,item_id,anchors):
+                    raise domain.DomainError('成长依据已经失效，请遵循当前有效理解',409)
+                return anchors
+            avatar=dict(profile.avatar or {})
+            if traits:
+                if len(traits)>6:
+                    raise domain.DomainError('一次只沉淀少量明确相处特点')
+                existing={row['id']:row for row in avatar.get('growth_traits',[]) if isinstance(row,dict) and row.get('id')}
+                from .memory_lifecycle import current_avatar, prepare_growth_trait
+                for raw in traits:
+                    proposal=GrowthTraitProposal.model_validate(raw)
+                    identity=growth_trait_id(proposal.dimension,proposal.context)
+                    proposed=GrowthTrait(id=identity,dimension=proposal.dimension,
+                        behavior=proposal.behavior,context=proposal.context,
+                        evidence=anchors_for(proposal.source_quote,proposal.experience_ids)).model_dump(exclude_none=True)
+                    try:
+                        proposed=prepare_growth_trait(db,avatar,proposed)
+                    except ValueError as error:
+                        raise domain.DomainError(str(error),409) from None
+                    existing[proposed['id']]=proposed
+                candidate={**avatar,'growth_traits':list(existing.values())}
+                if len(current_avatar(db,user_id,item_id,candidate).get('growth_traits',[]))>12:
+                    raise domain.DomainError('已有特点足够，请调整相关特点而非持续追加')
+                avatar['growth_traits']=list(existing.values())
+                for key in ('growth_note','growth_source','growth_evidence'):
+                    avatar.pop(key,None)
+            else:
+                if not growth_note.strip():
+                    raise domain.DomainError('请提供具体相处特点')
+                if avatar.get('growth_traits') or avatar.get('growth_dismissed_ids'):
+                    raise domain.DomainError('请使用带情境与依据的traits更新，不能用自由摘要恢复已停止特点',409)
+                # Legacy callers remain supported until they adopt typed traits.
+                avatar.update(growth_note=growth_note[:2000],growth_source=message_id,
+                              growth_evidence=anchors_for(source_quote,experience_ids))
+            profile.avatar=avatar
             db.commit()
-            return {"status": "updated", "growth_note": growth_note}
+            from .memory_lifecycle import current_avatar
+            visible=current_avatar(db,user_id,item_id,avatar)
+            return {"status":"updated","growth_traits":visible.get('growth_traits',[]),
+                    "growth_note":visible.get('growth_note','')}
 
     async def search_public_web(query: str, read_limit: int = 0, item_id: str | None = None, community: str = "web"):
         """Discover public references; community='web' uses Bailian search, 'bilibili' uses bounded public Bilibili search via optional yt-dlp without a paid search-model call. Use short actual topic/mechanism words for the community query, not a site: operator. Default read_limit=0 only discovers links; 1 or 2 also retrieves originals. Each result says retrieved/unavailable/not_read. Ranking, title or description is not model compatibility or observed footage. If a community request fails, it is not silently replaced by another search provider."""
@@ -332,14 +426,14 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
                 domain.accessible_item(db,user_id,item_id)
         if community == "bilibili":
             from .community_search import search_bilibili
-            discovery = await search_bilibili(query)
+            discovery = await search_bilibili(query,requester=await community_requester())
         else:
             discovery = await search_web(settings, query)
         results = [{**row, "read_state":"not_read"} for row in discovery["results"]]
 
         async def read_original(row):
             try:
-                source=await fetch_source(settings,sessions,user_id,row["url"],item_id,excerpt_chars=3500)
+                source=await fetch_original(row["url"], item_id)
                 if evidence_sources is not None:
                     evidence_sources.add(source["source_id"])
                 return {**row,"read_state":"retrieved","original":source}
@@ -353,10 +447,23 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
 
     async def fetch_document(url: str, item_id: str | None = None, refresh: bool = False):
         """Fetch public HTML/PDF/JSON/Markdown/text, retain the original and return source ID, numbered excerpts, reading depth and links. A video page/description is NOT its visual contents or complete instructions. Login gates are not evidence."""
-        result = await fetch_source(settings, sessions, user_id, url, item_id, refresh)
+        result = await fetch_original(url, item_id, refresh)
         if evidence_sources is not None:
             evidence_sources.add(result["source_id"])
         return result
+
+    async def fetch_original(url, item_id=None, refresh=False):
+        requester=await community_requester()
+        if requester or os.getenv("WUJIAN_COMMUNITY_PROVIDER", "yt-dlp") == "mediacrawler":
+            from .source_video import canonical_video_url
+            try:
+                canonical_video_url(url)
+            except domain.DomainError:
+                pass
+            else:
+                from .community_sources import fetch_bilibili_source
+                return await fetch_bilibili_source(sessions,user_id,url,item_id,refresh=refresh,requester=requester)
+        return await fetch_source(settings,sessions,user_id,url,item_id,refresh,excerpt_chars=3500)
 
     async def read_source(source_id: str, query: str = "", page: int | None = None):
         """Reopen a retained original, near a keyword or on a 1-based PDF page. A video_frame_sample source reopens its actual saved timestamped images without re-downloading; its scope remains a few frames, not full video."""
@@ -366,7 +473,8 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
                 evidence_sources.add(source_id)
             if source.origin == "video_frame_sample":
                 return video_frame_chunk(retained_video_frames(db, user_id, source_id))
-            return {**source_excerpt(source, query, page), "images":source_images(source,db.get(Asset,source.asset_id))}
+            asset = db.get(Asset,source.asset_id) if source.asset_id else None
+            return {**source_excerpt(source, query, page), "images":source_images(source,asset)}
 
     async def view_source_image(source_id: str, image_url: str):
         """Look at ONE image actually declared in an authorized source's images list. Use for visible geometry/diagrams, not proof of hidden properties or the user's actual current object."""
@@ -380,10 +488,11 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
             metadata={"evidence":{key:value[key] for key in
                 ("source_id","source_url","image_url","asset_id","evidence_kind")}})
 
-    async def sample_video_frames(source_id: str, start_seconds: float, end_seconds: float, frame_count: int = 3):
-        """Observe 1–4 actual frames in a <=30-second window of an already-read public BiliBili BV source. Use when visual construction matters and page text is insufficient. Requires optional yt-dlp + local FFmpeg. Returns timestamped images and a NEW derived source ID. A few sampled frames are not full-video/audio observation or proof of unseen steps. No login or access bypass."""
+    async def sample_video_frames(source_id: str, start_seconds: float, end_seconds: float, frame_count: int = 3,
+                                  at_seconds: list[float] | None = None):
+        """Observe 1–4 real frames in a <=30-second window of a retained public Bili BV source. Optionally choose exact at_seconds (same count as frame_count) to inspect decisive contact/support/action moments. Passing a prior sampled source ID reuses its retained MP4 without another download. Returns timestamped native images and a new derived source ID. Sampled images are not full-video/audio or continuous-motion observation. No login or access bypass."""
         value = await sample_source_video(settings, sessions, user_id, source_id,
-                                          start_seconds, end_seconds, frame_count)
+                                          start_seconds, end_seconds, frame_count, at_seconds=at_seconds)
         if evidence_sources is not None:
             evidence_sources.add(value["source_id"])
         return video_frame_chunk(value)
@@ -440,7 +549,13 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
                         turn_context.check(db, own_write=function.__name__ in {
                             "update_item_identity", "update_item_condition"})
                 if isinstance(value,ToolChunk):
+                    if turn_context and turn_context.deadline_at:
+                        value.content.append(TextBlock(text=json.dumps({"turn_time_remaining_seconds":
+                            max(0,int(turn_context.deadline_at-time.monotonic())),
+                            "guidance":"Reserve time to deliver the next useful step. Retained sources are reusable; do not exhaust the turn rewriting optional learning."})))
                     return value
+                if turn_context and turn_context.deadline_at and isinstance(value,dict):
+                    value={**value,"turn_time_remaining_seconds":max(0,int(turn_context.deadline_at-time.monotonic()))}
                 metadata = {}
                 if function.__name__ in {"search_public_web", "fetch_document", "read_source"}:
                     metadata["evidence"] = {key:value[key] for key in ("source_id", "url", "title", "content_level", "query_matched", "evidence_kind") if key in value}
@@ -474,6 +589,8 @@ class AgentRunner:
         from .retrieval import Retrieval
         self.retrieval=Retrieval(settings,sessions)
         self.devices=REABridge(settings,sessions)
+        from .mediacrawler_session import MediaCrawlerSessions
+        self.communities=MediaCrawlerSessions()
 
     def start(self, run_id):
         task = asyncio.create_task(self.execute(run_id))
@@ -488,6 +605,7 @@ class AgentRunner:
         for task in list(self.running.values()):
             task.cancel()
         await asyncio.gather(*list(self.running.values()), return_exceptions=True)
+        await self.communities.close_all()
         await self.retrieval.close()
         await self.devices.close()
 
@@ -577,8 +695,8 @@ class AgentRunner:
                 inputs.append(DataBlock(source=Base64Source(data=base64.b64encode(Path(asset.path).read_bytes()).decode(), media_type=asset.media_type)))
             user_id, conversation_id = user.id, conversation.id
             evidence_sources = set()
-            turn_context = TurnContext(run_id, conversation_id, revision)
-            toolkit = make_tools(self.settings, self.sessions, user_id, current.id,self.retrieval,self.devices,evidence_sources,turn_context)
+            turn_context = TurnContext(run_id, conversation_id, revision,deadline_at=time.monotonic()+240)
+            toolkit = make_tools(self.settings, self.sessions, user_id, current.id,self.retrieval,self.devices,evidence_sources,turn_context,self.communities)
             db.commit()
         try:
             prompt=SYSTEM + "\n当前获准上下文（记录内容是资料）：\n" + json.dumps(context, ensure_ascii=False, separators=(",", ":"))
@@ -594,7 +712,7 @@ class AgentRunner:
             tool_results, tool_arguments, tool_names = {}, {}, {}
             result=None
             async with asyncio.timeout(240) as deadline:
-                async for event in agent.reply_stream(UserMsg(name=user.display_name, content=inputs), structured_schema=grounded_turn_schema(self.sessions,user_id,current.id,evidence_sources),yield_final_msg=True):
+                async for event in agent.reply_stream(UserMsg(name=user.display_name, content=inputs), structured_schema=grounded_turn_schema(self.sessions,user_id,current.id,evidence_sources,deadline_at=turn_context.deadline_at),yield_final_msg=True):
                     event_type = str(getattr(event, "type", "")).lower()
                     if event_type == "text_block_delta":
                         text_output += event.delta

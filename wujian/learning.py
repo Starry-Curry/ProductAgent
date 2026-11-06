@@ -30,7 +30,7 @@ class KnowledgeUpdate(BaseModel):
         description="One narrowly scoped reusable claim actually supported by its quoted evidence. Do not bundle unrelated mechanisms/commands or upgrade a page description into observed steps. Put adaptations and unverified explanations in separate inference claims.")
     conditions: Applicability
     basis: Literal["document", "user_report", "inference"]
-    scope: Literal["product", "item"]
+    scope: Literal["product", "item"] = Field(description="Use product ONLY when the retained original explicitly matches this physical item's exact model. Generic brand/tool/community examples belong to item with applicability unknown; source_model cannot establish compatibility by itself.")
     source_id: str | None = Field(default=None,
         description="Actually retained source for document evidence, or the source of a provisional visual interpretation/inference. Video frames use their derived sample source ID; observed images do not turn a model interpretation into a verified procedure.")
     source_quote: str = Field(
@@ -91,10 +91,12 @@ class MemoryUpdate(BaseModel):
 
 class Learning(BaseModel):
     knowledge_updates: list[KnowledgeUpdate] = Field(
+        default_factory=list,
         max_length=12,
         description="New reusable capabilities, boundaries, procedures or cases learned this turn. Include useful evidence from documents actually read; empty when nothing was learned. A hypothesis stays inference.",
     )
     memory_updates: list[MemoryUpdate] = Field(
+        default_factory=list,
         max_length=12,
         description="Quiet changes to understanding THIS user. Compare with existing understanding before add/replace; do not save every message or infer permanent traits from temporary feelings. Empty when unnecessary.",
     )
@@ -151,7 +153,7 @@ def validate_learning(db, user_id, message_id, learning):
             except domain.DomainError as error:
                 errors.append(f"{field}[{index}]: {error.message}")
     if errors:
-        raise domain.DomainError("请一次修正以下依据错误，不要丢弃已经找到的有效认识：\n" + "\n".join(errors[:12]))
+        raise domain.DomainError("请一次修正以下依据错误；无法核实的条目不要写成事实，可在回答中说明未知。保留已核实的有用认识，无须为每个检索结果建立知识：\n" + "\n".join(errors[:12]))
 
 
 def _validate_memory_change(db, user_id, message, change):
@@ -183,6 +185,8 @@ def _validate_knowledge_change(db, user_id, message, change):
         source = domain.require(db.get(SourceRecord, change.source_id or ""))
         if source.owner_id != user_id:
             raise domain.DomainError("资料不可用", 404)
+        problems=[]
+        invalid_lines=False
         if (
             change.source_line_start is not None
             or change.source_line_end is not None
@@ -196,17 +200,18 @@ def _validate_knowledge_change(db, user_id, message, change):
                 or end > len(lines)
                 or end - start >= 40
             ):
-                raise domain.DomainError(
-                    "请使用该source实际返回的连续行号范围，最多40行"
-                )
-            change.source_quote = "\n".join(lines[start - 1 : end])
+                invalid_lines=True
+                problems.append(f"该source共{len(lines)}行；请使用连续行号范围，每条最多40行")
+            else:
+                change.source_quote = "\n".join(lines[start - 1 : end])
         quote = locate_quote(source.content, change.source_quote)
-        if quote is None or len(quote.strip()) < 8:
-            raise domain.DomainError(
+        if not invalid_lines and (quote is None or len(quote.strip()) < 8):
+            problems.append(
                 f"source_quote未匹配实际原文：请使用read_source({source.id})所标的source_line_start/source_line_end连续行号，由程序复制原文，source_quote留空即可；"
                 "也可复制连续原句，但不能改写、拼接片段、删去中间文字或把字面\\n当换行。行号引用仍须支持content，通用资料不写成型号共性。"
             )
-        change.source_quote = quote
+        if quote is not None:
+            change.source_quote = quote
         expected = normalized_model(item.product.get("model", ""))
         model_text_matched = model_mentioned(item.product.get("model", ""), source.title, source.content)
         if (
@@ -220,7 +225,7 @@ def _validate_knowledge_change(db, user_id, message, change):
             and normalized_model(change.source_model) == expected
             and model_text_matched
         ):
-            raise domain.DomainError(
+            problems.append(
                 f"该来源原文没有匹配型号 {item.product.get('model','')}，仅填写source_model不能建立匹配。"
                 "若保留通用案例或原理，改scope为item、source_model留空，并在unknowns保留当前实物适配尚未核实；"
                 "不要把未证实的适配写成商品共性。"
@@ -228,7 +233,9 @@ def _validate_knowledge_change(db, user_id, message, change):
         if source.item_id and source.item_id != item.id:
             original = domain.accessible_item(db, user_id, source.item_id)
             if not item.product_id or original.product_id != item.product_id:
-                raise domain.DomainError("资料绑定到另一型号")
+                problems.append("资料绑定到另一型号")
+        if problems:
+            raise domain.DomainError("；".join(problems))
     if change.basis == "user_report" and (
         change.scope == "product"
         or not change.source_quote

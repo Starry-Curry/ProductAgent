@@ -7,6 +7,7 @@ import asyncio
 import io
 import itertools
 import json
+import os
 import re
 import threading
 import uuid
@@ -153,7 +154,7 @@ def _search_sync(query, limit, cancel_event):
             "reading_note": "仅取得B站公开搜索标题、作者或简介；未读视频页面、未观看视频。需用现有来源工具继续取得原文或有界画面。"}
 
 
-async def search_bilibili(query: str, limit: int = 5):
+async def search_bilibili(query: str, limit: int = 5, *, requester=None):
     """One public search page, at most five real video metadata results."""
     if not isinstance(query, str) or not query.strip() or len(query.strip()) > 200:
         raise DomainError("社区搜索关键词须为1至200字", 422)
@@ -161,6 +162,28 @@ async def search_bilibili(query: str, limit: int = 5):
         raise DomainError("社区搜索关键词不能含控制字符", 422)
     if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 5:
         raise DomainError("社区搜索仅返回1至5条线索", 422)
+    provider = os.getenv("WUJIAN_COMMUNITY_PROVIDER", "yt-dlp")
+    if provider == "mediacrawler" or requester is not None:
+        from .mediacrawler_adapter import request_public
+        value = await (requester or request_public)({"operation": "search", "query": query.strip(), "limit": limit})
+        results, seen = [], set()
+        for row in value.get("items", [])[:limit]:
+            bvid = row.get("bvid")
+            if not isinstance(bvid, str) or not re.fullmatch(r"BV[0-9A-Za-z]{10}", bvid) or bvid in seen:
+                continue
+            seen.add(bvid)
+            result = {"url": f"https://www.bilibili.com/video/{bvid}/", "bvid": bvid,
+                      "platform": "bilibili", "content_level": "search_metadata_not_video_observation"}
+            for key, max_chars in (("title", 300), ("author", 120), ("description", 350)):
+                text = _text(row.get(key), max_chars)
+                if text:
+                    result[key] = text
+            results.append(result)
+        return {"provider": "mediacrawler_public_bilibili_client", "query": query.strip(), "results": results,
+                "evidence_kind": "search_result_not_full_document", "search_pages_read": 1,
+                "reading_note": "MediaCrawler只读搜索返回元数据；不是已观察视频或学会完整做法。"}
+    if provider != "yt-dlp":
+        raise DomainError("WUJIAN_COMMUNITY_PROVIDER须为yt-dlp或mediacrawler", 503)
     cancel_event = threading.Event()
     try:
         return await asyncio.to_thread(_search_sync, query.strip(), limit, cancel_event)

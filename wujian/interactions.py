@@ -135,11 +135,22 @@ def change_experience(db, user_id, identity, payload):
             labels[item_id] = row.item_labels.get(item_id, "曾经关联的物品")
     for photo in payload.photo_ids:
         domain.own_asset(db, user_id, photo)
+    provenance = dict(row.provenance or {})
+    if "photo_associations" in provenance:
+        # Editing a relation/photo is a real correction, not merely a hidden
+        # card. Do not keep rejected visual links in later Agent context.
+        kept = {key: value for key, value in provenance["photo_associations"].items()
+                if key in labels and isinstance(value, dict) and value.get("photo_ids")
+                and set(value["photo_ids"]).issubset(payload.photo_ids)}
+        if kept:
+            provenance["photo_associations"] = kept
+        else:
+            provenance.pop("photo_associations", None)
     changed = db.execute(update(ExperienceRecord).where(ExperienceRecord.id == identity,
         ExperienceRecord.creator_id == user_id, ExperienceRecord.version == payload.expected_version).values(
         title=payload.title, text=payload.text, item_ids=list(labels), item_labels=labels,
         photo_ids=payload.photo_ids, occurred_on=payload.occurred_on.isoformat() if payload.occurred_on else None, allow_ai=payload.allow_ai,
-        version=ExperienceRecord.version + 1))
+        provenance=provenance, version=ExperienceRecord.version + 1))
     if changed.rowcount != 1:
         raise domain.DomainError("这段回忆已更新，草稿仍保留，请核对后再保存", 409)
     domain.invalidate_context(db, [user_id], stop_running=True)

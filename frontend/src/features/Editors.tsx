@@ -21,6 +21,8 @@ import {
 } from "../api";
 import { presentation, safeDate } from "./shared";
 import { ObjectCompanion } from "./ObjectCompanion";
+import CommunityConnection from "./CommunityConnection";
+import { PhotoMatchFinder, PhotoMatchReview, type PhotoMatchResult } from "./PhotoMatchReview";
 
 export type Editor = {
   kind:
@@ -156,7 +158,7 @@ export default function Editors({
   onItem,
   onTask,
 }: Props) {
-  const { message } = AntApp.useApp();
+  const { message, modal } = AntApp.useApp();
   const item = editor.item,
     experience = editor.experience;
   const [name, setName] = useState(experience?.title || (editor.kind === "experience" ? "" : item?.name) || "");
@@ -175,6 +177,7 @@ export default function Editors({
   );
   const [date, setDate] = useState(experience ? experience.occurred_on || "" : today());
   const [allowAI, setAllowAI] = useState(experience?.allow_ai || false);
+  const [matchPhotos, setMatchPhotos] = useState(true);
   const [enabled, setEnabled] = useState(editor.kind === "persona" || item?.avatar.enabled || false),
     [nickname, setNickname] = useState(item?.avatar.nickname || (editor.kind === "persona" ? item?.name : "") || ""),
     [personality, setPersonality] = useState(item?.avatar.personality || "");
@@ -306,7 +309,7 @@ export default function Editors({
           cherished,
         });
       } else if (editor.kind === "experience") {
-        await request(
+        const recorded = await request<Experience>(
           experience ? `/experiences/${experience.id}` : "/experiences",
           experience ? "PUT" : "POST",
           {
@@ -319,6 +322,40 @@ export default function Editors({
             ...(experience ? { expected_version: experience.version } : {}),
           },
         );
+        const newPhotos = photos.some((id) => !experience?.photo_ids.includes(id));
+        if (matchPhotos && newPhotos && !experience?.origin_id) {
+          // Save first. Recognition has its own versioned request and cannot
+          // delay recording or overwrite a later edit while the model works.
+          const key = `photo-match-${recorded.id}`;
+          void message.open({ key, type: "loading", content: "回忆已保存，正在认照片里的物品…", duration: 0 });
+          void request<PhotoMatchResult>(`/experiences/${recorded.id}/photo-matches`, "POST", {
+            expected_version: recorded.version, apply_confident: true,
+          }).then(async (result) => {
+            const active = await request<User>("/me").catch(() => undefined);
+            if (active?.id !== user.id) {
+              message.destroy(key);
+              return;
+            }
+            await onDone();
+            const count = result.candidates.filter((value) => value.auto_linked).length;
+            if (result.candidates.length || result.remaining_items) {
+              void message.open({ key, type: "info", duration: 10, content: <span>
+                {count ? `已认出并关联${count}件物品。` : result.remaining_items
+                  ? `已比较${result.examined_items}件，还可继续其余${result.remaining_items}件。` : "照片里可能有这些物品。"}
+                <button type="button" className="quiet-button" onClick={() => modal.info({
+                  title: "照片中的已有物品", width: 520,
+                  content: result.remaining_items
+                    ? <PhotoMatchFinder initialResult={result} experience={result.experience} items={workspace.items} onDone={onDone} />
+                    : <PhotoMatchReview result={result} items={workspace.items} onDone={onDone} />,
+                })}>查看与调整</button>
+              </span> });
+            } else {
+              void message.open({ key, type: "info", content: "回忆已保存，暂未认出可关联的已有物品，可手动选择。", duration: 5 });
+            }
+          }).catch((cause) => {
+            void message.open({ key, type: "info", content: `回忆已保存。${(cause as Error).message}`, duration: 6 });
+          });
+        }
       } else if (editor.kind === "gift" && item) {
         await request("/gifts", "POST", {
           item_id: item.id,
@@ -740,6 +777,10 @@ export default function Editors({
         {editor.kind === "experience" && (
           <>
             <Photos ids={photos} onChange={setPhotos} onBusy={setPhotosBusy} />
+            {!experience?.origin_id && <label className="check-label">
+              <input type="checkbox" checked={matchPhotos} onChange={(event) => setMatchPhotos(event.target.checked)} />
+              识别照片里的已有物品并关联，拿不准的由我选择
+            </label>}
             <label>
               给这一刻一个名字
               <input
@@ -754,7 +795,7 @@ export default function Editors({
               想留下的话
               <textarea
                 rows={5}
-                required
+                required={photos.length === 0}
                 value={text}
                 readOnly={Boolean(experience?.origin_id)}
                 onChange={(event) => setText(event.target.value)}
@@ -1246,6 +1287,7 @@ export default function Editors({
         )}
         {editor.kind === "settings" && (
           <>
+            <CommunityConnection />
             <label>
               全局物伴的名字
               <input
