@@ -1,8 +1,8 @@
-# 物间 · 电脑版参考分支
+# 物间 · 手机版参考分支
 
-请先阅读 [本分支的运行与参考说明](REFERENCE_VERSION.md)。这是 2026-11-06 的完整源码快照，包含普通版、大字版、问答、物品、朋友、活动和手机适配。已知网络限制：当前手机公网入口需要 VPN，国内免 VPN 入口尚未完成。
+请先阅读 [本分支的运行与部署说明](REFERENCE_VERSION.md)。这是 2026-11-06 的完整响应式手机网页 App 源码，保留普通版/大字版、多模态帮助、物品、朋友、待办日期与活动规划，同时保留共用电脑版。当前公开域名在用户手机网络下需要 VPN，国内免 VPN 入口尚未完成。
 
-![电脑版参考](docs/reference/screenshots/desktop-home.jpg)
+![手机版参考](docs/reference/screenshots/mobile-home.png)
 
 以下保留历史说明。
 
