@@ -6,7 +6,7 @@ if(-not $SkipInstall){
  if(-not(Get-Command npm.cmd -ErrorAction SilentlyContinue)){throw 'Install Node.js with npm (Vite requires Node >=22.12, or a supported newer version).'}
  if($PythonIndex){
   New-Item -ItemType Directory -Path (Join-Path $PSScriptRoot 'tmp') -Force | Out-Null
-  & uv export --frozen --no-dev --no-emit-project --format requirements-txt --output-file tmp/demo-runtime-requirements.txt
+  & uv export --frozen --no-dev --no-emit-project --format requirements-txt --output-file tmp/demo-runtime-requirements.txt > $null
   if($LASTEXITCODE -ne 0){throw 'Locked dependency export failed'}
   $installPython=Join-Path $PSScriptRoot '.venv/Scripts/python.exe'
   if(-not(Test-Path -LiteralPath $installPython)){

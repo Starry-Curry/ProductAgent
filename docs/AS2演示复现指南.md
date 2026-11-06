@@ -2,6 +2,8 @@
 
 对应 `feat/as2-adaptive-lessons`。下载该分支即可获得演示所需实拍、静音视频、手册页、完整录像、3D 几何、渲染器与追踪小模型。不能用 main/develop 的旧文件替代本分支资源。
 
+本轮已经从 GitHub 下载到新目录、新建环境并验证；条件、初次安装失败及已知问题见[复现验证记录](AS2演示复现验证记录.md)。
+
 ## 1. 环境与首次启动
 
 需要 Git、Python 3.11+（本轮验证使用 3.12）、uv、Node.js/npm（Vite 要求 Node 20.19+ 或 22.12+ 的受支持版本）。核心演示不要求 Intel/NVIDIA GPU、OpenVINO 或 FFmpeg；首次安装依赖需要访问 Python/npm 包源。
