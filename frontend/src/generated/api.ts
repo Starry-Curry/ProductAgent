@@ -1360,6 +1360,8 @@ export interface components {
             expected_version: number;
             /** Step Id */
             step_id: string;
+            /** Photo Ids */
+            photo_ids?: string[];
         };
         /** EntryContext */
         EntryContext: {
@@ -1623,6 +1625,13 @@ export interface components {
              * @enum {string}
              */
             kind: "identify" | "observe" | "operate" | "verify" | "contact_support";
+            /**
+             * Basis
+             * @description 通用建议用general；已核验型号原文用document；不因没有手册而拒绝初步帮助。
+             * @default general
+             * @enum {string}
+             */
+            basis: "document" | "general" | "user_report";
             /** Instruction */
             instruction: string;
             /**
@@ -1654,6 +1663,7 @@ export interface components {
             evidence?: components["schemas"]["StepEvidence"][];
             /**
              * Observed Quote
+             * @description 仅在用户实际做过或报告结果时填写本轮连续原话。计划做的动作不是实际完成。
              * @default
              */
             observed_quote: string;
@@ -2151,6 +2161,7 @@ export interface components {
             note: string;
             /**
              * State
+             * @description 新建议必须pending。用户本轮明确报告做过才可ready；找不到用not_found，做过没变化用unchanged，并在guidance.observed_quote保存当前原话。
              * @default pending
              * @enum {string}
              */

@@ -87,7 +87,7 @@ async def locate(settings,encoded,target):
             'named COMPONENT CATEGORY and color, ignoring position/foreground/size ranking in the description. '
             'Do not pick which one is bottom/top/left/right; the application will apply the explicit user hint '
             'to your coordinates. Include nearby similar instances, even those on another similar object.')
-    async with AsyncOpenAI(api_key=settings.api_key,base_url=settings.base_url,timeout=45,max_retries=0) as client:
+    async with AsyncOpenAI(api_key=settings.api_key,base_url=settings.base_url,timeout=18,max_retries=0) as client:
         result=await client.chat.completions.create(model=settings.vision_model,max_tokens=750,
             response_format={'type':'json_object'},extra_body={'enable_thinking':False},messages=[{'role':'user','content':[
                 {'type':'text','text':prompt},{'type':'image_url','image_url':{'url':'data:image/jpeg;base64,'+encoded}}]}])

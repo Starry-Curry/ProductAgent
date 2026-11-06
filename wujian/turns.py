@@ -2,12 +2,22 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, model_validator, field_validator, ConfigDict
 
 from . import domain, foundation
 from .database import ChatMessage, TaskRecord, Conversation
 from .evidence import locate_quote
 from .learning import Learning, apply_learning, validate_learning
+from .api_models import TaskEntry
+
+
+class InteractionPlan(BaseModel):
+    """Expose actual step fields to the SDK, rather than an opaque plan object."""
+    model_config = ConfigDict(extra='allow')
+    schema_version: Literal['interaction/1'] = Field(default='interaction/1',alias='schema')
+    kind: Literal['guidance','checklist','idea']
+    entries: list[TaskEntry] = Field(default_factory=list,max_length=60)
+    guidance: dict = Field(default_factory=dict)
 
 
 class ContinuingPlan(BaseModel):
@@ -18,7 +28,7 @@ class ContinuingPlan(BaseModel):
     constraints: dict = Field(
         description="Current user requirements and conditions, including temporary exclusions"
     )
-    plan: dict = Field(
+    plan: InteractionPlan | dict = Field(union_mode='left_to_right',
         description="Proposed actions/alternatives, why they can work, minimum trial and unknown conditions; a proposal is not executed success"
     )
     task_id: str | None = Field(
@@ -38,17 +48,23 @@ class ContinuingPlan(BaseModel):
         "unknown"
     )
 
+    @field_validator('plan',mode='after')
+    @classmethod
+    def keep_shared_dict(cls,value):
+        return value.model_dump(by_alias=True,exclude_unset=True) if isinstance(value,InteractionPlan) else value
+
 
 class TurnResult(BaseModel):
     answer: str = Field(
         min_length=1,
         description="Final natural-language answer for the person; use item names here, internal IDs only in structured fields",
     )
-    continuation: ContinuingPlan | None = Field(
+    continuation: ContinuingPlan | None = Field(default=None,
         description="A substantive proposal or continuing task with latest feedback. Null for simple questions, acknowledgements, story-only recording and companionship. Keep actual user requirements separate from proposed mechanisms."
     )
-    learning: Learning
+    learning: Learning = Field(default_factory=lambda:Learning(knowledge_updates=[],memory_updates=[]))
     story_refs: list[str] = Field(
+        default_factory=list,
         description="IDs of authorized memory-wall records to quote with their original author. Use when the person asks about an existing story. Discuss present feelings in answer; the application renders the actual story, so do not retell or invent past scenes there. Empty for no story request.",
         max_length=5,
     )
@@ -97,6 +113,17 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
                 commit=False,
             )
             version = feedback["version"]
+            from .database import now
+            current = db.get(TaskRecord,task_id)
+            if current.plan.get('kind')=='guidance' and plan.plan.get('kind')=='guidance':
+                progress={**current.plan.get('guidance',{}),**plan.plan.get('guidance',{})}
+                observations=list(current.plan.get('guidance',{}).get('observations',[]))
+                if not any(row.get('message_id')==message_id for row in observations):
+                    observations.append({'receipt_id':'message-'+message_id,'message_id':message_id,
+                        'step_id':current.plan.get('guidance',{}).get('active_step_id'),
+                        'outcome':plan.outcome,'text':plan.feedback_quote,'source':'conversation','created_at':now()})
+                progress['observations']=observations
+                plan.plan={**plan.plan,'guidance':progress}
         if plan.task_id is not None or plan.feedback_quote:
             saved = foundation.save_task(
                 db,
@@ -121,6 +148,23 @@ def commit_result(db, user_id, message_id, result, current_question):
         task = commit_continuation(
             db, user_id, message_id, result, current_question, commit=False
         )
+        if task is None:
+            # A short answer may omit plan changes. Keep the actual statement
+            # on the active task anyway; recording it does not infer success.
+            message=domain.require(db.get(ChatMessage,message_id))
+            conversation=db.get(Conversation,message.conversation_id)
+            identity=conversation.entry_context.get('task_id')
+            active=db.get(TaskRecord,identity) if identity else None
+            if active and active.user_id==user_id and active.plan.get('kind')=='guidance' and active.status not in {'completed','cancelled'}:
+                from .database import now
+                progress=dict(active.plan.get('guidance') or {})
+                observations=list(progress.get('observations',[]))
+                if not any(row.get('message_id')==message_id for row in observations):
+                    observations.append({'receipt_id':'message-'+message_id,'message_id':message_id,
+                        'step_id':progress.get('active_step_id'),'outcome':'unknown','text':message.text,
+                        'source':'conversation','created_at':now()})
+                    task=foundation.save_task(db,user_id,message_id,active.goal,active.item_ids,active.constraints,
+                        {**active.plan,'guidance':{**progress,'observations':observations}},active.id,active.version,active.status,commit=False)
         experiences = {row["id"]: row for row in domain.list_experiences(db, user_id, for_ai=True)}
         stories = []
         for identity in dict.fromkeys(result.story_refs):
@@ -140,12 +184,9 @@ def commit_result(db, user_id, message_id, result, current_question):
                 f"{attribution}《{row['title']}》（{row['occurred_on']}）：\n\n{quote}"
             )
     db.commit()
+    # The current answer is the main Agent's response to THIS message. Replacing
+    # it with the active step hides negative feedback and repeats yesterday's text.
     answer=result.answer
-    message=db.get(ChatMessage,message_id)
-    conversation=db.get(Conversation,message.conversation_id) if message else None
-    if task and conversation and conversation.entry_context.get('intent')=='guidance':
-        from .guidance import render_current_step
-        answer=render_current_step(task['plan'],task['status'])
     return {
         "task": task,
         "learned": learned,
@@ -163,19 +204,27 @@ def grounded_turn_schema(sessions, user_id, message_id):
                 validate_learning(db, user_id, message_id, self.learning)
                 message = domain.require(db.get(ChatMessage, message_id))
                 conversation = db.get(Conversation, message.conversation_id)
-                if conversation.entry_context.get('intent','general')=='general':
-                    import re
-                    timed_action = re.search(r'(?:长按|按住|同时按|持续按)[^\n。]{0,70}\d+(?:[–~-]\d+)?\s*(?:秒|分钟)',self.answer)
-                    if timed_action and not (self.continuation and self.continuation.plan.get('kind')=='guidance'):
-                        raise ValueError('具体按键时序不能凭常识猜测。需要先确认当前物品准确型号，读适用原文后放在带 evidence 的 guidance 步骤中；型号未知时只帮用户识别，不建议试按组合')
-                if conversation.entry_context.get('intent') == 'guidance':
-                    if self.continuation is None:
-                        raise ValueError('逐步教学需维护可恢复的 continuation；有资料时整理当前一步，资料不足时用 identify/observe 补问，已有任务必须继续原 task_id')
+                from .guidance import validate_specific_advice
+                entries=self.continuation.plan.get('entries',[]) if self.continuation else []
+                known=[message.text]
+                for identity in (self.continuation.item_ids if self.continuation else conversation.item_ids):
+                    item=domain.accessible_item(db,user_id,identity)
+                    import json
+                    known.append(json.dumps({'product':item.product,'description':domain.item_view(db,user_id,item)['description']},ensure_ascii=False))
+                    known.extend(claim['content']+' '+claim.get('source_quote','') for claim in foundation.known_claims(db,user_id,identity) if claim.get('basis')=='document')
+                known.extend(e['quote'] for entry in entries for e in (entry.get('guidance') or {}).get('evidence',[]) if e.get('quote'))
+                try:validate_specific_advice(self.answer,entries,' '.join(known),allow_visual=bool(message.photo_ids))
+                except domain.DomainError as error:raise ValueError(error.message) from error
+                if conversation.entry_context.get('intent') == 'guidance' and self.continuation is not None:
                     teaching = self.continuation.plan
                     if teaching.get('schema') != 'interaction/1' or teaching.get('kind') != 'guidance' or not teaching.get('entries') or any(not entry.get('guidance') for entry in teaching.get('entries',[])):
-                        raise ValueError('请使用 interaction/1 guidance 计划；guidance 放在每个 entries 元素里面，各步骤填指令、预期信号、失败分支、target_label 和 evidence；不能放在 plan.guidance[step_id] 或只写在 answer 中')
+                        raise ValueError('可继续的教学请用 interaction/1 guidance，guidance放在每项entries内；普通简短回答也可以continuation=null，不必为了表格拖延回答')
                 if self.continuation:
                     plan = self.continuation
+                    if conversation.entry_context.get('task_id') and plan.task_id is None:
+                        active=domain.require(db.get(TaskRecord,conversation.entry_context['task_id']))
+                        if active.user_id != user_id: raise domain.DomainError('没有找到这项任务',404)
+                        plan.task_id,plan.expected_version=active.id,active.version
                     for identity in self.continuation.item_ids:
                         domain.accessible_item(db, user_id, identity)
                     message = domain.require(db.get(ChatMessage, message_id))
@@ -197,10 +246,16 @@ def grounded_turn_schema(sessions, user_id, message_id):
                             )
                     from .guidance import validate_plan, validate_parameters
                     previous = db.get(TaskRecord, plan.task_id) if plan.task_id else None
+                    if previous and plan.plan.get('kind')=='guidance' and previous.plan.get('kind')=='guidance':
+                        # The Agent may send only changed/current steps; SQL keeps
+                        # the historical steps instead of making it recopy them.
+                        merged={entry['id']:entry for entry in previous.plan.get('entries',[])}
+                        merged.update({entry['id']:entry for entry in plan.plan.get('entries',[])})
+                        plan.plan={**previous.plan,**plan.plan,'entries':list(merged.values())}
                     try:
                         plan.plan = validate_plan(db, user_id, plan.item_ids, plan.plan, message_id,
                             previous.plan if previous else None)
-                        if plan.plan.get('kind')=='guidance':
+                        if plan.plan.get('kind')=='guidance' and any((entry.get('guidance') or {}).get('evidence') for entry in plan.plan['entries']):
                             validate_parameters(self.answer,plan.plan['entries'])
                             observations=((previous.plan if previous else {}).get('guidance') or {}).get('observations',[])
                             report=next((entry for entry in reversed(observations) if entry.get('message_id')==message_id),None)

@@ -5,7 +5,7 @@ from . import domain
 from .database import ChatMessage, Run, SourceRecord, now
 from .source_access import readable_source
 
-RESEARCH_EVENTS = {"research_search", "research_source"}
+RESEARCH_EVENTS = {"research_search", "research_source", "research_unavailable"}
 
 
 def exploration_text(payload):
@@ -28,7 +28,9 @@ def record_research(sessions, user_id, message_id, name, value):
         run = db.get(Run, message.run_id) if message.run_id else None
         if not run or run.user_id != user_id or run.status != "running":
             return
-        if name == "search_public_web":
+        if value.get('available') is False:
+            receipt={'type':'research_unavailable','at':now(),'operation':name,'reason':value.get('reason','unavailable')}
+        elif name == "search_public_web":
             receipt = {"type": "research_search", "at": now(), "sources": value.get("results", [])[:15]}
         else:
             source = readable_source(db, user_id, value.get("source_id", ""))

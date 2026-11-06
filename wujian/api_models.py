@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class Input(BaseModel):
@@ -328,6 +328,7 @@ class StepEvidence(Input):
 
 class GuidanceDetails(Input):
     kind: Literal["identify", "observe", "operate", "verify", "contact_support"] = "operate"
+    basis: Literal["document", "general", "user_report"] = Field(default="general", description="通用建议用general；已核验型号原文用document；不因没有手册而拒绝初步帮助。")
     instruction: str = Field(min_length=1, max_length=2400)
     success_signal: str = Field(default="", max_length=1000)
     if_not_found: str = Field(default="", max_length=1000)
@@ -335,8 +336,13 @@ class GuidanceDetails(Input):
     caution: str = Field(default="", max_length=1000)
     target_label: str = Field(default="", max_length=160)
     evidence: list[StepEvidence] = Field(default_factory=list, max_length=6)
-    observed_quote: str = Field(default="", max_length=2400)
+    observed_quote: str = Field(default="", max_length=2400, description="仅在用户实际做过或报告结果时填写本轮连续原话。计划做的动作不是实际完成。")
     observed_message_id: str | None = None
+
+    @model_validator(mode='after')
+    def source_basis(self):
+        if self.evidence and self.basis=='general':self.basis='document'
+        return self
 
 
 class TaskEntry(Input):
@@ -345,7 +351,7 @@ class TaskEntry(Input):
     item_id: str | None = None
     group: Literal["owned", "buy", "borrow", "confirm", "step"] = "owned"
     note: str = Field(default="", max_length=2000)
-    state: Literal["pending", "ready", "not_found", "unchanged"] = "pending"
+    state: Literal["pending", "ready", "not_found", "unchanged"] = Field(default="pending", description="新建议必须pending。用户本轮明确报告做过才可ready；找不到用not_found，做过没变化用unchanged，并在guidance.observed_quote保存当前原话。")
     assignee_id: str | None = None
     updated_by: str | None = None
     guidance: GuidanceDetails | None = None

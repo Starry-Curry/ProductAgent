@@ -78,6 +78,50 @@ function LegacyPlan({ value }: { value: unknown }) {
   return null;
 }
 
+export function GuidanceTools({
+  board,
+  update,
+  photos = [],
+  initial = false,
+}: {
+  board: Board;
+  update: (board: Board) => void;
+  photos?: string[];
+  initial?: boolean;
+}) {
+  const active = (
+    board.task.plan.guidance as { active_step_id?: string } | undefined
+  )?.active_step_id;
+  const current =
+    board.entries.find((entry) => entry.id === active) ||
+    board.entries.find((entry) => entry.state !== "ready") ||
+    board.entries.at(-1);
+  if (!current?.guidance) return null;
+  return (
+    <section className="guidance-tools" aria-label="当前回答的辅助工具">
+      <p className="muted">
+        {board.task.status === "completed" ? "已完成" : "当前"} ·{" "}
+        {current.title}
+      </p>
+      {initial && <p className="saved-step">{current.guidance.instruction}</p>}
+      <div className="guidance-assists">
+        <TeachingDiagram
+          key={board.task.id + current.id}
+          board={board}
+          entry={current}
+          update={update}
+          photoIds={photos}
+        />
+        <CameraGuidance
+          key={"camera-" + board.task.id + current.id}
+          board={board}
+          entry={current}
+        />
+      </div>
+    </section>
+  );
+}
+
 export function TaskCanvas({
   board,
   workspace,
@@ -662,7 +706,10 @@ export function TaskRail({
           </>
         )}
       </section>
-      <section className="rail-section">
+      <section
+        className="rail-section"
+        hidden={board.kind === "guidance" && !board.sources.length}
+      >
         <h2>{board.kind === "guidance" ? "可核对的资料" : "一起准备"}</h2>
         {board.kind === "guidance" ? (
           board.sources.length ? (
@@ -761,9 +808,9 @@ export function TaskRail({
           </>
         )}
       </section>
-      {board.access === "owner" && (
-        <section className="rail-section actual-feedback">
-          <h2>实际尝试后</h2>
+      {board.access === "owner" && board.kind !== "guidance" && (
+        <details className="rail-section actual-feedback">
+          <summary>补充结果</summary>
           <label>
             结果怎样
             <select
@@ -790,7 +837,7 @@ export function TaskRail({
           >
             留下实际反馈
           </button>
-        </section>
+        </details>
       )}
       <button className="soft-button full-width" onClick={onCamera}>
         <MessageCircle size={17} />

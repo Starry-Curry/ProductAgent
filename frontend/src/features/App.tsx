@@ -38,7 +38,7 @@ import Memories from "./Memories";
 import Friends from "./Friends";
 import Care from "./Care";
 import CreativeSources from "./CreativeSources";
-import { TaskCanvas, TaskRail } from "./TaskBoard";
+import { TaskCanvas, TaskRail, GuidanceTools } from "./TaskBoard";
 import { Companion, ObjectVisual, presentation } from "./shared";
 import { navigate, useRoute, useWorkspace, type Section } from "./navigation";
 
@@ -656,11 +656,29 @@ function WorkspaceApp({
                       : undefined
                 }
                 afterMessages={
-                  context.entry.intent === "creative" && (
-                    <div className="creative-sources-inline">
-                      <CreativeSources run={run} />
-                    </div>
-                  )
+                  <>
+                    {context.entry.intent === "creative" && (
+                      <div className="creative-sources-inline">
+                        <CreativeSources run={run} />
+                      </div>
+                    )}
+                    {board?.kind === "guidance" && (
+                      <GuidanceTools
+                        board={board}
+                        update={setBoard}
+                        initial={!messages.length}
+                        photos={
+                          [...messages]
+                            .reverse()
+                            .find(
+                              (message) =>
+                                message.role === "user" &&
+                                message.photo_ids.length,
+                            )?.photo_ids || []
+                        }
+                      />
+                    )}
+                  </>
                 }
                 onCameraRef={() => {}}
               >
@@ -778,7 +796,9 @@ function WorkspaceApp({
                     </div>
                   </div>
                 )}
-                {board && boardActions && <TaskCanvas {...boardActions} />}
+                {board && board.kind !== "guidance" && boardActions && (
+                  <TaskCanvas {...boardActions} />
+                )}
               </Conversation>
             </main>
             <aside className="context-rail">

@@ -272,7 +272,7 @@ export interface RowUnit {
 
 /* ---------- generated plan ---------- */
 
-export type PartMaterial = "board" | "fiber" | "wood" | "metal" | "soft" | "glass";
+export type PartMaterial = "board" | "fiber" | "wood" | "metal" | "soft" | "glass" | "plastic";
 
 /** One box or cylinder of a part made of several (a star base, a cot side with bars), in the part's own frame. */
 export interface PartPiece {
@@ -290,7 +290,9 @@ export interface PartType {
   label: string; // letter
   name: string;
   size: Vec3; // mm, box extents or cylinder [dia, length, dia]; the bounding box when it has pieces
-  shape: "box" | "cyl";
+  shape: "box" | "cyl" | "sphere" | "arc" | "cone";
+  arc_angle?: number;
+  radius_ratio?: number;
   material: PartMaterial;
   qty: number;
   extra?: boolean; // not in the box (e.g. mattress)

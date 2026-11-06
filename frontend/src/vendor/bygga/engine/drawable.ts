@@ -91,6 +91,7 @@ const MAT_COLOR: Record<string, THREE.Color> = {
   metal: FACE.metal,
   soft: FACE.soft,
   glass: FACE.glass,
+  plastic: FACE.hwPlastic,
 };
 
 export function partDrawable(p: PartType, holes: Hole[]) {
@@ -109,6 +110,40 @@ export function partDrawable(p: PartType, holes: Hole[]) {
       else if (mat === "soft") addSolid(d, `soft:${qx}:${qy}:${qz}`, () => roundedBox(qx, qy, qz, Math.min(42, qy / 2.4, qx / 3, qz / 3)), c, { hull: "box", half: [qx / 2, qy / 2, qz / 2], edges: false, ...at });
       else addSolid(d, `box:${qx}:${qy}:${qz}`, () => new THREE.BoxGeometry(qx, qy, qz), c, at);
     }
+  } else if (p.shape === "sphere" || p.shape === "arc") {
+    const angle = p.arc_angle ?? Math.PI;
+    addSolid(
+      d,
+      `${p.shape}:${sx}:${sy}:${sz}:${angle}`,
+      () => {
+        const geometry =
+          p.shape === "sphere"
+            ? new THREE.SphereGeometry(1, 24, 16)
+            : new THREE.TorusGeometry(1, 0.1, 10, 48, angle);
+        geometry.computeBoundingBox();
+        const size = new THREE.Vector3();
+        geometry.boundingBox!.getSize(size);
+        geometry.center();
+        geometry.scale(sx / size.x, sy / size.y, sz / size.z);
+        return geometry;
+      },
+      color,
+      { hull: "radial" },
+    );
+  } else if (p.shape === "cone") {
+    const ratio = p.radius_ratio ?? 0.4;
+    addSolid(
+      d,
+      `cone:${sx}:${sy}:${sz}:${ratio}`,
+      () =>
+        new THREE.CylinderGeometry((sx * ratio) / 2, sx / 2, sy, 32).scale(
+          1,
+          1,
+          sz / sx,
+        ),
+      color,
+      { hull: "radial" },
+    );
   } else if (p.shape === "cyl") {
     addSolid(d, `cyl:${sx}:${sy}`, () => new THREE.CylinderGeometry(sx / 2, sx / 2, sy, 32), color, { hull: "cyl" });
   } else if (p.material === "soft") {

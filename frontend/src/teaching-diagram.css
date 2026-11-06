@@ -52,6 +52,22 @@
   gap: 10px;
   margin: 12px 0;
 }
+.diagram-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+.diagram-legend button {
+  font-size: 13px;
+}
+.diagram-legend span {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  border: 1px solid #a8b9bb;
+  border-radius: 50%;
+}
 @media (max-width: 640px) {
   .teaching-diagram {
     padding: 12px;

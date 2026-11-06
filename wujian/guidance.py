@@ -14,6 +14,7 @@ from .source_access import readable_source
 
 def step_signature(entry):
     details = dict(entry.get('guidance') or {})
+    if details.get('basis')=='document': details.pop('basis')
     for key in ['observed_quote','observed_message_id']:
         details.pop(key,None)
     return hashlib.sha256(json.dumps({'title':entry['title'],'item_id':entry.get('item_id'),
@@ -74,6 +75,26 @@ def validate_parameters(text,entries):
             raise domain.DomainError(f'操作参数 {label} 没有在本轮适用引文中出现，请按实际原文修正，不沿用其他型号的数字，也不要编造强制关机/重置分支')
 
 
+def validate_specific_advice(text,entries,known_text='',allow_visual=False):
+    """General help is allowed; do not invent precise reset timing/connectors."""
+    for sentence in re.split(r'[。！？\n]',text):
+        if re.search(r'(?:长按|按住|同时按|持续按)',sentence) and list(_parameters(sentence)):
+            if not re.search(r'(?:你|我|用户)(?:已经|刚才|之前|说|按了|长按了)',sentence):
+                validate_parameters(sentence,entries)
+    known=unicodedata.normalize('NFKC',known_text).casefold()
+    for sentence in re.split(r'[。！？\n]',text):
+        for connector in re.findall(r'USB[-‐‑– ]?C|Type[-‐‑– ]?C|Micro[-‐‑– ]?USB',sentence,re.I):
+            normal=lambda value:re.sub(r'[-‐‑–\s]','',value).casefold()
+            if normal(connector) not in normal(known) and not re.search(r'如果|假如|若是|若使用',sentence):
+                raise domain.DomainError('没有核验这件物品的具体接口类型；请改用原装供电连接等通用描述，不猜测接口。无需为了这点阻止初步回答')
+        if re.search(r'如果|假如|若有|若是|如有|若使用|有没有|是否有|能否看到|有无',sentence):continue
+        if allow_visual and re.search(r'图中|照片|看起来|似乎',sentence):continue
+        specifics=re.findall(r'触控|触摸|旋钮|底座[^，。；\n]{0,8}(?:电源键|指示灯)',sentence)
+        for value in specifics:
+            if value not in known_text:
+                raise domain.DomainError('当前资料没有确认这种具体控件或指示灯。直接给有用的通用建议，改用可见控件、原先使用方式等描述，或说明条件；无需继续搜齐资料')
+
+
 def render_current_step(plan,status):
     entries=plan.get('entries',[])
     active_id=(plan.get('guidance') or {}).get('active_step_id')
@@ -106,8 +127,8 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
         targets = [domain.accessible_item(db,user_id,identity) for identity in target_ids]
         if details['kind'] == 'operate' and len(targets)>1 and not entry.get('item_id'):
             raise domain.DomainError('每个具体操作步骤需指明正在处理哪件实物')
-        if details['kind'] == 'operate' and not details['evidence']:
-            raise domain.DomainError('具体操作步骤需要适用原文；资料不足时先识别或观察，不编造按钮和顺序')
+        if details['kind'] == 'operate' and not details['evidence'] and details['basis']=='document':
+            raise domain.DomainError('标为说明书操作的步骤需要适用原文；通用初步建议可标basis=general，不冒充型号已核验')
         for evidence in details['evidence']:
             source = readable_source(db,user_id,evidence['source_id'])
             if evidence.get('source_line_start'):
@@ -134,7 +155,10 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
                 if named and not any(normalized(model) in normalized(source.title+' '+source.content)
                     and normalized(evidence.get('source_model') or model)==normalized(model) for model in named):
                     raise domain.DomainError('操作资料没有匹配当前准确型号；相近型号只能作参考')
-        validate_parameters(details['instruction'],[entry])
+        if details['basis']=='document' or details['evidence']:
+            validate_parameters(details['instruction'],[entry])
+        else:
+            validate_specific_advice(details['instruction'],[entry],current_message.text if current_message else '')
         old = old_entries.get(entry['id'])
         same_step = old and step_signature(old)==step_signature(entry)
         old_details = old.get('guidance') or {} if old else {}
@@ -150,7 +174,15 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
             entry['updated_by'] = user_id
     progress = dict(plan.get('guidance') or {})
     prior = (previous or {}).get('guidance') or {}
-    progress['observations'] = prior.get('observations',[])
+    observations=list(prior.get('observations',[]))
+    # Model advice is not a report. A new conversational observation must point
+    # at this user's actual message; old observations always come from SQL.
+    for report in progress.get('observations',[]):
+        if (current_message and report.get('source')=='conversation' and report.get('message_id')==current_message.id
+            and report.get('text') and report['text'] in current_message.text
+            and not any(old.get('message_id')==current_message.id for old in observations)):
+            observations.append(report)
+    progress['observations'] = observations
     pending = next((entry['id'] for entry in entries if entry['state'] != 'ready'),None)
     active = next((entry for entry in entries if entry['id']==progress.get('active_step_id')),None)
     if not active or active['state']=='ready':

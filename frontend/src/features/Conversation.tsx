@@ -131,6 +131,11 @@ export default function Conversation({
   const latest = run?.events
     .filter((event) => event.type === "tool_start")
     .at(-1);
+  const hasPersistedReply =
+    !!run &&
+    messages.some(
+      (value) => value.role === "assistant" && value.run_id === run.id,
+    );
   return (
     <section className="conversation">
       <div className="conversation-scroll">
@@ -166,21 +171,39 @@ export default function Conversation({
             </div>
           </div>
         ))}
-        {busy && (
+        {(busy ||
+          (!!run?.text &&
+            !hasPersistedReply &&
+            run?.status === "completed")) && (
           <div className="chat-message assistant">
             <Companion small />
             <div className="chat-bubble">
-              <span className="thinking-dots">
-                <i />
-                <i />
-                <i />
-              </span>
-              <span>
-                {latest
-                  ? toolLabels[String(latest.name)] || "继续处理当前问题"
-                  : "正在理解你的这次需要"}
-                …
-              </span>
+              {run?.text && (
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {run.text}
+                </ReactMarkdown>
+              )}
+              {busy && (
+                <>
+                  <span className="thinking-dots">
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                  <span>
+                    {run?.events.some(
+                      (event) =>
+                        event.type === "research_unavailable" ||
+                        event.type === "answer_recovery",
+                    )
+                      ? "结合已有信息整理回答"
+                      : latest
+                        ? toolLabels[String(latest.name)] || "继续处理当前问题"
+                        : "正在理解你的这次需要"}
+                    …
+                  </span>
+                </>
+              )}
             </div>
           </div>
         )}

@@ -71,6 +71,18 @@ from .database import (
 from .retrieval import task_view
 
 
+class FrontendStaticFiles(StaticFiles):
+    async def get_response(self, path, scope):
+        response = await super().get_response(path, scope)
+        # Windows registry MIME mappings can classify ES modules as text/plain.
+        if response.status_code == 200:
+            if path.lower().endswith('.mjs'):
+                response.headers['content-type'] = 'text/javascript; charset=utf-8'
+            elif path.lower().endswith('.wasm'):
+                response.headers['content-type'] = 'application/wasm'
+        return response
+
+
 def create_app(settings=None, model_factory=None):
     settings = settings or Settings.load()
     settings.prepare()
@@ -508,7 +520,7 @@ def create_app(settings=None, model_factory=None):
     register_camera(app, current_user, db_session, settings)
     dist = ROOT / "frontend" / "dist"
     if (dist / "assets").exists():
-        app.mount("/assets", StaticFiles(directory=dist / "assets"), name="frontend_assets")
+        app.mount("/assets", FrontendStaticFiles(directory=dist / "assets"), name="frontend_assets")
     if (dist / "illustrations").exists():
         app.mount("/illustrations", StaticFiles(directory=dist / "illustrations"), name="illustrations")
 

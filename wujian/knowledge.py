@@ -18,11 +18,11 @@ from .domain import DomainError, accessible_item
 
 async def search_web(settings, query: str):
     async with AsyncOpenAI(api_key=settings.api_key, base_url=settings.base_url,
-                           timeout=60, max_retries=1) as client:
+                           timeout=14, max_retries=0) as client:
         response = await client.responses.create(
             model=settings.model,
             input="搜索以下公开资料，给出来源；只概述搜索发现，不把搜索摘要当成已读取的说明书：\n" + query[:1200],
-            tools=[{"type": "web_search"}], max_output_tokens=1800,
+            tools=[{"type": "web_search"}], max_output_tokens=1000,
             extra_body={"enable_thinking": False},
             store=False,
         )

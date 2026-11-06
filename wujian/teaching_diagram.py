@@ -1,5 +1,6 @@
 """Bounded schematic generation. Existing task/version/source permissions remain authoritative."""
 import json
+import math
 from typing import Annotated, Literal
 
 from fastapi import Depends
@@ -18,13 +19,30 @@ Size = Annotated[float, Field(gt=0, le=2000, allow_inf_nan=False)]
 class DiagramPart(Input):
     id: str = Field(pattern=r'^[a-zA-Z0-9_-]{1,32}$')
     name: str = Field(min_length=1,max_length=80)
-    shape: Literal['box','cyl'] = 'box'
+    shape: Literal['box','cyl','sphere','arc','cone'] = 'box'
+    arc_angle: float = Field(default=3.141592653589793,ge=.2,le=6.283185307179586,allow_inf_nan=False)
+    radius_ratio: float = Field(default=.4,ge=0,le=1,allow_inf_nan=False)
+    endpoints: tuple[tuple[Scalar,Scalar,Scalar],tuple[Scalar,Scalar,Scalar]] | None = None
     size: tuple[Size,Size,Size]
     pos: tuple[Scalar,Scalar,Scalar]
     rot: tuple[Scalar,Scalar,Scalar] = (0,0,0)
-    material: Literal['board','fiber','wood','metal','soft','glass'] = 'wood'
+    material: Literal['board','fiber','wood','metal','soft','glass','plastic'] = 'wood'
     attach_to: str | None = None
     face: Literal['+x','-x','+y','-y','+z','-z'] | None = None
+
+    @model_validator(mode='after')
+    def align_rod(self):
+        if self.endpoints:
+            if self.shape not in {'box','cyl'} or self.attach_to:
+                raise ValueError('Endpoints describe a free exterior rod only')
+            start,end=self.endpoints
+            direction=[end[i]-start[i] for i in range(3)]
+            length=math.sqrt(sum(value*value for value in direction))
+            if not .1 <= length <= 2000: raise ValueError('Rod length out of bounds')
+            self.pos=tuple((start[i]+end[i])/2 for i in range(3))
+            self.size=(self.size[0],length,self.size[2])
+            self.rot=(math.atan2(direction[2],direction[1]),0,-math.asin(max(-1,min(1,direction[0]/length))))
+        return self
 
 
 class DiagramScene(Input):
@@ -52,6 +70,10 @@ class DiagramScene(Input):
 
 def solve_contacts(scene):
     """Axis-aligned primitive contact; do not let guessed centres hide inserts inside solids."""
+    # An exterior observation is not an assembly constraint. Retain inferred
+    # poses instead of trying to solve rotated headphone/lamp parts as box joints.
+    if scene.action in {'observe','press'}:
+        for part in scene.parts:part.attach_to=None;part.face=None
     parts={part.id:part for part in scene.parts}
     resolved,visiting=set(),set()
     def place(part):
@@ -80,6 +102,7 @@ def solve_contacts(scene):
 class DiagramRequest(Input):
     expected_version: int = Field(ge=1)
     step_id: str = Field(min_length=1,max_length=80)
+    photo_ids: list[str] = Field(default_factory=list,max_length=2)
 
 
 def teaching_step(db,user_id,task_id,payload):
@@ -95,9 +118,23 @@ def teaching_step(db,user_id,task_id,payload):
 async def generate_scene(settings,item,entry,images=None):
     prompt = ('Generate a simple EXPLANATORY 3D scene, not CAD or official assembly instructions. '
         'Return JSON only matching this schema: '+json.dumps(DiagramScene.model_json_schema())+
-        '\nUse only 1-12 boxes/cylinders. Y up, floor at Y=0; units schematic. Cyl size=[diameter,length,diameter]; rotation radians. '
+        '\nUse only 2-7 PRIMARY exterior primitives: box, cyl, cone (tapered cylinder), sphere (ellipsoid), arc (curved tube segment). '
+        'Omit decorative springs, tiny controls and duplicate pads unless they are the exact target. '
+        'Preserve the PHOTO silhouette, connected endpoints, relative scale and left/right placement. Do not explode unrelated parts. '
+        'For visible slender rods/arms use endpoints=[[x1,y1,z1],[x2,y2,z2]] with shared joint coordinates; '
+        'the server derives centre, length and rotation, so you need not calculate Euler angles for rods. '
+        'For other parts use endpoints=null. cone is along local Y, size=[base diameter,height,base diameter]; '
+        'radius_ratio is upper/base radius (0 is a pointed cone, .4 a tapered shade). '
+        'Use arc for clearly curved exterior bands/handles, not a straight plank. arc_angle is radians (.2 to 2*pi, default pi); '
+        'The default pi arc lies in XY with ends at left/right and peak at positive Y; rot=[0,0,0] is an upright arch. '
+        'Cylinder axis is local Y: round earpieces face left/right with a +/-pi/2 rotation about Z, not lying flat on the floor. '
+        'all shapes have size=[bounding width,height,depth], centred at pos; cyl size=[diameter,length,diameter]. '
+        'Y up, floor at Y=0; units schematic, rotation radians. '
         'Focus on ONE representative part/action when a manual repeats it; do NOT reconstruct the whole product '
-        'or add parts from later pages. Include only parts actually shown on this page and needed for this step. '
+        'or add parts from later pages. When a user photo is supplied, represent its visible exterior and the current target. '
+        'Do not copy an IKEA/table/cap example onto unrelated lamps, headphones or other objects. '
+        'For general/observe steps without a manual, depict only supported exterior shapes and target labels, action=observe. '
+        'No imaginary internal mechanism or invented exact dimensions. Include only visible/evidenced parts needed for this step. '
         'For insertion, show the receiving part and insert in the DESIRED final contact position, with movement '
         'as a small approach offset from outside toward that position. Put their contact surfaces together '
         'using sizes and positions, not arbitrary overlapping or floating pieces. Use the original image orientation. '
@@ -119,9 +156,20 @@ async def generate_scene(settings,item,entry,images=None):
         result=await client.chat.completions.create(model=settings.vision_model if images else settings.model,
             messages=[{'role':'user','content':content}],response_format={'type':'json_object'},max_tokens=2600,
             extra_body={'enable_thinking':False})
+    raw=result.choices[0].message.content
+    if getattr(settings,'diagram_audit_dir',None):
+        from pathlib import Path
+        from .database import uid
+        audit=Path(settings.diagram_audit_dir);audit.mkdir(parents=True,exist_ok=True)
+        (audit/(uid()+'.json')).write_text(json.dumps({'model':settings.vision_model if images else settings.model,'raw':raw},ensure_ascii=False,indent=2),encoding='utf-8')
     try:
-        return solve_contacts(DiagramScene.model_validate_json(result.choices[0].message.content))
-    except (ValidationError,TypeError):
+        scene=DiagramScene.model_validate_json(raw)
+        if entry['guidance'].get('kind') in {'identify','observe','verify'}:
+            scene.action='observe';scene.movement=(0,0,0);scene.turns=0
+        return solve_contacts(scene)
+    except (ValidationError,TypeError) as error:
+        import logging
+        logging.getLogger(__name__).warning('3D structure check: %s',error)
         raise domain.DomainError('图解结构未通过检查，原步骤已保留，请稍后重试',502)
 
 
@@ -133,12 +181,24 @@ def register_diagrams(app,current_user,db_session,settings):
         target_id=entry.get('item_id') or next(iter(task.item_ids),None)
         if not target_id: raise domain.DomainError('先关联正在处理的实物',409)
         item=domain.accessible_item(db,user.id,target_id)
-        if not entry['guidance']['evidence']:
-            raise domain.DomainError('当前步骤资料还不够，先在对话中核对适用原文',409)
         from .source_access import readable_source
         from .knowledge import render_source_page
         from .database import Asset
         images=[]
+        import base64,io
+        from PIL import Image,ImageOps
+        photo_ids=list(payload.photo_ids)
+        if not photo_ids and item.photo_id: photo_ids.append(item.photo_id)
+        for identity in photo_ids[:2]:
+            asset=domain.own_asset(db,user.id,identity) if identity in payload.photo_ids else db.get(Asset,identity)
+            if asset and asset.media_type.startswith('image/'):
+                with Image.open(asset.path) as picture:
+                    picture=ImageOps.exif_transpose(picture).convert('RGB');picture.thumbnail((1280,1280))
+                    buffer=io.BytesIO();picture.save(buffer,format='JPEG',quality=85)
+                images.extend([{'type':'text','text':'当前实物的外观照片（不证明内部结构或已完成操作）'},
+                    {'type':'image_url','image_url':{'url':'data:image/jpeg;base64,'+base64.b64encode(buffer.getvalue()).decode()}}])
+        if not entry['guidance']['evidence'] and not images and entry['guidance'].get('basis','document')=='document':
+            raise domain.DomainError('请补充一张物品照片，或先在对话中核对这一步',409)
         for evidence in entry['guidance']['evidence'][:1]:
             source=readable_source(db,user.id,evidence['source_id'])
             if evidence.get('page') and source.asset_id:
@@ -152,13 +212,15 @@ def register_diagrams(app,current_user,db_session,settings):
         scene=await generate_scene(settings,product,entry,images)
         db.expire_all()
         task,latest=teaching_step(db,user.id,task_id,payload)
+        domain.accessible_item(db,user.id,target_id)
+        for identity in payload.photo_ids: domain.own_asset(db,user.id,identity)
         if step_signature(latest)!=original_signature: raise domain.DomainError('步骤已改变，请根据新步骤生成',409)
         for evidence in latest['guidance']['evidence']:
             readable_source(db,user.id,evidence['source_id'])
         visualizations={**task.plan.get('visualizations',{}),payload.step_id:{
             'schema':'schematic/1','scene':scene.model_dump(),'step_signature':original_signature,
             'model':settings.vision_model if images else settings.model,'created_at':now(),
-            'nature':'model_generated_schematic','evidence':latest['guidance']['evidence']}}
+            'nature':'model_generated_schematic','evidence':latest['guidance']['evidence'],'photo_ids':photo_ids}}
         foundation.save_task(db,user.id,task.source_message_id,task.goal,task.item_ids,
             task.constraints,{**task.plan,'visualizations':visualizations},task.id,payload.expected_version,task.status)
         return interactions.board(db,user.id,task_id)
