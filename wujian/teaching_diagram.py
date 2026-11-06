@@ -27,6 +27,7 @@ class DiagramPart(Input):
     pos: tuple[Scalar,Scalar,Scalar]
     rot: tuple[Scalar,Scalar,Scalar] = (0,0,0)
     material: Literal['board','fiber','wood','metal','soft','glass','plastic'] = 'wood'
+    color: str | None = Field(default=None,pattern=r'^#[0-9a-fA-F]{6}$')
     attach_to: str | None = None
     face: Literal['+x','-x','+y','-y','+z','-z'] | None = None
 
@@ -49,7 +50,9 @@ class DiagramScene(Input):
     title: str = Field(min_length=1,max_length=120)
     parts: list[DiagramPart] = Field(min_length=1,max_length=24)
     focus_ids: list[str] = Field(min_length=1,max_length=6)
+    view_ids: list[str] = Field(default_factory=list,max_length=24)
     movement: tuple[Scalar,Scalar,Scalar] = (0,0,0)
+    part_movements: dict[str,tuple[Scalar,Scalar,Scalar]] = Field(default_factory=dict,max_length=24)
     turns: float = Field(default=0,ge=-2,le=2,allow_inf_nan=False)
     action: Literal['observe','press','insert','rotate'] = 'observe'
     explanation: str = Field(min_length=1,max_length=1000)
@@ -58,7 +61,7 @@ class DiagramScene(Input):
     @model_validator(mode='after')
     def references(self):
         ids = [part.id for part in self.parts]
-        if len(ids)!=len(set(ids)) or any(identity not in ids for identity in self.focus_ids):
+        if len(ids)!=len(set(ids)) or any(identity not in ids for identity in [*self.focus_ids,*self.view_ids,*self.part_movements]):
             raise ValueError('Scene focus must refer to unique existing parts')
         for part in self.parts:
             if part.attach_to and (part.attach_to not in ids or part.attach_to==part.id or not part.face):
@@ -112,6 +115,8 @@ def teaching_step(db,user_id,task_id,payload):
     entry = next((entry for entry in task.plan.get('entries',[]) if entry['id']==payload.step_id),None)
     if task.plan.get('kind')!='guidance' or not entry or not entry.get('guidance'):
         raise domain.DomainError('先与阿圆核对一个有依据的教学步骤',409)
+    if task.plan.get('guidance',{}).get('lesson') and task.plan['guidance'].get('active_step_id')!=payload.step_id:
+        raise domain.DomainError('请使用当前步骤的图解，不跳到尚未确认的下一步',409)
     return task,entry
 
 
@@ -176,8 +181,11 @@ async def generate_scene(settings,item,entry,images=None):
 def register_diagrams(app,current_user,db_session,settings):
     @app.post('/api/tasks/{task_id}/diagram',response_model=TaskBoardView,tags=['3D teaching demo'])
     async def diagram(task_id:str,payload:DiagramRequest,user=Depends(current_user),db=Depends(db_session)):
-        if not settings.api_key: raise domain.DomainError('请先配置百炼 API Key',503)
         task,entry=teaching_step(db,user.id,task_id,payload)
+        cached=task.plan.get('visualizations',{}).get(payload.step_id)
+        if cached and cached.get('nature')=='reviewed_schematic' and cached.get('step_signature')==step_signature(entry):
+            return interactions.board(db,user.id,task_id)
+        if not settings.api_key: raise domain.DomainError('请先配置百炼 API Key',503)
         target_id=entry.get('item_id') or next(iter(task.item_ids),None)
         if not target_id: raise domain.DomainError('先关联正在处理的实物',409)
         item=domain.accessible_item(db,user.id,target_id)

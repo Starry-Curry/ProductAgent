@@ -1,0 +1,897 @@
+{
+  "id": "loklik-as2",
+  "revision": "2026-11-06.4",
+  "goal": "学会用 AS2 完成一次烫印",
+  "product_match": {
+    "brand": "LOKLiK",
+    "model": "AS2"
+  },
+  "manual": {
+    "index_url": "https://www.loklik.cn/files-download/",
+    "url": "https://video.loklik.cn/wp-content/uploads/2026/06/多功能自动衣服印画机AS2-说明书.pdf",
+    "identity": "大陆 220V HPA01 实体按键版；不是 HPA01-2 Smart 触屏版"
+  },
+  "model_file": "loklik-as2-model.json",
+  "profiles": [
+    {
+      "id": "plain-htv-mode1",
+      "name": "普通刻字膜 / 模式①",
+      "required_report": [
+        "普通",
+        "刻字膜",
+        "145",
+        "15",
+        "80"
+      ],
+      "instruction": "已记录你报告的材料包装条件。短按左半边循环箭头的“模式”键，切换到①；核对屏幕为145℃、15秒、80kg，不一致先告诉我。"
+    }
+  ],
+  "steps": [
+    {
+      "id": "power",
+      "title": "打开电源",
+      "instruction": "机器放稳、压板间隙清空后，接好配套电源，短按控制区最左侧带 ⏻ 图标的圆形电源键一次。",
+      "success_signal": "看到屏幕点亮就先停在这里。",
+      "target_label": "操作面板按键区最左侧带电源符号 ⏻ 的圆形电源键，不是最右侧的品牌启动键",
+      "focus_ids": [
+        "power"
+      ],
+      "explanation": "先找到屏幕下方那排实体按键。最左边单独的圆键上是电源符号 ⏻；用手指点按后松开即可，不需要长按。视频中的机器没有开机，画面只帮你找位置；开机结果以你现场看到的屏幕为准。",
+      "reviewed_instruction": "LOKLiK AS2 的电源开关为面板左侧圆键。接电后点按并松开可切换开关机；开机后设备可能开始加热，手应避开发热板。",
+      "manual_pdf_page": 3,
+      "action": "press",
+      "kind": "operate",
+      "visual_explanation": "打开电源；高亮处为本步相关部位。",
+      "control_closeup": true,
+      "picture": {
+        "asset_key": "panel_detail",
+        "point": [
+          167,
+          400
+        ],
+        "label": "短按左端 ⏻ 电源键"
+      }
+    },
+    {
+      "id": "mode",
+      "title": "核对材料并选择模式",
+      "instruction": "按耗材包装选择匹配的模式；没有核对前先不开始压烫。",
+      "success_signal": "选好模式并核对屏幕的温度、时间与压力后告诉我。",
+      "target_label": "操作面板中间偏左带圆形循环箭头的模式键，不是右侧带字母 A 的自动熨压键",
+      "focus_ids": [
+        "mode",
+        "display"
+      ],
+      "explanation": "温度、时间和压力取决于耗材及基材，不能给所有材料套同一套参数。模式键位于电源键右边、温度/时间/压力三键旁，图标是循环箭头；右边带 A 的按钮会开启自动熨压，新手先不要把它当模式键。",
+      "reviewed_instruction": "AS2 有四组固定预置以及四组自定义参数。普通热转印刻字膜对应的预置一为 145℃、15秒、80kg；必须先核对实际耗材和基材的适用要求。",
+      "manual_pdf_page": 3,
+      "action": "press",
+      "kind": "operate",
+      "visual_explanation": "核对材料并选择模式；高亮处为本步相关部位。",
+      "requires_input": "material_parameters",
+      "input_question": "这次要烫什么耗材和布料？请告诉我包装建议的温度、时间、压力。比如普通刻字膜是否适用 145℃、15秒、80kg；不确定可以拍包装，我们先不开始压烫。",
+      "resolved_instruction": "{profile_instruction}",
+      "control_closeup": true,
+      "picture": {
+        "asset_key": "panel_detail",
+        "point": [
+          460,
+          400
+        ],
+        "label": "循环箭头模式键"
+      }
+    },
+    {
+      "id": "preheat",
+      "title": "等预热完成",
+      "instruction": "先等最右侧“启动”键的绿灯从闪烁变为常亮，这时不要开始压烫。",
+      "success_signal": "你看到启动键绿灯常亮后再告诉我。",
+      "target_label": "操作面板最右侧带品牌图标的启动键及其指示灯，不是最左侧电源键",
+      "focus_ids": [
+        "start",
+        "display"
+      ],
+      "explanation": "预热过程中启动键的绿灯闪烁，达到设置温度后才常亮。只靠等待了多久或视频里的外观，不能判断已经预热完成。请看你面前这台机器；如果一直不常亮，告诉我屏幕显示的温度或错误码。",
+      "reviewed_instruction": "AS2 达到设定温度时，启动按键的绿色指示由闪烁转为常亮；该信号用来核对预热就绪。",
+      "manual_pdf_page": 4,
+      "action": "observe",
+      "kind": "verify",
+      "visual_explanation": "等预热完成；高亮处为本步相关部位。",
+      "control_closeup": true,
+      "picture": {
+        "asset_key": "panel_detail",
+        "point": [
+          880,
+          400
+        ],
+        "label": "右端品牌启动键"
+      }
+    },
+    {
+      "id": "drawer_out",
+      "title": "拉出熨烫板",
+      "instruction": "握住底部抽屉前缘的拉手，把熨烫板拉出来；手不要伸到上方发热板下面。",
+      "success_signal": "抽屉拉出、熨烫垫露出后告诉我。",
+      "target_label": "机器下方抽拉熨烫板前缘中央的浅色拉手，不是最底部底座标志",
+      "focus_ids": [
+        "drawer",
+        "mat",
+        "pull_tab"
+      ],
+      "explanation": "从机身正前方看，拉手在黑色熨烫垫的前缘中央。抓前缘向自己这边拉，移动的是下方抽屉，白色上部发热板不要碰。",
+      "reviewed_instruction": "AS2 的下方熨烫板可向前抽出，用于在远离上方热板的位置摆放材料。",
+      "manual_pdf_page": 4,
+      "action": "observe",
+      "kind": "operate",
+      "visual_explanation": "拉出熨烫板；高亮处为本步相关部位。",
+      "movement": [
+        0,
+        0,
+        -110
+      ],
+      "control_closeup": false,
+      "picture": {
+        "asset_key": "front_detail",
+        "point": [
+          500,
+          720
+        ],
+        "label": "下方抽屉式熨烫板前缘"
+      },
+      "part_offsets": {
+        "drawer": [
+          0,
+          0,
+          110
+        ],
+        "mat": [
+          0,
+          0,
+          110
+        ],
+        "pull_tab": [
+          0,
+          0,
+          110
+        ]
+      }
+    },
+    {
+      "id": "fabric",
+      "title": "放好布料",
+      "instruction": "把已去皱的布料平铺在抽出的熨烫垫上，保持待烫区域平整。",
+      "success_signal": "布料平整、待烫处没有折叠或厚接缝后告诉我。",
+      "target_label": "抽出的下方熨烫板上的深灰色熨烫垫表面",
+      "focus_ids": [
+        "fabric",
+        "mat"
+      ],
+      "explanation": "把这次要烫的区域放在垫子中央，先把褶皱理平。不要把纽扣、拉链或厚接缝直接堆在图案下方，避免局部受力不均。",
+      "reviewed_instruction": "材料在 AS2 的熨烫垫上应平整摆放；褶皱会影响接触。先完成材料准备，再推回熨烫板。",
+      "manual_pdf_page": 4,
+      "action": "observe",
+      "kind": "operate",
+      "visual_explanation": "放好布料；高亮处为本步相关部位。",
+      "control_closeup": false,
+      "extra_parts": [
+        {
+          "id": "fabric",
+          "name": "布料",
+          "shape": "box",
+          "size": [
+            280,
+            2,
+            280
+          ],
+          "pos": [
+            0,
+            125,
+            122
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#d5b990"
+        }
+      ],
+      "part_movements": {
+        "fabric": [
+          0,
+          65,
+          0
+        ]
+      },
+      "picture": {
+        "asset_key": "front_detail",
+        "point": [
+          500,
+          720
+        ],
+        "label": "下方熨烫垫放料区域"
+      },
+      "part_offsets": {
+        "drawer": [
+          0,
+          0,
+          110
+        ],
+        "mat": [
+          0,
+          0,
+          110
+        ],
+        "pull_tab": [
+          0,
+          0,
+          110
+        ]
+      }
+    },
+    {
+      "id": "design",
+      "title": "定位图案",
+      "instruction": "按照耗材包装标明的转印面朝向，把准备好的图案定位在布料上。",
+      "success_signal": "图案方向与位置确认后告诉我。",
+      "target_label": "下方熨烫垫与布料放置区域",
+      "focus_ids": [
+        "transfer",
+        "fabric"
+      ],
+      "explanation": "不同耗材的膜层与面向不完全一样，先看包装示意；不要凭透明面或图案正反自行猜。看不懂可以把包装和图案一起拍给我，我们留在这一阶段。",
+      "reviewed_instruction": "AS2 的材料准备阶段需要在熨烫垫上平放待压材料；具体图案朝向与撕膜方式遵循该耗材说明。",
+      "manual_pdf_page": 4,
+      "action": "observe",
+      "kind": "operate",
+      "visual_explanation": "定位图案；高亮处为本步相关部位。",
+      "control_closeup": false,
+      "extra_parts": [
+        {
+          "id": "fabric",
+          "name": "布料",
+          "shape": "box",
+          "size": [
+            280,
+            2,
+            280
+          ],
+          "pos": [
+            0,
+            125,
+            122
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#d5b990"
+        },
+        {
+          "id": "transfer",
+          "name": "图案位置",
+          "shape": "box",
+          "size": [
+            100,
+            1,
+            80
+          ],
+          "pos": [
+            0,
+            127,
+            122
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#7ca6ae"
+        }
+      ],
+      "part_movements": {
+        "transfer": [
+          0,
+          50,
+          0
+        ]
+      },
+      "picture": {
+        "asset_key": "front_detail",
+        "point": [
+          500,
+          720
+        ],
+        "label": "下方熨烫垫放料区域"
+      },
+      "part_offsets": {
+        "drawer": [
+          0,
+          0,
+          110
+        ],
+        "mat": [
+          0,
+          0,
+          110
+        ],
+        "pull_tab": [
+          0,
+          0,
+          110
+        ]
+      }
+    },
+    {
+      "id": "cover",
+      "title": "覆盖高温布",
+      "instruction": "在待烫区域上方铺好配套高温布，避免手接触上方热板。",
+      "success_signal": "高温布已覆盖、材料仍平整后告诉我。",
+      "target_label": "下方熨烫垫上的待烫区域",
+      "focus_ids": [
+        "covering",
+        "fabric"
+      ],
+      "explanation": "使用随机器提供的高温布覆盖作品；它不是普通湿毛巾。覆盖时从已经拉出的抽屉前方操作，不伸进上方热板与材料之间。",
+      "reviewed_instruction": "AS2 手册的材料准备示意要求覆盖高温布后再把熨烫板推回机内。",
+      "manual_pdf_page": 4,
+      "action": "observe",
+      "kind": "operate",
+      "visual_explanation": "覆盖高温布；高亮处为本步相关部位。",
+      "control_closeup": false,
+      "extra_parts": [
+        {
+          "id": "fabric",
+          "name": "布料",
+          "shape": "box",
+          "size": [
+            280,
+            2,
+            280
+          ],
+          "pos": [
+            0,
+            125,
+            122
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#d5b990"
+        },
+        {
+          "id": "covering",
+          "name": "高温布",
+          "shape": "box",
+          "size": [
+            300,
+            1,
+            290
+          ],
+          "pos": [
+            0,
+            129,
+            122
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#e8dfcd"
+        }
+      ],
+      "part_movements": {
+        "covering": [
+          0,
+          60,
+          0
+        ]
+      },
+      "picture": {
+        "asset_key": "front_detail",
+        "point": [
+          500,
+          720
+        ],
+        "label": "下方熨烫垫放料区域"
+      },
+      "part_offsets": {
+        "drawer": [
+          0,
+          0,
+          110
+        ],
+        "mat": [
+          0,
+          0,
+          110
+        ],
+        "pull_tab": [
+          0,
+          0,
+          110
+        ]
+      }
+    },
+    {
+      "id": "drawer_in",
+      "title": "推回熨烫板",
+      "instruction": "握住抽屉前缘，把熨烫板平稳推回最里面。",
+      "success_signal": "抽屉已完全推到底、双手已离开压板间隙后告诉我。",
+      "target_label": "机器下方抽拉熨烫板前缘中央的浅色拉手",
+      "focus_ids": [
+        "drawer",
+        "mat",
+        "pull_tab"
+      ],
+      "explanation": "移动下方抽屉，不推白色上机身。确保材料没有卷边、卡住或滑落。没有推到底时先别按启动键；不要为了测试去把手放在压板间。",
+      "reviewed_instruction": "AS2 在启动熨压前，下方熨烫板需要完全推到机内最里面。",
+      "manual_pdf_page": 4,
+      "action": "observe",
+      "kind": "operate",
+      "visual_explanation": "推回熨烫板；高亮处为本步相关部位。",
+      "movement": [
+        0,
+        0,
+        110
+      ],
+      "control_closeup": false,
+      "extra_parts": [
+        {
+          "id": "fabric",
+          "name": "布料",
+          "shape": "box",
+          "size": [
+            280,
+            2,
+            280
+          ],
+          "pos": [
+            0,
+            125,
+            12
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#d5b990"
+        },
+        {
+          "id": "covering",
+          "name": "高温布",
+          "shape": "box",
+          "size": [
+            300,
+            1,
+            290
+          ],
+          "pos": [
+            0,
+            129,
+            12
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#e8dfcd"
+        }
+      ],
+      "part_movements": {
+        "drawer": [
+          0,
+          0,
+          110
+        ],
+        "mat": [
+          0,
+          0,
+          110
+        ],
+        "pull_tab": [
+          0,
+          0,
+          110
+        ],
+        "fabric": [
+          0,
+          0,
+          110
+        ],
+        "covering": [
+          0,
+          0,
+          110
+        ]
+      },
+      "picture": {
+        "asset_key": "front_detail",
+        "point": [
+          500,
+          720
+        ],
+        "label": "下方抽屉式熨烫板前缘"
+      }
+    },
+    {
+      "id": "press",
+      "title": "启动这一轮压烫",
+      "instruction": "确认双手与杂物离开压板间隙后，短按最右侧带品牌图标的“启动”键一次。",
+      "success_signal": "看到压板下降并开始倒计时后告诉我。",
+      "target_label": "操作面板最右侧带品牌图标的圆形启动键，不是最左侧的电源键",
+      "focus_ids": [
+        "start",
+        "upper_plate"
+      ],
+      "explanation": "右端启动键和左端电源键用途不同。先核对抽屉已经推到底、材料参数正确、手已离开，再点按右端启动键。不要反复按 A 自动熨压键；那会改变后续触发方式。",
+      "reviewed_instruction": "AS2 的启动键位于控制区右端。按下后发热板自动下降并启动倒计时；压板运动时应远离夹压区域。",
+      "manual_pdf_page": 4,
+      "action": "press",
+      "kind": "operate",
+      "visual_explanation": "启动这一轮压烫；高亮处为本步相关部位。",
+      "control_closeup": false,
+      "extra_parts": [
+        {
+          "id": "fabric",
+          "name": "布料",
+          "shape": "box",
+          "size": [
+            280,
+            2,
+            280
+          ],
+          "pos": [
+            0,
+            125,
+            12
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#d5b990"
+        },
+        {
+          "id": "covering",
+          "name": "高温布",
+          "shape": "box",
+          "size": [
+            300,
+            1,
+            290
+          ],
+          "pos": [
+            0,
+            129,
+            12
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#e8dfcd"
+        }
+      ],
+      "part_offsets": {
+        "upper_plate": [
+          0,
+          -30,
+          0
+        ],
+        "hot_underside": [
+          0,
+          -30,
+          0
+        ]
+      },
+      "part_movements": {
+        "upper_plate": [
+          0,
+          30,
+          0
+        ],
+        "hot_underside": [
+          0,
+          30,
+          0
+        ],
+        "start": [
+          0,
+          2,
+          0
+        ],
+        "action_pointer": [
+          0,
+          8,
+          0
+        ]
+      },
+      "picture": {
+        "asset_key": "panel_detail",
+        "point": [
+          880,
+          400
+        ],
+        "label": "右端品牌启动键"
+      }
+    },
+    {
+      "id": "release",
+      "title": "等压板自动升起",
+      "instruction": "等倒计时结束、上方压板自动升起后再取作品；现在先不要把手伸进去。",
+      "success_signal": "现场确认压板已升起、动作停止后告诉我。",
+      "target_label": "机器中间的白色上发热板及它与下方熨烫垫之间的间隙",
+      "focus_ids": [
+        "upper_plate",
+        "hot_underside"
+      ],
+      "explanation": "这一步只观察，不用重复按启动。示意动画和视频外观都不能证明现场压板已经完成动作。若卡住、出现异常或错误码，请先描述情况，不要徒手拽热板。",
+      "reviewed_instruction": "AS2 的倒计时结束后，上方发热板会自动抬升复位；待动作停止后再操作抽屉。",
+      "manual_pdf_page": 4,
+      "action": "observe",
+      "kind": "verify",
+      "visual_explanation": "等压板自动升起；高亮处为本步相关部位。",
+      "movement": [
+        0,
+        -35,
+        0
+      ],
+      "control_closeup": false,
+      "extra_parts": [
+        {
+          "id": "fabric",
+          "name": "布料",
+          "shape": "box",
+          "size": [
+            280,
+            2,
+            280
+          ],
+          "pos": [
+            0,
+            125,
+            12
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#d5b990"
+        },
+        {
+          "id": "covering",
+          "name": "高温布",
+          "shape": "box",
+          "size": [
+            300,
+            1,
+            290
+          ],
+          "pos": [
+            0,
+            129,
+            12
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#e8dfcd"
+        }
+      ],
+      "picture": {
+        "asset_key": "front_detail",
+        "point": [
+          500,
+          140
+        ],
+        "label": "观察上方压板与下方垫子的间隙"
+      }
+    },
+    {
+      "id": "remove",
+      "title": "取出作品",
+      "instruction": "拉出抽屉后按耗材包装要求取出作品；撕膜要遵循它规定的热撕、温撕或冷撕条件。",
+      "success_signal": "作品已按包装要求处理后告诉我，也可以先说是否有翘边等现象。",
+      "target_label": "下方抽拉熨烫板及熨烫垫",
+      "focus_ids": [
+        "drawer",
+        "mat",
+        "pull_tab"
+      ],
+      "explanation": "机器完成压烫不等于胶膜已经可以随意撕。包装不明时先不强行撕膜，也不要立刻套用某个温度重复压；把耗材名称或包装发来核对。",
+      "reviewed_instruction": "AS2 负责压烫动作；作品取出及膜层处理仍需遵守实际耗材的撕膜条件，不能用机器预置代替耗材说明。",
+      "manual_pdf_page": 4,
+      "action": "observe",
+      "kind": "operate",
+      "visual_explanation": "取出作品；高亮处为本步相关部位。",
+      "movement": [
+        0,
+        0,
+        -110
+      ],
+      "control_closeup": false,
+      "extra_parts": [
+        {
+          "id": "fabric",
+          "name": "布料",
+          "shape": "box",
+          "size": [
+            280,
+            2,
+            280
+          ],
+          "pos": [
+            0,
+            125,
+            122
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#d5b990"
+        },
+        {
+          "id": "transfer",
+          "name": "图案位置",
+          "shape": "box",
+          "size": [
+            100,
+            1,
+            80
+          ],
+          "pos": [
+            0,
+            127,
+            122
+          ],
+          "rot": [
+            0,
+            0,
+            0
+          ],
+          "material": "soft",
+          "color": "#7ca6ae"
+        }
+      ],
+      "picture": {
+        "asset_key": "front_detail",
+        "point": [
+          500,
+          720
+        ],
+        "label": "下方抽屉式熨烫板前缘"
+      },
+      "part_offsets": {
+        "drawer": [
+          0,
+          0,
+          110
+        ],
+        "mat": [
+          0,
+          0,
+          110
+        ],
+        "pull_tab": [
+          0,
+          0,
+          110
+        ]
+      }
+    },
+    {
+      "id": "off",
+      "title": "关闭电源",
+      "instruction": "短按最左侧带 ⏻ 的电源键关机；收纳或清洁前还要等机器完全冷却。",
+      "success_signal": "确认已经关机后告诉我。",
+      "target_label": "操作面板最左侧带电源符号 ⏻ 的圆形电源键",
+      "focus_ids": [
+        "power"
+      ],
+      "explanation": "电源键短按用于关机，不是去长按恢复出厂设置。关机后发热部件仍可能很烫，先不要触摸或立即收纳。",
+      "reviewed_instruction": "AS2 电源键短按可切换关机；使用结束后的清洁与收纳应在切断电源并充分冷却后进行。",
+      "manual_pdf_page": 3,
+      "action": "press",
+      "kind": "operate",
+      "visual_explanation": "关闭电源；高亮处为本步相关部位。",
+      "control_closeup": true,
+      "picture": {
+        "asset_key": "panel_detail",
+        "point": [
+          167,
+          400
+        ],
+        "label": "短按左端 ⏻ 电源键"
+      }
+    }
+  ],
+  "authoring": "Codex authored, checked against supplied photos and mainland official PDF; instruction text is a paraphrase, not a verbatim manual transcript.",
+  "controls": [
+    {
+      "id": "power",
+      "name": "电源键（⏻）",
+      "location": "面板最左侧",
+      "purpose": "开关机",
+      "question_aliases": [
+        "⏻"
+      ],
+      "answer_terms": [
+        "电源",
+        "开关机",
+        "开机",
+        "关机"
+      ]
+    },
+    {
+      "id": "mode",
+      "name": "模式键（循环箭头）",
+      "location": "面板左半区、三枚参数键右边",
+      "purpose": "选择预置模式",
+      "question_aliases": [
+        "循环箭头"
+      ],
+      "answer_terms": [
+        "模式",
+        "预置"
+      ]
+    },
+    {
+      "id": "auto",
+      "name": "自动熨压键（A）",
+      "location": "右半区、品牌启动键左边",
+      "purpose": "自动熨压模式",
+      "question_aliases": [
+        "A键",
+        "A 键",
+        "带 A",
+        "带A"
+      ],
+      "answer_terms": [
+        "自动熨压",
+        "自动压烫",
+        "自动烫印"
+      ]
+    },
+    {
+      "id": "start",
+      "name": "启动键（品牌图标）",
+      "location": "面板最右侧",
+      "purpose": "预热/开始当前压烫",
+      "question_aliases": [
+        "品牌图标"
+      ],
+      "answer_terms": [
+        "启动",
+        "压烫",
+        "烫印",
+        "预热"
+      ]
+    }
+  ]
+}

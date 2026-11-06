@@ -95,7 +95,13 @@ def authorized_documents(sessions, user_id):
         for row in domain.list_experiences(db, user_id, for_ai=True):
             add("experience", row["id"], row)
         for row in db.scalars(select(TaskRecord).where(TaskRecord.user_id == user_id)):
-            add("task", row.id, task_view(row))
+            value=task_view(row)
+            plan={key:part for key,part in value['plan'].items() if key!='visualizations'}
+            if plan.get('guidance',{}).get('lesson'):
+                progress=dict(plan['guidance']);lesson=progress['lesson']
+                progress['lesson']={key:lesson[key] for key in ['id','revision','phase','inputs']}
+                plan['guidance']=progress
+            add("task", row.id, {**value,'plan':plan})
         for row in db.scalars(
             select(KnowledgeClaim).where(
                 KnowledgeClaim.owner_id == user_id,
@@ -170,6 +176,10 @@ class Retrieval:
     def __init__(self, settings, sessions):
         self.settings, self.sessions = settings, sessions
         self.apps, self.locks, self.hashes = {}, {}, {}
+        self.local=None
+        if settings.local_embedding_dir:
+            from .local_embedding import LocalEmbedding
+            self.local=LocalEmbedding(settings.local_embedding_dir,settings.local_ai_device,settings.local_ai_required)
 
     async def _app(self, user_id):
         if user_id in self.apps:
@@ -183,13 +193,13 @@ class Retrieval:
             "file_store": {
                 "default": {
                     "backend": "local",
-                    "embedding_store": "default" if self.settings.api_key else "",
+                    "embedding_store": "default" if self.settings.api_key and not self.local else "",
                     "keyword_index": "default",
                     "file_graph": "default",
                 }
             },
         }
-        if self.settings.api_key:
+        if self.settings.api_key and not self.local:
             components.update(
                 {
                     "as_embedding": {
@@ -218,7 +228,7 @@ class Retrieval:
                 }
             )
         space = json.dumps(
-            [user_id, self.settings.embedding_model, self.settings.base_url, 512]
+            [user_id, self.settings.embedding_model, self.settings.base_url, 512,str(self.local.folder) if self.local else '']
         )
         vault = (
             self.settings.data_dir
@@ -295,10 +305,29 @@ class Retrieval:
             )
             if not response.success:
                 raise RuntimeError("ReMe retrieval did not complete")
+            hits=response.metadata.get('results',[]);local_receipt=None;local_error=None
+            if self.local:
+                # ReMe still owns keyword retrieval; local embeddings add semantic
+                # candidates, with reciprocal-rank fusion and the SAME SQL visibility.
+                allowed={path:doc for path,doc in documents.items() if not kinds or doc['kind'] in kinds}
+                preferred=[hit['path'] for hit in hits if hit['path'] in allowed]
+                candidates=list(dict.fromkeys([*preferred,*allowed]))[:250]
+                def semantic_text(doc):
+                    data=doc['data'];keys=['name','goal','content','summary','text','user_text','assistant_text','title','excerpt','description']
+                    text=' '.join(str(data[key]) for key in keys if data.get(key))
+                    return text or doc['text']
+                try:
+                    ranked,scores,local_receipt=await asyncio.to_thread(self.local.rank,query,{path:semantic_text(allowed[path]) for path in candidates})
+                    fusion={path:1/(60+i+1) for i,path in enumerate(ranked)}
+                    for i,hit in enumerate(hits):fusion[hit['path']]=fusion.get(hit['path'],0)+1/(60+i+1)
+                    hits=[{'path':path,'scores':{'rrf':fusion[path],'local_cosine':scores.get(path)}} for path in sorted(fusion,key=fusion.get,reverse=True)]
+                except Exception as error:
+                    if self.local.required:raise
+                    local_error=type(error).__name__+': '+str(error)[:240]
             # Rehydrate and check current visibility/content after awaiting external calls.
             current = authorized_documents(self.sessions, user_id)
             results = []
-            for hit in response.metadata.get("results", []):
+            for hit in hits:
                 path = hit["path"]
                 doc = current.get(path)
                 if (
@@ -312,7 +341,8 @@ class Retrieval:
                     )
             return {
                 "results": results[:limit],
-                "mode": "hybrid"
+                'local_ai':local_receipt,'local_ai_error':local_error,
+                "mode": "keyword_plus_openvino" if local_receipt else "hybrid"
                 if store.embedding_store and store.embedding_store.is_healthy
                 else "keyword_only",
                 "counts": response.metadata.get("counts", {}),

@@ -23,6 +23,26 @@
         }
       }
     },
+    "/api/local-ai": {
+      "get": {
+        "summary": "Local Ai Status",
+        "operationId": "local_ai_status_api_local_ai_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Local Ai Status Api Local Ai Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "summary": "Register",
@@ -3181,6 +3201,58 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GroundingView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/picture": {
+      "post": {
+        "tags": [
+          "Teaching pictures"
+        ],
+        "summary": "Picture",
+        "operationId": "picture_api_tasks__task_id__picture_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiagramRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
                 }
               }
             }

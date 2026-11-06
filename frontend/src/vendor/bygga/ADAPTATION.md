@@ -15,3 +15,7 @@ Next app, generated assembly instructions or IKEA media copied.
 Wujian adapts its bounded schematic/1 JSON into the renderer Plan interface.
 Geometry is an inferred schematic, not dimensionally accurate CAD or an official
 assembly manual. Teaching evidence and real user progress stay in TaskRecord.
+
+The AS2 adapter adds validated per-part colors and focus-only labels (labelIds).
+Per-part animation positions stay in the application scene adapter; the upstream
+renderer remains an exterior schematic viewer, not a machine simulator.

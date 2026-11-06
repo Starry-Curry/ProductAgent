@@ -12,6 +12,18 @@ export type Grounding = {
 };
 export type CameraState = "seeking" | "following" | "waiting" | "stopped";
 type Ports = {
+  reference?: (
+    frame: HTMLCanvasElement,
+  ) => Promise<{
+    tracker: Tracker;
+    value: {
+      box: Box;
+      quad: number[][];
+      ms: number;
+      retained: number;
+      engine?: string;
+    };
+  } | null>;
   read: () => HTMLCanvasElement | null;
   ground: (snapshot: HTMLCanvasElement) => Promise<Grounding>;
   schedule: (callback: () => void) => () => void;
@@ -35,7 +47,8 @@ const copy = (source: HTMLCanvasElement) => {
 
 /** Cloud chooses semantic target; buffered local frames align its delayed result.
  * Tracking loss clears the overlay and schedules a fresh detection automatically.
- * No fixed object catalog, target coordinates or saved model answers are used. */
+ * Optional reviewed reference-plane targets are projected onto actual frames;
+ * there is no saved video trajectory or substituted model answer. */
 export class AutoCameraSession {
   private tracker?: Tracker;
   private cancelFrame = () => {};
@@ -50,6 +63,7 @@ export class AutoCameraSession {
   private calls: number[] = [];
   private totalCalls = 0;
   private localFrames = 0;
+  private nextReference = 0;
   private label = "当前目标";
   private previousBox?: Box;
   private phase: CameraState = "stopped";
@@ -90,6 +104,35 @@ export class AutoCameraSession {
     const frame = this.ports.read(),
       now = performance.now();
     if (frame) {
+      if (!this.tracker && this.ports.reference && now >= this.nextReference) {
+        this.nextReference = now + 500;
+        try {
+          const matched = await this.ports.reference(frame);
+          if (this.closed) {
+            matched?.tracker.dispose();
+            return;
+          }
+          if (matched) {
+            this.tracker = matched.tracker;
+            this.previousBox = matched.value.box;
+            this.label = "当前操作部位";
+            this.lastDetection = now;
+            this.ports.overlay(
+              matched.value.box,
+              this.label,
+              matched.value.quad,
+            );
+            this.ports.metrics?.({
+              ...matched.value,
+              cloudCalls: this.totalCalls,
+            });
+            this.setStatus("following", "已匹配当前部位，正在本地跟随。");
+            this.ports.afterAttempt?.();
+          }
+        } catch {
+          /* A reference miss falls back to actual cloud grounding below. */
+        }
+      }
       if (this.pending && now - this.lastBuffer >= 100) {
         this.lastBuffer = now;
         if (this.frames.length < 90) this.frames.push(copy(frame));
@@ -121,7 +164,9 @@ export class AutoCameraSession {
       if (
         !this.pending &&
         now >= this.nextCloud &&
-        (!this.tracker || now - this.lastDetection > 20000)
+        (!this.tracker ||
+          (this.tracker.engine !== "reference" &&
+            now - this.lastDetection > 20000))
       ) {
         if (this.calls.length < 6) void this.locate(frame);
         else if (!this.tracker)
@@ -152,6 +197,7 @@ export class AutoCameraSession {
         this.ports.ground(snapshot),
       ]);
       if (this.closed) return;
+      if (this.tracker?.engine === "reference") return;
       let box = answer.visible && answer.confidence >= 0.7 ? answer.bbox : null;
       // Re-associate only an already locked instance, never arbitrarily pick a
       // first target among duplicates. This is temporal overlap, not recognition.

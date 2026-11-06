@@ -133,7 +133,34 @@ function WorkspaceApp({
   ) {
     stopWatching();
     setRun(initial);
-    if (!["queued", "running"].includes(initial.status)) return;
+    const settle = (value: Run) => {
+      void updateMessages(value.conversation_id);
+      void refresh()
+        .then(() => {
+          const continued = [...value.events]
+            .reverse()
+            .find((event) => event.type === "continuation_saved")?.task_id;
+          const nextTask =
+            taskId || (typeof continued === "string" ? continued : undefined);
+          if (nextTask)
+            void request<Board>(`/tasks/${nextTask}/board`)
+              .then((next) => {
+                if (currentThread.current === value.conversation_id) {
+                  setBoard(next);
+                  setContext((previous) => ({
+                    ...previous,
+                    entry: { ...previous.entry, task_id: nextTask },
+                  }));
+                }
+              })
+              .catch(() => setBoard(undefined));
+        })
+        .catch(() => {});
+    };
+    if (!["queued", "running"].includes(initial.status)) {
+      settle(initial);
+      return;
+    }
     const eventSource = new EventSource(`/api/runs/${initial.id}/events`);
     source.current = eventSource;
     eventSource.onmessage = (event) => {
@@ -142,28 +169,7 @@ function WorkspaceApp({
       setRun(value);
       if (!["queued", "running"].includes(value.status)) {
         eventSource.close();
-        void updateMessages(value.conversation_id);
-        void refresh()
-          .then(() => {
-            const continued = [...value.events]
-              .reverse()
-              .find((event) => event.type === "continuation_saved")?.task_id;
-            const nextTask =
-              taskId || (typeof continued === "string" ? continued : undefined);
-            if (nextTask)
-              void request<Board>(`/tasks/${nextTask}/board`)
-                .then((next) => {
-                  if (currentThread.current === value.conversation_id) {
-                    setBoard(next);
-                    setContext((previous) => ({
-                      ...previous,
-                      entry: { ...previous.entry, task_id: nextTask },
-                    }));
-                  }
-                })
-                .catch(() => setBoard(undefined));
-          })
-          .catch(() => {});
+        settle(value);
       }
     };
     eventSource.onerror = () => {
@@ -174,8 +180,7 @@ function WorkspaceApp({
             setRun(value);
             if (!["queued", "running"].includes(value.status)) {
               eventSource.close();
-              void updateMessages(value.conversation_id);
-              void refresh().catch(() => {});
+              settle(value);
             }
           }
         })
@@ -667,6 +672,24 @@ function WorkspaceApp({
                         board={board}
                         update={setBoard}
                         initial={!messages.length}
+                        onRun={boardActions!.onRun}
+                        running={
+                          sending ||
+                          (!!run && ["queued", "running"].includes(run.status))
+                        }
+                        explain={() =>
+                          void request<Run>("/chat", "POST", {
+                            text: "这一步怎么做？",
+                            conversation_id: threadId,
+                            item_ids: board.task.item_ids,
+                            entry_context: {
+                              intent: "guidance",
+                              task_id: board.task.id,
+                            },
+                          })
+                            .then(boardActions!.onRun)
+                            .catch((error) => message.error(error.message))
+                        }
                         photos={
                           [...messages]
                             .reverse()

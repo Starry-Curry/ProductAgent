@@ -1,18 +1,11 @@
 import TeachingDiagram from "./TeachingDiagram";
+import StepIllustration from "./StepIllustration";
 import "../teaching-diagram.css";
 import CameraGuidance from "./CameraGuidance";
 import "../camera-guidance.css";
 import { useEffect, useState } from "react";
-import { App as AntApp, Modal } from "antd";
-import {
-  ArrowRight,
-  Check,
-  Clipboard,
-  FileText,
-  MessageCircle,
-  Plus,
-  Volume2,
-} from "lucide-react";
+import { App as AntApp } from "antd";
+import { ArrowRight, Check, FileText, MessageCircle, Plus } from "lucide-react";
 import {
   request,
   type Task,
@@ -22,7 +15,7 @@ import {
   type Workspace,
   type Run,
 } from "../api";
-import { Companion, EmptyState, ObjectVisual, speak } from "./shared";
+import { Companion, EmptyState, ObjectVisual } from "./shared";
 
 export type BoardActions = {
   board: Board;
@@ -83,12 +76,20 @@ export function GuidanceTools({
   update,
   photos = [],
   initial = false,
+  onRun,
+  running = false,
+  explain,
 }: {
   board: Board;
   update: (board: Board) => void;
   photos?: string[];
   initial?: boolean;
+  onRun: (run: Run) => Promise<void>;
+  running?: boolean;
+  explain: () => void;
 }) {
+  const { message } = AntApp.useApp();
+  const [busy, setBusy] = useState(false);
   const active = (
     board.task.plan.guidance as { active_step_id?: string } | undefined
   )?.active_step_id;
@@ -97,25 +98,104 @@ export function GuidanceTools({
     board.entries.find((entry) => entry.state !== "ready") ||
     board.entries.at(-1);
   if (!current?.guidance) return null;
+  const lesson = (
+    board.task.plan.guidance as {
+      lesson?: {
+        phase: string;
+        inputs: Record<string, unknown>;
+        definition: { steps: { id: string; requires_input?: string }[] };
+      };
+    }
+  )?.lesson;
+  const inputKey = lesson?.definition.steps.find(
+    (step) => step.id === current.id,
+  )?.requires_input;
+  const waitingInput = !!inputKey && !lesson?.inputs[inputKey];
+  async function confirm() {
+    if (!current) return;
+    setBusy(true);
+    try {
+      const key = `${board.task.id}:${board.task.version}:${current.id}`;
+      const saved = sessionStorage.getItem("lesson-receipt");
+      const previous = saved ? JSON.parse(saved) : null;
+      const receipt = previous?.key === key ? previous.id : crypto.randomUUID();
+      sessionStorage.setItem(
+        "lesson-receipt",
+        JSON.stringify({ key, id: receipt }),
+      );
+      const next = await request<Run>(
+        `/tasks/${board.task.id}/guidance-feedback`,
+        "POST",
+        {
+          expected_version: board.task.version,
+          step_id: current.id,
+          outcome: "done",
+          receipt_id: receipt,
+        },
+      );
+      await onRun(next);
+    } catch (error) {
+      message.error((error as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  if (board.task.status === "completed")
+    return (
+      <p className="muted">这次教学已按你的反馈完成。可以继续聊成品效果。</p>
+    );
   return (
     <section className="guidance-tools" aria-label="当前回答的辅助工具">
       <p className="muted">
-        {board.task.status === "completed" ? "已完成" : "当前"} ·{" "}
-        {current.title}
+        {lesson
+          ? `第 ${board.entries.findIndex((entry) => entry.id === current.id) + 1} / ${board.total_count} 步`
+          : "当前"}{" "}
+        · {current.title}
       </p>
       {initial && <p className="saved-step">{current.guidance.instruction}</p>}
+      <StepIllustration
+        key={board.task.id + current.id}
+        board={board}
+        entry={current}
+        update={update}
+        enabled={!running && !busy}
+        photos={photos}
+      />
       <div className="guidance-assists">
+        <button
+          className="primary-button"
+          disabled={
+            busy ||
+            running ||
+            waitingInput ||
+            lesson?.phase === "paused" ||
+            board.access !== "owner"
+          }
+          onClick={() => void confirm()}
+        >
+          <Check size={17} />
+          {waitingInput ? "先告诉阿圆材料条件" : "我完成了这一步"}
+        </button>
+        <button
+          className="quiet-button"
+          disabled={busy || running}
+          onClick={explain}
+        >
+          这一步怎么做？
+        </button>
         <TeachingDiagram
           key={board.task.id + current.id}
           board={board}
           entry={current}
           update={update}
           photoIds={photos}
+          onConfirm={!waitingInput && !running && !busy ? confirm : undefined}
         />
         <CameraGuidance
-          key={"camera-" + board.task.id + current.id}
+          key={"camera-" + board.task.id}
           board={board}
           entry={current}
+          onConfirm={!waitingInput && !running && !busy ? confirm : undefined}
         />
       </div>
     </section>
@@ -134,81 +214,7 @@ export function TaskCanvas({
   running,
 }: BoardActions) {
   const { message } = AntApp.useApp();
-  const [busy, setBusy] = useState(false),
-    [focus, setFocus] = useState(0),
-    [summary, setSummary] = useState<string>(),
-    [observation, setObservation] = useState("");
-  useEffect(() => {
-    const progress = board.task.plan.guidance as
-      { active_step_id?: string } | undefined;
-    const active = board.entries.findIndex(
-      (entry) => entry.id === progress?.active_step_id,
-    );
-    setFocus(
-      Math.max(
-        0,
-        active >= 0
-          ? active
-          : board.entries.findIndex((entry) => entry.state !== "ready"),
-      ),
-    );
-  }, [board.task.id, board.task.version]);
-  async function report(outcome: string) {
-    if (busy || running || !current) return;
-    setBusy(true);
-    try {
-      const receiptKey = `${board.task.id}:${board.task.version}:${current.id}:${outcome}:${observation}`;
-      const stored = sessionStorage.getItem("guidance-feedback");
-      const previous = stored ? JSON.parse(stored) : null;
-      const receipt =
-        previous?.key === receiptKey ? previous.id : crypto.randomUUID();
-      sessionStorage.setItem(
-        "guidance-feedback",
-        JSON.stringify({ key: receiptKey, id: receipt }),
-      );
-      const next = await request<Run>(
-        `/tasks/${board.task.id}/guidance-feedback`,
-        "POST",
-        {
-          expected_version: board.task.version,
-          step_id: current.id,
-          outcome,
-          note: observation,
-          receipt_id: receipt,
-        },
-      );
-      update(await request<Board>(`/tasks/${board.task.id}/board`));
-      setObservation("");
-      await onRun(next);
-    } catch (error) {
-      message.error((error as Error).message);
-      update(await request<Board>(`/tasks/${board.task.id}/board`));
-    } finally {
-      setBusy(false);
-    }
-  }
-  const current = board.entries[focus];
-  function afterSales() {
-    const items = workspace.items.filter((item) =>
-      board.task.item_ids.includes(item.id),
-    );
-    setSummary(
-      [
-        `问题：${board.task.goal}`,
-        ...items.map(
-          (item) =>
-            `物品：${item.name}；型号：${item.product.model || "尚待确认"}`,
-        ),
-        "已做检查与实际报告：",
-        ...board.entries.map(
-          (entry) =>
-            `- ${entry.title}：${states[entry.state]}${entry.note ? "；" + entry.note : ""}`,
-        ),
-        "补充症状、时间与错误代码：",
-        "未执行的操作与仍待确认的信息：",
-      ].join("\n"),
-    );
-  }
+  const [busy, setBusy] = useState(false);
   return (
     <div className="task-canvas">
       <div className="task-heading">
@@ -247,162 +253,7 @@ export function TaskCanvas({
           接受并一起准备
         </button>
       )}
-      {board.kind === "guidance" && current ? (
-        <>
-          <div className="step-track">
-            {board.entries.map((entry, index) => (
-              <button
-                className={`${index === focus ? "active" : ""} ${entry.state === "ready" ? "done" : ""}`}
-                key={entry.id}
-                onClick={() => setFocus(index)}
-              >
-                <span>
-                  {entry.state === "ready" ? <Check size={14} /> : index + 1}
-                </span>
-                {entry.title}
-              </button>
-            ))}
-          </div>
-          <article className="guidance-card">
-            <h3>
-              第 {focus + 1} 步 · {current.title}
-            </h3>
-            {board.task.item_ids[0] &&
-              workspace.items.find(
-                (item) => item.id === board.task.item_ids[0],
-              ) && (
-                <div className="guidance-visual">
-                  <ObjectVisual
-                    item={workspace.items.find(
-                      (item) => item.id === board.task.item_ids[0],
-                    )!}
-                  />
-                  <small>请核对你手边的实际物品</small>
-                </div>
-              )}
-            <p className="guidance-copy">
-              {current.guidance?.instruction ||
-                current.note ||
-                "先核对这一项，再根据你的实际反馈继续。"}
-            </p>
-            {current.guidance && (
-              <div className="step-details">
-                {current.guidance.success_signal && (
-                  <p>
-                    <strong>留意这个信号</strong>
-                    {current.guidance.success_signal}
-                  </p>
-                )}
-                {current.guidance.caution && (
-                  <p className="step-caution">{current.guidance.caution}</p>
-                )}
-                {current.guidance.observed_quote && (
-                  <p className="step-observation">
-                    你的实际报告：{current.guidance.observed_quote}
-                  </p>
-                )}
-                {current.guidance.evidence?.map((evidence, index) => {
-                  const source = board.sources.find(
-                    (source) => source.id === evidence.source_id,
-                  );
-                  return (
-                    <details key={index}>
-                      <summary>
-                        {String(source?.title || "步骤依据")}
-                        {evidence.page ? ` · 第 ${evidence.page} 页` : ""}
-                      </summary>
-                      <blockquote>{evidence.quote}</blockquote>
-                      {typeof source?.url === "string" &&
-                        source.url.startsWith("https://") && (
-                          <a
-                            href={source.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            核对原文
-                          </a>
-                        )}
-                    </details>
-                  );
-                })}
-                <textarea
-                  aria-label="这一步的实际情况"
-                  placeholder="可补充你看到的灯、声音或其他情况…"
-                  value={observation}
-                  onChange={(event) => setObservation(event.target.value)}
-                  maxLength={1600}
-                />
-              </div>
-            )}
-            <TeachingDiagram board={board} entry={current} update={update} />
-            <div className="guidance-buttons">
-              <button
-                className="primary-button"
-                disabled={
-                  busy ||
-                  running ||
-                  board.access !== "owner" ||
-                  !current.guidance
-                }
-                onClick={async () => {
-                  await report("done");
-                }}
-              >
-                {running ? "阿圆正在接着看…" : "检查过了"}
-                <Check size={18} />
-              </button>
-              <button
-                className="soft-button"
-                disabled={
-                  busy ||
-                  running ||
-                  board.access !== "owner" ||
-                  !current.guidance
-                }
-                onClick={() => void report("not_found")}
-              >
-                我没找到
-              </button>
-              <button
-                className="soft-button"
-                disabled={
-                  busy ||
-                  running ||
-                  board.access !== "owner" ||
-                  !current.guidance
-                }
-                onClick={() => void report("unchanged")}
-              >
-                没有变化
-              </button>
-            </div>
-            <CameraGuidance board={board} entry={current} />
-            <div className="guidance-helper">
-              <Companion small />
-              <button className="quiet-button" onClick={onCamera}>
-                不确定？拍张照片，再继续聊。
-              </button>
-              <button
-                className="icon-button"
-                title="听一遍当前步骤"
-                onClick={() => {
-                  if (!speak(current.title + "。" + current.note))
-                    message.info("当前浏览器无法朗读，请直接阅读文字。");
-                }}
-              >
-                <Volume2 size={19} />
-              </button>
-            </div>
-            <p className="form-note">
-              这是当前事项中整理的步骤；具体操作仍需与适用资料核对。
-            </p>
-          </article>
-          <button className="soft-button" onClick={afterSales}>
-            <Clipboard size={17} />
-            整理售后问题说明
-          </button>
-        </>
-      ) : board.kind !== "legacy" ? (
+      {board.kind !== "legacy" ? (
         <>
           <div className="plan-overview">
             {(["owned", "buy", "borrow", "confirm"] as const).map((group) => {
@@ -474,37 +325,6 @@ export function TaskCanvas({
           </p>
         </section>
       )}
-      <Modal
-        open={summary !== undefined}
-        title="给售后的一份问题说明"
-        onCancel={() => setSummary(undefined)}
-        footer={
-          <button
-            className="primary-button"
-            onClick={async () => {
-              try {
-                await navigator.clipboard.writeText(summary || "");
-                message.success("已复制，请自行选择发送给谁。");
-              } catch {
-                message.info("可以在上方选中文字后复制。");
-              }
-            }}
-          >
-            <Clipboard size={17} />
-            复制说明
-          </button>
-        }
-      >
-        <p className="form-note">
-          只包含已知物品和实际记录，请补充或纠正后再自行发送。
-        </p>
-        <textarea
-          className="after-sales-text"
-          aria-label="售后问题说明"
-          value={summary || ""}
-          onChange={(event) => setSummary(event.target.value)}
-        />
-      </Modal>
     </div>
   );
 }
@@ -719,7 +539,8 @@ export function TaskRail({
                 <strong>{String(source.title)}</strong>
                 <p>{String(source.quote || "")}</p>
                 {typeof source.url === "string" &&
-                  source.url.startsWith("https://") && (
+                  (source.url.startsWith("https://") ||
+                    source.url.startsWith("/api/assets/")) && (
                     <a
                       href={source.url}
                       target="_blank"

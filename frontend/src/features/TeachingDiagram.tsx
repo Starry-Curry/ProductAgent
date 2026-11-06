@@ -16,11 +16,15 @@ type Scene = {
     pos: Vec3;
     rot: Vec3;
     material: PartMaterial;
+    color?: string;
     face?: Pose | null;
     attach_to?: string | null;
   }[];
   focus_ids: string[];
+  view_ids?: string[];
+  action?: string;
   movement: Vec3;
+  part_movements?: Record<string, Vec3>;
   turns: number;
   explanation: string;
   uncertainty: string;
@@ -56,7 +60,7 @@ function contactDetail(scene: Scene) {
   }
   return { parts, cropped };
 }
-function asPlan(scene: Scene): Plan {
+function asPlan(scene: Scene, labels?: Record<string, string>): Plan {
   scene = { ...scene, parts: contactDetail(scene).parts };
   const face =
     scene.parts.find((part) => scene.focus_ids.includes(part.id))?.face || "+y";
@@ -74,7 +78,7 @@ function asPlan(scene: Scene): Plan {
     },
     parts: scene.parts.map((part, index) => ({
       ...part,
-      label: String(index + 1),
+      label: labels?.[part.id] || String(index + 1),
       qty: 1,
     })),
     hardware: [],
@@ -92,7 +96,15 @@ function asPlan(scene: Scene): Plan {
           pos: part.pos,
           rot: part.rot,
           delay: 0,
-          from: scene.focus_ids.includes(part.id) ? scene.movement : [0, 0, 0],
+          from:
+            scene.part_movements?.[part.id] ??
+            ((
+              scene.action === "press"
+                ? part.id === scene.focus_ids[0] || part.id === "action_pointer"
+                : scene.focus_ids.includes(part.id)
+            )
+              ? scene.movement
+              : [0, 0, 0]),
           spin: scene.focus_ids.includes(part.id) ? scene.turns : 0,
         },
       ],
@@ -118,11 +130,13 @@ export default function TeachingDiagram({
   entry,
   update,
   photoIds = [],
+  onConfirm,
 }: {
   board: TaskBoard;
   entry: TaskEntry;
   update: (next: TaskBoard) => void;
   photoIds?: string[];
+  onConfirm?: () => Promise<void>;
 }) {
   const host = useRef<HTMLDivElement>(null),
     stage = useRef<import("../vendor/bygga/engine/stage").Stage | null>(null);
@@ -130,10 +144,12 @@ export default function TeachingDiagram({
     [failure, setFailure] = useState(""),
     [open, setOpen] = useState(false),
     [ready, setReady] = useState(false);
+  const [detailView, setDetailView] = useState(true);
   const candidate = (
     board.task.plan.visualizations as Record<string, Saved> | undefined
   )?.[entry.id];
   const saved =
+    candidate?.nature !== "reviewed_schematic" &&
     photoIds.length &&
     photoIds.slice(-2).join(",") !== (candidate?.photo_ids || []).join(",")
       ? undefined
@@ -150,8 +166,33 @@ export default function TeachingDiagram({
             loop: false,
             callout: false,
             margins: { t: -48, b: -32, l: 0, r: 0 },
+            labelIds:
+              saved.nature === "reviewed_schematic"
+                ? saved.scene.focus_ids.filter((id) => id !== "action_pointer")
+                : undefined,
           });
-          view.setPlan(asPlan(saved.scene));
+          const visible =
+            saved.nature === "reviewed_schematic" &&
+            detailView &&
+            saved.scene.view_ids?.length
+              ? {
+                  ...saved.scene,
+                  parts: saved.scene.parts.filter((part) =>
+                    saved.scene.view_ids!.includes(part.id),
+                  ),
+                }
+              : saved.scene;
+          view.setPlan(
+            asPlan(
+              visible,
+              Object.fromEntries(
+                saved.scene.parts.map((part, index) => [
+                  part.id,
+                  String(index + 1),
+                ]),
+              ),
+            ),
+          );
           view.setMode({ kind: "step", index: 0 });
           view.setHighlight(saved.scene.focus_ids);
           stage.current = view;
@@ -164,7 +205,7 @@ export default function TeachingDiagram({
       stage.current?.dispose();
       stage.current = null;
     };
-  }, [saved, ready]);
+  }, [saved, ready, detailView]);
   async function generate() {
     setBusy(true);
     setFailure("");
@@ -199,7 +240,20 @@ export default function TeachingDiagram({
         open={open}
         title={entry.title + " · 3D 图解"}
         width={800}
-        footer={null}
+        footer={
+          onConfirm ? (
+            <button
+              className="primary-button"
+              onClick={() => {
+                setReady(false);
+                setOpen(false);
+                void onConfirm();
+              }}
+            >
+              我完成了这一步，继续
+            </button>
+          ) : null
+        }
         destroyOnHidden
         afterOpenChange={setReady}
         onCancel={() => {
@@ -215,7 +269,13 @@ export default function TeachingDiagram({
               disabled={busy || board.access !== "owner"}
               onClick={() => void generate()}
             >
-              {busy ? "正在整理图解…" : saved ? "重新生成" : "重试"}
+              {busy
+                ? "正在整理图解…"
+                : saved?.nature === "reviewed_schematic"
+                  ? "本步资源已准备"
+                  : saved
+                    ? "重新生成"
+                    : "重试"}
             </button>
           </div>
           {saved && (
@@ -239,35 +299,48 @@ export default function TeachingDiagram({
                 </button>
                 <button
                   className="quiet-button"
-                  onClick={() =>
+                  onClick={() => {
+                    if (
+                      saved.nature === "reviewed_schematic" &&
+                      saved.scene.view_ids?.length
+                    ) {
+                      setDetailView(!detailView);
+                      return;
+                    }
                     stage.current?.setMode({
                       kind: "assembled",
                       view: { az: 0.7, el: 0.4 },
-                    })
-                  }
+                    });
+                  }}
                 >
                   <RotateCcw size={16} />
-                  看全貌
+                  {saved.nature === "reviewed_schematic" && !detailView
+                    ? "看操作处"
+                    : "看全貌"}
                 </button>
               </div>
               <div className="diagram-legend" aria-label="图解部件">
-                {saved.scene.parts.map((part, index) => (
-                  <button
-                    key={part.id}
-                    className="quiet-button"
-                    onClick={() => stage.current?.setHighlight([part.id])}
-                  >
-                    <span>{index + 1}</span>
-                    {part.name}
-                  </button>
-                ))}
+                {saved.scene.parts.map((part, index) =>
+                  part.id === "action_pointer" ||
+                  (saved.nature === "reviewed_schematic" &&
+                    !saved.scene.focus_ids.includes(part.id)) ? null : (
+                    <button
+                      key={part.id}
+                      className="quiet-button"
+                      onClick={() => stage.current?.setHighlight([part.id])}
+                    >
+                      <span>{index + 1}</span>
+                      {part.name}
+                    </button>
+                  ),
+                )}
               </div>
               <p>{saved.scene.explanation}</p>
               <small className="muted">
-                AI 示意图
-                {contactDetail(saved.scene).cropped
-                  ? " · 连接处局部画面"
-                  : ""}{" "}
+                {saved.nature === "reviewed_schematic"
+                  ? "按实拍与手册校核的示意图"
+                  : "AI 示意图"}
+                {contactDetail(saved.scene).cropped ? " · 连接处局部画面" : ""}{" "}
                 · 拖动可旋转，请按实物和原图核对。
               </small>
               <details>

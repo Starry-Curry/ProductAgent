@@ -26,6 +26,9 @@ dependencies = [
 requires = ["hatchling>=1.27,<2"]
 build-backend = "hatchling.build"
 
+[project.optional-dependencies]
+intel = ["openvino==2026.4.1", "tokenizers==0.23.3"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["wujian"]
 

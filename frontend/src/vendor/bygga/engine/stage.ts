@@ -18,6 +18,7 @@ export interface StageOptions {
   callout?: boolean;
   interactive?: boolean;
   labels?: boolean;
+  labelIds?: string[]; // optional teaching focus; keep the rest of the model visible
   offscreen?: boolean;
   loop?: boolean;
   onIntroDone?: () => void;
@@ -1124,7 +1125,7 @@ export class Stage {
             }
           }
         }
-        if (this.labelLayer && !p.type.extra && this.typeFirst.get(p.type.id) === m.index) {
+        if (this.labelLayer && !p.type.extra && (!this.opts.labelIds || this.opts.labelIds.includes(p.type.id)) && this.typeFirst.get(p.type.id) === m.index) {
           const k = clamp01((t - st.delay - PART_DUR * 0.55) / 0.3) * fade;
           if (!wantedLabels.has(p.type.id) && k > 0) {
             const c = new THREE.Vector3();

@@ -9,6 +9,7 @@ from .database import ChatMessage, TaskRecord, Conversation
 from .evidence import locate_quote
 from .learning import Learning, apply_learning, validate_learning
 from .api_models import TaskEntry
+from .lessons import LessonAction
 
 
 class InteractionPlan(BaseModel):
@@ -63,6 +64,7 @@ class TurnResult(BaseModel):
         description="A substantive proposal or continuing task with latest feedback. Null for simple questions, acknowledgements, story-only recording and companionship. Keep actual user requirements separate from proposed mechanisms."
     )
     learning: Learning = Field(default_factory=lambda:Learning(knowledge_updates=[],memory_updates=[]))
+    lesson_action: LessonAction | None = Field(default=None,description='只用于当前已建立的逐步教学。明确实际完成才confirm，当前疑问不推进。不要同时重建continuation。')
     story_refs: list[str] = Field(
         default_factory=list,
         description="IDs of authorized memory-wall records to quote with their original author. Use when the person asks about an existing story. Discuss present feelings in answer; the application renders the actual story, so do not retell or invent past scenes there. Empty for no story request.",
@@ -145,9 +147,15 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
 def commit_result(db, user_id, message_id, result, current_question):
     with db.begin_nested():
         learned = apply_learning(db, user_id, message_id, result.learning)
-        task = commit_continuation(
-            db, user_id, message_id, result, current_question, commit=False
-        )
+        controlled_answer=None
+        if result.lesson_action:
+            from .lessons import apply_action
+            controlled,controlled_answer=apply_action(db,user_id,message_id,result.lesson_action)
+            if result.lesson_action.kind=='explain':controlled_answer=None
+            from .retrieval import task_view
+            task=task_view(controlled)
+        else:
+            task = commit_continuation(db, user_id, message_id, result, current_question, commit=False)
         if task is None:
             # A short answer may omit plan changes. Keep the actual statement
             # on the active task anyway; recording it does not infer success.
@@ -186,7 +194,7 @@ def commit_result(db, user_id, message_id, result, current_question):
     db.commit()
     # The current answer is the main Agent's response to THIS message. Replacing
     # it with the active step hides negative feedback and repeats yesterday's text.
-    answer=result.answer
+    answer=controlled_answer or result.answer
     return {
         "task": task,
         "learned": learned,
@@ -204,6 +212,14 @@ def grounded_turn_schema(sessions, user_id, message_id):
                 validate_learning(db, user_id, message_id, self.learning)
                 message = domain.require(db.get(ChatMessage, message_id))
                 conversation = db.get(Conversation, message.conversation_id)
+                active=db.get(TaskRecord,conversation.entry_context.get('task_id')) if conversation.entry_context.get('task_id') else None
+                if result_action:=self.lesson_action:
+                    if self.continuation:raise ValueError('逐步教学用lesson_action，不同时重写整张continuation')
+                    from .lessons import validate_action
+                    try:validate_action(db,user_id,message_id,result_action)
+                    except domain.DomainError as error:raise ValueError(error.message) from error
+                if active and active.plan.get('guidance',{}).get('lesson') and self.continuation:
+                    raise ValueError('当前是已核验的逐步教学；请解释当前一步，明确实际完成时用lesson_action，不删除或跳过原步骤')
                 from .guidance import validate_specific_advice
                 entries=self.continuation.plan.get('entries',[]) if self.continuation else []
                 known=[message.text]

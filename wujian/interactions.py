@@ -270,12 +270,14 @@ def board(db, user_id, task_id):
     sources = {}
     for entry in entries:
         details = entry.get("guidance") or {}
+        active_source = not plan.get('guidance',{}).get('lesson') or entry['id']==plan['guidance'].get('active_step_id')
         readable = []
         for evidence in details.get("evidence", []):
             try:
                 source = readable_source(db, user_id, evidence["source_id"])
-                sources[source.id] = {"id": source.id, "title": source.title, "url": source.url,
-                    "quote": evidence["quote"], "page": evidence.get("page")}
+                if active_source:
+                    sources[source.id] = {"id": source.id, "title": source.title, "url": source.url,
+                        "quote": evidence["quote"], "page": evidence.get("page")}
                 readable.append(evidence)
             except domain.DomainError:
                 pass
@@ -295,6 +297,16 @@ def board(db, user_id, task_id):
                 except domain.DomainError:
                     pass
     task_value = task_for_actor(db, user_id, task_id)
+    if plan.get('guidance',{}).get('lesson') and row.item_ids:
+        item=domain.accessible_item(db,user_id,row.item_ids[0])
+        original_id=item.state.get('teaching',{}).get('manual_source_id')
+        if original_id:
+            original=readable_source(db,user_id,original_id)
+            from .lessons import step_definition
+            step=step_definition(row)
+            sources[original.id]={'id':original.id,'title':original.title,
+                'url':'/api/assets/'+original.asset_id if original.asset_id else original.url,
+                'quote':f"当前操作可核对原始 PDF 第 {step['manual_pdf_page']} 页；上方导览为改写，不是原文。" if step else '官方原始 PDF，保留页图以供核验。'}
     if task_value['plan'].get('visualizations'):
         from .guidance import step_signature
         signatures={entry['id']:step_signature(entry) for entry in entries}
@@ -346,6 +358,8 @@ def create_board(db, user_id, payload):
 
 def update_entry(db, user_id, task_id, entry_id, payload):
     row, access = task_access(db, user_id, task_id, writing=True)
+    if row.plan.get('guidance',{}).get('lesson'):
+        raise domain.DomainError('逐步教学请用当前步骤的实际反馈入口，不能用清单接口跳步',409)
     plan = dict(row.plan or {})
     if plan.get("schema") != "interaction/1":
         raise domain.DomainError("这份历史方案尚未整理为清单，请在原话题继续")

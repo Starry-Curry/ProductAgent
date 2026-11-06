@@ -91,6 +91,9 @@ def create_app(settings=None, model_factory=None):
 
     @asynccontextmanager
     async def lifespan(app):
+        if settings.local_ai_required:
+            if not runner.retrieval.local:raise RuntimeError('Local AI required but no model directory configured')
+            await asyncio.to_thread(runner.retrieval.local.load)
         with sessions() as db:
             for run in db.scalars(select(Run).where(Run.status.in_(["queued", "running"]))):
                 run.status, run.error = "interrupted", "服务重启，任务已停止。请继续对话；不会自动重复外部操作。"
@@ -137,6 +140,13 @@ def create_app(settings=None, model_factory=None):
     def health():
         return {"status": "ok", "model_configured": bool(settings.api_key), "model": settings.model,
                 "demo_mode": settings.demo_mode, "device_connected": False}
+
+    @app.get('/api/local-ai')
+    def local_ai_status(user=Depends(current_user)) -> dict:
+        if not runner.retrieval.local:return {'enabled':False,'accelerator_verified':False}
+        value=runner.retrieval.local.status()
+        value['last_inference']={key:part for key,part in value['last_inference'].items() if key!='ranked_ids'}
+        return value
 
     @app.post("/api/auth/register", response_model=UserView)
     def register(payload: Register, request: Request, db=Depends(db_session)):
@@ -518,6 +528,8 @@ def create_app(settings=None, model_factory=None):
     register_diagrams(app, current_user, db_session, settings)
     from .camera_guidance import register_camera
     register_camera(app, current_user, db_session, settings)
+    from .lesson_assets import register_pictures
+    register_pictures(app,current_user,db_session,settings)
     dist = ROOT / "frontend" / "dist"
     if (dist / "assets").exists():
         app.mount("/assets", FrontendStaticFiles(directory=dist / "assets"), name="frontend_assets")

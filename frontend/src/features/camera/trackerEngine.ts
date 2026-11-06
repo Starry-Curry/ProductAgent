@@ -7,6 +7,7 @@ type Result = {
   engine?: string;
 };
 export type Tracker = {
+  engine?: string;
   update: (frame: HTMLCanvasElement) => Result | Promise<Result>;
   dispose: () => void;
 };

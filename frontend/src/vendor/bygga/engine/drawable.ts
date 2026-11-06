@@ -97,7 +97,7 @@ const MAT_COLOR: Record<string, THREE.Color> = {
 export function partDrawable(p: PartType, holes: Hole[]) {
   const d = new Drawable();
   const [sx, sy, sz] = p.size;
-  const color = MAT_COLOR[p.material] ?? FACE.board;
+  const color = p.color && /^#[0-9a-fA-F]{6}$/.test(p.color) ? new THREE.Color(p.color) : MAT_COLOR[p.material] ?? FACE.board;
   if (p.pieces) {
     for (const q of p.pieces) {
       const [qx, qy, qz] = q.size;

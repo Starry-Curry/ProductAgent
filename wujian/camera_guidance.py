@@ -65,6 +65,8 @@ def owned_step(db,user_id,task_id,payload):
     entry=next((entry for entry in task.plan.get('entries',[]) if entry['id']==payload.step_id),None)
     if task.plan.get('kind')!='guidance' or not entry or not entry.get('guidance'):
         raise domain.DomainError('先和阿圆核对当前步骤',409)
+    if task.plan.get('guidance',{}).get('lesson') and task.plan['guidance'].get('active_step_id')!=payload.step_id:
+        raise domain.DomainError('请定位当前步骤的部位，不跳到下一步',409)
     return task,entry
 
 

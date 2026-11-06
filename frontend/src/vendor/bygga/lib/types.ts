@@ -294,6 +294,7 @@ export interface PartType {
   arc_angle?: number;
   radius_ratio?: number;
   material: PartMaterial;
+  color?: string; // reviewed schematic palette; application validates six-digit hex
   qty: number;
   extra?: boolean; // not in the box (e.g. mattress)
   pieces?: PartPiece[]; // drawn as these boxes and cylinders instead of one

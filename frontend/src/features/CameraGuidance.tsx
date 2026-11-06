@@ -13,13 +13,19 @@ import {
   type Grounding,
 } from "./camera/autoSession";
 import type { Box } from "./camera/opticalFlow";
+import type {
+  ReferenceSpec,
+  ReferenceSurface,
+} from "./camera/referenceTracker";
 
 export default function CameraGuidance({
   board,
   entry,
+  onConfirm,
 }: {
   board: TaskBoard;
   entry: TaskEntry;
+  onConfirm?: () => Promise<void>;
 }) {
   const [open, setOpen] = useState(false),
     [source, setSource] = useState(false),
@@ -38,17 +44,75 @@ export default function CameraGuidance({
     local = useRef(false);
   const frame = useRef<HTMLCanvasElement>(document.createElement("canvas"));
   const controller = useRef<AbortController | undefined>(undefined);
+  const preparedVideo = useRef<Promise<Blob> | undefined>(undefined);
+  const referenceSpec = (
+    board.task.plan.guidance as { reference?: ReferenceSpec } | undefined
+  )?.reference;
+  const reference = useRef<Promise<ReferenceSurface> | undefined>(undefined);
+  const targetPart = (
+    board.task.plan.guidance as
+      | {
+          lesson?: {
+            definition: { steps: { id: string; focus_ids: string[] }[] };
+          };
+        }
+      | undefined
+  )?.lesson?.definition.steps.find((step) => step.id === entry.id)
+    ?.focus_ids[0];
+  useEffect(() => {
+    if (!referenceSpec) return;
+    let cancelled = false;
+    let surface: ReferenceSurface | undefined;
+    reference.current = import("./camera/referenceTracker")
+      .then((module) => module.ReferenceSurface.load(referenceSpec))
+      .then((value) => {
+        if (cancelled) {
+          value.dispose();
+          throw new Error("closed");
+        }
+        surface = value;
+        return value;
+      });
+    void reference.current.catch(() => {});
+    return () => {
+      cancelled = true;
+      surface?.dispose();
+      reference.current = undefined;
+    };
+  }, [referenceSpec?.image_id]);
   const demoId = (
     board.task.plan.guidance as { demo_video_id?: string } | undefined
   )?.demo_video_id;
   const videoNature = (
     board.task.plan.guidance as { demo_video_nature?: string } | undefined
   )?.demo_video_nature;
+  useEffect(() => {
+    if (
+      !demoId ||
+      !(board.task.plan.guidance as { lesson?: unknown } | undefined)?.lesson
+    )
+      return;
+    const abort = new AbortController();
+    preparedVideo.current = fetch("/api/assets/" + demoId, {
+      credentials: "same-origin",
+      signal: abort.signal,
+    }).then((response) => {
+      if (!response.ok) throw new Error("片段暂不可用");
+      return response.blob();
+    });
+    void preparedVideo.current.catch(() => {
+      preparedVideo.current = undefined;
+    });
+    return () => {
+      abort.abort();
+      preparedVideo.current = undefined;
+    };
+  }, [demoId]);
   function capture() {
     const v = video.current,
       c = frame.current;
     if (!v?.videoWidth) return null;
-    const scale = Math.min(1, 480 / Math.max(v.videoWidth, v.videoHeight));
+    const scale = Math.min(1, 720 / Math.max(v.videoWidth, v.videoHeight));
     c.width = Math.round(v.videoWidth * scale);
     c.height = Math.round(v.videoHeight * scale);
     c.getContext("2d")!.drawImage(v, 0, 0, c.width, c.height);
@@ -97,16 +161,34 @@ export default function CameraGuidance({
     setSource(false);
     setManual(false);
   }
-  useEffect(
-    () => () => stopSource(),
-    [board.task.id, board.task.version, entry.id],
-  );
+  useEffect(() => () => stopSource(), [board.task.id]);
+  useEffect(() => {
+    if (open && source) {
+      automate();
+      setStatus("步骤已更新，正在寻找这一步的部位…");
+    }
+    return () => stopTracking();
+  }, [board.task.version, entry.id]);
   function automate(seek = true) {
     stopTracking();
     setManual(false);
     const token = generation.current;
     setStats("");
     session.current = new AutoCameraSession({
+      reference:
+        targetPart && referenceSpec?.targets[targetPart]
+          ? async (current) => {
+              const surface = await reference.current;
+              if (!surface) return null;
+              const tracker = surface.tracker(targetPart);
+              try {
+                return { tracker, value: await tracker.update(current) };
+              } catch {
+                tracker.dispose();
+                return null;
+              }
+            }
+          : undefined,
       read: capture,
       overlay: draw,
       schedule: (callback) => {
@@ -188,6 +270,7 @@ export default function CameraGuidance({
       setSource(true);
       automate();
     } catch {
+      if (token !== generation.current) return;
       stream.current?.getTracks().forEach((track) => track.stop());
       stream.current = undefined;
       setStatus("相机未打开。请允许权限，或选择视频体验自动跟随。");
@@ -220,6 +303,23 @@ export default function CameraGuidance({
         v.load();
       });
       if (token !== generation.current) return;
+      await v.play();
+      await new Promise<void>((resolve) => {
+        const timer = setTimeout(resolve, 1500);
+        if (v.requestVideoFrameCallback)
+          v.requestVideoFrameCallback(() => {
+            clearTimeout(timer);
+            resolve();
+          });
+        else
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => {
+              clearTimeout(timer);
+              resolve();
+            }),
+          );
+      });
+      if (token !== generation.current) return;
       v.pause();
       setSource(true);
       automate();
@@ -230,11 +330,15 @@ export default function CameraGuidance({
   async function demo() {
     if (!demoId) return;
     try {
-      const response = await fetch("/api/assets/" + demoId, {
-        credentials: "same-origin",
-      });
-      if (!response.ok) throw new Error("片段暂不可用");
-      const blob = await response.blob();
+      const response = preparedVideo.current
+        ? null
+        : await fetch("/api/assets/" + demoId, {
+            credentials: "same-origin",
+          });
+      if (response && !response.ok) throw new Error("片段暂不可用");
+      const blob = preparedVideo.current
+        ? await preparedVideo.current
+        : await response!.blob();
       await localVideo(new File([blob], "demo.webm", { type: blob.type }));
     } catch (error) {
       setStatus((error as Error).message);
@@ -301,7 +405,10 @@ export default function CameraGuidance({
       <button
         className="soft-button"
         disabled={board.access !== "owner"}
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          local.current = false;
+          setOpen(true);
+        }}
       >
         <Camera size={18} />
         相机辅助
@@ -310,10 +417,23 @@ export default function CameraGuidance({
         open={open}
         title="和阿圆一起看看"
         width={800}
-        footer={null}
+        footer={
+          onConfirm ? (
+            <button
+              className="primary-button"
+              onClick={() => {
+                stopSource();
+                setOpen(false);
+                void onConfirm();
+              }}
+            >
+              我完成了这一步，继续
+            </button>
+          ) : null
+        }
         destroyOnHidden
         afterOpenChange={(visible) => {
-          if (visible) void camera();
+          if (visible && !local.current && !stream.current) void camera();
         }}
         onCancel={() => {
           stopSource();
@@ -411,7 +531,7 @@ export default function CameraGuidance({
           {stats && <p>{stats}</p>}
         </details>
         <small className="muted">
-          会间歇发送一帧定位，其余在本地跟随；跟丢后自动重找。标注只提示位置，不判断操作已经完成。
+          优先匹配已校核的实拍控制面；匹配不到时会发送一帧由云端定位，再本地跟随。跟丢后自动重找，标注只提示位置。
         </small>
         {demoId && (
           <p className="form-note">

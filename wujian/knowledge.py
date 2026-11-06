@@ -18,7 +18,7 @@ from .domain import DomainError, accessible_item
 
 async def search_web(settings, query: str):
     async with AsyncOpenAI(api_key=settings.api_key, base_url=settings.base_url,
-                           timeout=14, max_retries=0) as client:
+                           timeout=35, max_retries=0) as client:
         response = await client.responses.create(
             model=settings.model,
             input="搜索以下公开资料，给出来源；只概述搜索发现，不把搜索摘要当成已读取的说明书：\n" + query[:1200],
@@ -87,7 +87,11 @@ async def download_public(url):
             address = await validate_public_url(url)
             original = httpx.URL(url)
             pinned = original.copy_with(host=address)
-            async with client.stream("GET", pinned,headers={'Host':original.netloc.decode()},
+            headers={'Host':original.netloc.decode()}
+            # Public manual CDN requires its publisher's normal hotlink Referer.
+            # Keep verified DNS, IP pinning and TLS SNI; no proxy/private bypass.
+            if original.host=='video.loklik.cn':headers['Referer']='https://www.loklik.cn/'
+            async with client.stream("GET", pinned,headers=headers,
                     extensions={'sni_hostname':original.host}) as response:
                 if response.status_code in {301, 302, 303, 307, 308}:
                     url = urljoin(url, response.headers.get("location", ""))
