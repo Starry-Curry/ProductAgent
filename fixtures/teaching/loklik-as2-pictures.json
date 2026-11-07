@@ -31,6 +31,22 @@
         1380
       ],
       "key": "front_detail"
+    },
+    {
+      "filename": "5.jpg",
+      "sha256": "4961e769f7d788a66f72f45fa8ea4c75399cef6f3efa3f76b0c27cafe9c3ff2e",
+      "rotation": -90,
+      "size": [
+        1200,
+        1600
+      ],
+      "crop": [
+        310,
+        440,
+        950,
+        1000
+      ],
+      "key": "panel_settings"
     }
   ]
 }

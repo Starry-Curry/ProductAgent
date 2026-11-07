@@ -126,7 +126,7 @@ class TeachingTests(unittest.TestCase):
             b = foundation.revise_memory(db,self.owner,'second','我喜欢白光',attributes={'context':'阅读'})
             self.assertNotEqual(a['id'],b['id'])
             foundation.revise_memory(db,self.owner,'third','我喜欢白光',attributes={'context':'做手工'})
-            self.assertEqual(db.get(Memory,a['id']).attributes['source_message_ids'],['first','third'])
+            self.assertEqual([e['message_id'] for e in db.get(Memory,a['id']).attributes['evidence']],['first','third'])
             domain.remove_memory(db,self.owner,a['id'])
             self.assertNotIn(a['id'],[row['id'] for row in domain.recall(db,self.owner)])
 
@@ -158,7 +158,7 @@ class TeachingTests(unittest.TestCase):
         with self.sessions() as db:
             memory = foundation.revise_memory(db,self.owner,'report','已经遗忘的偏好')
             domain.remove_memory(db,self.owner,memory['id'])
-            retired_at = db.get(Memory,memory['id']).attributes['retired_at']
+            retired_at = db.get(Memory,memory['id']).attributes['retirement']['at']
             conversation = Conversation(user_id=self.owner)
             db.add(conversation); db.flush()
             run = Run(user_id=self.owner,conversation_id=conversation.id,status='running')
@@ -166,7 +166,7 @@ class TeachingTests(unittest.TestCase):
             domain.remove_memory(db,self.owner,memory['id'])
             db.refresh(run)
             self.assertEqual(run.status,'running')
-            self.assertEqual(db.get(Memory,memory['id']).attributes['retired_at'],retired_at)
+            self.assertEqual(db.get(Memory,memory['id']).attributes['retirement']['at'],retired_at)
 
     def test_forget_excludes_echoed_answers_but_keeps_unrelated_history(self):
         with self.sessions() as db:

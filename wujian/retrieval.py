@@ -8,6 +8,7 @@ import asyncio
 import hashlib
 import json
 import logging
+from collections import defaultdict
 
 from sqlalchemy import select
 
@@ -15,6 +16,7 @@ from . import domain
 from .database import (
     ChatMessage,
     Conversation,
+    ExperienceRecord,
     KnowledgeClaim,
     Memory,
     Run,
@@ -24,6 +26,18 @@ from .database import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+def record_write_receipts(message, record_uses):
+    """Project linked, still-existing own records without granting body access.
+
+    record_uses is an owner-filtered SQL mapping of record ID to AI permission.
+    Both restored chat and the disposable search index use this same receipt.
+    """
+    return [{"experience_id": identity, "reference_kind": "record_write_receipt",
+        "ai_reference_allowed": bool(record_uses[identity])}
+        for identity in dict.fromkeys((message.recorded_experiences or {}).values())
+        if identity in record_uses]
 
 
 def task_view(row):
@@ -81,7 +95,7 @@ def authorized_documents(sessions, user_id):
 
     with sessions() as db:
         for row in domain.list_items(db, user_id):
-            add("item", row["id"], row)
+            add("item", row["id"], domain.agent_item_view(row))
             if row["access"] == "shared":
                 from .foundation import known_claims
 
@@ -97,9 +111,11 @@ def authorized_documents(sessions, user_id):
         for row in db.scalars(select(TaskRecord).where(TaskRecord.user_id == user_id)):
             value=task_view(row)
             plan={key:part for key,part in value['plan'].items() if key!='visualizations'}
-            if plan.get('guidance',{}).get('lesson'):
-                progress=dict(plan['guidance']);lesson=progress['lesson']
-                progress['lesson']={key:lesson[key] for key in ['id','revision','phase','inputs']}
+            if isinstance(plan.get('guidance'),dict):
+                progress={key:part for key,part in plan['guidance'].items() if key!='pictures'}
+                if progress.get('lesson'):
+                    lesson=progress['lesson']
+                    progress['lesson']={key:lesson[key] for key in ['id','revision','phase','inputs'] if key in lesson}
                 plan['guidance']=progress
             add("task", row.id, {**value,'plan':plan})
         for row in db.scalars(
@@ -110,7 +126,8 @@ def authorized_documents(sessions, user_id):
         ):
             add("knowledge", row.id, claim_view(row))
         for row in db.scalars(
-            select(SourceRecord).where(SourceRecord.owner_id == user_id)
+            select(SourceRecord).where(SourceRecord.owner_id == user_id,
+                                       SourceRecord.origin != "curated_reference_retired")
         ):
             add(
                 "source",
@@ -125,22 +142,31 @@ def authorized_documents(sessions, user_id):
             )
         # Exchanges already exist in SQL. Index them without turning model advice
         # into user facts or depending on an optional model memory/task tool call.
-        retired_sources, retired_ids, legacy_cutoff = set(), set(), ''
-        for memory in db.scalars(select(Memory).where(Memory.user_id == user_id, Memory.active.is_(False))):
-            retired_ids.add(memory.id)
-            legacy_cutoff = max(legacy_cutoff,(memory.attributes or {}).get('retired_at',''))
-            retired_sources.update([memory.source_message_id, *(memory.attributes or {}).get("source_message_ids", [])])
+        from .memory_lifecycle import history_policy
+        history = history_policy(db, user_id)
+        # A conversation can point back to a wall record it created without
+        # copying private wall text or treating the write as AI-read consent.
+        record_uses = dict(db.execute(select(ExperienceRecord.id, ExperienceRecord.allow_ai)
+            .where(ExperienceRecord.creator_id == user_id)).all())
+        terminal_runs = dict(db.execute(select(Run.id, Run.status).where(
+            Run.user_id == user_id, Run.status.in_(("failed", "interrupted"))
+        )).all())
+        # One current-user message read per fresh projection, rather than one
+        # query per conversation. This is request-local data, never a cache;
+        # search still rebuilds authorization after its external await.
+        messages_by_conversation = defaultdict(list)
+        for message in db.scalars(select(ChatMessage).join(
+            Conversation, ChatMessage.conversation_id == Conversation.id
+        ).where(Conversation.user_id == user_id).order_by(
+            ChatMessage.conversation_id, ChatMessage.created_at
+        )):
+            messages_by_conversation[message.conversation_id].append(message)
         for conversation in db.scalars(
             select(Conversation).where(Conversation.user_id == user_id)
         ):
-            messages = db.scalars(
-                select(ChatMessage)
-                .where(ChatMessage.conversation_id == conversation.id)
-                .order_by(ChatMessage.created_at)
-            ).all()
-            if any(message.id in retired_sources for message in messages):
-                continue  # do not resurface superseded/forgotten source conversations
+            messages = messages_by_conversation.pop(conversation.id, [])
             question = None
+            answered = set()
             for message in messages:
                 if message.role == "user":
                     question = message
@@ -149,12 +175,11 @@ def authorized_documents(sessions, user_id):
                     and message.role == "assistant"
                     and message.run_id == question.run_id
                 ):
-                    run = db.get(Run,message.run_id) if message.run_id else None
-                    provenance = [event for event in run.events if event.get('type')=='memory_context'] if run else []
-                    used_memories = {identity for event in provenance for identity in event.get('memory_ids',[])}
-                    if used_memories & retired_ids or (not provenance and question.created_at < legacy_cutoff):
+                    answered.add(question.id)
+                    if history.blocks(question.id, question.text, message.text):
                         question = None
                         continue
+                    receipts = record_write_receipts(question, record_uses)
                     add(
                         "conversation",
                         question.id,
@@ -166,9 +191,30 @@ def authorized_documents(sessions, user_id):
                             "created_at": question.created_at,
                             "evidence_kind": "historical_exchange",
                             "assistant_advice_is_not_observed_success": True,
+                            "assistant_text_is_generated_not_user_life_evidence": True,
+                            **({"record_receipts":receipts} if receipts else {}),
                         },
                     )
                     question = None
+            # A failed generation must not erase what the user actually said.
+            # Keep this as unanswered history, never as an assistant answer or
+            # evidence that an action succeeded. SQL remains the only writer.
+            for message in messages:
+                if (message.role != "user" or message.id in answered
+                    or message.run_id not in terminal_runs
+                    or history.blocks(message.id, message.text)):
+                    continue
+                receipts = record_write_receipts(message, record_uses)
+                add("conversation", message.id, {
+                    "conversation_id": conversation.id,
+                    "user_message_id": message.id,
+                    "user_text": message.text,
+                    "assistant_text": "",
+                    "created_at": message.created_at,
+                    "run_status": terminal_runs[message.run_id],
+                    "evidence_kind": "historical_unanswered_user_message",
+                    **({"record_receipts": receipts} if receipts else {}),
+                })
     return documents
 
 
@@ -176,10 +222,8 @@ class Retrieval:
     def __init__(self, settings, sessions):
         self.settings, self.sessions = settings, sessions
         self.apps, self.locks, self.hashes = {}, {}, {}
-        self.local=None
-        if settings.local_embedding_dir:
-            from .local_embedding import LocalEmbedding
-            self.local=LocalEmbedding(settings.local_embedding_dir,settings.local_ai_device,settings.local_ai_required)
+        from .local_embedding import LocalEmbedding
+        self.local=LocalEmbedding(settings.local_embedding_dir,settings.local_ai_device,settings.local_ai_required) if settings.local_embedding_dir else None
 
     async def _app(self, user_id):
         if user_id in self.apps:
@@ -193,13 +237,13 @@ class Retrieval:
             "file_store": {
                 "default": {
                     "backend": "local",
-                    "embedding_store": "default" if self.settings.api_key and not self.local else "",
+                    "embedding_store": "default" if self.settings.api_key else "",
                     "keyword_index": "default",
                     "file_graph": "default",
                 }
             },
         }
-        if self.settings.api_key and not self.local:
+        if self.settings.api_key:
             components.update(
                 {
                     "as_embedding": {
@@ -228,7 +272,7 @@ class Retrieval:
                 }
             )
         space = json.dumps(
-            [user_id, self.settings.embedding_model, self.settings.base_url, 512,str(self.local.folder) if self.local else '']
+            [user_id, self.settings.embedding_model, self.settings.base_url, 512]
         )
         vault = (
             self.settings.data_dir
@@ -262,25 +306,12 @@ class Retrieval:
         self.hashes[user_id] = {}
         return app
 
-    async def search(self, user_id, query, kinds=None, limit=8, item_ids=None):
+    async def search(self, user_id, query, kinds=None, limit=8):
         if not query.strip():
             return {"results": [], "mode": "empty_query"}
         lock = self.locks.setdefault(user_id, asyncio.Lock())
         async with lock:
             documents = authorized_documents(self.sessions, user_id)
-            scoped_paths = None
-            if item_ids:
-                from .database import ItemRecord
-                with self.sessions() as db:
-                    products = {domain.accessible_item(db,user_id,i).product_id for i in item_ids}
-                def relevant(doc):
-                    data = doc['data']
-                    if doc['kind'] == 'knowledge':
-                        return data.get('item_id') in item_ids or bool(data.get('product_id') and data['product_id'] in products)
-                    return data.get('item_id') in item_ids or bool(set(data.get('item_ids', [])) & set(item_ids))
-                scoped_paths = {path for path,doc in documents.items() if relevant(doc)}
-                if not scoped_paths:
-                    return {'results':[], 'mode':'no_applicable_evidence', 'absence_is_not_proven':True}
             app = await self._app(user_id)
             from reme.enumeration import ComponentEnum
             from reme.schema import FileChunk, FileNode
@@ -322,8 +353,7 @@ class Retrieval:
             if self.local:
                 # ReMe still owns keyword retrieval; local embeddings add semantic
                 # candidates, with reciprocal-rank fusion and the SAME SQL visibility.
-                allowed={path:doc for path,doc in documents.items() if (not kinds or doc['kind'] in kinds)
-                    and (scoped_paths is None or path in scoped_paths)}
+                allowed={path:doc for path,doc in documents.items() if (not kinds or doc['kind'] in kinds)}
                 preferred=[hit['path'] for hit in hits if hit['path'] in allowed]
                 candidates=list(dict.fromkeys([*preferred,*allowed]))[:250]
                 def semantic_text(doc):
@@ -348,7 +378,6 @@ class Retrieval:
                     doc
                     and doc["hash"] == documents.get(path, {}).get("hash")
                     and (not kinds or doc["kind"] in kinds)
-                    and (scoped_paths is None or path in scoped_paths)
                 ):
                     results.append(
                         {key: doc[key] for key in ("kind", "id", "data")}
@@ -356,7 +385,7 @@ class Retrieval:
                     )
             return {
                 "results": results[:limit],
-                'local_ai':local_receipt,'local_ai_error':local_error,
+                "local_ai":local_receipt,"local_ai_error":local_error,
                 "mode": "keyword_plus_openvino" if local_receipt else "hybrid"
                 if store.embedding_store and store.embedding_store.is_healthy
                 else "keyword_only",

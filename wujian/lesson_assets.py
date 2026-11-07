@@ -52,16 +52,20 @@ def register_pictures(app,current_user,db_session,settings):
     @app.post('/api/tasks/{task_id}/picture',response_model=TaskBoardView,tags=['Teaching pictures'])
     async def picture(task_id:str,payload:DiagramRequest,user=Depends(current_user),db=Depends(db_session)):
         task,entry=teaching_step(db,user.id,task_id,payload)
+        item=domain.accessible_item(db,user.id,entry.get('item_id') or task.item_ids[0])
+        def readable_image(identity):
+            if identity == item.photo_id:
+                from .database import Asset
+                return domain.require(db.get(Asset,identity))
+            return domain.own_asset(db,user.id,identity)
         cached=task.plan.get('guidance',{}).get('pictures',{}).get(entry['id'])
         if cached and (cached.get('evidence_kind')=='reviewed_photo_annotation' or cached.get('step_signature')==step_signature(entry)):
-            domain.own_asset(db,user.id,cached['image_id'])
+            readable_image(cached['image_id'])
             return interactions.board(db,user.id,task.id)
         item=domain.accessible_item(db,user.id,entry.get('item_id') or task.item_ids[0])
-        from .assistance import item_photos
-        available=item_photos(db,user.id,[item.id])
-        image_id=next(iter(reversed(payload.photo_ids)),None) or (available[0].id if available else None)
+        image_id=next(iter(reversed(payload.photo_ids)),None) or item.photo_id
         source_id=None;page_number=None
-        if not payload.photo_ids and not image_id:
+        if not payload.photo_ids:
             for evidence in entry['guidance'].get('evidence',[]):
                 source=readable_source(db,user.id,evidence['source_id'])
                 if not source.asset_id or source.owner_id!=user.id:continue
@@ -73,7 +77,7 @@ def register_pictures(app,current_user,db_session,settings):
                 db.add(Asset(id=identity,owner_id=user.id,path=str(path.resolve()),media_type='image/png',original_name='manual-page.png'));db.flush()
                 image_id=identity;source_id=source.id;page_number=page;break
         if not image_id:raise domain.DomainError('尚无实物照片或已读取的说明书页，可以先拍一张',409)
-        asset=domain.own_asset(db,user.id,image_id)
+        asset=readable_image(image_id)
         if not asset.media_type.startswith('image/'):raise domain.DomainError('位置图需要照片或说明书页图')
         with Image.open(asset.path) as raw:
             image=ImageOps.exif_transpose(raw).convert('RGB');image.thumbnail((1280,1280));buffer=io.BytesIO();image.save(buffer,'JPEG',quality=90)
@@ -85,7 +89,7 @@ def register_pictures(app,current_user,db_session,settings):
             try:answer=await camera_guidance.locate(settings,base64.b64encode(buffer.getvalue()).decode(),target)
             except Exception as error:grounding_error=type(error).__name__
         db.expire_all();task,entry=teaching_step(db,user.id,task_id,payload)
-        domain.own_asset(db,user.id,image_id)
+        readable_image(image_id)
         if source_id:readable_source(db,user.id,source_id)
         if step_signature(entry)!=signature:raise domain.DomainError('步骤刚更新，请查看新的位置图',409)
         value={'image_id':image_id,'label':answer.label if answer and answer.visible else '位置尚未核对，请结合文字看图',

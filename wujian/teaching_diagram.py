@@ -189,6 +189,8 @@ def register_diagrams(app,current_user,db_session,settings):
             from .lessons import package_for,cache_aids
             item=domain.accessible_item(db,user.id,entry.get('item_id') or task.item_ids[0])
             package=package_for(item)
+            variant=task.plan['guidance']['lesson'].get('definition',{})
+            if package and variant.get('id')==package['id'] and variant.get('model_file')==package['model_file']:package=variant
             if package and any(step['id']==entry['id'] for step in package['steps']):
                 from .source_access import readable_source
                 for evidence in entry['guidance']['evidence']:readable_source(db,user.id,evidence['source_id'])
@@ -207,9 +209,7 @@ def register_diagrams(app,current_user,db_session,settings):
         import base64,io
         from PIL import Image,ImageOps
         photo_ids=list(payload.photo_ids)
-        if not photo_ids:
-            from .assistance import item_photos
-            photo_ids=[asset.id for asset in item_photos(db,user.id,[item.id],limit=2)]
+        if not photo_ids and item.photo_id: photo_ids.append(item.photo_id)
         for identity in photo_ids[:2]:
             asset=domain.own_asset(db,user.id,identity) if identity in payload.photo_ids else db.get(Asset,identity)
             if asset and asset.media_type.startswith('image/'):

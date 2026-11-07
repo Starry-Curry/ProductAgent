@@ -21,23 +21,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/local-ai": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Local Ai Status */
-        get: operations["local_ai_status_api_local_ai_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/auth/register": {
         parameters: {
             query?: never;
@@ -1002,6 +985,40 @@ export interface paths {
         patch: operations["update_entry_api_tasks__task_id__entries__entry_id__patch"];
         trace?: never;
     };
+    "/api/tasks/{task_id}/entries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add Entry */
+        post: operations["add_entry_api_tasks__task_id__entries_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/entries/{entry_id}/details": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Edit Entry */
+        patch: operations["edit_entry_api_tasks__task_id__entries__entry_id__details_patch"];
+        trace?: never;
+    };
     "/api/tasks/{task_id}/entries/{entry_id}/assignee": {
         parameters: {
             query?: never;
@@ -1147,10 +1164,319 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
+        /** Change Wish */
+        put: operations["change_wish_api_wishes__wish_id__put"];
         post?: never;
         /** Delete Wish */
         delete: operations["delete_wish_api_wishes__wish_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/action": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Action */
+        get: operations["get_action_api_tasks__task_id__action_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/action/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Confirm Action */
+        post: operations["confirm_action_api_tasks__task_id__action_confirm_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tasks/{task_id}/action/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel Action */
+        post: operations["cancel_action_api_tasks__task_id__action_cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/avatar-image": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Image */
+        post: operations["create_image_api_items__item_id__avatar_image_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/earbuds/devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Inspect */
+        get: operations["inspect_api_earbuds_devices_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Status */
+        get: operations["status_api_items__item_id__earbuds_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds/console": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create */
+        post: operations["create_api_items__item_id__earbuds_console_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read */
+        post: operations["read_api_items__item_id__earbuds_read_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds/noise-mode": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set Mode */
+        post: operations["set_mode_api_items__item_id__earbuds_noise_mode_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds/volume/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read Volume */
+        post: operations["read_volume_api_items__item_id__earbuds_volume_read_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/earbuds/volume": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set Volume */
+        post: operations["set_volume_api_items__item_id__earbuds_volume_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workbenches/{task_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Workbench */
+        get: operations["get_workbench_api_workbenches__task_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/items/{item_id}/workbenches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Workbenches */
+        get: operations["list_workbenches_api_items__item_id__workbenches_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workbenches/{task_id}/device": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Device Operation */
+        post: operations["device_operation_api_workbenches__task_id__device_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/community/bilibili/references/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Search */
+        post: operations["search_api_community_bilibili_references_search_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/community/bilibili/references/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read */
+        post: operations["read_api_community_bilibili_references_read_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/experiences/{experience_id}/photo-matches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Match */
+        post: operations["match_api_experiences__experience_id__photo_matches_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/community/bilibili/session": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Community Status */
+        get: operations["community_status_api_community_bilibili_session_get"];
+        put?: never;
+        /** Community Start */
+        post: operations["community_start_api_community_bilibili_session_post"];
+        /** Community Close */
+        delete: operations["community_close_api_community_bilibili_session_delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1211,6 +1537,40 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ActionDecision */
+        ActionDecision: {
+            /** Expected Version */
+            expected_version: number;
+        };
+        /** ActionView */
+        ActionView: {
+            /** Task Id */
+            task_id: string;
+            /** Version */
+            version: number;
+            /** Kind */
+            kind: string;
+            /** Status */
+            status: string;
+            /** Title */
+            title: string;
+            /** Details */
+            details: string[];
+            /** Result Id */
+            result_id?: string | null;
+        };
+        /** AvatarImageRequest */
+        AvatarImageRequest: {
+            /** Expected Version */
+            expected_version: number;
+        };
+        /** AvatarImageResult */
+        AvatarImageResult: {
+            /** Asset Id */
+            asset_id: string;
+            /** Model */
+            model: string;
+        };
         /** AvatarSpec */
         AvatarSpec: {
             /**
@@ -1218,6 +1578,12 @@ export interface components {
              * @default false
              */
             enabled: boolean;
+            /**
+             * Form
+             * @default auto
+             * @enum {string}
+             */
+            form: "auto" | "keepsake" | "dango_leaf" | "dango_hat" | "dango_bow" | "cup" | "stone" | "flower" | "cat";
             /**
              * Nickname
              * @default
@@ -1233,6 +1599,15 @@ export interface components {
              * @default #d49c62
              */
             color: string;
+            /** Image Id */
+            image_id?: string | null;
+            /**
+             * Growth Enabled
+             * @default true
+             */
+            growth_enabled: boolean;
+            /** Growth Dismissed Ids */
+            growth_dismissed_ids?: string[];
         };
         /** AvatarView */
         AvatarView: {
@@ -1242,6 +1617,12 @@ export interface components {
              */
             enabled: boolean;
             /**
+             * Form
+             * @default auto
+             * @enum {string}
+             */
+            form: "auto" | "keepsake" | "dango_leaf" | "dango_hat" | "dango_bow" | "cup" | "stone" | "flower" | "cat";
+            /**
              * Nickname
              * @default
              */
@@ -1256,6 +1637,15 @@ export interface components {
              * @default #d49c62
              */
             color: string;
+            /** Image Id */
+            image_id?: string | null;
+            /**
+             * Growth Enabled
+             * @default true
+             */
+            growth_enabled: boolean;
+            /** Growth Dismissed Ids */
+            growth_dismissed_ids?: string[];
             /**
              * Gift From
              * @default
@@ -1266,6 +1656,8 @@ export interface components {
              * @default
              */
             gift_message: string;
+            /** Gift Memories */
+            gift_memories?: components["schemas"]["GiftMemoryView"][];
             /**
              * Growth Note
              * @default
@@ -1280,6 +1672,10 @@ export interface components {
             growth_evidence?: {
                 [key: string]: unknown;
             }[];
+            /** Growth Traits */
+            growth_traits?: components["schemas"]["GrowthTrait"][];
+            /** Growth Stopped Traits */
+            growth_stopped_traits?: components["schemas"]["GrowthStoppedTrait"][];
         };
         /** Body_upload_api_assets_post */
         Body_upload_api_assets_post: {
@@ -1316,6 +1712,26 @@ export interface components {
             photo_ids?: string[];
             entry_context?: components["schemas"]["EntryContext"] | null;
         };
+        /** CommunitySessionView */
+        CommunitySessionView: {
+            /** Failure Phase */
+            failure_phase?: string | null;
+            /** Failure Reason */
+            failure_reason?: string | null;
+            /** Stage */
+            stage: string;
+            /** Connected */
+            connected: boolean;
+            /** Remaining Seconds */
+            remaining_seconds: number;
+            /** Qr Data Url */
+            qr_data_url?: string | null;
+        };
+        /** ConsoleRequest */
+        ConsoleRequest: {
+            /** Address */
+            address?: string | null;
+        };
         /** ConversationView */
         ConversationView: {
             /** Id */
@@ -1331,12 +1747,8 @@ export interface components {
                 [key: string]: unknown;
             };
         };
-        /** CreativeRequest */
-        CreativeRequest: {
-            /** Item Ids */
-            item_ids?: string[];
-            /** Photo Ids */
-            photo_ids?: string[];
+        /** CreativeExploration */
+        CreativeExploration: {
             /** Goal */
             goal: string;
             /**
@@ -1344,6 +1756,10 @@ export interface components {
              * @default
              */
             constraints: string;
+            /** Item Ids */
+            item_ids?: string[];
+            /** Photo Ids */
+            photo_ids?: string[];
         };
         /** DeviceBind */
         DeviceBind: {
@@ -1359,6 +1775,17 @@ export interface components {
         DeviceProposal: {
             /** Request */
             request: {
+                [key: string]: unknown;
+            };
+        };
+        /** DeviceRequest */
+        DeviceRequest: {
+            /** Expected Version */
+            expected_version: number;
+            /** Op */
+            op: string;
+            /** Args */
+            args?: {
                 [key: string]: unknown;
             };
         };
@@ -1397,6 +1824,44 @@ export interface components {
             /** Photo Ids */
             photo_ids?: string[];
         };
+        /** EarbudResult */
+        EarbudResult: {
+            /** Status */
+            status: string;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            /** Item Id */
+            item_id?: string | null;
+            /** Target Id */
+            target_id?: string | null;
+            /** Console Url */
+            console_url?: string | null;
+            /** Observed At */
+            observed_at?: string | null;
+            /** Observation Id */
+            observation_id?: string | null;
+            /** Devices */
+            devices?: {
+                [key: string]: unknown;
+            }[];
+            /** State */
+            state?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Available
+             * @default false
+             */
+            available: boolean;
+            /**
+             * Physical Effect Verified
+             * @default false
+             */
+            physical_effect_verified: boolean;
+        };
         /** EntryContext */
         EntryContext: {
             /**
@@ -1412,22 +1877,24 @@ export interface components {
         ExperienceChange: {
             /** Title */
             title: string;
-            /** Text */
+            /**
+             * Text
+             * @default
+             */
             text: string;
             /** Item Ids */
             item_ids?: string[];
             /** Photo Ids */
             photo_ids?: string[];
-            /**
-             * Occurred On
-             * Format: date
-             */
-            occurred_on?: string;
+            /** Occurred On */
+            occurred_on?: string | null;
             /**
              * Allow Ai
              * @default false
              */
             allow_ai: boolean;
+            /** Household Id */
+            household_id?: string | null;
             /** Expected Version */
             expected_version: number;
         };
@@ -1435,43 +1902,47 @@ export interface components {
         ExperienceCreate: {
             /** Title */
             title: string;
-            /** Text */
+            /**
+             * Text
+             * @default
+             */
             text: string;
             /** Item Ids */
             item_ids?: string[];
             /** Photo Ids */
             photo_ids?: string[];
-            /**
-             * Occurred On
-             * Format: date
-             */
-            occurred_on?: string;
+            /** Occurred On */
+            occurred_on?: string | null;
             /**
              * Allow Ai
              * @default false
              */
             allow_ai: boolean;
+            /** Household Id */
+            household_id?: string | null;
         };
         /** ExperienceView */
         ExperienceView: {
             /** Title */
             title: string;
-            /** Text */
+            /**
+             * Text
+             * @default
+             */
             text: string;
             /** Item Ids */
             item_ids: string[];
             /** Photo Ids */
             photo_ids: string[];
-            /**
-             * Occurred On
-             * Format: date
-             */
-            occurred_on: string;
+            /** Occurred On */
+            occurred_on: string | null;
             /**
              * Allow Ai
              * @default false
              */
             allow_ai: boolean;
+            /** Household Id */
+            household_id?: string | null;
             /** Id */
             id: string;
             /** Creator Id */
@@ -1528,6 +1999,19 @@ export interface components {
             /** Sender Id */
             sender_id: string;
         };
+        /** GiftAccept */
+        GiftAccept: {
+            /**
+             * Wake Avatar
+             * @default false
+             */
+            wake_avatar: boolean;
+            /**
+             * Allow Story Ai
+             * @default false
+             */
+            allow_story_ai: boolean;
+        };
         /** GiftCreate */
         GiftCreate: {
             /** Item Id */
@@ -1542,6 +2026,8 @@ export interface components {
             /** Experience Ids */
             experience_ids?: string[];
             avatar?: components["schemas"]["AvatarSpec"];
+            /** Surprises */
+            surprises?: components["schemas"]["GiftSurprise"][];
         };
         /** GiftDecision */
         GiftDecision: {
@@ -1550,6 +2036,25 @@ export interface components {
              * @enum {string}
              */
             action: "decline" | "cancel";
+        };
+        /** GiftMemoryView */
+        GiftMemoryView: {
+            /** Experience Id */
+            experience_id: string;
+            /** Hint */
+            hint: string;
+            /** Trigger Words */
+            trigger_words?: string[];
+            /**
+             * Unlocked
+             * @default false
+             */
+            unlocked: boolean;
+            /**
+             * Chat Allowed
+             * @default true
+             */
+            chat_allowed: boolean;
         };
         /** GiftSnapshot */
         GiftSnapshot: {
@@ -1568,6 +2073,19 @@ export interface components {
             sender_name: string;
             /** Public Source Ids */
             public_source_ids?: string[];
+            /** Photo Id */
+            photo_id?: string | null;
+            /** Surprises */
+            surprises?: components["schemas"]["GiftSurprise"][];
+        };
+        /** GiftSurprise */
+        GiftSurprise: {
+            /** Experience Id */
+            experience_id: string;
+            /** Hint */
+            hint: string;
+            /** Trigger Words */
+            trigger_words?: string[];
         };
         /** GiftView */
         GiftView: {
@@ -1651,18 +2169,67 @@ export interface components {
              */
             selection_basis: "model" | "user_spatial_hint" | "unresolved";
         };
+        /** GrowthEvidence */
+        GrowthEvidence: {
+            /** Message Id */
+            message_id?: string | null;
+            /**
+             * Quote
+             * @default
+             */
+            quote: string;
+            /** Experience Id */
+            experience_id?: string | null;
+            /** Version */
+            version?: number | null;
+            /**
+             * Lineage Id
+             * @description Original source identity stamped by the authoritative writer, never supplied by the model
+             */
+            readonly lineage_id?: string | null;
+        };
+        /**
+         * GrowthStoppedTrait
+         * @description A local expression control, with no private story or evidence identities.
+         */
+        GrowthStoppedTrait: {
+            /**
+             * Dimension
+             * @enum {string}
+             */
+            dimension: "pace" | "humor" | "support" | "relationship";
+            /** Behavior */
+            behavior: string;
+            /** Context */
+            context: string;
+        };
+        /** GrowthTrait */
+        GrowthTrait: {
+            /** Id */
+            id: string;
+            /**
+             * Dimension
+             * @enum {string}
+             */
+            dimension: "pace" | "humor" | "support" | "relationship";
+            /** Behavior */
+            behavior: string;
+            /** Context */
+            context: string;
+            /** Evidence */
+            evidence: components["schemas"]["GrowthEvidence"][];
+        };
         /** GuidanceDetails */
         GuidanceDetails: {
             /**
              * Kind
-             * @description 缺少适用操作依据时用observe/identify/verify核对实物；已知型号的operate必须有匹配原文或用户实际报告，不能把操作改标general。
              * @default operate
              * @enum {string}
              */
             kind: "identify" | "observe" | "operate" | "verify" | "contact_support";
             /**
              * Basis
-             * @description general用于通用观察；document需当前型号适用原文及连续引句；user_report需本轮实际报告原话。型号操作不能用general绕过依据检查。
+             * @description 通用建议用general；已核验型号原文用document；不因没有手册而拒绝初步帮助。
              * @default general
              * @enum {string}
              */
@@ -1957,6 +2524,72 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** NoiseRequest */
+        NoiseRequest: {
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "off" | "light" | "balanced";
+        };
+        /** PhotoMatchCandidate */
+        PhotoMatchCandidate: {
+            /** Item Id */
+            item_id: string;
+            /** Photo Ids */
+            photo_ids: string[];
+            /**
+             * Verdict
+             * @enum {string}
+             */
+            verdict: "same_instance" | "possible";
+            /**
+             * Evidence Kind
+             * @enum {string}
+             */
+            evidence_kind: "distinctive_detail" | "visible_identity" | "category_only";
+            /** Reference Detail */
+            reference_detail: string;
+            /** Observed Detail */
+            observed_detail: string;
+            /** Explanation */
+            explanation: string;
+            /** Ambiguous With */
+            ambiguous_with?: string[];
+            /** Item Name */
+            item_name: string;
+            /**
+             * Auto Linked
+             * @default false
+             */
+            auto_linked: boolean;
+        };
+        /** PhotoMatchRequest */
+        PhotoMatchRequest: {
+            /** Expected Version */
+            expected_version: number;
+            /**
+             * Apply Confident
+             * @default true
+             */
+            apply_confident: boolean;
+            /** Exclude Item Ids */
+            exclude_item_ids?: string[];
+        };
+        /** PhotoMatchResult */
+        PhotoMatchResult: {
+            experience: components["schemas"]["ExperienceView"];
+            /** Candidates */
+            candidates: components["schemas"]["PhotoMatchCandidate"][];
+            /** Examined Items */
+            examined_items: number;
+            /** Examined Item Ids */
+            examined_item_ids: string[];
+            /** Remaining Items */
+            remaining_items: number;
+            /** Note */
+            note: string;
+        };
         /** Preferences */
         Preferences: {
             /**
@@ -2002,6 +2635,23 @@ export interface components {
             firmware_version?: string | null;
             /** Source Urls */
             source_urls?: string[];
+        };
+        /** ReferenceRead */
+        ReferenceRead: {
+            /** Url */
+            url: string;
+            /** Item Id */
+            item_id?: string | null;
+        };
+        /** ReferenceSearch */
+        ReferenceSearch: {
+            /** Query */
+            query: string;
+            /**
+             * Limit
+             * @default 5
+             */
+            limit: number;
         };
         /** Register */
         Register: {
@@ -2196,7 +2846,6 @@ export interface components {
             note: string;
             /**
              * State
-             * @description 新建议必须pending。用户本轮明确报告做过才可ready；找不到用not_found，做过没变化用unchanged，并在guidance.observed_quote保存当前原话。
              * @default pending
              * @enum {string}
              */
@@ -2213,6 +2862,48 @@ export interface components {
             expected_version: number;
             /** Assignee Id */
             assignee_id?: string | null;
+        };
+        /** TaskEntryCreate */
+        TaskEntryCreate: {
+            /** Expected Version */
+            expected_version: number;
+            /** Title */
+            title: string;
+            /** Item Id */
+            item_id?: string | null;
+            /**
+             * Group
+             * @default owned
+             * @enum {string}
+             */
+            group: "owned" | "buy" | "borrow" | "confirm" | "step";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /** Assignee Id */
+            assignee_id?: string | null;
+        };
+        /** TaskEntryDetails */
+        TaskEntryDetails: {
+            /** Expected Version */
+            expected_version: number;
+            /** Title */
+            title: string;
+            /** Item Id */
+            item_id?: string | null;
+            /**
+             * Group
+             * @default owned
+             * @enum {string}
+             */
+            group: "owned" | "buy" | "borrow" | "confirm" | "step";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
         };
         /** TaskEntryFeedback */
         TaskEntryFeedback: {
@@ -2315,6 +3006,35 @@ export interface components {
             /** Context */
             ctx?: Record<string, never>;
         };
+        /** VolumeRequest */
+        VolumeRequest: {
+            /** Volume */
+            volume: number;
+            /** Endpoint Id */
+            endpoint_id: string;
+        };
+        /** WishChange */
+        WishChange: {
+            /** Title */
+            title: string;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /**
+             * Url
+             * @default
+             */
+            url: string;
+            /**
+             * Visible To Friends
+             * @default false
+             */
+            visible_to_friends: boolean;
+            /** Expected Version */
+            expected_version: number;
+        };
         /** WishCreate */
         WishCreate: {
             /** Title */
@@ -2360,6 +3080,56 @@ export interface components {
             user_id: string;
             /** Version */
             version: number;
+        };
+        /** WorkbenchSource */
+        WorkbenchSource: {
+            /**
+             * Html
+             * @default
+             */
+            html: string;
+            /**
+             * Css
+             * @default
+             */
+            css: string;
+            /**
+             * Javascript
+             * @default
+             */
+            javascript: string;
+        };
+        /** WorkbenchView */
+        WorkbenchView: {
+            /** Task Id */
+            task_id: string;
+            /** Item Id */
+            item_id: string;
+            /** Version */
+            version: number;
+            /** Title */
+            title: string;
+            /** Published */
+            published: boolean;
+            source: components["schemas"]["WorkbenchSource"];
+            /** Source Sha256 */
+            source_sha256: string;
+            /** Source History */
+            source_history?: {
+                [key: string]: unknown;
+            }[];
+            /** Document Html */
+            document_html: string;
+            /** Checks */
+            checks?: {
+                [key: string]: unknown;
+            } | null;
+            /** Bridge */
+            bridge: {
+                [key: string]: unknown;
+            };
+            /** Url */
+            url: string;
         };
         /** WorkspaceView */
         WorkspaceView: {
@@ -2408,28 +3178,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HealthView"];
-                };
-            };
-        };
-    };
-    local_ai_status_api_local_ai_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
                 };
             };
         };
@@ -3352,7 +4100,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreativeRequest"];
+                "application/json": components["schemas"]["CreativeExploration"];
             };
         };
         responses: {
@@ -3747,7 +4495,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["GiftAccept"] | null;
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {
@@ -4505,6 +5257,77 @@ export interface operations {
             };
         };
     };
+    add_entry_api_tasks__task_id__entries_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskEntryCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_entry_api_tasks__task_id__entries__entry_id__details_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TaskEntryDetails"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaskBoardView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     assign_entry_api_tasks__task_id__entries__entry_id__assignee_patch: {
         parameters: {
             query?: never;
@@ -4789,6 +5612,41 @@ export interface operations {
             };
         };
     };
+    change_wish_api_wishes__wish_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                wish_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WishChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WishView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     delete_wish_api_wishes__wish_id__delete: {
         parameters: {
             query?: never;
@@ -4820,6 +5678,618 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_action_api_tasks__task_id__action_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActionView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    confirm_action_api_tasks__task_id__action_confirm_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActionDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActionView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_action_api_tasks__task_id__action_cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActionDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActionView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_image_api_items__item_id__avatar_image_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AvatarImageRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AvatarImageResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    inspect_api_earbuds_devices_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+        };
+    };
+    status_api_items__item_id__earbuds_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_api_items__item_id__earbuds_console_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConsoleRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_api_items__item_id__earbuds_read_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_mode_api_items__item_id__earbuds_noise_mode_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoiseRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_volume_api_items__item_id__earbuds_volume_read_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_volume_api_items__item_id__earbuds_volume_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VolumeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EarbudResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_workbench_api_workbenches__task_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkbenchView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_workbenches_api_items__item_id__workbenches_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkbenchView"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    device_operation_api_workbenches__task_id__device_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeviceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_api_community_bilibili_references_search_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReferenceSearch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_api_community_bilibili_references_read_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReferenceRead"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    match_api_experiences__experience_id__photo_matches_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                experience_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PhotoMatchRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PhotoMatchResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    community_status_api_community_bilibili_session_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommunitySessionView"];
+                };
+            };
+        };
+    };
+    community_start_api_community_bilibili_session_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommunitySessionView"];
+                };
+            };
+        };
+    };
+    community_close_api_community_bilibili_session_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommunitySessionView"];
                 };
             };
         };

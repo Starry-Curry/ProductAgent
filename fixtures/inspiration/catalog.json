@@ -1,0 +1,4069 @@
+{
+  "schema": "wujian-creative-reference/1",
+  "revision": "2026-11-07.2-reviewed",
+  "authorship": "codex_editorial_not_original_author",
+  "purpose": "资源与场景检索用的编者参考；原始SQL来源保持独立，所有应用仍待当前实物小试。不是看过的100份教程，也不是100次成功。",
+  "references": {
+    "moonlight": {
+      "original_source_id": "920d875c2b3741fd9882855968b403e3",
+      "url": "https://github.com/moonlight-stream/moonlight-docs/wiki/Setup-Guide",
+      "title": "Setup Guide · moonlight-stream/moonlight-docs Wiki · GitHub",
+      "content_sha256": "cb4f897cc69edd61f808ef873e2741716b21615ffc19d712470ae1244e661b6f",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "ha-cast": {
+      "original_source_id": "d462c83b46ce459587ec7b377523f6ca",
+      "url": "https://www.home-assistant.io/integrations/cast/",
+      "title": "Google Cast - Home Assistant",
+      "content_sha256": "8dccf4ef03f3d855811d960c1fcc54d0b2fa2176933f9e17d70f8343d23853a4",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "hyperion": {
+      "original_source_id": "bdd07384c346422da7bfd15a592992b6",
+      "url": "https://github.com/hyperion-project/hyperion.ng",
+      "title": "GitHub - hyperion-project/hyperion.ng: The successor to Hyperion aka Hyperion Next Generation · GitHub",
+      "content_sha256": "d1bdb7ff507749b47395e42e6f1b539eba8ab11e45a4bb85dcc1404b32a216bf",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "wled-segments": {
+      "original_source_id": "4bca6bffb5da444cb4fe2999923955a6",
+      "url": "https://kno.wled.ge/features/segments/",
+      "title": "Segments - WLED Project",
+      "content_sha256": "9b709209f7153f4e5c9da601b345fa8de4b442983bb47630440bc5d8bb7347ae",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "wled-presets": {
+      "original_source_id": "4548248e1dcf4018a2e8f0af5906cb8a",
+      "url": "https://kno.wled.ge/features/presets/",
+      "title": "Presets - WLED Project",
+      "content_sha256": "275dc1df428a95c00bd170060893dcf71fcc12dfb1b85ee8cfc039c057963627",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "wled-audio": {
+      "original_source_id": "3b43199d50e24cb1860e3f8f213f61dc",
+      "url": "https://kno.wled.ge/advanced/audio-reactive/",
+      "title": "Audio Reactive WLED - WLED Project",
+      "content_sha256": "46aaaefcf63cf577959717fb0c5a479ff114e685340074a255606d11fc196298",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "vacuum": {
+      "original_source_id": "31f7d5c16e1744f6ae13b02c88b070d2",
+      "url": "https://www.home-assistant.io/integrations/vacuum/",
+      "title": "Vacuum - Home Assistant",
+      "content_sha256": "06240afa139d8699773341011af4045823cda61e723b73646d5e26b12609b275",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "grocy": {
+      "original_source_id": "d7dd7d55a9bd46ed8a25fee9b047a37f",
+      "url": "https://github.com/grocy/grocy",
+      "title": "GitHub - grocy/grocy: ERP beyond your fridge - Grocy is a web-based self-hosted groceries & household management solution for your home · GitHub",
+      "content_sha256": "ed05debb99374de869f759f88964d3001a7cfc28940232285c4cee74ef13caf8",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "mealie": {
+      "original_source_id": "d597474bece94fe59d1e3ca26e4ec86d",
+      "url": "https://github.com/mealie-recipes/mealie",
+      "title": "GitHub - mealie-recipes/mealie: Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. Easily add recipes into your database by providing the url and mealie will automatically import the relevant data or add a family recipe with the UI editor · GitHub",
+      "content_sha256": "7f450fcaf2a7e04a8aca2e10a9ab609ec77b7a5ad71a9d1fc84a42d5ab4e75ab",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "ha-trigger": {
+      "original_source_id": "a92fab2661604c7291476d6fa87ce748",
+      "url": "https://www.home-assistant.io/docs/automation/trigger/",
+      "title": "Automation triggers - Home Assistant",
+      "content_sha256": "2cb57df2ee6ec49efb521bd21d81c83f443b4101d04cca41a64a886d71dda21f",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "autoeq": {
+      "original_source_id": "0580f25e9d37418b85fb357697de3b30",
+      "url": "https://github.com/jaakkopasanen/AutoEq",
+      "title": "GitHub - jaakkopasanen/AutoEq: Automatic headphone equalization from frequency responses · GitHub",
+      "content_sha256": "f7fa9844e55eba6d1a5a983fec3a5ec367ff49ff1cf344fb0efe4f57227b34e7",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "mixxx": {
+      "original_source_id": "badf75f176954aeeaf622e689152588f",
+      "url": "https://manual.mixxx.org/2.5/en/chapters/user_interface.html",
+      "title": "3. The Mixxx User Interface — Mixxx User Manual",
+      "content_sha256": "5c7dfc7919feccc3cd0491a80dd8ebdf295adfa438af4660b819b31cccc0d8f5",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "audacity": {
+      "original_source_id": "d9c8aec13b5e496e932c012fc5be19f2",
+      "url": "https://manual.audacityteam.org/man/tutorial_making_ringtones_and_ivr_messages.html",
+      "title": "Tutorial - Making Ringtones and IVR messages - Audacity Manual",
+      "content_sha256": "d3135b5f8119e5b4a4a4ca0c8bd5036adfb46254a309e423a42520d164b2b5a1",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "scrcpy": {
+      "original_source_id": "bffccd4a1f594b6d955ef323cbb48708",
+      "url": "https://github.com/Genymobile/scrcpy",
+      "title": "GitHub - Genymobile/scrcpy: Display and control your Android device · GitHub",
+      "content_sha256": "b30fe4460ffa9c067a9d3a507bfd63993867cf39f26ce5efa1e995ecc9d5f9ee",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "kdeconnect": {
+      "original_source_id": "485354baee354674a3e01c3952876d1d",
+      "url": "https://userbase.kde.org/KDEConnect",
+      "title": "KDEConnect - KDE UserBase Wiki",
+      "content_sha256": "e148271b962ae2857c3891dc7fb1682f9fb3a367e0930eafcaf36f1b22e15c2c",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "deskreen": {
+      "original_source_id": "8a07f83a198347518f43188b48885bdf",
+      "url": "https://github.com/pavlobu/deskreen",
+      "title": "GitHub - pavlobu/deskreen: Deskreen turns any device with a web browser into a secondary screen for your computer. ⭐️ Star to support our work! · GitHub",
+      "content_sha256": "2f29ab45ffddd0128c27c4a8a7699a6d99c764a4248e483657145fd82a233241",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "esphome-paper": {
+      "original_source_id": "890397abecf5453d93233c7a3383f07c",
+      "url": "https://esphome.io/components/display/waveshare_epaper/",
+      "title": "Waveshare E-Paper Display - ESPHome - Smart Home Made Simple",
+      "content_sha256": "efe12073e72d5ee38e13279f8df92feee646dbe6ae768929e93ce041780671f0",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "koreader": {
+      "original_source_id": "dd5b19d16e0149579ccd74efdfbedf27",
+      "url": "https://github.com/koreader/koreader",
+      "title": "GitHub - koreader/koreader: An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats, running on Cervantes, Kindle, Kobo, PocketBook and Android devices · GitHub",
+      "content_sha256": "7b6dfde174476db9d250951c60739d180fd52f80aaf22551ae72ba356ba660f3",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "calibre": {
+      "original_source_id": "01d41662f2394395b5f31825c2801e78",
+      "url": "https://manual.calibre-ebook.com/server.html",
+      "title": "The calibre Content server — calibre 9.18.0 documentation",
+      "content_sha256": "6b56e99a3003bc5070422d0b1518f15fe293a7d0ef668e02f937176bd09caea5",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "anki": {
+      "original_source_id": "ad02e6f74eb3457b92a417dc5fbf0475",
+      "url": "https://docs.ankiweb.net/manual/filtered-decks",
+      "title": "Filtered Decks & Cramming - Anki Docs",
+      "content_sha256": "b312980545987583608631a1c72059eeafce1a553caf96311f0011ec8b4169b4",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "syncthing": {
+      "original_source_id": "ed8710b568774e5ba377a5f5cf56727d",
+      "url": "https://docs.syncthing.net/intro/getting-started.html",
+      "title": "Getting Started — Syncthing documentation",
+      "content_sha256": "7fd6bd83ec10c961496aff047414ee2755d2492c138f36365dfe553cfc9e3389",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "immich": {
+      "original_source_id": "1033159b955c45a1a3503b52ac302a0c",
+      "url": "https://docs.immich.app/features/searching/",
+      "title": "Searching | Immich",
+      "content_sha256": "4dc4cf1d54521c712b669bac0092c1f4f23184b3009bee3dd63e164b23b74386",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "digikam": {
+      "original_source_id": "09cc9f131f5347dfb2c68e15a668049a",
+      "url": "https://docs.digikam.org/en/post_processing/time_adjust.html",
+      "title": "Time Adjust — Digikam Manual 9.2.0 documentation",
+      "content_sha256": "622fa280b8ab9d7c1d9b6c6e8083d62dca9e139b8690e3c2d4f864d17937f3cb",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "opentracks": {
+      "original_source_id": "d0acb0ec94e049859cd7d3bcf90c823a",
+      "url": "https://github.com/OpenTracksApp/OpenTracks",
+      "title": "GitHub - OpenTracksApp/OpenTracks: Repository moved to: https://codeberg.org/OpenTracksApp/OpenTracks · GitHub",
+      "content_sha256": "5f182c07c7f964ffcd4853d712aac5d4993d09a0daadacc643d1959e45b7314a",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "obs": {
+      "original_source_id": "a712dfaeb7dd4c93b5e8b355d0ff2302",
+      "url": "https://obsproject.com/kb/quick-start-guide",
+      "title": "Quick Start Guide | OBS",
+      "content_sha256": "fb8de51d1d2eb6d2c87b77aeccd0476025c612d43517fd824f0f7e50a0885455",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "inkscape": {
+      "original_source_id": "aafc3a4cae1f473e9bccfc5db55a4663",
+      "url": "https://inkscape.org/learn/tutorials/",
+      "title": "Inkscape Tutorials | Inkscape",
+      "content_sha256": "17e4a87bcda305072a719a9dd1774e3f1cab7839ce76541fd85e9607935f7ff1",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "ha-scene": {
+      "original_source_id": "8a17c014e6454015966ba1756d4b8383",
+      "url": "https://www.home-assistant.io/integrations/scene/",
+      "title": "Scenes - Home Assistant",
+      "content_sha256": "d94eb1974335453c63691803ed211fcfae3bc4e73c79a989d11dddb729fe4b84",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "ha-timer": {
+      "original_source_id": "8801de0648ca4cf298fa74f6f7a13f4e",
+      "url": "https://www.home-assistant.io/integrations/timer/",
+      "title": "Timer - Home Assistant",
+      "content_sha256": "eec36af26c8114df84802e4cea8fe1e7862efecb3a33541727c6735a09586c82",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "ha-tags": {
+      "original_source_id": "10673310c81b4b87a7c1d6859ef4d9a7",
+      "url": "https://www.home-assistant.io/integrations/tag/",
+      "title": "Tags - Home Assistant",
+      "content_sha256": "346d4c4bf07ca74a878c3e658c79925ab8712f93e733245a78385acde99a30fe",
+      "evidence_level": "primary_document_text",
+      "reading_scope": "已读取项目维护者公开README/官方文档正文；未安装、未实机试验，兼容性仍需逐型号核对"
+    },
+    "BV1sQpjzwEvV": {
+      "original_source_id": "aec526dc347c43a5952a06197941711b",
+      "url": "https://www.bilibili.com/video/BV1sQpjzwEvV/",
+      "title": "洞洞板充电墙全新解决方案！",
+      "content_sha256": "a9004fc1ba392e9cd651fe097008b12fa137c3ebe9b2f30e5e31e8074e284223",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1CBL4zKE49": {
+      "original_source_id": "c81d1cf8161f4fa3bb1973c56a69a859",
+      "url": "https://www.bilibili.com/video/BV1CBL4zKE49/",
+      "title": "几毛钱到十几元！全网最全的洞洞板配件大推荐！花小钱办大事！轻松搞定收纳和装饰！【万物皆可烧】",
+      "content_sha256": "6884adfc860cccc77d5c7c88334a3bb4456afa6c0c1469f823a34c791dda2f42",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1V24y1d7Zu": {
+      "original_source_id": "bdc390fd38ac4bb099afb14167405f3e",
+      "url": "https://www.bilibili.com/video/BV1V24y1d7Zu/",
+      "title": "29种伸缩杆巧利用｜收纳神器",
+      "content_sha256": "d53434140c7db16516e570e9ab3c5d0f564d9eeac69954ff85f803cdeba35736",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1GS4y1L7Kh": {
+      "original_source_id": "3850a0b9973f40ff8b2fe0af4d87f88f",
+      "url": "https://www.bilibili.com/video/BV1GS4y1L7Kh/",
+      "title": "分隔架 伸缩杆 MUJI无印良品收纳神器多种使用创意",
+      "content_sha256": "f2ada9b4fd56680c5b7630cb43f913b5de8470d3549a688d4ab28c5f8907303e",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1we411V7je": {
+      "original_source_id": "0d8779a63b574fc49ba38a3723a7d6ad",
+      "url": "https://www.bilibili.com/video/BV1we411V7je/",
+      "title": "别将就，选对支架受益终身！显示器支架一站式科普指南",
+      "content_sha256": "da08b4b5d21c313c0138c92053328be6750003a760ac06c034fc79689cd5dd00",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1yzVA6nEQU": {
+      "original_source_id": "61eeea47751145fababc07bd1d334239",
+      "url": "https://www.bilibili.com/video/BV1yzVA6nEQU/",
+      "title": "模块化光轴增高架，好用，爱用~",
+      "content_sha256": "c82ec70d967d210f7beb1f04f2c18c31d8b7ea9cbb9986ca202ef6c3ad155fa9",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1ha4y127sv": {
+      "original_source_id": "a5fbbd4174a74581a08554e2a4dc0e03",
+      "url": "https://www.bilibili.com/video/BV1ha4y127sv/",
+      "title": "【银泪杂谈】你在用投影玩游戏前一定要知道的五件事",
+      "content_sha256": "85d2d4b0a2d0b761b57a830cc29337c2e131f3150efc9b6583f67d65a82af046",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1XS42197At": {
+      "original_source_id": "f471aeba4708454a8798da4d1f8fdeb4",
+      "url": "https://www.bilibili.com/video/BV1XS42197At/",
+      "title": "这些类型的双人游戏更适合用大屏投影玩~谁玩谁知道！",
+      "content_sha256": "b8482bc0370a7d5acf8ecbfdcdeb79afd24726ea989ddd42084647762e61e987",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1NA411K7VC": {
+      "original_source_id": "cd34221d32c3481bac8f7fc983e2f20e",
+      "url": "https://www.bilibili.com/video/BV1NA411K7VC/",
+      "title": "【窗景】海景房里听海浪×解压向 | 氛围营造 | 投影适用",
+      "content_sha256": "c211379f4b10b7bcf2bda28b7298baa34f7311b7e3246bf1a86cba5d712a4524",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1ez4y1y7dH": {
+      "original_source_id": "dab9532ec74441a6806f63854a97d402",
+      "url": "https://www.bilibili.com/video/BV1ez4y1y7dH/",
+      "title": "电视当做电脑的第二个显示器，一台电脑两个显示器播放不同的内容",
+      "content_sha256": "45f05ad6c437d5d118cf6559c6de289d96cf106bddfc01b8975dc56289bd8886",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1sz4y1171N": {
+      "original_source_id": "2f31be9dbb0641389a1e9bc72dcaa47d",
+      "url": "https://www.bilibili.com/video/BV1sz4y1171N/",
+      "title": "【二麦】超低成本，教你用50一盏的台灯拍大片",
+      "content_sha256": "e2b6d579d31fba5a4d567b6f3bbc7d9501666cb687cfd3229feb4cf89d8453db",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1N54y117Xi": {
+      "original_source_id": "0cde79facd1944ebba3e3870ebcda2a4",
+      "url": "https://www.bilibili.com/video/BV1N54y117Xi/",
+      "title": "两分钟教你如何用台灯低成本的布光 | 提升视频画面质量",
+      "content_sha256": "a33fbdfba3f263d428c75194e2f8469d4dc7395b30517e80c0ca855856b54f66",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1c64y1z7BD": {
+      "original_source_id": "09394d7abab44b78891656a716cd9448",
+      "url": "https://www.bilibili.com/video/BV1c64y1z7BD/",
+      "title": "【视觉升级】台灯+手机，低成本打造专业黑背景布光，Vlog画面更惊艳！",
+      "content_sha256": "da893c51a056ccf91100de4ae62c80bf9114871c5edb2be022a586f83a6ed157",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1Xx4y147Vf": {
+      "original_source_id": "6d730e0b3d5d40c1879d438f7c8f9bb6",
+      "url": "https://www.bilibili.com/video/BV1Xx4y147Vf/",
+      "title": "5分钟！学会7种常用单灯布光！轻松成为一灯大师！",
+      "content_sha256": "d309de84732cadd01e8b122f94d08214104369b83d5f80a46c0591272cdc7dc8",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1bvNfeQEUL": {
+      "original_source_id": "7cf6bbc54c624a83975eee63ba928c91",
+      "url": "https://www.bilibili.com/video/BV1bvNfeQEUL/",
+      "title": "露营车配桌板使用安装和收纳指导视频",
+      "content_sha256": "4b1a492101f6fc60696e9052e4ad3249029c645e0a5e316a52e5c8ef4c1ecf3f",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1wwV26vEKs": {
+      "original_source_id": "90a0a8017b804b259255e08f9971725b",
+      "url": "https://www.bilibili.com/video/BV1wwV26vEKs/",
+      "title": "手工DIY 周转箱爆改露营桌",
+      "content_sha256": "6f2eabcce20de64ed77d9b3a6bd3ceeb0be46f0a3742ce4be3b4be0a9bf329f9",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1TC4y1s7s8": {
+      "original_source_id": "a1c8ca581a614fb4881a911a4aebe713",
+      "url": "https://www.bilibili.com/video/BV1TC4y1s7s8/",
+      "title": "露营天幕各种搭法完整教学 台湾生产轻量化天幕推荐 [Campfire營火部落]",
+      "content_sha256": "9c2dc0dca696d80f482a1ead1329d2c292b60006be45ddbf9738094cc875d9a1",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1SdYu68EoW": {
+      "original_source_id": "79608c4c846249b29a3e7746ce695be0",
+      "url": "https://www.bilibili.com/video/BV1SdYu68EoW/",
+      "title": "露营天幕怎么搭才帅？10年经验教你「牛角式搭法」｜15分钟从拉绳到营柱一次讲懂",
+      "content_sha256": "5792f8647e85b4d047a4992a8f769aecfeae57f33241ee89d060abb29d17a3d7",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1eK411W73o": {
+      "original_source_id": "355478a8be0543c3931d1473e010e98f",
+      "url": "https://www.bilibili.com/video/BV1eK411W73o/",
+      "title": "近藤麻理惠—基本衣物收纳 The KonMari Fold Basics",
+      "content_sha256": "dbb15b40d3e8fe561f7ff0ef85847c7117a8fa5ed6fca4c68d1bd1c115f69033",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1vkt9zhEaC": {
+      "original_source_id": "c790f5ca9413471c968cbff015a3967c",
+      "url": "https://www.bilibili.com/video/BV1vkt9zhEaC/",
+      "title": "超高效全挂衣柜教程！免叠衣服+免换季整理！",
+      "content_sha256": "a406ec4a0a4a27bf00b7b4037d7b2aa2ba3de2e45cd704b8b23dd1c1bf17bf22",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1ePzzBhEXs": {
+      "original_source_id": "72be059315d74f27afd68de56d44d3f2",
+      "url": "https://www.bilibili.com/video/BV1ePzzBhEXs/",
+      "title": "【DIY】把旧 CD 机塞进画框，居然成了桌面封神摆件！",
+      "content_sha256": "a33aecb0f87c8fa9935b73d7b1f568944f55ae869221d46389cff8ff842e5373",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1aL411k7CG": {
+      "original_source_id": "1453ba160ae242378b9edc8df3f6828b",
+      "url": "https://www.bilibili.com/video/BV1aL411k7CG/",
+      "title": "【教程】自制唱片机蓝牙音响",
+      "content_sha256": "936c947e2fda78bf1df2be9703f09556902c46f824c6e22b5a359911f2f1a103",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1aM4m1R7BG": {
+      "original_source_id": "5c3561a705694575987ba5b3cce5a3a7",
+      "url": "https://www.bilibili.com/video/BV1aM4m1R7BG/",
+      "title": "意式浓缩咖啡的正确喝法",
+      "content_sha256": "af308b2a6c0c771093bfcbeb24bdaaa9e7d0328d796afaad1f79b669ce895184",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1uE411g7MJ": {
+      "original_source_id": "17e2c134b47144199031cebd05b828c3",
+      "url": "https://www.bilibili.com/video/BV1uE411g7MJ/",
+      "title": "【油管搬运】牛奶科学、奶泡和拉花（这是迄今为止我见过最专业的拉花教程）【完整中文字幕】",
+      "content_sha256": "86175cfa419ca9f086389aea32835f14300843c33173580d8a1f6a9ada972ae7",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1j5DQBaEaz": {
+      "original_source_id": "3bcb29769bc24e3587ee0795385d829a",
+      "url": "https://www.bilibili.com/video/BV1j5DQBaEaz/",
+      "title": "用电饭煲做了苹果酱油炖排骨，不加一滴水一滴油，果香浓郁，软烂脱骨，身材管理的也可以大口吃#电饭煲美食 #电饭锅美食 #排骨的神仙吃法 #苹果做菜 #炖排骨",
+      "content_sha256": "22cddc7db04c12c9bfdbb4a01819999a845eff1470717c0f7ba7b51d7cc997cb",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1CG411w74X": {
+      "original_source_id": "d004783c6aa347959f89682beab9578b",
+      "url": "https://www.bilibili.com/video/BV1CG411w74X/",
+      "title": "13个实测靠谱的空气炸锅料理，不要让虚假食谱浇灭你的热情，烤箱通用版",
+      "content_sha256": "c94fa060390c67ea36cc9eb0784482be2ca57f03801b717a1006711aa2366f8f",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV13xxMzZE92": {
+      "original_source_id": "dd06dc80e53449278b9bbe12b5e35161",
+      "url": "https://www.bilibili.com/video/BV13xxMzZE92/",
+      "title": "植物延时摄影拍摄及设备选择（省流：小米监控）",
+      "content_sha256": "cc8fb26880f36b6489e11fce6decaf138367e5d472bf52523a31f716d188f3b0",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1jjhj6sERo": {
+      "original_source_id": "525f2ae6592f42769c913d94d170eb6d",
+      "url": "https://www.bilibili.com/video/BV1jjhj6sERo/",
+      "title": "家里的旧手机别扔，它其实是一台现成的监控摄像头",
+      "content_sha256": "fd9b2d0710f6c46b85e2c4850567920b5fbbe280dd91652c0de16f5b8582fe7a",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1da411P7bK": {
+      "original_source_id": "9dcf4bc927aa4fc3a71590e4029d99cd",
+      "url": "https://www.bilibili.com/video/BV1da411P7bK/",
+      "title": "【PNP】五分钟学会自制桌游打印文件",
+      "content_sha256": "a2d0b1152f1999237e5e26d884f1788af62d82ef96bd2195a07785603abf1483",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1dogYeuEVM": {
+      "original_source_id": "2cdc4c42cf1c4b378edb7fbbe19d74d6",
+      "url": "https://www.bilibili.com/video/BV1dogYeuEVM/",
+      "title": "【揭秘】自制卡牌全流程",
+      "content_sha256": "18eac235897d2e4ccbae06212c94aa498c756145344ca76d275a0df104067a09",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1tgAaeTEf3": {
+      "original_source_id": "775e1032ef334c1aa604d88c09b8a30e",
+      "url": "https://www.bilibili.com/video/BV1tgAaeTEf3/",
+      "title": "打印自制桌游 全教程 疯狂的淘金镇 制作diy教程篇",
+      "content_sha256": "e9c9ba6dc4ea832fe3ab26ae3313b83212a121f81564f153c8f3f2b245b917b0",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1XM4y1t7p1": {
+      "original_source_id": "614a0356c7c34bef98df3f3ae4f30232",
+      "url": "https://www.bilibili.com/video/BV1XM4y1t7p1/",
+      "title": "手把手带你完成＊冰箱收纳＊",
+      "content_sha256": "fada934d5390d5fbe07c45538b7800c445a52adfc9e6afd4dc97e0b322a8be5a",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1GQHzzqECM": {
+      "original_source_id": "b558f4d196184bd09381b58c7f362788",
+      "url": "https://www.bilibili.com/video/BV1GQHzzqECM/",
+      "title": "厨房+冰箱收纳指南 ｜自制抽拉碗篮｜真实冰箱收纳分享｜分享一些我的厨房改造小巧思",
+      "content_sha256": "7397ad57773c82cabd3613042445a4ed98665dfc1ad728c29e0235b1b81760db",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV171421177B": {
+      "original_source_id": "3142390305cf4b758bb2f1713cf4dda6",
+      "url": "https://www.bilibili.com/video/BV171421177B/",
+      "title": "打开脑洞:智能插座的妙用！",
+      "content_sha256": "4b3fef0dbaaa01fca98a492d0e9d65ed0b22238de20672d300168ae1a7b53d6a",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1eP411r7rN": {
+      "original_source_id": "9248c9804f3b4802ad16972edbc1283d",
+      "url": "https://www.bilibili.com/video/BV1eP411r7rN/",
+      "title": "【教程】手把手教你玩转电视空调等各种红外遥控器",
+      "content_sha256": "9baf946e3d4483219af63a9c84e7cb5935afa631ff955515d18f23f82417aa40",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1Lx411o7ZJ": {
+      "original_source_id": "a82f876b406740a8a3c82db9eae0496e",
+      "url": "https://www.bilibili.com/video/BV1Lx411o7ZJ/",
+      "title": "4个创意十足的背包，让你出行更轻松，上街成焦点",
+      "content_sha256": "262f12507e70e923c3e01a00ed01d7fcd7c8910d32af2015f3a1cd8e2bac4dee",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1FX4y1w7zs": {
+      "original_source_id": "5b481f406c8348a98c10e8951e4b6418",
+      "url": "https://www.bilibili.com/video/BV1FX4y1w7zs/",
+      "title": "问就是好用！自制多功能折叠桌！还能当箱子用~",
+      "content_sha256": "1ed1c9e64f2e5fab428958a1d6f234a04e07fc444e6a195de34f409773e1a5df",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1o64y1r7L4": {
+      "original_source_id": "297283f5e153433f93932827430bfda4",
+      "url": "https://www.bilibili.com/video/BV1o64y1r7L4/",
+      "title": "DIY全自动家用灌溉系统｜喷灌｜滴灌｜懒！是第一生产力，我终于可以放心玩耍，不必再担心花花草草。",
+      "content_sha256": "8f03dfeab0749278bd6248a2f1cb99e7fbc474f545aac903f84cda81a4302466",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1gS411A7CD": {
+      "original_source_id": "789eeedb386d4353962d2c582025a4ff",
+      "url": "https://www.bilibili.com/video/BV1gS411A7CD/",
+      "title": "15 年坚持丨我拍摄的植物延时摄影大合集 ！",
+      "content_sha256": "46d5f73b32a2421825c4351cdecda1865c24a6d05180c741f1c2ef2b4b5245d4",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1nNE4zzEWb": {
+      "original_source_id": "df16d077c5164c18a58eee35ece8c9dc",
+      "url": "https://www.bilibili.com/video/BV1nNE4zzEWb/",
+      "title": "毛绒玩具改造成支持小智对话和控制以及触摸",
+      "content_sha256": "30a3fc1e67443967727e434d0bc124d34a1162b138d1e31b5fbaefffb9cf0f86",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1VEcbzoEhi": {
+      "original_source_id": "c1b9aae0d956498ea344feaa3a677918",
+      "url": "https://www.bilibili.com/video/BV1VEcbzoEhi/",
+      "title": "语音信箱 | 2.5d兽牌体兽偶毛绒玩偶制作教程",
+      "content_sha256": "ccd6e580b27f5d0a5c6efee70016f32e4947e74bd1ff137db6d9fb6d07ea3a9f",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1KczbBXEeC": {
+      "original_source_id": "011477e362ab4a9684c07d66a462117e",
+      "url": "https://www.bilibili.com/video/BV1KczbBXEeC/",
+      "title": "【老戴】我用 AI 分析了500G照片库，做了一个“会自己选图”的电子相框：让沉睡的记忆重新被看见",
+      "content_sha256": "d7c83d9244890e66691967e83a260a7fa5894c3281df68573ec7bf6c544d1c2d",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV143411b7N6": {
+      "original_source_id": "146d8adc96044290acd6e563f3cf579f",
+      "url": "https://www.bilibili.com/video/BV143411b7N6/",
+      "title": "自制电子相册很容易",
+      "content_sha256": "980a99f204af0fe84bf6fe5e0d713a1e177149832363b9b2e2c41da1822439bd",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1QGGV6REEp": {
+      "original_source_id": "5cec7f4ea53846d9852a3fa9c84615b3",
+      "url": "https://www.bilibili.com/video/BV1QGGV6REEp/",
+      "title": "【8月音箱推荐】游戏/蓝牙音箱选购指南，FPS 听声辨位、影音听歌追剧怎么选？全价位性价比音箱实测推荐，学生党小白必看",
+      "content_sha256": "d47df3af73d2bc32bf8ec936759fad0302b472b0e05f1b06404d1297b599417d",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1564y1P7k7": {
+      "original_source_id": "df675fa9d70d48e081e42c3869738cdd",
+      "url": "https://www.bilibili.com/video/BV1564y1P7k7/",
+      "title": "JBL partybox ultimate终极派对盒深夜蹦迪",
+      "content_sha256": "e481e87af7ac0b222504d8ba6cae380a7d9acb540d65a859b274528897834de8",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1n7x1eJE8f": {
+      "original_source_id": "bacd6859619c44e5932a14d661cde42c",
+      "url": "https://www.bilibili.com/video/BV1n7x1eJE8f/",
+      "title": "iPad自带的视频录制提词器超实用",
+      "content_sha256": "eca29ed0df7888b4259c88ed91688bb29e765d4534108b850ce903645e6fffa9",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV17EbP6mEzD": {
+      "original_source_id": "8722cfdb88a945dbb625bf03b9591035",
+      "url": "https://www.bilibili.com/video/BV17EbP6mEzD/",
+      "title": "解锁标签机宝藏用法，实现手帐贴纸自由～",
+      "content_sha256": "85dc12340f3acfe16cdd5de7d7efb268b8d15e692e1428ca35ca6f4b9cecb729",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1bd4y1Y74p": {
+      "original_source_id": "2174aa8ea67e438bb3abceccc26281fa",
+      "url": "https://www.bilibili.com/video/BV1bd4y1Y74p/",
+      "title": "【标签机的7种用法】一起用标签机做手帐吧！",
+      "content_sha256": "1f7d1ff02fa8c1a08584e07ea881d01c88ac3014ac52bce7691dfd64c94980a6",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1UuQwB1EwH": {
+      "original_source_id": "00888010ccbf44cf9a5420195794a093",
+      "url": "https://www.bilibili.com/video/BV1UuQwB1EwH/",
+      "title": "宜家拉斯克安装教程 |沉浸式安装vlog",
+      "content_sha256": "823dec3a2b6c98dc309f3acb6efe2070cd3ab1b8f05cceed4dd9179fabe63880",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV134NgzVEP1": {
+      "original_source_id": "1fc1adf0b499476193d452a6b5deb980",
+      "url": "https://www.bilibili.com/video/BV134NgzVEP1/",
+      "title": "73S沉浸式安装收纳洞洞板小推车｜宜家这个小推车改造后太实用啦",
+      "content_sha256": "993a45c2c300dc4687b0a91b97ba1655f28c48771db7fa5fea67f67dfb128524",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1ra4y1E7Wn": {
+      "original_source_id": "ff606dd65ce949a097de0f8f85f4175e",
+      "url": "https://www.bilibili.com/video/BV1ra4y1E7Wn/",
+      "title": "7款有创意的折叠桌子，节省空间必备",
+      "content_sha256": "2f786c6eafa31401c921d33218de7764b7d3b89970ab50b42a71c5b89dd38021",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV18u4m1M7H2": {
+      "original_source_id": "300d0ac1deba4512bd255a23b052a5ea",
+      "url": "https://www.bilibili.com/video/BV18u4m1M7H2/",
+      "title": "清洁家电各种各样，吸尘器能干啥？吸尘器吸头不同用法和选购要点",
+      "content_sha256": "a995c5a849129ff8a3ce20de86d6c481e4397b7295ef75992e658a8cd442713f",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1bnYF6vEhg": {
+      "original_source_id": "05c67655d8f64020932db32c2422908c",
+      "url": "https://www.bilibili.com/video/BV1bnYF6vEhg/",
+      "title": "把旧手机改成家用监控，效果比想象中离谱",
+      "content_sha256": "c0ebbf484778162ee5e2f620a1727d0267e4462c27b400df5b2b8bd5df09e249",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1pTHP66EVs": {
+      "original_source_id": "d66e2e250b234f82b55377a62a27e975",
+      "url": "https://www.bilibili.com/video/BV1pTHP66EVs/",
+      "title": "安装CleanYourTV+Aerial一键优化电视，替换桌面home，精简无用程序，打造纯净桌面，清爽大屏！",
+      "content_sha256": "30c5dd1d9da3ffbea9da7f74a933c9c713704654f162e372ec63a0aa6ddd50f5",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1PRV16gEQ8": {
+      "original_source_id": "a59e0803410d4eaca212e3cdd62114f2",
+      "url": "https://www.bilibili.com/video/BV1PRV16gEQ8/",
+      "title": "旧平板不要扔，教你如何秒变电脑第二块屏幕！",
+      "content_sha256": "20550319e01c5193696c4e09faa9b4f141a8f18ea56c7f48b3ebee877982021f",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1DHnc6zEnz": {
+      "original_source_id": "b7d81e8192c2416cadff317ddb80c5a6",
+      "url": "https://www.bilibili.com/video/BV1DHnc6zEnz/",
+      "title": "3到13寸，200到6000+！2026年双11值得入手的电纸书推荐！",
+      "content_sha256": "e44cdfb92a2183a1a7c35cfaf9084b50173320028227467c538841c7e60f36ae",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    },
+    "BV1BX4y1n7am": {
+      "original_source_id": "8b9ad610486e4d0b9276582ea2befd02",
+      "url": "https://www.bilibili.com/video/BV1BX4y1n7am/",
+      "title": "分享摆摊桌选择的经验、户外露营车加摆摊桌的组合，以及摆摊选户外露营车（推车）的相关经验",
+      "content_sha256": "250b041ec714ec033f54547a0de4550f0494104ee8cd401e685bb406e250ec85",
+      "evidence_level": "metadata_only",
+      "reading_scope": "真实视频页标题、作者、简介/分P元数据；未观看视频、未听音频，不能还原教程动作"
+    }
+  },
+  "entries": [
+    {
+      "key": "tv-sofa-pc",
+      "title": "电视接管客厅里的电脑游戏画面",
+      "category": "电视与大屏",
+      "scene": "想和朋友在沙发上玩已有的电脑游戏",
+      "resources": [
+        "电视或电视盒可安装Moonlight",
+        "已有游戏电脑可运行Sunshine",
+        "同一局域网",
+        "兼容手柄"
+      ],
+      "mechanism": "Sunshine在电脑编码画面，Moonlight在电视解码并回传手柄输入；电视承担显示与交互端。",
+      "first_step": "先在同网段配对两端，选择一个已有游戏，在菜单里移动光标测试响应。",
+      "observe": "按键响应是否足够及时，电视画面与声音是否同步。",
+      "unknowns": [
+        "电视系统、显卡编码和手柄映射需核对",
+        "先测局域网，不把近零延迟宣传当保证",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "moonlight"
+      ],
+      "tags": [
+        "电视",
+        "电脑",
+        "客厅",
+        "游戏",
+        "串流",
+        "Moonlight",
+        "Sunshine"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "tv-family-dashboard",
+      "title": "把电视临时变成家庭安排看板",
+      "category": "电视与大屏",
+      "scene": "出门前一起确认天气和今天安排",
+      "resources": [
+        "支持Google Cast的接收设备",
+        "已有Home Assistant实例",
+        "只含同意共享内容的仪表板",
+        "满足Cast的HTTPS访问条件"
+      ],
+      "mechanism": "Cast把指定仪表板视图送到大屏，电视从节目窗口转成共同可见的信息面。",
+      "first_step": "先建一个仅有天气和一个虚拟日程的测试视图，再手动投送。",
+      "observe": "远处文字能否看清、投送是否会打断正在观看的人。",
+      "unknowns": [
+        "国内网络与接收端可用性未知",
+        "展示前核对隐私与HTTPS要求，不假定所有电视支持Cast",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "ha-cast"
+      ],
+      "tags": [
+        "电视",
+        "日程",
+        "看板",
+        "投屏",
+        "家庭",
+        "Cast"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "tv-ambient-edge",
+      "title": "电视背后的颜色跟随画面",
+      "category": "灯光与空间",
+      "scene": "已有灯带想做观影氛围",
+      "resources": [
+        "Hyperion支持的灯具或控制器",
+        "能够取得画面的受支持采集路径",
+        "电视背后可散热的安装面",
+        "匹配供电"
+      ],
+      "mechanism": "Hyperion从可取得的视频画面生成环境照明颜色，再把数据发送给受支持LED；灯带扩展屏幕边缘的色彩。",
+      "first_step": "先在不固定灯带时发送一幅纯色测试图，核对灯带响应及四边位置。",
+      "observe": "左右是否映射反了、颜色切换是否滞后或刺眼。",
+      "unknowns": [
+        "受保护视频与电视内置App未必能采集",
+        "不能仅凭有灯带就认定可用，不改接市电",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "hyperion"
+      ],
+      "tags": [
+        "电视",
+        "灯带",
+        "氛围",
+        "背光",
+        "Hyperion",
+        "屏幕取色"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "wled-shelf-zones",
+      "title": "一条灯带分成不同物品区的路标",
+      "category": "灯光与空间",
+      "scene": "书架展示与找东西想共用同一灯带",
+      "resources": [
+        "已能运行WLED的可寻址灯带",
+        "现成匹配供电",
+        "书架安全固定位置"
+      ],
+      "mechanism": "WLED分段让同一灯带的不同像素区间独立显示颜色；灯光可以对应书、相机和常用配件所在格。",
+      "first_step": "先只定义两个不重叠区段，分别设成低亮度静态颜色，对照实际格位。",
+      "observe": "两段是否确实照到不同格位，亮度是否影响阅读。",
+      "unknowns": [
+        "普通整段调色灯带没有逐像素分区能力",
+        "实际控制器容量与供电需核对",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "wled-segments"
+      ],
+      "tags": [
+        "灯带",
+        "书架",
+        "收纳",
+        "分区",
+        "WLED",
+        "寻物"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "wled-mirror-entry",
+      "title": "让门框灯光从中间向两边展开",
+      "category": "灯光与空间",
+      "scene": "想用现有灯带布置聚会入口",
+      "resources": [
+        "WLED可寻址灯带",
+        "门框旁可靠固定面",
+        "匹配电源与可走线空间"
+      ],
+      "mechanism": "把灯带两半设为相同效果并反转其中一段，运动方向镜像，形成从中央分开的视觉路径。",
+      "first_step": "灯带先平放桌上，分成两半并反转第二段，选择慢速移动效果。",
+      "observe": "两侧起点是否对齐、有无一侧越界或反向。",
+      "unknowns": [
+        "不代表适合频闪敏感人群",
+        "门框开合不得压线；不凭软件效果认定电气安全",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "wled-segments"
+      ],
+      "tags": [
+        "灯带",
+        "门框",
+        "派对",
+        "对称",
+        "WLED",
+        "布置"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "wled-wind-down",
+      "title": "用灯光预设给晚上留一个收尾信号",
+      "category": "灯光与空间",
+      "scene": "不想再多一个提醒铃声",
+      "resources": [
+        "已配置WLED的灯带",
+        "已校准时区和时间",
+        "用户选定的收尾时间"
+      ],
+      "mechanism": "预设保存亮度与效果，定时加载把工作灯切换为低亮度颜色，成为可忽略的视觉提示。",
+      "first_step": "先保存当前设置，再创建一个低亮度收尾预设并手动切换一次。",
+      "observe": "提示是否能被看见而不打扰，同一时间能否恢复原设置。",
+      "unknowns": [
+        "定时点错过或断电后不会自动补触发",
+        "视觉信号不是已完成任务的证明",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "wled-presets"
+      ],
+      "tags": [
+        "灯带",
+        "睡前",
+        "提醒",
+        "预设",
+        "WLED",
+        "办公"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "wled-music-reactive",
+      "title": "把正在放的音乐画成灯光节奏",
+      "category": "音乐与声音",
+      "scene": "小聚会想让灯带参与音乐",
+      "resources": [
+        "支持AudioReactive的WLED硬件与固件",
+        "文档支持的数字麦克风或音频输入",
+        "匹配供电",
+        "现有音乐播放设备"
+      ],
+      "mechanism": "音频输入经过音量/频谱处理驱动效果，灯带把声音变化转成空间里的亮度和色彩。",
+      "first_step": "先在安静环境把噪声门限调到灯不乱跳，再播放一段熟悉的音乐。",
+      "observe": "安静时是否乱闪、音乐开始是否响应，选择慢变化以免不适。",
+      "unknowns": [
+        "仅有声音开关量的廉价传感器不等于音频采样",
+        "硬件接口需按文档确认，不直接乱接耳机输出",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "wled-audio"
+      ],
+      "tags": [
+        "灯带",
+        "音乐",
+        "节奏",
+        "WLED",
+        "派对",
+        "音频"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "vacuum-dinner-zone",
+      "title": "饭后只清理餐桌周边",
+      "category": "清洁与家务",
+      "scene": "只想解决刚掉下来的干碎屑",
+      "resources": [
+        "明确支持区域清扫的扫地机器人",
+        "地图已稳定并映射到Home Assistant区域",
+        "地上没有线缆、液体或易碎物"
+      ],
+      "mechanism": "区域清扫把目标缩到餐桌附近，避免为了几处碎屑跑遍全屋。",
+      "first_step": "先在原厂App或HA确认支持的区域范围，在空地上测试一次指定区清扫。",
+      "observe": "清扫路径是否覆盖椅脚周边，有无反复卡住。",
+      "unknowns": [
+        "区域功能由实际设备集成决定",
+        "软件报告完成不代表地面已干净",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "vacuum"
+      ],
+      "tags": [
+        "扫地机器人",
+        "餐桌",
+        "清洁",
+        "区域",
+        "碎屑",
+        "Home Assistant"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "vacuum-quiet-meeting",
+      "title": "开会时暂停扫地机，结束后再继续",
+      "category": "清洁与家务",
+      "scene": "线上会议临时开始时不想和清洁声抢话",
+      "resources": [
+        "已接入且支持暂停/继续的扫地机",
+        "现成HA控制面板",
+        "可手动使用的会议开关"
+      ],
+      "mechanism": "会议开关触发暂停动作，结束时有意恢复，保留机器清扫工作而减少噪声冲突。",
+      "first_step": "在机器人正常清扫时手动点暂停，再点继续，先验证两种动作。",
+      "observe": "是否原地暂停、继续后是否接回原路线。",
+      "unknowns": [
+        "不同设备的继续语义不同",
+        "不把麦克风亮起自动解释成用户同意控制设备",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "vacuum"
+      ],
+      "tags": [
+        "扫地机",
+        "会议",
+        "安静",
+        "暂停",
+        "办公"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "vacuum-error-cue",
+      "title": "扫地机卡住时给一个看得见的求助信号",
+      "category": "清洁与家务",
+      "scene": "机器藏在另一房间，报错声音听不见",
+      "resources": [
+        "HA能读取扫地机错误状态",
+        "已有可控灯或手机通知通道"
+      ],
+      "mechanism": "设备错误状态触发一次提示，把机器状态带回人的视野；提示只报告需要查看，不猜测故障原因。",
+      "first_step": "先在HA里观察一次已有错误记录，用手动测试通知检查消息内容。",
+      "observe": "是否仅发一次，能否点击找到实际设备状态。",
+      "unknowns": [
+        "错误枚举和通知通道需核对",
+        "不人为堵住滚刷制造故障，不把推送送达当修好",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "vacuum"
+      ],
+      "tags": [
+        "扫地机",
+        "卡住",
+        "提醒",
+        "错误",
+        "家务"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "fridge-use-first",
+      "title": "冰箱里留一个先吃区",
+      "category": "厨房与食物",
+      "scene": "开门就知道哪些东西先处理",
+      "resources": [
+        "冰箱已有可清洁的托盘或空格",
+        "现有食材标签与购入/开封记录",
+        "可选已有Grocy库存"
+      ],
+      "mechanism": "把快到使用优先级的食材集中在视线可达位置，让空间排序替代每次重新翻找；库存日期可辅助排序。",
+      "first_step": "只选三样已确认日期的食材放进同一层可见区域，并写明开封日期。",
+      "observe": "取食时能否一眼找到，是否挡住风道或造成生熟混放。",
+      "unknowns": [
+        "日期记录不能判断食品是否安全",
+        "容器是否适合低温、冰箱分区要求需按实物核对",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "grocy"
+      ],
+      "tags": [
+        "冰箱",
+        "先吃",
+        "食材",
+        "日期",
+        "收纳",
+        "Grocy"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "fridge-barcode-restock",
+      "title": "用现成条码把补货记录变轻",
+      "category": "厨房与食物",
+      "scene": "牛奶咖啡豆常买重或忘记买",
+      "resources": [
+        "已有Grocy或愿意使用其功能作参考",
+        "带条码的常购物品",
+        "兼容扫码器或HTTPS摄像扫码页面"
+      ],
+      "mechanism": "扫码把商品识别带入库存操作，库存消耗与补货清单减少重复输入；条码不自动代表实际剩余数量。",
+      "first_step": "只对一种常买物品建最小记录，扫码一次并手动确认数量。",
+      "observe": "识别是否稳定、需要修正的字段是否比手打少。",
+      "unknowns": [
+        "陌生条码可能无法查到商品",
+        "这是可选成熟工具参考，不要求为一个玩法另建物间事实库",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "grocy"
+      ],
+      "tags": [
+        "冰箱",
+        "补货",
+        "条码",
+        "清单",
+        "库存",
+        "Grocy"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "fridge-three-ingredient-menu",
+      "title": "先选冰箱里的三样，再排两顿饭",
+      "category": "厨房与食物",
+      "scene": "临时想解决库存而不是购买新菜谱材料",
+      "resources": [
+        "已确认可食用的现有食材",
+        "已有两三份可靠菜谱",
+        "可选已有Mealie"
+      ],
+      "mechanism": "把食材约束放在菜谱筛选前，复用同一食材跨两顿分配；菜谱管理器可保存已用过的组合与采购缺口。",
+      "first_step": "先列三样最希望用掉的食材，选择一份包含其中两样且自己会做的可靠菜谱。",
+      "observe": "两顿是否重复占用同一份食材，缺口是否真的需要买。",
+      "unknowns": [
+        "来源支持菜谱/计划/购物清单功能，不证明任意食材能混煮",
+        "烹饪熟度与过敏条件须由适用菜谱确认",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "mealie"
+      ],
+      "tags": [
+        "冰箱",
+        "食材",
+        "菜单",
+        "晚饭",
+        "Mealie",
+        "计划"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "fridge-door-reminder",
+      "title": "冰箱门忘关时延迟提醒",
+      "category": "厨房与食物",
+      "scene": "拿完菜后门没有完全吸合",
+      "resources": [
+        "安装合适的门磁或设备能可靠报告门状态",
+        "现成HA通知通道",
+        "已确认安装不影响密封"
+      ],
+      "mechanism": "门状态持续开启一段时间才触发提醒，过滤正常取物的短暂开门。",
+      "first_step": "先只观察传感器开闭是否与实际一致，再用测试通知核对延迟逻辑。",
+      "observe": "正常取物是否被误报，关门后提醒能否停止。",
+      "unknowns": [
+        "普通冰箱未必提供门状态",
+        "HA重启可能重置状态触发的持续计时；不以自动化替代检查密封",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "ha-trigger"
+      ],
+      "tags": [
+        "冰箱",
+        "门磁",
+        "忘关",
+        "提醒",
+        "门状态"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "earbuds-eq-audition",
+      "title": "给已有耳机做一次音色对照",
+      "category": "音乐与声音",
+      "scene": "不买新耳机也想听清自己喜欢什么",
+      "resources": [
+        "AutoEq中能核对到准确型号与测量版本",
+        "可关闭并能降低增益的播放器EQ",
+        "已有耳机和熟悉曲目"
+      ],
+      "mechanism": "AutoEq根据耳机频响提供均衡起点，切换EQ前后比较可区分低频量感、人声和音色偏好。",
+      "first_step": "先保存默认设置，在较低音量选择准确型号并按所用EQ类型导入，做等响度开关对照。",
+      "observe": "人声是否更自然、有无失真或音量差误导偏好。",
+      "unknowns": [
+        "同名不同代和不同耳套的测量不一定适用",
+        "测量目标不等于个人最佳，不增加音量追求细节",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "autoeq"
+      ],
+      "tags": [
+        "耳机",
+        "均衡器",
+        "EQ",
+        "音色",
+        "FreeBuds",
+        "AutoEq"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "earbuds-dj-cue",
+      "title": "耳机成为派对音乐的预听间",
+      "category": "音乐与声音",
+      "scene": "想接下一首时不让全场听到试播",
+      "resources": [
+        "Mixxx兼容电脑",
+        "可分离主输出与耳机输出的音频设备",
+        "耳机",
+        "现有音箱"
+      ],
+      "mechanism": "主输出给现场，预听输出单独给耳机，下一首的起点与音量可在不打断外放时准备。",
+      "first_step": "先不接音箱，用Mixxx音频设置核对主输出和耳机输出，分别试播不同片段。",
+      "observe": "预听声是否漏到主输出、左右声道是否正确。",
+      "unknowns": [
+        "普通单一蓝牙输出未必能独立分流",
+        "延迟与声卡通道必须核对，不把耳机同时连接等同多路音频",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "mixxx"
+      ],
+      "tags": [
+        "耳机",
+        "音箱",
+        "DJ",
+        "派对",
+        "预听",
+        "Mixxx"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "audio-personal-ringtone",
+      "title": "把自己的短声音做成专属提示音",
+      "category": "音乐与声音",
+      "scene": "想给计时或来电一个有辨识度的声音",
+      "resources": [
+        "自己有权使用的录音",
+        "Audacity",
+        "允许自定义提示音的设备"
+      ],
+      "mechanism": "裁剪、淡入淡出和导出把长录音变成短声标，声音承载一个明确事件。",
+      "first_step": "先导入自己的录音，选一小段，试听循环接缝后另存副本。",
+      "observe": "开头是否突兀、重复播放是否烦扰，设备是否接受导出格式。",
+      "unknowns": [
+        "手机系统可能限制通知音导入",
+        "只处理有权使用的声音，原录音保留不覆盖",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "audacity"
+      ],
+      "tags": [
+        "手机",
+        "录音",
+        "提示音",
+        "Audacity",
+        "声音"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "earbuds-shadow-loop",
+      "title": "耳机配合短句循环做跟读角",
+      "category": "学习与阅读",
+      "scene": "只想练会一句旅行用语",
+      "resources": [
+        "自己有权使用的短音频",
+        "Audacity可选段循环",
+        "现有耳机或音箱"
+      ],
+      "mechanism": "选区循环把一次长播放变成可重复的小节，用户跟读并通过停顿比较发音，不依赖整份课程。",
+      "first_step": "选一个完整短句，先循环试听，再在停播时跟读一句。",
+      "observe": "句首句尾是否被截断，速度是否能从容跟上。",
+      "unknowns": [
+        "选段循环不提供发音评分",
+        "不要把软件播放成功描述为学会该语言",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "audacity"
+      ],
+      "tags": [
+        "耳机",
+        "跟读",
+        "语言",
+        "学习",
+        "循环",
+        "Audacity"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "phone-large-demo",
+      "title": "手机操作给电脑另一端的人看",
+      "category": "办公与设备",
+      "scene": "远程教家人使用自己的手机App",
+      "resources": [
+        "自己的Android手机",
+        "支持数据传输的USB线",
+        "可运行scrcpy的电脑",
+        "明确授权的USB调试"
+      ],
+      "mechanism": "scrcpy把手机屏幕映射成电脑窗口，可被会议共享；用户保留手机上的实际操作，讲解者更容易指向同一画面。",
+      "first_step": "先连接自己的手机并确认调试授权，只共享一个不含私人信息的设置页面。",
+      "observe": "画面是否清晰，输入是否落在正确设备，是否出现通知泄露。",
+      "unknowns": [
+        "部分App禁止截屏或安全页面不可见",
+        "退出后撤销不需要的调试授权，不连接他人设备",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "scrcpy"
+      ],
+      "tags": [
+        "手机",
+        "电脑",
+        "教学",
+        "屏幕共享",
+        "scrcpy"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "phone-overhead-camera",
+      "title": "旧手机成为桌面手作的俯拍窗口",
+      "category": "摄影与记录",
+      "scene": "想在电脑里录下拼装或画画过程",
+      "resources": [
+        "Android12及以上且scrcpy支持相机镜像",
+        "稳固手机支架",
+        "电脑",
+        "USB线",
+        "可选OBS"
+      ],
+      "mechanism": "手机相机画面送进电脑窗口，支架负责俯视视角，电脑负责录屏；不用把手作区域挤进笔记本摄像头。",
+      "first_step": "先把手机支在稳固支架上，镜头对一张无私人信息的测试纸，验证相机镜像。",
+      "observe": "手是否挡镜头、画面是否自动转向，长时运行是否发热。",
+      "unknowns": [
+        "相机镜像不是所有Android版本可用",
+        "Windows窗口采集与Linux虚拟摄像头能力不同，不悬空夹不稳的手机",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "scrcpy"
+      ],
+      "tags": [
+        "手机",
+        "支架",
+        "俯拍",
+        "手作",
+        "相机",
+        "scrcpy"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "phone-trackpad",
+      "title": "手机临时充当沙发上的触控板",
+      "category": "办公与设备",
+      "scene": "电脑连着大屏，鼠标却够不到",
+      "resources": [
+        "双方支持KDE Connect",
+        "自己的电脑和手机",
+        "同一可信局域网并已配对"
+      ],
+      "mechanism": "远程输入插件把手机触控动作发送给电脑的指针和键盘，手机变成可移动的输入面。",
+      "first_step": "只在自己的电脑上配对，打开远程输入，用光标移动测试。",
+      "observe": "指针速度、点击和返回是否可控。",
+      "unknowns": [
+        "平台插件支持和防火墙需核对",
+        "配对仅给本人设备，不把网络可见当授权",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "kdeconnect"
+      ],
+      "tags": [
+        "手机",
+        "电脑",
+        "触控板",
+        "遥控",
+        "KDE Connect"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "phone-presentation-remote",
+      "title": "手机做演示翻页器",
+      "category": "办公与设备",
+      "scene": "站起来讲述时不想回桌边按键",
+      "resources": [
+        "KDE Connect支持的演示控制功能",
+        "自己的手机电脑已配对",
+        "已有幻灯片"
+      ],
+      "mechanism": "手机演示控制发送翻页动作，使人的站位和电脑键盘位置解耦。",
+      "first_step": "用一份测试幻灯片进入放映，试一次前进和后退。",
+      "observe": "焦点是否在放映窗口、误触是否容易发生。",
+      "unknowns": [
+        "不同系统和演示软件兼容性未知",
+        "不在正式演示前第一次配置",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "kdeconnect"
+      ],
+      "tags": [
+        "手机",
+        "翻页",
+        "演讲",
+        "幻灯片",
+        "KDE Connect"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "phone-photo-handoff",
+      "title": "拍完手写草图直接送到电脑继续改",
+      "category": "办公与设备",
+      "scene": "纸上构思转为电子文档",
+      "resources": [
+        "已配对KDE Connect的手机电脑",
+        "同一可信网络",
+        "自己拍摄的草图"
+      ],
+      "mechanism": "局域网文件传输把手机拍摄与电脑编辑连成短链路，保留原图而不经聊天压缩。",
+      "first_step": "先传一张测试草图，确认电脑接收目录和文件是否完整。",
+      "observe": "图像方向与分辨率是否保留、接收路径是否易找到。",
+      "unknowns": [
+        "这不自动识别手写内容",
+        "发送前核对相册内容，不全盘共享",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "kdeconnect"
+      ],
+      "tags": [
+        "手机",
+        "草图",
+        "照片",
+        "电脑",
+        "文件传输",
+        "KDE Connect"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "tablet-reference-window",
+      "title": "闲置平板只显示当前工作的参考窗口",
+      "category": "办公与设备",
+      "scene": "主屏写作时不想来回切参考资料",
+      "resources": [
+        "能运行Deskreen的电脑",
+        "平板现代浏览器",
+        "同一可信网络",
+        "现有支架"
+      ],
+      "mechanism": "Deskreen通过浏览器共享电脑屏幕或应用窗口，平板承担旁边可见的参考面。",
+      "first_step": "先只共享一份测试文档窗口，在平板浏览器连接并确认接入。",
+      "observe": "小字是否看得清，主屏切窗口是否影响平板内容。",
+      "unknowns": [
+        "镜像不一定等于扩展桌面",
+        "实现独立副屏可能需要额外显示输出/虚拟适配，先核对当前版本功能",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "deskreen"
+      ],
+      "tags": [
+        "平板",
+        "副屏",
+        "参考资料",
+        "办公",
+        "Deskreen"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "epaper-one-priority",
+      "title": "墨水屏只留下今天最想做的一件事",
+      "category": "学习与阅读",
+      "scene": "想在桌上看见提醒又不想点亮另一块屏幕",
+      "resources": [
+        "ESPHome明确支持的电子纸型号及板卡",
+        "已正确接线的低压供电设备",
+        "可显示文字的现有配置"
+      ],
+      "mechanism": "电子纸以低频刷新保留静态文字，把一句任务变成持续可见的桌面提示。",
+      "first_step": "先查清面板具体版本，在官方示例上仅改一行测试文字并验证刷新。",
+      "observe": "是否残影、字够不够大、刷新时闪烁是否能接受。",
+      "unknowns": [
+        "同尺寸不同面板不能混配驱动",
+        "按具体BUSY脚与电压要求接线，不以断电留图推断耗电参数",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "esphome-paper"
+      ],
+      "tags": [
+        "墨水屏",
+        "桌面",
+        "提醒",
+        "电子纸",
+        "ESPHome"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "ereader-scan-reflow",
+      "title": "把大页扫描手册变得适合小电纸书",
+      "category": "学习与阅读",
+      "scene": "修东西时想离线看清已有说明书",
+      "resources": [
+        "KOReader支持的设备",
+        "自己有权使用的扫描PDF",
+        "保留的原文件"
+      ],
+      "mechanism": "重排扫描PDF把固定大页中的文字块重新组织，配合裁边和对比度调整减少来回放大。",
+      "first_step": "复制一份手册，选一页有图表的页面试重排，对照原页检查顺序。",
+      "observe": "图注是否错位、表格和零件编号是否遗漏。",
+      "unknowns": [
+        "图表密集手册未必适合重排",
+        "不能用重排后的误序内容覆盖原说明书",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "koreader"
+      ],
+      "tags": [
+        "电纸书",
+        "阅读器",
+        "PDF",
+        "手册",
+        "KOReader",
+        "离线"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "tablet-house-library",
+      "title": "平板变成家庭已有电子书的入口",
+      "category": "学习与阅读",
+      "scene": "不想给每台设备重复拷书",
+      "resources": [
+        "已在电脑整理的Calibre书库",
+        "同一可信网络",
+        "平板浏览器",
+        "有权使用的电子书"
+      ],
+      "mechanism": "Calibre内容服务器把本地书库提供给浏览器，平板成为阅读终端而书库仍由原电脑管理。",
+      "first_step": "先在电脑开启Content server并用本机浏览器测试一本非私密样书，再接入平板。",
+      "observe": "格式能否阅读，离线缓存是否按预期工作。",
+      "unknowns": [
+        "局域网访问与公网开放是不同事项",
+        "不默认把全库开放给访客，先核对账户和目录权限",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "calibre"
+      ],
+      "tags": [
+        "平板",
+        "电子书",
+        "书库",
+        "Calibre",
+        "阅读"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "phone-trip-phrase-review",
+      "title": "出发前只复习这次会用到的词句",
+      "category": "学习与阅读",
+      "scene": "已有很多学习卡，临行只想复习一个主题",
+      "resources": [
+        "已有Anki卡片",
+        "自己明确标注的旅行主题标签",
+        "手机或电脑"
+      ],
+      "mechanism": "筛选牌组按标签临时抽出小集合，复习完归回原牌组，不另复制一套记忆。",
+      "first_step": "选一个已有主题标签，建含少量卡的筛选牌组，并先核对是否改变原调度。",
+      "observe": "卡片是否确实相关，重复复习是否挤占正常学习。",
+      "unknowns": [
+        "复习不等于现场能听懂会说",
+        "提前复习与不重新调度选项需按目的选择",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "anki"
+      ],
+      "tags": [
+        "手机",
+        "学习",
+        "旅行",
+        "复习",
+        "Anki",
+        "词卡"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "tablet-craft-files",
+      "title": "电脑改好的手作图样在工作台平板接着看",
+      "category": "办公与设备",
+      "scene": "缝纫或模型桌不方便放电脑",
+      "resources": [
+        "双方可运行Syncthing的设备或受支持客户端",
+        "专用测试文件夹",
+        "相同图样的合法副本"
+      ],
+      "mechanism": "已配对设备只同步指定文件夹，电脑编辑后的图样送到工作台阅读端。",
+      "first_step": "先建一个仅含测试PDF的新文件夹共享，确认两端设备ID后改一个测试文件。",
+      "observe": "更新是否到达、冲突副本是否易辨认。",
+      "unknowns": [
+        "同步删除可能传播，不能当独立备份",
+        "平台客户端支持需核对，不共享整个私人文档目录",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "syncthing"
+      ],
+      "tags": [
+        "平板",
+        "图样",
+        "手作",
+        "同步",
+        "Syncthing"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "photos-theme-rediscovery",
+      "title": "从自己的相册找一组同主题照片布置桌面",
+      "category": "摄影与记录",
+      "scene": "想找“窗边的猫”一类画面而不是按年月翻",
+      "resources": [
+        "已有Immich且照片有权被索引",
+        "支持查询语言的搜索模型",
+        "自己控制的相册"
+      ],
+      "mechanism": "图像语义检索按画面内容找候选，人工选择后形成小主题；搜索结果不是对回忆意义的自动判定。",
+      "first_step": "先用一个简单可目视核对的主题词搜索，从结果中只选三张。",
+      "observe": "画面是否真的匹配，有无漏掉或误认。",
+      "unknowns": [
+        "多语言模型与资源开销需核对",
+        "照片里的人和地点不能因模型猜中就记成事实",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "immich"
+      ],
+      "tags": [
+        "照片",
+        "相册",
+        "主题",
+        "相框",
+        "Immich"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "photos-clock-alignment",
+      "title": "让两台相机的旅行照片回到同一时间线",
+      "category": "摄影与记录",
+      "scene": "手机和相机时间差导致相册顺序混乱",
+      "resources": [
+        "自己拥有的照片副本",
+        "能核实的同一事件时间锚点",
+        "digiKam"
+      ],
+      "mechanism": "批量时间偏移修正相机时钟差，照片排序按已知偏差恢复；不是根据画面猜造拍摄日期。",
+      "first_step": "找一对同一瞬间的照片，算出确定的时间差，在副本上只调整一张检查。",
+      "observe": "EXIF拍摄时间和文件修改时间有没有被混用。",
+      "unknowns": [
+        "夏令时/时区与错误钟差可能不同",
+        "无可靠锚点则保留日期未知，原文件不覆盖",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "digikam"
+      ],
+      "tags": [
+        "相机",
+        "照片",
+        "时间",
+        "旅行",
+        "digiKam",
+        "归档"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "phone-neighborhood-route",
+      "title": "散步时收集一条自己的小店路线",
+      "category": "出门与露营",
+      "scene": "想下次带朋友走一条有意思的路",
+      "resources": [
+        "可运行OpenTracks的Android手机",
+        "必要定位权限",
+        "用户愿意记录的公开路径"
+      ],
+      "mechanism": "轨迹点串起路线，沿途照片和标记把具体停留点附在路径上，回看时不只剩一条线。",
+      "first_step": "先绕一段熟悉的短路记录，在一处公共地标加一个标记后停止并查看导出。",
+      "observe": "轨迹偏移是否明显，照片标记是否落对位置。",
+      "unknowns": [
+        "GPS不等于可通行路线",
+        "发布前去掉住址和私人停留点，续航与后台定位需实测",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "opentracks"
+      ],
+      "tags": [
+        "手机",
+        "散步",
+        "路线",
+        "摄影",
+        "OpenTracks"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "obs-handwork-lesson",
+      "title": "把手作近景和示意图放在同一张讲解画面",
+      "category": "摄影与记录",
+      "scene": "教朋友拼装时双方总在问你指哪里",
+      "resources": [
+        "电脑与OBS",
+        "已有摄像头或采集输入",
+        "自己的示意图",
+        "稳固桌面"
+      ],
+      "mechanism": "OBS场景组合摄像源和图像/文字源，使实际动作与说明同时可见，而不是事后让人猜。",
+      "first_step": "先创建一个测试场景，把摄像头窗口放一边、示意图放另一边，录十秒查看。",
+      "observe": "手是否离开画框、文字有没有被摄像窗口挡住。",
+      "unknowns": [
+        "场景合成不验证手作步骤正确",
+        "默认音频可能含桌面声，录制前核对隐私与输入设备",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "obs"
+      ],
+      "tags": [
+        "电脑",
+        "摄像头",
+        "教学",
+        "手作",
+        "OBS",
+        "录制"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "obs-party-scoreboard",
+      "title": "聚会游戏的大屏加上手动计分牌",
+      "category": "电视与大屏",
+      "scene": "家里已经有电脑连电视，想玩小游戏",
+      "resources": [
+        "电脑与OBS",
+        "已连接的大屏",
+        "可手动编辑的文本源",
+        "自定的游戏规则"
+      ],
+      "mechanism": "文字源叠在游戏或摄像画面上，把主持人的分数记录变成全场可见反馈。",
+      "first_step": "先放一张测试背景并添加双方名字和0分文本，改一次数字检查可读性。",
+      "observe": "观众能否一眼分清队伍，文字会不会遮住主要画面。",
+      "unknowns": [
+        "OBS文本不会自动理解游戏得分",
+        "规则与裁决由参与者约定，不宣称自动计分",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "obs"
+      ],
+      "tags": [
+        "电视",
+        "派对",
+        "游戏",
+        "计分",
+        "OBS"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "printer-silhouette-label",
+      "title": "把常用物的轮廓做成归位标签",
+      "category": "收纳与整理",
+      "scene": "工具拿走后不容易放回原格",
+      "resources": [
+        "自己拍摄的物品正面照片",
+        "Inkscape",
+        "已有打印机或标签机",
+        "可移除的合适标签材料"
+      ],
+      "mechanism": "描摹照片得到轮廓符号，归位位置用形状而非长文字提示，减少识字或命名差异。",
+      "first_step": "先拍一件工具的清晰正面，描一张简单轮廓，以纸样试放在格位旁。",
+      "observe": "轮廓是否一眼可认，标签会不会挡住开关或必要警示。",
+      "unknowns": [
+        "描摹只是图像提取，不证明比例精准",
+        "贴附材料与表面兼容性需先试，不贴纪念物正面",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "inkscape"
+      ],
+      "tags": [
+        "打印机",
+        "标签机",
+        "收纳",
+        "工具",
+        "轮廓",
+        "Inkscape"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "speaker-dj-transition",
+      "title": "用已有音箱练两首歌的平顺交接",
+      "category": "音乐与声音",
+      "scene": "聚会播放不想每首结束后突然安静",
+      "resources": [
+        "Mixxx电脑端",
+        "有权播放的两首音频",
+        "现有音箱",
+        "可控制的低音量"
+      ],
+      "mechanism": "双播放台与交叉推子允许两首歌在短时间重叠，用户选择切入点和响度，形成连续段落。",
+      "first_step": "先只加载两首熟悉的歌，在低音量用推子手动交接一次。",
+      "observe": "两首音量差、节奏冲突和人声重叠是否明显。",
+      "unknowns": [
+        "节拍同步不能保证任意歌曲都好听",
+        "不默认拥有公开播放权，不以音量掩盖接点",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "mixxx"
+      ],
+      "tags": [
+        "音箱",
+        "聚会",
+        "音乐",
+        "混音",
+        "Mixxx"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "room-scene-return",
+      "title": "临时观影后把灯光还给原来的状态",
+      "category": "灯光与空间",
+      "scene": "聚会结束不想逐盏猜原来怎么开",
+      "resources": [
+        "HA可控制的灯具",
+        "支持快照恢复的实际实体",
+        "用户发起的观影动作"
+      ],
+      "mechanism": "在切换前对支持实体做场景快照，再应用观影状态；结束后恢复快照，减少永久改变。",
+      "first_step": "先只对一盏测试灯拍快照、改变亮度再恢复。",
+      "observe": "亮度颜色是否都恢复，离线实体如何呈现。",
+      "unknowns": [
+        "并非所有实体属性都能快照恢复",
+        "他人中途改变可能更重要，恢复前尊重当前使用情境",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "ha-scene"
+      ],
+      "tags": [
+        "灯光",
+        "电视",
+        "观影",
+        "场景",
+        "恢复",
+        "Home Assistant"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "desk-focus-timer",
+      "title": "把休息计时做成可暂停的桌面节奏",
+      "category": "办公与设备",
+      "scene": "工作被打断后不想重新从头计时",
+      "resources": [
+        "已有HA Timer或等价成熟计时器",
+        "用户自己选择的时长",
+        "可见的面板或现成提示灯"
+      ],
+      "mechanism": "计时器保留暂停/继续状态，结束提示只表示这一段计时到点，不推断工作产出。",
+      "first_step": "创建一个很短的测试计时，启动、暂停再继续，观察剩余时间。",
+      "observe": "暂停是否真正冻结，重启与过期后是否漏掉提示。",
+      "unknowns": [
+        "恢复计时状态不等于补发停机期间到期事件",
+        "无需为玩法新增另一套物间任务库",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "ha-timer"
+      ],
+      "tags": [
+        "桌面",
+        "计时",
+        "专注",
+        "休息",
+        "办公",
+        "Home Assistant"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "nfc-album-cards",
+      "title": "一张卡叫出一张专辑",
+      "category": "音乐与声音",
+      "scene": "想保留选唱片的手感但用现有音箱播放",
+      "resources": [
+        "已有NFC卡/标签或愿意临时确认是否有",
+        "支持的读卡手机或读卡器",
+        "已有HA和可控播放器",
+        "合法音乐入口"
+      ],
+      "mechanism": "卡片ID触发已配置的播放动作，实体卡提供可拿取的选择界面；卡本身不存音乐。",
+      "first_step": "先用一张测试卡只触发一个可见通知，核对读卡后再绑定自己能播放的专辑。",
+      "observe": "是否误触重复播放，手机平台是否支持后台读卡。",
+      "unknowns": [
+        "读卡支持与媒体服务权限各自核对",
+        "不能从玩偶或卡片外形推断内置NFC",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "ha-tags"
+      ],
+      "tags": [
+        "NFC",
+        "音箱",
+        "专辑",
+        "唱片",
+        "音乐",
+        "实体交互"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "light-sunset-transition",
+      "title": "天暗时让阅读角慢慢进入夜间状态",
+      "category": "灯光与空间",
+      "scene": "每天日落时间变化，不想固定点突然开很亮",
+      "resources": [
+        "可提供可靠日落事件的现成HA",
+        "已有可调光灯",
+        "用户认可的位置和光照需求"
+      ],
+      "mechanism": "太阳事件作为触发而非固定时刻，动作把阅读灯切到选定状态，适应季节变化。",
+      "first_step": "先检查HA显示的日落时间和家庭位置，再手动试一次夜间亮度。",
+      "observe": "屋内是否早已太暗，窗帘和天气是否使日落信号不合适。",
+      "unknowns": [
+        "日落是天文时间，不是室内照度",
+        "不要用未经确认位置，实际需要可由人随时覆盖",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "ha-trigger"
+      ],
+      "tags": [
+        "台灯",
+        "阅读",
+        "日落",
+        "灯光",
+        "自动化"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "pegboard-charging-parking",
+      "title": "洞洞板成为充电设备的停车位",
+      "category": "收纳与整理",
+      "scene": "相机、电池和耳机充电时占满桌面",
+      "resources": [
+        "已有洞洞板及匹配挂件",
+        "原厂或合规充电器",
+        "可让设备散热的托架",
+        "线缆固定件需确认可用"
+      ],
+      "mechanism": "竖直托架承担设备重量，线缆只导电不承重；固定归位位置让充电与找回连成一处。",
+      "first_step": "先只放一台轻设备，在断电状态试托架和取放路径，确认不会靠线吊着。",
+      "observe": "插拔时托架是否松动、接口是否被拉扯。",
+      "unknowns": [
+        "未读原教程安装步骤与承重",
+        "不能把密集充电墙照搬到可燃封闭容器",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1sQpjzwEvV"
+      ],
+      "tags": [
+        "洞洞板",
+        "耳机",
+        "充电",
+        "相机",
+        "收纳"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "pegboard-project-kit",
+      "title": "洞洞板挂一套正在做的项目工具",
+      "category": "收纳与整理",
+      "scene": "每次做模型都在不同抽屉找同样几件东西",
+      "resources": [
+        "已有洞洞板和合适挂件",
+        "几件轻质常用工具",
+        "可移除的项目标识"
+      ],
+      "mechanism": "按当前项目而非工具种类邻近摆放，把一次任务的取用路径缩短。",
+      "first_step": "先选一个项目最常用的三件轻工具，断开电动工具电源后试挂并模拟拿放。",
+      "observe": "最常用件是否够得到，尖端是否朝向手会经过的位置。",
+      "unknowns": [
+        "挂件承重与墙体固定未知",
+        "不悬挂未锁紧电池或裸露刀刃",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1CBL4zKE49"
+      ],
+      "tags": [
+        "洞洞板",
+        "工具",
+        "项目",
+        "手作",
+        "收纳"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "tension-rod-bottle-hang",
+      "title": "柜内伸缩杆为轻喷瓶腾出柜底",
+      "category": "收纳与整理",
+      "scene": "柜底瓶子挤在一起难清洁",
+      "resources": [
+        "已有伸缩杆",
+        "能承受夹紧且不损伤的两侧柜壁",
+        "少量可可靠挂住的轻瓶",
+        "柜底留有防坠承接"
+      ],
+      "mechanism": "杆横跨柜壁承担轻物，利用上方闲置高度，柜底便于擦拭；瓶子挂点必须实际咬合。",
+      "first_step": "先空杆检查锁紧方式，再用一个空轻瓶试挂并轻拉检查滑动。",
+      "observe": "杆端是否下滑、瓶嘴是否会意外扣动。",
+      "unknowns": [
+        "元数据未提供具体结构和承重",
+        "不挂有腐蚀性液体、不在儿童可触及处展示喷瓶",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1V24y1d7Zu"
+      ],
+      "tags": [
+        "伸缩杆",
+        "喷瓶",
+        "柜子",
+        "收纳",
+        "清洁"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "tension-rod-pan-dividers",
+      "title": "让竖放的砧板和烤盘各有一格",
+      "category": "收纳与整理",
+      "scene": "抽一块砧板总带倒旁边一摞",
+      "resources": [
+        "可稳固安装的分隔架或伸缩杆组合",
+        "平整柜底",
+        "适合竖放的砧板烤盘"
+      ],
+      "mechanism": "竖直分隔限制侧倾，底面承担重量，取放时不用抬起整摞。",
+      "first_step": "先用现有分隔件只隔出两格，把一块最轻的干砧板竖放试取。",
+      "observe": "抽出后旁边是否仍稳定，门能否正常关闭。",
+      "unknowns": [
+        "伸缩杆方向、柜体结构不能由标题确定",
+        "杆不能代替底部承重，湿木板需通风",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1GS4y1L7Kh"
+      ],
+      "tags": [
+        "砧板",
+        "烤盘",
+        "分隔架",
+        "伸缩杆",
+        "收纳"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "monitor-arm-clear-stage",
+      "title": "显示器转开后桌面留给手作",
+      "category": "办公与设备",
+      "scene": "同一张桌子既办公又画画",
+      "resources": [
+        "已经正确安装且承重匹配的显示器支架",
+        "现有显示器",
+        "足够长且有余量的线缆"
+      ],
+      "mechanism": "支架的活动范围让显示器让出平面，空出的桌面承担绘画或拼装，不另买工作桌。",
+      "first_step": "先不放其他物品，缓慢把屏幕移到计划位置，检查底座、夹口和线缆余量。",
+      "observe": "移动时是否撞墙、夹口是否位移，屏幕能否稳定停住。",
+      "unknowns": [
+        "未读支架安装细节，不能拿额定未知支架承载其他物品",
+        "桌沿和孔位兼容需按实际说明核对",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1we411V7je"
+      ],
+      "tags": [
+        "显示器",
+        "支架",
+        "桌面",
+        "手作",
+        "办公"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "desk-riser-work-tray",
+      "title": "增高架下留一个可整盘收走的工作区",
+      "category": "办公与设备",
+      "scene": "临时拼装占桌，晚些还要办公",
+      "resources": [
+        "已有稳固增高架",
+        "能自由滑入的轻托盘",
+        "不超过架下净空的小项目"
+      ],
+      "mechanism": "托盘把散件组织成可整体移动的平面，架下空隙成为暂停区，桌面能快速切换用途。",
+      "first_step": "先空托盘滑入架下，确认手指仍能握住边缘，再放少量零件。",
+      "observe": "滑动是否刮碰、零件高度是否撞到架底。",
+      "unknowns": [
+        "不要求复刻视频的3D打印结构",
+        "增高架承重与通风未知，不遮电脑进出风口",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1yzVA6nEQU"
+      ],
+      "tags": [
+        "增高架",
+        "桌面",
+        "托盘",
+        "模型",
+        "收纳"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "projector-drawing-guide",
+      "title": "投影给手绘提供可关掉的轮廓参考",
+      "category": "摄影与记录",
+      "scene": "想画一幅自己的大尺寸线稿",
+      "resources": [
+        "已有投影仪",
+        "自己有权使用的简单线稿",
+        "稳定投影面",
+        "可擦除的绘画材料需确认"
+      ],
+      "mechanism": "投影把小图放大到绘画面，先描关键参照点再关掉投影，继续自主作画。",
+      "first_step": "先在纸面投一张自己的简单图，调整到不移动投影仪也能完整覆盖的尺寸。",
+      "observe": "手或身体是否挡光、线是否变形。",
+      "unknowns": [
+        "不是原视频已验证玩法",
+        "表面材质与绘画材料适配需先试，不投向人的眼睛",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1ha4y127sv"
+      ],
+      "tags": [
+        "投影仪",
+        "画画",
+        "轮廓",
+        "创作",
+        "大屏"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "projector-coop-night",
+      "title": "用投影做大家都看得见的合作游戏局",
+      "category": "电视与大屏",
+      "scene": "两三人想一起解谜而不是各玩手机",
+      "resources": [
+        "已有投影仪",
+        "能合法运行的合作游戏和输入设备",
+        "足够清楚的投影面"
+      ],
+      "mechanism": "共享的大画面让所有人看到同一谜题，人可以分担观察、操作和记录角色。",
+      "first_step": "先开游戏最初的静态菜单，从各座位检查文字和操作延迟。",
+      "observe": "边缘座位是否看得清，输入延迟会不会影响玩法。",
+      "unknowns": [
+        "互动靠游戏或控制器，不是投影自动识别人动作",
+        "未取得原视频具体游戏清单",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1XS42197At"
+      ],
+      "tags": [
+        "投影仪",
+        "游戏",
+        "合作",
+        "解谜",
+        "聚会"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "projector-home-window",
+      "title": "投影把空白墙暂时变成窗景",
+      "category": "灯光与空间",
+      "scene": "小房间想换一种安静背景",
+      "resources": [
+        "投影仪",
+        "自己有权播放的风景素材",
+        "适合投影的空白墙",
+        "可调环境亮度"
+      ],
+      "mechanism": "墙面接收风景画面，固定视点与缓慢变化形成临时空间背景；声音可独立选择。",
+      "first_step": "先放自己拍的一段静态风景，降低亮度并从常坐位置观看。",
+      "observe": "墙面纹理是否干扰、光是否影响休息。",
+      "unknowns": [
+        "原分享素材可能来自他人，不能默认可下载再发布",
+        "不是对真实室外环境或疗效的证明",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1NA411K7VC"
+      ],
+      "tags": [
+        "投影仪",
+        "窗景",
+        "风景",
+        "氛围",
+        "房间"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "tv-cabled-workshop",
+      "title": "电视做手作说明书的放大页",
+      "category": "电视与大屏",
+      "scene": "两个人拼装时总抢着看小屏幕",
+      "resources": [
+        "电脑",
+        "电视可用视频输入",
+        "兼容HDMI线",
+        "自己有权使用的说明书"
+      ],
+      "mechanism": "有线视频把电脑说明书映到远处大屏，桌面留下零件区，双方看同一页。",
+      "first_step": "先连接并选择正确输入，只打开一页测试说明书，从工作位置放大到能看清编号。",
+      "observe": "文字与零件图是否清楚，线缆会不会横跨走道。",
+      "unknowns": [
+        "输入分辨率和缩放需核对",
+        "大屏可读不代表说明书对应当前版本零件",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1ez4y1y7dH"
+      ],
+      "tags": [
+        "电视",
+        "HDMI",
+        "说明书",
+        "拼装",
+        "电脑"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "lamp-side-product-photo",
+      "title": "台灯换成物品照片的侧光",
+      "category": "摄影与记录",
+      "scene": "给想转赠的小物拍清楚材质",
+      "resources": [
+        "现有台灯",
+        "手机相机",
+        "稳定桌面",
+        "被拍物品"
+      ],
+      "mechanism": "侧向光在表面形成明暗和阴影，材质起伏比正面平光更可见，手机记录这些差异。",
+      "first_step": "把物品放稳，台灯放在侧前方，手机保持位置拍一张，再只移动灯比较。",
+      "observe": "刻痕是否可见，有无高光把细节盖住。",
+      "unknowns": [
+        "不照搬钨丝灯与专业灯的参数",
+        "灯具散热与材质耐热需尊重，不贴纸覆盖灯头",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1sz4y1171N"
+      ],
+      "tags": [
+        "台灯",
+        "手机",
+        "摄影",
+        "转赠",
+        "材质"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "lamp-wall-bounce",
+      "title": "借白墙把台灯变成更大的间接光",
+      "category": "摄影与记录",
+      "scene": "视频通话里脸上阴影太硬",
+      "resources": [
+        "能安全改变朝向的台灯",
+        "近处浅色墙面",
+        "稳定桌面",
+        "手机或摄像头"
+      ],
+      "mechanism": "灯先照墙，墙把光反射到人脸，大面积反射面弱化局部硬影；会损失亮度。",
+      "first_step": "灯与墙保持安全间距，先照一小片墙，比较摄像画面里的明暗。",
+      "observe": "脸是否仍太暗、墙色是否改变肤色。",
+      "unknowns": [
+        "元数据只表明台灯布光主题",
+        "灯不可贴墙散热，浅墙不一定有足够反射光",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1N54y117Xi"
+      ],
+      "tags": [
+        "台灯",
+        "白墙",
+        "视频会议",
+        "反射",
+        "摄影"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "lamp-black-background",
+      "title": "拉开人和背景，让台灯只照主体",
+      "category": "摄影与记录",
+      "scene": "在杂乱房间录一个简短口播",
+      "resources": [
+        "台灯",
+        "手机",
+        "背景后方有可拉开距离的空间",
+        "稳定支架"
+      ],
+      "mechanism": "主体靠近灯、背景远离光源，曝光以主体为准，可使背景相对暗下去而不必添一块幕布。",
+      "first_step": "先坐在离背景更远的位置，把灯移向侧前方，锁定主体曝光拍十秒。",
+      "observe": "背景是否仍亮、脸部高光是否过曝。",
+      "unknowns": [
+        "未读取原视频具体布光动作",
+        "不同灯具和房间反射可能无法形成黑背景",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1c64y1z7BD"
+      ],
+      "tags": [
+        "台灯",
+        "手机",
+        "口播",
+        "黑背景",
+        "Vlog"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "lamp-shadow-story",
+      "title": "用普通灯和手边物拍一段影子小故事",
+      "category": "摄影与记录",
+      "scene": "想和孩子或朋友玩一次短片创作",
+      "resources": [
+        "台灯",
+        "安全不透光小物或手",
+        "空白墙",
+        "手机"
+      ],
+      "mechanism": "物体挡光在墙上形成轮廓，移动物体与光源距离改变影子大小，手机记录画面。",
+      "first_step": "先只用手在墙前做一个轮廓，固定灯，再缓慢前后移动手观察大小。",
+      "observe": "影子边缘是否可辨，人的位置是否挡住相机。",
+      "unknowns": [
+        "是编者独立玩法，不是原作者已演示的七种布光之一",
+        "不靠近高温灯头或在走道拉线",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1Xx4y147Vf"
+      ],
+      "tags": [
+        "台灯",
+        "影子",
+        "手机",
+        "亲子",
+        "短片"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "camp-wagon-table",
+      "title": "露营车停稳后变成桌面底座",
+      "category": "出门与露营",
+      "scene": "到场后想少搬一件家具",
+      "resources": [
+        "露营车",
+        "厂家适配或已经核实兼容的桌板",
+        "平整地面",
+        "驻车方式"
+      ],
+      "mechanism": "车体在静止状态提供支承，匹配桌板跨接到指定受力位置，运输容器换成轻物桌。",
+      "first_step": "先清空车面并在平地锁止，按桌板说明空载安装，轻压各角检查翘动。",
+      "observe": "桌板是否滑动、轮子是否移动、开合机构是否受压。",
+      "unknowns": [
+        "标题不提供卡扣结构与承重",
+        "不把普通松放木板当适配桌板，不坐人不放炉火",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1bvNfeQEUL"
+      ],
+      "tags": [
+        "露营车",
+        "桌板",
+        "露营",
+        "桌子",
+        "组合"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "camp-crate-side-table",
+      "title": "已有硬箱成为低矮的随手小几",
+      "category": "出门与露营",
+      "scene": "帐边想放一盏灯和几本书",
+      "resources": [
+        "结构完好的平顶硬质周转箱",
+        "能可靠扣合的原盖",
+        "平整干燥地面",
+        "轻物品"
+      ],
+      "mechanism": "箱盖提供平面、箱体承担轻载，储物与落物表面共用同一体积。",
+      "first_step": "先盖好空箱，用手检查盖子是否会弯陷或滑开，再放一件轻物。",
+      "observe": "盖面有无凹陷，开箱时是否需要先把东西移开。",
+      "unknowns": [
+        "不复刻视频未知改造结构",
+        "不是座椅，不放高温炉具或易倒热饮",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1wwV26vEKs"
+      ],
+      "tags": [
+        "周转箱",
+        "露营",
+        "边几",
+        "收纳",
+        "组合"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "tarp-shade-reading",
+      "title": "同一块天幕给阅读角留阴影",
+      "category": "出门与露营",
+      "scene": "野餐时想坐着看书而非一直晒屏幕",
+      "resources": [
+        "已有天幕及其匹配营柱绳钉",
+        "允许搭设的场地",
+        "合适天气",
+        "掌握原厂基本搭法的人"
+      ],
+      "mechanism": "天幕改变太阳光到座位的直达路径，阴影位置随时间变动，座位随阴影调整。",
+      "first_step": "先按已掌握的标准搭法固定，坐到计划位置检查当前阴影，不自行改未知绳结。",
+      "observe": "书页是否仍反光、阴影是否很快离开座位。",
+      "unknowns": [
+        "简介没给具体节点与受力步骤",
+        "风雨能力和锚固须依原厂资料，不能因搭起来就认定抗风",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1TC4y1s7s8"
+      ],
+      "tags": [
+        "天幕",
+        "阅读",
+        "野餐",
+        "遮阳",
+        "露营"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "tarp-privacy-edge",
+      "title": "用已支持的低侧边给野餐区挡一侧视线",
+      "category": "出门与露营",
+      "scene": "公共营地想留一点安静感",
+      "resources": [
+        "原厂允许调节侧边的天幕",
+        "完整适配固定件",
+        "不会阻碍通行的场地",
+        "无强风天气"
+      ],
+      "mechanism": "一侧降低形成视线遮挡，另一侧保留进出和通风；它是空间边界而非封闭帐篷。",
+      "first_step": "先核对已有搭法是否允许降低一侧，在不松开主锚固的前提下按原说明调整。",
+      "observe": "低边是否碰人、营绳是否进入通道。",
+      "unknowns": [
+        "未读原分享牛角式搭法，不提供仿制受力参数",
+        "不用于取暖炉周边或危险天气避难",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1SdYu68EoW"
+      ],
+      "tags": [
+        "天幕",
+        "野餐",
+        "空间",
+        "露营",
+        "遮挡"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "wardrobe-file-fold",
+      "title": "衣物竖着排，抽一件不用掀一摞",
+      "category": "收纳与整理",
+      "scene": "抽屉里只穿最上面几件",
+      "resources": [
+        "浅抽屉",
+        "适合折叠的普通衣物",
+        "已有可选分隔件"
+      ],
+      "mechanism": "衣物折成可并排的块，竖直展示边缘，把堆叠层变成一排可选项。",
+      "first_step": "先挑三件不易变形的T恤，用自己会的折法折成接近抽屉深度，竖排试取。",
+      "observe": "抽一件后剩余是否倒下，抽屉能否关闭。",
+      "unknowns": [
+        "未观看原作者折法，不能标为已学会KonMari步骤",
+        "易皱或需悬挂的材质另行处理",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1eK411W73o"
+      ],
+      "tags": [
+        "衣柜",
+        "抽屉",
+        "T恤",
+        "衣物",
+        "收纳"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "wardrobe-ready-outfit",
+      "title": "在挂衣区留出明天的一整套",
+      "category": "收纳与整理",
+      "scene": "早上总在衣柜里来回找",
+      "resources": [
+        "现有衣架与挂杆",
+        "已选好的普通衣服",
+        "一个可区分的空位"
+      ],
+      "mechanism": "把一套出门所需衣物空间邻近摆放，任务选择从早上移到前一天，减少跨区查找。",
+      "first_step": "今晚只挑明天一套，把上衣和外层相邻挂好，裤子按合适方式放在同一区。",
+      "observe": "早晨是否还缺关键件，搭配是否受天气影响。",
+      "unknowns": [
+        "挂杆承重与衣物适挂性需尊重",
+        "只是当前安排，不自动写成用户长期穿衣偏好",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1vkt9zhEaC"
+      ],
+      "tags": [
+        "衣柜",
+        "衣架",
+        "出门",
+        "衣物",
+        "准备"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "music-cd-listening-corner",
+      "title": "让CD和封面一起成为会听的桌面展陈",
+      "category": "音乐与声音",
+      "scene": "想重新听自己收藏的唱片",
+      "resources": [
+        "功能完好的现有CD机",
+        "原装或匹配音频输出",
+        "可立稳的唱片封面",
+        "干燥桌面"
+      ],
+      "mechanism": "声音从原CD机播放，封面与选曲过程同时可见，陈列增加选择和回忆线索，不必拆机。",
+      "first_step": "先放一张自己拥有的CD，封面单独立在不挡散热和机械开合的位置。",
+      "observe": "播放时是否震动、取盘是否碰到陈列物。",
+      "unknowns": [
+        "原视频是复杂机芯/音箱改装，此处明确改为保留原机的低门槛提案",
+        "不因原作者改装成功就认定纪念机可拆",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1ePzzBhEXs"
+      ],
+      "tags": [
+        "CD机",
+        "唱片",
+        "音乐",
+        "陈列",
+        "桌面"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "speaker-album-vote",
+      "title": "聚会每人用一张唱片封面提名下一首",
+      "category": "音乐与声音",
+      "scene": "想让音乐选择变成大家参与的小游戏",
+      "resources": [
+        "现有音箱和播放设备",
+        "有权播放的音乐",
+        "手机相册中的自制封面列表或已有唱片封面"
+      ],
+      "mechanism": "可见的封面让人先做选择再说明理由，轮流提名替代单人一直掌握歌单。",
+      "first_step": "先各选一张自己能合法播放的专辑封面，轮流讲一句为什么选它。",
+      "observe": "每个人是否都有轮次、歌曲切换是否打断谈话。",
+      "unknowns": [
+        "是编者派对机制，来源仅提示唱片与蓝牙音箱组合",
+        "不假定音箱支持多用户同时配对",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1aL411k7CG"
+      ],
+      "tags": [
+        "音箱",
+        "唱片",
+        "聚会",
+        "歌单",
+        "游戏"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "coffee-tasting-notes",
+      "title": "同一杯咖啡分三口记录温度变化的风味",
+      "category": "厨房与食物",
+      "scene": "想更理解自己已有的咖啡豆",
+      "resources": [
+        "按原机说明已做好的一杯咖啡",
+        "安全可饮温度",
+        "现有杯子",
+        "简单记录工具"
+      ],
+      "mechanism": "同一杯随冷却香气与入口感受可能改变，固定豆和做法减少变量，记录自己的口感而非追求标准答案。",
+      "first_step": "先等到自己能安全小口饮用，写下第一口的一个感受，再稍后回到同一杯比较。",
+      "observe": "酸甜苦、香气和口感是否变化，是否仅是预期影响。",
+      "unknowns": [
+        "不提供从标题猜出的萃取参数",
+        "个人品尝不是测量化学成分或咖啡品质认证",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1aM4m1R7BG"
+      ],
+      "tags": [
+        "咖啡机",
+        "咖啡",
+        "品尝",
+        "风味",
+        "记录"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "coffee-milk-stencil",
+      "title": "咖啡表面做一个可吃的符号",
+      "category": "厨房与食物",
+      "scene": "想给日常饮品一点个人标记",
+      "resources": [
+        "已做好的饮品",
+        "可食用撒粉且使用者不过敏",
+        "食品接触安全的现成模板",
+        "不烫手的操作面"
+      ],
+      "mechanism": "模板限制撒粉落点，在表面形成简单轮廓，用形状表达今天的心情。",
+      "first_step": "先在空盘上用食品模板试一个简单形状，确认撒粉可控后再对饮品试。",
+      "observe": "形状边缘是否散开、粉量是否影响口感。",
+      "unknowns": [
+        "与来源奶泡/拉花方向不同，此处是编者撒粉提案",
+        "不把打印纸或未知塑料直接接触热饮，不猜奶泡温度",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1uE411g7MJ"
+      ],
+      "tags": [
+        "咖啡机",
+        "饮品",
+        "模板",
+        "装饰",
+        "咖啡"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "rice-cooker-meal-staging",
+      "title": "用电饭煲预约前先做一份可核对的备料顺序",
+      "category": "厨房与食物",
+      "scene": "下班想少在厨房来回找材料",
+      "resources": [
+        "现有电饭煲",
+        "对应型号已支持的烹饪程序",
+        "一份自己熟悉且可靠的菜谱",
+        "合适容器"
+      ],
+      "mechanism": "把称量、清洗、装锅拆成可视的备料顺序，减少漏料；电饭煲只承担说明书允许的加热任务。",
+      "first_step": "先选一道已做过的菜，按真实菜谱把需要的材料放到台面，暂不开机。",
+      "observe": "是否有缺料，菜谱是否真的允许当前锅具和程序。",
+      "unknowns": [
+        "未取得原视频配方，不提供猜测的米水比或生肉预约时长",
+        "易腐食材不因有预约功能就适合长时间常温放置",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1j5DQBaEaz"
+      ],
+      "tags": [
+        "电饭煲",
+        "备料",
+        "晚饭",
+        "厨房",
+        "菜谱"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "air-fryer-breakfast-mise",
+      "title": "早餐分成冷备和热加工两小段",
+      "category": "厨房与食物",
+      "scene": "早上只想处理最后一步",
+      "resources": [
+        "现有空气炸锅",
+        "当前型号适用且已熟悉的可靠早餐菜谱",
+        "食品适用容器",
+        "正确冷藏条件"
+      ],
+      "mechanism": "先完成可安全冷备的部分，早上再按已知菜谱热加工，减少同一时刻的操作拥挤。",
+      "first_step": "选一道自己做过的早餐，标出哪些步骤必须现做，前一天只做菜谱允许的冷备。",
+      "observe": "早晨是否减少找料与清洗，热加工是否仍按菜谱完成。",
+      "unknowns": [
+        "视频标题不是食谱正文，不能编温度时间",
+        "不使用未知耐热容器，不让易腐食材在锅内过夜",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1CG411w74X"
+      ],
+      "tags": [
+        "空气炸锅",
+        "早餐",
+        "备料",
+        "厨房",
+        "流程"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "phone-plant-timelapse",
+      "title": "手机给一株植物留一段缓慢变化",
+      "category": "摄影与记录",
+      "scene": "想看见平时注意不到的新叶过程",
+      "resources": [
+        "手机已有延时功能",
+        "稳固支架",
+        "适当光线",
+        "一株可观察植物",
+        "不会淋湿设备的位置"
+      ],
+      "mechanism": "固定视角隔时取样把慢变化压缩成短片；标记盆与支架位置帮助重复构图。",
+      "first_step": "先对一片叶做很短测试，锁定构图并确认不会因浇水碰倒支架。",
+      "observe": "曝光是否跳动、叶子是否出框，设备温度与续航是否正常。",
+      "unknowns": [
+        "未看原视频设备设置，不指定间隔与拍摄天数",
+        "视频变化不等于诊断植物健康",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV13xxMzZE92"
+      ],
+      "tags": [
+        "手机",
+        "植物",
+        "延时",
+        "摄影",
+        "支架"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "phone-visible-pet-check",
+      "title": "旧手机做一次明示的宠物看护视角",
+      "category": "摄影与记录",
+      "scene": "短时间去另一房间想看宠物是否安稳",
+      "resources": [
+        "状态良好无鼓包的旧手机",
+        "可信的现成视频工具",
+        "稳定不易被宠物碰到的支架",
+        "知情同意的家庭环境"
+      ],
+      "mechanism": "固定摄像头把一个明确区域的实时画面传到另一端，让看护人少来回开门；只看必要区域。",
+      "first_step": "先在自己面前试连，镜头朝宠物活动区并排除门窗外与他人私人区域。",
+      "observe": "宠物能否碰倒或咬线，画面是否存在明显延迟。",
+      "unknowns": [
+        "元数据不证明任何App安全可用",
+        "不拆电池、不做隐蔽监控，不把断流解释成宠物安好",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1jjhj6sERo"
+      ],
+      "tags": [
+        "旧手机",
+        "宠物",
+        "摄像头",
+        "看护",
+        "支架"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "printer-owned-boardgame",
+      "title": "打印一份授权纸上桌游来试新机制",
+      "category": "游戏与活动",
+      "scene": "不想先买盒装游戏，想试一局",
+      "resources": [
+        "打印机",
+        "作者明确允许打印的PNP文件",
+        "现成轻质棋子或可临时确认的替代物",
+        "桌面"
+      ],
+      "mechanism": "把规则、地图和组件从数字文件变成可移动的实体信息，低成本体验一种确定游戏机制。",
+      "first_step": "先核对作者授权和组件清单，只打印规则及一张测试页检查尺寸。",
+      "observe": "文字是否可读，是否缺少规则要求的关键配件。",
+      "unknowns": [
+        "原视频元数据没有完整规则与印刷参数",
+        "不把任意商业卡牌扫描打印当获得授权",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1da411P7bK"
+      ],
+      "tags": [
+        "打印机",
+        "桌游",
+        "PNP",
+        "游戏",
+        "纸面"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "printer-memory-pairs",
+      "title": "自己的照片变成配对记忆牌",
+      "category": "游戏与活动",
+      "scene": "聚会想玩带一点共同话题的小桌游",
+      "resources": [
+        "打印机",
+        "本人有权使用且参与者同意展示的几张照片",
+        "不透明背面的卡纸或现有牌套需确认",
+        "桌面"
+      ],
+      "mechanism": "同图各两张倒扣，通过翻牌记位置；照片内容在翻开后提供聊天线索。",
+      "first_step": "先只选三张无敏感信息的照片，各印两份，检查背面无法看出内容。",
+      "observe": "两张是否容易匹配、背面是否泄露答案。",
+      "unknowns": [
+        "是编者自定玩法，不是源视频的卡牌规则",
+        "照片中的故事不自动属于每位参与者的亲历",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1dogYeuEVM"
+      ],
+      "tags": [
+        "打印机",
+        "照片",
+        "配对",
+        "记忆",
+        "桌游"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "printer-coop-story-cards",
+      "title": "几张自制词卡接成合作故事",
+      "category": "游戏与活动",
+      "scene": "想玩无需胜负的聚会小游戏",
+      "resources": [
+        "打印机或现有书写工具",
+        "参与者选定的普通词语",
+        "可打乱的轻质卡片",
+        "桌面"
+      ],
+      "mechanism": "随机抽到的词限制下一段叙述，轮流接续把个人联想串成共同创作。",
+      "first_step": "先用六个常见名词做六张字卡，每人抽一张接一句。",
+      "observe": "词是否太难接、是否有人不愿讲个人经历。",
+      "unknowns": [
+        "规则为编者提出，与原视频桌游不同",
+        "不把游戏虚构故事写入用户经历或长期偏好",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1tgAaeTEf3"
+      ],
+      "tags": [
+        "打印机",
+        "词卡",
+        "故事",
+        "合作",
+        "派对"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "fridge-basket-kits",
+      "title": "冰箱托篮按一顿饭组队",
+      "category": "厨房与食物",
+      "scene": "做饭要从多处取同一组材料",
+      "resources": [
+        "食品适用可清洗浅托篮",
+        "冰箱中可容纳且不挡风道的位置",
+        "同一储存条件的食材"
+      ],
+      "mechanism": "浅篮把同一顿的若干材料组成可整体取出的组，底层仍各自包装和分区。",
+      "first_step": "先选两样储存条件相同的材料放进一个浅篮，试取出并检查门是否关严。",
+      "observe": "篮子是否过重、是否让后排更难取。",
+      "unknowns": [
+        "不能为了成套把生肉和即食食品混放",
+        "抽拉结构与尺寸不从视频标题推断",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1GQHzzqECM"
+      ],
+      "tags": [
+        "冰箱",
+        "托篮",
+        "备料",
+        "抽拉",
+        "收纳"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "smart-plug-observe-cycle",
+      "title": "智能插座先当家电使用节奏的观察窗",
+      "category": "办公与设备",
+      "scene": "想了解一台非关键设备什么时候真正闲下来",
+      "resources": [
+        "已有合规带功率读数的智能插座",
+        "明确在额定范围内且允许此连接的非关键设备",
+        "正常可触达插头"
+      ],
+      "mechanism": "功率曲线提示运行与空闲的差异，先观察再决定是否值得自动化；不靠单个阈值直接断电。",
+      "first_step": "先只在厂商App看一次完整使用周期的功率，不添加自动开关规则。",
+      "observe": "待机和工作读数是否可区分、有无长时间延迟。",
+      "unknowns": [
+        "读数不是设备内部状态的完整证明",
+        "不用于冰箱、医疗设备或需要保温/冷却保护的负载自动断电",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV171421177B"
+      ],
+      "tags": [
+        "智能插座",
+        "功率",
+        "待机",
+        "观察",
+        "办公"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "ir-one-remote",
+      "title": "把常用的两个红外按键集中到一个入口",
+      "category": "办公与设备",
+      "scene": "电视与音箱遥控器总拿错",
+      "resources": [
+        "设备确实使用红外",
+        "已有兼容学习遥控器或红外发射器",
+        "原遥控器正常",
+        "可见的无遮挡路径"
+      ],
+      "mechanism": "学习器记录并重放按键信号，让一个入口承担少量高频指令；对需要双向状态的设备仍可能不同步。",
+      "first_step": "先只学习一个音量减键，近距离测试并核对没有触发别的设备。",
+      "observe": "是否需要特定角度、是否存在相同编码误控。",
+      "unknowns": [
+        "不是所有遥控都是红外",
+        "未读完整教程，空调状态码不能按普通单键随意迁移",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1eP411r7rN"
+      ],
+      "tags": [
+        "遥控器",
+        "电视",
+        "红外",
+        "音箱",
+        "集中控制"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "backpack-entry-pouch",
+      "title": "背包和桌面共用一只出门小袋",
+      "category": "出门与露营",
+      "scene": "换包时老漏耳机线或钥匙",
+      "resources": [
+        "已有背包",
+        "一只可取出的现成小袋",
+        "用户确认的少量出门必需品"
+      ],
+      "mechanism": "把跨场景常用物放在同一可转移容器，换包移动一个单元，桌面也有固定落点。",
+      "first_step": "先选三样每天确实带的东西放入已有小袋，试放进常用背包再取出。",
+      "observe": "是否容易过重、拿钥匙是否需要把整袋倒出。",
+      "unknowns": [
+        "不要求购买视频中的特殊背包",
+        "不把常用清单猜成用户已经拥有或必须随身携带",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1Lx411o7ZJ"
+      ],
+      "tags": [
+        "背包",
+        "耳机",
+        "钥匙",
+        "出门",
+        "收纳"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "camp-folding-table-flow",
+      "title": "折叠桌用展开顺序减少露营卸货往返",
+      "category": "出门与露营",
+      "scene": "到营地先想有一个不落地的整理面",
+      "resources": [
+        "结构完好且锁止明确的现成折叠桌",
+        "平整允许摆放的场地",
+        "轻质行李"
+      ],
+      "mechanism": "先立稳桌面，再把需要分组的小件暂放其上，地面运输物与洁净操作区分开。",
+      "first_step": "先空桌展开并确认锁止，轻推四角再放一件轻物，随后才卸其他小件。",
+      "observe": "铰链是否夹手、桌脚是否下陷或滑动。",
+      "unknowns": [
+        "元数据未给DIY结构与承重，不据此造承重桌",
+        "不把尚未锁定的半展开桌当支点",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1FX4y1w7zs"
+      ],
+      "tags": [
+        "折叠桌",
+        "露营",
+        "卸货",
+        "整理",
+        "流程"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "plant-watering-measure",
+      "title": "先用现有浇水系统做空盆接水检查",
+      "category": "园艺与阳台",
+      "scene": "已有自动浇水装置但不知每盆分到多少",
+      "resources": [
+        "已经合规装好的低压或原厂浇水系统",
+        "空盆或现有接水容器",
+        "可手动停止的水源",
+        "不怕湿的测试区"
+      ],
+      "mechanism": "各出水口同时间接水比较分配差异，先暴露堵塞和流量不均，再讨论植物需水。",
+      "first_step": "先把两个出水口放进各自空盆，运行一个可随时停止的短测试。",
+      "observe": "是否漏水、是否有某一路明显多或少。",
+      "unknowns": [
+        "不是原视频安装教程，不提供泵接线或浇水周期",
+        "接水量不等于植物需要量，先无人值守前观察",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1o64y1r7L4"
+      ],
+      "tags": [
+        "植物",
+        "浇水",
+        "花盆",
+        "阳台",
+        "自动化"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "plant-light-turn-journal",
+      "title": "花盆转向前后留一组同角度照片",
+      "category": "园艺与阳台",
+      "scene": "想知道植物朝光变化，不急着改环境",
+      "resources": [
+        "可安全移动的现有盆栽",
+        "手机",
+        "可重复的拍照位置",
+        "植物适宜环境"
+      ],
+      "mechanism": "固定观察位记录朝向，把一次转盆作为明确事件与后续照片分开，减少凭印象判断。",
+      "first_step": "先拍一张现状并记下朝窗方向，暂不改变浇水和其他条件。",
+      "observe": "后续叶片姿态是否变化、有无光线差导致的假象。",
+      "unknowns": [
+        "不是植物诊断或科学实验保证",
+        "不从延时成片推断自己的植物一定按相同速度生长",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1gS411A7CD"
+      ],
+      "tags": [
+        "植物",
+        "花盆",
+        "手机",
+        "摄影",
+        "观察"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "plush-story-token",
+      "title": "玩偶成为轮流讲故事的接力物",
+      "category": "游戏与活动",
+      "scene": "家庭聊天想让安静的人也有轮次",
+      "resources": [
+        "参与者愿意使用的现有玩偶",
+        "围坐空间",
+        "自愿参与的简单规则"
+      ],
+      "mechanism": "拿着玩偶的人拥有当前发言轮次，传递动作让轮换可见；玩偶承担社交提示而非麦克风。",
+      "first_step": "先约定每人可讲一句或选择跳过，再把玩偶交给愿意开始的人。",
+      "observe": "传递是否自然、是否有人觉得被强迫发言。",
+      "unknowns": [
+        "是编者不改硬件的玩法，原视频语音玩偶不证明此玩偶有电子能力",
+        "纪念玩偶不做拆改或抛掷",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1nNE4zzEWb"
+      ],
+      "tags": [
+        "玩偶",
+        "故事",
+        "家庭",
+        "聚会",
+        "轮流"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "plush-nfc-message",
+      "title": "玩偶旁的标签打开一段自己留下的语音",
+      "category": "音乐与声音",
+      "scene": "想把一段祝福和礼物放在一起",
+      "resources": [
+        "已有玩偶",
+        "另贴在礼物卡上的NFC标签或二维码",
+        "本人有权分享的语音",
+        "接收者能主动打开的入口"
+      ],
+      "mechanism": "标签只提供主动打开语音的入口，玩偶保留触觉和象征意义，故事访问由接收者决定。",
+      "first_step": "先把语音放到接收者可访问且权限清楚的位置，用测试标签或二维码从另一设备打开。",
+      "observe": "链接权限是否正确、对方是否需登录，是否愿意保留。",
+      "unknowns": [
+        "不是源视频的嵌入电路教程，不声称玩偶会自己说话",
+        "赠礼后不默认持续追踪或控制接收者",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1VEcbzoEhi"
+      ],
+      "tags": [
+        "玩偶",
+        "NFC",
+        "二维码",
+        "礼物",
+        "语音"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "frame-seasonal-curation",
+      "title": "电子相框按一个季节手工选图",
+      "category": "摄影与记录",
+      "scene": "想让旧照片被看见，但不希望系统替自己决定意义",
+      "resources": [
+        "已有电子相框或可作相框的平板",
+        "本人有权展示的少量照片",
+        "家人同意的展示位置"
+      ],
+      "mechanism": "少量主题照片轮播，让被动存档变成日常可见的布置；图组由人挑，解释不自动成为事实。",
+      "first_step": "先只选三张适合公共区域展示的照片，加载到现成相框的测试相册。",
+      "observe": "裁切是否丢人物、亮度与切换是否影响休息。",
+      "unknowns": [
+        "原视频InkTime含AI选图，这里明确采用手选的编者方案",
+        "收到故事不等于亲历，陌生人照片不默认为可展示",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1KczbBXEeC"
+      ],
+      "tags": [
+        "相框",
+        "平板",
+        "照片",
+        "季节",
+        "回忆"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "frame-before-after",
+      "title": "相框并排看物品整理前后的变化",
+      "category": "摄影与记录",
+      "scene": "想保留自己改造桌面的过程",
+      "resources": [
+        "相框或平板",
+        "同角度的本人照片",
+        "只含同意展示内容的区域"
+      ],
+      "mechanism": "相同视角的前后图让变化具体可见，帮助回看哪些摆法有效，而不是仅凭成品照记忆。",
+      "first_step": "先从固定位置拍现状，做一次小整理后回到同位置拍第二张，选并排布局。",
+      "observe": "视角差是否夸大效果，物品是否只是临时移出画面。",
+      "unknowns": [
+        "展示不等于验证长期使用改善",
+        "元数据不提供相框具体软件或电气安装方法",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV143411b7N6"
+      ],
+      "tags": [
+        "相框",
+        "平板",
+        "桌面",
+        "改造",
+        "照片"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "speaker-sound-guessing",
+      "title": "音箱播放自己录的生活声音，让大家猜来源",
+      "category": "游戏与活动",
+      "scene": "想来一局不盯屏幕的聚会游戏",
+      "resources": [
+        "音箱",
+        "本人录制且参与者愿意听的短声音",
+        "可手动播放的设备",
+        "安静舒适空间"
+      ],
+      "mechanism": "听觉线索从原场景分离，参与者根据音色和节奏猜来源，再揭示照片或答案。",
+      "first_step": "先用一段开门或倒水等无私人谈话的短录音测试音量，给一条宽泛提示。",
+      "observe": "声音是否太难区分、是否有人对声音不适。",
+      "unknowns": [
+        "规则是编者设计，不是音箱评测已验证玩法",
+        "不把听声辨位能力从游戏宣传推广到任何音箱",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1QGGV6REEp"
+      ],
+      "tags": [
+        "音箱",
+        "录音",
+        "听觉",
+        "猜谜",
+        "派对"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "speaker-silent-headphone-party",
+      "title": "同一首歌各自戴耳机，保留一起动的节奏",
+      "category": "游戏与活动",
+      "scene": "晚上想一起听歌又不想大声外放",
+      "resources": [
+        "每人自愿使用的耳机",
+        "大家都有权播放的同一首歌",
+        "各自可控的播放设备"
+      ],
+      "mechanism": "约定同一段开始时间和动作提示，让共同节奏来自协调而非大音箱；不假定蓝牙能一拖多。",
+      "first_step": "先只选一小段，大家在口头倒数后各自播放，观察是否需要重新同步。",
+      "observe": "延迟是否让动作无法对上、有人是否想退出。",
+      "unknowns": [
+        "此为编者协同播放玩法，来源仅有派对音箱方向",
+        "不承诺精确同步或长时安全音量，不借多人蓝牙能力背书",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1564y1P7k7"
+      ],
+      "tags": [
+        "耳机",
+        "音乐",
+        "派对",
+        "安静",
+        "游戏"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "tablet-teleprompter",
+      "title": "平板放在镜头附近，帮短口播记住顺序",
+      "category": "办公与设备",
+      "scene": "录视频时总低头看稿",
+      "resources": [
+        "平板可用文本展示或提词功能",
+        "现有相机或手机",
+        "稳定支架",
+        "自己写的短稿"
+      ],
+      "mechanism": "提示文字靠近镜头减少视线位移，大字与短段落帮助顺着说；平板是记忆提示面而非自动导演。",
+      "first_step": "先把稿件缩成三行关键词，平板放在镜头下方且不挡镜头，录十秒查看眼神。",
+      "observe": "阅读视线是否明显飘移，滚动速度是否自然。",
+      "unknowns": [
+        "标题不能证明当前iPad型号有同样内置功能",
+        "支架稳定和反光需核对，不悬夹不适配平板",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1n7x1eJE8f"
+      ],
+      "tags": [
+        "平板",
+        "提词",
+        "口播",
+        "录制",
+        "办公"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "label-maker-cable-ends",
+      "title": "同一条线两端贴配对标识",
+      "category": "收纳与整理",
+      "scene": "桌后线缆多，不知道哪一根能拔",
+      "resources": [
+        "已有标签机或现有标记材料",
+        "能识别两端的线缆",
+        "适合线材且可移除的标签"
+      ],
+      "mechanism": "两端相同编号建立可见对应，不依赖沿着整根线摸过去；标签表达用途而非额定能力。",
+      "first_step": "先在断开且确认归属的一根低压数据线上，两端贴同一个短代号再试追踪。",
+      "observe": "插头处是否仍有弯曲余量，标识是否会脱落。",
+      "unknowns": [
+        "原视频手帐方向仅启发标签迁移",
+        "不遮设备警示或散热孔，不凭猜测标错电源线",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV17EbP6mEzD"
+      ],
+      "tags": [
+        "标签机",
+        "线缆",
+        "电脑",
+        "收纳",
+        "配对"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "label-maker-parts-return",
+      "title": "拆装前给零件位置留可移除编号",
+      "category": "收纳与整理",
+      "scene": "家具或模型临时拆开，想装回原位",
+      "resources": [
+        "适合非关键结构的现有可移除标签",
+        "自己有权拆装的普通物品",
+        "手机记录",
+        "原厂装配说明"
+      ],
+      "mechanism": "对应编号和照片把拆前连接关系外显化，复装时有回查锚点，标签不代替说明书。",
+      "first_step": "先只在一处非承重可拆部件旁贴配对编号，拍照后再按说明拆卸。",
+      "observe": "标签是否会粘坏表面，编号是否在拆后仍能看见。",
+      "unknowns": [
+        "不用于纪念物或未经授权物品",
+        "标题不是结构教程，关键承重/电气部件不凭编号自行处理",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1bd4y1Y74p"
+      ],
+      "tags": [
+        "标签机",
+        "零件",
+        "装配",
+        "照片",
+        "收纳"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "cart-project-station",
+      "title": "小推车带着一个项目在家里移动",
+      "category": "收纳与整理",
+      "scene": "手作或办公需要临时换房间",
+      "resources": [
+        "结构完好可锁止的小推车",
+        "轻质常用工具与材料",
+        "平坦通道",
+        "现有浅托盘可选"
+      ],
+      "mechanism": "把同一项目的资源分层装在移动底座上，移动位置时保持项目边界，不重找一套工具。",
+      "first_step": "先空车沿计划路线走一次检查门槛，再只装一层轻物并测试驻车。",
+      "observe": "转弯时是否晃动、伸手取上层是否导致倾斜。",
+      "unknowns": [
+        "原简介提到文具数码配件，不证明所有推车载荷",
+        "不载人不堆高重物，充电前先停稳并检查散热",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1UuQwB1EwH"
+      ],
+      "tags": [
+        "小推车",
+        "文具",
+        "手作",
+        "移动",
+        "项目"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "cart-room-reset",
+      "title": "小推车做派对前的临时归位中转站",
+      "category": "收纳与整理",
+      "scene": "客厅要腾出桌面，但不想把东西塞乱",
+      "resources": [
+        "现有小推车或可移动浅箱",
+        "能明确辨认归属的托盘",
+        "通畅室内路线"
+      ],
+      "mechanism": "暂存按原区域分格，聚会后把各格沿原路线送回，移动不等于丢失位置关系。",
+      "first_step": "先选桌面一个区域，拍照并把其中轻物放入同一格，给格位写回哪儿。",
+      "observe": "复原是否容易，是否混入他人私人用品。",
+      "unknowns": [
+        "编者方案不等于原视频已演示结构",
+        "不把临时归位写成物品永久位置变化",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV134NgzVEP1"
+      ],
+      "tags": [
+        "小推车",
+        "客厅",
+        "派对",
+        "归位",
+        "收纳"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "folding-table-photo-stage",
+      "title": "折叠桌只在拍物品时展开成小影棚",
+      "category": "摄影与记录",
+      "scene": "想定期给收藏物拍照又不占长期桌面",
+      "resources": [
+        "已有稳固折叠桌",
+        "手机与现有灯",
+        "合适背景或干净墙面",
+        "轻物品"
+      ],
+      "mechanism": "可展开平面提供重复拍摄位置，用完收起，摄影从常驻占地变成临时场景。",
+      "first_step": "先空桌锁止，在桌脚与相机位置做可移除参照，拍一件轻物试景。",
+      "observe": "光照能否重复、桌面是否晃动导致模糊。",
+      "unknowns": [
+        "未取得源视频DIY铰链方法",
+        "不自行改结构或站上桌，不把轻桌当重器材支架",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1ra4y1E7Wn"
+      ],
+      "tags": [
+        "折叠桌",
+        "手机",
+        "摄影",
+        "收藏",
+        "空间"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "vacuum-dust-fabric",
+      "title": "吸尘器配合合适吸头清理沙发缝",
+      "category": "清洁与家务",
+      "scene": "整张沙发不脏，缝里却积了碎屑",
+      "resources": [
+        "现有吸尘器",
+        "说明书允许的缝隙吸头",
+        "明确可吸尘的沙发材质",
+        "可见干燥碎屑"
+      ],
+      "mechanism": "细吸头把气流作用集中到狭窄接触区，先松动可取出的干屑再沿缝移动，减少整面重复处理。",
+      "first_step": "先拔出可手取的小物和线头，在隐蔽短缝用低档试吸。",
+      "observe": "面料是否被吸住或拉毛、碎屑有没有真正移除。",
+      "unknowns": [
+        "视频标题不证明任意吸头适用",
+        "不吸液体、细粉或发热物；按当前机器说明处理过滤器",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV18u4m1M7H2"
+      ],
+      "tags": [
+        "吸尘器",
+        "沙发",
+        "缝隙",
+        "清洁",
+        "吸头"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "phone-fixed-review",
+      "title": "手机给运动或乐器练习留一个固定视角",
+      "category": "摄影与记录",
+      "scene": "想看清自己练习时一个动作的变化",
+      "resources": [
+        "手机",
+        "稳固支架",
+        "本人愿意录制的短练习",
+        "合适空地或座位"
+      ],
+      "mechanism": "同一机位记录重复动作，让人回放对照自己关注的一个细节，不要求实时识别或诊断。",
+      "first_step": "先选一个无需危险动作的短练习，把手机放在能拍到关键部位的位置录一轮。",
+      "observe": "关键部位是否出框、支架是否在运动路径上。",
+      "unknowns": [
+        "来源旧手机摄像方向只作线索",
+        "视频不替代教练或医疗判断，不录未同意的人",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1bnYF6vEhg"
+      ],
+      "tags": [
+        "手机",
+        "支架",
+        "练习",
+        "视频",
+        "记录"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "tv-app-shortlist",
+      "title": "电视首页只保留自己常用的几个入口",
+      "category": "电视与大屏",
+      "scene": "家人总在一堆App里找同一个功能",
+      "resources": [
+        "自己的电视",
+        "系统原生允许的收藏/排序设置",
+        "已知能恢复的操作"
+      ],
+      "mechanism": "把高频入口前置并保留易识别名称，减少从开机到目标功能的选择次数；先用原生设置。",
+      "first_step": "先拍下当前首页，在系统支持的收藏区只加一个最常用App并测试返回首页。",
+      "observe": "家人能否找到、遥控器返回键是否仍符合习惯。",
+      "unknowns": [
+        "不把视频广告中的兼容所有安卓当事实",
+        "不删系统组件、不默认装第三方桌面，当前型号可恢复性需核对",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1pTHP66EVs"
+      ],
+      "tags": [
+        "电视",
+        "桌面",
+        "App",
+        "入口",
+        "个性化"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "tablet-cooking-cards",
+      "title": "平板把熟悉菜谱变成一屏一步",
+      "category": "厨房与食物",
+      "scene": "做饭时不想湿手不停滑长网页",
+      "resources": [
+        "已有平板与稳定干燥支架",
+        "自己有权用且已核对的菜谱",
+        "不会靠近灶火水池的位置"
+      ],
+      "mechanism": "把真实步骤分成大字卡，先显示当前一步，减少操作时阅读密度；不是从食谱标题生成步骤。",
+      "first_step": "先复制一份自己做过的菜谱，仅把第一步放大成一屏，摆到不挡操作的位置。",
+      "observe": "文字是否足够大、屏幕常亮是否发热，手是否仍需频繁触碰。",
+      "unknowns": [
+        "原视频只提供平板副屏方向，此处为编者厨房应用",
+        "不让平板承受蒸汽油溅，不改菜谱熟度参数",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1PRV16gEQ8"
+      ],
+      "tags": [
+        "平板",
+        "菜谱",
+        "厨房",
+        "步骤卡",
+        "阅读"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "ereader-pack-manuals",
+      "title": "电纸书收一个出门能离线看的小手册夹",
+      "category": "学习与阅读",
+      "scene": "露营或旅行时不想临场联网找说明",
+      "resources": [
+        "已有阅读器",
+        "允许导入的文件格式",
+        "本人有权使用且适配当前设备版本的说明书",
+        "可选已有文件传输方式"
+      ],
+      "mechanism": "把关键资料提前离线放到同一入口，阅读器承担低干扰查阅；资料仍保留型号、版本与来源。",
+      "first_step": "先导入一份当前露营装备的真实PDF，在断网状态打开目录与关键图页。",
+      "observe": "小字图示是否可辨、是否能快速定位目标页。",
+      "unknowns": [
+        "视频是电纸书线索而非当前阅读器兼容证明",
+        "旧版说明书和屏幕重排不能代替当前器材要求",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1DHnc6zEnz"
+      ],
+      "tags": [
+        "阅读器",
+        "电纸书",
+        "露营",
+        "手册",
+        "离线"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "speaker-distance-dialogue",
+      "title": "把音箱的位置当成对话清晰度的可调变量",
+      "category": "音乐与声音",
+      "scene": "看电视时听不清人声，先不买设备",
+      "resources": [
+        "现有独立音箱或可移动声源",
+        "自己熟悉的清楚对话片段",
+        "稳固可移动位置",
+        "低音量环境"
+      ],
+      "mechanism": "减少遮挡并改变扬声器与听者的相对位置，可能改善直达声和反射的比例；先只改一个位置。",
+      "first_step": "保持音量不变，把音箱从被挡位置移到稳定无遮挡处，听同一句对话比较。",
+      "observe": "清晰度是否改善、桌面是否出现共振。",
+      "unknowns": [
+        "不是原评测已测试的具体摆位",
+        "电视内置扬声器不可强拆，不给未知音箱编指向与声压参数",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1QGGV6REEp"
+      ],
+      "tags": [
+        "音箱",
+        "电视",
+        "对话",
+        "摆位",
+        "听感"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "camp-inventory-photo",
+      "title": "出门装备摊一张照片，回来按图归位",
+      "category": "出门与露营",
+      "scene": "露营回来不知道哪件还在车上",
+      "resources": [
+        "现有装备",
+        "手机",
+        "能暂时摊放且不影响他人的干燥地面",
+        "已知的收纳位置"
+      ],
+      "mechanism": "出门前的组合照片成为当前任务清单，回来逐件对照归位，减少只靠记忆核数。",
+      "first_step": "先只摆这次真正带的一组装备拍照，排除身份证地址等私人信息。",
+      "observe": "小件是否被大件挡住，照片是否能对应回来的实际数量。",
+      "unknowns": [
+        "照片只证明拍摄时摆在这里，不证明已装车或已归还",
+        "不要求把临时小零件逐件建物品档案",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1BX4y1n7am"
+      ],
+      "tags": [
+        "露营",
+        "手机",
+        "清单",
+        "归位",
+        "出门"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "tv-photo-reveal-game",
+      "title": "大屏局部照片猜物品",
+      "category": "游戏与活动",
+      "scene": "想让家中熟悉的物品变成一次轻松猜谜",
+      "resources": [
+        "电脑或手机能投到大屏",
+        "自己拍摄的物品照片",
+        "可手动放大缩小的相册",
+        "参与者愿意展示的普通物品"
+      ],
+      "mechanism": "先显示照片局部、逐步缩小揭示全貌，图像信息逐步释放形成猜测与修正。",
+      "first_step": "先拍一件无私人信息的日常物，放大到只见一个细节，投到屏幕让大家猜一次。",
+      "observe": "细节是否仍有辨识线索、缩小时是否误切到私人相册。",
+      "unknowns": [
+        "编者自定规则，与源视频的电子游戏推荐不同",
+        "不把猜测答案写成物品身份事实",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1XS42197At"
+      ],
+      "tags": [
+        "电视",
+        "投影仪",
+        "照片",
+        "猜谜",
+        "聚会"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "printer-room-footprints",
+      "title": "纸样先替家具试占地",
+      "category": "收纳与整理",
+      "scene": "买或移动家具前想知道门和抽屉还能不能开",
+      "resources": [
+        "现有测量工具",
+        "待摆物品真实尺寸",
+        "打印机或现有大纸",
+        "可移除标记材料",
+        "实际房间"
+      ],
+      "mechanism": "等比例平面轮廓占住地面面积，让人的行走与门扇开合可以在移动重物前演练；高度另查。",
+      "first_step": "先量一件现有小家具的长宽，在纸上画出真实占地，摆到计划位置并开关附近门。",
+      "observe": "走道是否够用，门扇与抽屉的活动范围是否被漏算。",
+      "unknowns": [
+        "是编者纸样方法，不是Inkscape已测量房间",
+        "平面不反映高度、倾倒和承重，尺寸须来自实测或准确原文",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "inkscape"
+      ],
+      "tags": [
+        "打印机",
+        "家具",
+        "房间",
+        "布局",
+        "纸样",
+        "尺寸"
+      ],
+      "physical_validation": false,
+      "evidence_level": "primary_document_mechanism_editorial_application",
+      "source_basis": "官方正文支持所述软件机制；此处生活场景、组合和第一步为Codex编者迁移建议。"
+    },
+    {
+      "key": "phone-stop-motion",
+      "title": "手机和现有小摆件拍一段定格动画",
+      "category": "摄影与记录",
+      "scene": "想用几分钟做一个能分享的小片段",
+      "resources": [
+        "手机能连续拍照",
+        "稳定机位",
+        "不易碎且允许移动的小摆件",
+        "能按顺序播放照片的现成工具"
+      ],
+      "mechanism": "每拍一张只移动一点，连续播放时相邻静态姿态形成运动感，物品从陈列物变成角色。",
+      "first_step": "先固定手机，拍一张后把小摆件轻移一点再拍，做少量照片检查顺序。",
+      "observe": "相机是否晃动、手是否入镜，光线变化是否跳闪。",
+      "unknowns": [
+        "编者定格方案，与来源植物延时不同，不声称看过其动作",
+        "不使用易碎纪念品或让摆件靠桌沿",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV13xxMzZE92"
+      ],
+      "tags": [
+        "手机",
+        "摆件",
+        "动画",
+        "定格",
+        "摄影",
+        "创作"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "label-maker-borrow-card",
+      "title": "借出的配件用可移除标签保留归还线索",
+      "category": "收纳与整理",
+      "scene": "朋友借了几根相似线缆，想减少混淆",
+      "resources": [
+        "自己有权出借的物品",
+        "现成可移除标签",
+        "双方认可的简短代号",
+        "现有物间借用/任务记录可选"
+      ],
+      "mechanism": "物品上的短代号和既有记录对应，区分相似件；标签提供识别线索，不自动断言已交付或已归还。",
+      "first_step": "先和借用者确认只写一个非敏感代号，在不损伤表面的位置试贴，拍一张交接前照片。",
+      "observe": "标签是否容易脱落、是否暴露姓名电话，是否妨碍使用。",
+      "unknowns": [
+        "元数据只提供标签方向，交接结果以实际确认记录为准",
+        "不另建私人借用数据库，不把贴好标签当完成借出",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1bd4y1Y74p"
+      ],
+      "tags": [
+        "标签机",
+        "线缆",
+        "借用",
+        "归还",
+        "识别"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    },
+    {
+      "key": "camera-object-turntable",
+      "title": "固定手机，转动物品拍一组四面记录",
+      "category": "摄影与记录",
+      "scene": "收藏或转赠前想让别人看清背面与接口",
+      "resources": [
+        "手机",
+        "稳定支架",
+        "能安全手动转动且有权记录的物品",
+        "平整桌面"
+      ],
+      "mechanism": "相机和光线位置固定，人工逐面转动物品，系列照片保留不同接触面，比一张正面照更完整。",
+      "first_step": "先固定手机与灯，拍正面后暂停，手动转到侧面再拍，保持物品稳放。",
+      "observe": "接口和损伤是否清楚，反光是否盖住细节。",
+      "unknowns": [
+        "是编者记录方法，不是来源已验证的产品摄影步骤",
+        "照片覆盖不等于功能检测，易碎物不为拍照冒险倒置",
+        "尚无用户实物试用结果；不证明当前型号适配"
+      ],
+      "reference_keys": [
+        "BV1sz4y1171N"
+      ],
+      "tags": [
+        "手机",
+        "相机",
+        "物品",
+        "记录",
+        "转赠",
+        "摄影"
+      ],
+      "physical_validation": false,
+      "evidence_level": "metadata_direction_editorial_proposal",
+      "source_basis": "原页仅提供标题/简介所示的灵感方向；机制解释、资源条件和第一步均为Codex编者提出的待试设计，不是原作者教程。"
+    }
+  ],
+  "retired_entries": [
+    {
+      "key": "fridge-visible-leftovers",
+      "title": "冰箱里用一层暂存区接住剩菜",
+      "reason": "独立审查：与fridge-use-first同为可见分区加日期优先处理，机制重复；不计入有效独立玩法。",
+      "expected_content_sha256": "6d9594d89577587402fb3119a393ba7219f409420510c660865bc3870996ed45",
+      "original_reference_keys": [
+        "BV1XM4y1t7p1"
+      ]
+    },
+    {
+      "key": "vacuum-find-small-part",
+      "title": "掉落小零件先用吸尘器的可见收集思路定位",
+      "reason": "独立审查：第一步主要使用灯寻物，吸尘器只是可选且来源是一般吸头评测，资源适配与来源支持过弱；撤回而不凑数。",
+      "expected_content_sha256": "2fdb70946b3f9d3b61f0fddba9a671168494751b5349a17b30925d763b71c754",
+      "original_reference_keys": [
+        "BV18u4m1M7H2"
+      ]
+    }
+  ],
+  "review_note": "独立审查后撤回2条，保留102条活跃候选；不将旧104初稿全部宣称为不同机制。原SQL正文保留供历史回查，退役来源不参加新的ReMe检索。"
+}

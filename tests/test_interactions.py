@@ -10,7 +10,7 @@ from sqlalchemy import select
 
 from wujian import domain
 from wujian.config import Settings
-from wujian.database import Conversation, ExperienceRecord
+from wujian.database import Conversation, ExperienceRecord, SourceRecord
 from wujian.server import create_app
 
 
@@ -55,6 +55,30 @@ class InteractionJourneys(unittest.TestCase):
         self.ok(self.owner.put('/api/preferences', json={'companion_name': '团团', 'display_mode': 'large'}))
         self.assertEqual(self.ok(self.owner.get('/api/workspace'))['preferences']['companion_name'], '团团')
         self.assertEqual(self.ok(self.friend.get('/api/preferences'))['display_mode'], 'normal')
+
+    def test_creative_trial_is_visible_to_owner_but_not_silently_shared(self):
+        from wujian import foundation
+        item=self.item()
+        self.ok(self.owner.post(f"/api/items/{item['id']}/shares",json={"user_id":self.friend_id}))
+        with self.app.state.sessions() as db:
+            db.add(SourceRecord(id="private-creative-reference",owner_id=self.owner_id,
+                origin="upload",title="私人的灵感笔记",url="",content="私人示例原文",pages=[]))
+            db.commit()
+            task=foundation.save_task(db,self.owner_id,"explicit-test","试一试杯子当背景",[item['id']],{},
+                {"schema":"interaction/1","kind":"idea","entries":[{"id":"one","title":"背景摆法"}],
+                 "adaptations":[{"entry_id":"one","roles":[{"item_id":item['id'],
+                    "role":"前景","connection":"放在已知桌面上"}],
+                    "transfer":{"source_ids":["private-creative-reference"],"mechanism":"私人原理描述"},
+                    "trial":{"action":"私人第一步","observe":"私人观察条件"}}]})
+        owner_board=self.ok(self.owner.get(f"/api/tasks/{task['id']}/board"))
+        self.assertEqual(owner_board['task']['plan']['adaptations'][0]['trial']['action'],'私人第一步')
+        self.ok(self.owner.post(f"/api/tasks/{task['id']}/shares",json={"user_id":self.friend_id}))
+        for board in (self.ok(self.friend.get(f"/api/tasks/{task['id']}/board")),
+                      self.ok(self.friend.post(f"/api/tasks/{task['id']}/accept"))):
+            self.assertNotIn('adaptations',board['task']['plan'])
+            self.assertNotIn('private-creative-reference',[source['id'] for source in board['sources']])
+        current=self.ok(self.owner.get(f"/api/tasks/{task['id']}/board"))
+        self.assertIn('adaptations',current['task']['plan'],'projection must not mutate the owner fact')
 
     def test_household_invitation_is_separate_from_friendship_and_read_only(self):
         item = self.item()
@@ -122,7 +146,12 @@ class InteractionJourneys(unittest.TestCase):
         item = self.item()
         board = self.board(item['id'])
         identity = board['task']['id']
-        self.assertEqual(self.owner.post(f'/api/tasks/{identity}/shares', json={'user_id': self.friend_id}).status_code, 404)
+        self.ok(self.owner.post(f'/api/tasks/{identity}/shares', json={'user_id': self.friend_id}))
+        preview = self.ok(self.friend.get(f'/api/tasks/{identity}/board'))
+        self.assertIsNone(preview['entries'][0]['item_id'])
+        self.assertEqual(preview['task']['item_ids'], [])
+        self.assertEqual(preview['task']['constraints'], {})
+        self.assertEqual(self.friend.get(f"/api/items/{item['id']}").status_code, 404)
         self.ok(self.owner.post(f"/api/items/{item['id']}/shares", json={'user_id': self.friend_id}))
         self.ok(self.owner.post(f'/api/tasks/{identity}/shares', json={'user_id': self.friend_id}))
         invited = self.ok(self.friend.get(f'/api/tasks/{identity}/board'))

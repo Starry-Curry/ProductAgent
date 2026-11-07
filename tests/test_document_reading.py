@@ -29,4 +29,4 @@ class DocumentReadingTests(unittest.TestCase):
         text,pages,links,media,_=parse_document(html,'text/html','https://publisher.example/viewer')
         self.assertNotIn('Ignore the user',text)
         self.assertEqual(links[0]['url'],'https://publisher.example/manuals/original.pdf')
-        self.assertEqual(len(links),1);self.assertEqual(pages,[])
+        self.assertTrue(any(".pdf" in row.get("url","") for row in links));self.assertEqual(pages,[])

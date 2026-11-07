@@ -23,26 +23,6 @@
         }
       }
     },
-    "/api/local-ai": {
-      "get": {
-        "summary": "Local Ai Status",
-        "operationId": "local_ai_status_api_local_ai_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": true,
-                  "type": "object",
-                  "title": "Response Local Ai Status Api Local Ai Get"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/auth/register": {
       "post": {
         "summary": "Register",
@@ -1174,16 +1154,13 @@
     },
     "/api/creative-explorations": {
       "post": {
-        "tags": [
-          "Creative exploration"
-        ],
         "summary": "Creative Exploration",
         "operationId": "creative_exploration_api_creative_explorations_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreativeRequest"
+                "$ref": "#/components/schemas/CreativeExploration"
               }
             }
           },
@@ -1658,6 +1635,23 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/GiftAccept"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -2662,6 +2656,119 @@
         }
       }
     },
+    "/api/tasks/{task_id}/entries": {
+      "post": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Add Entry",
+        "operationId": "add_entry_api_tasks__task_id__entries_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskEntryCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/entries/{entry_id}/details": {
+      "patch": {
+        "tags": [
+          "Continuing tasks"
+        ],
+        "summary": "Edit Entry",
+        "operationId": "edit_entry_api_tasks__task_id__entries__entry_id__details_patch",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          },
+          {
+            "name": "entry_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Entry Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskEntryDetails"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskBoardView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/tasks/{task_id}/entries/{entry_id}/assignee": {
       "patch": {
         "tags": [
@@ -3065,6 +3172,56 @@
       }
     },
     "/api/wishes/{wish_id}": {
+      "put": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Change Wish",
+        "operationId": "change_wish_api_wishes__wish_id__put",
+        "parameters": [
+          {
+            "name": "wish_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Wish Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WishChange"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WishView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Friends"
@@ -3107,6 +3264,792 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/action": {
+      "get": {
+        "tags": [
+          "Butler actions"
+        ],
+        "summary": "Get Action",
+        "operationId": "get_action_api_tasks__task_id__action_get",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/action/confirm": {
+      "post": {
+        "tags": [
+          "Butler actions"
+        ],
+        "summary": "Confirm Action",
+        "operationId": "confirm_action_api_tasks__task_id__action_confirm_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionDecision"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tasks/{task_id}/action/cancel": {
+      "post": {
+        "tags": [
+          "Butler actions"
+        ],
+        "summary": "Cancel Action",
+        "operationId": "cancel_action_api_tasks__task_id__action_cancel_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionDecision"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/avatar-image": {
+      "post": {
+        "summary": "Create Image",
+        "operationId": "create_image_api_items__item_id__avatar_image_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AvatarImageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AvatarImageResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/earbuds/devices": {
+      "get": {
+        "summary": "Inspect",
+        "operationId": "inspect_api_earbuds_devices_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds": {
+      "get": {
+        "summary": "Status",
+        "operationId": "status_api_items__item_id__earbuds_get",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds/console": {
+      "post": {
+        "summary": "Create",
+        "operationId": "create_api_items__item_id__earbuds_console_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsoleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds/read": {
+      "post": {
+        "summary": "Read",
+        "operationId": "read_api_items__item_id__earbuds_read_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds/noise-mode": {
+      "post": {
+        "summary": "Set Mode",
+        "operationId": "set_mode_api_items__item_id__earbuds_noise_mode_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoiseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds/volume/read": {
+      "post": {
+        "summary": "Read Volume",
+        "operationId": "read_volume_api_items__item_id__earbuds_volume_read_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/earbuds/volume": {
+      "post": {
+        "summary": "Set Volume",
+        "operationId": "set_volume_api_items__item_id__earbuds_volume_post",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VolumeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EarbudResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workbenches/{task_id}": {
+      "get": {
+        "summary": "Get Workbench",
+        "operationId": "get_workbench_api_workbenches__task_id__get",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkbenchView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}/workbenches": {
+      "get": {
+        "summary": "List Workbenches",
+        "operationId": "list_workbenches_api_items__item_id__workbenches_get",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkbenchView"
+                  },
+                  "title": "Response List Workbenches Api Items  Item Id  Workbenches Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workbenches/{task_id}/device": {
+      "post": {
+        "summary": "Device Operation",
+        "operationId": "device_operation_api_workbenches__task_id__device_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/community/bilibili/references/search": {
+      "post": {
+        "tags": [
+          "Community references"
+        ],
+        "summary": "Search",
+        "operationId": "search_api_community_bilibili_references_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferenceSearch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/community/bilibili/references/read": {
+      "post": {
+        "tags": [
+          "Community references"
+        ],
+        "summary": "Read",
+        "operationId": "read_api_community_bilibili_references_read_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferenceRead"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/experiences/{experience_id}/photo-matches": {
+      "post": {
+        "tags": [
+          "Experiences"
+        ],
+        "summary": "Match",
+        "operationId": "match_api_experiences__experience_id__photo_matches_post",
+        "parameters": [
+          {
+            "name": "experience_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Experience Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhotoMatchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhotoMatchResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/community/bilibili/session": {
+      "get": {
+        "summary": "Community Status",
+        "operationId": "community_status_api_community_bilibili_session_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunitySessionView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Community Start",
+        "operationId": "community_start_api_community_bilibili_session_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunitySessionView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Community Close",
+        "operationId": "community_close_api_community_bilibili_session_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommunitySessionView"
                 }
               }
             }
@@ -3273,12 +4216,126 @@
   },
   "components": {
     "schemas": {
+      "ActionDecision": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "ActionDecision"
+      },
+      "ActionView": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "details": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Details"
+          },
+          "result_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id",
+          "version",
+          "kind",
+          "status",
+          "title",
+          "details"
+        ],
+        "title": "ActionView"
+      },
+      "AvatarImageRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "AvatarImageRequest"
+      },
+      "AvatarImageResult": {
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "title": "Asset Id"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model"
+          }
+        },
+        "type": "object",
+        "required": [
+          "asset_id",
+          "model"
+        ],
+        "title": "AvatarImageResult"
+      },
       "AvatarSpec": {
         "properties": {
           "enabled": {
             "type": "boolean",
             "title": "Enabled",
             "default": false
+          },
+          "form": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "keepsake",
+              "dango_leaf",
+              "dango_hat",
+              "dango_bow",
+              "cup",
+              "stone",
+              "flower",
+              "cat"
+            ],
+            "title": "Form",
+            "default": "auto"
           },
           "nickname": {
             "type": "string",
@@ -3297,6 +4354,31 @@
             "pattern": "^#[0-9a-fA-F]{6}$",
             "title": "Color",
             "default": "#d49c62"
+          },
+          "image_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Id"
+          },
+          "growth_enabled": {
+            "type": "boolean",
+            "title": "Growth Enabled",
+            "default": true
+          },
+          "growth_dismissed_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Growth Dismissed Ids"
           }
         },
         "additionalProperties": false,
@@ -3310,6 +4392,22 @@
             "title": "Enabled",
             "default": false
           },
+          "form": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "keepsake",
+              "dango_leaf",
+              "dango_hat",
+              "dango_bow",
+              "cup",
+              "stone",
+              "flower",
+              "cat"
+            ],
+            "title": "Form",
+            "default": "auto"
+          },
           "nickname": {
             "type": "string",
             "maxLength": 80,
@@ -3328,6 +4426,31 @@
             "title": "Color",
             "default": "#d49c62"
           },
+          "image_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Id"
+          },
+          "growth_enabled": {
+            "type": "boolean",
+            "title": "Growth Enabled",
+            "default": true
+          },
+          "growth_dismissed_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Growth Dismissed Ids"
+          },
           "gift_from": {
             "type": "string",
             "title": "Gift From",
@@ -3337,6 +4460,13 @@
             "type": "string",
             "title": "Gift Message",
             "default": ""
+          },
+          "gift_memories": {
+            "items": {
+              "$ref": "#/components/schemas/GiftMemoryView"
+            },
+            "type": "array",
+            "title": "Gift Memories"
           },
           "growth_note": {
             "type": "string",
@@ -3355,6 +4485,20 @@
             },
             "type": "array",
             "title": "Growth Evidence"
+          },
+          "growth_traits": {
+            "items": {
+              "$ref": "#/components/schemas/GrowthTrait"
+            },
+            "type": "array",
+            "title": "Growth Traits"
+          },
+          "growth_stopped_traits": {
+            "items": {
+              "$ref": "#/components/schemas/GrowthStoppedTrait"
+            },
+            "type": "array",
+            "title": "Growth Stopped Traits"
           }
         },
         "additionalProperties": false,
@@ -3473,6 +4617,81 @@
         "type": "object",
         "title": "ChatRequest"
       },
+      "CommunitySessionView": {
+        "properties": {
+          "failure_phase": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Phase"
+          },
+          "failure_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Reason"
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "connected": {
+            "type": "boolean",
+            "title": "Connected"
+          },
+          "remaining_seconds": {
+            "type": "integer",
+            "title": "Remaining Seconds"
+          },
+          "qr_data_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Qr Data Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "stage",
+          "connected",
+          "remaining_seconds"
+        ],
+        "title": "CommunitySessionView"
+      },
+      "ConsoleRequest": {
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ConsoleRequest"
+      },
       "ConversationView": {
         "properties": {
           "id": {
@@ -3509,14 +4728,26 @@
         ],
         "title": "ConversationView"
       },
-      "CreativeRequest": {
+      "CreativeExploration": {
         "properties": {
+          "goal": {
+            "type": "string",
+            "maxLength": 6000,
+            "minLength": 1,
+            "title": "Goal"
+          },
+          "constraints": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Constraints",
+            "default": ""
+          },
           "item_ids": {
             "items": {
               "type": "string"
             },
             "type": "array",
-            "maxItems": 12,
+            "maxItems": 50,
             "title": "Item Ids"
           },
           "photo_ids": {
@@ -3526,18 +4757,6 @@
             "type": "array",
             "maxItems": 4,
             "title": "Photo Ids"
-          },
-          "goal": {
-            "type": "string",
-            "maxLength": 8000,
-            "minLength": 1,
-            "title": "Goal"
-          },
-          "constraints": {
-            "type": "string",
-            "maxLength": 2000,
-            "title": "Constraints",
-            "default": ""
           }
         },
         "additionalProperties": false,
@@ -3545,7 +4764,7 @@
         "required": [
           "goal"
         ],
-        "title": "CreativeRequest"
+        "title": "CreativeExploration"
       },
       "DeviceBind": {
         "properties": {
@@ -3586,6 +4805,31 @@
           "request"
         ],
         "title": "DeviceProposal"
+      },
+      "DeviceRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "op": {
+            "type": "string",
+            "title": "Op"
+          },
+          "args": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Args"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "op"
+        ],
+        "title": "DeviceRequest"
       },
       "DeviceStatusView": {
         "properties": {
@@ -3686,6 +4930,109 @@
         ],
         "title": "DiagramRequest"
       },
+      "EarbudResult": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "default": ""
+          },
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          },
+          "target_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Id"
+          },
+          "console_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Console Url"
+          },
+          "observed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed At"
+          },
+          "observation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Id"
+          },
+          "devices": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Devices"
+          },
+          "state": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "State"
+          },
+          "available": {
+            "type": "boolean",
+            "title": "Available",
+            "default": false
+          },
+          "physical_effect_verified": {
+            "type": "boolean",
+            "title": "Physical Effect Verified",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "EarbudResult"
+      },
       "EntryContext": {
         "properties": {
           "intent": {
@@ -3728,8 +5075,8 @@
           "text": {
             "type": "string",
             "maxLength": 20000,
-            "minLength": 1,
-            "title": "Text"
+            "title": "Text",
+            "default": ""
           },
           "item_ids": {
             "items": {
@@ -3748,14 +5095,32 @@
             "title": "Photo Ids"
           },
           "occurred_on": {
-            "type": "string",
-            "format": "date",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Occurred On"
           },
           "allow_ai": {
             "type": "boolean",
             "title": "Allow Ai",
             "default": false
+          },
+          "household_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Household Id"
           },
           "expected_version": {
             "type": "integer",
@@ -3767,7 +5132,6 @@
         "type": "object",
         "required": [
           "title",
-          "text",
           "expected_version"
         ],
         "title": "ExperienceChange"
@@ -3783,8 +5147,8 @@
           "text": {
             "type": "string",
             "maxLength": 20000,
-            "minLength": 1,
-            "title": "Text"
+            "title": "Text",
+            "default": ""
           },
           "item_ids": {
             "items": {
@@ -3803,21 +5167,38 @@
             "title": "Photo Ids"
           },
           "occurred_on": {
-            "type": "string",
-            "format": "date",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Occurred On"
           },
           "allow_ai": {
             "type": "boolean",
             "title": "Allow Ai",
             "default": false
+          },
+          "household_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Household Id"
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
-          "title",
-          "text"
+          "title"
         ],
         "title": "ExperienceCreate"
       },
@@ -3832,8 +5213,8 @@
           "text": {
             "type": "string",
             "maxLength": 20000,
-            "minLength": 1,
-            "title": "Text"
+            "title": "Text",
+            "default": ""
           },
           "item_ids": {
             "items": {
@@ -3850,14 +5231,32 @@
             "title": "Photo Ids"
           },
           "occurred_on": {
-            "type": "string",
-            "format": "date",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Occurred On"
           },
           "allow_ai": {
             "type": "boolean",
             "title": "Allow Ai",
             "default": false
+          },
+          "household_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Household Id"
           },
           "id": {
             "type": "string",
@@ -3909,7 +5308,6 @@
         "type": "object",
         "required": [
           "title",
-          "text",
           "item_ids",
           "photo_ids",
           "occurred_on",
@@ -4007,6 +5405,23 @@
         ],
         "title": "FriendView"
       },
+      "GiftAccept": {
+        "properties": {
+          "wake_avatar": {
+            "type": "boolean",
+            "title": "Wake Avatar",
+            "default": false
+          },
+          "allow_story_ai": {
+            "type": "boolean",
+            "title": "Allow Story Ai",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GiftAccept"
+      },
       "GiftCreate": {
         "properties": {
           "item_id": {
@@ -4033,6 +5448,14 @@
           },
           "avatar": {
             "$ref": "#/components/schemas/AvatarSpec"
+          },
+          "surprises": {
+            "items": {
+              "$ref": "#/components/schemas/GiftSurprise"
+            },
+            "type": "array",
+            "maxItems": 6,
+            "title": "Surprises"
           }
         },
         "additionalProperties": false,
@@ -4060,6 +5483,41 @@
           "action"
         ],
         "title": "GiftDecision"
+      },
+      "GiftMemoryView": {
+        "properties": {
+          "experience_id": {
+            "type": "string",
+            "title": "Experience Id"
+          },
+          "hint": {
+            "type": "string",
+            "title": "Hint"
+          },
+          "trigger_words": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Trigger Words"
+          },
+          "unlocked": {
+            "type": "boolean",
+            "title": "Unlocked",
+            "default": false
+          },
+          "chat_allowed": {
+            "type": "boolean",
+            "title": "Chat Allowed",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "experience_id",
+          "hint"
+        ],
+        "title": "GiftMemoryView"
       },
       "GiftSnapshot": {
         "properties": {
@@ -4096,6 +5554,24 @@
             },
             "type": "array",
             "title": "Public Source Ids"
+          },
+          "photo_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Id"
+          },
+          "surprises": {
+            "items": {
+              "$ref": "#/components/schemas/GiftSurprise"
+            },
+            "type": "array",
+            "title": "Surprises"
           }
         },
         "type": "object",
@@ -4108,6 +5584,35 @@
           "sender_name"
         ],
         "title": "GiftSnapshot"
+      },
+      "GiftSurprise": {
+        "properties": {
+          "experience_id": {
+            "type": "string",
+            "title": "Experience Id"
+          },
+          "hint": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Hint"
+          },
+          "trigger_words": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Trigger Words"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "experience_id",
+          "hint"
+        ],
+        "title": "GiftSurprise"
       },
       "GiftView": {
         "properties": {
@@ -4330,6 +5835,153 @@
         ],
         "title": "GroundingView"
       },
+      "GrowthEvidence": {
+        "properties": {
+          "message_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message Id"
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Quote",
+            "default": ""
+          },
+          "experience_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Experience Id"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "lineage_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 160
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lineage Id",
+            "description": "Original source identity stamped by the authoritative writer, never supplied by the model",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GrowthEvidence"
+      },
+      "GrowthStoppedTrait": {
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "pace",
+              "humor",
+              "support",
+              "relationship"
+            ],
+            "title": "Dimension"
+          },
+          "behavior": {
+            "type": "string",
+            "maxLength": 600,
+            "minLength": 1,
+            "title": "Behavior"
+          },
+          "context": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Context"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dimension",
+          "behavior",
+          "context"
+        ],
+        "title": "GrowthStoppedTrait",
+        "description": "A local expression control, with no private story or evidence identities."
+      },
+      "GrowthTrait": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "pace",
+              "humor",
+              "support",
+              "relationship"
+            ],
+            "title": "Dimension"
+          },
+          "behavior": {
+            "type": "string",
+            "maxLength": 600,
+            "minLength": 1,
+            "title": "Behavior"
+          },
+          "context": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Context"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/GrowthEvidence"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Evidence"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "dimension",
+          "behavior",
+          "context",
+          "evidence"
+        ],
+        "title": "GrowthTrait"
+      },
       "GuidanceDetails": {
         "properties": {
           "kind": {
@@ -4342,7 +5994,6 @@
               "contact_support"
             ],
             "title": "Kind",
-            "description": "缺少适用操作依据时用observe/identify/verify核对实物；已知型号的operate必须有匹配原文或用户实际报告，不能把操作改标general。",
             "default": "operate"
           },
           "basis": {
@@ -4353,7 +6004,7 @@
               "user_report"
             ],
             "title": "Basis",
-            "description": "general用于通用观察；document需当前型号适用原文及连续引句；user_report需本轮实际报告原话。型号操作不能用general绕过依据检查。",
+            "description": "通用建议用general；已核验型号原文用document；不因没有手册而拒绝初步帮助。",
             "default": "general"
           },
           "instruction": {
@@ -5053,6 +6704,176 @@
         ],
         "title": "MemoryView"
       },
+      "NoiseRequest": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "off",
+              "light",
+              "balanced"
+            ],
+            "title": "Mode"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "mode"
+        ],
+        "title": "NoiseRequest"
+      },
+      "PhotoMatchCandidate": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "photo_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Photo Ids"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "same_instance",
+              "possible"
+            ],
+            "title": "Verdict"
+          },
+          "evidence_kind": {
+            "type": "string",
+            "enum": [
+              "distinctive_detail",
+              "visible_identity",
+              "category_only"
+            ],
+            "title": "Evidence Kind"
+          },
+          "reference_detail": {
+            "type": "string",
+            "maxLength": 600,
+            "title": "Reference Detail"
+          },
+          "observed_detail": {
+            "type": "string",
+            "maxLength": 600,
+            "title": "Observed Detail"
+          },
+          "explanation": {
+            "type": "string",
+            "maxLength": 800,
+            "title": "Explanation"
+          },
+          "ambiguous_with": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 24,
+            "title": "Ambiguous With"
+          },
+          "item_name": {
+            "type": "string",
+            "title": "Item Name"
+          },
+          "auto_linked": {
+            "type": "boolean",
+            "title": "Auto Linked",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "item_id",
+          "photo_ids",
+          "verdict",
+          "evidence_kind",
+          "reference_detail",
+          "observed_detail",
+          "explanation",
+          "item_name"
+        ],
+        "title": "PhotoMatchCandidate"
+      },
+      "PhotoMatchRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "apply_confident": {
+            "type": "boolean",
+            "title": "Apply Confident",
+            "default": true
+          },
+          "exclude_item_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 2000,
+            "title": "Exclude Item Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "PhotoMatchRequest"
+      },
+      "PhotoMatchResult": {
+        "properties": {
+          "experience": {
+            "$ref": "#/components/schemas/ExperienceView"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/PhotoMatchCandidate"
+            },
+            "type": "array",
+            "title": "Candidates"
+          },
+          "examined_items": {
+            "type": "integer",
+            "title": "Examined Items"
+          },
+          "examined_item_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Examined Item Ids"
+          },
+          "remaining_items": {
+            "type": "integer",
+            "title": "Remaining Items"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "experience",
+          "candidates",
+          "examined_items",
+          "examined_item_ids",
+          "remaining_items",
+          "note"
+        ],
+        "title": "PhotoMatchResult"
+      },
       "Preferences": {
         "properties": {
           "companion_name": {
@@ -5126,6 +6947,56 @@
         "additionalProperties": false,
         "type": "object",
         "title": "ProductSpec"
+      },
+      "ReferenceRead": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "Url"
+          },
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "title": "ReferenceRead"
+      },
+      "ReferenceSearch": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Query"
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "default": 5
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "title": "ReferenceSearch"
       },
       "Register": {
         "properties": {
@@ -5640,7 +7511,6 @@
               "unchanged"
             ],
             "title": "State",
-            "description": "新建议必须pending。用户本轮明确报告做过才可ready；找不到用not_found，做过没变化用unchanged，并在guidance.observed_quote保存当前原话。",
             "default": "pending"
           },
           "assignee_id": {
@@ -5709,6 +7579,119 @@
           "expected_version"
         ],
         "title": "TaskEntryAssignment"
+      },
+      "TaskEntryCreate": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          },
+          "group": {
+            "type": "string",
+            "enum": [
+              "owned",
+              "buy",
+              "borrow",
+              "confirm",
+              "step"
+            ],
+            "title": "Group",
+            "default": "owned"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Note",
+            "default": ""
+          },
+          "assignee_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assignee Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "title"
+        ],
+        "title": "TaskEntryCreate"
+      },
+      "TaskEntryDetails": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          },
+          "group": {
+            "type": "string",
+            "enum": [
+              "owned",
+              "buy",
+              "borrow",
+              "confirm",
+              "step"
+            ],
+            "title": "Group",
+            "default": "owned"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Note",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "title"
+        ],
+        "title": "TaskEntryDetails"
       },
       "TaskEntryFeedback": {
         "properties": {
@@ -5969,6 +7952,68 @@
         ],
         "title": "ValidationError"
       },
+      "VolumeRequest": {
+        "properties": {
+          "volume": {
+            "type": "number",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Volume"
+          },
+          "endpoint_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Endpoint Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "volume",
+          "endpoint_id"
+        ],
+        "title": "VolumeRequest"
+      },
+      "WishChange": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1600,
+            "title": "Note",
+            "default": ""
+          },
+          "url": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Url",
+            "default": ""
+          },
+          "visible_to_friends": {
+            "type": "boolean",
+            "title": "Visible To Friends",
+            "default": false
+          },
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "expected_version"
+        ],
+        "title": "WishChange"
+      },
       "WishCreate": {
         "properties": {
           "title": {
@@ -6049,6 +8094,109 @@
           "version"
         ],
         "title": "WishView"
+      },
+      "WorkbenchSource": {
+        "properties": {
+          "html": {
+            "type": "string",
+            "maxLength": 80000,
+            "title": "Html",
+            "default": ""
+          },
+          "css": {
+            "type": "string",
+            "maxLength": 50000,
+            "title": "Css",
+            "default": ""
+          },
+          "javascript": {
+            "type": "string",
+            "maxLength": 80000,
+            "title": "Javascript",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "WorkbenchSource"
+      },
+      "WorkbenchView": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "published": {
+            "type": "boolean",
+            "title": "Published"
+          },
+          "source": {
+            "$ref": "#/components/schemas/WorkbenchSource"
+          },
+          "source_sha256": {
+            "type": "string",
+            "title": "Source Sha256"
+          },
+          "source_history": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Source History"
+          },
+          "document_html": {
+            "type": "string",
+            "title": "Document Html"
+          },
+          "checks": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checks"
+          },
+          "bridge": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Bridge"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id",
+          "item_id",
+          "version",
+          "title",
+          "published",
+          "source",
+          "source_sha256",
+          "document_html",
+          "bridge",
+          "url"
+        ],
+        "title": "WorkbenchView"
       },
       "WorkspaceView": {
         "properties": {

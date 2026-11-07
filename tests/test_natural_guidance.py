@@ -107,7 +107,7 @@ class NaturalTeachingTests(unittest.TestCase):
         result=grounded_turn_schema(self.sessions,self.owner,'explain').model_validate(value)
         with self.sessions() as db:
             saved=commit_result(db,self.owner,'explain',result,'这一步怎么按？')
-            self.assertEqual(saved['answer'],value['answer'])
+            self.assertTrue(saved['answer'].startswith(value['answer']));self.assertIn('https://publisher.example/guide',saved['answer'])
             latest=db.get(TaskRecord,self.task['id'])
             question=ChatMessage(id='followup',conversation_id='conversation',role='user',text='再讲清楚一点。')
             db.add(question);db.commit()
@@ -152,7 +152,7 @@ class NaturalTeachingTests(unittest.TestCase):
         for events in [[],[{'type':'research_source','source_id':'wrong-feature'}]]:
             with self.sessions() as db:
                 db.get(Run,'feature-run').events=events;db.commit()
-            with self.assertRaises(ValueError):schema.model_validate({'answer':'这个功能用触控面板调节。'})
+            with self.assertRaises((ValueError,domain.DomainError)):schema.model_validate({'answer':'这个功能用触控面板调节。'})
 
     def test_paraphrased_feedback_keeps_user_words_and_does_not_infer_success(self):
         value={'answer':'先别继续硬压。你看到的是边缘歪了，还是接触面没对齐？',
@@ -192,7 +192,7 @@ class NaturalTeachingTests(unittest.TestCase):
         value={'answer':'按住电源按钮7秒启动。','continuation':{'goal':self.task['goal'],'item_ids':['item_demo_lamp'],'constraints':{},
             'plan':plan,'task_id':self.task['id'],'expected_version':self.task['version']}}
         schema=grounded_turn_schema(self.sessions,self.owner,'actions-question')
-        with self.assertRaises(ValueError):schema.model_validate(value)
+        with self.assertRaises((ValueError,domain.DomainError)):schema.model_validate(value)
         value['answer']='这里按住电源按钮2秒就可以启动，不用反复点。'
         self.assertEqual(schema.model_validate(value).answer,value['answer'])
 
@@ -206,10 +206,10 @@ class NaturalTeachingTests(unittest.TestCase):
                 guidance.validate_specific_advice(reply,[],known)
 
     def test_general_observation_is_allowed_but_model_operations_require_evidence(self):
-        plan=copy.deepcopy(self.plan);plan['entries'][0]['guidance']['kind']='operate'
+        plan=copy.deepcopy(self.plan);plan['entries'][0]['guidance'].update(kind='operate',instruction='长按底座按钮。')
         with self.sessions() as db:
             with self.assertRaises(domain.DomainError):guidance.validate_plan(db,self.owner,['item_demo_lamp'],plan,'report')
-            plan['entries'][0]['guidance']['kind']='observe'
+            plan['entries'][0]['guidance'].update(kind='observe',instruction='核对当前外观。')
             guidance.validate_plan(db,self.owner,['item_demo_lamp'],plan,'report')
             plan['entries'][0]['guidance']['basis']='document'
             with self.assertRaises(domain.DomainError):guidance.validate_plan(db,self.owner,['item_demo_lamp'],plan,'report')

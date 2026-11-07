@@ -16,7 +16,7 @@ def wants_steps(text):
     # paraphrases through TurnResult.assistance_mode, without a classifier call.
     if re.search(r'不要.{0,8}(分步|一步步|步骤)|不用.{0,6}(带|教)|只想了解', text):
         return False
-    return bool(re.search(r'一步[一步]*|分步骤?|逐步|带我.{0,8}(做|用|操作)|教我.{0,8}(用|操作)', text))
+    return bool(re.search(r'一步(?:一步|步)|分步骤?|逐步|带我.{0,8}(做|用|操作)|教我.{0,8}(用|操作)', text))
 
 
 def research_requested(text):
@@ -28,7 +28,7 @@ def no_search(text):
 
 
 def negative_step_feedback(text):
-    return bool(re.search(r'没找到|找不到|没看懂|看不懂|没反应|没有反应|没变化|没有变化|(?:不要|别|先不)跳',text))
+    return bool(re.search(r'没找到|找不到|没看懂|看不懂|没反应|没有反应|没变化|没有变化|没连上|没有连上|连不上|未连接|(?:不要|别|先不)跳',text))
 
 
 def bind_task(db, user_id, item_ids, entry, *, detach=False):
@@ -38,6 +38,7 @@ def bind_task(db, user_id, item_ids, entry, *, detach=False):
         return entry
     from .interactions import task_access
     task, _ = task_access(db, user_id, identity)
+    if entry.get('intent')=='persona' or task.plan.get('kind')!='guidance':return entry
     if item_ids and not set(item_ids).issubset(task.item_ids):
         if detach:
             entry['task_id'] = None
@@ -191,9 +192,9 @@ def preparation_turn(context, question):
     from .turns import TurnResult
     focused=context.get('focused_items', [])
     active=context.get('active_task')
-    if len(focused)!=1 or not (negative_step_feedback(question) if active else wants_steps(question)):
+    if len(focused)!=1 or not (negative_step_feedback(question) if active else wants_steps(question) or negative_step_feedback(question)):
         return None
-    item=focused[0]
+    item={**focused[0],'id':focused[0].get('id') or focused[0].get('item_id')}
     if active:
         if active['plan'].get('kind')!='guidance' or active['plan'].get('guidance',{}).get('lesson'):
             return None

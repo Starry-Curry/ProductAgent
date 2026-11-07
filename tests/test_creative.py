@@ -24,6 +24,22 @@ class CreativeModel(ChatModelBase):
         self.formatter = OpenAIChatFormatter()
         self.calls, self.research, self.clarification = 0, research, clarification
 
+    def source_ids(self,messages):
+        found=[]
+        def visit(value):
+            if hasattr(value,'model_dump'):return visit(value.model_dump())
+            if isinstance(value,list):
+                for part in value:visit(part)
+            elif isinstance(value,dict):
+                if isinstance(value.get('source_id'),str):found.append(value['source_id'])
+                for part in value.values():visit(part)
+            elif isinstance(value,str):
+                try:decoded=json.loads(value)
+                except (ValueError,TypeError):return
+                if isinstance(decoded,(dict,list)):visit(decoded)
+        visit(messages)
+        return list(dict.fromkeys(found))[-1:]
+
     async def _call_api(self, model_name, messages, tools=None, tool_choice=None, **kwargs):
         self.calls += 1
         if self.research and self.calls == 1:
@@ -37,7 +53,8 @@ class CreativeModel(ChatModelBase):
                     'constraints':{'no_permanent_change':True}, 'plan':{'schema':'interaction/1','kind':'idea',
                     'entries':[{'id':'trial','title':'先在可擦除的表面试画','group':'step','state':'pending'}]},
                     'task_id':None,'expected_version':None,'status':'exploring','feedback_quote':'','outcome':'unknown'},
-                'learning':{'knowledge_updates':[],'memory_updates':[]}, 'story_refs':[]}
+                'learning':{'knowledge_updates':[],'memory_updates':[]}, 'story_refs':[],
+                'source_refs':self.source_ids(messages)}
         return ChatResponse(content=[ToolCallBlock(id=f'creative-{self.calls}',name=name,input=json.dumps(args))],is_last=True,
             usage=ChatUsage(input_tokens=10,output_tokens=4,time=0))
 

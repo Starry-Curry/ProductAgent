@@ -86,8 +86,12 @@ def remove_member(db, user_id, household_id, other_id):
     if other_id != user_id and house.creator_id != user_id:
         raise domain.DomainError("只有家庭创建者能移除其他成员", 403)
     row = domain.require(db.get(HouseholdMember, (household_id, other_id)))
+    affected = list(db.scalars(select(HouseholdMember.user_id).where(
+        HouseholdMember.household_id == household_id)))
     db.delete(row)
-    domain.invalidate_context(db, [other_id], stop_running=True)
+    # Leaving also withdraws that author's old household wall records. Reset
+    # remaining members who could otherwise retain them in a running answer.
+    domain.invalidate_context(db, affected, stop_running=True)
     db.commit()
     return {"status": "removed"}
 
@@ -120,11 +124,15 @@ def update_presentation(db, user_id, item_id, payload):
 
 
 def change_experience(db, user_id, identity, payload):
+    from .family_memory import experience_readers, validate_family_scope
     row = domain.require(db.get(ExperienceRecord, identity))
     if row.creator_id != user_id:
         raise domain.DomainError("没有找到这段回忆", 404)
     if row.origin_id and (payload.text != row.text or payload.title != row.title):
         raise domain.DomainError("收到的原故事保留作者原文，可以另记属于你的新经历")
+    affected = experience_readers(db, row)
+    household_id = payload.household_id if "household_id" in payload.model_fields_set else row.household_id
+    validate_family_scope(db, user_id, household_id, payload.item_ids)
     labels = {}
     for item_id in dict.fromkeys(payload.item_ids):
         try:
@@ -135,24 +143,37 @@ def change_experience(db, user_id, identity, payload):
             labels[item_id] = row.item_labels.get(item_id, "曾经关联的物品")
     for photo in payload.photo_ids:
         domain.own_asset(db, user_id, photo)
+    provenance = dict(row.provenance or {})
+    if "photo_associations" in provenance:
+        # Editing a relation/photo is a real correction, not merely a hidden
+        # card. Do not keep rejected visual links in later Agent context.
+        kept = {key: value for key, value in provenance["photo_associations"].items()
+                if key in labels and isinstance(value, dict) and value.get("photo_ids")
+                and set(value["photo_ids"]).issubset(payload.photo_ids)}
+        if kept:
+            provenance["photo_associations"] = kept
+        else:
+            provenance.pop("photo_associations", None)
     changed = db.execute(update(ExperienceRecord).where(ExperienceRecord.id == identity,
         ExperienceRecord.creator_id == user_id, ExperienceRecord.version == payload.expected_version).values(
         title=payload.title, text=payload.text, item_ids=list(labels), item_labels=labels,
-        photo_ids=payload.photo_ids, occurred_on=payload.occurred_on.isoformat(), allow_ai=payload.allow_ai,
-        version=ExperienceRecord.version + 1))
+        photo_ids=payload.photo_ids, occurred_on=payload.occurred_on.isoformat() if payload.occurred_on else None, allow_ai=payload.allow_ai,
+        provenance=provenance, household_id=household_id, version=ExperienceRecord.version + 1))
     if changed.rowcount != 1:
         raise domain.DomainError("这段回忆已更新，草稿仍保留，请核对后再保存", 409)
-    domain.invalidate_context(db, [user_id], stop_running=True)
+    affected.update(experience_readers(db, db.get(ExperienceRecord, identity)))
+    domain.invalidate_context(db, affected, stop_running=True)
     db.commit()
     db.expire_all()
     return domain.experience_view(db.get(ExperienceRecord, identity))
 
 
 def delete_experience(db, user_id, identity, version):
+    from .family_memory import experience_readers
     row = domain.require(db.get(ExperienceRecord, identity))
     if row.creator_id != user_id:
         raise domain.DomainError("没有找到这段回忆", 404)
-    recipients = list(db.scalars(select(ExperienceShare.user_id).where(ExperienceShare.experience_id == identity)))
+    recipients = experience_readers(db, row)
     changed = db.execute(delete(ExperienceRecord).where(ExperienceRecord.id == identity,
         ExperienceRecord.creator_id == user_id, ExperienceRecord.version == version))
     if changed.rowcount != 1:
@@ -179,6 +200,11 @@ def share_experience(db, user_id, identity, recipient_id, revoke=False):
 
 
 def reminder_visible(db, user_id, reminder):
+    if reminder.household_id:
+        membership = db.get(HouseholdMember, (reminder.household_id, user_id))
+        return bool(membership and membership.status == "active" and
+                    (not reminder.item_id or db.get(HouseholdItem,
+                        (reminder.household_id, reminder.item_id)) is not None))
     if user_id in {reminder.creator_id, reminder.assignee_id}:
         if reminder.item_id:
             try:
@@ -186,10 +212,6 @@ def reminder_visible(db, user_id, reminder):
             except domain.DomainError:
                 return False
         return True
-    if reminder.household_id:
-        membership = db.get(HouseholdMember, (reminder.household_id, user_id))
-        return bool(membership and membership.status == "active" and
-                    (not reminder.item_id or domain.household_access(db, user_id, reminder.item_id)))
     return False
 
 
@@ -229,10 +251,25 @@ def task_access(db, user_id, task_id, writing=False):
         if not participant or (writing and participant.status != "active"):
             raise domain.DomainError("没有找到或无权处理这项事情", 404)
         access = participant.status
-    if access != "owner":
+    if access != "owner" and not _shared_checklist(row):
         for identity in row.item_ids:
             domain.accessible_item(db, user_id, identity)
     return row, access
+
+
+def _shared_checklist(row):
+    return row.plan.get("schema") == "interaction/1" and row.plan.get("kind") == "checklist"
+
+
+def _readable_task_items(db, user_id, item_ids):
+    result = []
+    for identity in item_ids:
+        try:
+            domain.accessible_item(db, user_id, identity)
+            result.append(identity)
+        except domain.DomainError:
+            pass
+    return result
 
 
 def task_for_actor(db, user_id, task_id):
@@ -240,25 +277,25 @@ def task_for_actor(db, user_id, task_id):
     value = task_view(row)
     if access != "owner":
         # The invited summary never contains the owner's chat, personal constraints or feedback.
-        value = {**value, "constraints": {}, "feedback": []}
-        if value["plan"].get("guidance"):
-            value["plan"] = {**value["plan"], "guidance": {
-                key: val for key, val in value["plan"]["guidance"].items() if key != "observations"}}
-        if value["plan"].get("entries"):
-            value["plan"] = {**value["plan"], "entries": [{**entry, "guidance":
-                {**entry["guidance"], "observed_quote": "", "observed_message_id": None}
-                if entry.get("guidance") else None} for entry in value["plan"]["entries"]]}
+        # Only the visible interaction summary is shared, not private internal
+        # reasoning or future extra plan fields hidden from the owner's preview.
+        value = {**value, "constraints": {}, "feedback": [],
+                 "plan": {key: field for key, field in value["plan"].items()
+                          if value["plan"].get("schema") != "interaction/1" or key in {"schema", "kind", "entries"}}}
+        if _shared_checklist(row):
+            readable = set(_readable_task_items(db, user_id, row.item_ids))
+            value["item_ids"] = [identity for identity in row.item_ids if identity in readable]
+            value["plan"]["entries"] = [{**entry,
+                "item_id": entry.get("item_id") if entry.get("item_id") in readable else None}
+                for entry in value["plan"].get("entries", [])]
     return value
 
 
 def board(db, user_id, task_id):
     row, access = task_access(db, user_id, task_id)
-    plan = row.plan or {}
+    projected = task_for_actor(db, user_id, task_id)
+    plan = projected["plan"] or {}
     entries = [TaskEntry.model_validate(entry).model_dump() for entry in plan.get("entries", [])] if plan.get("schema") == "interaction/1" else []
-    if access != "owner":
-        for entry in entries:
-            if entry.get("guidance"):
-                entry["guidance"] = {**entry["guidance"], "observed_quote": "", "observed_message_id": None}
     participants = [{**domain.user_view(db.get(User, member.user_id)), "status": member.status}
         for member in db.scalars(select(TaskParticipant).where(TaskParticipant.task_id == task_id))]
     source_message = db.get(ChatMessage, row.source_message_id)
@@ -268,21 +305,6 @@ def board(db, user_id, task_id):
             if conversation.entry_context.get("task_id") == task_id), None)
     from .source_access import readable_source
     sources = {}
-    for entry in entries:
-        details = entry.get("guidance") or {}
-        active_source = not plan.get('guidance',{}).get('lesson') or entry['id']==plan['guidance'].get('active_step_id')
-        readable = []
-        for evidence in details.get("evidence", []):
-            try:
-                source = readable_source(db, user_id, evidence["source_id"])
-                if active_source:
-                    sources[source.id] = {"id": source.id, "title": source.title, "url": source.url,
-                        "quote": evidence["quote"], "page": evidence.get("page")}
-                readable.append(evidence)
-            except domain.DomainError:
-                pass
-        if details:
-            entry["guidance"] = {**details, "evidence": readable}
     for item_id in row.item_ids:
         try:
             claims = foundation.known_claims(db, user_id, item_id)
@@ -296,7 +318,6 @@ def board(db, user_id, task_id):
                         "quote": claim.get("source_quote", ""), "item_id": item_id}
                 except domain.DomainError:
                     pass
-    task_value = task_for_actor(db, user_id, task_id)
     if plan.get('guidance',{}).get('lesson') and row.item_ids:
         item=domain.accessible_item(db,user_id,row.item_ids[0])
         original_id=item.state.get('teaching',{}).get('manual_source_id')
@@ -306,39 +327,11 @@ def board(db, user_id, task_id):
             step=step_definition(row)
             sources[original.id]={'id':original.id,'title':original.title,
                 'url':'/api/assets/'+original.asset_id if original.asset_id else original.url,
-                'quote':f"当前操作可核对原始 PDF 第 {step['manual_pdf_page']} 页；上方导览为改写，不是原文。" if step else '官方原始 PDF，保留页图以供核验。'}
-    if task_value['plan'].get('visualizations'):
-        from .guidance import step_signature
-        signatures={entry['id']:step_signature(entry) for entry in entries}
-        task_value['plan']={**task_value['plan'],'visualizations':{
-            key:value for key,value in task_value['plan']['visualizations'].items()
-            if signatures.get(key)==value.get('step_signature')}}
-    return {"task": task_value, "kind": plan.get("kind", "legacy") if plan.get("schema") == "interaction/1" else "legacy",
+                'quote':f"当前操作可核对原始 PDF 第 {step['manual_pdf_page']} 页；上方导览为改写，不是原文。" if step and step.get('manual_pdf_page') else '官方原始 PDF；补充核对是一般观察建议。'}
+    return {"task": projected, "kind": plan.get("kind", "legacy") if plan.get("schema") == "interaction/1" else "legacy",
         "entries": entries, "completed_count": sum(entry["state"] == "ready" for entry in entries),
         "total_count": len(entries), "conversation_id": conversation_id, "sources": list(sources.values()),
         "access": access, "participants": participants}
-
-
-def resume_task(db, user_id, task_id):
-    """One stable per-actor conversation, shared by HTTP, teaching and demos."""
-    import hashlib
-    from sqlalchemy.exc import IntegrityError
-    value = board(db, user_id, task_id)
-    entry = {"task_id": task_id, "intent": "guidance" if value["kind"] == "guidance" else "planning"}
-    if value["conversation_id"]:
-        return {"conversation_id": value["conversation_id"], "entry_context": entry}
-    identity = "task_" + hashlib.sha256(f"{user_id}\0{task_id}".encode()).hexdigest()[:40]
-    row = db.get(Conversation, identity)
-    if row is None:
-        row = Conversation(id=identity, user_id=user_id, title=value["task"]["goal"][:35],
-            item_ids=value["task"]["item_ids"], entry_context=entry)
-        db.add(row)
-        try:
-            db.commit()
-        except IntegrityError:
-            db.rollback()
-            row = domain.require(db.get(Conversation, identity))
-    return {"conversation_id": row.id, "entry_context": entry}
 
 
 def create_board(db, user_id, payload):
@@ -356,10 +349,24 @@ def create_board(db, user_id, payload):
     return board(db, user_id, task["id"])
 
 
+def validate_entry_ready(db, user_id, entry):
+    """The same current resource boundary for UI and Agent progress reports."""
+    if entry.get("item_id"):
+        item = domain.accessible_item(db, user_id, entry["item_id"])
+        # A diagnostic action can be completed on an unavailable device.
+        if entry.get("group", "owned") != "step" and (
+            item.archived
+            or item.state.get("availability") == "unavailable"
+            or item.state.get("presentation", {}).get("attention") in {"paused", "lost", "lent"}
+        ):
+            raise domain.DomainError("这件物品目前不可用，请先调整物品或方案", 409)
+
+
 def update_entry(db, user_id, task_id, entry_id, payload):
+    task,_ = task_access(db,user_id,task_id,writing=True)
+    if task.plan.get("guidance",{}).get("lesson"):
+        raise domain.DomainError("请在当前教学步骤中报告实际结果",409)
     row, access = task_access(db, user_id, task_id, writing=True)
-    if row.plan.get('guidance',{}).get('lesson'):
-        raise domain.DomainError('逐步教学请用当前步骤的实际反馈入口，不能用清单接口跳步',409)
     plan = dict(row.plan or {})
     if plan.get("schema") != "interaction/1":
         raise domain.DomainError("这份历史方案尚未整理为清单，请在原话题继续")
@@ -369,15 +376,16 @@ def update_entry(db, user_id, task_id, entry_id, payload):
         raise domain.DomainError("清单项目已变化", 404)
     if access != "owner" and entry.get("assignee_id") not in {None, user_id}:
         raise domain.DomainError("请让当前负责人报告这项进度", 403)
-    if payload.state == "ready" and entry.get("item_id"):
-        item = domain.accessible_item(db, user_id, entry["item_id"])
-        if item.archived or item.state.get("availability") == "unavailable" or item.state.get("presentation", {}).get("attention") in {"paused", "lost", "lent"}:
-            raise domain.DomainError("这件物品目前不可用，请先调整物品或方案", 409)
+    if payload.state == "ready":
+        # A checklist shares the preparation action, not the inventory record.
+        # Check current availability under the owner's existing authority while
+        # retaining the participant's explicit report as the progress author.
+        validate_entry_ready(db, row.user_id if access != "owner" and _shared_checklist(row) else user_id, entry)
     if entry["state"] == payload.state and entry.get("note", "") == payload.note and entry.get("updated_by") == user_id:
         return board(db, user_id, task_id)
     entry.update(state=payload.state, note=payload.note, updated_by=user_id)
     plan["entries"] = entries
-    # Ready means the preparation is ready, never that the real-world goal succeeded.
+    # Ready reports prepared resources or completed steps, never overall success.
     status = "ready" if entries and all(entry["state"] == "ready" for entry in entries) else "in_progress"
     changed = db.execute(update(TaskRecord).where(TaskRecord.id == task_id, TaskRecord.version == payload.expected_version).values(
         plan=plan, status=status, version=TaskRecord.version + 1, updated_at=now()))
@@ -388,14 +396,93 @@ def update_entry(db, user_id, task_id, entry_id, payload):
     return board(db, user_id, task_id)
 
 
+def _entry_details(db, user_id, task, payload, previous=None):
+    title = payload.title.strip()
+    if not title:
+        raise domain.DomainError("请写下要准备什么")
+    item_id = payload.item_id if "item_id" in payload.model_fields_set else (previous or {}).get("item_id")
+    if item_id and (previous is None or "item_id" in payload.model_fields_set):
+        domain.accessible_item(db, user_id, item_id)
+        # A participant can report owning something without publishing their
+        # private inventory. Only mutually readable item references enter a task.
+        if user_id != task.user_id:
+            domain.accessible_item(db, task.user_id, item_id)
+    return {"title": title, "group": payload.group, "item_id": item_id,
+            "note": payload.note.strip()}
+
+
+def _entry_assignee(db, task, actor_id, access, assignee_id):
+    if access != "owner":
+        if assignee_id not in {None, actor_id}:
+            raise domain.DomainError("只能为自己补充准备事项", 403)
+        return actor_id
+    if assignee_id not in {None, task.user_id}:
+        participant = db.get(TaskParticipant, (task.id, assignee_id))
+        if not participant or participant.status != "active":
+            raise domain.DomainError("请先等对方接受这件事，再分配条目")
+    return assignee_id
+
+
+def _save_entries(db, user_id, task, entries, expected_version):
+    plan = {**task.plan, "entries": entries}
+    item_ids = list(dict.fromkeys([*task.item_ids,
+        *(entry["item_id"] for entry in entries if entry.get("item_id"))]))
+    # Having an item and actually packing it are independent facts. Any new or
+    # materially changed entry starts pending, never completes an outing.
+    status = "ready" if entries and all(entry["state"] == "ready" for entry in entries) else "in_progress"
+    changed = db.execute(update(TaskRecord).where(TaskRecord.id == task.id,
+        TaskRecord.version == expected_version).values(plan=plan, item_ids=item_ids,
+        status=status, version=TaskRecord.version + 1, updated_at=now()))
+    if changed.rowcount != 1:
+        raise domain.DomainError("清单已由另一人更新，请核对最新内容", 409)
+    db.commit()
+    db.expire_all()
+    return board(db, user_id, task.id)
+
+
+def add_entry(db, user_id, task_id, payload):
+    row, access = task_access(db, user_id, task_id, writing=True)
+    if row.plan.get("schema") != "interaction/1":
+        raise domain.DomainError("请先把这份方案整理为准备清单")
+    entries = [dict(entry) for entry in row.plan.get("entries", [])]
+    if len(entries) >= 60:
+        raise domain.DomainError("这份清单已达60项，请先整理现有事项")
+    details = _entry_details(db, user_id, row, payload)
+    assignee = _entry_assignee(db, row, user_id, access, payload.assignee_id)
+    entries.append({"id": uid(), **details, "state": "pending",
+                    "assignee_id": assignee, "updated_by": user_id})
+    return _save_entries(db, user_id, row, entries, payload.expected_version)
+
+
+def edit_entry(db, user_id, task_id, entry_id, payload):
+    row, access = task_access(db, user_id, task_id, writing=True)
+    if row.plan.get("schema") != "interaction/1":
+        raise domain.DomainError("请先把这份方案整理为准备清单")
+    entries = [dict(entry) for entry in row.plan.get("entries", [])]
+    entry = next((entry for entry in entries if entry["id"] == entry_id), None)
+    if entry is None:
+        raise domain.DomainError("没有找到这个条目", 404)
+    if access != "owner" and entry.get("assignee_id") != user_id:
+        raise domain.DomainError("只能修改自己负责的准备事项", 403)
+    details = _entry_details(db, user_id, row, payload, entry)
+    material_change = any(entry.get(key) != details[key] for key in ("title", "group", "item_id"))
+    entry.update(details, updated_by=user_id)
+    if material_change:
+        entry["state"] = "pending"
+    return _save_entries(db, user_id, row, entries, payload.expected_version)
+
+
 def share_task(db, user_id, task_id, other_id):
     row, access = task_access(db, user_id, task_id)
     if access != "owner" or row.plan.get("schema") != "interaction/1":
         raise domain.DomainError("只能分享自己明确整理的清单", 403)
+    if row.plan.get("pending_action"):
+        raise domain.DomainError("请先确认这件事，再邀请朋友一起准备", 409)
     if other_id == user_id or not domain.are_friends(db, user_id, other_id):
         raise domain.DomainError("请选择已接受关系的朋友或家人")
-    for identity in row.item_ids:
-        domain.accessible_item(db, other_id, identity)
+    if not _shared_checklist(row):
+        for identity in row.item_ids:
+            domain.accessible_item(db, other_id, identity)
     participant = db.get(TaskParticipant, (task_id, other_id))
     if participant is None:
         db.add(TaskParticipant(task_id=task_id, user_id=other_id, status="invited"))
@@ -454,15 +541,42 @@ def wish_view(row):
     return {key: getattr(row, key) for key in ("id", "user_id", "title", "note", "url", "visible_to_friends", "version")}
 
 
-def create_wish(db, user_id, payload):
+def _wish_values(payload):
     if payload.url:
-        parsed = urlsplit(payload.url)
-        if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+        try:
+            parsed = urlsplit(payload.url)
+            valid = parsed.scheme == "https" and parsed.hostname and not parsed.username and not parsed.password
+            parsed.port  # Validate a supplied port without contacting the URL.
+        except ValueError:
+            valid = False
+        if not valid:
             raise domain.DomainError("商品链接请使用不含登录信息的HTTPS地址")
-    row = Wish(user_id=user_id, **payload.model_dump())
+    values = payload.model_dump(exclude={"expected_version"})
+    values["title"] = values["title"].strip()
+    if not values["title"]:
+        raise domain.DomainError("请写下想收到什么礼物")
+    return values
+
+
+def create_wish(db, user_id, payload):
+    row = Wish(user_id=user_id, **_wish_values(payload))
     db.add(row)
     db.commit()
     return wish_view(row)
+
+
+def change_wish(db, user_id, identity, payload):
+    row = domain.require(db.get(Wish, identity))
+    if row.user_id != user_id:
+        raise domain.DomainError("没有找到这个心愿", 404)
+    changed = db.execute(update(Wish).where(Wish.id == identity,
+        Wish.user_id == user_id, Wish.version == payload.expected_version).values(
+            **_wish_values(payload), version=Wish.version + 1))
+    if changed.rowcount != 1:
+        raise domain.DomainError("心愿已更新，请重新打开后再修改", 409)
+    db.commit()
+    db.expire_all()
+    return wish_view(db.get(Wish, identity))
 
 
 def friend_space(db, user_id, other_id):
@@ -482,3 +596,25 @@ def workspace(db, user_id):
         "friends": domain.friends(db, user_id),
         "gifts": [domain.gift_view(db, row) for row in db.scalars(select(Gift).where(or_(Gift.sender_id == user_id, Gift.recipient_id == user_id)).order_by(Gift.created_at.desc()))],
         "wishes": [wish_view(row) for row in db.scalars(select(Wish).where(Wish.user_id == user_id))]}
+
+
+def resume_task(db, user_id, task_id):
+    """One stable per-actor conversation, shared by HTTP, teaching and demos."""
+    import hashlib
+    from sqlalchemy.exc import IntegrityError
+    value = board(db, user_id, task_id)
+    entry = {"task_id": task_id, "intent": "guidance" if value["kind"] == "guidance" else "planning"}
+    if value["conversation_id"]:
+        return {"conversation_id": value["conversation_id"], "entry_context": entry}
+    identity = "task_" + hashlib.sha256(f"{user_id}\0{task_id}".encode()).hexdigest()[:40]
+    row = db.get(Conversation, identity)
+    if row is None:
+        row = Conversation(id=identity, user_id=user_id, title=value["task"]["goal"][:35],
+            item_ids=value["task"]["item_ids"], entry_context=entry)
+        db.add(row)
+        try:
+            db.commit()
+        except IntegrityError:
+            db.rollback()
+            row = domain.require(db.get(Conversation, identity))
+    return {"conversation_id": row.id, "entry_context": entry}

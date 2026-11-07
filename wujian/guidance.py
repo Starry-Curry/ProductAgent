@@ -7,9 +7,29 @@ from decimal import Decimal, InvalidOperation
 
 from . import domain
 from .api_models import TaskEntry
-from .database import ChatMessage, Conversation, Run, SourceRecord, TaskRecord, now, uid
+from .database import ChatMessage, Conversation, Run, TaskRecord, now, uid
 from .evidence import locate_quote
 from .source_access import readable_source
+
+
+def source_applicability(db, user_id, source, item_ids=()):
+    """Lexical applicability signals, never semantic compatibility approval.
+
+    Linking a fetched FAQ to an item, or a model appearing in its URL/title,
+    does not make that FAQ a verified manual for that model's controls.
+    """
+    from .learning import model_mentioned
+    identities = list(dict.fromkeys([*item_ids,*([source.item_id] if source.item_id else [])]))
+    targets = []
+    for identity in identities:
+        item = domain.accessible_item(db,user_id,identity)
+        model = item.product.get('model','')
+        present = bool(model and model_mentioned(model,source.content))
+        targets.append({'item_id':identity,'model':model,'market':item.product.get('market',''),
+            'model_in_source_text':present,
+            'status':'model_mentioned_requires_procedure_check' if present else 'model_not_confirmed'})
+    return {'targets':targets,'procedure_compatibility_verified':False,
+        'note':'型号未在正文出现时，只能作通用参考；具体控件、组合键与松键时序先查适用型号官方手册及面板图。型号出现也不等于本段操作适用。'}
 
 
 def step_signature(entry):
@@ -99,8 +119,10 @@ def _control_locations(text):
             offset+=len(clause)+1
 
 
-def validate_specific_advice(text,entries,known_text='',allow_visual=False):
+def validate_specific_advice(text,entries,known_text='',allow_visual=False,require_button_evidence=False):
     """General help is allowed; do not invent precise reset timing/connectors."""
+    if require_button_evidence and re.search(r'长按|按住|同时按|先松|再松|松开',text) and not any((entry.get('guidance') or {}).get('evidence') for entry in entries):
+        raise domain.DomainError('组合按键或松键时序还没有适用原文，先核对状态或资料。')
     known_text+=' '+' '.join(e.get('quote','') for entry in entries for e in (entry.get('guidance') or {}).get('evidence',[]))
     # Permit ordinary translations of these explicit source attributes. This
     # does not infer any gesture or light behavior from a product's category.
@@ -156,7 +178,9 @@ def validate_specific_advice(text,entries,known_text='',allow_visual=False):
 
 
 def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
-    if plan.get('schema') != 'interaction/1' or plan.get('kind') != 'guidance':
+    if plan.get('schema') != 'interaction/1':
+        return plan
+    if plan.get('kind') != 'guidance' and not any(entry.get('guidance') for entry in plan.get('entries',[])):
         return plan
     entries = [TaskEntry.model_validate(entry).model_dump() for entry in plan.get('entries',[])]
     old_entries = {entry['id']:entry for entry in (previous or {}).get('entries',[])}
@@ -173,26 +197,28 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
         targets = [domain.accessible_item(db,user_id,identity) for identity in target_ids]
         if details['kind'] == 'operate' and len(targets)>1 and not entry.get('item_id'):
             raise domain.DomainError('每个具体操作步骤需指明正在处理哪件实物')
-        if details['kind']=='operate' and any(item.product.get('model') for item in targets) and details['basis']=='general' and not details['evidence']:
-            raise domain.DomainError('已知型号的具体操作必须有适用原文或用户实际报告依据，不能改标general绕过核验。资料不足先用observe/identify核对当前状态或可见标识。')
-        if details['basis']=='user_report' and (not current_message or not details['observed_quote'] or details['observed_quote'] not in current_message.text):
-            raise domain.DomainError('user_report依据需保留本轮用户实际报告的连续原话；提问或模型建议不是操作依据。')
+        if (details['kind']=='operate' and any(item.product.get('model') for item in targets) and details['basis']=='general' and not details['evidence']
+                and re.search(r'按|拨|旋转|装入|倒入|拆|复位|初始化|对它说|打开蓝牙',details['instruction'])):
+            raise domain.DomainError('型号专用操作需要适用原文或实际用户报告；未核验时用observe/identify核对，不把具体控件、按键组合或参数标为general。')
+        if details['basis']=='user_report' and not plan.get('guidance',{}).get('lesson') and (not current_message or not details['observed_quote'] or details['observed_quote'] not in current_message.text):
+            raise domain.DomainError('user_report需要本轮用户实际原话，提问不是已做操作。')
         source_context=[]
         if not details['evidence'] and details['basis']=='document':
             raise domain.DomainError('标为说明书操作的步骤需要适用原文；通用初步建议可标basis=general，不冒充型号已核验')
         for evidence in details['evidence']:
             try:source = readable_source(db,user_id,evidence['source_id'])
-            except domain.DomainError as error:
+            except domain.DomainError:
                 from sqlalchemy import select
-                available=[{'source_id':source.id,'title':source.title[:120]} for source in db.scalars(
-                    select(SourceRecord).where(SourceRecord.owner_id==user_id,SourceRecord.item_id.in_(target_ids))
-                    .order_by(SourceRecord.fetched_at.desc()).limit(6))]
-                # Do not expose whether an arbitrary foreign ID exists. Offer
-                # only this user's already-read sources for accessible targets.
-                raise domain.DomainError('引用的source_id不可读取，请原样复制实际返回的原文ID，不填照片、URL或自行命名。当前物品已读原文：'+json.dumps(available,ensure_ascii=False)) from error
+                from .database import SourceRecord
+                available=[{'source_id':row.id,'title':row.title[:100]} for row in db.scalars(select(SourceRecord).where(SourceRecord.owner_id==user_id,SourceRecord.item_id.in_(target_ids)))]
+                raise domain.DomainError('来源引用不存在或无权读取，请使用实际已读ID：'+str(available[:8])) from None
             from .assistance import source_applies
-            if not source_applies(db, source, target_ids):
-                raise domain.DomainError('这份资料关联另一件不同型号的物品，不能作为当前操作的依据。')
+            if not source_applies(db,source,target_ids):
+                raise domain.DomainError('这是另一件物品的资料，不能作为当前实物的操作依据')
+            source_context.append(source.content[:12000])
+            from .knowledge import source_content_level
+            if source_content_level(source) == 'public_page_metadata_only_not_document_body':
+                raise domain.DomainError('当前来源只有页面元数据，没有操作正文；请沿明确文档链接读取原文，或先给通用观察，不把简介当成已读教程')
             if evidence.get('source_line_start'):
                 start = evidence['source_line_start']
                 end = evidence.get('source_line_end') or start
@@ -208,27 +234,28 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
                 raise domain.DomainError('教学引用被改写，不能使用。请填 source_line_start/source_line_end，由程序提取原句。来源 '+source.id+' 的原始行：\n'+numbered[:2200])
             evidence['quote'] = quote
             if evidence.get('page') is not None:
+                page = next((page for page in source.pages if page.get('page')==evidence['page']),None)
                 if not source.pages:
-                    evidence['page']=None  # HTML has source lines, not PDF pages.
-                else:
-                    page = next((page for page in source.pages if page.get('page')==evidence['page']),None)
-                    if not page or locate_quote(page.get('text',''),quote) is None:
-                        raise domain.DomainError('教学步骤引用的PDF页码与原文不对应')
-            if targets:
+                    evidence['page']=None
+                elif not page or locate_quote(page.get('text',''),quote) is None:
+                    raise domain.DomainError('教学步骤引用的PDF页码与原文不对应')
+            if details['basis'] == 'document' or details['evidence']:
+                from .learning import model_mentioned, normalized_model
                 named = [item.product.get('model','') for item in targets if item.product.get('model')]
-                normalized = lambda text: re.sub(r'[^\w]','',text).casefold()
-                from .assistance import identity_in_source
-                if named and not any(identity_in_source(item,source)
-                    and normalized(evidence.get('source_model') or item.product.get('model',''))==normalized(item.product.get('model','')) for item in targets):
+                if named and not all(model_mentioned(model,source.content)
+                    and normalized_model(evidence.get('source_model') or model)==normalized_model(model) for model in named):
                     raise domain.DomainError('操作资料没有匹配当前准确型号；相近型号只能作参考')
-            source_context.append(source.content[:12000])
-        advice = '。'.join([entry['title'],entry.get('note',''),*(details.get(field,'') for field in ['instruction','success_signal','caution','if_not_found','if_unchanged'])])
+        advice=' '.join([entry['title'],entry.get('note',''),*(details.get(field,'') for field in ['instruction','success_signal','caution','if_not_found','if_unchanged'])])
         if details['basis']=='document' or details['evidence']:
             validate_parameters(advice,[entry])
-        # Component names may be introduced in the same original's heading
-        # rather than repeated in the action quote. Numeric action parameters
-        # above still have to match THIS step's local evidence.
-        validate_specific_advice(advice,[entry],' '.join([current_message.text if current_message else '',*source_context]))
+            validate_specific_advice(advice,[entry],' '.join(source_context))
+        else:
+            validate_specific_advice(advice,[entry],current_message.text if current_message else '',
+                require_button_evidence=True)
+        if plan.get('kind') != 'guidance':
+            # Checklist/idea reports already use task_progress's user-grounded
+            # state path; only the interactive guide owns observed_quote.
+            continue
         old = old_entries.get(entry['id'])
         same_step = old and step_signature(old)==step_signature(entry)
         old_details = old.get('guidance') or {} if old else {}
@@ -242,13 +269,11 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
                 raise domain.DomainError('不能替用户完成教学步骤；请保留待反馈，或引用当前实际报告')
             details['observed_message_id'] = current_message.id
             entry['updated_by'] = user_id
+    if plan.get('kind') != 'guidance':
+        # Presentation does not waive evidence, nor does evidence turn an
+        # ordinary checklist into the interactive lesson state machine.
+        return {**plan,'entries':entries}
     progress = dict(plan.get('guidance') or {})
-    overview = progress.get('overview') or plan.get('overview')
-    if isinstance(overview, str):
-        overview = [overview]
-    if isinstance(overview, list):
-        progress['overview'] = [value[:240] for value in overview[:8] if isinstance(value, str) and value.strip()]
-    plan = {key:value for key,value in plan.items() if key != 'overview'}
     prior = (previous or {}).get('guidance') or {}
     observations=list(prior.get('observations',[]))
     # Model advice is not a report. A new conversational observation must point
@@ -289,18 +314,16 @@ def start_feedback(db, user_id, task_id, payload):
     entry = next((entry for entry in row.plan.get('entries',[]) if entry['id']==payload.step_id),None)
     if not entry or not entry.get('guidance'):
         raise domain.DomainError('这一步尚未核对，请先回到对话补充资料',409)
-    if entry['state']=='ready' or row.status in {'completed','cancelled'}:
-        raise domain.DomainError('这一步已经确认过了，请继续当前问题，不用重复确认。',409)
-    if progress.get('active_step_id') and progress['active_step_id'] != payload.step_id:
-        raise domain.DomainError('请只反馈当前步骤，不能跳步确认。',409)
+    if entry.get('state')=='ready' or row.status in {'completed','cancelled'}:
+        raise domain.DomainError('这一步已确认或任务已结束，请继续处理当前问题',409)
     if progress.get('lesson'):
-        from .lessons import step_definition
+        from .lessons import step_definition,input_ready
         if progress.get('active_step_id')!=payload.step_id:
             raise domain.DomainError('请先完成当前一步，不能跳步确认',409)
         if progress['lesson']['phase']=='paused':
             raise domain.DomainError('教学已暂停，先恢复再继续',409)
         step=step_definition(row,entry)
-        if payload.outcome=='done' and step.get('requires_input') and not progress['lesson']['inputs'].get(step['requires_input']):
+        if payload.outcome=='done' and not input_ready(progress['lesson'],step.get('requires_input')):
             raise domain.DomainError('先核对当前步骤需要的材料条件，再确认完成',409)
     for photo_id in payload.photo_ids:
         asset = domain.own_asset(db,user_id,photo_id)
@@ -335,7 +358,7 @@ def start_feedback(db, user_id, task_id, payload):
     run = Run(id=run_id,user_id=user_id,conversation_id=conversation.id)
     db.add(run)
     db.add(ChatMessage(id=message_id,conversation_id=conversation.id,role='user',text=text,
-        photo_ids=payload.photo_ids,item_ids=row.item_ids,run_id=run.id))
+        photo_ids=payload.photo_ids,item_ids=list(row.item_ids),run_id=run.id))
     try:
         db.commit()
     except IntegrityError:

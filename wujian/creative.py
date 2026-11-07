@@ -24,7 +24,8 @@ def record_research(sessions, user_id, message_id, name, value):
     if not isinstance(value, dict):
         return
     with sessions() as db:
-        message = domain.require(db.get(ChatMessage, message_id))
+        message = db.get(ChatMessage, message_id)
+        if message is None:return
         run = db.get(Run, message.run_id) if message.run_id else None
         if not run or run.user_id != user_id or run.status != "running":
             return
@@ -60,5 +61,10 @@ def require_research(db, run, result):
                     break
             except domain.DomainError:
                 pass
-    if not searched or not readable:
+    from .turns import referenced_sources
+    retained=False
+    for identity in referenced_sources(result):
+        try:retained=bool(readable_source(db,run.user_id,identity).content.strip()) or retained
+        except domain.DomainError:pass
+    if not ((searched and readable) or retained):
         raise domain.DomainError("还没取得可读取的公开案例，暂未生成玩法方案。可以换个方向或补充公开链接后继续。", 502)

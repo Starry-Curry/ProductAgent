@@ -1,0 +1,24 @@
+flowchart TD
+    Q["具体问题 + 当前实物 / 准确型号"] --> OLD["read_item / list_sources：先看已知内容"]
+    OLD --> DEC{"是否需要新资料"}
+    DEC -->|是| WEB["search_public_web → 百炼Responses web_search"]
+    WEB --> OBS["检查真实搜索调用记录；取得候选URL与摘要"]
+    OBS --> FETCH["fetch_document → fetch_source"]
+    FETCH --> CACHE{"同用户、URL、item_id已有来源且不强制刷新"}
+    CACHE -->|是| EX["返回已有source_excerpt"]
+    CACHE -->|否| DL["公开URL检查、逐跳重定向、下载≤12MB"]
+    DL --> PARSE{"实际内容类型"}
+    PARSE -->|HTML| HTML["BeautifulSoup：正文、标题、链接"]
+    PARSE -->|PDF| PDF["pypdf：页文本，最多前160页"]
+    HTML --> SAVE["原始响应字节→assets；文本/页表→sources"]
+    PDF --> SAVE
+    SAVE --> EX
+    DEC -->|否| EX
+    EX --> READ["read_source：关键词附近或指定页；返回编号原句"]
+    READ --> VIS{"本次是否需要看原页图示"}
+    VIS -->|是| RENDER["pypdfium2渲染原页 → 视觉千问"]
+    VIS -->|否| THINK["主Agent解释步骤、能力、条件与未知"]
+    RENDER --> THINK
+    THINK --> LEARN["最终knowledge_updates：来源、原句、范围和条件"]
+    LEARN --> CHECK["validate_learning + save_claim"]
+    CHECK --> KB[("knowledge_claims：可复用认识")]

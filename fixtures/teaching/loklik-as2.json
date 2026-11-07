@@ -1,6 +1,6 @@
 {
   "id": "loklik-as2",
-  "revision": "2026-11-06.4",
+  "revision": "2026-11-06.5",
   "goal": "学会用 AS2 完成一次烫印",
   "product_match": {
     "brand": "LOKLiK",
@@ -16,6 +16,16 @@
     {
       "id": "plain-htv-mode1",
       "name": "普通刻字膜 / 模式①",
+      "material_terms": [
+        "普通刻字膜",
+        "普通热转印刻字膜",
+        "变色龙刻字膜"
+      ],
+      "parameters": {
+        "temperature_c": 145,
+        "duration_s": 15,
+        "pressure_kg": 80
+      },
       "required_report": [
         "普通",
         "刻字膜",
@@ -23,7 +33,68 @@
         "15",
         "80"
       ],
-      "instruction": "已记录你报告的材料包装条件。短按左半边循环箭头的“模式”键，切换到①；核对屏幕为145℃、15秒、80kg，不一致先告诉我。"
+      "instruction": "按 AS2 手册，这类耗材可参考模式①：145℃、15秒、80kg；若包装标注不同先告诉我。短按左半边循环箭头的模式键切换到①，核对屏幕后告诉我。"
+    },
+    {
+      "id": "glitter-mode2",
+      "name": "闪光或全息刻字膜 / 模式②",
+      "material_terms": [
+        "闪光刻字膜",
+        "全息刻字膜",
+        "闪光热刻字膜",
+        "烫画膜"
+      ],
+      "parameters": {
+        "temperature_c": 150,
+        "duration_s": 15,
+        "pressure_kg": 80
+      },
+      "required_report": [
+        "闪光刻字膜",
+        "150",
+        "15",
+        "80"
+      ],
+      "instruction": "按 AS2 手册，这类耗材可参考模式②：150℃、15秒、80kg；若包装标注不同先告诉我。短按左半边循环箭头的模式键切换到②，核对屏幕后告诉我。"
+    },
+    {
+      "id": "printable-mode3",
+      "name": "可打印刻字膜或热转印纸 / 模式③",
+      "material_terms": [
+        "可打印刻字膜",
+        "热转印纸"
+      ],
+      "parameters": {
+        "temperature_c": 160,
+        "duration_s": 20,
+        "pressure_kg": 80
+      },
+      "required_report": [
+        "可打印刻字膜",
+        "160",
+        "20",
+        "80"
+      ],
+      "instruction": "按 AS2 手册，这类耗材可参考模式③：160℃、20秒、80kg；若包装标注不同先告诉我。短按左半边循环箭头的模式键切换到③，核对屏幕后告诉我。"
+    },
+    {
+      "id": "sublimation-mode4",
+      "name": "热升华纸 / 模式④",
+      "material_terms": [
+        "热升华纸"
+      ],
+      "parameters": {
+        "temperature_c": 200,
+        "duration_s": 40,
+        "pressure_kg": 80
+      },
+      "required_report": [
+        "热升华纸",
+        "200",
+        "40",
+        "80"
+      ],
+      "instruction": "按 AS2 手册，这类耗材可参考模式④：200℃、40秒、80kg；若包装标注不同先告诉我。短按左半边循环箭头的模式键切换到④，核对屏幕后告诉我。"
     }
   ],
   "steps": [
@@ -63,13 +134,13 @@
         "display"
       ],
       "explanation": "温度、时间和压力取决于耗材及基材，不能给所有材料套同一套参数。模式键位于电源键右边、温度/时间/压力三键旁，图标是循环箭头；右边带 A 的按钮会开启自动熨压，新手先不要把它当模式键。",
-      "reviewed_instruction": "AS2 有四组固定预置以及四组自定义参数。普通热转印刻字膜对应的预置一为 145℃、15秒、80kg；必须先核对实际耗材和基材的适用要求。",
+      "reviewed_instruction": "AS2 有四组固定预置及四组自定义参数。模式①为145℃/15秒/80kg，适用于普通或变色龙热转印刻字膜；②为150℃/15秒/80kg，适用于闪光、全息刻字膜及烫画膜；③为160℃/20秒/80kg，适用于可打印刻字膜及热转印纸；④为200℃/40秒/80kg，适用于热升华纸。实际耗材有不同要求时按其说明核对。",
       "manual_pdf_page": 3,
       "action": "press",
       "kind": "operate",
       "visual_explanation": "核对材料并选择模式；高亮处为本步相关部位。",
       "requires_input": "material_parameters",
-      "input_question": "这次要烫什么耗材和布料？请告诉我包装建议的温度、时间、压力。比如普通刻字膜是否适用 145℃、15秒、80kg；不确定可以拍包装，我们先不开始压烫。",
+      "input_question": "这次用的转印耗材叫什么？不知道名称也没关系，可以先看包装品名或拍给我；不用一次报齐参数，我们先识别它。",
       "resolved_instruction": "{profile_instruction}",
       "control_closeup": true,
       "picture": {
@@ -892,6 +963,68 @@
         "烫印",
         "预热"
       ]
+    },
+    {
+      "id": "temperature",
+      "name": "温度键",
+      "location": "三枚小参数键的上方，温度计图标",
+      "purpose": "短按使温度闪烁后用加减键调整",
+      "question_aliases": [
+        "温度键"
+      ],
+      "answer_terms": [
+        "温度",
+        "℃"
+      ]
+    },
+    {
+      "id": "time",
+      "name": "时间键",
+      "location": "三枚小参数键左侧，时钟图标",
+      "purpose": "短按使时间闪烁后用加减键调整",
+      "question_aliases": [
+        "时间键"
+      ],
+      "answer_terms": [
+        "时间",
+        "秒"
+      ]
+    },
+    {
+      "id": "pressure",
+      "name": "压力键",
+      "location": "三枚小参数键下方",
+      "purpose": "短按使压力闪烁后用加减键调整",
+      "question_aliases": [
+        "压力键"
+      ],
+      "answer_terms": [
+        "压力",
+        "kg"
+      ]
     }
-  ]
+  ],
+  "parameter_input": {
+    "material_categories": [
+      "转印",
+      "刻字",
+      "升华",
+      "烫画"
+    ],
+    "limits": {
+      "temperature_c": [
+        100,
+        210
+      ],
+      "duration_s": [
+        1,
+        3600
+      ],
+      "pressure_kg": [
+        1,
+        80
+      ]
+    },
+    "nature": "Only records actual user packaging conditions; not a claim of observed temperature or real pressing success."
+  }
 }
