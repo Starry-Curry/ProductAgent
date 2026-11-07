@@ -1,0 +1,66 @@
+.memory-river-page {
+  background-color:#eee6d8;
+  background-image:
+    radial-gradient(ellipse at 8% 10%,#e9bdab91,transparent 48%),
+    radial-gradient(ellipse at 80% 28%,#b6d4cc85,transparent 52%),
+    radial-gradient(ellipse at 18% 75%,#d9c8a78c,transparent 48%),
+    radial-gradient(ellipse at 94% 88%,#c8c4d466,transparent 44%),
+    repeating-linear-gradient(35deg,#fff9ed2b 0 1px,transparent 1px 4px),
+    linear-gradient(175deg,#f3e4d5,#e4ede6 52%,#eee1cc);
+  background-size:100% 1250px;
+  background-attachment:local;
+}
+.memory-river { position:relative; isolation:isolate; padding-bottom:30px; }
+.river-intro { text-align:center; padding:20px 12px 18px; position:relative; }
+.river-intro-line { display:none; }
+.river-intro p { font-family:Georgia,"Songti SC","SimSun",serif; font-size:22px; line-height:1.7; color:#706858; letter-spacing:3px; }
+.river-intro p br {display:none;}
+.river-count { display:block; margin-top:10px; font-size:11px; color:#746654; letter-spacing:2px; }
+.river-dates { display:flex; align-items:center; gap:8px; overflow-x:auto; max-width:100%; padding:12px 0 22px; scrollbar-width:thin; }
+.river-dates>span { white-space:nowrap; font-size:11px; color:#82735e; padding-right:10px; }
+.river-dates button { flex-shrink:0; border:1px solid #ded9cd; border-radius:30px; background:#fffdf780; color:#827b6f; font-size:11px; padding:8px 14px; cursor:pointer; }
+.river-dates button:hover,.river-dates button:focus-visible { background:#e5eeee; color:#4f737c; border-color:#a6bfc0; }
+.river-course { position:relative; max-width:1100px; margin:auto; padding:22px 0; }
+.river-water { position:absolute; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+.river-water:before { content:""; position:absolute; top:0; bottom:0; left:calc(50% - 115px); width:230px; background:linear-gradient(90deg,transparent,#d1e5d96b 28%,#a6cfc56b 50%,#d5e6df85 65%,transparent); filter:blur(8px); }
+.river-water i { position:absolute; left:calc(50% - 15px); top:0; width:30px; height:100%; border-radius:50%; border-left:1px solid #b3c9c08c; transform:rotate(1deg); }
+.river-water i:nth-child(2) { left:calc(50% - 3px); width:23px; border-color:#d6c7a6a1; transform:rotate(-1deg); }
+.river-water i:nth-child(3) { left:calc(50% - 7px); width:14px; border-color:#a7c4c169; background:repeating-linear-gradient(180deg,transparent 0 160px,#bfd9d24a 180px,transparent 250px); background-size:100% 500px; animation:river-drift 18s linear infinite; }
+@keyframes river-drift { to { background-position:0 500px; } }
+.river-day-group { position:relative; scroll-margin-top:30px; }
+.river-day-heading { display:flex; flex-direction:column; align-items:center; padding:12px 0 24px; gap:7px; }
+.river-pearl { display:block; width:9px; height:9px; border-radius:50%; background:#b4c9bf; border:2px solid #faf7ed; box-shadow:0 0 0 5px #c5d8cd38; margin-bottom:10px; }
+.river-day-heading time { background:#fff7e6c2; padding:6px 18px; border-radius:20px; font-family:Georgia,"Songti SC",serif; color:#786e5c; font-size:18px; letter-spacing:1px; }
+.river-day-heading small { background:#fff7e69c; color:#877a63; padding:2px 10px; font-size:10px; letter-spacing:2px; border-radius:8px; }
+.river-moment { display:grid; grid-template-columns:minmax(0,1fr) 90px minmax(0,1fr); position:relative; align-items:center; margin:0 14px 55px; }
+.river-keepsake { grid-column:1; background:#fffefa; border:1px solid #e7e1d4; border-radius:4px 4px 24px 4px; padding:10px; text-align:left; box-shadow:0 12px 35px #6255430b,0 2px 5px #62554308; cursor:pointer; transition:transform .35s,box-shadow .35s; min-width:0; width:100%; transform:rotate(-1deg); }
+.river-moment-right .river-keepsake { grid-column:3; transform:rotate(1deg); border-radius:4px 4px 4px 24px; }
+.river-keepsake:hover { transform:translateY(-5px) rotate(0); box-shadow:0 18px 40px #62554316; }
+.river-keepsake:focus-visible { outline:2px solid #7199a0; outline-offset:5px; }
+.river-photo { position:relative; aspect-ratio:4/3; overflow:hidden; border-radius:2px; background:#f2eee3; }
+.river-photo img { width:100%; height:100%; display:block; object-fit:cover; transition:transform .8s; }
+.river-keepsake:hover .river-photo img { transform:scale(1.025); }
+.river-story-copy { padding:22px 16px 12px; }
+.river-story-copy,.river-story-copy footer span { min-width:0; overflow-wrap:anywhere; }
+.river-author { font-size:10px; color:#756f63; letter-spacing:1px; }
+.river-story-copy h2 { margin:10px 0 12px; font-family:Georgia,"Songti SC","SimSun",serif; font-size:23px; line-height:1.5; color:#4c5148; }
+.river-story-copy>p { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; font-size:13px; line-height:1.9; color:#6e6a5e; white-space:pre-line; }
+.river-story-copy footer { display:flex; justify-content:space-between; align-items:center; gap:10px; border-top:1px solid #eee8dc; margin-top:20px; padding-top:13px; font-size:10px; color:#756f63; }
+.river-moment-dot { position:absolute; left:calc(50% - 3px); top:40%; width:6px; height:6px; border-radius:50%; background:#b3c9bf; box-shadow:0 0 0 7px #f7f6ed; }
+.river-whisper { grid-column:3; grid-row:1; text-align:center; font-family:Georgia,"Songti SC",serif; font-size:14px; color:#8f7f69; letter-spacing:2px; padding:25px; }
+.river-moment-right .river-whisper { grid-column:1; }
+.river-letter { background:linear-gradient(130deg,#fffdf6,#f0ede2); padding:25px 16px; }
+.river-quote { color:#c3ba9b; font:65px Georgia,serif; display:block; height:38px; padding-left:15px; }
+.river-next { display:flex; flex-direction:column; align-items:center; text-align:center; padding:30px 10px 10px; background:linear-gradient(transparent,#efe6d3b3); border-radius:30px; }
+.river-next p { font-family:Georgia,"Songti SC",serif; color:#7c7664; font-size:20px; letter-spacing:3px; margin:10px 0; }
+.river-next small { color:#81745f; font-size:12px; line-height:1.8; margin-bottom:22px; }
+@media(max-width:900px) { .river-moment { grid-template-columns:minmax(0,1fr) 55px minmax(0,1fr); margin-left:0;margin-right:0; } .river-story-copy {padding:15px 9px 10px;} .river-story-copy h2 {font-size:19px;} .river-whisper {font-size:12px;padding:12px;} }
+@media(max-width:600px) {
+ .river-intro {padding:4px 8px 16px;} .river-intro p {font-size:18px;letter-spacing:2px;} .river-intro p br {display:block;} .river-count {margin-top:8px;} .river-dates {padding-bottom:15px;} .river-course {padding-top:12px;}
+ .river-water:before {left:-65px;width:170px;} .river-water i {left:14px;} .river-water i:nth-child(2) {left:22px;} .river-water i:nth-child(3) {left:19px;}
+ .river-day-heading {align-items:flex-start;padding:14px 0 18px 39px;gap:3px;} .river-day-heading .river-pearl {position:absolute;left:17px;margin-top:14px;} .river-day-heading time {font-size:16px;padding:6px 0;} .river-day-heading small {padding:2px 0;}
+ .river-moment,.river-moment-right {display:block;margin:0 0 32px;padding-left:42px;} .river-moment-dot {left:19px;top:40%;}
+ .river-keepsake,.river-moment-right .river-keepsake {transform:none;border-radius:4px 4px 18px 4px;padding:7px;} .river-whisper {display:none;}
+ .river-story-copy {padding:17px 12px 11px;} .river-story-copy h2 {font-size:21px;} .river-story-copy>p {font-size:12px;} .river-next {margin-left:30px;}
+}
+@media(prefers-reduced-motion:reduce) { .river-water i {animation:none;} .river-keepsake,.river-photo img {transition:none;transform:none!important;} }
