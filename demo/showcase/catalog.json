@@ -2899,7 +2899,8 @@
           "identity_basis": "visible_EOS_R5_body_marking",
           "intake_photo_ids": [
             "c205fbeeac01465a8a0df03ec1c970a6",
-            "9a02d01c0a3d4c80a015995035559774"
+            "9a02d01c0a3d4c80a015995035559774",
+            "ea0e71d72e924e65b399ab2f8f21e960"
           ],
           "attached_lens": {
             "brand": "Canon 佳能",
@@ -21210,6 +21211,13 @@
         "original_name": "e97ebc8d669b4f438f80162246a2b5a7.jpg"
       },
       {
+        "id": "ea0e71d72e924e65b399ab2f8f21e960",
+        "owner_id": "person_demo_owner",
+        "path": "media/ea0e71d72e924e65b399ab2f8f21e960.jpg",
+        "media_type": "image/jpeg",
+        "original_name": "ea0e71d72e924e65b399ab2f8f21e960.jpg"
+      },
+      {
         "id": "ebaf3803f6c144ca9241cb498f29c399",
         "owner_id": "person_demo_owner",
         "path": "media/ebaf3803f6c144ca9241cb498f29c399.json",
@@ -22109,6 +22117,13 @@
       "media_type": "image/jpeg"
     },
     {
+      "id": "ea0e71d72e924e65b399ab2f8f21e960",
+      "path": "media/ea0e71d72e924e65b399ab2f8f21e960.jpg",
+      "sha256": "3a5d2bdf9c76bc250f84b004a4818d8a67b6513b23d8fce28168deeb83ff371d",
+      "size": 742350,
+      "media_type": "image/jpeg"
+    },
+    {
       "id": "ebaf3803f6c144ca9241cb498f29c399",
       "path": "media/ebaf3803f6c144ca9241cb498f29c399.json",
       "sha256": "810544beed63e4c36f96361ebb0634c5f1438e827f76d9e23f7b3e6f86598cd8",
@@ -22214,7 +22229,6 @@
       "authentication sessions",
       "run logs",
       "hardware bindings",
-      "camera serial-number plate",
       "third-party whole-video caches",
       "raw web-page scripts"
     ],

@@ -21,8 +21,8 @@ from wujian.database import Base
 DEMO_IDS = {"person_demo_owner", "person_demo_friend"}
 DEMO_NAMES = {"xiaolin_mom_demo", "xiaolin_grandpa_demo"}
 EXCLUDED = {"runs", "device_targets", "device_observations"}
-# The camera's third supplied image is a serial-number plate, not the cover.
-OMITTED_ASSETS = {"ea0e71d72e924e65b399ab2f8f21e960"}
+# All supplied demonstration photos are explicitly approved for publication.
+OMITTED_ASSETS = set()
 MAC = re.compile(r"(?i)\b[0-9a-f]{2}(?:[:-][0-9a-f]{2}){5}\b")
 KEY = re.compile(r"\bsk-[A-Za-z0-9_-]{16,}\b")
 JWT = re.compile(r"\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b")
@@ -174,7 +174,7 @@ def export(database: Path, destination: Path):
         manifest.append({'id':identity,'path':relative,'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'size':target.stat().st_size,'media_type':asset['media_type']})
     rows['assets'] = exported_assets
     payload = {'schema':'wujian-showcase/1','schema_revision':'0009','tables':rows,'assets_manifest':manifest,
-               'publication':{'scope':'负责人授权的演示账号、实拍和对话记录','excluded':['passwords','authentication sessions','run logs','hardware bindings','camera serial-number plate','third-party whole-video caches','raw web-page scripts'],'images':'GPS absent; supplied photo orientation normalized where metadata was removed; already-public AS2 calibration files retain their original bytes.'}}
+               'publication':{'scope':'负责人授权的演示账号、实拍和对话记录','excluded':['passwords','authentication sessions','run logs','hardware bindings','third-party whole-video caches','raw web-page scripts'],'images':'GPS absent; supplied photo orientation normalized where metadata was removed; already-public AS2 calibration files retain their original bytes.'}}
     (destination/'catalog.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'tables':{name:len(values) for name,values in rows.items()},'media_files':len(manifest),'bytes':sum(row['size'] for row in manifest)},ensure_ascii=False))
 
