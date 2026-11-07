@@ -80,6 +80,8 @@ if __name__ == '__main__':
     settings = Settings.load()
     settings.prepare()
     database = settings.data_dir / 'wujian.sqlite3'
+    if settings.database_url != 'sqlite:///' + database.as_posix():
+        raise SystemExit('This repair only supports the default SQLite file; back up and repair custom databases separately.')
     backup = settings.data_dir / 'backups' / ('before-demo-link-repair-' + datetime.now().strftime('%Y%m%d-%H%M%S') + '.sqlite3')
     backup.parent.mkdir(exist_ok=True)
     with sqlite3.connect(database) as source, sqlite3.connect(backup) as target:
