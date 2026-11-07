@@ -8,3 +8,5 @@
 # Frozen evaluation artifacts keep byte-exact hashes across checkouts.
 fixtures/acceptance/*_cases.json -text whitespace=cr-at-eol
 fixtures/acceptance/*_criteria.md -text whitespace=cr-at-eol
+# Showcase manifests and checked workbench versions refer to exact asset bytes.
+demo/showcase/media/* -text
