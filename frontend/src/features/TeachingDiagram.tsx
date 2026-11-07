@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Modal } from "antd";
 import { Box, Play, RotateCcw } from "lucide-react";
 import { request, type TaskBoard, type TaskEntry } from "../api";
 import type { Plan, Vec3, PartMaterial, Pose } from "../vendor/bygga/lib/types";
+import type { GeneratedMesh } from "./GeneratedModel";
+const GeneratedModel = lazy(() => import("./GeneratedModel"));
 
 type Scene = {
   title: string;
@@ -35,6 +37,7 @@ type Saved = {
   nature: string;
   step_signature: string;
   photo_ids?: string[];
+  mesh?: GeneratedMesh;
 };
 
 function contactDetail(scene: Scene) {
@@ -156,7 +159,7 @@ export default function TeachingDiagram({
       : candidate;
   useEffect(() => {
     let cancelled = false;
-    if (saved && host.current && ready)
+    if (saved && !saved.mesh && host.current && ready)
       void import("../vendor/bygga/engine/stage").then(({ Stage }) => {
         if (cancelled || !host.current) return;
         try {
@@ -206,7 +209,7 @@ export default function TeachingDiagram({
       stage.current = null;
     };
   }, [saved, ready, detailView]);
-  async function generate() {
+  async function generate(localOnly = false) {
     setBusy(true);
     setFailure("");
     try {
@@ -215,6 +218,8 @@ export default function TeachingDiagram({
           expected_version: board.task.version,
           step_id: entry.id,
           photo_ids: photoIds.slice(-2),
+          use_model: true,
+          local_only: localOnly,
         }),
       );
     } catch (error) {
@@ -230,7 +235,7 @@ export default function TeachingDiagram({
         disabled={board.access !== "owner"}
         onClick={() => {
           setOpen(true);
-          if (!saved && !busy) void generate();
+          if ((!saved || (!saved.mesh && saved.nature !== "reviewed_schematic")) && !busy) void generate();
         }}
       >
         <Box size={18} />
@@ -266,7 +271,7 @@ export default function TeachingDiagram({
             <h4>看看这一步怎么做</h4>
             <button
               className="quiet-button"
-              disabled={busy || board.access !== "owner"}
+              disabled={busy || board.access !== "owner" || saved?.nature === "reviewed_schematic"}
               onClick={() => void generate()}
             >
               {busy
@@ -277,10 +282,11 @@ export default function TeachingDiagram({
                     ? "重新生成"
                     : "重试"}
             </button>
+            {saved?.mesh && !saved.mesh.fallback && <button className="quiet-button" disabled={busy || board.access !== "owner"} onClick={() => void generate(true)}>改用本地模型</button>}
           </div>
           {saved && (
             <>
-              <div
+              {saved.mesh && ready ? <Suspense fallback={<p>正在打开外观模型…</p>}><GeneratedModel mesh={saved.mesh} board={board} entry={entry} photoIds={saved.photo_ids || []} /></Suspense> : !saved.mesh ? <><div
                 ref={host}
                 className="teaching-stage"
                 role="img"
@@ -335,6 +341,7 @@ export default function TeachingDiagram({
                   ),
                 )}
               </div>
+              </> : null}
               <p>{saved.scene.explanation}</p>
               <small className="muted">
                 {saved.nature === "reviewed_schematic"

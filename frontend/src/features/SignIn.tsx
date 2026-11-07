@@ -20,8 +20,7 @@ export default function SignIn({
     setBusy(true);
     setError("");
     try {
-      onLogin(
-        await request<User>(
+      const user = await request<User>(
           persona
             ? `/auth/demo/${persona}`
             : registering
@@ -35,8 +34,9 @@ export default function SignIn({
                 password,
                 ...(registering ? { display_name: name } : {}),
               },
-        ),
-      );
+        );
+      if (persona) location.hash = "companion";
+      onLogin(user);
     } catch (error) {
       setError((error as Error).message);
     } finally {

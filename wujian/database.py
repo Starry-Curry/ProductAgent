@@ -214,6 +214,7 @@ class ChatMessage(Base):
     text: Mapped[str] = mapped_column(Text)
     run_id: Mapped[str | None] = mapped_column(String, nullable=True)
     photo_ids: Mapped[list] = mapped_column(JSON, default=list)
+    item_ids: Mapped[list] = mapped_column(JSON, default=list, server_default="[]")
     recorded_experiences: Mapped[dict] = mapped_column(JSON, default=dict, server_default="{}")
     created_at: Mapped[str] = mapped_column(String, default=now)
 

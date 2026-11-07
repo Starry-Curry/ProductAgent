@@ -439,7 +439,8 @@ def prepare_turn(db,run):
             return text,task.id,'reviewed_lesson_'+kind
         return None
     if conversation.entry_context.get('intent')!='guidance' or len(conversation.item_ids)!=1:return None
-    if not re.search(r'怎么用|如何使用|不会用|用法|一步步|开始教学',message.text):return None
+    from .assistance import wants_steps
+    if not wants_steps(message.text) and not re.search(r'怎么用|如何使用|不会用|用法|开始教学',message.text):return None
     item=domain.accessible_item(db,run.user_id,conversation.item_ids[0]);package=package_for(item)
     if not package:return None
     created=create_lesson(db,run.user_id,item,message,package)

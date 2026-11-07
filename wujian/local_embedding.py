@@ -34,7 +34,9 @@ class LocalEmbedding:
             model.reshape({port.get_any_name():[1,128] for port in model.inputs})
             self.folder.joinpath('cache').mkdir(exist_ok=True)
             self.model=self.core.compile_model(model,self.device,{'CACHE_DIR':str(self.folder/'cache'),'PERFORMANCE_HINT':'LATENCY'})
-            self.execution_devices=list(self.model.get_property('EXECUTION_DEVICES'))
+            # NPU returns a scalar string, GPU returns a list; normalize before the check.
+            executed=self.model.get_property('EXECUTION_DEVICES')
+            self.execution_devices=[executed] if isinstance(executed,str) else [str(value) for value in executed]
             if not self.execution_devices or any(not value.startswith(self.device) for value in self.execution_devices):raise RuntimeError('Execution device differs from requested device')
             self.tokenizer=Tokenizer.from_file(str(self.folder/'tokenizer.json'))
             self.tokenizer.enable_truncation(max_length=128);self.tokenizer.enable_padding(length=128,pad_id=0,pad_token='[PAD]')

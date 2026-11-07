@@ -222,6 +222,14 @@ class Retrieval:
     def __init__(self, settings, sessions):
         self.settings, self.sessions = settings, sessions
         self.apps, self.locks, self.hashes = {}, {}, {}
+        # Local MiniLM replaces the cloud embedding provider when configured.
+        self.local = None
+        if settings.local_embedding_dir:
+            from .local_embedding import LocalEmbedding
+
+            self.local = LocalEmbedding(
+                settings.local_embedding_dir, settings.local_ai_device, settings.local_ai_required
+            )
 
     async def _app(self, user_id):
         if user_id in self.apps:
@@ -235,13 +243,13 @@ class Retrieval:
             "file_store": {
                 "default": {
                     "backend": "local",
-                    "embedding_store": "default" if self.settings.api_key else "",
+                    "embedding_store": "default" if self.settings.api_key and not self.local else "",
                     "keyword_index": "default",
                     "file_graph": "default",
                 }
             },
         }
-        if self.settings.api_key:
+        if self.settings.api_key and not self.local:
             components.update(
                 {
                     "as_embedding": {
@@ -347,10 +355,58 @@ class Retrieval:
             )
             if not response.success:
                 raise RuntimeError("ReMe retrieval did not complete")
+            hits = response.metadata.get("results", [])
+            local_receipt, local_error = None, None
+            if self.local:
+                # Keyword hits stay; local MiniLM supplies semantic candidates and
+                # both are fused by reciprocal rank with the same SQL visibility.
+                allowed = {
+                    path: doc
+                    for path, doc in documents.items()
+                    if not kinds or doc["kind"] in kinds
+                }
+                preferred = [hit["path"] for hit in hits if hit["path"] in allowed]
+                candidates = list(dict.fromkeys([*preferred, *allowed]))[:250]
+
+                def semantic_text(doc):
+                    data = doc.get("data") or {}
+                    if not isinstance(data, dict):
+                        return str(data) or doc["text"]
+                    keys = (
+                        "name", "goal", "content", "summary", "text", "user_text",
+                        "assistant_text", "title", "excerpt", "description",
+                    )
+                    text = " ".join(str(data[key]) for key in keys if data.get(key))
+                    return text or doc["text"]
+
+                try:
+                    ranked, scores, local_receipt = await asyncio.to_thread(
+                        self.local.rank,
+                        query,
+                        {path: semantic_text(allowed[path]) for path in candidates},
+                    )
+                    fusion = {
+                        path: 1 / (60 + index + 1) for index, path in enumerate(ranked)
+                    }
+                    for index, hit in enumerate(hits):
+                        fusion[hit["path"]] = fusion.get(hit["path"], 0) + 1 / (
+                            60 + index + 1
+                        )
+                    hits = [
+                        {
+                            "path": path,
+                            "scores": {"rrf": fusion[path], "local_cosine": scores.get(path)},
+                        }
+                        for path in sorted(fusion, key=fusion.get, reverse=True)
+                    ]
+                except Exception as error:  # noqa: BLE001 - reported unless required
+                    if self.local.required:
+                        raise
+                    local_error = type(error).__name__ + ": " + str(error)[:240]
             # Rehydrate and check current visibility/content after awaiting external calls.
             current = authorized_documents(self.sessions, user_id)
             results = []
-            for hit in response.metadata.get("results", []):
+            for hit in hits:
                 path = hit["path"]
                 doc = current.get(path)
                 if (
@@ -364,7 +420,11 @@ class Retrieval:
                     )
             return {
                 "results": results[:limit],
-                "mode": "hybrid"
+                "local_ai": local_receipt,
+                "local_ai_error": local_error,
+                "mode": "keyword_plus_openvino"
+                if local_receipt
+                else "hybrid"
                 if store.embedding_store and store.embedding_store.is_healthy
                 else "keyword_only",
                 "counts": response.metadata.get("counts", {}),

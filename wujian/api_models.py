@@ -396,6 +396,13 @@ class TaskEntry(Input):
     guidance: GuidanceDetails | None = None
 
 
+class CreativeExploration(Input):
+    goal: str = Field(min_length=1,max_length=6000)
+    constraints: str = Field(default="",max_length=4000)
+    item_ids: list[str] = Field(default_factory=list,max_length=50)
+    photo_ids: list[str] = Field(default_factory=list,max_length=4)
+
+
 class GuidanceRequest(Input):
     item_id: str
     question: str = Field(min_length=1, max_length=6000)

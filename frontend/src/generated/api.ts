@@ -451,6 +451,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/creative-explorations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Creative Exploration */
+        post: operations["creative_exploration_api_creative_explorations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/guidance": {
         parameters: {
             query?: never;
@@ -1465,6 +1482,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/tasks/{task_id}/diagram/locate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Locate */
+        post: operations["locate_api_tasks__task_id__diagram_locate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/tasks/{task_id}/diagram": {
         parameters: {
             query?: never;
@@ -1730,6 +1764,20 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** CreativeExploration */
+        CreativeExploration: {
+            /** Goal */
+            goal: string;
+            /**
+             * Constraints
+             * @default
+             */
+            constraints: string;
+            /** Item Ids */
+            item_ids?: string[];
+            /** Photo Ids */
+            photo_ids?: string[];
+        };
         /** DeviceBind */
         DeviceBind: {
             /**
@@ -1792,6 +1840,16 @@ export interface components {
             step_id: string;
             /** Photo Ids */
             photo_ids?: string[];
+            /**
+             * Use Model
+             * @default false
+             */
+            use_model: boolean;
+            /**
+             * Local Only
+             * @default false
+             */
+            local_only: boolean;
         };
         /** EarbudResult */
         EarbudResult: {
@@ -2069,6 +2127,31 @@ export interface components {
             status: string;
             /** Created At */
             created_at: string;
+        };
+        /** Grounding */
+        Grounding: {
+            /** Visible */
+            visible: boolean;
+            /** Bbox */
+            bbox?: [
+                number,
+                number,
+                number,
+                number
+            ] | null;
+            /** Label */
+            label: string;
+            /** Confidence */
+            confidence: number;
+            /** Explanation */
+            explanation: string;
+            /** Candidates */
+            candidates: [
+                number,
+                number,
+                number,
+                number
+            ][];
         };
         /** GroundingRequest */
         GroundingRequest: {
@@ -2492,6 +2575,17 @@ export interface components {
             attributes?: {
                 [key: string]: unknown;
             };
+        };
+        /** MeshGroundingRequest */
+        MeshGroundingRequest: {
+            /** Expected Version */
+            expected_version: number;
+            /** Step Id */
+            step_id: string;
+            /** Model Asset Id */
+            model_asset_id: string;
+            /** Render Base64 */
+            render_base64: string;
         };
         /** NoiseRequest */
         NoiseRequest: {
@@ -4037,6 +4131,39 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ChatRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    creative_exploration_api_creative_explorations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreativeExploration"];
             };
         };
         responses: {
@@ -6226,6 +6353,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CommunitySessionView"];
+                };
+            };
+        };
+    };
+    locate_api_tasks__task_id__diagram_locate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshGroundingRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Grounding"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

@@ -1152,6 +1152,44 @@
         }
       }
     },
+    "/api/creative-explorations": {
+      "post": {
+        "summary": "Creative Exploration",
+        "operationId": "creative_exploration_api_creative_explorations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreativeExploration"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/guidance": {
       "post": {
         "tags": [
@@ -4019,6 +4057,58 @@
         }
       }
     },
+    "/api/tasks/{task_id}/diagram/locate": {
+      "post": {
+        "tags": [
+          "3D teaching demo"
+        ],
+        "summary": "Locate",
+        "operationId": "locate_api_tasks__task_id__diagram_locate_post",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeshGroundingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Grounding"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/tasks/{task_id}/diagram": {
       "post": {
         "tags": [
@@ -4690,6 +4780,44 @@
         ],
         "title": "ConversationView"
       },
+      "CreativeExploration": {
+        "properties": {
+          "goal": {
+            "type": "string",
+            "maxLength": 6000,
+            "minLength": 1,
+            "title": "Goal"
+          },
+          "constraints": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Constraints",
+            "default": ""
+          },
+          "item_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Item Ids"
+          },
+          "photo_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Photo Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "goal"
+        ],
+        "title": "CreativeExploration"
+      },
       "DeviceBind": {
         "properties": {
           "kind": {
@@ -4844,6 +4972,16 @@
             "type": "array",
             "maxItems": 2,
             "title": "Photo Ids"
+          },
+          "use_model": {
+            "type": "boolean",
+            "title": "Use Model",
+            "default": false
+          },
+          "local_only": {
+            "type": "boolean",
+            "title": "Local Only",
+            "default": false
           }
         },
         "additionalProperties": false,
@@ -5577,6 +5715,91 @@
           "created_at"
         ],
         "title": "GiftView"
+      },
+      "Grounding": {
+        "properties": {
+          "visible": {
+            "type": "boolean",
+            "title": "Visible"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "prefixItems": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ],
+                "type": "array",
+                "maxItems": 4,
+                "minItems": 4
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bbox"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 120,
+            "title": "Label"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence"
+          },
+          "explanation": {
+            "type": "string",
+            "maxLength": 800,
+            "title": "Explanation"
+          },
+          "candidates": {
+            "items": {
+              "prefixItems": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                }
+              ],
+              "type": "array",
+              "maxItems": 4,
+              "minItems": 4
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Candidates"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "visible",
+          "label",
+          "confidence",
+          "explanation",
+          "candidates"
+        ],
+        "title": "Grounding"
       },
       "GroundingRequest": {
         "properties": {
@@ -6627,6 +6850,42 @@
           "updated_at"
         ],
         "title": "MemoryView"
+      },
+      "MeshGroundingRequest": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "step_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Step Id"
+          },
+          "model_asset_id": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Model Asset Id"
+          },
+          "render_base64": {
+            "type": "string",
+            "maxLength": 8000000,
+            "minLength": 20,
+            "title": "Render Base64"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "step_id",
+          "model_asset_id",
+          "render_base64"
+        ],
+        "title": "MeshGroundingRequest"
       },
       "NoiseRequest": {
         "properties": {

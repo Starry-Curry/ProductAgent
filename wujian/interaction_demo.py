@@ -4,6 +4,11 @@ from .database import Household, HouseholdItem, HouseholdMember, ItemRecord, Pro
 
 
 def ensure_demo_workspace(db):
+    # A focused real-object profile may contain only its own user/item. Seed
+    # the fictional family workspace only when its complete base is present.
+    from .database import User,ItemRecord
+    if not db.get(User,'person_demo_friend') or not db.get(ItemRecord,'item_demo_lamp'):
+        return
     owner, friend, house_id = "person_demo_owner", "person_demo_friend", "household_demo_home"
     from .database import User
     if not db.get(User,owner) or not db.get(User,friend):

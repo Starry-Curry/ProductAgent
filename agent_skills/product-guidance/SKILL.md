@@ -3,6 +3,14 @@ name: product-guidance
 description: 回答陌生商品的具体操作、型号能力、维护或故障问题。操作指导前阅读，用适用的原始资料形成可追溯、可复用的认识。
 ---
 
+按语义判断带做：首次上手、连接/使用失败、安装设置和“接下来怎么弄”就进入当前对话的guidance，不要求用户说特定词。用assistance_mode=teach和target_item_ids明确对象；全局聊天先核对库存里的物品。首次回复即保存一个有guidance.instruction的具体当前步骤；核对问题也属于identify/observe，缺少资料不等于只能输出散文。只有title/note的提纲没有可运行的教学步骤。应用在同一话题提供3D图解、相机辅助和完成反馈；摄像头需用户点击并授权，不能假称已经观察到现场。
+
+先调用start_guidance，以本次困难最关键的一条观察问题进入原生带做。它返回真实task_id/version，后续沿用；不要先重复读Skill或把整轮耗在资料搜索上。已有上下文和原文节选直接使用；本轮最多一轮搜索、一轮原文读取，再交付当前一步。资料未全也可先询问连接方式、具体提示等关键现象，不编造按钮或把所有检查塞在同一个步骤里。
+
+后续仍可用start_guidance更新同一任务的当前一步，question必须回应本轮反馈，不能复述用户现状。已报告USB连接就不再追问Wi-Fi；操作系统未知先核对。读取适用原文后，用kind=operate和source_id/source_line_start/source_line_end发布有依据的操作；程序提取原句，不手抄。工具已保存则最终continuation=null自然解释，不重复生成整份历史方案。需要continuation时只提交变化条目，状态仅pending/ready/not_found/unchanged，不能写completed；实际完成用progress_reports。
+
+“生成详细讲解/3D示意/实时追踪/在当前对话里”不等于要求编写网页，不用create_workbench替代带做。只有明确委托软件或控制台作品才生成独立工作台；已有错误工作台也不作为本次教学任务覆盖，回到当前实物的新guidance步骤。
+
 先回答当前问题；简单解释且不需继续操作时，continuation 可为 null。需要实际操作时，continuation.plan 使用 schema=interaction/1、kind=guidance，只推进本轮可观察的当前一步及完成标志；条目 group=step，entry.guidance 保留 instruction、success_signal、target_label、basis 和实际 evidence。通用观察用 basis=general，型号专用操作需要 document 原文；负反馈先核对，不复读旧步骤或凭空复位。未实际执行的提案仍为 pending。
 
 已有任务沿用原 task_id、expected_version、entry ID 与真实状态，只填写本轮变化；不要为了套用本方法自动转换或重建旧 checklist。feedback_quote 保留本轮用户反馈，具体条目的实际结果用 progress_reports 引用本轮原话。preparation_reports 仅用于 checklist 中资源有无、数量和准备说明的更正，不替代步骤完成报告；guidance 时留空。不把用户提问、操作建议或资料中的示例结果当作用户已经完成。
@@ -28,3 +36,5 @@ description: 回答陌生商品的具体操作、型号能力、维护或故障�
 理解出的能力也能用于创造和分身；保留的是同一份知识，不为每个功能另建说明书库。
 
 原文工具返回带编号的行。知识依据优先填写source_line_start/source_line_end连续范围，程序提取原句；无须手抄整段或重复已知型号。PDF的page是页码，source_line是全文行号，二者不能互填；查看页图后需要文字依据时，用read_source指定该page，采用实际返回的行号，不拿目录中印出的页码作为正文行号。每条认识只表达所选证据真正支持的能力或边界；其他章节的条件另行读取和引用。
+
+聊天正文自然回应本轮困难，按需要解释、举例或提问，不强制套标题、观察信号或固定结尾。计划记录进度，回答负责帮助人理解；解释时可以continuation=null，不必重写计划。列出的步骤都完成只表示做过这些步骤，未报告原目标解决就继续同一目标；观察步骤的确认不提供灯色、错误信息或连接结果，缺哪一项就具体询问。不要反复要求用户确认同一步。

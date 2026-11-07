@@ -164,9 +164,8 @@ function WorkspaceApp({
     setRun(initial);
     const generation = openingGeneration.current;
     const routeWhenStarted = location.hash;
-    function finish(value: Run) {
-      void updateMessages(value.conversation_id);
-      void refresh().catch(() => {});
+    let shownGuidanceEvents = 0;
+    function syncBoard(value: Run) {
       const taskId = String(value.events.filter((event) => event.type === "continuation_saved").at(-1)?.task_id || context.entry.task_id || "");
       if (!taskId || large) return;
       void request<Board>(`/tasks/${taskId}/board`).then((next) => {
@@ -180,9 +179,14 @@ function WorkspaceApp({
         // tasks retain their explicit entry and their existing presentation.
         if (context.entry.task_id || (["checklist", "guidance"].includes(String(next.task.plan.kind)) && !next.task.plan.pending_action)) {
           setBoard((previous) => previous?.task.id === next.task.id && previous.task.version > next.task.version ? previous : next);
-          setContext((previous) => ({ ...previous, itemIds: next.task.item_ids, entry: { ...previous.entry, task_id: taskId } }));
+          setContext((previous) => ({ ...previous, itemIds: next.task.item_ids, entry: { ...previous.entry, intent: next.task.plan.kind === "guidance" ? "guidance" : previous.entry.intent, task_id: taskId } }));
         }
       }).catch(() => {});
+    }
+    function finish(value: Run) {
+      void updateMessages(value.conversation_id);
+      void refresh().catch(() => {});
+      syncBoard(value);
     }
     if (!["queued", "running"].includes(initial.status)) {
       finish(initial);
@@ -194,6 +198,11 @@ function WorkspaceApp({
       const value = JSON.parse(event.data) as Run;
       if (currentThread.current !== value.conversation_id) return;
       setRun(value);
+      const prepared = value.events.filter((entry) => entry.type === "continuation_saved" && entry.source === "start_guidance").length;
+      if (prepared > shownGuidanceEvents) {
+        shownGuidanceEvents = prepared;
+        syncBoard(value);
+      }
       if (!["queued", "running"].includes(value.status)) {
         eventSource.close();
         finish(value);
@@ -814,7 +823,7 @@ function WorkspaceApp({
                   {actionTaskIds.map((id) => <ButlerActionCard key={id} taskId={id} refresh={refresh} />)}
                   {workbenchLink?.taskId && workspace.items.some((item) => item.id === workbenchLink.itemId) && <button className="continuation-entry soft-button" onClick={() => navigate({ section: "items", itemId: workbenchLink.itemId, panel: "workbench", taskId: workbenchLink.taskId })}><Wrench size={17} />打开我的新工具</button>}
                   {!large && board && boardActions && board.task.plan.kind === "checklist" && <TaskCanvas {...boardActions} />}
-                  {!large && board && board.task.plan.kind === "guidance" && board.entries.some((entry) => "guidance" in entry && entry.guidance) && <GuidanceTools board={board} update={(value) => { setBoard(value); void refresh(); }} initial={!messages.length} photos={draft.photos.length ? draft.photos : [...messages].reverse().find((value) => value.role === "user" && value.photo_ids.length)?.photo_ids || []} running={sending || run?.status === "running" || run?.status === "queued"} onRun={async (value) => { await openThread(value.conversation_id, { itemIds: board.task.item_ids, entry: { intent: "guidance", task_id: board.task.id } }); if (currentThread.current === value.conversation_id) watch(value); await refresh(); }} explain={() => { setDraft((previous) => ({ ...previous, text: previous.text || "这一步还有点不明白，结合这件物品再帮我讲讲吧。" })); document.querySelector<HTMLTextAreaElement>(".composer textarea")?.focus(); }} />}
+                  {!large && board && board.task.plan.kind === "guidance" && board.entries.some((entry) => "guidance" in entry && entry.guidance) && <GuidanceTools board={board} update={(value) => { setBoard(value); void refresh(); }} initial={!messages.length} photos={draft.photos.length ? draft.photos : [...messages].reverse().find((value) => value.role === "user" && value.photo_ids.length)?.photo_ids || []} running={sending || run?.status === "running" || run?.status === "queued"} onRun={async (value) => { await openThread(value.conversation_id, { itemIds: board.task.item_ids, entry: { intent: "guidance", task_id: board.task.id } }); if (currentThread.current === value.conversation_id) watch(value); await refresh(); }} explain={(text) => { setDraft((previous) => ({ ...previous, text: previous.text || text || "这一步还有点不明白，结合这件物品再帮我讲讲吧。" })); document.querySelector<HTMLTextAreaElement>(".composer textarea")?.focus(); }} />}
                   {continuedTaskId && board?.task.id !== continuedTaskId && !actionTaskIds.includes(continuedTaskId) && <button className="continuation-entry soft-button" onClick={() => void openTask(continuedTaskId)}><Sparkles size={17} />查看这次方案</button>}
                 </>}
                 contextLabel={

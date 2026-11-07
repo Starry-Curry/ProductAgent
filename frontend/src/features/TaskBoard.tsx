@@ -743,47 +743,38 @@ export function GuidanceTools({
   initial?: boolean;
   onRun: (run: Run) => Promise<void>;
   running?: boolean;
-  explain: () => void;
+  explain: (text?: string) => Promise<void> | void;
 }) {
   const { message } = AntApp.useApp();
   const [busy, setBusy] = useState(false);
+  const actionPending = useRef(false);
   const active = (
     board.task.plan.guidance as { active_step_id?: string } | undefined
   )?.active_step_id;
   const current =
-    board.entries.find((entry) => entry.id === active) ||
-    board.entries.find((entry) => entry.state !== "ready") ||
-    board.entries.at(-1);
-  if (!current?.guidance) return null;
+    board.entries.find((entry) => entry.id === active && entry.state !== "ready") ||
+    board.entries.find((entry) => entry.state !== "ready");
   const lesson = (
     board.task.plan.guidance as {
       lesson?: {
         phase: string;
         inputs: Record<string, unknown>;
-        definition: {
-          steps: { id: string; requires_input?: string; adaptive?: boolean }[];
-        };
+        definition: { steps: { id: string; requires_input?: string; adaptive?: boolean }[] };
       };
     }
   )?.lesson;
   const inputKey = lesson?.definition.steps.find(
-    (step) => step.id === current.id,
+    (step) => step.id === current?.id,
   )?.requires_input;
-  const provided = (inputKey ? lesson?.inputs[inputKey] : null) as {
-    status?: string;
-    profile_id?: string;
-  } | null;
-  const waitingInput =
-    !!inputKey &&
-    !(
-      provided?.status === "ready" ||
-      (provided?.profile_id && !provided?.status)
-    );
-  const adaptive = !!lesson?.definition.steps.find(
-    (step) => step.id === current.id,
-  )?.adaptive;
+  const provided = (inputKey ? lesson?.inputs[inputKey] : null) as {status?: string; profile_id?: string} | null;
+  const waitingInput = !!inputKey && !(provided?.status === "ready" || (provided?.profile_id && !provided?.status));
+  const overview = (board.task.plan.guidance as {overview?: unknown})?.overview;
+  const outline = Array.isArray(overview)
+    ? overview.filter((value): value is string => typeof value === "string")
+    : lesson ? board.entries.map((entry) => entry.title) : [];
   async function confirm() {
-    if (!current) return;
+    if (!current || current.state === "ready" || busy || running || actionPending.current) return;
+    actionPending.current = true;
     setBusy(true);
     try {
       const key = `${board.task.id}:${board.task.version}:${current.id}`;
@@ -808,71 +799,87 @@ export function GuidanceTools({
     } catch (error) {
       message.error((error as Error).message);
     } finally {
+      actionPending.current = false;
       setBusy(false);
     }
+  }
+  async function discuss(text?: string) {
+    if (busy || running || actionPending.current) return;
+    actionPending.current = true;
+    setBusy(true);
+    try { await explain(text); }
+    catch (error) { message.error((error as Error).message); }
+    finally { actionPending.current = false; setBusy(false); }
   }
   if (board.task.status === "completed")
     return (
       <p className="muted">这次教学已按你的反馈完成。可以继续聊成品效果。</p>
     );
+  if (board.task.status === "cancelled") return <p className="muted">这件事已结束，想继续可以在聊天里说明。</p>;
+  const overviewContent = outline.length > 0 && (
+    <details className="guidance-overview">
+      <summary>这次怎么做 · 查看总览</summary>
+      <ol>{outline.map((title, index) => <li key={index}>{title}</li>)}</ol>
+    </details>
+  );
+  if (!current?.guidance)
+    return (
+      <section className="guidance-tools" aria-label="接着处理当前问题">
+        {overviewContent}
+        <p className="muted">{running || busy ? "正在接着处理你的反馈…" : board.entries.length && !current ? "前面的步骤已确认，可以补充看到的现象，接着处理原来的问题。" : "还没有可操作的当前步骤，可以接着聊聊要做什么。"}</p>
+        <button className="soft-button" disabled={busy || running}
+          onClick={() => void discuss(board.entries.length && !current ? "前面的步骤我已经做过了，请接着帮我处理原来的问题。" : "请帮我明确这件事接下来怎么做。")}>接着处理</button>
+      </section>
+    );
+  const adaptive = !!lesson?.definition.steps.find((step) => step.id === current?.id)?.adaptive;
+  const canConfirm = !waitingInput && !running && !busy && lesson?.phase !== "paused" && board.access === "owner";
   return (
     <section className="guidance-tools" aria-label="当前回答的辅助工具">
+      {overviewContent}
       <p className="muted">
         {lesson
-          ? adaptive
-            ? "当前补充核对"
-            : `第 ${board.entries.findIndex((entry) => entry.id === current.id) + 1} 步`
+          ? `第 ${board.entries.findIndex((entry) => entry.id === current.id) + 1} / ${board.total_count} 步`
           : "当前"}{" "}
         · {current.title}
       </p>
       {initial && <p className="saved-step">{current.guidance.instruction}</p>}
-      {!adaptive && (
-        <StepIllustration
-          key={board.task.id + current.id}
-          board={board}
-          entry={current}
-          update={update}
-          enabled={!running && !busy}
-          photos={photos}
-        />
-      )}
+      {!adaptive && <StepIllustration
+        key={board.task.id + current.id}
+        board={board}
+        entry={current}
+        update={update}
+        enabled={!running && !busy}
+        photos={photos}
+      />}
       <div className="guidance-assists">
         <button
           className="primary-button"
-          disabled={
-            busy ||
-            running ||
-            waitingInput ||
-            lesson?.phase === "paused" ||
-            board.access !== "owner"
-          }
+          disabled={!canConfirm}
           onClick={() => void confirm()}
         >
           <Check size={17} />
-          {waitingInput ? "先告诉阿圆材料条件" : "我完成了这一步"}
+          {waitingInput ? "先告诉阿圆材料条件" : "这步做好了"}
         </button>
         <button
           className="quiet-button"
           disabled={busy || running}
-          onClick={explain}
+          onClick={() => void discuss()}
         >
           这一步怎么做？
         </button>
-        {!adaptive && (
-          <TeachingDiagram
-            key={board.task.id + current.id}
-            board={board}
-            entry={current}
-            update={update}
-            photoIds={photos}
-            onConfirm={!waitingInput && !running && !busy ? confirm : undefined}
-          />
-        )}
+        {!adaptive && <TeachingDiagram
+          key={board.task.id + current.id}
+          board={board}
+          entry={current}
+          update={update}
+          photoIds={photos}
+          onConfirm={canConfirm ? confirm : undefined}
+        />}
         <CameraGuidance
           key={"camera-" + board.task.id}
           board={board}
           entry={current}
-          onConfirm={!waitingInput && !running && !busy ? confirm : undefined}
+          onConfirm={canConfirm ? confirm : undefined}
         />
       </div>
     </section>

@@ -78,6 +78,12 @@ def history_policy(db, user_id):
                 add_literal(quote)
         if len(content) >= 4 and content not in active_content:
             add_literal(content)
+    from .database import Run
+    retired={row.id for row in rows if not row.active}
+    if retired:
+        affected=[run.id for run in db.scalars(select(Run).where(Run.user_id==user_id))
+            if any(event.get('type')=='memory_context' and retired.intersection(event.get('memory_ids',[])) for event in run.events)]
+        if affected:source_ids.update(db.scalars(select(ChatMessage.id).where(ChatMessage.run_id.in_(affected))))
     return HistoryPolicy(frozenset(source_ids), tuple(sorted(literals.items())))
 
 

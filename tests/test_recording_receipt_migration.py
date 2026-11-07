@@ -64,7 +64,7 @@ class RecordingReceiptMigrationTests(unittest.TestCase):
                 self.assertEqual(len(list((Path(directory)/'backups').glob(f'before-0007-to-{head}-*.sqlite3'))),1)
                 with reopened.connect() as connection:
                     config.attributes['connection']=connection
-                    with self.assertRaisesRegex(RuntimeError,'verified pre-000[89]'):
+                    with self.assertRaisesRegex(RuntimeError,'pre-(?:000[89]|0010)'):
                         command.downgrade(config,'0007')
                 self.assertIn('recorded_experiences',[column['name'] for column in inspect(reopened).get_columns('messages')])
             finally:

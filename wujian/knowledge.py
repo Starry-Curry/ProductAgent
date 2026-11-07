@@ -131,30 +131,34 @@ async def download_public(url, *, max_bytes=12 * 1024 * 1024, headers=None, same
             initial_origin = initial_origin or origin
             # Pin the checked address: there is no second system DNS lookup,
             # while Host and TLS verification still use the original domain.
-            pinned = original.copy_with(host=addresses[0])
-            client.cookies.clear()
-            async with client.stream("GET", pinned, headers={**(headers or {}),"Host": original.netloc.decode("ascii")},
-                                     extensions={"sni_hostname": original.raw_host.decode("ascii")}) as response:
-                check_cancelled()
-                if response.status_code in {301, 302, 303, 307, 308}:
-                    url = urljoin(str(original), response.headers.get("location", ""))
-                    continue
-                if response.status_code in {401, 403, 412, 429}:
-                    raise DomainError(f"公开资料读取受限（HTTP {response.status_code}）；未登录或绕过限制，请换公开来源", 502)
+            for address_index,address in enumerate(addresses):
                 try:
-                    response.raise_for_status()
-                except httpx.HTTPStatusError as error:
-                    # Keep the actual public-document HTTP failure observable
-                    # without leaking a pinned-IP URL or an untrusted body.
-                    raise DomainError(f"公开资料读取失败（HTTP {response.status_code}）；尚未取得正文，请检查公开地址或换来源", 502) from error
-                data = bytearray()
-                async for chunk in response.aiter_bytes():
-                    check_cancelled()
-                    data.extend(chunk)
-                    if len(data) > max_bytes:
-                        raise DomainError(f"资料超过当前单文件{max_bytes // (1024 * 1024)}MB限制")
-                check_cancelled()
-                return str(original), response.headers.get("content-type", ""), bytes(data)
+                    pinned = original.copy_with(host=address)
+                    client.cookies.clear()
+                    async with client.stream("GET", pinned, headers={**(headers or {}),"Host": original.netloc.decode("ascii")},
+                                             extensions={"sni_hostname": original.raw_host.decode("ascii")}) as response:
+                        check_cancelled()
+                        if response.status_code in {301, 302, 303, 307, 308}:
+                            url = urljoin(str(original), response.headers.get("location", ""))
+                            break
+                        if response.status_code in {401, 403, 412, 429}:
+                            raise DomainError(f"公开资料读取受限（HTTP {response.status_code}）；未登录或绕过限制，请换公开来源", 502)
+                        try:
+                            response.raise_for_status()
+                        except httpx.HTTPStatusError as error:
+                            # Keep the actual public-document HTTP failure observable
+                            # without leaking a pinned-IP URL or an untrusted body.
+                            raise DomainError(f"公开资料读取失败（HTTP {response.status_code}）；尚未取得正文，请检查公开地址或换来源", 502) from error
+                        data = bytearray()
+                        async for chunk in response.aiter_bytes():
+                            check_cancelled()
+                            data.extend(chunk)
+                            if len(data) > max_bytes:
+                                raise DomainError(f"资料超过当前单文件{max_bytes // (1024 * 1024)}MB限制")
+                        check_cancelled()
+                        return str(original), response.headers.get("content-type", ""), bytes(data)
+                except (httpx.ConnectError,httpx.ConnectTimeout):
+                    if address_index+1==len(addresses):raise
     raise DomainError("资料重定向过多", 502)
 
 
@@ -492,6 +496,7 @@ def _candidate_pages(source, query):
 
 def source_excerpt(source, query="", page=None, *, max_chars=12000):
     text = source.content
+    if page==1 and not source.pages:page=None
     offset = 0
     candidates=_candidate_pages(source,query) if query else []
     query_matched=query.casefold() in source.content.casefold() if query else None

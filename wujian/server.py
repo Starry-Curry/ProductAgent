@@ -1,6 +1,8 @@
 import asyncio
 import io
 import json
+import secrets
+import threading
 from contextlib import asynccontextmanager
 from urllib.parse import urlsplit
 
@@ -105,6 +107,7 @@ def create_app(settings=None, model_factory=None):
 
     app = FastAPI(title="物间 Wujian API", version="0.3.0", lifespan=lifespan)
     app.state.sessions, app.state.runner, app.state.settings = sessions, runner, settings
+    demo_seed_lock = threading.Lock()
     app.add_middleware(SessionMiddleware, secret_key=settings.session_secret, same_site="lax", max_age=7 * 86400)
 
     @app.middleware("http")
@@ -129,6 +132,14 @@ def create_app(settings=None, model_factory=None):
 
     def current_user(request: Request, db=Depends(db_session)):
         user = db.get(User, request.session.get("user_id", ""))
+        if user is not None and settings.demo_isolation:
+            from .showcase import DEMO_USERNAMES, DEMO_SEED_REVISION
+            if user.username in DEMO_USERNAMES:
+                user = None
+            elif user.id.startswith('person_demo_') and user.username.startswith('demo_'):
+                visitor = request.session.get('demo_visitor', '')
+                if not visitor or not user.username.startswith('demo_' + visitor + '_') or request.session.get('demo_seed_revision') != DEMO_SEED_REVISION:
+                    user = None
         if user is None:
             raise domain.DomainError("请先登录", 401)
         return user
@@ -162,6 +173,20 @@ def create_app(settings=None, model_factory=None):
     def demo_login(persona: str, request: Request, db=Depends(db_session)):
         if not settings.demo_mode:
             raise domain.DomainError("体验档案未开放", 404)
+        if settings.demo_isolation:
+            from .showcase import import_showcase, DEMO_SEED_REVISION
+            username = {'xiaolin':'xiaolin','xiaoxia':'xiaoxia','mom':'xiaolin_mom_demo','grandpa':'xiaolin_grandpa_demo'}.get(persona)
+            if username is None:
+                raise domain.DomainError('未找到这个体验档案', 404)
+            visitor = request.session.get('demo_visitor') if request.session.get('user_id') and request.session.get('demo_seed_revision') == DEMO_SEED_REVISION else None
+            visitor = visitor or secrets.token_hex(16)
+            with demo_seed_lock:
+                import_showcase(db, settings, namespace=visitor)
+                db.commit()
+            user = domain.require(db.scalar(select(User).where(User.username == 'demo_' + visitor + '_' + username)))
+            request.session.clear()
+            request.session.update(user_id=user.id, demo_visitor=visitor, demo_seed_revision=DEMO_SEED_REVISION)
+            return domain.user_view(user)
         identity = {"xiaolin": "person_demo_owner", "xiaoxia": "person_demo_friend"}.get(persona)
         family_username = {"mom": "xiaolin_mom_demo", "grandpa": "xiaolin_grandpa_demo"}.get(persona)
         user = domain.require(db.scalar(select(User).where(User.username == family_username)) if family_username
@@ -242,7 +267,7 @@ def create_app(settings=None, model_factory=None):
 
     @app.get("/api/conversations", response_model=list[ConversationView])
     def conversations(user=Depends(current_user), db=Depends(db_session)):
-        return list(db.scalars(select(Conversation).where(Conversation.user_id == user.id).order_by(Conversation.updated_at.desc()).limit(80)))
+        return interactions.list_conversations(db, user.id)
 
     @app.get('/api/tasks',response_model=list[TaskView])
     def tasks(user=Depends(current_user),db=Depends(db_session)):
@@ -320,6 +345,16 @@ def create_app(settings=None, model_factory=None):
             if payload.entry_context.task_id:
                 interactions.task_access(db, user.id, payload.entry_context.task_id)
             conversation.entry_context = payload.entry_context.model_dump()
+        from .assistance import resolve_focus, bind_task, operation_help_requested, wants_software
+        if (payload.conversation_id or operation_help_requested(payload.text)) and (not conversation.item_ids or 'item_ids' not in payload.model_fields_set) and (conversation.entry_context or {}).get('intent','general') in {'general','guidance'}:
+            conversation.item_ids=resolve_focus(db,user.id,payload.text,conversation.item_ids)
+        if (conversation.item_ids and (conversation.entry_context or {}).get('intent','general') in {'general','guidance'}
+                and operation_help_requested(payload.text) and not wants_software(payload.text)):
+            entry=dict(conversation.entry_context or {})
+            attached=db.get(TaskRecord,entry.get('task_id') or '')
+            if attached and attached.plan.get('schema')=='workbench/1':entry['task_id']=None
+            conversation.entry_context={**entry,'intent':'guidance'}
+        conversation.entry_context=bind_task(db,user.id,conversation.item_ids,conversation.entry_context,detach=True)
         if (conversation.entry_context or {}).get("intent") == "persona":
             if len(conversation.item_ids) != 1 or not domain.item_view(db, user.id,
                     domain.accessible_item(db, user.id, conversation.item_ids[0]))["avatar"].get("enabled"):
@@ -329,7 +364,7 @@ def create_app(settings=None, model_factory=None):
         db.flush()
         run = Run(id=uid(), conversation_id=conversation.id, user_id=user.id)
         db.add(run)
-        db.add(ChatMessage(conversation_id=conversation.id, role="user", text=payload.text, photo_ids=payload.photo_ids, run_id=run.id))
+        db.add(ChatMessage(conversation_id=conversation.id, role="user", text=payload.text, photo_ids=payload.photo_ids, item_ids=list(conversation.item_ids), run_id=run.id))
         try:
             db.commit()
         except IntegrityError:
@@ -337,6 +372,16 @@ def create_app(settings=None, model_factory=None):
             raise domain.DomainError("这段对话已有进行中的任务，请等待或停止后继续", 409)
         runner.start(run.id)
         return RunView.model_validate(run, from_attributes=True)
+
+    from .api_models import CreativeExploration, EntryContext
+    @app.post('/api/creative-explorations',response_model=RunView)
+    async def creative_exploration(payload: CreativeExploration,user=Depends(current_user),db=Depends(db_session)):
+        if not payload.goal.strip():raise domain.DomainError('请先告诉我这次想探索什么')
+        from .creative import exploration_text
+        result=await chat(ChatRequest(text=exploration_text(payload),item_ids=payload.item_ids,
+            photo_ids=payload.photo_ids,entry_context=EntryContext(intent='creative')),user,db)
+        conversation=db.get(Conversation,result.conversation_id);conversation.title=payload.goal.strip()[:35];db.commit()
+        return result
 
     def owned_run(db, user_id, run_id):
         row = domain.require(db.get(Run, run_id))

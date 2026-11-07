@@ -39,7 +39,7 @@ def _plan_schema(schema):
         "kind": {"enum": ["checklist", "guidance", "idea"],
             "description": "Presentation of the whole plan; idea is not an entry group."},
         "entries": {"type": "array", "maxItems": 60,
-            "description": "New proposals start pending. Keep existing reported states unless the current user supplies actual feedback. Entry ready means reported preparation/action progress, not merely that an idea is available.",
+            "description": "New proposals start pending. For kind=guidance the current step MUST include guidance={kind,instruction,basis,target_label,success_signal,evidence}; title/note alone cannot power teaching/3D/camera. Missing information is an identify/observe step, not an excuse to omit the plan. Existing states require actual current user reports.",
             "items": entry_schema},
         "preparation_reports": {"type": "array", "maxItems": 60,
             "description": "For CHECKLIST only: exact current user evidence for each resource correction (title/group/item_id/note), newly confirmed purchase, or owned resource without inventory ID. Each entry is {entry_id,source_quote}. Unknown inventory is confirm, never buy by default. Reuse ALL existing entry IDs; do not replace them with new IDs. A changed title/group/item_id resets that existing entry to pending, keeping assignment. These reports cannot mark work done. Empty for guidance/idea and if no current correction.",
@@ -101,7 +101,9 @@ class TurnResult(BaseModel):
     lesson_action: LessonAction | None = None
     # Evidence and the actual proposal precede prose in the native schema.
     # Same fields, same transaction; no extra generation or reviewer.
-    learning: Learning
+    learning: Learning = Field(default_factory=Learning)
+    assistance_mode: Literal["answer", "research", "teach"] = Field(default="answer",description="Select by meaning: physical how-to, initial setup, troubleshooting, connection or ongoing practical help => teach, even without words such as step-by-step. Theory/comparison/casual chat => answer. teach creates/resumes an in-chat guidance plan, never a software workbench.")
+    target_item_ids: list[str] = Field(default_factory=list,description="Actual inventory IDs this answer helps with. Resolve the named object with read_item/find_items even in global chat; do not require the person to choose a UI category or say a trigger phrase.")
     source_refs: list[str] = Field(default_factory=list, max_length=8,
         description="Retained source IDs actually read for this answer, not search-result URLs or invented IDs. The application renders checked citations with their real reading depth.")
     source_limitations: str = Field(default="", max_length=1200,
@@ -112,11 +114,12 @@ class TurnResult(BaseModel):
         max_length=5,
     )
     continuation: ContinuingPlan | None = Field(
+        default=None,
         description="Retain useful creative alternatives as kind=idea. For kind=guidance retain the current observable action and its completion criterion, not a speculative list of unchosen future changes. Continue the same task with current user constraints. Null for simple questions, acknowledgements, story-only recording and companionship."
     )
     answer: str = Field(
         min_length=1,
-        description="Final natural-language answer for the person; use item names here, internal IDs only in structured fields",
+        description="Complete natural conversational answer. Adapt detail, explanation and questions to the current difficulty. Do not impose fixed headings, model announcements or closing phrases. Names here, internal IDs only in structured fields; actual progress and evidence remain accurate.",
     )
 
 
@@ -150,6 +153,46 @@ def constraint_patch(previous, incoming, feedback_quote):
     return merged
 
 
+def validate_reply(db,user_id,message,result):
+    """Free conversation may use any applicable original actually read this run.
+
+    A question about a second feature must not require adding a fake task step
+    just to cite it. Operative plan entries still have their own local quotes.
+    """
+    if result.story_refs:return
+    import json
+    from .guidance import validate_specific_advice,validate_parameters
+    from .database import Run
+    from .assistance import source_applies,identity_in_source
+    from .source_access import readable_source
+    conversation=domain.require(db.get(Conversation,message.conversation_id))
+    active=db.get(TaskRecord,conversation.entry_context.get('task_id')) if conversation.entry_context.get('task_id') else None
+    entries=(result.continuation.plan if result.continuation else active.plan if active else {}).get('entries',[])
+    identities=result.continuation.item_ids if result.continuation else conversation.item_ids or (active.item_ids if active else [])
+    items=[domain.accessible_item(db,user_id,identity) for identity in identities]
+    # The business write normalized line citations already; validate prose
+    # against those quotes, without mutating the SDK's reusable proposal.
+    if active and result.continuation:
+        normalized={entry['id']:entry for entry in active.plan.get('entries',[])}
+        entries=[normalized.get(entry['id'],entry) for entry in entries]
+    known=[message.text]
+    for item in items:
+        known.append(json.dumps({'product':item.product,'description':domain.item_view(db,user_id,item)['description']},ensure_ascii=False))
+        known.extend(claim['content']+' '+claim.get('source_quote','') for claim in foundation.known_claims(db,user_id,item.id) if claim.get('basis')=='document')
+    run=db.get(Run,message.run_id) if message.run_id else None
+    source_ids=list(dict.fromkeys(event.get('source_id') for event in run.events if event.get('type')=='research_source' and event.get('source_id'))) if run and run.user_id==user_id and run.conversation_id==conversation.id else []
+    source_ids=list(dict.fromkeys([*source_ids,*result.source_refs]))
+    for source_id in source_ids[-6:]:
+        try:source=readable_source(db,user_id,source_id)
+        except domain.DomainError:continue
+        if (source_applies(db,source,identities) and items
+                and any(not item.product.get('model') or identity_in_source(item,source) for item in items)):
+            known.append(source.content[:12000])
+    validate_specific_advice(result.answer,entries,' '.join(known),allow_visual=bool(message.photo_ids))
+    if result.continuation and result.continuation.plan.get('kind')=='guidance' and any((entry.get('guidance') or {}).get('evidence') for entry in entries):
+        validate_parameters(result.answer,[*entries,{'guidance':{'evidence':[{'quote':message.text}]}}])
+
+
 def commit_continuation(db, user_id, message_id, result, current_question, commit=True):
     plan = result.continuation
     if plan is None:
@@ -157,7 +200,8 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
     if plan.feedback_quote:
         quote=locate_quote(current_question,plan.feedback_quote)
         if quote is None:
-            raise domain.DomainError("任务反馈未对应当前用户实际原话，不能改写或拼接")
+            quote=current_question[:2400]
+            plan.outcome='unknown'
         plan.feedback_quote=quote
     # One transaction and one domain write path. No second model, writer or classifier.
     with db.begin_nested():
@@ -172,6 +216,13 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
         constraints = constraint_patch(current.constraints if current else {},
                                        plan.constraints, plan.feedback_quote)
         from .task_progress import apply_entry_reports
+        if current and plan.plan.get('kind')=='guidance' and not plan.progress_reports:
+            old={entry['id']:entry for entry in current.plan.get('entries',[])}
+            for entry in plan.plan.get('entries',[]):
+                quote=(entry.get('guidance') or {}).get('observed_quote','')
+                if entry['id'] in old and entry.get('state')!=old[entry['id']].get('state') and quote and locate_quote(current_question,quote):
+                    action={'ready':'completed','pending':'not_done','not_found':'not_found','unchanged':'unchanged'}.get(entry.get('state'))
+                    if action:plan.progress_reports.append(EntryProgressReport(entry_id=entry['id'],action_result=action,source_quote=quote))
         proposed, progress_evidence = apply_entry_reports(
             foundation.validate_plan(plan.plan), current.plan if current else {},
             plan.progress_reports, current_question, db=db, user_id=user_id)
@@ -199,6 +250,15 @@ def commit_continuation(db, user_id, message_id, result, current_question, commi
             if not feedback_quote:
                 saved = created
         if feedback_quote:
+            if proposed.get('kind')=='guidance':
+                from .database import now
+                progress=dict(proposed.get('guidance') or {})
+                observations=list((current.plan if current else {}).get('guidance',{}).get('observations',[]))
+                if not any(row.get('message_id')==message_id for row in observations):
+                    observations.append({'receipt_id':'message-'+message_id,'message_id':message_id,
+                        'step_id':(current.plan if current else {}).get('guidance',{}).get('active_step_id'),
+                        'outcome':plan.outcome,'text':feedback_quote,'source':'conversation','created_at':now()})
+                proposed={**proposed,'guidance':{**progress,'observations':observations,'awaiting_reply':False}}
             if current is not None and plan.status == "completed":
                 # A current report can complete the last existing step. Save
                 # that exact proposed state before signing its success receipt;
@@ -271,6 +331,13 @@ def _mark_displayed_gift_stories(db, user_id, message_id, experiences):
 
 
 def commit_result(db, user_id, message_id, result, current_question, *, commit=True):
+    message=domain.require(db.get(ChatMessage,message_id))
+    from .assistance import check_turn_scope, check_teaching_request
+    try:
+        check_turn_scope(db,user_id,message,result)
+        check_teaching_request(db,message,result)
+    except ValueError as error:
+        raise domain.DomainError(str(error)) from None
     with db.begin_nested():
         learned = apply_learning(db, user_id, message_id, result.learning)
         learning_rejections = learned.get("rejected", [])
@@ -297,6 +364,10 @@ def commit_result(db, user_id, message_id, result, current_question, *, commit=T
                 if result.lesson_action.kind=='confirm':result.answer+='\n\n当前步骤还未推进，我们先核对实际情况再继续。'
         else:
             task = commit_continuation(db, user_id, message_id, result, current_question, commit=False)
+        if task and task['plan'].get('kind')=='guidance':
+            conversation=db.get(Conversation,message.conversation_id)
+            conversation.entry_context={**conversation.entry_context,'intent':'guidance','task_id':task['id']}
+            if not conversation.item_ids:conversation.item_ids=task['item_ids']
         if task is None:
             # A short answer may omit plan changes. Keep the actual statement
             # on the active task anyway; recording it does not infer success.
@@ -308,12 +379,16 @@ def commit_result(db, user_id, message_id, result, current_question, *, commit=T
                 from .database import now
                 progress=dict(active.plan.get('guidance') or {})
                 observations=list(progress.get('observations',[]))
-                if not any(row.get('message_id')==message_id for row in observations):
+                new_report=not any(row.get('message_id')==message_id for row in observations)
+                if new_report:
                     observations.append({'receipt_id':'message-'+message_id,'message_id':message_id,
                         'step_id':progress.get('active_step_id'),'outcome':'unknown','text':message.text,
                         'source':'conversation','created_at':now()})
+                if new_report or progress.get('awaiting_reply'):
                     task=foundation.save_task(db,user_id,message_id,active.goal,active.item_ids,active.constraints,
-                        {**active.plan,'guidance':{**progress,'observations':observations}},active.id,active.version,active.status,commit=False)
+                        {**active.plan,'guidance':{**progress,'observations':observations,'awaiting_reply':False}},active.id,active.version,active.status,commit=False)
+        if not result.lesson_action:
+            validate_reply(db,user_id,message,result)
         # Empty references cannot display/unlock a story. Avoid projecting the
         # whole wall in both SDK preview and commit; real refs still recheck it.
         experiences = {row["id"]: row for row in domain.list_experiences(db, user_id, for_ai=True)} if result.story_refs else {}
@@ -400,8 +475,14 @@ def grounded_turn_schema(sessions, user_id, message_id, evidence_sources=None, *
             if evidence_sources is not None:
                 unread = set(self.source_refs) - set(evidence_sources or ())
                 if unread:
-                    raise ValueError("引用的来源尚未实际读取，请先read_source/fetch_document取得原文或画面，再引用支持当前回答的资料。")
-            if evidence_sources and not self.source_refs and not self.source_limitations:
+                    raise ValueError("引用的来源尚未实际读取，请先read_source/fetch_document取得原文或画面，再引用支持当前回答的资料。当前已读ID：" + str(sorted(evidence_sources or ())) + "")
+            with sessions() as scope_db:
+                scope_message=scope_db.get(ChatMessage,message_id)
+                scope_chat=scope_db.get(Conversation,scope_message.conversation_id) if scope_message else None
+                observation_only=bool(scope_chat and scope_chat.entry_context.get('intent')=='guidance'
+                    and (not self.continuation or all((entry.get('guidance') or {}).get('kind') in {'identify','observe','verify'}
+                        for entry in self.continuation.plan.get('entries',[]))))
+            if evidence_sources and not self.source_refs and not self.source_limitations and not observation_only:
                 raise ValueError("本轮已读取资料：请用source_refs列出确实支持回答的原文ID；如果原文不足以支持方案，则用source_limitations诚实说明限制，不能宣称案例已经核实。")
             with sessions() as db:
                 message = domain.require(db.get(ChatMessage, message_id))
