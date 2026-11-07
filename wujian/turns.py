@@ -5,7 +5,7 @@ from typing import Literal
 from pydantic import BaseModel, Field, model_validator, field_validator, ConfigDict
 
 from . import domain, foundation
-from .database import ChatMessage, TaskRecord, Conversation
+from .database import ChatMessage, TaskRecord, Conversation, Run
 from .evidence import locate_quote
 from .learning import Learning, apply_learning, validate_learning
 from .api_models import TaskEntry
@@ -67,7 +67,7 @@ class TurnResult(BaseModel):
     target_item_ids: list[str] = Field(default_factory=list, description='本轮实际回答的获准物品ID，与当前聚焦物一致；没有识别清楚时留空并核对。')
     answer: str = Field(
         min_length=1,
-        description="普通问答用完整自然语言回复。提交guidance变化时只需简短回应，程序会呈现本轮通过核验的当前步骤，不再写第二篇操作文。使用物品名称，内部ID只放结构字段。",
+        description="直接给用户看的自然回复。回应本轮具体问题，可解释、举例或追问；即使更新教学计划也要完整回答，不复述字段或固定结尾。动作、参数与进度须和已核验依据一致，使用物品名称而不是内部ID。",
     )
     continuation: ContinuingPlan | None = Field(default=None,
         description="A substantive proposal or continuing task with latest feedback. Null for simple questions, acknowledgements, story-only recording and companionship. Keep actual user requirements separate from proposed mechanisms."
@@ -79,6 +79,38 @@ class TurnResult(BaseModel):
         description="IDs of authorized memory-wall records to quote with their original author. Use when the person asks about an existing story. Discuss present feelings in answer; the application renders the actual story, so do not retell or invent past scenes there. Empty for no story request.",
         max_length=5,
     )
+
+
+def validate_reply(db,user_id,message,result):
+    """Free conversation may use any applicable original actually read this run.
+
+    A question about a second feature must not require adding a fake task step
+    just to cite it. Operative plan entries still have their own local quotes.
+    """
+    import json
+    from .guidance import validate_specific_advice,validate_parameters
+    from .assistance import source_applies,identity_in_source
+    from .source_access import readable_source
+    conversation=domain.require(db.get(Conversation,message.conversation_id))
+    active=db.get(TaskRecord,conversation.entry_context.get('task_id')) if conversation.entry_context.get('task_id') else None
+    entries=(result.continuation.plan if result.continuation else active.plan if active else {}).get('entries',[])
+    identities=result.continuation.item_ids if result.continuation else conversation.item_ids or (active.item_ids if active else [])
+    items=[domain.accessible_item(db,user_id,identity) for identity in identities]
+    known=[message.text]
+    for item in items:
+        known.append(json.dumps({'product':item.product,'description':domain.item_view(db,user_id,item)['description']},ensure_ascii=False))
+        known.extend(claim['content']+' '+claim.get('source_quote','') for claim in foundation.known_claims(db,user_id,item.id) if claim.get('basis')=='document')
+    run=db.get(Run,message.run_id) if message.run_id else None
+    source_ids=list(dict.fromkeys(event.get('source_id') for event in run.events if event.get('type')=='research_source' and event.get('source_id'))) if run and run.user_id==user_id and run.conversation_id==conversation.id else []
+    for source_id in source_ids[-6:]:
+        try:source=readable_source(db,user_id,source_id)
+        except domain.DomainError:continue
+        if (source_applies(db,source,identities) and items
+                and any(not item.product.get('model') or identity_in_source(item,source) for item in items)):
+            known.append(source.content[:12000])
+    validate_specific_advice(result.answer,entries,' '.join(known),allow_visual=bool(message.photo_ids))
+    if result.continuation and result.continuation.plan.get('kind')=='guidance' and any((entry.get('guidance') or {}).get('evidence') for entry in entries):
+        validate_parameters(result.answer,[*entries,{'guidance':{'evidence':[{'quote':message.text}]}}])
 
 
 def commit_continuation(db, user_id, message_id, result, current_question, commit=True):
@@ -190,12 +222,14 @@ def commit_result(db, user_id, message_id, result, current_question):
                 from .database import now
                 progress=dict(active.plan.get('guidance') or {})
                 observations=list(progress.get('observations',[]))
-                if not any(row.get('message_id')==message_id for row in observations):
+                new_report=not any(row.get('message_id')==message_id for row in observations)
+                if new_report:
                     observations.append({'receipt_id':'message-'+message_id,'message_id':message_id,
                         'step_id':progress.get('active_step_id'),'outcome':'unknown','text':message.text,
                         'source':'conversation','created_at':now()})
+                if new_report or progress.get('awaiting_reply'):
                     task=foundation.save_task(db,user_id,message_id,active.goal,active.item_ids,active.constraints,
-                        {**active.plan,'guidance':{**progress,'observations':observations}},active.id,active.version,active.status,commit=False)
+                        {**active.plan,'guidance':{**progress,'observations':observations,'awaiting_reply':False}},active.id,active.version,active.status,commit=False)
         experiences = {row["id"]: row for row in domain.list_experiences(db, user_id, for_ai=True)}
         stories = []
         for identity in dict.fromkeys(result.story_refs):
@@ -215,20 +249,8 @@ def commit_result(db, user_id, message_id, result, current_question):
                 f"{attribution}《{row['title']}》（{row['occurred_on']}）：\n\n{quote}"
             )
     db.commit()
-    # Render THIS turn's validated change, never yesterday's untouched plan.
-    # A second free prose recipe used to reintroduce unsupported controls and
-    # signals after the structured step had passed evidence checks.
-    if task and result.continuation and task['plan'].get('kind')=='guidance' and not result.lesson_action:
-        from .guidance import render_current_step
-        controlled_answer=render_current_step(task['plan'],task['status'])
-        from .assistance import negative_step_feedback
-        if negative_step_feedback(current_question):controlled_answer='先停在这一步，我们核对你遇到的位置或现象。\n\n'+controlled_answer
-        elif result.continuation.task_id is None and len(task['item_ids'])==1:
-            item=domain.accessible_item(db,user_id,task['item_ids'][0])
-            model=item.product.get('model','')
-            if model:
-                tentative=(item.state.get('identity_evidence') or {}).get('provisional')
-                controlled_answer=('本次物品型号'+('暂读为' if tentative else '为')+' '+model+'。\n\n')+controlled_answer
+    # The plan carries state; the Agent's validated reply carries conversation.
+    # Do not replace a response to THIS question with a repeated step template.
     answer=controlled_answer or result.answer
     return {
         "task": task,
@@ -265,21 +287,6 @@ def grounded_turn_schema(sessions, user_id, message_id):
                         # Other conversations may discuss it, but cannot replace
                         # its controller metadata or reviewed presentation assets.
                         self.continuation=None
-                from .guidance import validate_specific_advice
-                entries=self.continuation.plan.get('entries',[]) if self.continuation else []
-                known=[message.text]
-                for identity in (self.continuation.item_ids if self.continuation else conversation.item_ids):
-                    item=domain.accessible_item(db,user_id,identity)
-                    import json
-                    known.append(json.dumps({'product':item.product,'description':domain.item_view(db,user_id,item)['description']},ensure_ascii=False))
-                    known.extend(claim['content']+' '+claim.get('source_quote','') for claim in foundation.known_claims(db,user_id,identity) if claim.get('basis')=='document')
-                known.extend(e['quote'] for entry in entries for e in (entry.get('guidance') or {}).get('evidence',[]) if e.get('quote'))
-                # Teaching prose is rendered from the validated current step at
-                # commit. Ordinary explanations still use the main Agent reply.
-                try:
-                    if not (self.continuation and self.continuation.plan.get('kind')=='guidance'):
-                        validate_specific_advice(self.answer,entries,' '.join(known),allow_visual=bool(message.photo_ids))
-                except domain.DomainError as error:raise ValueError(error.message) from error
                 if conversation.entry_context.get('intent') == 'guidance' and self.continuation is not None:
                     teaching = self.continuation.plan
                     if teaching.get('schema') != 'interaction/1' or teaching.get('kind') != 'guidance' or not teaching.get('entries') or any(not entry.get('guidance') for entry in teaching.get('entries',[])):
@@ -296,10 +303,12 @@ def grounded_turn_schema(sessions, user_id, message_id):
                     if plan.feedback_quote:
                         quote = locate_quote(message.text, plan.feedback_quote)
                         if quote is None:
-                            raise domain.DomainError(
-                                "feedback_quote必须是当前用户实际报告的连续原句，不能改写或拼接"
-                            )
-                        plan.feedback_quote = quote
+                            # A paraphrased bookkeeping field must not block an
+                            # otherwise valid explanation. Preserve actual user
+                            # words and make no inferred success/failure claim.
+                            plan.feedback_quote=message.text[:2400]
+                            plan.outcome='unknown'
+                        else:plan.feedback_quote = quote
                     if plan.task_id:
                         task = domain.require(db.get(TaskRecord, plan.task_id))
                         if (
@@ -309,7 +318,7 @@ def grounded_turn_schema(sessions, user_id, message_id):
                             raise domain.DomainError(
                                 "原任务已变化或不可用，请重新read_task后接续"
                             )
-                    from .guidance import validate_plan, validate_parameters
+                    from .guidance import validate_plan
                     previous = db.get(TaskRecord, plan.task_id) if plan.task_id else None
                     if previous and plan.plan.get('kind')=='guidance' and previous.plan.get('kind')=='guidance':
                         # The Agent may send only changed/current steps; SQL keeps
@@ -335,6 +344,10 @@ def grounded_turn_schema(sessions, user_id, message_id):
                         import logging
                         logging.getLogger(__name__).warning('Teaching validation: %s', error.message)
                         raise ValueError(error.message) from error
+                # Resolve/validate source line references first, then check the
+                # free reply against the normalized evidence and existing task.
+                try:validate_reply(db,user_id,message,self)
+                except domain.DomainError as error:raise ValueError(error.message) from error
                 available = {row["id"] for row in domain.list_experiences(db, user_id, for_ai=True)}
                 if any(identity not in available for identity in self.story_refs):
                     raise ValueError("story_refs包含不可用的经历，请重新读取")

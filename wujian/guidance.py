@@ -77,24 +77,50 @@ def validate_parameters(text,entries):
             raise domain.DomainError(f'操作参数 {label} 没有在本轮适用引文中出现，请按实际原文修正，不沿用其他型号的数字，也不要编造强制关机/重置分支')
 
 
+def _control_locations(text):
+    """Only explicit nearby side/control statements, never product defaults."""
+    text=re.sub(r'\b(left|right)\b',lambda match:'左侧' if match[0].casefold()=='left' else '右侧',text,flags=re.I)
+    text=re.sub(r'\bpower\s+(?:button|key)\b','电源',text,flags=re.I)
+    text=re.sub(r'\btouch(?:\s+sensor)?(?:\s+control)?\s+panel\b','触摸面板',text,flags=re.I)
+    text=re.sub(r'\s+','',text)
+    controls=r'电源|开关机|触摸(?:传感器)?(?:控制)?面板|触控(?:面板|板|区)?'
+    for sentence in re.split(r'[。！？!?.]',text):
+        prior_side=None;offset=0
+        for clause in re.split(r'[，,；;]',sentence):
+            sides=list(re.finditer(r'([左右])(?:侧|边|面|耳罩|单元)',clause))
+            for control in re.finditer(controls,clause):
+                if sides:
+                    side=min(sides,key=lambda side:abs(side.start()-control.start()))
+                    side_info=(side[1],offset+side.start())
+                else:side_info=prior_side
+                if side_info and abs(offset+control.start()-side_info[1])<=35:
+                    yield side_info[0], '电源' if control[0] in {'电源','开关机'} else '触摸面板'
+            if sides:prior_side=(sides[-1][1],offset+sides[-1].start())
+            offset+=len(clause)+1
+
+
 def validate_specific_advice(text,entries,known_text='',allow_visual=False):
     """General help is allowed; do not invent precise reset timing/connectors."""
     known_text+=' '+' '.join(e.get('quote','') for entry in entries for e in (entry.get('guidance') or {}).get('evidence',[]))
     # Permit ordinary translations of these explicit source attributes. This
     # does not infer any gesture or light behavior from a product's category.
-    translations={'长按':['press and hold','press & hold'], '同时按':['simultaneously'],
+    translations={'长按':['press and hold','press & hold','按住'], '同时按':['simultaneously'],
         '复位':['reset'],'恢复出厂':['factory reset'],'蓝色':['blue'],'白色':['white'],
         '红色':['red'],'绿色':['green'],'黄色':['yellow'],'环形灯':['light ring','ring light'],
-        '旋钮':['knob','dial'],'触控':['touch'],'触摸':['touch']}
+        '旋钮':['knob','dial'],'触控':['touch','触摸'],'触摸':['touch','触控']}
     normalized=known_text.casefold()
     known_text+=' '+' '.join(word for word,phrases in translations.items()
         if any(re.search(r'(?<![a-z])'+re.escape(phrase)+r'(?![a-z])',normalized) for phrase in phrases))
-    for sentence in re.split(r'[。！？\n]',text):
-        if re.search(r'(?:长按|按住|同时按|持续按)',sentence) and list(_parameters(sentence)):
-            if not re.search(r'(?:你|我|用户)(?:已经|刚才|之前|说|按了|长按了)',sentence):
-                validate_parameters(sentence,entries)
     known=unicodedata.normalize('NFKC',known_text).casefold()
+    locations=set(_control_locations(known_text))
     for sentence in re.split(r'[。！？\n]',text):
+        if not re.search(r'哪|是否|是不是|有没有|还是|左右|不确定|吗',sentence) and not (allow_visual and re.search(r'图中|照片|看起来|似乎',sentence)):
+            for location in _control_locations(sentence):
+                if location not in locations:
+                    raise domain.DomainError('当前依据没有核对这个控件的左右位置。不要猜侧别；可按已知文字或图标定位，或读取部件位置资料后再解释，不必复读整套步骤。')
+        if re.search(r'短按|按一下.{0,8}(?:电源|开关)|(?:电源|开关).{0,8}按一下',sentence):
+            if not any(term in known for term in ['短按','按一下','按一次','press once','briefly press']):
+                raise domain.DomainError('当前依据未确认短按操作，不能把按住改成按一下；若只知道操作前提，就先确认状态，不临时编造关机方法。')
         # These are physical claims too, even when no numeric parameter is
         # present. A conditional reset branch is still an operating instruction.
         for gesture in re.findall(r'长按|同时按|恢复出厂|复位',sentence):
@@ -129,20 +155,6 @@ def validate_specific_advice(text,entries,known_text='',allow_visual=False):
                 raise domain.DomainError('当前资料没有确认这种具体控件或指示灯。直接给有用的通用建议，改用可见控件、原先使用方式等描述，或说明条件；无需继续搜齐资料')
 
 
-def render_current_step(plan,status):
-    entries=plan.get('entries',[])
-    active_id=(plan.get('guidance') or {}).get('active_step_id')
-    active=next((entry for entry in entries if entry['id']==active_id),None)
-    if not active:
-        return '已保留这些步骤的实际检查记录。' + ('本次目标已按你的实际反馈记为完成。' if status=='completed' else '现在问题解决了吗？也可以告诉我仍然看到的情况，我们接着看。')
-    details=active.get('guidance') or {}
-    pieces=[f"**{active['title']}**",details.get('instruction') or active.get('note','')]
-    if details.get('success_signal'): pieces.append('留意一下：'+details['success_signal'])
-    if details.get('caution'): pieces.append(details['caution'])
-    pieces.append('做完告诉我你看到或听到了什么；找不到、没有变化也直接说，我们再接着看。')
-    return '\n\n'.join(piece for piece in pieces if piece)
-
-
 def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
     if plan.get('schema') != 'interaction/1' or plan.get('kind') != 'guidance':
         return plan
@@ -165,6 +177,7 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
             raise domain.DomainError('已知型号的具体操作必须有适用原文或用户实际报告依据，不能改标general绕过核验。资料不足先用observe/identify核对当前状态或可见标识。')
         if details['basis']=='user_report' and (not current_message or not details['observed_quote'] or details['observed_quote'] not in current_message.text):
             raise domain.DomainError('user_report依据需保留本轮用户实际报告的连续原话；提问或模型建议不是操作依据。')
+        source_context=[]
         if not details['evidence'] and details['basis']=='document':
             raise domain.DomainError('标为说明书操作的步骤需要适用原文；通用初步建议可标basis=general，不冒充型号已核验')
         for evidence in details['evidence']:
@@ -195,9 +208,12 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
                 raise domain.DomainError('教学引用被改写，不能使用。请填 source_line_start/source_line_end，由程序提取原句。来源 '+source.id+' 的原始行：\n'+numbered[:2200])
             evidence['quote'] = quote
             if evidence.get('page') is not None:
-                page = next((page for page in source.pages if page.get('page')==evidence['page']),None)
-                if not page or locate_quote(page.get('text',''),quote) is None:
-                    raise domain.DomainError('教学步骤引用的PDF页码与原文不对应')
+                if not source.pages:
+                    evidence['page']=None  # HTML has source lines, not PDF pages.
+                else:
+                    page = next((page for page in source.pages if page.get('page')==evidence['page']),None)
+                    if not page or locate_quote(page.get('text',''),quote) is None:
+                        raise domain.DomainError('教学步骤引用的PDF页码与原文不对应')
             if targets:
                 named = [item.product.get('model','') for item in targets if item.product.get('model')]
                 normalized = lambda text: re.sub(r'[^\w]','',text).casefold()
@@ -205,10 +221,14 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
                 if named and not any(identity_in_source(item,source)
                     and normalized(evidence.get('source_model') or item.product.get('model',''))==normalized(item.product.get('model','')) for item in targets):
                     raise domain.DomainError('操作资料没有匹配当前准确型号；相近型号只能作参考')
+            source_context.append(source.content[:12000])
         advice = '。'.join([entry['title'],entry.get('note',''),*(details.get(field,'') for field in ['instruction','success_signal','caution','if_not_found','if_unchanged'])])
         if details['basis']=='document' or details['evidence']:
             validate_parameters(advice,[entry])
-        validate_specific_advice(advice,[entry],current_message.text if current_message else '')
+        # Component names may be introduced in the same original's heading
+        # rather than repeated in the action quote. Numeric action parameters
+        # above still have to match THIS step's local evidence.
+        validate_specific_advice(advice,[entry],' '.join([current_message.text if current_message else '',*source_context]))
         old = old_entries.get(entry['id'])
         same_step = old and step_signature(old)==step_signature(entry)
         old_details = old.get('guidance') or {} if old else {}
@@ -269,6 +289,8 @@ def start_feedback(db, user_id, task_id, payload):
     entry = next((entry for entry in row.plan.get('entries',[]) if entry['id']==payload.step_id),None)
     if not entry or not entry.get('guidance'):
         raise domain.DomainError('这一步尚未核对，请先回到对话补充资料',409)
+    if entry['state']=='ready' or row.status in {'completed','cancelled'}:
+        raise domain.DomainError('这一步已经确认过了，请继续当前问题，不用重复确认。',409)
     if progress.get('active_step_id') and progress['active_step_id'] != payload.step_id:
         raise domain.DomainError('请只反馈当前步骤，不能跳步确认。',409)
     if progress.get('lesson'):
@@ -291,7 +313,7 @@ def start_feedback(db, user_id, task_id, payload):
     resumed = interactions.resume_task(db,user_id,task_id)
     conversation = db.get(Conversation,resumed['conversation_id'])
     labels = {'done':'我已做了这一步','not_found':'我没找到这一步说的位置或信号','unchanged':'做过了，但没有变化'}
-    text = f"{labels[payload.outcome]}：{entry['title']}。" + ('\n'+payload.note if payload.note.strip() else '')
+    text = ('这步做好了。' if payload.outcome=='done' else f"{labels[payload.outcome]}：{entry['title']}。") + ('\n'+payload.note if payload.note.strip() else '')
     run_id, message_id = uid(),uid()
     entries = [dict(value) for value in row.plan['entries']]
     current = next(value for value in entries if value['id']==payload.step_id)

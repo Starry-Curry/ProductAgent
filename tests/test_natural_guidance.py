@@ -16,8 +16,9 @@ from agentscope.model._model_usage import ChatUsage
 from fastapi.testclient import TestClient
 
 from wujian import domain,foundation,guidance
+from wujian.api_models import ItemCreate
 from wujian.config import Settings
-from wujian.database import ChatMessage,Conversation,make_database
+from wujian.database import ChatMessage,Conversation,SourceRecord,TaskRecord,Run,make_database
 from wujian.server import create_app
 from wujian.turns import TurnResult,commit_result,grounded_turn_schema
 
@@ -55,9 +56,9 @@ class NaturalTeachingTests(unittest.TestCase):
                 'task_id':self.task['id'],'expected_version':1,'feedback_quote':'我有一个装不上，怎么办？','outcome':'failure','status':'in_progress'}})
         with self.sessions() as db:
             saved=commit_result(db,self.owner,'report',result,'我有一个装不上，怎么办？')
-            self.assertIn('先别硬压',saved['answer'])
-            self.assertIn('看看有没有歪斜或异物',saved['answer'])
-            self.assertNotEqual(saved['answer'],guidance.render_current_step(self.task['plan'],self.task['status']))
+            self.assertEqual(saved['answer'],result.answer)
+            self.assertNotIn('留意一下：',saved['answer'])
+            self.assertNotIn('做完告诉我你看到或听到了什么',saved['answer'])
             self.assertEqual(saved['task']['id'],self.task['id'])
             self.assertEqual(saved['task']['plan']['entries'][0]['state'],'unchanged')
             self.assertEqual(saved['task']['plan']['guidance']['active_step_id'],'inspect')
@@ -88,6 +89,121 @@ class NaturalTeachingTests(unittest.TestCase):
             self.assertEqual(saved['task']['plan']['entries'][0]['state'],'pending')
             self.assertEqual(saved['task']['plan']['guidance']['observations'][-1]['text'],'我有一个装不上，怎么办？')
             self.assertEqual(saved['task']['plan']['guidance']['observations'][-1]['outcome'],'unknown')
+
+    def test_source_lines_are_resolved_before_checking_a_natural_explanation(self):
+        with self.sessions() as db:
+            model=domain.accessible_item(db,self.owner,'item_demo_lamp').product['model']
+            db.add(SourceRecord(id='manual-for-explanation',owner_id=self.owner,item_id='item_demo_lamp',title=model+' 指南',
+                url='https://publisher.example/guide',content=model+' 按住电源按钮2秒，指示灯亮起。',pages=[]))
+            db.add(ChatMessage(id='explain',conversation_id='conversation',role='user',text='这一步怎么按？'));db.commit()
+        plan=copy.deepcopy(self.plan)
+        plan['entries']=[{'id':'press','title':'启动','item_id':'item_demo_lamp','group':'step','guidance':{
+            'kind':'operate','basis':'document','instruction':'按住电源按钮2秒。',
+            'evidence':[{'source_id':'manual-for-explanation','source_line_start':1,'source_line_end':1}]}}]
+        plan['guidance']={'active_step_id':'press'}
+        value={'answer':'这里需要持续按住电源按钮2秒，看到指示灯亮起就松手，不用反复点。',
+            'continuation':{'goal':self.task['goal'],'item_ids':['item_demo_lamp'],'constraints':{},'plan':plan,
+                'task_id':self.task['id'],'expected_version':self.task['version']}}
+        result=grounded_turn_schema(self.sessions,self.owner,'explain').model_validate(value)
+        with self.sessions() as db:
+            saved=commit_result(db,self.owner,'explain',result,'这一步怎么按？')
+            self.assertEqual(saved['answer'],value['answer'])
+            latest=db.get(TaskRecord,self.task['id'])
+            question=ChatMessage(id='followup',conversation_id='conversation',role='user',text='再讲清楚一点。')
+            db.add(question);db.commit()
+        # A clarification can use existing verified evidence without rewriting
+        # the task just to make the answer pass the schema.
+        result=grounded_turn_schema(self.sessions,self.owner,'followup').model_validate({'answer':'按住电源按钮2秒，看到灯亮再松手。'})
+        self.assertIsNone(result.continuation)
+
+    def test_reply_after_confirmation_clears_waiting_without_falsely_finishing_goal(self):
+        from wujian.api_models import GuidanceFeedback
+        from sqlalchemy import select
+        with self.sessions() as db:
+            run=guidance.start_feedback(db,self.owner,self.task['id'],GuidanceFeedback(
+                expected_version=self.task['version'],step_id='cap',outcome='done',receipt_id='checked-once'))
+            message=db.scalar(select(ChatMessage).where(ChatMessage.run_id==run.id))
+            message_id,question=message.id,message.text
+        result=grounded_turn_schema(self.sessions,self.owner,message_id).model_validate({
+            'answer':'你已经看过接触处了。它现在是歪着卡住，还是完全套不进去？'})
+        with self.sessions() as db:
+            saved=commit_result(db,self.owner,message_id,result,question)
+            self.assertFalse(saved['task']['plan']['guidance']['awaiting_reply'])
+            self.assertIsNone(saved['task']['plan']['guidance']['active_step_id'])
+            self.assertEqual(saved['task']['plan']['entries'][0]['state'],'ready')
+            self.assertNotEqual(saved['task']['status'],'completed')
+            self.assertEqual(saved['answer'],result.answer)
+
+    def test_reply_can_explain_another_feature_from_an_actually_read_applicable_source(self):
+        with self.sessions() as db:
+            model=domain.accessible_item(db,self.owner,'item_demo_lamp').product['model']
+            other=domain.create_item(db,self.owner,ItemCreate(name='另一件测试物品'))
+            db.add(SourceRecord(id='read-feature',owner_id=self.owner,item_id='item_demo_lamp',title=model+' 功能指南',
+                url='https://publisher.example/feature',content=model+' 使用触摸面板调节此功能。',pages=[]))
+            db.add(SourceRecord(id='wrong-feature',owner_id=self.owner,item_id=other['id'],title='其他物品指南',
+                url='https://publisher.example/other',content=model+' 使用触摸面板调节此功能。',pages=[]))
+            db.add(Run(id='feature-run',user_id=self.owner,conversation_id='conversation',status='running',
+                events=[{'type':'research_source','source_id':'read-feature'}]));db.flush()
+            db.add(ChatMessage(id='feature-question',conversation_id='conversation',role='user',text='这个功能怎么调？',run_id='feature-run'))
+            db.commit()
+        schema=grounded_turn_schema(self.sessions,self.owner,'feature-question')
+        result=schema.model_validate({'answer':'这个功能用触控面板调节。'})
+        self.assertIsNone(result.continuation)
+        for events in [[],[{'type':'research_source','source_id':'wrong-feature'}]]:
+            with self.sessions() as db:
+                db.get(Run,'feature-run').events=events;db.commit()
+            with self.assertRaises(ValueError):schema.model_validate({'answer':'这个功能用触控面板调节。'})
+
+    def test_paraphrased_feedback_keeps_user_words_and_does_not_infer_success(self):
+        value={'answer':'先别继续硬压。你看到的是边缘歪了，还是接触面没对齐？',
+            'continuation':{'goal':self.task['goal'],'item_ids':['item_demo_lamp'],'constraints':{},'plan':copy.deepcopy(self.plan),
+                'task_id':self.task['id'],'expected_version':self.task['version'],
+                'feedback_quote':'有一件无法安装','outcome':'success','status':'in_progress'}}
+        result=grounded_turn_schema(self.sessions,self.owner,'report').model_validate(value)
+        self.assertEqual(result.continuation.feedback_quote,'我有一个装不上，怎么办？')
+        self.assertEqual(result.continuation.outcome,'unknown')
+        with self.sessions() as db:
+            saved=commit_result(db,self.owner,'report',result,'我有一个装不上，怎么办？')
+            self.assertEqual(saved['answer'],value['answer'])
+            self.assertEqual(saved['task']['feedback'][-1]['outcome'],'unknown')
+            self.assertNotEqual(saved['task']['status'],'completed')
+
+    def test_web_source_page_metadata_does_not_invent_a_pdf_page(self):
+        with self.sessions() as db:
+            model=domain.accessible_item(db,self.owner,'item_demo_lamp').product['model']
+            db.add(SourceRecord(id='html-guide',owner_id=self.owner,item_id='item_demo_lamp',title=model+' 指南',
+                url='https://publisher.example/guide',content=model+' 请先核对连接处的外观。',pages=[]));db.commit()
+            plan=copy.deepcopy(self.plan)
+            plan['entries'][0]['guidance'].update(basis='document',evidence=[{
+                'source_id':'html-guide','quote':'请先核对连接处的外观。','page':1}])
+            checked=guidance.validate_plan(db,self.owner,['item_demo_lamp'],plan,'report')
+            self.assertIsNone(checked['entries'][0]['guidance']['evidence'][0]['page'])
+
+    def test_free_reply_cannot_borrow_another_actions_number_from_the_same_manual(self):
+        with self.sessions() as db:
+            model=domain.accessible_item(db,self.owner,'item_demo_lamp').product['model']
+            db.add(SourceRecord(id='two-actions',owner_id=self.owner,item_id='item_demo_lamp',title=model+' 指南',
+                url='https://publisher.example/actions',content=model+' 按住电源按钮2秒启动。\n初始化时按住7秒。',pages=[]))
+            db.add(Run(id='actions-run',user_id=self.owner,conversation_id='conversation',status='running',
+                events=[{'type':'research_source','source_id':'two-actions'}]));db.flush()
+            db.add(ChatMessage(id='actions-question',conversation_id='conversation',role='user',text='这一步怎么启动？',run_id='actions-run'));db.commit()
+        plan=copy.deepcopy(self.plan);plan['entries'][0]['guidance'].update(kind='operate',basis='document',
+            instruction='按住电源按钮2秒启动。',evidence=[{'source_id':'two-actions','quote':'按住电源按钮2秒启动。'}])
+        value={'answer':'按住电源按钮7秒启动。','continuation':{'goal':self.task['goal'],'item_ids':['item_demo_lamp'],'constraints':{},
+            'plan':plan,'task_id':self.task['id'],'expected_version':self.task['version']}}
+        schema=grounded_turn_schema(self.sessions,self.owner,'actions-question')
+        with self.assertRaises(ValueError):schema.model_validate(value)
+        value['answer']='这里按住电源按钮2秒就可以启动，不用反复点。'
+        self.assertEqual(schema.model_validate(value).answer,value['answer'])
+
+    def test_free_explanation_does_not_invent_a_control_side_or_short_press(self):
+        known='左单元上有电源按钮。右侧单元有触摸面板。按住电源按钮2秒关闭。'
+        guidance.validate_specific_advice('电源在左侧，触控面板在右侧。',[],known)
+        guidance.validate_specific_advice('电源在左侧。',[],'The power button is on the left side.')
+        guidance.validate_specific_advice('找到电源符号的按钮，按住2秒。',[],known)
+        for reply in ['在右耳罩上，有一个圆形按钮，就是开关机用的那个。','先按一下电源键把它关掉。']:
+            with self.subTest(reply=reply),self.assertRaises(domain.DomainError):
+                guidance.validate_specific_advice(reply,[],known)
 
     def test_general_observation_is_allowed_but_model_operations_require_evidence(self):
         plan=copy.deepcopy(self.plan);plan['entries'][0]['guidance']['kind']='operate'

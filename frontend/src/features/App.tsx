@@ -682,9 +682,9 @@ function WorkspaceApp({
                           sending ||
                           (!!run && ["queued", "running"].includes(run.status))
                         }
-                        explain={() =>
-                          void request<Run>("/chat", "POST", {
-                            text: "这一步怎么做？",
+                        explain={(text) =>
+                          request<Run>("/chat", "POST", {
+                            text: text || "这一步怎么做？",
                             conversation_id: threadId,
                             item_ids: board.task.item_ids,
                             entry_context: {
@@ -693,7 +693,7 @@ function WorkspaceApp({
                             },
                           })
                             .then(boardActions!.onRun)
-                            .catch((error) => message.error(error.message))
+                            .catch((error) => { message.error(error.message); })
                         }
                       />
                     )}

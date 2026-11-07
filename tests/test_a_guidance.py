@@ -62,13 +62,6 @@ class TeachingTests(unittest.TestCase):
             plan['entries'][0]['guidance']['instruction']='按住电源按钮约7秒。'
             with self.assertRaises(domain.DomainError): self.save(db,plan)
 
-    def test_render_uses_current_validated_step_not_another_recipe(self):
-        with self.sessions() as db:
-            task=self.save(db)
-            text=guidance.render_current_step(task['plan'],task['status'])
-            self.assertIn('长按电源按钮约2秒',text)
-            self.assertNotIn('7秒',text)
-
     def test_parameters_compare_whole_quantities_and_written_numbers(self):
         def evidence(quote):
             return [{'guidance':{'evidence':[{'quote':quote}]}}]
@@ -113,6 +106,19 @@ class TeachingTests(unittest.TestCase):
             changed['entries'][0]['guidance']['instruction']='改做另一项操作'
             with self.assertRaises(domain.DomainError):
                 guidance.validate_plan(db,self.owner,[self.item['id']],changed,previous=old)
+
+    def test_confirmed_step_cannot_create_duplicate_feedback_with_a_new_receipt(self):
+        from sqlalchemy import select
+        with self.sessions() as db:
+            task=self.save(db)
+            payload=GuidanceFeedback(expected_version=task['version'],step_id='power',outcome='done',receipt_id='done-original')
+            run=guidance.start_feedback(db,self.owner,task['id'],payload)
+            self.assertEqual(guidance.start_feedback(db,self.owner,task['id'],payload).id,run.id)
+            current=db.get(TaskRecord,task['id']);version=current.version
+            with self.assertRaises(domain.DomainError):
+                guidance.start_feedback(db,self.owner,task['id'],payload.model_copy(update={'expected_version':version,'receipt_id':'done-repeated'}))
+            self.assertEqual(db.get(TaskRecord,task['id']).version,version)
+            self.assertEqual(len(list(db.scalars(select(Run)))),1)
 
     def test_context_memory_lineage_and_forgetting(self):
         with self.sessions() as db:

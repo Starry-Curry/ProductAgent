@@ -223,13 +223,8 @@ class ObjectBoundaryTests(unittest.TestCase):
         with self.assertRaises(ValueError):grounded_turn_schema(self.sessions,self.user,'question').model_validate(value)
         for text in ['等待顶部环形灯旋转。','指示灯开始蓝色闪烁。','如果没反应，长按顶部按键。']:
             value=self.result();value['answer']=text
-            result=grounded_turn_schema(self.sessions,self.user,'question').model_validate(value)
-            with self.subTest(text=text),self.sessions() as db:
-                saved=commit_result(db,self.user,'question',result,'请分步骤讲解怎么操作。')
-                self.assertNotIn(text,saved['answer'])
-                self.assertIn('先看看当前正在操作的位置',saved['answer'])
-                # Isolate each proposed new plan in this regression.
-                chat=db.get(Conversation,'test-chat');chat.entry_context={'intent':'guidance'};db.commit()
+            with self.subTest(text=text),self.assertRaises(ValueError):
+                grounded_turn_schema(self.sessions,self.user,'question').model_validate(value)
 
     def test_old_photo_scope_is_not_relabelled_by_a_topic_switch(self):
         with self.sessions() as db:
@@ -274,7 +269,7 @@ class ObjectBoundaryTests(unittest.TestCase):
         self.assertEqual(saved['task']['plan']['entries'][0]['state'],'pending')
         self.assertEqual(saved['task']['plan']['entries'][0]['guidance']['kind'],'observe')
 
-    def test_negative_feedback_requires_a_current_inspection_and_outage_keeps_same_task(self):
+    def test_negative_feedback_can_ask_without_rewriting_plan_and_outage_keeps_same_task(self):
         from wujian.assistance import preparation_turn
         schema=grounded_turn_schema(self.sessions,self.user,'question')
         with self.sessions() as db:
@@ -283,7 +278,8 @@ class ObjectBoundaryTests(unittest.TestCase):
             db.add(ChatMessage(id='negative',conversation_id='test-chat',role='user',text='我还没找到，先别跳到下一步。'))
             db.commit()
         check=grounded_turn_schema(self.sessions,self.user,'negative')
-        with self.assertRaises(ValueError):check.model_validate({'answer':'通常会有几个按键，请找一找。'})
+        natural=check.model_validate({'answer':'你现在能看到哪些文字或标记？我先帮你认清位置。'})
+        self.assertIsNone(natural.continuation)
         recovered=preparation_turn({'focused_items':[self.item],'active_task':task},'我还没找到，先别跳到下一步。')
         result=check.model_validate(recovered.model_dump())
         with self.sessions() as db:

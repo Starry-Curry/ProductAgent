@@ -138,8 +138,6 @@ def check_teaching_request(db, message, result):
     conversation = db.get(Conversation, message.conversation_id)
     active = db.get(TaskRecord, conversation.entry_context.get('task_id') or '')
     requested = wants_steps(message.text) or result.assistance_mode == 'teach'
-    if active and active.plan.get('kind')=='guidance' and not active.plan.get('guidance',{}).get('lesson') and negative_step_feedback(message.text) and not result.continuation:
-        raise ValueError('用户没找到或没看懂当前步骤，请提交同一任务本轮的observe/identify/verify变化，回应具体困难；不要仅返回一篇猜控件的自由正文。')
     if requested and conversation.item_ids and not active:
         plan = result.continuation.plan if result.continuation else {}
         if plan.get('schema') != 'interaction/1' or plan.get('kind') != 'guidance' or not plan.get('entries'):
