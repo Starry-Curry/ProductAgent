@@ -106,6 +106,8 @@ class DiagramRequest(Input):
     expected_version: int = Field(ge=1)
     step_id: str = Field(min_length=1,max_length=80)
     photo_ids: list[str] = Field(default_factory=list,max_length=2)
+    use_model: bool = False
+    local_only: bool = False
 
 
 def teaching_step(db,user_id,task_id,payload):
@@ -179,8 +181,13 @@ async def generate_scene(settings,item,entry,images=None):
 
 
 def register_diagrams(app,current_user,db_session,settings):
+    from .model_generation.grounding import register_mesh_grounding
+    register_mesh_grounding(app, current_user, db_session, settings)
     @app.post('/api/tasks/{task_id}/diagram',response_model=TaskBoardView,tags=['3D teaching demo'])
     async def diagram(task_id:str,payload:DiagramRequest,user=Depends(current_user),db=Depends(db_session)):
+        if payload.use_model or payload.local_only:
+            from .model_generation.teaching import generate_for_step
+            return await generate_for_step(settings, db, user.id, task_id, payload)
         task,entry=teaching_step(db,user.id,task_id,payload)
         cached=task.plan.get('visualizations',{}).get(payload.step_id)
         if cached and cached.get('nature')=='reviewed_schematic' and cached.get('step_signature')==step_signature(entry):
