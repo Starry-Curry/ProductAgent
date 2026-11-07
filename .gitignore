@@ -8,6 +8,7 @@ tmp/
 .pytest_cache/
 node_modules/
 var/
+var-showcase/
 frontend/dist/
 logs/
 *.log

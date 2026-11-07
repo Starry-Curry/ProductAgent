@@ -18,7 +18,7 @@
 - [外观几何](../../fixtures/teaching/loklik-as2-model.json)
 - [教学数据包](../../fixtures/teaching/loklik-as2.json)
 - [3D 渲染入口](../../frontend/src/features/TeachingDiagram.tsx)
-- [复现步骤](../../docs/AS2演示复现指南.md)
+- [安装与启动步骤](../../README.md#队友首次安装)
 
 所有媒体都是普通 Git 文件，无 Git LFS 指针。启动会校验 14 个二进制资产的摘要；无需 FFmpeg、视频转码服务或外网下载手册。依赖首次安装和云问答仍需要网络。
 
