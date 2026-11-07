@@ -28,6 +28,7 @@ class Settings:
     rea_artifact_roots: tuple[Path, ...] = ()
     session_secret: str = field(default="", repr=False)
     demo_mode: bool = True
+    showcase_enabled: bool = False
     host: str = "127.0.0.1"
     port: int = 8000
 
@@ -50,6 +51,7 @@ class Settings:
             rea_artifact_roots=tuple(Path(path).resolve() for path in json.loads(os.getenv('WUJIAN_REA_ARTIFACT_ROOTS','[]'))),
             session_secret=os.getenv("WUJIAN_SESSION_SECRET", ""),
             demo_mode=os.getenv("WUJIAN_DEMO_MODE", "true").lower() == "true",
+            showcase_enabled=os.getenv("WUJIAN_SHOWCASE", "true").lower() == "true",
             host=os.getenv("WUJIAN_HOST", "127.0.0.1"),
             port=int(os.getenv("WUJIAN_PORT", "8000")),
         )

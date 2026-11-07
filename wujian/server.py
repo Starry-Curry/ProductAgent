@@ -92,6 +92,9 @@ def create_app(settings=None, model_factory=None):
             for run in db.scalars(select(Run).where(Run.status.in_(["queued", "running"]))):
                 run.status, run.error = "interrupted", "服务重启，任务已停止。请继续对话；不会自动重复外部操作。"
             if settings.demo_mode:
+                if settings.showcase_enabled:
+                    from .showcase import import_showcase
+                    import_showcase(db, settings)
                 domain.seed_demo(db)
                 from .interaction_demo import ensure_demo_workspace
                 ensure_demo_workspace(db)

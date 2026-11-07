@@ -53,6 +53,8 @@ npm.cmd --prefix frontend run build
 
 首次使用前，将 `.env.example` 复制为 `.env` 并在本地填写密钥；已有 `.env` 请保留。`uv.lock` 和 `frontend/package-lock.json` 固定依赖。数据与原始资料保存在 `var/`，与源码分开；不要为了重新启动而删除它。关闭体验档案入口可设置 `WUJIAN_DEMO_MODE=false`。当前会话和部署设置用于本地原型，尚未完成公网生产加固。
 
+负责人已授权将上传的物品实拍和演示对话随源码交付，详见[可下载展示数据包](demo/showcase/README.md)。首次在空数据库启动时，默认载入这些物品、照片、回忆、演示聊天及工作台；进入「小林的物间」即可查看。已有数据库不会被替换，请勿删除原`var/`。如需单独体验下载版，可在`.env`设置`WUJIAN_DATA_DIR=var-showcase`，使用独立数据目录；该目录应留在本机。设置`WUJIAN_SHOWCASE=false`可关闭展示包装载。耳机真实绑定不随演示数据分发，需要在本机重新连接；无百炼密钥也可浏览已保存的展示内容，新增AI回答仍需配置密钥。
+
 公开B站搜索与视频抽帧共用现有可选组件：安装 `uv sync --extra video --cache-dir tmp/uv-cache`。搜索只需yt-dlp；抽帧还需将本地 FFmpeg 可执行文件的绝对路径填入 `.env` 的 `FFMPEG_BINARY`（或把 FFmpeg 加入 PATH）。搜索通过既有Agent工具`search_public_web(..., community="bilibili")`按需选用，最多一页五条真实视频线索，不额外调用搜索模型；默认`web`仍走百炼。仅使用工具本次新建的匿名会话，不读取用户登录信息；受限时明确失败，不暗中切换收费搜索。视频观察仍只支持可匿名读取的单条BV、低清有界MP4和少量抽帧。搜索标题、原页文字与实际画面分开，不能当作全视频理解、字幕生成或教学动画。此电脑已经配置；队友不用这些可选能力时无需安装额外组件。
 
 ## 开发与验证
