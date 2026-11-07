@@ -314,7 +314,9 @@ def commit_result(db, user_id, message_id, result, current_question, *, commit=T
                         'source':'conversation','created_at':now()})
                     task=foundation.save_task(db,user_id,message_id,active.goal,active.item_ids,active.constraints,
                         {**active.plan,'guidance':{**progress,'observations':observations}},active.id,active.version,active.status,commit=False)
-        experiences = {row["id"]: row for row in domain.list_experiences(db, user_id, for_ai=True)}
+        # Empty references cannot display/unlock a story. Avoid projecting the
+        # whole wall in both SDK preview and commit; real refs still recheck it.
+        experiences = {row["id"]: row for row in domain.list_experiences(db, user_id, for_ai=True)} if result.story_refs else {}
         stories = []
         for identity in dict.fromkeys(result.story_refs):
             row = experiences.get(identity)
