@@ -1,0 +1,50 @@
+.outing-preparation { margin: 12px 0 18px; }
+.outing-list-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.outing-list-heading h3 { margin: 0 0 5px; font-size: 19px; }
+.outing-list-heading p { margin: 0; color: var(--muted, #777d78); font-size: 12px; }
+.outing-list-heading > button { flex-shrink: 0; min-height: 42px; }
+.outing-progress { display: flex; align-items: center; gap: 15px; font-size: 13px; margin: 12px 0; }
+.outing-progress strong { flex-shrink: 0; }
+.outing-progress progress { width: 100%; height: 9px; accent-color: var(--blue, #7197a4); border: 0; border-radius: 8px; overflow: hidden; }
+.outing-progress progress::-webkit-progress-bar { background: #e9e2db; }
+.outing-progress progress::-webkit-progress-value { background: var(--blue, #7197a4); border-radius: 8px; }
+.outing-entries { background: #fcfaf7; border: 1px solid var(--line, #e7e0d8); border-radius: 19px; padding: 0 16px; }
+.outing-entry { display: flex; align-items: flex-start; gap: 12px; padding: 17px 0; border-bottom: 1px solid var(--line, #e7e0d8); }
+.outing-entry:last-child { border-bottom: 0; }
+.outing-entry > input { flex: 0 0 21px; width: 21px; height: 21px; margin-top: 3px; accent-color: var(--blue, #7197a4); cursor: pointer; }
+.outing-entry-content { min-width: 0; flex: 1; }
+.outing-entry-title { display: flex; align-items: center; gap: 11px; }
+.outing-entry-title > div { min-width: 0; }
+.outing-entry-title strong { font-size: 16px; font-weight: 600; overflow-wrap: anywhere; }
+.outing-item-image { width: 62px; height: 62px; padding: 0; flex-shrink: 0; border-radius: 11px; overflow: hidden; }
+.outing-item-image > .object-photo, .outing-item-image > .object-placeholder { width: 100%; height: 100%; border-radius: inherit; aspect-ratio: auto; }
+.outing-entry-badges { display: flex; flex-wrap: wrap; gap: 6px 9px; align-items: center; margin-top: 8px; font-size: 11px; color: #7d807a; }
+.outing-availability { padding: 3px 7px; border-radius: 6px; background: #eae7df; color: #60645d; }
+.outing-availability.owned { background: #e4eeeb; color: #46695d; }
+.outing-availability.buy { background: #f4e8dc; color: #886442; }
+.outing-entry.is-ready .outing-entry-title strong { color: #4f7269; }
+.outing-entry-note { color: #71776f; font-size: 12px; line-height: 1.8; margin: 10px 0 2px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.outing-entry-actions { display: flex; justify-content: space-between; gap: 8px; align-items: center; margin-top: 11px; }
+.outing-assignment { display: flex; align-items: center; gap: 7px; color: #7d807a; font-size: 11px; }
+.outing-assignment select { padding: 6px 9px; max-width: 150px; min-height: 34px; background: #f2eee8; border: 1px solid var(--line, #e7e0d8); border-radius: 8px; color: #4e5955; }
+.outing-person { font-size: 12px; color: #7d807a; }
+.outing-entry-actions .quiet-button { font-size: 12px; min-height: 34px; }
+.outing-invite-link { margin-top: 12px; font-size: 12px; }
+.outing-entry-form { display: grid; gap: 15px; padding: 8px 0; }
+.outing-entry-form label { display: grid; gap: 7px; font-size: 13px; color: #626c65; }
+.outing-entry-form input, .outing-entry-form select, .outing-entry-form textarea { width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #ded9d0; border-radius: 10px; background: #fcfaf7; font: inherit; color: #363e38; }
+.outing-entry-form textarea { resize: vertical; min-height: 82px; }
+.outing-form-error { color: #a0483b; font-size: 13px; margin: 0; }
+@media (max-width: 600px) {
+  .outing-list-heading { align-items: flex-start; gap: 9px; }
+  .outing-list-heading h3 { font-size: 19px; }
+  .outing-list-heading p { font-size: 11px; line-height: 1.7; }
+  .outing-list-heading > button { font-size: 12px; padding: 9px 11px; }
+  .outing-entries { padding: 0 12px; }
+  .outing-entry { gap: 10px; padding: 16px 0; }
+  .outing-item-image { width: 54px; height: 59px; }
+  .outing-entry-title strong { font-size: 15px; }
+  .outing-assignment { flex-wrap: wrap; }
+  .outing-assignment select { font-size: 13px; max-width: 135px; }
+  .outing-entry-form input, .outing-entry-form select, .outing-entry-form textarea { font-size: 16px; }
+}

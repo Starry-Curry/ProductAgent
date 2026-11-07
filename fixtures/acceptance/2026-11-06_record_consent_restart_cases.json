@@ -1,0 +1,51 @@
+{
+  "schema": "wujian-development-regression/1",
+  "prepared_on": "2026-11-06",
+  "scope": "Controlled development regression, not independent holdout. Fictional user, ownership and life event; no externally verified life claim. Explicit chat consent must drive actual record permission, never pre-enable by SQL.",
+  "cases": [
+    {
+      "id": "additional60-record-consent-restart-13",
+      "fixture": {
+        "fictional_user": "小满",
+        "fictional_ownership": true,
+        "items": [
+          {
+            "key": "pebble",
+            "name": "旅行带回来的灰色小石头",
+            "kind": "nonstandard_object",
+            "description": "虚构拥有：海边捡到的小石头，留在书桌边。没有上传照片。",
+            "avatar": {
+              "enabled": true,
+              "form": "keepsake",
+              "nickname": "小灰",
+              "personality": "慢悠悠、朴实，有一点冷幽默，说话简短。",
+              "color": "#a7b8bd"
+            }
+          }
+        ]
+      },
+      "turns": [
+        {
+          "conversation": "new",
+          "entry": {
+            "intent": "persona",
+            "focus_item_keys": [
+              "pebble"
+            ]
+          },
+          "text": "小灰，今天忙到挺晚，回来看见你就觉得没那么赶了。替我记一句吧：忙了一天，桌上这颗小石头让我慢了下来。这段以后聊天也可以提起。"
+        },
+        {
+          "conversation": "new_restart",
+          "entry": {
+            "intent": "persona",
+            "focus_item_keys": [
+              "pebble"
+            ]
+          },
+          "text": "小灰，我前面让你留的那句话还在吗？读给我听听就好。"
+        }
+      ]
+    }
+  ]
+}

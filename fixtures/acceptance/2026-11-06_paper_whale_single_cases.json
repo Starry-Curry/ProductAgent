@@ -1,0 +1,49 @@
+{
+  "schema": "wujian-independent-acceptance/1",
+  "prepared_on": "2026-11-06",
+  "scope": "新单轮独立分身验收；人物、拥有关系与经历均为虚构。仅按真实HTTP创建下列业务对象和当轮自然话语，不预置答案。",
+  "cases": [
+    {
+      "id": "holdout-persona-paper-whale-09-single-first",
+      "title": "一只蓝色纸鲸鱼，想再看看朋友说过的话",
+      "fixture": {
+        "fictional_user": "阿禾",
+        "fictional_ownership": true,
+        "items": [
+          {
+            "key": "whale",
+            "name": "搬家时折的蓝色纸鲸鱼",
+            "kind": "nonstandard_object",
+            "description": "我折的一只蓝色纸鲸鱼，留在书桌边。没有上传照片。",
+            "avatar": {
+              "enabled": true,
+              "form": "keepsake",
+              "nickname": "小蓝",
+              "personality": "轻巧、温和，说话简短，有一点幽默，喜欢听人讲生活。",
+              "color": "#8baec5"
+            }
+          }
+        ],
+        "experiences": [
+          {
+            "key": "folding",
+            "title": "搬家后折的小鲸鱼",
+            "text": "刚搬完家，我拿蓝纸折了一只鲸鱼，折坏了两次。阿岚说：‘慢一点也没关系，咱们又不是在比赛。’我把折好的鲸鱼放在书桌边。",
+            "item_keys": ["whale"],
+            "photo_ids": [],
+            "occurred_on": null,
+            "allow_ai": true
+          }
+        ]
+      },
+      "turns": [
+        {
+          "index": 1,
+          "conversation": "new",
+          "entry": {"intent": "persona", "focus_item_keys": ["whale"]},
+          "text": "小蓝，今天做什么都慢，心里挺烦的。翻翻我记的折鲸鱼那段吧，阿岚当时说的那句话我想再看看。她那天是不是还给我带了蛋糕？我也想跟你说说今天的事。"
+        }
+      ]
+    }
+  ]
+}

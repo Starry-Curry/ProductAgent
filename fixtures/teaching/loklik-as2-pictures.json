@@ -1,0 +1,52 @@
+{
+  "photos": [
+    {
+      "filename": "5.jpg",
+      "sha256": "4961e769f7d788a66f72f45fa8ea4c75399cef6f3efa3f76b0c27cafe9c3ff2e",
+      "rotation": -90,
+      "size": [
+        1200,
+        1600
+      ],
+      "crop": [
+        350,
+        780,
+        930,
+        1000
+      ],
+      "key": "panel_detail"
+    },
+    {
+      "filename": "1.jpg",
+      "sha256": "c3826ecee10cee1a7bfaf41c617b93be7d0efb004a1866066f293f4b79b4b46e",
+      "rotation": -90,
+      "size": [
+        1368,
+        1824
+      ],
+      "crop": [
+        200,
+        790,
+        1140,
+        1380
+      ],
+      "key": "front_detail"
+    },
+    {
+      "filename": "5.jpg",
+      "sha256": "4961e769f7d788a66f72f45fa8ea4c75399cef6f3efa3f76b0c27cafe9c3ff2e",
+      "rotation": -90,
+      "size": [
+        1200,
+        1600
+      ],
+      "crop": [
+        310,
+        440,
+        950,
+        1000
+      ],
+      "key": "panel_settings"
+    }
+  ]
+}

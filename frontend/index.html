@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- srcdoc workbenches remain usable; their own navigations must not reach
+         external URLs. A sandbox alone permits navigation of its own frame. -->
+    <meta http-equiv="Content-Security-Policy" content="frame-src 'none'; object-src 'none'" />
     <meta name="theme-color" content="#f6f6f0" />
     <title>物间 Wujian · 让物与生活相连</title>
   </head>

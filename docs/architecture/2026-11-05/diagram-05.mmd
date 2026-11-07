@@ -1,0 +1,16 @@
+flowchart TD
+    Q["search_world(query,kinds) 或部分recall_memories"] --> LOCK["按user_id的asyncio.Lock"]
+    LOCK --> DOCS["authorized_documents：从SQL组织当前可用对象"]
+    DOCS --> CONTENT["item / memory / experience / knowledge / source / task / conversation"]
+    CONTENT --> HASH["每个对象JSON序列化并计算内容哈希"]
+    HASH --> DIFF["对比进程内hashes：删失效对象、upsert变化对象"]
+    DIFF --> STORE["ReMe本地file_store：每个业务对象一个FileChunk"]
+    STORE --> BM["BM25；regex tokenizer"]
+    STORE --> EMB["百炼embedding；text-embedding-v4；512维；本地缓存"]
+    BM --> FUSE["ReMe search job：召回与分数融合"]
+    EMB --> FUSE
+    FUSE --> RELOAD["await之后重新读取SQL授权对象"]
+    RELOAD --> SAME{"仍可见、哈希未变、kind匹配"}
+    SAME -->|是| RESULT["返回当前业务数据、ID和scores"]
+    SAME -->|否| DROP["丢弃该命中"]
+    RESULT --> AG["主Agent按需read_item/read_source/read_task取得细节"]

@@ -16,8 +16,11 @@ class Settings:
     api_key: str = field(default="", repr=False)
     base_url: str = "https://dashscope.aliyuncs.com/compatible-mode/v1"
     model: str = "qwen3.6-plus"
+    # Kept for the parallel teaching/3D integration; ordinary PDF observation
+    # now uses the main model's native image input without a second RPC.
     vision_model: str = "qwen3-vl-plus"
     thinking_enabled: bool = True
+    thinking_budget: int | None = None
     provider_stream: bool = False
     embedding_model: str = "text-embedding-v4"
     rea_enabled: bool = True
@@ -39,6 +42,7 @@ class Settings:
             model=os.getenv("QWEN_MODEL") or cls.model,
             vision_model=os.getenv("QWEN_VISION_MODEL") or cls.vision_model,
             thinking_enabled=os.getenv("QWEN_THINKING", "true").lower() == "true",
+            thinking_budget=int(os.environ["QWEN_THINKING_BUDGET"]) if os.getenv("QWEN_THINKING_BUDGET") else None,
             provider_stream=os.getenv("QWEN_STREAM", "false").lower() == "true",
             embedding_model=os.getenv("QWEN_EMBEDDING_MODEL") or cls.embedding_model,
             rea_enabled=os.getenv("WUJIAN_REA_ENABLED", "true").lower() == "true",

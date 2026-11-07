@@ -8,7 +8,10 @@ export type Route = {
   itemId?: string;
   taskId?: string;
   friendId?: string;
+  experienceId?: string;
+  householdId?: string;
   scope?: string;
+  panel?: "earbuds" | "workbench";
 };
 function parse(): Route {
   const [part, search = ""] = location.hash.slice(1).split("?");
@@ -23,7 +26,10 @@ function parse(): Route {
     itemId: query.get("item") || undefined,
     taskId: query.get("task") || undefined,
     friendId: query.get("friend") || undefined,
+    experienceId: query.get("experience") || undefined,
+    householdId: query.get("household") || undefined,
     scope: query.get("scope") || undefined,
+    panel: query.get("panel") === "earbuds" ? "earbuds" : query.get("panel") === "workbench" ? "workbench" : undefined,
   };
 }
 export function navigate(route: Route) {
@@ -32,7 +38,10 @@ export function navigate(route: Route) {
     ["item", route.itemId],
     ["task", route.taskId],
     ["friend", route.friendId],
+    ["experience", route.experienceId],
+    ["household", route.householdId],
     ["scope", route.scope],
+    ["panel", route.panel],
   ])
     if (value) query.set(key!, value);
   location.hash = route.section + (query.size ? "?" + query : "");

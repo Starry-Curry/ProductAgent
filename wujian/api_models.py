@@ -1,7 +1,8 @@
 from datetime import date
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+from .persona_models import GrowthStoppedTrait, GrowthTrait
 
 
 class Input(BaseModel):
@@ -27,9 +28,13 @@ class UserView(BaseModel):
 
 class AvatarSpec(Input):
     enabled: bool = False
+    form: Literal["auto", "keepsake", "dango_leaf", "dango_hat", "dango_bow", "cup", "stone", "flower", "cat"] = "auto"
     nickname: str = Field(default="", max_length=80)
     personality: str = Field(default="", max_length=2000)
     color: str = Field(default="#d49c62", pattern=r"^#[0-9a-fA-F]{6}$")
+    image_id: str | None = Field(default=None, max_length=128)
+    growth_enabled: bool = True
+    growth_dismissed_ids: list[str] = Field(default_factory=list, max_length=100)
 
 
 class ProductSpec(Input):
@@ -42,12 +47,23 @@ class ProductSpec(Input):
     source_urls: list[str] = Field(default_factory=list, max_length=20)
 
 
+class GiftMemoryView(BaseModel):
+    experience_id: str
+    hint: str
+    trigger_words: list[str] = Field(default_factory=list)
+    unlocked: bool = False
+    chat_allowed: bool = True
+
+
 class AvatarView(AvatarSpec):
     gift_from: str = ""
     gift_message: str = ""
+    gift_memories: list[GiftMemoryView] = Field(default_factory=list)
     growth_note: str = ""
     growth_source: str = ""
     growth_evidence: list[dict] = Field(default_factory=list)
+    growth_traits: list[GrowthTrait] = Field(default_factory=list)
+    growth_stopped_traits: list[GrowthStoppedTrait] = Field(default_factory=list)
 
 
 class ItemCreate(Input):
@@ -83,15 +99,31 @@ class ItemView(ItemCreate):
 
 class ExperienceCreate(Input):
     title: str = Field(min_length=1, max_length=160)
-    text: str = Field(min_length=1, max_length=20000)
+    text: str = Field(default="", max_length=20000)
     item_ids: list[str] = Field(default_factory=list, max_length=30)
     photo_ids: list[str] = Field(default_factory=list, max_length=8)
-    occurred_on: date = Field(default_factory=date.today)
+    occurred_on: date | None = None
     allow_ai: bool = False
+    household_id: str | None = None
+
+    @model_validator(mode="after")
+    def has_content(self):
+        if not self.text.strip() and not self.photo_ids:
+            raise ValueError("留下一句话或一张照片即可")
+        return self
 
 
 class ExperienceChange(ExperienceCreate):
     expected_version: int = Field(ge=1)
+
+
+class CommunitySessionView(BaseModel):
+    failure_phase: str | None = None
+    failure_reason: str | None = None
+    stage: str
+    connected: bool
+    remaining_seconds: int
+    qr_data_url: str | None = None
 
 
 class TaskSave(Input):
@@ -150,7 +182,7 @@ class DeviceStatusView(BaseModel):
 class ExperienceView(ExperienceCreate):
     item_ids: list[str]
     photo_ids: list[str]
-    occurred_on: date
+    occurred_on: date | None
     id: str
     creator_id: str
     item_labels: dict[str, str]
@@ -195,12 +227,24 @@ class RunView(BaseModel):
     usage: dict
 
 
+class GiftSurprise(Input):
+    experience_id: str
+    hint: str = Field(min_length=1, max_length=160)
+    trigger_words: list[str] = Field(default_factory=list, max_length=8)
+
+
+class GiftAccept(Input):
+    wake_avatar: bool = False
+    allow_story_ai: bool = False
+
+
 class GiftCreate(Input):
     item_id: str
     recipient_id: str
     message: str = Field(default="", max_length=3000)
     experience_ids: list[str] = Field(default_factory=list, max_length=20)
     avatar: AvatarSpec = Field(default_factory=AvatarSpec)
+    surprises: list[GiftSurprise] = Field(default_factory=list, max_length=6)
 
 
 class ReminderCreate(Input):
@@ -233,6 +277,8 @@ class GiftSnapshot(BaseModel):
     experiences: list[ExperienceView]
     sender_name: str
     public_source_ids: list[str] = Field(default_factory=list)
+    photo_id: str | None = None
+    surprises: list[GiftSurprise] = Field(default_factory=list)
 
 
 class GiftView(BaseModel):
@@ -310,6 +356,34 @@ class ReminderFeedback(Input):
     note: str = Field(default="", max_length=1200)
 
 
+class StepEvidence(Input):
+    source_id: str
+    quote: str = Field(default="", max_length=4000)
+    source_line_start: int | None = Field(default=None, ge=1)
+    source_line_end: int | None = Field(default=None, ge=1)
+    page: int | None = Field(default=None, ge=1)
+    source_model: str = Field(default="", max_length=120)
+
+
+class GuidanceDetails(Input):
+    kind: Literal["identify", "observe", "operate", "verify", "contact_support"] = "operate"
+    basis: Literal["document", "general", "user_report"] = Field(default="general", description="通用建议用general；已核验型号原文用document；不因没有手册而拒绝初步帮助。")
+    instruction: str = Field(min_length=1, max_length=2400)
+    success_signal: str = Field(default="", max_length=1000)
+    if_not_found: str = Field(default="", max_length=1000)
+    if_unchanged: str = Field(default="", max_length=1000)
+    caution: str = Field(default="", max_length=1000)
+    target_label: str = Field(default="", max_length=160)
+    evidence: list[StepEvidence] = Field(default_factory=list, max_length=6)
+    observed_quote: str = Field(default="", max_length=2400, description="仅在用户实际做过或报告结果时填写本轮连续原话。计划做的动作不是实际完成。")
+    observed_message_id: str | None = None
+
+    @model_validator(mode='after')
+    def source_basis(self):
+        if self.evidence and self.basis=='general':self.basis='document'
+        return self
+
+
 class TaskEntry(Input):
     id: str = Field(min_length=1, max_length=80)
     title: str = Field(min_length=1, max_length=200)
@@ -319,6 +393,22 @@ class TaskEntry(Input):
     state: Literal["pending", "ready", "not_found", "unchanged"] = "pending"
     assignee_id: str | None = None
     updated_by: str | None = None
+    guidance: GuidanceDetails | None = None
+
+
+class GuidanceRequest(Input):
+    item_id: str
+    question: str = Field(min_length=1, max_length=6000)
+    photo_ids: list[str] = Field(default_factory=list, max_length=4)
+
+
+class GuidanceFeedback(Input):
+    expected_version: int = Field(ge=1)
+    step_id: str = Field(min_length=1, max_length=80)
+    outcome: Literal["done", "not_found", "unchanged"]
+    note: str = Field(default="", max_length=1600)
+    photo_ids: list[str] = Field(default_factory=list, max_length=4)
+    receipt_id: str = Field(min_length=8, max_length=80)
 
 
 class TaskBoardCreate(Input):
@@ -340,6 +430,18 @@ class TaskEntryAssignment(Input):
     assignee_id: str | None = None
 
 
+class TaskEntryDetails(Input):
+    expected_version: int = Field(ge=1)
+    title: str = Field(min_length=1, max_length=200)
+    item_id: str | None = None
+    group: Literal["owned", "buy", "borrow", "confirm", "step"] = "owned"
+    note: str = Field(default="", max_length=2000)
+
+
+class TaskEntryCreate(TaskEntryDetails):
+    assignee_id: str | None = None
+
+
 class TaskBoardView(BaseModel):
     task: TaskView
     kind: Literal["checklist", "guidance", "idea", "legacy"]
@@ -357,6 +459,10 @@ class WishCreate(Input):
     note: str = Field(default="", max_length=1600)
     url: str = Field(default="", max_length=2000)
     visible_to_friends: bool = False
+
+
+class WishChange(WishCreate):
+    expected_version: int = Field(ge=1)
 
 
 class WishView(WishCreate):

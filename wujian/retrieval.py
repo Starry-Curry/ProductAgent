@@ -15,14 +15,28 @@ from . import domain
 from .database import (
     ChatMessage,
     Conversation,
+    ExperienceRecord,
     KnowledgeClaim,
     Memory,
+    Run,
     SourceRecord,
     TaskRecord,
     now,
 )
 
 logger = logging.getLogger(__name__)
+
+
+def record_write_receipts(message, record_uses):
+    """Project linked, still-existing own records without granting body access.
+
+    record_uses is an owner-filtered SQL mapping of record ID to AI permission.
+    Both restored chat and the disposable search index use this same receipt.
+    """
+    return [{"experience_id": identity, "reference_kind": "record_write_receipt",
+        "ai_reference_allowed": bool(record_uses[identity])}
+        for identity in dict.fromkeys((message.recorded_experiences or {}).values())
+        if identity in record_uses]
 
 
 def task_view(row):
@@ -80,7 +94,7 @@ def authorized_documents(sessions, user_id):
 
     with sessions() as db:
         for row in domain.list_items(db, user_id):
-            add("item", row["id"], row)
+            add("item", row["id"], domain.agent_item_view(row))
             if row["access"] == "shared":
                 from .foundation import known_claims
 
@@ -94,7 +108,15 @@ def authorized_documents(sessions, user_id):
         for row in domain.list_experiences(db, user_id, for_ai=True):
             add("experience", row["id"], row)
         for row in db.scalars(select(TaskRecord).where(TaskRecord.user_id == user_id)):
-            add("task", row.id, task_view(row))
+            value=task_view(row)
+            plan={key:part for key,part in value['plan'].items() if key!='visualizations'}
+            if isinstance(plan.get('guidance'),dict):
+                progress={key:part for key,part in plan['guidance'].items() if key!='pictures'}
+                if progress.get('lesson'):
+                    lesson=progress['lesson']
+                    progress['lesson']={key:lesson[key] for key in ['id','revision','phase','inputs'] if key in lesson}
+                plan['guidance']=progress
+            add("task", row.id, {**value,'plan':plan})
         for row in db.scalars(
             select(KnowledgeClaim).where(
                 KnowledgeClaim.owner_id == user_id,
@@ -103,7 +125,8 @@ def authorized_documents(sessions, user_id):
         ):
             add("knowledge", row.id, claim_view(row))
         for row in db.scalars(
-            select(SourceRecord).where(SourceRecord.owner_id == user_id)
+            select(SourceRecord).where(SourceRecord.owner_id == user_id,
+                                       SourceRecord.origin != "curated_reference_retired")
         ):
             add(
                 "source",
@@ -118,13 +141,15 @@ def authorized_documents(sessions, user_id):
             )
         # Exchanges already exist in SQL. Index them without turning model advice
         # into user facts or depending on an optional model memory/task tool call.
-        retired_sources = set(
-            db.scalars(
-                select(Memory.source_message_id).where(
-                    Memory.user_id == user_id, Memory.active.is_(False)
-                )
-            )
-        )
+        from .memory_lifecycle import history_policy
+        history = history_policy(db, user_id)
+        # A conversation can point back to a wall record it created without
+        # copying private wall text or treating the write as AI-read consent.
+        record_uses = dict(db.execute(select(ExperienceRecord.id, ExperienceRecord.allow_ai)
+            .where(ExperienceRecord.creator_id == user_id)).all())
+        terminal_runs = dict(db.execute(select(Run.id, Run.status).where(
+            Run.user_id == user_id, Run.status.in_(("failed", "interrupted"))
+        )).all())
         for conversation in db.scalars(
             select(Conversation).where(Conversation.user_id == user_id)
         ):
@@ -133,9 +158,8 @@ def authorized_documents(sessions, user_id):
                 .where(ChatMessage.conversation_id == conversation.id)
                 .order_by(ChatMessage.created_at)
             ).all()
-            if any(message.id in retired_sources for message in messages):
-                continue  # do not resurface superseded/forgotten source conversations
             question = None
+            answered = set()
             for message in messages:
                 if message.role == "user":
                     question = message
@@ -144,6 +168,11 @@ def authorized_documents(sessions, user_id):
                     and message.role == "assistant"
                     and message.run_id == question.run_id
                 ):
+                    answered.add(question.id)
+                    if history.blocks(question.id, question.text, message.text):
+                        question = None
+                        continue
+                    receipts = record_write_receipts(question, record_uses)
                     add(
                         "conversation",
                         question.id,
@@ -155,9 +184,30 @@ def authorized_documents(sessions, user_id):
                             "created_at": question.created_at,
                             "evidence_kind": "historical_exchange",
                             "assistant_advice_is_not_observed_success": True,
+                            "assistant_text_is_generated_not_user_life_evidence": True,
+                            **({"record_receipts":receipts} if receipts else {}),
                         },
                     )
                     question = None
+            # A failed generation must not erase what the user actually said.
+            # Keep this as unanswered history, never as an assistant answer or
+            # evidence that an action succeeded. SQL remains the only writer.
+            for message in messages:
+                if (message.role != "user" or message.id in answered
+                    or message.run_id not in terminal_runs
+                    or history.blocks(message.id, message.text)):
+                    continue
+                receipts = record_write_receipts(message, record_uses)
+                add("conversation", message.id, {
+                    "conversation_id": conversation.id,
+                    "user_message_id": message.id,
+                    "user_text": message.text,
+                    "assistant_text": "",
+                    "created_at": message.created_at,
+                    "run_status": terminal_runs[message.run_id],
+                    "evidence_kind": "historical_unanswered_user_message",
+                    **({"record_receipts": receipts} if receipts else {}),
+                })
     return documents
 
 

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { App as AntApp } from "antd";
 import {
   ArrowLeft,
   ArrowRight,
@@ -21,7 +20,6 @@ import { request, type Item, type User, type Workspace } from "../api";
 import type { Editor } from "./Editors";
 import {
   attentionLabels,
-  Companion,
   EmptyState,
   ItemCard,
   ObjectVisual,
@@ -31,6 +29,10 @@ import {
 } from "./shared";
 import { navigate, type Route } from "./navigation";
 import Care from "./Care";
+import FamilyMemories from "./FamilyMemories";
+import { ObjectCompanion, PersonaGrowth } from "./ObjectCompanion";
+import EarbudConsole from "./EarbudConsole";
+import GeneratedWorkbench from "./GeneratedWorkbench";
 
 type Props = {
   workspace: Workspace;
@@ -38,8 +40,9 @@ type Props = {
   route: Route;
   refresh: () => Promise<unknown>;
   edit: (editor: Editor) => void;
-  ask: (item: Item, intent?: string) => void;
+  ask: (item: Item, intent?: string, text?: string) => void;
   task: (id: string) => void;
+  continueWorkbench: (id: string) => void;
   device: (item: Item) => void;
 };
 export default function Items({
@@ -50,6 +53,7 @@ export default function Items({
   edit,
   ask,
   task,
+  continueWorkbench,
   device,
 }: Props) {
   const [query, setQuery] = useState(""),
@@ -60,22 +64,25 @@ export default function Items({
   );
   const [houseId, setHouseId] = useState(houses[0]?.id || "");
   useEffect(() => {
-    if (!houses.some((house) => house.id === houseId))
+    if (route.householdId && houses.some((house) => house.id === route.householdId))
+      setHouseId(route.householdId);
+    else if (!houses.some((house) => house.id === houseId))
       setHouseId(houses[0]?.id || "");
-  }, [workspace.households]);
-  const house = houses.find((house) => house.id === houseId);
+  }, [workspace.households, route.householdId]);
+  const house = houses.find((house) => house.id === route.householdId)
+    || houses.find((house) => house.id === houseId) || houses[0];
   const scope = route.scope || "household";
   const item = workspace.items.find((item) => item.id === route.itemId);
   const items = workspace.items.filter((item) =>
     scope === "personal"
-      ? item.owner_id === user.id
+      ? item.owner_id === user.id && !workspace.households.some((family) => family.item_ids.includes(item.id))
       : house?.item_ids.includes(item.id),
   );
   const visible = items.filter((item) => {
     const info = presentation(item);
     return (
       (!query ||
-        (item.name + item.avatar.nickname + item.product.model + info.location)
+        (item.name + item.avatar.nickname + item.product.brand + item.product.commercial_name + item.product.model + info.location)
           .toLowerCase()
           .includes(query.toLowerCase())) &&
       (!room || info.location === room) &&
@@ -95,10 +102,53 @@ export default function Items({
     (item) => presentation(item).attention === "needs_restock",
   ).length;
   function select(item: Item) {
-    navigate({ section: "items", scope, itemId: item.id });
+    navigate({ section: "items", scope, itemId: item.id,
+      householdId: scope === "household" ? house?.id : undefined });
+  }
+  if (route.itemId) {
+    if (item && route.panel === "workbench" && item.owner_id === user.id) {
+      const installed = /(?:huawei|华为)/i.test(item.product.brand + item.name)
+        && /4e/i.test((item.product.model + item.name).replace(/\s/g, ""));
+      return <main className="item-profile-page"><GeneratedWorkbench item={item} taskId={route.taskId}
+        onClose={() => navigate({ ...route, panel: undefined, taskId: undefined })}
+        onSelect={(id) => navigate({ ...route, taskId: id })}
+        onAsk={(text) => ask(item, "general", text)} onContinue={continueWorkbench}
+        installedAvailable={installed}
+        onInstalled={() => navigate({ ...route, panel: "earbuds", taskId: undefined })} /></main>;
+    }
+    if (item && route.panel === "earbuds" && item.owner_id === user.id) {
+      return <main className="item-profile-page" aria-label="耳机控制台">
+        <EarbudConsole itemId={item.id} photoId={item.photo_id || undefined}
+          onClose={() => navigate({ ...route, panel: "workbench", taskId: undefined })} />
+      </main>;
+    }
+    return (
+      <main className="item-profile-page" aria-label="物品名片">
+        {item ? (
+          <ItemDetail
+            key={item.id}
+            item={item}
+            workspace={workspace}
+            user={user}
+            refresh={refresh}
+            edit={edit}
+            ask={ask}
+            task={task}
+            device={device}
+            householdId={scope === "household" && house?.item_ids.includes(item.id) ? house.id : undefined}
+            onBack={() => navigate({ section: "items", scope, householdId: scope === "household" ? house?.id : undefined })}
+          />
+        ) : (
+          <EmptyState
+            title="暂时无法打开这件物品"
+            action={<button className="soft-button" onClick={() => navigate({ section: "items", scope, householdId: scope === "household" ? house?.id : undefined })}>返回物品</button>}
+          >它可能已被移走，或共享权限已改变。</EmptyState>
+        )}
+      </main>
+    );
   }
   return (
-    <div className={`items-workspace ${item ? "has-detail" : ""}`}>
+    <div className={`items-workspace ${scope === "personal" ? "personal-items" : ""}`}>
       <section className="items-browser">
         <div className="segmented" role="group" aria-label="物品范围">
           <button
@@ -106,10 +156,10 @@ export default function Items({
             onClick={() => {
               setFilter("all");
               setRoom("");
-              navigate({ section: "items", scope: "household" });
+              navigate({ section: "items", scope: "household", householdId: house?.id });
             }}
           >
-            家庭用品
+            家庭物品
           </button>
           <button
             className={scope === "personal" ? "active" : ""}
@@ -124,6 +174,13 @@ export default function Items({
         </div>
         {scope === "household" && (
           <div className="mobile-household-tools">
+            {houses.length > 1 && <select className="family-household-select" aria-label="选择家庭" value={house?.id || ""}
+              onChange={(event) => {
+                setHouseId(event.target.value); setFilter("all"); setRoom("");
+                navigate({ section: "items", scope: "household", householdId: event.target.value });
+              }}>
+              {houses.map((family) => <option key={family.id} value={family.id}>{family.name}</option>)}
+            </select>}
             <button
               className="quiet-button"
               onClick={() => edit({ kind: "household" })}
@@ -133,7 +190,7 @@ export default function Items({
             </button>
             <button
               className="quiet-button"
-              onClick={() => navigate({ section: "care" })}
+              onClick={() => navigate({ section: "care", householdId: house?.id })}
             >
               共同照顾的事
               <ArrowRight size={16} />
@@ -207,7 +264,7 @@ export default function Items({
               </Pill>
               <span className="scope-note">
                 <LockKeyhole size={14} />
-                私人故事单独管理
+                未加入家庭的私人物品
               </span>
             </>
           )}
@@ -218,7 +275,6 @@ export default function Items({
               <ItemCard
                 key={value.id}
                 item={value}
-                selected={item?.id === value.id}
                 onSelect={() => select(value)}
               />
             ))}
@@ -266,21 +322,7 @@ export default function Items({
             </button>
           )}
       </section>
-      <aside className={`detail-pane ${item ? "visible" : ""}`}>
-        {item ? (
-          <ItemDetail
-            item={item}
-            workspace={workspace}
-            user={user}
-            refresh={refresh}
-            edit={edit}
-            ask={ask}
-            task={task}
-            device={device}
-            onBack={() => navigate({ section: "items", scope })}
-          />
-        ) : (
-          <>
+      {scope === "household" && <aside className="detail-pane">
             <section className="rail-section">
               <div className="section-title">
                 <h2>一起照看这个家</h2>
@@ -333,8 +375,8 @@ export default function Items({
                 workspace={workspace}
                 user={user}
                 refresh={refresh}
-                onItem={(id) =>
-                  navigate({ section: "items", scope, itemId: id })
+                onItem={(id, reminderHouseholdId) =>
+                  navigate({ section: "items", scope, itemId: id, householdId: reminderHouseholdId || house?.id })
                 }
                 householdId={house?.id}
                 compact
@@ -358,14 +400,12 @@ export default function Items({
               ))}
             <button
               className="primary-button full-width"
-              onClick={() => edit({ kind: "reminder" })}
+              onClick={() => edit({ kind: "reminder", householdId: house?.id })}
             >
               <Wrench size={18} />
               记录一件需要处理的事
             </button>
-          </>
-        )}
-      </aside>
+      </aside>}
     </div>
   );
 }
@@ -380,18 +420,58 @@ function ItemDetail({
   task,
   device,
   onBack,
-}: Omit<Props, "route"> & { item: Item; onBack: () => void }) {
+  householdId,
+}: Omit<Props, "route" | "continueWorkbench"> & { item: Item; onBack: () => void; householdId?: string }) {
+  const [growthBusy, setGrowthBusy] = useState(false);
+  const [growthError, setGrowthError] = useState("");
+  async function changeGrowth(change: { growth_enabled?: boolean; growth_dismissed_ids?: string[] }) {
+    if (growthBusy) return;
+    setGrowthBusy(true);
+    setGrowthError("");
+    try {
+      await request(`/items/${item.id}`, "PUT", {
+        name: item.name, kind: item.kind, product: item.product,
+        description: item.description, photo_id: item.photo_id, state: item.state,
+        expected_version: item.version,
+        avatar: {
+          enabled: item.avatar.enabled, form: item.avatar.form,
+          nickname: item.avatar.nickname, personality: item.avatar.personality,
+          color: item.avatar.color, growth_enabled: item.avatar.growth_enabled,
+          growth_dismissed_ids: item.avatar.growth_dismissed_ids, ...change,
+        },
+      });
+      await refresh();
+    } catch (error) {
+      setGrowthError((error as Error).message);
+    } finally {
+      setGrowthBusy(false);
+    }
+  }
   const [tab, setTab] = useState("story"),
     [more, setMore] = useState(false),
-    [knowledge, setKnowledge] = useState<Record<string, unknown>[]>([]);
-  const { message } = AntApp.useApp();
+    [attempt, setAttempt] = useState(0),
+    [knowledge, setKnowledge] = useState<{
+      identity: string;
+      rows: Record<string, unknown>[];
+      error: string;
+      loading: boolean;
+    }>({ identity: "", rows: [], error: "", loading: true });
   const info = presentation(item),
     owned = item.owner_id === user.id;
   useEffect(() => {
+    let current = true;
+    const identity = `${item.id}:${item.version}`;
+    setKnowledge({ identity, rows: [], error: "", loading: true });
     void request<Record<string, unknown>[]>(`/items/${item.id}/knowledge`)
-      .then(setKnowledge)
-      .catch(() => setKnowledge([]));
-  }, [item.id, item.version]);
+      .then((rows) => {
+        if (current) setKnowledge({ identity, rows, error: "", loading: false });
+      })
+      .catch((error: Error) => {
+        if (current) setKnowledge({ identity, rows: [], error: error.message, loading: false });
+      });
+    return () => { current = false; };
+  }, [item.id, item.version, attempt]);
+  const knowledgeCurrent = knowledge.identity === `${item.id}:${item.version}`;
   const experiences = workspace.experiences.filter((exp) =>
     exp.item_ids.includes(item.id),
   );
@@ -402,16 +482,24 @@ function ItemDetail({
   );
   return (
     <>
-      <button className="back-link mobile-only" onClick={onBack}>
+      <button className="back-link" onClick={onBack}>
         <ArrowLeft size={18} />
         返回物品
       </button>
       <div className="detail-hero">
-        <ObjectVisual item={item} />
+        {!item.photo_id && item.avatar.enabled ? (
+          <div className="detail-companion-hero">
+            <ObjectCompanion item={item} size={220} className="object-companion-alive" />
+            <small>{item.avatar.nickname || item.name} · 物品分身</small>
+          </div>
+        ) : <ObjectVisual item={item} />}
       </div>
       <div className="detail-heading">
         <div>
           <h1>{item.name}</h1>
+          {item.kind === "standard_product" && item.product.model && (
+            <p>{[item.product.brand, item.product.commercial_name, item.product.model].filter(Boolean).join(" · ")}</p>
+          )}
           <p>
             <MapPin size={16} />
             {info.location || item.product.model || "独一份的存在"}
@@ -419,7 +507,7 @@ function ItemDetail({
         </div>
         <span className="privacy-label">
           <LockKeyhole size={15} />
-          {owned ? "私人介绍仅自己可见" : "获准共享的物品"}
+          {householdId ? "家庭共享物品 · 回忆另选范围" : owned ? "私人介绍仅自己可见" : "获准共享的物品"}
         </span>
       </div>
       {info.attention !== "normal" && (
@@ -441,14 +529,24 @@ function ItemDetail({
           }
         >
           <MessageCircle size={18} />
-          {item.kind === "nonstandard_object" ? "聊聊它" : "问问用法"}
+          {item.kind === "nonstandard_object" ? "问问这件物" : "问问用法"}
+        </button>
+        <button
+          className="soft-button"
+          onClick={() => ask(item, "creative")}
+        >
+          <Sparkles size={18} />
+          发现新玩法
         </button>
         <button
           className="primary-button"
-          onClick={() => edit({ kind: "experience", item })}
+          onClick={() => edit({ kind: "experience", item, householdId })}
         >
-          记一段
+          {householdId ? "和家人记一段" : "记一段"}
         </button>
+        {owned && <button className="soft-button" onClick={() => navigate({ section: "items", itemId: item.id, panel: "workbench" })}>
+          <Wrench size={18} />我的工作台
+        </button>}
         <button
           className="icon-button"
           title="更多物品操作"
@@ -460,15 +558,11 @@ function ItemDetail({
       </div>
       {more && (
         <div className="detail-more">
-          <button onClick={() => ask(item, "creative")}>
-            <Sparkles size={17} />
-            发现新玩法
-          </button>
           {owned && (
             <>
               <button onClick={() => edit({ kind: "item", item })}>
                 <Settings2 size={17} />
-                物品与分身设置
+                编辑物品资料
               </button>
               <button onClick={() => edit({ kind: "presentation", item })}>
                 <MapPin size={17} />
@@ -482,31 +576,47 @@ function ItemDetail({
                 <Gift size={17} />
                 送出这件物品
               </button>
-              <button onClick={() => edit({ kind: "reminder", item })}>
+              <button onClick={() => edit({ kind: "reminder", item, householdId })}>
                 照顾与提醒
               </button>
-              <button onClick={() => device(item)}>连接设备与探索</button>
+              <button onClick={() => device(item)}>让它更合心意</button>
             </>
           )}
+          {householdId && !owned && <button onClick={() => edit({ kind: "reminder", item, householdId })}>给家人留个提醒</button>}
+        </div>
+      )}
+      {item.avatar.enabled && (
+        <div className="persona-strip">
+          {item.photo_id && <ObjectCompanion item={item} size={80} />}
+          <div className="persona-identity">
+            <strong>{item.avatar.nickname || item.name}</strong>
+            <p>{item.avatar.personality || "相处时的样子，由你慢慢决定。"}</p>
+            {owned && <PersonaGrowth avatar={item.avatar} busy={growthBusy}
+              onToggle={(enabled) => { void changeGrowth({ growth_enabled: enabled }); }}
+              onDismiss={(id) => { void changeGrowth({ growth_dismissed_ids:
+                [...new Set([...(item.avatar.growth_dismissed_ids || []), id])] }); }}
+              onExperience={(id) => navigate({ section: "memories", itemId: item.id, experienceId: id })} />}
+            {growthError && <p className="inline-error" role="alert">{growthError}</p>}
+          </div>
+          <div className="persona-strip-actions">
+            <button className="soft-button" onClick={() => ask(item, "persona")}>
+              和它聊聊
+            </button>
+            {owned && <button className="quiet-button" onClick={() => edit({ kind: "persona", item })}>它的模样与性格</button>}
+          </div>
         </div>
       )}
       {item.description && (
         <blockquote className="personal-story">
-          <Companion small />
           <p>{item.description}</p>
         </blockquote>
       )}
-      {item.avatar.enabled && (
-        <div className="persona-strip">
-          <Companion small />
-          <div>
-            <strong>{item.avatar.nickname || item.name}的分身</strong>
-            <p>{item.avatar.personality || "相处时的样子，由你慢慢决定。"}</p>
-          </div>
-          <button className="quiet-button" onClick={() => ask(item, "persona")}>
-            和它聊聊
-          </button>
-        </div>
+      {!item.avatar.enabled && owned && (
+        <button className="persona-invitation" onClick={() => edit({ kind: "persona", item })}>
+          <Heart size={19} strokeWidth={1.5} />
+          <span>给它一个分身<small>有些东西，也可以成为陪伴。</small></span>
+          <ArrowRight size={17} />
+        </button>
       )}
       {!!tasks.length && (
         <section className="related-tasks">
@@ -521,7 +631,7 @@ function ItemDetail({
       )}
       <div className="detail-tabs">
         <Pill active={tab === "story"} onClick={() => setTab("story")}>
-          它的经历
+          {householdId ? "家庭共同回忆" : "它的经历"}
         </Pill>
         <Pill active={tab === "knowledge"} onClick={() => setTab("knowledge")}>
           用法与资料
@@ -530,23 +640,25 @@ function ItemDetail({
           照顾与历史
         </Pill>
       </div>
-      {tab === "story" && (
+      {tab === "story" && householdId && <FamilyMemories workspace={workspace} item={item} householdId={householdId} edit={edit} />}
+      {tab === "story" && !householdId && (
         <div className="story-timeline">
           {experiences.map((exp) => (
             <button
               key={exp.id}
-              onClick={() => edit({ kind: "experience", experience: exp })}
-              disabled={exp.access === "shared"}
+              onClick={() => navigate({ section: "memories", experienceId: exp.id })}
             >
               <span className="timeline-dot" />
               <time>{safeDate(exp.occurred_on)}</time>
               <strong>{exp.title}</strong>
               <p>{exp.text.slice(0, 180)}</p>
+              <small>{exp.origin_id ? "随礼物收到的故事 · 保留原作者" : exp.access === "shared" ? "朋友分享的经历" : "我记录的回忆"}</small>
             </button>
           ))}
           {!experiences.length && (
             <p className="empty-note">它的第一段故事，可以从今天开始。</p>
           )}
+          {!!experiences.length && <button className="quiet-button" onClick={() => navigate({ section: "memories" })}>去回忆墙看看 <ArrowRight size={16} /></button>}
         </div>
       )}
       {tab === "knowledge" && (
@@ -569,7 +681,14 @@ function ItemDetail({
                 .join(" · ") || "尚待确认"}
             </dd>
           </dl>
-          {knowledge.map((claim, index) => (
+          {(!knowledgeCurrent || knowledge.loading) && <p className="empty-note" role="status">正在读取这件物品的资料…</p>}
+          {knowledgeCurrent && knowledge.error && (
+            <div className="inline-error" role="alert">
+              <p>资料暂时没有读取成功：{knowledge.error}</p>
+              <button className="quiet-button" onClick={() => setAttempt((value) => value + 1)}>重新读取</button>
+            </div>
+          )}
+          {knowledgeCurrent && knowledge.rows.map((claim, index) => (
             <article key={String(claim.id || index)}>
               <strong>{String(claim.content || "")}</strong>
               <p>{String(claim.source_quote || "")}</p>
@@ -580,7 +699,7 @@ function ItemDetail({
               </small>
             </article>
           ))}
-          {!knowledge.length && (
+          {knowledgeCurrent && !knowledge.loading && !knowledge.error && !knowledge.rows.length && (
             <p className="empty-note">
               尚未取得适用资料，先确认型号，再核对具体用法。
             </p>
@@ -603,6 +722,7 @@ function ItemDetail({
             user={user}
             refresh={refresh}
             onItem={() => {}}
+            householdId={householdId}
           />
           <p className="form-note">
             处理反馈和实物状态分别保留，需要改变状态时再明确更新。

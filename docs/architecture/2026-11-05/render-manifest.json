@@ -1,0 +1,86 @@
+{
+  "mermaid_version": "11.17.2",
+  "source": "2026-11-05_物间技术架构详图与接口说明.md",
+  "diagrams": [
+    {
+      "title": "图1 当前组件与进程",
+      "stem": "diagram-01",
+      "width": 1600,
+      "height": 770,
+      "naturalWidth": 2972,
+      "naturalHeight": 1430.0264892578125
+    },
+    {
+      "title": "图2 POST chat至最终显示的实际时序",
+      "stem": "diagram-02",
+      "width": 1600,
+      "height": 2081,
+      "naturalWidth": 1675,
+      "naturalHeight": 2178
+    },
+    {
+      "title": "图3 当前主循环内部的职责",
+      "stem": "diagram-03",
+      "width": 1600,
+      "height": 513,
+      "naturalWidth": 2316,
+      "naturalHeight": 742
+    },
+    {
+      "title": "图4 外部资料怎样进入物品认识",
+      "stem": "diagram-04",
+      "width": 638,
+      "height": 2899,
+      "naturalWidth": 638,
+      "naturalHeight": 2898.426513671875
+    },
+    {
+      "title": "图5 ReMe混合检索与权限重查",
+      "stem": "diagram-05",
+      "width": 555,
+      "height": 1832,
+      "naturalWidth": 554.94921875,
+      "naturalHeight": 1831
+    },
+    {
+      "title": "图6 核心认知数据的真实外键",
+      "stem": "diagram-06",
+      "width": 1600,
+      "height": 1101,
+      "naturalWidth": 2624.0390625,
+      "naturalHeight": 1804.1500244140625
+    },
+    {
+      "title": "图7 对话运行 社交与设备关系",
+      "stem": "diagram-07",
+      "width": 1600,
+      "height": 763,
+      "naturalWidth": 1907.408203125,
+      "naturalHeight": 908.5
+    },
+    {
+      "title": "图8 最终结果的三个分支",
+      "stem": "diagram-08",
+      "width": 1160,
+      "height": 910,
+      "naturalWidth": 1160,
+      "naturalHeight": 910
+    },
+    {
+      "title": "图9 当前社会关系操作与待补表达",
+      "stem": "diagram-09",
+      "width": 1572,
+      "height": 622,
+      "naturalWidth": 1572,
+      "naturalHeight": 622
+    },
+    {
+      "title": "图10 当前REA通道及执行状态",
+      "stem": "diagram-10",
+      "width": 1038,
+      "height": 1564,
+      "naturalWidth": 1037.375,
+      "naturalHeight": 1562.328125
+    }
+  ]
+}

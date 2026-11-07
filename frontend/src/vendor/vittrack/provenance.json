@@ -1,0 +1,17 @@
+{
+  "model_revision": "d4938dfc9d4ec5d098bfa33e98b3f3345a236586",
+  "model_source": "https://huggingface.co/opencv/opencv_zoo/resolve/d4938dfc9d4ec5d098bfa33e98b3f3345a236586/models/object_tracking_vittrack/",
+  "implementation_reference": "https://raw.githubusercontent.com/opencv/opencv/6d381e029fe26248675f48b2d44df23f4f288d11/modules/video/src/tracking/tracker_vit.cpp",
+  "files": [
+    {
+      "file": "vittrack.onnx",
+      "bytes": 714726,
+      "sha256": "2990f0b7cd44d92afa48cd97db6de7be113fc1d9594fddb74e2725c10478e91d"
+    },
+    {
+      "file": "LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    }
+  ]
+}

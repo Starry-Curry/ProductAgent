@@ -1,0 +1,469 @@
+{
+  "schema": "reviewed-exterior/1",
+  "author": "Codex",
+  "basis": "User AS2 photos 1/2/5 and official mainland manual, visually checked",
+  "parts": [
+    {
+      "id": "base",
+      "name": "底座",
+      "shape": "box",
+      "size": [
+        430,
+        60,
+        410
+      ],
+      "pos": [
+        0,
+        30,
+        0
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "soft",
+      "color": "#d8d8d3"
+    },
+    {
+      "id": "rear",
+      "name": "后方支撑机身",
+      "shape": "box",
+      "size": [
+        270,
+        192,
+        115
+      ],
+      "pos": [
+        0,
+        169,
+        -148
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "soft",
+      "color": "#ece6da"
+    },
+    {
+      "id": "drawer",
+      "name": "抽拉熨烫板",
+      "shape": "box",
+      "size": [
+        375,
+        28,
+        360
+      ],
+      "pos": [
+        0,
+        91,
+        12
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "soft",
+      "color": "#545958"
+    },
+    {
+      "id": "mat",
+      "name": "熨烫垫",
+      "shape": "box",
+      "size": [
+        355,
+        18,
+        340
+      ],
+      "pos": [
+        0,
+        114,
+        12
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "soft",
+      "color": "#696d67"
+    },
+    {
+      "id": "pull_tab",
+      "name": "抽屉前方拉手",
+      "shape": "box",
+      "size": [
+        58,
+        8,
+        26
+      ],
+      "pos": [
+        0,
+        100,
+        200
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "soft",
+      "color": "#eeeae0"
+    },
+    {
+      "id": "upper_plate",
+      "name": "上方发热板",
+      "shape": "box",
+      "size": [
+        390,
+        35,
+        360
+      ],
+      "pos": [
+        0,
+        180,
+        0
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "soft",
+      "color": "#dcd7cd"
+    },
+    {
+      "id": "hot_underside",
+      "name": "发热板底面",
+      "shape": "box",
+      "size": [
+        350,
+        8,
+        330
+      ],
+      "pos": [
+        0,
+        159,
+        0
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "metal",
+      "color": "#444b4b"
+    },
+    {
+      "id": "hood",
+      "name": "白色主机外壳",
+      "shape": "box",
+      "size": [
+        255,
+        80,
+        280
+      ],
+      "pos": [
+        0,
+        239,
+        -30
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "soft",
+      "color": "#eee8dc"
+    },
+    {
+      "id": "panel_surround",
+      "name": "操作面板外框",
+      "shape": "box",
+      "size": [
+        222,
+        18,
+        210
+      ],
+      "pos": [
+        0,
+        280,
+        0
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "soft",
+      "color": "#9eaaa9"
+    },
+    {
+      "id": "panel",
+      "name": "控制面板",
+      "shape": "box",
+      "size": [
+        205,
+        12,
+        196
+      ],
+      "pos": [
+        0,
+        290,
+        0
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "soft",
+      "color": "#eee9dd"
+    },
+    {
+      "id": "display",
+      "name": "显示屏",
+      "shape": "box",
+      "size": [
+        182,
+        8,
+        85
+      ],
+      "pos": [
+        0,
+        300,
+        -30
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "glass",
+      "color": "#263b3e"
+    },
+    {
+      "id": "power",
+      "name": "电源键（⏻）",
+      "shape": "cyl",
+      "size": [
+        19,
+        4,
+        19
+      ],
+      "pos": [
+        -86,
+        300,
+        66
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "plastic",
+      "color": "#f5f0e7"
+    },
+    {
+      "id": "temperature",
+      "name": "温度键（温度计）",
+      "shape": "cyl",
+      "size": [
+        14,
+        4,
+        14
+      ],
+      "pos": [
+        -48,
+        300,
+        50
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "plastic",
+      "color": "#f5f0e7"
+    },
+    {
+      "id": "time",
+      "name": "时间键（时钟）",
+      "shape": "cyl",
+      "size": [
+        14,
+        4,
+        14
+      ],
+      "pos": [
+        -66,
+        300,
+        72
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "plastic",
+      "color": "#f5f0e7"
+    },
+    {
+      "id": "pressure",
+      "name": "压力键",
+      "shape": "cyl",
+      "size": [
+        14,
+        4,
+        14
+      ],
+      "pos": [
+        -48,
+        300,
+        91
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "plastic",
+      "color": "#f5f0e7"
+    },
+    {
+      "id": "mode",
+      "name": "模式键（循环箭头）",
+      "shape": "cyl",
+      "size": [
+        14,
+        4,
+        14
+      ],
+      "pos": [
+        -24,
+        300,
+        70
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "plastic",
+      "color": "#f5f0e7"
+    },
+    {
+      "id": "custom",
+      "name": "自定义键（齿轮）",
+      "shape": "cyl",
+      "size": [
+        14,
+        4,
+        14
+      ],
+      "pos": [
+        19,
+        300,
+        70
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "plastic",
+      "color": "#f5f0e7"
+    },
+    {
+      "id": "plus",
+      "name": "增加（＋）",
+      "shape": "cyl",
+      "size": [
+        14,
+        4,
+        14
+      ],
+      "pos": [
+        43,
+        300,
+        49
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "plastic",
+      "color": "#f5f0e7"
+    },
+    {
+      "id": "minus",
+      "name": "减少（－）",
+      "shape": "cyl",
+      "size": [
+        14,
+        4,
+        14
+      ],
+      "pos": [
+        43,
+        300,
+        91
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "plastic",
+      "color": "#f5f0e7"
+    },
+    {
+      "id": "auto",
+      "name": "自动熨压键（A）",
+      "shape": "cyl",
+      "size": [
+        14,
+        4,
+        14
+      ],
+      "pos": [
+        66,
+        300,
+        70
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "plastic",
+      "color": "#f5f0e7"
+    },
+    {
+      "id": "start",
+      "name": "启动键（品牌图标）",
+      "shape": "cyl",
+      "size": [
+        19,
+        4,
+        19
+      ],
+      "pos": [
+        91,
+        300,
+        70
+      ],
+      "rot": [
+        0,
+        0,
+        0
+      ],
+      "material": "plastic",
+      "color": "#c3d6b9"
+    }
+  ]
+}

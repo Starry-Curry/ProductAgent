@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { App as AntApp, Modal } from "antd";
 import {
   Camera,
@@ -17,13 +17,19 @@ import {
   type Memory,
   type Preferences,
   type User,
+  type Wish,
   type Workspace,
 } from "../api";
-import { presentation } from "./shared";
+import { presentation, safeDate } from "./shared";
+import { ObjectCompanion } from "./ObjectCompanion";
+import CommunityConnection from "./CommunityConnection";
+import { PhotoMatchFinder, PhotoMatchReview, type PhotoMatchResult } from "./PhotoMatchReview";
+import "./family-ui.css";
 
 export type Editor = {
   kind:
     | "item"
+    | "persona"
     | "presentation"
     | "experience"
     | "gift"
@@ -37,6 +43,8 @@ export type Editor = {
     | "experience-share";
   item?: Item;
   experience?: Experience;
+  wish?: Wish;
+  householdId?: string;
 };
 type Props = {
   editor: Editor;
@@ -48,11 +56,12 @@ type Props = {
   onTask: (id: string) => void;
 };
 const today = () => {
-  const date = new Date();
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  const parts = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
+  return ["year", "month", "day"].map((type) => parts.find((part) => part.type === type)?.value).join("-");
 };
 const titles: Record<Editor["kind"], string> = {
   item: "记一件物品",
+  persona: "认识它的另一面",
   presentation: "位置与当前状态",
   experience: "留住这一刻",
   gift: "一份有来处的心意",
@@ -69,23 +78,27 @@ const titles: Record<Editor["kind"], string> = {
 function Photos({
   ids,
   onChange,
+  onBusy,
 }: {
   ids: string[];
-  onChange: (value: string[]) => void;
+  onChange: (value: string[] | ((previous: string[]) => string[])) => void;
+  onBusy: (value: boolean) => void;
 }) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   async function add(file?: File) {
     if (!file) return;
     setBusy(true);
+    onBusy(true);
     setError("");
     try {
       const asset = await upload(file);
-      onChange([...ids, asset.id].slice(-8));
+      onChange((previous) => [...previous, asset.id].slice(-8));
     } catch (error) {
       setError((error as Error).message);
     } finally {
       setBusy(false);
+      onBusy(false);
     }
   }
   return (
@@ -97,7 +110,7 @@ function Photos({
             <button
               type="button"
               aria-label="移除照片"
-              onClick={() => onChange(ids.filter((value) => value !== id))}
+              onClick={() => onChange((previous) => previous.filter((value) => value !== id))}
             >
               <X size={14} />
             </button>
@@ -149,43 +162,52 @@ export default function Editors({
   onItem,
   onTask,
 }: Props) {
-  const { message } = AntApp.useApp();
+  const { message, modal } = AntApp.useApp();
   const item = editor.item,
     experience = editor.experience;
-  const [name, setName] = useState(experience?.title || item?.name || "");
+  const [name, setName] = useState(experience?.title || editor.wish?.title || (["experience", "reminder"].includes(editor.kind) ? "" : item?.name) || "");
   const [text, setText] = useState(
-    experience?.text || (editor.kind === "item" ? item?.description : "") || "",
+    experience?.text || editor.wish?.note || (editor.kind === "item" ? item?.description : "") || "",
   );
   const [brand, setBrand] = useState(item?.product.brand || ""),
     [model, setModel] = useState(item?.product.model || "");
   const [kind, setKind] = useState(item?.kind || "standard_product");
   const [photos, setPhotos] = useState(
-    experience?.photo_ids || (item?.photo_id ? [item.photo_id] : []),
+    experience?.photo_ids || (editor.kind === "item" && item?.photo_id ? [item.photo_id] : []),
   );
+  const [photosBusy, setPhotosBusy] = useState(false);
   const [selected, setSelected] = useState<string[]>(
     experience?.item_ids || (item ? [item.id] : []),
   );
-  const [date, setDate] = useState(experience?.occurred_on || today());
+  const [date, setDate] = useState(experience ? experience.occurred_on || "" : today());
   const [allowAI, setAllowAI] = useState(experience?.allow_ai || false);
-  const [enabled, setEnabled] = useState(item?.avatar.enabled || false),
-    [nickname, setNickname] = useState(item?.avatar.nickname || ""),
-    [personality, setPersonality] = useState(item?.avatar.personality || "");
+  const [matchPhotos, setMatchPhotos] = useState(false);
+  const [enabled, setEnabled] = useState(editor.kind === "persona" || item?.avatar.enabled || false),
+    [nickname, setNickname] = useState(item?.avatar.nickname || (editor.kind === "persona" ? item?.name : "") || ""),
+    [personality, setPersonality] = useState(editor.kind === "gift" ? "" : item?.avatar.personality || "");
   const [color, setColor] = useState(item?.avatar.color || "#7e9eac");
+  const [form, setForm] = useState<Item["avatar"]["form"]>(item?.avatar.form || "auto");
+  const [imageId, setImageId] = useState<string | null>(item?.avatar.image_id || null),
+    [imageBusy, setImageBusy] = useState(false),
+    [imageError, setImageError] = useState("");
+  const [delighted, setDelighted] = useState(false);
+  const personaPreview = useRef<HTMLDivElement>(null);
   const info = item
     ? presentation(item)
     : { location: "", attention: "normal", note: "", cherished: false };
   const [location, setLocation] = useState(info.location),
     [attention, setAttention] = useState(info.attention),
     [cherished, setCherished] = useState(info.cherished);
-  const [houseId, setHouseId] = useState(""),
+  const [houseId, setHouseId] = useState(experience?.household_id ?? editor.householdId ?? ""),
     [recipient, setRecipient] = useState("");
   const [stories, setStories] = useState<string[]>([]),
-    [carryAvatar, setCarryAvatar] = useState(false),
+    [carryAvatar, setCarryAvatar] = useState(true),
     [preview, setPreview] = useState(false);
+  const [surprises, setSurprises] = useState<Record<string, { hint: string; words: string }>>({});
   const [note, setNote] = useState(info.note),
     [due, setDue] = useState(today() + "T18:00");
-  const [visible, setVisible] = useState(false),
-    [url, setUrl] = useState("");
+  const [visible, setVisible] = useState(editor.wish?.visible_to_friends || false),
+    [url, setUrl] = useState(editor.wish?.url || "");
   const [taskKind, setTaskKind] = useState("checklist"),
     [lines, setLines] = useState("");
   const [busy, setBusy] = useState(false),
@@ -197,8 +219,16 @@ export default function Editors({
   const houses = workspace.households.filter(
     (house) => house.membership === "active",
   );
+  const selectedHouse = houses.find((house) => house.id === houseId);
+  const scopedSelection = Boolean(houseId && ["experience", "reminder"].includes(editor.kind));
+  const selectableItems = scopedSelection ? workspace.items.filter((value) => selectedHouse?.item_ids.includes(value.id)) : workspace.items;
+  const outOfScope = scopedSelection ? selected.filter((id) => !selectedHouse?.item_ids.includes(id)) : [];
+  const reminderRecipients = houseId ? selectedHouse?.members.filter((member) => member.status === "active") || [] : friends;
+  const giftStories = item ? workspace.experiences.filter((value) => value.creator_id === user.id && value.item_ids.includes(item.id)) : [];
   const [createdItem, setCreatedItem] = useState<Item>();
   const [memoryDrafts, setMemoryDrafts] = useState<Record<string, string>>({});
+  const [memoriesLoading, setMemoriesLoading] = useState(editor.kind === "settings"),
+    [memoriesError, setMemoriesError] = useState("");
   useEffect(() => {
     if (editor.kind === "sharing" && item)
       void request<User[]>(`/items/${item.id}/shares`)
@@ -211,7 +241,8 @@ export default function Editors({
     if (editor.kind === "settings")
       void request<Memory[]>("/memories")
         .then(setMemories)
-        .catch((error) => setError(error.message));
+        .catch((error) => setMemoriesError(error.message))
+        .finally(() => setMemoriesLoading(false));
   }, []);
 
   async function perform(operation: () => Promise<unknown>) {
@@ -228,6 +259,27 @@ export default function Editors({
     }
   }
   async function save() {
+    if (photosBusy || imageBusy) return;
+    if (scopedSelection && (!selectedHouse || outOfScope.length)) {
+      setError("请先确认家庭范围，并手动移除不属于这个家庭的关联物品；原关联不会自动删除。");
+      return;
+    }
+    if (editor.kind === "experience" && houseId && !selected.length) {
+      setError("请选择至少一件这个家庭的物品，让家人知道这段回忆属于什么。");
+      return;
+    }
+    if (editor.kind === "reminder" && houseId && recipient && !reminderRecipients.some((member) => member.id === recipient)) {
+      setError("请选择当前家庭中已经加入的接收人。");
+      return;
+    }
+    const preparedSurprises = (carryAvatar ? stories.filter((id) => surprises[id]) : []).map((id) => ({
+      experience_id: id, hint: surprises[id].hint.trim(),
+      trigger_words: [...new Set(surprises[id].words.split(/[，,、\n]/).map((word) => word.trim()).filter(Boolean))],
+    }));
+    if (editor.kind === "gift" && (preparedSurprises.length > 6 || preparedSurprises.some((value) => !value.hint || value.trigger_words.length > 8))) {
+      setError("每份礼物最多设置6个彩蛋，每个写一句提示，触发词最多8个。");
+      return;
+    }
     if (editor.kind === "gift" && !preview) {
       if (!recipient) {
         setError("请选择接收这份心意的朋友");
@@ -248,7 +300,7 @@ export default function Editors({
             market: item?.product.market || "CN",
           },
           description: text,
-          avatar: { enabled, nickname, personality, color },
+          avatar: { enabled, nickname, personality, color, form, image_id: imageId },
           photo_id: photos[0] || null,
           state: {
             ...item?.state,
@@ -271,6 +323,17 @@ export default function Editors({
           });
         await onDone();
         onItem(result);
+      } else if (editor.kind === "persona" && item) {
+        await request(`/items/${item.id}`, "PUT", {
+          name: item.name,
+          kind: item.kind,
+          product: item.product,
+          description: item.description,
+          photo_id: item.photo_id,
+          state: item.state,
+          avatar: { enabled, nickname: nickname.trim(), personality: personality.trim(), color, form, image_id: imageId },
+          expected_version: item.version,
+        });
       } else if (editor.kind === "presentation" && item) {
         await request(`/items/${item.id}/presentation`, "PATCH", {
           expected_version: item.version,
@@ -280,38 +343,76 @@ export default function Editors({
           cherished,
         });
       } else if (editor.kind === "experience") {
-        await request(
+        const recorded = await request<Experience>(
           experience ? `/experiences/${experience.id}` : "/experiences",
           experience ? "PUT" : "POST",
           {
-            title: name,
+            title: experience ? name : name.trim() || text.trim().split(/[\n。！？!?]/)[0].slice(0, 60) || "生活中的一刻",
             text,
-            occurred_on: date,
+            occurred_on: date || null,
             item_ids: selected,
             photo_ids: photos,
             allow_ai: allowAI,
+            household_id: houseId || null,
             ...(experience ? { expected_version: experience.version } : {}),
           },
         );
+        const newPhotos = photos.some((id) => !experience?.photo_ids.includes(id));
+        if (matchPhotos && newPhotos && !experience?.origin_id) {
+          // Save first. Recognition has its own versioned request and cannot
+          // delay recording or overwrite a later edit while the model works.
+          const key = `photo-match-${recorded.id}`;
+          void message.open({ key, type: "loading", content: "回忆已保存，正在认照片里的物品…", duration: 0 });
+          void request<PhotoMatchResult>(`/experiences/${recorded.id}/photo-matches`, "POST", {
+            expected_version: recorded.version, apply_confident: true,
+          }).then(async (result) => {
+            const active = await request<User>("/me").catch(() => undefined);
+            if (active?.id !== user.id) {
+              message.destroy(key);
+              return;
+            }
+            await onDone();
+            const count = result.candidates.filter((value) => value.auto_linked).length;
+            if (result.candidates.length || result.remaining_items) {
+              void message.open({ key, type: "info", duration: 10, content: <span>
+                {count ? `已认出并关联${count}件物品。` : result.remaining_items
+                  ? `已比较${result.examined_items}件，还可继续其余${result.remaining_items}件。` : "照片里可能有这些物品。"}
+                <button type="button" className="quiet-button" onClick={() => modal.info({
+                  title: "照片中的已有物品", width: 520,
+                  content: result.remaining_items
+                    ? <PhotoMatchFinder initialResult={result} experience={result.experience} items={workspace.items} onDone={onDone} />
+                    : <PhotoMatchReview result={result} items={workspace.items} onDone={onDone} />,
+                })}>查看与调整</button>
+              </span> });
+            } else {
+              void message.open({ key, type: "info", content: "回忆已保存，暂未认出可关联的已有物品，可手动选择。", duration: 5 });
+            }
+          }).catch((cause) => {
+            void message.open({ key, type: "info", content: `回忆已保存。${(cause as Error).message}`, duration: 6 });
+          });
+        }
       } else if (editor.kind === "gift" && item) {
         await request("/gifts", "POST", {
           item_id: item.id,
           recipient_id: recipient,
           message: text,
           experience_ids: stories,
+          surprises: preparedSurprises,
           avatar: carryAvatar
             ? {
                 enabled: true,
                 nickname: nickname || item.name,
                 personality,
                 color,
+                form,
+                image_id: imageId,
               }
-            : { enabled: false },
+            : { enabled: false, form },
         });
       } else if (editor.kind === "reminder") {
         await request("/reminders", "POST", {
           title: name,
-          due_at: new Date(due).toISOString(),
+          due_at: new Date(`${due}+08:00`).toISOString(),
           assignee_id: recipient || null,
           item_id: selected[0] || null,
           household_id: houseId || null,
@@ -319,11 +420,12 @@ export default function Editors({
       } else if (editor.kind === "friend")
         await request("/friends", "POST", { username: name.trim() });
       else if (editor.kind === "wish")
-        await request("/wishes", "POST", {
-          title: name,
+        await request(editor.wish ? `/wishes/${editor.wish.id}` : "/wishes", editor.wish ? "PUT" : "POST", {
+          title: name.trim(),
           note: text,
           url,
           visible_to_friends: visible,
+          ...(editor.wish ? { expected_version: editor.wish.version } : {}),
         });
       else if (editor.kind === "settings")
         await request("/preferences", "PUT", prefs);
@@ -367,7 +469,7 @@ export default function Editors({
 
   const itemSelection = (
     <div className="selection-list">
-      {workspace.items.map((value) => (
+      {selectableItems.map((value) => (
         <label className="check-label" key={value.id}>
           <input
             type="checkbox"
@@ -383,8 +485,8 @@ export default function Editors({
           {value.name}
         </label>
       ))}
-      {experience?.item_ids
-        .filter((id) => !workspace.items.some((item) => item.id === id))
+      {selected
+        .filter((id) => !selectableItems.some((item) => item.id === id))
         .map((id) => (
           <label className="check-label" key={id}>
             <input
@@ -398,7 +500,7 @@ export default function Editors({
                 )
               }
             />
-            {experience.item_labels[id] || "曾经关联的物品"}（历史关联）
+            {workspace.items.find((value) => value.id === id)?.name || experience?.item_labels[id] || "曾经关联的物品"}（{outOfScope.includes(id) ? "不在当前家庭范围，需手动移除或更换范围" : "历史关联"}）
           </label>
         ))}
     </div>
@@ -424,7 +526,7 @@ export default function Editors({
   );
   const friendsChoice = (
     <label>
-      交给谁
+      {editor.kind === "reminder" ? "提醒给谁" : "交给谁"}
       <select
         value={recipient}
         onChange={(event) => setRecipient(event.target.value)}
@@ -432,7 +534,7 @@ export default function Editors({
         <option value="">
           {editor.kind === "reminder" ? "我自己" : "选择一位朋友"}
         </option>
-        {friends.map((friend) => (
+        {(editor.kind === "reminder" ? reminderRecipients.filter((person) => person.id !== user.id) : friends).map((friend) => (
           <option key={friend.id} value={friend.id}>
             {friend.display_name}
           </option>
@@ -440,13 +542,61 @@ export default function Editors({
       </select>
     </label>
   );
+  const avatarControls = <>
+    {editor.kind === "persona" && item && <div className="persona-photo-create">
+      <strong>从实物照片，长出它的样子</strong>
+      <p>AI会参考照片的轮廓与配色，生成柔软的小伙伴。这是创作形象，并非实物照片；保存才会换上。</p>
+      <div className="persona-image-actions">
+        <button type="button" className="soft-button" disabled={busy || imageBusy || !item.photo_id}
+          onClick={async () => {
+            if (busy || imageBusy) return;
+            setImageBusy(true); setImageError("");
+            try {
+              const result = await request<{ asset_id: string; model: string }>(`/items/${item.id}/avatar-image`, "POST", { expected_version: item.version });
+              setImageId(result.asset_id);
+              setEnabled(true);
+            } catch (error) {
+              setImageError((error as Error).message);
+            } finally { setImageBusy(false); }
+          }}><ImagePlus size={16} />{imageBusy ? "它的样子正在长出来…" : imageId ? "再长一个样子" : "用物品照片生成"}</button>
+        {imageId && <button type="button" className="quiet-button" disabled={imageBusy} onClick={() => setImageId(null)}>换回已有样式</button>}
+      </div>
+      {!item.photo_id && <span className="persona-generation-note">先在物品资料里添加一张实物照片。</span>}
+      {imageBusy && <span className="persona-generation-note" role="status">需要一点时间，你可以先想想它叫什么。</span>}
+      {imageError && <p className="inline-error" role="alert">{imageError}</p>}
+    </div>}
+    <fieldset>
+      <legend>想让它是什么模样？</legend>
+      <div className="persona-forms">
+        {([ ["auto", "随物品"], ["keepsake", "围巾团子"], ["dango_leaf", "叶子团子"], ["dango_hat", "小帽团子"], ["dango_bow", "蝴蝶结团子"], ["cup", "杯子"], ["stone", "石头"], ["flower", "花"], ["cat", "小猫"] ] as const).map(([value, label]) => (
+          <button key={value} type="button" aria-pressed={!imageId && form === value} disabled={imageBusy} onClick={() => { setForm(value); setImageId(null); }}>{label}</button>
+        ))}
+      </div>
+      <small>{imageId ? "正在使用AI生成的创作形象，也可以选下方样式换回来。" : "由你选择，也可以随时换个样子。"}</small>
+    </fieldset>
+    <label>它的名字<input value={nickname} maxLength={40} onChange={(event) => setNickname(event.target.value)} placeholder={item?.name} /></label>
+    {!imageId && <fieldset className="persona-colors">
+      <legend>喜欢的颜色</legend>
+      {[ ["雾蓝", "#7e9eac"], ["陶杏", "#c49c7b"], ["豆绿", "#97a48c"], ["暖粉", "#c39897"] ].map(([label, value]) => (
+        <button type="button" key={value} aria-label={label} aria-pressed={color === value} style={{ background: value }} onClick={() => setColor(value)} />
+      ))}
+      <input type="color" aria-label="自选分身颜色" value={color} onChange={(event) => setColor(event.target.value)} />
+    </fieldset>}
+    <fieldset>
+      <legend>相处时，想要什么样的语气？</legend>
+      <div className="persona-temperaments">
+        {["温柔耐心", "活泼好奇", "简洁安静"].map((value) => <button key={value} type="button" className={personality === value ? "active" : ""} onClick={() => setPersonality(value)}>{value}</button>)}
+      </div>
+      <textarea aria-label="分身的性格与说话习惯" rows={2} maxLength={500} value={personality} onChange={(event) => setPersonality(event.target.value)} placeholder="也可以自己写：温柔一点，少说大道理，陪我慢慢聊。" />
+    </fieldset>
+  </>;
   const simpleFooter = ["household", "sharing", "experience-share"].includes(
     editor.kind,
   );
   return (
     <Modal
       open
-      title={titles[editor.kind]}
+      title={editor.kind === "wish" && editor.wish ? "修改心愿与可见范围" : titles[editor.kind]}
       onCancel={onClose}
       width={620}
       footer={
@@ -469,11 +619,11 @@ export default function Editors({
             </button>
             <button
               className="primary-button"
-              disabled={busy}
+              disabled={busy || photosBusy || imageBusy}
               type="submit"
               form="interaction-editor"
             >
-              {busy
+              {photosBusy ? "照片上传中…" : busy
                 ? "保存中…"
                 : editor.kind === "gift"
                   ? preview
@@ -498,9 +648,45 @@ export default function Editors({
             {error}
           </p>
         )}
+        {editor.kind === "persona" && item && (
+          <>
+            <div className="persona-preview" ref={personaPreview}>
+              <button type="button" className="persona-preview-touch" aria-label="和分身打个招呼" onClick={() => setDelighted(!delighted)}>
+                <ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, nickname, personality, color, form, image_id: imageId } }} className="object-companion-alive" size={190} expression={delighted ? "happy" : "calm"} />
+              </button>
+              <strong>{nickname || item.name}</strong>
+              <p>{delighted ? "在呢。今天也一起过吧。" : "轻轻点一下，和它打个招呼。"}</p>
+              <small>形象与招呼预览 · 对话会使用这件物品的身份与获准回忆</small>
+            </div>
+            {avatarControls}
+            <label className="check-label"><input type="checkbox" checked={enabled} onChange={(event) => setEnabled(event.target.checked)} />开启这件物品的分身</label>
+            <p className="form-note">这是{item.name}的可选分身。物品照片与已有故事会继续保留；回忆是否用于对话，可以在每段回忆里单独选择。</p>
+            <button type="button" className="quiet-button" onClick={async () => {
+              if (imageId) {
+                try {
+                  const response = await fetch(`/api/assets/${imageId}`);
+                  if (!response.ok) throw new Error("这张形象暂时不可读取，请刷新后重试");
+                  const url = URL.createObjectURL(await response.blob());
+                  const link = document.createElement("a");
+                  link.href = url; link.download = "物间-物品分身.png"; link.click();
+                  setTimeout(() => URL.revokeObjectURL(url), 1000);
+                } catch (error) { message.error((error as Error).message); }
+                return;
+              }
+              const svg = personaPreview.current?.querySelector("svg");
+              if (!svg) return;
+              const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)], { type: "image/svg+xml;charset=utf-8" }));
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = "物间-物品分身.svg";
+              link.click();
+              setTimeout(() => URL.revokeObjectURL(url), 1000);
+            }}>保存这张形象</button>
+          </>
+        )}
         {editor.kind === "item" && (
           <>
-            <Photos ids={photos} onChange={setPhotos} />
+            <Photos ids={photos} onChange={setPhotos} onBusy={setPhotosBusy} />
             <label>
               物品名称
               <input
@@ -664,21 +850,35 @@ export default function Editors({
         )}
         {editor.kind === "experience" && (
           <>
-            <Photos ids={photos} onChange={setPhotos} />
+            <label>
+              这段回忆的可见范围
+              <select value={houseId} onChange={(event) => setHouseId(event.target.value)}>
+                <option value="">仅自己记录，不向家庭共享</option>
+                {houseId && !selectedHouse && <option value={houseId}>原家庭当前不可用，请重新选择</option>}
+                {houses.map((house) => <option key={house.id} value={house.id}>{house.name} · 已加入的成员可见</option>)}
+              </select>
+              <small>{houseId ? "文字、照片和所选家庭物品会向这个家庭的成员开放，每人保留自己的署名原文。" : "关联家庭物品也不会自动分享回忆。已单独分享给朋友的访问范围仍需在分享设置中管理。"}</small>
+            </label>
+            <Photos ids={photos} onChange={setPhotos} onBusy={setPhotosBusy} />
+            {!experience?.origin_id && <label className="check-label">
+              <input type="checkbox" checked={matchPhotos} onChange={(event) => setMatchPhotos(event.target.checked)} />
+              识别照片里的已有物品并关联，拿不准的由我选择
+            </label>}
             <label>
               给这一刻一个名字
               <input
-                required
+                required={Boolean(experience)}
                 value={name}
                 readOnly={Boolean(experience?.origin_id)}
                 onChange={(event) => setName(event.target.value)}
+                placeholder={experience ? undefined : "可留空，保存时用正文开头作标题"}
               />
             </label>
             <label>
               想留下的话
               <textarea
                 rows={5}
-                required
+                required={photos.length === 0}
                 value={text}
                 readOnly={Boolean(experience?.origin_id)}
                 onChange={(event) => setText(event.target.value)}
@@ -689,14 +889,15 @@ export default function Editors({
               发生的日子
               <input
                 type="date"
-                required
                 value={date}
                 onChange={(event) => setDate(event.target.value)}
               />
+              <small>不记得具体哪天，可以留空。</small>
             </label>
             <fieldset>
               <legend>一起出现在这段经历里的物</legend>
               {itemSelection}
+              {outOfScope.length > 0 && <p className="inline-error" role="status">有{outOfScope.length}件原关联不在当前家庭中。请明确取消关联，或改回原范围；保存前不会自动移除。</p>}
             </fieldset>
             <label className="check-label">
               <input
@@ -704,11 +905,11 @@ export default function Editors({
                 checked={allowAI}
                 onChange={(event) => setAllowAI(event.target.checked)}
               />
-              允许物伴在相关对话中参考这段回忆
+              {houseId ? "允许这个家庭各成员的物伴在相关对话中参考这段回忆" : "允许我的物伴在相关对话中参考这段回忆"}
             </label>
             <p className="form-note">
               <LockKeyhole size={14} />
-              默认仅自己可见。关联家庭用品，不会自动把回忆分享给家人。
+              {houseId ? "这段记录向所选家庭成员开放；智能使用许可与家庭可见范围分别设置。" : "默认不向家庭分享。关联家庭物品，不会自动把回忆分享给家人。"}
             </p>
             {experience?.origin_id && (
               <p className="form-note">
@@ -732,28 +933,47 @@ export default function Editors({
               </label>
               <fieldset>
                 <legend>随礼物送出的故事</legend>
-                {workspace.experiences
-                  .filter(
-                    (value) =>
-                      value.creator_id === user.id &&
-                      value.item_ids.includes(item.id),
-                  )
-                  .map((value) => (
-                    <label className="check-label" key={value.id}>
+                {giftStories.map((value) => (
+                  <div className="gift-story-selection" key={value.id}>
+                    <label className="check-label">
                       <input
                         type="checkbox"
                         checked={stories.includes(value.id)}
-                        onChange={(event) =>
-                          setStories(
-                            event.target.checked
-                              ? [...stories, value.id]
-                              : stories.filter((id) => id !== value.id),
-                          )
-                        }
+                        onChange={(event) => {
+                          const checked = event.target.checked;
+                          setStories((previous) => checked ? [...previous, value.id] : previous.filter((id) => id !== value.id));
+                          if (!checked) setSurprises((previous) => {
+                            const next = { ...previous }; delete next[value.id]; return next;
+                          });
+                        }}
                       />
                       {value.title}
                     </label>
+                    {carryAvatar && stories.includes(value.id) && <div className="gift-surprise-setting">
+                      <label className="check-label"><input type="checkbox" checked={Boolean(surprises[value.id])}
+                        disabled={!surprises[value.id] && Object.keys(surprises).length >= 6}
+                        onChange={(event) => {
+                          const checked = event.target.checked;
+                          setSurprises((previous) => {
+                            const next = { ...previous };
+                            if (checked) next[value.id] = { hint: `有一段关于“${value.title.slice(0, 90)}”的小故事`, words: "" };
+                            else delete next[value.id];
+                            return next;
+                          });
+                        }} />留成聊天时发现的彩蛋</label>
+                      {surprises[value.id] && <>
+                        <label>给对方的线索<input maxLength={160} value={surprises[value.id].hint}
+                          onChange={(event) => setSurprises((previous) => ({ ...previous, [value.id]: { ...previous[value.id], hint: event.target.value } }))}
+                          placeholder="例如：还记得我们第一次见面的地方吗？" /></label>
+                        <label>聊到哪些词时打开（可选）<input maxLength={320} value={surprises[value.id].words}
+                          onChange={(event) => setSurprises((previous) => ({ ...previous, [value.id]: { ...previous[value.id], words: event.target.value } }))}
+                          placeholder="例如：向日葵，毕业，海边。用逗号隔开，最多8个。" /></label>
+                        <small>彩蛋引用这段已有故事；接收者允许后才用于分身对话。留空触发词时，可从线索主动打开。</small>
+                      </>}
+                    </div>}
+                  </div>
                   ))}
+                {!giftStories.length && <p className="form-note">这件物品还没有你记录的故事。可以先在物品卡片里“记一段”，之后随礼物送出。</p>}
               </fieldset>
               <label className="check-label">
                 <input
@@ -761,30 +981,20 @@ export default function Editors({
                   checked={carryAvatar}
                   onChange={(event) => setCarryAvatar(event.target.checked)}
                 />
-                附上我选择的分身设定
+                送出一个可以聊天的物品分身
               </label>
               {carryAvatar && (
                 <>
-                  <label>
-                    分身名字
-                    <input
-                      value={nickname}
-                      onChange={(event) => setNickname(event.target.value)}
-                    />
-                  </label>
-                  <label>
-                    相处时的性格
-                    <textarea
-                      value={personality}
-                      onChange={(event) => setPersonality(event.target.value)}
-                    />
-                  </label>
+                  <div className="persona-gift-preview"><ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, form, nickname: nickname || item.name, personality, color, image_id: imageId } }} size={120} /></div>
+                  {avatarControls}
+                  <p className="form-note">这些设定只属于这份礼物，不修改你当前物品的分身。接收者可以选择唤醒，也能修改自己的形象和性格；你的私人聊天不会送出。</p>
                 </>
               )}
             </>
           ) : (
             <div className="gift-preview">
               <h2>{item.name}</h2>
+              {carryAvatar && <div className="persona-gift-preview"><ObjectCompanion item={{ ...item, avatar: { ...item.avatar, enabled: true, form, nickname: nickname || item.name, personality, color, image_id: imageId } }} size={140} /></div>}
               <p>
                 送给{" "}
                 {
@@ -798,6 +1008,7 @@ export default function Editors({
                 .map((value) => (
                   <article key={value.id}>
                     <h4>{value.title}</h4>
+                    {carryAvatar && surprises[value.id] && <p className="gift-surprise-preview"><strong>聊天彩蛋线索：</strong>{surprises[value.id].hint}{surprises[value.id].words.trim() && <small>聊到：{surprises[value.id].words}</small>}</p>}
                     <p>{value.text}</p>
                   </article>
                 ))}
@@ -811,16 +1022,25 @@ export default function Editors({
         {editor.kind === "reminder" && (
           <>
             <label>
+              提醒范围
+              <select value={houseId} onChange={(event) => { setHouseId(event.target.value); setRecipient(""); }}>
+                <option value="">仅发起者与接收者可见</option>
+                {houseId && !selectedHouse && <option value={houseId}>原家庭当前不可用，请重新选择</option>}
+                {houses.map((house) => <option key={house.id} value={house.id}>{house.name} · 家庭成员共同查看</option>)}
+              </select>
+            </label>
+            <label>
               需要处理的小事
               <input
                 required
+                maxLength={160}
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 placeholder="例如：检查保温壶"
               />
             </label>
             <label>
-              何时提醒
+              何时提醒（北京时间）
               <input
                 required
                 type="datetime-local"
@@ -838,23 +1058,10 @@ export default function Editors({
                 }
               >
                 <option value="">不关联物品</option>
-                {workspace.items.map((item) => (
+                {outOfScope.map((id) => <option key={id} value={id}>{workspace.items.find((value) => value.id === id)?.name || "原关联物品"}（不属于此家庭，请重新选择）</option>)}
+                {selectableItems.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              在家庭用品中共同查看
-              <select
-                value={houseId}
-                onChange={(event) => setHouseId(event.target.value)}
-              >
-                <option value="">仅发起者与接收者可见</option>
-                {houses.map((house) => (
-                  <option key={house.id} value={house.id}>
-                    {house.name}
                   </option>
                 ))}
               </select>
@@ -884,6 +1091,7 @@ export default function Editors({
               想要什么
               <input
                 required
+                maxLength={120}
                 value={name}
                 onChange={(event) => setName(event.target.value)}
               />
@@ -892,6 +1100,7 @@ export default function Editors({
               为什么想要
               <textarea
                 rows={3}
+                maxLength={1600}
                 value={text}
                 onChange={(event) => setText(event.target.value)}
               />
@@ -900,6 +1109,7 @@ export default function Editors({
               商品链接（可选）
               <input
                 type="url"
+                maxLength={2000}
                 value={url}
                 onChange={(event) => setUrl(event.target.value)}
                 placeholder="https://"
@@ -913,6 +1123,7 @@ export default function Editors({
               />
               让已接受的好友看到这个心愿
             </label>
+            <p className="form-note">关闭好友可见并保存后，好友将不再看到这条心愿，你自己的记录会保留；已被对方看到的内容无法收回。</p>
             <p className="form-note">想要的东西不会被当作你已经拥有的物品。</p>
           </>
         )}
@@ -1169,6 +1380,7 @@ export default function Editors({
         )}
         {editor.kind === "settings" && (
           <>
+            <CommunityConnection />
             <label>
               全局物伴的名字
               <input
@@ -1198,10 +1410,13 @@ export default function Editors({
             </label>
             <div className="form-divider">物间对我的理解</div>
             <p className="form-note">
-              这些理解用于相关帮助，不会因共享物品自动分享给朋友。
+              有用的理解会在相处中安静积累；回忆墙保存你主动留下的记录。当前要求优先，你可以随时纠正或移除理解，不会因共享物品自动分享给朋友。
             </p>
+            {memoriesLoading && <p className="muted" role="status">正在读取对你的理解…</p>}
+            {memoriesError && <p className="inline-error" role="alert">暂时未能读取已有理解：{memoriesError}。关闭后重新打开可重试。</p>}
             {memories.map((memory) => (
               <div className="memory-setting" key={memory.id}>
+                <div className="memory-setting-copy">
                 <textarea
                   aria-label="更正理解"
                   value={memoryDrafts[memory.id] ?? memory.content}
@@ -1212,6 +1427,14 @@ export default function Editors({
                     }))
                   }
                 />
+                <div className="understanding-meta">
+                  <span>{memory.basis === "inference" ? "待确认的推测" : "来自你的表达"}</span>
+                  {memory.item_id && <span>关于：{workspace.items.find((item) => item.id === memory.item_id)?.name || "曾经关联的物品"}</span>}
+                  {typeof memory.attributes?.context === "string" && memory.attributes.context && <span>适用情境：{memory.attributes.context}</span>}
+                  {memory.expires_at && <span>有效至：{safeDate(memory.expires_at)}</span>}
+                  {typeof memory.attributes?.source_quote === "string" && memory.attributes.source_quote && <details><summary>当时的话</summary><p>{memory.attributes.source_quote}</p></details>}
+                </div>
+                </div>
                 <button
                   type="button"
                   className="quiet-button"
@@ -1243,6 +1466,7 @@ export default function Editors({
                   type="button"
                   aria-label="移除这条理解"
                   className="quiet-button"
+                  disabled={busy}
                   onClick={() =>
                     void perform(async () => {
                       await request(`/memories/${memory.id}`, "DELETE");
@@ -1256,7 +1480,7 @@ export default function Editors({
                 </button>
               </div>
             ))}
-            {!memories.length && (
+            {!memoriesLoading && !memoriesError && !memories.length && (
               <p className="muted">这里还没有积累的理解。</p>
             )}
           </>

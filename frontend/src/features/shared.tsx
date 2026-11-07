@@ -34,7 +34,7 @@ export function Companion({ small = false }: { small?: boolean }) {
   return (
     <img
       className={`companion-art ${small ? "small" : ""}`}
-      src="/illustrations/companion.png"
+      src="/illustrations/ayuan.webp"
       alt="物伴阿圆"
     />
   );
@@ -113,6 +113,9 @@ export function ItemCard({
       </div>
       <div className="item-card-copy">
         <strong>{item.name}</strong>
+        {item.kind === "standard_product" && item.product.model && (
+          <small className="item-product-identity">{[item.product.brand, item.product.model].filter(Boolean).join(" · ")}</small>
+        )}
         <div>
           <span>
             <MapPin size={14} />
@@ -170,8 +173,12 @@ export function Pill({
     </button>
   );
 }
-export function safeDate(value: string) {
-  const parsed = new Date(value);
+export function safeDate(value: string | null | undefined) {
+  if (!value) return "日期未记";
+  // A recorded calendar day has no time zone. Parse it in the viewer's local
+  // calendar so UTC midnight cannot move the story to the previous day.
+  const parsed = new Date(/^\d{4}-\d{2}-\d{2}$/.test(value)
+    ? `${value}T00:00:00` : value);
   return Number.isNaN(parsed.getTime())
     ? value
     : new Intl.DateTimeFormat("zh-CN", {

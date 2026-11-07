@@ -1,0 +1,152 @@
+{
+  "schema": "wujian-demo-assets/1",
+  "id": "loklik-as2",
+  "media_dir": "media",
+  "manual": "manual/AS2-HPA01-CN.pdf",
+  "prepared_pictures": {
+    "panel_detail": "prepared/panel_detail.jpg",
+    "front_detail": "prepared/front_detail.jpg",
+    "panel_settings": "prepared/panel_settings.jpg",
+    "manual_3": "prepared/manual-3.png",
+    "manual_4": "prepared/manual-4.png"
+  },
+  "reference": {
+    "width": 405,
+    "height": 720,
+    "video_sha256": "d9809156148a1cf5ac43813c31d720a24c40022f96d6c159ac1d80e1d0a678ec",
+    "roi": [
+      112,
+      392,
+      309,
+      455
+    ],
+    "targets": {
+      "power": [
+        127,
+        416,
+        148,
+        435
+      ],
+      "mode": [
+        189,
+        416,
+        210,
+        435
+      ],
+      "start": [
+        277,
+        415,
+        300,
+        440
+      ],
+      "temperature": [
+        173,
+        401,
+        193,
+        418
+      ],
+      "time": [
+        153,
+        416,
+        173,
+        435
+      ],
+      "pressure": [
+        172,
+        435,
+        193,
+        451
+      ]
+    },
+    "basis": "Codex visually reviewed control locations on the first frame of the user-supplied real AS2 movie; these are reference-image coordinates, not a video trajectory.",
+    "method": "OpenCV ORB descriptor matches and RANSAC homography estimated from each actual camera/video frame",
+    "image_path": "prepared/as2-reference.png",
+    "image_sha256": "a97ac6e157dd8ced62f0943042e447c03978eef86c3efd7f55398e6055df077d"
+  },
+  "walkthrough": "walkthrough.mp4",
+  "files": [
+    {
+      "path": "manual/AS2-HPA01-CN.pdf",
+      "bytes": 1790456,
+      "sha256": "cd59234fc256fa9983133dae666358866aa7d382355565cf12d3cc590c8ea5ea"
+    },
+    {
+      "path": "media/pic/1.jpg",
+      "bytes": 5171050,
+      "sha256": "c3826ecee10cee1a7bfaf41c617b93be7d0efb004a1866066f293f4b79b4b46e"
+    },
+    {
+      "path": "media/pic/2.jpg",
+      "bytes": 5096372,
+      "sha256": "b9c052e948ba56397754a92446cad55b55a7f4cbbd79057f7102ccfec30907c6"
+    },
+    {
+      "path": "media/pic/3.jpg",
+      "bytes": 5187765,
+      "sha256": "490f3a96f0eef733c62e38cd3d943b9ee0dab275abe44b0f16a48d4c8e5169ae"
+    },
+    {
+      "path": "media/pic/4.jpg",
+      "bytes": 4140736,
+      "sha256": "273905134ba6df111cb5bc46b4b4028d902a689c1fcef48dd82cb32737cf7956"
+    },
+    {
+      "path": "media/pic/5.jpg",
+      "bytes": 4825762,
+      "sha256": "4961e769f7d788a66f72f45fa8ea4c75399cef6f3efa3f76b0c27cafe9c3ff2e"
+    },
+    {
+      "path": "media/pic/movie.mp4",
+      "bytes": 4822085,
+      "sha256": "d9809156148a1cf5ac43813c31d720a24c40022f96d6c159ac1d80e1d0a678ec"
+    },
+    {
+      "path": "prepared/as2-reference.png",
+      "bytes": 220794,
+      "sha256": "a97ac6e157dd8ced62f0943042e447c03978eef86c3efd7f55398e6055df077d"
+    },
+    {
+      "path": "prepared/front_detail.jpg",
+      "bytes": 94922,
+      "sha256": "d6546ad293763c0a4f39d9f2c6a465ac88394bc42e2695776e66188b06c25e2a"
+    },
+    {
+      "path": "prepared/manual-3.png",
+      "bytes": 212242,
+      "sha256": "c5fdcb92f1805652578619e72e0dff47f51f2fb0b4a34424ba09857b9e28f18e"
+    },
+    {
+      "path": "prepared/manual-4.png",
+      "bytes": 252194,
+      "sha256": "2d68cd471269940684911714a45210ffc18b1602aa0c2004666e2435b4f8c418"
+    },
+    {
+      "path": "prepared/panel_detail.jpg",
+      "bytes": 37515,
+      "sha256": "480c622c6af3721017ba6e46b988844e9fa01d695c48be3c5ee8dba9c9697f7e"
+    },
+    {
+      "path": "prepared/panel_settings.jpg",
+      "bytes": 87147,
+      "sha256": "f2d3df8937d436d115fbfc02b7f1c71af4c6e0abf415b28281d13de2c888b54c"
+    },
+    {
+      "path": "walkthrough.mp4",
+      "bytes": 9140035,
+      "sha256": "1fc31556d6a4f70acb74eb431083bf8837c72d9f0915731141d7b923a625d5b1"
+    }
+  ],
+  "manual_provenance": {
+    "source_page": "https://www.loklik.cn/files-download/",
+    "download_url": "https://www.loklik.cn/download/%e5%a4%9a%e5%8a%9f%e8%83%bd%e8%87%aa%e5%8a%a8%e8%a1%a3%e6%9c%8d%e5%8d%b0%e7%94%bb%e6%9c%baas2-%e8%af%b4%e6%98%8e%e4%b9%a6-pdf/?wpdmdl=4968&refresh=6aed652385a5f1793942819",
+    "final_url": "https://video.loklik.cn/wp-content/uploads/2026/06/%E5%A4%9A%E5%8A%9F%E8%83%BD%E8%87%AA%E5%8A%A8%E8%A1%A3%E6%9C%8D%E5%8D%B0%E7%94%BB%E6%9C%BAAS2-%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf",
+    "bytes": 1790456
+  },
+  "publication": {
+    "authorization": "User explicitly requested publishing the AS2 demonstration assets to this feature branch on 2026-11-06.",
+    "photos": "User-supplied AS2 photos; EXIF contains orientation only, no GPS. Original pixel/orientation calibration retained.",
+    "camera_video": "User-supplied exterior video; H.264 conversion, audio and source container metadata removed. No physical operation is shown.",
+    "walkthrough": "Software screen recording; all completion reports are simulated. Includes a visible simulation banner.",
+    "manual": "Official LOKLiK AS2 HPA01 mainland manual. Copyright/trademarks remain with LOKLiK; not relicensed as project code."
+  }
+}

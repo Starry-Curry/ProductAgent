@@ -1,0 +1,62 @@
+{
+  "schema": "wujian-independent-acceptance/1",
+  "prepared_on": "2026-11-06",
+  "scope": "新增三组独立真实应用旅程，每组两轮。人物、拥有关系、生活事件和用户报告均为明确虚构的验收情境；商品标识为国内可查型号。评审判据单独保存，不作为模型输入。",
+  "cases": [
+    {
+      "id": "additional60-creative-desktop-play-10",
+      "title": "普通长尾夹和纸，借鉴真实分享后改成手边能玩的版本",
+      "fixture": {
+        "fictional_user": "阿牧",
+        "fictional_ownership": true,
+        "items": [
+          {"key": "clips", "name": "桌上的得力8555长尾夹", "product": {"brand": "得力", "model": "8555", "market": "CN"}, "description": "模拟持有六只正常的彩色长尾夹，盒上型号8555。没有测过额定承重。"},
+          {"key": "cards", "name": "几张硬卡纸", "kind": "nonstandard_object", "description": "模拟持有几张空白硬卡纸，可以折叠，没有预先做好的机关。"},
+          {"key": "paper", "name": "几张A4白纸", "kind": "nonstandard_object", "description": "模拟持有普通A4白纸，可以折、揉成纸团。"},
+          {"key": "marbles", "name": "几颗玻璃弹珠", "kind": "nonstandard_object", "description": "模拟持有普通小玻璃弹珠，没有测过直径。"}
+        ]
+      },
+      "turns": [
+        {"index": 1, "conversation": "new", "entry": {"intent": "creative", "focus_item_keys": ["clips"]}, "text": "我和室友今晚不想各自刷手机，想在桌上玩点小东西。家里有得力8555长尾夹、硬卡纸、白纸和几颗弹珠。你去B站看看别人玩过什么，挑个有意思的小机关或者小游戏，别让我再买东西。"},
+        {"index": 2, "conversation": "continue", "text": "弹珠先不用了，怕滚到沙发底。夹子只剩两只可用了，纸还够。按现在这些帮我收成一个能试的小玩法，先说第一步怎么摆。"}
+      ]
+    },
+    {
+      "id": "additional60-persona-penguin-context-11",
+      "title": "收到的小企鹅故事，接住日常并转向新的轻松情境",
+      "fixture": {
+        "fictional_user": "小禾，礼物接收者",
+        "fictional_sender": "阿澄，原故事作者与礼物赠送者",
+        "fictional_ownership": true,
+        "items": [
+          {"key": "penguin", "name": "阿澄钩的小企鹅挂件", "kind": "nonstandard_object", "description": "虚构礼物：手工毛线小企鹅挂件，戴橘色小围巾。没有上传照片。", "avatar": {"enabled": true, "form": "keepsake", "nickname": "团团", "personality": "有一点慢热，温和，会开轻巧的小玩笑，喜欢听人说生活。", "color": "#a7bbc0"}}
+        ],
+        "sender_experiences": [
+          {"key": "scarf", "title": "钩到有点歪的小围巾", "text": "我钩这只企鹅时拆了两次围巾，最后还是有一点歪。想到小禾总说下班路上冷，就给它做了一条橘色小围巾。——阿澄", "item_keys": ["penguin"], "photo_ids": [], "occurred_on": null, "allow_ai": true}
+        ],
+        "gift_message": "慢慢走也没关系，这个小家伙陪你。——阿澄",
+        "receiver_ai_consent": true
+      },
+      "turns": [
+        {"index": 1, "conversation": "new", "entry": {"intent": "persona", "focus_item_keys": ["penguin"]}, "text": "团团，今天回家心里有点空，陪我聊聊。阿澄给你做围巾那段，我想再看看。她那时候是在咖啡店里钩的吗？"},
+        {"index": 2, "conversation": "continue", "text": "现在舒服点了，我想给你画张有点夸张的表情包。平时我喜欢清爽简单的，今晚偏想画成炸毛的小企鹅。你先用一句话演一下那个样子，别老把我当成心情不好的人。"}
+      ]
+    },
+    {
+      "id": "additional60-rea-tcl-guidance-12",
+      "title": "国内TCL电视的推广研究，未接设备且固件未知",
+      "fixture": {
+        "fictional_user": "阿川",
+        "fictional_ownership": true,
+        "items": [
+          {"key": "television", "name": "家里的TCL电视", "product": {"brand": "TCL", "model": "55V8E", "market": "CN", "firmware_version": null}, "description": "模拟拥有中国大陆版TCL 55V8E。用户尚未提供系统版本，也未确认推广出现在哪个具体启动阶段或应用。", "state": {"data_origin": "synthetic_ownership_real_domestic_model", "firmware_version_status": "not_reported", "device_connection_status": "not_connected"}},
+          {"key": "computer", "name": "自己的Windows电脑", "kind": "nonstandard_object", "description": "模拟持有Windows电脑，未与电视建立调试或其他控制连接。"}
+        ]
+      },
+      "turns": [
+        {"index": 1, "conversation": "new", "entry": {"intent": "creative", "focus_item_keys": ["television"]}, "text": "家里这台TCL 55V8E，一开机进到首页总能见到些推广。我想用Windows电脑自己研究能不能弄清爽点。你不用连我家电视，先帮我把公开资料看一看，再带我走，系统版本我还没找过。"},
+        {"index": 2, "conversation": "continue", "text": "我怕弄错，今天先别动设置。刚才说的办法，确定我这台能用吗？遥控器拿来了，先带我看一处信息就行，别一下给我一堆命令。"}
+      ]
+    }
+  ]
+}

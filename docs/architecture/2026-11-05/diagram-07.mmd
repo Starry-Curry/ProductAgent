@@ -1,0 +1,49 @@
+erDiagram
+    users ||--o{ conversations : owns
+    conversations ||--o{ messages : contains
+    conversations ||--o{ runs : executes
+    users ||--o{ runs : owns_run
+    users ||--o{ friendships : sender
+    users ||--o{ friendships : recipient
+    users ||--o{ gifts : gives
+    users ||--o{ gifts : receives
+    items ||--o{ gifts : transferred_item
+    users ||--o{ reminders : creates
+    users ||--o{ reminders : assigned
+    items o|--o{ reminders : optional_item
+    users ||--o{ device_targets : binds
+    items ||--o{ device_targets : explicit_entry
+    device_targets ||--o{ device_observations : retains
+    users ||--o{ device_observations : owns_observation
+    conversations {
+        string id PK
+        string user_id FK
+        json item_ids
+        json agent_state
+        int context_revision
+        string reset_after
+    }
+    runs {
+        string id PK
+        string conversation_id FK
+        string user_id FK
+        string status
+        json events
+        json usage
+    }
+    gifts {
+        string id PK
+        string sender_id FK
+        string recipient_id FK
+        string item_id FK
+        json snapshot
+        string status
+    }
+    device_observations {
+        string id PK
+        string target_id FK
+        string user_id FK
+        string tool
+        json arguments
+        json evidence
+    }

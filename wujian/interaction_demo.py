@@ -5,6 +5,9 @@ from .database import Household, HouseholdItem, HouseholdMember, ItemRecord, Pro
 
 def ensure_demo_workspace(db):
     owner, friend, house_id = "person_demo_owner", "person_demo_friend", "household_demo_home"
+    from .database import User
+    if not db.get(User,owner) or not db.get(User,friend):
+        return  # A single-object teaching profile is not a synthetic family.
     if db.get(Household, house_id):
         return
     db.add(Household(id=house_id, name="小林的家（体验）", creator_id=owner))

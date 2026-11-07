@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { App as AntApp } from "antd";
-import { Camera, Check, Mic, Send, Square, X } from "lucide-react";
+import { Camera, Check, Mic, Send, Square, Volume2, X } from "lucide-react";
+import { Input } from "antd";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { upload, type ChatMessage, type Run } from "../api";
-import { Companion } from "./shared";
+import { type ChatMessage, type Run } from "../api";
+import { Companion, speak } from "./shared";
+import "./conversation-presence.css";
 
 export type Draft = { text: string; photos: string[] };
 type Recognition = {
@@ -20,72 +21,69 @@ type Recognition = {
   onerror: (() => void) | null;
   onend: (() => void) | null;
 };
-const toolLabels: Record<string, string> = {
-  find_items: "寻找相关物品",
-  read_item: "核对这件物品",
-  search_public_web: "查找公开资料",
-  fetch_document: "阅读原始资料",
-  read_source: "核对资料细节",
-  view_source_page: "查看说明书图示",
-  recall_memories: "回看获准经历",
-  search_world: "寻找相关的物与经历",
-  read_task: "接续正在做的事",
-  GenerateStructuredOutput: "整理回答与后续安排",
-};
 
 export default function Conversation({
   messages,
   run,
   draft,
+  draftIdentity,
   setDraft,
   onSend,
+  onPhoto,
+  uploading,
+  assistantAvatar,
+  blocked = false,
   onStop,
   companionName,
   contextLabel,
   onCameraRef,
   children,
+  afterMessages,
+  readAloud = false,
 }: {
   messages: ChatMessage[];
   run: Run | null;
   draft: Draft;
-  setDraft: (draft: Draft) => void;
+  draftIdentity: string;
+  setDraft: (draft: Draft | ((previous: Draft) => Draft)) => void;
   onSend: () => Promise<void>;
+  onPhoto: (photo?: File) => Promise<void>;
+  uploading: boolean;
+  assistantAvatar?: React.ReactNode;
+  blocked?: boolean;
   onStop: () => void;
   companionName: string;
   contextLabel?: string;
   onCameraRef: (callback: () => void) => void;
   children?: React.ReactNode;
+  afterMessages?: React.ReactNode;
+  readAloud?: boolean;
 }) {
   const bottom = useRef<HTMLDivElement>(null),
     file = useRef<HTMLInputElement>(null),
     recognition = useRef<Recognition | null>(null);
-  const [uploading, setUploading] = useState(false),
-    [listening, setListening] = useState(false),
+  const [listening, setListening] = useState(false),
     [voiceError, setVoiceError] = useState("");
-  const { message } = AntApp.useApp();
   const busy = run?.status === "queued" || run?.status === "running";
   useEffect(() => {
     onCameraRef(() => file.current?.click());
-    return () => {
-      recognition.current?.stop();
-    };
   }, []);
+  useEffect(() => {
+    setListening(false);
+    setVoiceError("");
+    return () => {
+      const previous = recognition.current;
+      recognition.current = null;
+      if (previous) {
+        previous.onresult = previous.onerror = previous.onend = null;
+        previous.stop();
+      }
+    };
+  }, [draftIdentity, blocked]);
   useEffect(() => {
     if (messages.length)
       bottom.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }, [messages.length, run?.status]);
-  async function photo(selected?: File) {
-    if (!selected) return;
-    setUploading(true);
-    try {
-      const result = await upload(selected);
-      setDraft({ ...draft, photos: [...draft.photos, result.id].slice(-4) });
-    } catch (error) {
-      message.error((error as Error).message);
-    } finally {
-      setUploading(false);
-    }
-  }
   function voice() {
     if (listening) {
       recognition.current?.stop();
@@ -107,17 +105,21 @@ export default function Conversation({
     current.lang = "zh-CN";
     current.interimResults = false;
     current.onresult = (event) => {
+      if (recognition.current !== current) return;
       const transcript = event.results[0]?.[0]?.transcript || "";
-      setDraft({
-        ...draft,
-        text: [draft.text, transcript].filter(Boolean).join(" "),
-      });
+      setDraft((previous) => ({
+        ...previous,
+        text: [previous.text, transcript].filter(Boolean).join(" "),
+      }));
     };
     current.onerror = () => {
+      if (recognition.current !== current) return;
       setListening(false);
       setVoiceError("这次没有听清，可以再试或输入文字。");
     };
-    current.onend = () => setListening(false);
+    current.onend = () => {
+      if (recognition.current === current) setListening(false);
+    };
     try {
       current.start();
       setListening(true);
@@ -126,9 +128,6 @@ export default function Conversation({
       setVoiceError("暂时无法使用麦克风，请检查浏览器权限。");
     }
   }
-  const latest = run?.events
-    .filter((event) => event.type === "tool_start")
-    .at(-1);
   return (
     <section className="conversation">
       <div className="conversation-scroll">
@@ -138,7 +137,7 @@ export default function Conversation({
         )}
         {messages.map((value) => (
           <div className={`chat-message ${value.role}`} key={value.id}>
-            {value.role === "assistant" && <Companion small />}
+            {value.role === "assistant" && (assistantAvatar || <Companion small />)}
             <div className="chat-bubble">
               {value.photo_ids.length > 0 && (
                 <div className="message-photos">
@@ -161,24 +160,23 @@ export default function Conversation({
               >
                 {value.text}
               </ReactMarkdown>
+              {readAloud && value.role === "assistant" && <button type="button" className="soft-button" onClick={() => {
+                if (!speak(value.text)) setVoiceError("当前浏览器暂时无法朗读，可以直接看文字。");
+              }}><Volume2 size={20} />听一遍</button>}
             </div>
           </div>
         ))}
+        {afterMessages}
         {busy && (
-          <div className="chat-message assistant">
-            <Companion small />
-            <div className="chat-bubble">
-              <span className="thinking-dots">
+          <div className="chat-message assistant assistant-presence" role="status" aria-label={`${companionName}正在准备回答`}>
+            {assistantAvatar || <Companion small />}
+            <div className="assistant-presence-content" aria-hidden="true">
+              <span className="assistant-presence-dots">
                 <i />
                 <i />
                 <i />
               </span>
-              <span>
-                {latest
-                  ? toolLabels[String(latest.name)] || "继续处理当前问题"
-                  : "正在理解你的这次需要"}
-                …
-              </span>
+              <span>稍等一下</span>
             </div>
           </div>
         )}
@@ -214,7 +212,7 @@ export default function Conversation({
           className="composer"
           onSubmit={(event) => {
             event.preventDefault();
-            void onSend();
+            if (!uploading && !blocked) void onSend();
           }}
         >
           <button
@@ -226,14 +224,16 @@ export default function Conversation({
           >
             <Camera size={23} />
           </button>
-          <textarea
+          <Input.TextArea
             aria-label="对物伴说"
             value={draft.text}
             onChange={(event) =>
               setDraft({ ...draft, text: event.target.value })
             }
-            placeholder={`说说你想做的事，和${companionName}接着聊…`}
+            placeholder={`想问什么，或和${companionName}聊聊今天…`}
             rows={1}
+            variant="borderless"
+            autoSize={{ minRows: 1, maxRows: 5 }}
             onKeyDown={(event) => {
               if (
                 event.key === "Enter" &&
@@ -241,7 +241,7 @@ export default function Conversation({
                 !event.nativeEvent.isComposing
               ) {
                 event.preventDefault();
-                void onSend();
+                if (!uploading && !blocked) void onSend();
               }
             }}
           />
@@ -269,7 +269,7 @@ export default function Conversation({
               className="send-button"
               title="发送"
               disabled={
-                uploading || (!draft.text.trim() && !draft.photos.length)
+                uploading || blocked || (!draft.text.trim() && !draft.photos.length)
               }
             >
               <Send size={21} />
@@ -302,7 +302,7 @@ export default function Conversation({
           accept="image/*"
           capture="environment"
           onChange={(event) => {
-            void photo(event.target.files?.[0]);
+            void onPhoto(event.target.files?.[0]);
             event.target.value = "";
           }}
         />

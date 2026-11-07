@@ -8,7 +8,8 @@ from .api_models import (
     HouseholdInvite, HouseholdItemChange, HouseholdView, ItemPresentation, ItemView,
     MemoryCorrection, MemoryView, Preferences, ReminderFeedback, ReminderView,
     Revision, ShareRequest, TaskBoardCreate, TaskBoardView, TaskEntryFeedback, TaskEntryAssignment,
-    WishCreate, WishView, WorkspaceView,
+    TaskEntryCreate, TaskEntryDetails,
+    WishCreate, WishChange, WishView, WorkspaceView,
 )
 from .database import Conversation, ExperienceRecord, ExperienceShare, Gift, Memory, TaskParticipant, User, Wish, uid
 
@@ -82,8 +83,15 @@ def register_interactions(app, current_user, db_session):
         previous = domain.require(db.get(Memory, memory_id))
         if previous.user_id != user.id:
             raise domain.DomainError("没有找到这条理解", 404)
-        return foundation.revise_memory(db, user.id, "explicit_correction:" + uid(), payload.content,
-            item_id=previous.item_id, supersedes_id=memory_id, attributes=previous.attributes)
+        result = foundation.revise_memory(db, user.id, "explicit_correction:" + uid(), payload.content,
+            item_id=previous.item_id, supersedes_id=memory_id, attributes={
+                **{key:value for key,value in (previous.attributes or {}).items() if key not in {"evidence", "retirement"}},
+                "source_quote": payload.content, "source_kind": "explicit_correction", "corrected_from": memory_id})
+        if result.get("status") == "previously_removed":
+            raise domain.DomainError("这段理解此前已撤回，不能直接作为更正恢复", 409)
+        domain.invalidate_context(db, [user.id], stop_running=True)
+        db.commit()
+        return result
 
     @app.post("/api/reminders/{reminder_id}/feedback", response_model=ReminderView, tags=["Household care"])
     def reminder_feedback(reminder_id: str, payload: ReminderFeedback, user=Depends(current_user), db=Depends(db_session)):
@@ -100,6 +108,14 @@ def register_interactions(app, current_user, db_session):
     @app.patch("/api/tasks/{task_id}/entries/{entry_id}", response_model=TaskBoardView, tags=["Continuing tasks"])
     def update_entry(task_id: str, entry_id: str, payload: TaskEntryFeedback, user=Depends(current_user), db=Depends(db_session)):
         return interactions.update_entry(db, user.id, task_id, entry_id, payload)
+
+    @app.post("/api/tasks/{task_id}/entries", response_model=TaskBoardView, tags=["Continuing tasks"])
+    def add_entry(task_id: str, payload: TaskEntryCreate, user=Depends(current_user), db=Depends(db_session)):
+        return interactions.add_entry(db, user.id, task_id, payload)
+
+    @app.patch("/api/tasks/{task_id}/entries/{entry_id}/details", response_model=TaskBoardView, tags=["Continuing tasks"])
+    def edit_entry(task_id: str, entry_id: str, payload: TaskEntryDetails, user=Depends(current_user), db=Depends(db_session)):
+        return interactions.edit_entry(db, user.id, task_id, entry_id, payload)
 
     @app.patch("/api/tasks/{task_id}/entries/{entry_id}/assignee", response_model=TaskBoardView, tags=["Continuing tasks"])
     def assign_entry(task_id: str, entry_id: str, payload: TaskEntryAssignment, user=Depends(current_user), db=Depends(db_session)):
@@ -125,24 +141,7 @@ def register_interactions(app, current_user, db_session):
 
     @app.post("/api/tasks/{task_id}/conversation", tags=["Continuing tasks"])
     def resume_task(task_id: str, user=Depends(current_user), db=Depends(db_session)):
-        board = interactions.board(db, user.id, task_id)
-        if board["conversation_id"]:
-            return {"conversation_id": board["conversation_id"], "entry_context": {"task_id": task_id, "intent": "planning"}}
-        import hashlib
-        from sqlalchemy.exc import IntegrityError
-        identity = "task_" + hashlib.sha256(f"{user.id}\0{task_id}".encode()).hexdigest()[:40]
-        existing = db.get(Conversation, identity)
-        if existing:
-            return {"conversation_id": existing.id, "entry_context": existing.entry_context}
-        row = Conversation(id=identity, user_id=user.id, title=board["task"]["goal"][:35],
-            item_ids=board["task"]["item_ids"], entry_context={"task_id": task_id, "intent": "planning"})
-        db.add(row)
-        try:
-            db.commit()
-        except IntegrityError:
-            db.rollback()
-            row = domain.require(db.get(Conversation, identity))
-        return {"conversation_id": row.id, "entry_context": row.entry_context}
+        return interactions.resume_task(db,user.id,task_id)
 
     @app.post("/api/gifts/{gift_id}/decision", response_model=GiftView, tags=["Friends"])
     def gift_decision(gift_id: str, payload: GiftDecision, user=Depends(current_user), db=Depends(db_session)):
@@ -172,6 +171,10 @@ def register_interactions(app, current_user, db_session):
     @app.post("/api/wishes", response_model=WishView, tags=["Friends"])
     def create_wish(payload: WishCreate, user=Depends(current_user), db=Depends(db_session)):
         return interactions.create_wish(db, user.id, payload)
+
+    @app.put("/api/wishes/{wish_id}", response_model=WishView, tags=["Friends"])
+    def change_wish(wish_id: str, payload: WishChange, user=Depends(current_user), db=Depends(db_session)):
+        return interactions.change_wish(db, user.id, wish_id, payload)
 
     @app.delete("/api/wishes/{wish_id}", tags=["Friends"])
     def delete_wish(wish_id: str, payload: Revision, user=Depends(current_user), db=Depends(db_session)):
