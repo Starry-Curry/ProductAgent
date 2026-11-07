@@ -2940,6 +2940,41 @@
             "https://gdlp01.c-wss.com/gds/5/0300040305/01/rf50f18stm-im-zh.pdf"
           ]
         }
+      },
+      {
+        "id": "ffd55db0d7c24bea95ee930ec0741f2b",
+        "owner_id": "person_demo_owner",
+        "name": "我们做的阿元",
+        "kind": "nonstandard_object",
+        "state": {
+          "data_origin": "user_provided_photo",
+          "photo_origin": "user_uploaded_photo",
+          "identity_basis": "user_report",
+          "user_intake_key": "ayuan-keepsake-20261107",
+          "intake_photo_ids": [
+            "7da74df65687433581f6577f3094253d",
+            "6530174a32664009bbb1f514ed0a4d8e"
+          ],
+          "presentation": {
+            "cherished": true,
+            "location": "",
+            "attention": "normal"
+          }
+        },
+        "photo_id": "7da74df65687433581f6577f3094253d",
+        "archived": 0,
+        "version": 1,
+        "created_at": "2026-11-07T07:30:19.302286+00:00",
+        "product_id": null,
+        "identity_notes": {
+          "brand": "",
+          "commercial_name": "",
+          "model": "",
+          "market": "CN",
+          "edition": "",
+          "firmware_version": null,
+          "source_urls": []
+        }
       }
     ],
     "tasks": [
@@ -15067,6 +15102,21 @@
           "growth_enabled": true,
           "growth_dismissed_ids": []
         }
+      },
+      {
+        "user_id": "person_demo_owner",
+        "item_id": "ffd55db0d7c24bea95ee930ec0741f2b",
+        "description": "我们自己做的阿元，是一件有纪念意义的小物件。照片记录了它现在的样子。",
+        "avatar": {
+          "enabled": false,
+          "form": "auto",
+          "nickname": "阿元",
+          "personality": "",
+          "color": "#d49c62",
+          "image_id": null,
+          "growth_enabled": true,
+          "growth_dismissed_ids": []
+        }
       }
     ],
     "memories": [
@@ -21314,6 +21364,20 @@
         "path": "media/fdd7325fdbcd4f36a8e7537691811e3a.jpg",
         "media_type": "image/jpeg",
         "original_name": "fdd7325fdbcd4f36a8e7537691811e3a.jpg"
+      },
+      {
+        "id": "6530174a32664009bbb1f514ed0a4d8e",
+        "owner_id": "person_demo_owner",
+        "path": "media/6530174a32664009bbb1f514ed0a4d8e.jpg",
+        "media_type": "image/jpeg",
+        "original_name": "6530174a32664009bbb1f514ed0a4d8e.jpg"
+      },
+      {
+        "id": "7da74df65687433581f6577f3094253d",
+        "owner_id": "person_demo_owner",
+        "path": "media/7da74df65687433581f6577f3094253d.jpg",
+        "media_type": "image/jpeg",
+        "original_name": "7da74df65687433581f6577f3094253d.jpg"
       }
     ]
   },
@@ -22219,6 +22283,20 @@
       "path": "media/fdd7325fdbcd4f36a8e7537691811e3a.jpg",
       "sha256": "92063fdb12717c21b07abdd767b7dd2cc51db4e2b74020fd97b68d67ae3f776f",
       "size": 100469,
+      "media_type": "image/jpeg"
+    },
+    {
+      "id": "6530174a32664009bbb1f514ed0a4d8e",
+      "path": "media/6530174a32664009bbb1f514ed0a4d8e.jpg",
+      "sha256": "a541be2f44faa5379288e3cfc788c1e2d01b93004c3271d70a22fe9fe72ba78c",
+      "size": 82722,
+      "media_type": "image/jpeg"
+    },
+    {
+      "id": "7da74df65687433581f6577f3094253d",
+      "path": "media/7da74df65687433581f6577f3094253d.jpg",
+      "sha256": "0f3aaed1a35aa1233a30a38174fc08f82028bf46a3fad28c146c62fe85e46788",
+      "size": 91531,
       "media_type": "image/jpeg"
     }
   ],
