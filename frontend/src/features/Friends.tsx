@@ -23,6 +23,14 @@ import { navigate, type Route } from "./navigation";
 import GiftExperience from "./GiftExperience";
 import { wishImage } from "./wishImages";
 
+function WishVisual({ title, detail = false }: { title: string; detail?: boolean }) {
+  const source = wishImage(title);
+  return <div className={detail ? "wish-detail-visual" : "wish-visual"}>
+    {source ? <><img src={source.src} alt={`${title}的礼物参考：${source.product}`} loading={detail ? "eager" : "lazy"} /><span className="wish-picture-caption" title={source.product}>礼物灵感 · {source.product}</span></>
+      : <span className="wish-no-photo"><GiftIcon size={38} strokeWidth={1} /><small>想要的一点美好</small></span>}
+  </div>;
+}
+
 export default function Friends({
   workspace,
   user,
@@ -84,9 +92,7 @@ export default function Friends({
             className={`wish-card ${selected?.id === wish.id ? "selected" : ""}`}
             onClick={() => setSelected(wish)}
           >
-            <div className={`wish-visual ${wishImage(wish.title).framed ? "wish-photo-frame" : ""}`}>
-              <img src={wishImage(wish.title).src} alt={wish.title} loading="lazy" />
-            </div>
+            <WishVisual title={wish.title} />
             <div>
               <h3>{wish.title}</h3>
               <p>{wish.note || "一个想要，慢慢了解"}</p>
@@ -368,9 +374,7 @@ export default function Friends({
               <ArrowLeft size={17} />
               返回心愿
             </button>
-            <div className={`wish-detail-visual ${wishImage(selected.title).framed ? "wish-photo-frame" : ""}`}>
-              <img src={wishImage(selected.title).src} alt={selected.title} />
-            </div>
+            <WishVisual title={selected.title} detail />
             <h1>{selected.title}</h1>
             <p className="wish-owner">
               {selected.user_id === user.id ? "我" : person?.display_name}

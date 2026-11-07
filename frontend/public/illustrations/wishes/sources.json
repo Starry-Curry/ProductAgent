@@ -1,11 +1,117 @@
 {
-  "source": "Owner-approved demo/showcase; category pictures for wishes, not exact SKU verification.",
-  "assets": {
-    "lamp": "23e526bc7c1549ea91a0bd729035e442",
-    "earbuds": "e0ff620a99ab4226ad8c8af63ba00cc8",
-    "speaker": "ec11e0dad0d843d6ac7ab279e2839e25",
-    "coffee": "d1494f95cd4443478306dd3412cc0203",
-    "camera": "c205fbeeac01465a8a0df03ec1c970a6",
-    "cup": "7cd698a6ce4c4baa9a18af29aba44022"
-  }
+  "purpose": "Independent public product photos illustrating wishes; candidate gift ideas, not owned inventory and not a claim that the friend specified this exact SKU.",
+  "ownership": "Not owned; photos sourced separately from publicly accessible product pages. Product/photo copyright remains with original rights holders.",
+  "retrieved_on": "2026-11-07",
+  "images": [
+    {
+      "key": "lamp",
+      "product": "IKEA TÄRNABY 塔娜比 米黄色台灯 205.080.74",
+      "wish": "床头阅读灯",
+      "source_page": "https://www.ikea.cn/cn/zh/p/taernaby-ta-nuo-bi-tai-deng-mi-huang-se-20508074/",
+      "source_image": "https://file.app.ikea.cn/cn/zh/images/products/taernaby-ta-nuo-bi-tai-deng-ke-diao-guang-de-mi-huang-se__1188960_pe899632_s5.jpg",
+      "path": "lamp.jpg",
+      "sha256": "f6f6383db94f8e3db240ed3e99abcf1cfa9c28ccfd8dd30771bb9879dd0d567b",
+      "width": 1000,
+      "height": 1000,
+      "status": "downloaded"
+    },
+    {
+      "key": "soft-lamp",
+      "product": "IKEA FADO 法多 白色球形台灯 400.963.74",
+      "wish": "一盏柔和的阅读灯",
+      "source_page": "https://www.ikea.cn/cn/zh/p/fado-table-lamp-white-40096374/",
+      "source_image": "https://www.ikea.com.hk/dairyfarm/hk/images/069/0606976_PE682645_S4.jpg",
+      "path": "soft-lamp.jpg",
+      "sha256": "19ccc8f7a720c0828b8955e969a673ecb58e5c2c16af94b0d2410384b6052d51",
+      "width": 500,
+      "height": 500,
+      "status": "downloaded"
+    },
+    {
+      "key": "plant",
+      "product": "IKEA ZAMIOCULCAS 金钱树 503.852.84",
+      "wish": "想给阳台添一点绿色",
+      "source_page": "https://www.ikea.cn/cn/zh/p/zamioculcas-jin-qian-shu-pen-zai-zhi-wu-jin-qian-shu-50385284/",
+      "source_image": "https://file.app.ikea.cn/cn/zh/images/products/zamioculcas-jin-qian-shu-pen-zai-zhi-wu-jin-qian-shu__1346257_pe950886_s5.jpg",
+      "path": "plant.jpg",
+      "sha256": "2ed92fe55bbfc4f9d08d35bfbfb424401f07519f3fb0ee461b1029102fd3d084",
+      "width": 1000,
+      "height": 1000,
+      "status": "downloaded"
+    },
+    {
+      "key": "speaker",
+      "product": "JBL Go 4 沙色便携蓝牙音箱",
+      "wish": "一起听歌的小音箱",
+      "source_page": "https://www.jbl.com/GO-4.html?dwvar_GO-4_color=Sand-AM-Current",
+      "source_image": "https://www.jbl.com/dw/image/v2/BFND_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw309b331e/JBL_GO_4_HERO_SAND_49712_x2%20%281%29.png?sh=800&sw=800",
+      "path": "speaker.jpg",
+      "sha256": "4b3029b70dc60008bc278e30478b0983701b94ad4e063caceb5e40140b9513e8",
+      "width": 800,
+      "height": 800,
+      "status": "downloaded"
+    },
+    {
+      "key": "coffee",
+      "product": "Nespresso Essenza Mini C30 灰色胶囊咖啡机",
+      "wish": "一台入门胶囊咖啡机",
+      "source_page": "https://www.nespressochina.com/zh/machines/original/essenza-mini-grey-coffee-machine-aeroccino.html",
+      "source_image": "https://coffeemart.com.ua/images/product_images/popup_images/6115_0.jpg",
+      "path": "coffee.jpg",
+      "sha256": "5a34e6f2c6dae123c43de2b2a47ccc34804611a228f1de3fa9352f50a2a55c66",
+      "width": 800,
+      "height": 800,
+      "status": "downloaded",
+      "image_page": "https://coffeemart.com.ua/essenza-mini-c30-grey.html"
+    },
+    {
+      "key": "camera",
+      "product": "FUJIFILM instax mini 12 蓝色即影即有相机",
+      "wish": "记录旅行的相机",
+      "source_page": "https://www.fujifilm.com/jp/ja/consumer/instax/cameras/mini12/design",
+      "source_image": "https://asset.fujifilm.com/www/jp/files/2023-02/56f234bbd1c877da92e841f4c6510d8a/pic_instaxmini12_design_08.jpg",
+      "path": "camera.jpg",
+      "sha256": "3f29470536b5d44279a8d60280ecfffc774c45829459c050b739922dd0e2666a",
+      "width": 1000,
+      "height": 667,
+      "status": "downloaded"
+    },
+    {
+      "key": "cup",
+      "product": "KINTO CERAMIC LAB CLK-151 粉色陶杯 180ml",
+      "wish": "一个有故事的手工杯",
+      "source_page": "https://kinto-europe.com/products/21889",
+      "source_image": "https://cdn.shopify.com/s/files/1/0087/4073/2986/products/21894.jpg?v=1598566973",
+      "image_page": "https://kinto-europe.com/products/21889",
+      "path": "cup.jpg",
+      "sha256": "f2d27260194df5f0d2dfe53f69eba3b5d969213f31ee0a916a106676e530d143",
+      "width": 1000,
+      "height": 1000,
+      "status": "downloaded"
+    },
+    {
+      "key": "frame",
+      "product": "Nixplay 10.1英寸电子相框",
+      "wish": "看得清的电子相框",
+      "source_page": "https://www.nixplay.com/products/nixplay-smart-photo-frame-10-1-inch-touch?variant=40096576602230",
+      "source_image": "https://www.nixplay.com/cdn/shop/products/04d47bd0313219407b18ce7b3d07d2ac.jpg?v=1704678541",
+      "path": "frame.jpg",
+      "sha256": "d8ccb9d8be356af7bd06f042a4238ae1eda9ee9f29eb40efc14a031b118e1597",
+      "width": 1000,
+      "height": 1000,
+      "status": "downloaded"
+    },
+    {
+      "key": "earbuds",
+      "product": "Bose QuietComfort 白色头戴式耳机",
+      "wish": "一副舒服的耳机",
+      "source_page": "https://www.fortress.com.hk/en/product/quietcomfort-headphone/p/BP_13075950",
+      "source_image": "https://medias.fortress.com.hk/publishing/FTRHK-13075950-SIDE-zoom.jpg?version=1747755481",
+      "path": "earbuds.jpg",
+      "sha256": "764369033108d4ce62a8425031a3f35d3549fc6ba5f500dc9164346acfc1d6cc",
+      "width": 1000,
+      "height": 1000,
+      "status": "downloaded"
+    }
+  ]
 }

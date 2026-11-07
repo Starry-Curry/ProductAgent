@@ -104,7 +104,7 @@ export default function Memories({
     });
   }
   return (
-    <section className="memories-page page-content">
+    <section className={`memories-page page-content ${view === "box" ? "memory-river-page" : ""}`}>
       <div className="page-heading">
         <div>
           <span className="eyebrow">LITTLE MOMENTS, TOGETHER</span>
