@@ -8,6 +8,7 @@ import asyncio
 import hashlib
 import json
 import logging
+from collections import defaultdict
 
 from sqlalchemy import select
 
@@ -150,14 +151,20 @@ def authorized_documents(sessions, user_id):
         terminal_runs = dict(db.execute(select(Run.id, Run.status).where(
             Run.user_id == user_id, Run.status.in_(("failed", "interrupted"))
         )).all())
+        # One current-user message read per fresh projection, rather than one
+        # query per conversation. This is request-local data, never a cache;
+        # search still rebuilds authorization after its external await.
+        messages_by_conversation = defaultdict(list)
+        for message in db.scalars(select(ChatMessage).join(
+            Conversation, ChatMessage.conversation_id == Conversation.id
+        ).where(Conversation.user_id == user_id).order_by(
+            ChatMessage.conversation_id, ChatMessage.created_at
+        )):
+            messages_by_conversation[message.conversation_id].append(message)
         for conversation in db.scalars(
             select(Conversation).where(Conversation.user_id == user_id)
         ):
-            messages = db.scalars(
-                select(ChatMessage)
-                .where(ChatMessage.conversation_id == conversation.id)
-                .order_by(ChatMessage.created_at)
-            ).all()
+            messages = messages_by_conversation.pop(conversation.id, [])
             question = None
             answered = set()
             for message in messages:

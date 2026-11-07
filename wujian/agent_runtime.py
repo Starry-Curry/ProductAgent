@@ -888,10 +888,16 @@ class AgentRunner:
             item_ids = conversation.item_ids
             selected = [{**domain.agent_item_view(domain.item_view(db, user.id, domain.accessible_item(db, user.id, identity))),
                          "knowledge":foundation.known_claims(db,user.id,identity)} for identity in item_ids]
+            if conversation.entry_context.get("intent") == "persona":
+                # These focused views were authorized above. A conversation
+                # with one object need not project the entire inventory again.
+                resource_rows = {row["item_id"]: {**row, "id": row["item_id"]}
+                                 for row in selected if not row["archived"]}.values()
+            else:
+                resource_rows = domain.list_items(db, user.id)[:100]
             resources = [{"item_id": row["id"], "name": row["name"], "kind": row["kind"], "model": row["product"].get("model", ""),
                           'description_excerpt':row['description'][:300],'state':row['state']}
-                         for row in domain.list_items(db, user.id)[:100]
-                         if conversation.entry_context.get("intent") != "persona" or row["id"] in item_ids]
+                         for row in resource_rows]
             context = {"user": domain.user_view(user), "date": datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(),
                        "focused_items": selected, "known_resource_index": resources,
                        **personal_context(db, user.id, item_ids, conversation.entry_context.get("intent") == "persona"),
