@@ -2551,15 +2551,13 @@ small {
   color: #bda783;
   margin-bottom: 22px;
 }
-.wish-visual, .wish-detail-visual { overflow: hidden; }
+.wish-visual, .wish-detail-visual { overflow: hidden; position:relative; }
 .wish-visual img, .wish-detail-visual img {
-  width: 100%; height: 100%; object-fit: contain; display: block; background: #f8f6f2;
+  width: 100%; height: calc(100% - 27px); object-fit: contain; display: block; background: #f8f6f2;
 }
-.wish-photo-frame { padding: 22px; background: #e7e1d8; }
-.wish-photo-frame img {
-  border: 12px solid #f9f7f2; border-radius: 3px;
-  box-shadow: 0 7px 18px #4b443425; object-fit: cover;
-}
+.wish-picture-caption { position:absolute; bottom:6px; left:10px; right:10px; text-align:center; font-size:10px; color:#777564; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.wish-no-photo { display:flex; flex-direction:column; align-items:center; gap:12px; color:#9a8e77; }
+.wish-no-photo small { font-size:12px; }
 .detail-pane > h1 {
   font-size: 27px;
   line-height: 1.5;
