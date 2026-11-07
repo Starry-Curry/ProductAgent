@@ -3,8 +3,6 @@ import { App as AntApp, Modal } from "antd";
 import {
   Camera,
   CalendarDays,
-  ChevronLeft,
-  ChevronRight,
   Images,
   LockKeyhole,
   Pencil,
@@ -17,7 +15,8 @@ import type { Editor } from "./Editors";
 import { EmptyState, Pill, safeDate } from "./shared";
 import { navigate } from "./navigation";
 import { PhotoMatchFinder } from "./PhotoMatchReview";
-import "./memory-box.css";
+import "./memory-controls.css";
+import MemoryRiver from "./MemoryRiver";
 
 export default function Memories({
   workspace,
@@ -39,11 +38,9 @@ export default function Memories({
   const [query, setQuery] = useState(""),
     [scope, setScope] = useState("all");
   const [view, setView] = useState<"box" | "all">("box"),
-    [filtersOpen, setFiltersOpen] = useState(false),
-    [activeDay, setActiveDay] = useState<string | null>(null),
-    [activeMemory, setActiveMemory] = useState("");
+    [filtersOpen, setFiltersOpen] = useState(false);
   useEffect(() => {
-    setQuery(""); setScope("all"); setActiveDay(null); setActiveMemory(""); setFiltersOpen(false);
+    setQuery(""); setScope("all"); setFiltersOpen(false);
   }, [itemId]);
   // Resolve the current authorized record rather than retaining a stale copy
   // after an edit, deletion or sharing change refreshes the workspace.
@@ -82,15 +79,6 @@ export default function Memories({
     if (exp.household_id) return `${workspace.households.find((house) => house.id === exp.household_id)?.name || "家庭"} · ${exp.access === "owner" ? "我记录的" : `${author || "家人"}记录的`}`;
     return exp.access === "shared" ? `来自${author || "朋友"}的分享` : "由我记录";
   }
-  // The recorded day is a business fact. Undated stories stay together in their
-  // own pocket; upload time and file metadata must not invent a life date.
-  const days = Array.from(new Set(experiences.map((exp) => exp.occurred_on || "")))
-    .sort((a, b) => b.localeCompare(a));
-  const day = activeDay !== null && days.includes(activeDay) ? activeDay : days[0] || "";
-  const dayIndex = days.indexOf(day);
-  const dayStories = experiences.filter((exp) => (exp.occurred_on || "") === day);
-  const current = dayStories.find((exp) => exp.id === activeMemory) || dayStories[0];
-  const currentVisual = current && cover(current);
   function openStory(exp: Experience) {
     navigate({ section: "memories", itemId, experienceId: exp.id });
   }
@@ -120,8 +108,8 @@ export default function Memories({
       <div className="page-heading">
         <div>
           <span className="eyebrow">LITTLE MOMENTS, TOGETHER</span>
-          <h1>{item ? `和${item.avatar.nickname || item.name}的回忆` : "一起的回忆"}</h1>
-          <p>{item ? `关于${item.name}，也关于一起经过的日子。` : "有些东西的意义，藏在一起经过的日子里。"}</p>
+          <h1>{item ? `和${item.avatar.nickname || item.name}的回忆` : "记忆长河"}</h1>
+          <p>{item ? `关于${item.name}，也关于一起经过的日子。` : "日子向前流淌，珍贵的瞬间留在这里。"}</p>
           {itemId && <div className="memory-context-actions">{onCompanion && <button className="quiet-button" onClick={onCompanion}>回去聊聊</button>}<button className="quiet-button" onClick={() => navigate({ section: "memories" })}>看全部回忆</button></div>}
         </div>
         {!!related.length && <button
@@ -134,7 +122,7 @@ export default function Memories({
       </div>
       {related.length > 0 && <div className="memory-view-switch" aria-label="回忆的浏览方式">
         <button className={view === "box" ? "active" : ""} onClick={() => setView("box")} aria-pressed={view === "box"}>
-          <CalendarDays size={17} />记忆盒
+          <CalendarDays size={17} />记忆长河
         </button>
         <button className={view === "all" ? "active" : ""} onClick={() => setView("all")} aria-pressed={view === "all"}>
           <Images size={17} />全部回忆<span>{related.length}</span>
@@ -175,58 +163,9 @@ export default function Memories({
       {experienceId && !selected && (
         <p className="inline-error" role="status">这段回忆已不可读取，可能已删除或分享权限已改变。其他记录仍可查看。</p>
       )}
-      {experiences.length && view === "box" && current ? (
-        <div className="memory-box">
-          <aside className="memory-date-pocket" aria-label="按记录日期浏览">
-            <div className="memory-pocket-heading"><CalendarDays size={18} /><span>把日子慢慢打开</span></div>
-            <div className="memory-date-list">
-              {days.map((value) => <button key={value || "undated"}
-                className={day === value ? "active" : ""}
-                aria-pressed={day === value}
-                onClick={() => { setActiveDay(value); setActiveMemory(""); }}>
-                {value ? <><strong>{value.slice(5).replace("-", " / ")}</strong><small>{value.slice(0, 4)}</small></>
-                  : <><strong>未记日期</strong><small>也值得留下</small></>}
-                <span>{experiences.filter((exp) => (exp.occurred_on || "") === value).length}段</span>
-              </button>)}
-            </div>
-          </aside>
-          <div className="memory-day">
-            <div className="memory-day-heading">
-              <div><span className="eyebrow">A DAY TO KEEP</span><h2>{safeDate(day)}</h2></div>
-              <div className="memory-day-turn">
-                <button className="icon-button" aria-label="更新的一天" disabled={dayIndex <= 0}
-                  onClick={() => { setActiveDay(days[dayIndex - 1]); setActiveMemory(""); }}><ChevronLeft size={20} /></button>
-                <button className="icon-button" aria-label="更早的一天" disabled={dayIndex >= days.length - 1}
-                  onClick={() => { setActiveDay(days[dayIndex + 1]); setActiveMemory(""); }}><ChevronRight size={20} /></button>
-              </div>
-            </div>
-            <button className={`memory-open-page ${currentVisual ? "" : "memory-page-letter"}`} onClick={() => openStory(current)}>
-              {currentVisual ? <div className="memory-page-photo">
-                <img key={currentVisual.id} src={`/api/assets/${currentVisual.id}`}
-                  alt={currentVisual.related ? `${current.title}关联的物品` : current.title} />
-                {currentVisual.related && <span className="memory-cover-caption">相关物品</span>}
-              </div> : <div className="memory-page-quote" aria-hidden="true">“</div>}
-              <div className="memory-page-copy">
-                <span className="memory-page-count">{dayStories.indexOf(current) + 1} / {dayStories.length}</span>
-                <h3>{current.title}</h3>
-                <p>{current.text}</p>
-                <span className="memory-page-objects">{Object.values(current.item_labels).join(" · ") || "留在这一天的心情"}</span>
-                <small className="memory-page-attribution">{attribution(current)}</small>
-                <span className="memory-page-read">打开这段回忆 <ChevronRight size={16} /></span>
-              </div>
-            </button>
-            {dayStories.length > 1 && <div className="memory-filmstrip" aria-label="这一天的其他回忆">
-              {dayStories.map((exp) => {
-                const visual = cover(exp);
-                return <button key={exp.id} className={exp.id === current.id ? "active" : ""}
-                  aria-pressed={exp.id === current.id} onClick={() => setActiveMemory(exp.id)}>
-                  {visual ? <img src={`/api/assets/${visual.id}`} alt="" loading="lazy" /> : <span className="memory-film-letter">“</span>}
-                  <span>{exp.title}</span>
-                </button>;
-              })}
-            </div>}
-          </div>
-        </div>
+      {experiences.length && view === "box" ? (
+        <MemoryRiver experiences={experiences} cover={cover} attribution={attribution}
+          open={openStory} record={() => edit({ kind: "experience", item })} />
       ) : experiences.length ? (
         <div className="memory-grid">
           {experiences.map((exp, index) => {
