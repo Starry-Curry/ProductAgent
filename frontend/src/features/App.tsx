@@ -47,6 +47,7 @@ import ButlerActionCard from "./ButlerActionCard";
 import { Companion, ObjectVisual, presentation } from "./shared";
 import { navigate, useRoute, useWorkspace, type Section } from "./navigation";
 import { ObjectCompanion } from "./ObjectCompanion";
+import { showcaseMessages } from "./showcasePresentation";
 
 export default function App() {
   const [user, setUser] = useState<User | null>(),
@@ -156,7 +157,7 @@ function WorkspaceApp({
     const next = await request<ChatMessage[]>(
       `/conversations/${identity}/messages`,
     );
-    if (currentThread.current === identity) setMessages(next);
+    if (currentThread.current === identity) setMessages(showcaseMessages(next));
   }
   function watch(initial: Run) {
     stopWatching();
@@ -250,8 +251,9 @@ function WorkspaceApp({
         `/conversations/${identity}/messages`,
       );
       if (currentThread.current !== identity || generation !== openingGeneration.current) return false;
-      setMessages(history);
-      const last = history.at(-1);
+      const visibleHistory = showcaseMessages(history);
+      setMessages(visibleHistory);
+      const last = visibleHistory.at(-1);
       if (last?.role === "user" && last.run_id) {
         const latest = await request<Run>(`/runs/${last.run_id}`);
         if (currentThread.current !== identity || generation !== openingGeneration.current) return false;
