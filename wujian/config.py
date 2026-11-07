@@ -23,8 +23,9 @@ class Settings:
     thinking_budget: int | None = None
     provider_stream: bool = False
     embedding_model: str = "text-embedding-v4"
-    local_embedding_dir: str = ''
-    local_ai_device: str = 'NPU'
+    # Optional local MiniLM (OpenVINO IR) semantic retrieval; empty disables it.
+    local_embedding_dir: str = ""
+    local_ai_device: str = "NPU"
     local_ai_required: bool = False
     rea_enabled: bool = True
     rea_entry: str = ""
@@ -49,9 +50,9 @@ class Settings:
             thinking_budget=int(os.environ["QWEN_THINKING_BUDGET"]) if os.getenv("QWEN_THINKING_BUDGET") else None,
             provider_stream=os.getenv("QWEN_STREAM", "false").lower() == "true",
             embedding_model=os.getenv("QWEN_EMBEDDING_MODEL") or cls.embedding_model,
-            local_embedding_dir=os.getenv('WUJIAN_LOCAL_EMBEDDING_DIR',''),
-            local_ai_device=os.getenv('WUJIAN_LOCAL_AI_DEVICE','NPU').upper(),
-            local_ai_required=os.getenv('WUJIAN_LOCAL_AI_REQUIRED','false').lower()=='true',
+            local_embedding_dir=os.getenv("WUJIAN_LOCAL_EMBEDDING_DIR", ""),
+            local_ai_device=os.getenv("WUJIAN_LOCAL_AI_DEVICE", "NPU").upper(),
+            local_ai_required=os.getenv("WUJIAN_LOCAL_AI_REQUIRED", "false").lower() == "true",
             rea_enabled=os.getenv("WUJIAN_REA_ENABLED", "true").lower() == "true",
             rea_entry=os.getenv("WUJIAN_REA_ENTRY", ""),
             rea_artifact_roots=tuple(Path(path).resolve() for path in json.loads(os.getenv('WUJIAN_REA_ARTIFACT_ROOTS','[]'))),

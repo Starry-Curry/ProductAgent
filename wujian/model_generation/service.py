@@ -120,9 +120,15 @@ def local_generate(config, folder):
         raise GenerationError('本地混元 mini 尚未配置。')
     environment = {key: value for key, value in os.environ.items()
                    if key not in {'DASHSCOPE_API_KEY', 'OPENAI_API_KEY'}}
-    command = [str(config.local_python), str(Path(__file__).with_name('hunyuan_worker.py')),
+    worker = 'hunyuan_ov_worker.py' if config.local_backend == 'openvino' else 'hunyuan_worker.py'
+    command = [str(config.local_python), str(Path(__file__).with_name(worker)),
                '--home', str(config.local_home), '--input', str(folder / 'input.png'),
                '--output', str(folder / 'local.glb'), '--faces', str(config.faces)]
+    if config.local_backend == 'openvino':
+        command += ['--device', 'NPU', '--resolution', str(config.local_resolution),
+                    '--steps', str(config.local_steps)]
+        if config.local_ir:
+            command += ['--ir', str(config.local_ir)]
     with run_lock(config.local_home / '.wujian-generation.lock', wait=config.local_timeout), (folder / 'local.log').open('ab') as log:
         try:
             result = subprocess.run(command, env=environment, cwd=config.local_home, stdout=log,
@@ -132,13 +138,30 @@ def local_generate(config, folder):
             raise GenerationError('本地混元 mini 未能完成生成，已保留诊断记录。') from None
     if result.returncode != 0:
         raise GenerationError('本地混元 mini 生成失败，已保留诊断记录。')
-    return folder / 'local.glb', {'model': 'tencent/Hunyuan3D-2mini', 'texture': False}
+    details = {'model': 'tencent/Hunyuan3D-2mini', 'texture': False}
+    if config.local_backend == 'openvino':
+        report = json.loads((folder / 'local.generation.json').read_text(encoding='utf-8'))
+        receipt = report.get('local_ai', {})
+        devices = receipt.get('execution_devices', [])
+        if (not devices or any(d.split('.')[0] != 'NPU' for d in devices)
+                or receipt.get('inferences', 0) < 1):
+            raise GenerationError('本地生成未提供有效 NPU 执行回执。')
+        details.update({key: report[key] for key in
+                        ['backend', 'resolution', 'steps', 'elapsed_seconds', 'local_ai']})
+    return folder / 'local.glb', details
 
 
 def generate_sync(config, owner_id, image):
     png, jpeg = prepare_image(image)
     scope = hashlib.sha256(owner_id.encode()).hexdigest()[:24]
     parameters = {'version': 1, 'cloud': config.model, 'faces': config.faces, 'local': 'Hunyuan3D-2mini/384/50'}
+    if config.local_backend == 'openvino':
+        ir = config.local_ir or (config.local_home.parent / 'dit_mini.xml' if config.local_home else None)
+        parameters['local'] = {'backend': 'openvino', 'device': 'NPU',
+                               'resolution': config.local_resolution, 'steps': config.local_steps,
+                               'ir': str(ir), 'ir_mtime_ns': ir.stat().st_mtime_ns if ir and ir.is_file() else None,
+                               'bin_mtime_ns': ir.with_suffix('.bin').stat().st_mtime_ns
+                               if ir and ir.with_suffix('.bin').is_file() else None}
     if config.local_only:
         parameters['local_only'] = True
     fingerprint = hashlib.sha256(png + json.dumps(parameters, sort_keys=True).encode()).hexdigest()
@@ -178,5 +201,6 @@ def generate_sync(config, owner_id, image):
 
 
 async def generate_model(settings, owner_id, image, *, local_only=False):
-    config = replace(GenerationSettings.load(settings), local_only=local_only)
+    config = GenerationSettings.load(settings)
+    config = replace(config, local_only=local_only or config.local_only)
     return await asyncio.to_thread(generate_sync, config, owner_id, image)

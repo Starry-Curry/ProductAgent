@@ -36,3 +36,20 @@ class LocalAiBoundaries(unittest.TestCase):
                     self.assertEqual(value['mode'],'keyword_plus_openvino')
                 finally:await retrieval.close()
             asyncio.run(exercise());engine.dispose()
+
+    def test_local_model_disables_cloud_embeddings_even_with_api_key(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as folder:
+            settings=Settings(data_dir=Path(folder),api_key='offline-must-not-be-used',
+                              local_embedding_dir='fixture-local-ir')
+            captured={}
+            class App:
+                def __init__(self,**kwargs):captured.update(kwargs)
+                async def start(self):pass
+            retrieval=Retrieval(settings,None)
+            with patch('reme.ReMe',App):
+                asyncio.run(retrieval._app('owner'))
+            components=captured['components']
+            self.assertEqual(components['file_store']['default']['embedding_store'],'')
+            self.assertNotIn('as_embedding',components)
+            self.assertNotIn('embedding_store',components)
