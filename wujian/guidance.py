@@ -7,7 +7,7 @@ from decimal import Decimal, InvalidOperation
 
 from . import domain
 from .api_models import TaskEntry
-from .database import ChatMessage, Conversation, Run, TaskRecord, now, uid
+from .database import ChatMessage, Conversation, Run, SourceRecord, TaskRecord, now, uid
 from .evidence import locate_quote
 from .source_access import readable_source
 
@@ -24,7 +24,7 @@ def step_signature(entry):
 _NUMBER_CHARS = '0-9.零〇一二两三四五六七八九十百千点'
 _PARAMETER = re.compile(
     rf'(?<![{_NUMBER_CHARS}])([{_NUMBER_CHARS}]+)\s*'
-    r'(秒钟|分钟|小时|秒|摄氏度|°c|伏特|瓦特|千克|公斤|kg|伏|瓦)')
+    r'(秒钟|分钟|小时|秒|摄氏度|°c|伏特|瓦特|千克|公斤|kg|伏|瓦|seconds?|minutes?|hours?|volts?|watts?)(?![a-z])')
 _DIGITS = dict(zip('零〇一二两三四五六七八九', [0,0,1,2,2,3,4,5,6,7,8,9]))
 
 
@@ -59,6 +59,8 @@ def _parameters(text):
     canonical = {'秒钟':('time',1),'秒':('time',1),'分钟':('time',60),'小时':('time',3600),
         '摄氏度':('celsius',1),'°c':('celsius',1),'伏特':('voltage',1),'伏':('voltage',1),
         '瓦特':('power',1),'瓦':('power',1),'千克':('mass',1),'公斤':('mass',1),'kg':('mass',1)}
+    canonical.update({unit:quantity for singular,quantity in [('second',('time',1)),('minute',('time',60)),
+        ('hour',('time',3600)),('volt',('voltage',1)),('watt',('power',1))] for unit in [singular,singular+'s']})
     for match in _PARAMETER.finditer(unicodedata.normalize('NFKC',text).casefold()):
         number = _quantity(match[1])
         if number is not None:
@@ -77,12 +79,33 @@ def validate_parameters(text,entries):
 
 def validate_specific_advice(text,entries,known_text='',allow_visual=False):
     """General help is allowed; do not invent precise reset timing/connectors."""
+    known_text+=' '+' '.join(e.get('quote','') for entry in entries for e in (entry.get('guidance') or {}).get('evidence',[]))
+    # Permit ordinary translations of these explicit source attributes. This
+    # does not infer any gesture or light behavior from a product's category.
+    translations={'长按':['press and hold','press & hold'], '同时按':['simultaneously'],
+        '复位':['reset'],'恢复出厂':['factory reset'],'蓝色':['blue'],'白色':['white'],
+        '红色':['red'],'绿色':['green'],'黄色':['yellow'],'环形灯':['light ring','ring light'],
+        '旋钮':['knob','dial'],'触控':['touch'],'触摸':['touch']}
+    normalized=known_text.casefold()
+    known_text+=' '+' '.join(word for word,phrases in translations.items()
+        if any(re.search(r'(?<![a-z])'+re.escape(phrase)+r'(?![a-z])',normalized) for phrase in phrases))
     for sentence in re.split(r'[。！？\n]',text):
         if re.search(r'(?:长按|按住|同时按|持续按)',sentence) and list(_parameters(sentence)):
             if not re.search(r'(?:你|我|用户)(?:已经|刚才|之前|说|按了|长按了)',sentence):
                 validate_parameters(sentence,entries)
     known=unicodedata.normalize('NFKC',known_text).casefold()
     for sentence in re.split(r'[。！？\n]',text):
+        # These are physical claims too, even when no numeric parameter is
+        # present. A conditional reset branch is still an operating instruction.
+        for gesture in re.findall(r'长按|同时按|恢复出厂|复位',sentence):
+            if gesture not in known and not re.search(r'(?:不|别|勿|避免|未经核验不).{0,10}'+gesture,sentence):
+                raise domain.DomainError('未核验长按、组合按键或复位依据；先核对当前状态，不编造失败分支。')
+        for shape in re.findall(r'环形灯|环状灯|灯环|指示灯[^，；]{0,8}旋转',sentence):
+            if shape not in known and not re.search(r'是否|有没有|能否看到',sentence):
+                raise domain.DomainError('当前依据未确认这种灯光形态，请让用户报告实际可见现象，不迁移其他外观版本。')
+        for color in re.findall(r'(?:蓝|白|红|绿|黄)色',sentence):
+            if re.search(r'灯|闪烁',sentence) and color not in known and not re.search(r'什么颜色|是否|有没有',sentence):
+                raise domain.DomainError('当前依据没有确认指示灯颜色，不用模型记忆预设蓝灯、白灯或其他版本的状态。')
         if list(_parameters(sentence)) and not re.search(r'(?:你|我|用户)(?:已经|刚才|之前|说|按了|长按了)',sentence):
             supported = {quantity for quantity,_ in _parameters(known_text)}
             supported.update(quantity for entry in entries for evidence in (entry.get('guidance') or {}).get('evidence',[])
@@ -95,8 +118,10 @@ def validate_specific_advice(text,entries,known_text='',allow_visual=False):
                 raise domain.DomainError('没有核验这件物品的具体接口类型；请改用原装供电连接等通用描述，不猜测接口。无需为了这点阻止初步回答')
         if re.search(r'如果|假如|若有|若是|如有|若使用|有没有|是否有|能否看到|有无',sentence):continue
         if allow_visual and re.search(r'图中|照片|看起来|似乎',sentence):continue
-        for detail in re.findall(r'(?<![A-Za-z])AAA?(?![A-Za-z])|[1-9]号电池|(?<![A-Za-z])CR\d{3,4}(?![A-Za-z])|(?<![A-Za-z])(?:ON|OFF)(?![A-Za-z])',sentence,re.I):
-            if detail.casefold() not in known:
+        for detail in re.findall(r'(?<![A-Za-z])AAA?(?![A-Za-z])|[1-9]\s*号电池|(?<![A-Za-z])CR\d{3,4}(?![A-Za-z])|(?<![A-Za-z])(?:ON|OFF)(?![A-Za-z])',sentence,re.I):
+            specification=re.sub(r'\s+','',detail).casefold()
+            equivalent={'5号电池':'aa','7号电池':'aaa'}.get(specification,specification)
+            if specification not in re.sub(r'\s+','',known) and not re.search(r'(?<![a-z])'+re.escape(equivalent)+r'(?![a-z])',known):
                 raise domain.DomainError('尚未核验当前物品的电池规格或开关标识，先核对可见文字，不把型号记忆写成通用步骤。')
         specifics=re.findall(r'触控|触摸|旋钮|底座[^，。；\n]{0,8}(?:电源键|指示灯)',sentence)
         for value in specifics:
@@ -136,10 +161,22 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
         targets = [domain.accessible_item(db,user_id,identity) for identity in target_ids]
         if details['kind'] == 'operate' and len(targets)>1 and not entry.get('item_id'):
             raise domain.DomainError('每个具体操作步骤需指明正在处理哪件实物')
+        if details['kind']=='operate' and any(item.product.get('model') for item in targets) and details['basis']=='general' and not details['evidence']:
+            raise domain.DomainError('已知型号的具体操作必须有适用原文或用户实际报告依据，不能改标general绕过核验。资料不足先用observe/identify核对当前状态或可见标识。')
+        if details['basis']=='user_report' and (not current_message or not details['observed_quote'] or details['observed_quote'] not in current_message.text):
+            raise domain.DomainError('user_report依据需保留本轮用户实际报告的连续原话；提问或模型建议不是操作依据。')
         if not details['evidence'] and details['basis']=='document':
             raise domain.DomainError('标为说明书操作的步骤需要适用原文；通用初步建议可标basis=general，不冒充型号已核验')
         for evidence in details['evidence']:
-            source = readable_source(db,user_id,evidence['source_id'])
+            try:source = readable_source(db,user_id,evidence['source_id'])
+            except domain.DomainError as error:
+                from sqlalchemy import select
+                available=[{'source_id':source.id,'title':source.title[:120]} for source in db.scalars(
+                    select(SourceRecord).where(SourceRecord.owner_id==user_id,SourceRecord.item_id.in_(target_ids))
+                    .order_by(SourceRecord.fetched_at.desc()).limit(6))]
+                # Do not expose whether an arbitrary foreign ID exists. Offer
+                # only this user's already-read sources for accessible targets.
+                raise domain.DomainError('引用的source_id不可读取，请原样复制实际返回的原文ID，不填照片、URL或自行命名。当前物品已读原文：'+json.dumps(available,ensure_ascii=False)) from error
             from .assistance import source_applies
             if not source_applies(db, source, target_ids):
                 raise domain.DomainError('这份资料关联另一件不同型号的物品，不能作为当前操作的依据。')
@@ -161,18 +198,17 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
                 page = next((page for page in source.pages if page.get('page')==evidence['page']),None)
                 if not page or locate_quote(page.get('text',''),quote) is None:
                     raise domain.DomainError('教学步骤引用的PDF页码与原文不对应')
-            if details['kind'] == 'operate':
+            if targets:
                 named = [item.product.get('model','') for item in targets if item.product.get('model')]
                 normalized = lambda text: re.sub(r'[^\w]','',text).casefold()
                 from .assistance import identity_in_source
                 if named and not any(identity_in_source(item,source)
                     and normalized(evidence.get('source_model') or item.product.get('model',''))==normalized(item.product.get('model','')) for item in targets):
                     raise domain.DomainError('操作资料没有匹配当前准确型号；相近型号只能作参考')
-        advice = '。'.join(details.get(field,'') for field in ['instruction','success_signal','caution','if_not_found','if_unchanged'])
+        advice = '。'.join([entry['title'],entry.get('note',''),*(details.get(field,'') for field in ['instruction','success_signal','caution','if_not_found','if_unchanged'])])
         if details['basis']=='document' or details['evidence']:
             validate_parameters(advice,[entry])
-        else:
-            validate_specific_advice(advice,[entry],current_message.text if current_message else '')
+        validate_specific_advice(advice,[entry],current_message.text if current_message else '')
         old = old_entries.get(entry['id'])
         same_step = old and step_signature(old)==step_signature(entry)
         old_details = old.get('guidance') or {} if old else {}

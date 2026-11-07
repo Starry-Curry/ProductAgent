@@ -55,7 +55,8 @@ class NaturalTeachingTests(unittest.TestCase):
                 'task_id':self.task['id'],'expected_version':1,'feedback_quote':'我有一个装不上，怎么办？','outcome':'failure','status':'in_progress'}})
         with self.sessions() as db:
             saved=commit_result(db,self.owner,'report',result,'我有一个装不上，怎么办？')
-            self.assertEqual(saved['answer'],result.answer)
+            self.assertIn('先别硬压',saved['answer'])
+            self.assertIn('看看有没有歪斜或异物',saved['answer'])
             self.assertNotEqual(saved['answer'],guidance.render_current_step(self.task['plan'],self.task['status']))
             self.assertEqual(saved['task']['id'],self.task['id'])
             self.assertEqual(saved['task']['plan']['entries'][0]['state'],'unchanged')
@@ -88,9 +89,11 @@ class NaturalTeachingTests(unittest.TestCase):
             self.assertEqual(saved['task']['plan']['guidance']['observations'][-1]['text'],'我有一个装不上，怎么办？')
             self.assertEqual(saved['task']['plan']['guidance']['observations'][-1]['outcome'],'unknown')
 
-    def test_general_operation_is_allowed_but_cannot_claim_to_be_a_manual_step(self):
+    def test_general_observation_is_allowed_but_model_operations_require_evidence(self):
         plan=copy.deepcopy(self.plan);plan['entries'][0]['guidance']['kind']='operate'
         with self.sessions() as db:
+            with self.assertRaises(domain.DomainError):guidance.validate_plan(db,self.owner,['item_demo_lamp'],plan,'report')
+            plan['entries'][0]['guidance']['kind']='observe'
             guidance.validate_plan(db,self.owner,['item_demo_lamp'],plan,'report')
             plan['entries'][0]['guidance']['basis']='document'
             with self.assertRaises(domain.DomainError):guidance.validate_plan(db,self.owner,['item_demo_lamp'],plan,'report')

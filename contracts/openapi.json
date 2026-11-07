@@ -4342,6 +4342,7 @@
               "contact_support"
             ],
             "title": "Kind",
+            "description": "缺少适用操作依据时用observe/identify/verify核对实物；已知型号的operate必须有匹配原文或用户实际报告，不能把操作改标general。",
             "default": "operate"
           },
           "basis": {
@@ -4352,7 +4353,7 @@
               "user_report"
             ],
             "title": "Basis",
-            "description": "通用建议用general；已核验型号原文用document；不因没有手册而拒绝初步帮助。",
+            "description": "general用于通用观察；document需当前型号适用原文及连续引句；user_report需本轮实际报告原话。型号操作不能用general绕过依据检查。",
             "default": "general"
           },
           "instruction": {

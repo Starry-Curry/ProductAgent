@@ -7,16 +7,21 @@ import socket
 import os
 from urllib.request import getproxies
 from urllib.parse import urljoin, urlsplit
+from threading import RLock
 
 import httpx
 import httpcore
 from bs4 import BeautifulSoup
 from openai import AsyncOpenAI
-from pypdf import PdfReader
+import pypdfium2 as pdfium
 from sqlalchemy import select
 
 from .database import Asset, SourceRecord, uid
 from .domain import DomainError, accessible_item
+
+# PDFium is also used by the original-page viewer. Its native API must not be
+# entered concurrently by parsing/rendering workers, even for different files.
+_PDF_LOCK=RLock()
 
 
 def public_transport():
@@ -142,12 +147,30 @@ async def download_public(url):
 
 def parse_document(data, content_type, url):
     if data.startswith(b"%PDF") or "application/pdf" in content_type:
-        reader = PdfReader(io.BytesIO(data))
-        pages = [{"page": index + 1, "text": (page.extract_text() or "")[:16000]} for index, page in enumerate(reader.pages[:160])]
+        # Reuse the installed renderer for text too: real vendor manuals with
+        # CFF fonts cannot be fully decoded by the old extractor without another
+        # optional dependency, producing noisy logs and losing operating text.
+        pages=[]
+        with _PDF_LOCK:
+            document=pdfium.PdfDocument(data)
+            try:
+                for index in range(min(len(document),160)):
+                    page=document[index]
+                    try:
+                        textpage=page.get_textpage()
+                        try: text=textpage.get_text_bounded().replace('\r\n','\n')[:16000]
+                        finally:textpage.close()
+                    finally:page.close()
+                    pages.append({'page':index+1,'text':text})
+            finally:document.close()
         return "\n\n".join(f"[第{page['page']}页]\n{page['text']}" for page in pages), pages, [], "application/pdf", "PDF资料"
     soup = BeautifulSoup(data, "html.parser")
     title = soup.title.get_text(" ", strip=True) if soup.title else urlsplit(url).hostname
     links = []
+    for node in soup.select('iframe[src],embed[src],object[data]'):
+        target=urljoin(url,node.get('src') or node.get('data',''))
+        if urlsplit(target).scheme in {'http','https'} and ('.pdf' in urlsplit(target).path.casefold() or node.get('type')=='application/pdf'):
+            links.append({'title':'嵌入的PDF原文（需读取核验）','url':target})
     for anchor in soup.select("a[href]"):
         target = urljoin(url, anchor.get("href", ""))
         if urlsplit(target).scheme in {"http", "https"}:
@@ -155,6 +178,7 @@ def parse_document(data, content_type, url):
     for node in soup.select("script,style,noscript,nav,footer,header"):
         node.decompose()
     content = "\n".join(line.strip() for line in soup.get_text("\n").splitlines() if line.strip())
+    links=list({row['url']:row for row in links}.values())
     return content[:300000], [], links[:100], "text/html", title
 
 
@@ -208,7 +232,11 @@ def source_excerpt(source, query="", page=None):
 
 
 def render_source_page(settings, source, asset, page):
-    import pypdfium2 as pdfium
+    with _PDF_LOCK:
+        return _render_source_page(settings,source,asset,page)
+
+
+def _render_source_page(settings, source, asset, page):
     if asset.media_type != "application/pdf":
         raise DomainError("此来源不是PDF")
     document = pdfium.PdfDocument(asset.path)

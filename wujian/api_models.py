@@ -327,8 +327,8 @@ class StepEvidence(Input):
 
 
 class GuidanceDetails(Input):
-    kind: Literal["identify", "observe", "operate", "verify", "contact_support"] = "operate"
-    basis: Literal["document", "general", "user_report"] = Field(default="general", description="通用建议用general；已核验型号原文用document；不因没有手册而拒绝初步帮助。")
+    kind: Literal["identify", "observe", "operate", "verify", "contact_support"] = Field(default="operate",description="缺少适用操作依据时用observe/identify/verify核对实物；已知型号的operate必须有匹配原文或用户实际报告，不能把操作改标general。")
+    basis: Literal["document", "general", "user_report"] = Field(default="general", description="general用于通用观察；document需当前型号适用原文及连续引句；user_report需本轮实际报告原话。型号操作不能用general绕过依据检查。")
     instruction: str = Field(min_length=1, max_length=2400)
     success_signal: str = Field(default="", max_length=1000)
     if_not_found: str = Field(default="", max_length=1000)

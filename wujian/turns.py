@@ -67,7 +67,7 @@ class TurnResult(BaseModel):
     target_item_ids: list[str] = Field(default_factory=list, description='本轮实际回答的获准物品ID，与当前聚焦物一致；没有识别清楚时留空并核对。')
     answer: str = Field(
         min_length=1,
-        description="Final natural-language answer for the person; use item names here, internal IDs only in structured fields",
+        description="普通问答用完整自然语言回复。提交guidance变化时只需简短回应，程序会呈现本轮通过核验的当前步骤，不再写第二篇操作文。使用物品名称，内部ID只放结构字段。",
     )
     continuation: ContinuingPlan | None = Field(default=None,
         description="A substantive proposal or continuing task with latest feedback. Null for simple questions, acknowledgements, story-only recording and companionship. Keep actual user requirements separate from proposed mechanisms."
@@ -215,8 +215,20 @@ def commit_result(db, user_id, message_id, result, current_question):
                 f"{attribution}《{row['title']}》（{row['occurred_on']}）：\n\n{quote}"
             )
     db.commit()
-    # The current answer is the main Agent's response to THIS message. Replacing
-    # it with the active step hides negative feedback and repeats yesterday's text.
+    # Render THIS turn's validated change, never yesterday's untouched plan.
+    # A second free prose recipe used to reintroduce unsupported controls and
+    # signals after the structured step had passed evidence checks.
+    if task and result.continuation and task['plan'].get('kind')=='guidance' and not result.lesson_action:
+        from .guidance import render_current_step
+        controlled_answer=render_current_step(task['plan'],task['status'])
+        from .assistance import negative_step_feedback
+        if negative_step_feedback(current_question):controlled_answer='先停在这一步，我们核对你遇到的位置或现象。\n\n'+controlled_answer
+        elif result.continuation.task_id is None and len(task['item_ids'])==1:
+            item=domain.accessible_item(db,user_id,task['item_ids'][0])
+            model=item.product.get('model','')
+            if model:
+                tentative=(item.state.get('identity_evidence') or {}).get('provisional')
+                controlled_answer=('本次物品型号'+('暂读为' if tentative else '为')+' '+model+'。\n\n')+controlled_answer
     answer=controlled_answer or result.answer
     return {
         "task": task,
@@ -235,7 +247,7 @@ def grounded_turn_schema(sessions, user_id, message_id):
                 validate_learning(db, user_id, message_id, self.learning)
                 message = domain.require(db.get(ChatMessage, message_id))
                 conversation = db.get(Conversation, message.conversation_id)
-                from .assistance import check_turn_scope, check_teaching_request, check_research_request
+                from .assistance import check_turn_scope, check_teaching_request, check_research_request, negative_step_feedback
                 check_turn_scope(db, user_id, message, self)
                 check_teaching_request(db, message, self)
                 check_research_request(db, user_id, message)
@@ -262,7 +274,11 @@ def grounded_turn_schema(sessions, user_id, message_id):
                     known.append(json.dumps({'product':item.product,'description':domain.item_view(db,user_id,item)['description']},ensure_ascii=False))
                     known.extend(claim['content']+' '+claim.get('source_quote','') for claim in foundation.known_claims(db,user_id,identity) if claim.get('basis')=='document')
                 known.extend(e['quote'] for entry in entries for e in (entry.get('guidance') or {}).get('evidence',[]) if e.get('quote'))
-                try:validate_specific_advice(self.answer,entries,' '.join(known),allow_visual=bool(message.photo_ids))
+                # Teaching prose is rendered from the validated current step at
+                # commit. Ordinary explanations still use the main Agent reply.
+                try:
+                    if not (self.continuation and self.continuation.plan.get('kind')=='guidance'):
+                        validate_specific_advice(self.answer,entries,' '.join(known),allow_visual=bool(message.photo_ids))
                 except domain.DomainError as error:raise ValueError(error.message) from error
                 if conversation.entry_context.get('intent') == 'guidance' and self.continuation is not None:
                     teaching = self.continuation.plan
@@ -304,8 +320,11 @@ def grounded_turn_schema(sessions, user_id, message_id):
                     try:
                         plan.plan = validate_plan(db, user_id, plan.item_ids, plan.plan, message_id,
                             previous.plan if previous else None)
+                        current_id=plan.plan.get('guidance',{}).get('active_step_id')
+                        current=next((entry for entry in plan.plan.get('entries',[]) if entry['id']==current_id),None)
+                        if previous and negative_step_feedback(message.text) and current and (current.get('guidance') or {}).get('kind')=='operate':
+                            raise domain.DomainError('用户尚未找到或尚无反应，先用observe/identify/verify回应具体困难，保持待核对；不能继续重复操作或跳到后续动作。')
                         if plan.plan.get('kind')=='guidance' and any((entry.get('guidance') or {}).get('evidence') for entry in plan.plan['entries']):
-                            validate_parameters(self.answer,plan.plan['entries'])
                             observations=((previous.plan if previous else {}).get('guidance') or {}).get('observations',[])
                             report=next((entry for entry in reversed(observations) if entry.get('message_id')==message_id),None)
                             active_id=(plan.plan.get('guidance') or {}).get('active_step_id')

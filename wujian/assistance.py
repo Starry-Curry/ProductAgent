@@ -27,6 +27,10 @@ def no_search(text):
     return bool(re.search(r'(?:不要|不用|别|不必).{0,4}(?:搜索?|联网|查(?:资料|说明书|网页))', text))
 
 
+def negative_step_feedback(text):
+    return bool(re.search(r'没找到|找不到|没看懂|看不懂|没反应|没有反应|没变化|没有变化|(?:不要|别|先不)跳',text))
+
+
 def bind_task(db, user_id, item_ids, entry, *, detach=False):
     entry = dict(entry or {})
     identity = entry.get('task_id')
@@ -134,6 +138,8 @@ def check_teaching_request(db, message, result):
     conversation = db.get(Conversation, message.conversation_id)
     active = db.get(TaskRecord, conversation.entry_context.get('task_id') or '')
     requested = wants_steps(message.text) or result.assistance_mode == 'teach'
+    if active and active.plan.get('kind')=='guidance' and not active.plan.get('guidance',{}).get('lesson') and negative_step_feedback(message.text) and not result.continuation:
+        raise ValueError('用户没找到或没看懂当前步骤，请提交同一任务本轮的observe/identify/verify变化，回应具体困难；不要仅返回一篇猜控件的自由正文。')
     if requested and conversation.item_ids and not active:
         plan = result.continuation.plan if result.continuation else {}
         if plan.get('schema') != 'interaction/1' or plan.get('kind') != 'guidance' or not plan.get('entries'):
@@ -186,9 +192,24 @@ def preparation_turn(context, question):
     """A provider outage can preserve a requested lesson, never invent actions."""
     from .turns import TurnResult
     focused=context.get('focused_items', [])
-    if len(focused)!=1 or context.get('active_task') or not wants_steps(question):
+    active=context.get('active_task')
+    if len(focused)!=1 or not (negative_step_feedback(question) if active else wants_steps(question)):
         return None
     item=focused[0]
+    if active:
+        if active['plan'].get('kind')!='guidance' or active['plan'].get('guidance',{}).get('lesson'):
+            return None
+        step_id=active['plan'].get('guidance',{}).get('active_step_id') or 'verify-current-state'
+        instruction='先停在这一步，不继续操作。请描述你现在看到的位置和能读清的文字或标记；未在画面中看清的位置先保留未知。'
+        return TurnResult.model_validate({'assistance_mode':'teach','target_item_ids':[item['id']],
+            'answer':instruction,'continuation':{'goal':active['goal'],'item_ids':active['item_ids'],
+                'constraints':active['constraints'],'status':'in_progress','task_id':active['id'],
+                'expected_version':active['version'],'feedback_quote':question,'outcome':'unknown',
+                'plan':{'schema':'interaction/1','kind':'guidance','entries':[{'id':step_id,
+                    'title':'核对没有找到的位置','item_id':item['id'],'group':'step','state':'pending',
+                    'guidance':{'kind':'observe','basis':'general','instruction':instruction,
+                        'target_label':'当前看到的位置','success_signal':'把你实际看到的位置或文字告诉我。'}}],
+                    'guidance':{'active_step_id':step_id,'research_pending':True}}}})
     instruction='先看一下这件物品目前的外观和你准备操作的位置，告诉我看到什么；这一轮先不试未经核对的按键或组合。'
     return TurnResult.model_validate({'assistance_mode':'teach','target_item_ids':[item['id']],
         'answer':'资料和操作细节还没有完成核验，先保留这次带做进度。\n\n当前一步：'+instruction,
@@ -196,6 +217,6 @@ def preparation_turn(context, question):
             'task_id':None,'expected_version':None,'plan':{'schema':'interaction/1','kind':'guidance',
                 'entries':[{'id':'verify-current-state','title':'核对当前实物状态','item_id':item['id'],'group':'step','state':'pending',
                     'guidance':{'kind':'observe','basis':'general','instruction':instruction,'target_label':item['name'],
-                        'success_signal':'用户描述或拍到当前状态；这不代表使用目标已完成。'}}],
+                        'success_signal':'把你现在看到或听到的现象告诉我。'}}],
                 'guidance':{'active_step_id':'verify-current-state','overview':['核对当前实物状态','继续核验资料后安排具体操作'],
                     'research_pending':True}}}})
