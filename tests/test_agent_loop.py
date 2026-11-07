@@ -63,7 +63,10 @@ class AgentIntegrationTests(unittest.TestCase):
                 if mode=='wait':
                     client.post('/api/runs/'+run['id']+'/cancel')
                 started=time.monotonic()
-                while run['status'] in {'queued','running'} and time.monotonic()-started<8:
+                # Exhaustion includes the SDK's structured-output grace turns;
+                # verify terminal semantics, not an eight-second latency SLA.
+                wait_seconds = 30 if mode == 'loop' else 8
+                while run['status'] in {'queued','running'} and time.monotonic()-started<wait_seconds:
                     time.sleep(.02)
                     run=client.get('/api/runs/'+run['id']).json()
                 if mode in {'tool','identity'}:
