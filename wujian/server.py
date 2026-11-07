@@ -1,6 +1,8 @@
 import asyncio
 import io
 import json
+import secrets
+import threading
 from contextlib import asynccontextmanager
 from urllib.parse import urlsplit
 
@@ -8,7 +10,7 @@ from fastapi import Depends, FastAPI, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from PIL import Image, ImageOps, UnidentifiedImageError
-from sqlalchemy import or_, select
+from sqlalchemy import case, or_, select
 from sqlalchemy.exc import IntegrityError
 from starlette.middleware.sessions import SessionMiddleware
 
@@ -105,6 +107,7 @@ def create_app(settings=None, model_factory=None):
 
     app = FastAPI(title="物间 Wujian API", version="0.3.0", lifespan=lifespan)
     app.state.sessions, app.state.runner, app.state.settings = sessions, runner, settings
+    demo_seed_lock = threading.Lock()
     app.add_middleware(SessionMiddleware, secret_key=settings.session_secret, same_site="lax", max_age=7 * 86400)
 
     @app.middleware("http")
@@ -129,6 +132,14 @@ def create_app(settings=None, model_factory=None):
 
     def current_user(request: Request, db=Depends(db_session)):
         user = db.get(User, request.session.get("user_id", ""))
+        if user is not None and settings.demo_isolation:
+            from .showcase import DEMO_USERNAMES, DEMO_SEED_REVISION
+            if user.username in DEMO_USERNAMES:
+                user = None
+            elif user.id.startswith('person_demo_') and user.username.startswith('demo_'):
+                visitor = request.session.get('demo_visitor', '')
+                if not visitor or not user.username.startswith('demo_' + visitor + '_') or request.session.get('demo_seed_revision') != DEMO_SEED_REVISION:
+                    user = None
         if user is None:
             raise domain.DomainError("请先登录", 401)
         return user
@@ -162,6 +173,20 @@ def create_app(settings=None, model_factory=None):
     def demo_login(persona: str, request: Request, db=Depends(db_session)):
         if not settings.demo_mode:
             raise domain.DomainError("体验档案未开放", 404)
+        if settings.demo_isolation:
+            from .showcase import import_showcase, DEMO_SEED_REVISION
+            username = {'xiaolin':'xiaolin','xiaoxia':'xiaoxia','mom':'xiaolin_mom_demo','grandpa':'xiaolin_grandpa_demo'}.get(persona)
+            if username is None:
+                raise domain.DomainError('未找到这个体验档案', 404)
+            visitor = request.session.get('demo_visitor') if request.session.get('user_id') and request.session.get('demo_seed_revision') == DEMO_SEED_REVISION else None
+            visitor = visitor or secrets.token_hex(16)
+            with demo_seed_lock:
+                import_showcase(db, settings, namespace=visitor)
+                db.commit()
+            user = domain.require(db.scalar(select(User).where(User.username == 'demo_' + visitor + '_' + username)))
+            request.session.clear()
+            request.session.update(user_id=user.id, demo_visitor=visitor, demo_seed_revision=DEMO_SEED_REVISION)
+            return domain.user_view(user)
         identity = {"xiaolin": "person_demo_owner", "xiaoxia": "person_demo_friend"}.get(persona)
         family_username = {"mom": "xiaolin_mom_demo", "grandpa": "xiaolin_grandpa_demo"}.get(persona)
         user = domain.require(db.scalar(select(User).where(User.username == family_username)) if family_username
@@ -242,7 +267,7 @@ def create_app(settings=None, model_factory=None):
 
     @app.get("/api/conversations", response_model=list[ConversationView])
     def conversations(user=Depends(current_user), db=Depends(db_session)):
-        return list(db.scalars(select(Conversation).where(Conversation.user_id == user.id).order_by(Conversation.updated_at.desc()).limit(80)))
+        return interactions.list_conversations(db, user.id)
 
     @app.get('/api/tasks',response_model=list[TaskView])
     def tasks(user=Depends(current_user),db=Depends(db_session)):

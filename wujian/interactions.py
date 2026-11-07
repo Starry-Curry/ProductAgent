@@ -5,7 +5,7 @@ model, store a second context/memory, or duplicate item/task/experience records.
 """
 from urllib.parse import urlsplit
 
-from sqlalchemy import delete, or_, select, update
+from sqlalchemy import case, delete, or_, select, update
 
 from . import domain, foundation
 from .api_models import AvatarSpec, ItemChange, Preferences, TaskEntry
@@ -299,7 +299,8 @@ def board(db, user_id, task_id):
     participants = [{**domain.user_view(db.get(User, member.user_id)), "status": member.status}
         for member in db.scalars(select(TaskParticipant).where(TaskParticipant.task_id == task_id))]
     source_message = db.get(ChatMessage, row.source_message_id)
-    conversation_id = source_message.conversation_id if source_message and row.user_id == user_id else None
+    source_conversation = db.get(Conversation, source_message.conversation_id) if source_message else None
+    conversation_id = source_conversation.id if source_conversation and source_conversation.user_id == user_id else None
     if conversation_id is None:
         conversation_id = next((conversation.id for conversation in db.scalars(select(Conversation).where(Conversation.user_id == user_id))
             if conversation.entry_context.get("task_id") == task_id), None)
@@ -588,11 +589,20 @@ def friend_space(db, user_id, other_id):
         "experiences": [row for row in domain.list_experiences(db, user_id) if row["creator_id"] == other_id]}
 
 
+def list_conversations(db, user_id):
+    from .showcase import DEMO_USERNAMES
+    user = db.get(User, user_id)
+    ordering = [Conversation.updated_at.desc()]
+    if user and (user.username in DEMO_USERNAMES or user.username.startswith('demo_')):
+        ordering.insert(0, case((Conversation.title.contains('烫印机'), 0), else_=1))
+    return list(db.scalars(select(Conversation).where(Conversation.user_id == user_id).order_by(*ordering).limit(80)))
+
+
 def workspace(db, user_id):
     return {"preferences": preferences(db.get(User, user_id)), "items": domain.list_items(db, user_id),
         "experiences": domain.list_experiences(db, user_id), "households": households(db, user_id),
         "reminders": list_reminders(db, user_id), "tasks": list_tasks(db, user_id),
-        "conversations": list(db.scalars(select(Conversation).where(Conversation.user_id == user_id).order_by(Conversation.updated_at.desc()).limit(80))),
+        "conversations": list_conversations(db, user_id),
         "friends": domain.friends(db, user_id),
         "gifts": [domain.gift_view(db, row) for row in db.scalars(select(Gift).where(or_(Gift.sender_id == user_id, Gift.recipient_id == user_id)).order_by(Gift.created_at.desc()))],
         "wishes": [wish_view(row) for row in db.scalars(select(Wish).where(Wish.user_id == user_id))]}

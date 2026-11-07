@@ -33,6 +33,7 @@ class Settings:
     session_secret: str = field(default="", repr=False)
     demo_mode: bool = True
     showcase_enabled: bool = False
+    demo_isolation: bool = False
     host: str = "127.0.0.1"
     port: int = 8000
 
@@ -59,6 +60,7 @@ class Settings:
             session_secret=os.getenv("WUJIAN_SESSION_SECRET", ""),
             demo_mode=os.getenv("WUJIAN_DEMO_MODE", "true").lower() == "true",
             showcase_enabled=os.getenv("WUJIAN_SHOWCASE", "true").lower() == "true",
+            demo_isolation=os.getenv("WUJIAN_DEMO_ISOLATION", "false").lower() == "true",
             host=os.getenv("WUJIAN_HOST", "127.0.0.1"),
             port=int(os.getenv("WUJIAN_PORT", "8000")),
         )
