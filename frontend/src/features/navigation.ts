@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Workspace, User } from "../api";
 import { request } from "../api";
+import { showcaseThreads } from "./showcasePresentation";
 
 export type Section = "companion" | "items" | "memories" | "friends" | "care";
 export type Route = {
@@ -61,6 +62,7 @@ export function useWorkspace(user: User) {
   async function refresh() {
     try {
       const next = await request<Workspace>("/workspace");
+      next.conversations = showcaseThreads(next.conversations);
       setWorkspace(next);
       setError("");
       return next;
