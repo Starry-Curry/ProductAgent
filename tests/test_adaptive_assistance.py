@@ -284,7 +284,8 @@ class ObjectBoundaryTests(unittest.TestCase):
         with self.sessions() as db:
             saved=commit_result(db,self.user,'negative',result,'我还没找到，先别跳到下一步。')
         self.assertEqual(saved['task']['id'],task['id'])
-        self.assertEqual(saved['task']['plan']['guidance']['active_step_id'],task['plan']['guidance']['active_step_id'])
+        self.assertEqual(saved['task']['plan']['guidance']['active_step_id'],'verify-current-state-'+str(task['version']))
+        self.assertIn(task['plan']['guidance']['active_step_id'],[entry['id'] for entry in saved['task']['plan']['entries']])
         self.assertTrue(all(e['state']=='pending' for e in saved['task']['plan']['entries']))
         self.assertIn('先停在这一步',saved['answer'])
         self.assertNotIn('按键',saved['answer'])

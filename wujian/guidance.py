@@ -183,7 +183,8 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
     if plan.get('kind') != 'guidance' and not any(entry.get('guidance') for entry in plan.get('entries',[])):
         return plan
     entries = [TaskEntry.model_validate(entry).model_dump() for entry in plan.get('entries',[])]
-    old_entries = {entry['id']:entry for entry in (previous or {}).get('entries',[])}
+    old_entries = {entry['id']:TaskEntry.model_validate(entry).model_dump()
+        for entry in (previous or {}).get('entries',[])}
     current_message = db.get(ChatMessage,message_id) if message_id else None
     if current_message:
         conversation = db.get(Conversation,current_message.conversation_id)
@@ -193,11 +194,14 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
         details = entry.get('guidance')
         if not details:
             continue  # Historical / manually outlined plans remain readable as unverified outlines.
+        old = old_entries.get(entry['id'])
+        preserved_step = bool(old and step_signature(old)==step_signature(entry))
+        preserved_general = bool(preserved_step and details['basis']=='general' and not details['evidence'])
         target_ids = [entry['item_id']] if entry.get('item_id') else item_ids
         targets = [domain.accessible_item(db,user_id,identity) for identity in target_ids]
         if details['kind'] == 'operate' and len(targets)>1 and not entry.get('item_id'):
             raise domain.DomainError('每个具体操作步骤需指明正在处理哪件实物')
-        if (details['kind']=='operate' and any(item.product.get('model') for item in targets) and details['basis']=='general' and not details['evidence']
+        if (not preserved_general and details['kind']=='operate' and any(item.product.get('model') for item in targets) and details['basis']=='general' and not details['evidence']
                 and re.search(r'按|拨|旋转|装入|倒入|拆|复位|初始化|对它说|打开蓝牙',details['instruction'])):
             raise domain.DomainError('型号专用操作需要适用原文或实际用户报告；未核验时用observe/identify核对，不把具体控件、按键组合或参数标为general。')
         if details['basis']=='user_report' and not plan.get('guidance',{}).get('lesson') and (not current_message or not details['observed_quote'] or details['observed_quote'] not in current_message.text):
@@ -239,7 +243,7 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
                     evidence['page']=None
                 elif not page or locate_quote(page.get('text',''),quote) is None:
                     raise domain.DomainError('教学步骤引用的PDF页码与原文不对应')
-            if details['basis'] == 'document' or details['evidence']:
+            if not preserved_step and (details['basis'] == 'document' or details['evidence']):
                 from .learning import model_mentioned, normalized_model
                 named = [item.product.get('model','') for item in targets if item.product.get('model')]
                 if named and not all(model_mentioned(model,source.content)
@@ -247,9 +251,10 @@ def validate_plan(db, user_id, item_ids, plan, message_id=None, previous=None):
                     raise domain.DomainError('操作资料没有匹配当前准确型号；相近型号只能作参考')
         advice=' '.join([entry['title'],entry.get('note',''),*(details.get(field,'') for field in ['instruction','success_signal','caution','if_not_found','if_unchanged'])])
         if details['basis']=='document' or details['evidence']:
-            validate_parameters(advice,[entry])
-            validate_specific_advice(advice,[entry],' '.join(source_context))
-        else:
+            if not preserved_step:
+                validate_parameters(advice,[entry])
+                validate_specific_advice(advice,[entry],' '.join(source_context))
+        elif not preserved_general:
             validate_specific_advice(advice,[entry],current_message.text if current_message else '',
                 require_button_evidence=True)
         if plan.get('kind') != 'guidance':

@@ -24,6 +24,28 @@ from wujian.turns import TurnResult,commit_result,grounded_turn_schema
 
 
 class NaturalTeachingTests(unittest.TestCase):
+    def test_old_unverified_instruction_does_not_block_a_new_observation(self):
+        with self.sessions() as db:
+            task=db.get(TaskRecord,self.task['id'])
+            legacy=copy.deepcopy(task.plan)
+            legacy['entries'][0]['guidance'].update(kind='operate',instruction='长按未核验的旧按钮。',if_not_found='长按另一个旧按钮。')
+            task.plan=legacy;db.commit()
+        delta={'schema':'interaction/1','kind':'guidance','entries':[{'id':'new-observation',
+            'title':'核对实际现象','item_id':'item_demo_lamp','group':'step','state':'pending',
+            'guidance':{'kind':'observe','basis':'general','instruction':'先说一下目前能看到什么。'}}],
+            'guidance':{'active_step_id':'new-observation'}}
+        value={'answer':'前面的记录保留，我们先核对你现在看到的现象。','continuation':{
+            'goal':self.task['goal'],'item_ids':['item_demo_lamp'],'constraints':{},'plan':delta,
+            'task_id':self.task['id'],'expected_version':1}}
+        result=grounded_turn_schema(self.sessions,self.owner,'report').model_validate(value)
+        with self.sessions() as db:
+            saved=commit_result(db,self.owner,'report',result,'我有一个装不上，怎么办？')
+            self.assertEqual(saved['task']['plan']['guidance']['active_step_id'],'new-observation')
+            self.assertEqual(len(saved['task']['plan']['entries']),2)
+            changed=copy.deepcopy(saved['task']['plan'])
+            changed['entries'][0]['guidance']['instruction']='同时长按另一个未核验按钮。'
+            with self.assertRaises(domain.DomainError):guidance.validate_plan(db,self.owner,['item_demo_lamp'],changed,'report',saved['task']['plan'])
+
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory()
         self.settings=Settings(data_dir=Path(self.tmp.name));self.settings.prepare()

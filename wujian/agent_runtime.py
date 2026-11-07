@@ -1006,7 +1006,7 @@ class AgentRunner:
                 context['retained_source_excerpts']=excerpts
                 context['evidence_use']='这些是本轮实际读取的已保存原文节选，可直接引用source_refs；只支持节选中的条件和操作。足够回答就先交付，不重复搜索。其他章节按需read_source。'
 
-            turn_context = TurnContext(run_id, conversation_id, revision,deadline_at=time.monotonic()+getattr(self.settings,"agent_timeout_seconds",180))
+            turn_context = TurnContext(run_id, conversation_id, revision,deadline_at=time.monotonic()+getattr(self.settings,"agent_timeout_seconds",120 if conversation.entry_context.get('intent')=='guidance' else 180))
             toolkit = make_tools(self.settings, self.sessions, user_id, current.id,self.retrieval,self.devices,evidence_sources,turn_context,self.communities)
             db.commit()
         try:

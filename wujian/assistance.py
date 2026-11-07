@@ -192,13 +192,18 @@ def preparation_turn(context, question):
     from .turns import TurnResult
     focused=context.get('focused_items', [])
     active=context.get('active_task')
-    if len(focused)!=1 or not (negative_step_feedback(question) if active else wants_steps(question) or negative_step_feedback(question)):
+    if len(focused)!=1:
+        return None
+    requested=wants_steps(question) or negative_step_feedback(question) or context.get('entry_context',{}).get('intent')=='guidance'
+    if not requested and not active:
         return None
     item={**focused[0],'id':focused[0].get('id') or focused[0].get('item_id')}
     if active:
         if active['plan'].get('kind')!='guidance' or active['plan'].get('guidance',{}).get('lesson'):
             return None
-        step_id=active['plan'].get('guidance',{}).get('active_step_id') or 'verify-current-state'
+        # A new observation must not inherit the old action's failure/reset
+        # branches through the plan's normal per-entry PATCH merge.
+        step_id='verify-current-state-'+str(active['version'])
         instruction='先停在这一步，不继续操作。请描述你现在看到的位置和能读清的文字或标记；未在画面中看清的位置先保留未知。'
         return TurnResult.model_validate({'assistance_mode':'teach','target_item_ids':[item['id']],
             'answer':instruction,'continuation':{'goal':active['goal'],'item_ids':active['item_ids'],
