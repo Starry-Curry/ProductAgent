@@ -33,6 +33,7 @@ import FamilyMemories from "./FamilyMemories";
 import { ObjectCompanion, PersonaGrowth } from "./ObjectCompanion";
 import EarbudConsole from "./EarbudConsole";
 import GeneratedWorkbench from "./GeneratedWorkbench";
+import { orderItemCards } from "./itemOrder";
 
 type Props = {
   workspace: Workspace;
@@ -78,7 +79,7 @@ export default function Items({
       ? item.owner_id === user.id && !workspace.households.some((family) => family.item_ids.includes(item.id))
       : house?.item_ids.includes(item.id),
   );
-  const visible = items.filter((item) => {
+  const visible = orderItemCards(items.filter((item) => {
     const info = presentation(item);
     return (
       (!query ||
@@ -94,7 +95,7 @@ export default function Items({
         (filter === "memories" &&
           workspace.experiences.some((exp) => exp.item_ids.includes(item.id))))
     );
-  });
+  }));
   const pending = items.filter((item) =>
     ["paused", "needs_check"].includes(presentation(item).attention),
   ).length;
