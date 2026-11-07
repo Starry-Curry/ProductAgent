@@ -1,0 +1,9 @@
+.object-portrait>img:first-child{display:block;width:100%;height:100%;object-fit:contain;border-radius:22%;mix-blend-mode:multiply}
+.object-portrait>.object-portrait-source{position:absolute;right:-3px;bottom:1px;width:27%;height:27%;object-fit:cover;border-radius:28%;border:2px solid #fffdf8;box-shadow:0 2px 6px #3c2d1914}
+.object-portrait.object-companion-alive>img:first-child{animation:object-portrait-breathe 5s ease-in-out infinite;transform-origin:50% 90%}
+.persona-photo-create{display:flex;flex-direction:column;align-items:flex-start;gap:9px;background:#f1f4f2;border:1px solid #e4eae6;border-radius:17px;padding:16px 18px}
+.persona-photo-create p{font-size:12px;line-height:1.8;color:#86908a;margin:0}
+.persona-photo-create .persona-image-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.persona-photo-create .persona-generation-note{color:#8e9b9c;font-size:11px}
+@keyframes object-portrait-breathe{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-3px) rotate(1deg)}}
+@media(prefers-reduced-motion:reduce){.object-portrait.object-companion-alive>img:first-child{animation:none}}

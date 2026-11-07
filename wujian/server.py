@@ -7,16 +7,17 @@ from urllib.parse import urlsplit
 from fastapi import Depends, FastAPI, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, ImageOps, UnidentifiedImageError
 from sqlalchemy import or_, select
 from sqlalchemy.exc import IntegrityError
 from starlette.middleware.sessions import SessionMiddleware
 
-from . import devices, domain, foundation
+from . import devices, domain, foundation, interactions
 from .agent_runtime import AgentRunner
 from .api_models import (
     ChatMessageView,
     ChatRequest,
+    CommunitySessionView,
     ConversationView,
     DeviceBind,
     DeviceProposal,
@@ -27,6 +28,7 @@ from .api_models import (
     FriendRequest,
     FriendView,
     GiftCreate,
+    GiftAccept,
     GiftView,
     HealthView,
     ItemChange,
@@ -50,9 +52,13 @@ from .database import (
     ChatMessage,
     Conversation,
     DeviceObservation,
+    ExperienceRecord,
+    ExperienceShare,
     Friendship,
     Gift,
     Grant,
+    HouseholdItem,
+    HouseholdMember,
     ItemRecord,
     Reminder,
     Run,
@@ -64,6 +70,14 @@ from .database import (
     uid,
 )
 from .retrieval import task_view
+
+
+class FrontendStaticFiles(StaticFiles):
+    async def get_response(self,path,scope):
+        response=await super().get_response(path,scope)
+        if response.status_code==200 and path.lower().endswith('.mjs'):
+            response.headers['content-type']='text/javascript; charset=utf-8'
+        return response
 
 
 def create_app(settings=None, model_factory=None):
@@ -79,6 +93,8 @@ def create_app(settings=None, model_factory=None):
                 run.status, run.error = "interrupted", "服务重启，任务已停止。请继续对话；不会自动重复外部操作。"
             if settings.demo_mode:
                 domain.seed_demo(db)
+                from .interaction_demo import ensure_demo_workspace
+                ensure_demo_workspace(db)
             db.commit()
         yield
         await runner.close()
@@ -144,14 +160,21 @@ def create_app(settings=None, model_factory=None):
         if not settings.demo_mode:
             raise domain.DomainError("体验档案未开放", 404)
         identity = {"xiaolin": "person_demo_owner", "xiaoxia": "person_demo_friend"}.get(persona)
-        user = domain.require(db.get(User, identity or ""))
+        family_username = {"mom": "xiaolin_mom_demo", "grandpa": "xiaolin_grandpa_demo"}.get(persona)
+        user = domain.require(db.scalar(select(User).where(User.username == family_username)) if family_username
+                              else db.get(User, identity or ""))
         request.session.clear()
         request.session["user_id"] = user.id
         return domain.user_view(user)
 
     @app.post("/api/auth/logout")
-    def logout(request: Request):
+    async def logout(request: Request):
+        user_id=request.session.get("user_id")
+        # Failing to reclaim an external collector must not leave this app's
+        # session authenticated. The manager retains any unreaped process.
         request.session.clear()
+        if user_id:
+            await runner.communities.close(user_id)
         return {"status": "ok"}
 
     @app.get("/api/me", response_model=UserView)
@@ -220,7 +243,7 @@ def create_app(settings=None, model_factory=None):
 
     @app.get('/api/tasks',response_model=list[TaskView])
     def tasks(user=Depends(current_user),db=Depends(db_session)):
-        return [task_view(row) for row in db.scalars(select(TaskRecord).where(TaskRecord.user_id==user.id).order_by(TaskRecord.updated_at.desc()))]
+        return interactions.list_tasks(db, user.id)
 
     @app.post('/api/tasks',response_model=TaskView)
     def save_task(payload:TaskSave,user=Depends(current_user),db=Depends(db_session)):
@@ -288,7 +311,17 @@ def create_app(settings=None, model_factory=None):
                 raise domain.DomainError("对话附件目前支持照片")
         conversation = owned_conversation(db, user.id, payload.conversation_id) if payload.conversation_id else Conversation(
             id=uid(), user_id=user.id, title=payload.text[:35] or "从一张照片开始")
-        conversation.item_ids, conversation.updated_at = payload.item_ids, now()
+        if not payload.conversation_id or "item_ids" in payload.model_fields_set:
+            conversation.item_ids = payload.item_ids
+        if payload.entry_context is not None:
+            if payload.entry_context.task_id:
+                interactions.task_access(db, user.id, payload.entry_context.task_id)
+            conversation.entry_context = payload.entry_context.model_dump()
+        if (conversation.entry_context or {}).get("intent") == "persona":
+            if len(conversation.item_ids) != 1 or not domain.item_view(db, user.id,
+                    domain.accessible_item(db, user.id, conversation.item_ids[0]))["avatar"].get("enabled"):
+                raise domain.DomainError("请先为这件物品启用分身，或直接向物伴提问")
+        conversation.updated_at = now()
         db.add(conversation)
         db.flush()
         run = Run(id=uid(), conversation_id=conversation.id, user_id=user.id)
@@ -307,6 +340,22 @@ def create_app(settings=None, model_factory=None):
         if row.user_id != user_id:
             raise domain.DomainError("没有找到这项任务", 404)
         return row
+
+    from .api_models import GuidanceRequest, GuidanceFeedback, EntryContext
+    @app.post('/api/guidance', response_model=RunView, tags=['Step-by-step guidance'])
+    async def begin_guidance(payload: GuidanceRequest, user=Depends(current_user), db=Depends(db_session)):
+        return await chat(ChatRequest(text=payload.question, item_ids=[payload.item_id],
+            photo_ids=payload.photo_ids, entry_context=EntryContext(intent='guidance')),user,db)
+
+    @app.post('/api/tasks/{task_id}/guidance-feedback', response_model=RunView, tags=['Step-by-step guidance'])
+    async def guidance_feedback(task_id: str, payload: GuidanceFeedback, user=Depends(current_user), db=Depends(db_session)):
+        from .guidance import start_feedback
+        if not settings.api_key:
+            raise domain.DomainError('请先配置百炼 API Key，反馈会由阿圆接着处理',503)
+        run = start_feedback(db,user.id,task_id,payload)
+        if run.status == 'queued':
+            runner.start(run.id)
+        return RunView.model_validate(run,from_attributes=True)
 
     @app.get("/api/runs/{run_id}", response_model=RunView)
     def run_status(run_id: str, user=Depends(current_user), db=Depends(db_session)):
@@ -347,7 +396,13 @@ def create_app(settings=None, model_factory=None):
             with Image.open(io.BytesIO(data)) as image:
                 if image.width * image.height > 30_000_000:
                     raise domain.DomainError("照片尺寸过大，请压缩后上传")
-                image = image.convert("RGB")
+                image = ImageOps.exif_transpose(image)
+                if 'A' in image.getbands() or 'transparency' in image.info:
+                    rgba=image.convert('RGBA')
+                    image=Image.new('RGB',rgba.size,'white')
+                    image.paste(rgba,mask=rgba.getchannel('A'))
+                else:
+                    image=image.convert('RGB')
                 image.thumbnail((2000, 2000))
                 output = io.BytesIO()
                 image.save(output, "JPEG", quality=88)
@@ -365,10 +420,29 @@ def create_app(settings=None, model_factory=None):
     def asset_file(asset_id: str, user=Depends(current_user), db=Depends(db_session)):
         asset = domain.require(db.get(Asset, asset_id))
         if asset.owner_id != user.id:
-            item = db.scalar(select(ItemRecord).where(ItemRecord.photo_id == asset_id))
-            if item is None:
+            item_allowed = False
+            for item in db.scalars(select(ItemRecord).where(ItemRecord.photo_id == asset_id)):
+                try:
+                    domain.accessible_item(db, user.id, item.id)
+                    item_allowed = True
+                    break
+                except domain.DomainError:
+                    pass
+            from .family_memory import ExperienceReadScope, can_read_experience
+            story_allowed = False
+            if not item_allowed:
+                scope = ExperienceReadScope.load(db, user.id)
+                story_allowed = any(asset_id in row.photo_ids and can_read_experience(db,user.id,row,scope=scope)
+                    for row in db.scalars(select(ExperienceRecord).where(or_(
+                        ExperienceRecord.household_id.in_(scope.members),
+                        ExperienceRecord.id.in_(scope.shared_ids)))))
+            gift_allowed = not (item_allowed or story_allowed) and any(asset_id == gift.snapshot.get("photo_id") or
+                asset_id == gift.snapshot.get("avatar", {}).get("image_id") or
+                any(asset_id in story.get("photo_ids",[]) for story in gift.snapshot.get("experiences",[]))
+                for gift in db.scalars(select(Gift).where(Gift.status.in_(["pending","accepted"]),
+                    or_(Gift.sender_id == user.id,Gift.recipient_id == user.id))))
+            if not item_allowed and not story_allowed and not gift_allowed:
                 raise domain.DomainError("没有找到这份文件", 404)
-            domain.accessible_item(db, user.id, item.id)
         return FileResponse(asset.path, media_type=asset.media_type,
                             filename=asset.original_name if not asset.media_type.startswith("image/") else None,
                             content_disposition_type="attachment", headers={"Cache-Control": "private, no-store"})
@@ -404,34 +478,24 @@ def create_app(settings=None, model_factory=None):
         return domain.create_gift(db, user.id, payload)
 
     @app.post("/api/gifts/{gift_id}/accept", response_model=GiftView)
-    def receive_gift(gift_id: str, user=Depends(current_user), db=Depends(db_session)):
-        return domain.accept_gift(db, user.id, gift_id)
+    def receive_gift(gift_id: str, payload: GiftAccept | None = None, user=Depends(current_user), db=Depends(db_session)):
+        return domain.accept_gift(db, user.id, gift_id, acceptance=payload)
 
     @app.get("/api/reminders", response_model=list[ReminderView])
     def reminders(user=Depends(current_user), db=Depends(db_session)):
-        return [{key: getattr(row, key) for key in ("id", "creator_id", "assignee_id", "item_id", "title", "due_at", "completed")}
-                for row in db.scalars(select(Reminder).where(or_(Reminder.creator_id == user.id, Reminder.assignee_id == user.id)).order_by(Reminder.due_at))]
+        return interactions.list_reminders(db, user.id)
 
     @app.post("/api/reminders")
     def add_reminder(payload: ReminderCreate, user=Depends(current_user), db=Depends(db_session)):
-        assignee = payload.assignee_id or user.id
-        if assignee != user.id and not domain.are_friends(db, user.id, assignee):
-            raise domain.DomainError("请选择已接受关系的家人或朋友")
-        if payload.item_id:
-            domain.accessible_item(db, user.id, payload.item_id)
-            domain.accessible_item(db, assignee, payload.item_id)
-        reminder = Reminder(**payload.model_dump(exclude={"assignee_id"}), creator_id=user.id, assignee_id=assignee)
-        db.add(reminder)
-        db.commit()
-        return {"id": reminder.id}
+        from .butler_actions import create_reminder
+        return create_reminder(db,user.id,payload)
 
     @app.post("/api/reminders/{reminder_id}/complete")
     def complete_reminder(reminder_id: str, user=Depends(current_user), db=Depends(db_session)):
         reminder = domain.require(db.get(Reminder, reminder_id))
-        if user.id not in {reminder.creator_id, reminder.assignee_id}:
-            raise domain.DomainError("没有找到这项提醒", 404)
-        reminder.completed = True
-        db.commit()
+        from .api_models import ReminderFeedback
+        interactions.reminder_feedback(db, user.id, reminder_id,
+            ReminderFeedback(expected_version=reminder.version, action="complete"))
         return {"status": "user_reported_complete"}
 
     @app.get("/api/sources")
@@ -439,9 +503,44 @@ def create_app(settings=None, model_factory=None):
         return [{"id": row.id, "title": row.title, "url": row.url, "item_id": row.item_id, "fetched_at": row.fetched_at, "page_count": len(row.pages)}
                 for row in db.scalars(select(SourceRecord).where(SourceRecord.owner_id == user.id))]
 
+    from .interaction_routes import register_interactions
+    register_interactions(app, current_user, db_session)
+    from .butler_actions import register_routes as register_butler_routes
+    register_butler_routes(app,current_user,db_session,settings)
+    from .avatar_images import register_routes as register_avatar_images
+    register_avatar_images(app,current_user,db_session,settings)
+    from .earbuds import register_routes as register_earbud_routes
+    register_earbud_routes(app,current_user,db_session,settings)
+    from .coding_workbench import register_routes as register_coding_workbench
+    register_coding_workbench(app,current_user,db_session,settings)
+    from .community_reference_routes import register_reference_routes
+    register_reference_routes(app,current_user,sessions,runner)
+    from .photo_matching_routes import register_photo_matching
+    register_photo_matching(app, current_user, settings, sessions)
+
+    @app.get("/api/community/bilibili/session", response_model=CommunitySessionView)
+    async def community_status(user=Depends(current_user)):
+        return await runner.communities.status(user.id)
+
+    @app.post("/api/community/bilibili/session", response_model=CommunitySessionView)
+    async def community_start(user=Depends(current_user)):
+        return await runner.communities.start(user.id)
+
+    @app.delete("/api/community/bilibili/session", response_model=CommunitySessionView)
+    async def community_close(user=Depends(current_user)):
+        await runner.communities.close(user.id)
+        return await runner.communities.status(user.id)
+    from .teaching_diagram import register_diagrams
+    from .camera_guidance import register_camera
+    from .lesson_assets import register_pictures
+    register_diagrams(app,current_user,db_session,settings)
+    register_camera(app,current_user,db_session,settings)
+    register_pictures(app,current_user,db_session,settings)
     dist = ROOT / "frontend" / "dist"
     if (dist / "assets").exists():
-        app.mount("/assets", StaticFiles(directory=dist / "assets"), name="frontend_assets")
+        app.mount("/assets", FrontendStaticFiles(directory=dist / "assets"), name="frontend_assets")
+    if (dist / "illustrations").exists():
+        app.mount("/illustrations", StaticFiles(directory=dist / "illustrations"), name="illustrations")
 
     @app.get("/", include_in_schema=False)
     def index():

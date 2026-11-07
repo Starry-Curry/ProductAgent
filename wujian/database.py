@@ -40,6 +40,7 @@ class User(Base):
     username: Mapped[str] = mapped_column(String, unique=True)
     display_name: Mapped[str] = mapped_column(String)
     password_hash: Mapped[str] = mapped_column(Text)
+    preferences: Mapped[dict] = mapped_column(JSON, default=dict)
 
 
 class ProductRecord(Base):
@@ -102,10 +103,13 @@ class ExperienceRecord(Base):
     item_ids: Mapped[list] = mapped_column(JSON, default=list)
     item_labels: Mapped[dict] = mapped_column(JSON, default=dict)
     photo_ids: Mapped[list] = mapped_column(JSON, default=list)
-    occurred_on: Mapped[str] = mapped_column(String)
+    occurred_on: Mapped[str | None] = mapped_column(String, nullable=True)
     origin_id: Mapped[str | None] = mapped_column(String, nullable=True)
     provenance: Mapped[dict] = mapped_column(JSON, default=dict)
     created_at: Mapped[str] = mapped_column(String, default=now)
+    version: Mapped[int] = mapped_column(Integer, default=1)
+    allow_ai: Mapped[bool] = mapped_column(Boolean, default=False)
+    household_id: Mapped[str | None] = mapped_column(ForeignKey("households.id"), nullable=True, index=True)
 
 
 class Memory(Base):
@@ -199,6 +203,7 @@ class Conversation(Base):
     context_revision: Mapped[int] = mapped_column(Integer, default=0)
     reset_after: Mapped[str] = mapped_column(String, default="")
     updated_at: Mapped[str] = mapped_column(String, default=now)
+    entry_context: Mapped[dict] = mapped_column(JSON, default=dict)
 
 
 class ChatMessage(Base):
@@ -209,6 +214,7 @@ class ChatMessage(Base):
     text: Mapped[str] = mapped_column(Text)
     run_id: Mapped[str | None] = mapped_column(String, nullable=True)
     photo_ids: Mapped[list] = mapped_column(JSON, default=list)
+    recorded_experiences: Mapped[dict] = mapped_column(JSON, default=dict, server_default="{}")
     created_at: Mapped[str] = mapped_column(String, default=now)
 
 
@@ -258,6 +264,58 @@ class Reminder(Base):
     title: Mapped[str] = mapped_column(String)
     due_at: Mapped[str] = mapped_column(String)
     completed: Mapped[bool] = mapped_column(Boolean, default=False)
+    status: Mapped[str] = mapped_column(String, default="pending")
+    version: Mapped[int] = mapped_column(Integer, default=1)
+    feedback: Mapped[list] = mapped_column(JSON, default=list)
+    household_id: Mapped[str | None] = mapped_column(ForeignKey("households.id"), nullable=True)
+
+
+class Household(Base):
+    __tablename__ = "households"
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=uid)
+    name: Mapped[str] = mapped_column(String)
+    creator_id: Mapped[str] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[str] = mapped_column(String, default=now)
+
+
+class HouseholdMember(Base):
+    __tablename__ = "household_members"
+    household_id: Mapped[str] = mapped_column(ForeignKey("households.id"), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    status: Mapped[str] = mapped_column(String, default="invited")
+    role: Mapped[str] = mapped_column(String, default="member")
+
+
+class HouseholdItem(Base):
+    __tablename__ = "household_items"
+    household_id: Mapped[str] = mapped_column(ForeignKey("households.id"), primary_key=True)
+    item_id: Mapped[str] = mapped_column(ForeignKey("items.id"), primary_key=True)
+    shared_by: Mapped[str] = mapped_column(ForeignKey("users.id"))
+
+
+class Wish(Base):
+    __tablename__ = "wishes"
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=uid)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    title: Mapped[str] = mapped_column(String)
+    note: Mapped[str] = mapped_column(Text, default="")
+    url: Mapped[str] = mapped_column(Text, default="")
+    visible_to_friends: Mapped[bool] = mapped_column(Boolean, default=False)
+    version: Mapped[int] = mapped_column(Integer, default=1)
+    created_at: Mapped[str] = mapped_column(String, default=now)
+
+
+class TaskParticipant(Base):
+    __tablename__ = "task_participants"
+    task_id: Mapped[str] = mapped_column(ForeignKey("tasks.id"), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    status: Mapped[str] = mapped_column(String, default="invited")
+
+
+class ExperienceShare(Base):
+    __tablename__ = "experience_shares"
+    experience_id: Mapped[str] = mapped_column(ForeignKey("experiences.id", ondelete="CASCADE"), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
 
 
 def make_database(settings):

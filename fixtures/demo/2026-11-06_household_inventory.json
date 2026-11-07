@@ -1,0 +1,858 @@
+{
+  "schema_version": "1.0",
+  "dataset_kind": "development_simulation",
+  "physical_devices_available": false,
+  "photo_notice": "所有新增商品使用对应国内型号的官方真实产品照片，拥有关系和位置为模拟。图片仅本地演示下载，不随源码发布；不是用户实拍，来源保留于内部元数据，界面不加角标。",
+  "items": [
+    {
+      "key": "precision",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/trixig-ti-ke-xi-25-jian-tao-jing-mi-luo-si-dao-zu-he__1223004_pe914746_s5.jpg",
+      "identity_check": "货号 505.680.90 宜家服务 商品详情 商品描述 这款精密螺丝刀套件非常适合修理手表、眼镜、玩具和小型电子产品。 螺丝刀的把手配有一个可旋转的顶部，由至少50%的再生聚丙烯塑料制成。 储物盒带有磁性，可将钻头固定在原位。 更换钻头非",
+      "item": {
+        "name": "精密螺丝刀套装",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "TRIXIG 缇克西 25件套精密螺丝刀组合 ",
+          "model": "505.680.90",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/50568090/"
+          ]
+        },
+        "description": "25件套精密螺丝刀组合，适合手表、眼镜、玩具和小型电子产品的螺丝作业；配旋转顶部把手和收纳盒。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "玄关工具柜",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "tape-measure",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/trixig-ti-ke-xi-juan-chi__1223631_pe914778_s5.jpg",
+      "identity_check": "货号 805.642.03 宜家服务 商品详情 商品描述 仅供家庭使用，不用于商业和专业用途。 备一把卷尺总不会错，可以帮助你准确把握尺寸。 形状设计符合人体工程学，外壳经过橡胶处理，在测量时便于抓稳。 耐用的钢卷尺，具有ABS塑料外壳，外",
+      "item": {
+        "name": "3米卷尺",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "TRIXIG 缇克西 卷尺 ",
+          "model": "805.642.03",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/80564203/"
+          ]
+        },
+        "description": "3米钢卷尺，带橡胶处理外壳，便于家庭测量家具、空间和物件尺寸；官网标明不用于商业和专业用途。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "玄关工具柜",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "level",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/trixig-ti-ke-xi-shui-ping-yi__1223627_pe914783_s5.jpg",
+      "identity_check": "货号 705.637.27 宜家服务 商品详情 商品描述 水平仪可帮助你正确安装搁架或者挂画。 工具箱中的必备品，适合与TRIXIG 缇克西 系列的其他工具搭配使用，助你在家轻松完成DIY小项目。 产地见包装 小贴士 此水平仪配有1个磁性连",
+      "item": {
+        "name": "水平仪",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "TRIXIG 缇克西 水平仪 ",
+          "model": "705.637.27",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/70563727/"
+          ]
+        },
+        "description": "用于家庭安装搁架、挂画时检查水平；可配合其他工具进行家居DIY。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "玄关工具柜",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "cloth",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/trixig-ti-ke-xi-qing-ji-mo-bu__1394096_pe966396_s5.jpg",
+      "identity_check": "货号 505.811.00 宜家服务 商品详情 商品描述 这款清洁抹布由纤维素和棉制成，具有良好的吸水性，非常适合清洁各种类型的表面， 而且不会留下任何划痕。 有了这款TRIXIG 缇克西 系列抹布，你就能轻松清洁家具和各种物品。 产地见包",
+      "item": {
+        "name": "清洁抹布",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "TRIXIG 缇克西 清洁抹布 ",
+          "model": "505.811.00",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/50581100/"
+          ]
+        },
+        "description": "18×20厘米擦拭布，用于清洁与擦拭家庭物件表面；使用前按待清洁材质选择清洁方式。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "厨房水槽下",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "sponge",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/pepprig-pei-pu-li-ge-bai-ji-bu-lu-se-lan-se-huang-se__1232066_pe916380_s5.jpg",
+      "identity_check": "货号 505.676.51 宜家服务 商品详情 商品描述 织物外罩可防止海绵擦破碎散落。 这款百洁布具有良好的吸水性能，可提供丰富的泡沫。 产地见包装 小贴士 设计师 IKEA of Sweden 商品尺寸和包装信息 商品尺寸 净含量/包装",
+      "item": {
+        "name": "百洁布",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "PEPPRIG 佩普里格 百洁布 绿色 蓝色/黄色",
+          "model": "505.676.51",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/50567651/"
+          ]
+        },
+        "description": "百洁海绵，用于厨房清洁；粗糙面与柔软面供不同清洁需要选择，不能据此认定所有材质均可擦洗。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "厨房水槽下",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "brush",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/rinnig-lin-ni-ge-xi-wan-shua-chun-huang-se-hui-bai__1267321_pe928463_s5.jpg",
+      "identity_check": "货号 005.658.57 宜家服务 商品详情 商品描述 刮刀边缘可轻松清除顽固食物残渣。 带有吸盘，可粘贴在水池、瓷砖等平面上。 揉擦、刷洗、清洗和擦拭——这就是RINNIG 林妮格 系列。 该系列包含你所需的全部产品，帮你处理各种污渍、",
+      "item": {
+        "name": "厨房洗碗刷",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "RINNIG 林妮格 洗碗刷 纯黄色/灰白",
+          "model": "005.658.57",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/00565857/"
+          ]
+        },
+        "description": "带吸盘底座的洗碗刷，用于清洁餐具、锅具；可在适合的平整表面吸附收纳。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "厨房水槽旁",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "bottle-brush",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/medelvag-mai-wo-ge-ping-shua-bai-se__0417863_pe575616_s5.jpg",
+      "identity_check": "货号 803.189.43 宜家服务 商品详情 商品描述 刷子带有柔软的刷毛和纤细的手柄，可经由狭窄瓶口伸到底部。 产地见包装 小贴士 商品尺寸和包装信息 商品尺寸 长度 43 厘米 包装信息 包装数量 1 高度 4 厘米 长度 43 厘米",
+      "item": {
+        "name": "长柄瓶刷",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "MEDELVÅG 麦沃格 瓶刷 白色",
+          "model": "803.189.43",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/80318943/"
+          ]
+        },
+        "description": "长柄瓶刷，用于清洁瓶子、花瓶等手不易伸入的容器。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "厨房水槽旁",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "gloves",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/rinnig-lin-ni-ge-qing-ji-shou-tao-chun-huang-se-hui-bai__1267316_pe928459_s5.jpg",
+      "identity_check": "货号 905.658.53 宜家服务 商品详情 商品描述 这款洗碗用手套的指套处带有小小的凸起，更方便抓握。 揉擦、刷洗、清洗和擦拭——这就是RINNIG 林妮格 系列。 该系列包含你所需的全部产品，帮你处理各种污渍、溢洒食物和液体洒溅，营",
+      "item": {
+        "name": "清洁手套",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "RINNIG 林妮格 清洁手套 纯黄色/灰白",
+          "model": "905.658.53",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/90565853/"
+          ]
+        },
+        "description": "中号家务清洁手套，用于清洁时隔开手部与污物；不是高温隔热手套。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "厨房水槽下",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "pegboard",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/skadis-si-kao-di-si-dong-dong-ban-bai-se__0710685_pe727711_s5.jpg",
+      "identity_check": "货号 803.208.04 企业服务 企业对公采购，提供一对一服务 宜家服务 商品详情 商品描述 根据需求，挑选 SKÅDIS 斯考迪斯 系列配件，打造个性储物组合。 搭配单独出售的连接器，可以将钉板固定到墙上、书桌上或者衣柜侧面。 使用一",
+      "item": {
+        "name": "书桌旁的洞洞板",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "SKÅDIS 斯考迪斯 洞洞板 白色",
+          "model": "803.208.04",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/80320804/"
+          ]
+        },
+        "description": "36×56厘米白色洞洞板，搭配SKÅDIS挂钩、夹子与容器整理小物件。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书房",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "peg-hooks",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/skadis-si-kao-di-si-gua-gou-bai-se__0710511_pe727606_s5.jpg",
+      "identity_check": "货号 303.356.19 企业服务 企业对公采购，提供一对一服务 宜家服务 商品详情 商品描述 单独使用时可挂放耳机或画笔，或搭配组合时则可收纳尺寸更长的物品，例如包装纸。 易于安装和移动，无需工具。 根据需求，挑选 SKÅDIS 斯考迪",
+      "item": {
+        "name": "洞洞板挂钩",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "SKÅDIS 斯考迪斯 挂钩 白色",
+          "model": "303.356.19",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/30335619/"
+          ]
+        },
+        "description": "SKÅDIS系列挂钩，用于在兼容洞洞板上悬挂日常小物。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书房",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "peg-cup",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/skadis-si-kao-di-si-sheng-ju-hei-se__1216154_pe912328_s5.jpg",
+      "identity_check": "货号 105.699.25 企业服务 企业对公采购，提供一对一服务 宜家服务 商品详情 商品描述 此产品可用于存放笔、刷子、牙刷或其他常用物品，近在手边，方便取用。 易于安装和移动，无需工具。 根据需求，挑选 SKÅDIS 斯考迪斯 系列配",
+      "item": {
+        "name": "洞洞板收纳筒",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "SKÅDIS 斯考迪斯 盛具 黑色",
+          "model": "105.699.25",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/10569925/"
+          ]
+        },
+        "description": "黑色洞洞板配套收纳容器，用于集中放置笔、刷子等小物；适配SKÅDIS系统。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书房",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "peg-cord",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/skadis-si-kao-di-si-dan-li-sheng-hei-se__1216164_pe912338_s5.jpg",
+      "identity_check": "货号 305.699.29 企业服务 企业对公采购，提供一对一服务 宜家服务 商品详情 商品描述 可用于悬挂照片、太阳镜或围巾。 易于安装和移动，无需工具。 根据需求，挑选 SKÅDIS 斯考迪斯 系列配件，打造个性储物组合。 有了SKÅD",
+      "item": {
+        "name": "洞洞板弹力绳",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "SKÅDIS 斯考迪斯 弹力绳 黑色",
+          "model": "305.699.29",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/30569929/"
+          ]
+        },
+        "description": "SKÅDIS弹力绳，搭配兼容洞洞板固定、整理小物件。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书房抽屉",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "jar",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/korken-kao-ken-fu-gai-kuan-kou-ping-tou-ming-bo-li__1152258_pe885224_s5.jpg",
+      "identity_check": "货号 105.413.71 宜家服务 商品详情 商品描述 非常适合用来存放酱菜、果脯或其他可口的天然食物，也可以用来存放意大利面、麦片、茶叶和美味饼干等干货。 橡胶垫圈和锁定装置使盖子密封防漏，为食物保鲜，锁住原味，不易漏气。 这款罐子采用",
+      "item": {
+        "name": "玻璃密封罐",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "KORKEN 考肯 附盖宽口瓶 透明玻璃",
+          "model": "105.413.71",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/10541371/"
+          ]
+        },
+        "description": "带盖透明玻璃罐，容量1.4升，可用于存放干货等食品并便于查看内容物；按官网说明清洁与使用。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "厨房置物架",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "bag",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/frakta-fu-la-ta-bian-zhi-dai-da-lan-se__0711230_pe728075_s5.jpg",
+      "identity_check": "货号 602.992.19 宜家服务 商品详情 商品描述 非常适合搬运大多数物品，从待洗衣物和采购商品到打算回收的干垃圾。 易于清洁，用湿布擦拭即可。 可折叠存放，占用空间少。 产地见包装 小贴士 设计师 K Hagberg/M Hagbe",
+      "item": {
+        "name": "蓝色大购物袋",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "FRAKTA 弗拉塔 编织袋，大 蓝色",
+          "model": "602.992.19",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/60299219/"
+          ]
+        },
+        "description": "71升蓝色大购物袋，尺寸55×37×35厘米，可用于搬运和临时归拢家庭物品。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "玄关柜",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "scissors",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/kvalificera-wa-lie-fu-jian-dao__0713054_pe729233_s5.jpg",
+      "identity_check": "货号 603.290.99 宜家服务 商品详情 商品描述 方便左手或右手使用 产地见包装 小贴士 设计师 Sarah Fager 商品尺寸和包装信息 商品尺寸 长度 16 厘米 包装信息 包装数量 1 高度 1 厘米 长度 16 厘米 净重",
+      "item": {
+        "name": "书桌剪刀",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "KVALIFICERA 瓦列夫 剪刀 ",
+          "model": "603.290.99",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/60329099/"
+          ]
+        },
+        "description": "KVALIFICERA剪刀，供家庭日常剪切使用；根据材料和刀刃实际状态判断是否适用。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书房抽屉",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "clips",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/skadis-si-kao-di-si-jia-zi-bai-se__0710524_pe727602_s5.jpg",
+      "identity_check": "货号 703.216.15 企业服务 企业对公采购，提供一对一服务 宜家服务 商品详情 商品描述 适合用于悬挂食谱、照片、图画或者待办事项清单，需要时随手可取。 易于安装和移动，无需工具。 适合摆放在门厅，用来存放信件；放在书桌边，收纳重要",
+      "item": {
+        "name": "洞洞板夹子",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "SKÅDIS 斯考迪斯 夹子 白色",
+          "model": "703.216.15",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/70321615/"
+          ]
+        },
+        "description": "SKÅDIS洞洞板夹子，可夹放便签、照片和纸张，让小件内容集中可见。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书房抽屉",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "toolkit",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/trixig-ti-ke-xi-gong-ju-15-jian-tao__1223642_pe914725_s5.jpg",
+      "identity_check": "货号 605.566.90 宜家服务 商品详情 商品描述 恰当的手工工具可以让家中的DIY活动更轻松，而这个盒子里的每件工具都有自己的作用。 这些工具的把手由柔软的合成橡胶制成，易于抓握，柄上有孔，便于悬挂。 这款手工工具的把手所用的材料至少50%都是再生聚丙",
+      "item": {
+        "name": "工具箱里的锤子钳子螺丝刀",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "TRIXIG 缇克西 工具15件套 ",
+          "model": "605.566.90",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/60556690/"
+          ]
+        },
+        "description": "15件套家庭工具组合，供常见安装、紧固与小修理；按螺丝和工件选择匹配工具。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "玄关工具柜",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "phone-stand",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/bergenes-bo-ge-ni-si-shou-ji-ping-ban-zhi-jia-zhu__0730164_pe737412_s5.jpg",
+      "identity_check": "货号 704.580.00 宜家服务 商品详情 商品描述 方便你用手机聊天或浏览时释放双手。 配有两种尺寸的插槽，适用于大部分的手机和平板电脑。 由竹子制成，这是一种经久耐用、易于护理的天然材质。 产地见包装 小贴士 适用于手机或尺寸达11寸的平板电脑。 设计",
+      "item": {
+        "name": "竹制手机支架",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "BERGENES 伯格尼斯 手机/平板支架 竹",
+          "model": "704.580.00",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/70458000/"
+          ]
+        },
+        "description": "竹制手机/平板支架，通过槽位支撑设备，便于桌面观看和阅读。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书桌",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "paint-brush",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/trixig-ti-ke-xi-you-qi-shua-3-jian-tao__0710247_pe727425_s5.jpg",
+      "identity_check": "货号 005.732.30 宜家服务 商品详情 商品描述 水性漆和油性漆均可使用该刷子。 厚实的刷毛可以蘸取更多油漆，这意味着可以减少去油漆罐里的蘸取次数。 聚酯刷毛可轻松实现均匀而光滑的涂刷效果。 产地见包装 小贴士 包含：1个刷子(宽25毫米)，1个刷子(",
+      "item": {
+        "name": "油漆刷三件套",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "TRIXIG 缇克西 油漆刷，3件套 ",
+          "model": "005.732.30",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/00573230/"
+          ]
+        },
+        "description": "3件套刷子，用于家庭涂刷和上漆；根据涂料与表面条件选择合适刷子。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "工具柜",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "pocket-stand",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.ikea.cn/cn/zh/images/products/yuppienalle-yu-pi-nai-shou-ji-zhi-jia-hui-se__1020769_pe831987_s5.jpg",
+      "identity_check": "货号 605.038.85 宜家服务 商品详情 商品描述 YUPPIENALLE 于皮奈 将手机支架和钥匙圈合二为一，不用时可折叠起来，方便携带，简单又实用。 带两个插槽设计，你可自由选择横向或竖向放置手机。 适用于大多数手机。 该产品由耐用材料制成，能出色满",
+      "item": {
+        "name": "口袋手机支架",
+        "kind": "standard_product",
+        "product": {
+          "brand": "IKEA 宜家",
+          "commercial_name": "YUPPIENALLE 于皮奈 手机支架 灰色",
+          "model": "605.038.85",
+          "market": "CN",
+          "edition": "宜家中国官网货号对应版本；不假定实物磨损、安装及承重情况",
+          "source_urls": [
+            "https://www.ikea.cn/cn/zh/p/60503885/"
+          ]
+        },
+        "description": "可折叠手机支架，便于携带并在桌面支撑手机观看。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书房抽屉",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "lamp",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://c1.mifile.cn/f/i/16/chain/mjsmartlamp-1s/specs-main.jpg",
+      "identity_check": "已联网核对小米中国官网参数页的产品名称和型号；产品图取自同名中国官方介绍页。",
+      "item": {
+        "name": "书桌上的米家台灯",
+        "kind": "standard_product",
+        "product": {
+          "brand": "米家",
+          "commercial_name": "米家台灯1S",
+          "model": "MJTD01SYL",
+          "market": "CN",
+          "edition": "中国官网所列版本；固件和实物现状未知",
+          "source_urls": [
+            "https://www.mi.com/mjsmartlamp-1s/specs",
+            "https://www.mi.com/mjsmartlamp-1s"
+          ]
+        },
+        "description": "米家台灯1S，型号MJTD01SYL，9瓦LED台灯；支持亮度与色温调节，可用于书桌阅读和工作照明。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书桌",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "kettle",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://c1.mifile.cn/f/i/16/chain/electric-kettle/kettle-01.jpg",
+      "identity_check": "已联网核对小米中国官网参数页的产品名称和型号；产品图取自同名中国官方介绍页。",
+      "item": {
+        "name": "厨房的电水壶",
+        "kind": "standard_product",
+        "product": {
+          "brand": "米家",
+          "commercial_name": "米家电水壶",
+          "model": "MJDSH01YM",
+          "market": "CN",
+          "edition": "中国官网所列版本；固件和实物现状未知",
+          "source_urls": [
+            "https://www.mi.com/electric-kettle/specs",
+            "https://www.mi.com/electric-kettle"
+          ]
+        },
+        "description": "米家电水壶，型号MJDSH01YM，容量1.5升、额定功率1800瓦，用于烧开饮用水；不假定具有恒温保温功能。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "厨房",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "fan",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://i1.mifile.cn/f/i/16/chain/airfan1x/airfan1x-01.jpg",
+      "identity_check": "已联网核对小米中国官网参数页的产品名称和型号；产品图取自同名中国官方介绍页。",
+      "item": {
+        "name": "客厅的落地扇",
+        "kind": "standard_product",
+        "product": {
+          "brand": "米家",
+          "commercial_name": "米家直流变频落地扇1X",
+          "model": "BPLDS01DM",
+          "market": "CN",
+          "edition": "中国官网所列版本；固件和实物现状未知",
+          "source_urls": [
+            "https://www.mi.com/airfan1x/specs",
+            "https://www.mi.com/airfan1x"
+          ]
+        },
+        "description": "米家直流变频落地扇1X，型号BPLDS01DM，用于室内送风；本条不是后来的1X升级版。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "客厅",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "powerstrip",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://i1.mifile.cn/f/i/16/chain/powerstrip/specs-01.jpg",
+      "identity_check": "已联网核对小米中国官网参数页的产品名称和型号；产品图取自同名中国官方介绍页。",
+      "item": {
+        "name": "书桌下的插线板",
+        "kind": "standard_product",
+        "product": {
+          "brand": "小米",
+          "commercial_name": "小米插线板USB版",
+          "model": "XMCXB01QM",
+          "market": "CN",
+          "edition": "中国官网所列版本；固件和实物现状未知",
+          "source_urls": [
+            "https://www.mi.com/powerstrip/techspecs",
+            "https://www.mi.com/powerstrip"
+          ]
+        },
+        "description": "小米USB插线板，型号XMCXB01QM，集成3个交流插孔及3个USB口，供家庭设备供电与USB充电；总负载须遵守2500瓦/10安限制。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书桌下",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "headphones",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://www.sonystyle.com.cn/content/dam/sonystyle/products/headphone/wh_1000xm5/feature/WH_1000M5_0915_01.jpg",
+      "identity_check": "索尼中国商城WH-1000XM5玫瑰灰页面；不推断固件、个人实际颜色或设备连接。",
+      "item": {
+        "name": "我的索尼降噪耳机",
+        "product": {
+          "brand": "Sony 索尼",
+          "commercial_name": "WH-1000XM5 无线降噪耳机",
+          "model": "WH-1000XM5",
+          "market": "CN",
+          "edition": "中国大陆销售款，玫瑰灰；固件未知",
+          "source_urls": [
+            "https://www.sonystyle.com.cn/products/headphone/wh_1000xm5/wh_1000xm5_r_feature.html",
+            "https://helpguide.sony.net/mdr/wh1000xm5/v1/zh-cn/print.pdf"
+          ]
+        },
+        "description": "索尼WH-1000XM5头戴式无线降噪耳机，用于蓝牙听音、通话与降噪；本条为国内官方页面可查型号，实际固件和配对状态未知。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书房",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "printer",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://eposs.epson.com.cn/EPSON/assets/resource/Images/Product/l-all-in-one/L3256/400x330.png",
+      "identity_check": "爱普生中国Epson L3256国内产品页及官方服务页公开接口返回准确产品名与对应型号照片。",
+      "item": {
+        "name": "家里的打印机",
+        "kind": "standard_product",
+        "product": {
+          "brand": "Epson 爱普生",
+          "commercial_name": "Epson L3256 A4全新彩色无线多功能一体机",
+          "model": "L3256",
+          "market": "CN",
+          "edition": "中国大陆产品；固件、网络和耗材状态未知",
+          "source_urls": [
+            "https://www.epson.com.cn/products/l-all-in-ones/l3256/",
+            "https://www.epson.com.cn/services/supportproduct.html?p=638cd89e3c6b49afb2f51b1b25c765ac"
+          ]
+        },
+        "description": "爱普生L3256墨仓式一体机，支持打印、复印和扫描，并可通过Wi-Fi或Wi-Fi Direct连接；实际墨水、纸张和网络状态未知。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "书房",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "air-purifier",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://c1.mifile.cn/f/i/16/chain/air2s/mj-air2s-04.jpg",
+      "identity_check": "小米中国官方产品/参数页核对米家空气净化器2S；产品型号AC-M4-AA。",
+      "item": {
+        "name": "米家空气净化器2S",
+        "kind": "standard_product",
+        "product": {
+          "brand": "小米 米家",
+          "commercial_name": "小米米家空气净化器2S",
+          "model": "AC-M4-AA",
+          "market": "CN",
+          "edition": "国内官网可查对应型号；不是当前在售状态或实物固件的声明",
+          "source_urls": [
+            "https://www.mi.com/air2s",
+            "https://www.mi.com/air2s/specs"
+          ]
+        },
+        "description": "用于室内颗粒物过滤，带空气质量显示；官方颗粒物CADR为310m³/h，适用面积21—37平方米，额定功率29瓦。滤芯状况和实际室内空气效果需要另行观察。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "客厅",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "projector",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://c1.mifile.cn/f/i/16/chain/projection-youth/projector-01.jpg",
+      "identity_check": "小米中国官方产品/参数页核对米家投影仪青春版；产品型号MJJGTYDS02FM。",
+      "item": {
+        "name": "米家投影仪青春版",
+        "kind": "standard_product",
+        "product": {
+          "brand": "小米 米家",
+          "commercial_name": "米家投影仪 青春版",
+          "model": "MJJGTYDS02FM",
+          "market": "CN",
+          "edition": "国内官网可查对应型号；不是当前在售状态或实物固件的声明",
+          "source_urls": [
+            "https://www.mi.com/projection-youth",
+            "https://www.mi.com/projection-youth/specs"
+          ]
+        },
+        "description": "用于将影音画面投到合适墙面或幕布，标准分辨率1080P，支持自动对焦和垂直梯形校正；官方推荐画面60—120英寸。系统版本、已装应用和当前连接未核验。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "客厅影音柜",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "smart-speaker",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://i1.mifile.cn/f/i/16/chain/aispeaker-hd/specs-01.jpg",
+      "identity_check": "小米中国官方产品/参数页核对小米小爱音箱HD；产品型号XMYX01JY。",
+      "item": {
+        "name": "小米小爱音箱HD",
+        "kind": "standard_product",
+        "product": {
+          "brand": "小米",
+          "commercial_name": "小米小爱音箱 HD",
+          "model": "XMYX01JY",
+          "market": "CN",
+          "edition": "国内官网可查对应型号；不是当前在售状态或实物固件的声明",
+          "source_urls": [
+            "https://www.mi.com/aispeaker-hd",
+            "https://www.mi.com/aispeaker-hd/specs"
+          ]
+        },
+        "description": "用于音乐播放与语音交互，支持2.4GHz/5GHz Wi-Fi及蓝牙4.1，带6个麦克风与音量、播放/暂停、麦克风按键；实际联网、唤醒和账号状态未核验。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "客厅边柜",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    },
+    {
+      "key": "robot-vacuum",
+      "identity_verified": true,
+      "verified_on": "2026-11-06",
+      "image_url": "https://c1.mifile.cn/f/i/16/chain/roomrobot/mj-specs-01.jpg",
+      "identity_check": "小米中国官方产品/参数页核对米家扫地机器人；产品型号SDJQR01RR。型号另由石头官方米家扫地机器人中文说明书核对。",
+      "item": {
+        "name": "米家扫地机器人",
+        "kind": "standard_product",
+        "product": {
+          "brand": "小米 米家",
+          "commercial_name": "米家扫地机器人（原版）",
+          "model": "SDJQR01RR",
+          "market": "CN",
+          "edition": "国内官网可查对应型号；不是当前在售状态或实物固件的声明",
+          "source_urls": [
+            "https://www.mi.com/roomrobot",
+            "https://www.mi.com/roomrobot/specs",
+            "https://files.roborock.com/uploadImages/images/upload/File/米家扫地机器人使用说明书1020.pdf"
+          ]
+        },
+        "description": "用于家居地面吸尘清扫，支持Wi-Fi连接、回充和定时清扫；官方参数为5200mAh电池、55瓦额定功率。不是1S或扫拖一体机，不假定已有地图、固件或清扫任务结果。 本条拥有关系和位置为演示模拟，实物现状未核验。",
+        "state": {
+          "location": "客厅充电区",
+          "condition": "unknown",
+          "availability": "available",
+          "quantity": 1
+        }
+      }
+    }
+  ]
+}

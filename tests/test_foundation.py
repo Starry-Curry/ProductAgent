@@ -4,10 +4,12 @@ import asyncio
 import json
 import tempfile
 import unittest
+from contextlib import ExitStack
 from pathlib import Path
 
 from alembic import command
 from alembic.config import Config
+from alembic.script import ScriptDirectory
 from sqlalchemy import create_engine, inspect, text
 
 from wujian import domain, foundation
@@ -152,6 +154,26 @@ class FoundationTests(unittest.TestCase):
                     source.id,
                     "网上没有这段原话",
                 )
+
+    def test_visual_inference_retains_its_actual_source_without_becoming_verified_knowledge(self):
+        with self.sessions() as db:
+            observed=SourceRecord(owner_id=self.owner,origin="video_frame_sample",title="夹子局部画面（模拟）",
+                url="https://www.bilibili.com/video/BV1pa4y1B7f8/",content='{"frames":[]}',pages=[])
+            foreign=SourceRecord(owner_id=self.friend,title="朋友私有资料",url="https://example.invalid/source",content="private")
+            db.add_all([observed,foreign]);db.commit()
+            def save(source_id):
+                return foundation.save_claim(db,self.owner,"synthetic-user-message","item_demo_lamp",
+                    "画面中的夹子可能用金属手柄作连接，具体扣法尚不清楚。",
+                    {"kind":"case","unknowns":["没有看到完整连接动作"]},"inference","item",source_id)
+            claim=save(observed.id)
+            self.assertEqual(claim["source_id"],observed.id)
+            self.assertEqual(claim["basis"],"inference")
+            self.assertEqual(claim["status"],"provisional")
+            self.assertEqual(save(observed.id)["id"],claim["id"])
+            with self.assertRaises(domain.DomainError):
+                save(foreign.id)
+            with self.assertRaises(domain.DomainError):
+                save("not-an-observed-source")
 
     def test_continuing_task_keeps_actual_feedback_and_prevents_old_plan_overwrite(
         self,
@@ -458,10 +480,12 @@ class FoundationTests(unittest.TestCase):
 
 class MigrationTests(unittest.TestCase):
     def test_known_legacy_database_keeps_item_identity_profiles_and_user_memories(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory() as directory, ExitStack() as resources:
             url = "sqlite:///" + (Path(directory) / "legacy.sqlite3").as_posix()
             engine = create_engine(url)
+            resources.callback(engine.dispose)
             config = Config(str(ROOT / "alembic.ini"))
+            head = ScriptDirectory.from_config(config).get_current_head()
             spec = {
                 "brand": "Sony 索尼",
                 "model": "WH-CH720N",
@@ -497,6 +521,7 @@ class MigrationTests(unittest.TestCase):
                 connection.commit()
             engine.dispose()
             migrated, sessions = make_database(Settings(database_url=url))
+            resources.callback(migrated.dispose)
             with sessions() as db:
                 item = domain.item_view(
                     db, "owner", domain.accessible_item(db, "owner", "headphones")
@@ -515,12 +540,43 @@ class MigrationTests(unittest.TestCase):
                     connection.execute(
                         text("SELECT version_num FROM alembic_version")
                     ).scalar(),
-                    "0005",
+                    head,
                 )
                 self.assertFalse(
                     connection.exec_driver_sql("PRAGMA foreign_key_check").fetchall()
                 )
             migrated.dispose()
+            backups = list((Path(directory) / "backups").glob(f"before-unversioned-to-{head}-*.sqlite3"))
+            self.assertEqual(len(backups), 1)
+            import sqlite3
+            from contextlib import closing
+            with closing(sqlite3.connect(backups[0])) as backup:
+                self.assertEqual(backup.execute("SELECT version FROM items WHERE id='headphones'").fetchone()[0], 3)
+                self.assertEqual(backup.execute("PRAGMA integrity_check").fetchone()[0], "ok")
+
+    def test_0005_migration_preserves_story_use_and_completed_reminders(self):
+        with tempfile.TemporaryDirectory() as directory, ExitStack() as resources:
+            url = "sqlite:///" + (Path(directory) / "prior.sqlite3").as_posix()
+            engine = create_engine(url)
+            resources.callback(engine.dispose)
+            config = Config(str(ROOT / "alembic.ini"))
+            head = ScriptDirectory.from_config(config).get_current_head()
+            with engine.connect() as connection:
+                config.attributes["connection"] = connection
+                command.upgrade(config, "0005")
+                connection.execute(text("INSERT INTO users VALUES ('owner','lin','小林','test-local-hash')"))
+                connection.execute(text("INSERT INTO experiences(id,creator_id,title,text,item_ids,item_labels,photo_ids,occurred_on,provenance,created_at) VALUES ('story','owner','旧故事','原文','[]','{}','[]','2026-01-01','{}','2026-01-01')"))
+                connection.execute(text("INSERT INTO reminders(id,creator_id,assignee_id,title,due_at,completed) VALUES ('care','owner','owner','处理完的事','2026-01-01',1)"))
+                connection.commit()
+            engine.dispose()
+            migrated, sessions = make_database(Settings(database_url=url))
+            resources.callback(migrated.dispose)
+            with migrated.connect() as connection:
+                self.assertEqual(connection.execute(text("SELECT allow_ai,version,text FROM experiences WHERE id='story'")).one(), (1,1,'原文'))
+                self.assertEqual(connection.execute(text("SELECT completed,status FROM reminders WHERE id='care'")).one(), (1,'completed'))
+                self.assertFalse(connection.exec_driver_sql("PRAGMA foreign_key_check").fetchall())
+            migrated.dispose()
+            self.assertEqual(len(list((Path(directory) / 'backups').glob(f'before-0005-to-{head}-*.sqlite3'))), 1)
 
 
 if __name__ == "__main__":

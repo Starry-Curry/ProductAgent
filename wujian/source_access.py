@@ -8,10 +8,14 @@ def readable_source(db, user_id, source_id):
     source = domain.require(db.get(SourceRecord, source_id))
     if source.owner_id == user_id:
         return source
-    if source.item_id:
+    if source.item_id and source.origin == "public_web":
         try:
             domain.accessible_item(db, user_id, source.item_id)
-            return source
+            from .continuity import public_product_sources
+            item = db.get(ItemRecord, source.item_id)
+            if item and any(candidate.id == source.id for candidate, _ in
+                            public_product_sources(db, source.owner_id, item)):
+                return source
         except domain.DomainError:
             pass
     if source.origin == "public_web":

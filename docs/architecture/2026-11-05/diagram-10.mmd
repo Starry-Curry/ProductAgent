@@ -1,0 +1,22 @@
+flowchart TB
+    UI["DeviceConnection：登记控制入口"] --> CONNECT["GET devices/status?connect=true"]
+    CONNECT --> MCP["REABridge.connect：Node rea.mjs mcp；列工具目录"]
+    UI --> BIND["POST items/id/device：拥有者校验"]
+    BIND --> KIND{"DeviceBind.kind"}
+    KIND -->|browser_cdp| CDP["本机HTTP CDP地址：localhost或环回IP + 明确端口"]
+    KIND -->|javascript_artifact| JS["授权根目录内JS/MJS/CJS/ASAR或目录"]
+    CDP --> EXP["explore_device或POST explore"]
+    JS --> EXP
+    EXP --> CONTEXT["device_context：物品、知识、当前版本、最近观察"]
+    CONTEXT --> CALL["调用REA：list_browser_targets 或 analyze_javascript_application"]
+    MCP --> CALL
+    CALL --> OBS["DeviceObservation：工具参数、结果与item_context"]
+    CDP --> PROP["POST proposals：明确target_id、start_url、actions"]
+    PROP --> P["phase=proposed；存为capture_browser_scenario请求"]
+    P --> EXEC["用户显式POST operation/execute"]
+    EXEC --> CAS["归属复核；条件更新executing，防并发重复执行"]
+    CAS --> CAP["调用REA capture_browser_scenario"]
+    MCP --> CAP
+    CAP -->|返回工具证据| OK["phase=observed；保存result"]
+    CAP -->|异常或中断| UNKNOWN["phase=outcome_unknown；不自动重试"]
+    OK -.-> REAL["待补：目标屏幕实际效果确认与恢复流程"]

@@ -1,0 +1,117 @@
+{
+  "schema": "wujian-independent-acceptance/1",
+  "prepared_on": "2026-11-06",
+  "scope": "两组真实应用指导；人物、持有关系、屏幕回报是声明的模拟情境，商品为真实国内型号。只提供用户事实，不预填来源、协议、路径、答案。TCL为已有失败开发回归；海信为本作者新冻结case，最终须另由新审查者验收。",
+  "cases": [
+    {
+      "id": "completion-rea-tcl-regression",
+      "title": "国内TCL电视的推广研究，未接设备且固件未知",
+      "fixture": {
+        "fictional_user": "阿川",
+        "fictional_ownership": true,
+        "items": [
+          {
+            "key": "television",
+            "name": "家里的TCL电视",
+            "product": {
+              "brand": "TCL",
+              "model": "55V8E",
+              "market": "CN",
+              "firmware_version": null
+            },
+            "description": "模拟拥有中国大陆版TCL 55V8E。用户尚未提供系统版本，也未确认推广出现在哪个具体启动阶段或应用。",
+            "state": {
+              "data_origin": "synthetic_ownership_real_domestic_model",
+              "firmware_version_status": "not_reported",
+              "device_connection_status": "not_connected"
+            }
+          },
+          {
+            "key": "computer",
+            "name": "自己的Windows电脑",
+            "kind": "nonstandard_object",
+            "description": "模拟持有Windows电脑，未与电视建立调试或其他控制连接。"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "index": 1,
+          "conversation": "new",
+          "entry": {
+            "intent": "creative",
+            "focus_item_keys": [
+              "television"
+            ]
+          },
+          "text": "家里这台TCL 55V8E，一开机进到首页总能见到些推广。我想用Windows电脑自己研究能不能弄清爽点。你不用连我家电视，先帮我把公开资料看一看，再带我走，系统版本我还没找过。"
+        },
+        {
+          "index": 2,
+          "conversation": "continue",
+          "text": "我怕弄错，今天先别动设置。刚才说的办法，确定我这台能用吗？遥控器拿来了，先带我看一处信息就行，别一下给我一堆命令。"
+        },
+        {
+          "index": 3,
+          "conversation": "continue",
+          "text": "我看清了，不是开机前那段视频，就是进首页以后的一排推广。我点进设置了，里面有通用和关于本机，现在只看信息，接下来点哪个？"
+        }
+      ]
+    },
+    {
+      "id": "completion-rea-hisense-fresh",
+      "title": "海信55E3F-Y国内型号，首页推广，普通菜单接续",
+      "fixture": {
+        "fictional_user": "阿宁",
+        "fictional_ownership": true,
+        "items": [
+          {
+            "key": "television",
+            "name": "客厅的海信电视",
+            "product": {
+              "brand": "海信",
+              "model": "55E3F-Y",
+              "market": "CN",
+              "firmware_version": null
+            },
+            "description": "模拟拥有国内海信55E3F-Y，系统版本未报告，没有与电脑建立控制连接。",
+            "state": {
+              "data_origin": "synthetic_ownership_real_domestic_model",
+              "device_connection_status": "not_connected",
+              "firmware_version_status": "not_reported"
+            }
+          },
+          {
+            "key": "computer",
+            "name": "书房的Windows电脑",
+            "kind": "nonstandard_object",
+            "description": "模拟拥有Windows电脑，未连接或调试电视。"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "index": 1,
+          "conversation": "new",
+          "entry": {
+            "intent": "creative",
+            "focus_item_keys": [
+              "television"
+            ]
+          },
+          "text": "我家海信55E3F-Y，进首页以后那些推荐有点烦，我想让它清爽点。你先自己找找型号资料和能参考的工具说明，别让我代你搜，也先别让我改设置或者连电脑。你能带我一步步弄清楚吗？"
+        },
+        {
+          "index": 2,
+          "conversation": "continue",
+          "text": "我拿遥控器打开普通设置了，看到通用、图像、声音，还有关于本机。今天只看信息，不动设置。下一步点哪个？"
+        },
+        {
+          "index": 3,
+          "conversation": "continue",
+          "text": "关于本机里有一长串软件版本号，我先不发图了。是不是找到版本就代表网上那个方法肯定能用？"
+        }
+      ]
+    }
+  ]
+}

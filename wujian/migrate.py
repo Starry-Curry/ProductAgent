@@ -12,6 +12,25 @@ def upgrade_database(engine):
     config.set_main_option("script_location", str(ROOT / "migrations"))
     with engine.connect() as connection:
         tables = set(inspect(connection).get_table_names())
+        if tables and engine.dialect.name == "sqlite" and engine.url.database not in {None, "", ":memory:"}:
+            from pathlib import Path
+            from datetime import datetime, timezone
+            import sqlite3
+            from alembic.script import ScriptDirectory
+            from sqlalchemy import text
+            current = connection.execute(text("SELECT version_num FROM alembic_version")).scalar() if "alembic_version" in tables else "unversioned"
+            target = ScriptDirectory.from_config(config).get_current_head()
+            connection.commit()
+            if current != target:
+                source = Path(engine.url.database).resolve()
+                folder = source.parent / "backups"
+                folder.mkdir(exist_ok=True)
+                stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S-%f")
+                backup = folder / f"before-{current}-to-{target}-{stamp}.sqlite3"
+                from contextlib import closing
+                with closing(sqlite3.connect(source.as_uri() + "?mode=ro", uri=True)) as reader:
+                    with closing(sqlite3.connect(backup)) as writer:
+                        reader.backup(writer)
         config.attributes["connection"] = connection
         if tables and "alembic_version" not in tables:
             # Only the exact known v0.2 layout may be adopted automatically.

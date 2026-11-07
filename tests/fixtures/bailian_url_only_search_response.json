@@ -1,0 +1,146 @@
+{
+  "fixture_note": "Retained public search response shape from independent 043850; discovery text is not original page evidence. No private conversation or provider credentials.",
+  "output": [
+    {
+      "action": {
+        "queries": [
+          "小米电视L55M5-AZ 屏保设置",
+          "小米电视L55M5-AZ ambient mode",
+          "小米电视L55M5-AZ 内置功能 屏保"
+        ],
+        "query": "小米电视L55M5-AZ 屏保设置",
+        "sources": [
+          {
+            "type": "url",
+            "url": "https://www.youtube.com/watch?v=hfAy9vpiqko"
+          },
+          {
+            "type": "url",
+            "url": "https://product.thethirdmedia.com/6406/param5585c84.html"
+          },
+          {
+            "type": "url",
+            "url": "https://detail.zol.com.cn/digital_tv/index1167402.shtml"
+          },
+          {
+            "type": "url",
+            "url": "https://www.mi.com/hk/support/faq/details/KA-17810/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.douyin.com/shipin/7337565672504969253"
+          },
+          {
+            "type": "url",
+            "url": "https://www.taobao.com/list/item/UUVoak11d3dBYllwNjd1VTRaVTRvQT09.htm"
+          },
+          {
+            "type": "url",
+            "url": "https://product.pcpop.com/parameter/010237096.html"
+          },
+          {
+            "type": "url",
+            "url": "https://www.znds.com/jc/waparticle/65164.html"
+          },
+          {
+            "type": "url",
+            "url": "https://m.sohu.com/n/498265566/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.mi.com/mitv4c/55/specs"
+          },
+          {
+            "type": "url",
+            "url": "https://www.mi.com/a/h/9819.html/1000"
+          },
+          {
+            "type": "url",
+            "url": "https://www.amazon.com/gp/help/customer/display.html?nodeId=G2XGAC3JW2FRVLRF"
+          },
+          {
+            "type": "url",
+            "url": "https://wap.zol.com.cn/ask/x_32079100.html"
+          },
+          {
+            "type": "url",
+            "url": "https://www.zhihu.com/question/275265847"
+          },
+          {
+            "type": "url",
+            "url": "https://www.mi.com/mitv5/55"
+          },
+          {
+            "type": "url",
+            "url": "https://www.jd.com/jiage/7377ac6e386ac67817e.html"
+          },
+          {
+            "type": "url",
+            "url": "https://www.suning.com/item/0000000000/12106872279.html"
+          },
+          {
+            "type": "url",
+            "url": "https://www.youtube.com/watch?v=7OuvzUPxVjU"
+          },
+          {
+            "type": "url",
+            "url": "https://www.mi.com/mitv3/70/miui"
+          },
+          {
+            "type": "url",
+            "url": "https://product.it168.com/detail/1164386.html"
+          },
+          {
+            "type": "url",
+            "url": "https://product.thethirdmedia.com/6406/param5585c84.html"
+          },
+          {
+            "type": "url",
+            "url": "https://product.it168.com/parameter/1164386.html"
+          },
+          {
+            "type": "url",
+            "url": "https://www.smzdm.com/p/104233625/"
+          },
+          {
+            "type": "url",
+            "url": "https://product.suning.com/0000000000/613789336.html"
+          },
+          {
+            "type": "url",
+            "url": "https://wap.zol.com.cn/ask/x_32079100.html"
+          },
+          {
+            "type": "url",
+            "url": "https://product.yesky.com/product/1081/1081299/param.shtml"
+          },
+          {
+            "type": "url",
+            "url": "https://www.youtube.com/watch?v=hfAy9vpiqko"
+          },
+          {
+            "type": "url",
+            "url": "https://product.it168.com/image/1164386.html"
+          }
+        ],
+        "type": "search"
+      },
+      "id": "msg_ed39e312-1f08-41ab-a9cb-b7402816723f",
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "text": "小米香港官网 - 小米電視如何設置屏保？\nhttps://www.mi.com/hk/support/faq/details/KA-17810/\n\nZNDS智能电视网 - 小米电视4A L55M5-AZ/L55M5-AD通过无U盘安装软件教程（含设置入口说明）\nhttps://www.znds.com/jc/waparticle/65164.html\n\nYouTube - What Happens When You Enable Ambient Mode on Xiaomi Google TV?\nhttps://www.youtube.com/watch?v=7OuvzUPxVjU\n\n中关村在线 - 小米L55M5-AZ 小米电视4C液晶电视技术参数\nhttps://product.thethirdmedia.com/6406/param5585c84.html",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_28962ffe-6acc-4ad4-a3e7-7fff9128caca",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+flowchart TB
+    subgraph CLIENT["浏览器进程：React / TypeScript / Vite构建"]
+        APP["App.tsx：页面状态、选中物品、会话、watchRun"]
+        CHAT["ChatPanel.tsx：输入与对话呈现"]
+        VIEW["Views.tsx：物品、经历、探索、家庭心意"]
+        EDIT["EditorDialogs.tsx：档案、经历、赠礼、事项"]
+        DEVUI["DeviceConnection.tsx：连接与先探索"]
+        HTTP["api.ts：fetch /api；App.tsx：EventSource"]
+        APP --> CHAT
+        APP --> VIEW
+        APP --> EDIT
+        APP --> DEVUI
+        APP --> HTTP
+        EDIT --> HTTP
+        DEVUI --> HTTP
+    end
+    subgraph PY["本机Python服务进程：FastAPI + Uvicorn"]
+        API["server.py：API路由、静态资源、SSE"]
+        AUTH["SessionMiddleware / current_user：当前身份"]
+        RUN["agent_runtime.py：AgentRunner与进程内asyncio任务"]
+        AS["AgentScope Agent：会话状态、工具循环、结构化最终输出"]
+        TOOL["make_tools：封闭当前user_id与message_id"]
+        DOM["domain.py：物品、经历、共享、赠礼、上下文失效"]
+        FND["foundation.py：知识、理解、状态、任务和反馈"]
+        WRITE["turns.py / learning.py：最终结果校验与提交"]
+        RET["retrieval.py：授权投影、哈希同步、ReMe搜索"]
+        DOC["knowledge.py：搜索、下载、解析、原页渲染"]
+        BR["devices.py：目标绑定、MCP生命周期、提案与执行"]
+        DBL["database.py / migrate.py：SQLAlchemy Session、Alembic"]
+        API --> AUTH
+        API --> DOM
+        API --> FND
+        API --> RUN
+        API --> BR
+        RUN --> AS
+        AS --> TOOL
+        AS --> WRITE
+        TOOL --> DOM
+        TOOL --> FND
+        TOOL --> RET
+        TOOL --> DOC
+        TOOL --> BR
+        WRITE --> DOM
+        WRITE --> FND
+        DOM --> DBL
+        FND --> DBL
+        RET --> DBL
+        DOC --> DBL
+        BR --> DBL
+    end
+    SQL[("SQLite：var/wujian.sqlite3；WAL / 外键 / 锁等待")]
+    FILE["本地文件：assets、retrieval投影、device-artifacts"]
+    CLOUD["百炼HTTPS：主模型、搜索、视觉、embedding"]
+    WEB["公开网站：原始HTML / PDF"]
+    NODE["Node子进程：REA 6.8.0 MCP stdio"]
+    TARGET["明确目标：本机CDP浏览器或授权JS软件包"]
+    HTTP -->|HTTP JSON / multipart / SSE| API
+    DBL --> SQL
+    DOC --> FILE
+    RET --> FILE
+    AS --> CLOUD
+    DOC --> CLOUD
+    RET --> CLOUD
+    DOC --> WEB
+    BR --> NODE
+    NODE --> TARGET

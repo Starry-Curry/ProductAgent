@@ -1,0 +1,102 @@
+erDiagram
+    users ||--o{ items : owns
+    products o|--o{ items : identifies
+    users ||--o{ item_profiles : personalizes
+    items ||--o{ item_profiles : has
+    users ||--o{ item_grants : receives
+    items ||--o{ item_grants : grants_read
+    users ||--o{ memories : understood_as
+    items o|--o{ memories : optional_scope
+    memories o|--o{ memories : supersedes
+    users ||--o{ knowledge_claims : owns_claim
+    products o|--o{ knowledge_claims : model_scope
+    items o|--o{ knowledge_claims : instance_scope
+    sources o|--o{ knowledge_claims : supports
+    users ||--o{ sources : retains
+    items o|--o{ sources : source_binding
+    users ||--o{ experiences : holds
+    users ||--o{ tasks : pursues
+    users ||--o{ assets : owns_file_record
+    users {
+        string id PK
+        string username UK
+        string display_name
+    }
+    item_profiles {
+        string user_id PK, FK
+        string item_id PK, FK
+        text description
+        json avatar
+    }
+    item_grants {
+        string item_id PK, FK
+        string user_id PK, FK
+    }
+    sources {
+        string id PK
+        string owner_id FK
+        string item_id FK
+        string origin
+        text url
+        text content
+        json pages
+        string asset_id
+    }
+    assets {
+        string id PK
+        string owner_id FK
+        text path
+        string media_type
+    }
+    products {
+        string id PK
+        json spec
+    }
+    items {
+        string id PK
+        string owner_id FK
+        string product_id FK
+        json identity_notes
+        json state
+        int version
+        bool archived
+    }
+    memories {
+        string id PK
+        string user_id FK
+        string item_id FK
+        string supersedes_id FK
+        text content
+        json attributes
+        string expires_at
+        bool active
+    }
+    knowledge_claims {
+        string id PK
+        string owner_id FK
+        string product_id FK
+        string item_id FK
+        string source_id FK
+        text content
+        json conditions
+        string basis
+        string status
+    }
+    experiences {
+        string id PK
+        string creator_id FK
+        json item_ids
+        json photo_ids
+        json provenance
+        string origin_id
+    }
+    tasks {
+        string id PK
+        string user_id FK
+        json item_ids
+        json constraints
+        json plan
+        json feedback
+        int version
+        string status
+    }

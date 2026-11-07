@@ -1,0 +1,22 @@
+{
+  "generator": "built-in image_gen",
+  "purpose": "Fictional demo memory covers, replaceable by user photographs. Not evidence of real events.",
+  "assets": [
+    {
+      "file": "memory-reading-v1.png",
+      "prompt": "Create a beautiful photorealistic landscape photograph for a warm Chinese personal memories app. A quiet lived-in reading corner at golden hour: a handmade cream ceramic mug with a tiny blue painted flower, a small smooth grey pebble resting on an open notebook with illegible handwritten lines, a faded concert ticket with NO readable text, a soft blue scarf draped over the chair, paperback books and a warm desk lamp. Natural tactile materials, candid film photography, warm white and muted blue grey palette, subtle grain, authentic emotional memory, not a product advertising arrangement. No people, no faces, no UI, no icons, no watermarks, no readable text. Full bleed 3:2 wide composition. This is an illustration of a fictional demo memory, not evidence of any real user event."
+    },
+    {
+      "file": "memory-gift-v1.png",
+      "prompt": "Photorealistic candid photograph for a personal memory journal: one hand-painted small sunflower picture on textured cream paper, a simple handwritten envelope with no legible words, a single fresh sunflower in a clear small vase next to a sunny apartment window. Gentle afternoon sunlight and soft shadows, warm white linen and muted blue-grey background, a tender gift to encourage a friend, authentic lived-in film photography, no illustration style, no cartoon, no UI, no readable writing, no watermark, 3:2 landscape. A fictional demo memory cover, not a record of a real person's life."
+    },
+    {
+      "file": "memory-sea-v1.png",
+      "prompt": "A photorealistic personal travel memory photograph, close view of a small smooth grey pebble picked up at a quiet Chinese seaside, resting on a weathered wooden bench beside a closed blue travel notebook. The empty beach and gentle pale blue sea are softly out of focus behind, early evening natural light, intimate nostalgic candid film photography, warm creamy highlights, muted blue grey and sand palette. No people, no written text, no icons or UI, no watermarks. Landscape 3:2. Fictional demo story illustration, not a real user photograph."
+    },
+    {
+      "file": "memory-desk-v1.png",
+      "prompt": "Photorealistic intimate memory-journal photograph of a small Chinese apartment study desk just tidied on a quiet weekend. A white perforated pegboard mounted above the desk with a few hanging scissors, a notebook and small organizers, below it a warm desk lamp and an open paperback, plenty of clean wooden desktop left empty for reading. A blue-grey fabric chair, soft late afternoon window light, tactile warm-white and muted blue-grey palette, candid natural film photography, emotionally calm and lived-in, not a furniture catalog or product photo. No people, no text, no UI, no icons, no watermark. Wide landscape 3:2. A fictional demo memory cover, not evidence of a real user's room."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+flowchart TD
+    FINAL["TurnResult，来自当前主Agent"] --> VALID["grounded_turn_schema：读取当前原话与可见对象"]
+    VALID --> MEM["memory_updates：add / replace / forget"]
+    VALID --> KNOW["knowledge_updates：capability / boundary / procedure / observation / case"]
+    VALID --> PLAN["continuation：目标、资源、约束、方案、反馈"]
+    MEM --> MC["检查当前用户原句、旧memory归属/有效性、可选item"]
+    MC --> MW["revise_memory 或逻辑遗忘；情境/期限/依据"]
+    KNOW --> KC["检查来源原句/行号、型号范围、实例报告"]
+    KC --> KW["save_claim：product或item范围；条件和来源"]
+    PLAN --> PC["检查资源ID、任务归属与expected_version、反馈原句"]
+    PC --> PW["task_feedback + save_task：条件更新版本"]
+    MW --> COMMIT["commit_result：T2同一事务提交认识与持续任务"]
+    KW --> COMMIT
+    PW --> COMMIT
+    VALID --> STORY["story_refs：核对获准经历ID"]
+    STORY --> QUOTE["程序拼接原文及作者；不由模型重写引文"]
+    QUOTE --> COMMIT
+    COMMIT --> RUN["Runner保存最终回答、消息与会话状态：T3"]
+    BAD1["已知缺口：同内容不同情境可能覆盖；同义改写可绕过遗忘"]
+    BAD2["已知缺口：旧成功反馈未绑定被尝试的方案版本"]
+    MW --> BAD1
+    PW --> BAD2

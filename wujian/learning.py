@@ -1,13 +1,14 @@
 """Evidence-grounded updates emitted by the main Agent's native final contract."""
 
 import re
+import unicodedata
 from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
 
 from . import domain, foundation
 from .database import ChatMessage, Conversation, Memory, SourceRecord
-from .evidence import locate_quote
+from .evidence import locate_quote, locate_user_quote
 
 
 class Applicability(BaseModel):
@@ -23,16 +24,19 @@ class Applicability(BaseModel):
 
 
 class KnowledgeUpdate(BaseModel):
-    item_id: str
+    item_id: str = Field(description="The actual physical ItemRecord id, NEVER product_id, source_id or a name; scope=product still uses the physical item id to resolve its model")
     kind: Literal["capability", "boundary", "procedure", "observation", "case"]
-    content: str = Field(min_length=1, max_length=4000)
+    content: str = Field(min_length=1, max_length=4000,
+        description="One narrowly scoped reusable claim actually supported by its quoted evidence. Do not bundle unrelated mechanisms/commands or upgrade a page description into observed steps. Put adaptations and unverified explanations in separate inference claims.")
     conditions: Applicability
-    basis: Literal["document", "user_report", "inference"]
-    scope: Literal["product", "item"]
-    source_id: str | None = None
+    basis: Literal["document", "user_report", "inference"] = Field(
+        description="document is the author's actual readable text with exact lines/quote. Interpretations of pictures or sampled frames are inference with the actual observation source_id, never document or proof of physical success. user_report is CURRENT user words only.")
+    scope: Literal["product", "item"] = Field(description="Use product ONLY when the retained original explicitly matches this physical item's exact model. Generic brand/tool/community examples belong to item with applicability unknown; source_model cannot establish compatibility by itself.")
+    source_id: str | None = Field(default=None,
+        description="Actually retained source for document evidence, or the source of a provisional visual interpretation/inference. Video frames use their derived sample source ID; observed images do not turn a model interpretation into a verified procedure.")
     source_quote: str = Field(
         default="",
-        description="Verbatim retained document or CURRENT user words, never a search summary",
+        description="For user_report copy CURRENT user words. For document prefer leaving this empty and give exact source_line_start/end from the numbered tool result; the program copies actual original evidence. Never paraphrase a source or copy a search summary.",
     )
     source_line_start: int | None = Field(
         default=None,
@@ -54,7 +58,8 @@ class KnowledgeUpdate(BaseModel):
 class MemoryUpdate(BaseModel):
     operation: Literal["add", "replace", "forget"]
     memory_id: str | None = None
-    content: str = Field(default="", max_length=2000)
+    content: str = Field(max_length=2000,
+        description="One understanding of the user supported by CURRENT user words, not YOUR proposed options, substitute materials or unaccepted next steps (keep those in continuation). A quote's presence does not support added assertions. Required for add/replace; empty only for forget.")
     item_id: str | None = None
     kind: Literal[
         "preference",
@@ -73,7 +78,8 @@ class MemoryUpdate(BaseModel):
         min_length=1,
         description="CURRENT user words supporting this change; never received stories or assistant guesses",
     )
-    expires_at: str | None = None
+    expires_at: str | None = Field(default=None,
+        description="Optional expiry of a temporary understanding: an ISO datetime with timezone offset strictly AFTER the current supplied time. Null for no expiry. Do not invent a year/date or store every passing mood.")
 
     @model_validator(mode="after")
     def require_new_understanding(self):
@@ -86,102 +92,199 @@ class MemoryUpdate(BaseModel):
 
 class Learning(BaseModel):
     knowledge_updates: list[KnowledgeUpdate] = Field(
+        default_factory=list,
         max_length=12,
-        description="New reusable capabilities, boundaries, procedures or cases learned this turn. Include useful evidence from documents actually read; empty when nothing was learned. A hypothesis stays inference.",
+        description="Optional narrowly verified reusable understanding, only when useful beyond the current answer. Reading a document does not require storing a claim. Omit uncertain/irrelevant learning and deliver the current step; retained sources remain available. A hypothesis stays inference.",
     )
     memory_updates: list[MemoryUpdate] = Field(
+        default_factory=list,
         max_length=12,
         description="Quiet changes to understanding THIS user. Compare with existing understanding before add/replace; do not save every message or infer permanent traits from temporary feelings. Empty when unnecessary.",
     )
 
 
 def normalized_model(value):
-    return re.sub(r"[^\w]", "", value).casefold()
+    return re.sub(r"[^\w]", "", unicodedata.normalize("NFKC", value)).casefold()
 
 
-def validate_learning(db, user_id, message_id, learning):
+def model_mentioned(model, *texts):
+    """Find a whole model label, allowing typography, not neighboring SKUs.
+
+    Chinese may sit next to an ASCII label. A label inside a larger ASCII
+    identifier (including a joined suffix) is not that model. Presence alone
+    still proves neither an assertion's meaning nor procedural applicability.
+    """
+    label = normalized_model(model)
+    if not label:
+        return False
+    joiners = "._-\u2010\u2011\u2012\u2013\u2014\u2015\u2212"
+    separators = re.escape(joiners)
+    pattern = re.compile(r"(?<![a-z0-9])" +
+        (r"[\s" + separators + r"]*").join(map(re.escape, label)) +
+        r"(?![a-z0-9]|[" + separators + r"]+[a-z0-9])")
+    for text in texts:
+        text = unicodedata.normalize("NFKC", text).casefold()
+        for match in pattern.finditer(text):
+            # Inspect only the adjacent prefix, rather than copying and
+            # rescanning the whole document for every candidate label.
+            prefix = match.start() - 1
+            while prefix >= 0 and text[prefix] in joiners:
+                prefix -= 1
+            if prefix >= 0 and text[prefix].isascii() and text[prefix].isalnum():
+                continue
+            return True
+    return False
+
+
+def _validated_learning(db, user_id, message_id, learning):
     if not learning.knowledge_updates and not learning.memory_updates:
-        return
+        return learning, []
     message = domain.require(db.get(ChatMessage, message_id))
     conversation = domain.require(db.get(Conversation, message.conversation_id))
     if message.role != "user" or conversation.user_id != user_id:
         raise domain.DomainError("理解更新必须来自当前用户")
-    for change in learning.memory_updates:
-        if change.source_quote not in message.text:
-            raise domain.DomainError("个人理解的source_quote未对应当前用户原话")
-        if change.operation in {"replace", "forget"}:
-            old = domain.require(db.get(Memory, change.memory_id or ""))
-            if old.user_id != user_id:
-                raise domain.DomainError("没有找到这条理解", 404)
-            if not old.active:
-                raise domain.DomainError("旧理解已被替换或遗忘，请重新读取", 409)
-        if change.item_id:
-            domain.accessible_item(db, user_id, change.item_id)
-    for change in learning.knowledge_updates:
-        item = domain.accessible_item(db, user_id, change.item_id)
-        if change.basis == "document":
-            source = domain.require(db.get(SourceRecord, change.source_id or ""))
-            if source.owner_id != user_id:
-                raise domain.DomainError("资料不可用", 404)
-            if (
-                change.source_line_start is not None
-                or change.source_line_end is not None
-            ):
-                start, end = change.source_line_start, change.source_line_end
-                lines = source.content.splitlines()
-                if (
-                    start is None
-                    or end is None
-                    or end < start
-                    or end > len(lines)
-                    or end - start >= 40
-                ):
-                    raise domain.DomainError(
-                        "请使用该source实际返回的连续行号范围，最多40行"
-                    )
-                change.source_quote = "\n".join(lines[start - 1 : end])
-            quote = locate_quote(source.content, change.source_quote)
-            if quote is None or len(quote.strip()) < 8:
-                raise domain.DomainError(
-                    f"source_quote未匹配实际原文，请重新read_source({source.id})选择连续原句；不能把摘要、改写或省略号当作原文"
-                )
-            change.source_quote = quote
-            expected = normalized_model(item.product.get("model", ""))
-            if (
-                not change.source_model
-                and expected
-                and expected in normalized_model(source.title + " " + source.content)
-            ):
-                change.source_model = item.product["model"]
-            if change.scope == "product" and not (
-                expected
-                and normalized_model(change.source_model) == expected
-                and expected in normalized_model(source.title + " " + source.content)
-            ):
-                raise domain.DomainError(
-                    "型号共性需要原文中的匹配source_model；通用案例按item参考保留"
-                )
-            if source.item_id and source.item_id != item.id:
-                original = domain.accessible_item(db, user_id, source.item_id)
-                if not item.product_id or original.product_id != item.product_id:
-                    raise domain.DomainError("资料绑定到另一型号")
-        if change.basis == "user_report" and (
-            change.scope == "product"
-            or not change.source_quote
-            or change.source_quote not in message.text
-        ):
-            raise domain.DomainError("用户报告必须保留当前原话并仅用于具体实例")
+    errors, accepted = [], {"memory_updates": [], "knowledge_updates": []}
+    for field, changes, validate in (
+        ("memory_updates", learning.memory_updates, _validate_memory_change),
+        ("knowledge_updates", learning.knowledge_updates, _validate_knowledge_change),
+    ):
+        failed_targets = set()
+        candidates = []
+        for index, change in enumerate(changes):
+            try:
+                validate(db, user_id, message, change)
+                candidates.append((index, change))
+            except domain.DomainError as error:
+                errors.append({"field": field, "index": index, "reason": error.message})
+                target = change.memory_id if field == "memory_updates" else change.supersedes_id
+                if target:
+                    failed_targets.add(target)
+        for index, change in candidates:
+            target = change.memory_id if field == "memory_updates" else change.supersedes_id
+            if target and target in failed_targets:
+                errors.append({"field": field, "index": index,
+                    "reason": "同一旧记录的另一更改未通过校验，本次不部分修改这一组记录"})
+            else:
+                accepted[field].append(change)
+    return Learning(**accepted), errors
 
+
+def _learning_error(errors):
+    return domain.DomainError("请一次修正以下依据错误；无法核实的条目不要写成事实，可在回答中说明未知。保留已核实的有用认识，无须为每个检索结果建立知识：\n" +
+        "\n".join(f"{entry['field']}[{entry['index']}]: {entry['reason']}" for entry in errors[:12]))
+
+
+def validate_learning(db, user_id, message_id, learning):
+    _, errors = _validated_learning(db, user_id, message_id, learning)
+    if errors:
+        raise _learning_error(errors)
+
+
+def _validate_memory_change(db, user_id, message, change):
+    if change.operation != "forget":
+        change.expires_at=foundation.normalize_expiry(change.expires_at)
+    anchored = locate_user_quote(message.text, change.source_quote)
+    if anchored is None:
+        raise domain.DomainError("个人理解的source_quote未对应当前用户原话")
+    change.source_quote = anchored
+    if change.operation in {"replace", "forget"}:
+        old = domain.require(db.get(Memory, change.memory_id or ""))
+        if old.user_id != user_id:
+            raise domain.DomainError("没有找到这条理解", 404)
+        if not old.active:
+            raise domain.DomainError("旧理解已被替换或遗忘，请重新读取", 409)
+    if change.item_id:
+        domain.accessible_item(db, user_id, change.item_id)
+
+
+def _validate_knowledge_change(db, user_id, message, change):
+    basis, scope, quote = foundation.normalize_claim_evidence(db, user_id, change.basis,
+        change.scope, change.source_id, change.source_quote)
+    if (basis, scope, quote) != (change.basis, change.scope, change.source_quote):
+        change.basis, change.scope, change.source_quote = basis, scope, quote
+        change.source_line_start = change.source_line_end = None
+        change.source_model = ""
+    try:
+        item = domain.accessible_item(db, user_id, change.item_id)
+    except domain.DomainError:
+        candidates = [{"item_id": item["id"], "name": item["name"]} for item in
+            domain.list_items(db, user_id) if item.get("product_id") == change.item_id]
+        if candidates:
+            raise domain.DomainError("item_id必须是具体实物ID，scope=product也不能填product_id；可用实物：" + str(candidates[:8]))
+        available = [{"item_id": row["id"], "name": row["name"]} for row in domain.list_items(db,user_id)[:8]]
+        raise domain.DomainError("item_id未对应可访问实物，不能填source_id或名称。当前可用引用：" + str(available))
+    if change.basis == "document":
+        source = domain.require(db.get(SourceRecord, change.source_id or ""))
+        if source.owner_id != user_id:
+            raise domain.DomainError("资料不可用", 404)
+        problems=[]
+        invalid_lines=False
+        if (
+            change.source_line_start is not None
+            or change.source_line_end is not None
+        ):
+            start, end = change.source_line_start, change.source_line_end
+            lines = source.content.splitlines()
+            if (
+                start is None
+                or end is None
+                or end < start
+                or end > len(lines)
+                or end - start >= 40
+            ):
+                invalid_lines=True
+                problems.append(f"该source共{len(lines)}行；请使用连续行号范围，每条最多40行")
+            else:
+                change.source_quote = "\n".join(lines[start - 1 : end])
+        quote = locate_quote(source.content, change.source_quote)
+        if not invalid_lines and (quote is None or len(quote.strip()) < 8):
+            problems.append(
+                f"source_quote未匹配实际原文：请使用read_source({source.id})所标的source_line_start/source_line_end连续行号，由程序复制原文，source_quote留空即可；"
+                "也可复制连续原句，但不能改写、拼接片段、删去中间文字或把字面\\n当换行。行号引用仍须支持content，通用资料不写成型号共性。"
+            )
+        if quote is not None:
+            change.source_quote = quote
+        expected = normalized_model(item.product.get("model", ""))
+        model_text_matched = model_mentioned(item.product.get("model", ""), source.title, source.content)
+        if (
+            not change.source_model
+            and expected
+            and model_text_matched
+        ):
+            change.source_model = item.product["model"]
+        if change.scope == "product" and not (
+            expected
+            and normalized_model(change.source_model) == expected
+            and model_text_matched
+        ):
+            problems.append(
+                f"该来源原文没有匹配型号 {item.product.get('model','')}，仅填写source_model不能建立匹配。"
+                "若保留通用案例或原理，改scope为item、source_model留空，并在unknowns保留当前实物适配尚未核实；"
+                "不要把未证实的适配写成商品共性。"
+            )
+        if source.item_id and source.item_id != item.id:
+            original = domain.accessible_item(db, user_id, source.item_id)
+            if not item.product_id or original.product_id != item.product_id:
+                problems.append("资料绑定到另一型号")
+        if problems:
+            raise domain.DomainError("；".join(problems))
+    if change.basis == "user_report":
+        anchored = locate_user_quote(message.text, change.source_quote)
+        if change.scope == "product" or anchored is None:
+            raise domain.DomainError("用户报告必须保留当前原话并仅用于具体实例")
+        change.source_quote = anchored
 
 def apply_learning(db, user_id, message_id, learning):
-    validate_learning(db, user_id, message_id, learning)
+    learning, rejected = _validated_learning(db, user_id, message_id, learning)
+    if rejected and not learning.knowledge_updates and not learning.memory_updates:
+        raise _learning_error(rejected)
     if not learning.knowledge_updates and not learning.memory_updates:
         return {"knowledge": [], "memories": []}
     message = domain.require(db.get(ChatMessage, message_id))
     conversation = domain.require(db.get(Conversation, message.conversation_id))
     if message.role != "user" or conversation.user_id != user_id:
         raise domain.DomainError("理解更新必须来自当前用户的实际任务")
-    saved = {"knowledge": [], "memories": []}
+    saved = {"knowledge": [], "memories": [], "rejected": rejected}
     for change in learning.memory_updates:
         if change.source_quote not in message.text:
             raise domain.DomainError("个人理解未对应当前用户原话")
@@ -190,7 +293,8 @@ def apply_learning(db, user_id, message_id, learning):
             if old.user_id != user_id:
                 raise domain.DomainError("没有找到这条理解", 404)
             if change.operation == "forget":
-                old.active = False
+                from .memory_lifecycle import retire
+                retire(old, "forgotten", message_id)
                 domain.invalidate_context(db, [user_id])
                 saved["memories"].append({"id": old.id, "status": "forgotten"})
                 continue
@@ -225,7 +329,7 @@ def apply_learning(db, user_id, message_id, learning):
             matched = bool(
                 expected
                 and normalized_model(change.source_model) == expected
-                and expected in normalized_model(source.title + " " + source.content)
+                and model_mentioned(item.product.get("model", ""), source.title, source.content)
             )
             if change.scope == "product" and not matched:
                 raise domain.DomainError(
