@@ -3,7 +3,6 @@ import {
   ArrowLeft,
   ArrowRight,
   Gift as GiftIcon,
-  Heart,
   Link,
   Plus,
   Pencil,
@@ -22,6 +21,7 @@ import type { Editor } from "./Editors";
 import { EmptyState, ItemCard, Pill, safeDate } from "./shared";
 import { navigate, type Route } from "./navigation";
 import GiftExperience from "./GiftExperience";
+import { wishImage } from "./wishImages";
 
 export default function Friends({
   workspace,
@@ -84,8 +84,8 @@ export default function Friends({
             className={`wish-card ${selected?.id === wish.id ? "selected" : ""}`}
             onClick={() => setSelected(wish)}
           >
-            <div className="wish-visual">
-              <Heart size={55} strokeWidth={1} />
+            <div className={`wish-visual ${wishImage(wish.title).framed ? "wish-photo-frame" : ""}`}>
+              <img src={wishImage(wish.title).src} alt={wish.title} loading="lazy" />
             </div>
             <div>
               <h3>{wish.title}</h3>
@@ -368,8 +368,8 @@ export default function Friends({
               <ArrowLeft size={17} />
               返回心愿
             </button>
-            <div className="wish-detail-visual">
-              <Heart size={86} strokeWidth={0.9} />
+            <div className={`wish-detail-visual ${wishImage(selected.title).framed ? "wish-photo-frame" : ""}`}>
+              <img src={wishImage(selected.title).src} alt={selected.title} />
             </div>
             <h1>{selected.title}</h1>
             <p className="wish-owner">
