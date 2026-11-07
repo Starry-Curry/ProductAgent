@@ -320,9 +320,15 @@ def create_app(settings=None, model_factory=None):
             if payload.entry_context.task_id:
                 interactions.task_access(db, user.id, payload.entry_context.task_id)
             conversation.entry_context = payload.entry_context.model_dump()
-        from .assistance import resolve_focus, bind_task
-        if payload.conversation_id and 'item_ids' not in payload.model_fields_set and (conversation.entry_context or {}).get('intent','general') in {'general','guidance'}:
+        from .assistance import resolve_focus, bind_task, operation_help_requested, wants_software
+        if (payload.conversation_id or operation_help_requested(payload.text)) and (not conversation.item_ids or 'item_ids' not in payload.model_fields_set) and (conversation.entry_context or {}).get('intent','general') in {'general','guidance'}:
             conversation.item_ids=resolve_focus(db,user.id,payload.text,conversation.item_ids)
+        if (conversation.item_ids and (conversation.entry_context or {}).get('intent','general') in {'general','guidance'}
+                and operation_help_requested(payload.text) and not wants_software(payload.text)):
+            entry=dict(conversation.entry_context or {})
+            attached=db.get(TaskRecord,entry.get('task_id') or '')
+            if attached and attached.plan.get('schema')=='workbench/1':entry['task_id']=None
+            conversation.entry_context={**entry,'intent':'guidance'}
         conversation.entry_context=bind_task(db,user.id,conversation.item_ids,conversation.entry_context,detach=True)
         if (conversation.entry_context or {}).get("intent") == "persona":
             if len(conversation.item_ids) != 1 or not domain.item_view(db, user.id,

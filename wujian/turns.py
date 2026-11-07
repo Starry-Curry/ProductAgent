@@ -39,7 +39,7 @@ def _plan_schema(schema):
         "kind": {"enum": ["checklist", "guidance", "idea"],
             "description": "Presentation of the whole plan; idea is not an entry group."},
         "entries": {"type": "array", "maxItems": 60,
-            "description": "New proposals start pending. Keep existing reported states unless the current user supplies actual feedback. Entry ready means reported preparation/action progress, not merely that an idea is available.",
+            "description": "New proposals start pending. For kind=guidance the current step MUST include guidance={kind,instruction,basis,target_label,success_signal,evidence}; title/note alone cannot power teaching/3D/camera. Missing information is an identify/observe step, not an excuse to omit the plan. Existing states require actual current user reports.",
             "items": entry_schema},
         "preparation_reports": {"type": "array", "maxItems": 60,
             "description": "For CHECKLIST only: exact current user evidence for each resource correction (title/group/item_id/note), newly confirmed purchase, or owned resource without inventory ID. Each entry is {entry_id,source_quote}. Unknown inventory is confirm, never buy by default. Reuse ALL existing entry IDs; do not replace them with new IDs. A changed title/group/item_id resets that existing entry to pending, keeping assignment. These reports cannot mark work done. Empty for guidance/idea and if no current correction.",
@@ -102,8 +102,8 @@ class TurnResult(BaseModel):
     # Evidence and the actual proposal precede prose in the native schema.
     # Same fields, same transaction; no extra generation or reviewer.
     learning: Learning = Field(default_factory=Learning)
-    assistance_mode: Literal["answer", "research", "teach"] = "answer"
-    target_item_ids: list[str] = Field(default_factory=list)
+    assistance_mode: Literal["answer", "research", "teach"] = Field(default="answer",description="Select by meaning: physical how-to, initial setup, troubleshooting, connection or ongoing practical help => teach, even without words such as step-by-step. Theory/comparison/casual chat => answer. teach creates/resumes an in-chat guidance plan, never a software workbench.")
+    target_item_ids: list[str] = Field(default_factory=list,description="Actual inventory IDs this answer helps with. Resolve the named object with read_item/find_items even in global chat; do not require the person to choose a UI category or say a trigger phrase.")
     source_refs: list[str] = Field(default_factory=list, max_length=8,
         description="Retained source IDs actually read for this answer, not search-result URLs or invented IDs. The application renders checked citations with their real reading depth.")
     source_limitations: str = Field(default="", max_length=1200,

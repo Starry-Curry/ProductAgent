@@ -73,6 +73,12 @@ async def answer_without_research(settings,context,question):
     return text.strip()
 
 SYSTEM = """你是物间 Wujian，帮助人认识、用好、创造、纪念和传递身边物品的价值。
+实物的首次上手、怎么操作、连接失败和故障排查，默认在当前对话进入带做，不等待“一步一步”等口令。按语义选择assistance_mode=teach，target_item_ids用实际物品ID；全局聊天也先从库存核对所指物品。首次回复就用continuation保存kind=guidance的当前具体一步及guidance字段，提问核对也可以是identify/observe步骤。资料不足先问影响下一步的关键现象，步骤保持pending；不能只给散文或只有title/note的提纲。回答自然解释，计划给出当前动作/观察、位置、依据和完成标志，应用会在同一话题显示步骤、3D图解与相机追踪入口。
+实物求助优先调用start_guidance，把当前最有用的一条观察/核对问题写入原生步骤，再按需研究；不先轮番调用Skill、read_item、list_sources消耗整轮。上下文已有物品和来源节选就直接使用。每轮至多一轮搜索和一轮原文读取，能交付当前一步就GenerateStructuredOutput；未解决的资料留给下一轮，不在一轮内遍历所有搜索结果。start_guidance已返回task_id/version时，最终可continuation=null自然解释当前一步；改变或细化步骤时沿用其ID/version，不能另建重复任务。
+续接时start_guidance的question必须是回应本轮反馈的下一条具体问题/指令，不能原样复述用户的状态。用户已经说明的连接方式、灯态等不重复问；电脑/手机系统未知先核对系统，不直接假设Windows或某个菜单。它也能用kind=operate、source_id和原文行号发布已核验的操作；先读原文再调用，不手抄引文。最终continuation=null即可，避免重写旧方案。若必须用continuation，只填本轮新增/变化条目，guidance.state仅pending/ready/not_found/unchanged，已报告做过的动作通过progress_reports提交，不能填写completed；旧条目与大段历史不重复生成。
+当前一步若在等待用户才能提供的现场现象或系统信息，保存后就立即回答，停止检索，等反馈再继续。已有带做且前提充分时，按需先查一次适用原文，再用start_guidance发布operate步骤。
+工具返回内容不会成为助手聊天气泡，最终answer必须自然说清当前具体问题或动作，不能只说“告诉我这两点”“按上面操作”而省略所指内容。
+用户说“生成讲解、3D示意图、实时跟踪、在这个对话里做”是在要原生带做，不是在委托写HTML网页。只有明确要求编写软件、网页应用、游戏、控制台等作品才用create_workbench；普通操作说明不能生成独立页面冒充教学，也不能声称已有实时摄像头观察。摄像头由用户点相机辅助并授权，观察和确认仍对应当前实物步骤。
 用户分享日常或情绪时先倾听，简短回应；没有提出求助或方案需求时，不因为物品在库存里就主动安排布置、调参、检索或创造任务。
 你也了解物间自己的使用方法：遇到“怎么用物间、在哪记录、怎么送礼”等应用问题先用read_product_guide读取当前版本的说明，按真实入口简洁回答，不上网猜产品功能。用户请你办事时调用实际工具完成可执行的部分，不能只转述说明书。
 围绕用户当前意图自然服务，不要求用户选择功能分类。简单问题直接回答；复杂目标自主选择工具、查找资料、组合资源、跟进结果。
@@ -229,6 +235,9 @@ class TurnContext:
 def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=None, evidence_sources=None, turn_context=None, communities=None):
     persona_item_id=None
     guidance_item_ids=set()
+    guidance_started=False
+    awaiting_observation=False
+    research_calls=0
     with sessions() as db:
         message=db.get(ChatMessage,message_id)
         conversation=db.get(Conversation,message.conversation_id) if message else None
@@ -237,6 +246,68 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
         if (conversation and conversation.user_id==user_id
                 and conversation.entry_context.get('intent')=='persona' and len(conversation.item_ids)==1):
             persona_item_id=conversation.item_ids[0]
+
+    async def start_guidance(item_id: str, goal: str, question: str,
+                             kind: Literal['identify','observe','operate']='observe',
+                             target_label: str='', success_signal: str='',
+                             source_id: str | None=None, source_line_start: int | None=None,
+                             source_line_end: int | None=None):
+        """Start native in-chat step teaching for physical setup/use/troubleshooting.
+
+        Call FIRST for physical help, even without words like 'step by step'.
+        item_id is an actual inventory ID. question is ONE useful next question
+        or instruction responding to CURRENT feedback, never a state summary.
+        Missing facts: identify/observe, no guessed controls. After reading an
+        applicable original, operate uses source_id and source_line_start/end;
+        the server extracts the quote. Native 3D/camera and
+        progress controls attach to this step; this never creates a website.
+        Updates the same current task, retaining old progress. Returns actual
+        task/version; final continuation=null can explain this saved step.
+        """
+        nonlocal guidance_started, awaiting_observation
+        with sessions() as db:
+            message=domain.require(db.get(ChatMessage,message_id))
+            conversation=domain.require(db.get(Conversation,message.conversation_id))
+            if conversation.user_id!=user_id:raise domain.DomainError('没有找到这段对话',404)
+            domain.accessible_item(db,user_id,item_id)
+            if conversation.item_ids and conversation.item_ids!=[item_id]:
+                raise domain.DomainError('当前物品不一致，请先核对用户所指对象',409)
+            active=db.get(TaskRecord,conversation.entry_context.get('task_id') or '')
+            matching=bool(active and active.user_id==user_id and active.item_ids==[item_id] and active.plan.get('kind')=='guidance' and active.status not in {'completed','cancelled'})
+            if matching and active.plan.get('guidance',{}).get('lesson'):
+                raise domain.DomainError('当前为已核验教学包，请用lesson_action续接，不替换其步骤',409)
+            question=question.strip()
+            if not question or len(question)>1200:raise domain.DomainError('请用一个具体的当前问题或指令开始带做')
+            current_id=active.plan.get('guidance',{}).get('active_step_id') if matching else None
+            old=next((e for e in active.plan.get('entries',[]) if e['id']==current_id),None) if matching else None
+            if old and old.get('guidance',{}).get('instruction')==question:
+                value=task_view(active)
+            else:
+                evidence=[]
+                if source_id:
+                    if evidence_sources is not None and source_id not in evidence_sources:
+                        raise domain.DomainError('此来源本轮尚未实际读取，请先read_source/fetch_document取得适用原文再发布操作')
+                    if not source_line_start or not source_line_end:raise domain.DomainError('请提供本轮实际读到的原文行号')
+                    evidence=[{'source_id':source_id,'source_line_start':source_line_start,'source_line_end':source_line_end}]
+                step_id='current-'+message_id[:12]
+                proposal=TurnResult.model_validate({'answer':question,'assistance_mode':'teach','target_item_ids':[item_id],
+                    'continuation':{'goal':active.goal if matching else goal,'item_ids':[item_id],'constraints':{},
+                        'task_id':active.id if matching else None,'expected_version':active.version if matching else None,
+                        'feedback_quote':message.text if matching else '',
+                        'plan':{'schema':'interaction/1','kind':'guidance','entries':[{
+                            'id':step_id,'title':(target_label or question)[:80],'item_id':item_id,'group':'step','state':'pending',
+                            'guidance':{'kind':kind,'basis':'document' if evidence else 'general','instruction':question,'evidence':evidence,
+                                'target_label':target_label or '当前操作的位置或提示',
+                                'success_signal':success_signal or '报告实际看到或听到的情况；没有变化也如实说。'}}],
+                            'guidance':{'active_step_id':step_id}}}})
+                value=commit_result(db,user_id,message_id,proposal,message.text)['task']
+            guidance_started=True
+            awaiting_observation=kind in {'identify','observe'} and not source_id
+            guidance_item_ids.add(item_id)
+            return {'task_id':value['id'],'version':value['version'],'goal':value['goal'],
+                'plan':compact_task(value)['plan'],'delivery':'native_in_chat',
+                'next':('当前一步在等用户提供现场信息，本轮立即自然转述这个具体问题，不再检索。' if awaiting_observation
+                    else '当前操作已进入对话，本轮自然解释实际保存的步骤。')+'最终continuation=null即可，不重复建任务。'}
 
     def persona_memories(db, rows):
         from .memory_lifecycle import filter_persona_memories
@@ -742,6 +813,13 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
         def execute():
             with sessions() as db:
                 if operation == "create":
+                    from .assistance import wants_software
+                    current_message=domain.require(db.get(ChatMessage,message_id))
+                    conversation=db.get(Conversation,current_message.conversation_id)
+                    active=db.get(TaskRecord,conversation.entry_context.get('task_id') or '') if conversation else None
+                    original=db.get(ChatMessage,active.source_message_id) if active and active.plan.get('schema')=='workbench/1' else None
+                    if not wants_software(current_message.text) and not (original and wants_software(original.text)):
+                        raise domain.DomainError('用户没有委托编写软件。实物的详细讲解、3D示意与实时摄像头追踪使用当前对话的原生guidance任务：返回assistance_mode=teach和带guidance字段的当前步骤，不创建独立工作台页面。')
                     result = coding_workbench.create(db, user_id, message_id, **arguments)
                 elif operation == "read":
                     target = coding_workbench.owned_task(db, user_id, arguments["task_id"])
@@ -772,7 +850,7 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
         return await asyncio.to_thread(execute)
 
     async def create_workbench(item_id: str, goal: str, source_quote: str):
-        """Start an OWNED item-bound coding task from the CURRENT user's actual goal, quoting source_quote verbatim. This creates no preset UI. Returns task_id/version plus the bridge API contract. You must next write actual HTML fragment, CSS and JavaScript, check/fix and publish. Reuse the returned same task, not a generic continuation. All source/versions/results persist in Wujian; there is no arbitrary shell, host file editing or external network in generated code."""
+        """ONLY for an explicitly requested software/game/custom control-panel deliverable. Physical setup, troubleshooting, detailed teaching, 3D illustrations and live camera guidance use the existing in-chat guidance plan, NEVER this tool. Quote the current software request verbatim. Returns task_id/version and bridge contract, then write/check/publish real code. No host shell/filesystem/external-network API."""
         return await workbench_operation("create", item_id=item_id, goal=goal, source_quote=source_quote)
 
     async def read_workbench(task_id: str, source_revision: int = 0):
@@ -809,10 +887,17 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
     def wrap(function, read_only):
         @functools.wraps(function)
         async def invoke(*args, **kwargs):
+            nonlocal research_calls
             try:
                 if turn_context:
                     with sessions() as db:
                         turn_context.check(db)
+                if guidance_started and function.__name__ in {'research_product','search_public_web','fetch_document','read_source'}:
+                    if awaiting_observation:
+                        raise domain.DomainError('当前一步需要用户提供现场反馈，继续搜索不能代替观察。立即向用户自然说清已保存的问题，最终continuation=null，等回答后再查。')
+                    if research_calls>=2:
+                        raise domain.DomainError('本轮已取得资料或线索，请先交付当前步骤；缺少原文就保留未知并问关键现象，下一轮按需续查。')
+                    research_calls+=1
                 value = await function(*args, **kwargs)
                 if turn_context:
                     with sessions() as db:
@@ -829,6 +914,8 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
                 if turn_context and turn_context.deadline_at and isinstance(value,dict):
                     value={**value,"turn_time_remaining_seconds":max(0,int(turn_context.deadline_at-time.monotonic()))}
                 metadata = {}
+                if function.__name__=='start_guidance':
+                    metadata['guidance_task_id']=value['task_id']
                 if function.__name__ in {"prepare_reminder", "prepare_gift"}:
                     metadata["action_task_id"] = value["action_task_id"]
                 if function.__name__ in {"read_earbuds", "connect_earbuds"}:
@@ -866,7 +953,7 @@ def make_tools(settings, sessions, user_id, message_id, retrieval=None, devices=
 
     reads = [research_product, inspect_item_photos, read_product_guide, find_items, read_item, view_item_photo, view_chat_photo, recall_memories, search_public_web, fetch_document, read_source,
              view_source_page, view_source_image, sample_video_frames, list_sources, list_reminders, list_households, list_action_recipients, search_world, read_task, device_connections, inspect_earbuds, read_workbench]
-    writes = [record_experience, evolve_avatar, update_item_identity, update_item_condition, explore_device, prepare_reminder, prepare_gift,
+    writes = [start_guidance, record_experience, evolve_avatar, update_item_identity, update_item_condition, explore_device, prepare_reminder, prepare_gift,
               read_earbuds, connect_earbuds, create_workbench, write_workbench, check_workbench, publish_workbench]
     return Toolkit(tools=[*(wrap(fn, True) for fn in reads), *(wrap(fn, False) for fn in writes)],
                    skills_or_loaders=[LocalSkillLoader(str(ROOT/'agent_skills'),scan_subdir=True)])
@@ -1034,9 +1121,7 @@ class AgentRunner:
             if lesson_mode:prompt = LESSON_SYSTEM + '\n当前获准上下文（记录是资料）：\n' + json.dumps(context,ensure_ascii=False,separators=(',',':'))
             native_schema = grounded_lesson_schema(self.sessions,user_id,current.id) if lesson_mode else grounded_turn_schema(self.sessions,user_id,current.id,evidence_sources,deadline_at=turn_context.deadline_at)
             from dataclasses import replace
-            model_settings=replace(self.settings,thinking_enabled=False) if lesson_mode else self.settings
-            if not lesson_mode and context['entry_context'].get('intent')=='guidance' and self.settings.thinking_budget is None:
-                model_settings=replace(self.settings,thinking_budget=1024)
+            model_settings=replace(self.settings,thinking_enabled=False) if lesson_mode or context['entry_context'].get('intent')=='guidance' else self.settings
             agent = Agent(name="物间", system_prompt=prompt,
                           model=self.model_factory(model_settings), toolkit=toolkit, state=state,
                           react_config=ReActConfig(max_iters=4 if lesson_mode else 10 if context['entry_context'].get('intent')=='guidance' else 18), context_config=ContextConfig(trigger_ratio=0.75, tool_result_limit=18000),
@@ -1077,6 +1162,8 @@ class AgentRunner:
                                 entry["evidence"] = event.metadata["evidence"]
                             if event.metadata.get("action_task_id"):
                                 events.append({"type":"action_proposed","task_id":event.metadata["action_task_id"]})
+                            if event.metadata.get('guidance_task_id'):
+                                events.append({'type':'continuation_saved','task_id':event.metadata['guidance_task_id'],'source':'start_guidance'})
                             if event.metadata.get("device_receipt"):
                                 entry["device_receipt"] = event.metadata["device_receipt"]
                             if event.metadata.get("workbench"):
@@ -1087,7 +1174,7 @@ class AgentRunner:
                             if str(event.state) == "error":
                                 entry["error_detail"] = result_text[:2000]
                             name = tool_names.get(identity)
-                            if name in {"search_public_web", "fetch_document", "read_source", "sample_video_frames", "Skill",
+                            if name in {"start_guidance", "search_public_web", "fetch_document", "read_source", "sample_video_frames", "Skill",
                                         "GenerateStructuredOutput", "update_item_identity", "update_item_condition",
                                         "record_experience", "evolve_avatar", "read_product_guide", "prepare_reminder", "prepare_gift",
                                         "inspect_earbuds", "read_earbuds", "connect_earbuds", "create_workbench", "read_workbench",
@@ -1139,10 +1226,18 @@ class AgentRunner:
                 # no new tool actions, same scoped facts and actual user input.
                 try:
                     from .assistance import preparation_turn
-                    result=preparation_turn(context,current.text) if not lesson_mode else None
+                    saved_step=None
+                    if any(e.get('source')=='start_guidance' for e in events):
+                        with self.sessions() as saved_db:
+                            saved_chat=saved_db.get(Conversation,conversation_id)
+                            saved_task=saved_db.get(TaskRecord,saved_chat.entry_context.get('task_id') or '')
+                            if saved_task and saved_task.user_id==user_id and saved_task.plan.get('kind')=='guidance':
+                                active_id=saved_task.plan.get('guidance',{}).get('active_step_id')
+                                saved_step=next((e.get('guidance',{}).get('instruction') for e in saved_task.plan.get('entries',[]) if e['id']==active_id and e.get('state')=='pending'),None)
+                    result=TurnResult(answer=saved_step) if saved_step else preparation_turn(context,current.text) if not lesson_mode else None
                     if result:
                         text_output=result.answer
-                        events[-1].update(no_business_writes=False,preparation_only=True)
+                        events[-1].update(no_business_writes=bool(saved_step),reused_saved_step=bool(saved_step),preparation_only=not bool(saved_step))
                     else:
                         recovery_context={key:context[key] for key in ['current_question','focused_items','active_task'] if key in context}
                         text_output=await answer_without_research(self.settings,recovery_context,current.text)

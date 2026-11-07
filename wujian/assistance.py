@@ -19,6 +19,25 @@ def wants_steps(text):
     return bool(re.search(r'一步(?:一步|步)|分步骤?|逐步|带我.{0,8}(做|用|操作)|教我.{0,8}(用|操作)', text))
 
 
+def wants_software(text):
+    """An explicit software deliverable, not an inferred tutorial website."""
+    return bool(re.search(r'(?:写|编|开发|设计|制作|做|生成|搭建|构建|自定义|来个).{0,35}(?:代码|程序|软件|网页|应用程序|游戏|小工具|工作台|操控台|控制面板|控制台|小作品|界面|面板)|想要?(?:一个|个).{0,20}(?:网页|软件|游戏|小工具|工作台)|\b(?:html|javascript|css|software|code)\b|\b(?:build|create|write|make|customize).{0,40}(?:panel|interface|tool|page|timer|app|game|workbench)',text,re.I))
+
+
+def operation_help_requested(text):
+    """Context hint for ordinary how-to questions; semantic teach also works.
+
+    This is not the teaching permission gate. The main Agent's semantic
+    assistance_mode/typed plan can select teaching without any of these words.
+    """
+    if wants_software(text) or re.search(r'只想了解|只讲原理|不要.{0,6}(?:带做|步骤|操作)|不用.{0,6}(?:带做|步骤|操作)|(?:安排|设计|想个|来个).{0,20}(?:游戏|活动|玩法)|(?:游戏|活动|玩法).{0,12}(?:怎么开始|如何开始)',text):
+        return False
+    return wants_steps(text) or bool(re.search(
+        r'怎么.{0,18}(?:用|连|开|关|调|装|修|设置|操作|开始)|如何.{0,18}(?:用|连|开|关|调|装|修|设置|操作)|'
+        r'不会(?:用|操作)|用不了|连不上|开不了|没反应|没有反应|故障|报错|脱机|接下来.{0,8}(?:做|弄|办)|'
+        r'帮我.{0,12}(?:调|连|开|装|修|弄)|想.{0,10}(?:连|使用|试用)',text))
+
+
 def research_requested(text):
     return not no_search(text) and bool(re.search(r'搜索|联网|查.{0,8}(资料|说明书|手册)|核对.{0,20}(型号|资料)', text))
 
@@ -54,8 +73,14 @@ def resolve_focus(db, user_id, text, item_ids):
     matches = []
     for item in domain.list_items(db, user_id):
         aliases = [item['name'], item['product'].get('model', '')]
+        # Unique real inventory names may contain a possessive or Latin model
+        # prefix: “我的耳机”, “LOKLiK AS2 烫印机”, “天猫精灵TG_C1”.
+        # Reuse their actual Chinese name fragments, never a fixed product list.
+        for fragment in re.findall(r'[\u4e00-\u9fff]{2,}',item['name']):
+            short=re.sub(r'^.*?的','',fragment)
+            if 2<=len(short)<=6:aliases.append(short)
         for alias in aliases:
-            position = text.casefold().find(alias.casefold()) if len(alias)>=3 else -1
+            position = text.casefold().find(alias.casefold()) if len(alias)>=2 else -1
             if position < 0:
                 continue
             prefix = text[max(0,position-12):position]
@@ -138,11 +163,16 @@ def check_turn_scope(db, user_id, message, result):
 def check_teaching_request(db, message, result):
     conversation = db.get(Conversation, message.conversation_id)
     active = db.get(TaskRecord, conversation.entry_context.get('task_id') or '')
-    requested = wants_steps(message.text) or result.assistance_mode == 'teach'
-    if requested and conversation.item_ids and not active:
+    practical=conversation.entry_context.get('intent','general') in {'general','guidance'} and operation_help_requested(message.text)
+    requested = result.assistance_mode == 'teach' or wants_steps(message.text) or practical
+    plan = result.continuation.plan if result.continuation else {}
+    targets=conversation.item_ids or result.target_item_ids or (result.continuation.item_ids if result.continuation else [])
+    active_guide=bool(active and active.plan.get('kind')=='guidance' and active.status not in {'completed','cancelled'})
+    if requested and targets and not active_guide:
         plan = result.continuation.plan if result.continuation else {}
-        if plan.get('schema') != 'interaction/1' or plan.get('kind') != 'guidance' or not plan.get('entries'):
-            raise ValueError('用户要求逐步带做，请创建interaction/1 guidance任务；资料未齐可以先建立identify/observe准备步骤，不只输出一篇文字。')
+        if (plan.get('schema') != 'interaction/1' or plan.get('kind') != 'guidance'
+                or not any(entry.get('guidance',{}).get('instruction') for entry in plan.get('entries',[]))):
+            raise ValueError('这是实物使用/排障带做：请在当前对话创建interaction/1、kind=guidance，至少给当前一步填写guidance={kind:identify或observe,instruction:本轮具体核对问题,basis:general,target_label:核对位置}及item_id。缺资料先核对，不等用户说特定口令，也不生成独立网页。只有title/note的文字提纲不能打开3D和相机。')
 
 
 def check_research_request(db, user_id, message):
